@@ -1,0 +1,25 @@
+chunk = _{ soi ~ structdef* ~ eoi }
+
+structdef   =  { name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
+fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
+field       =  { var | function }
+fieldsep    = _{ (",") }
+
+rettype     = { name }
+derive      = { (":") ~ name }
+callback    = { ("[callback]") }
+retexp      = { ("->") ~ name }
+var         = { name ~ name }
+varlist     = { var ~ ((",") ~ var)* }
+function    = { callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+
+name = @{
+	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
+}
+
+comment = _{
+	("//") ~ (!(("\r") | ("\n")) ~ any)* ~ (("\n") | ("\r\n") | ("\r") | eoi)
+}
+
+whitespace = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }
+
