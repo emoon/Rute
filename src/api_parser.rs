@@ -1,21 +1,23 @@
 use std::fs::File;
 use std::io::Write;
-use std::io::prelude::*;
 use std::io;
 use std::path::Path;
-use std::collections::VecDeque;
 
+use std::rc::Rc;
 
 use pest::Parser;
+use pest::RuleType;
+use pest::inputs::{FileInput, Input};
+use pest::iterators::Pair;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Variable {
     pub name: String,
     pub vtype: String,
     pub primitive: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Function {
     pub name: String,
     pub function_args: Vec<Variable>,
@@ -29,14 +31,14 @@ pub enum StructEntry {
     Function(Function),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Struct {
     pub name: String,
     pub inherit: Option<String>,
     pub entries: Vec<StructEntry>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct ApiDef {
     pub entries: Vec<Struct>,
 }
@@ -68,11 +70,11 @@ impl Struct {
                  })
     }
 
-    pub fn get_functions<F>(&self, funcs: &mut Vec<Function>, filter: F) 
+    pub fn get_functions<F>(&self, funcs: &mut Vec<Function>, filter: F)
         where F: Fn(&Function) -> bool {
         for entry in &self.entries {
             match *entry {
-                StructEntry::Function(ref func) => 
+                StructEntry::Function(ref func) =>
                     if filter(func) {
                         funcs.push(func.clone());
                     },
@@ -209,8 +211,8 @@ impl ApiDef {
                     Self::collect_recursive(funcs, api_def, &sdef, coll_type);
                 }
             }
-        } 
-    
+        }
+
         for entry in &sdef.entries {
             match *entry {
                 StructEntry::Function(ref func) => {
@@ -396,47 +398,44 @@ impl_rdp! {
 */
 
 impl ApiDef {
+    fn fill_field_list<R: RuleType, I: Input>(rule: &Pair<R, I>) -> Vec<StructEntry> {
+        println!("begn....\n");
+        for entry in rule.clone().into_inner() {
+            println!("{}", entry);
+
+        }
+        println!("end....\n");
+
+        Vec::new()
+    }
+
     pub fn new<P: AsRef<Path>>(path: P) -> ApiDef {
-        let mut text = String::new();
+        let mut api_def = ApiDef::default();
+        let file_input = FileInput::new(path).unwrap();
 
-        let mut file = File::open(path).unwrap();
-        file.read_to_string(&mut text).unwrap();
-
-        let chunks = ApiParser::parse_str(Rule::chunk, &text).
+        let chunks = ApiParser::parse(Rule::chunk, Rc::new(file_input)).
             unwrap_or_else(|e| panic!("{}", e));
 
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::structdef => {
-                    for func in chunk.into_inner() {
-                        println!("func:    {}", func); 
+                    let mut cur_struct = Struct::default();
+
+                    for entry in chunk.into_inner() {
+                        match entry.as_rule() {
+                            Rule::name => cur_struct.name = entry.as_str().to_owned(),
+                            Rule::fieldlist => cur_struct.entries = Self::fill_field_list(&entry),
+                            _ => (),
+                        }
                     }
+
+                    api_def.entries.push(cur_struct);
                 }
 
                 _ => (),
             }
-
-            //println!("Rule:    {:?}", chunk.as_rule());
-            //println!("Span:    {:?}", chunk.clone().into_span());
-            //println!("Text:    {}", chunk.clone().into_span().as_str());
-            
-            println!("\n\n");
         }
-        
-        /*
-        let mut parser = Rdp::new(StringInput::new(&text));
 
-        parser.chunk();
-
-        if !parser.end() {
-            let expected = parser.expected();
-            panic!("Failed to parse file - {:?} - {}",
-                   parser.expected(),
-                   &text[expected.1..]);
-        }
-        */
-
-        // ApiDef { entries: parser.process() }
-        ApiDef { entries: Vec::new() }
+        api_def
     }
 }
