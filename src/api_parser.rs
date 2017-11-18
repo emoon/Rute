@@ -36,6 +36,7 @@ pub struct Struct {
     pub name: String,
     pub inherit: Option<String>,
     pub entries: Vec<StructEntry>,
+    pub is_widget: bool,
 }
 
 #[derive(Debug, Default)]
@@ -354,6 +355,8 @@ impl ApiDef {
                 Rule::structdef => {
                     let mut cur_struct = Struct::default();
 
+                    println!("{}\n", chunk);
+
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
                             Rule::name => cur_struct.name = entry.as_str().to_owned(),
@@ -362,6 +365,16 @@ impl ApiDef {
                             _ => (),
                         }
                     }
+
+                    if let Some(ref name) = cur_struct.inherit {
+                        if name == "Widget" {
+                            cur_struct.is_widget = true;
+                        }
+                    } else if cur_struct.name == "Widget" {
+                        cur_struct.is_widget = true;
+                    }
+
+                    println!("{:?}\n", cur_struct);
 
                     api_def.entries.push(cur_struct);
                 }

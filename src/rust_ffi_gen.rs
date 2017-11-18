@@ -93,7 +93,7 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"pub struct PU {\n")?;
 
-    for struct_ in structs.iter().filter(|s| !s.is_pod()) {
+    for struct_ in structs.iter().filter(|s| !s.is_pod() && s.is_widget) {
         f.write_fmt(format_args!("    pub create_{}: extern \"C\" fn(priv_data: *const c_void) -> *const PU{},\n",
                                  struct_.name.to_snake_case(), struct_.name))?;
     }
