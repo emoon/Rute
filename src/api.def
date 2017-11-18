@@ -9,6 +9,11 @@ Rect {
 
 Widget {
     show(),
+    set_size(i32 width, i32 height),
+
+	// events that can be overriden
+
+    [event] on_paint(Painter painter),
 }
 
 // Inherit functions from Button in PushButton

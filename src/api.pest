@@ -8,12 +8,17 @@ fieldsep    = _{ (",") }
 rettype     = { name }
 derive      = { (":") ~ name }
 callback    = { ("[callback]") }
-retexp      = { ("->") ~ name }
-var         = { name ~ name }
+event       = { ("[event]") }
+retexp      = { ("->") ~ vtype }
+var         = { vtype ~ name }
 varlist     = { var ~ ((",") ~ var)* }
-function    = { callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function    = { event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
+	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
+}
+
+vtype = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
 }
 

@@ -6,7 +6,6 @@ use std::path::Path;
 use std::rc::Rc;
 
 use pest::Parser;
-use pest::RuleType;
 use pest::inputs::{FileInput, Input};
 use pest::iterators::Pair;
 
@@ -23,6 +22,7 @@ pub struct Function {
     pub function_args: Vec<Variable>,
     pub return_val: Option<Variable>,
     pub callback: bool,
+    pub event: bool,
 }
 
 #[derive(Debug)]
@@ -264,149 +264,82 @@ const _GRAMMAR: &'static str = include_str!("api.pest");
 #[grammar = "api.pest"]
 struct ApiParser;
 
-/*
-impl_rdp! {
-    grammar! {
-        chunk = _{ soi ~ structdef* ~ eoi }
+impl ApiDef {
+    fn get_variable<I: Input>(rule: &Pair<Rule, I>) -> Variable {
+        let mut var = Variable::default();
 
-        structdef   =  { name ~ derive? ~ ["{"] ~ fieldlist? ~ ["}"] }
-        fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
-        field       =  { var | function }
-        fieldsep    = _{ [","] }
-
-        rettype     = { name }
-        derive      = { [":"] ~ name }
-        callback    = { ["[callback]"] }
-        retexp      = { ["->"] ~ name }
-        var         = { name ~ name }
-        varlist     = { var ~ ([","] ~ var)* }
-        function    = { callback? ~ name ~ ["("] ~ varlist? ~ [")"] ~ retexp? }
-
-        name = @{
-            (['a'..'z'] | ['A'..'Z'] | ["_"]) ~ (['a'..'z'] | ['A'..'Z'] | ["_"] | ['0'..'9'])*
-        }
-
-       comment = _{
-            ["//"] ~ (!(["\r"] | ["\n"]) ~ any)* ~ (["\n"] | ["\r\n"] | ["\r"] | eoi)
-        }
-
-        whitespace = _{ [" "] | ["\t"] | ["\u{000C}"] | ["\r"] | ["\n"] }
-    }
-
-    process! {
-        process(&self) -> Vec<Struct> {
-            (structs: _chunk()) => {
-                structs.into_iter().collect::<Vec<_>>()
-            },
-        }
-
-        _chunk(&self) -> VecDeque<Struct> {
-            (_: structdef, sdef: _structdef(), mut tail: _chunk()) => {
-                tail.push_front(sdef);
-                tail
-            },
-
-            () => VecDeque::new(),
-        }
-
-        _structdef(&self) -> Struct {
-            (&name: name, inherit: _derive(), list: _fieldentries()) => {
-                Struct {
-                    name: name.to_owned(),
-                    inherit: inherit,
-                    entries: list.into_iter().collect::<Vec<_>>(),
-                }
-            },
-        }
-
-        _derive(&self) -> Option<String> {
-            (_: derive, &name: name) => Some(name.to_owned()),
-            () => None,
-        }
-
-        _fieldentries(&self) -> VecDeque<StructEntry> {
-            (_: field, entry: _fieldentry(), mut tail: _fieldentries()) => {
-                tail.push_front(entry);
-                tail
-            },
-
-            (_: fieldlist, entries: _fieldentries()) => entries,
-            () => VecDeque::new(),
-        }
-
-        _fieldentry(&self) -> StructEntry {
-            (_: function, func: _funcentry()) => func,
-
-            (_: var, &vtype: name, &name: name) => {
-                StructEntry::Var(Variable {
-                    name: name.to_owned(),
-                    vtype: vtype.to_owned(),
-                    primitive: is_primitve(vtype),
-                })
-            },
-        }
-
-        _funcentry(&self) -> StructEntry {
-            (callback: _callback(), &name: name, mut func_args: _func_args_list(), ret_value: _returnvalue()) => {
-                func_args.push_front(Variable {
-                    name: "self_c".to_owned(),
-                    vtype: "self".to_owned(),
-                    primitive: false,
-                });
-                // we always have self as first parameter so add it here
-                StructEntry::Function(Function {
-                    name: name.to_owned(),
-                    function_args: func_args.into_iter().collect::<Vec<_>>(),
-                    return_val: ret_value,
-                    callback: callback,
-                })
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name => var.name = entry.as_str().to_owned(),
+                Rule::vtype => var.vtype = entry.as_str().to_owned(),
+                _ => (),
             }
         }
 
-        _callback(&self) -> bool {
-            (_: callback) => true,
-            () => false,
-        }
-
-        _returnvalue(&self) -> Option<Variable> {
-            (_: retexp, &name: name) => {
-                Some(Variable {
-                    name: "".to_owned(),
-                    vtype: name.to_owned(),
-                    primitive: is_primitve(name),
-                })
-            },
-            () => None,
-        }
-
-        _func_args_list(&self) -> VecDeque<Variable> {
-            (_: var, &name: name, &atype: name, mut tail: _func_args_list()) => {
-                tail.push_front(Variable {
-                    name: atype.to_owned(),
-                    vtype: name.to_owned(),
-                    primitive: is_primitve(name),
-                });
-
-                tail
-            },
-
-            (_: varlist, tail: _func_args_list()) => tail,
-            () => VecDeque::new(),
-        }
+        var.primitive = is_primitve(&var.vtype);
+        var
     }
-}
-*/
 
-impl ApiDef {
-    fn fill_field_list<R: RuleType, I: Input>(rule: &Pair<R, I>) -> Vec<StructEntry> {
-        println!("begn....\n");
+    fn get_variable_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<Variable> {
+        let mut variables = Vec::new();
+
         for entry in rule.clone().into_inner() {
-            println!("{}", entry);
-
+            variables.push(Self::get_variable(&entry));
         }
-        println!("end....\n");
 
-        Vec::new()
+        variables
+    }
+
+    fn get_function<I: Input>(rule: &Pair<Rule, I>) -> Function {
+        let mut function = Function::default();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name => function.name = entry.as_str().to_owned(),
+                Rule::callback => function.callback = true,
+                Rule::event => function.event = true,
+                Rule::varlist => function.function_args = Self::get_variable_list(&entry),
+                Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
+                _ => (),
+            }
+        }
+
+        function
+    }
+
+    fn get_derive<I: Input>(rule: &Pair<Rule, I>) -> String {
+        let mut derive_type = String::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name => derive_type = entry.as_str().to_owned(),
+                _ => (),
+            }
+        }
+
+        derive_type
+    }
+
+    fn fill_field_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<StructEntry> {
+        let mut entries = Vec::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::field => {
+                    let field = entry.clone().into_inner().next().unwrap();
+
+                    match field.as_rule() {
+                        Rule::var => entries.push(StructEntry::Var(Self::get_variable(&field))),
+                        Rule::function => entries.push(StructEntry::Function(Self::get_function(&field))),
+                        _ => (),
+                    }
+                },
+
+                _ => (),
+            }
+        }
+
+        entries
     }
 
     pub fn new<P: AsRef<Path>>(path: P) -> ApiDef {
@@ -424,6 +357,7 @@ impl ApiDef {
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
                             Rule::name => cur_struct.name = entry.as_str().to_owned(),
+                            Rule::derive => cur_struct.inherit = Some(Self::get_derive(&entry)),
                             Rule::fieldlist => cur_struct.entries = Self::fill_field_list(&entry),
                             _ => (),
                         }
