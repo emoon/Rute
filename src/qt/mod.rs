@@ -307,6 +307,46 @@ fn generate_includes(f: &mut File,
 }
 
 ///
+/// Genarate event setup code. It will look something like this
+///
+///  virtual void paintEvent(QPaintEvent* event) {
+///        if (m_paint_event) {
+///            PUPainteEvent e;
+///            memcpy(&e, s_paint_event_funcs, sizeof(s_paint_event_funcs));
+///            e.priv_data = event;
+///            m_paint_event((PUPainteEvent*)&e, m_paint_user_data);
+///        } else {
+///            QWidget::paintEvent(event);
+///        }
+///    }
+///
+///    PUPaintEventFunc m_paint_event = nullptr;
+///    void* m_paint_user_data = nullptr;
+
+fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::Result<()> {
+
+   // Write virtual function def
+
+    f.write_fmt(format_args!("    virtual void {}(Q{}) {{\n", func.name.to_mixed_case(), func.function_args[0].vtype))?;
+    f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
+    f.write_fmt(format_args!("            PU{} e;\n", func.function_args[0].vtype))?;
+    f.write_fmt(format_args!("            memcpy(&e, s_{}_funcs, sizeof(e));\n", func.name))?;
+    f.write_fmt(format_args!("            e.priv_data = event;\n"))?;
+    f.write_fmt(format_args!("            m_{}(({}*)&e, m_{}_user_data);\n", func.name, func.function_args[0].vtype, func.name))?;
+    f.write_fmt(format_args!("        }} else {{\n"))?;
+    f.write_fmt(format_args!("            Q{}::{}(event);\n", class_name, func.name.to_mixed_case()))?;
+    f.write_fmt(format_args!("        }}\n"))?;
+    f.write_fmt(format_args!("    }}\n\n"))?;
+
+    // write data
+
+    f.write_fmt(format_args!("    PU{}Func m_{} = nullptr;\n", func.function_args[0].vtype, func.name))?;
+    f.write_fmt(format_args!("    void* m_{}_user_data= nullptr;\n", func.name))?;
+
+    Ok(())
+}
+
+///
 /// Generate wrapper classes for all the Widges. This allows us to override
 /// virtual functions from the outside (in C and other langs)
 ///
@@ -321,10 +361,18 @@ fn generate_wrapper_classes(f: &mut File,
             .unwrap_or_else(|| &struct_name);
 
         f.write_all(SEPARATOR)?;
-        f.write_fmt(format_args!("class WR{} : public Q{}\n", struct_qt_name, struct_qt_name))?;
-        f.write_all(b"{\n")?;
+        f.write_fmt(format_args!("class WR{} : public Q{} {{\n", struct_qt_name, struct_qt_name))?;
         f.write_all(b"public:\n")?;
-        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n", struct_qt_name))?;
+        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
+
+        let funcs = api_def.collect_event_functions(&sdef);
+
+        println!("funcs {:?}", funcs);
+
+        for func in funcs {
+            generate_event_setup(f, &struct_qt_name, &func)?;
+        }
+
         f.write_all(b"};\n\n")?;
     }
 

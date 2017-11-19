@@ -13,7 +13,7 @@ Widget {
 
 	// events that can be overriden
 
-    // [event] on_paint(Painter painter),
+    [event] paint_event(PaintEvent event),
 }
 
 // Inherit functions from Button in PushButton
@@ -28,6 +28,10 @@ PushButton : Widget {
 
 Slider : Widget {
     [callback] value_changed(i32 value),
+}
+
+PaintEvent {
+
 }
 
 Painter {

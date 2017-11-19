@@ -59,6 +59,7 @@ enum FuncCollectionType {
     All,
     Callback,
     Regular,
+    Event,
 }
 
 impl Struct {
@@ -224,9 +225,14 @@ impl ApiDef {
                                 funcs.push(func.clone());
                             }
                         },
+                        FuncCollectionType::Event => {
+                            if func.event {
+                                funcs.push(func.clone());
+                            }
+                        },
 
                         FuncCollectionType::Regular => {
-                            if !func.callback {
+                            if !func.callback && !func.event {
                                 funcs.push(func.clone());
                             }
                         },
@@ -250,6 +256,10 @@ impl ApiDef {
 
     pub fn collect_callback_functions(&self, sdef: &Struct) -> Vec<Function> {
         Self::collect_functions(&self, sdef, FuncCollectionType::Callback)
+    }
+
+    pub fn collect_event_functions(&self, sdef: &Struct) -> Vec<Function> {
+        Self::collect_functions(&self, sdef, FuncCollectionType::Event)
     }
 
     pub fn collect_regular_functions(&self, sdef: &Struct) -> Vec<Function> {
