@@ -9,8 +9,9 @@ rettype     = { name }
 derive      = { (":") ~ name }
 callback    = { ("[callback]") }
 event       = { ("[event]") }
-retexp      = { ("->") ~ vtype }
-var         = { vtype ~ name }
+refexp      = { ("&") }
+retexp      = { ("->") ~ refexp? ~ vtype }
+var         = { refexp? ~ vtype ~ name }
 varlist     = { var ~ ((",") ~ var)* }
 function    = { event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
