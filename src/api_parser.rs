@@ -360,6 +360,15 @@ impl ApiDef {
             }
         }
 
+        if function.function_args.len() == 0 {
+            function.function_args.push(Variable {
+                name: "self_c".to_owned(),
+                vtype: "self".to_owned(),
+                primitive: false,
+                reference: false,
+            });
+        }
+
         function
     }
 
