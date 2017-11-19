@@ -14,6 +14,7 @@ pub struct Variable {
     pub name: String,
     pub vtype: String,
     pub primitive: bool,
+    pub reference: bool,
 }
 
 #[derive(Debug, Clone, Default)]
@@ -128,9 +129,11 @@ impl Variable {
                     return format!("int{}_t", &tname[1..]);
                 }
             }
-        } else {
+        } else if self.reference {
             // Unknown type here, we always assume to use a struct Type*
             format!("struct PU{}*", tname)
+        } else {
+            format!("struct PU{}", tname)
         }
     }
 }
@@ -202,6 +205,40 @@ impl Function {
 
         Ok(())
     }
+
+    pub fn write_func_def_full<F>(&self, f: &mut File, filter: F) -> io::Result<()>
+        where F: Fn(usize, &Variable) -> (String, String)
+    {
+        let arg_count = self.function_args.len();
+
+        f.write_all(b"(")?;
+
+        for (i, arg) in self.function_args.iter().enumerate() {
+            let filter_arg = filter(i, &arg);
+
+            if filter_arg.1 == "" {
+                f.write_fmt(format_args!("{}", filter_arg.0))?;
+            } else {
+                f.write_fmt(format_args!("{}: {}", filter_arg.0, filter_arg.1))?;
+            }
+
+            if i != arg_count - 1 {
+                f.write_all(b", ")?;
+            }
+        }
+
+        f.write_all(b")")?;
+
+        if let Some(ref ret_var) = self.return_val {
+            let filter_arg = filter(arg_count, &ret_var);
+            if filter_arg.1 != "" {
+                f.write_fmt(format_args!(" -> {}", filter_arg.1))?;
+            }
+        }
+
+        Ok(())
+    }
+
 }
 
 
@@ -283,6 +320,7 @@ impl ApiDef {
             match entry.as_rule() {
                 Rule::name => var.name = entry.as_str().to_owned(),
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
+                Rule::refexp => var.reference = true,
                 _ => (),
             }
         }
@@ -293,6 +331,13 @@ impl ApiDef {
 
     fn get_variable_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<Variable> {
         let mut variables = Vec::new();
+
+        variables.push(Variable {
+            name: "self_c".to_owned(),
+            vtype: "self".to_owned(),
+            primitive: false,
+            reference: false,
+        });
 
         for entry in rule.clone().into_inner() {
             variables.push(Self::get_variable(&entry));
