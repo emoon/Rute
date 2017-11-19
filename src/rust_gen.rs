@@ -65,8 +65,10 @@ fn get_arg(arg: &Variable, type_handlers: &Vec<Box<TypeHandler>>) -> (String, St
         ("&self".to_owned(), "".to_owned())
     } else if arg.primitive {
         (arg.name.to_owned(), arg.vtype.clone())
-    } else {
+    } else if arg.reference {
         (arg.name.clone(), format!("&{}", arg.vtype.to_owned()))
+    } else {
+        (arg.name.clone(), arg.vtype.to_owned())
     }
 }
 
@@ -94,13 +96,13 @@ fn get_func_def(index: usize, arg: &Variable, type_handlers: &Vec<Box<TypeHandle
 */
 
 fn generate_func_impl(f: &mut File, func: &Function, type_handlers: &Vec<Box<TypeHandler>>) -> io::Result<()> {
-    f.write_fmt(format_args!("    pub fn {}(", func.name))?;
+    f.write_fmt(format_args!("    pub fn {}", func.name))?;
 
-    func.write_func_def(f, |_, arg| {
+    func.write_func_def_full(f, |_, arg| {
         get_arg(arg, type_handlers)
     })?;
 
-    f.write_all(b") {\n")?;
+    f.write_all(b" {\n")?;
 
     // Handle strings (as they need to use CString before call down to the C code
 
@@ -123,11 +125,11 @@ fn generate_func_impl(f: &mut File, func: &Function, type_handlers: &Vec<Box<Typ
 
     func.write_func_def(f, |index, arg| {
         if index == 0 {
-            ("(*self.obj).privd".to_owned(), "".to_owned())
+            ("(*self.obj).privd".to_owned(), String::new())
         } else if !arg.primitive {
-            (format!("{}", name_remap.get(&index).unwrap()), "".to_owned())
+            (format!("{}", name_remap.get(&index).unwrap()), String::new())
         } else {
-            (arg.name.to_owned(), "".to_owned())
+            (arg.name.to_owned(), String::new())
         }
     })?;
 
