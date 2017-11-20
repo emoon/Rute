@@ -35,6 +35,7 @@ pub enum StructEntry {
 #[derive(Debug, Default)]
 pub struct Struct {
     pub name: String,
+    pub attributes: Vec<String>,
     pub inherit: Option<String>,
     pub entries: Vec<StructEntry>,
     pub is_widget: bool,
@@ -281,6 +282,26 @@ impl ApiDef {
         }
     }
 
+    fn has_attribute_recursive(api_def: &ApiDef, sdef: &Struct, attribute: &str) -> bool {
+        if let Some(ref inherit_name) = sdef.inherit {
+            for sdef in &api_def.entries {
+                if &sdef.name == inherit_name {
+                    if Self::has_attribute_recursive(api_def, &sdef, attribute) == true {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        for attrib in &sdef.attributes {
+            if attrib == attribute {
+                return true;
+            }
+        }
+
+        false
+    }
+
     fn collect_functions(&self, sdef: &Struct, coll_type: FuncCollectionType) -> Vec<Function> {
         let mut funcs = Vec::new();
         Self::collect_recursive(&mut funcs, &self, sdef, coll_type);
@@ -301,6 +322,10 @@ impl ApiDef {
 
     pub fn collect_regular_functions(&self, sdef: &Struct) -> Vec<Function> {
         Self::collect_functions(&self, sdef, FuncCollectionType::Regular)
+    }
+
+    pub fn has_attribute(&self, sdef: &Struct, attribute: &str) -> bool {
+        Self::has_attribute_recursive(&self, sdef, attribute)
     }
 }
 
@@ -372,17 +397,17 @@ impl ApiDef {
         function
     }
 
-    fn get_derive<I: Input>(rule: &Pair<Rule, I>) -> String {
-        let mut derive_type = String::new();
+    fn get_name<I: Input>(rule: &Pair<Rule, I>) -> String {
+        let mut name = String::new();
 
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
-                Rule::name => derive_type = entry.as_str().to_owned(),
+                Rule::name => name = entry.as_str().to_owned(),
                 _ => (),
             }
         }
 
-        derive_type
+        name
     }
 
     fn fill_field_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<StructEntry> {
@@ -407,6 +432,19 @@ impl ApiDef {
         entries
     }
 
+    fn get_attrbutes<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
+        let mut attribs = Vec::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::namelist => attribs.push(Self::get_name(&entry)),
+                _ => (),
+            }
+        }
+
+        attribs
+    }
+
     pub fn new<P: AsRef<Path>>(path: P) -> ApiDef {
         let mut api_def = ApiDef::default();
         let file_input = FileInput::new(path).unwrap();
@@ -424,7 +462,8 @@ impl ApiDef {
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
                             Rule::name => cur_struct.name = entry.as_str().to_owned(),
-                            Rule::derive => cur_struct.inherit = Some(Self::get_derive(&entry)),
+                            Rule::derive => cur_struct.inherit = Some(Self::get_name(&entry)),
+                            Rule::attributes => cur_struct.attributes = Self::get_attrbutes(&entry),
                             Rule::fieldlist => cur_struct.entries = Self::fill_field_list(&entry),
                             _ => (),
                         }
@@ -437,8 +476,6 @@ impl ApiDef {
                     } else if cur_struct.name == "Widget" {
                         cur_struct.is_widget = true;
                     }
-
-                    println!("{:?}\n", cur_struct);
 
                     api_def.entries.push(cur_struct);
                 }

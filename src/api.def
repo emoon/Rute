@@ -7,7 +7,7 @@ Rect {
     f32 height,
 }
 
-#[derive(PaintEvent)]
+#[derive(PaintDevice)]
 Widget {
     show(),
     set_size(i32 width, i32 height),

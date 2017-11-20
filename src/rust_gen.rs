@@ -34,6 +34,11 @@ trait TypeHandler {
 ///
 fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
     for sdef in structs {
+        if sdef.is_pod() {
+            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
+        } else {
+            f.write_all(b"#[derive(Debug)]\n")?;
+        }
         f.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
 
         if sdef.is_pod() {
@@ -104,8 +109,6 @@ fn generate_func_impl(f: &mut File, func: &Function, type_handlers: &Vec<Box<Typ
 
     f.write_all(b" {\n")?;
 
-    println!("------------- {}", func.name);
-
     // Handle strings (as they need to use CString before call down to the C code
 
     let mut name_remap = HashMap::with_capacity(func.function_args.len());
@@ -123,19 +126,23 @@ fn generate_func_impl(f: &mut File, func: &Function, type_handlers: &Vec<Box<Typ
     }
 
     f.write_all(b"        unsafe {\n")?;
-    f.write_fmt(format_args!("            return ((*self.obj).{})(", func.name))?;
+    f.write_fmt(format_args!("            ((*self.obj).{})(", func.name))?;
 
     func.write_func_def(f, |index, arg| {
         if index == 0 {
             ("(*self.obj).privd".to_owned(), String::new())
-        } else if !arg.primitive && arg.reference {
-            (format!("{}", name_remap.get(&index).unwrap()), String::new())
+        } else if !arg.primitive && !arg.reference {
+            if let Some(name) = name_remap.get(&index) {
+                (name.to_owned(), String::new())
+            } else {
+                (arg.name.to_owned(), String::new())
+            }
         } else {
             (arg.name.to_owned(), String::new())
         }
     })?;
 
-    f.write_all(b");\n")?;
+    f.write_all(b")\n")?;
 
     f.write_all(b"        }\n")?;
     f.write_all(b"    }\n\n")?;
