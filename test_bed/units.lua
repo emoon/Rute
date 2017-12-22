@@ -24,7 +24,7 @@ SharedLibrary {
             Recursive = true,
         },
 
-        gen_moc("test_bed/qt/wrui_qt.h"),
+        gen_moc("src/qt/qt_api_gen.h"),
     },
 
     Env = {
