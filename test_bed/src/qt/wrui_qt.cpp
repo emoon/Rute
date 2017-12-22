@@ -18,18 +18,18 @@ class WRWidget : public QWidget {
 public:
     virtual ~WRWidget() {}
 
-    virtual void paintEvent(Qself) {
+    virtual void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
-            PUself e;
+            PUPaintEvent e;
             memcpy(&e, s_paint_event_funcs, sizeof(e));
             e.priv_data = event;
-            m_paint_event((self*)&e, m_paint_event_user_data);
+            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
         } else {
             QWidget::paintEvent(event);
         }
     }
 
-    PUselfFunc m_paint_event = nullptr;
+    PUPaintEventFunc m_paint_event = nullptr;
     void* m_paint_event_user_data= nullptr;
 };
 
@@ -39,19 +39,6 @@ class WRPushButton : public QPushButton {
 public:
     virtual ~WRPushButton() {}
 
-    virtual void paintEvent(Qself) {
-        if (m_paint_event) {
-            PUself e;
-            memcpy(&e, s_paint_event_funcs, sizeof(e));
-            e.priv_data = event;
-            m_paint_event((self*)&e, m_paint_event_user_data);
-        } else {
-            QPushButton::paintEvent(event);
-        }
-    }
-
-    PUselfFunc m_paint_event = nullptr;
-    void* m_paint_event_user_data= nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,19 +47,6 @@ class WRSlider : public QSlider {
 public:
     virtual ~WRSlider() {}
 
-    virtual void paintEvent(Qself) {
-        if (m_paint_event) {
-            PUself e;
-            memcpy(&e, s_paint_event_funcs, sizeof(e));
-            e.priv_data = event;
-            m_paint_event((self*)&e, m_paint_event_user_data);
-        } else {
-            QSlider::paintEvent(event);
-        }
-    }
-
-    PUselfFunc m_paint_event = nullptr;
-    void* m_paint_event_user_data= nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

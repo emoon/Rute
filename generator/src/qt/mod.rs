@@ -324,15 +324,16 @@ fn generate_includes(f: &mut File,
 ///    void* m_paint_user_data = nullptr;
 
 fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::Result<()> {
+    let event_type = &func.function_args[1];
 
    // Write virtual function def
 
-    f.write_fmt(format_args!("    virtual void {}(Q{}) {{\n", func.name.to_mixed_case(), func.function_args[0].vtype))?;
+    f.write_fmt(format_args!("    virtual void {}(Q{}* event) {{\n", func.name.to_mixed_case(), event_type.vtype))?;
     f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
-    f.write_fmt(format_args!("            PU{} e;\n", func.function_args[0].vtype))?;
+    f.write_fmt(format_args!("            PU{} e;\n", event_type.vtype))?;
     f.write_fmt(format_args!("            memcpy(&e, s_{}_funcs, sizeof(e));\n", func.name))?;
     f.write_fmt(format_args!("            e.priv_data = event;\n"))?;
-    f.write_fmt(format_args!("            m_{}(({}*)&e, m_{}_user_data);\n", func.name, func.function_args[0].vtype, func.name))?;
+    f.write_fmt(format_args!("            m_{}((PU{}*)&e, m_{}_user_data);\n", func.name, event_type.vtype, func.name))?;
     f.write_fmt(format_args!("        }} else {{\n"))?;
     f.write_fmt(format_args!("            Q{}::{}(event);\n", class_name, func.name.to_mixed_case()))?;
     f.write_fmt(format_args!("        }}\n"))?;
@@ -340,7 +341,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 
     // write data
 
-    f.write_fmt(format_args!("    PU{}Func m_{} = nullptr;\n", func.function_args[0].vtype, func.name))?;
+    f.write_fmt(format_args!("    PU{}Func m_{} = nullptr;\n", event_type.vtype, func.name))?;
     f.write_fmt(format_args!("    void* m_{}_user_data= nullptr;\n", func.name))?;
 
     Ok(())

@@ -317,7 +317,21 @@ impl ApiDef {
     }
 
     pub fn collect_event_functions(&self, sdef: &Struct) -> Vec<Function> {
-        Self::collect_functions(&self, sdef, FuncCollectionType::Event)
+        let mut funcs = Vec::new();
+        for entry in &sdef.entries {
+            match *entry {
+                StructEntry::Function(ref func) => {
+                    if func.event {
+                        funcs.push(func.clone());
+                    }
+                }
+
+                _ => (),
+            }
+        }
+
+        funcs
+        //Self::collect_functions(&self, sdef, FuncCollectionType::Event)
     }
 
     pub fn collect_regular_functions(&self, sdef: &Struct) -> Vec<Function> {
