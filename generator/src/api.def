@@ -31,6 +31,12 @@ Slider : Widget {
     [callback] value_changed(i32 value),
 }
 
+
+Application {
+	set_style(String style),
+	run(),
+}
+
 PaintEvent {
 	rect() -> Rect,
 }

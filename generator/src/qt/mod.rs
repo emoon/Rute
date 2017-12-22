@@ -354,7 +354,7 @@ fn generate_wrapper_classes(f: &mut File,
                      struct_name_map: &HashMap<&str, &str>,
                      api_def: &ApiDef)
                      -> io::Result<()> {
-    for sdef in api_def.entries.iter().filter(|v| !v.is_pod() && v.is_widget) {
+    for sdef in api_def.entries.iter().filter(|v| !v.is_pod()) {
         let struct_name = sdef.name.as_str();
         let struct_qt_name = struct_name_map
             .get(struct_name)
