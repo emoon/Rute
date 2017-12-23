@@ -39,6 +39,19 @@ class WRPushButton : public QPushButton {
 public:
     virtual ~WRPushButton() {}
 
+    virtual void paintEvent(QPaintEvent* event) {
+        if (m_paint_event) {
+            PUPaintEvent e;
+            memcpy(&e, s_paint_event_funcs, sizeof(e));
+            e.priv_data = event;
+            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
+        } else {
+            QPushButton::paintEvent(event);
+        }
+    }
+
+    PUPaintEventFunc m_paint_event = nullptr;
+    void* m_paint_event_user_data= nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +60,19 @@ class WRSlider : public QSlider {
 public:
     virtual ~WRSlider() {}
 
+    virtual void paintEvent(QPaintEvent* event) {
+        if (m_paint_event) {
+            PUPaintEvent e;
+            memcpy(&e, s_paint_event_funcs, sizeof(e));
+            e.priv_data = event;
+            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
+        } else {
+            QSlider::paintEvent(event);
+        }
+    }
+
+    PUPaintEventFunc m_paint_event = nullptr;
+    void* m_paint_event_user_data= nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,17 +108,12 @@ static void widget_show(void* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_size(void* self_c, int width, int height) { 
+static void widget_resize(void* self_c, int width, int height) { 
     QWidget* qt_data = (QWidget*)self_c;
-    qt_data->setSize(width, height);
+    qt_data->resize(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_paint_event(void* self_c, struct PUPaintEvent event) { 
-    QWidget* qt_data = (QWidget*)self_c;
-    qt_data->paintEvent(event);
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,17 +124,12 @@ static void push_button_show(void* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void push_button_set_size(void* self_c, int width, int height) { 
+static void push_button_resize(void* self_c, int width, int height) { 
     QPushButton* qt_data = (QPushButton*)self_c;
-    qt_data->setSize(width, height);
+    qt_data->resize(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void push_button_paint_event(void* self_c, struct PUPaintEvent event) { 
-    QPushButton* qt_data = (QPushButton*)self_c;
-    qt_data->paintEvent(event);
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -146,17 +162,12 @@ static void slider_show(void* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void slider_set_size(void* self_c, int width, int height) { 
+static void slider_resize(void* self_c, int width, int height) { 
     QSlider* qt_data = (QSlider*)self_c;
-    qt_data->setSize(width, height);
+    qt_data->resize(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void slider_paint_event(void* self_c, struct PUPaintEvent event) { 
-    QSlider* qt_data = (QSlider*)self_c;
-    qt_data->paintEvent(event);
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,8 +209,7 @@ static void painter_draw_line(void* self_c, int x1, int y1, int x2, int y2) {
 
 static struct PUWidget s_widget = {
     widget_show,
-    widget_set_size,
-    widget_paint_event,
+    widget_resize,
     0,
 };
 
@@ -207,8 +217,7 @@ static struct PUWidget s_widget = {
 
 static struct PUPushButton s_push_button = {
     push_button_show,
-    push_button_set_size,
-    push_button_paint_event,
+    push_button_resize,
     connect_push_button_released,
     push_button_set_text,
     push_button_set_flat,
@@ -219,8 +228,7 @@ static struct PUPushButton s_push_button = {
 
 static struct PUSlider s_slider = {
     slider_show,
-    slider_set_size,
-    slider_paint_event,
+    slider_resize,
     connect_slider_value_changed,
     0,
 };

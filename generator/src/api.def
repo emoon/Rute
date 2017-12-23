@@ -10,7 +10,7 @@ Rect {
 #[derive(PaintDevice)]
 Widget {
     show(),
-    set_size(i32 width, i32 height),
+    resize(i32 width, i32 height),
 
 	// events that can be overriden
 
@@ -37,6 +37,8 @@ Application {
 	run(),
 }
 
+// No create on this as its a event only
+#[derive(NoCreate)]
 PaintEvent {
 	rect() -> Rect,
 }

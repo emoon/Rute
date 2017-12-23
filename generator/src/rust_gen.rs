@@ -224,7 +224,7 @@ fn generate_connect(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         let funcs = api_def.collect_callback_functions(&sdef);
 
-        for func in funcs.iter().filter(|s| s.callback) {
+        for func in funcs.iter().filter(|s| s.func_type == FunctionType::Callback) {
             let args = get_function_args(&func);
             let mut found = true;
 

@@ -11,16 +11,16 @@ pub struct PURect {
 #[repr(C)]
 pub struct PUWidget {
     pub show: extern "C" fn(self_c: *const c_void),
-    pub set_size: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
-    pub paint_event: extern "C" fn(self_c: *const c_void, event: *const PUPaintEvent),
+    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+,
     pub privd: *const c_void,
 }
 
 #[repr(C)]
 pub struct PUPushButton {
     pub show: extern "C" fn(self_c: *const c_void),
-    pub set_size: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
-    pub paint_event: extern "C" fn(self_c: *const c_void, event: *const PUPaintEvent),
+    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+,
     pub connect_released: extern "C" fn(object: *const c_void, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),
     pub set_text: extern "C" fn(self_c: *const c_void, text: *const c_char),
@@ -31,8 +31,8 @@ pub struct PUPushButton {
 #[repr(C)]
 pub struct PUSlider {
     pub show: extern "C" fn(self_c: *const c_void),
-    pub set_size: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
-    pub paint_event: extern "C" fn(self_c: *const c_void, event: *const PUPaintEvent),
+    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+,
     pub connect_value_changed: extern "C" fn(object: *const c_void, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),
     pub privd: *const c_void,

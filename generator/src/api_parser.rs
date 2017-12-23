@@ -17,13 +17,25 @@ pub struct Variable {
     pub reference: bool,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum FunctionType {
+    Regular,
+    Event,
+    Callback,
+}
+
+impl Default for FunctionType {
+    fn default() -> Self {
+        FunctionType::Regular
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct Function {
     pub name: String,
     pub function_args: Vec<Variable>,
     pub return_val: Option<Variable>,
-    pub callback: bool,
-    pub event: bool,
+    pub func_type: FunctionType,
 }
 
 #[derive(Debug)]
@@ -88,15 +100,29 @@ impl Struct {
     }
 
     pub fn get_callback_functions(&self, funcs: &mut Vec<Function>) {
-        Self::get_functions(self, funcs, |func| func.callback)
+        Self::get_functions(self, funcs, |func| func.func_type == FunctionType::Callback)
     }
 
     pub fn get_regular_functions(&self, funcs: &mut Vec<Function>) {
-        Self::get_functions(self, funcs, |func| !func.callback)
+        Self::get_functions(self, funcs, |func| func.func_type == FunctionType::Regular)
+    }
+
+    pub fn get_event_functions(&self, funcs: &mut Vec<Function>) {
+        Self::get_functions(self, funcs, |func| func.func_type == FunctionType::Event)
     }
 
     pub fn get_all_functions(&self, funcs: &mut Vec<Function>) {
         Self::get_functions(self, funcs, |_| true)
+    }
+
+    pub fn should_have_create_func(&self) -> bool {
+        for attrib in &self.attributes {
+            if attrib == "NoCreate" {
+                return false;
+            }
+        }
+
+        true
     }
 }
 
@@ -259,18 +285,18 @@ impl ApiDef {
                     match coll_type {
                         FuncCollectionType::All => funcs.push(func.clone()),
                         FuncCollectionType::Callback => {
-                            if func.callback {
+                            if func.func_type == FunctionType::Callback {
                                 funcs.push(func.clone());
                             }
                         },
                         FuncCollectionType::Event => {
-                            if func.event {
+                            if func.func_type == FunctionType::Event {
                                 funcs.push(func.clone());
                             }
                         },
 
                         FuncCollectionType::Regular => {
-                            if !func.callback && !func.event {
+                            if func.func_type == FunctionType::Regular {
                                 funcs.push(func.clone());
                             }
                         },
@@ -316,22 +342,8 @@ impl ApiDef {
         Self::collect_functions(&self, sdef, FuncCollectionType::Callback)
     }
 
-    pub fn collect_event_functions(&self, sdef: &Struct) -> Vec<Function> {
-        let mut funcs = Vec::new();
-        for entry in &sdef.entries {
-            match *entry {
-                StructEntry::Function(ref func) => {
-                    if func.event {
-                        funcs.push(func.clone());
-                    }
-                }
-
-                _ => (),
-            }
-        }
-
-        funcs
-        //Self::collect_functions(&self, sdef, FuncCollectionType::Event)
+    pub fn collect_all_event_functions(&self, sdef: &Struct) -> Vec<Function> {
+        Self::collect_functions(&self, sdef, FuncCollectionType::Event)
     }
 
     pub fn collect_regular_functions(&self, sdef: &Struct) -> Vec<Function> {
@@ -391,8 +403,8 @@ impl ApiDef {
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
                 Rule::name => function.name = entry.as_str().to_owned(),
-                Rule::callback => function.callback = true,
-                Rule::event => function.event = true,
+                Rule::callback => function.func_type = FunctionType::Callback,
+                Rule::event => function.func_type = FunctionType::Event,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
                 _ => (),

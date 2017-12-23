@@ -274,10 +274,10 @@ fn generate_struct_body_recursive(f: &mut File,
             StructEntry::Function(ref func) => {
                 f.write_all(SEPARATOR)?;
 
-                if func.callback == false {
-                    generate_func_def(f, name, func, struct_name_map)?;
-                } else {
-                    func_def_callback(f, name, func)?;
+                match func.func_type {
+                    FunctionType::Regular => generate_func_def(f, name, func, struct_name_map)?,
+                    FunctionType::Callback => func_def_callback(f, name, func)?,
+                    _ => ()
                 }
             }
 
@@ -366,7 +366,7 @@ fn generate_wrapper_classes(f: &mut File,
         f.write_all(b"public:\n")?;
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
 
-        let funcs = api_def.collect_event_functions(&sdef);
+        let funcs = api_def.collect_all_event_functions(&sdef);
 
         println!("funcs {:?}", funcs);
 
@@ -400,11 +400,10 @@ fn generate_struct_def(f: &mut File,
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Function(ref func) => {
-                if func.callback {
-                    f.write_fmt(format_args!("    connect_{},\n",
-                                                function_name(struct_name, func)))?;
-                } else {
-                    f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
+                match func.func_type {
+                    FunctionType::Regular => f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?,
+                    FunctionType::Callback => f.write_fmt(format_args!("    connect_{},\n", function_name(struct_name, func)))?,
+                    _ => (),
                 }
             }
 

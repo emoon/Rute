@@ -48,9 +48,9 @@ impl Widget {
         }
     }
 
-    pub fn set_size(&self, width: i32, height: i32) {
+    pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).set_size)((*self.obj).privd, width, height)
+            ((*self.obj).resize)((*self.obj).privd, width, height)
         }
     }
 
@@ -63,9 +63,9 @@ impl PushButton {
         }
     }
 
-    pub fn set_size(&self, width: i32, height: i32) {
+    pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).set_size)((*self.obj).privd, width, height)
+            ((*self.obj).resize)((*self.obj).privd, width, height)
         }
     }
 
@@ -91,9 +91,9 @@ impl Slider {
         }
     }
 
-    pub fn set_size(&self, width: i32, height: i32) {
+    pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).set_size)((*self.obj).privd, width, height)
+            ((*self.obj).resize)((*self.obj).privd, width, height)
         }
     }
 

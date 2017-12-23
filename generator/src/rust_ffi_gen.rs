@@ -57,10 +57,10 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
             }
 
             StructEntry::Function(ref func) => {
-                if func.callback {
-                    generate_ffi_callback(f, func)?;
-                } else {
-                    generate_ffi_function(f, func)?;
+                match func.func_type {
+                    FunctionType::Regular => generate_ffi_function(f, func)?,
+                    FunctionType::Callback => generate_ffi_callback(f, func)?,
+                    _ => (),
                 }
 
                 f.write_all(b",\n")?;
