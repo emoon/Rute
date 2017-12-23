@@ -14,71 +14,81 @@ struct PrivData {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+extern struct PUWidget s_widget;
+extern struct PUPushButton s_push_button;
+extern struct PUSlider s_slider;
+extern struct PUApplication s_application;
+extern struct PUPaintEvent s_paint_event;
+extern struct PUPainter s_painter;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRWidget : public QWidget {
 public:
+    WRWidget(QWidget* widget) : QWidget(widget) {}
     virtual ~WRWidget() {}
 
     virtual void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
-            PUPaintEvent e;
-            memcpy(&e, s_paint_event_funcs, sizeof(e));
+            PUPaintEvent e = s_paint_event;
             e.priv_data = event;
-            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
+            m_paint_event(m_paint_event_user_data, (PUPaintEvent*)&e);
         } else {
             QWidget::paintEvent(event);
         }
     }
 
-    PUPaintEventFunc m_paint_event = nullptr;
-    void* m_paint_event_user_data= nullptr;
+    void (*m_paint_event)(void* self_c, struct PUPaintEvent* event) = nullptr;
+    void* m_paint_event_user_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WRPushButton : public QPushButton {
 public:
+    WRPushButton(QWidget* widget) : QPushButton(widget) {}
     virtual ~WRPushButton() {}
 
     virtual void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
-            PUPaintEvent e;
-            memcpy(&e, s_paint_event_funcs, sizeof(e));
+            PUPaintEvent e = s_paint_event;
             e.priv_data = event;
-            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
+            m_paint_event(m_paint_event_user_data, (PUPaintEvent*)&e);
         } else {
             QPushButton::paintEvent(event);
         }
     }
 
-    PUPaintEventFunc m_paint_event = nullptr;
-    void* m_paint_event_user_data= nullptr;
+    void (*m_paint_event)(void* self_c, struct PUPaintEvent* event) = nullptr;
+    void* m_paint_event_user_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WRSlider : public QSlider {
 public:
+    WRSlider(QWidget* widget) : QSlider(widget) {}
     virtual ~WRSlider() {}
 
     virtual void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
-            PUPaintEvent e;
-            memcpy(&e, s_paint_event_funcs, sizeof(e));
+            PUPaintEvent e = s_paint_event;
             e.priv_data = event;
-            m_paint_event((PUPaintEvent*)&e, m_paint_event_user_data);
+            m_paint_event(m_paint_event_user_data, (PUPaintEvent*)&e);
         } else {
             QSlider::paintEvent(event);
         }
     }
 
-    PUPaintEventFunc m_paint_event = nullptr;
-    void* m_paint_event_user_data= nullptr;
+    void (*m_paint_event)(void* self_c, struct PUPaintEvent* event) = nullptr;
+    void* m_paint_event_user_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WRApplication : public QApplication {
 public:
+    WRApplication(QWidget* widget) : QApplication(widget) {}
     virtual ~WRApplication() {}
 
 };
@@ -87,6 +97,7 @@ public:
 
 class WRPaintEvent : public QPaintEvent {
 public:
+    WRPaintEvent(QWidget* widget) : QPaintEvent(widget) {}
     virtual ~WRPaintEvent() {}
 
 };
@@ -95,6 +106,7 @@ public:
 
 class WRPainter : public QPainter {
 public:
+    WRPainter(QWidget* widget) : QPainter(widget) {}
     virtual ~WRPainter() {}
 
 };
@@ -133,7 +145,7 @@ static void push_button_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void connect_push_button_released(void* object, void* user_data, void (*callback)(void* self_c)) {
+static void set_push_button_released_event(void* object, void* user_data, void (*event)(void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)callback);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(released()), wrap, SLOT(method()));
@@ -171,7 +183,7 @@ static void slider_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void connect_slider_value_changed(void* object, void* user_data, void (*callback)(void* self_c, int value)) {
+static void set_slider_value_changed_event(void* object, void* user_data, void (*event)(void* self_c, int value)) {
     QSlotWrapperSignal_self_i32_void* wrap = new QSlotWrapperSignal_self_i32_void(user_data, (Signal_self_i32_void)callback);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(valueChanged(int)), wrap, SLOT(method(int)));
@@ -207,7 +219,7 @@ static void painter_draw_line(void* self_c, int x1, int y1, int x2, int y2) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUWidget s_widget = {
+struct PUWidget s_widget = {
     widget_show,
     widget_resize,
     0,
@@ -215,7 +227,7 @@ static struct PUWidget s_widget = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUPushButton s_push_button = {
+struct PUPushButton s_push_button = {
     push_button_show,
     push_button_resize,
     connect_push_button_released,
@@ -226,7 +238,7 @@ static struct PUPushButton s_push_button = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUSlider s_slider = {
+struct PUSlider s_slider = {
     slider_show,
     slider_resize,
     connect_slider_value_changed,
@@ -235,7 +247,7 @@ static struct PUSlider s_slider = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUApplication s_application = {
+struct PUApplication s_application = {
     application_set_style,
     application_run,
     0,
@@ -243,14 +255,14 @@ static struct PUApplication s_application = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUPaintEvent s_paint_event = {
+struct PUPaintEvent s_paint_event = {
     paint_event_rect,
     0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUPainter s_painter = {
+struct PUPainter s_painter = {
     painter_draw_line,
     0,
 };
@@ -297,8 +309,6 @@ static struct PUPaintEvent* create_paint_event(void* priv_data) {
 static struct PUPainter* create_painter(void* priv_data) {
     return create_func<struct PUPainter, WRPainter>(&s_painter, priv_data);
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct PU s_pu = {
     create_widget,
     create_push_button,
@@ -306,6 +316,8 @@ static struct PU s_pu = {
     create_application,
     create_paint_event,
     create_painter,
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 };
 
 

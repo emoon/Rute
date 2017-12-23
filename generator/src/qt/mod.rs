@@ -312,7 +312,7 @@ fn generate_includes(f: &mut File,
 ///  virtual void paintEvent(QPaintEvent* event) {
 ///        if (m_paint_event) {
 ///            PUPainteEvent e;
-///            memcpy(&e, s_paint_event_funcs, sizeof(s_paint_event_funcs));
+///            memcpy(&e, s_paint_event, sizeof(e));
 ///            e.priv_data = event;
 ///            m_paint_event((PUPainteEvent*)&e, m_paint_user_data);
 ///        } else {
@@ -330,10 +330,9 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 
     f.write_fmt(format_args!("    virtual void {}(Q{}* event) {{\n", func.name.to_mixed_case(), event_type.vtype))?;
     f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
-    f.write_fmt(format_args!("            PU{} e;\n", event_type.vtype))?;
-    f.write_fmt(format_args!("            memcpy(&e, s_{}_funcs, sizeof(e));\n", func.name))?;
+    f.write_fmt(format_args!("            PU{} e = s_{};\n", event_type.vtype, func.name))?;
     f.write_fmt(format_args!("            e.priv_data = event;\n"))?;
-    f.write_fmt(format_args!("            m_{}((PU{}*)&e, m_{}_user_data);\n", func.name, event_type.vtype, func.name))?;
+    f.write_fmt(format_args!("            m_{}(m_{}_user_data, (PU{}*)&e);\n", func.name, func.name, event_type.vtype))?;
     f.write_fmt(format_args!("        }} else {{\n"))?;
     f.write_fmt(format_args!("            Q{}::{}(event);\n", class_name, func.name.to_mixed_case()))?;
     f.write_fmt(format_args!("        }}\n"))?;
@@ -341,8 +340,14 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 
     // write data
 
-    f.write_fmt(format_args!("    PU{}Func m_{} = nullptr;\n", event_type.vtype, func.name))?;
-    f.write_fmt(format_args!("    void* m_{}_user_data= nullptr;\n", func.name))?;
+    f.write_fmt(format_args!("    void (*m_{})(", func.name))?;
+
+    func.write_c_func_def(f, |index, arg| {
+        (arg.get_c_type(), arg.name.to_owned())
+    })?;
+
+    f.write_fmt(format_args!(" = nullptr;\n"))?;
+    f.write_fmt(format_args!("    void* m_{}_user_data = nullptr;\n", func.name))?;
 
     Ok(())
 }
@@ -364,6 +369,7 @@ fn generate_wrapper_classes(f: &mut File,
         f.write_all(SEPARATOR)?;
         f.write_fmt(format_args!("class WR{} : public Q{} {{\n", struct_qt_name, struct_qt_name))?;
         f.write_all(b"public:\n")?;
+        f.write_fmt(format_args!("    WR{}(QWidget* widget) : Q{}(widget) {{}}\n", struct_qt_name, struct_qt_name))?;
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
 
         let funcs = api_def.collect_all_event_functions(&sdef);
@@ -422,7 +428,7 @@ fn generate_struct_def(f: &mut File,
 fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_all(SEPARATOR)?;
-        f.write_fmt(format_args!("static struct PU{} s_{} = {{\n",
+        f.write_fmt(format_args!("struct PU{} s_{} = {{\n",
                                     sdef.name,
                                     sdef.name.to_snake_case()))?;
 
@@ -435,6 +441,20 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     Ok(())
 }
 
+///
+///
+///
+///
+///
+fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    f.write_all(SEPARATOR)?;
+
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+        f.write_fmt(format_args!("extern struct PU{} s_{};\n", sdef.name, sdef.name.to_snake_case()))?;
+    }
+
+    f.write_all(b"\n")
+}
 
 // struct PUWidget* create_widget(void* priv_data) {
 //    PrivData* data = (PrivData*)priv_data;
@@ -478,12 +498,13 @@ fn generate_create_functions(f: &mut File,
 /// Generate the PU structure
 ///
 fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    f.write_all(SEPARATOR)?;
     f.write_all(b"static struct PU s_pu = {\n")?;
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
+
+    f.write_all(SEPARATOR)?;
 
     f.write_all(b"};\n\n")
 }
@@ -512,12 +533,13 @@ pub fn generate_qt_bindings(filename: &str,
 
     f.write_all(HEADER)?;
 
-
     build_signal_wrappers_info(&mut signals_info, api_def);
 
     header_file
         .write_all(b"#pragma once\n#include <QObject>\n\n")?;
     generate_signal_wrappers(&mut header_file, &signals_info)?;
+
+    generate_forward_declare_struct_defs(&mut f, api_def)?;
 
     generate_wrapper_classes(&mut f, &struct_name_map, api_def)?;
 

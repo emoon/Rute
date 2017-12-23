@@ -16,8 +16,6 @@ struct PUApplication;
 struct PUPaintEvent;
 struct PUPainter;
 
-typedef void (*PUPaintEventFunc)(void* self_c, struct PUPaintEvent* event);
-
 struct PURect {
     float x;
     float y;
@@ -28,13 +26,14 @@ struct PURect {
 struct PUWidget {
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
+    void (*set_paint_event_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUPaintEvent* event));
     void* priv_data;
 };
 
 struct PUPushButton {
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
-    void (*connect_released)(void* object, void* user_data, void (*callback)(void* self_c));
+    void (*set_released_event)(void* object, void* user_data, void (*event)(void* self_c));
     void (*set_text)(void* self_c, const char* text);
     void (*set_flat)(void* self_c, bool flat);
     void* priv_data;
@@ -43,7 +42,7 @@ struct PUPushButton {
 struct PUSlider {
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
-    void (*connect_value_changed)(void* object, void* user_data, void (*callback)(void* self_c, int value));
+    void (*set_value_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int value));
     void* priv_data;
 };
 

@@ -2,9 +2,6 @@ use std::io;
 use std::fs::File;
 use std::io::Write;
 use api_parser::*;
-use std::io::{Error, ErrorKind};
-use std::collections::HashMap;
-
 use heck::{CamelCase, SnakeCase};
 
 static HEADER: &'static [u8] = b"
@@ -60,9 +57,9 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
     let mut func_def;
 
     if def {
-        func_def = format!("void (*connect_{})(void* object, void* user_data, void (*callback)(", name);
+        func_def = format!("void (*set_{}_event)(void* object, void* user_data, void (*event)(", name);
     } else {
-        func_def = format!("void connect_{}(void* object, void* user_data, void (*callback)(", name);
+        func_def = format!("void set_{}_event(void* object, void* user_data, void (*event)(", name);
     }
 
     let arg_count = func.function_args.len();
@@ -118,61 +115,25 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
 }
 
 ///
+/// Generate the struct body
 ///
 ///
-fn generate_event_func_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    let mut event_names: HashMap<String, Function> = HashMap::new();
-
-    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
-        let mut funcs = Vec::new();
-        sdef.get_event_functions(&mut funcs);
-
-        for func in &funcs {
-            let args = generate_c_function_args(&func);
-            let mut found = true;
-
-            if let Some(ref f) = event_names.get(&func.name) {
-                let current_args = generate_c_function_args(&f);
-                if &current_args != &args {
-                    println!("Event: {} - has versions with diffrent args {} - {}", func.name, current_args, args);
-                    return Err(Error::new(ErrorKind::Other, "Fail"));
+fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
+    for entry in &sdef.entries {
+        match *entry {
+            StructEntry::Function(ref func) => {
+                match func.func_type {
+                    FunctionType::Event => generate_callback_def(f, func)?,
+                    _ => (),
                 }
-            } else {
-                found = false;
             }
 
-            if !found {
-                event_names.insert(func.name.clone(), func.clone());
-            }
+            _ => (),
         }
     }
 
-    let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
-    event_list.sort_by(|a, b| a.0.cmp(b.0));
-
-    // typedef void (*myfunc)();
-
-    // Generate the typedefs for the function defs
-
-    for funcs in event_list {
-        f.write_fmt(format_args!("typedef void (*PU{}Func)(", funcs.0.to_camel_case()))?;
-
-        funcs.1.write_c_func_def(f, |index, arg| {
-            match index {
-                0 => ("void* self_c".to_owned(), "".to_owned()),
-                1 => (format!("struct PU{}*", arg.vtype.to_owned()), arg.name.to_owned()),
-                _ => (arg.vtype.to_owned(), arg.name.to_owned()),
-            }
-        })?;
-
-        f.write_all(b";\n")?;
-    }
-
-    f.write_all(b"\n")?;
-
     Ok(())
 }
-
 
 ///
 /// Main entry for generate the C API def
@@ -190,16 +151,13 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(b"\n")?;
 
-    // Write event/callback types
-
-    generate_event_func_defs(&mut f, api_def)?;
-
     // Write the struct defs
 
     for sdef in &api_def.entries {
         f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
+        generate_struct_events(&mut f, sdef)?;
 
         if !sdef.is_pod() {
             f.write_all(b"    void* priv_data;\n")?;

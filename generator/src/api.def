@@ -1,4 +1,14 @@
 // test
+//
+// A note about event/callbacks
+//
+// [event] = Something the requires a virtual override in the Qt case. We handle this separately as we
+//           need to generate the code a bit differently compared to events
+//           Also events are not inharited.
+// [callback] = Used func Signals/Slots.
+//
+// The idea though is that this looks like the same thing for the user of the API.
+//
 
 Rect {
     f32 x,
@@ -14,7 +24,7 @@ Widget {
 
 	// events that can be overriden
 
-    [event] paint_event(PaintEvent event),
+    [event] paint_event(&PaintEvent event),
 }
 
 // Inherit functions from Button in PushButton

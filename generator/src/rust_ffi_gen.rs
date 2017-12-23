@@ -27,16 +27,18 @@ fn generate_ffi_function(f: &mut File, func: &Function) -> io::Result<()> {
     f.write_fmt(format_args!("    pub {}: extern \"C\" fn(", func.name))?;
 
     func.write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
-    f.write_all(b")")
+    f.write_all(b"),\n")
 }
 
 ///
 /// Generate ffi function
 ///
 fn generate_ffi_callback(f: &mut File, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("    pub connect_{}: extern \"C\" fn(object: *const c_void, user_data: *const c_void,
-                                        callback: extern \"C\" fn(self_c: *const c_void))",
-                func.name))
+    f.write_fmt(format_args!("    pub set_{}_event: extern \"C\" fn(object: *const c_void, user_data: *const c_void,
+                                        callback: extern \"C\" fn(",
+                func.name))?;
+    func.write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
+    f.write_all(b")),\n")
 }
 
 fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct) -> io::Result<()> {
@@ -62,8 +64,6 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
                     FunctionType::Callback => generate_ffi_callback(f, func)?,
                     _ => (),
                 }
-
-                f.write_all(b",\n")?;
             }
         }
     }
@@ -71,6 +71,22 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
     Ok(())
 }
 
+fn generate_struct_body_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
+    for entry in &sdef.entries {
+        match *entry {
+            StructEntry::Function(ref func) => {
+                match func.func_type {
+                    FunctionType::Event => generate_ffi_callback(f, func)?,
+                    _ => (),
+                }
+            }
+
+            _ => (),
+        }
+    }
+
+    Ok(())
+}
 
 pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Struct>) -> io::Result<()> {
     let mut f = File::create(filename)?;
@@ -82,6 +98,7 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
         f.write_fmt(format_args!("pub struct PU{} {{\n", struct_.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, &struct_)?;
+        generate_struct_body_events(&mut f, &struct_)?;
 
         if !struct_.is_pod() {
             f.write_all(b"    pub privd: *const c_void,\n")?;
