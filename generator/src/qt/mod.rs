@@ -19,7 +19,12 @@ struct PrivData {
 
 static CREATE_WIDGET_TEMPLATE: &'static [u8] = b"template<typename T, typename QT> T* create_widget_func(T* struct_data, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
-    QT* qt_obj = new QT(data->parent);
+    QT* qt_obj = nullptr;
+    if (data) {
+        qt_obj = new QT(data->parent);
+    } else {
+        qt_obj = new QT(nullptr);
+    }
     T* ctl = new T;
     memcpy(ctl, struct_data, sizeof(T));
     ctl->priv_data = qt_obj;
@@ -42,7 +47,14 @@ struct PU* PU_create_instance(void* user_data, QWidget* parent) {
     priv_data->parent = parent;
     priv_data->user_data = user_data;
     return instance;
-}\n\n";
+}\n\n
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+extern \"C\" struct PU* wrui_get() {
+    return (PU*)&s_pu;
+}
+";
 
 static SEPARATOR: &'static [u8] = b"///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n\n";
 
