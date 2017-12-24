@@ -107,9 +107,9 @@ impl Application {
         }
     }
 
-    pub fn run(&self) {
+    pub fn exec(&self) {
         unsafe {
-            ((*self.obj).run)((*self.obj).privd)
+            ((*self.obj).exec)((*self.obj).privd)
         }
     }
 

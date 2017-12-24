@@ -17,10 +17,17 @@ struct PrivData {
     void* user_data;
 };\n\n";
 
-static CREATE_TEMPLATE: &'static [u8] = b"
-template<typename T, typename QT> T* create_func(T* struct_data, void* priv_data) {
+static CREATE_WIDGET_TEMPLATE: &'static [u8] = b"template<typename T, typename QT> T* create_widget_func(T* struct_data, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = new QT(data->parent);
+    T* ctl = new T;
+    memcpy(ctl, struct_data, sizeof(T));
+    ctl->priv_data = qt_obj;
+    return ctl;
+}\n\n";
+
+static CREATE_GENERIC_TEMPLATE: &'static [u8] = b"template<typename T, typename QT> T* create_generic_func(T* struct_data, void* priv_data) {
+    QT* qt_obj = new QT();
     T* ctl = new T;
     memcpy(ctl, struct_data, sizeof(T));
     ctl->priv_data = qt_obj;
@@ -178,22 +185,31 @@ fn generate_func_def(f: &mut File,
                                 struct_qt_name,
                                 struct_qt_name))?;
 
-    // TODO: Handle return functions
+    // Hack for rect currently. We need to generalize this
 
-    // qt_data->func(params);
-    f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
-
-    func.write_c_func_def(f, |index, arg| {
-        if index == 0 {
-            ("".to_owned(), "".to_owned())
-        } else if arg.vtype == "String" {
-            (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
-        } else if arg.vtype == "Rect" {
-            (format!("QRect({}->x, {}->y, {}->width, {}->height)", &arg.name, &arg.name, &arg.name, &arg.name), "".to_owned())
+    if let Some(ref ret_val) = func.return_val {
+        if ret_val.vtype == "Rect" {
+            f.write_fmt(format_args!("    const auto& t = qt_data->{}();\n", func.name.to_mixed_case()))?;
+            f.write_fmt(format_args!("    return PURect {{ .x = (float)t.x(), .y = (float)t.y(), .width = (float)t.width(), .height = (float)t.height() }}"))?;
         } else {
-            (arg.name.clone(), "".to_owned())
+            f.write_fmt(format_args!("    return qt_data->{}(", func.name.to_mixed_case()))?;
         }
-    })?;
+    } else {
+        f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
+
+        func.write_c_func_def(f, |index, arg| {
+            if index == 0 {
+                ("".to_owned(), "".to_owned())
+            } else if arg.vtype == "String" {
+                (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
+            } else if arg.vtype == "Rect" {
+                (format!("QRect({}->x, {}->y, {}->width, {}->height)", &arg.name, &arg.name, &arg.name, &arg.name), "".to_owned())
+            } else {
+                (arg.name.clone(), "".to_owned())
+            }
+        })?;
+    }
+
 
     f.write_all(b";\n")?;
     f.write_all(b"}\n\n")?;
@@ -217,7 +233,7 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
                                 callback_fun_def_name(false, &func_name, func)))?;
 
     //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
-    f.write_fmt(format_args!("    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})callback);\n", signal_type_name, signal_type_name, signal_type_name))?;
+    f.write_fmt(format_args!("    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})event);\n", signal_type_name, signal_type_name, signal_type_name))?;
     f.write_all(b"    QObject* q_obj = (QObject*)object;\n")?;
 
 
@@ -286,6 +302,27 @@ fn generate_struct_body_recursive(f: &mut File,
     }
 
     Ok(())
+}
+
+fn inherits_widget(sdef: &Struct, api_def: &ApiDef) -> bool {
+    if sdef.name == "Widget" {
+        return true;
+    }
+
+    if let Some(ref inherit_name) = sdef.inherit {
+        if inherit_name == "Widget" {
+            return true;
+        }
+
+        for sdef in &api_def.entries {
+
+            if inherits_widget(&sdef, api_def) == true {
+                return true;
+            }
+        }
+    }
+
+    false
 }
 
 ///
@@ -360,7 +397,7 @@ fn generate_wrapper_classes(f: &mut File,
                      struct_name_map: &HashMap<&str, &str>,
                      api_def: &ApiDef)
                      -> io::Result<()> {
-    for sdef in api_def.entries.iter().filter(|v| !v.is_pod()) {
+    for sdef in api_def.entries.iter().filter(|v| !v.is_pod() && inherits_widget(&v, api_def)) {
         let struct_name = sdef.name.as_str();
         let struct_qt_name = struct_name_map
             .get(struct_name)
@@ -372,11 +409,10 @@ fn generate_wrapper_classes(f: &mut File,
         f.write_fmt(format_args!("    WR{}(QWidget* widget) : Q{}(widget) {{}}\n", struct_qt_name, struct_qt_name))?;
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
 
-        let funcs = api_def.collect_all_event_functions(&sdef);
+        let mut event_funcs = Vec::new();
+        sdef.get_event_functions(&mut event_funcs);
 
-        println!("funcs {:?}", funcs);
-
-        for func in funcs {
+        for func in event_funcs {
             generate_event_setup(f, &struct_qt_name, &func)?;
         }
 
@@ -408,7 +444,7 @@ fn generate_struct_def(f: &mut File,
             StructEntry::Function(ref func) => {
                 match func.func_type {
                     FunctionType::Regular => f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?,
-                    FunctionType::Callback => f.write_fmt(format_args!("    connect_{},\n", function_name(struct_name, func)))?,
+                    FunctionType::Callback => f.write_fmt(format_args!("    set_{}_event,\n", function_name(struct_name, func)))?,
                     _ => (),
                 }
             }
@@ -473,9 +509,12 @@ fn generate_create_functions(f: &mut File,
                              api_def: &ApiDef)
                              -> io::Result<()> {
     f.write_all(SEPARATOR)?;
-    f.write_all(CREATE_TEMPLATE)?;
+    f.write_all(CREATE_WIDGET_TEMPLATE)?;
+    f.write_all(SEPARATOR)?;
+    f.write_all(CREATE_GENERIC_TEMPLATE)?;
+    f.write_all(SEPARATOR)?;
 
-    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
         let struct_name = sdef.name.as_str();
 
         f.write_all(SEPARATOR)?;
@@ -488,10 +527,24 @@ fn generate_create_functions(f: &mut File,
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
 
-        f.write_fmt(format_args!("    return create_func<struct PU{}, WR{}>(&s_{}, priv_data);\n}}\n", struct_name, struct_qt_name, struct_name.to_snake_case()))?;
+        // Hack
+
+        if sdef.name == "Application" {
+            f.write_all(b"
+    static int argc = 0;
+    QApplication* qt_obj = new QApplication(argc, 0);
+    struct PUApplication* ctl = new struct PUApplication;
+    memcpy(ctl, &s_application, sizeof(struct PUApplication));
+    ctl->priv_data = qt_obj;
+    return ctl;\n}\n")?;
+        } else if inherits_widget(&sdef, api_def) {
+            f.write_fmt(format_args!("    return create_widget_func<struct PU{}, WR{}>(&s_{}, priv_data);\n}}\n\n", struct_name, struct_qt_name, struct_name.to_snake_case()))?;
+        } else {
+            f.write_fmt(format_args!("    return create_generic_func<struct PU{}, Q{}>(&s_{}, priv_data);\n}}\n\n", struct_name, struct_qt_name, struct_name.to_snake_case()))?;
+        }
     }
 
-    Ok(())
+    f.write_all(SEPARATOR)
 }
 
 ///
@@ -500,13 +553,12 @@ fn generate_create_functions(f: &mut File,
 fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(b"static struct PU s_pu = {\n")?;
 
-    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
 
-    f.write_all(SEPARATOR)?;
-
-    f.write_all(b"};\n\n")
+    f.write_all(b"};\n\n");
+    f.write_all(SEPARATOR)
 }
 
 ///
@@ -551,6 +603,7 @@ pub fn generate_qt_bindings(filename: &str,
 
     generate_struct_defs(&mut f, api_def)?;
     generate_create_functions(&mut f, &struct_name_map, api_def)?;
+
     generate_pu_struct(&mut f, api_def)?;
 
     f.write_all(FOOTER)

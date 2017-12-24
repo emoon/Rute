@@ -48,7 +48,7 @@ struct PUSlider {
 
 struct PUApplication {
     void (*set_style)(void* self_c, const char* style);
-    void (*run)(void* self_c);
+    void (*exec)(void* self_c);
     void* priv_data;
 };
 

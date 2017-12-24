@@ -40,7 +40,7 @@ pub struct PUSlider {
 #[repr(C)]
 pub struct PUApplication {
     pub set_style: extern "C" fn(self_c: *const c_void, style: *const c_char),
-    pub run: extern "C" fn(self_c: *const c_void),
+    pub exec: extern "C" fn(self_c: *const c_void),
     pub privd: *const c_void,
 }
 

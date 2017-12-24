@@ -44,7 +44,7 @@ Slider : Widget {
 
 Application {
 	set_style(String style),
-	run(),
+	exec(),
 }
 
 // No create on this as its a event only
