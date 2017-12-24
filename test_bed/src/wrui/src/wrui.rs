@@ -5,27 +5,27 @@ use std::ffi::CString;
 pub use ffi_gen::PURect as Rect;
 
 pub struct Widget {
-    obj: *const PUWidget,
+    pub obj: *const PUWidget,
 }
 
 pub struct PushButton {
-    obj: *const PUPushButton,
+    pub obj: *const PUPushButton,
 }
 
 pub struct Slider {
-    obj: *const PUSlider,
+    pub obj: *const PUSlider,
 }
 
 pub struct Application {
-    obj: *const PUApplication,
+    pub obj: *const PUApplication,
 }
 
 pub struct PaintEvent {
-    obj: *const PUPaintEvent,
+    pub obj: *const PUPaintEvent,
 }
 
 pub struct Painter {
-    obj: *const PUPainter,
+    pub obj: *const PUPainter,
 }
 
 impl Widget {
@@ -122,32 +122,32 @@ impl Painter {
 
 #[macro_export]
 macro_rules! set_released_event {
-  ($sender:expr, $data:expr, $call_type:ident) => {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const c_void) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
           unsafe {
-              let app = target as *mut $call_type;
+              let app = self_c as *mut $call_type;
               $callback(&mut *app);
           }
       }
       unsafe {
-         ((*$sender.obj).set_released_event)((*$sender.obj).privd, $data, temp_call);
+         ((*$sender.obj).set_released_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}
 
 #[macro_export]
 macro_rules! set_value_changed_event {
-  ($sender:expr, $data:expr, $call_type:ident) => {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const c_void, value: i32) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, value: i32) {
           unsafe {
-              let app = target as *mut $call_type;
+              let app = self_c as *mut $call_type;
               $callback(&mut *app, value);
           }
       }
       unsafe {
-         ((*$sender.obj).set_value_changed_event)((*$sender.obj).privd, $data, temp_call);
+         ((*$sender.obj).set_value_changed_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}

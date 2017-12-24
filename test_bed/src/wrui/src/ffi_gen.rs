@@ -1,4 +1,4 @@
-use std::os::raw::{c_void, c_char};
+use std::os::raw::c_void;
 
 #[repr(C)]
 #[derive(Default, Copy, Clone, Debug)]
@@ -11,50 +11,50 @@ pub struct PURect {
 
 #[repr(C)]
 pub struct PUWidget {
-    pub show: extern "C" fn(self_c: *const c_void),
-    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+    pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
+    pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_paint_event_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
-                                        callback: extern "C" fn(self_c: *const c_void, event: *const PUPaintEvent)),
-    pub privd: *const c_void,
+                                        callback: extern "C" fn(self_c: *const ::std::os::raw::c_void, event: *const PUPaintEvent)),
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]
 pub struct PUPushButton {
-    pub show: extern "C" fn(self_c: *const c_void),
-    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+    pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
+    pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_released_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
-                                        callback: extern "C" fn(self_c: *const c_void)),
-    pub set_text: extern "C" fn(self_c: *const c_void, text: *const c_char),
-    pub set_flat: extern "C" fn(self_c: *const c_void, flat: bool),
-    pub privd: *const c_void,
+                                        callback: extern "C" fn(self_c: *const ::std::os::raw::c_void)),
+    pub set_text: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
+    pub set_flat: extern "C" fn(self_c: *const ::std::os::raw::c_void, flat: bool),
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]
 pub struct PUSlider {
-    pub show: extern "C" fn(self_c: *const c_void),
-    pub resize: extern "C" fn(self_c: *const c_void, width: i32, height: i32),
+    pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
+    pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_value_changed_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
-                                        callback: extern "C" fn(self_c: *const c_void, value: i32)),
-    pub privd: *const c_void,
+                                        callback: extern "C" fn(self_c: *const ::std::os::raw::c_void, value: i32)),
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]
 pub struct PUApplication {
-    pub set_style: extern "C" fn(self_c: *const c_void, style: *const c_char),
-    pub exec: extern "C" fn(self_c: *const c_void),
-    pub privd: *const c_void,
+    pub set_style: extern "C" fn(self_c: *const ::std::os::raw::c_void, style: *const ::std::os::raw::c_char),
+    pub exec: extern "C" fn(self_c: *const ::std::os::raw::c_void),
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]
 pub struct PUPaintEvent {
-    pub rect: extern "C" fn(self_c: *const c_void) ->  PURect,
-    pub privd: *const c_void,
+    pub rect: extern "C" fn(self_c: *const ::std::os::raw::c_void) ->  PURect,
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]
 pub struct PUPainter {
-    pub draw_line: extern "C" fn(self_c: *const c_void, x1: i32, y1: i32, x2: i32, y2: i32),
-    pub privd: *const c_void,
+    pub draw_line: extern "C" fn(self_c: *const ::std::os::raw::c_void, x1: i32, y1: i32, x2: i32, y2: i32),
+    pub privd: *const ::std::os::raw::c_void,
 }
 
 #[repr(C)]

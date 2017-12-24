@@ -49,7 +49,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
                 }
             } else {
                 // Assume for non-pod that we only use the FFI interface to do stuff.
-                f.write_fmt(format_args!("    obj: *const PU{},\n", sdef.name))?;
+                f.write_fmt(format_args!("    pub obj: *const PU{},\n", sdef.name))?;
             }
 
             f.write_all(b"}\n\n")?;
@@ -184,14 +184,14 @@ fn get_function_args(func: &Function) -> String {
 fn generate_set_event_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
     for funcs in connect_funcs {
         f.write_fmt(format_args!("#[macro_export]\nmacro_rules! set_{}_event {{\n", funcs.0))?;
-        f.write_all(b"  ($sender:expr, $data:expr, $call_type:ident) => {\n")?;
+        f.write_all(b"  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {\n")?;
         f.write_all(b"    {\n")?;
         f.write_all(b"      extern \"C\" fn temp_call(")?;
 
         funcs.1.write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
         f.write_all(b") {\n")?;
         f.write_all(b"          unsafe {\n")?;
-        f.write_all(b"              let app = target as *mut $call_type;\n")?;
+        f.write_all(b"              let app = self_c as *mut $call_type;\n")?;
         f.write_all(b"              $callback(")?;
 
         funcs.1.write_func_def(f, |index, arg| {
@@ -206,7 +206,7 @@ fn generate_set_event_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function
         f.write_all(b"          }\n")?;
         f.write_all(b"      }\n")?;
         f.write_all(b"      unsafe {\n")?;
-        f.write_fmt(format_args!("         ((*$sender.obj).set_{}_event)((*$sender.obj).privd, $data, temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!("         ((*$sender.obj).set_{}_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
