@@ -2,7 +2,7 @@ use std::io;
 use std::fs::File;
 use std::io::Write;
 use api_parser::*;
-use heck::{CamelCase, SnakeCase};
+use heck::SnakeCase;
 
 static HEADER: &'static [u8] = b"
 #pragma once\n

@@ -379,7 +379,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 
     f.write_fmt(format_args!("    void (*m_{})(", func.name))?;
 
-    func.write_c_func_def(f, |index, arg| {
+    func.write_c_func_def(f, |_, arg| {
         (arg.get_c_type(), arg.name.to_owned())
     })?;
 
@@ -557,7 +557,7 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
 
-    f.write_all(b"};\n\n");
+    f.write_all(b"};\n\n")?;
     f.write_all(SEPARATOR)
 }
 

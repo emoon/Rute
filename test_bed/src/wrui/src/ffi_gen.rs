@@ -1,6 +1,7 @@
 use std::os::raw::{c_void, c_char};
 
 #[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]
 pub struct PURect {
     pub x: f32,
     pub y: f32,
@@ -46,7 +47,7 @@ pub struct PUApplication {
 
 #[repr(C)]
 pub struct PUPaintEvent {
-    pub rect: extern "C" fn(self_c: *const c_void -> *const PURect),
+    pub rect: extern "C" fn(self_c: *const c_void) ->  PURect,
     pub privd: *const c_void,
 }
 

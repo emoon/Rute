@@ -6,10 +6,22 @@ require "tundra.util"
 
 local native = require('tundra.native')
 
+-----------------------------------------------------------------------------------------------------------------------
+
 local function gen_moc(src)
     return Moc {
         Pass = "GenerateSources",
         Source = src
+    }
+end
+
+-----------------------------------------------------------------------------------------------------------------------
+
+local function get_rs_src(dir)
+    return Glob {
+        Dir = dir,
+        Extensions = { ".rs" },
+        Recursive = true,
     }
 end
 
@@ -78,7 +90,18 @@ SharedLibrary {
     Frameworks = { "Cocoa", "QtWidgets", "QtGui", "QtCore" },
 }
 
+-----------------------------------------------------------------------------------------------------------------------
+
+RustCrate {
+    Name = "wrui",
+    CargoConfig = "src/wrui/Cargo.toml",
+    Sources = {
+        get_rs_src("src/wrui/src"),
+    },
+}
+
 Default "wrui_qt"
+Default "wrui"
 
 -- vim: ts=4:sw=4:sts=4
 

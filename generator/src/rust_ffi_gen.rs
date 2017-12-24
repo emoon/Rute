@@ -13,8 +13,10 @@ impl Variable {
                 "*const c_char".to_owned()
             } else if self.vtype == "self" {
                 "*const c_void".to_owned()
-            } else {
+            } else if self.reference {
                 format!("*const PU{}", self.vtype)
+            } else {
+                format!(" PU{}", self.vtype)
             }
         }
     }
@@ -24,10 +26,10 @@ impl Variable {
 /// Generate ffi function
 ///
 fn generate_ffi_function(f: &mut File, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("    pub {}: extern \"C\" fn(", func.name))?;
+    f.write_fmt(format_args!("    pub {}: extern \"C\" fn", func.name))?;
 
-    func.write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
-    f.write_all(b"),\n")
+    func.write_func_def_full(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
+    f.write_all(b",\n")
 }
 
 ///
@@ -95,6 +97,11 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
 
     for struct_ in structs {
         f.write_all(b"#[repr(C)]\n")?;
+
+        if struct_.is_pod() {
+            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
+        }
+
         f.write_fmt(format_args!("pub struct PU{} {{\n", struct_.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, &struct_)?;

@@ -7,7 +7,6 @@ use std::collections::HashMap;
 use heck::SnakeCase;
 
 static HEADER: &'static [u8] = b"
-mod ffi_gen;
 use ffi_gen::*;
 use std::ffi::CString;\n\n";
 
@@ -35,25 +34,26 @@ trait TypeHandler {
 fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
     for sdef in structs {
         if sdef.is_pod() {
-            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
-        } else {
-            f.write_all(b"#[derive(Debug)]\n")?;
+            // for pod structs we re-use the FFI implementation
+            f.write_fmt(format_args!("pub use ffi_gen::PU{} as {};\n\n", sdef.name, sdef.name))?;
         }
-        f.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
+        else {
+            f.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
 
-        if sdef.is_pod() {
-            for entry in &sdef.entries {
-                match *entry {
-                    StructEntry::Var(ref var) => f.write_fmt(format_args!("    pub {}: {},\n", var.name, var.vtype))?,
-                    _ => (),
+            if sdef.is_pod() {
+                for entry in &sdef.entries {
+                    match *entry {
+                        StructEntry::Var(ref var) => f.write_fmt(format_args!("    pub {}: {},\n", var.name, var.vtype))?,
+                        _ => (),
+                    }
                 }
+            } else {
+                // Assume for non-pod that we only use the FFI interface to do stuff.
+                f.write_fmt(format_args!("    obj: *const PU{},\n", sdef.name))?;
             }
-        } else {
-            // Assume for non-pod that we only use the FFI interface to do stuff.
-            f.write_fmt(format_args!("    obj: *const PU{},\n", sdef.name))?;
-        }
 
-        f.write_all(b"}\n\n")?;
+            f.write_all(b"}\n\n")?;
+        }
     }
 
     Ok(())
@@ -164,7 +164,7 @@ fn get_function_args(func: &Function) -> String {
 ///
 /// Generate something that looks like this
 ///
-/// macro_rules! connect_released {
+/// macro_rules! set_released_event {
 ///     ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
 ///         {
 ///             extern "C" fn temp_call(target: *mut std::os::raw::c_void) {
@@ -181,9 +181,9 @@ fn get_function_args(func: &Function) -> String {
 ///         }
 ///     }
 /// }
-fn generate_connect_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
+fn generate_set_event_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
     for funcs in connect_funcs {
-        f.write_fmt(format_args!("macro_rules! connect_{} {{\n", funcs.0))?;
+        f.write_fmt(format_args!("#[macro_export]\nmacro_rules! set_{}_event {{\n", funcs.0))?;
         f.write_all(b"  ($sender:expr, $data:expr, $call_type:ident) => {\n")?;
         f.write_all(b"    {\n")?;
         f.write_all(b"      extern \"C\" fn temp_call(")?;
@@ -206,7 +206,7 @@ fn generate_connect_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function)>
         f.write_all(b"          }\n")?;
         f.write_all(b"      }\n")?;
         f.write_all(b"      unsafe {\n")?;
-        f.write_fmt(format_args!("         ((*$sender.obj).connect_{})((*$sender.obj).privd, $data, temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!("         ((*$sender.obj).set_{}_event)((*$sender.obj).privd, $data, temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -218,8 +218,8 @@ fn generate_connect_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function)>
 ///
 /// This code assumes that the connection name has the same number of args
 ///
-fn generate_connect(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    let mut connect_names: HashMap<String, Function> = HashMap::new();
+fn generate_set_event(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    let mut event_names: HashMap<String, Function> = HashMap::new();
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         let funcs = api_def.collect_callback_functions(&sdef);
@@ -228,7 +228,7 @@ fn generate_connect(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
             let args = get_function_args(&func);
             let mut found = true;
 
-            if let Some(ref f) = connect_names.get(&func.name) {
+            if let Some(ref f) = event_names.get(&func.name) {
                 let current_args = get_function_args(&f);
                 if &current_args != &args {
                     println!("Signal: {} - has versions with diffrent args {} - {}", func.name, current_args, args);
@@ -239,17 +239,17 @@ fn generate_connect(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
             }
 
             if !found {
-                connect_names.insert(func.name.clone(), func.clone());
+                event_names.insert(func.name.clone(), func.clone());
             }
         }
     }
 
-    let mut connect_list = connect_names.iter().collect::<Vec<(&String, &Function)>>();
-    connect_list.sort_by(|a, b| a.0.cmp(b.0));
+    let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
+    event_list.sort_by(|a, b| a.0.cmp(b.0));
 
-    // println!("{:?}", connect_list);
+    // println!("{:?}", event_list);
 
-    generate_connect_impl(f, &connect_list)
+    generate_set_event_impl(f, &event_list)
 }
 
 fn generate_impl(f: &mut File, api_def: &ApiDef, type_handlers: &Vec<Box<TypeHandler>>) -> io::Result<()> {
@@ -313,7 +313,7 @@ pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()
 
     generate_struct(&mut f, &api_def.entries)?;
     generate_impl(&mut f, &api_def, &type_handlers)?;
-    generate_connect(&mut f, &api_def)?;
+    generate_set_event(&mut f, &api_def)?;
     generate_ui_impl(&mut f, &api_def)?;
 
     Ok(())

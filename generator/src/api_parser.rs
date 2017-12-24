@@ -483,7 +483,7 @@ impl ApiDef {
                 Rule::structdef => {
                     let mut cur_struct = Struct::default();
 
-                    println!("{}\n", chunk);
+                    //println!("{}\n", chunk);
 
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
