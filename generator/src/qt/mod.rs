@@ -569,6 +569,7 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
 
+    f.write_all(b"    0,\n\n")?;
     f.write_all(b"};\n\n")?;
     f.write_all(SEPARATOR)
 }

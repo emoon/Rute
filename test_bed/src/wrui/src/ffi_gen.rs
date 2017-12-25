@@ -63,7 +63,6 @@ pub struct PU {
     pub create_push_button: extern "C" fn(priv_data: *const c_void) -> *const PUPushButton,
     pub create_slider: extern "C" fn(priv_data: *const c_void) -> *const PUSlider,
     pub create_application: extern "C" fn(priv_data: *const c_void) -> *const PUApplication,
-    pub create_paint_event: extern "C" fn(priv_data: *const c_void) -> *const PUPaintEvent,
     pub create_painter: extern "C" fn(priv_data: *const c_void) -> *const PUPainter,
     pub privd: *const c_void,
 }

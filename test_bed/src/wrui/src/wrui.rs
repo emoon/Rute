@@ -175,10 +175,6 @@ impl Ui {
         Application { obj: unsafe { ((*self.pu).create_application)((*self.pu).privd) }}
     }
 
-    pub fn create_paint_event(&self) -> PaintEvent {
-        PaintEvent { obj: unsafe { ((*self.pu).create_paint_event)((*self.pu).privd) }}
-    }
-
     pub fn create_painter(&self) -> Painter {
         Painter { obj: unsafe { ((*self.pu).create_painter)((*self.pu).privd) }}
     }

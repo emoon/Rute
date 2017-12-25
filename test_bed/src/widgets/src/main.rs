@@ -36,6 +36,7 @@ impl MyApp {
         let button = self.ui.create_push_button();
 
         button.set_text("Press me!");
+        button.resize(100, 100);
         button.show();
 
         set_released_event!(button, self, MyApp, MyApp::pressed_button);

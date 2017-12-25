@@ -269,7 +269,7 @@ fn generate_impl(f: &mut File, api_def: &ApiDef, type_handlers: &Vec<Box<TypeHan
 fn generate_ui_impl(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(UI_HEADER)?;
 
-    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
         let snake_name = sdef.name.to_snake_case();
 
         f.write_fmt(format_args!("    pub fn create_{}(&self) -> {} {{\n", snake_name, sdef.name))?;
