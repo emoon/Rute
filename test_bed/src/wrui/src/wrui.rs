@@ -43,6 +43,14 @@ impl Widget {
 
 }
 
+impl Drop for Widget {
+    fn drop(&mut self) {
+       unsafe {
+          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+       }
+    }
+}
+
 impl PushButton {
     pub fn show(&self) {
         unsafe {
@@ -71,6 +79,14 @@ impl PushButton {
 
 }
 
+impl Drop for PushButton {
+    fn drop(&mut self) {
+       unsafe {
+          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+       }
+    }
+}
+
 impl Slider {
     pub fn show(&self) {
         unsafe {
@@ -84,6 +100,14 @@ impl Slider {
         }
     }
 
+}
+
+impl Drop for Slider {
+    fn drop(&mut self) {
+       unsafe {
+          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+       }
+    }
 }
 
 impl Application {
@@ -102,6 +126,14 @@ impl Application {
 
 }
 
+impl Drop for Application {
+    fn drop(&mut self) {
+       unsafe {
+          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+       }
+    }
+}
+
 impl PaintEvent {
     pub fn rect(&self) -> Rect {
         unsafe {
@@ -118,6 +150,14 @@ impl Painter {
         }
     }
 
+}
+
+impl Drop for Painter {
+    fn drop(&mut self) {
+       unsafe {
+          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+       }
+    }
 }
 
 #[macro_export]

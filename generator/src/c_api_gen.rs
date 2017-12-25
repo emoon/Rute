@@ -95,6 +95,8 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
         }
     }
 
+    // Add destroy function to all structs that has a create function
+
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Var(ref var) => {
@@ -155,6 +157,10 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     for sdef in &api_def.entries {
         f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
+
+        if !sdef.is_pod() && sdef.should_have_create_func() {
+            f.write_all(b"    void (*destroy)(void* self_c);\n")?;
+        }
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_events(&mut f, sdef)?;

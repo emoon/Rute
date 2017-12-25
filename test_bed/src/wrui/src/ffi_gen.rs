@@ -11,6 +11,7 @@ pub struct PURect {
 
 #[repr(C)]
 pub struct PUWidget {
+    pub destroy: extern "C" fn(self_c: *const c_void),
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_paint_event_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
@@ -20,6 +21,7 @@ pub struct PUWidget {
 
 #[repr(C)]
 pub struct PUPushButton {
+    pub destroy: extern "C" fn(self_c: *const c_void),
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_released_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
@@ -31,6 +33,7 @@ pub struct PUPushButton {
 
 #[repr(C)]
 pub struct PUSlider {
+    pub destroy: extern "C" fn(self_c: *const c_void),
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_value_changed_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
@@ -40,6 +43,7 @@ pub struct PUSlider {
 
 #[repr(C)]
 pub struct PUApplication {
+    pub destroy: extern "C" fn(self_c: *const c_void),
     pub set_style: extern "C" fn(self_c: *const ::std::os::raw::c_void, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub privd: *const ::std::os::raw::c_void,
@@ -53,6 +57,7 @@ pub struct PUPaintEvent {
 
 #[repr(C)]
 pub struct PUPainter {
+    pub destroy: extern "C" fn(self_c: *const c_void),
     pub draw_line: extern "C" fn(self_c: *const ::std::os::raw::c_void, x1: i32, y1: i32, x2: i32, y2: i32),
     pub privd: *const ::std::os::raw::c_void,
 }

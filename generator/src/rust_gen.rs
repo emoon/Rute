@@ -261,6 +261,18 @@ fn generate_impl(f: &mut File, api_def: &ApiDef, type_handlers: &Vec<Box<TypeHan
         }
 
         f.write_all(b"}\n\n")?;
+
+        // If we have a create function we implement drop on this also
+
+        if !sdef.is_pod() && sdef.should_have_create_func() {
+            f.write_fmt(format_args!("impl Drop for {} {{\n", sdef.name))?;
+            f.write_all(b"    fn drop(&mut self) {\n")?;
+            f.write_all(b"       unsafe {\n")?;
+            f.write_all(b"          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)\n")?;
+            f.write_all(b"       }\n")?;
+            f.write_all(b"    }\n")?;
+            f.write_all(b"}\n\n")?;
+        }
     }
 
     Ok(())

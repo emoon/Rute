@@ -104,6 +104,10 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
 
         f.write_fmt(format_args!("pub struct PU{} {{\n", struct_.name))?;
 
+        if !struct_.is_pod() && struct_.should_have_create_func() {
+            f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const c_void),\n")?;
+        }
+
         generate_struct_body_recursive(&mut f, api_def, &struct_)?;
         generate_struct_body_events(&mut f, &struct_)?;
 

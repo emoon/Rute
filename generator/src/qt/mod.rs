@@ -1,5 +1,3 @@
-//mod signal_wrappers;
-
 use std::io;
 use std::fs::File;
 use std::io::Write;
@@ -37,6 +35,14 @@ static CREATE_GENERIC_TEMPLATE: &'static [u8] = b"template<typename T, typename 
     memcpy(ctl, struct_data, sizeof(T));
     ctl->priv_data = qt_obj;
     return ctl;
+}\n\n";
+
+static DESTROY_TEMPLATE: &'static [u8] = b"template<typename T, typename QT> void destroy_generic(void* struct_data) {
+    assert(struct_data);
+    T* t = (T*)struct_data;
+    QT* qt_obj = (QT*)t->priv_data;
+    delete qt_obj;
+    delete t;
 }\n\n";
 
 static FOOTER: &'static [u8] = b"
@@ -174,7 +180,8 @@ fn function_name(struct_name: &str, func: &Function) -> String {
 fn generate_func_def(f: &mut File,
                      struct_name: &str,
                      func: &Function,
-                     struct_name_map: &HashMap<&str, &str>)
+                     struct_name_map: &HashMap<&str, &str>,
+                     is_widget: bool)
                      -> io::Result<()> {
     let ret_value = func.return_val
         .as_ref()
@@ -190,11 +197,17 @@ fn generate_func_def(f: &mut File,
         .get(struct_name)
         .unwrap_or_else(|| &struct_name);
 
+    let qt_type = match is_widget {
+        true => "WR",
+        false => "Q",
+    };
+
     // (changed from snake_case to camelCase matches the Qt function)
 
-    // QWidget* qt_data = (QWidget*)priv_data;
-    f.write_fmt(format_args!("    Q{}* qt_data = (Q{}*)self_c;\n",
+    f.write_fmt(format_args!("    {}{}* qt_data = ({}{}*)self_c;\n",
+                                qt_type,
                                 struct_qt_name,
+                                qt_type,
                                 struct_qt_name))?;
 
     // Hack for rect currently. We need to generalize this
@@ -228,7 +241,6 @@ fn generate_func_def(f: &mut File,
 
     Ok(())
 }
-
 
 ///
 ///
@@ -297,13 +309,15 @@ fn generate_struct_body_recursive(f: &mut File,
         }
     }
 
+    let is_widget = inherits_widget(sdef, api_def);
+
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Function(ref func) => {
                 f.write_all(SEPARATOR)?;
 
                 match func.func_type {
-                    FunctionType::Regular => generate_func_def(f, name, func, struct_name_map)?,
+                    FunctionType::Regular => generate_func_def(f, name, func, struct_name_map, is_widget)?,
                     FunctionType::Callback => func_def_callback(f, name, func)?,
                     _ => ()
                 }
@@ -480,6 +494,10 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
                                     sdef.name,
                                     sdef.name.to_snake_case()))?;
 
+        if !sdef.is_pod() && sdef.should_have_create_func() {
+            f.write_fmt(format_args!("    destroy_{},\n", sdef.name.to_snake_case()))?;
+        }
+
         generate_struct_def(f, &sdef.name, api_def, sdef)?;
 
         f.write_all(b"    0,\n")?;
@@ -525,9 +543,15 @@ fn generate_create_functions(f: &mut File,
     f.write_all(SEPARATOR)?;
     f.write_all(CREATE_GENERIC_TEMPLATE)?;
     f.write_all(SEPARATOR)?;
+    f.write_all(DESTROY_TEMPLATE)?;
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
         let struct_name = sdef.name.as_str();
+
+        let qt_type = match inherits_widget(&sdef, api_def) {
+            true => "WR",
+            false => "Q",
+        };
 
         f.write_all(SEPARATOR)?;
 
@@ -542,21 +566,28 @@ fn generate_create_functions(f: &mut File,
         // Hack
 
         if sdef.name == "Application" {
-            f.write_all(b"
-    static int argc = 0;
+            f.write_all(b"    static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
     struct PUApplication* ctl = new struct PUApplication;
     memcpy(ctl, &s_application, sizeof(struct PUApplication));
     ctl->priv_data = qt_obj;
-    return ctl;\n}\n")?;
+    return ctl;\n}\n\n")?;
         } else if inherits_widget(&sdef, api_def) {
             f.write_fmt(format_args!("    return create_widget_func<struct PU{}, WR{}>(&s_{}, priv_data);\n}}\n\n", struct_name, struct_qt_name, struct_name.to_snake_case()))?;
         } else {
             f.write_fmt(format_args!("    return create_generic_func<struct PU{}, Q{}>(&s_{}, priv_data);\n}}\n\n", struct_name, struct_qt_name, struct_name.to_snake_case()))?;
         }
+
+        if !sdef.is_pod() && sdef.should_have_create_func() {
+            f.write_all(SEPARATOR)?;
+
+            f.write_fmt(format_args!("static void destroy_{}(void* priv_data) {{\n",
+                                    sdef.name.to_snake_case()))?;
+            f.write_fmt(format_args!("    destroy_generic<struct PU{}, {}{}>(priv_data);\n}}\n\n", struct_name, qt_type, struct_qt_name))?;
+        }
     }
 
-    f.write_all(SEPARATOR)
+    Ok(())
 }
 
 ///
@@ -593,6 +624,7 @@ pub fn generate_qt_bindings(filename: &str,
 
     f.write_all(b"#include \"c_api.h\"\n")?;
     f.write_all(b"#include \"qt_api_gen.h\"\n")?;
+    f.write_all(b"#include <assert.h>\n")?;
 
     generate_includes(&mut f, &struct_name_map, api_def)?;
 
@@ -614,9 +646,9 @@ pub fn generate_qt_bindings(filename: &str,
         generate_struct_body_recursive(&mut f, &sdef.name, &sdef, &struct_name_map, api_def)?;
     }
 
-    generate_struct_defs(&mut f, api_def)?;
     generate_create_functions(&mut f, &struct_name_map, api_def)?;
 
+    generate_struct_defs(&mut f, api_def)?;
     generate_pu_struct(&mut f, api_def)?;
 
     f.write_all(FOOTER)
