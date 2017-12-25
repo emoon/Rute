@@ -49,7 +49,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
                 }
             } else {
                 // Assume for non-pod that we only use the FFI interface to do stuff.
-                f.write_fmt(format_args!("    pub obj: *const PU{},\n", sdef.name))?;
+                f.write_fmt(format_args!("    pub obj: Option<*const PU{}>,\n", sdef.name))?;
             }
 
             f.write_all(b"}\n\n")?;
@@ -126,11 +126,12 @@ fn generate_func_impl(f: &mut File, func: &Function, type_handlers: &Vec<Box<Typ
     }
 
     f.write_all(b"        unsafe {\n")?;
-    f.write_fmt(format_args!("            ((*self.obj).{})(", func.name))?;
+    f.write_all(b"            let obj = self.obj.unwrap();\n")?;
+    f.write_fmt(format_args!("            ((*obj).{})(", func.name))?;
 
     func.write_func_def(f, |index, arg| {
         if index == 0 {
-            ("(*self.obj).privd".to_owned(), String::new())
+            ("(*obj).privd".to_owned(), String::new())
         } else if !arg.primitive && !arg.reference {
             if let Some(name) = name_remap.get(&index) {
                 (name.to_owned(), String::new())
@@ -206,7 +207,8 @@ fn generate_set_event_impl(f: &mut File, connect_funcs: &Vec<(&String, &Function
         f.write_all(b"          }\n")?;
         f.write_all(b"      }\n")?;
         f.write_all(b"      unsafe {\n")?;
-        f.write_fmt(format_args!("         ((*$sender.obj).set_{}_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
+        f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
+        f.write_fmt(format_args!("         ((*obj).set_{}_event)((*obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -268,7 +270,9 @@ fn generate_impl(f: &mut File, api_def: &ApiDef, type_handlers: &Vec<Box<TypeHan
             f.write_fmt(format_args!("impl Drop for {} {{\n", sdef.name))?;
             f.write_all(b"    fn drop(&mut self) {\n")?;
             f.write_all(b"       unsafe {\n")?;
-            f.write_all(b"          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)\n")?;
+            f.write_all(b"          let obj = self.obj.unwrap();\n")?;
+            f.write_all(b"          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);\n")?;
+            f.write_all(b"          self.obj = None;\n")?;
             f.write_all(b"       }\n")?;
             f.write_all(b"    }\n")?;
             f.write_all(b"}\n\n")?;
@@ -285,7 +289,7 @@ fn generate_ui_impl(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         let snake_name = sdef.name.to_snake_case();
 
         f.write_fmt(format_args!("    pub fn create_{}(&self) -> {} {{\n", snake_name, sdef.name))?;
-        f.write_fmt(format_args!("        {} {{ obj: unsafe {{ ((*self.pu).create_{})((*self.pu).privd) }}}}\n", sdef.name, snake_name))?;
+        f.write_fmt(format_args!("        {} {{ obj: Some(unsafe {{ ((*self.pu).create_{})((*self.pu).privd) }}) }}\n", sdef.name, snake_name))?;
         f.write_all(b"    }\n\n")?;
     }
 

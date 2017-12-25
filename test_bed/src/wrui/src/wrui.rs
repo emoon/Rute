@@ -5,39 +5,41 @@ use std::ffi::CString;
 pub use ffi_gen::PURect as Rect;
 
 pub struct Widget {
-    pub obj: *const PUWidget,
+    pub obj: Option<*const PUWidget>,
 }
 
 pub struct PushButton {
-    pub obj: *const PUPushButton,
+    pub obj: Option<*const PUPushButton>,
 }
 
 pub struct Slider {
-    pub obj: *const PUSlider,
+    pub obj: Option<*const PUSlider>,
 }
 
 pub struct Application {
-    pub obj: *const PUApplication,
+    pub obj: Option<*const PUApplication>,
 }
 
 pub struct PaintEvent {
-    pub obj: *const PUPaintEvent,
+    pub obj: Option<*const PUPaintEvent>,
 }
 
 pub struct Painter {
-    pub obj: *const PUPainter,
+    pub obj: Option<*const PUPainter>,
 }
 
 impl Widget {
     pub fn show(&self) {
         unsafe {
-            ((*self.obj).show)((*self.obj).privd)
+            let obj = self.obj.unwrap();
+            ((*obj).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).resize)((*self.obj).privd, width, height)
+            let obj = self.obj.unwrap();
+            ((*obj).resize)((*obj).privd, width, height)
         }
     }
 
@@ -46,7 +48,9 @@ impl Widget {
 impl Drop for Widget {
     fn drop(&mut self) {
        unsafe {
-          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
        }
     }
 }
@@ -54,26 +58,30 @@ impl Drop for Widget {
 impl PushButton {
     pub fn show(&self) {
         unsafe {
-            ((*self.obj).show)((*self.obj).privd)
+            let obj = self.obj.unwrap();
+            ((*obj).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).resize)((*self.obj).privd, width, height)
+            let obj = self.obj.unwrap();
+            ((*obj).resize)((*obj).privd, width, height)
         }
     }
 
     pub fn set_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
-            ((*self.obj).set_text)((*self.obj).privd, str_in_text_1.as_ptr())
+            let obj = self.obj.unwrap();
+            ((*obj).set_text)((*obj).privd, str_in_text_1.as_ptr())
         }
     }
 
     pub fn set_flat(&self, flat: bool) {
         unsafe {
-            ((*self.obj).set_flat)((*self.obj).privd, flat)
+            let obj = self.obj.unwrap();
+            ((*obj).set_flat)((*obj).privd, flat)
         }
     }
 
@@ -82,7 +90,9 @@ impl PushButton {
 impl Drop for PushButton {
     fn drop(&mut self) {
        unsafe {
-          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
        }
     }
 }
@@ -90,13 +100,15 @@ impl Drop for PushButton {
 impl Slider {
     pub fn show(&self) {
         unsafe {
-            ((*self.obj).show)((*self.obj).privd)
+            let obj = self.obj.unwrap();
+            ((*obj).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
-            ((*self.obj).resize)((*self.obj).privd, width, height)
+            let obj = self.obj.unwrap();
+            ((*obj).resize)((*obj).privd, width, height)
         }
     }
 
@@ -105,7 +117,9 @@ impl Slider {
 impl Drop for Slider {
     fn drop(&mut self) {
        unsafe {
-          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
        }
     }
 }
@@ -114,13 +128,15 @@ impl Application {
     pub fn set_style(&self, style: &str) {
         let str_in_style_1 = CString::new(style).unwrap();
         unsafe {
-            ((*self.obj).set_style)((*self.obj).privd, str_in_style_1.as_ptr())
+            let obj = self.obj.unwrap();
+            ((*obj).set_style)((*obj).privd, str_in_style_1.as_ptr())
         }
     }
 
     pub fn exec(&self) {
         unsafe {
-            ((*self.obj).exec)((*self.obj).privd)
+            let obj = self.obj.unwrap();
+            ((*obj).exec)((*obj).privd)
         }
     }
 
@@ -129,7 +145,9 @@ impl Application {
 impl Drop for Application {
     fn drop(&mut self) {
        unsafe {
-          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
        }
     }
 }
@@ -137,7 +155,8 @@ impl Drop for Application {
 impl PaintEvent {
     pub fn rect(&self) -> Rect {
         unsafe {
-            ((*self.obj).rect)((*self.obj).privd)
+            let obj = self.obj.unwrap();
+            ((*obj).rect)((*obj).privd)
         }
     }
 
@@ -146,7 +165,8 @@ impl PaintEvent {
 impl Painter {
     pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
         unsafe {
-            ((*self.obj).draw_line)((*self.obj).privd, x1, y1, x2, y2)
+            let obj = self.obj.unwrap();
+            ((*obj).draw_line)((*obj).privd, x1, y1, x2, y2)
         }
     }
 
@@ -155,7 +175,9 @@ impl Painter {
 impl Drop for Painter {
     fn drop(&mut self) {
        unsafe {
-          ((*self.obj).destroy)(self.obj as *const ::std::os::raw::c_void)
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
        }
     }
 }
@@ -171,7 +193,8 @@ macro_rules! set_released_event {
           }
       }
       unsafe {
-         ((*$sender.obj).set_released_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);
+          let obj = $sender.obj.unwrap();
+         ((*obj).set_released_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}
@@ -187,7 +210,8 @@ macro_rules! set_value_changed_event {
           }
       }
       unsafe {
-         ((*$sender.obj).set_value_changed_event)((*$sender.obj).privd, ::std::mem::transmute($data), temp_call);
+          let obj = $sender.obj.unwrap();
+         ((*obj).set_value_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}
@@ -200,23 +224,23 @@ impl Ui {
     pub fn new(pu: *const PU) -> Ui { Ui { pu: pu } }
 
     pub fn create_widget(&self) -> Widget {
-        Widget { obj: unsafe { ((*self.pu).create_widget)((*self.pu).privd) }}
+        Widget { obj: Some(unsafe { ((*self.pu).create_widget)((*self.pu).privd) }) }
     }
 
     pub fn create_push_button(&self) -> PushButton {
-        PushButton { obj: unsafe { ((*self.pu).create_push_button)((*self.pu).privd) }}
+        PushButton { obj: Some(unsafe { ((*self.pu).create_push_button)((*self.pu).privd) }) }
     }
 
     pub fn create_slider(&self) -> Slider {
-        Slider { obj: unsafe { ((*self.pu).create_slider)((*self.pu).privd) }}
+        Slider { obj: Some(unsafe { ((*self.pu).create_slider)((*self.pu).privd) }) }
     }
 
     pub fn create_application(&self) -> Application {
-        Application { obj: unsafe { ((*self.pu).create_application)((*self.pu).privd) }}
+        Application { obj: Some(unsafe { ((*self.pu).create_application)((*self.pu).privd) }) }
     }
 
     pub fn create_painter(&self) -> Painter {
-        Painter { obj: unsafe { ((*self.pu).create_painter)((*self.pu).privd) }}
+        Painter { obj: Some(unsafe { ((*self.pu).create_painter)((*self.pu).privd) }) }
     }
 
 }
