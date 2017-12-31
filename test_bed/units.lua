@@ -37,6 +37,11 @@ SharedLibrary {
         },
 
         gen_moc("src/qt/qt_api_gen.h"),
+        gen_moc("src/qt/ToolWindowManager/ToolWindowManager.h"),
+        gen_moc("src/qt/ToolWindowManager/ToolWindowManagerArea.h"),
+        gen_moc("src/qt/ToolWindowManager/ToolWindowManagerSplitter.h"),
+        gen_moc("src/qt/ToolWindowManager/ToolWindowManagerTabBar.h"),
+        gen_moc("src/qt/ToolWindowManager/ToolWindowManagerWrapper.h"),
     },
 
     Env = {
@@ -53,7 +58,6 @@ SharedLibrary {
         },
 
         CPPDEFS = {
-            "QT_NO_KEYWORDS",
             "QT_NO_CAST_FROM_ASCII",
             "QT_NO_CAST_TO_ASCII",
         },
