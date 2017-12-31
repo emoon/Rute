@@ -33,11 +33,16 @@ impl MyApp {
 
     fn run(&mut self) {
         let app = self.ui.create_application();
+        let main_window = self.ui.create_main_window();
         let button = self.ui.create_push_button();
 
         button.set_text("Press me!");
-        button.resize(100, 100);
-        button.show();
+        //button.resize(100, 100);
+        //button.show();
+
+        main_window.resize(500, 500);
+        main_window.set_central_widget(&button);
+        main_window.show();
 
         set_released_event!(button, self, MyApp, MyApp::pressed_button);
 

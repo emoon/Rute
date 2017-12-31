@@ -67,7 +67,9 @@ fn generate_traits(
         f.write_fmt(format_args!("pub trait {} {{\n", trait_name))?;
         f.write_all(b"    fn get_obj(&self) -> *const ::std::os::raw::c_void;\n}\n\n")?;
 
-        type_handlers.push(Box::new(TraitTypeHandler { name: trait_name.clone() }));
+        type_handlers.push(Box::new(TraitTypeHandler {
+            name: trait_name.clone(),
+        }));
     }
 
     Ok(())

@@ -23,6 +23,7 @@ pub enum FunctionType {
     Regular,
     Event,
     Callback,
+    Manual,
 }
 
 impl Default for FunctionType {
@@ -61,9 +62,10 @@ pub struct ApiDef {
 }
 
 fn is_primitve(name: &str) -> bool {
-    if name == "u8" || name == "u8" || name == "i16" || name == "u16" ||
-       name == "i32" || name == "u32" || name == "i64" || name == "u64" ||
-       name == "f32" || name == "f64" || name == "bool" {
+    if name == "u8" || name == "u8" || name == "i16" || name == "u16" || name == "i32"
+        || name == "u32" || name == "i64" || name == "u64" || name == "f32" || name == "f64"
+        || name == "bool"
+    {
         true
     } else {
         false
@@ -80,22 +82,21 @@ enum FuncCollectionType {
 
 impl Struct {
     pub fn is_pod(&self) -> bool {
-        self.entries
-            .iter()
-            .all(|e| match *e {
-                     StructEntry::Var(ref _var) => true,
-                     _ => false,
-                 })
+        self.entries.iter().all(|e| match *e {
+            StructEntry::Var(ref _var) => true,
+            _ => false,
+        })
     }
 
     pub fn get_functions<F>(&self, funcs: &mut Vec<Function>, filter: F)
-        where F: Fn(&Function) -> bool {
+    where
+        F: Fn(&Function) -> bool,
+    {
         for entry in &self.entries {
             match *entry {
-                StructEntry::Function(ref func) =>
-                    if filter(func) {
-                        funcs.push(func.clone());
-                    },
+                StructEntry::Function(ref func) => if filter(func) {
+                    funcs.push(func.clone());
+                },
                 _ => (),
             }
         }
@@ -126,19 +127,6 @@ impl Struct {
 
         true
     }
-
-    /*
-    pub fn is_trait(&self) -> bool {
-        for attrib in &self.types {
-            println!("struct {} has trait {}", self.name, attrib);
-            if attrib == "Trait" {
-                return true;
-            }
-        }
-
-        false
-    }
-    */
 }
 
 impl Variable {
@@ -182,7 +170,8 @@ impl Variable {
 
 impl Function {
     pub fn write_c_func_def<F>(&self, f: &mut File, filter: F) -> io::Result<()>
-        where F: Fn(usize, &Variable) -> (String, String)
+    where
+        F: Fn(usize, &Variable) -> (String, String),
     {
         let arg_count = self.function_args.len();
 
@@ -218,7 +207,8 @@ impl Function {
     }
 
     pub fn write_func_def<F>(&self, f: &mut File, filter: F) -> io::Result<()>
-        where F: Fn(usize, &Variable) -> (String, String)
+    where
+        F: Fn(usize, &Variable) -> (String, String),
     {
         let arg_count = self.function_args.len();
 
@@ -249,7 +239,8 @@ impl Function {
     }
 
     pub fn write_func_def_full<F>(&self, f: &mut File, filter: F) -> io::Result<()>
-        where F: Fn(usize, &Variable) -> (String, String)
+    where
+        F: Fn(usize, &Variable) -> (String, String),
     {
         let arg_count = self.function_args.len();
 
@@ -280,12 +271,15 @@ impl Function {
 
         Ok(())
     }
-
 }
 
-
 impl ApiDef {
-    fn collect_recursive(funcs: &mut Vec<Function>, api_def: &ApiDef, sdef: &Struct, coll_type: FuncCollectionType) {
+    fn collect_recursive(
+        funcs: &mut Vec<Function>,
+        api_def: &ApiDef,
+        sdef: &Struct,
+        coll_type: FuncCollectionType,
+    ) {
         if let Some(ref inherit_name) = sdef.inherit {
             for sdef in &api_def.entries {
                 if &sdef.name == inherit_name {
@@ -296,27 +290,25 @@ impl ApiDef {
 
         for entry in &sdef.entries {
             match *entry {
-                StructEntry::Function(ref func) => {
-                    match coll_type {
-                        FuncCollectionType::All => funcs.push(func.clone()),
-                        FuncCollectionType::Callback => {
-                            if func.func_type == FunctionType::Callback {
-                                funcs.push(func.clone());
-                            }
-                        },
-                        FuncCollectionType::Event => {
-                            if func.func_type == FunctionType::Event {
-                                funcs.push(func.clone());
-                            }
-                        },
-
-                        FuncCollectionType::Regular => {
-                            if func.func_type == FunctionType::Regular {
-                                funcs.push(func.clone());
-                            }
-                        },
+                StructEntry::Function(ref func) => match coll_type {
+                    FuncCollectionType::All => funcs.push(func.clone()),
+                    FuncCollectionType::Callback => {
+                        if func.func_type == FunctionType::Callback {
+                            funcs.push(func.clone());
+                        }
                     }
-                }
+                    FuncCollectionType::Event => {
+                        if func.func_type == FunctionType::Event {
+                            funcs.push(func.clone());
+                        }
+                    }
+
+                    FuncCollectionType::Regular => {
+                        if func.func_type == FunctionType::Regular {
+                            funcs.push(func.clone());
+                        }
+                    }
+                },
 
                 _ => (),
             }
@@ -392,7 +384,7 @@ impl ApiDef {
 
         let mut sorted_traits = Vec::new();
         let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
-        sorted_list .sort();
+        sorted_list.sort();
 
         for entry in sorted_list {
             sorted_traits.push(entry.clone());
@@ -414,7 +406,7 @@ impl ApiDef {
 
         let mut sorted_traits = Vec::new();
         let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
-        sorted_list .sort();
+        sorted_list.sort();
 
         for entry in sorted_list {
             sorted_traits.push(entry.clone());
@@ -423,7 +415,6 @@ impl ApiDef {
         sorted_traits
     }
 }
-
 
 //#[cfg(debug_assertions)]
 //const _GRAMMAR: &'static str = include_str!("api.pest");
@@ -474,6 +465,7 @@ impl ApiDef {
                 Rule::name => function.name = entry.as_str().to_owned(),
                 Rule::callback => function.func_type = FunctionType::Callback,
                 Rule::event => function.func_type = FunctionType::Event,
+                Rule::event => function.func_type = FunctionType::Event,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
                 _ => (),
@@ -515,10 +507,12 @@ impl ApiDef {
 
                     match field.as_rule() {
                         Rule::var => entries.push(StructEntry::Var(Self::get_variable(&field))),
-                        Rule::function => entries.push(StructEntry::Function(Self::get_function(&field))),
+                        Rule::function => {
+                            entries.push(StructEntry::Function(Self::get_function(&field)))
+                        }
                         _ => (),
                     }
-                },
+                }
 
                 _ => (),
             }
@@ -556,8 +550,8 @@ impl ApiDef {
         let mut api_def = ApiDef::default();
         let file_input = FileInput::new(path).unwrap();
 
-        let chunks = ApiParser::parse(Rule::chunk, Rc::new(file_input)).
-            unwrap_or_else(|e| panic!("{}", e));
+        let chunks =
+            ApiParser::parse(Rule::chunk, Rc::new(file_input)).unwrap_or_else(|e| panic!("{}", e));
 
         for chunk in chunks {
             match chunk.as_rule() {

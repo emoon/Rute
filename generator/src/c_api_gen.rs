@@ -43,9 +43,7 @@ fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
     // write return value and function name
     f.write_fmt(format_args!("    {} (*{})(", ret_value, func.name))?;
 
-    func.write_c_func_def(f, |_, arg| {
-        (arg.get_c_type(), arg.name.to_owned())
-    })?;
+    func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
 
     f.write_all(b";\n")
 }
@@ -57,9 +55,15 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
     let mut func_def;
 
     if def {
-        func_def = format!("void (*set_{}_event)(void* object, void* user_data, void (*event)(", name);
+        func_def = format!(
+            "void (*set_{}_event)(void* object, void* user_data, void (*event)(",
+            name
+        );
     } else {
-        func_def = format!("void set_{}_event(void* object, void* user_data, void (*event)(", name);
+        func_def = format!(
+            "void set_{}_event(void* object, void* user_data, void (*event)(",
+            name
+        );
     }
 
     let arg_count = func.function_args.len();
@@ -79,7 +83,10 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
 }
 
 fn generate_callback_def(f: &mut File, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("    {};\n", callback_fun_def_name(true, &func.name, func)))
+    f.write_fmt(format_args!(
+        "    {};\n",
+        callback_fun_def_name(true, &func.name, func)
+    ))
 }
 
 ///
@@ -103,13 +110,11 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
                 f.write_fmt(format_args!("    {} {};\n", var.get_c_type(), var.name))?;
             }
 
-            StructEntry::Function(ref func) => {
-                match func.func_type {
-                    FunctionType::Regular => generate_func_def(f, func)?,
-                    FunctionType::Callback => generate_callback_def(f, func)?,
-                    _ => (),
-                }
-            }
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Regular => generate_func_def(f, func)?,
+                FunctionType::Callback => generate_callback_def(f, func)?,
+                _ => (),
+            },
         }
     }
 
@@ -123,12 +128,10 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
 fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     for entry in &sdef.entries {
         match *entry {
-            StructEntry::Function(ref func) => {
-                match func.func_type {
-                    FunctionType::Event => generate_callback_def(f, func)?,
-                    _ => (),
-                }
-            }
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Event => generate_callback_def(f, func)?,
+                _ => (),
+            },
 
             _ => (),
         }
@@ -180,10 +183,16 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(b"typedef struct PU { \n")?;
 
-    for sdef in api_def.entries.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
-        f.write_fmt(format_args!("    struct PU{}* (*create_{})(void* self);\n",
-                                    sdef.name,
-                                    sdef.name.to_snake_case()))?;
+    for sdef in api_def
+        .entries
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func())
+    {
+        f.write_fmt(format_args!(
+            "    struct PU{}* (*create_{})(void* self);\n",
+            sdef.name,
+            sdef.name.to_snake_case()
+        ))?;
     }
 
     f.write_all(b"    void* priv_data;\n} PU;\n")?;

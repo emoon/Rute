@@ -1,8 +1,8 @@
+extern crate argparse;
+extern crate heck;
 extern crate pest;
 #[macro_use]
 extern crate pest_derive;
-extern crate heck;
-extern crate argparse;
 
 pub mod api_parser;
 pub mod c_api_gen;
@@ -63,11 +63,8 @@ fn generate_code() -> io::Result<()> {
             "Output Qt C++ Header",
         );
 
-        ap.refer(&mut options.rust_impl).add_option(
-            &["-r", "--rust"],
-            Store,
-            "Output Rust impl",
-        );
+        ap.refer(&mut options.rust_impl)
+            .add_option(&["-r", "--rust"], Store, "Output Rust impl");
 
         ap.refer(&mut options.rust_ffi).add_option(
             &["-f", "--rust_ffi"],

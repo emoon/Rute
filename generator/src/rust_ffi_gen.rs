@@ -36,9 +36,11 @@ fn generate_ffi_function(f: &mut File, func: &Function) -> io::Result<()> {
 /// Generate ffi function
 ///
 fn generate_ffi_callback(f: &mut File, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("    pub set_{}_event: extern \"C\" fn(object: *const c_void, user_data: *const c_void,
+    f.write_fmt(format_args!(
+        "    pub set_{}_event: extern \"C\" fn(object: *const c_void, user_data: *const c_void,
                                         callback: extern \"C\" fn(",
-                func.name))?;
+        func.name
+    ))?;
     func.write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
     f.write_all(b")),\n")
 }
@@ -55,18 +57,18 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Var(ref var) => {
-                f.write_fmt(format_args!("    pub {}: {},\n",
-                                            var.name,
-                                            var.get_rust_ffi_type()))?;
+                f.write_fmt(format_args!(
+                    "    pub {}: {},\n",
+                    var.name,
+                    var.get_rust_ffi_type()
+                ))?;
             }
 
-            StructEntry::Function(ref func) => {
-                match func.func_type {
-                    FunctionType::Regular => generate_ffi_function(f, func)?,
-                    FunctionType::Callback => generate_ffi_callback(f, func)?,
-                    _ => (),
-                }
-            }
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Regular => generate_ffi_function(f, func)?,
+                FunctionType::Callback => generate_ffi_callback(f, func)?,
+                _ => (),
+            },
         }
     }
 
@@ -76,12 +78,10 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
 fn generate_struct_body_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     for entry in &sdef.entries {
         match *entry {
-            StructEntry::Function(ref func) => {
-                match func.func_type {
-                    FunctionType::Event => generate_ffi_callback(f, func)?,
-                    _ => (),
-                }
-            }
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Event => generate_ffi_callback(f, func)?,
+                _ => (),
+            },
 
             _ => (),
         }
@@ -90,7 +90,11 @@ fn generate_struct_body_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     Ok(())
 }
 
-pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Struct>) -> io::Result<()> {
+pub fn generate_ffi_bindings(
+    filename: &str,
+    api_def: &ApiDef,
+    structs: &Vec<Struct>,
+) -> io::Result<()> {
     let mut f = File::create(filename)?;
 
     f.write_all(b"use std::os::raw::c_void;\n\n")?;
@@ -131,9 +135,15 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"pub struct PU {\n")?;
 
-    for struct_ in structs.iter().filter(|s| !s.is_pod() && s.should_have_create_func()) {
-        f.write_fmt(format_args!("    pub create_{}: extern \"C\" fn(priv_data: *const c_void) -> *const PU{},\n",
-                                 struct_.name.to_snake_case(), struct_.name))?;
+    for struct_ in structs
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func())
+    {
+        f.write_fmt(format_args!(
+            "    pub create_{}: extern \"C\" fn(priv_data: *const c_void) -> *const PU{},\n",
+            struct_.name.to_snake_case(),
+            struct_.name
+        ))?;
     }
 
     f.write_all(b"    pub privd: *const c_void,\n")?;
