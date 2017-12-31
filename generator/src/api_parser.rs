@@ -23,7 +23,6 @@ pub enum FunctionType {
     Regular,
     Event,
     Callback,
-    Manual,
 }
 
 impl Default for FunctionType {
@@ -38,6 +37,7 @@ pub struct Function {
     pub function_args: Vec<Variable>,
     pub return_val: Option<Variable>,
     pub func_type: FunctionType,
+    pub is_manual: bool,
 }
 
 #[derive(Debug)]
@@ -126,6 +126,16 @@ impl Struct {
         }
 
         true
+    }
+
+    pub fn has_manual_create(&self) -> bool {
+        for attrib in &self.attributes {
+            if attrib == "ManualCreate" {
+                return true;
+            }
+        }
+
+        false
     }
 }
 
@@ -465,9 +475,12 @@ impl ApiDef {
                 Rule::name => function.name = entry.as_str().to_owned(),
                 Rule::callback => function.func_type = FunctionType::Callback,
                 Rule::event => function.func_type = FunctionType::Event,
-                Rule::event => function.func_type = FunctionType::Event,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
+                Rule::manual => {
+                    function.is_manual = true;
+                    function.func_type = FunctionType::Regular;
+                },
                 _ => (),
             }
         }

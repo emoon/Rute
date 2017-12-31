@@ -1,6 +1,6 @@
 use std::io;
 use std::fs::File;
-use std::io::Write;
+use std::io::{Write, Read};
 use std::collections::{BTreeMap, HashMap};
 use api_parser::*;
 use c_api_gen::generate_c_function_args;
@@ -631,7 +631,7 @@ fn generate_create_functions(
     for sdef in api_def
         .entries
         .iter()
-        .filter(|s| !s.is_pod() && s.should_have_create_func())
+        .filter(|s| !s.is_pod() && s.should_have_create_func() && !s.has_manual_create())
     {
         let struct_name = sdef.name.as_str();
 
@@ -652,18 +652,7 @@ fn generate_create_functions(
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
 
-        // Hack
-
-        if sdef.name == "Application" {
-            f.write_all(
-                b"    static int argc = 0;
-    QApplication* qt_obj = new QApplication(argc, 0);
-    struct PUApplication* ctl = new struct PUApplication;
-    memcpy(ctl, &s_application, sizeof(struct PUApplication));
-    ctl->priv_data = qt_obj;
-    return ctl;\n}\n\n",
-            )?;
-        } else if inherits_widget(&sdef, api_def) {
+        if inherits_widget(&sdef, api_def) {
             f.write_fmt(format_args!(
                 "    return create_widget_func<struct PU{}, WR{}>(&s_{}, priv_data);\n}}\n\n",
                 struct_name,
@@ -797,13 +786,18 @@ impl TypeHandler for TraitTypeHandler {
 pub fn generate_qt_bindings(
     filename: &str,
     header_filename: &str,
+    manual_cpp_code: &str,
     api_def: &ApiDef,
 ) -> io::Result<()> {
     let mut f = File::create(filename)?;
     let mut header_file = File::create(header_filename)?;
+    let mut cpp_manual = File::open(manual_cpp_code)?;
     let mut signals_info = HashMap::new();
     let mut struct_name_map = HashMap::new();
     let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
+    let mut cpp_manual_data = Vec::new();
+
+    cpp_manual.read_to_end(&mut cpp_manual_data)?;
 
     type_handlers.push(Box::new(RectTypeHandler {}));
 
@@ -844,6 +838,8 @@ pub fn generate_qt_bindings(
     }
 
     generate_create_functions(&mut f, &struct_name_map, api_def)?;
+
+    f.write_all(&cpp_manual_data)?;
 
     generate_struct_defs(&mut f, api_def)?;
     generate_pu_struct(&mut f, api_def)?;
