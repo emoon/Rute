@@ -1,4 +1,8 @@
 
+// ***************************************************************
+// AUTO-GENERATED! DO NOT EDIT!
+// ***************************************************************
+
 use ffi_gen::*;
 use std::ffi::CString;
 
@@ -16,6 +20,10 @@ pub struct Slider {
     pub obj: Option<*const PUSlider>,
 }
 
+pub struct MainWindow {
+    pub obj: Option<*const PUMainWindow>,
+}
+
 pub struct Application {
     pub obj: Option<*const PUApplication>,
 }
@@ -26,6 +34,14 @@ pub struct PaintEvent {
 
 pub struct Painter {
     pub obj: Option<*const PUPainter>,
+}
+
+pub trait PaintDevice {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void;
+}
+
+pub trait WidgetType {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void;
 }
 
 impl Widget {
@@ -51,6 +67,24 @@ impl Drop for Widget {
           let obj = self.obj.unwrap();
           ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for Widget {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl WidgetType for Widget {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
        }
     }
 }
@@ -97,6 +131,24 @@ impl Drop for PushButton {
     }
 }
 
+impl PaintDevice for PushButton {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl WidgetType for PushButton {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
 impl Slider {
     pub fn show(&self) {
         unsafe {
@@ -120,6 +172,83 @@ impl Drop for Slider {
           let obj = self.obj.unwrap();
           ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for Slider {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl WidgetType for Slider {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl MainWindow {
+    pub fn show(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).show)((*obj).privd)
+        }
+    }
+
+    pub fn resize(&self, width: i32, height: i32) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).resize)((*obj).privd, width, height)
+        }
+    }
+
+    pub fn is_animated(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).is_animated)((*obj).privd)
+        }
+    }
+
+    pub fn set_central_widget(&self, widget: &WidgetType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).set_central_widget)((*obj).privd, widget.get_obj() as *const PUWidgetType)
+        }
+    }
+
+}
+
+impl Drop for MainWindow {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for MainWindow {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl WidgetType for MainWindow {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
        }
     }
 }
@@ -233,6 +362,10 @@ impl Ui {
 
     pub fn create_slider(&self) -> Slider {
         Slider { obj: Some(unsafe { ((*self.pu).create_slider)((*self.pu).privd) }) }
+    }
+
+    pub fn create_main_window(&self) -> MainWindow {
+        MainWindow { obj: Some(unsafe { ((*self.pu).create_main_window)((*self.pu).privd) }) }
     }
 
     pub fn create_application(&self) -> Application {

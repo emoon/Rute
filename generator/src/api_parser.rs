@@ -8,6 +8,7 @@ use std::rc::Rc;
 use pest::Parser;
 use pest::inputs::{FileInput, Input};
 use pest::iterators::Pair;
+use std::collections::HashSet;
 
 #[derive(Debug, Clone, Default)]
 pub struct Variable {
@@ -48,6 +49,7 @@ pub enum StructEntry {
 pub struct Struct {
     pub name: String,
     pub attributes: Vec<String>,
+    pub traits: Vec<String>,
     pub inherit: Option<String>,
     pub entries: Vec<StructEntry>,
     pub is_widget: bool,
@@ -124,6 +126,19 @@ impl Struct {
 
         true
     }
+
+    /*
+    pub fn is_trait(&self) -> bool {
+        for attrib in &self.types {
+            println!("struct {} has trait {}", self.name, attrib);
+            if attrib == "Trait" {
+                return true;
+            }
+        }
+
+        false
+    }
+    */
 }
 
 impl Variable {
@@ -328,6 +343,20 @@ impl ApiDef {
         false
     }
 
+    fn collect_traits_recursive(traits: &mut HashSet<String>, api_def: &ApiDef, sdef: &Struct) {
+        if let Some(ref inherit_name) = sdef.inherit {
+            for sdef in &api_def.entries {
+                if &sdef.name == inherit_name {
+                    Self::collect_traits_recursive(traits, api_def, &sdef)
+                }
+            }
+        }
+
+        for trait_name in &sdef.traits {
+            traits.insert(trait_name.clone());
+        }
+    }
+
     fn collect_functions(&self, sdef: &Struct, coll_type: FuncCollectionType) -> Vec<Function> {
         let mut funcs = Vec::new();
         Self::collect_recursive(&mut funcs, &self, sdef, coll_type);
@@ -352,6 +381,46 @@ impl ApiDef {
 
     pub fn has_attribute(&self, sdef: &Struct, attribute: &str) -> bool {
         Self::has_attribute_recursive(&self, sdef, attribute)
+    }
+
+    pub fn get_traits(&self, sdef: &Struct) -> Vec<String> {
+        let mut traits = HashSet::new();
+
+        Self::collect_traits_recursive(&mut traits, self, sdef);
+
+        // TODO: There is likely a way better way to do this
+
+        let mut sorted_traits = Vec::new();
+        let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
+        sorted_list .sort();
+
+        for entry in sorted_list {
+            sorted_traits.push(entry.clone());
+        }
+
+        sorted_traits
+    }
+
+    pub fn get_all_traits(&self) -> Vec<String> {
+        let mut traits = HashSet::new();
+
+        for sdef in self.entries.iter().filter(|s| !s.is_pod()) {
+            for t in &sdef.traits {
+                traits.insert(t.clone());
+            }
+        }
+
+        // TODO: There is likely a way better way to do this
+
+        let mut sorted_traits = Vec::new();
+        let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
+        sorted_list .sort();
+
+        for entry in sorted_list {
+            sorted_traits.push(entry.clone());
+        }
+
+        sorted_traits
     }
 }
 
@@ -458,15 +527,27 @@ impl ApiDef {
         entries
     }
 
+    fn get_namelist_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
+        let mut names = Vec::new();
+
+        for entry in rule.clone().into_inner() {
+            names.push(entry.as_str().to_owned())
+        }
+
+        names
+    }
+
     fn get_attrbutes<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
         let mut attribs = Vec::new();
 
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
-                Rule::namelist => attribs.push(Self::get_name(&entry)),
+                Rule::namelist => attribs = Self::get_namelist_list((&entry)),
                 _ => (),
             }
         }
+
+        println!("Attribs {:?}", attribs);
 
         attribs
     }
@@ -490,6 +571,7 @@ impl ApiDef {
                             Rule::name => cur_struct.name = entry.as_str().to_owned(),
                             Rule::derive => cur_struct.inherit = Some(Self::get_name(&entry)),
                             Rule::attributes => cur_struct.attributes = Self::get_attrbutes(&entry),
+                            Rule::traits => cur_struct.traits = Self::get_attrbutes(&entry),
                             Rule::fieldlist => cur_struct.entries = Self::fill_field_list(&entry),
                             _ => (),
                         }

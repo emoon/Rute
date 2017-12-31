@@ -1,21 +1,23 @@
 chunk = _{ soi ~ structdef* ~ eoi }
 
-structdef   =  { attributes? ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
+structdef   =  { attributes? ~ traits? ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
 fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
 field       =  { var | function }
 fieldsep    = _{ (",") }
 
 rettype     = { name }
-attributes  = { ("#[derive(") ~ namelist ~ (")]") }
+attributes  = { ("#[attributes(") ~ namelist ~ (")]") }
+traits      = { ("#[traits(") ~ namelist ~ (")]") }
 derive      = { (":") ~ name }
 callback    = { ("[callback]") }
 event       = { ("[event]") }
+manual      = { ("[manual]") }
 refexp      = { ("&") }
 retexp      = { ("->") ~ refexp? ~ vtype }
 var         = { refexp? ~ vtype ~ name }
 varlist     = { var ~ ((",") ~ var)* }
 namelist    = { name ~ ((",") ~ name)* }
-function    = { event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function    = { manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*

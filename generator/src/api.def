@@ -1,33 +1,28 @@
-// test
 //
-// A note about event/callbacks
+// Notes about function modifiers:
 //
 // [event] = Something the requires a virtual override in the Qt case. We handle this separately as we
 //           need to generate the code a bit differently compared to events
 //           Also events are not inharited.
 // [callback] = Used func Signals/Slots.
+// [manual]  = This function needs to be manually implemented on the C++ side
 //
 // The idea though is that this looks like the same thing for the user of the API.
 //
 
 Rect {
-    f32 x,
-    f32 y,
-    f32 width,
-    f32 height,
+    i32 x,
+    i32 y,
+    i32 width,
+    i32 height,
 }
 
-#[derive(PaintDevice)]
+#[traits(PaintDevice, WidgetType)]
 Widget {
     show(),
     resize(i32 width, i32 height),
-
-	// events that can be overriden
-
     [event] paint_event(&PaintEvent event),
 }
-
-// Inherit functions from Button in PushButton
 
 PushButton : Widget {
     [callback] released(),
@@ -41,14 +36,19 @@ Slider : Widget {
     [callback] value_changed(i32 value),
 }
 
+MainWindow : Widget {
+    is_animated() -> bool,
+    set_central_widget(&WidgetType widget),
+}
 
+#[attributes(ManualCreate)]
 Application {
 	set_style(String style),
 	exec(),
 }
 
 // No create on this as its a event only
-#[derive(NoCreate)]
+#[attributes(NoCreate)]
 PaintEvent {
 	rect() -> Rect,
 }

@@ -64,6 +64,20 @@ extern \"C\" struct PU* wrui_get() {
 
 static SEPARATOR: &'static [u8] = b"///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n\n";
 
+
+trait TypeHandler {
+    fn match_type(&self) -> String;
+
+    fn replace_arg(&self, arg: &Variable) -> (String, String) {
+        (arg.name.to_owned(), arg.vtype.to_owned())
+    }
+
+    fn gen_body_return(&self, function_name: &String, f: &mut File) -> io::Result<()> {
+        f.write_fmt(format_args!("    return qt_data->{}()", function_name.to_mixed_case()))
+    }
+}
+
+
 fn generate_bind_info(info: &mut HashMap<String, Function>, func: &Function) {
     let mut input_args = String::new();
 
@@ -181,6 +195,7 @@ fn generate_func_def(f: &mut File,
                      struct_name: &str,
                      func: &Function,
                      struct_name_map: &HashMap<&str, &str>,
+                     type_handlers: &Vec<Box<TypeHandler>>,
                      is_widget: bool)
                      -> io::Result<()> {
     let ret_value = func.return_val
@@ -197,10 +212,7 @@ fn generate_func_def(f: &mut File,
         .get(struct_name)
         .unwrap_or_else(|| &struct_name);
 
-    let qt_type = match is_widget {
-        true => "WR",
-        false => "Q",
-    };
+    let qt_type = if is_widget { "WR" } else { "Q" };
 
     // (changed from snake_case to camelCase matches the Qt function)
 
@@ -210,15 +222,16 @@ fn generate_func_def(f: &mut File,
                                 qt_type,
                                 struct_qt_name))?;
 
-    // Hack for rect currently. We need to generalize this
-
     if let Some(ref ret_val) = func.return_val {
-        if ret_val.vtype == "Rect" {
-            f.write_fmt(format_args!("    const auto& t = qt_data->{}();\n", func.name.to_mixed_case()))?;
-            f.write_fmt(format_args!("    return PURect {{ .x = (float)t.x(), .y = (float)t.y(), .width = (float)t.width(), .height = (float)t.height() }}"))?;
-        } else {
-            f.write_fmt(format_args!("    return qt_data->{}(", func.name.to_mixed_case()))?;
+        for handler in type_handlers.iter() {
+            if ret_val.vtype == handler.match_type() {
+                handler.gen_body_return(&func.name, f)?;
+                f.write_all(b";\n")?;
+                return f.write_all(b"}\n\n")
+            }
         }
+
+        f.write_fmt(format_args!("    return qt_data->{}()", func.name.to_mixed_case()))?;
     } else {
         f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
 
@@ -227,14 +240,17 @@ fn generate_func_def(f: &mut File,
                 ("".to_owned(), "".to_owned())
             } else if arg.vtype == "String" {
                 (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
-            } else if arg.vtype == "Rect" {
-                (format!("QRect({}->x, {}->y, {}->width, {}->height)", &arg.name, &arg.name, &arg.name, &arg.name), "".to_owned())
             } else {
+                for handler in type_handlers.iter() {
+                    if arg.vtype == handler.match_type() {
+                        return handler.replace_arg(&arg);
+                    }
+                }
+
                 (arg.name.clone(), "".to_owned())
             }
         })?;
     }
-
 
     f.write_all(b";\n")?;
     f.write_all(b"}\n\n")?;
@@ -299,12 +315,13 @@ fn generate_struct_body_recursive(f: &mut File,
                                   name: &str,
                                   sdef: &Struct,
                                   struct_name_map: &HashMap<&str, &str>,
+                                  type_handlers: &Vec<Box<TypeHandler>>,
                                   api_def: &ApiDef)
                                   -> io::Result<()> {
     if let Some(ref inherit_name) = sdef.inherit {
         for sdef in &api_def.entries {
             if &sdef.name == inherit_name {
-                generate_struct_body_recursive(f, name, &sdef, struct_name_map, api_def)?;
+                generate_struct_body_recursive(f, name, &sdef, struct_name_map, type_handlers, api_def)?;
             }
         }
     }
@@ -317,7 +334,7 @@ fn generate_struct_body_recursive(f: &mut File,
                 f.write_all(SEPARATOR)?;
 
                 match func.func_type {
-                    FunctionType::Regular => generate_func_def(f, name, func, struct_name_map, is_widget)?,
+                    FunctionType::Regular => generate_func_def(f, name, func, struct_name_map, type_handlers, is_widget)?,
                     FunctionType::Callback => func_def_callback(f, name, func)?,
                     _ => ()
                 }
@@ -606,6 +623,70 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
+/// Type handler for traits as the function arguments when using a trait needs to use "get_obj"
+///
+/*
+struct TraitTypeHandler {
+    name: String,
+}
+
+impl TypeHandler for TraitTypeHandler {
+    fn match_type(&self) -> String {
+        self.name.clone()
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> (String, String) {
+        (arg.name.to_owned(), format!("&{}", arg.vtype.to_owned()))
+    }
+
+    fn gen_body(&self, fuction_name: &str, f: &mut File) -> io::Result<()>  {
+    fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
+        format!("{}.get_obj() as *const PU{}", arg_name, self.name)
+    }
+}
+*/
+
+///
+/// Handling for Rect
+///
+struct RectTypeHandler;
+
+impl TypeHandler for RectTypeHandler {
+    fn match_type(&self) -> String {
+        "Rect".to_owned()
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> (String, String) {
+        (format!("QRect({}->x, {}->y, {}->width, {}->height)", &arg.name, &arg.name, &arg.name, &arg.name), "".to_owned())
+    }
+
+    fn gen_body_return(&self, function_name: &String, f: &mut File) -> io::Result<()> {
+        f.write_fmt(format_args!("    const auto& t = qt_data->{}();\n", function_name.to_mixed_case()))?;
+        f.write_fmt(format_args!("    return PURect {{ .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() }}"))
+    }
+}
+
+///
+/// Handling for Traits
+///
+struct TraitTypeHandler(String);
+
+impl TypeHandler for TraitTypeHandler {
+    fn match_type(&self) -> String {
+        self.0.to_owned()
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> (String, String) {
+        // This is a bit hacky but not sure how to solve this right now
+        if self.0 == "WidgetType" {
+            (format!("(QWidget*){}", &arg.name), "".to_owned())
+        } else {
+            (format!("(Q{}*){}", self.0, &arg.name), "".to_owned())
+        }
+    }
+}
+
+///
 /// This is the main entry for generating the C/C++ buindings for Qt. The current API mimics Qt
 /// fairly closely when it comes to names but at the start there is a map setup that used used
 /// to translate between some struct names to fit the Qt version. If more structs gets added that
@@ -619,6 +700,13 @@ pub fn generate_qt_bindings(filename: &str,
     let mut header_file = File::create(header_filename)?;
     let mut signals_info = HashMap::new();
     let mut struct_name_map = HashMap::new();
+    let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
+
+    type_handlers.push(Box::new(RectTypeHandler {}));
+
+    for trait_name in api_def.get_all_traits() {
+        type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
+    }
 
     struct_name_map.insert("Button", "AbstractButton");
 
@@ -643,7 +731,7 @@ pub fn generate_qt_bindings(filename: &str,
     // generate wrapper functions
 
     for sdef in &api_def.entries {
-        generate_struct_body_recursive(&mut f, &sdef.name, &sdef, &struct_name_map, api_def)?;
+        generate_struct_body_recursive(&mut f, &sdef.name, &sdef, &struct_name_map, &type_handlers, api_def)?;
     }
 
     generate_create_functions(&mut f, &struct_name_map, api_def)?;

@@ -151,6 +151,10 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("struct PU{};\n", sdef.name))?;
     }
 
+    for trait_name in api_def.get_all_traits() {
+        f.write_fmt(format_args!("struct PU{};\n", trait_name))?;
+    }
+
     f.write_all(b"\n")?;
 
     // Write the struct defs

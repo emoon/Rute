@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QSlider>
+#include <QMainWindow>
 #include <QApplication>
 #include <QPaintEvent>
 #include <QPainter>
@@ -18,6 +19,7 @@ struct PrivData {
 extern struct PUWidget s_widget;
 extern struct PUPushButton s_push_button;
 extern struct PUSlider s_slider;
+extern struct PUMainWindow s_main_window;
 extern struct PUApplication s_application;
 extern struct PUPaintEvent s_paint_event;
 extern struct PUPainter s_painter;
@@ -58,6 +60,15 @@ class WRSlider : public QSlider {
 public:
     WRSlider(QWidget* widget) : QSlider(widget) {}
     virtual ~WRSlider() {}
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRMainWindow : public QMainWindow {
+public:
+    WRMainWindow(QWidget* widget) : QMainWindow(widget) {}
+    virtual ~WRMainWindow() {}
 
 };
 
@@ -141,6 +152,36 @@ static void set_slider_value_changed_event(void* object, void* user_data, void (
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void main_window_show(void* self_c) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void main_window_resize(void* self_c, int width, int height) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool main_window_is_animated(void* self_c) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    return qt_data->isAnimated();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void main_window_set_central_widget(void* self_c, struct PUWidgetType* widget) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->setCentralWidget((QWidget*)widget);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void application_set_style(void* self_c, const char* style) { 
     QApplication* qt_data = (QApplication*)self_c;
     qt_data->setStyle(QString::fromLatin1(style));
@@ -158,7 +199,7 @@ static void application_exec(void* self_c) {
 static struct PURect paint_event_rect(void* self_c) { 
     QPaintEvent* qt_data = (QPaintEvent*)self_c;
     const auto& t = qt_data->rect();
-    return PURect { .x = (float)t.x(), .y = (float)t.y(), .width = (float)t.width(), .height = (float)t.height() };
+    return PURect { .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() };
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,6 +283,18 @@ static void destroy_slider(void* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUMainWindow* create_main_window(void* priv_data) {
+    return create_widget_func<struct PUMainWindow, WRMainWindow>(&s_main_window, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_main_window(void* priv_data) {
+    destroy_generic<struct PUMainWindow, WRMainWindow>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct PUApplication* create_application(void* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
@@ -302,6 +355,17 @@ struct PUSlider s_slider = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct PUMainWindow s_main_window = {
+    destroy_main_window,
+    main_window_show,
+    main_window_resize,
+    main_window_is_animated,
+    main_window_set_central_widget,
+    0,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct PUApplication s_application = {
     destroy_application,
     application_set_style,
@@ -328,6 +392,7 @@ static struct PU s_pu = {
     create_widget,
     create_push_button,
     create_slider,
+    create_main_window,
     create_application,
     create_painter,
     0,

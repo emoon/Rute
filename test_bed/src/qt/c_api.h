@@ -12,15 +12,18 @@ struct PURect;
 struct PUWidget;
 struct PUPushButton;
 struct PUSlider;
+struct PUMainWindow;
 struct PUApplication;
 struct PUPaintEvent;
 struct PUPainter;
+struct PUPaintDevice;
+struct PUWidgetType;
 
 struct PURect {
-    float x;
-    float y;
-    float width;
-    float height;
+    int x;
+    int y;
+    int width;
+    int height;
 };
 
 struct PUWidget {
@@ -49,6 +52,15 @@ struct PUSlider {
     void* priv_data;
 };
 
+struct PUMainWindow {
+    void (*destroy)(void* self_c);
+    void (*show)(void* self_c);
+    void (*resize)(void* self_c, int width, int height);
+    bool (*is_animated)(void* self_c);
+    void (*set_central_widget)(void* self_c, struct PUWidgetType* widget);
+    void* priv_data;
+};
+
 struct PUApplication {
     void (*destroy)(void* self_c);
     void (*set_style)(void* self_c, const char* style);
@@ -71,6 +83,7 @@ typedef struct PU {
     struct PUWidget* (*create_widget)(void* self);
     struct PUPushButton* (*create_push_button)(void* self);
     struct PUSlider* (*create_slider)(void* self);
+    struct PUMainWindow* (*create_main_window)(void* self);
     struct PUApplication* (*create_application)(void* self);
     struct PUPainter* (*create_painter)(void* self);
     void* priv_data;

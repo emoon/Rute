@@ -95,6 +95,16 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
 
     f.write_all(b"use std::os::raw::c_void;\n\n")?;
 
+    // Write the trait forward structs
+
+    for trait_name in api_def.get_all_traits() {
+        f.write_all(b"#[repr(C)]\n")?;
+        f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
+        f.write_fmt(format_args!("pub struct PU{} {{\n", trait_name))?;
+        f.write_all(b"    _unused: [u8; 0],\n")?;
+        f.write_all(b"}\n\n")?;
+    }
+
     for struct_ in structs {
         f.write_all(b"#[repr(C)]\n")?;
 
@@ -112,7 +122,7 @@ pub fn generate_ffi_bindings(filename: &str, api_def: &ApiDef, structs: &Vec<Str
         generate_struct_body_events(&mut f, &struct_)?;
 
         if !struct_.is_pod() {
-            f.write_all(b"    pub privd: *const ::std::os::raw::c_void,\n")?;
+            f.write_all(b"    pub privd: *const c_void,\n")?;
         }
 
         f.write_all(b"}\n\n")?;
