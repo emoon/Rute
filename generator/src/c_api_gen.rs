@@ -152,6 +152,10 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     for sdef in &api_def.entries {
         f.write_fmt(format_args!("struct PU{};\n", sdef.name))?;
+
+        if !sdef.is_pod() {
+            f.write_fmt(format_args!("struct PU{}Funcs;\n", sdef.name))?;
+        }
     }
 
     for trait_name in api_def.get_all_traits() {
@@ -160,24 +164,38 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(b"\n")?;
 
-    // Write the struct defs
+    // Write the struct for pods
 
-    for sdef in &api_def.entries {
+    for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
         f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
 
-        if !sdef.is_pod() && sdef.should_have_create_func() {
+        generate_struct_body_recursive(&mut f, api_def, sdef)?;
+        generate_struct_events(&mut f, sdef)?;
+
+        f.write_all(b"};\n\n")?;
+    }
+
+    // Write non-pod structs
+
+
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+        f.write_fmt(format_args!("struct PU{}Funcs {{\n", sdef.name))?;
+
+        if sdef.should_have_create_func() {
             f.write_all(b"    void (*destroy)(void* self_c);\n")?;
         }
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_events(&mut f, sdef)?;
-
-        if !sdef.is_pod() {
-            f.write_all(b"    void* priv_data;\n")?;
-        }
-
         f.write_fmt(format_args!("}};\n\n"))?;
+
+        f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("    struct PU{}Funcs* funcs;\n", sdef.name))?;
+        f.write_all(b"    void* priv_data;\n")?;
+
+        f.write_all(b"};\n\n")?;
     }
+
 
     // generate C_API entry
 
@@ -189,7 +207,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    struct PU{}* (*create_{})(void* self);\n",
+            "    struct PU{} (*create_{})(void* self);\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;

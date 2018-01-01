@@ -178,6 +178,13 @@ static void list_widget_add_item(void* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUListWidgetItem list_widget_item(void* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    return qt_data->item();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void set_list_widget_current_row_changed_event(void* object, void* user_data, void (*event)(void* self_c, int row)) {
@@ -451,6 +458,7 @@ struct PUListWidget s_list_widget = {
     list_widget_show,
     list_widget_resize,
     list_widget_add_item,
+    list_widget_item,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
     0,

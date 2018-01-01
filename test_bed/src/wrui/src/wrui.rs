@@ -8,38 +8,47 @@ use std::ffi::CString;
 
 pub use ffi_gen::PURect as Rect;
 
+#[derive(Clone, Debug)]
 pub struct Widget {
     pub obj: Option<*const PUWidget>,
 }
 
+#[derive(Clone, Debug)]
 pub struct PushButton {
     pub obj: Option<*const PUPushButton>,
 }
 
+#[derive(Clone, Debug)]
 pub struct Painter {
     pub obj: Option<*const PUPainter>,
 }
 
+#[derive(Clone, Debug)]
 pub struct ListWidgetItem {
     pub obj: Option<*const PUListWidgetItem>,
 }
 
+#[derive(Clone, Debug)]
 pub struct ListWidget {
     pub obj: Option<*const PUListWidget>,
 }
 
+#[derive(Clone, Debug)]
 pub struct Slider {
     pub obj: Option<*const PUSlider>,
 }
 
+#[derive(Clone, Debug)]
 pub struct MainWindow {
     pub obj: Option<*const PUMainWindow>,
 }
 
+#[derive(Clone, Debug)]
 pub struct Application {
     pub obj: Option<*const PUApplication>,
 }
 
+#[derive(Clone, Debug)]
 pub struct PaintEvent {
     pub obj: Option<*const PUPaintEvent>,
 }
@@ -218,6 +227,13 @@ impl ListWidget {
         unsafe {
             let obj = self.obj.unwrap();
             ((*obj).add_item)((*obj).privd, str_in_text_1.as_ptr())
+        }
+    }
+
+    pub fn item(&self) -> ListWidgetItem {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).item)((*obj).privd)
         }
     }
 

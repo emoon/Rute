@@ -87,6 +87,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
                 sdef.name, sdef.name
             ))?;
         } else {
+            f.write_all(b"#[derive(Clone, Debug)]\n")?;
             f.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
 
             if sdef.is_pod() {
