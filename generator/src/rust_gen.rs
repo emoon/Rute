@@ -167,36 +167,41 @@ fn generate_func_impl(
 
     // Handle strings (as they need to use CString before call down to the C code
 
-    let mut name_remap = HashMap::with_capacity(func.function_args.len());
+    //let mut name_remap = HashMap::with_capacity(func.function_args.len());
+    let mut name_remap = HashMap::new();
 
     for (i, arg) in func.function_args.iter().enumerate() {
         for handler in type_handlers.iter() {
             if arg.vtype == handler.match_type() {
                 let arg_name = handler.gen_body(&arg.name, f, i);
-                println!("arg_name {}", arg_name);
+                println!(">>>>>>>>>>>>> inserting arg_name {}", arg_name);
                 name_remap.insert(i, arg_name);
                 break;
             }
         }
-
-        name_remap.entry(i).or_insert(arg.name.to_owned());
     }
 
     f.write_all(b"        unsafe {\n")?;
     f.write_all(b"            let obj = self.obj.unwrap();\n")?;
     f.write_fmt(format_args!("            ((*obj).{})(", func.name))?;
 
+    // TODO: Clean this up
+
     func.write_func_def(f, |index, arg| {
         if index == 0 {
             ("(*obj).privd".to_owned(), String::new())
         } else if !arg.primitive {
             if let Some(name) = name_remap.get(&index) {
-                println!("nameremap {} for index {}", name, index);
                 (name.to_owned(), String::new())
+            } else if arg.reference {
+                (format!("(*{}.obj.unwrap()).privd as *const PU{}", arg.name, arg.vtype), String::new())
             } else {
                 (arg.name.to_owned(), String::new())
             }
+        } else if arg.reference {
+            (format!("(*{}.obj.unwrap()).privd as *const PU{}", arg.name, arg.vtype), String::new())
         } else {
+            println!("{} - ref {}", arg.name, arg.reference);
             (arg.name.to_owned(), String::new())
         }
     })?;

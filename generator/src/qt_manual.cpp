@@ -18,4 +18,8 @@ static void destroy_application(void* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_add_widget_item(void* self_c, struct PUListWidgetItem* item) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->addItem((QListWidgetItem*)item);
+}
 

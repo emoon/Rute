@@ -35,6 +35,21 @@ struct PushButton : Widget {
     set_flat(bool flat),
 }
 
+// Lists
+
+struct Painter {
+    draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
+}
+
+struct ListWidgetItem {
+    set_text(String text),
+}
+
+struct ListWidget : Widget {
+	add_item(String text),
+	[manual] add_widget_item(&ListWidgetItem item),
+}
+
 // Sliders
 
 struct Slider : Widget {
@@ -58,9 +73,6 @@ struct PaintEvent {
 	rect() -> Rect,
 }
 
-struct Painter {
-    draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
-}
 
 // Taken directly from Qt but values has been removed. We will use a lookup on the native
 // side to map this table to the key ones

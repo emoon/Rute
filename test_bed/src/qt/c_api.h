@@ -11,11 +11,13 @@ extern "C" {
 struct PURect;
 struct PUWidget;
 struct PUPushButton;
+struct PUPainter;
+struct PUListWidgetItem;
+struct PUListWidget;
 struct PUSlider;
 struct PUMainWindow;
 struct PUApplication;
 struct PUPaintEvent;
-struct PUPainter;
 struct PUPaintDevice;
 struct PUWidgetType;
 
@@ -41,6 +43,27 @@ struct PUPushButton {
     void (*set_released_event)(void* object, void* user_data, void (*event)(void* self_c));
     void (*set_text)(void* self_c, const char* text);
     void (*set_flat)(void* self_c, bool flat);
+    void* priv_data;
+};
+
+struct PUPainter {
+    void (*destroy)(void* self_c);
+    void (*draw_line)(void* self_c, int x1, int y1, int x2, int y2);
+    void* priv_data;
+};
+
+struct PUListWidgetItem {
+    void (*destroy)(void* self_c);
+    void (*set_text)(void* self_c, const char* text);
+    void* priv_data;
+};
+
+struct PUListWidget {
+    void (*destroy)(void* self_c);
+    void (*show)(void* self_c);
+    void (*resize)(void* self_c, int width, int height);
+    void (*add_item)(void* self_c, const char* text);
+    void (*add_widget_item)(void* self_c, struct PUListWidgetItem* item);
     void* priv_data;
 };
 
@@ -73,19 +96,15 @@ struct PUPaintEvent {
     void* priv_data;
 };
 
-struct PUPainter {
-    void (*destroy)(void* self_c);
-    void (*draw_line)(void* self_c, int x1, int y1, int x2, int y2);
-    void* priv_data;
-};
-
 typedef struct PU { 
     struct PUWidget* (*create_widget)(void* self);
     struct PUPushButton* (*create_push_button)(void* self);
+    struct PUPainter* (*create_painter)(void* self);
+    struct PUListWidgetItem* (*create_list_widget_item)(void* self);
+    struct PUListWidget* (*create_list_widget)(void* self);
     struct PUSlider* (*create_slider)(void* self);
     struct PUMainWindow* (*create_main_window)(void* self);
     struct PUApplication* (*create_application)(void* self);
-    struct PUPainter* (*create_painter)(void* self);
     void* priv_data;
 } PU;
 

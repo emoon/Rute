@@ -3,11 +3,13 @@
 #include <assert.h>
 #include <QWidget>
 #include <QPushButton>
+#include <QPainter>
+#include <QListWidgetItem>
+#include <QListWidget>
 #include <QSlider>
 #include <QMainWindow>
 #include <QApplication>
 #include <QPaintEvent>
-#include <QPainter>
 
 struct PrivData {
     QWidget* parent;
@@ -18,11 +20,13 @@ struct PrivData {
 
 extern struct PUWidget s_widget;
 extern struct PUPushButton s_push_button;
+extern struct PUPainter s_painter;
+extern struct PUListWidgetItem s_list_widget_item;
+extern struct PUListWidget s_list_widget;
 extern struct PUSlider s_slider;
 extern struct PUMainWindow s_main_window;
 extern struct PUApplication s_application;
 extern struct PUPaintEvent s_paint_event;
-extern struct PUPainter s_painter;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -51,6 +55,15 @@ class WRPushButton : public QPushButton {
 public:
     WRPushButton(QWidget* widget) : QPushButton(widget) {}
     virtual ~WRPushButton() {}
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRListWidget : public QListWidget {
+public:
+    WRListWidget(QWidget* widget) : QListWidget(widget) {}
+    virtual ~WRListWidget() {}
 
 };
 
@@ -125,6 +138,45 @@ static void push_button_set_flat(void* self_c, bool flat) {
     WRPushButton* qt_data = (WRPushButton*)self_c;
     qt_data->setFlat(flat);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_draw_line(void* self_c, int x1, int y1, int x2, int y2) { 
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->drawLine(x1, y1, x2, y2);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_text(void* self_c, const char* text) { 
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    qt_data->setText(QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_show(void* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_resize(void* self_c, int width, int height) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_add_item(void* self_c, const char* text) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->addItem(QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -204,13 +256,6 @@ static struct PURect paint_event_rect(void* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_line(void* self_c, int x1, int y1, int x2, int y2) { 
-    QPainter* qt_data = (QPainter*)self_c;
-    qt_data->drawLine(x1, y1, x2, y2);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 template<typename T, typename QT> T* create_widget_func(T* struct_data, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
@@ -271,6 +316,42 @@ static void destroy_push_button(void* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUPainter* create_painter(void* priv_data) {
+    return create_generic_func<struct PUPainter, QPainter>(&s_painter, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_painter(void* priv_data) {
+    destroy_generic<struct PUPainter, QPainter>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUListWidgetItem* create_list_widget_item(void* priv_data) {
+    return create_generic_func<struct PUListWidgetItem, QListWidgetItem>(&s_list_widget_item, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_list_widget_item(void* priv_data) {
+    destroy_generic<struct PUListWidgetItem, QListWidgetItem>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUListWidget* create_list_widget(void* priv_data) {
+    return create_widget_func<struct PUListWidget, WRListWidget>(&s_list_widget, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_list_widget(void* priv_data) {
+    destroy_generic<struct PUListWidget, WRListWidget>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct PUSlider* create_slider(void* priv_data) {
     return create_widget_func<struct PUSlider, WRSlider>(&s_slider, priv_data);
 }
@@ -293,18 +374,6 @@ static void destroy_main_window(void* priv_data) {
     destroy_generic<struct PUMainWindow, WRMainWindow>(priv_data);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct PUPainter* create_painter(void* priv_data) {
-    return create_generic_func<struct PUPainter, QPainter>(&s_painter, priv_data);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void destroy_painter(void* priv_data) {
-    destroy_generic<struct PUPainter, QPainter>(priv_data);
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -325,6 +394,10 @@ static void destroy_application(void* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_add_widget_item(void* self_c, struct PUListWidgetItem* item) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->addItem((QListWidgetItem*)item);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -344,6 +417,33 @@ struct PUPushButton s_push_button = {
     set_push_button_released_event,
     push_button_set_text,
     push_button_set_flat,
+    0,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUPainter s_painter = {
+    destroy_painter,
+    painter_draw_line,
+    0,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUListWidgetItem s_list_widget_item = {
+    destroy_list_widget_item,
+    list_widget_item_set_text,
+    0,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUListWidget s_list_widget = {
+    destroy_list_widget,
+    list_widget_show,
+    list_widget_resize,
+    list_widget_add_item,
+    list_widget_add_widget_item,
     0,
 };
 
@@ -384,21 +484,15 @@ struct PUPaintEvent s_paint_event = {
     0,
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-struct PUPainter s_painter = {
-    destroy_painter,
-    painter_draw_line,
-    0,
-};
-
 static struct PU s_pu = {
     create_widget,
     create_push_button,
+    create_painter,
+    create_list_widget_item,
+    create_list_widget,
     create_slider,
     create_main_window,
     create_application,
-    create_painter,
     0,
 
 };

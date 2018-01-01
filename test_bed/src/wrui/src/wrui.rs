@@ -16,6 +16,18 @@ pub struct PushButton {
     pub obj: Option<*const PUPushButton>,
 }
 
+pub struct Painter {
+    pub obj: Option<*const PUPainter>,
+}
+
+pub struct ListWidgetItem {
+    pub obj: Option<*const PUListWidgetItem>,
+}
+
+pub struct ListWidget {
+    pub obj: Option<*const PUListWidget>,
+}
+
 pub struct Slider {
     pub obj: Option<*const PUSlider>,
 }
@@ -30,10 +42,6 @@ pub struct Application {
 
 pub struct PaintEvent {
     pub obj: Option<*const PUPaintEvent>,
-}
-
-pub struct Painter {
-    pub obj: Option<*const PUPainter>,
 }
 
 pub trait PaintDevice {
@@ -141,6 +149,107 @@ impl PaintDevice for PushButton {
 }
 
 impl WidgetType for PushButton {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl Painter {
+    pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).draw_line)((*obj).privd, x1, y1, x2, y2)
+        }
+    }
+
+}
+
+impl Drop for Painter {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl ListWidgetItem {
+    pub fn set_text(&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).set_text)((*obj).privd, str_in_text_1.as_ptr())
+        }
+    }
+
+}
+
+impl Drop for ListWidgetItem {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl ListWidget {
+    pub fn show(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).show)((*obj).privd)
+        }
+    }
+
+    pub fn resize(&self, width: i32, height: i32) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).resize)((*obj).privd, width, height)
+        }
+    }
+
+    pub fn add_item(&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).add_item)((*obj).privd, str_in_text_1.as_ptr())
+        }
+    }
+
+    pub fn add_widget_item(&self, item: &ListWidgetItem) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj).add_widget_item)((*obj).privd, (*item.obj.unwrap()).privd as *const PUListWidgetItem)
+        }
+    }
+
+}
+
+impl Drop for ListWidget {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for ListWidget {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       unsafe {
+           let obj = self.obj.unwrap();
+           (*obj).privd as *const ::std::os::raw::c_void
+       }
+    }
+}
+
+impl WidgetType for ListWidget {
     fn get_obj(&self) -> *const ::std::os::raw::c_void {
        unsafe {
            let obj = self.obj.unwrap();
@@ -291,26 +400,6 @@ impl PaintEvent {
 
 }
 
-impl Painter {
-    pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
-        unsafe {
-            let obj = self.obj.unwrap();
-            ((*obj).draw_line)((*obj).privd, x1, y1, x2, y2)
-        }
-    }
-
-}
-
-impl Drop for Painter {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
-          self.obj = None;
-       }
-    }
-}
-
 #[macro_export]
 macro_rules! set_released_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
@@ -360,6 +449,18 @@ impl Ui {
         PushButton { obj: Some(unsafe { ((*self.pu).create_push_button)((*self.pu).privd) }) }
     }
 
+    pub fn create_painter(&self) -> Painter {
+        Painter { obj: Some(unsafe { ((*self.pu).create_painter)((*self.pu).privd) }) }
+    }
+
+    pub fn create_list_widget_item(&self) -> ListWidgetItem {
+        ListWidgetItem { obj: Some(unsafe { ((*self.pu).create_list_widget_item)((*self.pu).privd) }) }
+    }
+
+    pub fn create_list_widget(&self) -> ListWidget {
+        ListWidget { obj: Some(unsafe { ((*self.pu).create_list_widget)((*self.pu).privd) }) }
+    }
+
     pub fn create_slider(&self) -> Slider {
         Slider { obj: Some(unsafe { ((*self.pu).create_slider)((*self.pu).privd) }) }
     }
@@ -370,10 +471,6 @@ impl Ui {
 
     pub fn create_application(&self) -> Application {
         Application { obj: Some(unsafe { ((*self.pu).create_application)((*self.pu).privd) }) }
-    }
-
-    pub fn create_painter(&self) -> Painter {
-        Painter { obj: Some(unsafe { ((*self.pu).create_painter)((*self.pu).privd) }) }
     }
 
 }

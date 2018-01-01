@@ -363,7 +363,9 @@ fn generate_struct_body_recursive(
 
                 match func.func_type {
                     FunctionType::Regular => {
-                        generate_func_def(f, name, func, struct_name_map, type_handlers, is_widget)?
+                        if !func.is_manual {
+                            generate_func_def(f, name, func, struct_name_map, type_handlers, is_widget)?
+                        }
                     }
                     FunctionType::Callback => func_def_callback(f, name, func)?,
                     _ => (),

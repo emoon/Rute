@@ -34,17 +34,20 @@ impl MyApp {
     fn run(&mut self) {
         let app = self.ui.create_application();
         let main_window = self.ui.create_main_window();
-        let button = self.ui.create_push_button();
+        let list = self.ui.create_list_widget();
 
-        button.set_text("Press me!");
+        list.add_item("Test");
+        list.add_item("Test");
+
+        //button.set_text("Press me!");
         //button.resize(100, 100);
         //button.show();
 
         main_window.resize(500, 500);
-        main_window.set_central_widget(&button);
+        main_window.set_central_widget(&list);
         main_window.show();
 
-        set_released_event!(button, self, MyApp, MyApp::pressed_button);
+        //set_released_event!(button, self, MyApp, MyApp::pressed_button);
 
         app.exec();
     }
