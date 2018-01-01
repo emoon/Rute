@@ -10,7 +10,12 @@
 // The idea though is that this looks like the same thing for the user of the API.
 //
 
-Rect {
+enum Keys {
+    Key_A,
+    Key_B = 10,
+}
+
+struct Rect {
     i32 x,
     i32 y,
     i32 width,
@@ -18,13 +23,13 @@ Rect {
 }
 
 #[traits(PaintDevice, WidgetType)]
-Widget {
+struct Widget {
     show(),
     resize(i32 width, i32 height),
     [event] paint_event(&PaintEvent event),
 }
 
-PushButton : Widget {
+struct PushButton : Widget {
     [callback] released(),
     set_text(String text),
     set_flat(bool flat),
@@ -32,28 +37,28 @@ PushButton : Widget {
 
 // Sliders
 
-Slider : Widget {
+struct Slider : Widget {
     [callback] value_changed(i32 value),
 }
 
-MainWindow : Widget {
+struct MainWindow : Widget {
     is_animated() -> bool,
     set_central_widget(&WidgetType widget),
 }
 
 #[attributes(ManualCreate)]
-Application {
+struct Application {
 	set_style(String style),
 	exec(),
 }
 
 // No create on this as its a event only
 #[attributes(NoCreate)]
-PaintEvent {
+struct PaintEvent {
 	rect() -> Rect,
 }
 
-Painter {
+struct Painter {
     draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
 }
 

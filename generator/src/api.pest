@@ -1,8 +1,9 @@
-chunk = _{ soi ~ structdef* ~ eoi }
+chunk = _{ soi ~ (structdef | enumdef)+ ~ eoi }
 
-structdef   =  { attributes? ~ traits? ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
+structdef   =  { attributes? ~ traits? ~ ("struct") ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
+enumdef     =  { attributes? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
 fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
-field       =  { var | function }
+field       =  { var | function | enum_type }
 fieldsep    = _{ (",") }
 
 rettype     = { name }
@@ -16,11 +17,17 @@ refexp      = { ("&") }
 retexp      = { ("->") ~ refexp? ~ vtype }
 var         = { refexp? ~ vtype ~ name }
 varlist     = { var ~ ((",") ~ var)* }
+enum_assign = { ("=") ~ name_or_num }
+enum_type   = { name ~ enum_assign? }
 namelist    = { name ~ ((",") ~ name)* }
 function    = { manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
+}
+
+name_or_num = @{
+	(('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
 }
 
 vtype = @{

@@ -426,8 +426,10 @@ impl ApiDef {
     }
 }
 
-//#[cfg(debug_assertions)]
-//const _GRAMMAR: &'static str = include_str!("api.pest");
+#[cfg(debug_assertions)]
+const _GRAMMAR: &'static str = include_str!("api.pest");
+
+///
 
 #[derive(Parser)]
 #[grammar = "api.pest"]
