@@ -64,6 +64,7 @@ struct PUListWidget {
     void (*resize)(void* self_c, int width, int height);
     void (*add_item)(void* self_c, const char* text);
     void (*add_widget_item)(void* self_c, struct PUListWidgetItem* item);
+    void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int row));
     void* priv_data;
 };
 

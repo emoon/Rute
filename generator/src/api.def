@@ -48,6 +48,7 @@ struct ListWidgetItem {
 struct ListWidget : Widget {
 	add_item(String text),
 	[manual] add_widget_item(&ListWidgetItem item),
+	[callback] current_row_changed(i32 row),
 }
 
 // Sliders

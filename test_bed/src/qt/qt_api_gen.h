@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef void (*Signal_self_i32_void)(void* self_c, int value);
+typedef void (*Signal_self_i32_void)(void* self_c, int row);
 
 class QSlotWrapperSignal_self_i32_void : public QObject {
     Q_OBJECT
@@ -13,8 +13,8 @@ public:
         m_data = data;
     }
 
-    Q_SLOT void method(int value) {
-        m_func(m_data, value);
+    Q_SLOT void method(int row) {
+        m_func(m_data, row);
     }
 private:
     Signal_self_i32_void m_func;

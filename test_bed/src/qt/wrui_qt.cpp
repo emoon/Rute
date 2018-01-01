@@ -180,6 +180,14 @@ static void list_widget_add_item(void* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_list_widget_current_row_changed_event(void* object, void* user_data, void (*event)(void* self_c, int row)) {
+    QSlotWrapperSignal_self_i32_void* wrap = new QSlotWrapperSignal_self_i32_void(user_data, (Signal_self_i32_void)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(currentRowChanged(int)), wrap, SLOT(method(int)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void slider_show(void* self_c) { 
     WRSlider* qt_data = (WRSlider*)self_c;
     qt_data->show();
@@ -444,6 +452,7 @@ struct PUListWidget s_list_widget = {
     list_widget_resize,
     list_widget_add_item,
     list_widget_add_widget_item,
+    set_list_widget_current_row_changed_event,
     0,
 };
 

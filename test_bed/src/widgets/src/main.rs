@@ -26,9 +26,8 @@ impl MyApp {
         }
     }
 
-    fn pressed_button(&mut self) {
-        self.pressed_count += 1;
-        println!("Pressed button {} times", self.pressed_count);
+    fn new_row_selected(&mut self, row: i32) {
+        println!("new row {}", row);
     }
 
     fn run(&mut self) {
@@ -47,7 +46,7 @@ impl MyApp {
         main_window.set_central_widget(&list);
         main_window.show();
 
-        //set_released_event!(button, self, MyApp, MyApp::pressed_button);
+        set_current_row_changed_event!(list, self, MyApp, MyApp::new_row_selected);
 
         app.exec();
     }

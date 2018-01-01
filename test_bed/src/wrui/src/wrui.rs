@@ -401,6 +401,23 @@ impl PaintEvent {
 }
 
 #[macro_export]
+macro_rules! set_current_row_changed_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, row: i32) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, row);
+          }
+      }
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj).set_current_row_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
+      }
+    }
+}}
+
+#[macro_export]
 macro_rules! set_released_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
