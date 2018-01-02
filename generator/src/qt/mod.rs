@@ -239,32 +239,47 @@ fn generate_func_def(
                 return f.write_all(b"}\n\n");
             }
         }
-
-        f.write_fmt(format_args!(
-            "    return qt_data->{}()",
-            func.name.to_mixed_case()
-        ))?;
-    } else {
-        f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
-
-        func.write_c_func_def(f, |index, arg| {
-            if index == 0 {
-                ("".to_owned(), "".to_owned())
-            } else if arg.vtype == "String" {
-                (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
-            } else {
-                for handler in type_handlers.iter() {
-                    if arg.vtype == handler.match_type() {
-                        return handler.replace_arg(&arg);
-                    }
-                }
-
-                (arg.name.clone(), "".to_owned())
-            }
-        })?;
     }
 
+    if func.return_val.is_some() {
+        f.write_fmt(format_args!("    auto ret_value = qt_data->{}(", func.name.to_mixed_case()))?;
+    } else {
+        f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
+    }
+
+    func.write_c_func_def(f, |index, arg| {
+        if index == 0 {
+            ("".to_owned(), "".to_owned())
+        } else if arg.vtype == "String" {
+            (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
+        } else {
+            for handler in type_handlers.iter() {
+                if arg.vtype == handler.match_type() {
+                    return handler.replace_arg(&arg);
+                }
+            }
+
+            (arg.name.clone(), "".to_owned())
+        }
+    })?;
+
     f.write_all(b";\n")?;
+
+    if let Some(ref ret_val) = func.return_val {
+        // if this is just a primitive type we can go ahead and return it
+
+        if ret_val.primitive {
+            f.write_all(b"    return ret_value;\n")?;
+        } else {
+            // If we have a complex (currently assumed) QT here we need to wrap it before we return
+
+            f.write_fmt(format_args!("    PU{} ctl;\n", ret_val.vtype))?;
+            f.write_fmt(format_args!("    ctl.funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
+            f.write_fmt(format_args!("    ctl.priv_data = ret_value;\n"))?;
+            f.write_all(b"    return ctl;\n")?;
+        }
+    }
+
     f.write_all(b"}\n\n")?;
 
     Ok(())

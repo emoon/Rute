@@ -48,11 +48,6 @@ pub struct Application {
     pub obj: Option<PUApplication>,
 }
 
-#[derive(Clone)]
-pub struct PaintEvent {
-    pub obj: Option<PUPaintEvent>,
-}
-
 pub trait PaintDevice {
     fn get_obj(&self) -> *const ::std::os::raw::c_void;
 }
@@ -222,6 +217,14 @@ impl ListWidget {
         }
     }
 
+    pub fn item(&self, index: i32) -> ListWidgetItem {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).item)(obj.privd, index);
+            ListWidgetItem { obj: Some(ret_val) }
+        }
+    }
+
     pub fn add_widget_item(&self, item: &ListWidgetItem) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -314,8 +317,8 @@ impl MainWindow {
     pub fn is_animated(&self) -> bool {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).is_animated)(obj.privd)
-        }
+            let ret_val = ((*obj.funcs).is_animated)(obj.privd);
+            ret_val        }
     }
 
     pub fn set_central_widget(&self, widget: &WidgetType) {
@@ -377,16 +380,6 @@ impl Drop for Application {
           self.obj = None;
        }
     }
-}
-
-impl PaintEvent {
-    pub fn rect(&self) -> Rect {
-        unsafe {
-            let obj = self.obj.unwrap();
-            ((*obj.funcs).rect)(obj.privd)
-        }
-    }
-
 }
 
 #[macro_export]

@@ -175,7 +175,6 @@ fn generate_func_impl(
         for handler in type_handlers.iter() {
             if arg.vtype == handler.match_type() {
                 let arg_name = handler.gen_body(&arg.name, f, i);
-                println!(">>>>>>>>>>>>> inserting arg_name {}", arg_name);
                 name_remap.insert(i, arg_name);
                 break;
             }
@@ -184,7 +183,12 @@ fn generate_func_impl(
 
     f.write_all(b"        unsafe {\n")?;
     f.write_all(b"            let obj = self.obj.unwrap();\n")?;
-    f.write_fmt(format_args!("            ((*obj.funcs).{})(", func.name))?;
+
+    if func.return_val.is_some() {
+        f.write_fmt(format_args!("            let ret_val = ((*obj.funcs).{})(", func.name))?;
+    } else {
+        f.write_fmt(format_args!("            ((*obj.funcs).{})(", func.name))?;
+    }
 
     // TODO: Clean this up
 
@@ -202,12 +206,25 @@ fn generate_func_impl(
         } else if arg.reference {
             (format!("{}.obj.unwrap().privd as *const PU{}", arg.name, arg.vtype), String::new())
         } else {
-            println!("{} - ref {}", arg.name, arg.reference);
             (arg.name.to_owned(), String::new())
         }
     })?;
 
-    f.write_all(b")\n")?;
+    f.write_all(b")")?;
+
+    // Handle if we have a
+
+    if let Some(ref ret_val) = func.return_val {
+        f.write_all(b";\n")?;
+
+        if ret_val.primitive {
+            f.write_fmt(format_args!("            ret_val"))?;
+        } else {
+            f.write_fmt(format_args!("            {} {{ obj: Some(ret_val) }}\n", ret_val.vtype))?;
+        }
+    } else {
+        f.write_all(b"\n")?;
+    }
 
     f.write_all(b"        }\n")?;
     f.write_all(b"    }\n\n")?;

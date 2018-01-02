@@ -26,7 +26,7 @@ struct Rect {
 struct Widget {
     show(),
     resize(i32 width, i32 height),
-    [event] paint_event(&PaintEvent event),
+    //[event] paint_event(&PaintEvent event),
 }
 
 struct PushButton : Widget {
@@ -47,7 +47,7 @@ struct ListWidgetItem {
 
 struct ListWidget : Widget {
 	add_item(String text),
-// item() -> ListWidgetItem,
+	item(i32 index) -> ListWidgetItem,
 	[manual] add_widget_item(&ListWidgetItem item),
 	[callback] current_row_changed(i32 row),
 }
@@ -71,9 +71,9 @@ struct Application {
 
 // No create on this as its a event only
 #[attributes(NoCreate)]
-struct PaintEvent {
-	rect() -> Rect,
-}
+//struct PaintEvent {
+//	rect() -> Rect,
+//}
 
 
 // Taken directly from Qt but values has been removed. We will use a lookup on the native

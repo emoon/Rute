@@ -36,7 +36,10 @@ impl MyApp {
         let list = self.ui.create_list_widget();
 
         list.add_item("Test");
-        list.add_item("Test");
+        list.add_item("Test 4");
+
+        let test_item = list.item(0);
+        test_item.set_text("New text!");
 
         //button.set_text("Press me!");
         //button.resize(100, 100);

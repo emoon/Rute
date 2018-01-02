@@ -25,8 +25,6 @@ pub struct PUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
-    pub set_paint_event_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
-                                        callback: extern "C" fn(self_c: *const ::std::os::raw::c_void, event: *const PUPaintEvent)),
 }
 
 #[repr(C)]
@@ -86,6 +84,7 @@ pub struct PUListWidgetFuncs {
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub add_item: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
+    pub item: extern "C" fn(self_c: *const ::std::os::raw::c_void, index: i32) ->  PUListWidgetItem,
     pub add_widget_item: extern "C" fn(self_c: *const ::std::os::raw::c_void, item: *const PUListWidgetItem),
     pub set_current_row_changed_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const ::std::os::raw::c_void, row: i32)),
@@ -141,18 +140,6 @@ pub struct PUApplicationFuncs {
 #[derive(Copy, Clone)]
 pub struct PUApplication {
     pub funcs: *const PUApplicationFuncs,
-    pub privd: *const c_void,
-}
-
-#[repr(C)]
-pub struct PUPaintEventFuncs {
-    pub rect: extern "C" fn(self_c: *const ::std::os::raw::c_void) ->  PURect,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct PUPaintEvent {
-    pub funcs: *const PUPaintEventFuncs,
     pub privd: *const c_void,
 }
 

@@ -9,7 +9,6 @@
 #include <QSlider>
 #include <QMainWindow>
 #include <QApplication>
-#include <QPaintEvent>
 
 struct PrivData {
     QWidget* parent;
@@ -26,7 +25,6 @@ extern struct PUListWidgetFuncs s_list_widget_funcs;
 extern struct PUSliderFuncs s_slider_funcs;
 extern struct PUMainWindowFuncs s_main_window_funcs;
 extern struct PUApplicationFuncs s_application_funcs;
-extern struct PUPaintEventFuncs s_paint_event_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -35,19 +33,6 @@ public:
     WRWidget(QWidget* widget) : QWidget(widget) {}
     virtual ~WRWidget() {}
 
-    virtual void paintEvent(QPaintEvent* event) {
-        if (m_paint_event) {
-            PUPaintEvent e;
-            e.funcs = &s_paint_event_funcs;
-            e.priv_data = event;
-            m_paint_event(m_paint_event_user_data, (PUPaintEvent*)&e);
-        } else {
-            QWidget::paintEvent(event);
-        }
-    }
-
-    void (*m_paint_event)(void* self_c, struct PUPaintEvent* event) = nullptr;
-    void* m_paint_event_user_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,8 +87,6 @@ static void widget_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void push_button_show(void* self_c) { 
     WRPushButton* qt_data = (WRPushButton*)self_c;
     qt_data->show();
@@ -115,8 +98,6 @@ static void push_button_resize(void* self_c, int width, int height) {
     WRPushButton* qt_data = (WRPushButton*)self_c;
     qt_data->resize(width, height);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -170,11 +151,20 @@ static void list_widget_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void list_widget_add_item(void* self_c, const char* text) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
     qt_data->addItem(QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUListWidgetItem list_widget_item(void* self_c, int index) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->item(index);
+    PUListWidgetItem ctl;
+    ctl.funcs = &s_list_widget_item_funcs;
+    ctl.priv_data = ret_value;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -203,8 +193,6 @@ static void slider_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void set_slider_value_changed_event(void* object, void* user_data, void (*event)(void* self_c, int value)) {
     QSlotWrapperSignal_self_i32_void* wrap = new QSlotWrapperSignal_self_i32_void(user_data, (Signal_self_i32_void)event);
     QObject* q_obj = (QObject*)object;
@@ -227,11 +215,10 @@ static void main_window_resize(void* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool main_window_is_animated(void* self_c) { 
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
-    return qt_data->isAnimated();
+    auto ret_value = qt_data->isAnimated();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,14 +240,6 @@ static void application_set_style(void* self_c, const char* style) {
 static void application_exec(void* self_c) { 
     QApplication* qt_data = (QApplication*)self_c;
     qt_data->exec();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct PURect paint_event_rect(void* self_c) { 
-    QPaintEvent* qt_data = (QPaintEvent*)self_c;
-    const auto& t = qt_data->rect();
-    return PURect { .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() };
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,6 +424,7 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     list_widget_show,
     list_widget_resize,
     list_widget_add_item,
+    list_widget_item,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
 };
@@ -474,12 +454,6 @@ struct PUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_set_style,
     application_exec,
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-struct PUPaintEventFuncs s_paint_event_funcs = {
-    paint_event_rect,
 };
 
 static struct PU s_pu = {
