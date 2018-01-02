@@ -151,7 +151,7 @@ pub fn generate_ffi_bindings(
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    pub create_{}: extern \"C\" fn(priv_data: *const c_void) -> *const PU{},\n",
+            "    pub create_{}: extern \"C\" fn(priv_data: *const c_void) -> PU{},\n",
             struct_.name.to_snake_case(),
             struct_.name
         ))?;

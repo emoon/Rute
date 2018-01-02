@@ -35,8 +35,8 @@ impl MyApp {
         let main_window = self.ui.create_main_window();
         let list = self.ui.create_list_widget();
 
-        //list.add_item("Test");
-        //list.add_item("Test");
+        list.add_item("Test");
+        list.add_item("Test");
 
         //button.set_text("Press me!");
         //button.resize(100, 100);

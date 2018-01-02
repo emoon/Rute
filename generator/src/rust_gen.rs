@@ -87,7 +87,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
                 sdef.name, sdef.name
             ))?;
         } else {
-            f.write_all(b"#[derive(Clone, Debug)]\n")?;
+            f.write_all(b"#[derive(Clone)]\n")?;
             f.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
 
             if sdef.is_pod() {
@@ -102,7 +102,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
             } else {
                 // Assume for non-pod that we only use the FFI interface to do stuff.
                 f.write_fmt(format_args!(
-                    "    pub obj: Option<*const PU{}>,\n",
+                    "    pub obj: Option<PU{}>,\n",
                     sdef.name
                 ))?;
             }
@@ -184,23 +184,23 @@ fn generate_func_impl(
 
     f.write_all(b"        unsafe {\n")?;
     f.write_all(b"            let obj = self.obj.unwrap();\n")?;
-    f.write_fmt(format_args!("            ((*(*obj).funcs).{})(", func.name))?;
+    f.write_fmt(format_args!("            ((*obj.funcs).{})(", func.name))?;
 
     // TODO: Clean this up
 
     func.write_func_def(f, |index, arg| {
         if index == 0 {
-            ("(*obj).privd".to_owned(), String::new())
+            ("obj.privd".to_owned(), String::new())
         } else if !arg.primitive {
             if let Some(name) = name_remap.get(&index) {
                 (name.to_owned(), String::new())
             } else if arg.reference {
-                (format!("(*{}.obj.unwrap()).privd as *const PU{}", arg.name, arg.vtype), String::new())
+                (format!("{}.obj.unwrap().privd as *const PU{}", arg.name, arg.vtype), String::new())
             } else {
                 (arg.name.to_owned(), String::new())
             }
         } else if arg.reference {
-            (format!("(*{}.obj.unwrap()).privd as *const PU{}", arg.name, arg.vtype), String::new())
+            (format!("{}.obj.unwrap().privd as *const PU{}", arg.name, arg.vtype), String::new())
         } else {
             println!("{} - ref {}", arg.name, arg.reference);
             (arg.name.to_owned(), String::new())
@@ -280,7 +280,7 @@ fn generate_set_event_impl(
         f.write_all(b"      }\n")?;
         f.write_all(b"      unsafe {\n")?;
         f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-        f.write_fmt(format_args!("         ((*(*obj).funcs).set_{}_event)((*obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -353,7 +353,7 @@ fn generate_impl(
             f.write_all(b"    fn drop(&mut self) {\n")?;
             f.write_all(b"       unsafe {\n")?;
             f.write_all(b"          let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);\n")?;
+            f.write_all(b"          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);\n")?;
             f.write_all(b"          self.obj = None;\n")?;
             f.write_all(b"       }\n")?;
             f.write_all(b"    }\n")?;
@@ -363,10 +363,8 @@ fn generate_impl(
         for trait_name in api_def.get_traits(&sdef) {
             f.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
             f.write_all(b"    fn get_obj(&self) -> *const ::std::os::raw::c_void {\n")?;
-            f.write_all(b"       unsafe {\n")?;
-            f.write_all(b"           let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"           (*obj).privd as *const ::std::os::raw::c_void\n")?;
-            f.write_all(b"       }\n")?;
+            f.write_all(b"       let obj = self.obj.unwrap();\n")?;
+            f.write_all(b"       obj.privd as *const ::std::os::raw::c_void\n")?;
             f.write_all(b"    }\n")?;
             f.write_all(b"}\n\n")?;
         }

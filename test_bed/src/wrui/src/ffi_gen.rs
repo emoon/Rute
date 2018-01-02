@@ -158,14 +158,14 @@ pub struct PUPaintEvent {
 
 #[repr(C)]
 pub struct PU {
-    pub create_widget: extern "C" fn(priv_data: *const c_void) -> *const PUWidget,
-    pub create_push_button: extern "C" fn(priv_data: *const c_void) -> *const PUPushButton,
-    pub create_painter: extern "C" fn(priv_data: *const c_void) -> *const PUPainter,
-    pub create_list_widget_item: extern "C" fn(priv_data: *const c_void) -> *const PUListWidgetItem,
-    pub create_list_widget: extern "C" fn(priv_data: *const c_void) -> *const PUListWidget,
-    pub create_slider: extern "C" fn(priv_data: *const c_void) -> *const PUSlider,
-    pub create_main_window: extern "C" fn(priv_data: *const c_void) -> *const PUMainWindow,
-    pub create_application: extern "C" fn(priv_data: *const c_void) -> *const PUApplication,
+    pub create_widget: extern "C" fn(priv_data: *const c_void) -> PUWidget,
+    pub create_push_button: extern "C" fn(priv_data: *const c_void) -> PUPushButton,
+    pub create_painter: extern "C" fn(priv_data: *const c_void) -> PUPainter,
+    pub create_list_widget_item: extern "C" fn(priv_data: *const c_void) -> PUListWidgetItem,
+    pub create_list_widget: extern "C" fn(priv_data: *const c_void) -> PUListWidget,
+    pub create_slider: extern "C" fn(priv_data: *const c_void) -> PUSlider,
+    pub create_main_window: extern "C" fn(priv_data: *const c_void) -> PUMainWindow,
+    pub create_application: extern "C" fn(priv_data: *const c_void) -> PUApplication,
     pub privd: *const c_void,
 }
 
