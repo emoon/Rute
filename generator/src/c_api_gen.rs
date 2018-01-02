@@ -177,7 +177,6 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     // Write non-pod structs
 
-
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_fmt(format_args!("struct PU{}Funcs {{\n", sdef.name))?;
 
@@ -187,7 +186,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_events(&mut f, sdef)?;
-        f.write_fmt(format_args!("}};\n\n"))?;
+        f.write_all(b"};\n\n")?;
 
         f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
         f.write_fmt(format_args!("    struct PU{}Funcs* funcs;\n", sdef.name))?;
@@ -195,7 +194,6 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
         f.write_all(b"};\n\n")?;
     }
-
 
     // generate C_API entry
 

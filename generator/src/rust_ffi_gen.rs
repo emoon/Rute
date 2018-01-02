@@ -109,26 +109,37 @@ pub fn generate_ffi_bindings(
         f.write_all(b"}\n\n")?;
     }
 
-    for struct_ in structs {
+    // Write the struct for pods
+
+    for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
         f.write_all(b"#[repr(C)]\n")?;
+        f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
 
-        if struct_.is_pod() {
-            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
-        }
+        generate_struct_body_recursive(&mut f, api_def, sdef)?;
+        generate_struct_body_events(&mut f, sdef)?;
 
-        f.write_fmt(format_args!("pub struct PU{} {{\n", struct_.name))?;
+        f.write_all(b"}\n\n")?;
+    }
 
-        if !struct_.is_pod() && struct_.should_have_create_func() {
+    // Write non-pod structs
+
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+        f.write_all(b"#[repr(C)]\n")?;
+        f.write_fmt(format_args!("pub struct PU{}Funcs {{\n", sdef.name))?;
+
+        if sdef.should_have_create_func() {
             f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const c_void),\n")?;
         }
 
-        generate_struct_body_recursive(&mut f, api_def, &struct_)?;
-        generate_struct_body_events(&mut f, &struct_)?;
+        generate_struct_body_recursive(&mut f, api_def, &sdef)?;
+        generate_struct_body_events(&mut f, &sdef)?;
+        f.write_all(b"}\n\n")?;
 
-        if !struct_.is_pod() {
-            f.write_all(b"    pub privd: *const c_void,\n")?;
-        }
-
+        f.write_all(b"#[repr(C)]\n")?;
+        f.write_all(b"#[derive(Copy, Clone)]\n")?;
+        f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("    pub funcs: *const PU{}Funcs,\n", sdef.name))?;
+        f.write_all(b"    pub privd: *const c_void,\n")?;
         f.write_all(b"}\n\n")?;
     }
 
