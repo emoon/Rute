@@ -16,7 +16,7 @@ struct PrivData {
 };\n\n";
 
 static CREATE_WIDGET_TEMPLATE: &'static [u8] =
-    b"template<typename T, typename QT> T* create_widget_func(T* struct_data, void* priv_data) {
+    b"template<typename T, typename F, typename QT> T create_widget_func(F* funcs, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
     if (data) {
@@ -24,28 +24,25 @@ static CREATE_WIDGET_TEMPLATE: &'static [u8] =
     } else {
         qt_obj = new QT(nullptr);
     }
-    T* ctl = new T;
-    memcpy(ctl, struct_data, sizeof(T));
-    ctl->priv_data = qt_obj;
+    T ctl;
+    ctl.funcs = funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }\n\n";
 
 static CREATE_GENERIC_TEMPLATE: &'static [u8] =
-    b"template<typename T, typename QT> T* create_generic_func(T* struct_data, void* priv_data) {
+    b"template<typename T, typename F, typename QT> T create_generic_func(F* funcs, void* priv_data) {
     QT* qt_obj = new QT();
-    T* ctl = new T;
-    memcpy(ctl, struct_data, sizeof(T));
-    ctl->priv_data = qt_obj;
+    T ctl;
+    ctl.funcs = funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }\n\n";
 
 static DESTROY_TEMPLATE: &'static [u8] =
-    b"template<typename T, typename QT> void destroy_generic(void* struct_data) {
-    assert(struct_data);
-    T* t = (T*)struct_data;
-    QT* qt_obj = (QT*)t->priv_data;
+    b"template<typename QT> void destroy_generic(void* qt_data) {
+    QT* qt_obj = (QT*)qt_data;
     delete qt_obj;
-    delete t;
 }\n\n";
 
 static FOOTER: &'static [u8] = b"
@@ -447,9 +444,10 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     ))?;
     f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
     f.write_fmt(format_args!(
-        "            PU{} e = s_{};\n",
-        event_type.vtype, func.name
+        "            PU{} e;\n",
+        event_type.vtype,
     ))?;
+    f.write_fmt(format_args!("            e.funcs = &s_{}_funcs;\n", func.name))?;
     f.write_fmt(format_args!("            e.priv_data = event;\n"))?;
     f.write_fmt(format_args!(
         "            m_{}(m_{}_user_data, (PU{}*)&e);\n",
@@ -569,7 +567,7 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_all(SEPARATOR)?;
         f.write_fmt(format_args!(
-            "struct PU{} s_{} = {{\n",
+            "struct PU{}Funcs s_{}_funcs = {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -580,7 +578,6 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 
         generate_struct_def(f, &sdef.name, api_def, sdef)?;
 
-        f.write_all(b"    0,\n")?;
         f.write_all(b"};\n\n")?;
     }
 
@@ -597,7 +594,7 @@ fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::R
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_fmt(format_args!(
-            "extern struct PU{} s_{};\n",
+            "extern struct PU{}Funcs s_{}_funcs;\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -645,7 +642,7 @@ fn generate_create_functions(
         f.write_all(SEPARATOR)?;
 
         f.write_fmt(format_args!(
-            "static struct PU{}* create_{}(void* priv_data) {{\n",
+            "static struct PU{} create_{}(void* priv_data) {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -656,14 +653,16 @@ fn generate_create_functions(
 
         if inherits_widget(&sdef, api_def) {
             f.write_fmt(format_args!(
-                "    return create_widget_func<struct PU{}, WR{}>(&s_{}, priv_data);\n}}\n\n",
+                "    return create_widget_func<struct PU{}, struct PU{}Funcs, WR{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                struct_name,
                 struct_name,
                 struct_qt_name,
                 struct_name.to_snake_case()
             ))?;
         } else {
             f.write_fmt(format_args!(
-                "    return create_generic_func<struct PU{}, Q{}>(&s_{}, priv_data);\n}}\n\n",
+                "    return create_generic_func<struct PU{}, struct PU{}Funcs, Q{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                struct_name,
                 struct_name,
                 struct_qt_name,
                 struct_name.to_snake_case()
@@ -678,8 +677,8 @@ fn generate_create_functions(
                 sdef.name.to_snake_case()
             ))?;
             f.write_fmt(format_args!(
-                "    destroy_generic<struct PU{}, {}{}>(priv_data);\n}}\n\n",
-                struct_name, qt_type, struct_qt_name
+                "    destroy_generic<{}{}>(priv_data);\n}}\n\n",
+                qt_type, struct_qt_name
             ))?;
         }
     }

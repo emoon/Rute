@@ -184,7 +184,7 @@ fn generate_func_impl(
 
     f.write_all(b"        unsafe {\n")?;
     f.write_all(b"            let obj = self.obj.unwrap();\n")?;
-    f.write_fmt(format_args!("            ((*obj).{})(", func.name))?;
+    f.write_fmt(format_args!("            ((*(*obj).funcs).{})(", func.name))?;
 
     // TODO: Clean this up
 
@@ -280,7 +280,7 @@ fn generate_set_event_impl(
         f.write_all(b"      }\n")?;
         f.write_all(b"      unsafe {\n")?;
         f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-        f.write_fmt(format_args!("         ((*obj).set_{}_event)((*obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!("         ((*(*obj).funcs).set_{}_event)((*obj).privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -353,7 +353,7 @@ fn generate_impl(
             f.write_all(b"    fn drop(&mut self) {\n")?;
             f.write_all(b"       unsafe {\n")?;
             f.write_all(b"          let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);\n")?;
+            f.write_all(b"          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);\n")?;
             f.write_all(b"          self.obj = None;\n")?;
             f.write_all(b"       }\n")?;
             f.write_all(b"    }\n")?;

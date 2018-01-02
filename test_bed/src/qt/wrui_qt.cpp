@@ -18,15 +18,15 @@ struct PrivData {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-extern struct PUWidget s_widget;
-extern struct PUPushButton s_push_button;
-extern struct PUPainter s_painter;
-extern struct PUListWidgetItem s_list_widget_item;
-extern struct PUListWidget s_list_widget;
-extern struct PUSlider s_slider;
-extern struct PUMainWindow s_main_window;
-extern struct PUApplication s_application;
-extern struct PUPaintEvent s_paint_event;
+extern struct PUWidgetFuncs s_widget_funcs;
+extern struct PUPushButtonFuncs s_push_button_funcs;
+extern struct PUPainterFuncs s_painter_funcs;
+extern struct PUListWidgetItemFuncs s_list_widget_item_funcs;
+extern struct PUListWidgetFuncs s_list_widget_funcs;
+extern struct PUSliderFuncs s_slider_funcs;
+extern struct PUMainWindowFuncs s_main_window_funcs;
+extern struct PUApplicationFuncs s_application_funcs;
+extern struct PUPaintEventFuncs s_paint_event_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,8 @@ public:
 
     virtual void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
-            PUPaintEvent e = s_paint_event;
+            PUPaintEvent e;
+            e.funcs = &s_paint_event_funcs;
             e.priv_data = event;
             m_paint_event(m_paint_event_user_data, (PUPaintEvent*)&e);
         } else {
@@ -178,13 +179,6 @@ static void list_widget_add_item(void* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUListWidgetItem list_widget_item(void* self_c) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    return qt_data->item();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void set_list_widget_current_row_changed_event(void* object, void* user_data, void (*event)(void* self_c, int row)) {
@@ -271,7 +265,7 @@ static struct PURect paint_event_rect(void* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> T* create_widget_func(T* struct_data, void* priv_data) {
+template<typename T, typename F, typename QT> T create_widget_func(F* funcs, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
     if (data) {
@@ -279,132 +273,129 @@ template<typename T, typename QT> T* create_widget_func(T* struct_data, void* pr
     } else {
         qt_obj = new QT(nullptr);
     }
-    T* ctl = new T;
-    memcpy(ctl, struct_data, sizeof(T));
-    ctl->priv_data = qt_obj;
+    T ctl;
+    ctl.funcs = funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> T* create_generic_func(T* struct_data, void* priv_data) {
+template<typename T, typename F, typename QT> T create_generic_func(F* funcs, void* priv_data) {
     QT* qt_obj = new QT();
-    T* ctl = new T;
-    memcpy(ctl, struct_data, sizeof(T));
-    ctl->priv_data = qt_obj;
+    T ctl;
+    ctl.funcs = funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> void destroy_generic(void* struct_data) {
-    assert(struct_data);
-    T* t = (T*)struct_data;
-    QT* qt_obj = (QT*)t->priv_data;
+template<typename QT> void destroy_generic(void* qt_data) {
+    QT* qt_obj = (QT*)qt_data;
     delete qt_obj;
-    delete t;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUWidget* create_widget(void* priv_data) {
-    return create_widget_func<struct PUWidget, WRWidget>(&s_widget, priv_data);
+static struct PUWidget create_widget(void* priv_data) {
+    return create_widget_func<struct PUWidget, struct PUWidgetFuncs, WRWidget>(&s_widget_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_widget(void* priv_data) {
-    destroy_generic<struct PUWidget, WRWidget>(priv_data);
+    destroy_generic<WRWidget>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUPushButton* create_push_button(void* priv_data) {
-    return create_widget_func<struct PUPushButton, WRPushButton>(&s_push_button, priv_data);
+static struct PUPushButton create_push_button(void* priv_data) {
+    return create_widget_func<struct PUPushButton, struct PUPushButtonFuncs, WRPushButton>(&s_push_button_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_push_button(void* priv_data) {
-    destroy_generic<struct PUPushButton, WRPushButton>(priv_data);
+    destroy_generic<WRPushButton>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUPainter* create_painter(void* priv_data) {
-    return create_generic_func<struct PUPainter, QPainter>(&s_painter, priv_data);
+static struct PUPainter create_painter(void* priv_data) {
+    return create_generic_func<struct PUPainter, struct PUPainterFuncs, QPainter>(&s_painter_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_painter(void* priv_data) {
-    destroy_generic<struct PUPainter, QPainter>(priv_data);
+    destroy_generic<QPainter>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUListWidgetItem* create_list_widget_item(void* priv_data) {
-    return create_generic_func<struct PUListWidgetItem, QListWidgetItem>(&s_list_widget_item, priv_data);
+static struct PUListWidgetItem create_list_widget_item(void* priv_data) {
+    return create_generic_func<struct PUListWidgetItem, struct PUListWidgetItemFuncs, QListWidgetItem>(&s_list_widget_item_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_list_widget_item(void* priv_data) {
-    destroy_generic<struct PUListWidgetItem, QListWidgetItem>(priv_data);
+    destroy_generic<QListWidgetItem>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUListWidget* create_list_widget(void* priv_data) {
-    return create_widget_func<struct PUListWidget, WRListWidget>(&s_list_widget, priv_data);
+static struct PUListWidget create_list_widget(void* priv_data) {
+    return create_widget_func<struct PUListWidget, struct PUListWidgetFuncs, WRListWidget>(&s_list_widget_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_list_widget(void* priv_data) {
-    destroy_generic<struct PUListWidget, WRListWidget>(priv_data);
+    destroy_generic<WRListWidget>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUSlider* create_slider(void* priv_data) {
-    return create_widget_func<struct PUSlider, WRSlider>(&s_slider, priv_data);
+static struct PUSlider create_slider(void* priv_data) {
+    return create_widget_func<struct PUSlider, struct PUSliderFuncs, WRSlider>(&s_slider_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_slider(void* priv_data) {
-    destroy_generic<struct PUSlider, WRSlider>(priv_data);
+    destroy_generic<WRSlider>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUMainWindow* create_main_window(void* priv_data) {
-    return create_widget_func<struct PUMainWindow, WRMainWindow>(&s_main_window, priv_data);
+static struct PUMainWindow create_main_window(void* priv_data) {
+    return create_widget_func<struct PUMainWindow, struct PUMainWindowFuncs, WRMainWindow>(&s_main_window_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_main_window(void* priv_data) {
-    destroy_generic<struct PUMainWindow, WRMainWindow>(priv_data);
+    destroy_generic<WRMainWindow>(priv_data);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUApplication* create_application(void* priv_data) {
+static struct PUApplication create_application(void* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
-    struct PUApplication* ctl = new struct PUApplication;
-    memcpy(ctl, &s_application, sizeof(struct PUApplication));
-    ctl->priv_data = qt_obj;
+    struct PUApplication ctl;
+    ctl.funcs = &s_application_funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_application(void* priv_data) {
-    destroy_generic<struct PUApplication, QApplication>(priv_data);
+    destroy_generic<QApplication>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -416,89 +407,79 @@ static void list_widget_add_widget_item(void* self_c, struct PUListWidgetItem* i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUWidget s_widget = {
+struct PUWidgetFuncs s_widget_funcs = {
     destroy_widget,
     widget_show,
     widget_resize,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUPushButton s_push_button = {
+struct PUPushButtonFuncs s_push_button_funcs = {
     destroy_push_button,
     push_button_show,
     push_button_resize,
     set_push_button_released_event,
     push_button_set_text,
     push_button_set_flat,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUPainter s_painter = {
+struct PUPainterFuncs s_painter_funcs = {
     destroy_painter,
     painter_draw_line,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUListWidgetItem s_list_widget_item = {
+struct PUListWidgetItemFuncs s_list_widget_item_funcs = {
     destroy_list_widget_item,
     list_widget_item_set_text,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUListWidget s_list_widget = {
+struct PUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_show,
     list_widget_resize,
     list_widget_add_item,
-    list_widget_item,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUSlider s_slider = {
+struct PUSliderFuncs s_slider_funcs = {
     destroy_slider,
     slider_show,
     slider_resize,
     set_slider_value_changed_event,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUMainWindow s_main_window = {
+struct PUMainWindowFuncs s_main_window_funcs = {
     destroy_main_window,
     main_window_show,
     main_window_resize,
     main_window_is_animated,
     main_window_set_central_widget,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUApplication s_application = {
+struct PUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_set_style,
     application_exec,
-    0,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUPaintEvent s_paint_event = {
+struct PUPaintEventFuncs s_paint_event_funcs = {
     paint_event_rect,
-    0,
 };
 
 static struct PU s_pu = {

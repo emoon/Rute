@@ -12,6 +12,7 @@ pub struct PUWidgetType {
     _unused: [u8; 0],
 }
 
+#[repr(C)]
 pub struct PURect {
     pub x: i32,
     pub y: i32,
@@ -85,7 +86,6 @@ pub struct PUListWidgetFuncs {
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub add_item: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
-    pub item: extern "C" fn(self_c: *const ::std::os::raw::c_void) ->  PUListWidgetItem,
     pub add_widget_item: extern "C" fn(self_c: *const ::std::os::raw::c_void, item: *const PUListWidgetItem),
     pub set_current_row_changed_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const ::std::os::raw::c_void, row: i32)),

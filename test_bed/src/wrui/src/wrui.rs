@@ -65,14 +65,14 @@ impl Widget {
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).show)((*obj).privd)
+            ((*(*obj).funcs).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).resize)((*obj).privd, width, height)
+            ((*(*obj).funcs).resize)((*obj).privd, width, height)
         }
     }
 
@@ -82,7 +82,7 @@ impl Drop for Widget {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -110,14 +110,14 @@ impl PushButton {
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).show)((*obj).privd)
+            ((*(*obj).funcs).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).resize)((*obj).privd, width, height)
+            ((*(*obj).funcs).resize)((*obj).privd, width, height)
         }
     }
 
@@ -125,14 +125,14 @@ impl PushButton {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).set_text)((*obj).privd, str_in_text_1.as_ptr())
+            ((*(*obj).funcs).set_text)((*obj).privd, str_in_text_1.as_ptr())
         }
     }
 
     pub fn set_flat(&self, flat: bool) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).set_flat)((*obj).privd, flat)
+            ((*(*obj).funcs).set_flat)((*obj).privd, flat)
         }
     }
 
@@ -142,7 +142,7 @@ impl Drop for PushButton {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -170,7 +170,7 @@ impl Painter {
     pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).draw_line)((*obj).privd, x1, y1, x2, y2)
+            ((*(*obj).funcs).draw_line)((*obj).privd, x1, y1, x2, y2)
         }
     }
 
@@ -180,7 +180,7 @@ impl Drop for Painter {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -191,7 +191,7 @@ impl ListWidgetItem {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).set_text)((*obj).privd, str_in_text_1.as_ptr())
+            ((*(*obj).funcs).set_text)((*obj).privd, str_in_text_1.as_ptr())
         }
     }
 
@@ -201,7 +201,7 @@ impl Drop for ListWidgetItem {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -211,14 +211,14 @@ impl ListWidget {
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).show)((*obj).privd)
+            ((*(*obj).funcs).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).resize)((*obj).privd, width, height)
+            ((*(*obj).funcs).resize)((*obj).privd, width, height)
         }
     }
 
@@ -226,21 +226,14 @@ impl ListWidget {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).add_item)((*obj).privd, str_in_text_1.as_ptr())
-        }
-    }
-
-    pub fn item(&self) -> ListWidgetItem {
-        unsafe {
-            let obj = self.obj.unwrap();
-            ((*obj).item)((*obj).privd)
+            ((*(*obj).funcs).add_item)((*obj).privd, str_in_text_1.as_ptr())
         }
     }
 
     pub fn add_widget_item(&self, item: &ListWidgetItem) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).add_widget_item)((*obj).privd, (*item.obj.unwrap()).privd as *const PUListWidgetItem)
+            ((*(*obj).funcs).add_widget_item)((*obj).privd, (*item.obj.unwrap()).privd as *const PUListWidgetItem)
         }
     }
 
@@ -250,7 +243,7 @@ impl Drop for ListWidget {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -278,14 +271,14 @@ impl Slider {
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).show)((*obj).privd)
+            ((*(*obj).funcs).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).resize)((*obj).privd, width, height)
+            ((*(*obj).funcs).resize)((*obj).privd, width, height)
         }
     }
 
@@ -295,7 +288,7 @@ impl Drop for Slider {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -323,28 +316,28 @@ impl MainWindow {
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).show)((*obj).privd)
+            ((*(*obj).funcs).show)((*obj).privd)
         }
     }
 
     pub fn resize(&self, width: i32, height: i32) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).resize)((*obj).privd, width, height)
+            ((*(*obj).funcs).resize)((*obj).privd, width, height)
         }
     }
 
     pub fn is_animated(&self) -> bool {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).is_animated)((*obj).privd)
+            ((*(*obj).funcs).is_animated)((*obj).privd)
         }
     }
 
     pub fn set_central_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).set_central_widget)((*obj).privd, widget.get_obj() as *const PUWidgetType)
+            ((*(*obj).funcs).set_central_widget)((*obj).privd, widget.get_obj() as *const PUWidgetType)
         }
     }
 
@@ -354,7 +347,7 @@ impl Drop for MainWindow {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -383,14 +376,14 @@ impl Application {
         let str_in_style_1 = CString::new(style).unwrap();
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).set_style)((*obj).privd, str_in_style_1.as_ptr())
+            ((*(*obj).funcs).set_style)((*obj).privd, str_in_style_1.as_ptr())
         }
     }
 
     pub fn exec(&self) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).exec)((*obj).privd)
+            ((*(*obj).funcs).exec)((*obj).privd)
         }
     }
 
@@ -400,7 +393,7 @@ impl Drop for Application {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj).destroy)(obj as *const ::std::os::raw::c_void);
+          ((*(*obj).funcs).destroy)(obj as *const ::std::os::raw::c_void);
           self.obj = None;
        }
     }
@@ -410,7 +403,7 @@ impl PaintEvent {
     pub fn rect(&self) -> Rect {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj).rect)((*obj).privd)
+            ((*(*obj).funcs).rect)((*obj).privd)
         }
     }
 
@@ -428,7 +421,7 @@ macro_rules! set_current_row_changed_event {
       }
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj).set_current_row_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
+         ((*(*obj).funcs).set_current_row_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}
@@ -445,7 +438,7 @@ macro_rules! set_released_event {
       }
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj).set_released_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
+         ((*(*obj).funcs).set_released_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}
@@ -462,7 +455,7 @@ macro_rules! set_value_changed_event {
       }
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj).set_value_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
+         ((*(*obj).funcs).set_value_changed_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
       }
     }
 }}

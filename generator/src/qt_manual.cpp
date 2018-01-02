@@ -1,19 +1,19 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PUApplication* create_application(void* priv_data) {
+static struct PUApplication create_application(void* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
-    struct PUApplication* ctl = new struct PUApplication;
-    memcpy(ctl, &s_application, sizeof(struct PUApplication));
-    ctl->priv_data = qt_obj;
+    struct PUApplication ctl;
+    ctl.funcs = &s_application_funcs;
+    ctl.priv_data = qt_obj;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_application(void* priv_data) {
-    destroy_generic<struct PUApplication, QApplication>(priv_data);
+    destroy_generic<QApplication>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
