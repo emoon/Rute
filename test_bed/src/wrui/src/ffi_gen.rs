@@ -21,8 +21,22 @@ pub struct PURect {
 }
 
 #[repr(C)]
+pub struct PUObjectFuncs {
+    pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUObject {
+    pub funcs: *const PUObjectFuncs,
+    pub privd: *const c_void,
+}
+
+#[repr(C)]
 pub struct PUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
 }
@@ -37,6 +51,7 @@ pub struct PUWidget {
 #[repr(C)]
 pub struct PUPushButtonFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_released_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
@@ -81,6 +96,7 @@ pub struct PUListWidgetItem {
 #[repr(C)]
 pub struct PUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub add_item: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
@@ -100,6 +116,7 @@ pub struct PUListWidget {
 #[repr(C)]
 pub struct PUSliderFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub set_value_changed_event: extern "C" fn(object: *const c_void, user_data: *const c_void,
@@ -116,6 +133,7 @@ pub struct PUSlider {
 #[repr(C)]
 pub struct PUMainWindowFuncs {
     pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
     pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
     pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
     pub is_animated: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
@@ -126,6 +144,38 @@ pub struct PUMainWindowFuncs {
 #[derive(Copy, Clone)]
 pub struct PUMainWindow {
     pub funcs: *const PUMainWindowFuncs,
+    pub privd: *const c_void,
+}
+
+#[repr(C)]
+pub struct PUActionFuncs {
+    pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
+    pub is_enabled: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
+    pub set_text: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUAction {
+    pub funcs: *const PUActionFuncs,
+    pub privd: *const c_void,
+}
+
+#[repr(C)]
+pub struct PUMenuFuncs {
+    pub destroy: extern "C" fn(self_c: *const c_void),
+    pub is_widget_type: extern "C" fn(self_c: *const ::std::os::raw::c_void) -> bool,
+    pub show: extern "C" fn(self_c: *const ::std::os::raw::c_void),
+    pub resize: extern "C" fn(self_c: *const ::std::os::raw::c_void, width: i32, height: i32),
+    pub add_action_text: extern "C" fn(self_c: *const ::std::os::raw::c_void, text: *const ::std::os::raw::c_char),
+    pub add_action: extern "C" fn(self_c: *const ::std::os::raw::c_void, action: *const PUAction),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUMenu {
+    pub funcs: *const PUMenuFuncs,
     pub privd: *const c_void,
 }
 
@@ -145,6 +195,7 @@ pub struct PUApplication {
 
 #[repr(C)]
 pub struct PU {
+    pub create_object: extern "C" fn(priv_data: *const c_void) -> PUObject,
     pub create_widget: extern "C" fn(priv_data: *const c_void) -> PUWidget,
     pub create_push_button: extern "C" fn(priv_data: *const c_void) -> PUPushButton,
     pub create_painter: extern "C" fn(priv_data: *const c_void) -> PUPainter,
@@ -152,6 +203,8 @@ pub struct PU {
     pub create_list_widget: extern "C" fn(priv_data: *const c_void) -> PUListWidget,
     pub create_slider: extern "C" fn(priv_data: *const c_void) -> PUSlider,
     pub create_main_window: extern "C" fn(priv_data: *const c_void) -> PUMainWindow,
+    pub create_action: extern "C" fn(priv_data: *const c_void) -> PUAction,
+    pub create_menu: extern "C" fn(priv_data: *const c_void) -> PUMenu,
     pub create_application: extern "C" fn(priv_data: *const c_void) -> PUApplication,
     pub privd: *const c_void,
 }

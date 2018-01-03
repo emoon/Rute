@@ -23,3 +23,12 @@ static void list_widget_add_widget_item(void* self_c, struct PUListWidgetItem* i
     qt_data->addItem((QListWidgetItem*)item);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_add_action_text(void* self_c, const char* text) {
+    WRMenu* qt_data = (WRMenu*)self_c;
+    qt_data->addAction(QString::fromLatin1(text));
+}
+
+
+

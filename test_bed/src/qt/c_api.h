@@ -9,6 +9,8 @@ extern "C" {
 #endif
 
 struct PURect;
+struct PUObject;
+struct PUObjectFuncs;
 struct PUWidget;
 struct PUWidgetFuncs;
 struct PUPushButton;
@@ -23,6 +25,10 @@ struct PUSlider;
 struct PUSliderFuncs;
 struct PUMainWindow;
 struct PUMainWindowFuncs;
+struct PUAction;
+struct PUActionFuncs;
+struct PUMenu;
+struct PUMenuFuncs;
 struct PUApplication;
 struct PUApplicationFuncs;
 struct PUPaintDevice;
@@ -35,8 +41,19 @@ struct PURect {
     int height;
 };
 
+struct PUObjectFuncs {
+    void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
+};
+
+struct PUObject {
+    struct PUObjectFuncs* funcs;
+    void* priv_data;
+};
+
 struct PUWidgetFuncs {
     void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
 };
@@ -48,6 +65,7 @@ struct PUWidget {
 
 struct PUPushButtonFuncs {
     void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
     void (*set_released_event)(void* object, void* user_data, void (*event)(void* self_c));
@@ -82,6 +100,7 @@ struct PUListWidgetItem {
 
 struct PUListWidgetFuncs {
     void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
     void (*add_item)(void* self_c, const char* text);
@@ -97,6 +116,7 @@ struct PUListWidget {
 
 struct PUSliderFuncs {
     void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
     void (*set_value_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int value));
@@ -109,6 +129,7 @@ struct PUSlider {
 
 struct PUMainWindowFuncs {
     void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
     void (*show)(void* self_c);
     void (*resize)(void* self_c, int width, int height);
     bool (*is_animated)(void* self_c);
@@ -117,6 +138,32 @@ struct PUMainWindowFuncs {
 
 struct PUMainWindow {
     struct PUMainWindowFuncs* funcs;
+    void* priv_data;
+};
+
+struct PUActionFuncs {
+    void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
+    bool (*is_enabled)(void* self_c);
+    void (*set_text)(void* self_c, const char* text);
+};
+
+struct PUAction {
+    struct PUActionFuncs* funcs;
+    void* priv_data;
+};
+
+struct PUMenuFuncs {
+    void (*destroy)(void* self_c);
+    bool (*is_widget_type)(void* self_c);
+    void (*show)(void* self_c);
+    void (*resize)(void* self_c, int width, int height);
+    void (*add_action_text)(void* self_c, const char* text);
+    void (*add_action)(void* self_c, struct PUAction* action);
+};
+
+struct PUMenu {
+    struct PUMenuFuncs* funcs;
     void* priv_data;
 };
 
@@ -132,6 +179,7 @@ struct PUApplication {
 };
 
 typedef struct PU { 
+    struct PUObject (*create_object)(void* self);
     struct PUWidget (*create_widget)(void* self);
     struct PUPushButton (*create_push_button)(void* self);
     struct PUPainter (*create_painter)(void* self);
@@ -139,6 +187,8 @@ typedef struct PU {
     struct PUListWidget (*create_list_widget)(void* self);
     struct PUSlider (*create_slider)(void* self);
     struct PUMainWindow (*create_main_window)(void* self);
+    struct PUAction (*create_action)(void* self);
+    struct PUMenu (*create_menu)(void* self);
     struct PUApplication (*create_application)(void* self);
     void* priv_data;
 } PU;

@@ -220,7 +220,7 @@ fn generate_func_impl(
         f.write_all(b";\n")?;
 
         if ret_val.primitive {
-            f.write_fmt(format_args!("            ret_val"))?;
+            f.write_fmt(format_args!("            ret_val\n"))?;
         } else if ret_val.optional {
             f.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
             f.write_fmt(format_args!("                None\n"))?;

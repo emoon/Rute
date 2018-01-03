@@ -22,8 +22,12 @@ struct Rect {
     i32 height,
 }
 
+struct Object {
+	is_widget_type() -> bool,
+}
+
 #[traits(PaintDevice, WidgetType)]
-struct Widget {
+struct Widget : Object {
     show(),
     resize(i32 width, i32 height),
     //[event] paint_event(&PaintEvent event),
@@ -62,6 +66,22 @@ struct Slider : Widget {
 struct MainWindow : Widget {
     is_animated() -> bool,
     set_central_widget(&WidgetType widget),
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Actions
+
+struct Action : Object {
+	is_enabled() -> bool,
+	set_text(String text),
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Menu
+
+struct Menu : Widget {
+	[manual] add_action_text(String text),
+	add_action(&Action action),
 }
 
 #[attributes(ManualCreate)]

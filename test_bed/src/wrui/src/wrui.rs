@@ -9,6 +9,11 @@ use std::ffi::CString;
 pub use ffi_gen::PURect as Rect;
 
 #[derive(Clone)]
+pub struct Object {
+    pub obj: Option<PUObject>,
+}
+
+#[derive(Clone)]
 pub struct Widget {
     pub obj: Option<PUWidget>,
 }
@@ -44,6 +49,16 @@ pub struct MainWindow {
 }
 
 #[derive(Clone)]
+pub struct Action {
+    pub obj: Option<PUAction>,
+}
+
+#[derive(Clone)]
+pub struct Menu {
+    pub obj: Option<PUMenu>,
+}
+
+#[derive(Clone)]
 pub struct Application {
     pub obj: Option<PUApplication>,
 }
@@ -56,7 +71,36 @@ pub trait WidgetType {
     fn get_obj(&self) -> *const ::std::os::raw::c_void;
 }
 
+impl Object {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
+}
+
+impl Drop for Object {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
 impl Widget {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -98,6 +142,14 @@ impl WidgetType for Widget {
 }
 
 impl PushButton {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -195,6 +247,14 @@ impl Drop for ListWidgetItem {
 }
 
 impl ListWidget {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -263,6 +323,14 @@ impl WidgetType for ListWidget {
 }
 
 impl Slider {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -304,6 +372,14 @@ impl WidgetType for Slider {
 }
 
 impl MainWindow {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -322,7 +398,8 @@ impl MainWindow {
         unsafe {
             let obj = self.obj.unwrap();
             let ret_val = ((*obj.funcs).is_animated)(obj.privd);
-            ret_val        }
+            ret_val
+        }
     }
 
     pub fn set_central_widget(&self, widget: &WidgetType) {
@@ -352,6 +429,107 @@ impl PaintDevice for MainWindow {
 }
 
 impl WidgetType for MainWindow {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       let obj = self.obj.unwrap();
+       obj.privd as *const ::std::os::raw::c_void
+    }
+}
+
+impl Action {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn is_enabled(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_enabled)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn set_text(&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr())
+        }
+    }
+
+}
+
+impl Drop for Action {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl Menu {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn show(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).show)(obj.privd)
+        }
+    }
+
+    pub fn resize(&self, width: i32, height: i32) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn add_action_text(&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_action_text)(obj.privd, str_in_text_1.as_ptr())
+        }
+    }
+
+    pub fn add_action(&self, action: &Action) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_action)(obj.privd, action.obj.unwrap().privd as *const PUAction)
+        }
+    }
+
+}
+
+impl Drop for Menu {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for Menu {
+    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+       let obj = self.obj.unwrap();
+       obj.privd as *const ::std::os::raw::c_void
+    }
+}
+
+impl WidgetType for Menu {
     fn get_obj(&self) -> *const ::std::os::raw::c_void {
        let obj = self.obj.unwrap();
        obj.privd as *const ::std::os::raw::c_void
@@ -444,6 +622,10 @@ pub struct Ui {
 impl Ui {
     pub fn new(pu: *const PU) -> Ui { Ui { pu: pu } }
 
+    pub fn create_object(&self) -> Object {
+        Object { obj: Some(unsafe { ((*self.pu).create_object)((*self.pu).privd) }) }
+    }
+
     pub fn create_widget(&self) -> Widget {
         Widget { obj: Some(unsafe { ((*self.pu).create_widget)((*self.pu).privd) }) }
     }
@@ -470,6 +652,14 @@ impl Ui {
 
     pub fn create_main_window(&self) -> MainWindow {
         MainWindow { obj: Some(unsafe { ((*self.pu).create_main_window)((*self.pu).privd) }) }
+    }
+
+    pub fn create_action(&self) -> Action {
+        Action { obj: Some(unsafe { ((*self.pu).create_action)((*self.pu).privd) }) }
+    }
+
+    pub fn create_menu(&self) -> Menu {
+        Menu { obj: Some(unsafe { ((*self.pu).create_menu)((*self.pu).privd) }) }
     }
 
     pub fn create_application(&self) -> Application {
