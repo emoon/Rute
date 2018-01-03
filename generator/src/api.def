@@ -47,7 +47,8 @@ struct ListWidgetItem {
 
 struct ListWidget : Widget {
 	add_item(String text),
-	item(i32 index) -> ListWidgetItem,
+	item(i32 index) -> ListWidgetItem?,
+
 	[manual] add_widget_item(&ListWidgetItem item),
 	[callback] current_row_changed(i32 row),
 }

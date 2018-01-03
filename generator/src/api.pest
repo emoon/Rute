@@ -14,7 +14,8 @@ callback    = { ("[callback]") }
 event       = { ("[event]") }
 manual      = { ("[manual]") }
 refexp      = { ("&") }
-retexp      = { ("->") ~ refexp? ~ vtype }
+optional    = { ("?") }
+retexp      = { ("->") ~ refexp? ~ vtype ~ optional? }
 var         = { refexp? ~ vtype ~ name }
 varlist     = { var ~ ((",") ~ var)* }
 enum_assign = { ("=") ~ name_or_num }

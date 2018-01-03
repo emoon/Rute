@@ -38,7 +38,7 @@ impl MyApp {
         list.add_item("Test");
         list.add_item("Test 4");
 
-        let test_item = list.item(0);
+        let test_item = list.item(0).unwrap();
         test_item.set_text("New text!");
 
         //button.set_text("Press me!");

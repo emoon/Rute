@@ -16,6 +16,7 @@ pub struct Variable {
     pub vtype: String,
     pub primitive: bool,
     pub reference: bool,
+    pub optional: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -444,6 +445,7 @@ impl ApiDef {
                 Rule::name => var.name = entry.as_str().to_owned(),
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
                 Rule::refexp => var.reference = true,
+                Rule::optional => var.optional = true,
                 _ => (),
             }
         }
@@ -460,6 +462,7 @@ impl ApiDef {
             vtype: "self".to_owned(),
             primitive: false,
             reference: false,
+            optional: false,
         });
 
         for entry in rule.clone().into_inner() {
@@ -493,6 +496,7 @@ impl ApiDef {
                 vtype: "self".to_owned(),
                 primitive: false,
                 reference: false,
+                optional: false,
             });
         }
 

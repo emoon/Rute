@@ -127,6 +127,8 @@ fn get_arg(arg: &Variable, type_handlers: &Vec<Box<TypeHandler>>) -> (String, St
         (arg.name.to_owned(), arg.vtype.clone())
     } else if arg.reference {
         (arg.name.clone(), format!("&{}", arg.vtype.to_owned()))
+    } else if arg.optional {
+        (arg.name.clone(), format!("Option<{}>", arg.vtype.to_owned()))
     } else {
         (arg.name.clone(), arg.vtype.to_owned())
     }
@@ -219,6 +221,12 @@ fn generate_func_impl(
 
         if ret_val.primitive {
             f.write_fmt(format_args!("            ret_val"))?;
+        } else if ret_val.optional {
+            f.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
+            f.write_fmt(format_args!("                None\n"))?;
+            f.write_fmt(format_args!("            }} else {{\n"))?;
+            f.write_fmt(format_args!("                Some({} {{ obj: Some(ret_val) }})\n", ret_val.vtype))?;
+            f.write_fmt(format_args!("            }}\n"))?;
         } else {
             f.write_fmt(format_args!("            {} {{ obj: Some(ret_val) }}\n", ret_val.vtype))?;
         }
@@ -417,6 +425,7 @@ fn generate_ui_impl(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 }
 
 struct StringTypeHandler;
+struct RectTypeHandler;
 
 ///
 /// We need to handle strings in a special way. They need to be sent down using CString and the

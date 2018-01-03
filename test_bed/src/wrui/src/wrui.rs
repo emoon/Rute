@@ -217,11 +217,15 @@ impl ListWidget {
         }
     }
 
-    pub fn item(&self, index: i32) -> ListWidgetItem {
+    pub fn item(&self, index: i32) -> Option<ListWidgetItem> {
         unsafe {
             let obj = self.obj.unwrap();
             let ret_val = ((*obj.funcs).item)(obj.privd, index);
-            ListWidgetItem { obj: Some(ret_val) }
+            if ret_val.privd.is_null() {
+                None
+            } else {
+                Some(ListWidgetItem { obj: Some(ret_val) })
+            }
         }
     }
 
