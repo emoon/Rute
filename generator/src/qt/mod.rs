@@ -26,7 +26,7 @@ static CREATE_WIDGET_TEMPLATE: &'static [u8] =
     }
     T ctl;
     ctl.funcs = funcs;
-    ctl.priv_data = qt_obj;
+    ctl.priv_data = (struct PUBase*)qt_obj;
     return ctl;
 }\n\n";
 
@@ -35,12 +35,12 @@ static CREATE_GENERIC_TEMPLATE: &'static [u8] =
     QT* qt_obj = new QT();
     T ctl;
     ctl.funcs = funcs;
-    ctl.priv_data = qt_obj;
+    ctl.priv_data = (struct PUBase*)qt_obj;
     return ctl;
 }\n\n";
 
 static DESTROY_TEMPLATE: &'static [u8] =
-    b"template<typename QT> void destroy_generic(void* qt_data) {
+    b"template<typename QT> void destroy_generic(struct PUBase* qt_data) {
     QT* qt_obj = (QT*)qt_data;
     delete qt_obj;
 }\n\n";
@@ -117,6 +117,30 @@ fn signal_type_callback(func: &Function) -> String {
     name_def
 }
 
+pub fn generate_c_function_args_signal_wrapper(func: &Function) -> String {
+    let mut function_args = String::new();
+    let len = func.function_args.len();
+
+    // write arguments
+    for (i, arg) in func.function_args.iter().enumerate() {
+        if i == 0 {
+            function_args.push_str("void*");
+        } else {
+            function_args.push_str(&arg.get_c_type());
+        }
+
+        function_args.push_str(" ");
+        function_args.push_str(&arg.name);
+
+        if i != len - 1 {
+            function_args.push_str(", ");
+        }
+    }
+
+    function_args
+}
+
+
 /// Generate a signal wrapper that is in the style of this:
 ///
 ///    class QSlotWrapperNoArgs : public QObject {
@@ -147,7 +171,7 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
         f.write_fmt(format_args!(
             "typedef void (*{})({});\n\n",
             signal_type_name,
-            generate_c_function_args(func)
+            generate_c_function_args_signal_wrapper(func)
         ))?;
 
         f.write_fmt(format_args!(
@@ -252,14 +276,18 @@ fn generate_func_def(
             ("".to_owned(), "".to_owned())
         } else if arg.vtype == "String" {
             (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
-        } else {
+        } else  {
             for handler in type_handlers.iter() {
                 if arg.vtype == handler.match_type() {
                     return handler.replace_arg(&arg);
                 }
             }
-
-            (arg.name.clone(), "".to_owned())
+        
+            if arg.reference {
+                (format!("(Q{}*){}", &arg.vtype, &arg.name), String::new()) 
+            } else {
+                (arg.name.clone(), String::new())
+            }
         }
     })?;
 
@@ -275,7 +303,7 @@ fn generate_func_def(
 
             f.write_fmt(format_args!("    PU{} ctl;\n", ret_val.vtype))?;
             f.write_fmt(format_args!("    ctl.funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
-            f.write_fmt(format_args!("    ctl.priv_data = ret_value;\n"))?;
+            f.write_fmt(format_args!("    ctl.priv_data = (struct PUBase*)ret_value;\n"))?;
             f.write_all(b"    return ctl;\n")?;
         }
     }
@@ -657,7 +685,7 @@ fn generate_create_functions(
         f.write_all(SEPARATOR)?;
 
         f.write_fmt(format_args!(
-            "static struct PU{} create_{}(void* priv_data) {{\n",
+            "static struct PU{} create_{}(struct PUBase* priv_data) {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -688,7 +716,7 @@ fn generate_create_functions(
             f.write_all(SEPARATOR)?;
 
             f.write_fmt(format_args!(
-                "static void destroy_{}(void* priv_data) {{\n",
+                "static void destroy_{}(struct PUBase* priv_data) {{\n",
                 sdef.name.to_snake_case()
             ))?;
             f.write_fmt(format_args!(

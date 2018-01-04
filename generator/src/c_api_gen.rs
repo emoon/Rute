@@ -10,7 +10,8 @@ static HEADER: &'static [u8] = b"
 #include <stdbool.h>\n
 #ifdef __cplusplus
 extern \"C\" {
-#endif\n\n";
+#endif\n\n
+struct PUBase;\n";
 
 static FOOTER: &'static [u8] = b"
 #ifdef __cplusplus
@@ -69,7 +70,12 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
     let arg_count = func.function_args.len();
 
     for (i, arg) in func.function_args.iter().enumerate() {
-        func_def.push_str(&arg.get_c_type());
+        if i == 0 {
+            func_def.push_str("void*");
+        } else {
+            func_def.push_str(&arg.get_c_type());
+        }
+
         func_def.push_str(" ");
         func_def.push_str(&arg.name);
 
@@ -181,7 +187,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("struct PU{}Funcs {{\n", sdef.name))?;
 
         if sdef.should_have_create_func() {
-            f.write_all(b"    void (*destroy)(void* self_c);\n")?;
+            f.write_all(b"    void (*destroy)(struct PUBase* self_c);\n")?;
         }
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
@@ -190,7 +196,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
         f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
         f.write_fmt(format_args!("    struct PU{}Funcs* funcs;\n", sdef.name))?;
-        f.write_all(b"    void* priv_data;\n")?;
+        f.write_all(b"    struct PUBase* priv_data;\n")?;
 
         f.write_all(b"};\n\n")?;
     }
@@ -205,13 +211,13 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    struct PU{} (*create_{})(void* self);\n",
+            "    struct PU{} (*create_{})(PUBase* self);\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
     }
 
-    f.write_all(b"    void* priv_data;\n} PU;\n")?;
+    f.write_all(b"    struct PUBase* priv_data;\n} PU;\n")?;
 
     f.write_all(FOOTER)?;
 

@@ -150,7 +150,7 @@ impl Variable {
         }
 
         if tname == "self" {
-            return "void*".to_owned();
+            return "struct PUBase*".to_owned();
         }
 
         if primitve {
@@ -171,8 +171,8 @@ impl Variable {
                 }
             }
         } else if self.reference {
-            // Unknown type here, we always assume to use a struct Type*
-            format!("struct PU{}*", tname)
+            // Unknown type here so we always defult to PUBase* as a "raw pointer" 
+            "struct PUBase*".to_owned()
         } else {
             format!("struct PU{}", tname)
         }

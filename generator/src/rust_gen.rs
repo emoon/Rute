@@ -12,6 +12,7 @@ static HEADER: &'static [u8] = b"
 // ***************************************************************
 
 use ffi_gen::*;
+pub use ffi_gen::PUBase as PUBase;\n\n
 use std::ffi::CString;\n\n";
 
 static UI_HEADER: &'static [u8] = b"pub struct Ui {
@@ -49,7 +50,7 @@ impl TypeHandler for TraitTypeHandler {
     }
 
     fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
-        format!("{}.get_obj() as *const PU{}", arg_name, self.name)
+        format!("{}.get_obj() as *const PUBase", arg_name)
     }
 }
 
@@ -65,7 +66,7 @@ fn generate_traits(
 
     for trait_name in traits {
         f.write_fmt(format_args!("pub trait {} {{\n", trait_name))?;
-        f.write_all(b"    fn get_obj(&self) -> *const ::std::os::raw::c_void;\n}\n\n")?;
+        f.write_all(b"    fn get_obj(&self) -> *const PUBase;\n}\n\n")?;
 
         type_handlers.push(Box::new(TraitTypeHandler {
             name: trait_name.clone(),
@@ -201,12 +202,12 @@ fn generate_func_impl(
             if let Some(name) = name_remap.get(&index) {
                 (name.to_owned(), String::new())
             } else if arg.reference {
-                (format!("{}.obj.unwrap().privd as *const PU{}", arg.name, arg.vtype), String::new())
+                (format!("{}.obj.unwrap().privd", arg.name), String::new())
             } else {
                 (arg.name.to_owned(), String::new())
             }
         } else if arg.reference {
-            (format!("{}.obj.unwrap().privd as *const PU{}", arg.name, arg.vtype), String::new())
+            (format!("{}.obj.unwrap().privd", arg.name), String::new())
         } else {
             (arg.name.to_owned(), String::new())
         }
@@ -284,9 +285,14 @@ fn generate_set_event_impl(
         f.write_all(b"    {\n")?;
         f.write_all(b"      extern \"C\" fn temp_call(")?;
 
-        funcs
-            .1
-            .write_func_def(f, |_, arg| (arg.name.to_owned(), arg.get_rust_ffi_type()))?;
+        funcs.1.write_func_def(f, |index, arg| {
+            if index == 0 {
+                (arg.name.to_owned(), "*const ::std::os::raw::c_void".to_owned())
+            } else {
+                (arg.name.to_owned(), arg.get_rust_ffi_type())
+            }
+        })?;
+
         f.write_all(b") {\n")?;
         f.write_all(b"          unsafe {\n")?;
         f.write_all(b"              let app = self_c as *mut $call_type;\n")?;
@@ -378,7 +384,7 @@ fn generate_impl(
             f.write_all(b"    fn drop(&mut self) {\n")?;
             f.write_all(b"       unsafe {\n")?;
             f.write_all(b"          let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);\n")?;
+            f.write_all(b"          ((*obj.funcs).destroy)(obj.privd);\n")?;
             f.write_all(b"          self.obj = None;\n")?;
             f.write_all(b"       }\n")?;
             f.write_all(b"    }\n")?;
@@ -387,9 +393,9 @@ fn generate_impl(
 
         for trait_name in api_def.get_traits(&sdef) {
             f.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
-            f.write_all(b"    fn get_obj(&self) -> *const ::std::os::raw::c_void {\n")?;
+            f.write_all(b"    fn get_obj(&self) -> *const PUBase {\n")?;
             f.write_all(b"       let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"       obj.privd as *const ::std::os::raw::c_void\n")?;
+            f.write_all(b"       obj.privd as *const PUBase\n")?;
             f.write_all(b"    }\n")?;
             f.write_all(b"}\n\n")?;
         }

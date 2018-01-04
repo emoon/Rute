@@ -4,6 +4,9 @@
 // ***************************************************************
 
 use ffi_gen::*;
+pub use ffi_gen::PUBase as PUBase;
+
+
 use std::ffi::CString;
 
 pub use ffi_gen::PURect as Rect;
@@ -64,11 +67,11 @@ pub struct Application {
 }
 
 pub trait PaintDevice {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void;
+    fn get_obj(&self) -> *const PUBase;
 }
 
 pub trait WidgetType {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void;
+    fn get_obj(&self) -> *const PUBase;
 }
 
 impl Object {
@@ -86,7 +89,7 @@ impl Drop for Object {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
@@ -121,23 +124,23 @@ impl Drop for Widget {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for Widget {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Widget {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -185,23 +188,23 @@ impl Drop for PushButton {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for PushButton {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for PushButton {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -219,7 +222,7 @@ impl Drop for Painter {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
@@ -240,7 +243,7 @@ impl Drop for ListWidgetItem {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
@@ -292,7 +295,7 @@ impl ListWidget {
     pub fn add_widget_item(&self, item: &ListWidgetItem) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget_item)(obj.privd, item.obj.unwrap().privd as *const PUListWidgetItem)
+            ((*obj.funcs).add_widget_item)(obj.privd, item.obj.unwrap().privd)
         }
     }
 
@@ -302,23 +305,23 @@ impl Drop for ListWidget {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for ListWidget {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for ListWidget {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -351,23 +354,23 @@ impl Drop for Slider {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for Slider {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Slider {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -405,7 +408,7 @@ impl MainWindow {
     pub fn set_central_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_obj() as *const PUWidgetType)
+            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_obj() as *const PUBase)
         }
     }
 
@@ -415,23 +418,23 @@ impl Drop for MainWindow {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for MainWindow {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for MainWindow {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -466,7 +469,7 @@ impl Drop for Action {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
@@ -506,7 +509,7 @@ impl Menu {
     pub fn add_action(&self, action: &Action) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_action)(obj.privd, action.obj.unwrap().privd as *const PUAction)
+            ((*obj.funcs).add_action)(obj.privd, action.obj.unwrap().privd)
         }
     }
 
@@ -516,23 +519,23 @@ impl Drop for Menu {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
 }
 
 impl PaintDevice for Menu {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Menu {
-    fn get_obj(&self) -> *const ::std::os::raw::c_void {
+    fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
-       obj.privd as *const ::std::os::raw::c_void
+       obj.privd as *const PUBase
     }
 }
 
@@ -558,7 +561,7 @@ impl Drop for Application {
     fn drop(&mut self) {
        unsafe {
           let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd as *const ::std::os::raw::c_void);
+          ((*obj.funcs).destroy)(obj.privd);
           self.obj = None;
        }
     }
