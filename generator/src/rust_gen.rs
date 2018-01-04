@@ -30,7 +30,11 @@ trait TypeHandler {
         (arg.name.to_owned(), arg.vtype.to_owned())
     }
 
-    fn gen_body(&self, arg: &str, f: &mut File, index: usize) -> String;
+    fn gen_body_return(&self, _varible: &Variable, _f: &mut File) -> io::Result<()> {
+        Ok(())
+    }
+
+    fn gen_body(&self, _arg: &str, _f: &mut File, _index: usize) -> String;
 }
 
 ///
@@ -215,21 +219,32 @@ fn generate_func_impl(
 
     f.write_all(b")")?;
 
-    // Handle if we have a
+    // Handle if we have a return value
 
     if let Some(ref ret_val) = func.return_val {
         f.write_all(b";\n")?;
+        let mut skip_return_gen = false;
 
-        if ret_val.primitive {
-            f.write_fmt(format_args!("            ret_val\n"))?;
-        } else if ret_val.optional {
-            f.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
-            f.write_fmt(format_args!("                None\n"))?;
-            f.write_fmt(format_args!("            }} else {{\n"))?;
-            f.write_fmt(format_args!("                Some({} {{ obj: Some(ret_val) }})\n", ret_val.vtype))?;
-            f.write_fmt(format_args!("            }}\n"))?;
-        } else {
-            f.write_fmt(format_args!("            {} {{ obj: Some(ret_val) }}\n", ret_val.vtype))?;
+        for handler in type_handlers.iter() {
+            if ret_val.vtype == handler.match_type() {
+                handler.gen_body_return(&ret_val, f)?;
+                skip_return_gen = true;
+                break;
+            }
+        }
+
+        if !skip_return_gen {
+            if ret_val.primitive {
+                f.write_fmt(format_args!("            ret_val\n"))?;
+            } else if ret_val.optional {
+                f.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
+                f.write_fmt(format_args!("                None\n"))?;
+                f.write_fmt(format_args!("            }} else {{\n"))?;
+                f.write_fmt(format_args!("                Some({} {{ obj: Some(ret_val) }})\n", ret_val.vtype))?;
+                f.write_fmt(format_args!("            }}\n"))?;
+            } else {
+                f.write_fmt(format_args!("            {} {{ obj: Some(ret_val) }}\n", ret_val.vtype))?;
+            }
         }
     } else {
         f.write_all(b"\n")?;
@@ -456,11 +471,30 @@ impl TypeHandler for StringTypeHandler {
     }
 }
 
+///
+/// We need to handle strings in a special way. They need to be sent down using CString and the
+/// pointer to it so have a generator for it
+///
+impl TypeHandler for RectTypeHandler {
+    fn match_type(&self) -> String {
+        "Rect".to_owned()
+    }
+
+    fn gen_body(&self, _arg: &str, _f: &mut File, _index: usize) -> String {
+        String::new()
+    }
+
+    fn gen_body_return(&self, _value: &Variable, f: &mut File) -> io::Result<()> {
+        f.write_all(b"            ret_val\n")
+    }
+}
+
 pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()> {
     let mut f = File::create(filename)?;
     let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
 
     type_handlers.push(Box::new(StringTypeHandler {}));
+    type_handlers.push(Box::new(RectTypeHandler {}));
 
     f.write_all(HEADER)?;
 

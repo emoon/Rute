@@ -15,14 +15,12 @@ fn get_wrui_path() -> &'static str {
 
 struct MyApp {
     ui: Ui,
-    pressed_count: usize,
 }
 
 impl MyApp {
     fn new(ui: Ui) -> MyApp {
         MyApp {
             ui: ui,
-            pressed_count: 0,
         }
     }
 
@@ -39,15 +37,8 @@ impl MyApp {
         let main_window = self.ui.create_main_window();
         let list = self.ui.create_list_widget();
 
-        list.add_item("Test");
+        list.add_item("New Text!");
         list.add_item("Test 4");
-
-        let test_item = list.item(0).unwrap();
-        test_item.set_text("New text!");
-
-        //button.set_text("Press me!");
-        //button.resize(100, 100);
-        //button.show();
 
         main_window.resize(500, 500);
         main_window.set_central_widget(&list);

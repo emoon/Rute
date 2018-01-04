@@ -66,6 +66,11 @@ pub struct Application {
     pub obj: Option<PUApplication>,
 }
 
+#[derive(Clone)]
+pub struct PaintEvent {
+    pub obj: Option<PUPaintEvent>,
+}
+
 pub trait PaintDevice {
     fn get_obj(&self) -> *const PUBase;
 }
@@ -552,6 +557,17 @@ impl Drop for Application {
           self.obj = None;
        }
     }
+}
+
+impl PaintEvent {
+    pub fn rect(&self) -> Rect {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).rect)(obj.privd);
+            ret_val
+        }
+    }
+
 }
 
 #[macro_export]

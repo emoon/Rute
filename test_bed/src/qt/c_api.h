@@ -33,6 +33,8 @@ struct PUMenuBar;
 struct PUMenuBarFuncs;
 struct PUApplication;
 struct PUApplicationFuncs;
+struct PUPaintEvent;
+struct PUPaintEventFuncs;
 struct PUPaintDevice;
 struct PUWidgetType;
 
@@ -47,6 +49,7 @@ struct PUWidgetFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_paint_event_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
 };
 
 struct PUWidget {
@@ -175,6 +178,15 @@ struct PUApplicationFuncs {
 
 struct PUApplication {
     struct PUApplicationFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUPaintEventFuncs {
+    struct PURect (*rect)(struct PUBase* self_c);
+};
+
+struct PUPaintEvent {
+    struct PUPaintEventFuncs* funcs;
     struct PUBase* priv_data;
 };
 

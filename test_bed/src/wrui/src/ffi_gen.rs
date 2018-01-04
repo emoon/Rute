@@ -31,6 +31,8 @@ pub struct PUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_paint_event_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void, event: *const PUBase)),
 }
 
 #[repr(C)]
@@ -195,6 +197,18 @@ pub struct PUApplicationFuncs {
 #[derive(Copy, Clone)]
 pub struct PUApplication {
     pub funcs: *const PUApplicationFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
+pub struct PUPaintEventFuncs {
+    pub rect: extern "C" fn(self_c: *const PUBase) ->  PURect,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUPaintEvent {
+    pub funcs: *const PUPaintEventFuncs,
     pub privd: *const PUBase,
 }
 

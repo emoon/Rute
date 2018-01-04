@@ -491,10 +491,10 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
         event_type.vtype,
     ))?;
     f.write_fmt(format_args!("            e.funcs = &s_{}_funcs;\n", func.name))?;
-    f.write_fmt(format_args!("            e.priv_data = event;\n"))?;
+    f.write_fmt(format_args!("            e.priv_data = (struct PUBase*)event;\n"))?;
     f.write_fmt(format_args!(
-        "            m_{}(m_{}_user_data, (PU{}*)&e);\n",
-        func.name, func.name, event_type.vtype
+        "            m_{}(m_{}_user_data, (struct PUBase*)&e);\n",
+        func.name, func.name,
     ))?;
     f.write_fmt(format_args!("        }} else {{\n"))?;
     f.write_fmt(format_args!(
@@ -507,9 +507,9 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 
     // write data
 
-    f.write_fmt(format_args!("    void (*m_{})(", func.name))?;
+    f.write_fmt(format_args!("    void (*m_{})({})", func.name, generate_c_function_args_signal_wrapper(&func)))?;
 
-    func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
+    //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
 
     f.write_fmt(format_args!(" = nullptr;\n"))?;
     f.write_fmt(format_args!(
