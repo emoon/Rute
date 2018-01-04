@@ -282,9 +282,9 @@ fn generate_func_def(
                     return handler.replace_arg(&arg);
                 }
             }
-        
+
             if arg.reference {
-                (format!("(Q{}*){}", &arg.vtype, &arg.name), String::new()) 
+                (format!("(Q{}*){}", &arg.vtype, &arg.name), String::new())
             } else {
                 (arg.name.clone(), String::new())
             }
@@ -749,30 +749,6 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
-/// Type handler for traits as the function arguments when using a trait needs to use "get_obj"
-///
-/*
-struct TraitTypeHandler {
-    name: String,
-}
-
-impl TypeHandler for TraitTypeHandler {
-    fn match_type(&self) -> String {
-        self.name.clone()
-    }
-
-    fn replace_arg(&self, arg: &Variable) -> (String, String) {
-        (arg.name.to_owned(), format!("&{}", arg.vtype.to_owned()))
-    }
-
-    fn gen_body(&self, fuction_name: &str, f: &mut File) -> io::Result<()>  {
-    fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
-        format!("{}.get_obj() as *const PU{}", arg_name, self.name)
-    }
-}
-*/
-
-///
 /// Handling for Rect
 ///
 struct RectTypeHandler;
@@ -815,6 +791,8 @@ impl TypeHandler for TraitTypeHandler {
         // This is a bit hacky but not sure how to solve this right now
         if self.0 == "WidgetType" {
             (format!("(QWidget*){}", &arg.name), "".to_owned())
+        } else if self.0 == "LayoutType" {
+            (format!("(QLayout*){}", &arg.name), "".to_owned())
         } else {
             (format!("(Q{}*){}", self.0, &arg.name), "".to_owned())
         }

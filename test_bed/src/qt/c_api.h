@@ -35,6 +35,11 @@ struct PUApplication;
 struct PUApplicationFuncs;
 struct PUPaintEvent;
 struct PUPaintEventFuncs;
+struct PULayout;
+struct PULayoutFuncs;
+struct PUVBoxLayout;
+struct PUVBoxLayoutFuncs;
+struct PULayoutType;
 struct PUPaintDevice;
 struct PUWidgetType;
 
@@ -49,6 +54,7 @@ struct PUWidgetFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_paint_event_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
 };
 
@@ -61,6 +67,7 @@ struct PUPushButtonFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_released_event)(void* object, void* user_data, void (*event)(void* self_c));
     void (*set_text)(struct PUBase* self_c, const char* text);
     void (*set_flat)(struct PUBase* self_c, bool flat);
@@ -95,6 +102,7 @@ struct PUListWidgetFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_item)(struct PUBase* self_c, const char* text);
     struct PUListWidgetItem (*item)(struct PUBase* self_c, int index);
     void (*add_widget_item)(struct PUBase* self_c, struct PUBase* item);
@@ -110,6 +118,7 @@ struct PUSliderFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_value_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int value));
 };
 
@@ -122,6 +131,7 @@ struct PUMainWindowFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     bool (*is_animated)(struct PUBase* self_c);
     struct PUMenuBar (*menu_bar)(struct PUBase* self_c);
     void (*set_central_widget)(struct PUBase* self_c, struct PUBase* widget);
@@ -148,6 +158,7 @@ struct PUMenuFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_action_text)(struct PUBase* self_c, const char* text);
     void (*add_action)(struct PUBase* self_c, struct PUBase* action);
     void (*set_title)(struct PUBase* self_c, const char* title);
@@ -162,6 +173,7 @@ struct PUMenuBarFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_menu)(struct PUBase* self_c, struct PUBase* menu);
 };
 
@@ -190,6 +202,26 @@ struct PUPaintEvent {
     struct PUBase* priv_data;
 };
 
+struct PULayoutFuncs {
+    void (*add_widget)(struct PUBase* self_c, struct PUBase* widget);
+};
+
+struct PULayout {
+    struct PULayoutFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUVBoxLayoutFuncs {
+    void (*destroy)(struct PUBase* self_c);
+    void (*add_widget)(struct PUBase* self_c, struct PUBase* widget);
+    void (*update)(struct PUBase* self_c);
+};
+
+struct PUVBoxLayout {
+    struct PUVBoxLayoutFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
 typedef struct PU { 
     struct PUWidget (*create_widget)(PUBase* self);
     struct PUPushButton (*create_push_button)(PUBase* self);
@@ -202,6 +234,7 @@ typedef struct PU {
     struct PUMenu (*create_menu)(PUBase* self);
     struct PUMenuBar (*create_menu_bar)(PUBase* self);
     struct PUApplication (*create_application)(PUBase* self);
+    struct PUVBoxLayout (*create_v_box_layout)(PUBase* self);
     struct PUBase* priv_data;
 } PU;
 

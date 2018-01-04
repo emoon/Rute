@@ -13,6 +13,8 @@
 #include <QMenuBar>
 #include <QApplication>
 #include <QPaintEvent>
+#include <QLayout>
+#include <QVBoxLayout>
 
 struct PrivData {
     QWidget* parent;
@@ -33,6 +35,8 @@ extern struct PUMenuFuncs s_menu_funcs;
 extern struct PUMenuBarFuncs s_menu_bar_funcs;
 extern struct PUApplicationFuncs s_application_funcs;
 extern struct PUPaintEventFuncs s_paint_event_funcs;
+extern struct PULayoutFuncs s_layout_funcs;
+extern struct PUVBoxLayoutFuncs s_v_box_layout_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -112,6 +116,15 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRVBoxLayout : public QVBoxLayout {
+public:
+    WRVBoxLayout(QWidget* widget) : QVBoxLayout(widget) {}
+    virtual ~WRVBoxLayout() {}
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void widget_show(struct PUBase* self_c) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->show();
@@ -122,6 +135,13 @@ static void widget_show(struct PUBase* self_c) {
 static void widget_resize(struct PUBase* self_c, int width, int height) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->setLayout((QLayout*)layout);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +158,13 @@ static void push_button_show(struct PUBase* self_c) {
 static void push_button_resize(struct PUBase* self_c, int width, int height) { 
     WRPushButton* qt_data = (WRPushButton*)self_c;
     qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void push_button_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRPushButton* qt_data = (WRPushButton*)self_c;
+    qt_data->setLayout((QLayout*)layout);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +221,13 @@ static void list_widget_resize(struct PUBase* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setLayout((QLayout*)layout);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void list_widget_add_item(struct PUBase* self_c, const char* text) { 
@@ -238,6 +272,13 @@ static void slider_resize(struct PUBase* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void slider_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRSlider* qt_data = (WRSlider*)self_c;
+    qt_data->setLayout((QLayout*)layout);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void set_slider_value_changed_event(void* object, void* user_data, void (*event)(void* self_c, int value)) {
@@ -258,6 +299,13 @@ static void main_window_show(struct PUBase* self_c) {
 static void main_window_resize(struct PUBase* self_c, int width, int height) { 
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
     qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void main_window_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->setLayout((QLayout*)layout);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,6 +375,13 @@ static void menu_resize(struct PUBase* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void menu_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRMenu* qt_data = (WRMenu*)self_c;
+    qt_data->setLayout((QLayout*)layout);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,6 +414,13 @@ static void menu_bar_resize(struct PUBase* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void menu_bar_set_layout(struct PUBase* self_c, struct PUBase* layout) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->setLayout((QLayout*)layout);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void menu_bar_add_menu(struct PUBase* self_c, struct PUBase* menu) { 
@@ -386,6 +448,27 @@ static struct PURect paint_event_rect(struct PUBase* self_c) {
     QPaintEvent* qt_data = (QPaintEvent*)self_c;
     const auto& t = qt_data->rect();
     return PURect { .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() };
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void layout_add_widget(struct PUBase* self_c, struct PUBase* widget) { 
+    QLayout* qt_data = (QLayout*)self_c;
+    qt_data->addWidget((QWidget*)widget);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void v_box_layout_add_widget(struct PUBase* self_c, struct PUBase* widget) { 
+    QVBoxLayout* qt_data = (QVBoxLayout*)self_c;
+    qt_data->addWidget((QWidget*)widget);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void v_box_layout_update(struct PUBase* self_c) { 
+    WRVBoxLayout* qt_data = (WRVBoxLayout*)self_c;
+    qt_data->update();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -541,6 +624,18 @@ static void destroy_menu_bar(struct PUBase* priv_data) {
     destroy_generic<WRMenuBar>(priv_data);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUVBoxLayout create_v_box_layout(struct PUBase* priv_data) {
+    return create_widget_func<struct PUVBoxLayout, struct PUVBoxLayoutFuncs, WRVBoxLayout>(&s_v_box_layout_funcs, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_v_box_layout(struct PUBase* priv_data) {
+    destroy_generic<WRVBoxLayout>(priv_data);
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -581,6 +676,7 @@ struct PUWidgetFuncs s_widget_funcs = {
     destroy_widget,
     widget_show,
     widget_resize,
+    widget_set_layout,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -589,6 +685,7 @@ struct PUPushButtonFuncs s_push_button_funcs = {
     destroy_push_button,
     push_button_show,
     push_button_resize,
+    push_button_set_layout,
     set_push_button_released_event,
     push_button_set_text,
     push_button_set_flat,
@@ -614,6 +711,7 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_show,
     list_widget_resize,
+    list_widget_set_layout,
     list_widget_add_item,
     list_widget_item,
     list_widget_add_widget_item,
@@ -626,6 +724,7 @@ struct PUSliderFuncs s_slider_funcs = {
     destroy_slider,
     slider_show,
     slider_resize,
+    slider_set_layout,
     set_slider_value_changed_event,
 };
 
@@ -635,6 +734,7 @@ struct PUMainWindowFuncs s_main_window_funcs = {
     destroy_main_window,
     main_window_show,
     main_window_resize,
+    main_window_set_layout,
     main_window_is_animated,
     main_window_menu_bar,
     main_window_set_central_widget,
@@ -655,6 +755,7 @@ struct PUMenuFuncs s_menu_funcs = {
     destroy_menu,
     menu_show,
     menu_resize,
+    menu_set_layout,
     menu_add_action_text,
     menu_add_action,
     menu_set_title,
@@ -666,6 +767,7 @@ struct PUMenuBarFuncs s_menu_bar_funcs = {
     destroy_menu_bar,
     menu_bar_show,
     menu_bar_resize,
+    menu_bar_set_layout,
     menu_bar_add_menu,
 };
 
@@ -683,6 +785,20 @@ struct PUPaintEventFuncs s_paint_event_funcs = {
     paint_event_rect,
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PULayoutFuncs s_layout_funcs = {
+    layout_add_widget,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUVBoxLayoutFuncs s_v_box_layout_funcs = {
+    destroy_v_box_layout,
+    v_box_layout_add_widget,
+    v_box_layout_update,
+};
+
 static struct PU s_pu = {
     create_widget,
     create_push_button,
@@ -695,6 +811,7 @@ static struct PU s_pu = {
     create_menu,
     create_menu_bar,
     create_application,
+    create_v_box_layout,
     0,
 
 };

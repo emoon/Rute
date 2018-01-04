@@ -36,13 +36,14 @@ impl MyApp {
         let app = self.ui.create_application();
         let main_window = self.ui.create_main_window();
         let list = self.ui.create_list_widget();
+        let button = self.ui.create_push_button();
 
+        button.set_text("Button!");
         list.add_item("New Text!");
         list.add_item("Test 4");
 
         main_window.resize(500, 500);
-        main_window.set_central_widget(&list);
-        main_window.show();
+        //main_window.show();
 
         let open_file = self.ui.create_action();
         open_file.set_text("Open");
@@ -56,6 +57,17 @@ impl MyApp {
 
         set_current_row_changed_event!(list, &self, MyApp, MyApp::new_row_selected);
         set_triggered_event!(open_file, &self, MyApp, MyApp::menu_selected);
+
+        let layout = self.ui.create_v_box_layout();
+
+        layout.add_widget(&button);
+        layout.add_widget(&list);
+
+        let window = self.ui.create_widget();
+        window.set_layout(&layout);
+
+        main_window.set_central_widget(&window);
+        main_window.show();
 
         app.exec();
     }

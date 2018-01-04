@@ -26,6 +26,7 @@ struct Rect {
 struct Widget {
     show(),
     resize(i32 width, i32 height),
+    set_layout(&LayoutType layout),
     [event] paint_event(&PaintEvent event),
 }
 
@@ -97,6 +98,19 @@ struct Application {
 #[attributes(NoCreate)]
 struct PaintEvent {
 	rect() -> Rect,
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Layouts
+
+#[attributes(NoCreate)]
+#[traits(LayoutType)]
+struct Layout {
+	add_widget(&WidgetType widget),
+}
+
+struct VBoxLayout : Layout {
+	update(),
 }
 
 

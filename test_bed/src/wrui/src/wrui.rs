@@ -71,6 +71,20 @@ pub struct PaintEvent {
     pub obj: Option<PUPaintEvent>,
 }
 
+#[derive(Clone)]
+pub struct Layout {
+    pub obj: Option<PULayout>,
+}
+
+#[derive(Clone)]
+pub struct VBoxLayout {
+    pub obj: Option<PUVBoxLayout>,
+}
+
+pub trait LayoutType {
+    fn get_obj(&self) -> *const PUBase;
+}
+
 pub trait PaintDevice {
     fn get_obj(&self) -> *const PUBase;
 }
@@ -91,6 +105,13 @@ impl Widget {
         unsafe {
             let obj = self.obj.unwrap();
             ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
         }
     }
 
@@ -132,6 +153,13 @@ impl PushButton {
         unsafe {
             let obj = self.obj.unwrap();
             ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
         }
     }
 
@@ -232,6 +260,13 @@ impl ListWidget {
         }
     }
 
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+        }
+    }
+
     pub fn add_item(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
@@ -300,6 +335,13 @@ impl Slider {
         }
     }
 
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+        }
+    }
+
 }
 
 impl Drop for Slider {
@@ -338,6 +380,13 @@ impl MainWindow {
         unsafe {
             let obj = self.obj.unwrap();
             ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
         }
     }
 
@@ -434,6 +483,13 @@ impl Menu {
         }
     }
 
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+        }
+    }
+
     pub fn add_action_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
@@ -495,6 +551,13 @@ impl MenuBar {
         unsafe {
             let obj = self.obj.unwrap();
             ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn set_layout(&self, layout: &LayoutType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
         }
     }
 
@@ -568,6 +631,57 @@ impl PaintEvent {
         }
     }
 
+}
+
+impl Layout {
+    pub fn add_widget(&self, widget: &WidgetType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+        }
+    }
+
+}
+
+impl LayoutType for Layout {
+    fn get_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl VBoxLayout {
+    pub fn add_widget(&self, widget: &WidgetType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+        }
+    }
+
+    pub fn update(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).update)(obj.privd)
+        }
+    }
+
+}
+
+impl Drop for VBoxLayout {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+}
+
+impl LayoutType for VBoxLayout {
+    fn get_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
 }
 
 #[macro_export]
@@ -687,6 +801,10 @@ impl Ui {
 
     pub fn create_application(&self) -> Application {
         Application { obj: Some(unsafe { ((*self.pu).create_application)((*self.pu).privd) }) }
+    }
+
+    pub fn create_v_box_layout(&self) -> VBoxLayout {
+        VBoxLayout { obj: Some(unsafe { ((*self.pu).create_v_box_layout)((*self.pu).privd) }) }
     }
 
 }

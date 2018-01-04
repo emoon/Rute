@@ -8,6 +8,12 @@ pub struct PUBase {
 
 #[repr(C)]
 #[derive(Default, Copy, Clone, Debug)]
+pub struct PULayoutType {
+    _unused: [u8; 0],
+}
+
+#[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]
 pub struct PUPaintDevice {
     _unused: [u8; 0],
 }
@@ -31,6 +37,7 @@ pub struct PUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub set_paint_event_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, event: *const PUBase)),
 }
@@ -47,6 +54,7 @@ pub struct PUPushButtonFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub set_released_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
@@ -91,6 +99,7 @@ pub struct PUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
     pub add_widget_item: extern "C" fn(self_c: *const PUBase, item: *const PUBase),
@@ -110,6 +119,7 @@ pub struct PUSliderFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub set_value_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, value: i32)),
 }
@@ -126,6 +136,7 @@ pub struct PUMainWindowFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub is_animated: extern "C" fn(self_c: *const PUBase) -> bool,
     pub menu_bar: extern "C" fn(self_c: *const PUBase) ->  PUMenuBar,
     pub set_central_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
@@ -159,6 +170,7 @@ pub struct PUMenuFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_action_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub add_action: extern "C" fn(self_c: *const PUBase, action: *const PUBase),
     pub set_title: extern "C" fn(self_c: *const PUBase, title: *const ::std::os::raw::c_char),
@@ -176,6 +188,7 @@ pub struct PUMenuBarFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_menu: extern "C" fn(self_c: *const PUBase, menu: *const PUBase),
 }
 
@@ -213,6 +226,32 @@ pub struct PUPaintEvent {
 }
 
 #[repr(C)]
+pub struct PULayoutFuncs {
+    pub add_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PULayout {
+    pub funcs: *const PULayoutFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
+pub struct PUVBoxLayoutFuncs {
+    pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub add_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUVBoxLayout {
+    pub funcs: *const PUVBoxLayoutFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PU {
     pub create_widget: extern "C" fn(priv_data: *const PUBase) -> PUWidget,
     pub create_push_button: extern "C" fn(priv_data: *const PUBase) -> PUPushButton,
@@ -225,6 +264,7 @@ pub struct PU {
     pub create_menu: extern "C" fn(priv_data: *const PUBase) -> PUMenu,
     pub create_menu_bar: extern "C" fn(priv_data: *const PUBase) -> PUMenuBar,
     pub create_application: extern "C" fn(priv_data: *const PUBase) -> PUApplication,
+    pub create_v_box_layout: extern "C" fn(priv_data: *const PUBase) -> PUVBoxLayout,
     pub privd: *const PUBase,
 }
 
