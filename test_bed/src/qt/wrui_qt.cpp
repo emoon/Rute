@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <QAction>
 #include <QMenu>
+#include <QMenuBar>
 #include <QApplication>
 
 struct PrivData {
@@ -30,6 +31,7 @@ extern struct PUSliderFuncs s_slider_funcs;
 extern struct PUMainWindowFuncs s_main_window_funcs;
 extern struct PUActionFuncs s_action_funcs;
 extern struct PUMenuFuncs s_menu_funcs;
+extern struct PUMenuBarFuncs s_menu_bar_funcs;
 extern struct PUApplicationFuncs s_application_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +94,15 @@ class WRMenu : public QMenu {
 public:
     WRMenu(QWidget* widget) : QMenu(widget) {}
     virtual ~WRMenu() {}
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRMenuBar : public QMenuBar {
+public:
+    WRMenuBar(QWidget* widget) : QMenuBar(widget) {}
+    virtual ~WRMenuBar() {}
 
 };
 
@@ -295,6 +306,17 @@ static bool main_window_is_animated(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUMenuBar main_window_menu_bar(struct PUBase* self_c) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    auto ret_value = qt_data->menuBar();
+    PUMenuBar ctl;
+    ctl.funcs = &s_menu_bar_funcs;
+    ctl.priv_data = (struct PUBase*)ret_value;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void main_window_set_central_widget(struct PUBase* self_c, struct PUBase* widget) { 
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
     qt_data->setCentralWidget((QWidget*)widget);
@@ -352,6 +374,42 @@ static void menu_resize(struct PUBase* self_c, int width, int height) {
 static void menu_add_action(struct PUBase* self_c, struct PUBase* action) { 
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->addAction((QAction*)action);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_set_title(struct PUBase* self_c, const char* title) { 
+    WRMenu* qt_data = (WRMenu*)self_c;
+    qt_data->setTitle(QString::fromLatin1(title));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool menu_bar_is_widget_type(struct PUBase* self_c) { 
+    QMenuBar* qt_data = (QMenuBar*)self_c;
+    auto ret_value = qt_data->isWidgetType();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_bar_show(struct PUBase* self_c) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_bar_resize(struct PUBase* self_c, int width, int height) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_bar_add_menu(struct PUBase* self_c, struct PUBase* menu) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->addMenu((QMenu*)menu);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -521,6 +579,18 @@ static void destroy_menu(struct PUBase* priv_data) {
     destroy_generic<WRMenu>(priv_data);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUMenuBar create_menu_bar(struct PUBase* priv_data) {
+    return create_widget_func<struct PUMenuBar, struct PUMenuBarFuncs, WRMenuBar>(&s_menu_bar_funcs, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_menu_bar(struct PUBase* priv_data) {
+    destroy_generic<WRMenuBar>(priv_data);
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -628,6 +698,7 @@ struct PUMainWindowFuncs s_main_window_funcs = {
     main_window_show,
     main_window_resize,
     main_window_is_animated,
+    main_window_menu_bar,
     main_window_set_central_widget,
 };
 
@@ -649,6 +720,17 @@ struct PUMenuFuncs s_menu_funcs = {
     menu_resize,
     menu_add_action_text,
     menu_add_action,
+    menu_set_title,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUMenuBarFuncs s_menu_bar_funcs = {
+    destroy_menu_bar,
+    menu_bar_is_widget_type,
+    menu_bar_show,
+    menu_bar_resize,
+    menu_bar_add_menu,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -670,6 +752,7 @@ static struct PU s_pu = {
     create_main_window,
     create_action,
     create_menu,
+    create_menu_bar,
     create_application,
     0,
 

@@ -143,6 +143,7 @@ pub struct PUMainWindowFuncs {
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub is_animated: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub menu_bar: extern "C" fn(self_c: *const PUBase) ->  PUMenuBar,
     pub set_central_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
 }
 
@@ -176,12 +177,29 @@ pub struct PUMenuFuncs {
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub add_action_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub add_action: extern "C" fn(self_c: *const PUBase, action: *const PUBase),
+    pub set_title: extern "C" fn(self_c: *const PUBase, title: *const ::std::os::raw::c_char),
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PUMenu {
     pub funcs: *const PUMenuFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
+pub struct PUMenuBarFuncs {
+    pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub show: extern "C" fn(self_c: *const PUBase),
+    pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
+    pub add_menu: extern "C" fn(self_c: *const PUBase, menu: *const PUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUMenuBar {
+    pub funcs: *const PUMenuBarFuncs,
     pub privd: *const PUBase,
 }
 
@@ -211,6 +229,7 @@ pub struct PU {
     pub create_main_window: extern "C" fn(priv_data: *const PUBase) -> PUMainWindow,
     pub create_action: extern "C" fn(priv_data: *const PUBase) -> PUAction,
     pub create_menu: extern "C" fn(priv_data: *const PUBase) -> PUMenu,
+    pub create_menu_bar: extern "C" fn(priv_data: *const PUBase) -> PUMenuBar,
     pub create_application: extern "C" fn(priv_data: *const PUBase) -> PUApplication,
     pub privd: *const PUBase,
 }

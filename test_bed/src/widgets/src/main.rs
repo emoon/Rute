@@ -49,6 +49,16 @@ impl MyApp {
         main_window.set_central_widget(&list);
         main_window.show();
 
+        let open_file = self.ui.create_action();
+        open_file.set_text("Open");
+
+        let file_menu = self.ui.create_menu();
+        file_menu.set_title("File");
+        file_menu.add_action(&open_file);
+
+        let menu_bar = main_window.menu_bar();
+        menu_bar.add_menu(&file_menu);
+
         set_current_row_changed_event!(list, self, MyApp, MyApp::new_row_selected);
 
         app.exec();

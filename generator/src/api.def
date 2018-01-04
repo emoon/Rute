@@ -65,6 +65,7 @@ struct Slider : Widget {
 
 struct MainWindow : Widget {
     is_animated() -> bool,
+    menu_bar() -> MenuBar,
     set_central_widget(&WidgetType widget),
 }
 
@@ -82,6 +83,11 @@ struct Action : Object {
 struct Menu : Widget {
 	[manual] add_action_text(String text),
 	add_action(&Action action),
+	set_title(String title),
+}
+
+struct MenuBar : Widget {
+	add_menu(&Menu menu),
 }
 
 #[attributes(ManualCreate)]

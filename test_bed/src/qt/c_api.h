@@ -31,6 +31,8 @@ struct PUAction;
 struct PUActionFuncs;
 struct PUMenu;
 struct PUMenuFuncs;
+struct PUMenuBar;
+struct PUMenuBarFuncs;
 struct PUApplication;
 struct PUApplicationFuncs;
 struct PUPaintDevice;
@@ -135,6 +137,7 @@ struct PUMainWindowFuncs {
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
     bool (*is_animated)(struct PUBase* self_c);
+    struct PUMenuBar (*menu_bar)(struct PUBase* self_c);
     void (*set_central_widget)(struct PUBase* self_c, struct PUBase* widget);
 };
 
@@ -162,10 +165,24 @@ struct PUMenuFuncs {
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*add_action_text)(struct PUBase* self_c, const char* text);
     void (*add_action)(struct PUBase* self_c, struct PUBase* action);
+    void (*set_title)(struct PUBase* self_c, const char* title);
 };
 
 struct PUMenu {
     struct PUMenuFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUMenuBarFuncs {
+    void (*destroy)(struct PUBase* self_c);
+    bool (*is_widget_type)(struct PUBase* self_c);
+    void (*show)(struct PUBase* self_c);
+    void (*resize)(struct PUBase* self_c, int width, int height);
+    void (*add_menu)(struct PUBase* self_c, struct PUBase* menu);
+};
+
+struct PUMenuBar {
+    struct PUMenuBarFuncs* funcs;
     struct PUBase* priv_data;
 };
 
@@ -191,6 +208,7 @@ typedef struct PU {
     struct PUMainWindow (*create_main_window)(PUBase* self);
     struct PUAction (*create_action)(PUBase* self);
     struct PUMenu (*create_menu)(PUBase* self);
+    struct PUMenuBar (*create_menu_bar)(PUBase* self);
     struct PUApplication (*create_application)(PUBase* self);
     struct PUBase* priv_data;
 } PU;

@@ -62,6 +62,11 @@ pub struct Menu {
 }
 
 #[derive(Clone)]
+pub struct MenuBar {
+    pub obj: Option<PUMenuBar>,
+}
+
+#[derive(Clone)]
 pub struct Application {
     pub obj: Option<PUApplication>,
 }
@@ -405,6 +410,14 @@ impl MainWindow {
         }
     }
 
+    pub fn menu_bar(&self) -> MenuBar {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).menu_bar)(obj.privd);
+            MenuBar { obj: Some(ret_val) }
+        }
+    }
+
     pub fn set_central_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -513,6 +526,14 @@ impl Menu {
         }
     }
 
+    pub fn set_title(&self, title: &str) {
+        let str_in_title_1 = CString::new(title).unwrap();
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_title)(obj.privd, str_in_title_1.as_ptr())
+        }
+    }
+
 }
 
 impl Drop for Menu {
@@ -533,6 +554,62 @@ impl PaintDevice for Menu {
 }
 
 impl WidgetType for Menu {
+    fn get_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl MenuBar {
+    pub fn is_widget_type(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn show(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).show)(obj.privd)
+        }
+    }
+
+    pub fn resize(&self, width: i32, height: i32) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).resize)(obj.privd, width, height)
+        }
+    }
+
+    pub fn add_menu(&self, menu: &Menu) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_menu)(obj.privd, menu.obj.unwrap().privd)
+        }
+    }
+
+}
+
+impl Drop for MenuBar {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+}
+
+impl PaintDevice for MenuBar {
+    fn get_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl WidgetType for MenuBar {
     fn get_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
@@ -663,6 +740,10 @@ impl Ui {
 
     pub fn create_menu(&self) -> Menu {
         Menu { obj: Some(unsafe { ((*self.pu).create_menu)((*self.pu).privd) }) }
+    }
+
+    pub fn create_menu_bar(&self) -> MenuBar {
+        MenuBar { obj: Some(unsafe { ((*self.pu).create_menu_bar)((*self.pu).privd) }) }
     }
 
     pub fn create_application(&self) -> Application {
