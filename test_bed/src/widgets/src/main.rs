@@ -30,6 +30,10 @@ impl MyApp {
         println!("new row {}", row);
     }
 
+    fn menu_selected(&mut self) {
+        println!("menu select");
+    }
+
     fn run(&mut self) {
         let app = self.ui.create_application();
         let main_window = self.ui.create_main_window();
@@ -59,7 +63,8 @@ impl MyApp {
         let menu_bar = main_window.menu_bar();
         menu_bar.add_menu(&file_menu);
 
-        set_current_row_changed_event!(list, self, MyApp, MyApp::new_row_selected);
+        set_current_row_changed_event!(list, &self, MyApp, MyApp::new_row_selected);
+        set_triggered_event!(open_file, &self, MyApp, MyApp::menu_selected);
 
         app.exec();
     }

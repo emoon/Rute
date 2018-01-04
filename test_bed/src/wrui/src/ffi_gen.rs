@@ -27,22 +27,8 @@ pub struct PURect {
 }
 
 #[repr(C)]
-pub struct PUObjectFuncs {
-    pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct PUObject {
-    pub funcs: *const PUObjectFuncs,
-    pub privd: *const PUBase,
-}
-
-#[repr(C)]
 pub struct PUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
 }
@@ -57,7 +43,6 @@ pub struct PUWidget {
 #[repr(C)]
 pub struct PUPushButtonFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_released_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
@@ -102,7 +87,6 @@ pub struct PUListWidgetItem {
 #[repr(C)]
 pub struct PUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
@@ -122,7 +106,6 @@ pub struct PUListWidget {
 #[repr(C)]
 pub struct PUSliderFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_value_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
@@ -139,7 +122,6 @@ pub struct PUSlider {
 #[repr(C)]
 pub struct PUMainWindowFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub is_animated: extern "C" fn(self_c: *const PUBase) -> bool,
@@ -157,9 +139,10 @@ pub struct PUMainWindow {
 #[repr(C)]
 pub struct PUActionFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub is_enabled: extern "C" fn(self_c: *const PUBase) -> bool,
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
+    pub set_triggered_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void)),
 }
 
 #[repr(C)]
@@ -172,7 +155,6 @@ pub struct PUAction {
 #[repr(C)]
 pub struct PUMenuFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub add_action_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
@@ -190,7 +172,6 @@ pub struct PUMenu {
 #[repr(C)]
 pub struct PUMenuBarFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
-    pub is_widget_type: extern "C" fn(self_c: *const PUBase) -> bool,
     pub show: extern "C" fn(self_c: *const PUBase),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub add_menu: extern "C" fn(self_c: *const PUBase, menu: *const PUBase),
@@ -219,7 +200,6 @@ pub struct PUApplication {
 
 #[repr(C)]
 pub struct PU {
-    pub create_object: extern "C" fn(priv_data: *const PUBase) -> PUObject,
     pub create_widget: extern "C" fn(priv_data: *const PUBase) -> PUWidget,
     pub create_push_button: extern "C" fn(priv_data: *const PUBase) -> PUPushButton,
     pub create_painter: extern "C" fn(priv_data: *const PUBase) -> PUPainter,

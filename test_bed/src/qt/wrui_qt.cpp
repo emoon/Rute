@@ -1,7 +1,6 @@
 #include "c_api.h"
 #include "qt_api_gen.h"
 #include <assert.h>
-#include <QObject>
 #include <QWidget>
 #include <QPushButton>
 #include <QPainter>
@@ -21,7 +20,6 @@ struct PrivData {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-extern struct PUObjectFuncs s_object_funcs;
 extern struct PUWidgetFuncs s_widget_funcs;
 extern struct PUPushButtonFuncs s_push_button_funcs;
 extern struct PUPainterFuncs s_painter_funcs;
@@ -81,15 +79,6 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRAction : public QAction {
-public:
-    WRAction(QWidget* widget) : QAction(widget) {}
-    virtual ~WRAction() {}
-
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 class WRMenu : public QMenu {
 public:
     WRMenu(QWidget* widget) : QMenu(widget) {}
@@ -108,22 +97,6 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool object_is_widget_type(struct PUBase* self_c) { 
-    QObject* qt_data = (QObject*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool widget_is_widget_type(struct PUBase* self_c) { 
-    QWidget* qt_data = (QWidget*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void widget_show(struct PUBase* self_c) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->show();
@@ -134,14 +107,6 @@ static void widget_show(struct PUBase* self_c) {
 static void widget_resize(struct PUBase* self_c, int width, int height) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->resize(width, height);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool push_button_is_widget_type(struct PUBase* self_c) { 
-    QPushButton* qt_data = (QPushButton*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,14 +161,6 @@ static void list_widget_item_set_text(struct PUBase* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool list_widget_is_widget_type(struct PUBase* self_c) { 
-    QListWidget* qt_data = (QListWidget*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void list_widget_show(struct PUBase* self_c) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
     qt_data->show();
@@ -246,14 +203,6 @@ static void set_list_widget_current_row_changed_event(void* object, void* user_d
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool slider_is_widget_type(struct PUBase* self_c) { 
-    QSlider* qt_data = (QSlider*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void slider_show(struct PUBase* self_c) { 
     WRSlider* qt_data = (WRSlider*)self_c;
     qt_data->show();
@@ -272,14 +221,6 @@ static void set_slider_value_changed_event(void* object, void* user_data, void (
     QSlotWrapperSignal_self_i32_void* wrap = new QSlotWrapperSignal_self_i32_void(user_data, (Signal_self_i32_void)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(valueChanged(int)), wrap, SLOT(method(int)));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool main_window_is_widget_type(struct PUBase* self_c) { 
-    QMainWindow* qt_data = (QMainWindow*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,16 +265,8 @@ static void main_window_set_central_widget(struct PUBase* self_c, struct PUBase*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool action_is_widget_type(struct PUBase* self_c) { 
-    QAction* qt_data = (QAction*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool action_is_enabled(struct PUBase* self_c) { 
-    WRAction* qt_data = (WRAction*)self_c;
+    QAction* qt_data = (QAction*)self_c;
     auto ret_value = qt_data->isEnabled();
     return ret_value;
 }
@@ -341,16 +274,16 @@ static bool action_is_enabled(struct PUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void action_set_text(struct PUBase* self_c, const char* text) { 
-    WRAction* qt_data = (WRAction*)self_c;
+    QAction* qt_data = (QAction*)self_c;
     qt_data->setText(QString::fromLatin1(text));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool menu_is_widget_type(struct PUBase* self_c) { 
-    QMenu* qt_data = (QMenu*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
+static void set_action_triggered_event(void* object, void* user_data, void (*event)(void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(triggered()), wrap, SLOT(method()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,14 +314,6 @@ static void menu_add_action(struct PUBase* self_c, struct PUBase* action) {
 static void menu_set_title(struct PUBase* self_c, const char* title) { 
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->setTitle(QString::fromLatin1(title));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool menu_bar_is_widget_type(struct PUBase* self_c) { 
-    QMenuBar* qt_data = (QMenuBar*)self_c;
-    auto ret_value = qt_data->isWidgetType();
-    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -457,18 +382,6 @@ template<typename T, typename F, typename QT> T create_generic_func(F* funcs, vo
 template<typename QT> void destroy_generic(struct PUBase* qt_data) {
     QT* qt_obj = (QT*)qt_data;
     delete qt_obj;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct PUObject create_object(struct PUBase* priv_data) {
-    return create_generic_func<struct PUObject, struct PUObjectFuncs, QObject>(&s_object_funcs, priv_data);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void destroy_object(struct PUBase* priv_data) {
-    destroy_generic<QObject>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,13 +471,13 @@ static void destroy_main_window(struct PUBase* priv_data) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct PUAction create_action(struct PUBase* priv_data) {
-    return create_widget_func<struct PUAction, struct PUActionFuncs, WRAction>(&s_action_funcs, priv_data);
+    return create_generic_func<struct PUAction, struct PUActionFuncs, QAction>(&s_action_funcs, priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_action(struct PUBase* priv_data) {
-    destroy_generic<WRAction>(priv_data);
+    destroy_generic<QAction>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -627,16 +540,8 @@ static void menu_add_action_text(struct PUBase* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct PUObjectFuncs s_object_funcs = {
-    destroy_object,
-    object_is_widget_type,
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 struct PUWidgetFuncs s_widget_funcs = {
     destroy_widget,
-    widget_is_widget_type,
     widget_show,
     widget_resize,
 };
@@ -645,7 +550,6 @@ struct PUWidgetFuncs s_widget_funcs = {
 
 struct PUPushButtonFuncs s_push_button_funcs = {
     destroy_push_button,
-    push_button_is_widget_type,
     push_button_show,
     push_button_resize,
     set_push_button_released_event,
@@ -671,7 +575,6 @@ struct PUListWidgetItemFuncs s_list_widget_item_funcs = {
 
 struct PUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
-    list_widget_is_widget_type,
     list_widget_show,
     list_widget_resize,
     list_widget_add_item,
@@ -684,7 +587,6 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
 
 struct PUSliderFuncs s_slider_funcs = {
     destroy_slider,
-    slider_is_widget_type,
     slider_show,
     slider_resize,
     set_slider_value_changed_event,
@@ -694,7 +596,6 @@ struct PUSliderFuncs s_slider_funcs = {
 
 struct PUMainWindowFuncs s_main_window_funcs = {
     destroy_main_window,
-    main_window_is_widget_type,
     main_window_show,
     main_window_resize,
     main_window_is_animated,
@@ -706,16 +607,15 @@ struct PUMainWindowFuncs s_main_window_funcs = {
 
 struct PUActionFuncs s_action_funcs = {
     destroy_action,
-    action_is_widget_type,
     action_is_enabled,
     action_set_text,
+    set_action_triggered_event,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct PUMenuFuncs s_menu_funcs = {
     destroy_menu,
-    menu_is_widget_type,
     menu_show,
     menu_resize,
     menu_add_action_text,
@@ -727,7 +627,6 @@ struct PUMenuFuncs s_menu_funcs = {
 
 struct PUMenuBarFuncs s_menu_bar_funcs = {
     destroy_menu_bar,
-    menu_bar_is_widget_type,
     menu_bar_show,
     menu_bar_resize,
     menu_bar_add_menu,
@@ -742,7 +641,6 @@ struct PUApplicationFuncs s_application_funcs = {
 };
 
 static struct PU s_pu = {
-    create_object,
     create_widget,
     create_push_button,
     create_painter,

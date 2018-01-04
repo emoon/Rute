@@ -22,12 +22,8 @@ struct Rect {
     i32 height,
 }
 
-struct Object {
-	is_widget_type() -> bool,
-}
-
 #[traits(PaintDevice, WidgetType)]
-struct Widget : Object {
+struct Widget {
     show(),
     resize(i32 width, i32 height),
     //[event] paint_event(&PaintEvent event),
@@ -72,9 +68,10 @@ struct MainWindow : Widget {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Actions
 
-struct Action : Object {
+struct Action {
 	is_enabled() -> bool,
 	set_text(String text),
+	[callback] triggered(),
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

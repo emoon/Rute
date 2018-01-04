@@ -12,11 +12,6 @@ use std::ffi::CString;
 pub use ffi_gen::PURect as Rect;
 
 #[derive(Clone)]
-pub struct Object {
-    pub obj: Option<PUObject>,
-}
-
-#[derive(Clone)]
 pub struct Widget {
     pub obj: Option<PUWidget>,
 }
@@ -79,36 +74,7 @@ pub trait WidgetType {
     fn get_obj(&self) -> *const PUBase;
 }
 
-impl Object {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
-}
-
-impl Drop for Object {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl Widget {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -150,14 +116,6 @@ impl WidgetType for Widget {
 }
 
 impl PushButton {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -255,14 +213,6 @@ impl Drop for ListWidgetItem {
 }
 
 impl ListWidget {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -331,14 +281,6 @@ impl WidgetType for ListWidget {
 }
 
 impl Slider {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -380,14 +322,6 @@ impl WidgetType for Slider {
 }
 
 impl MainWindow {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -452,14 +386,6 @@ impl WidgetType for MainWindow {
 }
 
 impl Action {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn is_enabled(&self) -> bool {
         unsafe {
             let obj = self.obj.unwrap();
@@ -489,14 +415,6 @@ impl Drop for Action {
 }
 
 impl Menu {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -561,14 +479,6 @@ impl WidgetType for Menu {
 }
 
 impl MenuBar {
-    pub fn is_widget_type(&self) -> bool {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).is_widget_type)(obj.privd);
-            ret_val
-        }
-    }
-
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -679,6 +589,23 @@ macro_rules! set_released_event {
 }}
 
 #[macro_export]
+macro_rules! set_triggered_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app);
+          }
+      }
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_triggered_event)(obj.privd, ::std::mem::transmute($data), temp_call);
+      }
+    }
+}}
+
+#[macro_export]
 macro_rules! set_value_changed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
@@ -701,10 +628,6 @@ pub struct Ui {
 
 impl Ui {
     pub fn new(pu: *const PU) -> Ui { Ui { pu: pu } }
-
-    pub fn create_object(&self) -> Object {
-        Object { obj: Some(unsafe { ((*self.pu).create_object)((*self.pu).privd) }) }
-    }
 
     pub fn create_widget(&self) -> Widget {
         Widget { obj: Some(unsafe { ((*self.pu).create_widget)((*self.pu).privd) }) }
