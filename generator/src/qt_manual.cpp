@@ -30,5 +30,14 @@ static void menu_add_action_text(struct PUBase* self_c, const char* text) {
     qt_data->addAction(QString::fromLatin1(text));
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_accept_drops(struct PUBase* self_c, bool state) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+	qt_data->viewport()->setAcceptDrops(state);
+	qt_data->setDragDropMode(QAbstractItemView::InternalMove);
+}
+
+
 
 

@@ -81,6 +81,11 @@ pub struct VBoxLayout {
     pub obj: Option<PUVBoxLayout>,
 }
 
+#[derive(Clone)]
+pub struct HBoxLayout {
+    pub obj: Option<PUHBoxLayout>,
+}
+
 pub trait LayoutType {
     fn get_obj(&self) -> *const PUBase;
 }
@@ -284,6 +289,28 @@ impl ListWidget {
             } else {
                 Some(ListWidgetItem { obj: Some(ret_val) })
             }
+        }
+    }
+
+    pub fn set_drag_enabled(&self, state: bool) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_drag_enabled)(obj.privd, state)
+        }
+    }
+
+    pub fn set_drop_indicator_shown(&self, state: bool) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).set_drop_indicator_shown)(obj.privd, state);
+             { obj: Some(ret_val) }
+        }
+    }
+
+    pub fn set_accept_drops(&self, state: bool) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).set_accept_drops)(obj.privd, state)
         }
     }
 
@@ -684,6 +711,40 @@ impl LayoutType for VBoxLayout {
     }
 }
 
+impl HBoxLayout {
+    pub fn add_widget(&self, widget: &WidgetType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+        }
+    }
+
+    pub fn update(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).update)(obj.privd)
+        }
+    }
+
+}
+
+impl Drop for HBoxLayout {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+}
+
+impl LayoutType for HBoxLayout {
+    fn get_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
 #[macro_export]
 macro_rules! set_current_row_changed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
@@ -805,6 +866,10 @@ impl Ui {
 
     pub fn create_v_box_layout(&self) -> VBoxLayout {
         VBoxLayout { obj: Some(unsafe { ((*self.pu).create_v_box_layout)((*self.pu).privd) }) }
+    }
+
+    pub fn create_h_box_layout(&self) -> HBoxLayout {
+        HBoxLayout { obj: Some(unsafe { ((*self.pu).create_h_box_layout)((*self.pu).privd) }) }
     }
 
 }

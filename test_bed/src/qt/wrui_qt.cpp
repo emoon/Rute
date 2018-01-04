@@ -15,6 +15,7 @@
 #include <QPaintEvent>
 #include <QLayout>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 struct PrivData {
     QWidget* parent;
@@ -37,6 +38,7 @@ extern struct PUApplicationFuncs s_application_funcs;
 extern struct PUPaintEventFuncs s_paint_event_funcs;
 extern struct PULayoutFuncs s_layout_funcs;
 extern struct PUVBoxLayoutFuncs s_v_box_layout_funcs;
+extern struct PUHBoxLayoutFuncs s_h_box_layout_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -120,6 +122,15 @@ class WRVBoxLayout : public QVBoxLayout {
 public:
     WRVBoxLayout(QWidget* widget) : QVBoxLayout(widget) {}
     virtual ~WRVBoxLayout() {}
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRHBoxLayout : public QHBoxLayout {
+public:
+    WRHBoxLayout(QWidget* widget) : QHBoxLayout(widget) {}
+    virtual ~WRHBoxLayout() {}
 
 };
 
@@ -245,6 +256,26 @@ static struct PUListWidgetItem list_widget_item(struct PUBase* self_c, int index
     ctl.priv_data = (struct PUBase*)ret_value;
     return ctl;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_drag_enabled(struct PUBase* self_c, bool state) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setDragEnabled(state);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PU list_widget_set_drop_indicator_shown(struct PUBase* self_c, bool state) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->setDropIndicatorShown(state);
+    PU ctl;
+    ctl.funcs = &s__funcs;
+    ctl.priv_data = (struct PUBase*)ret_value;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -473,6 +504,20 @@ static void v_box_layout_update(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void h_box_layout_add_widget(struct PUBase* self_c, struct PUBase* widget) { 
+    QHBoxLayout* qt_data = (QHBoxLayout*)self_c;
+    qt_data->addWidget((QWidget*)widget);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void h_box_layout_update(struct PUBase* self_c) { 
+    WRHBoxLayout* qt_data = (WRHBoxLayout*)self_c;
+    qt_data->update();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 template<typename T, typename F, typename QT> T create_widget_func(F* funcs, void* priv_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
@@ -636,6 +681,18 @@ static void destroy_v_box_layout(struct PUBase* priv_data) {
     destroy_generic<WRVBoxLayout>(priv_data);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUHBoxLayout create_h_box_layout(struct PUBase* priv_data) {
+    return create_widget_func<struct PUHBoxLayout, struct PUHBoxLayoutFuncs, WRHBoxLayout>(&s_h_box_layout_funcs, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_h_box_layout(struct PUBase* priv_data) {
+    destroy_generic<WRHBoxLayout>(priv_data);
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -667,6 +724,15 @@ static void menu_add_action_text(struct PUBase* self_c, const char* text) {
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->addAction(QString::fromLatin1(text));
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_accept_drops(struct PUBase* self_c, bool state) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+	qt_data->viewport()->setAcceptDrops(state);
+	qt_data->setDragDropMode(QAbstractItemView::InternalMove);
+}
+
 
 
 
@@ -714,6 +780,9 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     list_widget_set_layout,
     list_widget_add_item,
     list_widget_item,
+    list_widget_set_drag_enabled,
+    list_widget_set_drop_indicator_shown,
+    list_widget_set_accept_drops,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
 };
@@ -799,6 +868,14 @@ struct PUVBoxLayoutFuncs s_v_box_layout_funcs = {
     v_box_layout_update,
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUHBoxLayoutFuncs s_h_box_layout_funcs = {
+    destroy_h_box_layout,
+    h_box_layout_add_widget,
+    h_box_layout_update,
+};
+
 static struct PU s_pu = {
     create_widget,
     create_push_button,
@@ -812,6 +889,7 @@ static struct PU s_pu = {
     create_menu_bar,
     create_application,
     create_v_box_layout,
+    create_h_box_layout,
     0,
 
 };

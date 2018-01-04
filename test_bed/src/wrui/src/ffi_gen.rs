@@ -102,6 +102,9 @@ pub struct PUListWidgetFuncs {
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
+    pub set_drag_enabled: extern "C" fn(self_c: *const PUBase, state: bool),
+    pub set_drop_indicator_shown: extern "C" fn(self_c: *const PUBase, state: bool) ->  PU,
+    pub set_accept_drops: extern "C" fn(self_c: *const PUBase, state: bool),
     pub add_widget_item: extern "C" fn(self_c: *const PUBase, item: *const PUBase),
     pub set_current_row_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, row: i32)),
@@ -252,6 +255,20 @@ pub struct PUVBoxLayout {
 }
 
 #[repr(C)]
+pub struct PUHBoxLayoutFuncs {
+    pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub add_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUHBoxLayout {
+    pub funcs: *const PUHBoxLayoutFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PU {
     pub create_widget: extern "C" fn(priv_data: *const PUBase) -> PUWidget,
     pub create_push_button: extern "C" fn(priv_data: *const PUBase) -> PUPushButton,
@@ -265,6 +282,7 @@ pub struct PU {
     pub create_menu_bar: extern "C" fn(priv_data: *const PUBase) -> PUMenuBar,
     pub create_application: extern "C" fn(priv_data: *const PUBase) -> PUApplication,
     pub create_v_box_layout: extern "C" fn(priv_data: *const PUBase) -> PUVBoxLayout,
+    pub create_h_box_layout: extern "C" fn(priv_data: *const PUBase) -> PUHBoxLayout,
     pub privd: *const PUBase,
 }
 

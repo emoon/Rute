@@ -39,6 +39,8 @@ struct PULayout;
 struct PULayoutFuncs;
 struct PUVBoxLayout;
 struct PUVBoxLayoutFuncs;
+struct PUHBoxLayout;
+struct PUHBoxLayoutFuncs;
 struct PULayoutType;
 struct PUPaintDevice;
 struct PUWidgetType;
@@ -105,6 +107,9 @@ struct PUListWidgetFuncs {
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_item)(struct PUBase* self_c, const char* text);
     struct PUListWidgetItem (*item)(struct PUBase* self_c, int index);
+    void (*set_drag_enabled)(struct PUBase* self_c, bool state);
+    struct PU (*set_drop_indicator_shown)(struct PUBase* self_c, bool state);
+    void (*set_accept_drops)(struct PUBase* self_c, bool state);
     void (*add_widget_item)(struct PUBase* self_c, struct PUBase* item);
     void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int row));
 };
@@ -222,6 +227,17 @@ struct PUVBoxLayout {
     struct PUBase* priv_data;
 };
 
+struct PUHBoxLayoutFuncs {
+    void (*destroy)(struct PUBase* self_c);
+    void (*add_widget)(struct PUBase* self_c, struct PUBase* widget);
+    void (*update)(struct PUBase* self_c);
+};
+
+struct PUHBoxLayout {
+    struct PUHBoxLayoutFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
 typedef struct PU { 
     struct PUWidget (*create_widget)(PUBase* self);
     struct PUPushButton (*create_push_button)(PUBase* self);
@@ -235,6 +251,7 @@ typedef struct PU {
     struct PUMenuBar (*create_menu_bar)(PUBase* self);
     struct PUApplication (*create_application)(PUBase* self);
     struct PUVBoxLayout (*create_v_box_layout)(PUBase* self);
+    struct PUHBoxLayout (*create_h_box_layout)(PUBase* self);
     struct PUBase* priv_data;
 } PU;
 

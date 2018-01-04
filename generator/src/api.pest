@@ -15,9 +15,10 @@ event       = { ("[event]") }
 manual      = { ("[manual]") }
 refexp      = { ("&") }
 optional    = { ("?") }
-retexp      = { ("->") ~ refexp? ~ vtype ~ optional? }
+array       = { ("<") ~ vtype ~ (">") }
+retexp      = { ("->") ~ refexp? ~ (vtype | array) ~ optional? }
 var         = { refexp? ~ vtype ~ name }
-varlist     = { var ~ ((",") ~ var)* }
+varlist     = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign = { ("=") ~ name_or_num }
 enum_type   = { name ~ enum_assign? }
 namelist    = { name ~ ((",") ~ name)* }

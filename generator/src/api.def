@@ -50,6 +50,12 @@ struct ListWidget : Widget {
 	add_item(String text),
 	item(i32 index) -> ListWidgetItem?,
 
+	// Drag'n'drop support
+
+	set_drag_enabled(bool state),
+	set_drop_indicator_shown(bool state),
+	[manual] set_accept_drops(bool state),
+
 	[manual] add_widget_item(&ListWidgetItem item),
 	[callback] current_row_changed(i32 row),
 }
@@ -113,6 +119,9 @@ struct VBoxLayout : Layout {
 	update(),
 }
 
+struct HBoxLayout : Layout {
+	update(),
+}
 
 // Taken directly from Qt but values has been removed. We will use a lookup on the native
 // side to map this table to the key ones

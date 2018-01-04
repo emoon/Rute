@@ -42,6 +42,10 @@ impl MyApp {
         list.add_item("New Text!");
         list.add_item("Test 4");
 
+        list.set_drag_enabled(true);
+        list.set_accept_drops(true);
+        list.set_drop_indicator_shown(true);
+
         main_window.resize(500, 500);
         //main_window.show();
 
