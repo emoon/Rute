@@ -259,6 +259,17 @@ static struct PUListWidgetItem list_widget_item(struct PUBase* self_c, int index
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUArray list_widget_selected_items(struct PUBase* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->selectedItems();
+    PUListWidgetItem ctl;
+    ctl.funcs = &s_list_widget_item_funcs;
+    ctl.priv_data = (struct PUBase*)ret_value;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void list_widget_set_drag_enabled(struct PUBase* self_c, bool state) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
     qt_data->setDragEnabled(state);
@@ -266,13 +277,9 @@ static void list_widget_set_drag_enabled(struct PUBase* self_c, bool state) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct PU list_widget_set_drop_indicator_shown(struct PUBase* self_c, bool state) { 
+static void list_widget_set_drop_indicator_shown(struct PUBase* self_c, bool state) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
-    auto ret_value = qt_data->setDropIndicatorShown(state);
-    PU ctl;
-    ctl.funcs = &s__funcs;
-    ctl.priv_data = (struct PUBase*)ret_value;
-    return ctl;
+    qt_data->setDropIndicatorShown(state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -780,6 +787,7 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     list_widget_set_layout,
     list_widget_add_item,
     list_widget_item,
+    list_widget_selected_items,
     list_widget_set_drag_enabled,
     list_widget_set_drop_indicator_shown,
     list_widget_set_accept_drops,

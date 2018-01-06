@@ -10,8 +10,12 @@ static HEADER: &'static [u8] = b"
 #include <stdbool.h>\n
 #ifdef __cplusplus
 extern \"C\" {
-#endif\n\n
-struct PUBase;\n";
+#endif\n
+struct PUBase;\n
+struct PUArray {
+    void* elements;
+    uint32_t count;
+};\n\n";
 
 static FOOTER: &'static [u8] = b"
 #ifdef __cplusplus

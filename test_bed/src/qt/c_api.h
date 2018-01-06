@@ -8,8 +8,13 @@
 extern "C" {
 #endif
 
-
 struct PUBase;
+
+struct PUArray {
+    void* elements;
+    uint32_t count;
+};
+
 struct PURect;
 struct PUWidget;
 struct PUWidgetFuncs;
@@ -107,8 +112,9 @@ struct PUListWidgetFuncs {
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_item)(struct PUBase* self_c, const char* text);
     struct PUListWidgetItem (*item)(struct PUBase* self_c, int index);
+    struct PUArray (*selected_items)(struct PUBase* self_c);
     void (*set_drag_enabled)(struct PUBase* self_c, bool state);
-    struct PU (*set_drop_indicator_shown)(struct PUBase* self_c, bool state);
+    void (*set_drop_indicator_shown)(struct PUBase* self_c, bool state);
     void (*set_accept_drops)(struct PUBase* self_c, bool state);
     void (*add_widget_item)(struct PUBase* self_c, struct PUBase* item);
     void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int row));

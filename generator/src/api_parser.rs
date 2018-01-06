@@ -17,6 +17,7 @@ pub struct Variable {
     pub primitive: bool,
     pub reference: bool,
     pub optional: bool,
+    pub array: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -171,8 +172,10 @@ impl Variable {
                 }
             }
         } else if self.reference {
-            // Unknown type here so we always defult to PUBase* as a "raw pointer" 
+            // Unknown type here so we always defult to PUBase* as a "raw pointer"
             "struct PUBase*".to_owned()
+        } else if self.array {
+            "struct PUArray".to_owned()
         } else {
             format!("struct PU{}", tname)
         }
@@ -437,17 +440,39 @@ const _GRAMMAR: &'static str = include_str!("api.pest");
 struct ApiParser;
 
 impl ApiDef {
+    fn get_vtype<I: Input>(rule: &Pair<Rule, I>) -> String {
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::vtype => {
+                    return entry.as_str().to_owned();
+                }
+                _ => (),
+            }
+        }
+
+        String::new()
+    }
+
     fn get_variable<I: Input>(rule: &Pair<Rule, I>) -> Variable {
         let mut var = Variable::default();
 
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
                 Rule::name => var.name = entry.as_str().to_owned(),
-                Rule::vtype => var.vtype = entry.as_str().to_owned(),
                 Rule::refexp => var.reference = true,
                 Rule::optional => var.optional = true,
+                Rule::vtype => var.vtype = entry.as_str().to_owned(),
+                Rule::array => {
+                    var.array = true;
+                    var.vtype = Self::get_vtype(&entry);
+                },
+
                 _ => (),
             }
+        }
+
+        if var.array {
+            println!("var {:?}", var);
         }
 
         var.primitive = is_primitve(&var.vtype);
@@ -463,6 +488,7 @@ impl ApiDef {
             primitive: false,
             reference: false,
             optional: false,
+            array: false,
         });
 
         for entry in rule.clone().into_inner() {
@@ -497,6 +523,7 @@ impl ApiDef {
                 primitive: false,
                 reference: false,
                 optional: false,
+                array: false,
             });
         }
 

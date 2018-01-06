@@ -13,6 +13,8 @@ impl Variable {
                 "*const ::std::os::raw::c_char".to_owned()
             } else if self.vtype == "self" || self.reference {
                 "*const PUBase".to_owned()
+            } else if self.array {
+                "PUArray".to_owned()
             } else {
                 format!(" PU{}", self.vtype)
             }
@@ -39,7 +41,7 @@ fn generate_ffi_callback(f: &mut File, func: &Function) -> io::Result<()> {
                                         callback: extern \"C\" fn(",
         func.name
     ))?;
-    func.write_func_def(f, |index, arg| { 
+    func.write_func_def(f, |index, arg| {
         if index == 0 {
             (arg.name.to_owned(), "*const c_void".to_owned())
         } else {
@@ -107,6 +109,13 @@ pub fn generate_ffi_bindings(
     f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
     f.write_all(b"pub struct PUBase {\n")?;
     f.write_all(b"    _unused: [u8; 0],\n")?;
+    f.write_all(b"}\n\n")?;
+
+    f.write_all(b"#[repr(C)]\n")?;
+    f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
+    f.write_all(b"pub struct PUArray {\n")?;
+    f.write_all(b"    elements: *const c_void,\n")?;
+    f.write_all(b"    count: i32,\n")?;
     f.write_all(b"}\n\n")?;
 
     // Write the trait forward structs

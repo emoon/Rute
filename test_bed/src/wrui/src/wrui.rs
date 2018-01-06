@@ -292,6 +292,14 @@ impl ListWidget {
         }
     }
 
+    pub fn selected_items(&self) -> ListWidgetItem {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).selected_items)(obj.privd);
+            ListWidgetItem { obj: Some(ret_val) }
+        }
+    }
+
     pub fn set_drag_enabled(&self, state: bool) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -302,8 +310,7 @@ impl ListWidget {
     pub fn set_drop_indicator_shown(&self, state: bool) {
         unsafe {
             let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).set_drop_indicator_shown)(obj.privd, state);
-             { obj: Some(ret_val) }
+            ((*obj.funcs).set_drop_indicator_shown)(obj.privd, state)
         }
     }
 

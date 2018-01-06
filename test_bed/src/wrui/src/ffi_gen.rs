@@ -7,6 +7,13 @@ pub struct PUBase {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PUArray {
+    elements: *const c_void,
+    count: i32,
+}
+
+#[repr(C)]
 #[derive(Default, Copy, Clone, Debug)]
 pub struct PULayoutType {
     _unused: [u8; 0],
@@ -102,8 +109,9 @@ pub struct PUListWidgetFuncs {
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
+    pub selected_items: extern "C" fn(self_c: *const PUBase) -> PUArray,
     pub set_drag_enabled: extern "C" fn(self_c: *const PUBase, state: bool),
-    pub set_drop_indicator_shown: extern "C" fn(self_c: *const PUBase, state: bool) ->  PU,
+    pub set_drop_indicator_shown: extern "C" fn(self_c: *const PUBase, state: bool),
     pub set_accept_drops: extern "C" fn(self_c: *const PUBase, state: bool),
     pub add_widget_item: extern "C" fn(self_c: *const PUBase, item: *const PUBase),
     pub set_current_row_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
