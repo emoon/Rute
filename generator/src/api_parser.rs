@@ -40,6 +40,7 @@ pub struct Function {
     pub return_val: Option<Variable>,
     pub func_type: FunctionType,
     pub is_manual: bool,
+    pub trait_target: String,
 }
 
 #[derive(Debug)]
@@ -508,6 +509,7 @@ impl ApiDef {
                 Rule::event => function.func_type = FunctionType::Event,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
+                Rule::trait_target => function.trait_target = Self::get_vtype(&entry),
                 Rule::manual => {
                     function.is_manual = true;
                     function.func_type = FunctionType::Regular;
@@ -526,6 +528,10 @@ impl ApiDef {
                 array: false,
             });
         }
+
+        println!("-------------------------------------------------");
+        println!("function.trait_target {:?}", function.trait_target);
+        println!("function {:?}", function);
 
         function
     }

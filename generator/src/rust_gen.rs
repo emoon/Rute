@@ -54,7 +54,7 @@ impl TypeHandler for TraitTypeHandler {
     }
 
     fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
-        format!("{}.get_obj() as *const PUBase", arg_name)
+        format!("{}.get_{}_obj() as *const PUBase", arg_name, self.name.to_snake_case())
     }
 }
 
@@ -70,7 +70,7 @@ fn generate_traits(
 
     for trait_name in traits {
         f.write_fmt(format_args!("pub trait {} {{\n", trait_name))?;
-        f.write_all(b"    fn get_obj(&self) -> *const PUBase;\n}\n\n")?;
+        f.write_fmt(format_args!("    fn get_{}_obj(&self) -> *const PUBase;\n}}\n\n", trait_name.to_snake_case()))?;
 
         type_handlers.push(Box::new(TraitTypeHandler {
             name: trait_name.clone(),
@@ -408,7 +408,7 @@ fn generate_impl(
 
         for trait_name in api_def.get_traits(&sdef) {
             f.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
-            f.write_all(b"    fn get_obj(&self) -> *const PUBase {\n")?;
+            f.write_fmt(format_args!("    fn get_{}_obj(&self) -> *const PUBase {{\n", trait_name.to_snake_case()))?;
             f.write_all(b"       let obj = self.obj.unwrap();\n")?;
             f.write_all(b"       obj.privd as *const PUBase\n")?;
             f.write_all(b"    }\n")?;

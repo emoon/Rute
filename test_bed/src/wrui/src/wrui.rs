@@ -87,15 +87,15 @@ pub struct HBoxLayout {
 }
 
 pub trait LayoutType {
-    fn get_obj(&self) -> *const PUBase;
+    fn get_layout_type_obj(&self) -> *const PUBase;
 }
 
 pub trait PaintDevice {
-    fn get_obj(&self) -> *const PUBase;
+    fn get_paint_device_obj(&self) -> *const PUBase;
 }
 
 pub trait WidgetType {
-    fn get_obj(&self) -> *const PUBase;
+    fn get_widget_type_obj(&self) -> *const PUBase;
 }
 
 impl Widget {
@@ -116,7 +116,7 @@ impl Widget {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -133,14 +133,14 @@ impl Drop for Widget {
 }
 
 impl PaintDevice for Widget {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Widget {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -164,7 +164,7 @@ impl PushButton {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -196,14 +196,14 @@ impl Drop for PushButton {
 }
 
 impl PaintDevice for PushButton {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for PushButton {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -268,7 +268,7 @@ impl ListWidget {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -289,14 +289,6 @@ impl ListWidget {
             } else {
                 Some(ListWidgetItem { obj: Some(ret_val) })
             }
-        }
-    }
-
-    pub fn selected_items(&self) -> ListWidgetItem {
-        unsafe {
-            let obj = self.obj.unwrap();
-            let ret_val = ((*obj.funcs).selected_items)(obj.privd);
-            ListWidgetItem { obj: Some(ret_val) }
         }
     }
 
@@ -341,14 +333,14 @@ impl Drop for ListWidget {
 }
 
 impl PaintDevice for ListWidget {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for ListWidget {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -372,7 +364,7 @@ impl Slider {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -389,14 +381,14 @@ impl Drop for Slider {
 }
 
 impl PaintDevice for Slider {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Slider {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -420,7 +412,7 @@ impl MainWindow {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -443,7 +435,7 @@ impl MainWindow {
     pub fn set_central_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_obj() as *const PUBase)
+            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
         }
     }
 
@@ -460,14 +452,14 @@ impl Drop for MainWindow {
 }
 
 impl PaintDevice for MainWindow {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for MainWindow {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -520,7 +512,7 @@ impl Menu {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -560,14 +552,14 @@ impl Drop for Menu {
 }
 
 impl PaintDevice for Menu {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for Menu {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -591,7 +583,7 @@ impl MenuBar {
     pub fn set_layout(&self, layout: &LayoutType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_obj() as *const PUBase)
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
         }
     }
 
@@ -615,14 +607,14 @@ impl Drop for MenuBar {
 }
 
 impl PaintDevice for MenuBar {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
 }
 
 impl WidgetType for MenuBar {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_widget_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -671,14 +663,14 @@ impl Layout {
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
         }
     }
 
 }
 
 impl LayoutType for Layout {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_layout_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -688,7 +680,7 @@ impl VBoxLayout {
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
         }
     }
 
@@ -712,7 +704,7 @@ impl Drop for VBoxLayout {
 }
 
 impl LayoutType for VBoxLayout {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_layout_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }
@@ -722,7 +714,7 @@ impl HBoxLayout {
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_obj() as *const PUBase)
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
         }
     }
 
@@ -746,7 +738,7 @@ impl Drop for HBoxLayout {
 }
 
 impl LayoutType for HBoxLayout {
-    fn get_obj(&self) -> *const PUBase {
+    fn get_layout_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
        obj.privd as *const PUBase
     }

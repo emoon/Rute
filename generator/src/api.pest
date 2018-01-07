@@ -6,23 +6,24 @@ fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
 field       =  { var | function | enum_type }
 fieldsep    = _{ (",") }
 
-rettype     = { name }
-attributes  = { ("#[attributes(") ~ namelist ~ (")]") }
-traits      = { ("#[traits(") ~ namelist ~ (")]") }
-derive      = { (":") ~ name }
-callback    = { ("[callback]") }
-event       = { ("[event]") }
-manual      = { ("[manual]") }
-refexp      = { ("&") }
-optional    = { ("?") }
-array       = { ("<") ~ vtype ~ (">") }
-retexp      = { ("->") ~ refexp? ~ (vtype | array) ~ optional? }
-var         = { refexp? ~ vtype ~ name }
-varlist     = { (var | array) ~ ((",") ~ (var | array))* }
-enum_assign = { ("=") ~ name_or_num }
-enum_type   = { name ~ enum_assign? }
-namelist    = { name ~ ((",") ~ name)* }
-function    = { manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+rettype      = { name }
+attributes   = { ("#[attributes(") ~ namelist ~ (")]") }
+traits       = { ("#[traits(") ~ namelist ~ (")]") }
+derive       = { (":") ~ name }
+callback     = { ("[callback]") }
+event        = { ("[event]") }
+manual       = { ("[manual]") }
+refexp       = { ("&") }
+optional     = { ("?") }
+array        = { ("<") ~ vtype ~ (">") }
+retexp       = { ("->") ~ refexp? ~ (vtype | array) ~ optional? }
+var          = { refexp? ~ vtype ~ name }
+varlist      = { (var | array) ~ ((",") ~ (var | array))* }
+enum_assign  = { ("=") ~ name_or_num }
+enum_type    = { name ~ enum_assign? }
+namelist     = { name ~ ((",") ~ name)* }
+function     = { manual? ~ event? ~ callback? ~ name ~ trait_target? ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+trait_target = { ("<") ~ vtype ~ (">") }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*

@@ -27,7 +27,7 @@ struct Widget {
     show(),
     resize(i32 width, i32 height),
     set_layout(&LayoutType layout),
-    [event] paint_event(&PaintEvent event),
+    [event] paint_event<PaintDevice>(&PaintEvent event),
 }
 
 struct PushButton : Widget {
@@ -50,7 +50,7 @@ struct ListWidget : Widget {
 	add_item(String text),
 	item(i32 index) -> ListWidgetItem?,
 
-	selected_items() -> <ListWidgetItem>,
+	//selected_items() -> <ListWidgetItem>,
 
 	// Drag'n'drop support
 
