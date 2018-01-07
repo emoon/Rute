@@ -322,8 +322,6 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
     let signal_type_name = signal_type_callback(func);
     let func_name = function_name(struct_name, func);
 
-    println!("struct_name {}", struct_name);
-
     f.write_fmt(format_args!(
         "static {} {{\n",
         callback_fun_def_name(false, &func_name, func)
