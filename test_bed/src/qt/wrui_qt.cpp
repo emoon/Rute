@@ -214,6 +214,20 @@ static void push_button_set_flat(struct PUBase* self_c, bool flat) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void painter_begin(struct PUBase* self_c, struct PUBase* target) { 
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->begin((QWidget*)target);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_end(struct PUBase* self_c) { 
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->end();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void painter_draw_line(struct PUBase* self_c, int x1, int y1, int x2, int y2) { 
     QPainter* qt_data = (QPainter*)self_c;
     qt_data->drawLine(x1, y1, x2, y2);
@@ -768,6 +782,8 @@ struct PUPushButtonFuncs s_push_button_funcs = {
 
 struct PUPainterFuncs s_painter_funcs = {
     destroy_painter,
+    painter_begin,
+    painter_end,
     painter_draw_line,
 };
 

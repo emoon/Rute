@@ -39,6 +39,8 @@ struct PushButton : Widget {
 // Lists
 
 struct Painter {
+    begin(&WidgetType target),
+    end(),
     draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
 }
 

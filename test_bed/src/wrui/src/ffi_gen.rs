@@ -78,6 +78,8 @@ pub struct PUPushButton {
 #[repr(C)]
 pub struct PUPainterFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub begin: extern "C" fn(self_c: *const PUBase, target: *const PUBase),
+    pub end: extern "C" fn(self_c: *const PUBase),
     pub draw_line: extern "C" fn(self_c: *const PUBase, x1: i32, y1: i32, x2: i32, y2: i32),
 }
 

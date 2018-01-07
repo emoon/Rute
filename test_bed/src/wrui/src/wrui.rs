@@ -190,6 +190,20 @@ impl WidgetType for PushButton {
 }
 
 impl Painter {
+    pub fn begin(&self, target: &WidgetType) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).begin)(obj.privd, target.get_widget_type_obj() as *const PUBase)
+        }
+    }
+
+    pub fn end(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).end)(obj.privd)
+        }
+    }
+
     pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -624,9 +638,14 @@ macro_rules! set_current_row_changed_event {
               $callback(&mut *app, row);
           }
       }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_current_row_changed_event)(obj.privd, ::std::mem::transmute($data), temp_call);
+         ((*obj.funcs).set_current_row_changed_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 }}
@@ -641,9 +660,14 @@ macro_rules! set_released_event {
               $callback(&mut *app);
           }
       }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_released_event)(obj.privd, ::std::mem::transmute($data), temp_call);
+         ((*obj.funcs).set_released_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 }}
@@ -658,9 +682,14 @@ macro_rules! set_triggered_event {
               $callback(&mut *app);
           }
       }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_triggered_event)(obj.privd, ::std::mem::transmute($data), temp_call);
+         ((*obj.funcs).set_triggered_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 }}
@@ -675,9 +704,37 @@ macro_rules! set_value_changed_event {
               $callback(&mut *app, value);
           }
       }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_value_changed_event)(obj.privd, ::std::mem::transmute($data), temp_call);
+         ((*obj.funcs).set_value_changed_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+}}
+
+#[macro_export]
+macro_rules! set_paint_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              let event = PaintEvent { obj: Some(*(event as *const wrui::ffi_gen::PUPaintEvent)) };
+              $callback(&mut *app, &event);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_paint_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 }}

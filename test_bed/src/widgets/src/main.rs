@@ -1,8 +1,10 @@
 #[macro_use]
 extern crate wrui;
 
+use std::os::raw::c_void;
+
 use wrui::{SharedLibUi, Ui};
-use wrui::wrui::{ListWidget, Application};
+use wrui::wrui::{PaintEvent, ListWidget, Application, Widget};
 
 #[cfg(target_os="windows")]
 fn get_wrui_path() -> &'static str {
@@ -18,6 +20,7 @@ fn get_wrui_path() -> &'static str {
 struct MyApp<'a> {
     ui: &'a Ui,
     list: ListWidget,
+    main_win: Widget,
     app: Application,
 }
 
@@ -27,32 +30,43 @@ impl<'a> MyApp<'a> {
             ui: ui,
             app: ui.create_application(),
             list: ui.create_list_widget(),
+            main_win: ui.create_widget(),
         }
     }
 
     fn new_row_selected(&mut self, row: i32) {
-        println!("callback: self {:p}", &self);
-        println!("callback: obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
-        println!("callback: self.list {:p}", &self.list);
-
         println!("new row {}", row);
     }
 
     fn menu_selected(&mut self) {
-        println!("menu_selected: obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
+        //println!("menu_selected: obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
 
+        /*
         for selected in &self.list.items() {
             selected.set_text("selected");
         }
+        */
 
         println!("menu select");
     }
 
-    fn run(&self) {
+    fn custom_draw_widget(&mut self, _event: &PaintEvent) {
+        println!("begin drawing\n");
+
+        let painter = self.ui.create_painter();
+
+        painter.begin(&self.main_win);
+        painter.draw_line(0,0, 20, 20);
+        painter.end();
+
+        //painter.destroy();
+
+        println!("end drawing!");
+    }
+
+    fn run(&mut self) {
         let main_window = self.ui.create_main_window();
         let button = self.ui.create_push_button();
-
-        println!("obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
 
         button.set_text("Button!");
         self.list.add_item("New Text!");
@@ -83,17 +97,13 @@ impl<'a> MyApp<'a> {
         layout.add_widget(&button);
         layout.add_widget(&self.list);
 
-        let window = self.ui.create_widget();
-        window.set_layout(&layout);
+        //let window = self.ui.create_widget();
+        self.main_win.set_layout(&layout);
 
-        main_window.set_central_widget(&window);
+        set_paint_event!(self.main_win, self, MyApp, MyApp::custom_draw_widget);
+
+        main_window.set_central_widget(&self.main_win);
         main_window.show();
-
-        println!("setup: obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
-        println!("setup: obj.privd location {:p}", &self.list);
-        println!("setup: self     {:p}", self);
-        println!("setup: self ref {:p}", &self);
-        println!("---------------------------------------------------------------");
 
         self.app.exec();
     }
@@ -103,6 +113,6 @@ impl<'a> MyApp<'a> {
 fn main() {
     let wrui_instance = SharedLibUi::new(get_wrui_path()).unwrap();
     let ui = wrui_instance.get_ui();
-    let app = MyApp::new(&ui);
+    let mut app = MyApp::new(&ui);
     app.run();
 }

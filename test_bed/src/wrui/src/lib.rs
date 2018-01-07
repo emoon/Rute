@@ -1,6 +1,6 @@
 extern crate libloading;
 
-mod ffi_gen;
+pub mod ffi_gen;
 pub mod wrui;
 
 use libloading::{Library, Symbol};

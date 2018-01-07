@@ -87,6 +87,8 @@ struct PUPushButton {
 
 struct PUPainterFuncs {
     void (*destroy)(struct PUBase* self_c);
+    void (*begin)(struct PUBase* self_c, struct PUBase* target);
+    void (*end)(struct PUBase* self_c);
     void (*draw_line)(struct PUBase* self_c, int x1, int y1, int x2, int y2);
 };
 

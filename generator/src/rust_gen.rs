@@ -4,7 +4,7 @@ use std::io::Write;
 use std::io::{Error, ErrorKind};
 use api_parser::*;
 use std::collections::HashMap;
-use heck::SnakeCase;
+use heck::{SnakeCase, CamelCase};
 
 static HEADER: &'static [u8] = b"
 // ***************************************************************
@@ -324,9 +324,12 @@ fn generate_set_event_impl(
         f.write_all(b");\n")?;
         f.write_all(b"          }\n")?;
         f.write_all(b"      }\n")?;
+        f.write_all(b"      fn get_data_ptr(val: &$call_type) -> *const c_void {\n")?;
+        f.write_all(b"         let t: *const c_void = unsafe { ::std::mem::transmute(val) };\n")?;
+        f.write_all(b"         t\n      }\n\n")?;
         f.write_all(b"      unsafe {\n")?;
         f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, ::std::mem::transmute($data), temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n", funcs.0))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -378,6 +381,80 @@ fn generate_set_event(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     generate_set_event_impl(f, &event_list)
 }
 
+/// Generate something that looks like this
+///
+/// macro_rules! set_released_event {
+///     ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+///         {
+///             extern "C" fn temp_call(target: *mut std::os::raw::c_void, event: *const PUBase) {
+///                 unsafe {
+///                     let app = target as *mut $call_type;
+///                     let event = EventType { obj: Some(*event) };
+///                     $callback(&mut *app, &event);
+///                 }
+///             }
+///
+///             unsafe {
+///                 let obj = $sender.obj.unwrap();
+///                 ((*obj.funcs).set_<something>_event)((*obj).privd, ::std::mem::transmute($data), temp_call);
+///             }
+///         }
+///     }
+/// }
+///
+/// Generate the "virtual" set events that connects overriden functions in the Qt class
+///
+fn generate_virt_set_event(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    let mut event_names: HashMap<String, Function> = HashMap::new();
+
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+        let mut funcs = Vec::new();
+        sdef.get_event_functions(&mut funcs);
+
+        for func in &funcs {
+            event_names.insert(func.name.clone(), func.clone());
+        }
+    }
+
+    let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
+    event_list.sort_by(|a, b| a.0.cmp(b.0));
+
+    for func in &event_list {
+        f.write_fmt(format_args!(
+            "#[macro_export]\nmacro_rules! set_{}_event {{\n",
+            func.0
+        ))?;
+        f.write_all(b"  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {\n")?;
+        f.write_all(b"    {\n")?;
+        f.write_all(b"      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase")?;
+
+        // Right now all events has two arguments, user_data and the event_type
+
+        f.write_all(b") {\n")?;
+        f.write_all(b"          unsafe {\n")?;
+        f.write_all(b"              let app = self_c as *mut $call_type;\n")?;
+        f.write_fmt(format_args!("              let event = {}Event {{ obj: Some(*(event as *const wrui::ffi_gen::PU{}Event)) }};\n", func.0.to_camel_case(), func.0.to_camel_case()))?;
+        f.write_all(b"              $callback(&mut *app, &event);\n")?;
+        f.write_all(b"          }\n")?;
+        f.write_all(b"      }\n")?;
+        f.write_all(b"      fn get_data_ptr(val: &$call_type) -> *const c_void {\n")?;
+        f.write_all(b"         let t: *const c_void = unsafe { ::std::mem::transmute(val) };\n")?;
+        f.write_all(b"         t\n      }\n\n")?;
+        f.write_all(b"      unsafe {\n")?;
+        f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
+        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n", func.0))?;
+        f.write_all(b"      }\n")?;
+        f.write_all(b"    }\n")?;
+        f.write_all(b"}}\n\n")?;
+    }
+
+    Ok(())
+}
+
+///
+///
+///
+///
 fn generate_impl(
     f: &mut File,
     api_def: &ApiDef,
@@ -488,6 +565,7 @@ pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()
     generate_traits(&mut f, &mut type_handlers, api_def)?;
     generate_impl(&mut f, &api_def, &type_handlers)?;
     generate_set_event(&mut f, &api_def)?;
+    generate_virt_set_event(&mut f, &api_def)?;
     generate_ui_impl(&mut f, &api_def)?;
 
     Ok(())
