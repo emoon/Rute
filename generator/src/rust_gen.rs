@@ -392,20 +392,6 @@ fn generate_impl(
 
         f.write_all(b"}\n\n")?;
 
-        // If we have a create function we implement drop on this also
-
-        if !sdef.is_pod() && sdef.should_have_create_func() {
-            f.write_fmt(format_args!("impl Drop for {} {{\n", sdef.name))?;
-            f.write_all(b"    fn drop(&mut self) {\n")?;
-            f.write_all(b"       unsafe {\n")?;
-            f.write_all(b"          let obj = self.obj.unwrap();\n")?;
-            f.write_all(b"          ((*obj.funcs).destroy)(obj.privd);\n")?;
-            f.write_all(b"          self.obj = None;\n")?;
-            f.write_all(b"       }\n")?;
-            f.write_all(b"    }\n")?;
-            f.write_all(b"}\n\n")?;
-        }
-
         for trait_name in api_def.get_traits(&sdef) {
             f.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
             f.write_fmt(format_args!("    fn get_{}_obj(&self) -> *const PUBase {{\n", trait_name.to_snake_case()))?;
