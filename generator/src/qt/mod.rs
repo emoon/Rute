@@ -505,7 +505,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     f.write_fmt(format_args!("    }}\n\n"))?;
 
     // write data
-    f.write_all(b"protected:\n")?;
+    f.write_all(b"public:\n")?;
 
     f.write_fmt(format_args!("    void (*m_{})({})", func.name, generate_c_function_args_signal_wrapper(&func)))?;
 
@@ -518,6 +518,29 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     ))?;
 
     Ok(())
+}
+
+///
+/// Generate something like this
+///
+/// static void set_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event)) {
+///     WRWidget* qt_object = (WRWidget*)object;
+///     qt_object->m_paint_user_data = user_data;
+///     qt_object->m_paint = event;
+/// }
+///
+fn generate_event_setup_funcs(f: &mut File, struct_qt_name: &str, func: &Function) -> io::Result<()> {
+    let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
+
+    f.write_fmt(format_args!(
+        "static {} {{\n",
+        callback_fun_def_name(false, &func_name, func)
+    ))?;
+
+    f.write_fmt(format_args!("    WR{}* qt_object = (WR{}*)object;\n", struct_qt_name, struct_qt_name))?;
+    f.write_fmt(format_args!("    qt_object->m_{}_user_data = user_data;\n", func.name))?;
+    f.write_fmt(format_args!("    qt_object->m_{} = event;\n", func.name))?;
+    f.write_all(b"};\n\n")
 }
 
 ///
@@ -554,11 +577,18 @@ fn generate_wrapper_classes(
         let mut event_funcs = Vec::new();
         sdef.get_event_functions(&mut event_funcs);
 
-        for func in event_funcs {
+        for func in &event_funcs {
             generate_event_setup(f, &struct_qt_name, &func)?;
         }
 
         f.write_all(b"};\n\n")?;
+
+        // Generate the setup functions for events
+
+        for func in event_funcs {
+            f.write_all(SEPARATOR)?;
+            generate_event_setup_funcs(f, &struct_qt_name, &func)?;
+        }
     }
 
     Ok(())

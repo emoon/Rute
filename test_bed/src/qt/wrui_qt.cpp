@@ -59,9 +59,17 @@ protected:
         }
     }
 
-protected:
+public:
     void (*m_paint)(void* self_c, struct PUBase* event) = nullptr;
     void* m_paint_user_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_paint_user_data = user_data;
+    qt_object->m_paint = event;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
