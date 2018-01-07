@@ -47,19 +47,21 @@ public:
     WRWidget(QWidget* widget) : QWidget(widget) {}
     virtual ~WRWidget() {}
 
+protected:
     virtual void paintEvent(QPaintEvent* event) {
-        if (m_paint_event) {
+        if (m_paint) {
             PUPaintEvent e;
             e.funcs = &s_paint_event_funcs;
             e.priv_data = (struct PUBase*)event;
-            m_paint_event(m_paint_event_user_data, (struct PUBase*)&e);
+            m_paint(m_paint_user_data, (struct PUBase*)&e);
         } else {
             QWidget::paintEvent(event);
         }
     }
 
-    void (*m_paint_event)(void* self_c, struct PUBase* event) = nullptr;
-    void* m_paint_event_user_data = nullptr;
+protected:
+    void (*m_paint)(void* self_c, struct PUBase* event) = nullptr;
+    void* m_paint_user_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

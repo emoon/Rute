@@ -27,7 +27,7 @@ struct Widget {
     show(),
     resize(i32 width, i32 height),
     set_layout(&LayoutType layout),
-    [event] paint_event<PaintDevice>(&PaintEvent event),
+    [event] paint<PaintDevice>(&PaintEvent event),
 }
 
 struct PushButton : Widget {

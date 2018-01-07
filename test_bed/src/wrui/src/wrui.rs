@@ -122,16 +122,6 @@ impl Widget {
 
 }
 
-impl Drop for Widget {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for Widget {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -185,16 +175,6 @@ impl PushButton {
 
 }
 
-impl Drop for PushButton {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for PushButton {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -219,16 +199,6 @@ impl Painter {
 
 }
 
-impl Drop for Painter {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl ListWidgetItem {
     pub fn set_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
@@ -238,16 +208,6 @@ impl ListWidgetItem {
         }
     }
 
-}
-
-impl Drop for ListWidgetItem {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
 }
 
 impl ListWidget {
@@ -322,16 +282,6 @@ impl ListWidget {
 
 }
 
-impl Drop for ListWidget {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for ListWidget {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -368,16 +318,6 @@ impl Slider {
         }
     }
 
-}
-
-impl Drop for Slider {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
 }
 
 impl PaintDevice for Slider {
@@ -441,16 +381,6 @@ impl MainWindow {
 
 }
 
-impl Drop for MainWindow {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for MainWindow {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -482,16 +412,6 @@ impl Action {
         }
     }
 
-}
-
-impl Drop for Action {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
 }
 
 impl Menu {
@@ -541,16 +461,6 @@ impl Menu {
 
 }
 
-impl Drop for Menu {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for Menu {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -596,16 +506,6 @@ impl MenuBar {
 
 }
 
-impl Drop for MenuBar {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl PaintDevice for MenuBar {
     fn get_paint_device_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -636,16 +536,6 @@ impl Application {
         }
     }
 
-}
-
-impl Drop for Application {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
 }
 
 impl PaintEvent {
@@ -693,16 +583,6 @@ impl VBoxLayout {
 
 }
 
-impl Drop for VBoxLayout {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
-}
-
 impl LayoutType for VBoxLayout {
     fn get_layout_type_obj(&self) -> *const PUBase {
        let obj = self.obj.unwrap();
@@ -725,16 +605,6 @@ impl HBoxLayout {
         }
     }
 
-}
-
-impl Drop for HBoxLayout {
-    fn drop(&mut self) {
-       unsafe {
-          let obj = self.obj.unwrap();
-          ((*obj.funcs).destroy)(obj.privd);
-          self.obj = None;
-       }
-    }
 }
 
 impl LayoutType for HBoxLayout {

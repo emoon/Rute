@@ -472,10 +472,6 @@ impl ApiDef {
             }
         }
 
-        if var.array {
-            println!("var {:?}", var);
-        }
-
         var.primitive = is_primitve(&var.vtype);
         var
     }
@@ -528,10 +524,6 @@ impl ApiDef {
                 array: false,
             });
         }
-
-        println!("-------------------------------------------------");
-        println!("function.trait_target {:?}", function.trait_target);
-        println!("function {:?}", function);
 
         function
     }
@@ -593,7 +585,7 @@ impl ApiDef {
             }
         }
 
-        println!("Attribs {:?}", attribs);
+        //println!("Attribs {:?}", attribs);
 
         attribs
     }

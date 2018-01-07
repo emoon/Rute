@@ -479,9 +479,10 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     let event_type = &func.function_args[1];
 
     // Write virtual function def
+    f.write_all(b"protected:\n")?;
 
     f.write_fmt(format_args!(
-        "    virtual void {}(Q{}* event) {{\n",
+        "    virtual void {}Event(Q{}* event) {{\n",
         func.name.to_mixed_case(),
         event_type.vtype
     ))?;
@@ -490,7 +491,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
         "            PU{} e;\n",
         event_type.vtype,
     ))?;
-    f.write_fmt(format_args!("            e.funcs = &s_{}_funcs;\n", func.name))?;
+    f.write_fmt(format_args!("            e.funcs = &s_{}_event_funcs;\n", func.name))?;
     f.write_fmt(format_args!("            e.priv_data = (struct PUBase*)event;\n"))?;
     f.write_fmt(format_args!(
         "            m_{}(m_{}_user_data, (struct PUBase*)&e);\n",
@@ -498,7 +499,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     ))?;
     f.write_fmt(format_args!("        }} else {{\n"))?;
     f.write_fmt(format_args!(
-        "            Q{}::{}(event);\n",
+        "            Q{}::{}Event(event);\n",
         class_name,
         func.name.to_mixed_case()
     ))?;
@@ -506,6 +507,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     f.write_fmt(format_args!("    }}\n\n"))?;
 
     // write data
+    f.write_all(b"protected:\n")?;
 
     f.write_fmt(format_args!("    void (*m_{})({})", func.name, generate_c_function_args_signal_wrapper(&func)))?;
 

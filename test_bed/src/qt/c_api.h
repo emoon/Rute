@@ -62,7 +62,7 @@ struct PUWidgetFuncs {
     void (*show)(struct PUBase* self_c);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
-    void (*set_paint_event_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
+    void (*set_paint_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
 };
 
 struct PUWidget {
