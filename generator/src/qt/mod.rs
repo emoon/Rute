@@ -604,6 +604,24 @@ fn generate_struct_def(
 }
 
 ///
+/// Generate the struct body
+///
+fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
+    for entry in &sdef.entries {
+        match *entry {
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Event => f.write_fmt(format_args!( "    set_{}_event,\n", function_name(&sdef.name, func)))?,
+                _ => (),
+            },
+
+            _ => (),
+        }
+    }
+
+    Ok(())
+}
+
+///
 ///
 ///
 ///
@@ -622,6 +640,7 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         }
 
         generate_struct_def(f, &sdef.name, api_def, sdef)?;
+        generate_struct_events(f, &sdef)?;
 
         f.write_all(b"};\n\n")?;
     }
