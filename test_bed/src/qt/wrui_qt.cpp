@@ -216,7 +216,7 @@ static void push_button_set_flat(struct PUBase* self_c, bool flat) {
 
 static void painter_begin(struct PUBase* self_c, struct PUBase* target) { 
     QPainter* qt_data = (QPainter*)self_c;
-    qt_data->begin((QWidget*)target);
+    qt_data->begin(dynamic_cast<QPaintDevice*>((QObject*)target));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

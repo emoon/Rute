@@ -839,11 +839,12 @@ impl TypeHandler for TraitTypeHandler {
     fn replace_arg(&self, arg: &Variable) -> (String, String) {
         // This is a bit hacky but not sure how to solve this right now
         if self.0 == "WidgetType" {
-            (format!("(QWidget*){}", &arg.name), "".to_owned())
+            (format!("(QWidget*){}", &arg.name), String::new())
         } else if self.0 == "LayoutType" {
-            (format!("(QLayout*){}", &arg.name), "".to_owned())
+            (format!("(QLayout*){}", &arg.name), String::new())
         } else {
-            (format!("(Q{}*){}", self.0, &arg.name), "".to_owned())
+            (format!("dynamic_cast<Q{}*>((QObject*){})", self.0, &arg.name), String::new())
+            //(format!("(Q{}*){}", self.0, &arg.name), "".to_owned())
         }
     }
 }

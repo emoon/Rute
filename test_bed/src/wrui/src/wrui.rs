@@ -190,10 +190,10 @@ impl WidgetType for PushButton {
 }
 
 impl Painter {
-    pub fn begin(&self, target: &WidgetType) {
+    pub fn begin(&self, target: &PaintDevice) {
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).begin)(obj.privd, target.get_widget_type_obj() as *const PUBase)
+            ((*obj.funcs).begin)(obj.privd, target.get_paint_device_obj() as *const PUBase)
         }
     }
 
