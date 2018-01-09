@@ -62,13 +62,12 @@ impl<'a> MyApp<'a> {
     fn custom_draw_widget(&mut self, _event: &PaintEvent) {
         println!("begin drawing\n");
 
-        let painter = self.ui.create_painter();
+        let mut painter = self.ui.create_painter();
 
         painter.begin(&self.main_win);
         painter.draw_line(0,0, 20, 20);
         painter.end();
-
-        //painter.destroy();
+        painter.destroy();
 
         println!("end drawing!");
     }

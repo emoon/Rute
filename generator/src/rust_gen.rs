@@ -485,8 +485,20 @@ fn generate_impl(
     api_def: &ApiDef,
     type_handlers: &Vec<Box<TypeHandler>>,
 ) -> io::Result<()> {
+
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_fmt(format_args!("impl {} {{\n", sdef.name))?;
+
+        // If we have a create function we also have a destroy one
+        if sdef.should_have_create_func() {
+            f.write_all(b"    pub fn destroy(&mut self) {\n")?;
+            f.write_all(b"       unsafe {\n")?;
+            f.write_all(b"          let obj = self.obj.unwrap();\n")?;
+            f.write_all(b"          ((*obj.funcs).destroy)(obj.privd);\n")?;
+            f.write_all(b"          self.obj = None;\n")?;
+            f.write_all(b"       }\n")?;
+            f.write_all(b"    }\n\n")?;
+        }
 
         for func in api_def.collect_regular_functions(&sdef) {
             generate_func_impl(f, &func, type_handlers)?;

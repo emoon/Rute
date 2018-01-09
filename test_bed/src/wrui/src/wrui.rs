@@ -114,6 +114,13 @@ pub trait WidgetType {
 }
 
 impl Widget {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -152,6 +159,13 @@ impl WidgetType for Widget {
 }
 
 impl PushButton {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -205,6 +219,13 @@ impl WidgetType for PushButton {
 }
 
 impl Painter {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn begin(&self, target: &PaintDevice) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -229,6 +250,13 @@ impl Painter {
 }
 
 impl ListWidgetItem {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn set_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
@@ -240,6 +268,13 @@ impl ListWidgetItem {
 }
 
 impl ListWidget {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -326,6 +361,13 @@ impl WidgetType for ListWidget {
 }
 
 impl Slider {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -364,6 +406,13 @@ impl WidgetType for Slider {
 }
 
 impl MainWindow {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -425,6 +474,13 @@ impl WidgetType for MainWindow {
 }
 
 impl Action {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn is_enabled(&self) -> bool {
         unsafe {
             let obj = self.obj.unwrap();
@@ -479,6 +535,13 @@ impl MimeData {
 }
 
 impl Menu {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -540,6 +603,13 @@ impl WidgetType for Menu {
 }
 
 impl MenuBar {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -585,6 +655,13 @@ impl WidgetType for MenuBar {
 }
 
 impl Application {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn set_style(&self, style: &str) {
         let str_in_style_1 = CString::new(style).unwrap();
         unsafe {
@@ -659,6 +736,13 @@ impl LayoutType for Layout {
 }
 
 impl VBoxLayout {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -683,6 +767,13 @@ impl LayoutType for VBoxLayout {
 }
 
 impl HBoxLayout {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
