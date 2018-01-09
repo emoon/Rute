@@ -121,6 +121,7 @@ impl Widget {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -166,6 +167,7 @@ impl PushButton {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -226,6 +228,7 @@ impl Painter {
           self.obj = None;
        }
     }
+
     pub fn begin(&self, target: &PaintDevice) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -257,6 +260,7 @@ impl ListWidgetItem {
           self.obj = None;
        }
     }
+
     pub fn set_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
         unsafe {
@@ -275,6 +279,7 @@ impl ListWidget {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -368,6 +373,7 @@ impl Slider {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -413,6 +419,7 @@ impl MainWindow {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -481,6 +488,7 @@ impl Action {
           self.obj = None;
        }
     }
+
     pub fn is_enabled(&self) -> bool {
         unsafe {
             let obj = self.obj.unwrap();
@@ -542,6 +550,7 @@ impl Menu {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -610,6 +619,7 @@ impl MenuBar {
           self.obj = None;
        }
     }
+
     pub fn show(&self) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -662,6 +672,7 @@ impl Application {
           self.obj = None;
        }
     }
+
     pub fn set_style(&self, style: &str) {
         let str_in_style_1 = CString::new(style).unwrap();
         unsafe {
@@ -743,6 +754,7 @@ impl VBoxLayout {
           self.obj = None;
        }
     }
+
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
@@ -774,6 +786,7 @@ impl HBoxLayout {
           self.obj = None;
        }
     }
+
     pub fn add_widget(&self, widget: &WidgetType) {
         unsafe {
             let obj = self.obj.unwrap();
