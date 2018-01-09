@@ -1,4 +1,5 @@
 extern crate argparse;
+extern crate liquid;
 extern crate heck;
 extern crate pest;
 #[macro_use]
@@ -9,6 +10,7 @@ pub mod c_api_gen;
 pub mod qt;
 mod rust_ffi_gen;
 mod rust_gen;
+mod rust_templates;
 
 use argparse::{ArgumentParser, Store};
 use std::process::exit;
