@@ -466,7 +466,7 @@ impl ApiDef {
                 Rule::array => {
                     var.array = true;
                     var.vtype = Self::get_vtype(&entry);
-                },
+                }
 
                 _ => (),
             }
@@ -509,7 +509,7 @@ impl ApiDef {
                 Rule::manual => {
                     function.is_manual = true;
                     function.func_type = FunctionType::Regular;
-                },
+                }
                 _ => (),
             }
         }

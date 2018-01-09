@@ -4,7 +4,7 @@ use std::io::Write;
 use std::io::{Error, ErrorKind};
 use api_parser::*;
 use std::collections::HashMap;
-use heck::{SnakeCase, CamelCase};
+use heck::{CamelCase, SnakeCase};
 
 static HEADER: &'static [u8] = b"
 // ***************************************************************
@@ -54,7 +54,11 @@ impl TypeHandler for TraitTypeHandler {
     }
 
     fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
-        format!("{}.get_{}_obj() as *const PUBase", arg_name, self.name.to_snake_case())
+        format!(
+            "{}.get_{}_obj() as *const PUBase",
+            arg_name,
+            self.name.to_snake_case()
+        )
     }
 }
 
@@ -70,7 +74,10 @@ fn generate_traits(
 
     for trait_name in traits {
         f.write_fmt(format_args!("pub trait {} {{\n", trait_name))?;
-        f.write_fmt(format_args!("    fn get_{}_obj(&self) -> *const PUBase;\n}}\n\n", trait_name.to_snake_case()))?;
+        f.write_fmt(format_args!(
+            "    fn get_{}_obj(&self) -> *const PUBase;\n}}\n\n",
+            trait_name.to_snake_case()
+        ))?;
 
         type_handlers.push(Box::new(TraitTypeHandler {
             name: trait_name.clone(),
@@ -106,10 +113,7 @@ fn generate_struct(f: &mut File, structs: &Vec<Struct>) -> io::Result<()> {
                 }
             } else {
                 // Assume for non-pod that we only use the FFI interface to do stuff.
-                f.write_fmt(format_args!(
-                    "    pub obj: Option<PU{}>,\n",
-                    sdef.name
-                ))?;
+                f.write_fmt(format_args!("    pub obj: Option<PU{}>,\n", sdef.name))?;
             }
 
             f.write_all(b"}\n\n")?;
@@ -133,7 +137,10 @@ fn get_arg(arg: &Variable, type_handlers: &Vec<Box<TypeHandler>>) -> (String, St
     } else if arg.reference {
         (arg.name.clone(), format!("&{}", arg.vtype.to_owned()))
     } else if arg.optional {
-        (arg.name.clone(), format!("Option<{}>", arg.vtype.to_owned()))
+        (
+            arg.name.clone(),
+            format!("Option<{}>", arg.vtype.to_owned()),
+        )
     } else {
         (arg.name.clone(), arg.vtype.to_owned())
     }
@@ -192,7 +199,10 @@ fn generate_func_impl(
     f.write_all(b"            let obj = self.obj.unwrap();\n")?;
 
     if func.return_val.is_some() {
-        f.write_fmt(format_args!("            let ret_val = ((*obj.funcs).{})(", func.name))?;
+        f.write_fmt(format_args!(
+            "            let ret_val = ((*obj.funcs).{})(",
+            func.name
+        ))?;
     } else {
         f.write_fmt(format_args!("            ((*obj.funcs).{})(", func.name))?;
     }
@@ -240,10 +250,16 @@ fn generate_func_impl(
                 f.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
                 f.write_fmt(format_args!("                None\n"))?;
                 f.write_fmt(format_args!("            }} else {{\n"))?;
-                f.write_fmt(format_args!("                Some({} {{ obj: Some(ret_val) }})\n", ret_val.vtype))?;
+                f.write_fmt(format_args!(
+                    "                Some({} {{ obj: Some(ret_val) }})\n",
+                    ret_val.vtype
+                ))?;
                 f.write_fmt(format_args!("            }}\n"))?;
             } else {
-                f.write_fmt(format_args!("            {} {{ obj: Some(ret_val) }}\n", ret_val.vtype))?;
+                f.write_fmt(format_args!(
+                    "            {} {{ obj: Some(ret_val) }}\n",
+                    ret_val.vtype
+                ))?;
             }
         }
     } else {
@@ -302,7 +318,10 @@ fn generate_set_event_impl(
 
         funcs.1.write_func_def(f, |index, arg| {
             if index == 0 {
-                (arg.name.to_owned(), "*const ::std::os::raw::c_void".to_owned())
+                (
+                    arg.name.to_owned(),
+                    "*const ::std::os::raw::c_void".to_owned(),
+                )
             } else {
                 (arg.name.to_owned(), arg.get_rust_ffi_type())
             }
@@ -329,7 +348,10 @@ fn generate_set_event_impl(
         f.write_all(b"         t\n      }\n\n")?;
         f.write_all(b"      unsafe {\n")?;
         f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n", funcs.0))?;
+        f.write_fmt(format_args!(
+            "         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n",
+            funcs.0
+        ))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -442,7 +464,10 @@ fn generate_virt_set_event(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         f.write_all(b"         t\n      }\n\n")?;
         f.write_all(b"      unsafe {\n")?;
         f.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-        f.write_fmt(format_args!("         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n", func.0))?;
+        f.write_fmt(format_args!(
+            "         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n",
+            func.0
+        ))?;
         f.write_all(b"      }\n")?;
         f.write_all(b"    }\n")?;
         f.write_all(b"}}\n\n")?;
@@ -471,7 +496,10 @@ fn generate_impl(
 
         for trait_name in api_def.get_traits(&sdef) {
             f.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
-            f.write_fmt(format_args!("    fn get_{}_obj(&self) -> *const PUBase {{\n", trait_name.to_snake_case()))?;
+            f.write_fmt(format_args!(
+                "    fn get_{}_obj(&self) -> *const PUBase {{\n",
+                trait_name.to_snake_case()
+            ))?;
             f.write_all(b"       let obj = self.obj.unwrap();\n")?;
             f.write_all(b"       obj.privd as *const PUBase\n")?;
             f.write_all(b"    }\n")?;

@@ -1,6 +1,6 @@
 use std::io;
 use std::fs::File;
-use std::io::{Write, Read};
+use std::io::{Read, Write};
 use std::collections::{BTreeMap, HashMap};
 use api_parser::*;
 use c_api_gen::generate_c_function_args;
@@ -140,7 +140,6 @@ pub fn generate_c_function_args_signal_wrapper(func: &Function) -> String {
     function_args
 }
 
-
 /// Generate a signal wrapper that is in the style of this:
 ///
 ///    class QSlotWrapperNoArgs : public QObject {
@@ -266,7 +265,10 @@ fn generate_func_def(
     }
 
     if func.return_val.is_some() {
-        f.write_fmt(format_args!("    auto ret_value = qt_data->{}(", func.name.to_mixed_case()))?;
+        f.write_fmt(format_args!(
+            "    auto ret_value = qt_data->{}(",
+            func.name.to_mixed_case()
+        ))?;
     } else {
         f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
     }
@@ -276,7 +278,7 @@ fn generate_func_def(
             ("".to_owned(), "".to_owned())
         } else if arg.vtype == "String" {
             (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
-        } else  {
+        } else {
             for handler in type_handlers.iter() {
                 if arg.vtype == handler.match_type() {
                     return handler.replace_arg(&arg);
@@ -302,8 +304,13 @@ fn generate_func_def(
             // If we have a complex (currently assumed) QT here we need to wrap it before we return
 
             f.write_fmt(format_args!("    PU{} ctl;\n", ret_val.vtype))?;
-            f.write_fmt(format_args!("    ctl.funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
-            f.write_fmt(format_args!("    ctl.priv_data = (struct PUBase*)ret_value;\n"))?;
+            f.write_fmt(format_args!(
+                "    ctl.funcs = &s_{}_funcs;\n",
+                ret_val.vtype.to_snake_case()
+            ))?;
+            f.write_fmt(format_args!(
+                "    ctl.priv_data = (struct PUBase*)ret_value;\n"
+            ))?;
             f.write_all(b"    return ctl;\n")?;
         }
     }
@@ -402,7 +409,14 @@ fn generate_struct_body_recursive(
                 match func.func_type {
                     FunctionType::Regular => {
                         if !func.is_manual {
-                            generate_func_def(f, name, func, struct_name_map, type_handlers, is_widget)?
+                            generate_func_def(
+                                f,
+                                name,
+                                func,
+                                struct_name_map,
+                                type_handlers,
+                                is_widget,
+                            )?
                         }
                     }
                     FunctionType::Callback => func_def_callback(f, name, func)?,
@@ -485,12 +499,14 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
         event_type.vtype
     ))?;
     f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
+    f.write_fmt(format_args!("            PU{} e;\n", event_type.vtype,))?;
     f.write_fmt(format_args!(
-        "            PU{} e;\n",
-        event_type.vtype,
+        "            e.funcs = &s_{}_event_funcs;\n",
+        func.name
     ))?;
-    f.write_fmt(format_args!("            e.funcs = &s_{}_event_funcs;\n", func.name))?;
-    f.write_fmt(format_args!("            e.priv_data = (struct PUBase*)event;\n"))?;
+    f.write_fmt(format_args!(
+        "            e.priv_data = (struct PUBase*)event;\n"
+    ))?;
     f.write_fmt(format_args!(
         "            m_{}(m_{}_user_data, (struct PUBase*)&e);\n",
         func.name, func.name,
@@ -507,7 +523,11 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     // write data
     f.write_all(b"public:\n")?;
 
-    f.write_fmt(format_args!("    void (*m_{})({})", func.name, generate_c_function_args_signal_wrapper(&func)))?;
+    f.write_fmt(format_args!(
+        "    void (*m_{})({})",
+        func.name,
+        generate_c_function_args_signal_wrapper(&func)
+    ))?;
 
     //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
 
@@ -529,7 +549,11 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 ///     qt_object->m_paint = event;
 /// }
 ///
-fn generate_event_setup_funcs(f: &mut File, struct_qt_name: &str, func: &Function) -> io::Result<()> {
+fn generate_event_setup_funcs(
+    f: &mut File,
+    struct_qt_name: &str,
+    func: &Function,
+) -> io::Result<()> {
     let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
 
     f.write_fmt(format_args!(
@@ -537,8 +561,14 @@ fn generate_event_setup_funcs(f: &mut File, struct_qt_name: &str, func: &Functio
         callback_fun_def_name(false, &func_name, func)
     ))?;
 
-    f.write_fmt(format_args!("    WR{}* qt_object = (WR{}*)object;\n", struct_qt_name, struct_qt_name))?;
-    f.write_fmt(format_args!("    qt_object->m_{}_user_data = user_data;\n", func.name))?;
+    f.write_fmt(format_args!(
+        "    WR{}* qt_object = (WR{}*)object;\n",
+        struct_qt_name, struct_qt_name
+    ))?;
+    f.write_fmt(format_args!(
+        "    qt_object->m_{}_user_data = user_data;\n",
+        func.name
+    ))?;
     f.write_fmt(format_args!("    qt_object->m_{} = event;\n", func.name))?;
     f.write_all(b"};\n\n")
 }
@@ -638,7 +668,10 @@ fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Function(ref func) => match func.func_type {
-                FunctionType::Event => f.write_fmt(format_args!( "    set_{}_event,\n", function_name(&sdef.name, func)))?,
+                FunctionType::Event => f.write_fmt(format_args!(
+                    "    set_{}_event,\n",
+                    function_name(&sdef.name, func)
+                ))?,
                 _ => (),
             },
 
@@ -843,7 +876,10 @@ impl TypeHandler for TraitTypeHandler {
         } else if self.0 == "LayoutType" {
             (format!("(QLayout*){}", &arg.name), String::new())
         } else {
-            (format!("dynamic_cast<Q{}*>((QObject*){})", self.0, &arg.name), String::new())
+            (
+                format!("dynamic_cast<Q{}*>((QObject*){})", self.0, &arg.name),
+                String::new(),
+            )
             //(format!("(Q{}*){}", self.0, &arg.name), "".to_owned())
         }
     }

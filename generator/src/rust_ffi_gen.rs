@@ -157,7 +157,10 @@ pub fn generate_ffi_bindings(
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"#[derive(Copy, Clone)]\n")?;
         f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
-        f.write_fmt(format_args!("    pub funcs: *const PU{}Funcs,\n", sdef.name))?;
+        f.write_fmt(format_args!(
+            "    pub funcs: *const PU{}Funcs,\n",
+            sdef.name
+        ))?;
         f.write_all(b"    pub privd: *const PUBase,\n")?;
         f.write_all(b"}\n\n")?;
     }
