@@ -5,7 +5,7 @@ use std::io::{Error, ErrorKind};
 use api_parser::*;
 use std::collections::HashMap;
 use heck::{CamelCase, SnakeCase};
-//use liquid::Template;
+use liquid::*;
 
 use rust_templates::*;
 
@@ -14,7 +14,7 @@ use rust_templates::*;
 ///
 ///
 struct RustGenerator {
-    //callback_template: Template,
+    callback_template: Template,
     //type_handlers: Vec<Box<TypeHandler>>,
     output: File,
 }
@@ -500,13 +500,7 @@ impl RustGenerator {
 
             // If we have a create function we also have a destroy one
             if sdef.should_have_create_func() {
-                self.output.write_all(b"    pub fn destroy(&mut self) {\n")?;
-                self.output.write_all(b"       unsafe {\n")?;
-                self.output.write_all(b"          let obj = self.obj.unwrap();\n")?;
-                self.output.write_all(b"          ((*obj.funcs).destroy)(obj.privd);\n")?;
-                self.output.write_all(b"          self.obj = None;\n")?;
-                self.output.write_all(b"       }\n")?;
-                self.output.write_all(b"    }\n\n")?;
+                self.output.write_all(DESTROY_TEMPLATE)?;
             }
 
             for func in api_def.collect_regular_functions(&sdef) {
@@ -558,8 +552,10 @@ impl RustGenerator {
     }
 
     fn new(filename: &str) -> RustGenerator {
+        let parser = ParserBuilder::with_liquid().build();
+
         RustGenerator {
-            // type_handlers: Vec::new(),
+            callback_template: parser.parse(CALLBACK_TEMPLATE).unwrap(),
             output: File::create(filename).unwrap(),
         }
     }
