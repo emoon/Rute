@@ -52,6 +52,11 @@ pub struct Action {
 }
 
 #[derive(Clone)]
+pub struct MimeData {
+    pub obj: Option<PUMimeData>,
+}
+
+#[derive(Clone)]
 pub struct Menu {
     pub obj: Option<PUMenu>,
 }
@@ -69,6 +74,16 @@ pub struct Application {
 #[derive(Clone)]
 pub struct PaintEvent {
     pub obj: Option<PUPaintEvent>,
+}
+
+#[derive(Clone)]
+pub struct DragEnterEvent {
+    pub obj: Option<PUDragEnterEvent>,
+}
+
+#[derive(Clone)]
+pub struct DropEvent {
+    pub obj: Option<PUDropEvent>,
 }
 
 #[derive(Clone)]
@@ -428,6 +443,41 @@ impl Action {
 
 }
 
+impl MimeData {
+    pub fn has_color(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).has_color)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn has_image(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).has_image)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn has_text(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).has_text)(obj.privd);
+            ret_val
+        }
+    }
+
+    pub fn has_urls(&self) -> bool {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).has_urls)(obj.privd);
+            ret_val
+        }
+    }
+
+}
+
 impl Menu {
     pub fn show(&self) {
         unsafe {
@@ -558,6 +608,34 @@ impl PaintEvent {
             let obj = self.obj.unwrap();
             let ret_val = ((*obj.funcs).rect)(obj.privd);
             ret_val
+        }
+    }
+
+}
+
+impl DragEnterEvent {
+    pub fn accept(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).accept)(obj.privd)
+        }
+    }
+
+}
+
+impl DropEvent {
+    pub fn accept_proposed_action(&self) {
+        unsafe {
+            let obj = self.obj.unwrap();
+            ((*obj.funcs).accept_proposed_action)(obj.privd)
+        }
+    }
+
+    pub fn mime_data(&self) -> MimeData {
+        unsafe {
+            let obj = self.obj.unwrap();
+            let ret_val = ((*obj.funcs).mime_data)(obj.privd);
+            MimeData { obj: Some(ret_val) }
         }
     }
 
@@ -712,6 +790,52 @@ macro_rules! set_value_changed_event {
       unsafe {
           let obj = $sender.obj.unwrap();
          ((*obj.funcs).set_value_changed_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+}}
+
+#[macro_export]
+macro_rules! set_drag_enter_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              let event = DragEnterEvent { obj: Some(*(event as *const wrui::ffi_gen::PUDragEnterEvent)) };
+              $callback(&mut *app, &event);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_drag_enter_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+}}
+
+#[macro_export]
+macro_rules! set_drop_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              let event = DropEvent { obj: Some(*(event as *const wrui::ffi_gen::PUDropEvent)) };
+              $callback(&mut *app, &event);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_drop_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 }}

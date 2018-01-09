@@ -117,6 +117,10 @@ pub struct PUListWidgetFuncs {
     pub add_widget_item: extern "C" fn(self_c: *const PUBase, item: *const PUBase),
     pub set_current_row_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, row: i32)),
+    pub set_drag_enter_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void, event: *const PUBase)),
+    pub set_drop_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void, event: *const PUBase)),
 }
 
 #[repr(C)]
@@ -178,6 +182,21 @@ pub struct PUAction {
 }
 
 #[repr(C)]
+pub struct PUMimeDataFuncs {
+    pub has_color: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub has_image: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub has_text: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub has_urls: extern "C" fn(self_c: *const PUBase) -> bool,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUMimeData {
+    pub funcs: *const PUMimeDataFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PUMenuFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
@@ -234,6 +253,31 @@ pub struct PUPaintEventFuncs {
 #[derive(Copy, Clone)]
 pub struct PUPaintEvent {
     pub funcs: *const PUPaintEventFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
+pub struct PUDragEnterEventFuncs {
+    pub accept: extern "C" fn(self_c: *const PUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUDragEnterEvent {
+    pub funcs: *const PUDragEnterEventFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
+pub struct PUDropEventFuncs {
+    pub accept_proposed_action: extern "C" fn(self_c: *const PUBase),
+    pub mime_data: extern "C" fn(self_c: *const PUBase) ->  PUMimeData,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUDropEvent {
+    pub funcs: *const PUDropEventFuncs,
     pub privd: *const PUBase,
 }
 

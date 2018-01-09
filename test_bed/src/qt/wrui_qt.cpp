@@ -9,10 +9,13 @@
 #include <QSlider>
 #include <QMainWindow>
 #include <QAction>
+#include <QMimeData>
 #include <QMenu>
 #include <QMenuBar>
 #include <QApplication>
 #include <QPaintEvent>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -32,10 +35,13 @@ extern struct PUListWidgetFuncs s_list_widget_funcs;
 extern struct PUSliderFuncs s_slider_funcs;
 extern struct PUMainWindowFuncs s_main_window_funcs;
 extern struct PUActionFuncs s_action_funcs;
+extern struct PUMimeDataFuncs s_mime_data_funcs;
 extern struct PUMenuFuncs s_menu_funcs;
 extern struct PUMenuBarFuncs s_menu_bar_funcs;
 extern struct PUApplicationFuncs s_application_funcs;
 extern struct PUPaintEventFuncs s_paint_event_funcs;
+extern struct PUDragEnterEventFuncs s_drag_enter_event_funcs;
+extern struct PUDropEventFuncs s_drop_event_funcs;
 extern struct PULayoutFuncs s_layout_funcs;
 extern struct PUVBoxLayoutFuncs s_v_box_layout_funcs;
 extern struct PUHBoxLayoutFuncs s_h_box_layout_funcs;
@@ -88,6 +94,52 @@ public:
     WRListWidget(QWidget* widget) : QListWidget(widget) {}
     virtual ~WRListWidget() {}
 
+protected:
+    virtual void dragEnterEvent(QDragEnterEvent* event) {
+        if (m_drag_enter) {
+            PUDragEnterEvent e;
+            e.funcs = &s_drag_enter_event_funcs;
+            e.priv_data = (struct PUBase*)event;
+            m_drag_enter(m_drag_enter_user_data, (struct PUBase*)&e);
+        } else {
+            QListWidget::dragEnterEvent(event);
+        }
+    }
+
+public:
+    void (*m_drag_enter)(void* self_c, struct PUBase* event) = nullptr;
+    void* m_drag_enter_user_data = nullptr;
+protected:
+    virtual void dropEvent(QDropEvent* event) {
+        if (m_drop) {
+            PUDropEvent e;
+            e.funcs = &s_drop_event_funcs;
+            e.priv_data = (struct PUBase*)event;
+            m_drop(m_drop_user_data, (struct PUBase*)&e);
+        } else {
+            QListWidget::dropEvent(event);
+        }
+    }
+
+public:
+    void (*m_drop)(void* self_c, struct PUBase* event) = nullptr;
+    void* m_drop_user_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_list_widget_drag_enter_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event)) {
+    WRListWidget* qt_object = (WRListWidget*)object;
+    qt_object->m_drag_enter_user_data = user_data;
+    qt_object->m_drag_enter = event;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_list_widget_drop_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event)) {
+    WRListWidget* qt_object = (WRListWidget*)object;
+    qt_object->m_drop_user_data = user_data;
+    qt_object->m_drop = event;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -301,6 +353,10 @@ static void list_widget_set_drop_indicator_shown(struct PUBase* self_c, bool sta
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void set_list_widget_current_row_changed_event(void* object, void* user_data, void (*event)(void* self_c, int row)) {
     QSlotWrapperSignal_self_i32_void* wrap = new QSlotWrapperSignal_self_i32_void(user_data, (Signal_self_i32_void)event);
     QObject* q_obj = (QObject*)object;
@@ -412,6 +468,38 @@ static void set_action_triggered_event(void* object, void* user_data, void (*eve
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static bool mime_data_has_color(struct PUBase* self_c) { 
+    QMimeData* qt_data = (QMimeData*)self_c;
+    auto ret_value = qt_data->hasColor();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool mime_data_has_image(struct PUBase* self_c) { 
+    QMimeData* qt_data = (QMimeData*)self_c;
+    auto ret_value = qt_data->hasImage();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool mime_data_has_text(struct PUBase* self_c) { 
+    QMimeData* qt_data = (QMimeData*)self_c;
+    auto ret_value = qt_data->hasText();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool mime_data_has_urls(struct PUBase* self_c) { 
+    QMimeData* qt_data = (QMimeData*)self_c;
+    auto ret_value = qt_data->hasUrls();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void menu_show(struct PUBase* self_c) { 
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->show();
@@ -499,6 +587,31 @@ static struct PURect paint_event_rect(struct PUBase* self_c) {
     QPaintEvent* qt_data = (QPaintEvent*)self_c;
     const auto& t = qt_data->rect();
     return PURect { .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() };
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void drag_enter_event_accept(struct PUBase* self_c) { 
+    QDragEnterEvent* qt_data = (QDragEnterEvent*)self_c;
+    qt_data->accept();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void drop_event_accept_proposed_action(struct PUBase* self_c) { 
+    QDropEvent* qt_data = (QDropEvent*)self_c;
+    qt_data->acceptProposedAction();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUMimeData drop_event_mime_data(struct PUBase* self_c) { 
+    QDropEvent* qt_data = (QDropEvent*)self_c;
+    auto ret_value = qt_data->mimeData();
+    PUMimeData ctl;
+    ctl.funcs = &s_mime_data_funcs;
+    ctl.priv_data = (struct PUBase*)ret_value;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -808,6 +921,8 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     list_widget_set_accept_drops,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
+    set_list_widget_drag_enter_event,
+    set_list_widget_drop_event,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -839,6 +954,15 @@ struct PUActionFuncs s_action_funcs = {
     action_is_enabled,
     action_set_text,
     set_action_triggered_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUMimeDataFuncs s_mime_data_funcs = {
+    mime_data_has_color,
+    mime_data_has_image,
+    mime_data_has_text,
+    mime_data_has_urls,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -875,6 +999,19 @@ struct PUApplicationFuncs s_application_funcs = {
 
 struct PUPaintEventFuncs s_paint_event_funcs = {
     paint_event_rect,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUDragEnterEventFuncs s_drag_enter_event_funcs = {
+    drag_enter_event_accept,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct PUDropEventFuncs s_drop_event_funcs = {
+    drop_event_accept_proposed_action,
+    drop_event_mime_data,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

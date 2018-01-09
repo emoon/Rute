@@ -4,7 +4,7 @@ extern crate wrui;
 use std::os::raw::c_void;
 
 use wrui::{SharedLibUi, Ui};
-use wrui::wrui::{PaintEvent, ListWidget, Application, Widget};
+use wrui::wrui::*;
 
 #[cfg(target_os="windows")]
 fn get_wrui_path() -> &'static str {
@@ -50,6 +50,15 @@ impl<'a> MyApp<'a> {
         println!("menu select");
     }
 
+    fn drag_enter(&mut self, event: &DragEnterEvent) {
+        println!("Dropping files!");
+        event.accept();
+    }
+
+    fn drop_files(&mut self, event: &DropEvent) {
+        println!("Has some files? {}", event.mime_data().has_urls());
+    }
+
     fn custom_draw_widget(&mut self, _event: &PaintEvent) {
         println!("begin drawing\n");
 
@@ -90,6 +99,10 @@ impl<'a> MyApp<'a> {
         menu_bar.add_menu(&file_menu);
 
         set_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
+        set_drag_enter_event!(self.list, self, MyApp, MyApp::drag_enter);
+        set_drop_event!(self.list, self, MyApp, MyApp::drop_files);
+        set_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
+
         set_triggered_event!(open_file, self, MyApp, MyApp::menu_selected);
 
         let layout = self.ui.create_v_box_layout();

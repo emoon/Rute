@@ -27,7 +27,8 @@ struct Widget {
     show(),
     resize(i32 width, i32 height),
     set_layout(&LayoutType layout),
-    [event] paint<PaintDevice>(&PaintEvent event),
+
+    [event] paint(&PaintEvent event),
 }
 
 struct PushButton : Widget {
@@ -60,6 +61,9 @@ struct ListWidget : Widget {
 	set_drop_indicator_shown(bool state),
 	[manual] set_accept_drops(bool state),
 
+    [event] drag_enter(&DragEnterEvent event),
+    [event] drop(&DropEvent event),
+
 	[manual] add_widget_item(&ListWidgetItem item),
 	[callback] current_row_changed(i32 row),
 }
@@ -86,6 +90,18 @@ struct Action {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Misc
+
+#[attributes(NoCreate)]
+struct MimeData {
+	has_color() -> bool,
+	has_image() -> bool,
+	has_text() -> bool,
+	has_urls() -> bool,
+	// [manual] filenames() -> <String>,
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Menu
 
 struct Menu : Widget {
@@ -104,10 +120,25 @@ struct Application {
 	exec(),
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Events
+
 // No create on this as its a event only
 #[attributes(NoCreate)]
 struct PaintEvent {
 	rect() -> Rect,
+}
+
+// No create on this as its a event only
+#[attributes(NoCreate)]
+struct DragEnterEvent {
+	accept(),
+}
+
+#[attributes(NoCreate)]
+struct DropEvent {
+	accept_proposed_action(),
+	mime_data() -> MimeData,
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

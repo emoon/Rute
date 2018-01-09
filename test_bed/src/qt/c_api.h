@@ -32,6 +32,8 @@ struct PUMainWindow;
 struct PUMainWindowFuncs;
 struct PUAction;
 struct PUActionFuncs;
+struct PUMimeData;
+struct PUMimeDataFuncs;
 struct PUMenu;
 struct PUMenuFuncs;
 struct PUMenuBar;
@@ -40,6 +42,10 @@ struct PUApplication;
 struct PUApplicationFuncs;
 struct PUPaintEvent;
 struct PUPaintEventFuncs;
+struct PUDragEnterEvent;
+struct PUDragEnterEventFuncs;
+struct PUDropEvent;
+struct PUDropEventFuncs;
 struct PULayout;
 struct PULayoutFuncs;
 struct PUVBoxLayout;
@@ -119,6 +125,8 @@ struct PUListWidgetFuncs {
     void (*set_accept_drops)(struct PUBase* self_c, bool state);
     void (*add_widget_item)(struct PUBase* self_c, struct PUBase* item);
     void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int row));
+    void (*set_drag_enter_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
+    void (*set_drop_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
 };
 
 struct PUListWidget {
@@ -163,6 +171,18 @@ struct PUActionFuncs {
 
 struct PUAction {
     struct PUActionFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUMimeDataFuncs {
+    bool (*has_color)(struct PUBase* self_c);
+    bool (*has_image)(struct PUBase* self_c);
+    bool (*has_text)(struct PUBase* self_c);
+    bool (*has_urls)(struct PUBase* self_c);
+};
+
+struct PUMimeData {
+    struct PUMimeDataFuncs* funcs;
     struct PUBase* priv_data;
 };
 
@@ -211,6 +231,25 @@ struct PUPaintEventFuncs {
 
 struct PUPaintEvent {
     struct PUPaintEventFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUDragEnterEventFuncs {
+    void (*accept)(struct PUBase* self_c);
+};
+
+struct PUDragEnterEvent {
+    struct PUDragEnterEventFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
+struct PUDropEventFuncs {
+    void (*accept_proposed_action)(struct PUBase* self_c);
+    struct PUMimeData (*mime_data)(struct PUBase* self_c);
+};
+
+struct PUDropEvent {
+    struct PUDropEventFuncs* funcs;
     struct PUBase* priv_data;
 };
 
