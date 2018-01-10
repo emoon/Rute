@@ -10,10 +10,28 @@ use pest::inputs::{FileInput, Input};
 use pest::iterators::Pair;
 use std::collections::HashSet;
 
+#[derive(Debug, Clone)]
+pub enum VariableType {
+    None,
+    SelfType,
+    Regular(String),
+    Primitive(String),
+    Reference(String),
+    Array(String),
+    Optional(String),
+}
+
+impl Default for VariableType {
+    fn default() -> Self {
+        VariableType::None
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct Variable {
     pub name: String,
     pub vtype: String,
+    pub vtype_e: VariableType,
     pub primitive: bool,
     pub reference: bool,
     pub optional: bool,
@@ -143,41 +161,43 @@ impl Struct {
 
 impl Variable {
     pub fn get_c_type(&self) -> String {
-        let tname = &self.vtype;
-        let primitve = self.primitive;
-
-        if tname == "String" {
-            return "const char*".to_owned();
-        }
-
-        if tname == "self" {
-            return "struct PUBase*".to_owned();
-        }
-
-        if primitve {
-            if tname == "f32" {
-                return "float".to_owned();
-            } else if tname == "bool" {
-                return "bool".to_owned();
-            } else if tname == "f64" {
-                return "double".to_owned();
-            } else if tname == "i32" {
-                return "int".to_owned();
-            } else {
-                // here we will have u8/i8,u32/etc
-                if tname.starts_with("u") {
-                    return format!("uint{}_t", &tname[1..]);
+        match self.vtype_e {
+            VariableType::SelfType => "struct PUBase*".to_owned(),
+            VariableType::Primitive(ref tname) => {
+                if tname == "f32" {
+                    "float".to_owned()
+                } else if tname == "bool" {
+                    "bool".to_owned()
+                } else if tname == "f64" {
+                    "double".to_owned()
+                } else if tname == "i32" {
+                    "int".to_owned()
                 } else {
-                    return format!("int{}_t", &tname[1..]);
+                    // here we will have u8/i8,u32/etc
+                    if tname.starts_with("u") {
+                        format!("uint{}_t", &tname[1..])
+                    } else {
+                        format!("int{}_t", &tname[1..])
+                    }
+                }
+            },
+
+            VariableType::Reference(ref _tname) => "struct PUBase*".to_owned(),
+            VariableType::Array(ref _tname) => "struct PUArray".to_owned(),
+            VariableType::Regular(ref tname) => {
+                if tname == "String" {
+                    "const char*".to_owned()
+                } else {
+                    format!("struct PU{}", tname)
                 }
             }
-        } else if self.reference {
-            // Unknown type here so we always defult to PUBase* as a "raw pointer"
-            "struct PUBase*".to_owned()
-        } else if self.array {
-            "struct PUArray".to_owned()
-        } else {
-            format!("struct PU{}", tname)
+
+            VariableType::Optional(ref tname) => format!("struct PU{}", tname),
+
+            _ => {
+                println!("Should not be here {}", self.vtype);
+                String::new()
+            }
         }
     }
 }
@@ -504,6 +524,20 @@ impl ApiDef {
         }
 
         var.primitive = is_primitve(&var.vtype);
+
+        let vtype = if var.array {
+            VariableType::Array(var.vtype.clone())
+        } else if var.optional {
+            VariableType::Optional(var.vtype.clone())
+        } else if var.reference {
+            VariableType::Reference(var.vtype.clone())
+        } else if var.primitive {
+            VariableType::Primitive(var.vtype.clone())
+        } else {
+            VariableType::Regular(var.vtype.clone())
+        };
+
+        var.vtype_e = vtype;
         var
     }
 
@@ -513,6 +547,7 @@ impl ApiDef {
         variables.push(Variable {
             name: "self_c".to_owned(),
             vtype: "self".to_owned(),
+            vtype_e: VariableType::SelfType,
             primitive: false,
             reference: false,
             optional: false,
@@ -548,6 +583,7 @@ impl ApiDef {
             function.function_args.push(Variable {
                 name: "self_c".to_owned(),
                 vtype: "self".to_owned(),
+                vtype_e: VariableType::SelfType,
                 primitive: false,
                 reference: false,
                 optional: false,
