@@ -252,6 +252,38 @@ impl Function {
         Ok(())
     }
 
+    pub fn gen_func_def<F>(&self, filter: F) -> String
+    where
+        F: Fn(usize, &Variable) -> (String, String),
+    {
+        let mut res = String::new();
+
+        let arg_count = self.function_args.len();
+
+        for (i, arg) in self.function_args.iter().enumerate() {
+            let filter_arg = filter(i, &arg);
+
+            if filter_arg.1 == "" {
+                res += &filter_arg.0;
+            } else {
+                res += &format!("{}: {}", filter_arg.0, filter_arg.1);
+            }
+
+            if i != arg_count - 1 {
+                res += ", ";
+            }
+        }
+
+        if let Some(ref ret_var) = self.return_val {
+            let filter_arg = filter(arg_count, &ret_var);
+            if filter_arg.1 != "" {
+                res += &format!(" -> {}", filter_arg.1);
+            }
+        }
+
+        res
+    }
+
     pub fn write_func_def_full<F>(&self, f: &mut File, filter: F) -> io::Result<()>
     where
         F: Fn(usize, &Variable) -> (String, String),

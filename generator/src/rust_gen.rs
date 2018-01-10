@@ -322,53 +322,31 @@ impl RustGenerator {
     /// }
     fn generate_set_event_impl(&mut self, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
         for funcs in connect_funcs {
-            self.output.write_fmt(format_args!(
-                "#[macro_export]\nmacro_rules! set_{}_event {{\n",
-                funcs.0
-            ))?;
-            self.output.write_all(b"  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {\n")?;
-            self.output.write_all(b"    {\n")?;
-            self.output.write_all(b"      extern \"C\" fn temp_call(")?;
+            let mut instance_data = Object::new();
 
-            funcs.1.write_func_def(&mut self.output, |index, arg| {
+            let ffi_args = funcs.1.gen_func_def(|index, arg| {
                 if index == 0 {
-                    (
-                        arg.name.to_owned(),
-                        "*const ::std::os::raw::c_void".to_owned(),
-                    )
+                    (arg.name.to_owned(), "*const ::std::os::raw::c_void".to_owned())
                 } else {
                     (arg.name.to_owned(), arg.get_rust_ffi_type())
                 }
-            })?;
+            });
 
-            self.output.write_all(b") {\n")?;
-            self.output.write_all(b"          unsafe {\n")?;
-            self.output.write_all(b"              let app = self_c as *mut $call_type;\n")?;
-            self.output.write_all(b"              $callback(")?;
-
-            funcs.1.write_func_def(&mut self.output, |index, arg| {
+            let rust_args = funcs.1.gen_func_def(|index, arg| {
                 if index == 0 {
-                    ("&mut *app".to_owned(), "".to_owned())
+                    ("&mut *app".to_owned(), String::new())
                 } else {
-                    (arg.name.to_owned(), "".to_owned())
+                    (arg.name.to_owned(), String::new())
                 }
-            })?;
+            });
 
-            self.output.write_all(b");\n")?;
-            self.output.write_all(b"          }\n")?;
-            self.output.write_all(b"      }\n")?;
-            self.output.write_all(b"      fn get_data_ptr(val: &$call_type) -> *const c_void {\n")?;
-            self.output.write_all(b"         let t: *const c_void = unsafe { ::std::mem::transmute(val) };\n")?;
-            self.output.write_all(b"         t\n      }\n\n")?;
-            self.output.write_all(b"      unsafe {\n")?;
-            self.output.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-            self.output.write_fmt(format_args!(
-                "         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n",
-                funcs.0
-            ))?;
-            self.output.write_all(b"      }\n")?;
-            self.output.write_all(b"    }\n")?;
-            self.output.write_all(b"}}\n\n")?;
+            instance_data.insert("name".to_owned(), Value::Str(funcs.0.to_owned()));
+            instance_data.insert("ffi_args".to_owned(), Value::Str(ffi_args));
+            instance_data.insert("rust_args".to_owned(), Value::Str(rust_args));
+
+            let output = self.callback_template.render(&instance_data).unwrap();
+
+            self.output.write_all(output.as_bytes())?;
         }
 
         Ok(())

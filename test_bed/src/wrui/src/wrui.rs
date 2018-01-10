@@ -797,6 +797,7 @@ impl LayoutType for HBoxLayout {
     }
 }
 
+
 #[macro_export]
 macro_rules! set_current_row_changed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
@@ -817,7 +818,8 @@ macro_rules! set_current_row_changed_event {
          ((*obj.funcs).set_current_row_changed_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
+
 
 #[macro_export]
 macro_rules! set_released_event {
@@ -839,7 +841,8 @@ macro_rules! set_released_event {
          ((*obj.funcs).set_released_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
+
 
 #[macro_export]
 macro_rules! set_triggered_event {
@@ -861,7 +864,8 @@ macro_rules! set_triggered_event {
          ((*obj.funcs).set_triggered_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
+
 
 #[macro_export]
 macro_rules! set_value_changed_event {
@@ -883,7 +887,7 @@ macro_rules! set_value_changed_event {
          ((*obj.funcs).set_value_changed_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
 
 #[macro_export]
 macro_rules! set_drag_enter_event {

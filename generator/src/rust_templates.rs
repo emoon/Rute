@@ -51,8 +51,10 @@ macro_rules! set_{{name}}_event {
 
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_current_row_changed_event)(obj.privd, get_data_ptr($data), temp_call);
+         ((*obj.funcs).set_{{name}}_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-} }";
+} }
+
+";
 
