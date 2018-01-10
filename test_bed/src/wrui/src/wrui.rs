@@ -889,6 +889,7 @@ macro_rules! set_value_changed_event {
     }
 } }
 
+
 #[macro_export]
 macro_rules! set_drag_enter_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
@@ -910,7 +911,8 @@ macro_rules! set_drag_enter_event {
          ((*obj.funcs).set_drag_enter_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
+
 
 #[macro_export]
 macro_rules! set_drop_event {
@@ -933,7 +935,8 @@ macro_rules! set_drop_event {
          ((*obj.funcs).set_drop_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
+
 
 #[macro_export]
 macro_rules! set_paint_event {
@@ -956,7 +959,7 @@ macro_rules! set_paint_event {
          ((*obj.funcs).set_paint_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
-}}
+} }
 
 pub struct Ui {
     pu: *const PU

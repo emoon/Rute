@@ -15,6 +15,7 @@ use rust_templates::*;
 ///
 struct RustGenerator {
     callback_template: Template,
+    event_template: Template,
     //type_handlers: Vec<Box<TypeHandler>>,
     output: File,
 }
@@ -322,7 +323,7 @@ impl RustGenerator {
     /// }
     fn generate_set_event_impl(&mut self, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
         for funcs in connect_funcs {
-            let mut instance_data = Object::new();
+            let mut template_data = Object::new();
 
             let ffi_args = funcs.1.gen_func_def(|index, arg| {
                 if index == 0 {
@@ -340,11 +341,11 @@ impl RustGenerator {
                 }
             });
 
-            instance_data.insert("name".to_owned(), Value::Str(funcs.0.to_owned()));
-            instance_data.insert("ffi_args".to_owned(), Value::Str(ffi_args));
-            instance_data.insert("rust_args".to_owned(), Value::Str(rust_args));
+            template_data.insert("name".to_owned(), Value::Str(funcs.0.to_owned()));
+            template_data.insert("ffi_args".to_owned(), Value::Str(ffi_args));
+            template_data.insert("rust_args".to_owned(), Value::Str(rust_args));
 
-            let output = self.callback_template.render(&instance_data).unwrap();
+            let output = self.callback_template.render(&template_data).unwrap();
 
             self.output.write_all(output.as_bytes())?;
         }
@@ -434,35 +435,16 @@ impl RustGenerator {
         event_list.sort_by(|a, b| a.0.cmp(b.0));
 
         for func in &event_list {
-            self.output.write_fmt(format_args!(
-                "#[macro_export]\nmacro_rules! set_{}_event {{\n",
-                func.0
-            ))?;
-            self.output.write_all(b"  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {\n")?;
-            self.output.write_all(b"    {\n")?;
-            self.output.write_all(b"      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase")?;
+            let mut template_data = Object::new();
 
-            // Right now all events has two arguments, user_data and the event_type
+            let event_type = func.0.to_camel_case();
 
-            self.output.write_all(b") {\n")?;
-            self.output.write_all(b"          unsafe {\n")?;
-            self.output.write_all(b"              let app = self_c as *mut $call_type;\n")?;
-            self.output.write_fmt(format_args!("              let event = {}Event {{ obj: Some(*(event as *const wrui::ffi_gen::PU{}Event)) }};\n", func.0.to_camel_case(), func.0.to_camel_case()))?;
-            self.output.write_all(b"              $callback(&mut *app, &event);\n")?;
-            self.output.write_all(b"          }\n")?;
-            self.output.write_all(b"      }\n")?;
-            self.output.write_all(b"      fn get_data_ptr(val: &$call_type) -> *const c_void {\n")?;
-            self.output.write_all(b"         let t: *const c_void = unsafe { ::std::mem::transmute(val) };\n")?;
-            self.output.write_all(b"         t\n      }\n\n")?;
-            self.output.write_all(b"      unsafe {\n")?;
-            self.output.write_all(b"          let obj = $sender.obj.unwrap();\n")?;
-            self.output.write_fmt(format_args!(
-                "         ((*obj.funcs).set_{}_event)(obj.privd, get_data_ptr($data), temp_call);\n",
-                func.0
-            ))?;
-            self.output.write_all(b"      }\n")?;
-            self.output.write_all(b"    }\n")?;
-            self.output.write_all(b"}}\n\n")?;
+            template_data.insert("name".to_owned(), Value::Str(func.0.to_owned()));
+            template_data.insert("event_type".to_owned(), Value::Str(event_type));
+
+            let output = self.event_template.render(&template_data).unwrap();
+
+            self.output.write_all(output.as_bytes())?;
         }
 
         Ok(())
@@ -534,6 +516,7 @@ impl RustGenerator {
 
         RustGenerator {
             callback_template: parser.parse(CALLBACK_TEMPLATE).unwrap(),
+            event_template: parser.parse(EVENT_TEMPLATE).unwrap(),
             output: File::create(filename).unwrap(),
         }
     }
