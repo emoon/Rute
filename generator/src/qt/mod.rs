@@ -244,10 +244,10 @@ fn generate_return_array(f: &mut File, ret_val: &Variable) -> io::Result<()> {
     f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
     f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
     if ret_val.reference {
-        f.write_all(b"            elements[i].priv_data = (struct PUBase*)data.at(i)\n")?;
+        f.write_all(b"            elements[i].priv_data = (struct PUBase*)ret_value.at(i);\n")?;
     } else {
         // This seems quite scary to me but lets keep it until it breaks.
-        f.write_all(b"            elements[i].priv_data = (struct PUBase*)&data.at(i);\n")?;
+        f.write_all(b"            elements[i].priv_data = (struct PUBase*)&ret_value.at(i);\n")?;
     }
 
     f.write_all(b"       }\n")?;

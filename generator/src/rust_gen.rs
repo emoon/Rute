@@ -176,7 +176,11 @@ impl RustGenerator {
         } else if arg.primitive {
             (arg.name.to_owned(), arg.vtype.clone())
         } else if arg.reference {
-            (arg.name.clone(), format!("&{}", arg.vtype.to_owned()))
+            if arg.array {
+                (arg.name.clone(), format!("Vec<{}>", arg.vtype.to_owned()))
+            } else {
+                (arg.name.clone(), format!("&{}", arg.vtype.to_owned()))
+            }
         } else if arg.optional {
             (
                 arg.name.clone(),
@@ -186,7 +190,6 @@ impl RustGenerator {
             (arg.name.clone(), arg.vtype.to_owned())
         }
     }
-
 
     fn generate_func_impl(&mut self, func: &Function, type_handlers: &Vec<Box<TypeHandler>>) -> io::Result<()> {
         let mut template_data = Object::new();
@@ -275,6 +278,10 @@ impl RustGenerator {
                         template_data.insert("return_type".to_owned(), Value::str("replaced"));
                         template_data.insert("replaced_return".to_owned(), Value::Str(format!("{} {{ obj: Some(ret_val) }}\n", vtype)));
                     }
+                    VariableType::Array(ref vtype) => {
+                        template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                        template_data.insert("return_type".to_owned(), Value::str("array"));
+                    },
                     _ => (),
                 }
             }

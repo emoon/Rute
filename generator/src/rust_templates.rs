@@ -4,6 +4,7 @@ pub static HEADER: &'static [u8] = b"
 // ***************************************************************
 
 use ffi_gen::*;
+use std::slice;
 pub use ffi_gen::PUBase as PUBase;\n\n
 use std::ffi::CString;\n\n";
 
@@ -99,6 +100,19 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
                 None
             } else {
                 Some({{rust_return_type}} { obj: Some(ret_val) })
+            }
+          {% when 'array' %}
+            if ret_val.count == 0 {
+                Vec::new()
+            } else {
+                let mut data = Vec::with_capacity(ret_val.count as usize);
+                let slice = slice::from_raw_parts(ret_val.elements as *const PU{{rust_return_type}}, ret_val.count as usize);
+
+                for item in slice {
+                    data.push({{rust_return_type}} { obj: Some(*item) });
+                }
+
+                data
             }
           {% else %}
             ret_val

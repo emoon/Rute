@@ -344,7 +344,7 @@ static struct PUArray list_widget_selected_items(struct PUBase* self_c) {
         PUListWidgetItem* elements = new PUListWidgetItem[count];
         for (int i = 0; i < count; ++i) {
             elements[i].funcs = &s_list_widget_item_funcs;
-            elements[i].priv_data = (struct PUBase*)data.at(i)
+            elements[i].priv_data = (struct PUBase*)ret_value.at(i);
        }
        array.elements = (void*)elements;
        array.count = int(count);

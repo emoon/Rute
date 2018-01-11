@@ -11,10 +11,10 @@ impl Variable {
         } else {
             if self.vtype == "String" {
                 "*const ::std::os::raw::c_char".to_owned()
-            } else if self.vtype == "self" || self.reference {
-                "*const PUBase".to_owned()
             } else if self.array {
                 "PUArray".to_owned()
+            } else if self.vtype == "self" || self.reference {
+                "*const PUBase".to_owned()
             } else {
                 format!(" PU{}", self.vtype)
             }
@@ -114,8 +114,9 @@ pub fn generate_ffi_bindings(
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
     f.write_all(b"pub struct PUArray {\n")?;
-    f.write_all(b"    elements: *const c_void,\n")?;
-    f.write_all(b"    count: i32,\n")?;
+    f.write_all(b"    pub priv_data: *const c_void,\n")?;
+    f.write_all(b"    pub elements: *const c_void,\n")?;
+    f.write_all(b"    pub count: i32,\n")?;
     f.write_all(b"}\n\n")?;
 
     // Write the trait forward structs

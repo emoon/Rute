@@ -4,6 +4,7 @@
 // ***************************************************************
 
 use ffi_gen::*;
+use std::slice;
 pub use ffi_gen::PUBase as PUBase;
 
 
@@ -370,14 +371,25 @@ impl ListWidget {
         }
     }
 
-    pub fn selected_items (&self) -> &ListWidgetItem {
+    pub fn selected_items (&self) -> Vec<ListWidgetItem> {
         
         unsafe {
             let obj = self.obj.unwrap();
         
             let ret_val = ((*obj.funcs).selected_items)(obj.privd);
           
-            ret_val
+            if ret_val.count == 0 {
+                Vec::new()
+            } else {
+                let mut data = Vec::with_capacity(ret_val.count as usize);
+                let slice = slice::from_raw_parts(ret_val.elements as *const PUListWidgetItem, ret_val.count as usize);
+
+                for item in slice {
+                    data.push(ListWidgetItem { obj: Some(*item) });
+                }
+
+                data
+            }
           
         
         }
