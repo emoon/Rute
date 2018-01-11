@@ -1113,6 +1113,29 @@ macro_rules! set_current_row_changed_event {
 
 
 #[macro_export]
+macro_rules! set_item_clicked_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, item: *const PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, &ListWidgetItem { obj: Some(*(item as *const wrui::ffi_gen::PUListWidgetItem)) });
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_item_clicked_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
 macro_rules! set_released_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
@@ -1252,6 +1275,8 @@ macro_rules! set_paint_event {
     }
 } }
 
+
+#[derive(Copy, Clone)]
 pub struct Ui {
     pu: *const PU
 }

@@ -9,7 +9,10 @@ use std::slice;
 pub use ffi_gen::PUBase as PUBase;\n\n
 use std::ffi::CString;\n\n";
 
-pub static UI_HEADER: &'static [u8] = b"pub struct Ui {
+pub static UI_HEADER: &'static [u8] =
+b"
+#[derive(Copy, Clone)]
+pub struct Ui {
     pu: *const PU
 }
 

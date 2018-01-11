@@ -354,6 +354,8 @@ impl RustGenerator {
             let rust_args = funcs.1.gen_func_def(|index, arg| {
                 if index == 0 {
                     ("&mut *app".to_owned(), String::new())
+                } else if arg.reference {
+                    (format!("&{} {{ obj: Some(*({} as *const wrui::ffi_gen::PU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
                 } else {
                     (arg.name.to_owned(), String::new())
                 }

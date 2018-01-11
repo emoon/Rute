@@ -400,6 +400,14 @@ static void set_list_widget_current_row_changed_event(void* object, void* user_d
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_list_widget_item_clicked_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* item)) {
+    QSlotWrapperSignal_self_ListWidgetItem_void* wrap = new QSlotWrapperSignal_self_ListWidgetItem_void(user_data, (Signal_self_ListWidgetItem_void)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(itemClicked(QListWidgetItem*)), wrap, SLOT(method(QListWidgetItem*)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void slider_show(struct PUBase* self_c) { 
     WRSlider* qt_data = (WRSlider*)self_c;
     qt_data->show();
@@ -998,6 +1006,7 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
     list_widget_set_accept_drops,
     list_widget_add_widget_item,
     set_list_widget_current_row_changed_event,
+    set_list_widget_item_clicked_event,
     set_list_widget_drag_enter_event,
     set_list_widget_drop_event,
 };

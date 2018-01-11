@@ -107,6 +107,43 @@ pub fn build_signal_wrappers_info(info: &mut HashMap<String, Function>, api_def:
     }
 }
 
+// generates signal wrappers for the variatos depending on input parameters
+pub fn generate_signal_wrappers_includes(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    let mut info = HashMap::new();
+
+    for sdef in &api_def.entries {
+        let mut functions = Vec::new();
+        sdef.get_callback_functions(&mut functions);
+
+        for func in &functions {
+            for arg in &func.function_args {
+                info.entry(arg.vtype.clone()).or_insert(arg.clone());
+            }
+        }
+    }
+
+    let ordered: BTreeMap<_, _> = info.iter().collect();
+
+    // Generate includes for all refreance types. We assume that these maps to Qt types.
+
+    for (_, arg) in ordered.iter().filter(|&(_, arg)| arg.reference) {
+        f.write_fmt(format_args!("#include <Q{}>\n", arg.vtype))?;
+    }
+
+    f.write_all(b"\n")?;
+
+    // Generate the ext refs for the static funcs
+
+    for (_, arg) in ordered.iter().filter(|&(_, arg)| arg.reference) {
+        f.write_fmt(format_args!("extern struct PU{}Funcs s_{}_funcs;\n", arg.vtype, arg.vtype.to_snake_case()))?;
+    }
+
+    f.write_all(b"\n")?;
+
+    Ok(())
+}
+
+
 fn signal_type_callback(func: &Function) -> String {
     let mut name_def = "Signal_".to_owned();
 
@@ -193,17 +230,40 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
             if index == 0 {
                 ("".to_owned(), "".to_owned())
             } else {
-                (arg.get_c_type(), arg.name.to_owned())
+                if arg.reference {
+                    (format!("Q{}*", arg.vtype), arg.name.to_owned())
+                } else {
+                    (arg.get_c_type(), arg.name.to_owned())
+                }
             }
         })?;
 
-        f.write_all(b" {\n        m_func(")?;
+        f.write_all(b" {\n")?;
+
+        // generate temporaries for the case of reference
+
+        for (index, arg) in func.function_args.iter().enumerate() {
+            if index == 0 {
+                continue;
+            }
+
+            if arg.reference {
+                f.write_fmt(format_args!("        auto temp_arg_{} = PU{} {{ &s_{}_funcs, (struct PUBase*){} }};\n",
+                index, arg.vtype, arg.vtype.to_snake_case(), arg.name.to_owned()))?;
+            }
+        }
+
+        f.write_all(b"        m_func(")?;
 
         func.write_c_func_def(f, |index, arg| {
             if index == 0 {
-                ("m_data".to_owned(), "".to_owned())
+                ("m_data".to_owned(), String::new())
             } else {
-                (arg.name.to_owned(), "".to_owned())
+                if arg.reference {
+                    (format!("(struct PUBase*)&temp_arg_{}", index), String::new())
+                } else {
+                    (arg.name.to_owned(), String::new())
+                }
             }
         })?;
 
@@ -425,9 +485,13 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
 
     func.write_c_func_def(f, |index, arg| {
         if index == 0 {
-            ("".to_owned(), "".to_owned())
+            (String::new(), String::new())
         } else {
-            (arg.get_c_type(), "".to_owned())
+            if arg.reference {
+                (format!("Q{}*", arg.vtype), String::new())
+            } else {
+                (arg.get_c_type(), String::new())
+            }
         }
     })?;
 
@@ -439,7 +503,11 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
         if index == 0 {
             ("".to_owned(), "".to_owned())
         } else {
-            (arg.get_c_type(), "".to_owned())
+            if arg.reference {
+                (format!("Q{}*", arg.vtype), String::new())
+            } else {
+                (arg.get_c_type(), String::new())
+            }
         }
     })?;
 
@@ -1002,7 +1070,9 @@ pub fn generate_qt_bindings(
 
     build_signal_wrappers_info(&mut signals_info, api_def);
 
-    header_file.write_all(b"#pragma once\n#include <QObject>\n\n")?;
+    header_file.write_all(b"#pragma once\n\n#include \"c_api.h\"\n#include <QObject>\n")?;
+
+    generate_signal_wrappers_includes(&mut header_file, api_def)?;
     generate_signal_wrappers(&mut header_file, &signals_info)?;
 
     generate_forward_declare_struct_defs(&mut f, api_def)?;
