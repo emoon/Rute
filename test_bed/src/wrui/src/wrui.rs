@@ -370,6 +370,19 @@ impl ListWidget {
         }
     }
 
+    pub fn selected_items (&self) -> &ListWidgetItem {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).selected_items)(obj.privd);
+          
+            ret_val
+          
+        
+        }
+    }
+
     pub fn set_drag_enabled (&self, state: bool) {
         
         unsafe {

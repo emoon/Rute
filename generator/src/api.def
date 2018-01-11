@@ -53,7 +53,7 @@ struct ListWidget : Widget {
 	add_item(String text),
 	item(i32 index) -> ListWidgetItem?,
 
-	//selected_items() -> <ListWidgetItem>,
+	selected_items() -> <&ListWidgetItem>,
 
 	// Drag'n'drop support
 

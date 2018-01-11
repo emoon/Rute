@@ -527,17 +527,14 @@ const _GRAMMAR: &'static str = include_str!("api.pest");
 struct ApiParser;
 
 impl ApiDef {
-    fn get_vtype<I: Input>(rule: &Pair<Rule, I>) -> String {
+    fn get_vtype<I: Input>(rule: &Pair<Rule, I>, var: &mut Variable) {
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
-                Rule::vtype => {
-                    return entry.as_str().to_owned();
-                }
+                Rule::vtype => var.vtype = entry.as_str().to_owned(),
+                Rule::refexp => var.reference = true,
                 _ => (),
             }
         }
-
-        String::new()
     }
 
     fn get_variable<I: Input>(rule: &Pair<Rule, I>) -> Variable {
@@ -551,7 +548,7 @@ impl ApiDef {
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
                 Rule::array => {
                     var.array = true;
-                    var.vtype = Self::get_vtype(&entry);
+                    Self::get_vtype(&entry, &mut var);
                 }
 
                 _ => (),

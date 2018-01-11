@@ -111,6 +111,7 @@ pub struct PUListWidgetFuncs {
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
     pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
+    pub selected_items: extern "C" fn(self_c: *const PUBase) -> *const PUBase,
     pub set_drag_enabled: extern "C" fn(self_c: *const PUBase, state: bool),
     pub set_drop_indicator_shown: extern "C" fn(self_c: *const PUBase, state: bool),
     pub set_accept_drops: extern "C" fn(self_c: *const PUBase, state: bool),

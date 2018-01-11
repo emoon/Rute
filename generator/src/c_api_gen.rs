@@ -13,6 +13,7 @@ extern \"C\" {
 #endif\n
 struct PUBase;\n
 struct PUArray {
+    void* priv_data;
     void* elements;
     uint32_t count;
 };\n\n";

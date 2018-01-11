@@ -221,7 +221,11 @@ impl RustGenerator {
         // dummy for return args (will not be lookup up anyway)
         function_args.push((false, String::new()));
 
-        template_data.insert("body_setup".to_owned(), Value::Str(body_setup));
+        if body_setup.len() == 0 {
+            template_data.insert("body_setup".to_owned(), Value::Nil);
+        } else {
+            template_data.insert("body_setup".to_owned(), Value::Str(body_setup));
+        }
 
         // Generate the function call
 

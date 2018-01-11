@@ -217,6 +217,48 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
     Ok(())
 }
 
+///
+/// Generate code for returing array
+///
+///    int count = ret_value.size();
+///     PUArray array = { 0 };
+///     if (count > 0) {
+///         PUListWidgetItem* elements = new PUListWidgetItem[count];
+///         for (int i = 0; i < count; ++i) {
+///             elements[i].funcs = &s_list_widget_item_funcs;
+///             elements[i].priv_data = (struct PUBase*)data.at(i);
+///         }
+///         array.elements = (void*)elements;
+///         array.count = int(count);
+///     }
+///     return array;
+
+fn generate_return_array(f: &mut File, ret_val: &Variable) -> io::Result<()> {
+    // TODO: Use templates
+
+    // Reference in this case means that the data from Qt is by pointer
+    f.write_all(b"    int count = ret_value.size();\n")?;
+    f.write_all(b"    PUArray array = { 0 };\n")?;
+    f.write_all(b"    if (count > 0) {\n")?;
+    f.write_all(b"        PUListWidgetItem* elements = new PUListWidgetItem[count];\n")?;
+    f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
+    f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
+    if ret_val.reference {
+        f.write_all(b"            elements[i].priv_data = (struct PUBase*)data.at(i)\n")?;
+    } else {
+        // This seems quite scary to me but lets keep it until it breaks.
+        f.write_all(b"            elements[i].priv_data = (struct PUBase*)&data.at(i);\n")?;
+    }
+
+    f.write_all(b"       }\n")?;
+    f.write_all(b"       array.elements = (void*)elements;\n")?;
+    f.write_all(b"       array.count = int(count);\n")?;
+    f.write_all(b"   }\n")?;
+    f.write_all(b"   return array;\n")?;
+
+    Ok(())
+}
+
 fn function_name(struct_name: &str, func: &Function) -> String {
     format!("{}_{}", struct_name.to_snake_case(), func.name)
 }
@@ -300,6 +342,8 @@ fn generate_func_def(
 
         if ret_val.primitive {
             f.write_all(b"    return ret_value;\n")?;
+        } else if ret_val.array {
+            generate_return_array(f, ret_val)?;
         } else {
             // If we have a complex (currently assumed) QT here we need to wrap it before we return
 
