@@ -95,6 +95,7 @@ pub struct PUPainter {
 pub struct PUListWidgetItemFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
+    pub text: extern "C" fn(self_c: *const PUBase) -> *const ::std::os::raw::c_char,
 }
 
 #[repr(C)]

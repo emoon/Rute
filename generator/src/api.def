@@ -47,6 +47,7 @@ struct Painter {
 
 struct ListWidgetItem {
     set_text(String text),
+    text() -> String,
 }
 
 struct ListWidget : Widget {

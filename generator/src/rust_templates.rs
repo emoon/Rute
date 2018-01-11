@@ -4,6 +4,7 @@ pub static HEADER: &'static [u8] = b"
 // ***************************************************************
 
 use ffi_gen::*;
+use std::ffi::CStr;
 use std::slice;
 pub use ffi_gen::PUBase as PUBase;\n\n
 use std::ffi::CString;\n\n";

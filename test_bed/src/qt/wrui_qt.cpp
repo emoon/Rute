@@ -20,6 +20,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+static char s_temp_string_buffer[8192];
+
 struct PrivData {
     QWidget* parent;
     void* user_data;
@@ -290,6 +292,18 @@ static void painter_draw_line(struct PUBase* self_c, int x1, int y1, int x2, int
 static void list_widget_item_set_text(struct PUBase* self_c, const char* text) { 
     QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
     qt_data->setText(QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* list_widget_item_text(struct PUBase* self_c) { 
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    auto ret_value = qt_data->text();
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert(ba.size() < sizeof(s_temp_string_buffer));
+    memcpy(s_temp_string_buffer, c_str, ba.size());
+    return s_temp_string_buffer;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -924,6 +938,7 @@ struct PUPainterFuncs s_painter_funcs = {
 struct PUListWidgetItemFuncs s_list_widget_item_funcs = {
     destroy_list_widget_item,
     list_widget_item_set_text,
+    list_widget_item_text,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

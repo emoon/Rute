@@ -4,6 +4,7 @@
 // ***************************************************************
 
 use ffi_gen::*;
+use std::ffi::CStr;
 use std::slice;
 pub use ffi_gen::PUBase as PUBase;
 
@@ -299,6 +300,19 @@ impl ListWidgetItem {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn text (&self) -> String {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).text)(obj.privd);
+          
+           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+          
         
         }
     }

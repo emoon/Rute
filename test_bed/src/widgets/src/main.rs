@@ -42,7 +42,7 @@ impl<'a> MyApp<'a> {
         //println!("menu_selected: obj.privd {:p}", self.list.obj.as_ref().unwrap().privd);
 
         for selected in &self.list.selected_items() {
-            selected.set_text("selected");
+            println!("selected item {}", selected.text());
         }
 
         println!("menu select");

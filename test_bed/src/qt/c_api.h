@@ -107,6 +107,7 @@ struct PUPainter {
 struct PUListWidgetItemFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*set_text)(struct PUBase* self_c, const char* text);
+    const char* (*text)(struct PUBase* self_c);
 };
 
 struct PUListWidgetItem {

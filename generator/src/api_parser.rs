@@ -36,6 +36,7 @@ pub struct Variable {
     pub reference: bool,
     pub optional: bool,
     pub array: bool,
+    pub ret_value: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -584,6 +585,7 @@ impl ApiDef {
             reference: false,
             optional: false,
             array: false,
+            ret_value: false,
         });
 
         for entry in rule.clone().into_inner() {
@@ -602,7 +604,11 @@ impl ApiDef {
                 Rule::callback => function.func_type = FunctionType::Callback,
                 Rule::event => function.func_type = FunctionType::Event,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
-                Rule::retexp => function.return_val = Some(Self::get_variable(&entry)),
+                Rule::retexp => {
+                    let mut var = Self::get_variable(&entry);
+                    var.ret_value = true;
+                    function.return_val = Some(var);
+                },
                 Rule::manual => {
                     function.is_manual = true;
                     function.func_type = FunctionType::Regular;
@@ -620,6 +626,7 @@ impl ApiDef {
                 reference: false,
                 optional: false,
                 array: false,
+                ret_value: false,
             });
         }
 

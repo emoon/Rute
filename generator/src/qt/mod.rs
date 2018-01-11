@@ -10,6 +10,8 @@ use heck::SnakeCase;
 use heck::MixedCase;
 
 static HEADER: &'static [u8] = b"
+static char s_temp_string_buffer[8192];
+
 struct PrivData {
     QWidget* parent;
     void* user_data;
@@ -259,6 +261,31 @@ fn generate_return_array(f: &mut File, ret_val: &Variable) -> io::Result<()> {
     Ok(())
 }
 
+///
+/// Generate code for returing string
+/// We currently use a static buffer here to reduce mallocs. This isn't thread safe but it's
+/// only allowed to use QtData from one thread anyway.
+///
+///   QByteArray ba = ret_value.toUtf8();
+///   const char* c_str = ba.data();
+///   assert(ba.size() < sizeof(s_temp_string_buffer));
+///   memcpy(s_temp_string_buffer, c_str, ba.size());
+///   return s_temp_string_buffer;
+///
+
+fn generate_return_string(f: &mut File) -> io::Result<()> {
+    // TODO: Use templates
+
+    f.write_all(b"    QByteArray ba = ret_value.toUtf8();\n")?;
+    f.write_all(b"    const char* c_str = ba.data();\n")?;
+    f.write_all(b"    assert(ba.size() < sizeof(s_temp_string_buffer));\n")?;
+    f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size());\n")?;
+    f.write_all(b"    return s_temp_string_buffer;\n")?;
+
+    Ok(())
+}
+
+
 fn function_name(struct_name: &str, func: &Function) -> String {
     format!("{}_{}", struct_name.to_snake_case(), func.name)
 }
@@ -344,6 +371,8 @@ fn generate_func_def(
             f.write_all(b"    return ret_value;\n")?;
         } else if ret_val.array {
             generate_return_array(f, ret_val)?;
+        } else if ret_val.vtype == "String" {
+            generate_return_string(f)?;
         } else {
             // If we have a complex (currently assumed) QT here we need to wrap it before we return
 

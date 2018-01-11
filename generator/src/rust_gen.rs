@@ -54,7 +54,15 @@ impl TypeHandler for StringTypeHandler {
     }
 
     fn replace_arg(&self, arg: &Variable) -> (String, String) {
-        (arg.name.to_owned(), "&str".to_owned())
+        if arg.ret_value {
+            (String::new(), "String".to_owned())
+        } else {
+            (arg.name.to_owned(), "&str".to_owned())
+        }
+    }
+
+    fn gen_body_return(&self, _varible: &Variable) -> String {
+        "CStr::from_ptr(ret_val).to_string_lossy().into_owned()".to_owned()
     }
 
     fn gen_body(&self, arg: &str, index: usize) -> (String, String) {
@@ -260,6 +268,7 @@ impl RustGenerator {
 
             for handler in type_handlers.iter() {
                 if ret_val.vtype == handler.match_type() {
+                    println!("{}", ret_val.vtype);
                     let ret = handler.gen_body_return(&ret_val);
                     template_data.insert("return_type".to_owned(), Value::str("replaced"));
                     template_data.insert("replaced_return".to_owned(), Value::Str(ret));
