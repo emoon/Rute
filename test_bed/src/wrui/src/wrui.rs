@@ -54,6 +54,11 @@ pub struct Action {
 }
 
 #[derive(Clone)]
+pub struct Url {
+    pub obj: Option<PUUrl>,
+}
+
+#[derive(Clone)]
 pub struct MimeData {
     pub obj: Option<PUMimeData>,
 }
@@ -643,6 +648,35 @@ impl Action {
     }
 }
 
+impl Url {
+
+    pub fn is_local_file (&self) -> bool {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).is_local_file)(obj.privd);
+          
+            ret_val
+          
+        
+        }
+    }
+
+    pub fn to_local_file (&self) -> String {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).to_local_file)(obj.privd);
+          
+           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+          
+        
+        }
+    }
+}
+
 impl MimeData {
 
     pub fn has_color (&self) -> bool {
@@ -692,6 +726,30 @@ impl MimeData {
             let ret_val = ((*obj.funcs).has_urls)(obj.privd);
           
             ret_val
+          
+        
+        }
+    }
+
+    pub fn urls (&self) -> Vec<Url> {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).urls)(obj.privd);
+          
+            if ret_val.count == 0 {
+                Vec::new()
+            } else {
+                let mut data = Vec::with_capacity(ret_val.count as usize);
+                let slice = slice::from_raw_parts(ret_val.elements as *const PUUrl, ret_val.count as usize);
+
+                for item in slice {
+                    data.push(Url { obj: Some(*item) });
+                }
+
+                data
+            }
           
         
         }

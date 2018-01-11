@@ -185,11 +185,25 @@ pub struct PUAction {
 }
 
 #[repr(C)]
+pub struct PUUrlFuncs {
+    pub is_local_file: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub to_local_file: extern "C" fn(self_c: *const PUBase) -> *const ::std::os::raw::c_char,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUUrl {
+    pub funcs: *const PUUrlFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PUMimeDataFuncs {
     pub has_color: extern "C" fn(self_c: *const PUBase) -> bool,
     pub has_image: extern "C" fn(self_c: *const PUBase) -> bool,
     pub has_text: extern "C" fn(self_c: *const PUBase) -> bool,
     pub has_urls: extern "C" fn(self_c: *const PUBase) -> bool,
+    pub urls: extern "C" fn(self_c: *const PUBase) -> PUArray,
 }
 
 #[repr(C)]

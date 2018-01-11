@@ -9,6 +9,7 @@
 #include <QSlider>
 #include <QMainWindow>
 #include <QAction>
+#include <QUrl>
 #include <QMimeData>
 #include <QMenu>
 #include <QMenuBar>
@@ -37,6 +38,7 @@ extern struct PUListWidgetFuncs s_list_widget_funcs;
 extern struct PUSliderFuncs s_slider_funcs;
 extern struct PUMainWindowFuncs s_main_window_funcs;
 extern struct PUActionFuncs s_action_funcs;
+extern struct PUUrlFuncs s_url_funcs;
 extern struct PUMimeDataFuncs s_mime_data_funcs;
 extern struct PUMenuFuncs s_menu_funcs;
 extern struct PUMenuBarFuncs s_menu_bar_funcs;
@@ -501,6 +503,26 @@ static void set_action_triggered_event(void* object, void* user_data, void (*eve
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static bool url_is_local_file(struct PUBase* self_c) { 
+    QUrl* qt_data = (QUrl*)self_c;
+    auto ret_value = qt_data->isLocalFile();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* url_to_local_file(struct PUBase* self_c) { 
+    QUrl* qt_data = (QUrl*)self_c;
+    auto ret_value = qt_data->toLocalFile();
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert(ba.size() < sizeof(s_temp_string_buffer));
+    memcpy(s_temp_string_buffer, c_str, ba.size());
+    return s_temp_string_buffer;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static bool mime_data_has_color(struct PUBase* self_c) { 
     QMimeData* qt_data = (QMimeData*)self_c;
     auto ret_value = qt_data->hasColor();
@@ -529,6 +551,26 @@ static bool mime_data_has_urls(struct PUBase* self_c) {
     QMimeData* qt_data = (QMimeData*)self_c;
     auto ret_value = qt_data->hasUrls();
     return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUArray mime_data_urls(struct PUBase* self_c) { 
+    QMimeData* qt_data = (QMimeData*)self_c;
+    auto ret_value = qt_data->urls();
+    int count = ret_value.size();
+    PUArray array = { 0 };
+    if (count > 0) {
+        PUUrl* elements = new PUUrl[count];
+        for (int i = 0; i < count; ++i) {
+            elements[i].funcs = &s_url_funcs;
+            QUrl* temp = new QUrl(ret_value.at(i));
+            elements[i].priv_data = (struct PUBase*)temp;
+       }
+       array.elements = (void*)elements;
+       array.count = int(count);
+   }
+   return array;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -993,11 +1035,19 @@ struct PUActionFuncs s_action_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct PUUrlFuncs s_url_funcs = {
+    url_is_local_file,
+    url_to_local_file,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct PUMimeDataFuncs s_mime_data_funcs = {
     mime_data_has_color,
     mime_data_has_image,
     mime_data_has_text,
     mime_data_has_urls,
+    mime_data_urls,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

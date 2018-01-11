@@ -54,7 +54,13 @@ impl<'a> MyApp<'a> {
     }
 
     fn drop_files(&mut self, event: &DropEvent) {
-        println!("Has some files? {}", event.mime_data().has_urls());
+        for url in event.mime_data().urls() {
+            if url.is_local_file() {
+                println!("Has local file {}", url.to_local_file());
+            } else {
+                println!("File is not local");
+            }
+        }
     }
 
     fn custom_draw_widget(&mut self, _event: &PaintEvent) {

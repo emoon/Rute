@@ -33,6 +33,8 @@ struct PUMainWindow;
 struct PUMainWindowFuncs;
 struct PUAction;
 struct PUActionFuncs;
+struct PUUrl;
+struct PUUrlFuncs;
 struct PUMimeData;
 struct PUMimeDataFuncs;
 struct PUMenu;
@@ -177,11 +179,22 @@ struct PUAction {
     struct PUBase* priv_data;
 };
 
+struct PUUrlFuncs {
+    bool (*is_local_file)(struct PUBase* self_c);
+    const char* (*to_local_file)(struct PUBase* self_c);
+};
+
+struct PUUrl {
+    struct PUUrlFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
 struct PUMimeDataFuncs {
     bool (*has_color)(struct PUBase* self_c);
     bool (*has_image)(struct PUBase* self_c);
     bool (*has_text)(struct PUBase* self_c);
     bool (*has_urls)(struct PUBase* self_c);
+    struct PUArray (*urls)(struct PUBase* self_c);
 };
 
 struct PUMimeData {

@@ -179,6 +179,8 @@ impl RustGenerator {
             }
         }
 
+        // TODO: Cleanup
+
         if arg.vtype == "self" {
             ("&self".to_owned(), "".to_owned())
         } else if arg.primitive {
@@ -195,7 +197,11 @@ impl RustGenerator {
                 format!("Option<{}>", arg.vtype.to_owned()),
             )
         } else {
-            (arg.name.clone(), arg.vtype.to_owned())
+            if arg.array {
+                (arg.name.clone(), format!("Vec<{}>", arg.vtype.to_owned()))
+            } else {
+                (arg.name.clone(), arg.vtype.to_owned())
+            }
         }
     }
 
@@ -268,7 +274,6 @@ impl RustGenerator {
 
             for handler in type_handlers.iter() {
                 if ret_val.vtype == handler.match_type() {
-                    println!("{}", ret_val.vtype);
                     let ret = handler.gen_body_return(&ret_val);
                     template_data.insert("return_type".to_owned(), Value::str("replaced"));
                     template_data.insert("replaced_return".to_owned(), Value::Str(ret));

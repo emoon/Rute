@@ -238,18 +238,22 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
 fn generate_return_array(f: &mut File, ret_val: &Variable) -> io::Result<()> {
     // TODO: Use templates
 
+    let vtype = &ret_val.vtype;
+
     // Reference in this case means that the data from Qt is by pointer
     f.write_all(b"    int count = ret_value.size();\n")?;
     f.write_all(b"    PUArray array = { 0 };\n")?;
     f.write_all(b"    if (count > 0) {\n")?;
-    f.write_all(b"        PUListWidgetItem* elements = new PUListWidgetItem[count];\n")?;
+    f.write_fmt(format_args!("        PU{}* elements = new PU{}[count];\n", vtype, vtype))?;
     f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
     f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
     if ret_val.reference {
         f.write_all(b"            elements[i].priv_data = (struct PUBase*)ret_value.at(i);\n")?;
     } else {
-        // This seems quite scary to me but lets keep it until it breaks.
-        f.write_all(b"            elements[i].priv_data = (struct PUBase*)&ret_value.at(i);\n")?;
+        // this is hacky as it leaks memory and needs to be fixed
+        f.write_fmt(format_args!("            Q{}* temp = new Q{}(ret_value.at(i));\n", vtype, vtype))?;
+        f.write_all(b"            elements[i].priv_data = (struct PUBase*)temp;\n")?;
+        //f.write_all(b"            elements[i].priv_data = (struct PUBase*)&ret_value.at(i);\n")?;
     }
 
     f.write_all(b"       }\n")?;

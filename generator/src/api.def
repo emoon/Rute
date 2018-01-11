@@ -94,11 +94,18 @@ struct Action {
 // Misc
 
 #[attributes(NoCreate)]
+struct Url {
+	is_local_file() -> bool,
+	to_local_file() -> String,
+}
+
+#[attributes(NoCreate)]
 struct MimeData {
 	has_color() -> bool,
 	has_image() -> bool,
 	has_text() -> bool,
 	has_urls() -> bool,
+	urls() -> <Url>,
 	// [manual] filenames() -> <String>,
 }
 
