@@ -342,8 +342,9 @@ fn generate_return_string(f: &mut File) -> io::Result<()> {
 
     f.write_all(b"    QByteArray ba = ret_value.toUtf8();\n")?;
     f.write_all(b"    const char* c_str = ba.data();\n")?;
-    f.write_all(b"    assert(ba.size() < sizeof(s_temp_string_buffer));\n")?;
-    f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size());\n")?;
+    f.write_all(b"    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));\n")?;
+    f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);\n")?;
+    f.write_all(b"    printf(\"temp string buffer %s\\n\", s_temp_string_buffer);\n")?;
     f.write_all(b"    return s_temp_string_buffer;\n")?;
 
     Ok(())
