@@ -84,5 +84,32 @@ macro_rules! set_{{name}}_event {
 
 ";
 
+pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
+    pub fn {{func_name}} {{ function_def }} {
+        {{ body_setup }}
+        unsafe {
+            let obj = self.obj.unwrap();
+        {% if return_value %}
+            let ret_val = ((*obj.funcs).{{func_name}})({{function_args}});
+          {% case return_type %}
+          {% when 'replaced' %}
+           {{replaced_return}}
+          {% when 'optional' %}
+            if ret_val.privd.is_null() {
+                None
+            } else {
+                Some({{rust_return_type}} { obj: Some(ret_val) })
+            }
+          {% else %}
+            ret_val
+          {% endcase %}
+        {% else %}
+            ((*obj.funcs).{{func_name}})({{function_args}});
+        {% endif %}
+        }
+    }
+";
+
+
 
 

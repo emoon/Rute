@@ -16,6 +16,7 @@ use rust_templates::*;
 struct RustGenerator {
     callback_template: Template,
     event_template: Template,
+    rust_func_template: Template,
     //type_handlers: Vec<Box<TypeHandler>>,
     output: File,
 }
@@ -30,11 +31,11 @@ trait TypeHandler {
         (arg.name.to_owned(), arg.vtype.to_owned())
     }
 
-    fn gen_body_return(&self, _varible: &Variable, _f: &mut File) -> io::Result<()> {
-        Ok(())
+    fn gen_body_return(&self, _varible: &Variable) -> String {
+        String::new()
     }
 
-    fn gen_body(&self, _arg: &str, _f: &mut File, _index: usize) -> String;
+    fn gen_body(&self, _arg: &str, _index: usize) -> (String, String);
 }
 
 #[derive(Clone)]
@@ -56,13 +57,9 @@ impl TypeHandler for StringTypeHandler {
         (arg.name.to_owned(), "&str".to_owned())
     }
 
-    fn gen_body(&self, arg: &str, f: &mut File, index: usize) -> String {
+    fn gen_body(&self, arg: &str, index: usize) -> (String, String) {
         let arg_name = format!("str_in_{}_{}", arg, index);
-        f.write_fmt(format_args!(
-            "        let {} = CString::new({}).unwrap();\n",
-            arg_name, arg
-        )).unwrap();
-        format!("{}.as_ptr()", arg_name)
+        (format!("{}.as_ptr()", arg_name), format!("let {} = CString::new({}).unwrap();\n", arg_name, arg))
     }
 }
 
@@ -75,12 +72,12 @@ impl TypeHandler for RectTypeHandler {
         "Rect".to_owned()
     }
 
-    fn gen_body(&self, _arg: &str, _f: &mut File, _index: usize) -> String {
-        String::new()
+    fn gen_body(&self, _arg: &str, _index: usize) -> (String, String) {
+        (String::new(), String::new())
     }
 
-    fn gen_body_return(&self, _value: &Variable, f: &mut File) -> io::Result<()> {
-        f.write_all(b"            ret_val\n")
+    fn gen_body_return(&self, _value: &Variable) -> String {
+       "ret_val\n".to_owned()
     }
 }
 
@@ -101,12 +98,8 @@ impl TypeHandler for TraitTypeHandler {
         (arg.name.to_owned(), format!("&{}", arg.vtype.to_owned()))
     }
 
-    fn gen_body(&self, arg_name: &str, _f: &mut File, _index: usize) -> String {
-        format!(
-            "{}.get_{}_obj() as *const PUBase",
-            arg_name,
-            self.name.to_snake_case()
-        )
+    fn gen_body(&self, arg_name: &str, _index: usize) -> (String, String) {
+        (format!("{}.get_{}_obj() as *const PUBase", arg_name, self.name.to_snake_case()), String::new())
     }
 }
 
@@ -194,100 +187,100 @@ impl RustGenerator {
         }
     }
 
+
     fn generate_func_impl(&mut self, func: &Function, type_handlers: &Vec<Box<TypeHandler>>) -> io::Result<()> {
-        self.output.write_fmt(format_args!("    pub fn {}", func.name))?;
+        let mut template_data = Object::new();
 
-        func.write_func_def_full(&mut self.output, |_, arg| Self::get_arg(arg, &type_handlers))?;
+        let fun_def = func.gen_func_def_full(|_, arg| Self::get_arg(arg, &type_handlers));
 
-        self.output.write_all(b" {\n")?;
+        template_data.insert("func_name".to_owned(), Value::Str(func.name.clone()));
+        template_data.insert("function_def".to_owned(), Value::Str(fun_def));
 
-        let mut name_remap = HashMap::new();
+        let mut function_args = Vec::with_capacity(func.function_args.len());
+        let mut body_setup = String::new();
 
+        // Setup the input args
         for (i, arg) in func.function_args.iter().enumerate() {
+            let mut added = false;
+
             for handler in type_handlers.iter() {
                 if arg.vtype == handler.match_type() {
-                    let arg_name = handler.gen_body(&arg.name, &mut self.output, i);
-                    name_remap.insert(i, arg_name);
+                    let (gen_arg, body) = handler.gen_body(&arg.name, i);
+                    function_args.push((true, gen_arg));
+                    body_setup += &body;
+                    added = true;
                     break;
                 }
             }
-        }
 
-        self.output.write_all(b"        unsafe {\n")?;
-        self.output.write_all(b"            let obj = self.obj.unwrap();\n")?;
-
-        if func.return_val.is_some() {
-            self.output.write_fmt(format_args!(
-                "            let ret_val = ((*obj.funcs).{})(",
-                func.name
-            ))?;
-        } else {
-            self.output.write_fmt(format_args!("            ((*obj.funcs).{})(", func.name))?;
-        }
-
-        // TODO: Clean this up
-
-        func.write_func_def(&mut self.output, |index, arg| {
-            if index == 0 {
-                ("obj.privd".to_owned(), String::new())
-            } else if !arg.primitive {
-                if let Some(name) = name_remap.get(&index) {
-                    (name.to_owned(), String::new())
-                } else if arg.reference {
-                    (format!("{}.obj.unwrap().privd", arg.name), String::new())
-                } else {
-                    (arg.name.to_owned(), String::new())
-                }
-            } else if arg.reference {
-                (format!("{}.obj.unwrap().privd", arg.name), String::new())
-            } else {
-                (arg.name.to_owned(), String::new())
+            if !added {
+                function_args.push((false, arg.name.clone()));
             }
-        })?;
+        }
 
-        self.output.write_all(b")")?;
+        // dummy for return args (will not be lookup up anyway)
+        function_args.push((false, String::new()));
 
-        // Handle if we have a return value
+        template_data.insert("body_setup".to_owned(), Value::Str(body_setup));
+
+        // Generate the function call
+
+        let func_args = func.gen_func_def(|index, arg| {
+            match arg.vtype_e {
+                VariableType::SelfType => ("obj.privd".to_owned(), String::new()),
+                VariableType::Reference(_) => {
+                    let func_arg = &function_args[index];
+                    if func_arg.0 {
+                        (func_arg.1.to_owned(), String::new())
+                    } else {
+                        (format!("{}.obj.unwrap().privd", func_arg.1), String::new())
+                    }
+                }
+
+                _ => (function_args[index].1.to_owned(), String::new()),
+            }
+        });
+
+        template_data.insert("function_args".to_owned(), Value::Str(func_args));
+
+        // Handle return value
 
         if let Some(ref ret_val) = func.return_val {
-            self.output.write_all(b";\n")?;
-            let mut skip_return_gen = false;
+            let mut replaced = false;
+
+            template_data.insert("return_value".to_owned(), Value::Bool(true));
+            template_data.insert("return_type".to_owned(), Value::str("none"));
 
             for handler in type_handlers.iter() {
                 if ret_val.vtype == handler.match_type() {
-                    handler.gen_body_return(&ret_val, &mut self.output)?;
-                    skip_return_gen = true;
+                    let ret = handler.gen_body_return(&ret_val);
+                    template_data.insert("return_type".to_owned(), Value::str("replaced"));
+                    template_data.insert("replaced_return".to_owned(), Value::Str(ret));
+                    replaced = true;
                     break;
                 }
             }
 
-            if !skip_return_gen {
-                if ret_val.primitive {
-                    self.output.write_fmt(format_args!("            ret_val\n"))?;
-                } else if ret_val.optional {
-                    self.output.write_fmt(format_args!("            if ret_val.privd.is_null() {{\n"))?;
-                    self.output.write_fmt(format_args!("                None\n"))?;
-                    self.output.write_fmt(format_args!("            }} else {{\n"))?;
-                    self.output.write_fmt(format_args!(
-                        "                Some({} {{ obj: Some(ret_val) }})\n",
-                        ret_val.vtype
-                    ))?;
-                    self.output.write_fmt(format_args!("            }}\n"))?;
-                } else {
-                    self.output.write_fmt(format_args!(
-                        "            {} {{ obj: Some(ret_val) }}\n",
-                        ret_val.vtype
-                    ))?;
+            if !replaced {
+                match ret_val.vtype_e {
+                    VariableType::Optional(ref vtype) => {
+                        template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                        template_data.insert("return_type".to_owned(), Value::str("optional"));
+                    },
+                    VariableType::Regular(ref vtype) => {
+                        template_data.insert("return_type".to_owned(), Value::str("replaced"));
+                        template_data.insert("replaced_return".to_owned(), Value::Str(format!("{} {{ obj: Some(ret_val) }}\n", vtype)));
+                    }
+                    _ => (),
                 }
             }
         } else {
-            self.output.write_all(b"\n")?;
+            template_data.insert("return_value".to_owned(), Value::Bool(false));
         }
 
-        self.output.write_all(b"        }\n")?;
-        self.output.write_all(b"    }\n\n")?;
+        let output = self.rust_func_template.render(&template_data).unwrap();
 
-        Ok(())
+        self.output.write_all(output.as_bytes())
     }
 
     fn get_function_args(func: &Function) -> String {
@@ -517,6 +510,7 @@ impl RustGenerator {
         RustGenerator {
             callback_template: parser.parse(CALLBACK_TEMPLATE).unwrap(),
             event_template: parser.parse(EVENT_TEMPLATE).unwrap(),
+            rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             output: File::create(filename).unwrap(),
         }
     }

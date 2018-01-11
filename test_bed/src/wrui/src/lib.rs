@@ -6,7 +6,7 @@ pub mod wrui;
 use libloading::{Library, Symbol};
 use std::rc::Rc;
 
-pub use wrui::Ui as Ui;
+pub use wrui::Ui;
 
 pub struct SharedLibUi {
     _lib: Rc<libloading::Library>,
@@ -17,7 +17,7 @@ impl SharedLibUi {
     pub fn new(shared_lib: &str) -> Option<SharedLibUi> {
         let lib = Rc::new(Library::new(shared_lib).unwrap());
         unsafe {
-            let wrui_get: Symbol<unsafe extern fn() -> *const ffi_gen::PU> =
+            let wrui_get: Symbol<unsafe extern "C" fn() -> *const ffi_gen::PU> =
                 lib.get(b"wrui_get\0").unwrap();
 
             Some(SharedLibUi {

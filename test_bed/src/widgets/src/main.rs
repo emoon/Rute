@@ -6,12 +6,12 @@ use std::os::raw::c_void;
 use wrui::{SharedLibUi, Ui};
 use wrui::wrui::*;
 
-#[cfg(target_os="windows")]
+#[cfg(target_os = "windows")]
 fn get_wrui_path() -> &'static str {
     "t2-output/win64-msvc-debug-default/wrui_qt.dll"
 }
 
-#[cfg(target_os="macos")]
+#[cfg(target_os = "macos")]
 fn get_wrui_path() -> &'static str {
     "t2-output/macosx-clang-debug-default/libwrui_qt.dylib"
 }
@@ -65,7 +65,7 @@ impl<'a> MyApp<'a> {
         let mut painter = self.ui.create_painter();
 
         painter.begin(&self.main_win);
-        painter.draw_line(0,0, 20, 20);
+        painter.draw_line(0, 0, 20, 20);
         painter.end();
         painter.destroy();
 
@@ -120,7 +120,6 @@ impl<'a> MyApp<'a> {
         self.app.exec();
     }
 }
-
 
 fn main() {
     let wrui_instance = SharedLibUi::new(get_wrui_path()).unwrap();

@@ -121,27 +121,36 @@ impl Widget {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
-
 }
 
 impl PaintDevice for Widget {
@@ -166,42 +175,57 @@ impl PushButton {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn set_text(&self, text: &str) {
+    pub fn set_text (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr())
+        
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
         }
     }
 
-    pub fn set_flat(&self, flat: bool) {
+    pub fn set_flat (&self, flat: bool) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_flat)(obj.privd, flat)
+        
+            ((*obj.funcs).set_flat)(obj.privd, flat);
+        
         }
     }
-
 }
 
 impl PaintDevice for PushButton {
@@ -226,27 +250,36 @@ impl Painter {
           self.obj = None;
        }
     }
-    pub fn begin(&self, target: &PaintDevice) {
+
+    pub fn begin (&self, target: &PaintDevice) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).begin)(obj.privd, target.get_paint_device_obj() as *const PUBase)
+        
+            ((*obj.funcs).begin)(obj.privd, target.get_paint_device_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn end(&self) {
+    pub fn end (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).end)(obj.privd)
+        
+            ((*obj.funcs).end)(obj.privd);
+        
         }
     }
 
-    pub fn draw_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
+    pub fn draw_line (&self, x1: i32, y1: i32, x2: i32, y2: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).draw_line)(obj.privd, x1, y1, x2, y2)
+        
+            ((*obj.funcs).draw_line)(obj.privd, x1, y1, x2, y2);
+        
         }
     }
-
 }
 
 impl ListWidgetItem {
@@ -257,14 +290,17 @@ impl ListWidgetItem {
           self.obj = None;
        }
     }
-    pub fn set_text(&self, text: &str) {
+
+    pub fn set_text (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr())
+        
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
         }
     }
-
 }
 
 impl ListWidget {
@@ -275,75 +311,104 @@ impl ListWidget {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn add_item(&self, text: &str) {
+    pub fn add_item (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_item)(obj.privd, str_in_text_1.as_ptr())
+        
+            ((*obj.funcs).add_item)(obj.privd, str_in_text_1.as_ptr());
+        
         }
     }
 
-    pub fn item(&self, index: i32) -> Option<ListWidgetItem> {
+    pub fn item (&self, index: i32) -> Option<ListWidgetItem> {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).item)(obj.privd, index);
+          
             if ret_val.privd.is_null() {
                 None
             } else {
                 Some(ListWidgetItem { obj: Some(ret_val) })
             }
+          
+        
         }
     }
 
-    pub fn set_drag_enabled(&self, state: bool) {
+    pub fn set_drag_enabled (&self, state: bool) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_drag_enabled)(obj.privd, state)
+        
+            ((*obj.funcs).set_drag_enabled)(obj.privd, state);
+        
         }
     }
 
-    pub fn set_drop_indicator_shown(&self, state: bool) {
+    pub fn set_drop_indicator_shown (&self, state: bool) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_drop_indicator_shown)(obj.privd, state)
+        
+            ((*obj.funcs).set_drop_indicator_shown)(obj.privd, state);
+        
         }
     }
 
-    pub fn set_accept_drops(&self, state: bool) {
+    pub fn set_accept_drops (&self, state: bool) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_accept_drops)(obj.privd, state)
+        
+            ((*obj.funcs).set_accept_drops)(obj.privd, state);
+        
         }
     }
 
-    pub fn add_widget_item(&self, item: &ListWidgetItem) {
+    pub fn add_widget_item (&self, item: &ListWidgetItem) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget_item)(obj.privd, item.obj.unwrap().privd)
+        
+            ((*obj.funcs).add_widget_item)(obj.privd, item.obj.unwrap().privd);
+        
         }
     }
-
 }
 
 impl PaintDevice for ListWidget {
@@ -368,27 +433,36 @@ impl Slider {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
-
 }
 
 impl PaintDevice for Slider {
@@ -413,50 +487,73 @@ impl MainWindow {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn is_animated(&self) -> bool {
+    pub fn is_animated (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).is_animated)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
 
-    pub fn menu_bar(&self) -> MenuBar {
+    pub fn menu_bar (&self) -> MenuBar {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).menu_bar)(obj.privd);
-            MenuBar { obj: Some(ret_val) }
+          
+           MenuBar { obj: Some(ret_val) }
+
+          
+        
         }
     }
 
-    pub fn set_central_widget(&self, widget: &WidgetType) {
+    pub fn set_central_widget (&self, widget: &WidgetType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_central_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
         }
     }
-
 }
 
 impl PaintDevice for MainWindow {
@@ -481,57 +578,85 @@ impl Action {
           self.obj = None;
        }
     }
-    pub fn is_enabled(&self) -> bool {
+
+    pub fn is_enabled (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).is_enabled)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
 
-    pub fn set_text(&self, text: &str) {
+    pub fn set_text (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr())
+        
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
         }
     }
-
 }
 
 impl MimeData {
-    pub fn has_color(&self) -> bool {
+
+    pub fn has_color (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).has_color)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
 
-    pub fn has_image(&self) -> bool {
+    pub fn has_image (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).has_image)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
 
-    pub fn has_text(&self) -> bool {
+    pub fn has_text (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).has_text)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
 
-    pub fn has_urls(&self) -> bool {
+    pub fn has_urls (&self) -> bool {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).has_urls)(obj.privd);
+          
             ret_val
+          
+        
         }
     }
-
 }
 
 impl Menu {
@@ -542,50 +667,68 @@ impl Menu {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn add_action_text(&self, text: &str) {
+    pub fn add_action_text (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_action_text)(obj.privd, str_in_text_1.as_ptr())
+        
+            ((*obj.funcs).add_action_text)(obj.privd, str_in_text_1.as_ptr());
+        
         }
     }
 
-    pub fn add_action(&self, action: &Action) {
+    pub fn add_action (&self, action: &Action) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_action)(obj.privd, action.obj.unwrap().privd)
+        
+            ((*obj.funcs).add_action)(obj.privd, action.obj.unwrap().privd);
+        
         }
     }
 
-    pub fn set_title(&self, title: &str) {
+    pub fn set_title (&self, title: &str) {
         let str_in_title_1 = CString::new(title).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_title)(obj.privd, str_in_title_1.as_ptr())
+        
+            ((*obj.funcs).set_title)(obj.privd, str_in_title_1.as_ptr());
+        
         }
     }
-
 }
 
 impl PaintDevice for Menu {
@@ -610,34 +753,46 @@ impl MenuBar {
           self.obj = None;
        }
     }
-    pub fn show(&self) {
+
+    pub fn show (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).show)(obj.privd)
+        
+            ((*obj.funcs).show)(obj.privd);
+        
         }
     }
 
-    pub fn resize(&self, width: i32, height: i32) {
+    pub fn resize (&self, width: i32, height: i32) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).resize)(obj.privd, width, height)
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
         }
     }
 
-    pub fn set_layout(&self, layout: &LayoutType) {
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn add_menu(&self, menu: &Menu) {
+    pub fn add_menu (&self, menu: &Menu) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_menu)(obj.privd, menu.obj.unwrap().privd)
+        
+            ((*obj.funcs).add_menu)(obj.privd, menu.obj.unwrap().privd);
+        
         }
     }
-
 }
 
 impl PaintDevice for MenuBar {
@@ -662,70 +817,97 @@ impl Application {
           self.obj = None;
        }
     }
-    pub fn set_style(&self, style: &str) {
+
+    pub fn set_style (&self, style: &str) {
         let str_in_style_1 = CString::new(style).unwrap();
+
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).set_style)(obj.privd, str_in_style_1.as_ptr())
+        
+            ((*obj.funcs).set_style)(obj.privd, str_in_style_1.as_ptr());
+        
         }
     }
 
-    pub fn exec(&self) {
+    pub fn exec (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).exec)(obj.privd)
+        
+            ((*obj.funcs).exec)(obj.privd);
+        
         }
     }
-
 }
 
 impl PaintEvent {
-    pub fn rect(&self) -> Rect {
+
+    pub fn rect (&self) -> Rect {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).rect)(obj.privd);
-            ret_val
+          
+           ret_val
+
+          
+        
         }
     }
-
 }
 
 impl DragEnterEvent {
-    pub fn accept(&self) {
+
+    pub fn accept (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).accept)(obj.privd)
+        
+            ((*obj.funcs).accept)(obj.privd);
+        
         }
     }
-
 }
 
 impl DropEvent {
-    pub fn accept_proposed_action(&self) {
+
+    pub fn accept_proposed_action (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).accept_proposed_action)(obj.privd)
+        
+            ((*obj.funcs).accept_proposed_action)(obj.privd);
+        
         }
     }
 
-    pub fn mime_data(&self) -> MimeData {
+    pub fn mime_data (&self) -> MimeData {
+        
         unsafe {
             let obj = self.obj.unwrap();
+        
             let ret_val = ((*obj.funcs).mime_data)(obj.privd);
-            MimeData { obj: Some(ret_val) }
+          
+           MimeData { obj: Some(ret_val) }
+
+          
+        
         }
     }
-
 }
 
 impl Layout {
-    pub fn add_widget(&self, widget: &WidgetType) {
+
+    pub fn add_widget (&self, widget: &WidgetType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
         }
     }
-
 }
 
 impl LayoutType for Layout {
@@ -743,20 +925,26 @@ impl VBoxLayout {
           self.obj = None;
        }
     }
-    pub fn add_widget(&self, widget: &WidgetType) {
+
+    pub fn add_widget (&self, widget: &WidgetType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn update(&self) {
+    pub fn update (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).update)(obj.privd)
+        
+            ((*obj.funcs).update)(obj.privd);
+        
         }
     }
-
 }
 
 impl LayoutType for VBoxLayout {
@@ -774,20 +962,26 @@ impl HBoxLayout {
           self.obj = None;
        }
     }
-    pub fn add_widget(&self, widget: &WidgetType) {
+
+    pub fn add_widget (&self, widget: &WidgetType) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase)
+        
+            ((*obj.funcs).add_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
         }
     }
 
-    pub fn update(&self) {
+    pub fn update (&self) {
+        
         unsafe {
             let obj = self.obj.unwrap();
-            ((*obj.funcs).update)(obj.privd)
+        
+            ((*obj.funcs).update)(obj.privd);
+        
         }
     }
-
 }
 
 impl LayoutType for HBoxLayout {
