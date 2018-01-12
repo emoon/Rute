@@ -149,6 +149,16 @@ impl Struct {
         true
     }
 
+    pub fn should_drop(&self) -> bool {
+        for attrib in &self.attributes {
+            if attrib == "Drop" {
+                return true;
+            }
+        }
+
+        false
+    }
+
     pub fn has_manual_create(&self) -> bool {
         for attrib in &self.attributes {
             if attrib == "ManualCreate" {

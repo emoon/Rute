@@ -39,6 +39,7 @@ struct PushButton : Widget {
 
 // Lists
 
+#[attributes(Drop)]
 struct Painter {
     begin(&PaintDevice target),
     end(),
@@ -77,6 +78,7 @@ struct Slider : Widget {
     [callback] value_changed(i32 value),
 }
 
+#[attributes(Drop)]
 struct MainWindow : Widget {
     is_animated() -> bool,
     menu_bar() -> MenuBar,
@@ -124,7 +126,7 @@ struct MenuBar : Widget {
 	add_menu(&Menu menu),
 }
 
-#[attributes(ManualCreate)]
+#[attributes(ManualCreate, Drop)]
 struct Application {
 	set_style(String style),
 	exec(),

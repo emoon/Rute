@@ -489,6 +489,17 @@ impl RustGenerator {
 
             self.output.write_all(b"}\n\n")?;
 
+            if sdef.should_drop() {
+                self.output.write_fmt(format_args!("impl Drop for {} {{\n", sdef.name))?;
+                self.output.write_all(b"    fn drop(&mut self) {\n")?;
+                self.output.write_all(b"       unsafe {\n")?;
+                self.output.write_all(b"          let obj = self.obj.unwrap();\n")?;
+                self.output.write_all(b"          ((*obj.funcs).destroy)(obj.privd as *const PUBase)\n")?;
+                self.output.write_all(b"       }\n")?;
+                self.output.write_all(b"    }\n")?;
+                self.output.write_all(b"}\n\n")?;
+            }
+
             for trait_name in api_def.get_traits(&sdef) {
                 self.output.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
                 self.output.write_fmt(format_args!(

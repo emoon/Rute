@@ -289,6 +289,15 @@ impl Painter {
     }
 }
 
+impl Drop for Painter {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const PUBase)
+       }
+    }
+}
+
 impl ListWidgetItem {
     pub fn destroy(&mut self) {
        unsafe {
@@ -597,6 +606,15 @@ impl MainWindow {
             ((*obj.funcs).set_central_widget)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
         
         }
+    }
+}
+
+impl Drop for MainWindow {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const PUBase)
+       }
     }
 }
 
@@ -934,6 +952,15 @@ impl Application {
             ((*obj.funcs).exec)(obj.privd);
         
         }
+    }
+}
+
+impl Drop for Application {
+    fn drop(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd as *const PUBase)
+       }
     }
 }
 
