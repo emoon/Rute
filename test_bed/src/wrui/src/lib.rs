@@ -31,3 +31,9 @@ impl SharedLibUi {
         Ui::new(self.c_api)
     }
 }
+
+impl Drop for SharedLibUi {
+    fn drop(&mut self) {
+        std::mem::forget(self);
+    }
+}
