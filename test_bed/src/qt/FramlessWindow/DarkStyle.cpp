@@ -39,8 +39,8 @@ void DarkStyle::polish(QPalette &palette)
     palette.setColor(QPalette::ButtonText,Qt::white);
     palette.setColor(QPalette::Disabled,QPalette::ButtonText,QColor(127,127,127));
     palette.setColor(QPalette::BrightText,Qt::red);
-    palette.setColor(QPalette::Link,QColor(42,130,218));
-    palette.setColor(QPalette::Highlight,QColor(42,130,218));
+    palette.setColor(QPalette::Link,QColor(50,50,50));
+    palette.setColor(QPalette::Highlight,QColor(50,50,50));
     palette.setColor(QPalette::Disabled,QPalette::Highlight,QColor(80,80,80));
     palette.setColor(QPalette::HighlightedText,Qt::white);
     palette.setColor(QPalette::Disabled,QPalette::HighlightedText,QColor(127,127,127));
@@ -56,7 +56,7 @@ void DarkStyle::polish(QApplication *app)
     defaultFont.setPointSize(defaultFont.pointSize()+1);
     app->setFont(defaultFont);
 
-    // loadstylesheet    
+    // loadstylesheet
     QFile qfDarkstyle(QStringLiteral(":/darkstyle/darkstyle.qss"));
     if (qfDarkstyle.open(QIODevice::ReadOnly | QIODevice::Text))
     {
