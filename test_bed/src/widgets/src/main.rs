@@ -74,7 +74,6 @@ impl<'a> MyApp<'a> {
         painter.begin(&self.main_win);
         painter.draw_line(0, 0, 20, 20);
         painter.end();
-        painter.destroy();
 
         println!("end drawing!");
     }
