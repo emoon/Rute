@@ -928,9 +928,8 @@ static struct PUApplication create_application(struct PUBase* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
 
-	/*
-    QCoreApplication::setOrganizationName(QStringLiteral("TBL"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("tbl.org"));
+    //QGuiApplication::setOrganizationName(QStringLiteral("Foobar"));
+    //QCoreApplication::setOrganizationDomain(QStringLiteral("tbl.org"));
 
     qt_obj->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
@@ -951,7 +950,6 @@ static struct PUApplication create_application(struct PUBase* priv_data) {
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
     qt_obj->setPalette(darkPalette);
-    */
 
     struct PUApplication ctl;
     ctl.funcs = &s_application_funcs;

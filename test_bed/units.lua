@@ -17,6 +17,24 @@ end
 
 -----------------------------------------------------------------------------------------------------------------------
 
+local function gen_uic(src)
+    return Uic {
+        Pass = "GenerateSources",
+        Source = src
+    }
+end
+
+-----------------------------------------------------------------------------------------------------------------------
+
+local function gen_rcc(src)
+    return Rcc {
+        Pass = "GenerateSources",
+        Source = src
+    }
+end
+
+-----------------------------------------------------------------------------------------------------------------------
+
 local function get_rs_src(dir)
     return Glob {
         Dir = dir,
@@ -42,6 +60,11 @@ SharedLibrary {
         gen_moc("src/qt/ToolWindowManager/ToolWindowManagerSplitter.h"),
         gen_moc("src/qt/ToolWindowManager/ToolWindowManagerTabBar.h"),
         gen_moc("src/qt/ToolWindowManager/ToolWindowManagerWrapper.h"),
+        gen_moc("src/qt/FramlessWindow/framelesswindow/framelesswindow.h"),
+        gen_moc("src/qt/FramlessWindow/framelesswindow/windowdragger.h"),
+        gen_moc("src/qt/FramlessWindow/DarkStyle.h"),
+
+        gen_uic("src/qt/FramlessWindow/framelesswindow/framelesswindow.ui"),
     },
 
     Env = {
@@ -63,10 +86,14 @@ SharedLibrary {
         },
 
         CPPPATH = {
+            "src/qt/ToolWindowManager/",
+            "src/qt/ToolWindowManager/",
+			"src/qt/FramlessWindow/framelesswindow",
             "$(QT5)/include",
             "$(QT5)/include/QtCore",
             "$(QT5)/include/QtGui",
             "$(QT5)/include/QtWidgets",
+            "$(OBJECTROOT)", "$(OBJECTDIR)",
         },
 
         LIBPATH = {
