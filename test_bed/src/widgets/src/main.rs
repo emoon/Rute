@@ -120,8 +120,14 @@ impl<'a> MyApp<'a> {
 
         set_paint_event!(self.main_win, self, MyApp, MyApp::custom_draw_widget);
 
-        main_window.set_central_widget(&self.main_win);
-        main_window.show();
+        let test_frameless = self.ui.create_frameless_window();
+        test_frameless.set_content(&main_window);
+
+        test_frameless.set_window_title("Test");
+        test_frameless.show();
+
+        //main_window.set_central_widget(&self.main_win);
+        //main_window.show();
 
         self.app.exec();
     }
@@ -132,4 +138,6 @@ fn main() {
     let ui = wrui_instance.get_ui();
     let mut app = MyApp::new(&ui);
     app.run();
+
+    std::mem::forget(app);
 }

@@ -65,6 +65,8 @@ SharedLibrary {
         gen_moc("src/qt/FramlessWindow/DarkStyle.h"),
 
         gen_uic("src/qt/FramlessWindow/framelesswindow/framelesswindow.ui"),
+        gen_rcc("src/qt/FramlessWindow/darkstyle.qrc"),
+        -- gen_rcc("src/qt/FramlessWindow/framelesswindow.qrc"),
     },
 
     Env = {
@@ -89,6 +91,7 @@ SharedLibrary {
             "src/qt/ToolWindowManager/",
             "src/qt/ToolWindowManager/",
 			"src/qt/FramlessWindow/framelesswindow",
+			"src/qt/FramlessWindow",
             "$(QT5)/include",
             "$(QT5)/include/QtCore",
             "$(QT5)/include/QtGui",

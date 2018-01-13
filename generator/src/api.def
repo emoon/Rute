@@ -85,6 +85,11 @@ struct MainWindow : Widget {
     set_central_widget(&WidgetType widget),
 }
 
+struct FramelessWindow : Widget {
+	set_window_title(String title),
+	set_content(&WidgetType widget),
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Actions
 
