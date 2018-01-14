@@ -36,6 +36,7 @@ struct Widget {
     set_fixed_width(i32 width),
     resize(i32 width, i32 height),
     set_layout(&LayoutType layout),
+    update(),
 
     [event] paint(&PaintEvent event),
 }
