@@ -93,6 +93,8 @@ pub struct PUPainterFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub begin: extern "C" fn(self_c: *const PUBase, target: *const PUBase),
     pub end: extern "C" fn(self_c: *const PUBase),
+    pub set_font: extern "C" fn(self_c: *const PUBase, font: *const PUBase),
+    pub draw_text: extern "C" fn(self_c: *const PUBase, x: i32, y: i32, text: *const ::std::os::raw::c_char),
     pub draw_line: extern "C" fn(self_c: *const PUBase, x1: i32, y1: i32, x2: i32, y2: i32),
     pub fill_rect_color: extern "C" fn(self_c: *const PUBase, rect:  PURect, color:  PUColor),
 }
@@ -256,6 +258,20 @@ pub struct PUMimeData {
 }
 
 #[repr(C)]
+pub struct PUFontFuncs {
+    pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub set_family: extern "C" fn(self_c: *const PUBase, family: *const ::std::os::raw::c_char),
+    pub set_point_size: extern "C" fn(self_c: *const PUBase, size: i32),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUFont {
+    pub funcs: *const PUFontFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PUMenuFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub show: extern "C" fn(self_c: *const PUBase),
@@ -395,6 +411,7 @@ pub struct PU {
     pub create_main_window: extern "C" fn(priv_data: *const PUBase) -> PUMainWindow,
     pub create_frameless_window: extern "C" fn(priv_data: *const PUBase) -> PUFramelessWindow,
     pub create_action: extern "C" fn(priv_data: *const PUBase) -> PUAction,
+    pub create_font: extern "C" fn(priv_data: *const PUBase) -> PUFont,
     pub create_menu: extern "C" fn(priv_data: *const PUBase) -> PUMenu,
     pub create_menu_bar: extern "C" fn(priv_data: *const PUBase) -> PUMenuBar,
     pub create_application: extern "C" fn(priv_data: *const PUBase) -> PUApplication,

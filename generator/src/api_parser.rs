@@ -37,6 +37,7 @@ pub struct Variable {
     pub optional: bool,
     pub array: bool,
     pub ret_value: bool,
+    pub cpp_ref: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -543,6 +544,10 @@ impl ApiDef {
             match entry.as_rule() {
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
                 Rule::refexp => var.reference = true,
+                Rule::refexp_val => {
+                    var.reference = true;
+                    var.cpp_ref = true;
+                }
                 _ => (),
             }
         }
@@ -555,6 +560,10 @@ impl ApiDef {
             match entry.as_rule() {
                 Rule::name => var.name = entry.as_str().to_owned(),
                 Rule::refexp => var.reference = true,
+                Rule::refexp_val => {
+                    var.reference = true;
+                    var.cpp_ref = true;
+                },
                 Rule::optional => var.optional = true,
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
                 Rule::array => {
@@ -591,11 +600,7 @@ impl ApiDef {
             name: "self_c".to_owned(),
             vtype: "self".to_owned(),
             vtype_e: VariableType::SelfType,
-            primitive: false,
-            reference: false,
-            optional: false,
-            array: false,
-            ret_value: false,
+            .. Variable::default()
         });
 
         for entry in rule.clone().into_inner() {
@@ -632,11 +637,7 @@ impl ApiDef {
                 name: "self_c".to_owned(),
                 vtype: "self".to_owned(),
                 vtype_e: VariableType::SelfType,
-                primitive: false,
-                reference: false,
-                optional: false,
-                array: false,
-                ret_value: false,
+                .. Variable::default()
             });
         }
 

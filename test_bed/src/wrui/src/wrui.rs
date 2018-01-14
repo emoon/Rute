@@ -71,6 +71,11 @@ pub struct MimeData {
 }
 
 #[derive(Clone)]
+pub struct Font {
+    pub obj: Option<PUFont>,
+}
+
+#[derive(Clone)]
 pub struct Menu {
     pub obj: Option<PUMenu>,
 }
@@ -321,6 +326,27 @@ impl Painter {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).end)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_font (&self, font: &Font) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_font)(obj.privd, font.obj.unwrap().privd);
+        
+        }
+    }
+
+    pub fn draw_text (&self, x: i32, y: i32, text: &str) {
+        let str_in_text_3 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).draw_text)(obj.privd, x, y, str_in_text_3.as_ptr());
         
         }
     }
@@ -986,6 +1012,37 @@ impl MimeData {
     }
 }
 
+impl Font {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+
+    pub fn set_family (&self, family: &str) {
+        let str_in_family_1 = CString::new(family).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_family)(obj.privd, str_in_family_1.as_ptr());
+        
+        }
+    }
+
+    pub fn set_point_size (&self, size: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_point_size)(obj.privd, size);
+        
+        }
+    }
+}
+
 impl Menu {
     pub fn destroy(&mut self) {
        unsafe {
@@ -1620,6 +1677,10 @@ impl Ui {
 
     pub fn create_action(&self) -> Action {
         Action { obj: Some(unsafe { ((*self.pu).create_action)((*self.pu).privd) }) }
+    }
+
+    pub fn create_font(&self) -> Font {
+        Font { obj: Some(unsafe { ((*self.pu).create_font)((*self.pu).privd) }) }
     }
 
     pub fn create_menu(&self) -> Menu {

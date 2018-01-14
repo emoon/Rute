@@ -420,7 +420,11 @@ fn generate_func_def(
             }
 
             if arg.reference {
-                (format!("(Q{}*){}", &arg.vtype, &arg.name), String::new())
+                if arg.cpp_ref {
+                    (format!("*(Q{}*){}", &arg.vtype, &arg.name), String::new())
+                } else {
+                    (format!("(Q{}*){}", &arg.vtype, &arg.name), String::new())
+                }
             } else {
                 (arg.name.clone(), String::new())
             }

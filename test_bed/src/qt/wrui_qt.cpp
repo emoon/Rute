@@ -12,6 +12,7 @@
 #include <QAction>
 #include <QUrl>
 #include <QMimeData>
+#include <QFont>
 #include <QMenu>
 #include <QMenuBar>
 #include <QApplication>
@@ -42,6 +43,7 @@ extern struct PUFramelessWindowFuncs s_frameless_window_funcs;
 extern struct PUActionFuncs s_action_funcs;
 extern struct PUUrlFuncs s_url_funcs;
 extern struct PUMimeDataFuncs s_mime_data_funcs;
+extern struct PUFontFuncs s_font_funcs;
 extern struct PUMenuFuncs s_menu_funcs;
 extern struct PUMenuBarFuncs s_menu_bar_funcs;
 extern struct PUApplicationFuncs s_application_funcs;
@@ -319,6 +321,20 @@ static void painter_begin(struct PUBase* self_c, struct PUBase* target) {
 static void painter_end(struct PUBase* self_c) { 
     QPainter* qt_data = (QPainter*)self_c;
     qt_data->end();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_set_font(struct PUBase* self_c, struct PUBase* font) { 
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->setFont(*(QFont*)font);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_draw_text(struct PUBase* self_c, int x, int y, const char* text) { 
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->drawText(x, y, QString::fromLatin1(text));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -727,6 +743,20 @@ static struct PUArray mime_data_urls(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void font_set_family(struct PUBase* self_c, const char* family) { 
+    QFont* qt_data = (QFont*)self_c;
+    qt_data->setFamily(QString::fromLatin1(family));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void font_set_point_size(struct PUBase* self_c, int size) { 
+    QFont* qt_data = (QFont*)self_c;
+    qt_data->setPointSize(size);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void menu_show(struct PUBase* self_c) { 
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->show();
@@ -1047,6 +1077,18 @@ static void destroy_action(struct PUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUFont create_font(struct PUBase* priv_data) {
+    return create_generic_func<struct PUFont, struct PUFontFuncs, QFont>(&s_font_funcs, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_font(struct PUBase* priv_data) {
+    destroy_generic<QFont>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct PUMenu create_menu(struct PUBase* priv_data) {
     return create_widget_func<struct PUMenu, struct PUMenuFuncs, WRMenu>(&s_menu_funcs, priv_data);
 }
@@ -1205,6 +1247,8 @@ struct PUPainterFuncs s_painter_funcs = {
     destroy_painter,
     painter_begin,
     painter_end,
+    painter_set_font,
+    painter_draw_text,
     painter_draw_line,
     painter_fill_rect_color,
 };
@@ -1307,6 +1351,14 @@ struct PUMimeDataFuncs s_mime_data_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct PUFontFuncs s_font_funcs = {
+    destroy_font,
+    font_set_family,
+    font_set_point_size,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct PUMenuFuncs s_menu_funcs = {
     destroy_menu,
     menu_show,
@@ -1390,6 +1442,7 @@ static struct PU s_pu = {
     create_main_window,
     create_frameless_window,
     create_action,
+    create_font,
     create_menu,
     create_menu_bar,
     create_application,

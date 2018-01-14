@@ -52,6 +52,8 @@ struct PushButton : Widget {
 struct Painter {
     begin(&PaintDevice target),
     end(),
+    set_font(^Font font),
+    draw_text(i32 x, i32 y, String text),
     draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
     [manual] fill_rect_color(Rect rect, Color color),
 }
@@ -126,6 +128,13 @@ struct MimeData {
 	has_urls() -> bool,
 	urls() -> <Url>,
 	// [manual] filenames() -> <String>,
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct Font {
+	set_family(String family),
+	set_point_size(i32 size),
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

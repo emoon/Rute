@@ -40,6 +40,8 @@ struct PUUrl;
 struct PUUrlFuncs;
 struct PUMimeData;
 struct PUMimeDataFuncs;
+struct PUFont;
+struct PUFontFuncs;
 struct PUMenu;
 struct PUMenuFuncs;
 struct PUMenuBar;
@@ -112,6 +114,8 @@ struct PUPainterFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*begin)(struct PUBase* self_c, struct PUBase* target);
     void (*end)(struct PUBase* self_c);
+    void (*set_font)(struct PUBase* self_c, struct PUBase* font);
+    void (*draw_text)(struct PUBase* self_c, int x, int y, const char* text);
     void (*draw_line)(struct PUBase* self_c, int x1, int y1, int x2, int y2);
     void (*fill_rect_color)(struct PUBase* self_c, struct PURect rect, struct PUColor color);
 };
@@ -241,6 +245,17 @@ struct PUMimeData {
     struct PUBase* priv_data;
 };
 
+struct PUFontFuncs {
+    void (*destroy)(struct PUBase* self_c);
+    void (*set_family)(struct PUBase* self_c, const char* family);
+    void (*set_point_size)(struct PUBase* self_c, int size);
+};
+
+struct PUFont {
+    struct PUFontFuncs* funcs;
+    struct PUBase* priv_data;
+};
+
 struct PUMenuFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
@@ -353,6 +368,7 @@ typedef struct PU {
     struct PUMainWindow (*create_main_window)(PUBase* self);
     struct PUFramelessWindow (*create_frameless_window)(PUBase* self);
     struct PUAction (*create_action)(PUBase* self);
+    struct PUFont (*create_font)(PUBase* self);
     struct PUMenu (*create_menu)(PUBase* self);
     struct PUMenuBar (*create_menu_bar)(PUBase* self);
     struct PUApplication (*create_application)(PUBase* self);
