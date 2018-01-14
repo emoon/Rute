@@ -17,6 +17,7 @@ struct PUArray {
 };
 
 struct PURect;
+struct PUColor;
 struct PUWidget;
 struct PUWidgetFuncs;
 struct PUPushButton;
@@ -68,9 +69,18 @@ struct PURect {
     int height;
 };
 
+struct PUColor {
+    uint16_t r;
+    uint16_t g;
+    uint16_t b;
+    uint16_t a;
+};
+
 struct PUWidgetFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_paint_event)(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event));
@@ -84,6 +94,8 @@ struct PUWidget {
 struct PUPushButtonFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_released_event)(void* object, void* user_data, void (*event)(void* self_c));
@@ -101,6 +113,7 @@ struct PUPainterFuncs {
     void (*begin)(struct PUBase* self_c, struct PUBase* target);
     void (*end)(struct PUBase* self_c);
     void (*draw_line)(struct PUBase* self_c, int x1, int y1, int x2, int y2);
+    void (*fill_rect_color)(struct PUBase* self_c, struct PURect rect, struct PUColor color);
 };
 
 struct PUPainter {
@@ -122,6 +135,8 @@ struct PUListWidgetItem {
 struct PUListWidgetFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_item)(struct PUBase* self_c, const char* text);
@@ -146,6 +161,8 @@ struct PUListWidget {
 struct PUSliderFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_value_changed_event)(void* object, void* user_data, void (*event)(void* self_c, int value));
@@ -159,6 +176,8 @@ struct PUSlider {
 struct PUMainWindowFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     bool (*is_animated)(struct PUBase* self_c);
@@ -174,6 +193,8 @@ struct PUMainWindow {
 struct PUFramelessWindowFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*set_window_title)(struct PUBase* self_c, const char* title);
@@ -223,6 +244,8 @@ struct PUMimeData {
 struct PUMenuFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_action_text)(struct PUBase* self_c, const char* text);
@@ -238,6 +261,8 @@ struct PUMenu {
 struct PUMenuBarFuncs {
     void (*destroy)(struct PUBase* self_c);
     void (*show)(struct PUBase* self_c);
+    void (*set_fixed_height)(struct PUBase* self_c, int width);
+    void (*set_fixed_width)(struct PUBase* self_c, int width);
     void (*resize)(struct PUBase* self_c, int width, int height);
     void (*set_layout)(struct PUBase* self_c, struct PUBase* layout);
     void (*add_menu)(struct PUBase* self_c, struct PUBase* menu);

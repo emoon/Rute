@@ -220,6 +220,20 @@ static void widget_show(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void widget_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->setFixedWidth(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void widget_resize(struct PUBase* self_c, int width, int height) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->resize(width, height);
@@ -239,6 +253,20 @@ static void widget_set_layout(struct PUBase* self_c, struct PUBase* layout) {
 static void push_button_show(struct PUBase* self_c) { 
     WRPushButton* qt_data = (WRPushButton*)self_c;
     qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void push_button_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRPushButton* qt_data = (WRPushButton*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void push_button_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRPushButton* qt_data = (WRPushButton*)self_c;
+    qt_data->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -302,6 +330,8 @@ static void painter_draw_line(struct PUBase* self_c, int x1, int y1, int x2, int
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void list_widget_item_set_text(struct PUBase* self_c, const char* text) { 
     QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
     qt_data->setText(QString::fromLatin1(text));
@@ -325,6 +355,20 @@ static const char* list_widget_item_text(struct PUBase* self_c) {
 static void list_widget_show(struct PUBase* self_c) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
     qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,6 +479,20 @@ static void slider_show(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void slider_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRSlider* qt_data = (WRSlider*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void slider_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRSlider* qt_data = (WRSlider*)self_c;
+    qt_data->setFixedWidth(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void slider_resize(struct PUBase* self_c, int width, int height) { 
     WRSlider* qt_data = (WRSlider*)self_c;
     qt_data->resize(width, height);
@@ -462,6 +520,20 @@ static void set_slider_value_changed_event(void* object, void* user_data, void (
 static void main_window_show(struct PUBase* self_c) { 
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
     qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void main_window_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void main_window_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRMainWindow* qt_data = (WRMainWindow*)self_c;
+    qt_data->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -511,6 +583,20 @@ static void main_window_set_central_widget(struct PUBase* self_c, struct PUBase*
 static void frameless_window_show(struct PUBase* self_c) { 
     WRFramelessWindow* qt_data = (WRFramelessWindow*)self_c;
     qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void frameless_window_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRFramelessWindow* qt_data = (WRFramelessWindow*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void frameless_window_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRFramelessWindow* qt_data = (WRFramelessWindow*)self_c;
+    qt_data->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -648,6 +734,20 @@ static void menu_show(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void menu_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRMenu* qt_data = (WRMenu*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRMenu* qt_data = (WRMenu*)self_c;
+    qt_data->setFixedWidth(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void menu_resize(struct PUBase* self_c, int width, int height) { 
     WRMenu* qt_data = (WRMenu*)self_c;
     qt_data->resize(width, height);
@@ -683,6 +783,20 @@ static void menu_set_title(struct PUBase* self_c, const char* title) {
 static void menu_bar_show(struct PUBase* self_c) { 
     WRMenuBar* qt_data = (WRMenuBar*)self_c;
     qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_bar_set_fixed_height(struct PUBase* self_c, int width) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void menu_bar_set_fixed_width(struct PUBase* self_c, int width) { 
+    WRMenuBar* qt_data = (WRMenuBar*)self_c;
+    qt_data->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1050,6 +1164,12 @@ static void list_widget_set_accept_drops(struct PUBase* self_c, bool state) {
 	qt_data->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_fill_rect_color(struct PUBase* self_c, struct PURect rect, struct PUColor color) {
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->fillRect(QRect(rect.x, rect.y, rect.width, rect.height), QColor(color.r, color.g, color.b, color.a));
+}
 
 
 
@@ -1058,6 +1178,8 @@ static void list_widget_set_accept_drops(struct PUBase* self_c, bool state) {
 struct PUWidgetFuncs s_widget_funcs = {
     destroy_widget,
     widget_show,
+    widget_set_fixed_height,
+    widget_set_fixed_width,
     widget_resize,
     widget_set_layout,
     set_widget_paint_event,
@@ -1068,6 +1190,8 @@ struct PUWidgetFuncs s_widget_funcs = {
 struct PUPushButtonFuncs s_push_button_funcs = {
     destroy_push_button,
     push_button_show,
+    push_button_set_fixed_height,
+    push_button_set_fixed_width,
     push_button_resize,
     push_button_set_layout,
     set_push_button_released_event,
@@ -1082,6 +1206,7 @@ struct PUPainterFuncs s_painter_funcs = {
     painter_begin,
     painter_end,
     painter_draw_line,
+    painter_fill_rect_color,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1097,6 +1222,8 @@ struct PUListWidgetItemFuncs s_list_widget_item_funcs = {
 struct PUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_show,
+    list_widget_set_fixed_height,
+    list_widget_set_fixed_width,
     list_widget_resize,
     list_widget_set_layout,
     list_widget_add_item,
@@ -1118,6 +1245,8 @@ struct PUListWidgetFuncs s_list_widget_funcs = {
 struct PUSliderFuncs s_slider_funcs = {
     destroy_slider,
     slider_show,
+    slider_set_fixed_height,
+    slider_set_fixed_width,
     slider_resize,
     slider_set_layout,
     set_slider_value_changed_event,
@@ -1128,6 +1257,8 @@ struct PUSliderFuncs s_slider_funcs = {
 struct PUMainWindowFuncs s_main_window_funcs = {
     destroy_main_window,
     main_window_show,
+    main_window_set_fixed_height,
+    main_window_set_fixed_width,
     main_window_resize,
     main_window_set_layout,
     main_window_is_animated,
@@ -1140,6 +1271,8 @@ struct PUMainWindowFuncs s_main_window_funcs = {
 struct PUFramelessWindowFuncs s_frameless_window_funcs = {
     destroy_frameless_window,
     frameless_window_show,
+    frameless_window_set_fixed_height,
+    frameless_window_set_fixed_width,
     frameless_window_resize,
     frameless_window_set_layout,
     frameless_window_set_window_title,
@@ -1177,6 +1310,8 @@ struct PUMimeDataFuncs s_mime_data_funcs = {
 struct PUMenuFuncs s_menu_funcs = {
     destroy_menu,
     menu_show,
+    menu_set_fixed_height,
+    menu_set_fixed_width,
     menu_resize,
     menu_set_layout,
     menu_add_action_text,
@@ -1189,6 +1324,8 @@ struct PUMenuFuncs s_menu_funcs = {
 struct PUMenuBarFuncs s_menu_bar_funcs = {
     destroy_menu_bar,
     menu_bar_show,
+    menu_bar_set_fixed_height,
+    menu_bar_set_fixed_width,
     menu_bar_resize,
     menu_bar_set_layout,
     menu_bar_add_menu,

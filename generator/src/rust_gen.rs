@@ -44,6 +44,9 @@ struct StringTypeHandler;
 #[derive(Clone)]
 struct RectTypeHandler;
 
+#[derive(Clone)]
+struct ColorTypeHandler;
+
 ///
 /// We need to handle strings in a special way. They need to be sent down using CString and the
 /// pointer to it so have a generator for it
@@ -80,8 +83,8 @@ impl TypeHandler for RectTypeHandler {
         "Rect".to_owned()
     }
 
-    fn gen_body(&self, _arg: &str, _index: usize) -> (String, String) {
-        (String::new(), String::new())
+    fn gen_body(&self, arg: &str, _index: usize) -> (String, String) {
+        (arg.to_owned(), String::new())
     }
 
     fn gen_body_return(&self, _value: &Variable) -> String {
@@ -89,6 +92,23 @@ impl TypeHandler for RectTypeHandler {
     }
 }
 
+///
+/// We need to handle strings in a special way. They need to be sent down using CString and the
+/// pointer to it so have a generator for it
+///
+impl TypeHandler for ColorTypeHandler {
+    fn match_type(&self) -> String {
+        "Color".to_owned()
+    }
+
+    fn gen_body(&self, arg: &str, _index: usize) -> (String, String) {
+        (arg.to_owned(), String::new())
+    }
+
+    fn gen_body_return(&self, _value: &Variable) -> String {
+       "ret_val\n".to_owned()
+    }
+}
 
 ///
 /// Type handler for traits as the function arguments when using a trait needs to use "get_obj"
@@ -242,6 +262,10 @@ impl RustGenerator {
             template_data.insert("body_setup".to_owned(), Value::Nil);
         } else {
             template_data.insert("body_setup".to_owned(), Value::Str(body_setup));
+        }
+
+        if func.name == "fill_rect_color" {
+            println!("{:?}", function_args);
         }
 
         // Generate the function call
@@ -562,6 +586,7 @@ pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()
 
     type_handlers.push(Box::new(StringTypeHandler {}));
     type_handlers.push(Box::new(RectTypeHandler {}));
+    type_handlers.push(Box::new(ColorTypeHandler {}));
 
     rust_gen.output.write_all(HEADER)?;
 

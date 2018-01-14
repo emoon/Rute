@@ -68,10 +68,10 @@ pub static EVENT_TEMPLATE: &str = "
 macro_rules! set_{{name}}_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::wrui::wrui::PUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
-              let event = {{event_type}}Event { obj: Some(*(event as *const wrui::ffi_gen::PU{{event_type}}Event)) };
+              let event = {{event_type}}Event { obj: Some(*(event as *const ::wrui::ffi_gen::PU{{event_type}}Event)) };
               $callback(&mut *app, &event);
           }
       }

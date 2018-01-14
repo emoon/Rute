@@ -69,6 +69,12 @@ static void list_widget_set_accept_drops(struct PUBase* self_c, bool state) {
 	qt_data->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void painter_fill_rect_color(struct PUBase* self_c, struct PURect rect, struct PUColor color) {
+    QPainter* qt_data = (QPainter*)self_c;
+    qt_data->fillRect(QRect(rect.x, rect.y, rect.width, rect.height), QColor(color.r, color.g, color.b, color.a));
+}
 
 
 

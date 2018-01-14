@@ -133,6 +133,7 @@ pub fn generate_ffi_bindings(
 
     for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
         f.write_all(b"#[repr(C)]\n")?;
+        f.write_all(b"#[derive(Default, Copy, Clone, Debug)]")?;
         f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;

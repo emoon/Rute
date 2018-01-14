@@ -13,6 +13,8 @@ use std::ffi::CString;
 
 pub use ffi_gen::PURect as Rect;
 
+pub use ffi_gen::PUColor as Color;
+
 #[derive(Clone)]
 pub struct Widget {
     pub obj: Option<PUWidget>,
@@ -144,6 +146,26 @@ impl Widget {
         }
     }
 
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
     pub fn resize (&self, width: i32, height: i32) {
         
         unsafe {
@@ -194,6 +216,26 @@ impl PushButton {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
         
         }
     }
@@ -292,6 +334,16 @@ impl Painter {
         
         }
     }
+
+    pub fn fill_rect_color (&self, rect: Rect, color: Color) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).fill_rect_color)(obj.privd, rect, color);
+        
+        }
+    }
 }
 
 impl Drop for Painter {
@@ -352,6 +404,26 @@ impl ListWidget {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
         
         }
     }
@@ -502,6 +574,26 @@ impl Slider {
         }
     }
 
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
     pub fn resize (&self, width: i32, height: i32) {
         
         unsafe {
@@ -552,6 +644,26 @@ impl MainWindow {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
         
         }
     }
@@ -652,6 +764,26 @@ impl FramelessWindow {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
         
         }
     }
@@ -873,6 +1005,26 @@ impl Menu {
         }
     }
 
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
     pub fn resize (&self, width: i32, height: i32) {
         
         unsafe {
@@ -955,6 +1107,26 @@ impl MenuBar {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
         
         }
     }
@@ -1338,10 +1510,10 @@ macro_rules! set_value_changed_event {
 macro_rules! set_drag_enter_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::wrui::wrui::PUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
-              let event = DragEnterEvent { obj: Some(*(event as *const wrui::ffi_gen::PUDragEnterEvent)) };
+              let event = DragEnterEvent { obj: Some(*(event as *const ::wrui::ffi_gen::PUDragEnterEvent)) };
               $callback(&mut *app, &event);
           }
       }
@@ -1362,10 +1534,10 @@ macro_rules! set_drag_enter_event {
 macro_rules! set_drop_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::wrui::wrui::PUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
-              let event = DropEvent { obj: Some(*(event as *const wrui::ffi_gen::PUDropEvent)) };
+              let event = DropEvent { obj: Some(*(event as *const ::wrui::ffi_gen::PUDropEvent)) };
               $callback(&mut *app, &event);
           }
       }
@@ -1386,10 +1558,10 @@ macro_rules! set_drop_event {
 macro_rules! set_paint_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const wrui::wrui::PUBase) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::wrui::wrui::PUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
-              let event = PaintEvent { obj: Some(*(event as *const wrui::ffi_gen::PUPaintEvent)) };
+              let event = PaintEvent { obj: Some(*(event as *const ::wrui::ffi_gen::PUPaintEvent)) };
               $callback(&mut *app, &event);
           }
       }

@@ -22,9 +22,18 @@ struct Rect {
     i32 height,
 }
 
+struct Color {
+    u16 r,
+    u16 g,
+    u16 b,
+    u16 a,
+}
+
 #[traits(PaintDevice, WidgetType)]
 struct Widget {
     show(),
+    set_fixed_height(i32 width),
+    set_fixed_width(i32 width),
     resize(i32 width, i32 height),
     set_layout(&LayoutType layout),
 
@@ -44,6 +53,7 @@ struct Painter {
     begin(&PaintDevice target),
     end(),
     draw_line(i32 x1, i32 y1, i32 x2, i32 y2),
+    [manual] fill_rect_color(Rect rect, Color color),
 }
 
 struct ListWidgetItem {

@@ -1004,6 +1004,35 @@ impl TypeHandler for RectTypeHandler {
         f.write_fmt(format_args!("    return PURect {{ .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() }}"))
     }
 }
+///
+/// Handling for Color
+///
+struct ColorTypeHandler;
+
+impl TypeHandler for ColorTypeHandler {
+    fn match_type(&self) -> String {
+        "Color".to_owned()
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> (String, String) {
+        (
+            format!(
+                "QColor({}->r, {}->g, {}->b, {}->a)",
+                &arg.name, &arg.name, &arg.name, &arg.name
+            ),
+            "".to_owned(),
+        )
+    }
+
+    fn gen_body_return(&self, function_name: &String, f: &mut File) -> io::Result<()> {
+        f.write_fmt(format_args!(
+            "    const auto& t = qt_data->{}();\n",
+            function_name.to_mixed_case()
+        ))?;
+        f.write_fmt(format_args!("    return PUColor {{ .r = uint16_t(t.red()), .g = uint16_t(t.green()), .b = uint16_t(t.blue()), .a = uint16_t(t.alpha()) }}"))
+    }
+}
+
 
 ///
 /// Handling for Traits
@@ -1054,6 +1083,7 @@ pub fn generate_qt_bindings(
     cpp_manual.read_to_end(&mut cpp_manual_data)?;
 
     type_handlers.push(Box::new(RectTypeHandler {}));
+    type_handlers.push(Box::new(ColorTypeHandler {}));
 
     for trait_name in api_def.get_all_traits() {
         type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
