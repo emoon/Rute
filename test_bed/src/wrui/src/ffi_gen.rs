@@ -56,6 +56,7 @@ pub struct PUWidgetFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub set_paint_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, event: *const PUBase)),
 }
@@ -75,6 +76,9 @@ pub struct PUPushButtonFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
+    pub set_pressed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void)),
     pub set_released_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
@@ -111,6 +115,8 @@ pub struct PUListWidgetItemFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub text: extern "C" fn(self_c: *const PUBase) -> *const ::std::os::raw::c_char,
+    pub set_string_data: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
+    pub get_string_data: extern "C" fn(self_c: *const PUBase) -> *const ::std::os::raw::c_char,
 }
 
 #[repr(C)]
@@ -128,9 +134,15 @@ pub struct PUListWidgetFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
-    pub add_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
-    pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
+    pub update: extern "C" fn(self_c: *const PUBase),
+    pub add_item: extern "C" fn(self_c: *const PUBase, item: *const PUBase),
+    pub add_text_item: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
+    pub current_item: extern "C" fn(self_c: *const PUBase) ->  PUListWidgetItem,
+    pub current_row: extern "C" fn(self_c: *const PUBase) -> i32,
     pub selected_items: extern "C" fn(self_c: *const PUBase) -> PUArray,
+    pub item: extern "C" fn(self_c: *const PUBase, index: i32) ->  PUListWidgetItem,
+    pub set_current_row: extern "C" fn(self_c: *const PUBase, index: i32),
+    pub count: extern "C" fn(self_c: *const PUBase) -> i32,
     pub set_drag_enabled: extern "C" fn(self_c: *const PUBase, state: bool),
     pub set_drop_indicator_shown: extern "C" fn(self_c: *const PUBase, state: bool),
     pub set_accept_drops: extern "C" fn(self_c: *const PUBase, state: bool),
@@ -162,6 +174,7 @@ pub struct PUSliderFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub set_value_changed_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void, value: i32)),
 }
@@ -181,6 +194,7 @@ pub struct PUMainWindowFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub is_animated: extern "C" fn(self_c: *const PUBase) -> bool,
     pub menu_bar: extern "C" fn(self_c: *const PUBase) ->  PUMenuBar,
     pub set_central_widget: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
@@ -201,6 +215,7 @@ pub struct PUFramelessWindowFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub set_window_title: extern "C" fn(self_c: *const PUBase, title: *const ::std::os::raw::c_char),
     pub set_content: extern "C" fn(self_c: *const PUBase, widget: *const PUBase),
 }
@@ -258,6 +273,21 @@ pub struct PUMimeData {
 }
 
 #[repr(C)]
+pub struct PUTimerFuncs {
+    pub destroy: extern "C" fn(self_c: *const PUBase),
+    pub set_timeout_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void)),
+    pub start: extern "C" fn(self_c: *const PUBase, time: i32),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct PUTimer {
+    pub funcs: *const PUTimerFuncs,
+    pub privd: *const PUBase,
+}
+
+#[repr(C)]
 pub struct PUFontFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub set_family: extern "C" fn(self_c: *const PUBase, family: *const ::std::os::raw::c_char),
@@ -279,6 +309,7 @@ pub struct PUMenuFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub add_action_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub add_action: extern "C" fn(self_c: *const PUBase, action: *const PUBase),
     pub set_title: extern "C" fn(self_c: *const PUBase, title: *const ::std::os::raw::c_char),
@@ -299,6 +330,7 @@ pub struct PUMenuBarFuncs {
     pub set_fixed_width: extern "C" fn(self_c: *const PUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const PUBase, width: i32, height: i32),
     pub set_layout: extern "C" fn(self_c: *const PUBase, layout: *const PUBase),
+    pub update: extern "C" fn(self_c: *const PUBase),
     pub add_menu: extern "C" fn(self_c: *const PUBase, menu: *const PUBase),
 }
 
@@ -314,6 +346,9 @@ pub struct PUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub set_style: extern "C" fn(self_c: *const PUBase, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const PUBase),
+    pub set_about_to_quit_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
+                                        callback: extern "C" fn(self_c: *const c_void)),
+    pub get_files: extern "C" fn(self_c: *const PUBase) -> PUArray,
 }
 
 #[repr(C)]
@@ -411,12 +446,14 @@ pub struct PU {
     pub create_main_window: extern "C" fn(priv_data: *const PUBase) -> PUMainWindow,
     pub create_frameless_window: extern "C" fn(priv_data: *const PUBase) -> PUFramelessWindow,
     pub create_action: extern "C" fn(priv_data: *const PUBase) -> PUAction,
+    pub create_timer: extern "C" fn(priv_data: *const PUBase) -> PUTimer,
     pub create_font: extern "C" fn(priv_data: *const PUBase) -> PUFont,
     pub create_menu: extern "C" fn(priv_data: *const PUBase) -> PUMenu,
     pub create_menu_bar: extern "C" fn(priv_data: *const PUBase) -> PUMenuBar,
     pub create_application: extern "C" fn(priv_data: *const PUBase) -> PUApplication,
     pub create_v_box_layout: extern "C" fn(priv_data: *const PUBase) -> PUVBoxLayout,
     pub create_h_box_layout: extern "C" fn(priv_data: *const PUBase) -> PUHBoxLayout,
+    pub open_files_dialog: extern "C" fn(self_c: *const PUBase) -> PUArray,
     pub privd: *const PUBase,
 }
 

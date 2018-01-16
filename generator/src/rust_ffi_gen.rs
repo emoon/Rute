@@ -9,10 +9,10 @@ impl Variable {
         if self.primitive {
             self.vtype.clone()
         } else {
-            if self.vtype == "String" {
-                "*const ::std::os::raw::c_char".to_owned()
-            } else if self.array {
+            if self.array {
                 "PUArray".to_owned()
+            } else if self.vtype == "String" {
+                "*const ::std::os::raw::c_char".to_owned()
             } else if self.vtype == "self" || self.reference {
                 "*const PUBase".to_owned()
             } else {
@@ -179,6 +179,10 @@ pub fn generate_ffi_bindings(
             struct_.name.to_snake_case(),
             struct_.name
         ))?;
+    }
+
+    for func in api_def.get_all_static_functions() {
+        generate_ffi_function(&mut f, &func)?;
     }
 
     f.write_all(b"    pub privd: *const PUBase,\n")?;

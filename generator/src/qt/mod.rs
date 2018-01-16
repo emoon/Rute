@@ -1005,7 +1005,7 @@ impl TypeHandler for RectTypeHandler {
             "    const auto& t = qt_data->{}();\n",
             function_name.to_mixed_case()
         ))?;
-        f.write_fmt(format_args!("    return PURect {{ .x = t.x(), .y = t.y(), .width = t.width(), .height = t.height() }}"))
+        f.write_fmt(format_args!("    return PURect {{ t.x(), t.y(), t.width(), t.height() }}"))
     }
 }
 ///

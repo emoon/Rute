@@ -71,6 +71,11 @@ pub struct MimeData {
 }
 
 #[derive(Clone)]
+pub struct Timer {
+    pub obj: Option<PUTimer>,
+}
+
+#[derive(Clone)]
 pub struct Font {
     pub obj: Option<PUFont>,
 }
@@ -190,6 +195,16 @@ impl Widget {
         
         }
     }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
 }
 
 impl PaintDevice for Widget {
@@ -261,6 +276,16 @@ impl PushButton {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
         
         }
     }
@@ -413,6 +438,30 @@ impl ListWidgetItem {
         
         }
     }
+
+    pub fn set_string_data (&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_string_data)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn get_string_data (&self) -> String {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).get_string_data)(obj.privd);
+          
+           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+          
+        
+        }
+    }
 }
 
 impl ListWidget {
@@ -474,29 +523,62 @@ impl ListWidget {
         }
     }
 
-    pub fn add_item (&self, text: &str) {
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
+
+    pub fn add_item (&self, item: &ListWidgetItem) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).add_item)(obj.privd, item.obj.unwrap().privd);
+        
+        }
+    }
+
+    pub fn add_text_item (&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
 
         unsafe {
             let obj = self.obj.unwrap();
         
-            ((*obj.funcs).add_item)(obj.privd, str_in_text_1.as_ptr());
+            ((*obj.funcs).add_text_item)(obj.privd, str_in_text_1.as_ptr());
         
         }
     }
 
-    pub fn item (&self, index: i32) -> Option<ListWidgetItem> {
+    pub fn current_item (&self) -> Option<ListWidgetItem> {
         
         unsafe {
             let obj = self.obj.unwrap();
         
-            let ret_val = ((*obj.funcs).item)(obj.privd, index);
+            let ret_val = ((*obj.funcs).current_item)(obj.privd);
           
             if ret_val.privd.is_null() {
                 None
             } else {
                 Some(ListWidgetItem { obj: Some(ret_val) })
             }
+          
+        
+        }
+    }
+
+    pub fn current_row (&self) -> i32 {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).current_row)(obj.privd);
+          
+            ret_val
           
         
         }
@@ -521,6 +603,46 @@ impl ListWidget {
 
                 data
             }
+          
+        
+        }
+    }
+
+    pub fn item (&self, index: i32) -> Option<ListWidgetItem> {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).item)(obj.privd, index);
+          
+            if ret_val.privd.is_null() {
+                None
+            } else {
+                Some(ListWidgetItem { obj: Some(ret_val) })
+            }
+          
+        
+        }
+    }
+
+    pub fn set_current_row (&self, index: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_current_row)(obj.privd, index);
+        
+        }
+    }
+
+    pub fn count (&self) -> i32 {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).count)(obj.privd);
+          
+            ret_val
           
         
         }
@@ -639,6 +761,16 @@ impl Slider {
         
         }
     }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
 }
 
 impl PaintDevice for Slider {
@@ -710,6 +842,16 @@ impl MainWindow {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
         
         }
     }
@@ -830,6 +972,16 @@ impl FramelessWindow {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
         
         }
     }
@@ -1012,6 +1164,26 @@ impl MimeData {
     }
 }
 
+impl Timer {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+
+    pub fn start (&self, time: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).start)(obj.privd, time);
+        
+        }
+    }
+}
+
 impl Font {
     pub fn destroy(&mut self) {
        unsafe {
@@ -1098,6 +1270,16 @@ impl Menu {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
         
         }
     }
@@ -1208,6 +1390,16 @@ impl MenuBar {
         }
     }
 
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
+
     pub fn add_menu (&self, menu: &Menu) {
         
         unsafe {
@@ -1259,6 +1451,30 @@ impl Application {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).exec)(obj.privd);
+        
+        }
+    }
+
+    pub fn get_files (&self) -> Vec<Url> {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).get_files)(obj.privd);
+          
+            if ret_val.count == 0 {
+                Vec::new()
+            } else {
+                let mut data = Vec::with_capacity(ret_val.count as usize);
+                let slice = slice::from_raw_parts(ret_val.elements as *const PUUrl, ret_val.count as usize);
+
+                for item in slice {
+                    data.push(Url { obj: Some(*item) });
+                }
+
+                data
+            }
+          
         
         }
     }
@@ -1426,6 +1642,29 @@ impl LayoutType for HBoxLayout {
 
 
 #[macro_export]
+macro_rules! set_about_to_quit_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_about_to_quit_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
 macro_rules! set_current_row_changed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
@@ -1495,6 +1734,29 @@ macro_rules! set_item_double_clicked_event {
 
 
 #[macro_export]
+macro_rules! set_pressed_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_pressed_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
 macro_rules! set_released_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
@@ -1512,6 +1774,29 @@ macro_rules! set_released_event {
       unsafe {
           let obj = $sender.obj.unwrap();
          ((*obj.funcs).set_released_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_timeout_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_timeout_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 } }
@@ -1677,6 +1962,10 @@ impl Ui {
 
     pub fn create_action(&self) -> Action {
         Action { obj: Some(unsafe { ((*self.pu).create_action)((*self.pu).privd) }) }
+    }
+
+    pub fn create_timer(&self) -> Timer {
+        Timer { obj: Some(unsafe { ((*self.pu).create_timer)((*self.pu).privd) }) }
     }
 
     pub fn create_font(&self) -> Font {

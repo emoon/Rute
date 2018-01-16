@@ -45,6 +45,7 @@ pub enum FunctionType {
     Regular,
     Event,
     Callback,
+    Static,
 }
 
 impl Default for FunctionType {
@@ -100,6 +101,7 @@ enum FuncCollectionType {
     Callback,
     Regular,
     Event,
+    Static,
 }
 
 impl Struct {
@@ -134,6 +136,10 @@ impl Struct {
 
     pub fn get_event_functions(&self, funcs: &mut Vec<Function>) {
         Self::get_functions(self, funcs, |func| func.func_type == FunctionType::Event)
+    }
+
+    pub fn get_static_functions(&self, funcs: &mut Vec<Function>) {
+        Self::get_functions(self, funcs, |func| func.func_type == FunctionType::Static)
     }
 
     pub fn get_all_functions(&self, funcs: &mut Vec<Function>) {
@@ -421,6 +427,12 @@ impl ApiDef {
                             funcs.push(func.clone());
                         }
                     }
+
+                    FuncCollectionType::Static => {
+                        if func.func_type == FunctionType::Static {
+                            funcs.push(func.clone());
+                        }
+                    }
                 },
 
                 _ => (),
@@ -482,6 +494,20 @@ impl ApiDef {
 
     pub fn collect_regular_functions(&self, sdef: &Struct) -> Vec<Function> {
         Self::collect_functions(&self, sdef, FuncCollectionType::Regular)
+    }
+
+    pub fn collect_static_functions(&self, sdef: &Struct) -> Vec<Function> {
+        Self::collect_functions(&self, sdef, FuncCollectionType::Static)
+    }
+
+    pub fn get_all_static_functions(&self) -> Vec<Function> {
+        let mut funcs = Vec::new();
+
+        for sdef in &self.entries {
+            sdef.get_static_functions(&mut funcs);
+        }
+
+        funcs
     }
 
     pub fn has_attribute(&self, sdef: &Struct, attribute: &str) -> bool {
@@ -618,6 +644,7 @@ impl ApiDef {
                 Rule::name => function.name = entry.as_str().to_owned(),
                 Rule::callback => function.func_type = FunctionType::Callback,
                 Rule::event => function.func_type = FunctionType::Event,
+                Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(&entry),
                 Rule::retexp => {
                     let mut var = Self::get_variable(&entry);

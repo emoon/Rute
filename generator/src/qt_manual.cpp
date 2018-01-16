@@ -1,6 +1,7 @@
 
 #include <QStyleFactory>
 #include <DarkStyle.h>
+#include <QFileDialog>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,5 +77,52 @@ static void painter_fill_rect_color(struct PUBase* self_c, struct PURect rect, s
     qt_data->fillRect(QRect(rect.x, rect.y, rect.width, rect.height), QColor(color.r, color.g, color.b, color.a));
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_string_data(struct PUBase* self_c, const char* text) {
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    qt_data->setData(Qt::UserRole, QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* list_widget_item_get_string_data(struct PUBase* self_c) {
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    auto ret_value = qt_data->data(Qt::UserRole).toString();
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));
+    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);
+    return s_temp_string_buffer;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_add_text_item(struct PUBase* self_c, const char* text) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->addItem(QString::fromLatin1(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct PUArray application_get_files(struct PUBase* self_c) {
+    QApplication* qt_data = (QApplication*)self_c;
+    (void)qt_data;
+    auto ret_value = QFileDialog::getOpenFileUrls();
+    int count = ret_value.size();
+    PUArray array = { 0 };
+    if (count > 0) {
+        PUUrl* elements = new PUUrl[count];
+        for (int i = 0; i < count; ++i) {
+            elements[i].funcs = &s_url_funcs;
+            QUrl* temp = new QUrl(ret_value.at(i));
+            elements[i].priv_data = (struct PUBase*)temp;
+       }
+       array.elements = (void*)elements;
+       array.count = int(count);
+   }
+   return array;
+}
 
 

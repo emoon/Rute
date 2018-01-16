@@ -56,7 +56,7 @@ impl<'a> MyApp<'a> {
     fn drop_files(&mut self, event: &DropEvent) {
         for url in event.mime_data().urls() {
             if url.is_local_file() {
-                self.list.add_item(&url.to_local_file());
+                self.list.add_text_item(&url.to_local_file());
                 //println!("Has local file {}", url.to_local_file());
             } else {
                 println!("File is not local");
@@ -69,7 +69,7 @@ impl<'a> MyApp<'a> {
     fn custom_draw_widget(&mut self, _event: &PaintEvent) {
         println!("begin drawing\n");
 
-        let mut painter = self.ui.create_painter();
+        let painter = self.ui.create_painter();
 
         painter.begin(&self.main_win);
         painter.draw_line(0, 0, 20, 20);
@@ -83,8 +83,8 @@ impl<'a> MyApp<'a> {
         let button = self.ui.create_push_button();
 
         button.set_text("Button!");
-        self.list.add_item("New Text!");
-        self.list.add_item("Test 4");
+        self.list.add_text_item("New Text!");
+        self.list.add_text_item("Test 4");
 
         self.list.set_drag_enabled(true);
         self.list.set_accept_drops(true);

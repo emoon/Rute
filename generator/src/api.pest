@@ -13,6 +13,7 @@ derive       = { (":") ~ name }
 callback     = { ("[callback]") }
 event        = { ("[event]") }
 manual       = { ("[manual]") }
+static_typ   = { ("[static]") }
 refexp_val   = { ("^") }
 refexp       = { ("&") }
 optional     = { ("?") }
@@ -23,7 +24,7 @@ varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
 namelist     = { name ~ ((",") ~ name)* }
-function     = { manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function     = { static_typ? ~ manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*

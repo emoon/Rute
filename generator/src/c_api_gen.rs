@@ -216,10 +216,14 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    struct PU{} (*create_{})(PUBase* self);\n",
+            "    struct PU{} (*create_{})(struct PUBase* self);\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
+    }
+
+    for func in api_def.get_all_static_functions() {
+        generate_func_def(&mut f, &func)?;
     }
 
     f.write_all(b"    struct PUBase* priv_data;\n} PU;\n")?;

@@ -42,6 +42,7 @@ struct Widget {
 }
 
 struct PushButton : Widget {
+    [callback] pressed(),
     [callback] released(),
     set_text(String text),
     set_flat(bool flat),
@@ -62,13 +63,21 @@ struct Painter {
 struct ListWidgetItem {
     set_text(String text),
     text() -> String,
+    [manual] set_string_data(String text),
+    [manual] get_string_data() -> String,
 }
 
 struct ListWidget : Widget {
-	add_item(String text),
-	item(i32 index) -> ListWidgetItem?,
+	add_item(&ListWidgetItem item),
+	[manual] add_text_item(String text),
 
+	current_item() -> ListWidgetItem?,
+	current_row() -> i32,
 	selected_items() -> <&ListWidgetItem>,
+
+	item(i32 index) -> ListWidgetItem?,
+	set_current_row(i32 index),
+	count() -> i32,
 
 	// Drag'n'drop support
 
@@ -131,6 +140,11 @@ struct MimeData {
 	// [manual] filenames() -> <String>,
 }
 
+struct Timer {
+    [callback] timeout(),
+    start(i32 time),
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct Font {
@@ -155,6 +169,14 @@ struct MenuBar : Widget {
 struct Application {
 	set_style(String style),
 	exec(),
+	[callback] about_to_quit(),
+	// hack
+	[manual] get_files() -> <Url>,
+
+	// These doesn't really belong to Application but will global but as Application is "global" we keep them
+	// here
+
+	[static] open_files_dialog() -> <String>,
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,6 +217,7 @@ struct HBoxLayout : Layout {
 	update(),
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Taken directly from Qt but values has been removed. We will use a lookup on the native
 // side to map this table to the key ones
 
