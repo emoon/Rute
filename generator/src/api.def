@@ -44,6 +44,7 @@ struct Widget {
 struct PushButton : Widget {
     [callback] pressed(),
     [callback] released(),
+    set_icon(^Icon icon),
     set_text(String text),
     set_flat(bool flat),
 }
@@ -143,6 +144,10 @@ struct MimeData {
 struct Timer {
     [callback] timeout(),
     start(i32 time),
+}
+
+struct Icon {
+	add_file(String filename),
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

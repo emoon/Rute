@@ -13,6 +13,7 @@
 #include <QUrl>
 #include <QMimeData>
 #include <QTimer>
+#include <QIcon>
 #include <QFont>
 #include <QMenu>
 #include <QMenuBar>
@@ -45,6 +46,7 @@ extern struct PUActionFuncs s_action_funcs;
 extern struct PUUrlFuncs s_url_funcs;
 extern struct PUMimeDataFuncs s_mime_data_funcs;
 extern struct PUTimerFuncs s_timer_funcs;
+extern struct PUIconFuncs s_icon_funcs;
 extern struct PUFontFuncs s_font_funcs;
 extern struct PUMenuFuncs s_menu_funcs;
 extern struct PUMenuBarFuncs s_menu_bar_funcs;
@@ -317,6 +319,13 @@ static void set_push_button_released_event(void* object, void* user_data, void (
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(released()), wrap, SLOT(method()));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void push_button_set_icon(struct PUBase* self_c, struct PUBase* icon) { 
+    WRPushButton* qt_data = (WRPushButton*)self_c;
+    qt_data->setIcon(*(QIcon*)icon);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -850,6 +859,13 @@ static void timer_start(struct PUBase* self_c, int time) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void icon_add_file(struct PUBase* self_c, const char* filename) { 
+    QIcon* qt_data = (QIcon*)self_c;
+    qt_data->addFile(QString::fromLatin1(filename));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void font_set_family(struct PUBase* self_c, const char* family) { 
     QFont* qt_data = (QFont*)self_c;
     qt_data->setFamily(QString::fromLatin1(family));
@@ -1222,6 +1238,18 @@ static void destroy_timer(struct PUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct PUIcon create_icon(struct PUBase* priv_data) {
+    return create_generic_func<struct PUIcon, struct PUIconFuncs, QIcon>(&s_icon_funcs, priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_icon(struct PUBase* priv_data) {
+    destroy_generic<QIcon>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct PUFont create_font(struct PUBase* priv_data) {
     return create_generic_func<struct PUFont, struct PUFontFuncs, QFont>(&s_font_funcs, priv_data);
 }
@@ -1433,6 +1461,7 @@ struct PUPushButtonFuncs s_push_button_funcs = {
     push_button_update,
     set_push_button_pressed_event,
     set_push_button_released_event,
+    push_button_set_icon,
     push_button_set_text,
     push_button_set_flat,
 };
@@ -1566,6 +1595,13 @@ struct PUTimerFuncs s_timer_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct PUIconFuncs s_icon_funcs = {
+    destroy_icon,
+    icon_add_file,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct PUFontFuncs s_font_funcs = {
     destroy_font,
     font_set_family,
@@ -1662,6 +1698,7 @@ static struct PU s_pu = {
     create_frameless_window,
     create_action,
     create_timer,
+    create_icon,
     create_font,
     create_menu,
     create_menu_bar,
