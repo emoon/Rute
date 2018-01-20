@@ -10,11 +10,6 @@
 // The idea though is that this looks like the same thing for the user of the API.
 //
 
-enum Keys {
-    Key_A,
-    Key_B,
-}
-
 struct Rect {
     i32 x,
     i32 y,
@@ -226,7 +221,7 @@ struct HBoxLayout : Layout {
 // Taken directly from Qt but values has been removed. We will use a lookup on the native
 // side to map this table to the key ones
 
-enum Key {
+enum Keys {
 	Key_Escape,                // misc keys
 	Key_Tab,
 	Key_Backtab,
@@ -367,73 +362,6 @@ enum Key {
 	Key_Bar,
 	Key_BraceRight,
 	Key_AsciiTilde,
-
-	Key_nobreakspace,
-	Key_exclamdown,
-	Key_cent,
-	Key_sterling,
-	Key_currency,
-	Key_yen,
-	Key_brokenbar,
-	Key_section,
-	Key_diaeresis,
-	Key_copyright,
-	Key_ordfeminine,
-	Key_guillemotleft,        // left angle quotation mark
-	Key_notsign,
-	Key_hyphen,
-	Key_registered,
-	Key_macron,
-	Key_degree,
-	Key_plusminus,
-	Key_twosuperior,
-	Key_threesuperior,
-	Key_acute,
-	Key_mu,
-	Key_paragraph,
-	Key_periodcentered,
-	Key_cedilla,
-	Key_onesuperior,
-	Key_masculine,
-	Key_guillemotright,        // right angle quotation mark
-	Key_onequarter,
-	Key_onehalf,
-	Key_threequarters,
-	Key_questiondown,
-	Key_Agrave,
-	Key_Aacute,
-	Key_Acircumflex,
-	Key_Atilde,
-	Key_Adiaeresis,
-	Key_Aring,
-	Key_AE,
-	Key_Ccedilla,
-	Key_Egrave,
-	Key_Eacute,
-	Key_Ecircumflex,
-	Key_Ediaeresis,
-	Key_Igrave,
-	Key_Iacute,
-	Key_Icircumflex,
-	Key_Idiaeresis,
-	Key_ETH,
-	Key_Ntilde,
-	Key_Ograve,
-	Key_Oacute,
-	Key_Ocircumflex,
-	Key_Otilde,
-	Key_Odiaeresis,
-	Key_multiply,
-	Key_Ooblique,
-	Key_Ugrave,
-	Key_Uacute,
-	Key_Ucircumflex,
-	Key_Udiaeresis,
-	Key_Yacute,
-	Key_THORN,
-	Key_ssharp,
-	Key_division,
-	Key_ydiaeresis,
 
 	Key_Back,
 	Key_Forward,
