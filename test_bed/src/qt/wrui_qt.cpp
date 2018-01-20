@@ -861,7 +861,7 @@ static void timer_start(struct PUBase* self_c, int time) {
 
 static void icon_add_file(struct PUBase* self_c, const char* filename) { 
     QIcon* qt_data = (QIcon*)self_c;
-    qt_data->addFile(QString::fromLatin1(filename));
+    qt_data->addFile(QString::fromUtf8(filename));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1312,6 +1312,7 @@ static void destroy_h_box_layout(struct PUBase* priv_data) {
 #include <QStyleFactory>
 #include <DarkStyle.h>
 #include <QFileDialog>
+//#include <QSvgRenderer>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1434,6 +1435,25 @@ static struct PUArray application_get_files(struct PUBase* self_c) {
    }
    return array;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+static void icon_add_file(struct PUBase* self_c, const char* filename) {
+    QIcon* qt_data = (QIcon*)self_c;
+    QSvgRenderer svgRenderer(QString::fromLatin1(filename));
+    printf("filling with svg renderer\n");
+    // create pixmap target (could be a QImage)
+    QPixmap pix(svgRenderer.defaultSize());
+    pix.fill(Qt::transparent);
+    // create painter to act over pixmap
+    QPainter pixPainter(&pix);
+    // use renderer to render over painter which paints on pixmap
+    svgRenderer.render(&pixPainter);
+    //QIcon myicon(pix);
+    qt_data->addPixmap(pix);
+}
+*/
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
