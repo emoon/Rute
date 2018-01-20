@@ -59,7 +59,11 @@ struct PU* PU_create_instance(void* user_data, QWidget* parent) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifdef _WIN32
+extern \"C\" __declspec(export) struct PU* wrui_get() {
+#else
 extern \"C\" struct PU* wrui_get() {
+#endif
     return (PU*)&s_pu;
 }
 ";
@@ -411,7 +415,7 @@ fn generate_func_def(
         if index == 0 {
             ("".to_owned(), "".to_owned())
         } else if arg.vtype == "String" {
-            (format!("QString::fromLatin1({})", &arg.name), "".to_owned())
+            (format!("QString::fromUtf8({})", &arg.name), "".to_owned())
         } else {
             for handler in type_handlers.iter() {
                 if arg.vtype == handler.match_type() {
