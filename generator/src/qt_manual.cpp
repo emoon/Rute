@@ -2,7 +2,7 @@
 #include <QStyleFactory>
 #include <DarkStyle.h>
 #include <QFileDialog>
-#include <QSvgRenderer>
+//#include <QSvgRenderer>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,7 +129,7 @@ static struct PUArray application_get_files(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-static void icon_add_file(struct PUBase* self_c, const char* filename) { 
+static void icon_add_file(struct PUBase* self_c, const char* filename) {
     QIcon* qt_data = (QIcon*)self_c;
     QSvgRenderer svgRenderer(QString::fromLatin1(filename));
     printf("filling with svg renderer\n");
