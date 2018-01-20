@@ -79,9 +79,22 @@ pub struct Struct {
     pub is_widget: bool,
 }
 
+#[derive(Debug)]
+pub enum EnumEntry {
+    Enum(String),
+    EnumValue(String, String),
+}
+
+#[derive(Debug, Default)]
+pub struct Enum {
+    name: String,
+    entries: Vec<EnumEntry>,
+}
+
 #[derive(Debug, Default)]
 pub struct ApiDef {
     pub entries: Vec<Struct>,
+    pub enums: Vec<Enum>,
 }
 
 fn is_primitve(name: &str) -> bool {
@@ -708,6 +721,59 @@ impl ApiDef {
         entries
     }
 
+    fn get_enum_assign<I: Input>(rule: &Pair<Rule, I>) -> String {
+        let mut name_or_num = String::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name_or_num => name_or_num = entry.as_str().to_owned(),
+                _ => (),
+            }
+        }
+
+        name_or_num
+    }
+
+    fn get_enum<I: Input>(rule: &Pair<Rule, I>) -> EnumEntry {
+        let mut name = String::new();
+        let mut assign = String::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name => name = entry.as_str().to_owned(),
+                Rule::enum_assign => assign =  Self::get_enum_assign(&entry),
+                _ => (),
+            }
+        }
+
+        if assign.len() == 0 {
+            EnumEntry::Enum(name)
+        } else {
+            EnumEntry::EnumValue(name, assign)
+        }
+    }
+
+    fn fill_field_list_enum<I: Input>(rule: &Pair<Rule, I>) -> Vec<EnumEntry> {
+        let mut entries = Vec::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::field => {
+                    let field = entry.clone().into_inner().next().unwrap();
+
+                    match field.as_rule() {
+                        Rule::enum_type => entries.push(Self::get_enum(&field)),
+                        _ => (),
+                    }
+                }
+
+                _ => (),
+            }
+        }
+
+        entries
+    }
+
     fn get_namelist_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
         let mut names = Vec::new();
 
@@ -768,6 +834,20 @@ impl ApiDef {
 
                     api_def.entries.push(cur_struct);
                 }
+
+                Rule::enumdef => {
+                    let mut enum_def = Enum::default();
+
+                    for entry in chunk.into_inner() {
+                        match entry.as_rule() {
+                            Rule::name => enum_def.name = entry.as_str().to_owned(),
+                            Rule::fieldlist => enum_def.entries = Self::fill_field_list_enum(&entry),
+                            _ => (),
+                        }
+                    }
+
+                    api_def.enums.push(enum_def);
+                },
 
                 _ => (),
             }
