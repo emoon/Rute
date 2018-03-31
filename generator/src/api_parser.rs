@@ -3,12 +3,12 @@ use std::io::Write;
 use std::io;
 use std::path::Path;
 
-use std::rc::Rc;
-
 use pest::Parser;
-use pest::inputs::{FileInput, Input};
+//use pest::{FileInput, Input};
+//use pest::inputs::{FileInput, Input};
 use pest::iterators::Pair;
 use std::collections::HashSet;
+use std::io::Read;
 
 #[derive(Debug, Clone)]
 pub enum VariableType {
@@ -578,7 +578,7 @@ const _GRAMMAR: &'static str = include_str!("api.pest");
 struct ApiParser;
 
 impl ApiDef {
-    fn get_vtype<I: Input>(rule: &Pair<Rule, I>, var: &mut Variable) {
+    fn get_vtype(rule: &Pair<Rule>, var: &mut Variable) {
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
                 Rule::vtype => var.vtype = entry.as_str().to_owned(),
@@ -592,7 +592,7 @@ impl ApiDef {
         }
     }
 
-    fn get_variable<I: Input>(rule: &Pair<Rule, I>) -> Variable {
+    fn get_variable(rule: &Pair<Rule>) -> Variable {
         let mut var = Variable::default();
 
         for entry in rule.clone().into_inner() {
@@ -632,7 +632,7 @@ impl ApiDef {
         var
     }
 
-    fn get_variable_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<Variable> {
+    fn get_variable_list(rule: &Pair<Rule>) -> Vec<Variable> {
         let mut variables = Vec::new();
 
         variables.push(Variable {
@@ -649,7 +649,7 @@ impl ApiDef {
         variables
     }
 
-    fn get_function<I: Input>(rule: &Pair<Rule, I>) -> Function {
+    fn get_function(rule: &Pair<Rule>) -> Function {
         let mut function = Function::default();
 
         for entry in rule.clone().into_inner() {
@@ -684,7 +684,7 @@ impl ApiDef {
         function
     }
 
-    fn get_name<I: Input>(rule: &Pair<Rule, I>) -> String {
+    fn get_name(rule: &Pair<Rule>) -> String {
         let mut name = String::new();
 
         for entry in rule.clone().into_inner() {
@@ -697,7 +697,7 @@ impl ApiDef {
         name
     }
 
-    fn fill_field_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<StructEntry> {
+    fn fill_field_list(rule: &Pair<Rule>) -> Vec<StructEntry> {
         let mut entries = Vec::new();
 
         for entry in rule.clone().into_inner() {
@@ -721,7 +721,7 @@ impl ApiDef {
         entries
     }
 
-    fn get_enum_assign<I: Input>(rule: &Pair<Rule, I>) -> String {
+    fn get_enum_assign(rule: &Pair<Rule>) -> String {
         let mut name_or_num = String::new();
 
         for entry in rule.clone().into_inner() {
@@ -734,7 +734,7 @@ impl ApiDef {
         name_or_num
     }
 
-    fn get_enum<I: Input>(rule: &Pair<Rule, I>) -> EnumEntry {
+    fn get_enum(rule: &Pair<Rule>) -> EnumEntry {
         let mut name = String::new();
         let mut assign = String::new();
 
@@ -753,7 +753,7 @@ impl ApiDef {
         }
     }
 
-    fn fill_field_list_enum<I: Input>(rule: &Pair<Rule, I>) -> Vec<EnumEntry> {
+    fn fill_field_list_enum(rule: &Pair<Rule>) -> Vec<EnumEntry> {
         let mut entries = Vec::new();
 
         for entry in rule.clone().into_inner() {
@@ -774,7 +774,7 @@ impl ApiDef {
         entries
     }
 
-    fn get_namelist_list<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
+    fn get_namelist_list(rule: &Pair<Rule>) -> Vec<String> {
         let mut names = Vec::new();
 
         for entry in rule.clone().into_inner() {
@@ -784,12 +784,12 @@ impl ApiDef {
         names
     }
 
-    fn get_attrbutes<I: Input>(rule: &Pair<Rule, I>) -> Vec<String> {
+    fn get_attrbutes(rule: &Pair<Rule>) -> Vec<String> {
         let mut attribs = Vec::new();
 
         for entry in rule.clone().into_inner() {
             match entry.as_rule() {
-                Rule::namelist => attribs = Self::get_namelist_list((&entry)),
+                Rule::namelist => attribs = Self::get_namelist_list(&entry),
                 _ => (),
             }
         }
@@ -801,10 +801,14 @@ impl ApiDef {
 
     pub fn new<P: AsRef<Path>>(path: P) -> ApiDef {
         let mut api_def = ApiDef::default();
-        let file_input = FileInput::new(path).unwrap();
+
+		let mut f = File::open(path).unwrap();
+		let mut buffer = String::new();
+
+		f.read_to_string(&mut buffer).unwrap();
 
         let chunks =
-            ApiParser::parse(Rule::chunk, Rc::new(file_input)).unwrap_or_else(|e| panic!("{}", e));
+            ApiParser::parse(Rule::chunk, &buffer).unwrap_or_else(|e| panic!("{}", e));
 
         for chunk in chunks {
             match chunk.as_rule() {
