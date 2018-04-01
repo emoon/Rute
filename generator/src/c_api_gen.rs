@@ -204,7 +204,7 @@ fn generate_defines_recursive(f: &mut File, base_name: &str, api_def: &ApiDef, s
                 FunctionType::Regular => generate_define_func(f, base_name, func)?,
                 FunctionType::Callback => {
                 	f.write_fmt(
-                		format_args!("#define  PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n", 
+                		format_args!("#define PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n", 
                 		base_name, func.name, func.name))?;
                 }
                 _ => (),
