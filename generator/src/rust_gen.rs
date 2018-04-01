@@ -406,6 +406,40 @@ impl RustGenerator {
         for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
             let funcs = api_def.collect_callback_functions(&sdef);
 
+            let mut template_data = Object::new();
+
+            for func in funcs {
+				let ffi_args = func.gen_func_def(|index, arg| {
+					if index == 0 {
+						(arg.name.to_owned(), "*const ::std::os::raw::c_void".to_owned())
+					} else {
+						(arg.name.to_owned(), arg.get_rust_ffi_type())
+					}
+				});
+
+				let rust_args = func.gen_func_def(|index, arg| {
+					if index == 0 {
+						("&mut *app".to_owned(), String::new())
+					} else if arg.reference {
+						(format!("&{} {{ obj: Some(*({} as *const wrui::ffi_gen::PU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
+					} else {
+						(arg.name.to_owned(), String::new())
+					}
+				});
+
+				let func_name = format!("{}_{}", sdef.name.to_snake_case(), func.name);
+
+				template_data.insert("func_name".to_owned(), Value::Str(func_name));
+				template_data.insert("name".to_owned(), Value::Str(func.name));
+				template_data.insert("ffi_args".to_owned(), Value::Str(ffi_args));
+				template_data.insert("rust_args".to_owned(), Value::Str(rust_args));
+
+				let output = self.callback_template.render(&template_data).unwrap();
+
+				self.output.write_all(output.as_bytes())?;
+			}
+			
+			/*
             for func in funcs
                 .iter()
                 .filter(|s| s.func_type == FunctionType::Callback)
@@ -430,14 +464,16 @@ impl RustGenerator {
                     event_names.insert(func.name.clone(), func.clone());
                 }
             }
+            */
         }
 
-        let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
-        event_list.sort_by(|a, b| a.0.cmp(b.0));
+        //let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
+        //event_list.sort_by(|a, b| a.0.cmp(b.0));
 
         // println!("{:?}", event_list);
 
-        self.generate_set_event_impl(&event_list)
+        //self.generate_set_event_impl(&event_list)
+        Ok(())
     }
 
     /// Generate something that looks like this

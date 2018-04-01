@@ -42,7 +42,7 @@ b"    pub fn destroy(&mut self) {
 
 pub static CALLBACK_TEMPLATE: &str = "
 #[macro_export]
-macro_rules! set_{{name}}_event {
+macro_rules! set_{{func_name}}_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
       extern \"C\" fn temp_call({{ ffi_args }}) {

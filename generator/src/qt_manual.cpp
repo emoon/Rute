@@ -155,5 +155,16 @@ static void icon_add_file(struct PUBase* self_c, const char* filename) {
     qt_data->addPixmap(pix);
 }
 */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void action_set_int_data(struct PUBase* self_c, int data) { 
+    QAction* qt_data = (QAction*)self_c;
+    qt_data->setData(QVariant(data));
+}
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int action_get_int_data(struct PUBase* self_c) { 
+    QAction* qt_data = (QAction*)self_c;
+    return qt_data->data().toInt();
+}

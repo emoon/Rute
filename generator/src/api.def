@@ -131,7 +131,9 @@ struct FramelessWindow : Widget {
 struct Action {
 	is_enabled() -> bool,
 	set_text(String text),
-	[callback] triggered(&Action action),
+	[callback] triggered(),
+	[manual] set_int_data(i32 data),
+	[manual] get_int_data() -> i32,
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +176,7 @@ struct Font {
 
 struct Menu : Widget {
 	[manual] add_action_text(String text),
+	[callback] triggered(&Action action),
 	add_action(&Action action),
 	set_title(String title),
 }
