@@ -89,7 +89,7 @@ fn generate_bind_info(info: &mut HashMap<String, Function>, func: &Function) {
     let mut input_args = String::new();
 
     for arg in &func.function_args {
-        let tname = arg.get_c_type();
+        let tname = arg.get_c_type(true);
         input_args.push_str(&tname);
         input_args.push_str(", ");
     }
@@ -111,7 +111,7 @@ pub fn build_signal_wrappers_info(info: &mut HashMap<String, Function>, api_def:
     }
 }
 
-// generates signal wrappers for the variatos depending on input parameters
+// generates signal wrappers for the variations depending on input parameters
 pub fn generate_signal_wrappers_includes(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     let mut info = HashMap::new();
 
@@ -169,7 +169,7 @@ pub fn generate_c_function_args_signal_wrapper(func: &Function) -> String {
         if i == 0 {
             function_args.push_str("void*");
         } else {
-            function_args.push_str(&arg.get_c_type());
+            function_args.push_str(&arg.get_c_type(false));
         }
 
         function_args.push_str(" ");
@@ -237,7 +237,7 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
                 if arg.reference {
                     (format!("Q{}*", arg.vtype), arg.name.to_owned())
                 } else {
-                    (arg.get_c_type(), arg.name.to_owned())
+                    (arg.get_c_type(false), arg.name.to_owned())
                 }
             }
         })?;
@@ -369,7 +369,7 @@ fn generate_func_def(
 ) -> io::Result<()> {
     let ret_value = func.return_val
         .as_ref()
-        .map_or("void".to_owned(), |v| v.get_c_type());
+        .map_or("void".to_owned(), |v| v.get_c_type(false));
 
     // write return value and function name
     f.write_fmt(format_args!(
@@ -499,7 +499,7 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
             if arg.reference {
                 (format!("Q{}*", arg.vtype), String::new())
             } else {
-                (arg.get_c_type(), String::new())
+                (arg.get_c_type(false), String::new())
             }
         }
     })?;
@@ -515,7 +515,7 @@ fn func_def_callback(f: &mut File, struct_name: &str, func: &Function) -> io::Re
             if arg.reference {
                 (format!("Q{}*", arg.vtype), String::new())
             } else {
-                (arg.get_c_type(), String::new())
+                (arg.get_c_type(false), String::new())
             }
         }
     })?;

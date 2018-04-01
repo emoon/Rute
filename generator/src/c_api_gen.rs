@@ -29,7 +29,7 @@ pub fn generate_c_function_args(func: &Function) -> String {
 
     // write arguments
     for (i, arg) in func.function_args.iter().enumerate() {
-        function_args.push_str(&arg.get_c_type());
+        function_args.push_str(&arg.get_c_type(false));
         function_args.push_str(" ");
         function_args.push_str(&arg.name);
 
@@ -44,12 +44,12 @@ pub fn generate_c_function_args(func: &Function) -> String {
 fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
     let ret_value = func.return_val
         .as_ref()
-        .map_or("void".to_owned(), |r| r.get_c_type());
+        .map_or("void".to_owned(), |r| r.get_c_type(false));
 
     // write return value and function name
     f.write_fmt(format_args!("    {} (*{})(", ret_value, func.name))?;
 
-    func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
+    func.write_c_func_def(f, |_, arg| (arg.get_c_type(false), arg.name.to_owned()))?;
 
     f.write_all(b";\n")
 }
@@ -129,7 +129,7 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
         if i == 0 {
             func_def.push_str("void*");
         } else {
-            func_def.push_str(&arg.get_c_type());
+            func_def.push_str(&arg.get_c_type(false));
         }
 
         func_def.push_str(" ");
@@ -169,7 +169,7 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Var(ref var) => {
-                f.write_fmt(format_args!("    {} {};\n", var.get_c_type(), var.name))?;
+                f.write_fmt(format_args!("    {} {};\n", var.get_c_type(false), var.name))?;
             }
 
             StructEntry::Function(ref func) => match func.func_type {

@@ -191,7 +191,7 @@ impl Struct {
 }
 
 impl Variable {
-    pub fn get_c_type(&self) -> String {
+    pub fn get_c_type(&self, use_type_ref: bool) -> String {
         match self.vtype_e {
             VariableType::SelfType => "struct PUBase*".to_owned(),
             VariableType::Primitive(ref tname) => {
@@ -213,7 +213,13 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference(ref _tname) => "struct PUBase*".to_owned(),
+            VariableType::Reference(ref _tname) => {
+            	if use_type_ref {
+                    format!("struct PU{}", _tname)
+            	} else {
+            		"struct PUBase*".to_owned()
+            	}
+            }
             VariableType::Array(ref _tname) => "struct PUArray".to_owned(),
             VariableType::Regular(ref tname) => {
                 if tname == "String" {
