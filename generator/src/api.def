@@ -30,6 +30,7 @@ struct Widget {
     set_fixed_height(i32 width),
     set_fixed_width(i32 width),
     resize(i32 width, i32 height),
+    set_parent(&WidgetType widget),
     set_layout(&LayoutType layout),
     update(),
 
@@ -88,6 +89,22 @@ struct ListWidget : Widget {
 	[callback] current_row_changed(i32 row),
 	[callback] item_clicked(&ListWidgetItem item),
 	[callback] item_double_clicked(&ListWidgetItem item),
+}
+
+struct Label : Widget {
+	set_text(String text),
+}
+
+struct LineEdit : Widget {
+	set_text(String text),
+	set_read_only(bool value),
+}
+
+struct PlainTextEdit : Widget {
+	clear(),
+	set_plain_text(String text),
+	append_plain_text(String text),
+	set_read_only(bool value),
 }
 
 // Sliders
@@ -210,10 +227,12 @@ struct Layout {
 }
 
 struct VBoxLayout : Layout {
+	add_layout(&LayoutType layout),
 	update(),
 }
 
 struct HBoxLayout : Layout {
+	add_layout(&LayoutType layout),
 	update(),
 }
 

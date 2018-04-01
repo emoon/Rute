@@ -18,6 +18,8 @@ pub struct Ui {
 
 impl Ui {
     pub fn new(pu: *const PU) -> Ui { Ui { pu: pu } }
+
+    pub fn get_c_api(&self) -> *const PU { self.pu }
 \n";
 
 ///

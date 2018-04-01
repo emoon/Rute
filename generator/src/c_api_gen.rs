@@ -54,6 +54,57 @@ fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
     f.write_all(b";\n")
 }
 
+//#define PUWidget_show(widget) widget.funcs->show(widget.priv_data)
+
+fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
+    f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
+
+    func.write_c_func_def(f, |index, arg| { 
+		if index == 0 {
+    		(String::new(), "obj".to_owned()) 
+		} else {
+    		(String::new(), arg.name.to_owned())
+		}
+    })?;
+
+    f.write_fmt(format_args!(" obj.funcs->{}(", func.name))?;
+
+    func.write_c_func_def(f, |index, arg| { 
+		if index == 0 {
+    		(String::new(), "obj.priv_data".to_owned()) 
+		} else {
+    		(String::new(), arg.name.to_owned())
+		}
+    })?;
+
+    f.write_all(b"\n")
+}
+
+fn generate_define_static_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
+    f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
+
+    func.write_c_func_def(f, |index, arg| { 
+		if index == 0 {
+    		(String::new(), "ui".to_owned()) 
+		} else {
+    		(String::new(), arg.name.to_owned())
+		}
+    })?;
+
+    f.write_fmt(format_args!(" ui->{}(", func.name))?;
+
+    func.write_c_func_def(f, |index, arg| { 
+		if index == 0 {
+    		(String::new(), "obj.priv_data".to_owned()) 
+		} else {
+    		(String::new(), arg.name.to_owned())
+		}
+    })?;
+
+    f.write_all(b"\n")
+}
+
+
 ///
 /// Generate def for connecting events
 ///
@@ -136,6 +187,41 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
 /// Generate the struct body
 ///
 ///
+fn generate_defines_recursive(f: &mut File, base_name: &str, api_def: &ApiDef, sdef: &Struct) -> io::Result<()> {
+    if let Some(ref inherit_name) = sdef.inherit {
+        for sdef in &api_def.entries {
+            if &sdef.name == inherit_name {
+                generate_defines_recursive(f, base_name, api_def, &sdef)?;
+            }
+        }
+    }
+
+    // Add destroy function to all structs that has a create function
+
+    for entry in &sdef.entries {
+        match *entry {
+            StructEntry::Function(ref func) => match func.func_type {
+                FunctionType::Regular => generate_define_func(f, base_name, func)?,
+                FunctionType::Callback => {
+                	f.write_fmt(
+                		format_args!("#define  PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n", 
+                		base_name, func.name, func.name))?;
+                }
+                _ => (),
+            },
+
+            _ => (),
+        }
+    }
+
+    Ok(())
+}
+
+
+///
+/// Generate the struct body
+///
+///
 fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     for entry in &sdef.entries {
         match *entry {
@@ -146,6 +232,39 @@ fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
 
             _ => (),
         }
+    }
+
+    Ok(())
+}
+
+///
+/// Generate defines 
+///
+
+fn generate_defines(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
+        generate_defines_recursive(f, &sdef.name, api_def, sdef)?;
+    	f.write_all(b"\n")?;
+
+        //generate_struct_events(&mut f, sdef)?;
+    }
+
+    for sdef in api_def
+        .entries
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func())
+    {
+		let name = sdef.name.to_snake_case();
+
+        f.write_fmt(format_args!(
+            "#define PU_create_{}(ui) ui->create_{}(ui->priv_data)\n",
+            name, name))?;
+    }
+
+	f.write_all(b"\n")?;
+
+    for func in api_def.get_all_static_functions() {
+		generate_define_static_func(f, "", &func)?;
     }
 
     Ok(())
@@ -226,7 +345,11 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         generate_func_def(&mut f, &func)?;
     }
 
-    f.write_all(b"    struct PUBase* priv_data;\n} PU;\n")?;
+    f.write_all(b"    struct PUBase* priv_data;\n} PU;\n\n")?;
+
+    // Generate all the defines to make usage of the C api easier
+
+	generate_defines(&mut f, api_def)?;
 
     f.write_all(FOOTER)?;
 

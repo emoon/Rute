@@ -251,7 +251,11 @@ impl Function {
                     write_next = false;
                 }
             } else {
-                f.write_fmt(format_args!("{} {}", filter_arg.0, filter_arg.1))?;
+                if filter_arg.0 == "" {
+                	f.write_fmt(format_args!("{}", filter_arg.1))?;
+                } else {
+                	f.write_fmt(format_args!("{} {}", filter_arg.0, filter_arg.1))?;
+                }
             }
 
             if (i != arg_count - 1) && write_next == true {
