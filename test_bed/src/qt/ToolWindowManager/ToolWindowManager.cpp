@@ -452,7 +452,7 @@ void ToolWindowManager::moveToolWindows(QList<QWidget *> toolWindows,
   }
 }
 
-void ToolWindowManager::removeToolWindow(QWidget *toolWindow)
+void ToolWindowManager::removeToolWindow(QWidget *toolWindow, bool allowCloseAlreadyChecked)
 {
   if(!m_toolWindows.contains(toolWindow))
   {
@@ -469,8 +469,11 @@ void ToolWindowManager::removeToolWindow(QWidget *toolWindow)
     return;
   }
 
-  if(!manager->allowClose(toolWindow))
-    return;
+  if(!allowCloseAlreadyChecked)
+  {
+    if(!manager->allowClose(toolWindow))
+      return;
+  }
 
   moveToolWindow(toolWindow, NoArea);
   m_toolWindows.removeOne(toolWindow);
@@ -890,7 +893,10 @@ void ToolWindowManager::updateDragPosition()
     // cursor and pick an area to map to.
     if(hoverWrapper)
     {
-      QSplitter *splitter = qobject_cast<QSplitter *>(hoverWrapper->layout()->itemAt(0)->widget());
+      QLayout *layout = hoverWrapper->layout();
+      QLayoutItem *layoutitem = layout ? layout->itemAt(0) : NULL;
+      QWidget *layoutwidget = layoutitem ? layoutitem->widget() : NULL;
+      QSplitter *splitter = qobject_cast<QSplitter *>(layoutwidget);
 
       while(splitter)
       {
@@ -1429,7 +1435,7 @@ void ToolWindowManager::tabCloseRequested(int index)
   if(toolWindowProperties(toolWindow) & ToolWindowManager::HideOnClose)
     hideToolWindow(toolWindow);
   else
-    removeToolWindow(toolWindow);
+    removeToolWindow(toolWindow, true);
 }
 
 void ToolWindowManager::windowTitleChanged(const QString &)
