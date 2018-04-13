@@ -882,21 +882,6 @@ fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::R
     f.write_all(b"\n")
 }
 
-
-fn get_split(name: &str) -> (&str, &str) {
-    for (i, v) in name.chars().enumerate() {
-        if i == 0 {
-            continue;
-        }
-
-        if v >= 'A' && v <= 'Z' {
-            return (&name[..i], &name[i..]);
-        }
-    }
-
-    ("", "")
-}
-
 ///
 /// Generate enum remappings from WRUI enums to Qt
 ///
@@ -905,7 +890,7 @@ fn generate_enum_mappings(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(SEPARATOR)?;
     f.write_all(b"\n")?;
-    f.write_all(b"struct KeyVal { int key, val; };\n");
+    f.write_all(b"struct KeyVal { int val, key; };\n")?;
 
     for enum_def in &api_def.enums {
         f.write_fmt(format_args!("static std::map<int, int> s_{}_lookup;\n", enum_def.name.to_snake_case()))?;
@@ -916,19 +901,26 @@ fn generate_enum_mappings(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(b"static void create_enum_mappings() {\n")?;
 
     for enum_def in &api_def.enums {
-        f.write_fmt(format_args!("    static {}_vals[] = {{\n", enum_def.name.to_snake_case()))?;
+        let enum_name = enum_def.name.to_snake_case();
+
+        f.write_fmt(format_args!("    static KeyVal {}_vals[] = {{\n", enum_name))?;
 
         for (i, entry) in enum_def.entries.iter().enumerate() {
             match *entry {
                 EnumEntry::Enum(ref value) => {
                     let name = &value;
-                    f.write_fmt(format_args!("        {{ Qt::{}, {} }},\n", name, i))?;
+                    f.write_fmt(format_args!("        {{ (int)Qt::{}, {} }},\n", name, i))?;
                 },
                 _ => (),
             }
         }
 
-        f.write_fmt(format_args!("    }};\n", enum_def.name.to_snake_case()))?;
+        f.write_all(b"    };\n\n")?;
+
+        f.write_fmt(format_args!("    for (int i = 0; i < {}; ++i) {{\n", enum_def.entries.len()))?;
+        f.write_fmt(format_args!("        s_{}_lookup[{}_vals[i].key] = {}_vals[i].val;\n",
+            enum_name, enum_name, enum_name))?;
+        f.write_all(b"    };\n")?;
     }
 
     f.write_all(b"}\n\n")

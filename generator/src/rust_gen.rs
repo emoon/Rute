@@ -1,7 +1,7 @@
 use std::io;
 use std::fs::File;
 use std::io::Write;
-use std::io::{Error, ErrorKind};
+//use std::io::{Error, ErrorKind};
 use api_parser::*;
 use std::collections::HashMap;
 use heck::{CamelCase, SnakeCase};
@@ -449,7 +449,7 @@ impl RustGenerator {
 
 				self.output.write_all(output.as_bytes())?;
 			}
-			
+
 			/*
             for func in funcs
                 .iter()

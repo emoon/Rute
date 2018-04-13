@@ -119,7 +119,7 @@ static struct PUArray application_get_files(struct PUBase* self_c) {
 
    if (!dialog.exec())
 		return array;
-    
+
    auto ret_value = dialog.selectedFiles();
 
    int count = ret_value.size();
@@ -159,14 +159,24 @@ static void icon_add_file(struct PUBase* self_c, const char* filename) {
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void action_set_int_data(struct PUBase* self_c, int data) { 
+static void action_set_int_data(struct PUBase* self_c, int data) {
     QAction* qt_data = (QAction*)self_c;
     qt_data->setData(QVariant(data));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int action_get_int_data(struct PUBase* self_c) { 
+static int action_get_int_data(struct PUBase* self_c) {
     QAction* qt_data = (QAction*)self_c;
     return qt_data->data().toInt();
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void action_set_shortcut(struct PUBase* self_c, PUKeys key, PUKeys modifier) {
+    QAction* qt_data = (QAction*)self_c;
+    qt_data->setShortcut(s_keys_lookup[(int)key] | s_keys_lookup[(int)modifier]);
+}
+
+

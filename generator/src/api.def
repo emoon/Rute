@@ -131,6 +131,7 @@ struct FramelessWindow : Widget {
 struct Action {
 	is_enabled() -> bool,
 	set_text(String text),
+	[manual] set_shortcut(Keys key, Keys modifier),
 	[callback] triggered(),
 	[manual] set_int_data(i32 data),
 	[manual] get_int_data() -> i32,

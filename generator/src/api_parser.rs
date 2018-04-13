@@ -10,6 +10,7 @@ use pest::iterators::Pair;
 use std::collections::HashSet;
 use std::io::Read;
 
+
 #[derive(Debug, Clone)]
 pub enum VariableType {
     None,

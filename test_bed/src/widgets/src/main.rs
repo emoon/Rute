@@ -103,12 +103,12 @@ impl<'a> MyApp<'a> {
         let menu_bar = main_window.menu_bar();
         menu_bar.add_menu(&file_menu);
 
-        set_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
+        set_list_widget_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
         set_drag_enter_event!(self.list, self, MyApp, MyApp::drag_enter);
         set_drop_event!(self.list, self, MyApp, MyApp::drop_files);
-        set_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
+        set_list_widget_current_row_changed_event!(self.list, self, MyApp, MyApp::new_row_selected);
 
-        set_triggered_event!(open_file, self, MyApp, MyApp::menu_selected);
+        set_action_triggered_event!(open_file, self, MyApp, MyApp::menu_selected);
 
         let layout = self.ui.create_v_box_layout();
 

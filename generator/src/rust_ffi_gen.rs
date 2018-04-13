@@ -1,7 +1,7 @@
 use std::io;
 use std::fs::File;
 use std::io::Write;
-use heck::SnakeCase;
+use heck::{SnakeCase, CamelCase};
 use api_parser::*;
 
 impl Variable {
@@ -138,8 +138,8 @@ pub fn generate_ffi_bindings(
 
         for entry in &enum_def.entries {
             match *entry {
-                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    {},\n", name))?,
-                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    {} = {},\n", name, val))?,
+                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    {},\n", name.to_camel_case()))?,
+                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    {} = {},\n", name.to_camel_case(), val))?,
             }
         }
 

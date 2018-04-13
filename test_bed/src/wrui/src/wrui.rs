@@ -11,6 +11,8 @@ pub use ffi_gen::PUBase as PUBase;
 
 use std::ffi::CString;
 
+pub use ffi_gen::PUKeys as Keys;
+
 pub use ffi_gen::PURect as Rect;
 
 pub use ffi_gen::PUColor as Color;
@@ -38,6 +40,21 @@ pub struct ListWidgetItem {
 #[derive(Clone)]
 pub struct ListWidget {
     pub obj: Option<PUListWidget>,
+}
+
+#[derive(Clone)]
+pub struct Label {
+    pub obj: Option<PULabel>,
+}
+
+#[derive(Clone)]
+pub struct LineEdit {
+    pub obj: Option<PULineEdit>,
+}
+
+#[derive(Clone)]
+pub struct PlainTextEdit {
+    pub obj: Option<PUPlainTextEdit>,
 }
 
 #[derive(Clone)]
@@ -191,6 +208,16 @@ impl Widget {
         }
     }
 
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn set_layout (&self, layout: &LayoutType) {
         
         unsafe {
@@ -271,6 +298,16 @@ impl PushButton {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
         
         }
     }
@@ -528,6 +565,16 @@ impl ListWidget {
         }
     }
 
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn set_layout (&self, layout: &LayoutType) {
         
         unsafe {
@@ -718,6 +765,362 @@ impl WidgetType for ListWidget {
     }
 }
 
+impl Label {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+
+    pub fn show (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn resize (&self, width: i32, height: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_text (&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+}
+
+impl PaintDevice for Label {
+    fn get_paint_device_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl WidgetType for Label {
+    fn get_widget_type_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl LineEdit {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+
+    pub fn show (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn resize (&self, width: i32, height: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_text (&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn set_read_only (&self, value: bool) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_read_only)(obj.privd, value);
+        
+        }
+    }
+}
+
+impl PaintDevice for LineEdit {
+    fn get_paint_device_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl WidgetType for LineEdit {
+    fn get_widget_type_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl PlainTextEdit {
+    pub fn destroy(&mut self) {
+       unsafe {
+          let obj = self.obj.unwrap();
+          ((*obj.funcs).destroy)(obj.privd);
+          self.obj = None;
+       }
+    }
+
+    pub fn show (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).show)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_fixed_height (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_height)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn set_fixed_width (&self, width: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_fixed_width)(obj.privd, width);
+        
+        }
+    }
+
+    pub fn resize (&self, width: i32, height: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn set_layout (&self, layout: &LayoutType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
+    pub fn update (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).update)(obj.privd);
+        
+        }
+    }
+
+    pub fn clear (&self) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).clear)(obj.privd);
+        
+        }
+    }
+
+    pub fn set_plain_text (&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_plain_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn append_plain_text (&self, text: &str) {
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).append_plain_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn set_read_only (&self, value: bool) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_read_only)(obj.privd, value);
+        
+        }
+    }
+}
+
+impl PaintDevice for PlainTextEdit {
+    fn get_paint_device_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
+impl WidgetType for PlainTextEdit {
+    fn get_widget_type_obj(&self) -> *const PUBase {
+       let obj = self.obj.unwrap();
+       obj.privd as *const PUBase
+    }
+}
+
 impl Slider {
     pub fn destroy(&mut self) {
        unsafe {
@@ -763,6 +1166,16 @@ impl Slider {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
         
         }
     }
@@ -847,6 +1260,16 @@ impl MainWindow {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
         
         }
     }
@@ -981,6 +1404,16 @@ impl FramelessWindow {
         }
     }
 
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn set_layout (&self, layout: &LayoutType) {
         
         unsafe {
@@ -1066,6 +1499,39 @@ impl Action {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        
+        }
+    }
+
+    pub fn set_shortcut (&self, key: Keys, modifier: Keys) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_shortcut)(obj.privd, key, modifier);
+        
+        }
+    }
+
+    pub fn set_int_data (&self, data: i32) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_int_data)(obj.privd, data);
+        
+        }
+    }
+
+    pub fn get_int_data (&self) -> i32 {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).get_int_data)(obj.privd);
+          
+            ret_val
+          
         
         }
     }
@@ -1300,6 +1766,16 @@ impl Menu {
         }
     }
 
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn set_layout (&self, layout: &LayoutType) {
         
         unsafe {
@@ -1412,6 +1888,16 @@ impl MenuBar {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).resize)(obj.privd, width, height);
+        
+        }
+    }
+
+    pub fn set_parent (&self, widget: &WidgetType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_parent)(obj.privd, widget.get_widget_type_obj() as *const PUBase);
         
         }
     }
@@ -1621,6 +2107,16 @@ impl VBoxLayout {
         }
     }
 
+    pub fn add_layout (&self, layout: &LayoutType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).add_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn update (&self) {
         
         unsafe {
@@ -1658,6 +2154,16 @@ impl HBoxLayout {
         }
     }
 
+    pub fn add_layout (&self, layout: &LayoutType) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).add_layout)(obj.privd, layout.get_layout_type_obj() as *const PUBase);
+        
+        }
+    }
+
     pub fn update (&self) {
         
         unsafe {
@@ -1678,99 +2184,7 @@ impl LayoutType for HBoxLayout {
 
 
 #[macro_export]
-macro_rules! set_about_to_quit_event {
-  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
-    {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
-          unsafe {
-              let app = self_c as *mut $call_type;
-              $callback(&mut *app);
-          }
-      }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
-         t
-      }
-
-      unsafe {
-          let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_about_to_quit_event)(obj.privd, get_data_ptr($data), temp_call);
-      }
-    }
-} }
-
-
-#[macro_export]
-macro_rules! set_current_row_changed_event {
-  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
-    {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, row: i32) {
-          unsafe {
-              let app = self_c as *mut $call_type;
-              $callback(&mut *app, row);
-          }
-      }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
-         t
-      }
-
-      unsafe {
-          let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_current_row_changed_event)(obj.privd, get_data_ptr($data), temp_call);
-      }
-    }
-} }
-
-
-#[macro_export]
-macro_rules! set_item_clicked_event {
-  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
-    {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, item: *const PUBase) {
-          unsafe {
-              let app = self_c as *mut $call_type;
-              $callback(&mut *app, &ListWidgetItem { obj: Some(*(item as *const wrui::ffi_gen::PUListWidgetItem)) });
-          }
-      }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
-         t
-      }
-
-      unsafe {
-          let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_item_clicked_event)(obj.privd, get_data_ptr($data), temp_call);
-      }
-    }
-} }
-
-
-#[macro_export]
-macro_rules! set_item_double_clicked_event {
-  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
-    {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, item: *const PUBase) {
-          unsafe {
-              let app = self_c as *mut $call_type;
-              $callback(&mut *app, &ListWidgetItem { obj: Some(*(item as *const wrui::ffi_gen::PUListWidgetItem)) });
-          }
-      }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
-         t
-      }
-
-      unsafe {
-          let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_item_double_clicked_event)(obj.privd, get_data_ptr($data), temp_call);
-      }
-    }
-} }
-
-
-#[macro_export]
-macro_rules! set_pressed_event {
+macro_rules! set_push_button_pressed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
       extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
@@ -1793,7 +2207,7 @@ macro_rules! set_pressed_event {
 
 
 #[macro_export]
-macro_rules! set_released_event {
+macro_rules! set_push_button_released_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
       extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
@@ -1816,13 +2230,13 @@ macro_rules! set_released_event {
 
 
 #[macro_export]
-macro_rules! set_timeout_event {
+macro_rules! set_list_widget_current_row_changed_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, row: i32) {
           unsafe {
               let app = self_c as *mut $call_type;
-              $callback(&mut *app);
+              $callback(&mut *app, row);
           }
       }
       fn get_data_ptr(val: &$call_type) -> *const c_void {
@@ -1832,14 +2246,83 @@ macro_rules! set_timeout_event {
 
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_timeout_event)(obj.privd, get_data_ptr($data), temp_call);
+         ((*obj.funcs).set_current_row_changed_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 } }
 
 
 #[macro_export]
-macro_rules! set_triggered_event {
+macro_rules! set_list_widget_item_clicked_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, item: *const PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, &ListWidgetItem { obj: Some(*(item as *const wrui::ffi_gen::PUListWidgetItem)) });
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_item_clicked_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_list_widget_item_double_clicked_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, item: *const PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, &ListWidgetItem { obj: Some(*(item as *const wrui::ffi_gen::PUListWidgetItem)) });
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_item_double_clicked_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_slider_value_changed_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, value: i32) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, value);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_value_changed_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_action_triggered_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
       extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
@@ -1862,13 +2345,13 @@ macro_rules! set_triggered_event {
 
 
 #[macro_export]
-macro_rules! set_value_changed_event {
+macro_rules! set_timer_timeout_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, value: i32) {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
           unsafe {
               let app = self_c as *mut $call_type;
-              $callback(&mut *app, value);
+              $callback(&mut *app);
           }
       }
       fn get_data_ptr(val: &$call_type) -> *const c_void {
@@ -1878,7 +2361,53 @@ macro_rules! set_value_changed_event {
 
       unsafe {
           let obj = $sender.obj.unwrap();
-         ((*obj.funcs).set_value_changed_event)(obj.privd, get_data_ptr($data), temp_call);
+         ((*obj.funcs).set_timeout_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_menu_triggered_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void, action: *const PUBase) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app, &Action { obj: Some(*(action as *const wrui::ffi_gen::PUAction)) });
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_triggered_event)(obj.privd, get_data_ptr($data), temp_call);
+      }
+    }
+} }
+
+
+#[macro_export]
+macro_rules! set_application_about_to_quit_event {
+  ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
+    {
+      extern "C" fn temp_call(self_c: *const ::std::os::raw::c_void) {
+          unsafe {
+              let app = self_c as *mut $call_type;
+              $callback(&mut *app);
+          }
+      }
+      fn get_data_ptr(val: &$call_type) -> *const c_void {
+         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+         t
+      }
+
+      unsafe {
+          let obj = $sender.obj.unwrap();
+         ((*obj.funcs).set_about_to_quit_event)(obj.privd, get_data_ptr($data), temp_call);
       }
     }
 } }
@@ -1964,6 +2493,8 @@ pub struct Ui {
 impl Ui {
     pub fn new(pu: *const PU) -> Ui { Ui { pu: pu } }
 
+    pub fn get_c_api(&self) -> *const PU { self.pu }
+
     pub fn create_widget(&self) -> Widget {
         Widget { obj: Some(unsafe { ((*self.pu).create_widget)((*self.pu).privd) }) }
     }
@@ -1982,6 +2513,18 @@ impl Ui {
 
     pub fn create_list_widget(&self) -> ListWidget {
         ListWidget { obj: Some(unsafe { ((*self.pu).create_list_widget)((*self.pu).privd) }) }
+    }
+
+    pub fn create_label(&self) -> Label {
+        Label { obj: Some(unsafe { ((*self.pu).create_label)((*self.pu).privd) }) }
+    }
+
+    pub fn create_line_edit(&self) -> LineEdit {
+        LineEdit { obj: Some(unsafe { ((*self.pu).create_line_edit)((*self.pu).privd) }) }
+    }
+
+    pub fn create_plain_text_edit(&self) -> PlainTextEdit {
+        PlainTextEdit { obj: Some(unsafe { ((*self.pu).create_plain_text_edit)((*self.pu).privd) }) }
     }
 
     pub fn create_slider(&self) -> Slider {
