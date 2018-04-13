@@ -5,3 +5,5 @@ authors = ["Daniel Collin <daniel@collin.com>"]
 
 [dependencies]
 libloading = "0.4"
+enum-primitive-derive = "^0.1"
+num-traits = "^0.1"

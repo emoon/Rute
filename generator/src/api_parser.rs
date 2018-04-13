@@ -14,6 +14,7 @@ use std::io::Read;
 pub enum VariableType {
     None,
     SelfType,
+    Enum(String),
     Regular(String),
     Primitive(String),
     Reference(String),
@@ -87,8 +88,8 @@ pub enum EnumEntry {
 
 #[derive(Debug, Default)]
 pub struct Enum {
-    name: String,
-    entries: Vec<EnumEntry>,
+    pub name: String,
+    pub entries: Vec<EnumEntry>,
 }
 
 #[derive(Debug, Default)]
@@ -194,6 +195,7 @@ impl Variable {
     pub fn get_c_type(&self, use_type_ref: bool) -> String {
         match self.vtype_e {
             VariableType::SelfType => "struct PUBase*".to_owned(),
+            VariableType::Enum(ref tname) => format!("PU{}", tname),
             VariableType::Primitive(ref tname) => {
                 if tname == "f32" {
                     "float".to_owned()
@@ -809,6 +811,33 @@ impl ApiDef {
         attribs
     }
 
+    ///
+    /// Patch up the types for enums as they can be out of order.
+    ///
+    fn second_pass(api_def: &mut ApiDef) {
+        let mut enums = HashSet::new();
+
+        for enum_def in &api_def.enums {
+            enums.insert(enum_def.name.clone());
+        }
+
+        for sdef in api_def.entries.iter_mut() {
+            for entry in sdef.entries.iter_mut() {
+                match *entry {
+                    StructEntry::Function(ref mut func) => {
+                        for var in func.function_args.iter_mut() {
+                            if enums.contains(&var.vtype) {
+                                var.vtype_e = VariableType::Enum(var.vtype.clone());
+                            }
+                        }
+                    }
+
+                    _ => (),
+                }
+            }
+        }
+    }
+
     pub fn new<P: AsRef<Path>>(path: P) -> ApiDef {
         let mut api_def = ApiDef::default();
 
@@ -866,6 +895,8 @@ impl ApiDef {
                 _ => (),
             }
         }
+
+        Self::second_pass(&mut api_def);
 
         api_def
     }

@@ -882,6 +882,58 @@ fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::R
     f.write_all(b"\n")
 }
 
+
+fn get_split(name: &str) -> (&str, &str) {
+    for (i, v) in name.chars().enumerate() {
+        if i == 0 {
+            continue;
+        }
+
+        if v >= 'A' && v <= 'Z' {
+            return (&name[..i], &name[i..]);
+        }
+    }
+
+    ("", "")
+}
+
+///
+/// Generate enum remappings from WRUI enums to Qt
+///
+fn generate_enum_mappings(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    // write enum mapping defs
+
+    f.write_all(SEPARATOR)?;
+    f.write_all(b"\n")?;
+    f.write_all(b"struct KeyVal { int key, val; };\n");
+
+    for enum_def in &api_def.enums {
+        f.write_fmt(format_args!("static std::map<int, int> s_{}_lookup;\n", enum_def.name.to_snake_case()))?;
+    }
+
+    f.write_all(b"\n")?;
+    f.write_all(SEPARATOR)?;
+    f.write_all(b"static void create_enum_mappings() {\n")?;
+
+    for enum_def in &api_def.enums {
+        f.write_fmt(format_args!("    static {}_vals[] = {{\n", enum_def.name.to_snake_case()))?;
+
+        for (i, entry) in enum_def.entries.iter().enumerate() {
+            match *entry {
+                EnumEntry::Enum(ref value) => {
+                    let name = &value;
+                    f.write_fmt(format_args!("        {{ Qt::{}, {} }},\n", name, i))?;
+                },
+                _ => (),
+            }
+        }
+
+        f.write_fmt(format_args!("    }};\n", enum_def.name.to_snake_case()))?;
+    }
+
+    f.write_all(b"}\n\n")
+}
+
 // struct PUWidget* create_widget(void* priv_data) {
 //    PrivData* data = (PrivData*)priv_data;
 //    QWidget* qt_obj = new QWidget(data->parent);
@@ -1115,6 +1167,7 @@ pub fn generate_qt_bindings(
     generate_signal_wrappers(&mut header_file, &signals_info)?;
 
     generate_forward_declare_struct_defs(&mut f, api_def)?;
+    generate_enum_mappings(&mut f, api_def)?;
 
     generate_wrapper_classes(&mut f, &struct_name_map, api_def)?;
 

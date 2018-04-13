@@ -152,6 +152,17 @@ impl RustGenerator {
 
         Ok(())
     }
+    ///
+    ///
+    ///
+    fn generate_enums(&mut self, api_def: &ApiDef) -> io::Result<()> {
+        for enum_def in &api_def.enums {
+            self.output.write_fmt(format_args!(
+                "pub use ffi_gen::PU{} as {};\n\n", enum_def.name, enum_def.name))?;
+        }
+
+        Ok(())
+    }
 
     ///
     ///
@@ -626,6 +637,7 @@ pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()
 
     rust_gen.output.write_all(HEADER)?;
 
+    rust_gen.generate_enums(&api_def)?;
     rust_gen.generate_struct(&api_def.entries)?;
     rust_gen.generate_traits(&mut type_handlers, &api_def)?;
     rust_gen.generate_impl(&type_handlers, &api_def)?;

@@ -294,6 +294,19 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(b"\n")?;
 
+    for enum_def in &api_def.enums {
+        f.write_fmt(format_args!("enum PU{} {{\n", enum_def.name))?;
+
+        for entry in &enum_def.entries {
+            match *entry {
+                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    PU{}_{},\n", enum_def.name, name))?,
+                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    PU{}_{} = {},\n", enum_def.name, name, val))?,
+            }
+        }
+
+        f.write_all(b"};\n\n")?;
+    }
+
     // Write the struct for pods
 
     for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {

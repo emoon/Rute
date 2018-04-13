@@ -10,6 +10,8 @@ static struct PUApplication create_application(struct PUBase* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
 
+    create_enum_mappings();
+
     //QGuiApplication::setOrganizationName(QStringLiteral("TBL"));
     //QCoreApplication::setOrganizationDomain(QStringLiteral("tbl.org"));
 

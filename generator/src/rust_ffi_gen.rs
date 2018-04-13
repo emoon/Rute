@@ -129,6 +129,23 @@ pub fn generate_ffi_bindings(
         f.write_all(b"}\n\n")?;
     }
 
+    // Generate all enums
+
+    for enum_def in &api_def.enums {
+        f.write_all(b"#[repr(C)]\n")?;
+        f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
+        f.write_fmt(format_args!("pub enum PU{} {{\n", enum_def.name))?;
+
+        for entry in &enum_def.entries {
+            match *entry {
+                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    {},\n", name))?,
+                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    {} = {},\n", name, val))?,
+            }
+        }
+
+        f.write_all(b"}\n\n")?;
+    }
+
     // Write the struct for pods
 
     for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
