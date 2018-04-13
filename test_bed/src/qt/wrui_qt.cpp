@@ -1378,6 +1378,8 @@ static void action_set_text(struct PUBase* self_c, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void set_action_triggered_event(void* object, void* user_data, void (*event)(void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
     QObject* q_obj = (QObject*)object;
@@ -2175,7 +2177,14 @@ static int action_get_int_data(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void action_set_shortcut(struct PUBase* self_c, PUKeys key, PUKeys modifier) {
+static void action_set_shortcut(struct PUBase* self_c, PUKeys key) {
+    QAction* qt_data = (QAction*)self_c;
+    qt_data->setShortcut(s_keys_lookup[(int)key]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUKeys modifier) {
     QAction* qt_data = (QAction*)self_c;
     qt_data->setShortcut(s_keys_lookup[(int)key] | s_keys_lookup[(int)modifier]);
 }
@@ -2363,6 +2372,7 @@ struct PUActionFuncs s_action_funcs = {
     action_is_enabled,
     action_set_text,
     action_set_shortcut,
+    action_set_shortcut_mod,
     set_action_triggered_event,
     action_set_int_data,
     action_get_int_data,

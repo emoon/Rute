@@ -174,9 +174,19 @@ static int action_get_int_data(struct PUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void action_set_shortcut(struct PUBase* self_c, PUKeys key, PUKeys modifier) {
+static void action_set_shortcut(struct PUBase* self_c, PUKeys key) {
     QAction* qt_data = (QAction*)self_c;
-    qt_data->setShortcut(s_keys_lookup[(int)key] | s_keys_lookup[(int)modifier]);
+    qt_data->setShortcut(s_keys_lookup[(int)key]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUMetaKeys modifier) {
+    QAction* qt_data = (QAction*)self_c;
+    int tkey = s_keys_lookup[(int)key];
+    int tmod = s_meta_keys_lookup[(int)modifier];
+
+    qt_data->setShortcut(tkey + tmod);
 }
 
 

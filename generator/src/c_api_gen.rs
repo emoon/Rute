@@ -59,9 +59,9 @@ fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
 fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
     f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
 
-    func.write_c_func_def(f, |index, arg| { 
+    func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
-    		(String::new(), "obj".to_owned()) 
+    		(String::new(), "obj".to_owned())
 		} else {
     		(String::new(), arg.name.to_owned())
 		}
@@ -69,9 +69,9 @@ fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::R
 
     f.write_fmt(format_args!(" obj.funcs->{}(", func.name))?;
 
-    func.write_c_func_def(f, |index, arg| { 
+    func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
-    		(String::new(), "obj.priv_data".to_owned()) 
+    		(String::new(), "obj.priv_data".to_owned())
 		} else {
     		(String::new(), arg.name.to_owned())
 		}
@@ -83,9 +83,9 @@ fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::R
 fn generate_define_static_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
     f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
 
-    func.write_c_func_def(f, |index, arg| { 
+    func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
-    		(String::new(), "ui".to_owned()) 
+    		(String::new(), "ui".to_owned())
 		} else {
     		(String::new(), arg.name.to_owned())
 		}
@@ -93,9 +93,9 @@ fn generate_define_static_func(f: &mut File, base_name: &str, func: &Function) -
 
     f.write_fmt(format_args!(" ui->{}(", func.name))?;
 
-    func.write_c_func_def(f, |index, arg| { 
+    func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
-    		(String::new(), "obj.priv_data".to_owned()) 
+    		(String::new(), "obj.priv_data".to_owned())
 		} else {
     		(String::new(), arg.name.to_owned())
 		}
@@ -204,7 +204,7 @@ fn generate_defines_recursive(f: &mut File, base_name: &str, api_def: &ApiDef, s
                 FunctionType::Regular => generate_define_func(f, base_name, func)?,
                 FunctionType::Callback => {
                 	f.write_fmt(
-                		format_args!("#define PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n", 
+                		format_args!("#define PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n",
                 		base_name, func.name, func.name))?;
                 }
                 _ => (),
@@ -238,7 +238,7 @@ fn generate_struct_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
 }
 
 ///
-/// Generate defines 
+/// Generate defines
 ///
 
 fn generate_defines(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
@@ -295,7 +295,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(b"\n")?;
 
     for enum_def in &api_def.enums {
-        f.write_fmt(format_args!("enum PU{} {{\n", enum_def.name))?;
+        f.write_fmt(format_args!("typedef enum PU{} {{\n", enum_def.name))?;
 
         for entry in &enum_def.entries {
             match *entry {
@@ -304,7 +304,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
             }
         }
 
-        f.write_all(b"};\n\n")?;
+        f.write_fmt(format_args!("}} PU{};\n\n", enum_def.name))?;
     }
 
     // Write the struct for pods

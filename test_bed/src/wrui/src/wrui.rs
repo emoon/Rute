@@ -1503,12 +1503,22 @@ impl Action {
         }
     }
 
-    pub fn set_shortcut (&self, key: Keys, modifier: Keys) {
+    pub fn set_shortcut (&self, key: Keys) {
         
         unsafe {
             let obj = self.obj.unwrap();
         
-            ((*obj.funcs).set_shortcut)(obj.privd, key, modifier);
+            ((*obj.funcs).set_shortcut)(obj.privd, key);
+        
+        }
+    }
+
+    pub fn set_shortcut_mod (&self, key: Keys, modifier: Keys) {
+        
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            ((*obj.funcs).set_shortcut_mod)(obj.privd, key, modifier);
         
         }
     }

@@ -622,7 +622,8 @@ struct PUActionFuncs {
     void (*destroy)(struct PUBase* self_c);
     bool (*is_enabled)(struct PUBase* self_c);
     void (*set_text)(struct PUBase* self_c, const char* text);
-    void (*set_shortcut)(struct PUBase* self_c, PUKeys key, PUKeys modifier);
+    void (*set_shortcut)(struct PUBase* self_c, PUKeys key);
+    void (*set_shortcut_mod)(struct PUBase* self_c, PUKeys key, PUKeys modifier);
     void (*set_triggered_event)(void* object, void* user_data, void (*event)(void* self_c));
     void (*set_int_data)(struct PUBase* self_c, int data);
     int (*get_int_data)(struct PUBase* self_c);
@@ -943,7 +944,8 @@ typedef struct PU {
 
 #define PUAction_is_enabled(obj) obj.funcs->is_enabled(obj.priv_data)
 #define PUAction_set_text(obj, text) obj.funcs->set_text(obj.priv_data, text)
-#define PUAction_set_shortcut(obj, key, modifier) obj.funcs->set_shortcut(obj.priv_data, key, modifier)
+#define PUAction_set_shortcut(obj, key) obj.funcs->set_shortcut(obj.priv_data, key)
+#define PUAction_set_shortcut_mod(obj, key, modifier) obj.funcs->set_shortcut_mod(obj.priv_data, key, modifier)
 #define PUAction_set_triggered_event(obj, user_data, event) obj.funcs->set_triggered_event(obj.priv_data, user_data, event)
 #define PUAction_set_int_data(obj, data) obj.funcs->set_int_data(obj.priv_data, data)
 #define PUAction_get_int_data(obj) obj.funcs->get_int_data(obj.priv_data)

@@ -131,7 +131,8 @@ struct FramelessWindow : Widget {
 struct Action {
 	is_enabled() -> bool,
 	set_text(String text),
-	[manual] set_shortcut(Keys key, Keys modifier),
+	[manual] set_shortcut(Keys key),
+	[manual] set_shortcut_mod(Keys key, MetaKeys modifier),
 	[callback] triggered(),
 	[manual] set_int_data(i32 data),
 	[manual] get_int_data() -> i32,
@@ -243,6 +244,10 @@ struct HBoxLayout : Layout {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Taken directly from Qt but values has been removed. We will use a lookup on the native
 // side to map this table to the key ones
+
+enum MetaKeys {
+	CTRL,
+}
 
 enum Keys {
 	Key_Escape,                // misc keys
