@@ -120,6 +120,10 @@ struct MainWindow : Widget {
     set_central_widget(&WidgetType widget),
 }
 
+struct ToolWindowManager : Widget {
+    [manual] add_to_docking(&WidgetType widget),
+}
+
 struct FramelessWindow : Widget {
 	set_window_title(String title),
 	set_content(&WidgetType widget),

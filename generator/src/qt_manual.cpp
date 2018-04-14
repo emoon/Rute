@@ -13,33 +13,6 @@ static struct PUApplication create_application(struct PUBase* priv_data) {
 
     create_enum_mappings();
 
-    //QGuiApplication::setOrganizationName(QStringLiteral("TBL"));
-    //QCoreApplication::setOrganizationDomain(QStringLiteral("tbl.org"));
-
-    qt_obj->setStyle(new DarkStyle);
-
-    /*
-    qt_obj->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
-
-    QPalette darkPalette;
-    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
-    darkPalette.setColor(QPalette::WindowText, QColor(170,170,170));
-    darkPalette.setColor(QPalette::Text, QColor(170,170,170));
-    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
-    darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
-    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-    darkPalette.setColor(QPalette::ToolTipText, Qt::white);
-    darkPalette.setColor(QPalette::Button, QColor(53,53,53));
-    darkPalette.setColor(QPalette::ButtonText, Qt::white);
-    darkPalette.setColor(QPalette::BrightText, Qt::red);
-    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
-
-    darkPalette.setColor(QPalette::Highlight, QColor(50, 60, 70));
-    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
-
-    qt_obj->setPalette(darkPalette);
-    */
-
     struct PUApplication ctl;
     ctl.funcs = &s_application_funcs;
     ctl.priv_data = (struct PUBase*)qt_obj;
@@ -188,6 +161,24 @@ static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUMetaKey
     int tmod = s_meta_keys_lookup[(int)modifier];
 
     qt_data->setShortcut(tkey + tmod);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void tool_window_manager_add_to_docking(struct PUBase* self_c, struct PUBase* widget) {
+    WRToolWindowManager* qt_data = (WRToolWindowManager*)self_c;
+    ToolWindowManager::AreaReferenceType type;
+
+    static int hack = 0;
+
+    if (hack == 0) {
+        type = ToolWindowManager::EmptySpace;
+        hack = 1;
+    } else {
+        type = ToolWindowManager::LastUsedArea;
+    }
+
+    qt_data->addToolWindow((QWidget*)widget, type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
