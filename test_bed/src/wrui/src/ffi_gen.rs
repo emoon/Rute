@@ -34,6 +34,12 @@ pub struct PUWidgetType {
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+pub enum PUMetaKeys {
+    Ctrl,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 pub enum PUKeys {
     KeyEscape,
     KeyTab,
@@ -628,7 +634,7 @@ pub struct PUActionFuncs {
     pub is_enabled: extern "C" fn(self_c: *const PUBase) -> bool,
     pub set_text: extern "C" fn(self_c: *const PUBase, text: *const ::std::os::raw::c_char),
     pub set_shortcut: extern "C" fn(self_c: *const PUBase, key:  PUKeys),
-    pub set_shortcut_mod: extern "C" fn(self_c: *const PUBase, key:  PUKeys, modifier:  PUKeys),
+    pub set_shortcut_mod: extern "C" fn(self_c: *const PUBase, key:  PUKeys, modifier:  PUMetaKeys),
     pub set_triggered_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),
     pub set_int_data: extern "C" fn(self_c: *const PUBase, data: i32),
@@ -761,6 +767,7 @@ pub struct PUMenuBar {
 pub struct PUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const PUBase),
     pub set_style: extern "C" fn(self_c: *const PUBase, style: *const ::std::os::raw::c_char),
+    pub set_style_sheet: extern "C" fn(self_c: *const PUBase, filename: *const ::std::os::raw::c_char) -> i32,
     pub exec: extern "C" fn(self_c: *const PUBase),
     pub set_about_to_quit_event: extern "C" fn(object: *const PUBase, user_data: *const c_void,
                                         callback: extern "C" fn(self_c: *const c_void)),

@@ -68,11 +68,19 @@ extern struct PUHBoxLayoutFuncs s_h_box_layout_funcs;
 
 
 struct KeyVal { int val, key; };
+static std::map<int, int> s_meta_keys_lookup;
 static std::map<int, int> s_keys_lookup;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void create_enum_mappings() {
+    static KeyVal meta_keys_vals[] = {
+        { (int)Qt::CTRL, 0 },
+    };
+
+    for (int i = 0; i < 1; ++i) {
+        s_meta_keys_lookup[meta_keys_vals[i].key] = meta_keys_vals[i].val;
+    };
     static KeyVal keys_vals[] = {
         { (int)Qt::Key_Escape, 0 },
         { (int)Qt::Key_Tab, 1 },
@@ -1641,6 +1649,8 @@ static void application_set_style(struct PUBase* self_c, const char* style) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void application_exec(struct PUBase* self_c) { 
     QApplication* qt_data = (QApplication*)self_c;
     qt_data->exec();
@@ -2005,6 +2015,7 @@ static void destroy_h_box_layout(struct PUBase* priv_data) {
 #include <QStyleFactory>
 #include <DarkStyle.h>
 #include <QFileDialog>
+#include <QTextStream>
 //#include <QSvgRenderer>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2184,10 +2195,32 @@ static void action_set_shortcut(struct PUBase* self_c, PUKeys key) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUKeys modifier) {
+static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUMetaKeys modifier) {
     QAction* qt_data = (QAction*)self_c;
-    qt_data->setShortcut(s_keys_lookup[(int)key] | s_keys_lookup[(int)modifier]);
+    int tkey = s_keys_lookup[(int)key];
+    int tmod = s_meta_keys_lookup[(int)modifier];
+
+    qt_data->setShortcut(tkey + tmod);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_set_style_sheet(struct PUBase* self_c, const char* filename) {
+    QApplication* qt_data = (QApplication*)self_c;
+    QFile f(QString::fromUtf8(filename));
+
+    if (!f.exists()) {
+        printf("Unable to set stylesheet: %s, file not found\n", filename);
+        return 0;
+    } else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qt_data->setStyleSheet(ts.readAll());
+    }
+
+    return 1;
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2454,6 +2487,7 @@ struct PUMenuBarFuncs s_menu_bar_funcs = {
 struct PUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_set_style,
+    application_set_style_sheet,
     application_exec,
     set_application_about_to_quit_event,
     application_get_files,

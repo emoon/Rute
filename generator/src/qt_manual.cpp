@@ -2,6 +2,7 @@
 #include <QStyleFactory>
 #include <DarkStyle.h>
 #include <QFileDialog>
+#include <QTextStream>
 //#include <QSvgRenderer>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,5 +189,24 @@ static void action_set_shortcut_mod(struct PUBase* self_c, PUKeys key, PUMetaKey
 
     qt_data->setShortcut(tkey + tmod);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_set_style_sheet(struct PUBase* self_c, const char* filename) {
+    QApplication* qt_data = (QApplication*)self_c;
+    QFile f(QString::fromUtf8(filename));
+
+    if (!f.exists()) {
+        printf("Unable to set stylesheet: %s, file not found\n", filename);
+        return 0;
+    } else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qt_data->setStyleSheet(ts.readAll());
+    }
+
+    return 1;
+}
+
 
 

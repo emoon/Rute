@@ -190,6 +190,7 @@ struct MenuBar : Widget {
 #[attributes(ManualCreate, Drop)]
 struct Application {
 	set_style(String style),
+	[manual] set_style_sheet(String filename) -> i32,
 	exec(),
 	[callback] about_to_quit(),
 	// hack

@@ -11,6 +11,8 @@ pub use ffi_gen::PUBase as PUBase;
 
 use std::ffi::CString;
 
+pub use ffi_gen::PUMetaKeys as MetaKeys;
+
 pub use ffi_gen::PUKeys as Keys;
 
 pub use ffi_gen::PURect as Rect;
@@ -1513,7 +1515,7 @@ impl Action {
         }
     }
 
-    pub fn set_shortcut_mod (&self, key: Keys, modifier: Keys) {
+    pub fn set_shortcut_mod (&self, key: Keys, modifier: MetaKeys) {
         
         unsafe {
             let obj = self.obj.unwrap();
@@ -1973,6 +1975,20 @@ impl Application {
             let obj = self.obj.unwrap();
         
             ((*obj.funcs).set_style)(obj.privd, str_in_style_1.as_ptr());
+        
+        }
+    }
+
+    pub fn set_style_sheet (&self, filename: &str) -> i32 {
+        let str_in_filename_1 = CString::new(filename).unwrap();
+
+        unsafe {
+            let obj = self.obj.unwrap();
+        
+            let ret_val = ((*obj.funcs).set_style_sheet)(obj.privd, str_in_filename_1.as_ptr());
+          
+            ret_val
+          
         
         }
     }
