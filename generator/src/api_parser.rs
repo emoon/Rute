@@ -171,6 +171,20 @@ impl Struct {
         true
     }
 
+
+    ///
+    ///
+    ///
+    pub fn should_have_create_func_plugin(&self) -> bool {
+        for attrib in &self.attributes {
+            if attrib == "NoPluginCreate" {
+                return false;
+            }
+        }
+
+        true
+    }
+
     pub fn should_drop(&self) -> bool {
         for attrib in &self.attributes {
             if attrib == "Drop" {

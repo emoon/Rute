@@ -360,6 +360,29 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     f.write_all(b"    struct PUBase* priv_data;\n} PU;\n\n")?;
 
+    // generate plugin instance
+
+    f.write_all(b"typedef struct PUPlugin { \n")?;
+
+    for sdef in api_def
+        .entries
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
+    {
+        f.write_fmt(format_args!(
+            "    struct PU{} (*create_{})(struct PUBase* self);\n",
+            sdef.name,
+            sdef.name.to_snake_case()
+        ))?;
+    }
+
+
+    for func in api_def.get_all_static_functions() {
+        generate_func_def(&mut f, &func)?;
+    }
+
+    f.write_all(b"    struct PUBase* priv_data;\n} PUPlugin;\n\n")?;
+
     // Generate all the defines to make usage of the C api easier
 
 	generate_defines(&mut f, api_def)?;

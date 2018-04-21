@@ -33,7 +33,6 @@ static char s_temp_string_buffer[8192];
 
 struct PrivData {
     QWidget* parent;
-    void* user_data;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2651,7 +2650,6 @@ struct PU* PU_create_instance(void* user_data, QWidget* parent) {
     memcpy(instance, &s_pu, sizeof(PU));
     PrivData* priv_data = new PrivData;
     priv_data->parent = parent;
-    priv_data->user_data = user_data;
     return instance;
 }
 

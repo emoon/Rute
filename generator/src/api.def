@@ -120,6 +120,7 @@ struct MainWindow : Widget {
     set_central_widget(&WidgetType widget),
 }
 
+#[attributes(NoPluginCreate)]
 struct ToolWindowManager : Widget {
     [manual] add_to_docking(&WidgetType widget),
 }
@@ -191,7 +192,7 @@ struct MenuBar : Widget {
 	add_menu(&Menu menu),
 }
 
-#[attributes(ManualCreate, Drop)]
+#[attributes(ManualCreate, NoPluginCreate, Drop)]
 struct Application {
 	set_style(String style),
 	[manual] set_style_sheet(String filename) -> i32,

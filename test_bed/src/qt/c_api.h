@@ -850,6 +850,36 @@ typedef struct PU {
     struct PUBase* priv_data;
 } PU;
 
+typedef struct PUPlugin { 
+    struct PUWidget (*create_widget)(struct PUBase* self);
+    struct PUPushButton (*create_push_button)(struct PUBase* self);
+    struct PUPainter (*create_painter)(struct PUBase* self);
+    struct PUListWidgetItem (*create_list_widget_item)(struct PUBase* self);
+    struct PUListWidget (*create_list_widget)(struct PUBase* self);
+    struct PULabel (*create_label)(struct PUBase* self);
+    struct PULineEdit (*create_line_edit)(struct PUBase* self);
+    struct PUPlainTextEdit (*create_plain_text_edit)(struct PUBase* self);
+    struct PUSlider (*create_slider)(struct PUBase* self);
+    struct PUMainWindow (*create_main_window)(struct PUBase* self);
+    struct PUFramelessWindow (*create_frameless_window)(struct PUBase* self);
+    struct PUAction (*create_action)(struct PUBase* self);
+    struct PUUrl (*create_url)(struct PUBase* self);
+    struct PUMimeData (*create_mime_data)(struct PUBase* self);
+    struct PUTimer (*create_timer)(struct PUBase* self);
+    struct PUIcon (*create_icon)(struct PUBase* self);
+    struct PUFont (*create_font)(struct PUBase* self);
+    struct PUMenu (*create_menu)(struct PUBase* self);
+    struct PUMenuBar (*create_menu_bar)(struct PUBase* self);
+    struct PUPaintEvent (*create_paint_event)(struct PUBase* self);
+    struct PUDragEnterEvent (*create_drag_enter_event)(struct PUBase* self);
+    struct PUDropEvent (*create_drop_event)(struct PUBase* self);
+    struct PULayout (*create_layout)(struct PUBase* self);
+    struct PUVBoxLayout (*create_v_box_layout)(struct PUBase* self);
+    struct PUHBoxLayout (*create_h_box_layout)(struct PUBase* self);
+    struct PUArray (*open_files_dialog)(struct PUBase* self_c);
+    struct PUBase* priv_data;
+} PUPlugin;
+
 #define PUWidget_show(obj) obj.funcs->show(obj.priv_data)
 #define PUWidget_set_fixed_height(obj, width) obj.funcs->set_fixed_height(obj.priv_data, width)
 #define PUWidget_set_fixed_width(obj, width) obj.funcs->set_fixed_width(obj.priv_data, width)
