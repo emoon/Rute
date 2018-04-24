@@ -2645,7 +2645,7 @@ static struct PU s_pu = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-struct PU* PU_create_instance(void* user_data, QWidget* parent) {
+struct PU* wrui_create_plugin_instance(void* user_data, QWidget* parent) {
     struct PU* instance = new PU;
     memcpy(instance, &s_pu, sizeof(PU));
     PrivData* priv_data = new PrivData;

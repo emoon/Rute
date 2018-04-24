@@ -184,6 +184,34 @@ pub fn generate_ffi_bindings(
         f.write_all(b"}\n\n")?;
     }
 
+    /////////////////////////
+    // Generate the plugin UI
+
+    f.write_all(b"#[repr(C)]\n")?;
+    f.write_all(b"#[derive(Copy, Clone)]\n")?;
+    f.write_all(b"pub struct PUPluginUI {\n")?;
+
+    for struct_ in structs
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
+    {
+        f.write_fmt(format_args!(
+            "    pub create_{}: extern \"C\" fn(priv_data: *const PUBase) -> PU{},\n",
+            struct_.name.to_snake_case(),
+            struct_.name
+        ))?;
+    }
+
+    for func in api_def.get_all_static_functions() {
+        generate_ffi_function(&mut f, &func)?;
+    }
+
+    f.write_all(b"    pub privd: *const PUBase,\n")?;
+    f.write_all(b"}\n\n")?;
+
+    //////////////////////////
+    // Generate application UI
+
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"pub struct PU {\n")?;
 
@@ -202,8 +230,11 @@ pub fn generate_ffi_bindings(
         generate_ffi_function(&mut f, &func)?;
     }
 
+    f.write_all(b"    pub create_plugin_ui: extern \"C\" fn(self_c: *const PUBase, parent: *const PUBase) -> *const PUPluginUI,\n")?;
+    f.write_all(b"    pub destroy_plugin_ui: extern \"C\" fn(self_c: *const PUPluginUI),\n")?;
     f.write_all(b"    pub privd: *const PUBase,\n")?;
     f.write_all(b"}\n\n")?;
+
 
     Ok(())
 }

@@ -197,7 +197,11 @@ impl RustGenerator {
             }
         }
 
-        Ok(())
+        // Generate hard-coded struct for plugin UI
+        self.output.write_all(b"#[derive(Clone)]
+pub struct PluginUI {
+    pub obj: Option<PUPluginUI>,
+}\n\n")
     }
 
     ///

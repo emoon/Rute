@@ -154,6 +154,10 @@ pub struct HBoxLayout {
     pub obj: Option<PUHBoxLayout>,
 }
 
+#[derive(Clone)]
+pub struct PluginUI {
+    pub obj: Option<PUPluginUI>,
+}
 pub trait LayoutType {
     fn get_layout_type_obj(&self) -> *const PUBase;
 }
