@@ -46,14 +46,24 @@ static DESTROY_TEMPLATE: &'static [u8] =
     delete qt_obj;
 }\n\n";
 
-static FOOTER: &'static [u8] = b"
-struct PU* wrui_create_plugin_instance(void* user_data, QWidget* parent) {
-    struct PU* instance = new PU;
-    memcpy(instance, &s_pu, sizeof(PU));
+static PLUGIN_UI_CREATE: &'static [u8] = b"
+struct PUPluginUI* create_plugin_ui(struct PUBase* user_data, struct PUBase* parent) {
+    struct PUPluginUI* instance = new PUPluginUI;
+    memcpy(instance, &s_plugin_ui, sizeof(PUPluginUI));
     PrivData* priv_data = new PrivData;
-    priv_data->parent = parent;
+    priv_data->parent = (QWidget*)parent;
+    instance->priv_data = (PUBase*)priv_data;
     return instance;
-}\n\n
+}
+
+void destroy_plugin_ui(PUPluginUI* plugin_ui) {
+    PrivData* priv_data = (PrivData*)plugin_ui->priv_data;
+    delete priv_data;
+    delete plugin_ui;
+}
+\n\n";
+
+static FOOTER: &'static [u8] = b"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1021,9 +1031,31 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
 
+    f.write_all(b"    0,")?;    // hack, should be open_files
+    f.write_all(b"    create_plugin_ui,\n")?;
+    f.write_all(b"    destroy_plugin_ui,\n")?;
     f.write_all(b"    0,\n\n")?;
     f.write_all(b"};\n\n")?;
     f.write_all(SEPARATOR)
+}
+///
+/// Generate the PU structure
+///
+fn generate_plugin_ui_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    f.write_all(b"static struct PUPluginUI s_plugin_ui = {\n")?;
+
+    for sdef in api_def
+        .entries
+        .iter()
+        .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
+    {
+        f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
+    }
+
+    f.write_all(b"    0,\n\n")?;
+    f.write_all(b"};\n\n")?;
+    f.write_all(SEPARATOR)?;
+    f.write_all(PLUGIN_UI_CREATE)
 }
 
 ///
@@ -1179,6 +1211,7 @@ pub fn generate_qt_bindings(
     f.write_all(&cpp_manual_data)?;
 
     generate_struct_defs(&mut f, api_def)?;
+    generate_plugin_ui_struct(&mut f, api_def)?;
     generate_pu_struct(&mut f, api_def)?;
 
     f.write_all(FOOTER)

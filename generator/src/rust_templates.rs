@@ -22,6 +22,23 @@ impl Ui {
     pub fn get_c_api(&self) -> *const PU { self.pu }
 \n";
 
+pub static UI_FOOTER: &'static [u8] = b"    pub fn create_plugin_ui(&self, parent: &WidgetType) -> PluginUi {
+        PluginUi { pu: unsafe { ((*self.pu).create_plugin_ui)((*self.pu).privd, parent.get_widget_type_obj()) } }
+    }
+}\n
+\n";
+
+pub static PLUGIN_UI_HEADER: &'static [u8] =
+b"
+#[derive(Copy, Clone)]
+pub struct PluginUi {
+    pu: *const PUPluginUI
+}
+
+impl PluginUi {
+    pub fn get_c_api(&self) -> *const PUPluginUI { self.pu }
+\n";
+
 ///
 /// Method for destroying an object
 ///

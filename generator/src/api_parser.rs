@@ -177,7 +177,7 @@ impl Struct {
     ///
     pub fn should_have_create_func_plugin(&self) -> bool {
         for attrib in &self.attributes {
-            if attrib == "NoPluginCreate" {
+            if attrib == "NoPluginCreate" || attrib == "NoCreate" {
                 return false;
             }
         }

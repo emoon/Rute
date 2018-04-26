@@ -347,17 +347,6 @@ pub struct PluginUI {
         self.output.write_all(output.as_bytes())
     }
 
-    fn get_function_args(func: &Function) -> String {
-        let mut args = String::new();
-
-        for arg in &func.function_args {
-            args.push_str(&arg.vtype);
-            args.push_str(", ");
-        }
-
-        args
-    }
-
     ///
     /// Generate something that looks like this
     ///
@@ -378,6 +367,7 @@ pub struct PluginUI {
     ///         }
     ///     }
     /// }
+    /*
     fn generate_set_event_impl(&mut self, connect_funcs: &Vec<(&String, &Function)>) -> io::Result<()> {
         for funcs in connect_funcs {
             let mut template_data = Object::new();
@@ -411,13 +401,12 @@ pub struct PluginUI {
 
         Ok(())
     }
+    */
 
     ///
     /// This code assumes that the connection name has the same number of args
     ///
     fn generate_set_event(&mut self, api_def: &ApiDef) -> io::Result<()> {
-        let mut event_names: HashMap<String, Function> = HashMap::new();
-
         for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
             let funcs = api_def.collect_callback_functions(&sdef);
 
@@ -453,41 +442,8 @@ pub struct PluginUI {
 
 				self.output.write_all(output.as_bytes())?;
 			}
-
-			/*
-            for func in funcs
-                .iter()
-                .filter(|s| s.func_type == FunctionType::Callback)
-            {
-                let args = Self::get_function_args(&func);
-                let mut found = true;
-
-                if let Some(ref f) = event_names.get(&func.name) {
-                    let current_args = Self::get_function_args(f);
-                    if &current_args != &args {
-                        println!(
-                            "Signal: {} - has versions with diffrent args {} - {}",
-                            func.name, current_args, args
-                        );
-                        return Err(Error::new(ErrorKind::Other, "Fail"));
-                    }
-                } else {
-                    found = false;
-                }
-
-                if !found {
-                    event_names.insert(func.name.clone(), func.clone());
-                }
-            }
-            */
         }
 
-        //let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
-        //event_list.sort_by(|a, b| a.0.cmp(b.0));
-
-        // println!("{:?}", event_list);
-
-        //self.generate_set_event_impl(&event_list)
         Ok(())
     }
 
@@ -591,6 +547,30 @@ pub struct PluginUI {
         Ok(())
     }
 
+    fn generate_ui_plugin_impl(&mut self, api_def: &ApiDef) -> io::Result<()> {
+        self.output.write_all(PLUGIN_UI_HEADER)?;
+
+        for sdef in api_def
+            .entries
+            .iter()
+            .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
+        {
+            let snake_name = sdef.name.to_snake_case();
+
+            self.output.write_fmt(format_args!(
+                "    pub fn create_{}(&self) -> {} {{\n",
+                snake_name, sdef.name
+            ))?;
+            self.output.write_fmt(format_args!(
+                "        {} {{ obj: Some(unsafe {{ ((*self.pu).create_{})((*self.pu).privd) }}) }}\n",
+                sdef.name, snake_name
+            ))?;
+            self.output.write_all(b"    }\n\n")?;
+        }
+
+        self.output.write_all(b"}\n")
+    }
+
     fn generate_ui_impl(&mut self, api_def: &ApiDef) -> io::Result<()> {
         self.output.write_all(UI_HEADER)?;
 
@@ -612,9 +592,7 @@ pub struct PluginUI {
             self.output.write_all(b"    }\n\n")?;
         }
 
-        self.output.write_all(b"}\n")?;
-
-        Ok(())
+        self.output.write_all(UI_FOOTER)
     }
 
     fn new(filename: &str) -> RustGenerator {
@@ -648,5 +626,6 @@ pub fn generate_rust_bindings(filename: &str, api_def: &ApiDef) -> io::Result<()
     rust_gen.generate_set_event(&api_def)?;
     rust_gen.generate_virt_set_event(&api_def)?;
 
+    rust_gen.generate_ui_plugin_impl(&api_def)?;
     rust_gen.generate_ui_impl(&api_def)
 }

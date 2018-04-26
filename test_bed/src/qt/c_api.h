@@ -837,17 +837,11 @@ typedef struct PUPluginUI {
     struct PUMainWindow (*create_main_window)(struct PUBase* self);
     struct PUFramelessWindow (*create_frameless_window)(struct PUBase* self);
     struct PUAction (*create_action)(struct PUBase* self);
-    struct PUUrl (*create_url)(struct PUBase* self);
-    struct PUMimeData (*create_mime_data)(struct PUBase* self);
     struct PUTimer (*create_timer)(struct PUBase* self);
     struct PUIcon (*create_icon)(struct PUBase* self);
     struct PUFont (*create_font)(struct PUBase* self);
     struct PUMenu (*create_menu)(struct PUBase* self);
     struct PUMenuBar (*create_menu_bar)(struct PUBase* self);
-    struct PUPaintEvent (*create_paint_event)(struct PUBase* self);
-    struct PUDragEnterEvent (*create_drag_enter_event)(struct PUBase* self);
-    struct PUDropEvent (*create_drop_event)(struct PUBase* self);
-    struct PULayout (*create_layout)(struct PUBase* self);
     struct PUVBoxLayout (*create_v_box_layout)(struct PUBase* self);
     struct PUHBoxLayout (*create_h_box_layout)(struct PUBase* self);
     struct PUArray (*open_files_dialog)(struct PUBase* self_c);
