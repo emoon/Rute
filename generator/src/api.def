@@ -123,6 +123,7 @@ struct MainWindow : Widget {
 #[attributes(NoPluginCreate)]
 struct ToolWindowManager : Widget {
     [manual] add_to_docking(&WidgetType widget),
+    [manual] add_to_docking_floating(&WidgetType widget),
 }
 
 struct FramelessWindow : Widget {
