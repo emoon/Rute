@@ -27,7 +27,7 @@ static CREATE_WIDGET_TEMPLATE: &'static [u8] =
     }
     T ctl;
     ctl.funcs = funcs;
-    ctl.priv_data = (struct PUBase*)qt_obj;
+    ctl.priv_data = (struct RUBase*)qt_obj;
     return ctl;
 }\n\n";
 
@@ -36,27 +36,27 @@ static CREATE_GENERIC_TEMPLATE: &'static [u8] =
     QT* qt_obj = new QT();
     T ctl;
     ctl.funcs = funcs;
-    ctl.priv_data = (struct PUBase*)qt_obj;
+    ctl.priv_data = (struct RUBase*)qt_obj;
     return ctl;
 }\n\n";
 
 static DESTROY_TEMPLATE: &'static [u8] =
-    b"template<typename QT> void destroy_generic(struct PUBase* qt_data) {
+    b"template<typename QT> void destroy_generic(struct RUBase* qt_data) {
     QT* qt_obj = (QT*)qt_data;
     delete qt_obj;
 }\n\n";
 
 static PLUGIN_UI_CREATE: &'static [u8] = b"
-struct PUPluginUI* create_plugin_ui(struct PUBase* user_data, struct PUBase* parent) {
-    struct PUPluginUI* instance = new PUPluginUI;
-    memcpy(instance, &s_plugin_ui, sizeof(PUPluginUI));
+struct RUPluginUI* create_plugin_ui(struct RUBase* user_data, struct RUBase* parent) {
+    struct RUPluginUI* instance = new RUPluginUI;
+    memcpy(instance, &s_plugin_ui, sizeof(RUPluginUI));
     PrivData* priv_data = new PrivData;
     priv_data->parent = (QWidget*)parent;
-    instance->priv_data = (PUBase*)priv_data;
+    instance->priv_data = (RUBase*)priv_data;
     return instance;
 }
 
-void destroy_plugin_ui(PUPluginUI* plugin_ui) {
+void destroy_plugin_ui(RUPluginUI* plugin_ui) {
     PrivData* priv_data = (PrivData*)plugin_ui->priv_data;
     delete priv_data;
     delete plugin_ui;
@@ -68,11 +68,11 @@ static FOOTER: &'static [u8] = b"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef _WIN32
-extern \"C\" __declspec(dllexport) struct PU* wrui_get() {
+extern \"C\" __declspec(dllexport) struct RU* rute_get() {
 #else
-extern \"C\" struct PU* wrui_get() {
+extern \"C\" struct RU* rute_get() {
 #endif
-    return (PU*)&s_pu;
+    return (RU*)&s_pu;
 }
 ";
 
@@ -147,7 +147,7 @@ pub fn generate_signal_wrappers_includes(f: &mut File, api_def: &ApiDef) -> io::
     // Generate the ext refs for the static funcs
 
     for (_, arg) in ordered.iter().filter(|&(_, arg)| arg.reference) {
-        f.write_fmt(format_args!("extern struct PU{}Funcs s_{}_funcs;\n", arg.vtype, arg.vtype.to_snake_case()))?;
+        f.write_fmt(format_args!("extern struct RU{}Funcs s_{}_funcs;\n", arg.vtype, arg.vtype.to_snake_case()))?;
     }
 
     f.write_all(b"\n")?;
@@ -260,7 +260,7 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
             }
 
             if arg.reference {
-                f.write_fmt(format_args!("        auto temp_arg_{} = PU{} {{ &s_{}_funcs, (struct PUBase*){} }};\n",
+                f.write_fmt(format_args!("        auto temp_arg_{} = RU{} {{ &s_{}_funcs, (struct RUBase*){} }};\n",
                 index, arg.vtype, arg.vtype.to_snake_case(), arg.name.to_owned()))?;
             }
         }
@@ -272,7 +272,7 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
                 ("m_data".to_owned(), String::new())
             } else {
                 if arg.reference {
-                    (format!("(struct PUBase*)&temp_arg_{}", index), String::new())
+                    (format!("(struct RUBase*)&temp_arg_{}", index), String::new())
                 } else {
                     (arg.name.to_owned(), String::new())
                 }
@@ -295,12 +295,12 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
 /// Generate code for returing array
 ///
 ///    int count = ret_value.size();
-///     PUArray array = { 0 };
+///     RUArray array = { 0 };
 ///     if (count > 0) {
-///         PUListWidgetItem* elements = new PUListWidgetItem[count];
+///         RUListWidgetItem* elements = new RUListWidgetItem[count];
 ///         for (int i = 0; i < count; ++i) {
 ///             elements[i].funcs = &s_list_widget_item_funcs;
-///             elements[i].priv_data = (struct PUBase*)data.at(i);
+///             elements[i].priv_data = (struct RUBase*)data.at(i);
 ///         }
 ///         array.elements = (void*)elements;
 ///         array.count = int(count);
@@ -314,18 +314,18 @@ fn generate_return_array(f: &mut File, ret_val: &Variable) -> io::Result<()> {
 
     // Reference in this case means that the data from Qt is by pointer
     f.write_all(b"    int count = ret_value.size();\n")?;
-    f.write_all(b"    PUArray array = { 0 };\n")?;
+    f.write_all(b"    RUArray array = { 0 };\n")?;
     f.write_all(b"    if (count > 0) {\n")?;
-    f.write_fmt(format_args!("        PU{}* elements = new PU{}[count];\n", vtype, vtype))?;
+    f.write_fmt(format_args!("        RU{}* elements = new RU{}[count];\n", vtype, vtype))?;
     f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
     f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", ret_val.vtype.to_snake_case()))?;
     if ret_val.reference {
-        f.write_all(b"            elements[i].priv_data = (struct PUBase*)ret_value.at(i);\n")?;
+        f.write_all(b"            elements[i].priv_data = (struct RUBase*)ret_value.at(i);\n")?;
     } else {
         // this is hacky as it leaks memory and needs to be fixed
         f.write_fmt(format_args!("            Q{}* temp = new Q{}(ret_value.at(i));\n", vtype, vtype))?;
-        f.write_all(b"            elements[i].priv_data = (struct PUBase*)temp;\n")?;
-        //f.write_all(b"            elements[i].priv_data = (struct PUBase*)&ret_value.at(i);\n")?;
+        f.write_all(b"            elements[i].priv_data = (struct RUBase*)temp;\n")?;
+        //f.write_all(b"            elements[i].priv_data = (struct RUBase*)&ret_value.at(i);\n")?;
     }
 
     f.write_all(b"       }\n")?;
@@ -457,13 +457,13 @@ fn generate_func_def(
         } else {
             // If we have a complex (currently assumed) QT here we need to wrap it before we return
 
-            f.write_fmt(format_args!("    PU{} ctl;\n", ret_val.vtype))?;
+            f.write_fmt(format_args!("    RU{} ctl;\n", ret_val.vtype))?;
             f.write_fmt(format_args!(
                 "    ctl.funcs = &s_{}_funcs;\n",
                 ret_val.vtype.to_snake_case()
             ))?;
             f.write_fmt(format_args!(
-                "    ctl.priv_data = (struct PUBase*)ret_value;\n"
+                "    ctl.priv_data = (struct RUBase*)ret_value;\n"
             ))?;
             f.write_all(b"    return ctl;\n")?;
         }
@@ -637,16 +637,16 @@ fn generate_includes(
 ///
 ///  virtual void paintEvent(QPaintEvent* event) {
 ///        if (m_paint_event) {
-///            PUPainteEvent e;
+///            RUPainteEvent e;
 ///            memcpy(&e, s_paint_event, sizeof(e));
 ///            e.priv_data = event;
-///            m_paint_event((PUPainteEvent*)&e, m_paint_user_data);
+///            m_paint_event((RUPainteEvent*)&e, m_paint_user_data);
 ///        } else {
 ///            QWidget::paintEvent(event);
 ///        }
 ///    }
 ///
-///    PUPaintEventFunc m_paint_event = nullptr;
+///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
 fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::Result<()> {
@@ -661,16 +661,16 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
         event_type.vtype
     ))?;
     f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
-    f.write_fmt(format_args!("            PU{} e;\n", event_type.vtype,))?;
+    f.write_fmt(format_args!("            RU{} e;\n", event_type.vtype,))?;
     f.write_fmt(format_args!(
         "            e.funcs = &s_{}_event_funcs;\n",
         func.name
     ))?;
     f.write_fmt(format_args!(
-        "            e.priv_data = (struct PUBase*)event;\n"
+        "            e.priv_data = (struct RUBase*)event;\n"
     ))?;
     f.write_fmt(format_args!(
-        "            m_{}(m_{}_user_data, (struct PUBase*)&e);\n",
+        "            m_{}(m_{}_user_data, (struct RUBase*)&e);\n",
         func.name, func.name,
     ))?;
     f.write_fmt(format_args!("        }} else {{\n"))?;
@@ -705,7 +705,7 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
 ///
 /// Generate something like this
 ///
-/// static void set_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct PUBase* event)) {
+/// static void set_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct RUBase* event)) {
 ///     WRWidget* qt_object = (WRWidget*)object;
 ///     qt_object->m_paint_user_data = user_data;
 ///     qt_object->m_paint = event;
@@ -853,7 +853,7 @@ fn generate_struct_defs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_all(SEPARATOR)?;
         f.write_fmt(format_args!(
-            "struct PU{}Funcs s_{}_funcs = {{\n",
+            "struct RU{}Funcs s_{}_funcs = {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -881,7 +881,7 @@ fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::R
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_fmt(format_args!(
-            "extern struct PU{}Funcs s_{}_funcs;\n",
+            "extern struct RU{}Funcs s_{}_funcs;\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -891,7 +891,7 @@ fn generate_forward_declare_struct_defs(f: &mut File, api_def: &ApiDef) -> io::R
 }
 
 ///
-/// Generate enum remappings from WRUI enums to Qt
+/// Generate enum remappings from rute enums to Qt
 ///
 fn generate_enum_mappings(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     // write enum mapping defs
@@ -934,10 +934,10 @@ fn generate_enum_mappings(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(b"}\n\n")
 }
 
-// struct PUWidget* create_widget(void* priv_data) {
+// struct RUWidget* create_widget(void* priv_data) {
 //    PrivData* data = (PrivData*)priv_data;
 //    QWidget* qt_obj = new QWidget(data->parent);
-//    PUWidget* ctl = new PUWidget;
+//    RUWidget* ctl = new RUWidget;
 //    memcpy(ctl, s_widget, sizeof(s_widget);
 //    ctl->priv_data = qt_object;
 //    return ctl;
@@ -973,7 +973,7 @@ fn generate_create_functions(
         f.write_all(SEPARATOR)?;
 
         f.write_fmt(format_args!(
-            "static struct PU{} create_{}(struct PUBase* priv_data) {{\n",
+            "static struct RU{} create_{}(struct RUBase* priv_data) {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -984,7 +984,7 @@ fn generate_create_functions(
 
         if inherits_widget(&sdef, api_def) {
             f.write_fmt(format_args!(
-                "    return create_widget_func<struct PU{}, struct PU{}Funcs, WR{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                "    return create_widget_func<struct RU{}, struct RU{}Funcs, WR{}>(&s_{}_funcs, priv_data);\n}}\n\n",
                 struct_name,
                 struct_name,
                 struct_qt_name,
@@ -992,7 +992,7 @@ fn generate_create_functions(
             ))?;
         } else {
             f.write_fmt(format_args!(
-                "    return create_generic_func<struct PU{}, struct PU{}Funcs, Q{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                "    return create_generic_func<struct RU{}, struct RU{}Funcs, Q{}>(&s_{}_funcs, priv_data);\n}}\n\n",
                 struct_name,
                 struct_name,
                 struct_qt_name,
@@ -1004,7 +1004,7 @@ fn generate_create_functions(
             f.write_all(SEPARATOR)?;
 
             f.write_fmt(format_args!(
-                "static void destroy_{}(struct PUBase* priv_data) {{\n",
+                "static void destroy_{}(struct RUBase* priv_data) {{\n",
                 sdef.name.to_snake_case()
             ))?;
             f.write_fmt(format_args!(
@@ -1018,10 +1018,10 @@ fn generate_create_functions(
 }
 
 ///
-/// Generate the PU structure
+/// Generate the RU structure
 ///
 fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    f.write_all(b"static struct PU s_pu = {\n")?;
+    f.write_all(b"static struct RU s_pu = {\n")?;
 
     for sdef in api_def
         .entries
@@ -1039,10 +1039,10 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(SEPARATOR)
 }
 ///
-/// Generate the PU structure
+/// Generate the RU structure
 ///
 fn generate_plugin_ui_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    f.write_all(b"static struct PUPluginUI s_plugin_ui = {\n")?;
+    f.write_all(b"static struct RUPluginUI s_plugin_ui = {\n")?;
 
     for sdef in api_def
         .entries
@@ -1083,7 +1083,7 @@ impl TypeHandler for RectTypeHandler {
             "    const auto& t = qt_data->{}();\n",
             function_name.to_mixed_case()
         ))?;
-        f.write_fmt(format_args!("    return PURect {{ t.x(), t.y(), t.width(), t.height() }}"))
+        f.write_fmt(format_args!("    return RURect {{ t.x(), t.y(), t.width(), t.height() }}"))
     }
 }
 ///
@@ -1111,7 +1111,7 @@ impl TypeHandler for ColorTypeHandler {
             "    const auto& t = qt_data->{}();\n",
             function_name.to_mixed_case()
         ))?;
-        f.write_fmt(format_args!("    return PUColor {{ .r = uint16_t(t.red()), .g = uint16_t(t.green()), .b = uint16_t(t.blue()), .a = uint16_t(t.alpha()) }}"))
+        f.write_fmt(format_args!("    return RUColor {{ .r = uint16_t(t.red()), .g = uint16_t(t.green()), .b = uint16_t(t.blue()), .a = uint16_t(t.alpha()) }}"))
     }
 }
 

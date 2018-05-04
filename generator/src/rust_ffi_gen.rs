@@ -10,13 +10,13 @@ impl Variable {
             self.vtype.clone()
         } else {
             if self.array {
-                "PUArray".to_owned()
+                "RUArray".to_owned()
             } else if self.vtype == "String" {
                 "*const ::std::os::raw::c_char".to_owned()
             } else if self.vtype == "self" || self.reference {
-                "*const PUBase".to_owned()
+                "*const RUBase".to_owned()
             } else {
-                format!(" PU{}", self.vtype)
+                format!(" RU{}", self.vtype)
             }
         }
     }
@@ -37,7 +37,7 @@ fn generate_ffi_function(f: &mut File, func: &Function) -> io::Result<()> {
 ///
 fn generate_ffi_callback(f: &mut File, func: &Function) -> io::Result<()> {
     f.write_fmt(format_args!(
-        "    pub set_{}_event: extern \"C\" fn(object: *const PUBase, user_data: *const c_void,
+        "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
                                         callback: extern \"C\" fn(",
         func.name
     ))?;
@@ -107,13 +107,13 @@ pub fn generate_ffi_bindings(
 
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
-    f.write_all(b"pub struct PUBase {\n")?;
+    f.write_all(b"pub struct RUBase {\n")?;
     f.write_all(b"    _unused: [u8; 0],\n")?;
     f.write_all(b"}\n\n")?;
 
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
-    f.write_all(b"pub struct PUArray {\n")?;
+    f.write_all(b"pub struct RUArray {\n")?;
     f.write_all(b"    pub priv_data: *const c_void,\n")?;
     f.write_all(b"    pub elements: *const c_void,\n")?;
     f.write_all(b"    pub count: i32,\n")?;
@@ -124,7 +124,7 @@ pub fn generate_ffi_bindings(
     for trait_name in api_def.get_all_traits() {
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
-        f.write_fmt(format_args!("pub struct PU{} {{\n", trait_name))?;
+        f.write_fmt(format_args!("pub struct RU{} {{\n", trait_name))?;
         f.write_all(b"    _unused: [u8; 0],\n")?;
         f.write_all(b"}\n\n")?;
     }
@@ -134,7 +134,7 @@ pub fn generate_ffi_bindings(
     for enum_def in &api_def.enums {
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
-        f.write_fmt(format_args!("pub enum PU{} {{\n", enum_def.name))?;
+        f.write_fmt(format_args!("pub enum RU{} {{\n", enum_def.name))?;
 
         for entry in &enum_def.entries {
             match *entry {
@@ -151,7 +151,7 @@ pub fn generate_ffi_bindings(
     for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"#[derive(Default, Copy, Clone, Debug)]")?;
-        f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_body_events(&mut f, sdef)?;
@@ -163,10 +163,10 @@ pub fn generate_ffi_bindings(
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
         f.write_all(b"#[repr(C)]\n")?;
-        f.write_fmt(format_args!("pub struct PU{}Funcs {{\n", sdef.name))?;
+        f.write_fmt(format_args!("pub struct RU{}Funcs {{\n", sdef.name))?;
 
         if sdef.should_have_create_func() {
-            f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const PUBase),\n")?;
+            f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const RUBase),\n")?;
         }
 
         generate_struct_body_recursive(&mut f, api_def, &sdef)?;
@@ -175,12 +175,12 @@ pub fn generate_ffi_bindings(
 
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"#[derive(Copy, Clone)]\n")?;
-        f.write_fmt(format_args!("pub struct PU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
         f.write_fmt(format_args!(
-            "    pub funcs: *const PU{}Funcs,\n",
+            "    pub funcs: *const RU{}Funcs,\n",
             sdef.name
         ))?;
-        f.write_all(b"    pub privd: *const PUBase,\n")?;
+        f.write_all(b"    pub privd: *const RUBase,\n")?;
         f.write_all(b"}\n\n")?;
     }
 
@@ -189,14 +189,14 @@ pub fn generate_ffi_bindings(
 
     f.write_all(b"#[repr(C)]\n")?;
     f.write_all(b"#[derive(Copy, Clone)]\n")?;
-    f.write_all(b"pub struct PUPluginUI {\n")?;
+    f.write_all(b"pub struct RUPluginUI {\n")?;
 
     for struct_ in structs
         .iter()
         .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
     {
         f.write_fmt(format_args!(
-            "    pub create_{}: extern \"C\" fn(priv_data: *const PUBase) -> PU{},\n",
+            "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
             struct_.name.to_snake_case(),
             struct_.name
         ))?;
@@ -206,21 +206,21 @@ pub fn generate_ffi_bindings(
         generate_ffi_function(&mut f, &func)?;
     }
 
-    f.write_all(b"    pub privd: *const PUBase,\n")?;
+    f.write_all(b"    pub privd: *const RUBase,\n")?;
     f.write_all(b"}\n\n")?;
 
     //////////////////////////
     // Generate application UI
 
     f.write_all(b"#[repr(C)]\n")?;
-    f.write_all(b"pub struct PU {\n")?;
+    f.write_all(b"pub struct RU {\n")?;
 
     for struct_ in structs
         .iter()
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    pub create_{}: extern \"C\" fn(priv_data: *const PUBase) -> PU{},\n",
+            "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
             struct_.name.to_snake_case(),
             struct_.name
         ))?;
@@ -230,9 +230,9 @@ pub fn generate_ffi_bindings(
         generate_ffi_function(&mut f, &func)?;
     }
 
-    f.write_all(b"    pub create_plugin_ui: extern \"C\" fn(self_c: *const PUBase, parent: *const PUBase) -> *const PUPluginUI,\n")?;
-    f.write_all(b"    pub destroy_plugin_ui: extern \"C\" fn(self_c: *const PUPluginUI),\n")?;
-    f.write_all(b"    pub privd: *const PUBase,\n")?;
+    f.write_all(b"    pub create_plugin_ui: extern \"C\" fn(self_c: *const RUBase, parent: *const RUBase) -> *const RUPluginUI,\n")?;
+    f.write_all(b"    pub destroy_plugin_ui: extern \"C\" fn(self_c: *const RUPluginUI),\n")?;
+    f.write_all(b"    pub privd: *const RUBase,\n")?;
     f.write_all(b"}\n\n")?;
 
 

@@ -11,8 +11,8 @@ static HEADER: &'static [u8] = b"
 #ifdef __cplusplus
 extern \"C\" {
 #endif\n
-struct PUBase;\n
-struct PUArray {
+struct RUBase;\n
+struct RUArray {
     void* priv_data;
     void* elements;
     uint32_t count;
@@ -54,10 +54,10 @@ fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
     f.write_all(b";\n")
 }
 
-//#define PUWidget_show(widget) widget.funcs->show(widget.priv_data)
+//#define RUWidget_show(widget) widget.funcs->show(widget.priv_data)
 
 fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
+    f.write_fmt(format_args!("#define RU{}_{}(", base_name, func.name))?;
 
     func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
@@ -81,7 +81,7 @@ fn generate_define_func(f: &mut File, base_name: &str, func: &Function) -> io::R
 }
 
 fn generate_define_static_func(f: &mut File, base_name: &str, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!("#define PU{}_{}(", base_name, func.name))?;
+    f.write_fmt(format_args!("#define RU{}_{}(", base_name, func.name))?;
 
     func.write_c_func_def(f, |index, arg| {
 		if index == 0 {
@@ -204,7 +204,7 @@ fn generate_defines_recursive(f: &mut File, base_name: &str, api_def: &ApiDef, s
                 FunctionType::Regular => generate_define_func(f, base_name, func)?,
                 FunctionType::Callback => {
                 	f.write_fmt(
-                		format_args!("#define PU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n",
+                		format_args!("#define RU{}_set_{}_event(obj, user_data, event) obj.funcs->set_{}_event(obj.priv_data, user_data, event)\n",
                 		base_name, func.name, func.name))?;
                 }
                 _ => (),
@@ -257,7 +257,7 @@ fn generate_defines(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
 		let name = sdef.name.to_snake_case();
 
         f.write_fmt(format_args!(
-            "#define PU_create_{}(ui) ui->create_{}(ui->priv_data)\n",
+            "#define RU_create_{}(ui) ui->create_{}(ui->priv_data)\n",
             name, name))?;
     }
 
@@ -281,36 +281,36 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
     // Write forward declarations
 
     for sdef in &api_def.entries {
-        f.write_fmt(format_args!("struct PU{};\n", sdef.name))?;
+        f.write_fmt(format_args!("struct RU{};\n", sdef.name))?;
 
         if !sdef.is_pod() {
-            f.write_fmt(format_args!("struct PU{}Funcs;\n", sdef.name))?;
+            f.write_fmt(format_args!("struct RU{}Funcs;\n", sdef.name))?;
         }
     }
 
     for trait_name in api_def.get_all_traits() {
-        f.write_fmt(format_args!("struct PU{};\n", trait_name))?;
+        f.write_fmt(format_args!("struct RU{};\n", trait_name))?;
     }
 
     f.write_all(b"\n")?;
 
     for enum_def in &api_def.enums {
-        f.write_fmt(format_args!("typedef enum PU{} {{\n", enum_def.name))?;
+        f.write_fmt(format_args!("typedef enum RU{} {{\n", enum_def.name))?;
 
         for entry in &enum_def.entries {
             match *entry {
-                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    PU{}_{},\n", enum_def.name, name))?,
-                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    PU{}_{} = {},\n", enum_def.name, name, val))?,
+                EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    RU{}_{},\n", enum_def.name, name))?,
+                EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    RU{}_{} = {},\n", enum_def.name, name, val))?,
             }
         }
 
-        f.write_fmt(format_args!("}} PU{};\n\n", enum_def.name))?;
+        f.write_fmt(format_args!("}} RU{};\n\n", enum_def.name))?;
     }
 
     // Write the struct for pods
 
     for sdef in api_def.entries.iter().filter(|s| s.is_pod()) {
-        f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_events(&mut f, sdef)?;
@@ -321,19 +321,19 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
     // Write non-pod structs
 
     for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
-        f.write_fmt(format_args!("struct PU{}Funcs {{\n", sdef.name))?;
+        f.write_fmt(format_args!("struct RU{}Funcs {{\n", sdef.name))?;
 
         if sdef.should_have_create_func() {
-            f.write_all(b"    void (*destroy)(struct PUBase* self_c);\n")?;
+            f.write_all(b"    void (*destroy)(struct RUBase* self_c);\n")?;
         }
 
         generate_struct_body_recursive(&mut f, api_def, sdef)?;
         generate_struct_events(&mut f, sdef)?;
         f.write_all(b"};\n\n")?;
 
-        f.write_fmt(format_args!("struct PU{} {{\n", sdef.name))?;
-        f.write_fmt(format_args!("    struct PU{}Funcs* funcs;\n", sdef.name))?;
-        f.write_all(b"    struct PUBase* priv_data;\n")?;
+        f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
+        f.write_fmt(format_args!("    struct RU{}Funcs* funcs;\n", sdef.name))?;
+        f.write_all(b"    struct RUBase* priv_data;\n")?;
 
         f.write_all(b"};\n\n")?;
     }
@@ -341,7 +341,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
     ////////////////////////////
     // generate plugin instance
 
-    f.write_all(b"typedef struct PUPluginUI { \n")?;
+    f.write_all(b"typedef struct RUPluginUI { \n")?;
 
     for sdef in api_def
         .entries
@@ -349,7 +349,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| !s.is_pod() && s.should_have_create_func_plugin())
     {
         f.write_fmt(format_args!(
-            "    struct PU{} (*create_{})(struct PUBase* self);\n",
+            "    struct RU{} (*create_{})(struct RUBase* self);\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -359,12 +359,12 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         generate_func_def(&mut f, &func)?;
     }
 
-    f.write_all(b"    struct PUBase* priv_data;\n} PUPlugin;\n\n")?;
+    f.write_all(b"    struct RUBase* priv_data;\n} RUPlugin;\n\n")?;
 
     ///////////////////////
     // generate C_API entry
 
-    f.write_all(b"typedef struct PU { \n")?;
+    f.write_all(b"typedef struct RU { \n")?;
 
     for sdef in api_def
         .entries
@@ -372,7 +372,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| !s.is_pod() && s.should_have_create_func())
     {
         f.write_fmt(format_args!(
-            "    struct PU{} (*create_{})(struct PUBase* self);\n",
+            "    struct RU{} (*create_{})(struct RUBase* self);\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -384,9 +384,9 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
 
     // generate func for create and destroy a plugin interface instance
 
-    f.write_all(b"    struct PUPluginUI* (*create_plugin_ui)(struct PUBase* self, struct PUBase* parent);\n")?;
-    f.write_all(b"    void (*destroy_plugin_ui)(struct PUPluginUI* self);\n")?;
-    f.write_all(b"    struct PUBase* priv_data;\n} PU;\n\n")?;
+    f.write_all(b"    struct RUPluginUI* (*create_plugin_ui)(struct RUBase* self, struct RUBase* parent);\n")?;
+    f.write_all(b"    void (*destroy_plugin_ui)(struct RUPluginUI* self);\n")?;
+    f.write_all(b"    struct RUBase* priv_data;\n} RU;\n\n")?;
 
     // Generate all the defines to make usage of the C api easier
 

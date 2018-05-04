@@ -1,6 +1,6 @@
 # Rute
 
-Rute is a Qt binding generator for Rust and C. It allows usage of the [Qt](https://www.qt.io) C++ API from Rust and C. There are already several such projects such as [rust-qt](https://github.com/rust-qt) and [qmlrs](https://github.com/cyndis/qmlrs) so what maske Rute different?
+Rute is a Qt binding wrapper and generator for Rust and C. It allows usage of the [Qt](https://www.qt.io) C++ API from Rust and C. There are already several such projects such as [rust-qt](https://github.com/rust-qt) and [qmlrs](https://github.com/cyndis/qmlrs) so what maske Rute different?
 
 ## Overview
 
@@ -36,6 +36,7 @@ Rute is currently being used in [HippoPlayer](https://github.com/emoon/HippoPlay
 * Some functions needs to be implemented manually in C++ but only the C++ and not the rest of the bindings.
 * The Rust API is currently quite unsafe while it looks safe. This is something I want to address.
 * Signals and slots can't easily be defined as in C++ and is only present for the ones defined in the API.
+* Currently very WIP. Has (known) memory leaks that needs to be fixed.
 * Currently the code for the generator is quite ugly and something that needs to be cleaned up.
 
 ### Usage

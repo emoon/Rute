@@ -6,20 +6,20 @@ pub static HEADER: &'static [u8] = b"
 use ffi_gen::*;
 use std::ffi::CStr;
 use std::slice;
-pub use ffi_gen::PUBase as PUBase;\n\n
+pub use ffi_gen::RUBase as RUBase;\n\n
 use std::ffi::CString;\n\n";
 
 pub static UI_HEADER: &'static [u8] =
 b"
 #[derive(Copy, Clone)]
 pub struct Ui {
-    pu: *const PU
+    pu: *const RU
 }
 
 impl Ui {
-    pub fn new(pu: *const PU) -> Ui { Ui { pu } }
+    pub fn new(pu: *const RU) -> Ui { Ui { pu } }
 
-    pub fn get_c_api(&self) -> *const PU { self.pu }
+    pub fn get_c_api(&self) -> *const RU { self.pu }
 \n";
 
 pub static UI_FOOTER: &'static [u8] = b"    pub fn create_plugin_ui(&self, parent: &WidgetType) -> PluginUi {
@@ -32,12 +32,12 @@ pub static PLUGIN_UI_HEADER: &'static [u8] =
 b"
 #[derive(Copy, Clone)]
 pub struct PluginUi {
-    pu: *const PUPluginUI
+    pu: *const RUPluginUI
 }
 
 impl PluginUi {
-    pub fn new(pu: *const PUPluginUI) -> PluginUi { PluginUi { pu } }
-    pub fn get_c_api(&self) -> *const PUPluginUI { self.pu }
+    pub fn new(pu: *const RUPluginUI) -> PluginUi { PluginUi { pu } }
+    pub fn get_c_api(&self) -> *const RUPluginUI { self.pu }
 \n";
 
 ///
@@ -88,10 +88,10 @@ pub static EVENT_TEMPLATE: &str = "
 macro_rules! set_{{name}}_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::wrui::wrui::PUBase) {
+      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::rute::rute::RUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
-              let event = {{event_type}}Event { obj: Some(*(event as *const ::wrui::ffi_gen::PU{{event_type}}Event)) };
+              let event = {{event_type}}Event { obj: Some(*(event as *const ::rute::ffi_gen::RU{{event_type}}Event)) };
               $callback(&mut *app, &event);
           }
       }
@@ -130,7 +130,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
                 Vec::new()
             } else {
                 let mut data = Vec::with_capacity(ret_val.count as usize);
-                let slice = slice::from_raw_parts(ret_val.elements as *const PU{{rust_return_type}}, ret_val.count as usize);
+                let slice = slice::from_raw_parts(ret_val.elements as *const RU{{rust_return_type}}, ret_val.count as usize);
 
                 for item in slice {
                     data.push({{rust_return_type}} { obj: Some(*item) });

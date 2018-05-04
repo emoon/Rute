@@ -209,8 +209,8 @@ impl Struct {
 impl Variable {
     pub fn get_c_type(&self, use_type_ref: bool) -> String {
         match self.vtype_e {
-            VariableType::SelfType => "struct PUBase*".to_owned(),
-            VariableType::Enum(ref tname) => format!("PU{}", tname),
+            VariableType::SelfType => "struct RUBase*".to_owned(),
+            VariableType::Enum(ref tname) => format!("RU{}", tname),
             VariableType::Primitive(ref tname) => {
                 if tname == "f32" {
                     "float".to_owned()
@@ -232,21 +232,21 @@ impl Variable {
 
             VariableType::Reference(ref _tname) => {
             	if use_type_ref {
-                    format!("struct PU{}", _tname)
+                    format!("struct RU{}", _tname)
             	} else {
-            		"struct PUBase*".to_owned()
+            		"struct RUBase*".to_owned()
             	}
             }
-            VariableType::Array(ref _tname) => "struct PUArray".to_owned(),
+            VariableType::Array(ref _tname) => "struct RUArray".to_owned(),
             VariableType::Regular(ref tname) => {
                 if tname == "String" {
                     "const char*".to_owned()
                 } else {
-                    format!("struct PU{}", tname)
+                    format!("struct RU{}", tname)
                 }
             }
 
-            VariableType::Optional(ref tname) => format!("struct PU{}", tname),
+            VariableType::Optional(ref tname) => format!("struct RU{}", tname),
 
             _ => {
                 println!("Should not be here {}", self.vtype);

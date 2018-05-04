@@ -127,7 +127,7 @@ impl TypeHandler for TraitTypeHandler {
     }
 
     fn gen_body(&self, arg_name: &str, _index: usize) -> (String, String) {
-        (format!("{}.get_{}_obj() as *const PUBase", arg_name, self.name.to_snake_case()), String::new())
+        (format!("{}.get_{}_obj() as *const RUBase", arg_name, self.name.to_snake_case()), String::new())
     }
 }
 
@@ -141,7 +141,7 @@ impl RustGenerator {
         for trait_name in traits {
             self.output.write_fmt(format_args!("pub trait {} {{\n", trait_name))?;
             self.output.write_fmt(format_args!(
-                "    fn get_{}_obj(&self) -> *const PUBase;\n}}\n\n",
+                "    fn get_{}_obj(&self) -> *const RUBase;\n}}\n\n",
                 trait_name.to_snake_case()
             ))?;
 
@@ -158,7 +158,7 @@ impl RustGenerator {
     fn generate_enums(&mut self, api_def: &ApiDef) -> io::Result<()> {
         for enum_def in &api_def.enums {
             self.output.write_fmt(format_args!(
-                "pub use ffi_gen::PU{} as {};\n\n", enum_def.name, enum_def.name))?;
+                "pub use ffi_gen::RU{} as {};\n\n", enum_def.name, enum_def.name))?;
         }
 
         Ok(())
@@ -172,7 +172,7 @@ impl RustGenerator {
             if sdef.is_pod() {
                 // for pod structs we re-use the FFI implementation
                 self.output.write_fmt(format_args!(
-                    "pub use ffi_gen::PU{} as {};\n\n",
+                    "pub use ffi_gen::RU{} as {};\n\n",
                     sdef.name, sdef.name
                 ))?;
             } else {
@@ -190,7 +190,7 @@ impl RustGenerator {
                     }
                 } else {
                     // Assume for non-pod that we only use the FFI interface to do stuff.
-                    self.output.write_fmt(format_args!("    pub obj: Option<PU{}>,\n", sdef.name))?;
+                    self.output.write_fmt(format_args!("    pub obj: Option<RU{}>,\n", sdef.name))?;
                 }
 
                 self.output.write_all(b"}\n\n")?;
@@ -200,7 +200,7 @@ impl RustGenerator {
         // Generate hard-coded struct for plugin UI
         self.output.write_all(b"#[derive(Clone)]
 pub struct PluginUI {
-    pub obj: Option<PUPluginUI>,
+    pub obj: Option<RUPluginUI>,
 }\n\n")
     }
 
@@ -384,7 +384,7 @@ pub struct PluginUI {
                 if index == 0 {
                     ("&mut *app".to_owned(), String::new())
                 } else if arg.reference {
-                    (format!("&{} {{ obj: Some(*({} as *const wrui::ffi_gen::PU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
+                    (format!("&{} {{ obj: Some(*({} as *const rute::ffi_gen::RU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
                 } else {
                     (arg.name.to_owned(), String::new())
                 }
@@ -425,7 +425,7 @@ pub struct PluginUI {
 					if index == 0 {
 						("&mut *app".to_owned(), String::new())
 					} else if arg.reference {
-						(format!("&{} {{ obj: Some(*({} as *const wrui::ffi_gen::PU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
+						(format!("&{} {{ obj: Some(*({} as *const rute::ffi_gen::RU{})) }}", arg.vtype, arg.name, arg.vtype), String::new())
 					} else {
 						(arg.name.to_owned(), String::new())
 					}
@@ -452,7 +452,7 @@ pub struct PluginUI {
     /// macro_rules! set_released_event {
     ///     ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     ///         {
-    ///             extern "C" fn temp_call(target: *mut std::os::raw::c_void, event: *const PUBase) {
+    ///             extern "C" fn temp_call(target: *mut std::os::raw::c_void, event: *const RUBase) {
     ///                 unsafe {
     ///                     let app = target as *mut $call_type;
     ///                     let event = EventType { obj: Some(*event) };
@@ -525,7 +525,7 @@ pub struct PluginUI {
                 self.output.write_all(b"    fn drop(&mut self) {\n")?;
                 self.output.write_all(b"       unsafe {\n")?;
                 self.output.write_all(b"          let obj = self.obj.unwrap();\n")?;
-                self.output.write_all(b"          ((*obj.funcs).destroy)(obj.privd as *const PUBase)\n")?;
+                self.output.write_all(b"          ((*obj.funcs).destroy)(obj.privd as *const RUBase)\n")?;
                 self.output.write_all(b"       }\n")?;
                 self.output.write_all(b"    }\n")?;
                 self.output.write_all(b"}\n\n")?;
@@ -534,11 +534,11 @@ pub struct PluginUI {
             for trait_name in api_def.get_traits(&sdef) {
                 self.output.write_fmt(format_args!("impl {} for {} {{\n", trait_name, sdef.name))?;
                 self.output.write_fmt(format_args!(
-                    "    fn get_{}_obj(&self) -> *const PUBase {{\n",
+                    "    fn get_{}_obj(&self) -> *const RUBase {{\n",
                     trait_name.to_snake_case()
                 ))?;
                 self.output.write_all(b"       let obj = self.obj.unwrap();\n")?;
-                self.output.write_all(b"       obj.privd as *const PUBase\n")?;
+                self.output.write_all(b"       obj.privd as *const RUBase\n")?;
                 self.output.write_all(b"    }\n")?;
                 self.output.write_all(b"}\n\n")?;
             }

@@ -1,5 +1,5 @@
 [package]
-name = "ui_gen"
+name = "rute_gen"
 version = "0.1.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
 
