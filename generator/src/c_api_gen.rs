@@ -359,6 +359,7 @@ pub fn generate_c_api(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         generate_func_def(&mut f, &func)?;
     }
 
+    f.write_all(b"    struct RUWidget (*get_parent)(struct RUBase* self);\n")?;
     f.write_all(b"    struct RUBase* priv_data;\n} RUPlugin;\n\n")?;
 
     ///////////////////////

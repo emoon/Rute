@@ -14,7 +14,22 @@ static char s_temp_string_buffer[8192];
 
 struct PrivData {
     QWidget* parent;
-};\n\n";
+};
+
+struct RUWidget plugin_ui_get_parent(RUBase* plugin_ui_priv) {
+    PrivData* priv_data = (PrivData*)plugin_ui_priv;
+
+    // meh?
+
+    struct RUWidget widget = {
+        &s_widget_funcs,
+        (RUBase*)priv_data->parent,
+    };
+
+    return widget;
+}
+
+\n\n";
 
 static CREATE_WIDGET_TEMPLATE: &'static [u8] =
     b"template<typename T, typename F, typename QT> T create_widget_func(F* funcs, void* priv_data) {
@@ -635,7 +650,7 @@ fn generate_includes(
 ///
 /// Genarate event setup code. It will look something like this
 ///
-///  virtual void paintEvent(QPaintEvent* event) {
+///  void Class::paintEvent(QPaintEvent* event) {
 ///        if (m_paint_event) {
 ///            RUPainteEvent e;
 ///            memcpy(&e, s_paint_event, sizeof(e));
@@ -649,41 +664,17 @@ fn generate_includes(
 ///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
-fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::Result<()> {
+fn generate_event_setup_def(f: &mut File, class_name: &str, func: &Function) -> io::Result<()> {
     let event_type = &func.function_args[1];
 
     // Write virtual function def
-    f.write_all(b"protected:\n")?;
+    f.write_all(b"public:\n")?;
 
     f.write_fmt(format_args!(
-        "    virtual void {}Event(Q{}* event) {{\n",
+        "    virtual void {}Event(Q{}* event);\n",
         func.name.to_mixed_case(),
         event_type.vtype
     ))?;
-    f.write_fmt(format_args!("        if (m_{}) {{\n", func.name))?;
-    f.write_fmt(format_args!("            RU{} e;\n", event_type.vtype,))?;
-    f.write_fmt(format_args!(
-        "            e.funcs = &s_{}_event_funcs;\n",
-        func.name
-    ))?;
-    f.write_fmt(format_args!(
-        "            e.priv_data = (struct RUBase*)event;\n"
-    ))?;
-    f.write_fmt(format_args!(
-        "            m_{}(m_{}_user_data, (struct RUBase*)&e);\n",
-        func.name, func.name,
-    ))?;
-    f.write_fmt(format_args!("        }} else {{\n"))?;
-    f.write_fmt(format_args!(
-        "            Q{}::{}Event(event);\n",
-        class_name,
-        func.name.to_mixed_case()
-    ))?;
-    f.write_fmt(format_args!("        }}\n"))?;
-    f.write_fmt(format_args!("    }}\n\n"))?;
-
-    // write data
-    f.write_all(b"public:\n")?;
 
     f.write_fmt(format_args!(
         "    void (*m_{})({})",
@@ -702,6 +693,41 @@ fn generate_event_setup(f: &mut File, class_name: &str, func: &Function) -> io::
     Ok(())
 }
 
+fn generate_event_setup_impl(f: &mut File, struct_name: &str, class_name: &str, func: &Function) -> io::Result<()> {
+    let event_type = &func.function_args[1];
+
+    f.write_fmt(format_args!(
+        "void WR{}::{}Event(Q{}* event) {{\n",
+        struct_name,
+        func.name.to_mixed_case(),
+        event_type.vtype
+    ))?;
+    f.write_fmt(format_args!("    if (m_{}) {{\n", func.name))?;
+    f.write_fmt(format_args!("        RU{} e;\n", event_type.vtype,))?;
+    f.write_fmt(format_args!(
+        "        e.funcs = &s_{}_event_funcs;\n",
+        func.name
+    ))?;
+    f.write_fmt(format_args!(
+        "        e.priv_data = (struct RUBase*)event;\n"
+    ))?;
+    f.write_fmt(format_args!(
+        "        m_{}(m_{}_user_data, (struct RUBase*)&e);\n",
+        func.name, func.name,
+    ))?;
+    f.write_fmt(format_args!("    }} else {{\n"))?;
+    f.write_fmt(format_args!(
+        "        Q{}::{}Event(event);\n",
+        class_name,
+        func.name.to_mixed_case()
+    ))?;
+    f.write_fmt(format_args!("    }}\n"))?;
+    f.write_fmt(format_args!("}}\n\n"))?;
+
+    Ok(())
+}
+
+
 ///
 /// Generate something like this
 ///
@@ -719,7 +745,7 @@ fn generate_event_setup_funcs(
     let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
 
     f.write_fmt(format_args!(
-        "static {} {{\n",
+        "{} {{\n",
         callback_fun_def_name(false, &func_name, func)
     ))?;
 
@@ -738,8 +764,9 @@ fn generate_event_setup_funcs(
 ///
 /// Generate wrapper classes for all the Widges. This allows us to override
 /// virtual functions from the outside (in C and other langs)
+/// defs
 ///
-fn generate_wrapper_classes(
+fn generate_wrapper_classes_defs(
     f: &mut File,
     struct_name_map: &HashMap<&str, &str>,
     api_def: &ApiDef,
@@ -759,6 +786,7 @@ fn generate_wrapper_classes(
             "class WR{} : public Q{} {{\n",
             struct_qt_name, struct_qt_name
         ))?;
+        f.write_all(b"    Q_OBJECT\n")?;
         f.write_all(b"public:\n")?;
         f.write_all(b"    Q_PROPERTY(QString persistData READ persistData WRITE setPersistData DESIGNABLE false SCRIPTABLE false)\n")?;
         f.write_all(b"    void setPersistData(const QString& data) { m_persistData = data; }\n")?;
@@ -775,10 +803,41 @@ fn generate_wrapper_classes(
         sdef.get_event_functions(&mut event_funcs);
 
         for func in &event_funcs {
-            generate_event_setup(f, &struct_qt_name, &func)?;
+            generate_event_setup_def(f, &struct_qt_name, &func)?;
         }
 
         f.write_all(b"};\n\n")?;
+    }
+
+    Ok(())
+}
+
+///
+/// Generate wrapper classes for all the Widges. This allows us to override
+/// virtual functions from the outside (in C and other langs)
+/// defs
+///
+fn generate_wrapper_classes_impl(
+    f: &mut File,
+    struct_name_map: &HashMap<&str, &str>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    for sdef in api_def
+        .entries
+        .iter()
+        .filter(|v| !v.is_pod() && inherits_widget(&v, api_def))
+    {
+        let struct_name = sdef.name.as_str();
+        let struct_qt_name = struct_name_map
+            .get(struct_name)
+            .unwrap_or_else(|| &struct_name);
+
+        let mut event_funcs = Vec::new();
+        sdef.get_event_functions(&mut event_funcs);
+
+        for func in &event_funcs {
+            generate_event_setup_impl(f, &struct_name, &struct_qt_name, &func)?;
+        }
 
         // Generate the setup functions for events
 
@@ -1044,7 +1103,7 @@ fn generate_pu_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(SEPARATOR)
 }
 ///
-/// Generate the RU structure
+/// Generate the RUPluginUI structure
 ///
 fn generate_plugin_ui_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(b"static struct RUPluginUI s_plugin_ui = {\n")?;
@@ -1057,6 +1116,8 @@ fn generate_plugin_ui_struct(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
     }
 
+    f.write_all(b"    0,\n\n")?;
+    f.write_all(b"    plugin_ui_get_parent,\n")?;
     f.write_all(b"    0,\n\n")?;
     f.write_all(b"};\n\n")?;
     f.write_all(SEPARATOR)?;
@@ -1182,21 +1243,23 @@ pub fn generate_qt_bindings(
     f.write_all(b"#include \"qt_api_gen.h\"\n")?;
     f.write_all(b"#include <assert.h>\n")?;
 
-    generate_includes(&mut f, &struct_name_map, api_def)?;
-
-    f.write_all(HEADER)?;
-
     build_signal_wrappers_info(&mut signals_info, api_def);
 
     header_file.write_all(b"#pragma once\n\n#include \"c_api.h\"\n#include <QObject>\n")?;
+    generate_includes(&mut header_file, &struct_name_map, api_def)?;
+    generate_includes(&mut f, &struct_name_map, api_def)?;
 
+    generate_forward_declare_struct_defs(&mut header_file, api_def)?;
     generate_signal_wrappers_includes(&mut header_file, api_def)?;
     generate_signal_wrappers(&mut header_file, &signals_info)?;
 
-    generate_forward_declare_struct_defs(&mut f, api_def)?;
+    //generate_forward_declare_struct_defs(&mut f, api_def)?;
     generate_enum_mappings(&mut f, api_def)?;
 
-    generate_wrapper_classes(&mut f, &struct_name_map, api_def)?;
+    f.write_all(HEADER)?;
+
+    generate_wrapper_classes_defs(&mut header_file, &struct_name_map, api_def)?;
+    generate_wrapper_classes_impl(&mut f, &struct_name_map, api_def)?;
 
     // generate wrapper functions
 
@@ -1212,6 +1275,7 @@ pub fn generate_qt_bindings(
     }
 
     generate_create_functions(&mut f, &struct_name_map, api_def)?;
+
 
     f.write_all(&cpp_manual_data)?;
 

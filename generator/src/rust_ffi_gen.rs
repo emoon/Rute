@@ -206,6 +206,7 @@ pub fn generate_ffi_bindings(
         generate_ffi_function(&mut f, &func)?;
     }
 
+    f.write_all(b"    pub get_parent: extern \"C\" fn(self_c: *const RUBase) -> RUWidget,\n")?;
     f.write_all(b"    pub privd: *const RUBase,\n")?;
     f.write_all(b"}\n\n")?;
 

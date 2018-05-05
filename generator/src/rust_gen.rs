@@ -568,6 +568,10 @@ pub struct PluginUI {
             self.output.write_all(b"    }\n\n")?;
         }
 
+        self.output.write_all(b"    pub fn get_parent(&self) -> Widget {\n")?;
+        self.output.write_all(b"        Widget { obj: Some(unsafe { ((*self.pu).get_parent)((*self.pu).privd) }) }\n")?;
+        self.output.write_all(b"    }\n\n")?;
+
         self.output.write_all(b"}\n")
     }
 
