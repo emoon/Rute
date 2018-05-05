@@ -760,6 +760,11 @@ fn generate_wrapper_classes(
             struct_qt_name, struct_qt_name
         ))?;
         f.write_all(b"public:\n")?;
+        f.write_all(b"    Q_PROPERTY(QString persistData READ persistData WRITE setPersistData DESIGNABLE false SCRIPTABLE false)\n")?;
+        f.write_all(b"    void setPersistData(const QString& data) { m_persistData = data; }\n")?;
+        f.write_all(b"    const QString& persistData() { return m_persistData; }\n")?;
+        f.write_all(b"    QString m_persistData;\n\n")?;
+
         f.write_fmt(format_args!(
             "    WR{}(QWidget* widget) : Q{}(widget) {{}}\n",
             struct_qt_name, struct_qt_name

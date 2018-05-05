@@ -27,6 +27,11 @@ struct Color {
 #[traits(PaintDevice, WidgetType)]
 struct Widget {
     show(),
+
+    // Set persistent data that can get serialized
+    set_persist_data(String text),
+	persist_data() -> String,
+
     set_fixed_height(i32 width),
     set_fixed_width(i32 width),
     resize(i32 width, i32 height),
