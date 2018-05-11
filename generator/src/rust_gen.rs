@@ -176,7 +176,7 @@ impl RustGenerator {
                     sdef.name, sdef.name
                 ))?;
             } else {
-                self.output.write_all(b"#[derive(Clone)]\n")?;
+                self.output.write_all(b"#[derive(Clone, Default)]\n")?;
                 self.output.write_fmt(format_args!("pub struct {} {{\n", sdef.name))?;
 
                 if sdef.is_pod() {
@@ -197,11 +197,7 @@ impl RustGenerator {
             }
         }
 
-        // Generate hard-coded struct for plugin UI
-        self.output.write_all(b"#[derive(Clone)]
-pub struct PluginUI {
-    pub obj: Option<RUPluginUI>,
-}\n\n")
+        Ok(())
     }
 
     ///
@@ -562,14 +558,14 @@ pub struct PluginUI {
                 snake_name, sdef.name
             ))?;
             self.output.write_fmt(format_args!(
-                "        {} {{ obj: Some(unsafe {{ ((*self.pu).create_{})((*self.pu).privd) }}) }}\n",
+                "        {} {{ obj: Some(unsafe {{ ((*self.pu.unwrap()).create_{})((*self.pu.unwrap()).privd) }}) }}\n",
                 sdef.name, snake_name
             ))?;
             self.output.write_all(b"    }\n\n")?;
         }
 
         self.output.write_all(b"    pub fn get_parent(&self) -> Widget {\n")?;
-        self.output.write_all(b"        Widget { obj: Some(unsafe { ((*self.pu).get_parent)((*self.pu).privd) }) }\n")?;
+        self.output.write_all(b"        Widget { obj: Some(unsafe { ((*self.pu.unwrap()).get_parent)((*self.pu.unwrap()).privd) }) }\n")?;
         self.output.write_all(b"    }\n\n")?;
 
         self.output.write_all(b"}\n")
@@ -590,7 +586,7 @@ pub struct PluginUI {
                 snake_name, sdef.name
             ))?;
             self.output.write_fmt(format_args!(
-                "        {} {{ obj: Some(unsafe {{ ((*self.pu).create_{})((*self.pu).privd) }}) }}\n",
+                "        {} {{ obj: Some(unsafe {{ ((*self.pu.unwrap()).create_{})((*self.pu.unwrap()).privd) }}) }}\n",
                 sdef.name, snake_name
             ))?;
             self.output.write_all(b"    }\n\n")?;

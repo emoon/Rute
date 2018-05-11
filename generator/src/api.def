@@ -133,6 +133,21 @@ struct ToolWindowManager : Widget {
     [manual] add_to_docking_floating(&WidgetType widget),
 }
 
+struct DockWidget {
+	set_object_name(String name),
+	object_name() -> String,
+	set_widget(&WidgetType widget)
+}
+
+#[attributes(NoPluginCreate)]
+struct DockManager : Widget {
+	save_state() -> String,
+	restore_state(String state) -> bool,
+
+    [manual] add_to_docking(&DockWidget widget),
+    [manual] get_dock_widgets() -> <&DockWidget>,
+}
+
 struct FramelessWindow : Widget {
 	set_window_title(String title),
 	set_content(&WidgetType widget),
@@ -144,6 +159,7 @@ struct FramelessWindow : Widget {
 struct Action {
 	is_enabled() -> bool,
 	set_text(String text),
+	text() -> String,
 	[manual] set_shortcut(Keys key),
 	[manual] set_shortcut_mod(Keys key, MetaKeys modifier),
 	[callback] triggered(),

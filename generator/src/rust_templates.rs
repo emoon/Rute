@@ -11,33 +11,33 @@ use std::ffi::CString;\n\n";
 
 pub static UI_HEADER: &'static [u8] =
 b"
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Ui {
-    pu: *const RU
+    pu: Option<*const RU>
 }
 
 impl Ui {
-    pub fn new(pu: *const RU) -> Ui { Ui { pu } }
+    pub fn new(pu: *const RU) -> Ui { Ui { pu: Some(pu) } }
 
-    pub fn get_c_api(&self) -> *const RU { self.pu }
+    pub fn get_c_api(&self) -> *const RU { self.pu.unwrap() }
 \n";
 
 pub static UI_FOOTER: &'static [u8] = b"    pub fn create_plugin_ui(&self, parent: &WidgetType) -> PluginUi {
-        PluginUi { pu: unsafe { ((*self.pu).create_plugin_ui)((*self.pu).privd, parent.get_widget_type_obj()) } }
+        PluginUi { pu: Some(unsafe { ((*self.pu.unwrap()).create_plugin_ui)((*self.pu.unwrap()).privd, parent.get_widget_type_obj()) }) }
     }
 }\n
 \n";
 
 pub static PLUGIN_UI_HEADER: &'static [u8] =
 b"
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PluginUi {
-    pu: *const RUPluginUI
+    pu: Option<*const RUPluginUI>
 }
 
 impl PluginUi {
-    pub fn new(pu: *const RUPluginUI) -> PluginUi { PluginUi { pu } }
-    pub fn get_c_api(&self) -> *const RUPluginUI { self.pu }
+    pub fn new(pu: *const RUPluginUI) -> PluginUi { PluginUi { pu: Some(pu) } }
+    pub fn get_c_api(&self) -> *const RUPluginUI { self.pu.unwrap() }
 \n";
 
 ///
@@ -69,8 +69,8 @@ macro_rules! set_{{func_name}}_event {
               $callback({{ rust_args }});
           }
       }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+      fn get_data_ptr(val: &$call_type) -> *const ::std::os::raw::c_void {
+         let t: *const ::std::os::raw::c_void = unsafe { ::std::mem::transmute(val) };
          t
       }
 
@@ -95,8 +95,8 @@ macro_rules! set_{{name}}_event {
               $callback(&mut *app, &event);
           }
       }
-      fn get_data_ptr(val: &$call_type) -> *const c_void {
-         let t: *const c_void = unsafe { ::std::mem::transmute(val) };
+      fn get_data_ptr(val: &$call_type) -> *const ::std::os::raw::c_void {
+         let t: *const ::std::os::raw::c_void = unsafe { ::std::mem::transmute(val) };
          t
       }
 

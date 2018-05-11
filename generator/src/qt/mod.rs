@@ -10,7 +10,7 @@ use heck::SnakeCase;
 use heck::MixedCase;
 
 static HEADER: &'static [u8] = b"
-static char s_temp_string_buffer[8192];
+static char s_temp_string_buffer[1024*1024];
 
 struct PrivData {
     QWidget* parent;
@@ -371,7 +371,7 @@ fn generate_return_string(f: &mut File) -> io::Result<()> {
     f.write_all(b"    const char* c_str = ba.data();\n")?;
     f.write_all(b"    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));\n")?;
     f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);\n")?;
-    f.write_all(b"    printf(\"temp string buffer %s\\n\", s_temp_string_buffer);\n")?;
+    // f.write_all(b"    printf(\"temp string buffer %s\\n\", s_temp_string_buffer);\n")?;
     f.write_all(b"    return s_temp_string_buffer;\n")?;
 
     Ok(())
@@ -790,11 +790,12 @@ fn generate_wrapper_classes_defs(
         f.write_all(b"public:\n")?;
         f.write_all(b"    Q_PROPERTY(QString persistData READ persistData WRITE setPersistData DESIGNABLE false SCRIPTABLE false)\n")?;
         f.write_all(b"    void setPersistData(const QString& data) { m_persistData = data; }\n")?;
-        f.write_all(b"    const QString& persistData() { return m_persistData; }\n")?;
+        f.write_all(b"    QString persistData() { return m_persistData; }\n")?;
         f.write_all(b"    QString m_persistData;\n\n")?;
 
         f.write_fmt(format_args!(
-            "    WR{}(QWidget* widget) : Q{}(widget) {{}}\n",
+            "    WR{}(QWidget* widget) : Q{}(widget) {{  setObjectName(QStringLiteral(\"Test\")); setPersistData(QStringLiteral(\"SomeData\")); }}\n",
+            //"    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
             struct_qt_name, struct_qt_name
         ))?;
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;

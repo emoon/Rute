@@ -3,6 +3,8 @@
 #include <DarkStyle.h>
 #include <QFileDialog>
 #include <QTextStream>
+#include <DockAreaWidget.h>
+#include <DockContainerWidget.h>
 //#include <QSvgRenderer>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,6 +115,49 @@ static struct RUArray application_get_files(struct RUBase* self_c) {
    return array;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUArray dock_manager_get_dock_widgets(struct RUBase* self_c) {
+    WRDockManager* dm = (WRDockManager*)self_c;
+
+    RUArray array = { 0 };
+
+    int i = 0;
+    int count = 0;
+
+    for (const auto& container : dm->dockContainers()) {
+        printf("contaier...\n");
+        for (const auto& area : container->dockAreas()) {
+            printf("area...\n");
+            for (const auto& dock : area->dockWidgets()) {
+                printf("dock...\n");
+                (void)dock;
+                count++;
+            }
+        }
+    }
+
+    if (count > 0) {
+        RUDockWidget* elements = new RUDockWidget[count];
+
+        for (const auto& container : dm->dockContainers()) {
+            for (const auto& area : container->dockAreas()) {
+                for (const auto& dock : area->dockWidgets()) {
+                    elements[i].funcs = &s_dock_widget_funcs;
+                    elements[i].priv_data = (RUBase*)dock;
+
+                    printf("setting %p %p\n", elements[i].funcs, elements[i].priv_data);
+                    ++i;
+                }
+            }
+        }
+
+        array.elements = (void*)elements;
+        array.count = int(count);
+    }
+
+    return array;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -207,5 +252,10 @@ static int application_set_style_sheet(struct RUBase* self_c, const char* filena
     return 1;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void dock_manager_add_to_docking(struct RUBase* self_c, struct RUBase* widget) {
+    WRDockManager* qt_data = (WRDockManager*)self_c;
+    qt_data->addDockWidget(ads::LeftDockWidgetArea, (QDockWidget*)widget);
+}
 
