@@ -127,7 +127,7 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
 
     for (i, arg) in func.function_args.iter().enumerate() {
         if i == 0 {
-            func_def.push_str("void*");
+            func_def.push_str("struct RUBase* widget, void*");
         } else {
             func_def.push_str(&arg.get_c_type(false));
         }
@@ -138,6 +138,10 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
         if i != arg_count - 1 {
             func_def.push_str(", ");
         }
+    }
+
+    if func.function_args.len() == 0 {
+        func_def.push_str("struct RUBase* widget");
     }
 
     func_def.push_str("))");

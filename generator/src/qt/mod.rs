@@ -183,14 +183,18 @@ fn signal_type_callback(func: &Function) -> String {
     name_def
 }
 
-pub fn generate_c_function_args_signal_wrapper(func: &Function) -> String {
+pub fn generate_c_function_args_signal_wrapper(event_type: bool, func: &Function) -> String {
     let mut function_args = String::new();
     let len = func.function_args.len();
 
     // write arguments
     for (i, arg) in func.function_args.iter().enumerate() {
         if i == 0 {
-            function_args.push_str("void*");
+            if event_type {
+                function_args.push_str("RUBase*, void*");
+            } else {
+                function_args.push_str("void*");
+            }
         } else {
             function_args.push_str(&arg.get_c_type(false));
         }
@@ -201,6 +205,10 @@ pub fn generate_c_function_args_signal_wrapper(func: &Function) -> String {
         if i != len - 1 {
             function_args.push_str(", ");
         }
+    }
+
+    if func.function_args.len() == 0 && event_type {
+        function_args.push_str("RUBase*");
     }
 
     function_args
@@ -236,7 +244,7 @@ pub fn generate_signal_wrappers(f: &mut File, info: &HashMap<String, Function>) 
         f.write_fmt(format_args!(
             "typedef void (*{})({});\n\n",
             signal_type_name,
-            generate_c_function_args_signal_wrapper(func)
+            generate_c_function_args_signal_wrapper(false, func)
         ))?;
 
         f.write_fmt(format_args!(
@@ -676,10 +684,12 @@ fn generate_event_setup_def(f: &mut File, class_name: &str, func: &Function) -> 
         event_type.vtype
     ))?;
 
+
+
     f.write_fmt(format_args!(
         "    void (*m_{})({})",
         func.name,
-        generate_c_function_args_signal_wrapper(&func)
+        generate_c_function_args_signal_wrapper(true, &func)
     ))?;
 
     //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
@@ -711,8 +721,18 @@ fn generate_event_setup_impl(f: &mut File, struct_name: &str, class_name: &str, 
     f.write_fmt(format_args!(
         "        e.priv_data = (struct RUBase*)event;\n"
     ))?;
+
+    f.write_fmt(format_args!("        RU{} w;\n", struct_name))?;
     f.write_fmt(format_args!(
-        "        m_{}(m_{}_user_data, (struct RUBase*)&e);\n",
+        "        w.funcs = &s_{}_funcs;\n",
+        struct_name.to_snake_case(),
+    ))?;
+    f.write_fmt(format_args!(
+        "        w.priv_data = (struct RUBase*)this;\n"
+    ))?;
+
+    f.write_fmt(format_args!(
+        "        m_{}((struct RUBase*)&w, m_{}_user_data, (struct RUBase*)&e);\n",
         func.name, func.name,
     ))?;
     f.write_fmt(format_args!("    }} else {{\n"))?;

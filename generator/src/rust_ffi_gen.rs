@@ -35,12 +35,20 @@ fn generate_ffi_function(f: &mut File, func: &Function) -> io::Result<()> {
 ///
 /// Generate ffi function
 ///
-fn generate_ffi_callback(f: &mut File, func: &Function) -> io::Result<()> {
-    f.write_fmt(format_args!(
-        "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                        callback: extern \"C\" fn(",
-        func.name
-    ))?;
+fn generate_ffi_callback(f: &mut File, event_type: bool, func: &Function) -> io::Result<()> {
+    if event_type {
+        f.write_fmt(format_args!(
+            "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
+                                            callback: extern \"C\" fn(widget: *const RUBase,",
+            func.name
+        ))?;
+    } else {
+        f.write_fmt(format_args!(
+            "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
+                                            callback: extern \"C\" fn(",
+            func.name
+        ))?;
+    }
     func.write_func_def(f, |index, arg| {
         if index == 0 {
             (arg.name.to_owned(), "*const c_void".to_owned())
@@ -72,7 +80,7 @@ fn generate_struct_body_recursive(f: &mut File, api_def: &ApiDef, sdef: &Struct)
 
             StructEntry::Function(ref func) => match func.func_type {
                 FunctionType::Regular => generate_ffi_function(f, func)?,
-                FunctionType::Callback => generate_ffi_callback(f, func)?,
+                FunctionType::Callback => generate_ffi_callback(f, false, func)?,
                 _ => (),
             },
         }
@@ -85,7 +93,7 @@ fn generate_struct_body_events(f: &mut File, sdef: &Struct) -> io::Result<()> {
     for entry in &sdef.entries {
         match *entry {
             StructEntry::Function(ref func) => match func.func_type {
-                FunctionType::Event => generate_ffi_callback(f, func)?,
+                FunctionType::Event => generate_ffi_callback(f, true, func)?,
                 _ => (),
             },
 

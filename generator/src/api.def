@@ -70,6 +70,8 @@ struct ListWidgetItem {
 }
 
 struct ListWidget : Widget {
+	clear(),
+
 	add_item(&ListWidgetItem item),
 	[manual] add_text_item(String text),
 
@@ -133,10 +135,12 @@ struct ToolWindowManager : Widget {
     [manual] add_to_docking_floating(&WidgetType widget),
 }
 
-struct DockWidget {
+struct DockWidget : Widget {
 	set_object_name(String name),
 	object_name() -> String,
-	set_widget(&WidgetType widget)
+	set_widget(&WidgetType widget),
+
+	[event] close(&CloseEvent event),
 }
 
 #[attributes(NoPluginCreate)]
@@ -238,6 +242,12 @@ struct Application {
 #[attributes(NoCreate)]
 struct PaintEvent {
 	rect() -> Rect,
+}
+
+// No create on this as its a event only
+#[attributes(NoCreate)]
+struct CloseEvent {
+	accept(),
 }
 
 // No create on this as its a event only

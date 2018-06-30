@@ -467,18 +467,18 @@ impl RustGenerator {
     /// Generate the "virtual" set events that connects overriden functions in the Qt class
     ///
     fn generate_virt_set_event(&mut self, api_def: &ApiDef) -> io::Result<()> {
-        let mut event_names: HashMap<String, Function> = HashMap::new();
+        let mut event_names: HashMap<String, String> = HashMap::new();
 
         for sdef in api_def.entries.iter().filter(|s| !s.is_pod()) {
             let mut funcs = Vec::new();
             sdef.get_event_functions(&mut funcs);
 
             for func in &funcs {
-                event_names.insert(func.name.clone(), func.clone());
+                event_names.insert(func.name.clone(), sdef.name.clone());
             }
         }
 
-        let mut event_list = event_names.iter().collect::<Vec<(&String, &Function)>>();
+        let mut event_list = event_names.iter().collect::<Vec<(&String, &String)>>();
         event_list.sort_by(|a, b| a.0.cmp(b.0));
 
         for func in &event_list {
@@ -486,6 +486,7 @@ impl RustGenerator {
 
             let event_type = func.0.to_camel_case();
 
+            template_data.insert("widget_type".to_owned(), Value::Str(func.1.to_owned()));
             template_data.insert("name".to_owned(), Value::Str(func.0.to_owned()));
             template_data.insert("event_type".to_owned(), Value::Str(event_type));
 

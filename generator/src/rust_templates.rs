@@ -88,11 +88,12 @@ pub static EVENT_TEMPLATE: &str = "
 macro_rules! set_{{name}}_event {
   ($sender:expr, $data:expr, $call_type:ident, $callback:path) => {
     {
-      extern \"C\" fn temp_call(self_c: *const ::std::os::raw::c_void, event: *const ::rute::rute::RUBase) {
+      extern \"C\" fn temp_call(widget: *const ::rute::rute::RUBase, self_c: *const ::std::os::raw::c_void, event: *const ::rute::rute::RUBase) {
           unsafe {
               let app = self_c as *mut $call_type;
+              let w = {{widget_type}} { obj: Some(*(widget as *const ::rute::ffi_gen::RU{{widget_type}})) };
               let event = {{event_type}}Event { obj: Some(*(event as *const ::rute::ffi_gen::RU{{event_type}}Event)) };
-              $callback(&mut *app, &event);
+              $callback(&mut *app, &w, &event);
           }
       }
       fn get_data_ptr(val: &$call_type) -> *const ::std::os::raw::c_void {
