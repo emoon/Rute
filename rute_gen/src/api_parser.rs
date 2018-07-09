@@ -3,6 +3,7 @@ use pest::iterators::Pair;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
+use std::collections::HashSet;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &'static str = include_str!("api.pest");
@@ -13,13 +14,11 @@ const _GRAMMAR: &'static str = include_str!("api.pest");
 static PRMITIVE_TYPES: &[&'static str] =
     &["i8", "u8", "i16", "u16", "i32", "u32", "i64", "u64", "bool", "f32", "f64"];
 
-
 ///
 /// Attribute tagged on struct of they shouldn't have a create function in the main
 /// exported Rute struct
 ///
-static ATTRIB_NO_CREATE: &str = "NoCreate";
-
+static ATTRIB_NO_CREATE: &'static str = "NoCreate";
 
 ///
 /// Variable type
@@ -248,7 +247,7 @@ impl ApiParser {
         for entry in chunk.into_inner() {
             match entry.as_rule() {
                 Rule::name => sdef.name = entry.as_str().to_owned(),
-                //Rule::derive => sdef.inherit = Some(Self::get_name(&entry)),
+                Rule::derive => sdef.inherit = Some(Self::get_name(entry)),
                 Rule::attributes => sdef.attributes = Self::get_attrbutes(entry),
                 Rule::traits => sdef.traits = Self::get_attrbutes(entry),
                 Rule::fieldlist => {
@@ -268,10 +267,23 @@ impl ApiParser {
     /// Get attributes for a struct
     ///
     fn get_attrbutes(rule: Pair<Rule>) -> Vec<String> {
+        /*
         rule.into_inner()
             .filter(|e| e.as_rule() == Rule::namelist)
             .map(|e| e.as_str().to_owned())
             .collect()
+        */
+
+        let mut attribs = Vec::new();
+
+        for entry in rule.into_inner() {
+            match entry.as_rule() {
+                Rule::namelist => attribs = Self::get_namelist_list(entry),
+                _ => (),
+            }
+        }
+
+        attribs
     }
 
     ///
@@ -311,6 +323,21 @@ impl ApiParser {
         (var_entries, func_entries)
     }
 
+    ///
+    ///
+    ///
+    fn get_name(rule: Pair<Rule>) -> String {
+        let mut name = String::new();
+
+        for entry in rule.into_inner() {
+            match entry.as_rule() {
+                Rule::name => name = entry.as_str().to_owned(),
+                _ => (),
+            }
+        }
+
+        name
+    }
 
     ///
     /// Get data for function declaration
@@ -411,7 +438,36 @@ impl ApiParser {
         var.vtype = var_type;
         var
     }
+
 }
 
+///
+/// Some helper functions for ApiDef
+///
+impl ApiDef {
+    ///
+    /// Get a list of all the traits
+    ///
+    pub fn get_all_traits(&self) -> Vec<String> {
+        let mut traits = HashSet::new();
 
+        for sdef in &self.class_structs {
+            for t in &sdef.traits {
+                traits.insert(t.clone());
+            }
+        }
 
+        // TODO: There is likely a way better way to do this
+
+        let mut sorted_traits = Vec::new();
+        let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
+        sorted_list.sort();
+
+        for entry in sorted_list {
+            println!("trait {}", entry.clone());
+            sorted_traits.push(entry.clone());
+        }
+
+        sorted_traits
+    }
+}

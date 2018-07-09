@@ -16,6 +16,9 @@ mod rust_ffi_gen;
 // Code for Rust generation
 mod rust_gen;
 
+// Code for C generation (comman helpers for C style code)
+mod c_helper;
+
 // Code for C++ generation
 mod cpp_gen;
 
@@ -40,5 +43,7 @@ fn main() {
         }
     }
 
-    println!("{:?}", api_def);
+    c_gen::CGenerator::generate("../rute/c_cpp/Rute.h", &api_def).unwrap();
+
+    //println!("{:?}", api_def);
 }
