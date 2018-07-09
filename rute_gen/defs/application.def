@@ -1,0 +1,12 @@
+#[attributes(ManualCreate, NoPluginCreate, Drop)]
+struct Application {
+	set_style(String style),
+	[manual] set_style_sheet(String filename) -> i32,
+	exec(),
+	[callback] about_to_quit(),
+	// hack
+	[manual] get_files() -> <Url>,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
+

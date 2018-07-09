@@ -1,0 +1,18 @@
+#[attributes(NoCreate)]
+#[traits(LayoutType)]
+struct Layout {
+	add_widget(&WidgetType widget),
+}
+
+struct VBoxLayout : Layout {
+	add_layout(&LayoutType layout),
+	update(),
+}
+
+struct HBoxLayout : Layout {
+	add_layout(&LayoutType layout),
+	update(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
+
