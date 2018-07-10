@@ -194,7 +194,7 @@ impl Struct {
     /// Check if the struct should have a create function
     ///
     pub fn should_have_create_func(&self) -> bool {
-        self.attributes.iter().find(|&s| s == ATTRIB_NO_CREATE).is_some()
+        self.attributes.iter().find(|&s| s == ATTRIB_NO_CREATE).is_none()
     }
 }
 
@@ -324,7 +324,7 @@ impl ApiParser {
     }
 
     ///
-    ///
+    /// Get the name for a rule
     ///
     fn get_name(rule: Pair<Rule>) -> String {
         let mut name = String::new();
@@ -441,6 +441,16 @@ impl ApiParser {
 
 }
 
+
+///
+/// Use if self should be included when finding all the structs
+///
+#[derive(PartialEq)]
+pub enum RecurseIncludeSelf {
+    Yes,
+    No
+}
+
 ///
 /// Some helper functions for ApiDef
 ///
@@ -458,7 +468,6 @@ impl ApiDef {
         }
 
         // TODO: There is likely a way better way to do this
-
         let mut sorted_traits = Vec::new();
         let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
         sorted_list.sort();
@@ -470,4 +479,52 @@ impl ApiDef {
 
         sorted_traits
     }
+
+    ///
+    /// Recursive get the structs
+    ///
+    fn recursive_get_inherit_structs<'a>(sdef: &'a Struct, api_def: &'a ApiDef, include_self: RecurseIncludeSelf, out_structs: &mut Vec<&'a Struct>) {
+        if let Some(ref inherit_name) = sdef.inherit {
+            for sdef in &api_def.class_structs {
+                if &sdef.name == inherit_name {
+                    Self::recursive_get_inherit_structs(sdef, api_def, RecurseIncludeSelf::Yes, out_structs);
+                }
+            }
+        }
+
+        if include_self == RecurseIncludeSelf::Yes {
+            out_structs.push(sdef);
+        }
+    }
+
+    ///
+    /// Get a list of all the traits
+    ///
+    pub fn get_inherit_structs<'a>(&'a self, sdef: &'a Struct, include_self: RecurseIncludeSelf) -> Vec<&'a Struct> {
+        let mut out_structs = Vec::new();
+
+        Self::recursive_get_inherit_structs(sdef, self, include_self, &mut out_structs);
+
+        out_structs
+    }
+
+    /*
+    ///
+    /// Collect all the functions of a certain type
+    ///
+    pub fn collect_functions<'a>(&'a self, sdef: &'a Struct, coll_type: FunctionType) -> Vec<&'a Function> {
+        // Collect all structs and inherited ones
+        let structs = self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes);
+        let mut functions = Vec::new();
+
+        for s in structs {
+            for f in s.functions.iter().filter(|f| f.func_type == coll_type) {
+                functions.push(f);
+            }
+        }
+
+        functions
+    }
+    */
+
 }

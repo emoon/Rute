@@ -36,10 +36,9 @@ static FOOTER: &'static [u8] = b"
 }
 #endif\n";
 
-pub struct CGenerator;
+pub struct CapiGenerator;
 
-impl CGenerator {
-
+impl CapiGenerator {
     ///
     /// Generates the C API definition to the output filename
     ///
@@ -146,6 +145,10 @@ impl CGenerator {
         for sdef in &api_def.class_structs {
             f.write_fmt(format_args!("struct RU{}Funcs {{\n", sdef.name))?;
 
+            if sdef.should_have_create_func() {
+                f.write_all(b"    void (*destroy)(struct RUBase* self);\n")?;
+            }
+
             for func in &sdef.functions {
                 Self::generate_func_def(&mut f, func)?;
             }
@@ -153,32 +156,56 @@ impl CGenerator {
             f.write_all(b"};\n\n")?;
             f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
 
-            Self::generate_inherit_structs(&mut f, api_def, &sdef)?;
+            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                f.write_fmt(format_args!("    struct RU{}Funcs* {}_funcs;\n", s.name, s.name.to_snake_case()))?;
+            }
 
             f.write_all(b"    struct RUBase* priv_data;\n")?;
             f.write_all(b"};\n\n")?;
         }
 
-        Ok(())
-    }
+        //
+        // Write main Rute entry for creation
+        //
+        // typedef struct Rute {
+        //     struct PUWidget (*create_widget)(struct PUBase* self);
+        //     ..
+        // } Rute;
+        //
 
-    ///
-    /// Recursivly generate inharit structs like:
-    ///
-    ///   struct RUWidgetFuncs* widget_funcs;
-    ///   struct RUButtonFuncs* button_funcs;
-    ///   ...
-    ///
-    fn generate_inherit_structs(f: &mut File, api_def: &ApiDef, sdef: &Struct) -> io::Result<()> {
-        if let Some(ref inherit_name) = sdef.inherit {
-            for sdef in &api_def.class_structs {
-                if &sdef.name == inherit_name {
-                    Self::generate_inherit_structs(f, api_def, &sdef)?;
-                }
+        f.write_all(b"typedef struct Rute { \n")?;
+
+        for sdef in api_def.class_structs
+            .iter()
+            .filter(|s| s.should_have_create_func()) {
+
+            f.write_fmt(format_args!(
+                "    struct RU{} (*create_{})(struct RUBase* self);\n",
+                sdef.name,
+                sdef.name.to_snake_case()
+            ))?;
+        }
+
+        //
+        // Generate all the static functions
+        //
+
+        for sdef in &api_def.class_structs {
+            for func in sdef.functions.iter().filter(|func| func.func_type == FunctionType::Static) {
+                Self::generate_func_def(&mut f, &func)?;
             }
         }
 
-        f.write_fmt(format_args!("    struct RU{}Funcs* {}_funcs;\n", sdef.name, sdef.name.to_snake_case()))
+        f.write_all(b"} Rute;\n\n")?;
+
+        //
+        // Generate the defines for easier usage of the API
+        //
+        //
+
+        Self::generate_define_funcs(&mut f, api_def)?;
+
+        f.write_all(FOOTER)
     }
 
     ///
@@ -196,6 +223,52 @@ impl CGenerator {
                     ret_value,
                     func.name,
                     generate_c_function_args(func)))
+    }
+
+    ///
+    /// Generate defines to make C API usage easier to use
+    ///
+    fn generate_define_funcs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+        for sdef in &api_def.class_structs {
+            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                let funcs_name = format!("{}_funcs", s.name.to_snake_case());
+                for func in &s.functions {
+                    match func.func_type {
+                        FunctionType::Regular => Self::generate_define_func(f, &sdef.name, &funcs_name, func)?,
+                    /*
+                    FunctionType::Callback => {
+                        f.write_fmt(
+                            format_args!("#define RU{}_set_{}_event(obj, user_data, event) obj.{}->set_{}_event(obj.priv_data, user_data, event)\n",
+                            base_name, func.name, func.name, funcs_name))?;
+                    }
+                    */
+                        _ => (),
+                    }
+                }
+            }
+
+            f.write_all(b"\n")?;
+        }
+
+        Ok(())
+    }
+
+    ///
+    /// Generate a define invoke in this style
+    ///
+    /// #define PUMenuBar_set_parent(obj, widget) obj.funcs->set_parent(obj.priv_data, widget)
+    ///
+    fn generate_define_func(f: &mut File, base_name: &str, funcs_name: &str, func: &Function) -> io::Result<()> {
+        let define_args = generate_c_function_invoke(func, Some("obj"));
+        let call_args = generate_c_function_invoke(func, Some("rute"));
+
+        f.write_fmt(format_args!("#define RU{}_{}({}) obj.{}->{}({})\n",
+            base_name,
+            func.name,
+            define_args,
+            funcs_name,
+            funcs_name,
+            call_args))
     }
 }
 

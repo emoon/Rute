@@ -26,6 +26,7 @@ mod cpp_gen;
 mod c_gen;
 
 use api_parser::{ApiParser, ApiDef};
+use c_gen::CapiGenerator;
 
 
 //
@@ -43,7 +44,6 @@ fn main() {
         }
     }
 
-    c_gen::CGenerator::generate("../rute/c_cpp/Rute.h", &api_def).unwrap();
-
-    //println!("{:?}", api_def);
+    // Generate the C API header
+    CapiGenerator::generate("../rute/c_cpp/Rute.h", &api_def).unwrap();
 }

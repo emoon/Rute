@@ -24,6 +24,10 @@ pub enum UseTypeRef {
 /// Array => struct RUArray
 ///
 pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
+    if var.array {
+        return "struct RUArray".to_owned();
+    }
+
     match var.vtype {
         VariableType::SelfType => "struct RUBase*".to_owned(),
         VariableType::Enum(ref tname) => format!("RU{}", tname),
@@ -107,10 +111,7 @@ pub fn generate_c_function_invoke(func: &Function, replace_first_arg: Option<&'s
     for (i, arg) in func.function_args.iter().enumerate() {
         if i == 0 && replace_first_arg.is_some() {
             function_invoke.push_str(replace_first_arg.unwrap());
-            function_invoke.push_str(" ");
         } else {
-            function_invoke.push_str(&get_c_type(&arg, UseTypeRef::No));
-            function_invoke.push_str(" ");
             function_invoke.push_str(&arg.name);
         }
 
