@@ -36,8 +36,6 @@ pub enum VariableType {
     Primitive(String),
     /// Reference type
     Reference(String),
-    /// Array type
-    Array(String),
     /// Optional type
     Optional(String),
 }
@@ -231,7 +229,21 @@ impl ApiParser {
                     } else {
                         api_def.class_structs.push(sdef);
                     }
-                }
+                },
+
+                Rule::enumdef => {
+                    let mut enum_def = Enum::default();
+
+                    for entry in chunk.into_inner() {
+                        match entry.as_rule() {
+                            Rule::name => enum_def.name = entry.as_str().to_owned(),
+                            Rule::fieldlist => enum_def.entries = Self::fill_field_list_enum(entry),
+                            _ => (),
+                        }
+                    }
+
+                    api_def.enums.push(enum_def);
+                },
 
                 _ => (),
             }
@@ -364,7 +376,7 @@ impl ApiParser {
         // if we don't have any function args we add self as first argument as we always have that
         if function.function_args.len() == 0 {
             function.function_args.push(Variable {
-                name: "self".to_owned(),
+                name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
                 .. Variable::default()
             });
@@ -380,7 +392,7 @@ impl ApiParser {
         let mut variables = Vec::new();
 
         variables.push(Variable {
-            name: "self".to_owned(),
+            name: "self_c".to_owned(),
             vtype: VariableType::SelfType,
             .. Variable::default()
         });
@@ -439,6 +451,68 @@ impl ApiParser {
         var
     }
 
+    ///
+    /// Get array of enums
+    ///
+    fn fill_field_list_enum(rule: Pair<Rule>) -> Vec<EnumEntry> {
+        let mut entries = Vec::new();
+
+        for entry in rule.into_inner() {
+            match entry.as_rule() {
+                Rule::field => {
+                    let field = entry.clone().into_inner().next().unwrap();
+
+                    match field.as_rule() {
+                        Rule::enum_type => entries.push(Self::get_enum(field)),
+                        _ => (),
+                    }
+                }
+
+                _ => (),
+            }
+        }
+
+        entries
+    }
+
+    ///
+    /// Get enum
+    ///
+    fn get_enum(rule: Pair<Rule>) -> EnumEntry {
+        let mut name = String::new();
+        let mut assign = String::new();
+
+        for entry in rule.clone().into_inner() {
+            match entry.as_rule() {
+                Rule::name => name = entry.as_str().to_owned(),
+                Rule::enum_assign => assign =  Self::get_enum_assign(entry),
+                _ => (),
+            }
+        }
+
+        if assign.len() == 0 {
+            EnumEntry::Enum(name)
+        } else {
+            EnumEntry::EnumValue(name, assign)
+        }
+    }
+
+    ///
+    /// Get enum asign
+    ///
+    fn get_enum_assign(rule: Pair<Rule>) -> String {
+        let mut name_or_num = String::new();
+
+        for entry in rule.into_inner() {
+            match entry.as_rule() {
+                Rule::name_or_num => name_or_num = entry.as_str().to_owned(),
+                _ => (),
+            }
+        }
+
+        name_or_num
+    }
+
 }
 
 
@@ -473,7 +547,6 @@ impl ApiDef {
         sorted_list.sort();
 
         for entry in sorted_list {
-            println!("trait {}", entry.clone());
             sorted_traits.push(entry.clone());
         }
 
@@ -508,23 +581,28 @@ impl ApiDef {
         out_structs
     }
 
-    /*
     ///
-    /// Collect all the functions of a certain type
+    /// Patch up the types for enums as they can be out of order.
     ///
-    pub fn collect_functions<'a>(&'a self, sdef: &'a Struct, coll_type: FunctionType) -> Vec<&'a Function> {
-        // Collect all structs and inherited ones
-        let structs = self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes);
-        let mut functions = Vec::new();
+    pub fn second_pass(&mut self) {
+        /*
+        let mut enums = HashSet::new();
 
-        for s in structs {
-            for f in s.functions.iter().filter(|f| f.func_type == coll_type) {
-                functions.push(f);
-            }
+        for enum_def in &self.enums {
+            enums.insert(enum_def.name.clone());
         }
 
-        functions
+        // TODO: Clean up this code
+        for sdef in self.class_structs.iter_mut() {
+            for func in sdef.functions.iter_mut() {
+                for var in func.function_args.iter_mut() {
+                    if enums.contains(&var.vtype) {
+                        var.vtype = VariableType::Enum(var.vtype.clone());
+                    }
+                }
+            }
+        }
+        */
     }
-    */
-
 }
+

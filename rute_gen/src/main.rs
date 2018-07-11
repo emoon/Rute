@@ -27,9 +27,8 @@ mod c_gen;
 
 use api_parser::{ApiParser, ApiDef};
 use c_gen::CapiGenerator;
+use rust_ffi_gen::RustFFIGenerator;
 
-
-//
 fn main() {
     // This holds all the structs,variables,etc
     let mut api_def = ApiDef::default();
@@ -44,6 +43,11 @@ fn main() {
         }
     }
 
-    // Generate the C API header
+    // This pass will run and "fixup" types that might be out of order and needs to be relinked
+    api_def.second_pass();
+
+    // Generate bindings for each backend
+
     CapiGenerator::generate("../rute/c_cpp/Rute.h", &api_def).unwrap();
+    RustFFIGenerator::generate("../rute/src/ffi.rs", &api_def).unwrap();
 }

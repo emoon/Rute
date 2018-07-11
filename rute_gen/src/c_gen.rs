@@ -7,6 +7,7 @@ use std::fs::File;
 use std::io::Write;
 use api_parser::*;
 use heck::SnakeCase;
+use std::io::BufWriter;
 use c_helper::*;
 
 ///
@@ -43,7 +44,7 @@ impl CapiGenerator {
     /// Generates the C API definition to the output filename
     ///
     pub fn generate(filename: &str, api_def: &ApiDef) -> io::Result<()> {
-        let mut f = File::create(filename)?;
+        let mut f = BufWriter::new(File::create(filename)?);
 
         f.write_all(HEADER)?;
 
@@ -213,7 +214,7 @@ impl CapiGenerator {
     ///
     /// struct Foo (*foobar)(uint32_t x, uint32_t)
     ///
-    fn generate_func_def(f: &mut File, func: &Function) -> io::Result<()> {
+    fn generate_func_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
         let ret_value = func.return_val
             .as_ref()
             .map_or("void".to_owned(), |r| get_c_type(&r, UseTypeRef::No));
@@ -226,22 +227,23 @@ impl CapiGenerator {
     }
 
     ///
-    /// Generate defines to make C API usage easier to use
+    /// Generate defines to make C API usage easier to use. The defines are genereted in the
+    /// following format:
     ///
-    fn generate_define_funcs(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
+    /// #define PUMenuBar_set_parent(obj, widget) obj.funcs->set_parent(obj.priv_data, widget)
+    ///
+    fn generate_define_funcs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         for sdef in &api_def.class_structs {
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
                 let funcs_name = format!("{}_funcs", s.name.to_snake_case());
                 for func in &s.functions {
                     match func.func_type {
                         FunctionType::Regular => Self::generate_define_func(f, &sdef.name, &funcs_name, func)?,
-                    /*
-                    FunctionType::Callback => {
-                        f.write_fmt(
-                            format_args!("#define RU{}_set_{}_event(obj, user_data, event) obj.{}->set_{}_event(obj.priv_data, user_data, event)\n",
-                            base_name, func.name, func.name, funcs_name))?;
-                    }
-                    */
+                        FunctionType::Callback => {
+                            f.write_fmt(
+                                format_args!("#define RU{}_set_{}_event(obj, user_data, event) obj.{}->set_{}_event(obj.priv_data, user_data, event)\n",
+                                    s.name, func.name, func.name, funcs_name))?;
+                        }
                         _ => (),
                     }
                 }
@@ -258,9 +260,9 @@ impl CapiGenerator {
     ///
     /// #define PUMenuBar_set_parent(obj, widget) obj.funcs->set_parent(obj.priv_data, widget)
     ///
-    fn generate_define_func(f: &mut File, base_name: &str, funcs_name: &str, func: &Function) -> io::Result<()> {
+    fn generate_define_func<W: Write>(f: &mut W, base_name: &str, funcs_name: &str, func: &Function) -> io::Result<()> {
         let define_args = generate_c_function_invoke(func, Some("obj"));
-        let call_args = generate_c_function_invoke(func, Some("rute"));
+        let call_args = generate_c_function_invoke(func, Some("obj.priv_data"));
 
         f.write_fmt(format_args!("#define RU{}_{}({}) obj.{}->{}({})\n",
             base_name,

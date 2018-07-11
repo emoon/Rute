@@ -57,7 +57,7 @@ pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
                 "struct RUBase*".to_owned()
             }
         }
-        VariableType::Array(ref _tname) => "struct RUArray".to_owned(),
+
         VariableType::Regular(ref tname) => {
             if tname == "String" {
                 "const char*".to_owned()
