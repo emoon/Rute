@@ -2,7 +2,6 @@
 /// This file contains helper functions for generating C variables, functions, etc
 /// We want to share this as c_gen and cpp_gen has many similar requirements
 ///
-
 use api_parser::{Function, Variable, VariableType};
 
 ///
@@ -11,7 +10,7 @@ use api_parser::{Function, Variable, VariableType};
 #[derive(Copy, Clone, PartialEq)]
 pub enum UseTypeRef {
     Yes,
-    No
+    No,
 }
 
 ///
@@ -40,12 +39,12 @@ pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
                 "double".to_owned()
             } else if tname == "i32" {
                 "int".to_owned()
-            } else if tname.starts_with('u')  {
+            } else if tname.starts_with('u') {
                 format!("uint{}_t", &tname[1..])
             } else {
                 format!("int{}_t", &tname[1..])
             }
-        },
+        }
 
         VariableType::Reference(ref _tname) => {
             if use_type_ref == UseTypeRef::Yes {
@@ -100,7 +99,10 @@ pub fn generate_c_function_args(func: &Function) -> String {
 ///
 /// For example: "self, test, bar"
 ///
-pub fn generate_c_function_invoke(func: &Function, replace_first_arg: Option<&'static str>) -> String {
+pub fn generate_c_function_invoke(
+    func: &Function,
+    replace_first_arg: Option<&'static str>,
+) -> String {
     let mut function_invoke = String::new();
     let len = func.function_args.len();
 
@@ -117,7 +119,5 @@ pub fn generate_c_function_invoke(func: &Function, replace_first_arg: Option<&'s
         }
     }
 
-
     function_invoke
 }
-

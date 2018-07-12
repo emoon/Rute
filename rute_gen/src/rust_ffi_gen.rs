@@ -1,9 +1,9 @@
-use std::io;
-use std::fs::File;
-use std::io::{Write, BufWriter};
-use std::borrow::Cow;
-use heck::{SnakeCase, CamelCase};
 use api_parser::*;
+use heck::{CamelCase, SnakeCase};
+use std::borrow::Cow;
+use std::fs::File;
+use std::io;
+use std::io::{BufWriter, Write};
 
 ///
 /// Header for Rust FFI
@@ -60,11 +60,12 @@ impl Function {
     ///
     /// (test: i32, foo: u32) -> u32
     ///
-    pub fn rust_func_def<F: Fn(&Variable) -> String>(&self,
+    pub fn rust_func_def<F: Fn(&Variable) -> String>(
+        &self,
         include_parens: bool,
         replace_first_arg: Option<&'static str>,
-        filter: F) -> String
-    {
+        filter: F,
+    ) -> String {
         let arg_count = self.function_args.len();
 
         let mut res = String::with_capacity(100);
@@ -99,7 +100,6 @@ impl Function {
         res
     }
 }
-
 
 pub struct RustFFIGenerator;
 
@@ -145,8 +145,12 @@ impl RustFFIGenerator {
 
             for entry in &enum_def.entries {
                 match *entry {
-                    EnumEntry::Enum(ref name) => f.write_fmt(format_args!("    {},\n", name.to_camel_case()))?,
-                    EnumEntry::EnumValue(ref name, ref val) => f.write_fmt(format_args!("    {} = {},\n", name.to_camel_case(), val))?,
+                    EnumEntry::Enum(ref name) => {
+                        f.write_fmt(format_args!("    {},\n", name.to_camel_case()))?
+                    }
+                    EnumEntry::EnumValue(ref name, ref val) => {
+                        f.write_fmt(format_args!("    {} = {},\n", name.to_camel_case(), val))?
+                    }
                 }
             }
 
@@ -201,7 +205,11 @@ impl RustFFIGenerator {
             f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-                f.write_fmt(format_args!("    pub {}_funcs: *const RU{}Funcs,\n", s.name.to_snake_case(), s.name))?;
+                f.write_fmt(format_args!(
+                    "    pub {}_funcs: *const RU{}Funcs,\n",
+                    s.name.to_snake_case(),
+                    s.name
+                ))?;
             }
 
             f.write_all(b"    pub privd: *const RUBase,\n")?;
@@ -218,10 +226,13 @@ impl RustFFIGenerator {
     ///
     /// Generate ffi function
     ///
-    fn generate_function< W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
+    fn generate_function<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
         let func_def = func.rust_func_def(true, None, |arg| arg.get_rust_ffi_type().into());
 
-        f.write_fmt(format_args!("    pub {}: extern \"C\" fn{},\n", func.name, func_def))
+        f.write_fmt(format_args!(
+            "    pub {}: extern \"C\" fn{},\n",
+            func.name, func_def
+        ))
     }
 
     ///
@@ -232,7 +243,9 @@ impl RustFFIGenerator {
     ///                                      i32)),
     ///
     fn generate_event<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
+            arg.get_rust_ffi_type().into()
+        });
 
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
@@ -243,10 +256,14 @@ impl RustFFIGenerator {
     /// Generate callback function
     ///
     fn generate_callback<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
+            arg.get_rust_ffi_type().into()
+        });
 
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern \"C\" fn({}),\n", func.name, func_def))
+                                            callback: extern \"C\" fn({}),\n",
+            func.name, func_def
+        ))
     }
 }

@@ -1,6 +1,6 @@
 extern crate argparse;
-extern crate liquid;
 extern crate heck;
+extern crate liquid;
 extern crate pest;
 extern crate walkdir;
 
@@ -25,7 +25,7 @@ mod cpp_gen;
 // Code for C generation
 mod c_gen;
 
-use api_parser::{ApiParser, ApiDef};
+use api_parser::{ApiDef, ApiParser};
 use c_gen::CapiGenerator;
 use rust_ffi_gen::RustFFIGenerator;
 
