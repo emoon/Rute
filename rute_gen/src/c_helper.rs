@@ -8,7 +8,7 @@ use api_parser::{Function, Variable, VariableType};
 ///
 /// Used in the function bellow to make bool a bit clerar
 ///
-#[derive(PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum UseTypeRef {
     Yes,
     No
@@ -30,7 +30,7 @@ pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
 
     match var.vtype {
         VariableType::SelfType => "struct RUBase*".to_owned(),
-        VariableType::Enum(ref tname) => format!("RU{}", tname),
+        //VariableType::Enum(ref tname) => format!("RU{}", tname),
         VariableType::Primitive(ref tname) => {
             if tname == "f32" {
                 "float".to_owned()
@@ -40,13 +40,10 @@ pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
                 "double".to_owned()
             } else if tname == "i32" {
                 "int".to_owned()
+            } else if tname.starts_with('u')  {
+                format!("uint{}_t", &tname[1..])
             } else {
-                // here we will have u8/i8,u32/etc
-                if tname.starts_with("u") {
-                    format!("uint{}_t", &tname[1..])
-                } else {
-                    format!("int{}_t", &tname[1..])
-                }
+                format!("int{}_t", &tname[1..])
             }
         },
 
@@ -119,6 +116,7 @@ pub fn generate_c_function_invoke(func: &Function, replace_first_arg: Option<&'s
             function_invoke.push_str(", ");
         }
     }
+
 
     function_invoke
 }

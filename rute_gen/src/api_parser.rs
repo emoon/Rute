@@ -6,12 +6,12 @@ use std::path::Path;
 use std::collections::HashSet;
 
 #[cfg(debug_assertions)]
-const _GRAMMAR: &'static str = include_str!("api.pest");
+const _GRAMMAR: &str = include_str!("api.pest");
 
 ///
 /// Current primitive types
 ///
-static PRMITIVE_TYPES: &[&'static str] =
+const PRMITIVE_TYPES: &[&str] =
     &["i8", "u8", "i16", "u16", "i32", "u32", "i64", "u64", "bool", "f32", "f64"];
 
 ///
@@ -29,7 +29,7 @@ pub enum VariableType {
     /// Self (aka this pointer in C++ and self in Rust)
     SelfType,
     /// Enum type
-    Enum(String),
+    //Enum(String),
     /// Struct/other type
     Regular(String),
     /// Prmitive type (such as i32,u64,etc)
@@ -174,20 +174,13 @@ pub struct ApiDef {
 /// Checks if name is a primitive
 ///
 fn is_primitve(name: &str) -> bool {
-    PRMITIVE_TYPES.iter().find(|&&type_name| type_name == name).is_some()
+    PRMITIVE_TYPES.iter().any(|&type_name| type_name == name)
 }
 
 ///
 /// Impl for struct. Mostly helper functions to make it easier to extract info
 ///
 impl Struct {
-    ///
-    /// Get iterator for all callback functions
-    ///
-    pub fn get_callback_functions<'a>(&'a self) -> Box<Iterator<Item = &'a Function> + 'a> {
-        Box::new(self.functions.iter().filter(|func| func.func_type == FunctionType::Callback))
-    }
-
     ///
     /// Check if the struct should have a create function
     ///
@@ -224,7 +217,7 @@ impl ApiParser {
                     let sdef = Self::fill_struct(chunk);
 
                     // If we have some variables in the struct we push it to pod_struct
-                    if sdef.variables.len() > 0 {
+                    if !sdef.variables.is_empty() {
                         api_def.pod_structs.push(sdef);
                     } else {
                         api_def.class_structs.push(sdef);
@@ -289,9 +282,8 @@ impl ApiParser {
         let mut attribs = Vec::new();
 
         for entry in rule.into_inner() {
-            match entry.as_rule() {
-                Rule::namelist => attribs = Self::get_namelist_list(entry),
-                _ => (),
+            if entry.as_rule() == Rule::namelist {
+                attribs = Self::get_namelist_list(entry);
             }
         }
 
@@ -317,18 +309,14 @@ impl ApiParser {
         let mut func_entries = Vec::new();
 
         for entry in rule.into_inner() {
-            match entry.as_rule() {
-                Rule::field => {
-                    let field = entry.clone().into_inner().next().unwrap();
+            if entry.as_rule() == Rule::field {
+                let field = entry.clone().into_inner().next().unwrap();
 
-                    match field.as_rule() {
-                        Rule::var => var_entries.push(Self::get_variable(field)),
-                        Rule::function => func_entries.push(Self::get_function(field)),
-                        _ => (),
-                    }
+                match field.as_rule() {
+                    Rule::var => var_entries.push(Self::get_variable(field)),
+                    Rule::function => func_entries.push(Self::get_function(field)),
+                    _ => (),
                 }
-
-                _ => (),
             }
         }
 
@@ -342,9 +330,9 @@ impl ApiParser {
         let mut name = String::new();
 
         for entry in rule.into_inner() {
-            match entry.as_rule() {
-                Rule::name => name = entry.as_str().to_owned(),
-                _ => (),
+            if entry.as_rule() == Rule::name {
+                name = entry.as_str().to_owned();
+                break;
             }
         }
 
@@ -374,7 +362,7 @@ impl ApiParser {
         }
 
         // if we don't have any function args we add self as first argument as we always have that
-        if function.function_args.len() == 0 {
+        if function.function_args.is_empty() {
             function.function_args.push(Variable {
                 name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
@@ -458,17 +446,12 @@ impl ApiParser {
         let mut entries = Vec::new();
 
         for entry in rule.into_inner() {
-            match entry.as_rule() {
-                Rule::field => {
-                    let field = entry.clone().into_inner().next().unwrap();
+            if entry.as_rule() == Rule::field {
+                let field = entry.clone().into_inner().next().unwrap();
 
-                    match field.as_rule() {
-                        Rule::enum_type => entries.push(Self::get_enum(field)),
-                        _ => (),
-                    }
+                if field.as_rule() == Rule::enum_type {
+                    entries.push(Self::get_enum(field));
                 }
-
-                _ => (),
             }
         }
 
@@ -482,7 +465,7 @@ impl ApiParser {
         let mut name = String::new();
         let mut assign = String::new();
 
-        for entry in rule.clone().into_inner() {
+        for entry in rule.into_inner() {
             match entry.as_rule() {
                 Rule::name => name = entry.as_str().to_owned(),
                 Rule::enum_assign => assign =  Self::get_enum_assign(entry),
@@ -490,7 +473,7 @@ impl ApiParser {
             }
         }
 
-        if assign.len() == 0 {
+        if assign.is_empty() {
             EnumEntry::Enum(name)
         } else {
             EnumEntry::EnumValue(name, assign)
@@ -504,9 +487,9 @@ impl ApiParser {
         let mut name_or_num = String::new();
 
         for entry in rule.into_inner() {
-            match entry.as_rule() {
-                Rule::name_or_num => name_or_num = entry.as_str().to_owned(),
-                _ => (),
+            if entry.as_rule() == Rule::name_or_num {
+                name_or_num = entry.as_str().to_owned();
+                break;
             }
         }
 
@@ -519,10 +502,9 @@ impl ApiParser {
 ///
 /// Use if self should be included when finding all the structs
 ///
-#[derive(PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum RecurseIncludeSelf {
     Yes,
-    No
 }
 
 ///

@@ -28,7 +28,7 @@ pub struct RUArray {
 /// Add function to convert a type into a Rust FFI type
 ///
 impl Variable {
-    pub fn get_rust_ffi_type<'a>(&'a self) -> Cow<'a, str> {
+    pub fn get_rust_ffi_type(&self) -> Cow<str> {
         if self.array {
             return "RUArray".into();
         }
@@ -39,7 +39,7 @@ impl Variable {
             VariableType::Primitive(ref name) => name.to_owned().into(),
             VariableType::Reference(_) => "*const RUBase".into(),
             VariableType::Optional(name) => format!(" RU{}", name).into(),
-            VariableType::Enum(ref name) => format!(" RU{}", name).into(),
+            //VariableType::Enum(ref name) => format!(" RU{}", name).into(),
             VariableType::Regular(ref name) => {
                 if name == "String" {
                     "*const ::std::os::raw::c_char".into()
@@ -61,6 +61,7 @@ impl Function {
     /// (test: i32, foo: u32) -> u32
     ///
     pub fn rust_func_def<F: Fn(&Variable) -> String>(&self,
+        include_parens: bool,
         replace_first_arg: Option<&'static str>,
         filter: F) -> String
     {
@@ -68,11 +69,15 @@ impl Function {
 
         let mut res = String::with_capacity(100);
 
+        if include_parens {
+            res += "(";
+        }
+
         for (i, arg) in self.function_args.iter().enumerate() {
             let filter_arg = filter(&arg);
 
             if i == 0 && replace_first_arg.is_some() {
-                res += &format!("{}: {}", replace_first_arg.unwrap(), filter_arg);
+                res += &format!("{}: {}", arg.name, replace_first_arg.unwrap());
             } else {
                 res += &format!("{}: {}", arg.name, filter_arg);
             }
@@ -80,6 +85,10 @@ impl Function {
             if i != arg_count - 1 {
                 res += ", ";
             }
+        }
+
+        if include_parens {
+            res += ")";
         }
 
         if let Some(ref ret_var) = self.return_val {
@@ -186,7 +195,9 @@ impl RustFFIGenerator {
                 }
             }
 
-            f.write_all(b"\n\n")?;
+            f.write_all(b"}\n\n")?;
+            f.write_all(b"#[repr(C)]\n")?;
+            f.write_all(b"#[derive(Copy, Clone)]\n")?;
             f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
@@ -208,9 +219,9 @@ impl RustFFIGenerator {
     /// Generate ffi function
     ///
     fn generate_function< W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(None, |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(true, None, |arg| arg.get_rust_ffi_type().into());
 
-        f.write_fmt(format_args!("    pub {}: extern \"C\" fn({}),\n", func.name, func_def))
+        f.write_fmt(format_args!("    pub {}: extern \"C\" fn{},\n", func.name, func_def))
     }
 
     ///
@@ -221,7 +232,7 @@ impl RustFFIGenerator {
     ///                                      i32)),
     ///
     fn generate_event<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(Some("*const c_void*"), |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| arg.get_rust_ffi_type().into());
 
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
@@ -232,7 +243,7 @@ impl RustFFIGenerator {
     /// Generate callback function
     ///
     fn generate_callback<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(Some("*const c_void*"), |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| arg.get_rust_ffi_type().into());
 
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,

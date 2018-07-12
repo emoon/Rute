@@ -151,7 +151,11 @@ impl CapiGenerator {
             }
 
             for func in &sdef.functions {
-                Self::generate_func_def(&mut f, func)?;
+                match func.func_type {
+                    FunctionType::Regular => Self::generate_func_def(&mut f, func)?,
+                    FunctionType::Callback => Self::generate_callback_def(&mut f, func)?,
+                    _ => (),
+                }
             }
 
             f.write_all(b"};\n\n")?;
@@ -193,7 +197,7 @@ impl CapiGenerator {
 
         for sdef in &api_def.class_structs {
             for func in sdef.functions.iter().filter(|func| func.func_type == FunctionType::Static) {
-                Self::generate_func_def(&mut f, &func)?;
+                Self::generate_func_def(&mut f, func)?;
             }
         }
 
@@ -225,6 +229,53 @@ impl CapiGenerator {
                     func.name,
                     generate_c_function_args(func)))
     }
+
+    ///
+    /// Generate def for connecting events
+    ///
+    /// TODO: Cleanup this code
+    pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
+        let mut func_def = if def {
+            format!("void (*set_{}_event)(void* object, void* user_data, void (*event)(", name)
+        } else {
+            format!("void set_{}_event(void* object, void* user_data, void (*event)(", name)
+        };
+
+        let arg_count = func.function_args.len();
+
+        for (i, arg) in func.function_args.iter().enumerate() {
+            if i == 0 {
+                func_def.push_str("struct RUBase* widget, void*");
+            } else {
+                func_def.push_str(&get_c_type(&arg, UseTypeRef::No));
+            }
+
+            func_def.push_str(" ");
+            func_def.push_str(&arg.name);
+
+            if i != arg_count - 1 {
+                func_def.push_str(", ");
+            }
+        }
+
+        if func.function_args.is_empty() {
+            func_def.push_str("struct RUBase* widget");
+        }
+
+        func_def.push_str("))");
+        func_def
+    }
+
+    ///
+    /// Code to write down callback def
+    ///
+    fn generate_callback_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
+        f.write_fmt(format_args!(
+            "    {};\n",
+            Self::callback_fun_def_name(true, &func.name, func)
+        ))
+    }
+
 
     ///
     /// Generate defines to make C API usage easier to use. The defines are genereted in the
