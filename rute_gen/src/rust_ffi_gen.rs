@@ -217,8 +217,35 @@ impl RustFFIGenerator {
         }
 
         //
-        // Generate main etry
+        // Generate main Entry
         //
+
+        f.write_all(b"#[repr(C)]\n")?;
+        f.write_all(b"pub struct RU {\n")?;
+
+        for sdef in api_def
+            .class_structs
+            .iter()
+            .filter(|s| s.should_have_create_func())
+        {
+            f.write_fmt(format_args!(
+                "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+                sdef.name.to_snake_case(),
+                sdef.name
+            ))?;
+        }
+
+        for func in api_def
+            .class_structs
+            .iter()
+            .flat_map(|s| s.functions.iter())
+            .filter(|f| f.func_type == FunctionType::Static)
+        {
+            Self::generate_function(&mut f, &func)?;
+        }
+
+        f.write_all(b"    pub privd: *const RUBase,\n")?;
+        f.write_all(b"}\n\n")?;
 
         Ok(())
     }
