@@ -12,3 +12,4 @@ generator/target
 test_bed/.tundra2.*
 test_bed/t2-output
 rute_gen/target/*
+rute/target/*
