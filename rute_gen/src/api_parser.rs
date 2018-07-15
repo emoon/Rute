@@ -515,17 +515,18 @@ impl ApiDef {
     /// Get a list of all the traits
     ///
     pub fn get_all_traits(&self) -> Vec<String> {
-        let mut traits = HashSet::new();
+        // Get all the traits name into a hashset so we can stort them afterwards
+        let traits = self
+            .class_structs
+            .iter()
+            .flat_map(|s| s.traits.iter())
+            .map(|t| t.clone())
+            .collect::<HashSet<String>>();
 
-        for sdef in &self.class_structs {
-            for t in &sdef.traits {
-                traits.insert(t.clone());
-            }
-        }
 
         // TODO: There is likely a way better way to do this
         let mut sorted_traits = Vec::new();
-        let mut sorted_list = traits.iter().collect::<Vec<(&String)>>();
+        let mut sorted_list = traits.iter().collect::<Vec<&String>>();
         sorted_list.sort();
 
         for entry in sorted_list {
@@ -564,27 +565,14 @@ impl ApiDef {
     }
 
     ///
-    /// Patch up the types for enums as they can be out of order.
+    /// Get functions from all structs that matches the filter
     ///
-    pub fn second_pass(&mut self) {
-        /*
-        let mut enums = HashSet::new();
-
-        for enum_def in &self.enums {
-            enums.insert(enum_def.name.clone());
-        }
-
-        // TODO: Clean up this code
-        for sdef in self.class_structs.iter_mut() {
-            for func in sdef.functions.iter_mut() {
-                for var in func.function_args.iter_mut() {
-                    if enums.contains(&var.vtype) {
-                        var.vtype = VariableType::Enum(var.vtype.clone());
-                    }
-                }
-            }
-        }
-        */
+    pub fn get_functions(&'a self, func_Type: FunctionType) -> Vec<&'a Function>) {
+        self.class_structs
+            .iter()
+            .flat_map(|s| s.functions.iter())
+            .filter(|f| f.func_type == func_type)
+            .collect::Vec<&'a Function>()
     }
 }
 

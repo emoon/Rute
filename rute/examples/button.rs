@@ -27,10 +27,12 @@ extern "C" {
     fn create_slider() -> RUWidget;
     fn slider_show(widget: *const RUBase);
 
-    fn slider_connect_value_changed(widget: *const RUBase,
-                                    user_data: *mut c_void,
-                                    callback: unsafe extern "C" fn(),
-                                    wrapped_func: *const c_void);
+    fn slider_connect_value_changed(
+        widget: *const RUBase,
+        user_data: *mut c_void,
+        callback: unsafe extern "C" fn(),
+        wrapped_func: *const c_void,
+    );
 }
 
 #[derive(Clone)]
@@ -55,12 +57,18 @@ impl Widget {
 
     pub fn show(self) -> Self {
         let data = self.data.get().unwrap().privd;
-        unsafe { widget_show(data); }
+        unsafe {
+            widget_show(data);
+        }
         self
     }
 }
 
-unsafe extern "C" fn slider_value_changed_trampoline<T>(user_data: *const c_void, func: *const c_void, value: i32) {
+unsafe extern "C" fn slider_value_changed_trampoline<T>(
+    user_data: *const c_void,
+    func: *const c_void,
+    value: i32,
+) {
     let f: &&(Fn(&mut T, i32) + 'static) = transmute(func);
     let data = user_data as *mut T;
     f(&mut *data, value);
@@ -81,7 +89,6 @@ unsafe extern "C" fn changed_trampoline<P>(this: *mut ffi::GtkComboBox, f: glib_
 }
 */
 
-
 impl Slider {
     pub fn new() -> Slider {
         unsafe {
@@ -94,35 +101,50 @@ impl Slider {
 
     pub fn show(self) -> Self {
         let data = self.data.get().unwrap().privd;
-        unsafe { slider_show(data); }
+        unsafe {
+            slider_show(data);
+        }
         self
     }
 
-    pub fn value_changed<F, T>(self, data: &mut T, func: F)
-        -> Slider where F: Fn(&mut T, i32) + 'static {
+    pub fn value_changed<F, T>(self, data: &mut T, func: F) -> Slider
+    where
+        F: Fn(&mut T, i32) + 'static,
+    {
         unsafe {
             let widget_data = self.data.get().unwrap().privd;
             let f: Box<Box<Fn(&mut T, i32) + 'static>> = Box::new(Box::new(func));
             let user_data: *mut c_void = transmute(data);
-            slider_connect_value_changed(widget_data,
-                user_data, transmute(slider_value_changed_trampoline::<T> as usize), Box::into_raw(f) as *const _);
+            slider_connect_value_changed(
+                widget_data,
+                user_data,
+                transmute(slider_value_changed_trampoline::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
         }
 
         self
     }
 }
 
+fn callbacked(temp: &mut u32, value: i32) {
+    println!("value {} - {}", temp, value);
+}
 
 fn main() {
     unsafe {
         create_application();
     }
 
-    let mut temp = 12;
+    let mut temp = 12u32;
 
-    rute.create_slider().value_changed(&mut temp, |temp, value| {
-        println!("value {} - {}", temp, value);
-    }).show();
+    Slider::new()
+        .value_changed(&mut temp, |temp, value| {
+            println!("value {} - {}", temp, value);
+        })
+        .show();
+
+    //Slider::new().value_changed(&mut temp, callbacked).show();
 
     unsafe {
         run_application();

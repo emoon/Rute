@@ -221,10 +221,9 @@ impl RustFFIGenerator {
         //
 
         f.write_all(b"#[repr(C)]\n")?;
-        f.write_all(b"pub struct RU {\n")?;
+        f.write_all(b"pub struct RuteFFI {\n")?;
 
-        for sdef in api_def
-            .class_structs
+        for sdef in api_def.class_structs
             .iter()
             .filter(|s| s.should_have_create_func())
         {
@@ -235,14 +234,11 @@ impl RustFFIGenerator {
             ))?;
         }
 
-        for func in api_def
-            .class_structs
-            .iter()
-            .flat_map(|s| s.functions.iter())
-            .filter(|f| f.func_type == FunctionType::Static)
-        {
-            Self::generate_function(&mut f, &func)?;
-        }
+        api_def.class_structs
+                           .iter()
+                           .flat_map(|s| s.functions.iter())
+                           .filter(|f| f.func_type == FunctionType::Static)
+                           .try_for_each(|func| Self::generate_function(&mut f, &func))?;
 
         f.write_all(b"    pub privd: *const RUBase,\n")?;
         f.write_all(b"}\n\n")?;

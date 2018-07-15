@@ -28,6 +28,7 @@ mod c_gen;
 use api_parser::{ApiDef, ApiParser};
 use c_gen::CapiGenerator;
 use rust_ffi_gen::RustFFIGenerator;
+use std::fs;
 
 fn main() {
     // This holds all the structs,variables,etc
@@ -43,11 +44,12 @@ fn main() {
         }
     }
 
-    // This pass will run and "fixup" types that might be out of order and needs to be relinked
-    api_def.second_pass();
+    // TODO: Correct error handling here
+    let _ = fs::create_dir("../rute/c_cpp");
+    let _ = fs::create_dir("../rute/src/auto");
 
     // Generate bindings for each backend
 
     CapiGenerator::generate("../rute/c_cpp/Rute.h", &api_def).unwrap();
-    RustFFIGenerator::generate("../rute/src/ffi.rs", &api_def).unwrap();
+    RustFFIGenerator::generate("../rute/src/auto/ffi.rs", &api_def).unwrap();
 }
