@@ -1,48 +1,31 @@
 
-
-
-
 ///
-/// Go over all
+/// In order to figure out what combination of of SignalWrappers we need to generate
+/// we go over all the the registered callback function and create a hash for the
+/// function arguments. This way we get one unique function wrapper in the cases
+/// where several wrapers has the same input
 ///
-fn generate_signal_wrappers_includes(f: &mut File, api_def: &ApiDef) -> io::Result<()> {
-    let mut info = HashMap::new();
+pub fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Function> {
+    let mut wrapper_info = HashMap::new();
 
-    api_def.class_structs
-        .iter()
-        .flat_map(|s| s.functions.iter())
-        .filter(|f| f.func_type == FunctionType::Callback)
-        .try_for_each(|func| Self::generate_function(&mut f, &func))?;
+    api_def
+        .get_functions(FunctionType::Callback)
+        .map(|func| {
+            let mut input_args = String::with_capacity(100);
 
-    for sdef in &api_def.entries {
-        let mut functions = Vec::new();
-        sdef.get_callback_functions(&mut functions);
+            // this will construct a string that looks something like:
+            // uint32_t, QEvent, void*
 
-        for func in &functions {
             for arg in &func.function_args {
-                info.entry(arg.vtype.clone()).or_insert(arg.clone());
+                let tname = arg.get_c_type(true);
+                input_args.push_str(&tname);
+                input_args.push_str(", ");
             }
-        }
-    }
 
-    let ordered: BTreeMap<_, _> = info.iter().collect();
+            input_args.push_str("void*"); // user_data
+            wrapper_info.entry(input_args).or_insert(func);
+        });
 
-    // Generate includes for all refreance types. We assume that these maps to Qt types.
-
-    for (_, arg) in ordered.iter().filter(|&(_, arg)| arg.reference) {
-        f.write_fmt(format_args!("#include <Q{}>\n", arg.vtype))?;
-    }
-
-    f.write_all(b"\n")?;
-
-    // Generate the ext refs for the static funcs
-
-    for (_, arg) in ordered.iter().filter(|&(_, arg)| arg.reference) {
-        f.write_fmt(format_args!("extern struct RU{}Funcs s_{}_funcs;\n", arg.vtype, arg.vtype.to_snake_case()))?;
-    }
-
-    f.write_all(b"\n")?;
-
-    Ok(())
+    wrapper_info
 }
 

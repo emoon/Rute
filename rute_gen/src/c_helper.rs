@@ -76,19 +76,28 @@ pub fn get_c_type(var: &Variable, use_type_ref: UseTypeRef) -> String {
 ///
 /// For example: "float test, uint32_t bar"
 ///
-pub fn generate_c_function_args(func: &Function) -> String {
-    let mut function_args = String::new();
+pub fn generate_c_function_args(func: &Function, replace_first: Option<&'static str>) -> String {
+    let mut function_args = String::with_capacity(128);
     let len = func.function_args.len();
 
     // write arguments
     for (i, arg) in func.function_args.iter().enumerate() {
-        function_args.push_str(&get_c_type(&arg, UseTypeRef::No));
+        if Some(replace_arg) && i == 0 {
+            function_args.push_str(replace_arg);
+        } else {
+            function_args.push_str(&get_c_type(&arg, UseTypeRef::No));
+        }
+
         function_args.push_str(" ");
         function_args.push_str(&arg.name);
 
         if i != len - 1 {
             function_args.push_str(", ");
         }
+    }
+
+    if Some(replace_first) && func.function_args.is_empty() {
+        function_args.push_str(replace_first);
     }
 
     function_args
