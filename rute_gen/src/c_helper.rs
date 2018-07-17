@@ -82,8 +82,8 @@ pub fn generate_c_function_args(func: &Function, replace_first: Option<&'static 
 
     // write arguments
     for (i, arg) in func.function_args.iter().enumerate() {
-        if Some(replace_arg) && i == 0 {
-            function_args.push_str(replace_arg);
+        if replace_first.is_some() && i == 0 {
+            function_args.push_str(replace_first.unwrap());
         } else {
             function_args.push_str(&get_c_type(&arg, UseTypeRef::No));
         }
@@ -96,8 +96,8 @@ pub fn generate_c_function_args(func: &Function, replace_first: Option<&'static 
         }
     }
 
-    if Some(replace_first) && func.function_args.is_empty() {
-        function_args.push_str(replace_first);
+    if replace_first.is_some() && func.function_args.is_empty() {
+        function_args.push_str(replace_first.unwrap());
     }
 
     function_args

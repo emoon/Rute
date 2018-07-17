@@ -245,7 +245,7 @@ impl CapiGenerator {
             "    {} (*{})({});\n",
             ret_value,
             func.name,
-            generate_c_function_args(func)
+            generate_c_function_args(func, None)
         ))
     }
 

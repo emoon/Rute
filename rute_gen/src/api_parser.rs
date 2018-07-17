@@ -514,23 +514,23 @@ impl ApiDef {
     ///
     /// Get a list of all the traits
     ///
-    pub fn get_all_traits(&self) -> Vec<String> {
+    pub fn get_all_traits<'a>(&'a self) -> Vec<&'a String> {
         // Get all the traits name into a hashset so we can stort them afterwards
         let traits = self
             .class_structs
             .iter()
             .flat_map(|s| s.traits.iter())
-            .map(|t| t.clone())
-            .collect::<HashSet<String>>();
+            .map(|t| t)
+            .collect::<HashSet<&'a String>>();
 
 
         // TODO: There is likely a way better way to do this
         let mut sorted_traits = Vec::new();
-        let mut sorted_list = traits.iter().collect::<Vec<&String>>();
+        let mut sorted_list = traits.iter().collect::<Vec<&&'a String>>();
         sorted_list.sort();
 
         for entry in sorted_list {
-            sorted_traits.push(entry.clone());
+            sorted_traits.push(*entry);
         }
 
         sorted_traits
@@ -540,6 +540,15 @@ impl ApiDef {
     /// Recursive get the structs
     ///
     fn recursive_get_inherit_structs<'a>(sdef: &'a Struct, api_def: &'a ApiDef, include_self: RecurseIncludeSelf, out_structs: &mut Vec<&'a Struct>) {
+        sdef.inherit 
+            .as_ref()
+            .map(|name| {
+                api_def.class_structs.iter().find(|s| s.name == *name)
+                    .map(|s| {
+                        Self::recursive_get_inherit_structs(s, api_def, RecurseIncludeSelf::Yes, out_structs);
+                    })
+            });
+        /*
         if let Some(ref inherit_name) = sdef.inherit {
             for sdef in &api_def.class_structs {
                 if &sdef.name == inherit_name {
@@ -547,6 +556,7 @@ impl ApiDef {
                 }
             }
         }
+        */
 
         if include_self == RecurseIncludeSelf::Yes {
             out_structs.push(sdef);
@@ -567,12 +577,12 @@ impl ApiDef {
     ///
     /// Get functions from all structs that matches the filter
     ///
-    pub fn get_functions(&'a self, func_Type: FunctionType) -> Vec<&'a Function>) {
+    pub fn get_functions<'a>(&'a self, func_type: FunctionType) -> Vec<&'a Function> {
         self.class_structs
             .iter()
             .flat_map(|s| s.functions.iter())
             .filter(|f| f.func_type == func_type)
-            .collect::Vec<&'a Function>()
+            .collect()
     }
 }
 
