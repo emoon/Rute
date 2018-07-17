@@ -124,12 +124,8 @@ impl CapiGenerator {
         for sdef in &api_def.pod_structs {
             f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
 
-            for entry in &sdef.variables {
-                f.write_fmt(format_args!(
-                    "    {} {};\n",
-                    get_c_type(&entry, UseTypeRef::No),
-                    entry.name
-                ))?;
+            for e in &sdef.variables {
+                f.write_fmt(format_args!( "    {} {};\n", e.get_c_type(), e.name))?;
             }
 
             f.write_all(b"};\n\n")?;
@@ -238,14 +234,14 @@ impl CapiGenerator {
         let ret_value = func
             .return_val
             .as_ref()
-            .map_or("void".to_owned(), |r| get_c_type(&r, UseTypeRef::No));
+            .map_or("void".into(), |r| r.get_c_type());
 
         // write return value and function name
         f.write_fmt(format_args!(
             "    {} (*{})({});\n",
             ret_value,
             func.name,
-            generate_c_function_args(func, None)
+            func.generate_c_function_def(None)
         ))
     }
 
@@ -272,7 +268,7 @@ impl CapiGenerator {
             if i == 0 {
                 func_def.push_str("struct RUBase* widget, void*");
             } else {
-                func_def.push_str(&get_c_type(&arg, UseTypeRef::No));
+                func_def.push_str(arg.get_c_type());
             }
 
             func_def.push_str(" ");

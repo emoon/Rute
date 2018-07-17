@@ -1,6 +1,10 @@
 use std::collections::HashMap;
+use std::path::Path;
+use std::io::{BufWriter, Write};
+use std::fs::File;
+use std::io;
+
 use api_parser::*;
-use c_helper::*;
 
 #[derive(PartialEq)]
 pub enum EventType {
@@ -25,7 +29,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
                 function_args.push_str("void*");
             }
         } else {
-            function_args.push_str(&get_c_type(&arg, UseTypeRef::Yes));
+            function_args.push_str(arg.get_c_type());
         }
 
         function_args.push_str(" ");
@@ -46,7 +50,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
 ///
 /// Generate signal wrapper name.
 ///
-/// Example: 
+/// Example:
 ///
 /// Signal_i32_u32_void
 ///
@@ -130,7 +134,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
 }
 
 ///
-/// Generate all forward declarations function pointer structs 
+/// Generate all forward declarations function pointer structs
 ///
 /// Example output:
 ///

@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use std::collections::HashSet;
+use std::borrow::Cow;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
@@ -175,18 +176,6 @@ pub struct ApiDef {
 ///
 fn is_primitve(name: &str) -> bool {
     PRMITIVE_TYPES.iter().any(|&type_name| type_name == name)
-}
-
-///
-/// Impl for struct. Mostly helper functions to make it easier to extract info
-///
-impl Struct {
-    ///
-    /// Check if the struct should have a create function
-    ///
-    pub fn should_have_create_func(&self) -> bool {
-        self.attributes.iter().find(|&s| s == ATTRIB_NO_CREATE).is_none()
-    }
 }
 
 #[derive(Parser)]
@@ -524,23 +513,26 @@ impl ApiDef {
             .collect::<HashSet<&'a String>>();
 
 
-        // TODO: There is likely a way better way to do this
-        let mut sorted_traits = Vec::new();
+        let mut sorted_traits = Vec::with_capacity(traits.len());
         let mut sorted_list = traits.iter().collect::<Vec<&&'a String>>();
-        sorted_list.sort();
+
+        sorted_list.sort().collect();
+        /*
+        sorted_list.collect();
 
         for entry in sorted_list {
             sorted_traits.push(*entry);
         }
 
         sorted_traits
+        */
     }
 
     ///
     /// Recursive get the structs
     ///
     fn recursive_get_inherit_structs<'a>(sdef: &'a Struct, api_def: &'a ApiDef, include_self: RecurseIncludeSelf, out_structs: &mut Vec<&'a Struct>) {
-        sdef.inherit 
+        sdef.inherit
             .as_ref()
             .map(|name| {
                 api_def.class_structs.iter().find(|s| s.name == *name)
@@ -586,3 +578,127 @@ impl ApiDef {
     }
 }
 
+///
+/// Impl for struct. Mostly helper functions to make it easier to extract info
+///
+impl Struct {
+    ///
+    /// Check if the struct should have a create function
+    ///
+    pub fn should_have_create_func(&self) -> bool {
+        self.attributes.iter().find(|&s| s == ATTRIB_NO_CREATE).is_none()
+    }
+}
+
+///
+/// Impl for Variable. Helper functions to make C and Rust generation easier
+///
+impl Variable {
+    pub fn get_c_type(&self) -> Cow<str> {
+        if self.array {
+            return "struct RUArray".into();
+        }
+
+        match self.vtype {
+            VariableType::SelfType => "struct RUBase*".into(),
+            VariableType::Primitive(ref tname) => {
+                match tname {
+                    "f32" => "float".into(),
+                    "bool" => "bool".into(),
+                    "f64" => "double".into(),
+                    "i32" => "int".into(),
+                    _ => {
+                        if tname.starts_with('u') {
+                            format!("uint{}_t", &tname[1..]).into()
+                        } else {
+                            format!("int{}_t", &tname[1..]).into()
+                        }
+                    }
+                }
+            }
+
+            VariableType::Reference(ref _tname) => {
+                format!("struct RU{}", _tname).into()
+            }
+
+            VariableType::Regular(ref tname) => {
+                if tname == "String" {
+                    "const char*".into()
+                } else {
+                    format!("struct RU{}", tname).into()
+                }
+            }
+
+            VariableType::Optional(ref tname) => format!("struct RU{}", tname).into(),
+
+            _ => {
+                println!("Should not be here {}", self.name);
+                "<error>".into()
+            }
+        }
+    }
+}
+
+
+///
+/// Impl for Function. Helper functions to make C and Rust generation easier
+///
+impl Function {
+    ///
+    /// Takes a function definition and generates a C function def from it
+    ///
+    /// For example: "float test, uint32_t bar"
+    ///
+    pub fn generate_c_function_def(&self, replace_first: Option<&'static str>) -> String {
+        let mut function_args = String::with_capacity(128);
+        let len = func.function_args.len();
+
+        // write arguments
+        for (i, arg) in self.function_args.iter().enumerate() {
+            if replace_first.is_some() && i == 0 {
+                function_args.push_str(replace_first.unwrap());
+            } else {
+                function_args.push_str(arg.get_c_type());
+            }
+
+            function_args.push_str(" ");
+            function_args.push_str(&arg.name);
+
+            if i != len - 1 {
+                function_args.push_str(", ");
+            }
+        }
+
+        if replace_first.is_some() && func.function_args.is_empty() {
+            function_args.push_str(replace_first.unwrap());
+        }
+
+        function_args
+    }
+
+    ///
+    /// Takes a function definition and generates a C function def from it
+    ///
+    /// For example: "self, test, bar"
+    ///
+    pub fn generate_function_invoke(&self,
+        replace_first_arg: Option<&'static str>) -> String {
+        let mut function_invoke = String::with_capacity(128);
+        let len = func.function_args.len();
+
+        // write arguments
+        for (i, arg) in func.function_args.iter().enumerate() {
+            if i == 0 && replace_first_arg.is_some() {
+                function_invoke.push_str(replace_first_arg.unwrap());
+            } else {
+                function_invoke.push_str(&arg.name);
+            }
+
+            if i != len - 1 {
+                function_invoke.push_str(", ");
+            }
+        }
+
+        function_invoke
+    }
+}
