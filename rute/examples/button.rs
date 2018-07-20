@@ -1,8 +1,10 @@
 extern crate rute;
 
 use std::cell::Cell;
+use std::marker::PhantomData;
 use std::mem::transmute;
 use std::os::raw::c_void;
+use std::cell::RefCell;
 
 #[repr(C)]
 #[derive(Default, Copy, Clone, Debug)]
@@ -29,33 +31,54 @@ extern "C" {
 
     fn slider_connect_value_changed(
         widget: *const RUBase,
-        user_data: *mut c_void,
+        user_data: *const c_void,
         callback: unsafe extern "C" fn(),
         wrapped_func: *const c_void,
     );
 }
 
 #[derive(Clone)]
-struct Widget {
+struct Widget<'a> {
     data: Box<Cell<Option<RUWidget>>>,
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
 #[derive(Clone)]
-struct Slider {
+struct Slider<'a> {
     data: Box<Cell<Option<RUWidget>>>,
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
-impl Widget {
-    pub fn new() -> Widget {
-        unsafe {
-            let ffi_data = create_widget();
-            Widget {
-                data: Box::new(Cell::new(Some(ffi_data))),
-            }
+struct Rute<'a> {
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,
+}
+
+/*
+impl<'a> Drop for Rute<'a> {
+    fn drop(&mut self) {}
+}
+*/
+
+impl<'a> Rute<'a> {
+    pub fn create_widget(&self) -> Widget<'a> {
+        let ffi_data = unsafe { create_widget() };
+        Widget {
+            data: Box::new(Cell::new(Some(ffi_data))),
+            _marker: PhantomData,
         }
     }
 
-    pub fn show(self) -> Self {
+    pub fn create_slider(&self) -> Slider<'a> {
+        let ffi_data = unsafe { create_slider() };
+        Slider {
+            data: Box::new(Cell::new(Some(ffi_data))),
+            _marker: PhantomData,
+        }
+    }
+}
+
+impl<'a> Widget<'a> {
+    pub fn show(self) -> Widget<'a> {
         let data = self.data.get().unwrap().privd;
         unsafe {
             widget_show(data);
@@ -74,32 +97,8 @@ unsafe extern "C" fn slider_value_changed_trampoline<T>(
     f(&mut *data, value);
 }
 
-/*
-   fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "changed",
-                transmute(changed_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
-        }
-    }
-
-unsafe extern "C" fn changed_trampoline<P>(this: *mut ffi::GtkComboBox, f: glib_ffi::gpointer) where P: IsA<ComboBox> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&ComboBox::from_glib_borrow(this).downcast_unchecked())
-}
-*/
-
-impl Slider {
-    pub fn new() -> Slider {
-        unsafe {
-            let ffi_data = create_slider();
-            Slider {
-                data: Box::new(Cell::new(Some(ffi_data))),
-            }
-        }
-    }
-
-    pub fn show(self) -> Self {
+impl<'a> Slider<'a> {
+    pub fn show(self) -> Slider<'a> {
         let data = self.data.get().unwrap().privd;
         unsafe {
             slider_show(data);
@@ -107,14 +106,16 @@ impl Slider {
         self
     }
 
-    pub fn value_changed<F, T>(self, data: &mut T, func: F) -> Slider
+    pub fn value_changed<F, T>(self, data: &'a T, func: F) -> Slider<'a>
     where
-        F: Fn(&mut T, i32) + 'static,
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
     {
+        let widget_data = self.data.get().unwrap().privd;
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
         unsafe {
-            let widget_data = self.data.get().unwrap().privd;
-            let f: Box<Box<Fn(&mut T, i32) + 'static>> = Box::new(Box::new(func));
-            let user_data: *mut c_void = transmute(data);
             slider_connect_value_changed(
                 widget_data,
                 user_data,
@@ -131,18 +132,47 @@ fn callbacked(temp: &mut u32, value: i32) {
     println!("value {} - {}", temp, value);
 }
 
+struct UiState {
+    value: i32,
+}
+
+struct MyApp<'a> {
+    ui: Rute<'a>,
+    shared_state: RefCell<UiState>,
+}
+
+impl<'a> MyApp<'a> {
+    fn new() -> MyApp<'a> {
+        MyApp {
+            ui: Rute { _marker: PhantomData },
+            shared_state: RefCell::new(UiState { value: 0 }),
+        }
+    }
+
+    fn setup_ui(&'a mut self) {
+        self.ui.create_slider().value_changed(self, |state, value| {
+            let mut state = state.shared_state.borrow_mut();
+            println!("prev value {}", state.value);
+            state.value = value;
+            println!("value {}", value);
+        }).show();
+    }
+}
+
 fn main() {
     unsafe {
         create_application();
     }
 
-    let mut temp = 12u32;
+    let mut app = MyApp::new();
+    app.setup_ui();
 
-    Slider::new()
-        .value_changed(&mut temp, |temp, value| {
-            println!("value {} - {}", temp, value);
-        })
-        .show();
+
+    /*
+    rute.create_slider().value_changed(&temp, |temp, value| {
+        println!("value {} - {}", temp, value);
+    }).show();
+    */
 
     //Slider::new().value_changed(&mut temp, callbacked).show();
 
