@@ -160,8 +160,10 @@ pub struct CppGenerator;
 
 impl CppGenerator {
     pub fn generate(target_name: &str, api_def: &ApiDef) -> io::Result<()> {
-        let header_path = Path::new(target_name).join(".h");
+        let header_path = format!("{}.h", target_name);
         //let cpp_path = Path::new(target_name).join(".cpp");
+
+		println!("header file {:?}", header_path);
 
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);

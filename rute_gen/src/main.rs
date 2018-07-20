@@ -46,12 +46,12 @@ fn main() {
     }
 
     // TODO: Correct error handling here
-    let _ = fs::create_dir("../rute/cpp/auto");
+    let _ = fs::create_dir("../rute/c_cpp/auto");
     let _ = fs::create_dir("../rute/src/auto");
 
     // Generate bindings for each backend
 
     CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &api_def).unwrap();
     RustFFIGenerator::generate("../rute/src/auto/ffi.rs", &api_def).unwrap();
-    CppGenerator::generate("../rute/src/c_cpp/auto/rute_cpp", &api_def).unwrap();
+    CppGenerator::generate("../rute/c_cpp/auto/rute_cpp", &api_def).unwrap();
 }
