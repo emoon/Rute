@@ -1,5 +1,4 @@
 use api_parser::*;
-use c_helper::*;
 use heck::SnakeCase;
 use std::fs::File;
 ///
@@ -268,7 +267,7 @@ impl CapiGenerator {
             if i == 0 {
                 func_def.push_str("struct RUBase* widget, void*");
             } else {
-                func_def.push_str(arg.get_c_type());
+                func_def.push_str(&arg.get_c_type());
             }
 
             func_def.push_str(" ");
@@ -339,8 +338,8 @@ impl CapiGenerator {
         funcs_name: &str,
         func: &Function,
     ) -> io::Result<()> {
-        let define_args = generate_c_function_invoke(func, Some("obj"));
-        let call_args = generate_c_function_invoke(func, Some("obj.priv_data"));
+        let define_args = func.generate_invoke(Some("obj"));
+        let call_args = func.generate_invoke(Some("obj.priv_data"));
 
         f.write_fmt(format_args!(
             "#define RU{}_{}({}) obj.{}->{}({})\n",

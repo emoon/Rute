@@ -512,20 +512,18 @@ impl ApiDef {
             .map(|t| t)
             .collect::<HashSet<&'a String>>();
 
-
         let mut sorted_traits = Vec::with_capacity(traits.len());
         let mut sorted_list = traits.iter().collect::<Vec<&&'a String>>();
 
-        sorted_list.sort().collect();
-        /*
-        sorted_list.collect();
+        sorted_list.sort();
+        //sorted_list.collect()
+        //sorted_list.collect();
 
         for entry in sorted_list {
             sorted_traits.push(*entry);
         }
 
         sorted_traits
-        */
     }
 
     ///
@@ -602,7 +600,7 @@ impl Variable {
         match self.vtype {
             VariableType::SelfType => "struct RUBase*".into(),
             VariableType::Primitive(ref tname) => {
-                match tname {
+                match tname.as_str() {
                     "f32" => "float".into(),
                     "bool" => "bool".into(),
                     "f64" => "double".into(),
@@ -651,14 +649,14 @@ impl Function {
     ///
     pub fn generate_c_function_def(&self, replace_first: Option<&'static str>) -> String {
         let mut function_args = String::with_capacity(128);
-        let len = func.function_args.len();
+        let len = self.function_args.len();
 
         // write arguments
         for (i, arg) in self.function_args.iter().enumerate() {
             if replace_first.is_some() && i == 0 {
                 function_args.push_str(replace_first.unwrap());
             } else {
-                function_args.push_str(arg.get_c_type());
+                function_args.push_str(&arg.get_c_type());
             }
 
             function_args.push_str(" ");
@@ -669,7 +667,7 @@ impl Function {
             }
         }
 
-        if replace_first.is_some() && func.function_args.is_empty() {
+        if replace_first.is_some() && self.function_args.is_empty() {
             function_args.push_str(replace_first.unwrap());
         }
 
@@ -681,13 +679,13 @@ impl Function {
     ///
     /// For example: "self, test, bar"
     ///
-    pub fn generate_function_invoke(&self,
+    pub fn generate_invoke(&self,
         replace_first_arg: Option<&'static str>) -> String {
         let mut function_invoke = String::with_capacity(128);
-        let len = func.function_args.len();
+        let len = self.function_args.len();
 
         // write arguments
-        for (i, arg) in func.function_args.iter().enumerate() {
+        for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 && replace_first_arg.is_some() {
                 function_invoke.push_str(replace_first_arg.unwrap());
             } else {

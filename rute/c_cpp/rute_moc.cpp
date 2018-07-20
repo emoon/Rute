@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'rute_cpp.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.10.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.10.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'rute_cpp.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.10.0. It"
+#error "This file was generated using the moc from 5.10.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -76,7 +76,7 @@ void QSlotWrapperSignal_self_i32_void::qt_static_metacall(QObject *_o, QMetaObje
     }
 }
 
-const QMetaObject QSlotWrapperSignal_self_i32_void::staticMetaObject = {
+QT_INIT_METAOBJECT const QMetaObject QSlotWrapperSignal_self_i32_void::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QSlotWrapperSignal_self_i32_void.data,
       qt_meta_data_QSlotWrapperSignal_self_i32_void,  qt_static_metacall, nullptr, nullptr}
 };
@@ -153,7 +153,7 @@ void WRWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     Q_UNUSED(_a);
 }
 
-const QMetaObject WRWidget::staticMetaObject = {
+QT_INIT_METAOBJECT const QMetaObject WRWidget::staticMetaObject = {
     { &QWidget::staticMetaObject, qt_meta_stringdata_WRWidget.data,
       qt_meta_data_WRWidget,  qt_static_metacall, nullptr, nullptr}
 };
@@ -219,7 +219,7 @@ void WRSlider::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     Q_UNUSED(_a);
 }
 
-const QMetaObject WRSlider::staticMetaObject = {
+QT_INIT_METAOBJECT const QMetaObject WRSlider::staticMetaObject = {
     { &QSlider::staticMetaObject, qt_meta_stringdata_WRSlider.data,
       qt_meta_data_WRSlider,  qt_static_metacall, nullptr, nullptr}
 };

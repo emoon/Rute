@@ -1,8 +1,9 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 use std::path::Path;
 use std::io::{BufWriter, Write};
 use std::fs::File;
 use std::io;
+use heck::SnakeCase;
 
 use api_parser::*;
 
@@ -29,7 +30,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
                 function_args.push_str("void*");
             }
         } else {
-            function_args.push_str(arg.get_c_type());
+            function_args.push_str(&arg.get_c_type());
         }
 
         function_args.push_str(" ");
@@ -58,7 +59,7 @@ fn signal_type_callback(func: &Function) -> String {
     let mut name_def = "Signal_".to_owned();
 
     for arg in &func.function_args {
-        name_def.push_str(arg.vtype.get_type());
+        name_def.push_str(&arg.get_c_type());
         name_def.push_str("_")
     }
 
@@ -98,14 +99,15 @@ fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Fu
 ///            m_func(m_data);
 ///        }
 ///
-///    private:
+///    private:f
 ///        SignalNoArgs m_func;
 ///        void* m_data;
 ///    };
 ///
 pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     // Sort the signals by their names to have stable generation
-    let ordered: BTreeMap<_, _> = build_signal_wrappers_info().iter().collect();
+	let temp = build_signal_wrappers_info(api_def);
+	let ordered: BTreeMap<_, _> = temp.iter().collect();
 
     for (signal_type_name, func) in ordered {
         let signal_type_name = signal_type_callback(func);
@@ -131,6 +133,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         f.write_all(b"    Q_SLOT void method(")?;
     }
 
+    Ok(())
 }
 
 ///
@@ -142,15 +145,13 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
 /// extern struct RUListFuncts s_list_funcs;
 ///
 fn generate_forward_declare_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    f.write_all(SEPARATOR)?;
-
-    api_def.class_structs.iter().for_each(|s| {
+    for s in &api_def.class_structs {
         f.write_fmt(format_args!(
             "extern struct RU{}Funcs s_{}_funcs;\n",
-            sdef.name,
-            sdef.name.to_snake_case()
+            s.name,
+            s.name.to_snake_case()
         ))?;
-    });
+    }
 
     f.write_all(b"\n")
 }
