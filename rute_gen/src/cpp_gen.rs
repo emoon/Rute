@@ -110,8 +110,6 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
 	let ordered: BTreeMap<_, _> = temp.iter().collect();
 
     for (signal_type_name, func) in ordered {
-        let signal_type_name = signal_type_callback(func);
-
         f.write_fmt(format_args!(
             "typedef void (*{})({});\n\n",
             signal_type_name,
@@ -163,19 +161,17 @@ pub struct CppGenerator;
 impl CppGenerator {
     pub fn generate(target_name: &str, api_def: &ApiDef) -> io::Result<()> {
         let header_path = Path::new(target_name).join(".h");
-        let cpp_path = Path::new(target_name).join(".cpp");
+        //let cpp_path = Path::new(target_name).join(".cpp");
 
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);
-        let mut cpp_out = BufWriter::new(File::create(cpp_path)?);
+        //let mut cpp_out = BufWriter::new(File::create(cpp_path)?);
 
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
 
         // Build the signals info used to generate the signal wrapper permutations
-        let signal_info = build_signal_wrappers_info(api_def);
-
-        Ok(())
+		generate_signal_wrappers(&mut h_out, api_def)
     }
 }
 
