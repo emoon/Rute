@@ -1,8 +1,8 @@
 use pest::Parser;
 use pest::iterators::Pair;
+use std::path::Path;
 use std::fs::File;
 use std::io::Read;
-use std::path::Path;
 use std::collections::HashSet;
 use std::borrow::Cow;
 
@@ -187,18 +187,19 @@ pub struct ApiParser;
 ///
 impl ApiParser {
     pub fn parse_file<P: AsRef<Path>>(path: P, api_def: &mut ApiDef) {
-		let mut buffer = String::new();
+        let mut buffer = String::new();
 
-		let pathname = path.as_ref().to_str().unwrap();
+        let pathname = path.as_ref().to_str().unwrap();
 
-		//
-		// Open and read file to memory
-		//
-		let mut f = File::open(pathname).unwrap_or_else(|e| panic!("ApiParser: Unable to open {}: {}", pathname, e));
-		f.read_to_string(&mut buffer).unwrap_or_else(|e| panic!("ApiParser: Unable to read from {}: {}", pathname, e));
+        let mut f = File::open(pathname).unwrap_or_else(|e| panic!("ApiParser: Unable to open {}: {}", pathname, e));
+        f.read_to_string(&mut buffer).unwrap_or_else(|e| panic!("ApiParser: Unable to read from {}: {}", pathname, e));
 
+        Self::parse_string(&buffer, &pathname, api_def);
+    }
+
+    pub fn parse_string(buffer: &str, filename: &str, api_def: &mut ApiDef) {
         let chunks =
-            ApiParser::parse(Rule::chunk, &buffer).unwrap_or_else(|e| panic!("APiParser: {} {}", pathname, e));
+            ApiParser::parse(Rule::chunk, buffer).unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
         for chunk in chunks {
             match chunk.as_rule() {
@@ -537,16 +538,8 @@ impl ApiDef {
                     .map(|s| {
                         Self::recursive_get_inherit_structs(s, api_def, RecurseIncludeSelf::Yes, out_structs);
                     })
-            });
-        /*
-        if let Some(ref inherit_name) = sdef.inherit {
-            for sdef in &api_def.class_structs {
-                if &sdef.name == inherit_name {
-                    Self::recursive_get_inherit_structs(sdef, api_def, RecurseIncludeSelf::Yes, out_structs);
-                }
             }
-        }
-        */
+        );
 
         if include_self == RecurseIncludeSelf::Yes {
             out_structs.push(sdef);
@@ -699,4 +692,49 @@ impl Function {
 
         function_invoke
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_primitve_ok() {
+        assert_eq!(is_primitve("i32"), true);
+    }
+
+    #[test]
+    fn test_primitve_false() {
+        assert_eq!(is_primitve("dummy"), false);
+    }
+
+    #[test]
+    fn test_basic_pod_struct() {
+        let mut api_def = ApiDef::default();
+        ApiParser::parse_string("struct Foo { i32 test }", "", &mut api_def);
+        assert_eq!(api_def.pod_structs.is_empty(), false);
+        assert_eq!(api_def.class_structs.is_empty(), true);
+
+        let sdef = &api_def.pod_structs[0];
+
+        assert_eq!(sdef.name, "Foo");
+        assert_eq!(sdef.variables.len(), 1);
+        assert_eq!(sdef.functions.is_empty(), true);
+        assert_eq!(sdef.variables[0].name, "test");
+    }
+
+    #[test]
+    fn test_basic_class_struct() {
+        let mut api_def = ApiDef::default();
+        ApiParser::parse_string("struct Widget { show() }", "", &mut api_def);
+        assert_eq!(api_def.pod_structs.is_empty(), true);
+        assert_eq!(api_def.class_structs.is_empty(), false);
+
+        let sdef = &api_def.class_structs[0];
+
+        assert_eq!(sdef.name, "Widget");
+        assert_eq!(sdef.functions.len(), 1);
+        assert_eq!(sdef.functions[0].name, "show");
+    }
+
+
 }
