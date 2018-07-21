@@ -736,5 +736,6 @@ mod tests {
         assert_eq!(sdef.functions[0].name, "show");
     }
 
+    // dumy
 
 }
