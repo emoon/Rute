@@ -13,9 +13,10 @@ pub enum EventType {
 }
 
 ///
+/// Generate a string in this style;
 ///
+/// void* self_c, void* wrapped_func, int row
 ///
-
 pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Function) -> String {
     let mut function_args = String::new();
     let len = func.function_args.len();
@@ -26,14 +27,13 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
             if event_type == EventType::Event {
                 function_args.push_str("RUBase*, void*");
             } else {
-                function_args.push_str("void*");
+                function_args.push_str("void* self_c, void* wrapped_func");
             }
         } else {
             function_args.push_str(&arg.get_c_type());
+            function_args.push_str(" ");
+            function_args.push_str(&arg.name);
         }
-
-        function_args.push_str(" ");
-        function_args.push_str(&arg.name);
 
         if i != len - 1 {
             function_args.push_str(", ");
@@ -125,11 +125,12 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             signal_type_name
         ))?;
         f.write_fmt(format_args!(
-            "    QSlotWrapper{}(void* data, {} func) {{\n",
+            "    QSlotWrapper{}(void* data, {} func, void* wrapped_func) {{\n",
             signal_type_name, signal_type_name
         ))?;
         f.write_all(b"        m_func = func;\n")?;
         f.write_all(b"        m_data = data;\n")?;
+        f.write_all(b"        m_wrapped_func = wrapped_func;\n")?;
         f.write_all(b"    }\n\n")?;
 
         //
@@ -147,7 +148,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             }
         });
 
-        f.write_fmt(format_args!("    Q_SLOT void method({}) \n", func_def))?;
+        f.write_fmt(format_args!("    Q_SLOT void method({}) {{\n", func_def))?;
 
         // generate temporaries for the case of reference for funcs
         for (index, arg) in func.function_args.iter().enumerate() {
@@ -166,7 +167,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
 
         // Generate the function invokation in the callback. First parameter is always m_data for
         // the user_data that needs to be passed to the callback
-        let func_invoke = func.gen_c_invoke_filter(Some("m_data".into()), |index, arg| {
+        let func_invoke = func.gen_c_invoke_filter(Some("m_data, m_wrapped_func".into()), |index, arg| {
             match arg.vtype {
                 VariableType::Reference(ref _name) => {
                     (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()))
@@ -181,6 +182,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         f.write_all(b"private:\n")?;
         f.write_fmt(format_args!("    {} m_func;\n", signal_type_name))?;
         f.write_all(b"    void* m_data;\n")?;
+        f.write_all(b"    void* m_wrapped_func;\n")?;
         f.write_all(b"};\n\n")?;
     }
 
