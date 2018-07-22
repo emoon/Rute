@@ -694,14 +694,15 @@ impl Function {
 
         function_invoke
     }
-    
+
     ///
     /// Allows to write out a C function def but to use a filter for the variable type
     ///
     /// TODO: Cleanup this code
-    pub fn write_c_func_def<F, W: Write>(&self, f: &mut Write, filter: F) -> io::Result<()>
+    pub fn write_c_func_def<F, W>(&self, f: &mut W, filter: F) -> io::Result<()>
     where
         F: Fn(usize, &Variable) -> (Option<Cow<str>>, Option<Cow<str>>),
+        W: Write,
     {
         let arg_count = self.function_args.len();
 

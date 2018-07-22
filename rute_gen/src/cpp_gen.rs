@@ -139,8 +139,8 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
                 (None, None)
             } else {
             	match arg.vtype {
-            		VariableType::Reference(ref name) => (Some(format!("Q{}*", name).into()), Some(arg.name.into())),
-            		_ => (Some(arg.get_c_type()), Some(arg.name.into())),
+            		VariableType::Reference(ref name) => (Some(format!("Q{}*", name).into()), Some(arg.name.clone().into())),
+            		_ => (Some(arg.get_c_type()), Some(arg.name.clone().into())),
             	}
             }
         })?;
@@ -172,7 +172,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
                 if arg.vtype == VariableType::Reference {
                     (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()), None)
                 } else {
-                    (Some(arg.name.into()), None) 
+                    (Some(arg.name.into()), None)
                 }
             }
         })?;
