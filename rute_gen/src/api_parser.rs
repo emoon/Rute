@@ -1,12 +1,12 @@
-use pest::Parser;
 use pest::iterators::Pair;
-use std::path::Path;
-use std::fs::File;
-use std::io::Read;
-use std::collections::HashSet;
+use pest::Parser;
 use std::borrow::Cow;
-use std::io::Write;
+use std::collections::HashSet;
+use std::fs::File;
 use std::io;
+use std::io::Read;
+use std::io::Write;
+use std::path::Path;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
@@ -14,8 +14,9 @@ const _GRAMMAR: &str = include_str!("api.pest");
 ///
 /// Current primitive types
 ///
-const PRMITIVE_TYPES: &[&str] =
-    &["i8", "u8", "i16", "u16", "i32", "u32", "i64", "u64", "bool", "f32", "f64"];
+const PRMITIVE_TYPES: &[&str] = &[
+    "i8", "u8", "i16", "u16", "i32", "u32", "i64", "u64", "bool", "f32", "f64",
+];
 
 ///
 /// Attribute tagged on struct of they shouldn't have a create function in the main
@@ -26,7 +27,7 @@ static ATTRIB_NO_CREATE: &'static str = "NoCreate";
 ///
 /// Variable type
 ///
-#[derive(Debug, Clone)]
+#[derive(PartialEq, Debug, Clone)]
 pub enum VariableType {
     None,
     /// Self (aka this pointer in C++ and self in Rust)
@@ -193,15 +194,17 @@ impl ApiParser {
 
         let pathname = path.as_ref().to_str().unwrap();
 
-        let mut f = File::open(pathname).unwrap_or_else(|e| panic!("ApiParser: Unable to open {}: {}", pathname, e));
-        f.read_to_string(&mut buffer).unwrap_or_else(|e| panic!("ApiParser: Unable to read from {}: {}", pathname, e));
+        let mut f = File::open(pathname)
+            .unwrap_or_else(|e| panic!("ApiParser: Unable to open {}: {}", pathname, e));
+        f.read_to_string(&mut buffer)
+            .unwrap_or_else(|e| panic!("ApiParser: Unable to read from {}: {}", pathname, e));
 
         Self::parse_string(&buffer, &pathname, api_def);
     }
 
     pub fn parse_string(buffer: &str, filename: &str, api_def: &mut ApiDef) {
-        let chunks =
-            ApiParser::parse(Rule::chunk, buffer).unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
+        let chunks = ApiParser::parse(Rule::chunk, buffer)
+            .unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
         for chunk in chunks {
             match chunk.as_rule() {
@@ -214,7 +217,7 @@ impl ApiParser {
                     } else {
                         api_def.class_structs.push(sdef);
                     }
-                },
+                }
 
                 Rule::enumdef => {
                     let mut enum_def = Enum::default();
@@ -228,7 +231,7 @@ impl ApiParser {
                     }
 
                     api_def.enums.push(enum_def);
-                },
+                }
 
                 _ => (),
             }
@@ -251,7 +254,7 @@ impl ApiParser {
                     let (var_entries, func_entries) = Self::fill_field_list(entry);
                     sdef.variables = var_entries;
                     sdef.functions = func_entries;
-                },
+                }
 
                 _ => (),
             }
@@ -286,9 +289,7 @@ impl ApiParser {
     /// collect namelist (array) of strings
     ///
     fn get_namelist_list(rule: Pair<Rule>) -> Vec<String> {
-        rule.into_inner()
-            .map(|e| e.as_str().to_owned())
-            .collect()
+        rule.into_inner().map(|e| e.as_str().to_owned()).collect()
     }
 
     ///
@@ -358,7 +359,7 @@ impl ApiParser {
             function.function_args.push(Variable {
                 name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
-                .. Variable::default()
+                ..Variable::default()
             });
         }
 
@@ -374,7 +375,7 @@ impl ApiParser {
         variables.push(Variable {
             name: "self_c".to_owned(),
             vtype: VariableType::SelfType,
-            .. Variable::default()
+            ..Variable::default()
         });
 
         for entry in rule.into_inner() {
@@ -460,7 +461,7 @@ impl ApiParser {
         for entry in rule.into_inner() {
             match entry.as_rule() {
                 Rule::name => name = entry.as_str().to_owned(),
-                Rule::enum_assign => assign =  Self::get_enum_assign(entry),
+                Rule::enum_assign => assign = Self::get_enum_assign(entry),
                 _ => (),
             }
         }
@@ -487,9 +488,7 @@ impl ApiParser {
 
         name_or_num
     }
-
 }
-
 
 ///
 /// Use if self should be included when finding all the structs
@@ -532,16 +531,26 @@ impl ApiDef {
     ///
     /// Recursive get the structs
     ///
-    fn recursive_get_inherit_structs<'a>(sdef: &'a Struct, api_def: &'a ApiDef, include_self: RecurseIncludeSelf, out_structs: &mut Vec<&'a Struct>) {
-        sdef.inherit
-            .as_ref()
-            .map(|name| {
-                api_def.class_structs.iter().find(|s| s.name == *name)
-                    .map(|s| {
-                        Self::recursive_get_inherit_structs(s, api_def, RecurseIncludeSelf::Yes, out_structs);
-                    })
-            }
-        );
+    fn recursive_get_inherit_structs<'a>(
+        sdef: &'a Struct,
+        api_def: &'a ApiDef,
+        include_self: RecurseIncludeSelf,
+        out_structs: &mut Vec<&'a Struct>,
+    ) {
+        sdef.inherit.as_ref().map(|name| {
+            api_def
+                .class_structs
+                .iter()
+                .find(|s| s.name == *name)
+                .map(|s| {
+                    Self::recursive_get_inherit_structs(
+                        s,
+                        api_def,
+                        RecurseIncludeSelf::Yes,
+                        out_structs,
+                    );
+                })
+        });
 
         if include_self == RecurseIncludeSelf::Yes {
             out_structs.push(sdef);
@@ -551,7 +560,11 @@ impl ApiDef {
     ///
     /// Get a list of all the traits
     ///
-    pub fn get_inherit_structs<'a>(&'a self, sdef: &'a Struct, include_self: RecurseIncludeSelf) -> Vec<&'a Struct> {
+    pub fn get_inherit_structs<'a>(
+        &'a self,
+        sdef: &'a Struct,
+        include_self: RecurseIncludeSelf,
+    ) -> Vec<&'a Struct> {
         let mut out_structs = Vec::new();
 
         Self::recursive_get_inherit_structs(sdef, self, include_self, &mut out_structs);
@@ -579,7 +592,10 @@ impl Struct {
     /// Check if the struct should have a create function
     ///
     pub fn should_have_create_func(&self) -> bool {
-        self.attributes.iter().find(|&s| s == ATTRIB_NO_CREATE).is_none()
+        self.attributes
+            .iter()
+            .find(|&s| s == ATTRIB_NO_CREATE)
+            .is_none()
     }
 }
 
@@ -594,25 +610,21 @@ impl Variable {
 
         match self.vtype {
             VariableType::SelfType => "struct RUBase*".into(),
-            VariableType::Primitive(ref tname) => {
-                match tname.as_str() {
-                    "f32" => "float".into(),
-                    "bool" => "bool".into(),
-                    "f64" => "double".into(),
-                    "i32" => "int".into(),
-                    _ => {
-                        if tname.starts_with('u') {
-                            format!("uint{}_t", &tname[1..]).into()
-                        } else {
-                            format!("int{}_t", &tname[1..]).into()
-                        }
+            VariableType::Primitive(ref tname) => match tname.as_str() {
+                "f32" => "float".into(),
+                "bool" => "bool".into(),
+                "f64" => "double".into(),
+                "i32" => "int".into(),
+                _ => {
+                    if tname.starts_with('u') {
+                        format!("uint{}_t", &tname[1..]).into()
+                    } else {
+                        format!("int{}_t", &tname[1..]).into()
                     }
                 }
-            }
+            },
 
-            VariableType::Reference(ref _tname) => {
-                format!("struct RU{}", _tname).into()
-            }
+            VariableType::Reference(ref _tname) => format!("struct RU{}", _tname).into(),
 
             VariableType::Regular(ref tname) => {
                 if tname == "String" {
@@ -631,7 +643,6 @@ impl Variable {
         }
     }
 }
-
 
 ///
 /// Impl for Function. Helper functions to make C and Rust generation easier
@@ -674,8 +685,7 @@ impl Function {
     ///
     /// For example: "self, test, bar"
     ///
-    pub fn generate_invoke(&self,
-        replace_first_arg: Option<&'static str>) -> String {
+    pub fn generate_invoke(&self, replace_first_arg: Option<&'static str>) -> String {
         let mut function_invoke = String::with_capacity(128);
         let len = self.function_args.len();
 
@@ -693,6 +703,101 @@ impl Function {
         }
 
         function_invoke
+    }
+
+    ///
+    /// This function allows to replace any of the types when generating a c function declaration
+    /// Type replacement depends highly on where the function is being use.
+    ///
+    pub fn gen_c_def_filter<F>(&self, replace_first: Option<Option<Cow<str>>>, filter: F) -> String
+    where
+        F: Fn(usize, &Variable) -> Option<Cow<str>>,
+    {
+        let mut output = String::with_capacity(256);
+        let arg_count = self.function_args.len();
+        let mut skip_first = false;
+
+        // This allows us to change the first parameter and it also supports to not have any parameter at all
+        replace_first
+            .map(|arg| {
+                skip_first = true;
+                arg
+            })
+            .and_then(|v| v)
+            .map(|v| {
+                if arg_count > 0 {
+                    output.push_str(&format!("{} {}", v, self.function_args[0].name));
+                }
+
+                if arg_count > 1 {
+                    output.push_str(", ");
+                }
+            });
+
+        // iterater over all the parameters and run the filter
+
+        for (i, arg) in self.function_args.iter().enumerate() {
+            if i == 0 && skip_first {
+                continue;
+            }
+
+            let filter_arg = filter(i, &arg);
+            let current_arg = filter_arg.map_or_else(|| arg.get_c_type(), |v| v);
+
+            output.push_str(&format!("{} {}", current_arg, arg.name));
+
+            if i != arg_count - 1 {
+                output.push_str(", ");
+            }
+        }
+
+        output
+    }
+
+    ///
+    /// This function allows to replace any of the parameter names when generating a c function
+    /// definition
+    ///
+    pub fn gen_c_invoke_filter<F>(&self, replace_first: Option<Cow<str>>, filter: F) -> String
+    where
+        F: Fn(usize, &Variable) -> Option<Cow<str>>,
+    {
+        let mut output = String::with_capacity(256);
+        let arg_count = self.function_args.len();
+        let mut skip_first = false;
+
+        // This allows us to change the first parameter and it also supports to not have any parameter at all
+        replace_first
+            .map(|arg| {
+                skip_first = true;
+
+                if arg_count > 0 {
+                    output.push_str(&format!("{}", arg));
+                }
+
+                if arg_count > 1 {
+                    output.push_str(", ");
+                }
+            });
+
+        // iterater over all the parameters and run the filter
+
+        for (i, arg) in self.function_args.iter().enumerate() {
+            if i == 0 && skip_first {
+                continue;
+            }
+
+            let filter_arg = filter(i, &arg);
+            let current_arg = filter_arg.map_or_else(|| arg.name.clone().into(), |v| v);
+
+            output.push_str(&format!("{}", current_arg));
+
+            if i != arg_count - 1 {
+                output.push_str(", ");
+            }
+        }
+
+        output
     }
 
     ///
@@ -718,9 +823,13 @@ impl Function {
                 }
             } else {
                 if filter_arg.0.is_none() {
-                	f.write_fmt(format_args!("{}", filter_arg.1.unwrap()))?;
+                    f.write_fmt(format_args!("{}", filter_arg.1.unwrap()))?;
                 } else {
-                	f.write_fmt(format_args!("{} {}", filter_arg.0.unwrap(), filter_arg.1.unwrap()))?;
+                    f.write_fmt(format_args!(
+                        "{} {}",
+                        filter_arg.0.unwrap(),
+                        filter_arg.1.unwrap()
+                    ))?;
                 }
             }
 
@@ -740,7 +849,6 @@ impl Function {
 
         Ok(())
     }
-
 }
 
 #[cfg(test)]
@@ -787,8 +895,6 @@ mod tests {
         assert_eq!(sdef.functions.len(), 1);
         assert_eq!(sdef.functions[0].name, "show");
     }
-
-
 
     // dumy
 
