@@ -52,13 +52,18 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
 ///
 /// Example:
 ///
-/// Signal_i32_u32_void
+/// Signal_self_i32_u32_void
 ///
 fn signal_type_callback(func: &Function) -> String {
     let mut name_def = "Signal_".to_owned();
 
     for arg in &func.function_args {
-        name_def.push_str(&arg.get_c_type());
+		match arg.vtype {
+			VariableType::SelfType => name_def.push_str("self"),
+			VariableType::Reference(ref name) => name_def.push_str(name),
+			_ => name_def.push_str(&arg.get_c_type()),
+		}
+
         name_def.push_str("_")
     }
 
@@ -128,6 +133,58 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         f.write_all(b"    }\n\n")?;
 
         f.write_all(b"    Q_SLOT void method(")?;
+
+        func.write_c_func_def(f, |index, arg| {
+            if index == 0 {
+                (None, None)
+            } else {
+            	match arg.vtype {
+            		VariableType::Reference(ref name) => (Some(format!("Q{}*", name).into()), Some(arg.name.into())),
+            		_ => (Some(arg.get_c_type()), Some(arg.name.into())),
+            	}
+            }
+        })?;
+
+        f.write_all(b" {\n")?;
+
+        // generate temporaries for the case of reference
+
+		/*
+        for (index, arg) in func.function_args.iter().enumerate() {
+            if index == 0 {
+                continue;
+            }
+
+            if arg.reference {
+                f.write_fmt(format_args!("        auto temp_arg_{} = RU{} {{ &s_{}_funcs, (struct RUBase*){} }};\n",
+                index, arg.vtype, arg.vtype.to_snake_case(), arg.name.to_owned()))?;
+            }
+        }
+        */
+
+        f.write_all(b"        m_func(")?;
+
+		/*
+        func.write_c_func_def(f, |index, arg| {
+            if index == 0 {
+                (Some("m_data".into()), None)
+            } else {
+                if arg.vtype == VariableType::Reference {
+                    (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()), None)
+                } else {
+                    (Some(arg.name.into()), None) 
+                }
+            }
+        })?;
+        */
+
+        f.write_all(b";\n")?;
+        f.write_all(b"    }\n")?;
+
+        f.write_all(b"private:\n")?;
+        f.write_fmt(format_args!("    {} m_func;\n", signal_type_name))?;
+        f.write_all(b"    void* m_data;\n")?;
+        f.write_all(b"};\n\n")?;
     }
 
     Ok(())
@@ -175,4 +232,53 @@ impl CppGenerator {
 		generate_signal_wrappers(&mut h_out, api_def)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    //
+    // This will test that the signal_type_callback generates the correct output
+    //
+    #[test]
+    fn test_signal_type_callback_0() {
+    	let func = Function {
+    		name: "test".to_owned(),
+    		function_args: vec![
+				Variable {
+					name: "var0".to_owned(),
+					vtype: VariableType::Primitive("i32".to_owned()),
+					array: false,
+				}],
+    		return_val: None,
+    		func_type: FunctionType::Regular,
+    		is_manual: false,
+    	};
+
+		let signal_gen = signal_type_callback(&func);
+        assert_eq!(signal_gen, "Signal_int_void");
+    }
+
+    //
+    // This will test that the signal_type_callback generates the correct output
+    //
+    #[test]
+    fn test_signal_type_callback_1() {
+    	let func = Function {
+    		name: "test".to_owned(),
+    		function_args: vec![
+				Variable {
+					name: "var0".to_owned(),
+					vtype: VariableType::Reference("DropEvent".to_owned()),
+					array: false,
+				}],
+    		return_val: None,
+    		func_type: FunctionType::Regular,
+    		is_manual: false,
+    	};
+
+		let signal_gen = signal_type_callback(&func);
+        assert_eq!(signal_gen, "Signal_DropEvent_void");
+    }
+}
+
 

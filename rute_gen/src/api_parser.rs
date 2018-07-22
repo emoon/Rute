@@ -5,6 +5,8 @@ use std::fs::File;
 use std::io::Read;
 use std::collections::HashSet;
 use std::borrow::Cow;
+use std::io::Write;
+use std::io;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
@@ -692,6 +694,52 @@ impl Function {
 
         function_invoke
     }
+    
+    ///
+    /// Allows to write out a C function def but to use a filter for the variable type
+    ///
+    /// TODO: Cleanup this code
+    pub fn write_c_func_def<F, W: Write>(&self, f: &mut Write, filter: F) -> io::Result<()>
+    where
+        F: Fn(usize, &Variable) -> (Option<Cow<str>>, Option<Cow<str>>),
+    {
+        let arg_count = self.function_args.len();
+
+        for (i, arg) in self.function_args.iter().enumerate() {
+            let filter_arg = filter(i, &arg);
+            let mut write_next = true;
+
+            if filter_arg.0.is_none() {
+                if filter_arg.1.is_some() {
+                    f.write_fmt(format_args!("{}", filter_arg.0.unwrap()))?;
+                } else {
+                    write_next = false;
+                }
+            } else {
+                if filter_arg.0.is_none() {
+                	f.write_fmt(format_args!("{}", filter_arg.1.unwrap()))?;
+                } else {
+                	f.write_fmt(format_args!("{} {}", filter_arg.0.unwrap(), filter_arg.1.unwrap()))?;
+                }
+            }
+
+            if (i != arg_count - 1) && write_next == true {
+                f.write_all(b", ")?;
+            }
+        }
+
+        f.write_all(b")")?;
+
+        if let Some(ref ret_var) = self.return_val {
+            let filter_arg = filter(arg_count, &ret_var);
+            if let Some(arg) = filter_arg.1 {
+                f.write_fmt(format_args!(" -> {}", arg))?;
+            }
+        }
+
+        Ok(())
+    }
+
 }
 
 #[cfg(test)]
@@ -722,6 +770,9 @@ mod tests {
         assert_eq!(sdef.variables[0].name, "test");
     }
 
+    ///
+    /// Make sure parsing of "struct Widget { show() }"
+    ///
     #[test]
     fn test_basic_class_struct() {
         let mut api_def = ApiDef::default();
@@ -735,6 +786,8 @@ mod tests {
         assert_eq!(sdef.functions.len(), 1);
         assert_eq!(sdef.functions[0].name, "show");
     }
+
+
 
     // dumy
 
