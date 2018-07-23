@@ -12,6 +12,80 @@ pub enum EventType {
     Event,
 }
 
+//
+// Used to make CPP generated code a bit easier to read
+//
+static SEPARATOR: &'static [u8] = b"///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n\n";
+
+///
+/// Adds some extra functionallity to Struct to make some checks easier
+///
+impl Struct {
+    fn inherits_widget(&self, api_def: &ApiDef) -> bool {
+        if self.name == "Widget" {
+            return true;
+        }
+
+        if let Some(ref inherit_name) = self.inherit {
+            if inherit_name == "Widget" {
+                return true;
+            }
+
+            for sdef in &api_def.class_structs {
+                if sdef.inherits_widget(api_def) == true {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+}
+
+///
+/// Generate enum remappings from rute enums to Qt
+///
+fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    // write enum mapping defs
+
+    f.write_all(SEPARATOR)?;
+    f.write_all(b"\n")?;
+    f.write_all(b"struct KeyVal { int val, key; };\n")?;
+
+    for enum_def in &api_def.enums {
+        f.write_fmt(format_args!("static std::map<int, int> s_{}_lookup;\n", enum_def.name.to_snake_case()))?;
+    }
+
+    f.write_all(b"\n")?;
+    f.write_all(SEPARATOR)?;
+    f.write_all(b"static void create_enum_mappings() {\n")?;
+
+    for enum_def in &api_def.enums {
+        let enum_name = enum_def.name.to_snake_case();
+
+        f.write_fmt(format_args!("    static KeyVal {}_vals[] = {{\n", enum_name))?;
+
+        for (i, entry) in enum_def.entries.iter().enumerate() {
+            match *entry {
+                EnumEntry::Enum(ref value) => {
+                    let name = &value;
+                    f.write_fmt(format_args!("        {{ (int)Qt::{}, {} }},\n", name, i))?;
+                },
+                _ => (),
+            }
+        }
+
+        f.write_all(b"    };\n\n")?;
+
+        f.write_fmt(format_args!("    for (int i = 0; i < {}; ++i) {{\n", enum_def.entries.len()))?;
+        f.write_fmt(format_args!("        s_{}_lookup[{}_vals[i].key] = {}_vals[i].val;\n",
+            enum_name, enum_name, enum_name))?;
+        f.write_all(b"    };\n")?;
+    }
+
+    f.write_all(b"}\n\n")
+}
+
 ///
 /// Generate a string in this style;
 ///
@@ -59,8 +133,7 @@ fn signal_type_callback(func: &Function) -> String {
 
     for arg in &func.function_args {
         match arg.vtype {
-            VariableType::SelfType => name_def.push_str("self"),
-            VariableType::Reference(ref name) => name_def.push_str(name),
+            VariableType::Reference => name_def.push_str(&arg.type_name),
             _ => name_def.push_str(&arg.get_c_type()),
         }
 
@@ -91,22 +164,25 @@ fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Fu
 
 /// Generate a signal wrapper that is in the style of this:
 ///
-///    class QSlotWrapperNoArgs : public QObject {
-///        Q_OBJECT
-///    public:
-///        QSlotWrapperNoArgs(void* data, SignalNoArgs func) {
-///            m_func = func;
-///            m_data = data;
-///        }
+/// typedef void (*Signal_self_int_void)(void* self_c, void* wrapped_func, int row);
 ///
-///        Q_SLOT void method() {
-///            m_func(m_data);
-///        }
+/// class QSlotWrapperSignal_self_int_void : public QObject {
+///     Q_OBJECT
+/// public:
+///     QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void func, void* wrapped_func) {
+///         m_func = func;
+///         m_data = data;
+///         m_wrapped_func = wrapped_func;
+///     }
 ///
-///    private:f
-///        SignalNoArgs m_func;
-///        void* m_data;
-///    };
+///     Q_SLOT void method(int row) {
+///         m_func(m_data, m_wrapped_func, row);
+///     }
+/// private:
+///     Signal_self_int_void m_func;
+///     void* m_data;
+///     void* m_wrapped_func;
+/// };
 ///
 pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     // Sort the signals by their names to have stable generation
@@ -141,8 +217,8 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         //
         let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
             match arg.vtype {
-                VariableType::Reference(ref name) => {
-                    Some(format!("Q{}*", name).into())
+                VariableType::Reference => {
+                    Some(format!("Q{}*", arg.type_name).into())
                 },
                 _ => None,
             }
@@ -157,7 +233,8 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             }
 
             match arg.vtype {
-                VariableType::Reference(ref name) => {
+                VariableType::Reference => {
+                    let name = arg.type_name.as_str();
                     f.write_fmt(format_args!("        auto temp_arg_{} = RU{} {{ &s_{}_funcs, (struct RUBase*){} }};\n",
                     index, name, name.to_snake_case(), arg.name.to_owned()))?;
                 },
@@ -169,7 +246,7 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         // the user_data that needs to be passed to the callback
         let func_invoke = func.gen_c_invoke_filter(Some("m_data, m_wrapped_func".into()), |index, arg| {
             match arg.vtype {
-                VariableType::Reference(ref _name) => {
+                VariableType::Reference => {
                     (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()))
                 },
                 _ => None,
@@ -209,24 +286,116 @@ fn generate_forward_declare_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -
     f.write_all(b"\n")
 }
 
+///
+/// Generates the create functions
+///
+fn generate_create_functions<W: Write>(
+    f: &mut W,
+    struct_name_map: &HashMap<&str, &str>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    //
+    // Generate create functions for all structs that are flagged with create function
+    // and doesn't have manual create selected on them
+    //
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|s| s.should_have_create_func() && !s.has_manual_create())
+    {
+        let struct_name = sdef.name.as_str();
+        let is_inherits_widget = sdef.inherits_widget(api_def);
+
+        //
+        // We create wrapper widgets for all Qt widges so we can have our own functionallity there
+        // So we prefix them with WR (WRapper) otherwise we assume it's a regular Q* class
+        //
+        let qt_type = match is_inherits_widget {
+            true => "WR",
+            false => "Q",
+        };
+
+        f.write_fmt(format_args!(
+            "static struct RU{} create_{}(struct RUBase* priv_data) {{\n",
+            sdef.name,
+            sdef.name.to_snake_case()
+        ))?;
+
+        //
+        // Get the name if we have remapped the name (for example we use Button while Qt uses
+        // AbstractButton)
+        //
+        let struct_qt_name = struct_name_map
+            .get(struct_name)
+            .unwrap_or_else(|| &struct_name);
+
+        //
+        // Depending on if this is a widget we generate the code a bit differently and have
+        // a generic create function otherwise a template function for creating widgets
+        //
+        if is_inherits_widget {
+            f.write_fmt(format_args!(
+                "    return create_widget_func<struct RU{}, struct RU{}Funcs, WR{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                struct_name,
+                struct_name,
+                struct_qt_name,
+                struct_name.to_snake_case()
+            ))?;
+        } else {
+            f.write_fmt(format_args!(
+                "    return create_generic_func<struct RU{}, struct RU{}Funcs, Q{}>(&s_{}_funcs, priv_data);\n}}\n\n",
+                struct_name,
+                struct_name,
+                struct_qt_name,
+                struct_name.to_snake_case()
+            ))?;
+        }
+
+        //
+        // Generate destroy functions as well
+        //
+        f.write_fmt(format_args!(
+            "static void destroy_{}(struct RUBase* priv_data) {{\n",
+            sdef.name.to_snake_case()
+        ))?;
+        f.write_fmt(format_args!(
+            "    destroy_generic<{}{}>(priv_data);\n}}\n\n",
+            qt_type, struct_qt_name
+        ))?;
+    }
+
+    Ok(())
+}
+
 pub struct CppGenerator;
 
 impl CppGenerator {
     pub fn generate(target_name: &str, api_def: &ApiDef) -> io::Result<()> {
         let header_path = format!("{}.h", target_name);
-        //let cpp_path = Path::new(target_name).join(".cpp");
+        let cpp_path = format!("{}.cpp", target_name);
+        let mut struct_name_map = HashMap::new();
 
         println!("header file {:?}", header_path);
 
+        struct_name_map.insert("Button", "AbstractButton");
+
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);
-        //let mut cpp_out = BufWriter::new(File::create(cpp_path)?);
+        let mut cpp_out = BufWriter::new(File::create(cpp_path)?);
 
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
 
         // Build the signals info used to generate the signal wrapper permutations
-        generate_signal_wrappers(&mut h_out, api_def)
+        generate_signal_wrappers(&mut h_out, api_def)?;
+
+        // Generate the Matching for Qt enums to our enums
+        generate_enum_mappings(&mut cpp_out, api_def)?;
+
+        // generate the create functions for all widgets
+        generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;
+
+        Ok(())
     }
 }
 

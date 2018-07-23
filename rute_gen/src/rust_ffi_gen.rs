@@ -33,14 +33,16 @@ impl Variable {
             return "RUArray".into();
         }
 
+        let name = self.type_name.as_str();
+
         match &self.vtype {
             VariableType::None => "<illegal type>".into(),
             VariableType::SelfType => "*const RUBase".into(),
-            VariableType::Primitive(ref name) => name.to_owned().into(),
-            VariableType::Reference(_) => "*const RUBase".into(),
-            VariableType::Optional(name) => format!(" RU{}", name).into(),
+            VariableType::Primitive => name.to_owned().into(),
+            VariableType::Reference => "*const RUBase".into(),
+            VariableType::Optional => format!(" RU{}", name).into(),
             //VariableType::Enum(ref name) => format!(" RU{}", name).into(),
-            VariableType::Regular(ref name) => {
+            VariableType::Regular => {
                 if name == "String" {
                     "*const ::std::os::raw::c_char".into()
                 } else {

@@ -3,9 +3,7 @@ use pest::Parser;
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::fs::File;
-use std::io;
 use std::io::Read;
-use std::io::Write;
 use std::path::Path;
 
 #[cfg(debug_assertions)]
@@ -23,6 +21,7 @@ const PRMITIVE_TYPES: &[&str] = &[
 /// exported Rute struct
 ///
 static ATTRIB_NO_CREATE: &'static str = "NoCreate";
+static ATTRIB_MANUAL_CREATE: &'static str = "ManualCreate";
 
 ///
 /// Variable type
@@ -33,15 +32,15 @@ pub enum VariableType {
     /// Self (aka this pointer in C++ and self in Rust)
     SelfType,
     /// Enum type
-    //Enum(String),
+    //Enum,
     /// Struct/other type
-    Regular(String),
+    Regular,
     /// Prmitive type (such as i32,u64,etc)
-    Primitive(String),
+    Primitive,
     /// Reference type
-    Reference(String),
+    Reference,
     /// Optional type
-    Optional(String),
+    Optional,
 }
 
 ///
@@ -53,6 +52,8 @@ pub struct Variable {
     pub name: String,
     /// Type of the variable
     pub vtype: VariableType,
+    /// Name of the variable type
+    pub type_name: String,
     /// If variable is an array
     pub array: bool,
 }
@@ -65,6 +66,7 @@ impl Default for Variable {
         Variable {
             name: String::new(),
             vtype: VariableType::None,
+            type_name: String::new(),
             array: false,
         }
     }
@@ -267,13 +269,6 @@ impl ApiParser {
     /// Get attributes for a struct
     ///
     fn get_attrbutes(rule: Pair<Rule>) -> Vec<String> {
-        /*
-        rule.into_inner()
-            .filter(|e| e.as_rule() == Rule::namelist)
-            .map(|e| e.as_str().to_owned())
-            .collect()
-        */
-
         let mut attribs = Vec::new();
 
         for entry in rule.into_inner() {
@@ -359,6 +354,7 @@ impl ApiParser {
             function.function_args.push(Variable {
                 name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
+                type_name: "self".to_owned(),
                 ..Variable::default()
             });
         }
@@ -417,17 +413,18 @@ impl ApiParser {
 
         // match up with the correct type
         let var_type = match vtype {
-            Rule::refexp => VariableType::Reference(type_name),
-            Rule::optional => VariableType::Optional(type_name),
+            Rule::refexp => VariableType::Reference,
+            Rule::optional => VariableType::Optional,
             _ => {
                 if is_primitve(&type_name) {
-                    VariableType::Primitive(type_name)
+                    VariableType::Primitive
                 } else {
-                    VariableType::Regular(type_name)
+                    VariableType::Regular
                 }
             }
         };
 
+        var.type_name = type_name;
         var.vtype = var_type;
         var
     }
@@ -597,6 +594,16 @@ impl Struct {
             .find(|&s| s == ATTRIB_NO_CREATE)
             .is_none()
     }
+
+    ///
+    /// Check if the struct is manually created
+    ///
+    pub fn has_manual_create(&self) -> bool {
+        self.attributes
+            .iter()
+            .find(|&s| s == ATTRIB_MANUAL_CREATE)
+            .is_some()
+    }
 }
 
 ///
@@ -608,15 +615,17 @@ impl Variable {
             return "struct RUArray".into();
         }
 
+        let tname = self.type_name.as_str();
+
         match self.vtype {
             VariableType::SelfType => "struct RUBase*".into(),
-            VariableType::Primitive(ref tname) => match tname.as_str() {
+            VariableType::Primitive => match tname {
                 "f32" => "float".into(),
                 "bool" => "bool".into(),
                 "f64" => "double".into(),
                 "i32" => "int".into(),
                 _ => {
-                    if tname.starts_with('u') {
+                    if self.type_name.starts_with('u') {
                         format!("uint{}_t", &tname[1..]).into()
                     } else {
                         format!("int{}_t", &tname[1..]).into()
@@ -624,9 +633,9 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference(ref _tname) => format!("struct RU{}", _tname).into(),
+            VariableType::Reference => format!("struct RU{}", tname).into(),
 
-            VariableType::Regular(ref tname) => {
+            VariableType::Regular => {
                 if tname == "String" {
                     "const char*".into()
                 } else {
@@ -634,7 +643,7 @@ impl Variable {
                 }
             }
 
-            VariableType::Optional(ref tname) => format!("struct RU{}", tname).into(),
+            VariableType::Optional => format!("struct RU{}", tname).into(),
 
             _ => {
                 println!("Should not be here {}", self.name);
@@ -799,56 +808,6 @@ impl Function {
 
         output
     }
-
-    ///
-    /// Allows to write out a C function def but to use a filter for the variable type
-    ///
-    /// TODO: Cleanup this code
-    pub fn write_c_func_def<F, W>(&self, f: &mut W, filter: F) -> io::Result<()>
-    where
-        F: Fn(usize, &Variable) -> (Option<Cow<str>>, Option<Cow<str>>),
-        W: Write,
-    {
-        let arg_count = self.function_args.len();
-
-        for (i, arg) in self.function_args.iter().enumerate() {
-            let filter_arg = filter(i, &arg);
-            let mut write_next = true;
-
-            if filter_arg.0.is_none() {
-                if filter_arg.1.is_some() {
-                    f.write_fmt(format_args!("{}", filter_arg.0.unwrap()))?;
-                } else {
-                    write_next = false;
-                }
-            } else {
-                if filter_arg.0.is_none() {
-                    f.write_fmt(format_args!("{}", filter_arg.1.unwrap()))?;
-                } else {
-                    f.write_fmt(format_args!(
-                        "{} {}",
-                        filter_arg.0.unwrap(),
-                        filter_arg.1.unwrap()
-                    ))?;
-                }
-            }
-
-            if (i != arg_count - 1) && write_next == true {
-                f.write_all(b", ")?;
-            }
-        }
-
-        f.write_all(b")")?;
-
-        if let Some(ref ret_var) = self.return_val {
-            let filter_arg = filter(arg_count, &ret_var);
-            if let Some(arg) = filter_arg.1 {
-                f.write_fmt(format_args!(" -> {}", arg))?;
-            }
-        }
-
-        Ok(())
-    }
 }
 
 #[cfg(test)]
@@ -895,7 +854,4 @@ mod tests {
         assert_eq!(sdef.functions.len(), 1);
         assert_eq!(sdef.functions[0].name, "show");
     }
-
-    // dumy
-
 }
