@@ -1,8 +1,10 @@
+use heck::MixedCase;
 use heck::SnakeCase;
 use std::collections::{BTreeMap, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
+use c_gen::*;
 
 use api_parser::*;
 
@@ -53,7 +55,10 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
     f.write_all(b"struct KeyVal { int val, key; };\n")?;
 
     for enum_def in &api_def.enums {
-        f.write_fmt(format_args!("static std::map<int, int> s_{}_lookup;\n", enum_def.name.to_snake_case()))?;
+        f.write_fmt(format_args!(
+            "static std::map<int, int> s_{}_lookup;\n",
+            enum_def.name.to_snake_case()
+        ))?;
     }
 
     f.write_all(b"\n")?;
@@ -63,27 +68,252 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
     for enum_def in &api_def.enums {
         let enum_name = enum_def.name.to_snake_case();
 
-        f.write_fmt(format_args!("    static KeyVal {}_vals[] = {{\n", enum_name))?;
+        f.write_fmt(format_args!(
+            "    static KeyVal {}_vals[] = {{\n",
+            enum_name
+        ))?;
 
         for (i, entry) in enum_def.entries.iter().enumerate() {
             match *entry {
                 EnumEntry::Enum(ref value) => {
                     let name = &value;
                     f.write_fmt(format_args!("        {{ (int)Qt::{}, {} }},\n", name, i))?;
-                },
+                }
                 _ => (),
             }
         }
 
         f.write_all(b"    };\n\n")?;
 
-        f.write_fmt(format_args!("    for (int i = 0; i < {}; ++i) {{\n", enum_def.entries.len()))?;
-        f.write_fmt(format_args!("        s_{}_lookup[{}_vals[i].key] = {}_vals[i].val;\n",
-            enum_name, enum_name, enum_name))?;
+        f.write_fmt(format_args!(
+            "    for (int i = 0; i < {}; ++i) {{\n",
+            enum_def.entries.len()
+        ))?;
+        f.write_fmt(format_args!(
+            "        s_{}_lookup[{}_vals[i].key] = {}_vals[i].val;\n",
+            enum_name, enum_name, enum_name
+        ))?;
         f.write_all(b"    };\n")?;
     }
 
     f.write_all(b"}\n\n")
+}
+///
+/// Genarate event setup code. It will look something like this
+///
+///  void Class::paintEvent(QPaintEvent* event) {
+///        if (m_paint_event) {
+///            RUPainteEvent e;
+///            memcpy(&e, s_paint_event, sizeof(e));
+///            e.priv_data = event;
+///            m_paint_event((RUPainteEvent*)&e, m_paint_user_data);
+///        } else {
+///            QWidget::paintEvent(event);
+///        }
+///    }
+///
+///    RUPaintEventFunc m_paint_event = nullptr;
+///    void* m_paint_user_data = nullptr;
+
+fn generate_event_setup_def<W: Write>(f: &mut W, class_name: &str, func: &Function) -> io::Result<()> {
+    let event_type = &func.function_args[1];
+
+    // Write virtual function def
+    f.write_all(b"public:\n")?;
+
+    f.write_fmt(format_args!(
+        "    virtual void {}Event(Q{}* event);\n",
+        func.name.to_mixed_case(),
+        event_type.type_name
+    ))?;
+
+    f.write_fmt(format_args!(
+        "    void (*m_{})({})",
+        func.name,
+        generate_c_function_args_signal_wrapper(EventType::Event, func)
+    ))?;
+
+    //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
+
+    f.write_fmt(format_args!(" = nullptr;\n"))?;
+    f.write_fmt(format_args!(
+        "    void* m_{}_user_data = nullptr;\n",
+        func.name
+    ))?;
+
+    Ok(())
+}
+
+///
+/// Generate wrapper classes for all the Widges. This allows us to override
+/// virtual functions from the outside (in C and other langs)
+/// defs
+///
+fn generate_wrapper_classes_defs<W: Write>(
+    f: &mut W,
+    struct_name_map: &HashMap<&str, &str>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|v| v.inherits_widget(api_def))
+    {
+        let struct_name = sdef.name.as_str();
+        let struct_qt_name = struct_name_map
+            .get(struct_name)
+            .unwrap_or_else(|| &struct_name);
+
+        f.write_all(SEPARATOR)?;
+        f.write_fmt(format_args!(
+            "class WR{} : public Q{} {{\n",
+            struct_qt_name, struct_qt_name
+        ))?;
+        f.write_all(b"    Q_OBJECT\n")?;
+        f.write_all(b"public:\n")?;
+        //f.write_all(b"    Q_PROPERTY(void* userData READ userData WRITE setUserData DESIGNABLE false SCRIPTABLE false)\n")?;
+        //f.write_all(b"    void setUserData(void* data) { m_qt_user_data = data; }\n")?;
+        //f.write_all(b"    void* userData() { return m_qt_user_data; }\n")?;
+        //f.write_all(b"    void* m_qt_user_data;\n\n")?;
+
+        f.write_fmt(format_args!(
+            "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
+            struct_qt_name, struct_qt_name
+        ))?;
+        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
+
+        let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
+
+        for func in &event_funcs {
+            generate_event_setup_def(f, &struct_qt_name, &func)?;
+        }
+
+        f.write_all(b"};\n\n")?;
+    }
+
+    Ok(())
+}
+
+///
+/// Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
+///
+fn generate_event_setup_impl<W: Write>(
+    f: &mut W,
+    struct_name: &str,
+    class_name: &str,
+    func: &Function,
+) -> io::Result<()> {
+    let event_type = &func.function_args[1];
+
+    f.write_fmt(format_args!(
+        "void WR{}::{}Event(Q{}* event) {{\n",
+        struct_name,
+        func.name.to_mixed_case(),
+        event_type.type_name
+    ))?;
+    f.write_fmt(format_args!("    if (m_{}) {{\n", func.name))?;
+    f.write_fmt(format_args!("        RU{} e;\n", event_type.type_name,))?;
+    f.write_fmt(format_args!(
+        "        e.funcs = &s_{}_event_funcs;\n",
+        func.name
+    ))?;
+    f.write_fmt(format_args!(
+        "        e.priv_data = (struct RUBase*)event;\n"
+    ))?;
+
+    f.write_fmt(format_args!("        RU{} w;\n", struct_name))?;
+    f.write_fmt(format_args!(
+        "        w.funcs = &s_{}_funcs;\n",
+        struct_name.to_snake_case(),
+    ))?;
+    f.write_fmt(format_args!(
+        "        w.priv_data = (struct RUBase*)this;\n"
+    ))?;
+
+    f.write_fmt(format_args!(
+        "        m_{}((struct RUBase*)&w, m_{}_user_data, (struct RUBase*)&e);\n",
+        func.name, func.name,
+    ))?;
+    f.write_fmt(format_args!("    }} else {{\n"))?;
+    f.write_fmt(format_args!(
+        "        Q{}::{}Event(event);\n",
+        class_name,
+        func.name.to_mixed_case()
+    ))?;
+    f.write_fmt(format_args!("    }}\n"))?;
+    f.write_fmt(format_args!("}}\n\n"))?;
+
+    Ok(())
+}
+///
+/// Generate something like this
+///
+/// static void set_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct RUBase* event)) {
+///     WRWidget* qt_object = (WRWidget*)object;
+///     qt_object->m_paint_user_data = user_data;
+///     qt_object->m_paint = event;
+/// }
+///
+fn generate_event_setup_funcs<W: Write>(
+    f: &mut W,
+    struct_qt_name: &str,
+    func: &Function,
+) -> io::Result<()> {
+    let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
+
+    f.write_fmt(format_args!(
+        "{} {{\n",
+        CapiGenerator::callback_fun_def_name(false, &func_name, func),
+    ))?;
+
+    f.write_fmt(format_args!(
+        "    WR{}* qt_object = (WR{}*)object;\n",
+        struct_qt_name, struct_qt_name
+    ))?;
+    f.write_fmt(format_args!(
+        "    qt_object->m_{}_user_data = user_data;\n",
+        func.name
+    ))?;
+    f.write_fmt(format_args!("    qt_object->m_{} = event;\n", func.name))?;
+    f.write_all(b"};\n\n")
+}
+
+///
+/// Generate wrapper classes for all the Widges. This allows us to override
+/// virtual functions from the outside (in C and other langs)
+/// defs
+///
+fn generate_wrapper_classes_impl<W: Write>(
+    f: &mut W,
+    struct_name_map: &HashMap<&str, &str>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|v| v.inherits_widget(api_def))
+    {
+        let struct_name = sdef.name.as_str();
+        let struct_qt_name = struct_name_map
+            .get(struct_name)
+            .unwrap_or_else(|| &struct_name);
+
+        // Get all the structs that thu current struct inherit from
+
+        let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
+
+        for func in &event_funcs {
+            generate_event_setup_impl(f, &struct_name, &struct_qt_name, &func)?;
+        }
+
+        // Generate the setup functions for events
+        for func in event_funcs {
+            f.write_all(SEPARATOR)?;
+            generate_event_setup_funcs(f, &struct_qt_name, &func)?;
+        }
+    }
+
+    Ok(())
 }
 
 ///
@@ -215,13 +445,9 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
         // We also remove the first parameter (as it's user data) which
         // isn't used for the Qt method def
         //
-        let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
-            match arg.vtype {
-                VariableType::Reference => {
-                    Some(format!("Q{}*", arg.type_name).into())
-                },
-                _ => None,
-            }
+        let func_def = func.gen_c_def_filter(Some(None), |_index, arg| match arg.vtype {
+            VariableType::Reference => Some(format!("Q{}*", arg.type_name).into()),
+            _ => None,
         });
 
         f.write_fmt(format_args!("    Q_SLOT void method({}) {{\n", func_def))?;
@@ -235,23 +461,29 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             match arg.vtype {
                 VariableType::Reference => {
                     let name = arg.type_name.as_str();
-                    f.write_fmt(format_args!("        auto temp_arg_{} = RU{} {{ &s_{}_funcs, (struct RUBase*){} }};\n",
-                    index, name, name.to_snake_case(), arg.name.to_owned()))?;
-                },
+                    f.write_fmt(format_args!(
+                        "        auto temp_arg_{} = RU{} {{ &s_{}_funcs, (struct RUBase*){} }};\n",
+                        index,
+                        name,
+                        name.to_snake_case(),
+                        arg.name.to_owned()
+                    ))?;
+                }
                 _ => (),
             }
         }
 
         // Generate the function invokation in the callback. First parameter is always m_data for
         // the user_data that needs to be passed to the callback
-        let func_invoke = func.gen_c_invoke_filter(Some("m_data, m_wrapped_func".into()), |index, arg| {
-            match arg.vtype {
+        let func_invoke = func.gen_c_invoke_filter(
+            Some("m_data, m_wrapped_func".into()),
+            |index, arg| match arg.vtype {
                 VariableType::Reference => {
                     (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()))
-                },
+                }
                 _ => None,
-            }
-        });
+            },
+        );
 
         f.write_fmt(format_args!("        m_func({});\n", func_invoke))?;
         f.write_all(b"    }\n")?;
@@ -391,6 +623,12 @@ impl CppGenerator {
 
         // Generate the Matching for Qt enums to our enums
         generate_enum_mappings(&mut cpp_out, api_def)?;
+
+        // Generate the wrapping classes declartion is used as for Qt.
+        generate_wrapper_classes_defs(&mut cpp_out, &struct_name_map, api_def)?;
+
+        // Generate the wrapping implementation that is used as for Qt.
+        generate_wrapper_classes_impl(&mut cpp_out, &struct_name_map, api_def)?;
 
         // generate the create functions for all widgets
         generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;

@@ -579,6 +579,21 @@ impl ApiDef {
             .filter(|f| f.func_type == func_type)
             .collect()
     }
+
+    ///
+    /// Get functions of given type in a recrusive fashion (to include inheritance)
+    ///
+    pub fn get_functions_recursive<'a>(
+        &'a self,
+        sdef: &'a Struct,
+        func_type: FunctionType,
+    ) -> Vec<&'a Function> {
+        self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes)
+            .iter()
+            .flat_map(|s| s.functions.iter())
+            .filter(|func| func.func_type == func_type)
+            .collect()
+    }
 }
 
 ///
@@ -776,18 +791,17 @@ impl Function {
         let mut skip_first = false;
 
         // This allows us to change the first parameter and it also supports to not have any parameter at all
-        replace_first
-            .map(|arg| {
-                skip_first = true;
+        replace_first.map(|arg| {
+            skip_first = true;
 
-                if arg_count > 0 {
-                    output.push_str(&format!("{}", arg));
-                }
+            if arg_count > 0 {
+                output.push_str(&format!("{}", arg));
+            }
 
-                if arg_count > 1 {
-                    output.push_str(", ");
-                }
-            });
+            if arg_count > 1 {
+                output.push_str(", ");
+            }
+        });
 
         // iterater over all the parameters and run the filter
 
