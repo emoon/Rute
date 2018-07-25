@@ -1188,3 +1188,195 @@ static void destroy_h_box_layout(struct RUBase* priv_data) {
     destroy_generic<WRHBoxLayout>(priv_data);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUApplicationFuncs s_application_funcs = {
+    destroy_application,
+    application_set_style,
+    application_set_style_sheet,
+    application_exec,
+    set_application_about_to_quit_event,
+    application_get_files,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUActionFuncs s_action_funcs = {
+    destroy_action,
+    action_is_enabled,
+    action_set_text,
+    action_text,
+    action_set_shortcut,
+    action_set_shortcut_mod,
+    set_action_triggered_event,
+    action_set_int_data,
+    action_get_int_data,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUWidgetFuncs s_widget_funcs = {
+    destroy_widget,
+    widget_show,
+    widget_set_persist_data,
+    widget_persist_data,
+    widget_set_fixed_height,
+    widget_set_fixed_width,
+    widget_resize,
+    widget_set_parent,
+    widget_set_layout,
+    widget_update,
+    set_widget_paint_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
+    destroy_list_widget_item,
+    list_widget_item_set_text,
+    list_widget_item_text,
+    list_widget_item_set_string_data,
+    list_widget_item_get_string_data,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUListWidgetFuncs s_list_widget_funcs = {
+    destroy_list_widget,
+    list_widget_clear,
+    list_widget_add_item,
+    list_widget_add_text_item,
+    list_widget_current_item,
+    list_widget_current_row,
+    list_widget_selected_items,
+    list_widget_item,
+    list_widget_set_current_row,
+    list_widget_count,
+    list_widget_set_drag_enabled,
+    list_widget_set_drop_indicator_shown,
+    list_widget_set_accept_drops,
+    set_list_widget_drag_enter_event,
+    set_list_widget_drop_event,
+    list_widget_add_widget_item,
+    set_list_widget_current_row_changed_event,
+    set_list_widget_item_clicked_event,
+    set_list_widget_item_double_clicked_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUUrlFuncs s_url_funcs = {
+    url_is_local_file,
+    url_to_local_file,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUMimeDataFuncs s_mime_data_funcs = {
+    mime_data_has_color,
+    mime_data_has_image,
+    mime_data_has_text,
+    mime_data_has_urls,
+    mime_data_urls,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUTimerFuncs s_timer_funcs = {
+    destroy_timer,
+    set_timer_timeout_event,
+    timer_start,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUIconFuncs s_icon_funcs = {
+    destroy_icon,
+    icon_add_file,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUMenuFuncs s_menu_funcs = {
+    destroy_menu,
+    menu_add_action_text,
+    set_menu_triggered_event,
+    menu_add_action,
+    menu_set_title,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUMenuBarFuncs s_menu_bar_funcs = {
+    destroy_menu_bar,
+    menu_bar_add_menu,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RULabelFuncs s_label_funcs = {
+    destroy_label,
+    label_set_text,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RULineEditFuncs s_line_edit_funcs = {
+    destroy_line_edit,
+    line_edit_set_text,
+    line_edit_set_read_only,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUPlainTextEditFuncs s_plain_text_edit_funcs = {
+    destroy_plain_text_edit,
+    plain_text_edit_clear,
+    plain_text_edit_set_plain_text,
+    plain_text_edit_append_plain_text,
+    plain_text_edit_set_read_only,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUSliderFuncs s_slider_funcs = {
+    destroy_slider,
+    set_slider_value_changed_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUMainWindowFuncs s_main_window_funcs = {
+    destroy_main_window,
+    main_window_is_animated,
+    main_window_menu_bar,
+    main_window_set_central_widget,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RULayoutFuncs s_layout_funcs = {
+    layout_add_widget,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUVBoxLayoutFuncs s_v_box_layout_funcs = {
+    destroy_v_box_layout,
+    v_box_layout_add_layout,
+    v_box_layout_update,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUHBoxLayoutFuncs s_h_box_layout_funcs = {
+    destroy_h_box_layout,
+    h_box_layout_add_layout,
+    h_box_layout_update,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUStaticFuncsFuncs s_static_funcs_funcs = {
+};
+

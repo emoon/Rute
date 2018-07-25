@@ -922,6 +922,55 @@ fn generate_create_functions<W: Write>(
 }
 
 ///
+/// Generate the function struct defs in the following style
+///
+/// struct PUMimeDataFuncs s_mime_data_funcs = {
+///    mime_data_has_color,
+///    mime_data_urls,
+///    ...
+/// };
+///
+fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    for sdef in &api_def.class_structs {
+        f.write_all(SEPARATOR)?;
+
+        let struct_name = &sdef.name;
+
+        f.write_fmt(format_args!(
+            "struct RU{}Funcs s_{}_funcs = {{\n",
+            struct_name,
+            struct_name.to_snake_case()
+        ))?;
+
+        if sdef.should_have_create_func() {
+            f.write_fmt(format_args!("    destroy_{},\n", struct_name.to_snake_case()))?;
+        }
+
+        for func in &sdef.functions {
+            match func.func_type {
+                 FunctionType::Regular => {
+                    f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
+                },
+
+                FunctionType::Callback => {
+                    f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
+                },
+
+                FunctionType::Event => {
+                    f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
+                },
+
+                _ => (),
+            }
+        }
+
+        f.write_all(b"};\n\n")?;
+    }
+
+    Ok(())
+}
+
+///
 /// Type handlers
 ///
 ///
@@ -1047,6 +1096,9 @@ impl CppGenerator {
 
         // generate the create functions for all widgets
         generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;
+
+        // generate the structs that holds the wrapper functinos
+        generate_struct_defs(&mut cpp_out, api_def)?;
 
         Ok(())
     }
