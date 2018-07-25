@@ -580,10 +580,10 @@ impl ApiDef {
             .collect()
     }
 
+    /*
+    pub fn get_functions_recursive<'a>(
     ///
     /// Get functions of given type in a recrusive fashion (to include inheritance)
-    ///
-    pub fn get_functions_recursive<'a>(
         &'a self,
         sdef: &'a Struct,
         func_type: FunctionType,
@@ -594,6 +594,7 @@ impl ApiDef {
             .filter(|func| func.func_type == func_type)
             .collect()
     }
+    */
 }
 
 ///
@@ -794,12 +795,14 @@ impl Function {
         replace_first.map(|arg| {
             skip_first = true;
 
-            if arg_count > 0 {
-                output.push_str(&format!("{}", arg));
-            }
+            if arg != "" {
+                if arg_count > 0 {
+                    output.push_str(&format!("{}", arg));
+                }
 
-            if arg_count > 1 {
-                output.push_str(", ");
+                if arg_count > 1 {
+                    output.push_str(", ");
+                }
             }
         });
 

@@ -1,10 +1,10 @@
+use c_gen::*;
 use heck::MixedCase;
 use heck::SnakeCase;
 use std::collections::{BTreeMap, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
-use c_gen::*;
 
 use api_parser::*;
 
@@ -18,6 +18,25 @@ pub enum EventType {
 // Used to make CPP generated code a bit easier to read
 //
 static SEPARATOR: &'static [u8] = b"///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n\n";
+
+///
+/// Type handlers allows us to override certain types that gets passed into functions.
+/// Examples are structs such as Rect, Color and Strings
+///
+trait TypeHandler {
+    fn match_type(&self) -> &str;
+
+    fn replace_arg(&self, arg: &Variable) -> String {
+        arg.name.clone()
+    }
+
+    fn gen_body_return(&self, function_name: &String) -> String {
+        format!(
+            "    return qt_data->{}()",
+            function_name.to_mixed_case())
+    }
+}
+
 
 ///
 /// Adds some extra functionallity to Struct to make some checks easier
@@ -115,14 +134,12 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
 ///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
-fn generate_event_setup_def<W: Write>(f: &mut W, class_name: &str, func: &Function) -> io::Result<()> {
+fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
     let event_type = &func.function_args[1];
 
     // Write virtual function def
-    f.write_all(b"public:\n")?;
-
     f.write_fmt(format_args!(
-        "    virtual void {}Event(Q{}* event);\n",
+        "\n    virtual void {}Event(Q{}* event);\n",
         func.name.to_mixed_case(),
         event_type.type_name
     ))?;
@@ -180,12 +197,17 @@ fn generate_wrapper_classes_defs<W: Write>(
             "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
             struct_qt_name, struct_qt_name
         ))?;
-        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n\n", struct_qt_name))?;
+        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n", struct_qt_name))?;
 
-        let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
+        //let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
+        //let event_funcs = sdef.get_functions(FunctionType::Event);
 
-        for func in &event_funcs {
-            generate_event_setup_def(f, &struct_qt_name, &func)?;
+        for func in sdef
+            .functions
+            .iter()
+            .filter(|func| func.func_type == FunctionType::Event)
+        {
+            generate_event_setup_def(f, &func)?;
         }
 
         f.write_all(b"};\n\n")?;
@@ -298,16 +320,19 @@ fn generate_wrapper_classes_impl<W: Write>(
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
 
+        let iterator = sdef
+            .functions
+            .iter()
+            .filter(|func| func.func_type == FunctionType::Event);
+
         // Get all the structs that thu current struct inherit from
 
-        let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
-
-        for func in &event_funcs {
+        for func in iterator.clone() {
             generate_event_setup_impl(f, &struct_name, &struct_qt_name, &func)?;
         }
 
         // Generate the setup functions for events
-        for func in event_funcs {
+        for func in iterator {
             f.write_all(SEPARATOR)?;
             generate_event_setup_funcs(f, &struct_qt_name, &func)?;
         }
@@ -349,6 +374,31 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
     }
 
     function_args
+}
+
+///
+/// Generate includes from all the structs which are non-pod
+///
+fn generate_includes<W: Write>(
+    f: &mut W,
+    struct_name_map: &HashMap<&str, &str>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    // There is a small hack here where we include generating includes for the static
+    // funcs structs as it doesn't map to a qt class
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|s| s.name != "StaticFuncs")
+    {
+        let struct_name = sdef.name.as_str();
+        let struct_qt_name = struct_name_map
+            .get(struct_name)
+            .unwrap_or_else(|| &struct_name);
+        f.write_fmt(format_args!("#include <Q{}>\n", struct_qt_name))?;
+    }
+
+    Ok(())
 }
 
 ///
@@ -518,6 +568,215 @@ fn generate_forward_declare_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -
     f.write_all(b"\n")
 }
 
+fn function_name(struct_name: &str, func: &Function) -> String {
+    format!("{}_{}", struct_name.to_snake_case(), func.name)
+}
+///
+/// Generate code for returing array
+///
+///    int count = ret_value.size();
+///     RUArray array = { 0 };
+///     if (count > 0) {
+///         RUListWidgetItem* elements = new RUListWidgetItem[count];
+///         for (int i = 0; i < count; ++i) {
+///             elements[i].funcs = &s_list_widget_item_funcs;
+///             elements[i].priv_data = (struct RUBase*)data.at(i);
+///         }
+///         array.elements = (void*)elements;
+///         array.count = int(count);
+///     }
+///     return array;
+
+fn generate_return_array<W: Write>(f: &mut W, ret_val: &Variable) -> io::Result<()> {
+    // TODO: Use templates
+
+    let vtype = &ret_val.type_name;
+
+    // Reference in this case means that the data from Qt is by pointer
+    f.write_all(b"    int count = ret_value.size();\n")?;
+    f.write_all(b"    RUArray array = { 0 };\n")?;
+    f.write_all(b"    if (count > 0) {\n")?;
+    f.write_fmt(format_args!("        RU{}* elements = new RU{}[count];\n", vtype, vtype))?;
+    f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
+    f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", vtype.to_snake_case()))?;
+    if ret_val.vtype == VariableType::Reference {
+        f.write_all(b"            elements[i].priv_data = (struct RUBase*)ret_value.at(i);\n")?;
+    } else {
+        // this is hacky as it leaks memory and needs to be fixed
+        f.write_fmt(format_args!("            Q{}* temp = new Q{}(ret_value.at(i));\n", vtype, vtype))?;
+        f.write_all(b"            elements[i].priv_data = (struct RUBase*)temp;\n")?;
+        //f.write_all(b"            elements[i].priv_data = (struct RUBase*)&ret_value.at(i);\n")?;
+    }
+
+    f.write_all(b"       }\n")?;
+    f.write_all(b"       array.elements = (void*)elements;\n")?;
+    f.write_all(b"       array.count = int(count);\n")?;
+    f.write_all(b"   }\n")?;
+    f.write_all(b"   return array;\n")?;
+
+    Ok(())
+}
+
+///
+/// Generate code for returing string
+/// We currently use a static buffer here to reduce mallocs. This isn't thread safe but it's
+/// only allowed to use QtData from one thread anyway.
+///
+///   QByteArray ba = ret_value.toUtf8();
+///   const char* c_str = ba.data();
+///   assert(ba.size() < sizeof(s_temp_string_buffer));
+///   memcpy(s_temp_string_buffer, c_str, ba.size());
+///   return s_temp_string_buffer;
+///
+
+fn generate_return_string<W: Write>(f: &mut W) -> io::Result<()> {
+    f.write_all(b"    QByteArray ba = ret_value.toUtf8();\n")?;
+    f.write_all(b"    const char* c_str = ba.data();\n")?;
+    f.write_all(b"    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));\n")?;
+    f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);\n")?;
+    f.write_all(b"    return s_temp_string_buffer;\n")?;
+
+    Ok(())
+}
+
+///
+/// Generate function wrappers such as:
+///
+/// static void widget_resize(struct PUBase* self_c, int width, int height) {
+///     WRWidget* qt_data = (WRWidget*)self_c;
+///     qt_data->resize(width, height);
+/// }
+///
+fn generate_func_def<W: Write>(
+    f: &mut W,
+    struct_name: &str,
+    func: &Function,
+    struct_name_map: &HashMap<&str, &str>,
+    type_handlers: &Vec<Box<TypeHandler>>,
+    is_widget: bool,
+) -> io::Result<()> {
+    let ret_value = func.return_val
+        .as_ref()
+        .map_or("void".into(), |v| v.get_c_type());
+
+    // write return value and function name
+    f.write_fmt(format_args!(
+        "static {} {}({}) {{ \n",
+        ret_value,
+        function_name(struct_name, func),
+        func.generate_invoke(None)
+    ))?;
+
+    let struct_qt_name = struct_name_map
+        .get(struct_name)
+        .unwrap_or_else(|| &struct_name);
+
+    let qt_type = if is_widget { "WR" } else { "Q" };
+
+    // (changed from snake_case to camelCase matches the Qt function)
+
+    f.write_fmt(format_args!(
+        "    {}{}* qt_data = ({}{}*)self_c;\n",
+        qt_type, struct_qt_name, qt_type, struct_qt_name
+    ))?;
+
+    if let Some(ref ret_val) = func.return_val {
+        for handler in type_handlers.iter() {
+            if ret_val.type_name == handler.match_type() {
+                let ret = handler.gen_body_return(&func.name);
+                return f.write_fmt(format_args!("{};\n", ret));
+            }
+        }
+    }
+
+    if func.return_val.is_some() {
+        f.write_fmt(format_args!(
+            "    auto ret_value = qt_data->{}(",
+            func.name.to_mixed_case()
+        ))?;
+    } else {
+        f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
+    }
+
+    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
+        if arg.type_name == "String" {
+            Some(format!("QString::fromUtf8({})", &arg.name).into())
+        } else {
+            for handler in type_handlers.iter() {
+                if arg.type_name == handler.match_type() {
+                    return Some(handler.replace_arg(&arg).into());
+                }
+            }
+
+            if arg.vtype == VariableType::Reference {
+                Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
+            } else {
+                None
+            }
+        }
+    });
+
+    f.write_fmt(format_args!("{});\n", func_def))?;
+
+    if let Some(ref ret_val) = func.return_val {
+        if ret_val.vtype == VariableType::Primitive {
+            f.write_all(b"    return ret_value;\n")?;
+        } else if ret_val.array {
+            generate_return_array(f, ret_val)?;
+        } else if ret_val.type_name == "String" {
+            generate_return_string(f)?;
+        } else {
+            // If we have a complex (currently assumed) Qt here we need to wrap it before we return
+            f.write_fmt(format_args!("    RU{} ctl;\n", ret_val.type_name))?;
+            f.write_fmt(format_args!(
+                "    ctl.funcs = &s_{}_funcs;\n",
+                ret_val.type_name.to_snake_case()
+            ))?;
+            f.write_fmt(format_args!(
+                "    ctl.priv_data = (struct RUBase*)ret_value;\n"
+            ))?;
+            f.write_all(b"    return ctl;\n")?;
+        }
+    }
+
+    f.write_all(b"}\n\n")?;
+
+    Ok(())
+}
+
+///
+/// Generate function wrappers such as:
+///
+/// static void widget_resize(struct PUBase* self_c, int width, int height) {
+///     WRWidget* qt_data = (WRWidget*)self_c;
+///     qt_data->resize(width, height);
+/// }
+///
+
+fn generate_function_wrappers<W: Write>(
+    f: &mut W,
+    struct_name_map: &HashMap<&str, &str>,
+    type_handlers: &Vec<Box<TypeHandler>>,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    for sdef in &api_def.class_structs {
+        let is_widget = sdef.inherits_widget(api_def);
+
+        for func in sdef
+            .functions
+            .iter()
+            .filter(|func| !func.is_manual)
+        {
+            match func.func_type {
+                FunctionType::Regular => generate_func_def(f, &sdef.name, func, struct_name_map, type_handlers, is_widget)?,
+                _ => (),
+            }
+        }
+    }
+
+    Ok(())
+}
+
 ///
 /// Generates the create functions
 ///
@@ -599,6 +858,79 @@ fn generate_create_functions<W: Write>(
     Ok(())
 }
 
+///
+/// Type handlers
+///
+///
+/// Handling for Rect
+///
+struct RectTypeHandler;
+
+impl TypeHandler for RectTypeHandler {
+    fn match_type(&self) -> &str {
+        "Rect"
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> String {
+        format!(
+            "QRect({}->x, {}->y, {}->width, {}->height)",
+            &arg.name, &arg.name, &arg.name, &arg.name)
+    }
+
+    fn gen_body_return(&self, function_name: &String) -> String {
+        format!(
+            "    const auto& t = qt_data->{}();\n
+                 return RURect {{ t.x(), t.y(), t.width(), t.height() }}",
+            function_name.to_mixed_case())
+    }
+}
+///
+/// Handling for Color
+///
+struct ColorTypeHandler;
+
+impl TypeHandler for ColorTypeHandler {
+    fn match_type(&self) -> &str {
+        "Color"
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> String {
+        format!(
+            "QColor({}->r, {}->g, {}->b, {}->a)",
+            &arg.name, &arg.name, &arg.name, &arg.name)
+    }
+
+    fn gen_body_return(&self, function_name: &String) -> String {
+        format!(
+            "    const auto& t = qt_data->{}();\n
+                 return RUColor {{ .r = uint16_t(t.red()), .g = uint16_t(t.green()), .b = uint16_t(t.blue()), .a = uint16_t(t.alpha()) }}",
+            function_name.to_mixed_case())
+    }
+}
+
+
+///
+/// Handling for Traits
+///
+struct TraitTypeHandler(String);
+
+impl TypeHandler for TraitTypeHandler {
+    fn match_type(&self) -> &str {
+        self.0.as_str()
+    }
+
+    fn replace_arg(&self, arg: &Variable) -> String {
+        // This is a bit hacky but not sure how to solve this right now
+        if self.0 == "WidgetType" {
+            format!("(QWidget*){}", &arg.name)
+        } else if self.0 == "LayoutType" {
+            format!("(QLayout*){}", &arg.name)
+        } else {
+            format!("dynamic_cast<Q{}*>((QObject*){})", self.0, &arg.name)
+        }
+    }
+}
+
 pub struct CppGenerator;
 
 impl CppGenerator {
@@ -609,14 +941,31 @@ impl CppGenerator {
 
         println!("header file {:?}", header_path);
 
+        // Remapping of the name Button -> AbstractButton for Qt
         struct_name_map.insert("Button", "AbstractButton");
+
+        // Set up all the type handlers that are being used to do special
+        // generation when needed
+        let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
+
+        type_handlers.push(Box::new(RectTypeHandler {}));
+        type_handlers.push(Box::new(ColorTypeHandler {}));
+
+        for trait_name in api_def.get_all_traits() {
+            type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
+        }
 
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);
         let mut cpp_out = BufWriter::new(File::create(cpp_path)?);
 
+        // Generate includes for all non-POD structs(
+        generate_includes(&mut h_out, &struct_name_map, &api_def)?;
+        generate_includes(&mut cpp_out, &struct_name_map, &api_def)?;
+
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
+        generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
         // Build the signals info used to generate the signal wrapper permutations
         generate_signal_wrappers(&mut h_out, api_def)?;
@@ -629,6 +978,9 @@ impl CppGenerator {
 
         // Generate the wrapping implementation that is used as for Qt.
         generate_wrapper_classes_impl(&mut cpp_out, &struct_name_map, api_def)?;
+
+        // Generate wrapper functions for are regular defined functions
+        generate_function_wrappers(&mut cpp_out, &struct_name_map, &type_handlers, api_def)?;
 
         // generate the create functions for all widgets
         generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;
