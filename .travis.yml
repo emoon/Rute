@@ -4,6 +4,5 @@ os:
   - osx
 rust:
   - stable
-  - beta
   - nightly
 script: cd rute_gen && cargo test
