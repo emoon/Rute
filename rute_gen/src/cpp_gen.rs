@@ -746,6 +746,31 @@ fn generate_func_def<W: Write>(
 }
 
 ///
+/// Geerate a declaration with only function types. Used for the SIGNAL/SLOT macros
+///
+
+fn generate_func_def_input_parms_only(func: &Function) -> String {
+    let mut function_args = String::with_capacity(128);
+    let len = func.function_args.len() - 1;
+
+    // write arguments
+    for (i, arg) in func.function_args[1..].iter().enumerate() {
+        let a = match arg.vtype {
+            VariableType::Reference => format!("Q{}*", arg.type_name).into(),
+            _ => arg.get_c_type(),
+        };
+
+        function_args.push_str(&a);
+
+        if i != len - 1 {
+            function_args.push_str(", ");
+        }
+    }
+
+    function_args
+}
+
+///
 /// Generation function def for callbacks/slots
 ///
 
@@ -770,28 +795,10 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
         func.name.to_mixed_case()
     ))?;
 
-    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
-        if arg.vtype == VariableType::Reference {
-            Some(format!("Q{}*", arg.type_name).into())
-        } else {
-            None
-        }
-    });
+    let func_def = generate_func_def_input_parms_only(func);
 
     f.write_fmt(format_args!("{}), wrap, SLOT(method(", func_def))?;
-
-    //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), "".to_owned()))?;
-
-    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
-        if arg.vtype == VariableType::Reference {
-            Some(format!("Q{}*", arg.type_name).into())
-        } else {
-            None
-        }
-    });
-
-
-    f.write_fmt(format_args!("{}\n", func_def))?;
+    f.write_fmt(format_args!("{}));\n", func_def))?;
     f.write_all(b"}\n\n")?;
 
     Ok(())
