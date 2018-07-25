@@ -413,6 +413,7 @@ fn signal_type_callback(func: &Function) -> String {
 
     for arg in &func.function_args {
         match arg.vtype {
+            VariableType::SelfType => name_def.push_str("self"),
             VariableType::Reference => name_def.push_str(&arg.type_name),
             _ => name_def.push_str(&arg.get_c_type()),
         }
@@ -664,7 +665,7 @@ fn generate_func_def<W: Write>(
         "static {} {}({}) {{ \n",
         ret_value,
         function_name(struct_name, func),
-        func.generate_invoke(None)
+        func.generate_c_function_def(None)
     ))?;
 
     let struct_qt_name = struct_name_map
@@ -698,7 +699,7 @@ fn generate_func_def<W: Write>(
         f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
     }
 
-    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
+    let func_def = func.gen_c_invoke_filter(Some("".into()), |_index, arg| {
         if arg.type_name == "String" {
             Some(format!("QString::fromUtf8({})", &arg.name).into())
         } else {
@@ -745,6 +746,58 @@ fn generate_func_def<W: Write>(
 }
 
 ///
+/// Generation function def for callbacks/slots
+///
+
+fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Function) -> io::Result<()> {
+    let signal_type_name = signal_type_callback(&func);
+    let func_name = function_name(struct_name, func);
+
+    f.write_fmt(format_args!(
+        "static {} {{\n",
+        CapiGenerator::callback_fun_def_name(false, &func_name, func),
+    ))?;
+
+    //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
+    f.write_fmt(format_args!(
+        "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})event);\n",
+        signal_type_name, signal_type_name, signal_type_name
+    ))?;
+    f.write_all(b"    QObject* q_obj = (QObject*)object;\n")?;
+
+    f.write_fmt(format_args!(
+        "    QObject::connect(q_obj, SIGNAL({}(",
+        func.name.to_mixed_case()
+    ))?;
+
+    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
+        if arg.vtype == VariableType::Reference {
+            Some(format!("Q{}*", arg.type_name).into())
+        } else {
+            None
+        }
+    });
+
+    f.write_fmt(format_args!("{}), wrap, SLOT(method(", func_def))?;
+
+    //func.write_c_func_def(f, |_, arg| (arg.get_c_type(), "".to_owned()))?;
+
+    let func_def = func.gen_c_def_filter(Some(None), |_index, arg| {
+        if arg.vtype == VariableType::Reference {
+            Some(format!("Q{}*", arg.type_name).into())
+        } else {
+            None
+        }
+    });
+
+
+    f.write_fmt(format_args!("{}\n", func_def))?;
+    f.write_all(b"}\n\n")?;
+
+    Ok(())
+}
+
+///
 /// Generate function wrappers such as:
 ///
 /// static void widget_resize(struct PUBase* self_c, int width, int height) {
@@ -767,8 +820,11 @@ fn generate_function_wrappers<W: Write>(
             .iter()
             .filter(|func| !func.is_manual)
         {
+            f.write_all(SEPARATOR)?;
+
             match func.func_type {
                 FunctionType::Regular => generate_func_def(f, &sdef.name, func, struct_name_map, type_handlers, is_widget)?,
+                FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
                 _ => (),
             }
         }
@@ -1001,7 +1057,8 @@ mod tests {
             name: "test".to_owned(),
             function_args: vec![Variable {
                 name: "var0".to_owned(),
-                vtype: VariableType::Primitive("i32".to_owned()),
+                vtype: VariableType::Primitive,
+                type_name: "i32".to_owned(),
                 array: false,
             }],
             return_val: None,
@@ -1022,7 +1079,8 @@ mod tests {
             name: "test".to_owned(),
             function_args: vec![Variable {
                 name: "var0".to_owned(),
-                vtype: VariableType::Reference("DropEvent".to_owned()),
+                vtype: VariableType::Reference,
+                type_name: "DropEvent".to_owned(),
                 array: false,
             }],
             return_val: None,
