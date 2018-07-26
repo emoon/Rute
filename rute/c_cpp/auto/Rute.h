@@ -55,8 +55,6 @@ struct RUVBoxLayoutFuncs;
 struct RUVBoxLayout;
 struct RUHBoxLayoutFuncs;
 struct RUHBoxLayout;
-struct RUStaticFuncsFuncs;
-struct RUStaticFuncs;
 struct RULayoutType;
 struct RUPaintDevice;
 struct RUWidgetType;
@@ -397,8 +395,8 @@ struct RUApplicationFuncs {
 };
 
 struct RUApplication {
-    struct RUApplicationFuncs* application_funcs;
     struct RUBase* priv_data;
+    struct RUApplicationFuncs* application_funcs;
 };
 
 struct RUActionFuncs {
@@ -414,8 +412,8 @@ struct RUActionFuncs {
 };
 
 struct RUAction {
-    struct RUActionFuncs* action_funcs;
     struct RUBase* priv_data;
+    struct RUActionFuncs* action_funcs;
 };
 
 struct RUWidgetFuncs {
@@ -432,8 +430,8 @@ struct RUWidgetFuncs {
 };
 
 struct RUWidget {
-    struct RUWidgetFuncs* widget_funcs;
     struct RUBase* priv_data;
+    struct RUWidgetFuncs* widget_funcs;
 };
 
 struct RUListWidgetItemFuncs {
@@ -445,8 +443,8 @@ struct RUListWidgetItemFuncs {
 };
 
 struct RUListWidgetItem {
-    struct RUListWidgetItemFuncs* list_widget_item_funcs;
     struct RUBase* priv_data;
+    struct RUListWidgetItemFuncs* list_widget_item_funcs;
 };
 
 struct RUListWidgetFuncs {
@@ -470,9 +468,9 @@ struct RUListWidgetFuncs {
 };
 
 struct RUListWidget {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUListWidgetFuncs* list_widget_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUUrlFuncs {
@@ -481,8 +479,8 @@ struct RUUrlFuncs {
 };
 
 struct RUUrl {
-    struct RUUrlFuncs* url_funcs;
     struct RUBase* priv_data;
+    struct RUUrlFuncs* url_funcs;
 };
 
 struct RUMimeDataFuncs {
@@ -494,8 +492,8 @@ struct RUMimeDataFuncs {
 };
 
 struct RUMimeData {
-    struct RUMimeDataFuncs* mime_data_funcs;
     struct RUBase* priv_data;
+    struct RUMimeDataFuncs* mime_data_funcs;
 };
 
 struct RUTimerFuncs {
@@ -505,8 +503,8 @@ struct RUTimerFuncs {
 };
 
 struct RUTimer {
-    struct RUTimerFuncs* timer_funcs;
     struct RUBase* priv_data;
+    struct RUTimerFuncs* timer_funcs;
 };
 
 struct RUIconFuncs {
@@ -515,8 +513,8 @@ struct RUIconFuncs {
 };
 
 struct RUIcon {
-    struct RUIconFuncs* icon_funcs;
     struct RUBase* priv_data;
+    struct RUIconFuncs* icon_funcs;
 };
 
 struct RUMenuFuncs {
@@ -528,9 +526,9 @@ struct RUMenuFuncs {
 };
 
 struct RUMenu {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUMenuFuncs* menu_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUMenuBarFuncs {
@@ -539,9 +537,9 @@ struct RUMenuBarFuncs {
 };
 
 struct RUMenuBar {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUMenuBarFuncs* menu_bar_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RULabelFuncs {
@@ -550,9 +548,9 @@ struct RULabelFuncs {
 };
 
 struct RULabel {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RULabelFuncs* label_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RULineEditFuncs {
@@ -562,9 +560,9 @@ struct RULineEditFuncs {
 };
 
 struct RULineEdit {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RULineEditFuncs* line_edit_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUPlainTextEditFuncs {
@@ -576,9 +574,9 @@ struct RUPlainTextEditFuncs {
 };
 
 struct RUPlainTextEdit {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUPlainTextEditFuncs* plain_text_edit_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUSliderFuncs {
@@ -587,9 +585,9 @@ struct RUSliderFuncs {
 };
 
 struct RUSlider {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUSliderFuncs* slider_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUMainWindowFuncs {
@@ -600,9 +598,9 @@ struct RUMainWindowFuncs {
 };
 
 struct RUMainWindow {
+    struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
     struct RUMainWindowFuncs* main_window_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RULayoutFuncs {
@@ -610,8 +608,8 @@ struct RULayoutFuncs {
 };
 
 struct RULayout {
-    struct RULayoutFuncs* layout_funcs;
     struct RUBase* priv_data;
+    struct RULayoutFuncs* layout_funcs;
 };
 
 struct RUVBoxLayoutFuncs {
@@ -621,9 +619,9 @@ struct RUVBoxLayoutFuncs {
 };
 
 struct RUVBoxLayout {
+    struct RUBase* priv_data;
     struct RULayoutFuncs* layout_funcs;
     struct RUVBoxLayoutFuncs* v_box_layout_funcs;
-    struct RUBase* priv_data;
 };
 
 struct RUHBoxLayoutFuncs {
@@ -633,17 +631,9 @@ struct RUHBoxLayoutFuncs {
 };
 
 struct RUHBoxLayout {
+    struct RUBase* priv_data;
     struct RULayoutFuncs* layout_funcs;
     struct RUHBoxLayoutFuncs* h_box_layout_funcs;
-    struct RUBase* priv_data;
-};
-
-struct RUStaticFuncsFuncs {
-};
-
-struct RUStaticFuncs {
-    struct RUStaticFuncsFuncs* static_funcs_funcs;
-    struct RUBase* priv_data;
 };
 
 typedef struct Rute { 
@@ -663,7 +653,6 @@ typedef struct Rute {
     struct RUMainWindow (*create_main_window)(struct RUBase* self);
     struct RUVBoxLayout (*create_v_box_layout)(struct RUBase* self);
     struct RUHBoxLayout (*create_h_box_layout)(struct RUBase* self);
-    struct RUArray (*open_files_dialog)(struct RUBase* self_c);
 } Rute;
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
@@ -831,7 +820,6 @@ typedef struct Rute {
 #define RUHBoxLayout_add_widget(obj, widget) obj.layout_funcs->layout_funcs(obj.priv_data, widget)
 #define RUHBoxLayout_add_layout(obj, layout) obj.h_box_layout_funcs->h_box_layout_funcs(obj.priv_data, layout)
 #define RUHBoxLayout_update(obj) obj.h_box_layout_funcs->h_box_layout_funcs(obj.priv_data)
-
 
 
 #ifdef __cplusplus

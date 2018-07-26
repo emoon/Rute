@@ -36,7 +36,6 @@ extern struct RUMainWindowFuncs s_main_window_funcs;
 extern struct RULayoutFuncs s_layout_funcs;
 extern struct RUVBoxLayoutFuncs s_v_box_layout_funcs;
 extern struct RUHBoxLayoutFuncs s_h_box_layout_funcs;
-extern struct RUStaticFuncsFuncs s_static_funcs_funcs;
 
 typedef void (*Signal_self_Action_void)(void* self_c, void* wrapped_func, struct RUAction action);
 

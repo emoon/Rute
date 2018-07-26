@@ -162,6 +162,7 @@ impl CapiGenerator {
 
             f.write_all(b"};\n\n")?;
             f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
+            f.write_all(b"    struct RUBase* priv_data;\n")?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
                 f.write_fmt(format_args!(
@@ -171,7 +172,6 @@ impl CapiGenerator {
                 ))?;
             }
 
-            f.write_all(b"    struct RUBase* priv_data;\n")?;
             f.write_all(b"};\n\n")?;
         }
 
@@ -202,6 +202,7 @@ impl CapiGenerator {
         // Generate all the static functions
         //
 
+        /*
         for sdef in &api_def.class_structs {
             for func in sdef
                 .functions
@@ -211,6 +212,7 @@ impl CapiGenerator {
                 Self::generate_func_def(&mut f, func)?;
             }
         }
+        */
 
         f.write_all(b"} Rute;\n\n")?;
 

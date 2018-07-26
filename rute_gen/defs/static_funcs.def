@@ -1,7 +1,0 @@
-#[attributes(NoCreate, Drop)]
-struct StaticFuncs {
-	[static] open_files_dialog() -> <String>,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4
-

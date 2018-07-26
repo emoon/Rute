@@ -673,17 +673,6 @@ struct RUHBoxLayout {
 }
 
 #[repr(C)]
-pub struct RUStaticFuncsFuncs {
-}
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-struct RUStaticFuncs {
-    pub static_funcs_funcs: *const RUStaticFuncsFuncs,
-    pub privd: *const RUBase,
-}
-
-#[repr(C)]
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_action: extern "C" fn(priv_data: *const RUBase) -> RUAction,
@@ -701,7 +690,6 @@ pub struct RuteFFI {
     pub create_main_window: extern "C" fn(priv_data: *const RUBase) -> RUMainWindow,
     pub create_v_box_layout: extern "C" fn(priv_data: *const RUBase) -> RUVBoxLayout,
     pub create_h_box_layout: extern "C" fn(priv_data: *const RUBase) -> RUHBoxLayout,
-    pub open_files_dialog: extern "C" fn(self_c: *const RUBase) -> RUArray,
     pub privd: *const RUBase,
 }
 

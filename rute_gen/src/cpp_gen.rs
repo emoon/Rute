@@ -14,6 +14,22 @@ pub enum EventType {
     Event,
 }
 
+///
+/// Writen at the end of the cpp output
+///
+static FOOTER: &'static [u8] = b"
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef _WIN32
+extern \"C\" __declspec(dllexport) struct Rute* rute_get() {
+#else
+extern \"C\" struct Rute* rute_get() {
+#endif
+    return (Rute*)&s_rute;
+}
+";
+
+
 //
 // Used to make CPP generated code a bit easier to read
 //
@@ -188,19 +204,12 @@ fn generate_wrapper_classes_defs<W: Write>(
         ))?;
         f.write_all(b"    Q_OBJECT\n")?;
         f.write_all(b"public:\n")?;
-        //f.write_all(b"    Q_PROPERTY(void* userData READ userData WRITE setUserData DESIGNABLE false SCRIPTABLE false)\n")?;
-        //f.write_all(b"    void setUserData(void* data) { m_qt_user_data = data; }\n")?;
-        //f.write_all(b"    void* userData() { return m_qt_user_data; }\n")?;
-        //f.write_all(b"    void* m_qt_user_data;\n\n")?;
 
         f.write_fmt(format_args!(
             "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
             struct_qt_name, struct_qt_name
         ))?;
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n", struct_qt_name))?;
-
-        //let event_funcs = api_def.get_functions_recursive(&sdef, FunctionType::Event);
-        //let event_funcs = sdef.get_functions(FunctionType::Event);
 
         for func in sdef
             .functions
@@ -226,6 +235,8 @@ fn generate_event_setup_impl<W: Write>(
     func: &Function,
 ) -> io::Result<()> {
     let event_type = &func.function_args[1];
+
+    f.write_all(SEPARATOR)?;
 
     f.write_fmt(format_args!(
         "void WR{}::{}Event(Q{}* event) {{\n",
@@ -859,6 +870,7 @@ fn generate_create_functions<W: Write>(
     {
         let struct_name = sdef.name.as_str();
         let is_inherits_widget = sdef.inherits_widget(api_def);
+        f.write_all(SEPARATOR)?;
 
         //
         // We create wrapper widgets for all Qt widges so we can have our own functionallity there
@@ -889,21 +901,30 @@ fn generate_create_functions<W: Write>(
         //
         if is_inherits_widget {
             f.write_fmt(format_args!(
-                "    return create_widget_func<struct RU{}, struct RU{}Funcs, WR{}>(&s_{}_funcs, priv_data);\n}}\n\n",
-                struct_name,
+                "    auto ctl = create_widget_func<struct RU{}, WR{}>(priv_data);\n",
                 struct_name,
                 struct_qt_name,
-                struct_name.to_snake_case()
             ))?;
         } else {
             f.write_fmt(format_args!(
-                "    return create_generic_func<struct RU{}, struct RU{}Funcs, Q{}>(&s_{}_funcs, priv_data);\n}}\n\n",
-                struct_name,
+                "    auto ctl = create_generic_func<struct RU{}, Q{}>(priv_data);\n",
                 struct_name,
                 struct_qt_name,
-                struct_name.to_snake_case()
             ))?;
         }
+
+        // fill in the function ptr structs
+        for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+            let snake_name = s.name.to_snake_case();
+
+            f.write_fmt(format_args!(
+                "    ctl.{}_funcs = &s_{}_funcs;\n",
+                snake_name,
+                snake_name
+            ))?;
+        }
+
+        f.write_all(b"    return ctl;\n}\n\n")?;
 
         //
         // Generate destroy functions as well
@@ -968,6 +989,34 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
     }
 
     Ok(())
+}
+
+///
+/// Generate the function struct defs in the following style
+///
+/// struct Rute s_mime_data_funcs = {
+///    mime_data_has_color,
+///    mime_data_urls,
+///    ...
+/// };
+///
+
+fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    f.write_all(SEPARATOR)?;
+    f.write_all(b"static struct Rute s_rute = { \n")?;
+
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|s| s.should_have_create_func())
+    {
+        f.write_fmt(format_args!(
+            "    create_{},\n",
+            sdef.name.to_snake_case()
+        ))?;
+    }
+
+    f.write_all(b"};\n")
 }
 
 ///
@@ -1097,10 +1146,14 @@ impl CppGenerator {
         // generate the create functions for all widgets
         generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;
 
-        // generate the structs that holds the wrapper functinos
+        // generate the structs that holds the wrapper functions
         generate_struct_defs(&mut cpp_out, api_def)?;
 
-        Ok(())
+        // Generate the main Rute struct definition
+        generate_rute_struct(&mut cpp_out, api_def)?;
+
+        // write the end footer of the file that is used for the export
+        cpp_out.write_all(FOOTER)
     }
 }
 
