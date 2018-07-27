@@ -692,7 +692,8 @@ fn generate_return_string<W: Write>(f: &mut W) -> io::Result<()> {
 ///
 fn generate_func_def<W: Write>(
     f: &mut W,
-    struct_name: &str,
+    sdef: &Struct,
+    api_def: &ApiDef,
     func: &Function,
     struct_name_map: &HashMap<&str, &str>,
     type_handlers: &Vec<Box<TypeHandler>>,
@@ -706,9 +707,11 @@ fn generate_func_def<W: Write>(
     f.write_fmt(format_args!(
         "static {} {}({}) {{ \n",
         ret_value,
-        function_name(struct_name, func),
+        function_name(&sdef.name, func),
         func.generate_c_function_def(None)
     ))?;
+
+    let struct_name: &str = &sdef.name;
 
     let struct_qt_name = struct_name_map
         .get(struct_name)
@@ -771,9 +774,24 @@ fn generate_func_def<W: Write>(
         } else {
             // If we have a complex (currently assumed) Qt here we need to wrap it before we return
             f.write_fmt(format_args!("    RU{} ctl;\n", ret_val.type_name))?;
+
+            // fill in the function ptr structs
+            /*
+            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                let snake_name = s.name.to_snake_case();
+
+                f.write_fmt(format_args!(
+                    "    ctl.{}_funcs = &s_{}_funcs;\n",
+                    snake_name,
+                    snake_name
+                ))?;
+            }
+            */
+
+            let name = ret_val.type_name.to_snake_case();
+
             f.write_fmt(format_args!(
-                "    ctl.funcs = &s_{}_funcs;\n",
-                ret_val.type_name.to_snake_case()
+               "    ctl.{}_funcs = &s_{}_funcs;\n", name, name
             ))?;
             f.write_fmt(format_args!(
                 "    ctl.priv_data = (struct RUBase*)ret_value;\n"
@@ -827,7 +845,7 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
 
     //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
     f.write_fmt(format_args!(
-        "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})event);\n",
+        "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})event, wrapped_func);\n",
         signal_type_name, signal_type_name, signal_type_name
     ))?;
     f.write_all(b"    QObject* q_obj = (QObject*)object;\n")?;
@@ -839,8 +857,8 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
 
     let func_def = generate_func_def_input_parms_only(func);
 
-    f.write_fmt(format_args!("{}), wrap, SLOT(method(", func_def))?;
-    f.write_fmt(format_args!("{}));\n", func_def))?;
+    f.write_fmt(format_args!("{})), wrap, SLOT(method(", func_def))?;
+    f.write_fmt(format_args!("{})));\n", func_def))?;
     f.write_all(b"}\n\n")?;
 
     Ok(())
@@ -872,7 +890,7 @@ fn generate_function_wrappers<W: Write>(
             f.write_all(SEPARATOR)?;
 
             match func.func_type {
-                FunctionType::Regular => generate_func_def(f, &sdef.name, func, struct_name_map, type_handlers, is_widget)?,
+                FunctionType::Regular => generate_func_def(f, &sdef, api_def, func, struct_name_map, type_handlers, is_widget)?,
                 FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
                 _ => (),
             }
@@ -945,6 +963,7 @@ fn generate_create_functions<W: Write>(
         }
 
         // fill in the function ptr structs
+        // TODO: Make to common function
         for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
             let snake_name = s.name.to_snake_case();
 
@@ -1071,8 +1090,8 @@ impl TypeHandler for RectTypeHandler {
 
     fn gen_body_return(&self, function_name: &String) -> String {
         format!(
-            "    const auto& t = qt_data->{}();\n
-                 return RURect {{ t.x(), t.y(), t.width(), t.height() }}",
+            "    const auto& t = qt_data->{}();
+    return RURect {{ t.x(), t.y(), t.width(), t.height() }};\n}}",
             function_name.to_mixed_case())
     }
 }
@@ -1155,6 +1174,7 @@ impl CppGenerator {
         h_out.write_all(b"#pragma once\n")?;
         h_out.write_all(HEADER)?;
         cpp_out.write_all(HEADER)?;
+        cpp_out.write_all(b"static char s_temp_string_buffer[1024*1024];\n")?;
 
         // Generate includes for all non-POD structs(
         generate_includes(&mut h_out, &struct_name_map, &api_def)?;

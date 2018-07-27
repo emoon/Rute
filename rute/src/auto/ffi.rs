@@ -364,6 +364,18 @@ pub enum RUKeys {
     KeyCameraFocus,
 }
 
+#[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]pub struct RURect {
+    pub x: i32,
+    pub y: i32,
+    pub width: i32,
+    pub height: i32,
+#[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]pub struct RUColor {
+    pub r: u16,
+    pub g: u16,
+    pub b: u16,
+    pub a: u16,
 }
 
 #[repr(C)]

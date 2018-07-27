@@ -63,6 +63,8 @@ struct RUVBoxLayoutFuncs;
 struct RUVBoxLayout;
 struct RUHBoxLayoutFuncs;
 struct RUHBoxLayout;
+struct RURect;
+struct RUColor;
 struct RULayoutType;
 struct RUPaintDevice;
 struct RUWidgetType;
@@ -393,6 +395,20 @@ typedef enum RUKeys {
     RUKeys_Key_CameraFocus,
 } RUKeys;
 
+struct RURect {
+    int x;
+    int y;
+    int width;
+    int height;
+};
+
+struct RUColor {
+    uint16_t r;
+    uint16_t g;
+    uint16_t b;
+    uint16_t a;
+};
+
 struct RUPaintEventFuncs {
     struct RURect (*rect)(struct RUBase* self_c);
 };
@@ -435,7 +451,7 @@ struct RUApplicationFuncs {
     void (*set_style)(struct RUBase* self_c, const char* style);
     int (*set_style_sheet)(struct RUBase* self_c, const char* filename);
     void (*exec)(struct RUBase* self_c);
-    void (*set_about_to_quit_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c));
+    void (*set_about_to_quit_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c));
     struct RUArray (*get_files)(struct RUBase* self_c);
 };
 
@@ -451,7 +467,7 @@ struct RUActionFuncs {
     const char* (*text)(struct RUBase* self_c);
     void (*set_shortcut)(struct RUBase* self_c, RUKeys key);
     void (*set_shortcut_mod)(struct RUBase* self_c, RUKeys key, RUMetaKeys modifier);
-    void (*set_triggered_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c));
+    void (*set_triggered_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c));
     void (*set_int_data)(struct RUBase* self_c, int data);
     int (*get_int_data)(struct RUBase* self_c);
 };
@@ -507,9 +523,9 @@ struct RUListWidgetFuncs {
     void (*set_drop_indicator_shown)(struct RUBase* self_c, bool state);
     void (*set_accept_drops)(struct RUBase* self_c, bool state);
     void (*add_widget_item)(struct RUBase* self_c, struct RUListWidgetItem item);
-    void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, int row));
-    void (*set_item_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
-    void (*set_item_double_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
+    void (*set_current_row_changed_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, int row));
+    void (*set_item_clicked_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
+    void (*set_item_double_clicked_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
 };
 
 struct RUListWidget {
@@ -543,7 +559,7 @@ struct RUMimeData {
 
 struct RUTimerFuncs {
     void (*destroy)(struct RUBase* self);
-    void (*set_timeout_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c));
+    void (*set_timeout_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c));
     void (*start)(struct RUBase* self_c, int time);
 };
 
@@ -565,7 +581,7 @@ struct RUIcon {
 struct RUMenuFuncs {
     void (*destroy)(struct RUBase* self);
     void (*add_action_text)(struct RUBase* self_c, const char* text);
-    void (*set_triggered_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* action));
+    void (*set_triggered_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* action));
     void (*add_action)(struct RUBase* self_c, struct RUAction action);
     void (*set_title)(struct RUBase* self_c, const char* title);
 };
@@ -626,7 +642,7 @@ struct RUPlainTextEdit {
 
 struct RUSliderFuncs {
     void (*destroy)(struct RUBase* self);
-    void (*set_value_changed_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, int value));
+    void (*set_value_changed_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, int value));
 };
 
 struct RUSlider {

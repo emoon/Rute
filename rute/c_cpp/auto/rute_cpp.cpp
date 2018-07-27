@@ -6,6 +6,7 @@
 #include "Rute.h"
 #include "rute_cpp.h"
 #include "../rute_manual.h"
+static char s_temp_string_buffer[1024*1024];
 #include <QPaintEvent>
 #include <QCloseEvent>
 #include <QDragEnterEvent>
@@ -526,7 +527,7 @@ void WRWidget::paintEvent(QPaintEvent* event) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void set_widget_paint_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
+void set_widget_paint_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_paint_user_data = user_data;
     qt_object->m_paint = event;
@@ -568,7 +569,7 @@ void WRListWidget::dropEvent(QDropEvent* event) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void set_list_widget_drag_enter_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
+void set_list_widget_drag_enter_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
     WRListWidget* qt_object = (WRListWidget*)object;
     qt_object->m_drag_enter_user_data = user_data;
     qt_object->m_drag_enter = event;
@@ -576,7 +577,7 @@ void set_list_widget_drag_enter_event(void* object, void* user_data, void (*even
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void set_list_widget_drop_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
+void set_list_widget_drop_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* event)) {
     WRListWidget* qt_object = (WRListWidget*)object;
     qt_object->m_drop_user_data = user_data;
     qt_object->m_drop = event;
@@ -587,8 +588,8 @@ void set_list_widget_drop_event(void* object, void* user_data, void (*event)(str
 static struct RURect paint_event_rect(struct RUBase* self_c) { 
     QPaintEvent* qt_data = (QPaintEvent*)self_c;
     const auto& t = qt_data->rect();
-
-                 return RURect { t.x(), t.y(), t.width(), t.height() };
+    return RURect { t.x(), t.y(), t.width(), t.height() };
+};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void close_event_accept(struct RUBase* self_c) { 
@@ -616,7 +617,7 @@ static struct RUMimeData drop_event_mime_data(struct RUBase* self_c) {
     QDropEvent* qt_data = (QDropEvent*)self_c;
     auto ret_value = qt_data->mimeData();
     RUMimeData ctl;
-    ctl.funcs = &s_mime_data_funcs;
+    ctl.mime_data_funcs = &s_mime_data_funcs;
     ctl.priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
@@ -637,10 +638,10 @@ static void application_exec(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_about_to_quit_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
+static void set_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(aboutToQuit(), wrap, SLOT(method());
+    QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -672,10 +673,10 @@ static const char* action_text(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_action_triggered_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
+static void set_action_triggered_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(triggered(), wrap, SLOT(method());
+    QObject::connect(q_obj, SIGNAL(triggered()), wrap, SLOT(method()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -787,7 +788,7 @@ static struct RUListWidgetItem list_widget_current_item(struct RUBase* self_c) {
     WRListWidget* qt_data = (WRListWidget*)self_c;
     auto ret_value = qt_data->currentItem();
     RUListWidgetItem ctl;
-    ctl.funcs = &s_list_widget_item_funcs;
+    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
     ctl.priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
@@ -825,7 +826,7 @@ static struct RUListWidgetItem list_widget_item(struct RUBase* self_c, int index
     WRListWidget* qt_data = (WRListWidget*)self_c;
     auto ret_value = qt_data->item(index);
     RUListWidgetItem ctl;
-    ctl.funcs = &s_list_widget_item_funcs;
+    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
     ctl.priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
@@ -865,26 +866,26 @@ static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool sta
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_list_widget_current_row_changed_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, int row)) {
-    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event);
+static void set_list_widget_current_row_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, int row)) {
+    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(currentRowChanged(int), wrap, SLOT(method(int));
+    QObject::connect(q_obj, SIGNAL(currentRowChanged(int)), wrap, SLOT(method(int)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_list_widget_item_clicked_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item)) {
-    QSlotWrapperSignal_self_ListWidgetItem_void* wrap = new QSlotWrapperSignal_self_ListWidgetItem_void(user_data, (Signal_self_ListWidgetItem_void)event);
+static void set_list_widget_item_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item)) {
+    QSlotWrapperSignal_self_ListWidgetItem_void* wrap = new QSlotWrapperSignal_self_ListWidgetItem_void(user_data, (Signal_self_ListWidgetItem_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(itemClicked(QListWidgetItem*), wrap, SLOT(method(QListWidgetItem*));
+    QObject::connect(q_obj, SIGNAL(itemClicked(QListWidgetItem*)), wrap, SLOT(method(QListWidgetItem*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_list_widget_item_double_clicked_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item)) {
-    QSlotWrapperSignal_self_ListWidgetItem_void* wrap = new QSlotWrapperSignal_self_ListWidgetItem_void(user_data, (Signal_self_ListWidgetItem_void)event);
+static void set_list_widget_item_double_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item)) {
+    QSlotWrapperSignal_self_ListWidgetItem_void* wrap = new QSlotWrapperSignal_self_ListWidgetItem_void(user_data, (Signal_self_ListWidgetItem_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(itemDoubleClicked(QListWidgetItem*), wrap, SLOT(method(QListWidgetItem*));
+    QObject::connect(q_obj, SIGNAL(itemDoubleClicked(QListWidgetItem*)), wrap, SLOT(method(QListWidgetItem*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -961,10 +962,10 @@ static struct RUArray mime_data_urls(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_timer_timeout_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event);
+static void set_timer_timeout_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(timeout(), wrap, SLOT(method());
+    QObject::connect(q_obj, SIGNAL(timeout()), wrap, SLOT(method()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -983,10 +984,10 @@ static void icon_add_file(struct RUBase* self_c, const char* filename) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_menu_triggered_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* action)) {
-    QSlotWrapperSignal_self_Action_void* wrap = new QSlotWrapperSignal_self_Action_void(user_data, (Signal_self_Action_void)event);
+static void set_menu_triggered_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* action)) {
+    QSlotWrapperSignal_self_Action_void* wrap = new QSlotWrapperSignal_self_Action_void(user_data, (Signal_self_Action_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(triggered(QAction*), wrap, SLOT(method(QAction*));
+    QObject::connect(q_obj, SIGNAL(triggered(QAction*)), wrap, SLOT(method(QAction*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1061,10 +1062,10 @@ static void plain_text_edit_set_read_only(struct RUBase* self_c, bool value) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_slider_value_changed_event(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, int value)) {
-    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event);
+static void set_slider_value_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c, int value)) {
+    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, wrapped_func);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(valueChanged(int), wrap, SLOT(method(int));
+    QObject::connect(q_obj, SIGNAL(valueChanged(int)), wrap, SLOT(method(int)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1081,7 +1082,7 @@ static struct RUMenuBar main_window_menu_bar(struct RUBase* self_c) {
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
     auto ret_value = qt_data->menuBar();
     RUMenuBar ctl;
-    ctl.funcs = &s_menu_bar_funcs;
+    ctl.menu_bar_funcs = &s_menu_bar_funcs;
     ctl.priv_data = (struct RUBase*)ret_value;
     return ctl;
 }

@@ -113,12 +113,12 @@ pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
 
     if def {
         func_def = format!(
-            "void (*set_{}_event)(void* object, void* user_data, void (*event)(",
+            "void (*set_{}_event)(void* object, void* user_data, void* wrapped_func, void (*event)(",
             name
         );
     } else {
         func_def = format!(
-            "void set_{}_event(void* object, void* user_data, void (*event)(",
+            "void set_{}_event(void* object, void* user_data, void* wrapped_func, void (*event)(",
             name
         );
     }
