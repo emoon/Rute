@@ -367,6 +367,55 @@ pub enum RUKeys {
 }
 
 #[repr(C)]
+pub struct RUPaintEventFuncs {
+    pub rect: extern "C" fn(self_c: *const RUBase) ->  RURect,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+struct RUPaintEvent {
+    pub paint_event_funcs: *const RUPaintEventFuncs,
+    pub privd: *const RUBase,
+}
+
+#[repr(C)]
+pub struct RUCloseEventFuncs {
+    pub accept: extern "C" fn(self_c: *const RUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+struct RUCloseEvent {
+    pub close_event_funcs: *const RUCloseEventFuncs,
+    pub privd: *const RUBase,
+}
+
+#[repr(C)]
+pub struct RUDragEnterEventFuncs {
+    pub accept: extern "C" fn(self_c: *const RUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+struct RUDragEnterEvent {
+    pub drag_enter_event_funcs: *const RUDragEnterEventFuncs,
+    pub privd: *const RUBase,
+}
+
+#[repr(C)]
+pub struct RUDropEventFuncs {
+    pub accept_proposed_action: extern "C" fn(self_c: *const RUBase),
+    pub mime_data: extern "C" fn(self_c: *const RUBase) ->  RUMimeData,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+struct RUDropEvent {
+    pub drop_event_funcs: *const RUDropEventFuncs,
+    pub privd: *const RUBase,
+}
+
+#[repr(C)]
 pub struct RUApplicationFuncs {
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
     pub set_style_sheet: extern "C" fn(self_c: *const RUBase, filename: *const ::std::os::raw::c_char) -> i32,

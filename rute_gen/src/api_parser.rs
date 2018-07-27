@@ -32,7 +32,7 @@ pub enum VariableType {
     /// Self (aka this pointer in C++ and self in Rust)
     SelfType,
     /// Enum type
-    //Enum,
+    Enum,
     /// Struct/other type
     Regular,
     /// Prmitive type (such as i32,u64,etc)
@@ -42,6 +42,8 @@ pub enum VariableType {
     /// Optional type
     Optional,
 }
+
+///
 
 ///
 /// Holds the data for a variable. It's name and it's type
@@ -485,6 +487,28 @@ impl ApiParser {
 
         name_or_num
     }
+
+    ///
+    /// Patch up the types for enums as they can be out of order.
+    ///
+    pub fn second_pass(api_def: &mut ApiDef) {
+        let mut enums = HashSet::new();
+
+        for enum_def in &api_def.enums {
+            enums.insert(enum_def.name.clone());
+        }
+
+        api_def
+            .class_structs
+            .iter_mut()
+            .flat_map(|s| s.functions.iter_mut())
+            .flat_map(|func| func.function_args.iter_mut())
+            .for_each(|arg| {
+                if enums.contains(&arg.type_name) {
+                    arg.vtype = VariableType::Enum;
+                }
+            });
+    }
 }
 
 ///
@@ -660,6 +684,7 @@ impl Variable {
             }
 
             VariableType::Optional => format!("struct RU{}", tname).into(),
+            VariableType::Enum => format!("RU{}", tname).into(),
 
             _ => {
                 println!("Should not be here {}", self.name);

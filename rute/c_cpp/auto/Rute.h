@@ -17,6 +17,14 @@ struct RUArray {
     uint32_t count;
 };
 
+struct RUPaintEventFuncs;
+struct RUPaintEvent;
+struct RUCloseEventFuncs;
+struct RUCloseEvent;
+struct RUDragEnterEventFuncs;
+struct RUDragEnterEvent;
+struct RUDropEventFuncs;
+struct RUDropEvent;
 struct RUApplicationFuncs;
 struct RUApplication;
 struct RUActionFuncs;
@@ -385,6 +393,43 @@ typedef enum RUKeys {
     RUKeys_Key_CameraFocus,
 } RUKeys;
 
+struct RUPaintEventFuncs {
+    struct RURect (*rect)(struct RUBase* self_c);
+};
+
+struct RUPaintEvent {
+    struct RUBase* priv_data;
+    struct RUPaintEventFuncs* paint_event_funcs;
+};
+
+struct RUCloseEventFuncs {
+    void (*accept)(struct RUBase* self_c);
+};
+
+struct RUCloseEvent {
+    struct RUBase* priv_data;
+    struct RUCloseEventFuncs* close_event_funcs;
+};
+
+struct RUDragEnterEventFuncs {
+    void (*accept)(struct RUBase* self_c);
+};
+
+struct RUDragEnterEvent {
+    struct RUBase* priv_data;
+    struct RUDragEnterEventFuncs* drag_enter_event_funcs;
+};
+
+struct RUDropEventFuncs {
+    void (*accept_proposed_action)(struct RUBase* self_c);
+    struct RUMimeData (*mime_data)(struct RUBase* self_c);
+};
+
+struct RUDropEvent {
+    struct RUBase* priv_data;
+    struct RUDropEventFuncs* drop_event_funcs;
+};
+
 struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
     void (*set_style)(struct RUBase* self_c, const char* style);
@@ -404,8 +449,8 @@ struct RUActionFuncs {
     bool (*is_enabled)(struct RUBase* self_c);
     void (*set_text)(struct RUBase* self_c, const char* text);
     const char* (*text)(struct RUBase* self_c);
-    void (*set_shortcut)(struct RUBase* self_c, struct RUKeys key);
-    void (*set_shortcut_mod)(struct RUBase* self_c, struct RUKeys key, struct RUMetaKeys modifier);
+    void (*set_shortcut)(struct RUBase* self_c, RUKeys key);
+    void (*set_shortcut_mod)(struct RUBase* self_c, RUKeys key, RUMetaKeys modifier);
     void (*set_triggered_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c));
     void (*set_int_data)(struct RUBase* self_c, int data);
     int (*get_int_data)(struct RUBase* self_c);
@@ -463,8 +508,8 @@ struct RUListWidgetFuncs {
     void (*set_accept_drops)(struct RUBase* self_c, bool state);
     void (*add_widget_item)(struct RUBase* self_c, struct RUListWidgetItem item);
     void (*set_current_row_changed_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, int row));
-    void (*set_item_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUListWidgetItem item));
-    void (*set_item_double_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUListWidgetItem item));
+    void (*set_item_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
+    void (*set_item_double_clicked_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* item));
 };
 
 struct RUListWidget {
@@ -520,7 +565,7 @@ struct RUIcon {
 struct RUMenuFuncs {
     void (*destroy)(struct RUBase* self);
     void (*add_action_text)(struct RUBase* self_c, const char* text);
-    void (*set_triggered_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUAction action));
+    void (*set_triggered_event)(void* object, void* user_data, void (*event)(struct RUBase* widget, void* self_c, struct RUBase* action));
     void (*add_action)(struct RUBase* self_c, struct RUAction action);
     void (*set_title)(struct RUBase* self_c, const char* title);
 };
@@ -654,6 +699,15 @@ typedef struct Rute {
     struct RUVBoxLayout (*create_v_box_layout)(struct RUBase* self);
     struct RUHBoxLayout (*create_h_box_layout)(struct RUBase* self);
 } Rute;
+
+#define RUPaintEvent_rect(obj) obj.paint_event_funcs->paint_event_funcs(obj.priv_data)
+
+#define RUCloseEvent_accept(obj) obj.close_event_funcs->close_event_funcs(obj.priv_data)
+
+#define RUDragEnterEvent_accept(obj) obj.drag_enter_event_funcs->drag_enter_event_funcs(obj.priv_data)
+
+#define RUDropEvent_accept_proposed_action(obj) obj.drop_event_funcs->drop_event_funcs(obj.priv_data)
+#define RUDropEvent_mime_data(obj) obj.drop_event_funcs->drop_event_funcs(obj.priv_data)
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
 #define RUApplication_set_style_sheet(obj, filename) obj.application_funcs->application_funcs(obj.priv_data, filename)

@@ -45,6 +45,9 @@ fn main() {
         }
     }
 
+    // Run a second pass to match up types that may be out of order
+    ApiParser::second_pass(&mut api_def);
+
     // TODO: Correct error handling here
     let _ = fs::create_dir("../rute/c_cpp/auto");
     let _ = fs::create_dir("../rute/src/auto");

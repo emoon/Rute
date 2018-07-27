@@ -269,7 +269,12 @@ impl CapiGenerator {
             if i == 0 {
                 func_def.push_str("struct RUBase* widget, void*");
             } else {
-                func_def.push_str(&arg.get_c_type());
+                // References are passed as pointers to the C code
+                match arg.vtype {
+                    VariableType::Reference => func_def.push_str("struct RUBase*"),
+                    _ => func_def.push_str(&arg.get_c_type()),
+                }
+                //func_def.push_str(&arg.get_c_type());
             }
 
             func_def.push_str(" ");
