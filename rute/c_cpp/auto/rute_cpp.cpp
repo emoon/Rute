@@ -6,7 +6,6 @@
 #include "Rute.h"
 #include "rute_cpp.h"
 #include "../rute_manual.h"
-static char s_temp_string_buffer[1024*1024];
 #include <QPaintEvent>
 #include <QCloseEvent>
 #include <QDragEnterEvent>
@@ -30,6 +29,12 @@ static char s_temp_string_buffer[1024*1024];
 #include <QLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+
+static char s_temp_string_buffer[1024*1024];
+
+#include <map>
+std::map<QWidget*, void*> s_widget_lookup;
+
 extern struct RUPaintEventFuncs s_paint_event_funcs;
 extern struct RUCloseEventFuncs s_close_event_funcs;
 extern struct RUDragEnterEventFuncs s_drag_enter_event_funcs;
@@ -409,6 +414,7 @@ public:
     virtual void paintEvent(QPaintEvent* event);
     void (*m_paint)(RUBase*, void*, struct RUBase* event) = nullptr;
     void* m_paint_user_data = nullptr;
+    RUWidget* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,6 +432,7 @@ public:
     virtual void dropEvent(QDropEvent* event);
     void (*m_drop)(RUBase*, void*, struct RUBase* event) = nullptr;
     void* m_drop_user_data = nullptr;
+    RUListWidget* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,6 +442,7 @@ class WRMenu : public QMenu {
 public:
     WRMenu(QWidget* widget) : QMenu(widget) { }
     virtual ~WRMenu() {}
+    RUMenu* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -444,6 +452,7 @@ class WRMenuBar : public QMenuBar {
 public:
     WRMenuBar(QWidget* widget) : QMenuBar(widget) { }
     virtual ~WRMenuBar() {}
+    RUMenuBar* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,6 +462,7 @@ class WRLabel : public QLabel {
 public:
     WRLabel(QWidget* widget) : QLabel(widget) { }
     virtual ~WRLabel() {}
+    RULabel* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -462,6 +472,7 @@ class WRLineEdit : public QLineEdit {
 public:
     WRLineEdit(QWidget* widget) : QLineEdit(widget) { }
     virtual ~WRLineEdit() {}
+    RULineEdit* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,6 +482,7 @@ class WRPlainTextEdit : public QPlainTextEdit {
 public:
     WRPlainTextEdit(QWidget* widget) : QPlainTextEdit(widget) { }
     virtual ~WRPlainTextEdit() {}
+    RUPlainTextEdit* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,6 +492,7 @@ class WRSlider : public QSlider {
 public:
     WRSlider(QWidget* widget) : QSlider(widget) { }
     virtual ~WRSlider() {}
+    RUSlider* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -489,6 +502,7 @@ class WRMainWindow : public QMainWindow {
 public:
     WRMainWindow(QWidget* widget) : QMainWindow(widget) { }
     virtual ~WRMainWindow() {}
+    RUMainWindow* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,6 +512,7 @@ class WRVBoxLayout : public QVBoxLayout {
 public:
     WRVBoxLayout(QWidget* widget) : QVBoxLayout(widget) { }
     virtual ~WRVBoxLayout() {}
+    RUVBoxLayout* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -507,6 +522,7 @@ class WRHBoxLayout : public QHBoxLayout {
 public:
     WRHBoxLayout(QWidget* widget) : QHBoxLayout(widget) { }
     virtual ~WRHBoxLayout() {}
+    RUHBoxLayout* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,8 +633,8 @@ static struct RUMimeData drop_event_mime_data(struct RUBase* self_c) {
     QDropEvent* qt_data = (QDropEvent*)self_c;
     auto ret_value = qt_data->mimeData();
     RUMimeData ctl;
-    ctl.mime_data_funcs = &s_mime_data_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+    ctl->mime_data_funcs = &s_mime_data_funcs;
+    ctl->priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
 
@@ -788,8 +804,8 @@ static struct RUListWidgetItem list_widget_current_item(struct RUBase* self_c) {
     WRListWidget* qt_data = (WRListWidget*)self_c;
     auto ret_value = qt_data->currentItem();
     RUListWidgetItem ctl;
-    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+    ctl->list_widget_item_funcs = &s_list_widget_item_funcs;
+    ctl->priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
 
@@ -826,8 +842,8 @@ static struct RUListWidgetItem list_widget_item(struct RUBase* self_c, int index
     WRListWidget* qt_data = (WRListWidget*)self_c;
     auto ret_value = qt_data->item(index);
     RUListWidgetItem ctl;
-    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+    ctl->list_widget_item_funcs = &s_list_widget_item_funcs;
+    ctl->priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
 
@@ -1082,8 +1098,8 @@ static struct RUMenuBar main_window_menu_bar(struct RUBase* self_c) {
     WRMainWindow* qt_data = (WRMainWindow*)self_c;
     auto ret_value = qt_data->menuBar();
     RUMenuBar ctl;
-    ctl.menu_bar_funcs = &s_menu_bar_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+    ctl->menu_bar_funcs = &s_menu_bar_funcs;
+    ctl->priv_data = (struct RUBase*)ret_value;
     return ctl;
 }
 
@@ -1131,9 +1147,9 @@ static void h_box_layout_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUAction create_action(struct RUBase* priv_data) {
-    auto ctl = create_generic_func<struct RUAction, QAction>(priv_data);
-    ctl.action_funcs = &s_action_funcs;
+static struct RUAction* create_action(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_generic_func<struct RUAction, QAction>(priv_data, user_data);
+    ctl->action_funcs = &s_action_funcs;
     return ctl;
 }
 
@@ -1143,9 +1159,9 @@ static void destroy_action(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget create_widget(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
+static struct RUWidget* create_widget(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
     return ctl;
 }
 
@@ -1155,9 +1171,9 @@ static void destroy_widget(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUListWidgetItem create_list_widget_item(struct RUBase* priv_data) {
-    auto ctl = create_generic_func<struct RUListWidgetItem, QListWidgetItem>(priv_data);
-    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
+static struct RUListWidgetItem* create_list_widget_item(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_generic_func<struct RUListWidgetItem, QListWidgetItem>(priv_data, user_data);
+    ctl->list_widget_item_funcs = &s_list_widget_item_funcs;
     return ctl;
 }
 
@@ -1167,10 +1183,10 @@ static void destroy_list_widget_item(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUListWidget create_list_widget(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.list_widget_funcs = &s_list_widget_funcs;
+static struct RUListWidget* create_list_widget(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->list_widget_funcs = &s_list_widget_funcs;
     return ctl;
 }
 
@@ -1180,9 +1196,9 @@ static void destroy_list_widget(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUTimer create_timer(struct RUBase* priv_data) {
-    auto ctl = create_generic_func<struct RUTimer, QTimer>(priv_data);
-    ctl.timer_funcs = &s_timer_funcs;
+static struct RUTimer* create_timer(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_generic_func<struct RUTimer, QTimer>(priv_data, user_data);
+    ctl->timer_funcs = &s_timer_funcs;
     return ctl;
 }
 
@@ -1192,9 +1208,9 @@ static void destroy_timer(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUIcon create_icon(struct RUBase* priv_data) {
-    auto ctl = create_generic_func<struct RUIcon, QIcon>(priv_data);
-    ctl.icon_funcs = &s_icon_funcs;
+static struct RUIcon* create_icon(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_generic_func<struct RUIcon, QIcon>(priv_data, user_data);
+    ctl->icon_funcs = &s_icon_funcs;
     return ctl;
 }
 
@@ -1204,10 +1220,10 @@ static void destroy_icon(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUMenu create_menu(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUMenu, WRMenu>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.menu_funcs = &s_menu_funcs;
+static struct RUMenu* create_menu(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUMenu, WRMenu>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->menu_funcs = &s_menu_funcs;
     return ctl;
 }
 
@@ -1217,10 +1233,10 @@ static void destroy_menu(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUMenuBar create_menu_bar(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUMenuBar, WRMenuBar>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.menu_bar_funcs = &s_menu_bar_funcs;
+static struct RUMenuBar* create_menu_bar(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUMenuBar, WRMenuBar>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->menu_bar_funcs = &s_menu_bar_funcs;
     return ctl;
 }
 
@@ -1230,10 +1246,10 @@ static void destroy_menu_bar(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RULabel create_label(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RULabel, WRLabel>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.label_funcs = &s_label_funcs;
+static struct RULabel* create_label(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RULabel, WRLabel>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->label_funcs = &s_label_funcs;
     return ctl;
 }
 
@@ -1243,10 +1259,10 @@ static void destroy_label(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RULineEdit create_line_edit(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RULineEdit, WRLineEdit>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.line_edit_funcs = &s_line_edit_funcs;
+static struct RULineEdit* create_line_edit(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RULineEdit, WRLineEdit>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->line_edit_funcs = &s_line_edit_funcs;
     return ctl;
 }
 
@@ -1256,10 +1272,10 @@ static void destroy_line_edit(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPlainTextEdit create_plain_text_edit(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUPlainTextEdit, WRPlainTextEdit>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.plain_text_edit_funcs = &s_plain_text_edit_funcs;
+static struct RUPlainTextEdit* create_plain_text_edit(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUPlainTextEdit, WRPlainTextEdit>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->plain_text_edit_funcs = &s_plain_text_edit_funcs;
     return ctl;
 }
 
@@ -1269,10 +1285,10 @@ static void destroy_plain_text_edit(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUSlider create_slider(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUSlider, WRSlider>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.slider_funcs = &s_slider_funcs;
+static struct RUSlider* create_slider(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUSlider, WRSlider>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->slider_funcs = &s_slider_funcs;
     return ctl;
 }
 
@@ -1282,10 +1298,10 @@ static void destroy_slider(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUMainWindow create_main_window(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUMainWindow, WRMainWindow>(priv_data);
-    ctl.widget_funcs = &s_widget_funcs;
-    ctl.main_window_funcs = &s_main_window_funcs;
+static struct RUMainWindow* create_main_window(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUMainWindow, WRMainWindow>(priv_data, user_data);
+    ctl->widget_funcs = &s_widget_funcs;
+    ctl->main_window_funcs = &s_main_window_funcs;
     return ctl;
 }
 
@@ -1295,10 +1311,10 @@ static void destroy_main_window(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUVBoxLayout create_v_box_layout(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUVBoxLayout, WRVBoxLayout>(priv_data);
-    ctl.layout_funcs = &s_layout_funcs;
-    ctl.v_box_layout_funcs = &s_v_box_layout_funcs;
+static struct RUVBoxLayout* create_v_box_layout(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUVBoxLayout, WRVBoxLayout>(priv_data, user_data);
+    ctl->layout_funcs = &s_layout_funcs;
+    ctl->v_box_layout_funcs = &s_v_box_layout_funcs;
     return ctl;
 }
 
@@ -1308,10 +1324,10 @@ static void destroy_v_box_layout(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUHBoxLayout create_h_box_layout(struct RUBase* priv_data) {
-    auto ctl = create_widget_func<struct RUHBoxLayout, WRHBoxLayout>(priv_data);
-    ctl.layout_funcs = &s_layout_funcs;
-    ctl.h_box_layout_funcs = &s_h_box_layout_funcs;
+static struct RUHBoxLayout* create_h_box_layout(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUHBoxLayout, WRHBoxLayout>(priv_data, user_data);
+    ctl->layout_funcs = &s_layout_funcs;
+    ctl->h_box_layout_funcs = &s_h_box_layout_funcs;
     return ctl;
 }
 

@@ -698,22 +698,22 @@ struct RUHBoxLayout {
 };
 
 typedef struct Rute { 
-    struct RUApplication (*create_application)(struct RUBase* self);
-    struct RUAction (*create_action)(struct RUBase* self);
-    struct RUWidget (*create_widget)(struct RUBase* self);
-    struct RUListWidgetItem (*create_list_widget_item)(struct RUBase* self);
-    struct RUListWidget (*create_list_widget)(struct RUBase* self);
-    struct RUTimer (*create_timer)(struct RUBase* self);
-    struct RUIcon (*create_icon)(struct RUBase* self);
-    struct RUMenu (*create_menu)(struct RUBase* self);
-    struct RUMenuBar (*create_menu_bar)(struct RUBase* self);
-    struct RULabel (*create_label)(struct RUBase* self);
-    struct RULineEdit (*create_line_edit)(struct RUBase* self);
-    struct RUPlainTextEdit (*create_plain_text_edit)(struct RUBase* self);
-    struct RUSlider (*create_slider)(struct RUBase* self);
-    struct RUMainWindow (*create_main_window)(struct RUBase* self);
-    struct RUVBoxLayout (*create_v_box_layout)(struct RUBase* self);
-    struct RUHBoxLayout (*create_h_box_layout)(struct RUBase* self);
+    struct RUApplication* (*create_application)(struct RUBase* priv_data, void* user_data);
+    struct RUAction* (*create_action)(struct RUBase* priv_data, void* user_data);
+    struct RUWidget* (*create_widget)(struct RUBase* priv_data, void* user_data);
+    struct RUListWidgetItem* (*create_list_widget_item)(struct RUBase* priv_data, void* user_data);
+    struct RUListWidget* (*create_list_widget)(struct RUBase* priv_data, void* user_data);
+    struct RUTimer* (*create_timer)(struct RUBase* priv_data, void* user_data);
+    struct RUIcon* (*create_icon)(struct RUBase* priv_data, void* user_data);
+    struct RUMenu* (*create_menu)(struct RUBase* priv_data, void* user_data);
+    struct RUMenuBar* (*create_menu_bar)(struct RUBase* priv_data, void* user_data);
+    struct RULabel* (*create_label)(struct RUBase* priv_data, void* user_data);
+    struct RULineEdit* (*create_line_edit)(struct RUBase* priv_data, void* user_data);
+    struct RUPlainTextEdit* (*create_plain_text_edit)(struct RUBase* priv_data, void* user_data);
+    struct RUSlider* (*create_slider)(struct RUBase* priv_data, void* user_data);
+    struct RUMainWindow* (*create_main_window)(struct RUBase* priv_data, void* user_data);
+    struct RUVBoxLayout* (*create_v_box_layout)(struct RUBase* priv_data, void* user_data);
+    struct RUHBoxLayout* (*create_h_box_layout)(struct RUBase* priv_data, void* user_data);
 } Rute;
 
 #define RUPaintEvent_rect(obj) obj.paint_event_funcs->paint_event_funcs(obj.priv_data)

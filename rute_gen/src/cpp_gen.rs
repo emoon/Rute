@@ -15,7 +15,7 @@ pub enum EventType {
 }
 
 ///
-/// Writen at the start of the cpp output
+/// Written at the start of the header and cpp output
 ///
 static HEADER: &'static [u8] = b"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,6 +25,15 @@ static HEADER: &'static [u8] = b"
 #include \"Rute.h\"
 #include \"rute_cpp.h\"
 #include \"../rute_manual.h\"
+";
+
+
+///
+///
+static CPP_HEADER: &'static [u8] = b"
+static char s_temp_string_buffer[1024*1024];\n
+#include <map>
+std::map<QWidget*, void*> s_widget_lookup;\n
 ";
 
 ///
@@ -193,7 +202,7 @@ fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<
 ///
 /// Generate wrapper classes for all the Widges. This allows us to override
 /// virtual functions from the outside (in C and other langs)
-/// defs
+/// defs and add custom data that we need
 ///
 fn generate_wrapper_classes_defs<W: Write>(
     f: &mut W,
@@ -231,6 +240,8 @@ fn generate_wrapper_classes_defs<W: Write>(
         {
             generate_event_setup_def(f, &func)?;
         }
+
+        f.write_fmt(format_args!("    RU{}* m_ru_ctl = nullptr;\n", struct_name))?;
 
         f.write_all(b"};\n\n")?;
     }
@@ -781,7 +792,7 @@ fn generate_func_def<W: Write>(
                 let snake_name = s.name.to_snake_case();
 
                 f.write_fmt(format_args!(
-                    "    ctl.{}_funcs = &s_{}_funcs;\n",
+                    "    ctl->{}_funcs = &s_{}_funcs;\n",
                     snake_name,
                     snake_name
                 ))?;
@@ -791,10 +802,10 @@ fn generate_func_def<W: Write>(
             let name = ret_val.type_name.to_snake_case();
 
             f.write_fmt(format_args!(
-               "    ctl.{}_funcs = &s_{}_funcs;\n", name, name
+               "    ctl->{}_funcs = &s_{}_funcs;\n", name, name
             ))?;
             f.write_fmt(format_args!(
-                "    ctl.priv_data = (struct RUBase*)ret_value;\n"
+                "    ctl->priv_data = (struct RUBase*)ret_value;\n"
             ))?;
             f.write_all(b"    return ctl;\n")?;
         }
@@ -931,7 +942,7 @@ fn generate_create_functions<W: Write>(
         };
 
         f.write_fmt(format_args!(
-            "static struct RU{} create_{}(struct RUBase* priv_data) {{\n",
+            "static struct RU{}* create_{}(struct RUBase* priv_data, void* user_data) {{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -950,13 +961,13 @@ fn generate_create_functions<W: Write>(
         //
         if is_inherits_widget {
             f.write_fmt(format_args!(
-                "    auto ctl = create_widget_func<struct RU{}, WR{}>(priv_data);\n",
+                "    auto ctl = create_widget_func<struct RU{}, WR{}>(priv_data, user_data);\n",
                 struct_name,
                 struct_qt_name,
             ))?;
         } else {
             f.write_fmt(format_args!(
-                "    auto ctl = create_generic_func<struct RU{}, Q{}>(priv_data);\n",
+                "    auto ctl = create_generic_func<struct RU{}, Q{}>(priv_data, user_data);\n",
                 struct_name,
                 struct_qt_name,
             ))?;
@@ -968,7 +979,7 @@ fn generate_create_functions<W: Write>(
             let snake_name = s.name.to_snake_case();
 
             f.write_fmt(format_args!(
-                "    ctl.{}_funcs = &s_{}_funcs;\n",
+                "    ctl->{}_funcs = &s_{}_funcs;\n",
                 snake_name,
                 snake_name
             ))?;
@@ -1174,11 +1185,12 @@ impl CppGenerator {
         h_out.write_all(b"#pragma once\n")?;
         h_out.write_all(HEADER)?;
         cpp_out.write_all(HEADER)?;
-        cpp_out.write_all(b"static char s_temp_string_buffer[1024*1024];\n")?;
 
         // Generate includes for all non-POD structs(
         generate_includes(&mut h_out, &struct_name_map, &api_def)?;
         generate_includes(&mut cpp_out, &struct_name_map, &api_def)?;
+
+        cpp_out.write_all(CPP_HEADER)?;
 
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
