@@ -1,3 +1,5 @@
+extern crate rute;
+
 use std::cell::Cell;
 use std::marker::PhantomData;
 //use std::mem::transmute;

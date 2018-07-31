@@ -53,15 +53,6 @@ template<typename T, typename QT> T create_widget_func(void* priv_data, void* us
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRWidget : public QWidget {
-    Q_OBJECT
-public:
-    WRWidget(QWidget* widget) : QWidget(widget) { }
-    virtual ~WRWidget() {}
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 template<typename T, typename QT> T create_generic_func() {
     QT* qt_obj = new QT();
     T ctl;
@@ -127,12 +118,7 @@ static struct Rute s_rute = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-#ifdef _WIN32
-extern "C" __declspec(dllexport) struct Rute* rute_get() {
-#else
 extern "C" struct Rute* rute_get() {
-#endif
     return (Rute*)&s_rute;
 }
 
