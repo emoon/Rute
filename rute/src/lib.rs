@@ -1,7 +1,7 @@
 extern crate libloading;
 
-mod auto;
+// mod auto;
 
-pub mod rute;
-pub use rute::Rute as Rute;
+// pub mod rute;
+// pub use rute::Rute as Rute;
 

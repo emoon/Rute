@@ -209,11 +209,10 @@ fn generate_wrapper_classes_defs<W: Write>(
     struct_name_map: &HashMap<&str, &str>,
     api_def: &ApiDef,
 ) -> io::Result<()> {
-    for sdef in api_def
-        .class_structs
-        .iter()
-        .filter(|v| v.inherits_widget(api_def))
-    {
+
+    for sdef in &api_def.class_structs {
+        let inherits_widget = sdef.inherits_widget(api_def);
+
         let struct_name = sdef.name.as_str();
         let struct_qt_name = struct_name_map
             .get(struct_name)
@@ -224,13 +223,24 @@ fn generate_wrapper_classes_defs<W: Write>(
             "class WR{} : public Q{} {{\n",
             struct_qt_name, struct_qt_name
         ))?;
-        f.write_all(b"    Q_OBJECT\n")?;
-        f.write_all(b"public:\n")?;
 
-        f.write_fmt(format_args!(
-            "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
-            struct_qt_name, struct_qt_name
-        ))?;
+        if inherits_widget {
+            f.write_all(b"    Q_OBJECT\n")?;
+            f.write_all(b"public:\n")?;
+
+            f.write_fmt(format_args!(
+                "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
+                struct_qt_name, struct_qt_name
+            ))?;
+        } else {
+            f.write_all(b"public:\n")?;
+
+            f.write_fmt(format_args!(
+                "    WR{}() : Q{}() {{ }}\n",
+                struct_qt_name, struct_qt_name
+            ))?;
+        }
+
         f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n", struct_qt_name))?;
 
         for func in sdef
@@ -936,9 +946,9 @@ fn generate_create_functions<W: Write>(
         // We create wrapper widgets for all Qt widges so we can have our own functionallity there
         // So we prefix them with WR (WRapper) otherwise we assume it's a regular Q* class
         //
-        let qt_type = match is_inherits_widget {
-            true => "WR",
-            false => "Q",
+        let (qt_type, create_func) = match is_inherits_widget {
+            true => ("WR", "create_widget_func"),
+            false => ("Q", "generic_create_func"),
         };
 
         f.write_fmt(format_args!(
@@ -955,23 +965,12 @@ fn generate_create_functions<W: Write>(
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
 
-        //
-        // Depending on if this is a widget we generate the code a bit differently and have
-        // a generic create function otherwise a template function for creating widgets
-        //
-        if is_inherits_widget {
-            f.write_fmt(format_args!(
-                "    auto ctl = create_widget_func<struct RU{}, WR{}>(priv_data, user_data);\n",
-                struct_name,
-                struct_qt_name,
-            ))?;
-        } else {
-            f.write_fmt(format_args!(
-                "    auto ctl = create_generic_func<struct RU{}, Q{}>(priv_data, user_data);\n",
-                struct_name,
-                struct_qt_name,
-            ))?;
-        }
+        f.write_fmt(format_args!(
+            "    auto ctl = {}<struct RU{}, {}{}>(priv_data, user_data);\n", create_func,
+            struct_name,
+            qt_type,
+            struct_qt_name,
+        ))?;
 
         // fill in the function ptr structs
         // TODO: Make to common function

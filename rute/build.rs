@@ -18,7 +18,9 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     // Generate the moc code
 
     Command::new(moc_exe)
-            .args(&["c_cpp/auto/rute_cpp.h", "-o", "c_cpp/auto/rute_moc.cpp"])
+            // .args(&["c_cpp/auto/rute_cpp.h", "-o", "c_cpp/auto/rute_moc.cpp"])
+            // Used for temporary test-bed
+            .args(&["c_cpp/test_bed/rute_test_bed.h", "-o", "c_cpp/auto/rute_moc.cpp"])
             .spawn()
             .expect("failed to execute process");
 
@@ -39,7 +41,9 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     //let mut f = File::create(&dest_path).unwrap();
 
     cc::Build::new()
-        .file("c_cpp/auto/rute_cpp.cpp")
+        //.file("c_cpp/auto/rute_cpp.cpp")
+        // Used for temporary test-bed
+        .file("c_cpp/test_bed/rute_test_bed.cpp")
         .file("c_cpp/auto/rute_moc.cpp")
         .include(i0)
         .include(i1)

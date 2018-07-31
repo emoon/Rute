@@ -405,6 +405,60 @@ static void create_enum_mappings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRPaintEvent : public QPaintEvent {
+public:
+    WRPaintEvent() : QPaintEvent() { }
+    virtual ~WRPaintEvent() {}
+    RUPaintEvent* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRCloseEvent : public QCloseEvent {
+public:
+    WRCloseEvent() : QCloseEvent() { }
+    virtual ~WRCloseEvent() {}
+    RUCloseEvent* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRDragEnterEvent : public QDragEnterEvent {
+public:
+    WRDragEnterEvent() : QDragEnterEvent() { }
+    virtual ~WRDragEnterEvent() {}
+    RUDragEnterEvent* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRDropEvent : public QDropEvent {
+public:
+    WRDropEvent() : QDropEvent() { }
+    virtual ~WRDropEvent() {}
+    RUDropEvent* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRApplication : public QApplication {
+public:
+    WRApplication() : QApplication() { }
+    virtual ~WRApplication() {}
+    RUApplication* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRAction : public QAction {
+public:
+    WRAction() : QAction() { }
+    virtual ~WRAction() {}
+    RUAction* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRWidget : public QWidget {
     Q_OBJECT
 public:
@@ -415,6 +469,15 @@ public:
     void (*m_paint)(RUBase*, void*, struct RUBase* event) = nullptr;
     void* m_paint_user_data = nullptr;
     RUWidget* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRListWidgetItem : public QListWidgetItem {
+public:
+    WRListWidgetItem() : QListWidgetItem() { }
+    virtual ~WRListWidgetItem() {}
+    RUListWidgetItem* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,6 +496,42 @@ public:
     void (*m_drop)(RUBase*, void*, struct RUBase* event) = nullptr;
     void* m_drop_user_data = nullptr;
     RUListWidget* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRUrl : public QUrl {
+public:
+    WRUrl() : QUrl() { }
+    virtual ~WRUrl() {}
+    RUUrl* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRMimeData : public QMimeData {
+public:
+    WRMimeData() : QMimeData() { }
+    virtual ~WRMimeData() {}
+    RUMimeData* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRTimer : public QTimer {
+public:
+    WRTimer() : QTimer() { }
+    virtual ~WRTimer() {}
+    RUTimer* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRIcon : public QIcon {
+public:
+    WRIcon() : QIcon() { }
+    virtual ~WRIcon() {}
+    RUIcon* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -503,6 +602,15 @@ public:
     WRMainWindow(QWidget* widget) : QMainWindow(widget) { }
     virtual ~WRMainWindow() {}
     RUMainWindow* m_ru_ctl = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRLayout : public QLayout {
+public:
+    WRLayout() : QLayout() { }
+    virtual ~WRLayout() {}
+    RULayout* m_ru_ctl = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1148,7 +1256,7 @@ static void h_box_layout_update(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUAction* create_action(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_generic_func<struct RUAction, QAction>(priv_data, user_data);
+    auto ctl = generic_create_func<struct RUAction, QAction>(priv_data, user_data);
     ctl->action_funcs = &s_action_funcs;
     return ctl;
 }
@@ -1172,7 +1280,7 @@ static void destroy_widget(struct RUBase* priv_data) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUListWidgetItem* create_list_widget_item(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_generic_func<struct RUListWidgetItem, QListWidgetItem>(priv_data, user_data);
+    auto ctl = generic_create_func<struct RUListWidgetItem, QListWidgetItem>(priv_data, user_data);
     ctl->list_widget_item_funcs = &s_list_widget_item_funcs;
     return ctl;
 }
@@ -1197,7 +1305,7 @@ static void destroy_list_widget(struct RUBase* priv_data) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUTimer* create_timer(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_generic_func<struct RUTimer, QTimer>(priv_data, user_data);
+    auto ctl = generic_create_func<struct RUTimer, QTimer>(priv_data, user_data);
     ctl->timer_funcs = &s_timer_funcs;
     return ctl;
 }
@@ -1209,7 +1317,7 @@ static void destroy_timer(struct RUBase* priv_data) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUIcon* create_icon(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_generic_func<struct RUIcon, QIcon>(priv_data, user_data);
+    auto ctl = generic_create_func<struct RUIcon, QIcon>(priv_data, user_data);
     ctl->icon_funcs = &s_icon_funcs;
     return ctl;
 }
