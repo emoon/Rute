@@ -2,8 +2,8 @@ extern crate rute;
 
 use std::cell::Cell;
 use std::marker::PhantomData;
-//use std::mem::transmute;
-//use std::os::raw::c_void;
+use std::mem::transmute;
+use std::os::raw::c_void;
 use std::cell::RefCell;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,10 @@ pub struct RUApplication {
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
-    pub create_list_widget: extern "C" fn(priv_data: *const RUBase) -> RUListWidget,
+    pub create_list_widget: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        delete_data: *const c_void) -> RUListWidget,
 }
 
 extern "C" {
@@ -115,6 +118,12 @@ impl<'a> WidgetType for ListWidget<'a> {
     }
 }
 
+
+unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
+    let d: &&(Cell<Option<T>>) = transmute(data);
+    d.set(None);
+}
+
 impl<'a> Rute<'a> {
     pub fn new() -> Rute<'a> {
         Rute {
@@ -132,9 +141,19 @@ impl<'a> Rute<'a> {
     }
 
     pub fn create_list_widget(&self) -> ListWidget<'a> {
-        let ffi_data = unsafe { ((*self.rute_ffi).create_list_widget)(std::ptr::null()) };
+        let data = Box::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*self.rute_ffi).create_list_widget)(
+                std::ptr::null(),
+                transmute(rute_object_delete_callback::<RUWidget> as usize),
+                Box::into_raw(&data) as *const c_void)
+        };
+
+        data.set(Some(ffi_data));
+
         ListWidget {
-            data: Box::new(Cell::new(Some(ffi_data))),
+            data,
             _marker: PhantomData,
         }
     }
