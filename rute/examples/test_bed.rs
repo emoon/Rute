@@ -21,11 +21,19 @@ pub struct RUBase {
 #[repr(C)]
 pub struct RUWidgetFuncs {
     pub show: extern "C" fn(self_c: *const RUBase),
+    pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUWidget {
+    pub privd: *const RUBase,
+    pub widget_funcs: *const RUWidgetFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUListWidget {
     pub privd: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
 }
@@ -46,6 +54,7 @@ pub struct RUApplication {
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
+    pub create_list_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
 }
 
 extern "C" {
@@ -61,6 +70,12 @@ extern "C" {
 #[derive(Clone)]
 pub struct Widget<'a> {
     data: Box<Cell<Option<RUWidget>>>,
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,
+}
+
+#[derive(Clone)]
+pub struct ListWidget<'a> {
+    data: Box<Cell<Option<RUListWidget>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
@@ -108,8 +123,8 @@ impl<'a> Rute<'a> {
         }
     }
 
-    pub fn create_list_widget(&self) -> Widget<'a> {
-        let ffi_data = unsafe { ((*self.rute_ffi).create_liste_widget)(std::ptr::null()) };
+    pub fn create_list_widget(&self) -> ListWidget<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).create_list_widget)(std::ptr::null()) };
         Widget {
             data: Box::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,

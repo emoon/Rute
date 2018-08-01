@@ -16,11 +16,21 @@ struct RUApplicationFuncs {
 
 struct RUWidgetFuncs {
     void (*show)(struct RUBase* self_c);
+    void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
+};
+
+struct RUListWidgetFuncs {
+    void (*show)(struct RUBase* self_c);
 };
 
 struct RUWidget {
     struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
+};
+
+struct RUListWidget {
+    struct RUBase* priv_data;
+    struct RUListWidgetFuncs* widget_funcs;
 };
 
 struct RUApplication {
@@ -31,6 +41,7 @@ struct RUApplication {
 typedef struct Rute {
     struct RUApplication (*create_application)(struct RUBase* priv_data, void* user_data);
     struct RUWidget (*create_widget)(struct RUBase* priv_data, void* user_data);
+    struct RUListWidget (*create_list_widget)(struct RUBase* priv_data, void* user_data);
 } Rute;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +80,22 @@ static void widget_show(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
+    WRWidget* qt_data = (WRWidget*)self_c;
+    WRWidget* p = (WRWidget*)p;
+    qt_data->setParent(p);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUWidgetFuncs s_widget_funcs = {
+    widget_show,
+    widget_set_parent,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUListWidgetFuncs s_list_widget_funcs = {
     widget_show,
 };
 
@@ -78,6 +104,14 @@ struct RUWidgetFuncs s_widget_funcs = {
 static struct RUWidget create_widget(struct RUBase* priv_data, void* user_data) {
     auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, user_data);
     ctl.widget_funcs = &s_widget_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget create_list_widget(struct RUBase* priv_data, void* user_data) {
+    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, user_data);
+    ctl.list_widget_funcs = &s_list_widget_funcs;
     return ctl;
 }
 
@@ -114,6 +148,7 @@ static struct RUApplication create_application(struct RUBase* priv_data, void* u
 static struct Rute s_rute = {
     create_application,
     create_widget,
+    create_list_widget,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
