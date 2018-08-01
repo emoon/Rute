@@ -81,6 +81,17 @@ struct Rute<'a> {
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
+pub trait WidgetType {
+    fn get_widget_type_obj(&self) -> *const RUBase;
+}
+
+impl WidgetType for ListWidget {
+    fn get_widget_type_obj(&self) -> *const RUBase {
+        let obj = self.data.get().unwrap();
+        obj.privd
+    }
+}
+
 impl<'a> Rute<'a> {
     pub fn new() -> Rute<'a> {
         Rute {
@@ -91,6 +102,14 @@ impl<'a> Rute<'a> {
 
     pub fn create_widget(&self) -> Widget<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_widget)(std::ptr::null()) };
+        Widget {
+            data: Box::new(Cell::new(Some(ffi_data))),
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn create_list_widget(&self) -> Widget<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).create_liste_widget)(std::ptr::null()) };
         Widget {
             data: Box::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
@@ -111,6 +130,15 @@ impl<'a> Widget<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
             ((*obj.widget_funcs).show)(obj.privd);
+        }
+        self
+    }
+
+    pub fn set_parent(self, parent: &WidgetType) -> Widget<'a> {
+        let parent_obj = parent.get_widget_type_obj();
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.widget_funcs).parent)(obj.privd, parent_obj);
         }
         self
     }
