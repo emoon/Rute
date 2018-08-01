@@ -30,7 +30,8 @@ struct RUWidget {
 
 struct RUListWidget {
     struct RUBase* priv_data;
-    struct RUListWidgetFuncs* widget_funcs;
+    struct RUWidgetFuncs* widget_funcs;
+    struct RUListWidgetFuncs* list_widget_funcs;
 };
 
 struct RUApplication {
@@ -82,7 +83,7 @@ static void widget_show(struct RUBase* self_c) {
 
 static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRWidget* qt_data = (WRWidget*)self_c;
-    WRWidget* p = (WRWidget*)p;
+    QWidget* p = (QWidget*)parent;
     qt_data->setParent(p);
 }
 
@@ -109,8 +110,9 @@ static struct RUWidget create_widget(struct RUBase* priv_data, void* user_data) 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget create_list_widget(struct RUBase* priv_data, void* user_data) {
+static struct RUListWidget create_list_widget(struct RUBase* priv_data, void* user_data) {
     auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, user_data);
+    ctl.widget_funcs = &s_widget_funcs;
     ctl.list_widget_funcs = &s_list_widget_funcs;
     return ctl;
 }

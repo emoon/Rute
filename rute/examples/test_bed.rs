@@ -36,6 +36,7 @@ pub struct RUWidget {
 pub struct RUListWidget {
     pub privd: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
+    pub list_widget_funcs: *const RUWidgetFuncs,
 }
 
 #[repr(C)]
@@ -54,7 +55,7 @@ pub struct RUApplication {
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
-    pub create_list_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
+    pub create_list_widget: extern "C" fn(priv_data: *const RUBase) -> RUListWidget,
 }
 
 extern "C" {
@@ -100,7 +101,14 @@ pub trait WidgetType {
     fn get_widget_type_obj(&self) -> *const RUBase;
 }
 
-impl WidgetType for ListWidget {
+impl<'a> WidgetType for Widget<'a> {
+    fn get_widget_type_obj(&self) -> *const RUBase {
+        let obj = self.data.get().unwrap();
+        obj.privd
+    }
+}
+
+impl<'a> WidgetType for ListWidget<'a> {
     fn get_widget_type_obj(&self) -> *const RUBase {
         let obj = self.data.get().unwrap();
         obj.privd
@@ -125,7 +133,7 @@ impl<'a> Rute<'a> {
 
     pub fn create_list_widget(&self) -> ListWidget<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_list_widget)(std::ptr::null()) };
-        Widget {
+        ListWidget {
             data: Box::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }
@@ -153,7 +161,26 @@ impl<'a> Widget<'a> {
         let parent_obj = parent.get_widget_type_obj();
         let obj = self.data.get().unwrap();
         unsafe {
-            ((*obj.widget_funcs).parent)(obj.privd, parent_obj);
+            ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
+        }
+        self
+    }
+}
+
+impl<'a> ListWidget<'a> {
+    pub fn show(self) -> ListWidget<'a> {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.widget_funcs).show)(obj.privd);
+        }
+        self
+    }
+
+    pub fn set_parent(self, parent: &WidgetType) -> ListWidget<'a> {
+        let parent_obj = parent.get_widget_type_obj();
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
         }
         self
     }
@@ -236,7 +263,13 @@ impl<'a> MyApp<'a> {
     }
 
     fn setup_ui(&'a mut self) {
-        self.ui.create_widget().show();
+        let widget = self.ui.create_widget();
+        let list = self.ui.create_list_widget();
+
+        list.set_parent(&widget);
+
+        widget.show();
+
         /*
         self.ui.create_slider().value_changed(self, |state, value| {
             let mut state = state.shared_state.borrow_mut();
