@@ -194,7 +194,7 @@ impl<'a> Widget<'a> {
 }
 
 impl<'a> ListWidget<'a> {
-    pub fn show(self) -> ListWidget<'a> {
+    pub fn show(&self) -> &ListWidget<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
             ((*obj.widget_funcs).show)(obj.privd);
@@ -207,6 +207,10 @@ impl<'a> ListWidget<'a> {
         unsafe {
             ((*obj.list_widget_funcs).destroy)(obj.privd);
         }
+    }
+
+    pub fn build(&self) -> ListWidget<'a> {
+        self.clone()
     }
 
     pub fn set_parent(&self, parent: &WidgetType) {
@@ -296,7 +300,7 @@ impl<'a> MyApp<'a> {
 
     fn setup_ui(&'a mut self) {
         let widget = self.ui.create_widget();
-        let list = self.ui.create_list_widget();
+        let list = self.ui.create_list_widget().show().build();
 
         list.set_parent(&widget);
 
@@ -304,6 +308,7 @@ impl<'a> MyApp<'a> {
 
         //list.destroy();
 
+        list.show();
         list.show();
 
         /*
