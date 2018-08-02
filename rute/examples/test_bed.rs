@@ -23,6 +23,7 @@ pub struct RUBase {
 pub struct RUWidgetFuncs {
     pub show: extern "C" fn(self_c: *const RUBase),
     pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
+    pub set_size: extern "C" fn(self_c: *const RUBase, width: i32, height: i32),
 }
 
 #[repr(C)]
@@ -43,6 +44,13 @@ pub struct RUListWidget {
     pub privd: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
     pub list_widget_funcs: *const RUListWidgetFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUListWidgetItem {
+    pub privd: *const RUBase,
+    pub list_widget_item_funcs: *const RUListWidgetFuncs,
 }
 
 #[repr(C)]
@@ -127,7 +135,7 @@ impl<'a> WidgetType for ListWidget<'a> {
 
 unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
     println!("delete callback");
-    let d = Rc::from_raw(data as *const Cell<Option<T>>); 
+    let d = Rc::from_raw(data as *const Cell<Option<T>>);
     d.set(None);
 }
 
@@ -159,7 +167,7 @@ impl<'a> Rute<'a> {
         };
 
         data.set(Some(ffi_data));
-        
+
         ListWidget {
             data,
             _marker: PhantomData,
@@ -183,6 +191,15 @@ impl<'a> Widget<'a> {
         }
         self
     }
+
+    pub fn set_size(self, width: i32, height: i32) -> Widget<'a> {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.widget_funcs).set_size)(obj.privd, width, height);
+        }
+        self
+    }
+
 
     pub fn set_parent(&self, parent: &WidgetType) {
         let parent_obj = parent.get_widget_type_obj();
@@ -299,7 +316,7 @@ impl<'a> MyApp<'a> {
     }
 
     fn setup_ui(&'a mut self) {
-        let widget = self.ui.create_widget();
+        let widget = self.ui.create_widget().set_size(400, 400);
         let list = self.ui.create_list_widget().show().build();
 
         list.set_parent(&widget);
