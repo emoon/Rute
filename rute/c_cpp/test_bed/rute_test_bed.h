@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QListWidget>
+#include <QListWidgetItem>
 
 typedef void (*DeleteCallback)(void* data);
 
@@ -36,4 +37,21 @@ public:
     DeleteCallback m_delete_callback = nullptr;
     void* m_delete_callback_data = nullptr;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRListWidgetItem : public QListWidgetItem {
+public:
+    WRListWidgetItem() : QListWidgetItem() { }
+    virtual ~WRListWidgetItem() {
+        if (m_delete_callback) {
+            m_delete_callback(m_delete_callback_data);
+        }
+    }
+
+    DeleteCallback m_delete_callback = nullptr;
+    void* m_delete_callback_data = nullptr;
+};
+
+
 
