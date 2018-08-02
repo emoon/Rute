@@ -20,7 +20,7 @@ struct RUWidgetFuncs {
 };
 
 struct RUListWidgetFuncs {
-    void (*show)(struct RUBase* self_c);
+    void (*destroy)(struct RUBase* self_c);
 };
 
 struct RUWidget {
@@ -40,22 +40,30 @@ struct RUApplication {
 };
 
 typedef struct Rute {
-    struct RUApplication (*create_application)(struct RUBase* priv_data, void* user_data);
-    struct RUWidget (*create_widget)(struct RUBase* priv_data, void* user_data);
-    struct RUListWidget (*create_list_widget)(struct RUBase* priv_data, void* user_data);
+    struct RUApplication (*create_application)(struct RUBase* priv_data);
+    struct RUWidget (*create_widget)(struct RUBase* priv_data);
+    struct RUListWidget (*create_list_widget)(
+        struct RUBase* priv_data,
+        DeleteCallback delete_callback, void* delete_user_data);
 } Rute;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> T create_widget_func(void* priv_data, void* user_data) {
+template<typename T, typename QT> T create_widget_func(
+    void* priv_data, 
+    DeleteCallback delete_callback, void* delete_user_data) {
     PrivData* data = (PrivData*)priv_data;
-    (void)user_data;
     QT* qt_obj = nullptr;
     if (data) {
         qt_obj = new QT(data->parent);
     } else {
         qt_obj = new QT(nullptr);
     }
+
+    qt_obj->m_delete_callback = delete_callback;
+    qt_obj->m_delete_callback_data = delete_user_data;
+
+    printf("m_delete_callback %p\n", delete_callback);
 
     T ctl;
     ctl.priv_data = (struct RUBase*)qt_obj;
@@ -96,22 +104,34 @@ struct RUWidgetFuncs s_widget_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_destroy(struct RUBase* self_c) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    delete qt_data;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUListWidgetFuncs s_list_widget_funcs = {
-    widget_show,
+    list_widget_destroy,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget create_widget(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, user_data);
+static struct RUWidget create_widget(struct RUBase* priv_data) {
+    auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, 0, 0);
     ctl.widget_funcs = &s_widget_funcs;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUListWidget create_list_widget(struct RUBase* priv_data, void* user_data) {
-    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, user_data);
+static struct RUListWidget create_list_widget(
+    struct RUBase* priv_data,
+    DeleteCallback delete_callback, void* delete_user_data) {
+
+    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(
+        priv_data, delete_callback, delete_user_data);
+
     ctl.widget_funcs = &s_widget_funcs;
     ctl.list_widget_funcs = &s_list_widget_funcs;
     return ctl;
@@ -132,12 +152,11 @@ struct RUApplicationFuncs s_application_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUApplication create_application(struct RUBase* priv_data, void* user_data) {
+static struct RUApplication create_application(struct RUBase* priv_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
 
     (void)priv_data;
-    (void)user_data;
     RUApplication ctl;
     ctl.application_funcs = &s_application_funcs;
     ctl.priv_data = (struct RUBase*)qt_obj;

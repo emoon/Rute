@@ -5,6 +5,7 @@ use std::marker::PhantomData;
 use std::mem::transmute;
 use std::os::raw::c_void;
 use std::cell::RefCell;
+use std::rc::Rc;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -25,6 +26,11 @@ pub struct RUWidgetFuncs {
 }
 
 #[repr(C)]
+pub struct RUListWidgetFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+}
+
+#[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUWidget {
     pub privd: *const RUBase,
@@ -36,7 +42,7 @@ pub struct RUWidget {
 pub struct RUListWidget {
     pub privd: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
-    pub list_widget_funcs: *const RUWidgetFuncs,
+    pub list_widget_funcs: *const RUListWidgetFuncs,
 }
 
 #[repr(C)]
@@ -73,25 +79,25 @@ extern "C" {
 
 #[derive(Clone)]
 pub struct Widget<'a> {
-    data: Box<Cell<Option<RUWidget>>>,
+    data: Rc<Cell<Option<RUWidget>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
 #[derive(Clone)]
 pub struct ListWidget<'a> {
-    data: Box<Cell<Option<RUListWidget>>>,
+    data: Rc<Cell<Option<RUListWidget>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
 #[derive(Clone)]
 pub struct Slider<'a> {
-    data: Box<Cell<Option<RUWidget>>>,
+    data: Rc<Cell<Option<RUWidget>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
 #[derive(Clone)]
 pub struct Application<'a> {
-    data: Box<Cell<Option<RUApplication>>>,
+    data: Rc<Cell<Option<RUApplication>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
@@ -120,7 +126,8 @@ impl<'a> WidgetType for ListWidget<'a> {
 
 
 unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
-    let d: &&(Cell<Option<T>>) = transmute(data);
+    println!("delete callback");
+    let d = Rc::from_raw(data as *const Cell<Option<T>>); 
     d.set(None);
 }
 
@@ -135,23 +142,24 @@ impl<'a> Rute<'a> {
     pub fn create_widget(&self) -> Widget<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_widget)(std::ptr::null()) };
         Widget {
-            data: Box::new(Cell::new(Some(ffi_data))),
+            data: Rc::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }
     }
 
     pub fn create_list_widget(&self) -> ListWidget<'a> {
-        let data = Box::new(Cell::new(None));
+        //let rute_api_data = self.
+        let data = Rc::new(Cell::new(None));
 
         let ffi_data = unsafe {
             ((*self.rute_ffi).create_list_widget)(
                 std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUWidget> as usize),
-                Box::into_raw(&data) as *const c_void)
+                transmute(rute_object_delete_callback::<RUListWidget> as usize),
+                Rc::into_raw(data.clone()) as *const c_void)
         };
 
         data.set(Some(ffi_data));
-
+        
         ListWidget {
             data,
             _marker: PhantomData,
@@ -161,7 +169,7 @@ impl<'a> Rute<'a> {
     pub fn create_application(&self) -> Application<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_application)(std::ptr::null()) };
         Application {
-            data: Box::new(Cell::new(Some(ffi_data))),
+            data: Rc::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }
     }
@@ -176,13 +184,12 @@ impl<'a> Widget<'a> {
         self
     }
 
-    pub fn set_parent(self, parent: &WidgetType) -> Widget<'a> {
+    pub fn set_parent(&self, parent: &WidgetType) {
         let parent_obj = parent.get_widget_type_obj();
         let obj = self.data.get().unwrap();
         unsafe {
             ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
         }
-        self
     }
 }
 
@@ -195,13 +202,19 @@ impl<'a> ListWidget<'a> {
         self
     }
 
-    pub fn set_parent(self, parent: &WidgetType) -> ListWidget<'a> {
+    pub fn destroy(&self) {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.list_widget_funcs).destroy)(obj.privd);
+        }
+    }
+
+    pub fn set_parent(&self, parent: &WidgetType) {
         let parent_obj = parent.get_widget_type_obj();
         let obj = self.data.get().unwrap();
         unsafe {
             ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
         }
-        self
     }
 }
 
@@ -288,6 +301,10 @@ impl<'a> MyApp<'a> {
         list.set_parent(&widget);
 
         widget.show();
+
+        //list.destroy();
+
+        list.show();
 
         /*
         self.ui.create_slider().value_changed(self, |state, value| {
