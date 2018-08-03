@@ -31,6 +31,7 @@ pub struct RUWidgetFuncs {
 pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub add_item: extern "C" fn(self_c: *const RUBase, in_0: *const RUListWidgetItem),
+    pub clear: extern "C" fn(self_c: *const RUBase),
 }
 
 #[repr(C)]
@@ -252,6 +253,14 @@ impl<'a> ListWidget<'a> {
         self
     }
 
+    pub fn clear(&self) -> &ListWidget<'a> {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.list_widget_funcs).clear)(obj.privd);
+        }
+        self
+    }
+
     pub fn add_item(&self, item: &ListWidgetItem) -> &ListWidget<'a> {
         let obj = self.data.get().unwrap();
         let in_0 = item.data.get().unwrap();
@@ -385,10 +394,12 @@ impl<'a> MyApp<'a> {
 
         widget.show();
 
+        list.clear();
+
+        item.set_text("Test 2");
+
         //list.destroy();
 
-        list.show();
-        list.show();
 
         /*
         self.ui.create_slider().value_changed(self, |state, value| {

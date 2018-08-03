@@ -23,6 +23,7 @@ struct RUWidgetFuncs {
 struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self_c);
     void (*add_item)(struct RUBase* self_c, struct RUListWidgetItem* item);
+    void (*clear)(struct RUBase* self_c);
 };
 
 struct RUWidget {
@@ -143,6 +144,13 @@ static void list_widget_destroy(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_clear(struct RUBase* self_c) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->clear();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void list_widget_add_item(struct RUBase* self_c, struct RUListWidgetItem* data) {
     WRListWidgetItem* qt_in = (WRListWidgetItem*)data->priv_data;
     WRListWidget* qt_data = (WRListWidget*)self_c;
@@ -154,6 +162,7 @@ static void list_widget_add_item(struct RUBase* self_c, struct RUListWidgetItem*
 struct RUListWidgetFuncs s_list_widget_funcs = {
     list_widget_destroy,
     list_widget_add_item,
+    list_widget_clear,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
