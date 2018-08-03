@@ -3,9 +3,10 @@ extern crate rute;
 use std::cell::Cell;
 use std::marker::PhantomData;
 use std::mem::transmute;
-use std::os::raw::c_void;
+use std::os::raw::{c_void, c_char};
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::ffi::CString;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -29,6 +30,12 @@ pub struct RUWidgetFuncs {
 #[repr(C)]
 pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub add_item: extern "C" fn(self_c: *const RUBase, in_0: *const RUListWidgetItem),
+}
+
+#[repr(C)]
+pub struct RUListWidgetItemFuncs {
+    pub set_text: extern "C" fn(self_c: *const RUBase, text: *const c_char),
 }
 
 #[repr(C)]
@@ -50,7 +57,7 @@ pub struct RUListWidget {
 #[derive(Copy, Clone)]
 pub struct RUListWidgetItem {
     pub privd: *const RUBase,
-    pub list_widget_item_funcs: *const RUListWidgetFuncs,
+    pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
 }
 
 #[repr(C)]
@@ -73,6 +80,10 @@ pub struct RuteFFI {
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         delete_data: *const c_void) -> RUListWidget,
+    pub create_list_widget_item: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        delete_data: *const c_void) -> RUListWidgetItem,
 }
 
 extern "C" {
@@ -94,6 +105,12 @@ pub struct Widget<'a> {
 #[derive(Clone)]
 pub struct ListWidget<'a> {
     data: Rc<Cell<Option<RUListWidget>>>,
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,
+}
+
+#[derive(Clone)]
+pub struct ListWidgetItem<'a> {
+    data: Rc<Cell<Option<RUListWidgetItem>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 
@@ -156,7 +173,6 @@ impl<'a> Rute<'a> {
     }
 
     pub fn create_list_widget(&self) -> ListWidget<'a> {
-        //let rute_api_data = self.
         let data = Rc::new(Cell::new(None));
 
         let ffi_data = unsafe {
@@ -169,6 +185,24 @@ impl<'a> Rute<'a> {
         data.set(Some(ffi_data));
 
         ListWidget {
+            data,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn create_list_widget_item(&self) -> ListWidgetItem<'a> {
+        let data = Rc::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*self.rute_ffi).create_list_widget_item)(
+                std::ptr::null(),
+                transmute(rute_object_delete_callback::<RUListWidgetItem> as usize),
+                Rc::into_raw(data.clone()) as *const c_void)
+        };
+
+        data.set(Some(ffi_data));
+
+        ListWidgetItem {
             data,
             _marker: PhantomData,
         }
@@ -200,7 +234,6 @@ impl<'a> Widget<'a> {
         self
     }
 
-
     pub fn set_parent(&self, parent: &WidgetType) {
         let parent_obj = parent.get_widget_type_obj();
         let obj = self.data.get().unwrap();
@@ -215,6 +248,16 @@ impl<'a> ListWidget<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
             ((*obj.widget_funcs).show)(obj.privd);
+        }
+        self
+    }
+
+    pub fn add_item(&self, item: &ListWidgetItem) -> &ListWidget<'a> {
+        let obj = self.data.get().unwrap();
+        let in_0 = item.data.get().unwrap();
+
+        unsafe {
+            ((*obj.list_widget_funcs).add_item)(obj.privd, &in_0);
         }
         self
     }
@@ -236,6 +279,22 @@ impl<'a> ListWidget<'a> {
         unsafe {
             ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
         }
+    }
+}
+
+impl<'a> ListWidgetItem<'a> {
+    pub fn set_text(&self, text: &str) -> &ListWidgetItem<'a> {
+        let obj = self.data.get().unwrap();
+        let str_in_text_1 = CString::new(text).unwrap();
+
+        unsafe {
+            ((*obj.list_widget_item_funcs).set_text)(obj.privd, str_in_text_1.as_ptr());
+        }
+        self
+    }
+
+    pub fn build(&self) -> ListWidgetItem<'a> {
+        self.clone()
     }
 }
 
@@ -319,7 +378,10 @@ impl<'a> MyApp<'a> {
         let widget = self.ui.create_widget().set_size(400, 400);
         let list = self.ui.create_list_widget().show().build();
 
+        let item = self.ui.create_list_widget_item().set_text("Test").build();
+
         list.set_parent(&widget);
+        list.add_item(&item);
 
         widget.show();
 
