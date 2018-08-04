@@ -39,6 +39,7 @@ pub struct RUListWidgetFuncs {
 #[repr(C)]
 pub struct RUListWidgetItemFuncs {
     pub set_text: extern "C" fn(self_c: *const RUBase, text: *const c_char),
+    pub icon: extern "C" fn(self_c: *const RUBase) -> RUIcon,
 }
 
 #[repr(C)]
@@ -46,6 +47,19 @@ pub struct RUListWidgetItemFuncs {
 pub struct RUWidget {
     pub privd: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
+}
+
+#[repr(C)]
+pub struct RUIconFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub cache_key: extern "C" fn(self_c: *const RUBase) -> u64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUIcon {
+    pub privd: *const RUBase,
+    pub icon_funcs: *const RUIconFuncs,
 }
 
 #[repr(C)]
@@ -124,6 +138,49 @@ pub struct Slider<'a> {
 }
 
 #[derive(Clone)]
+pub struct Icon {
+    data: Rc<Cell<Option<RUIcon>>>,
+    owner: bool,
+}
+
+impl Drop for Icon {
+    fn drop(&mut self) {
+        println!("Icon: About to drop");
+        if self.owner {
+            println!("Icon: Dropping as owner");
+            let obj = self.data.get().unwrap();
+            unsafe {
+                ((*obj.icon_funcs).destroy)(obj.privd);
+            }
+
+            self.data.set(None);
+        }
+    }
+}
+
+impl Icon {
+    pub fn destroy(&self) {
+        if self.owner {
+            let obj = self.data.get().unwrap();
+            unsafe {
+                ((*obj.icon_funcs).destroy)(obj.privd);
+            }
+            self.data.set(None);
+        } else {
+            println!("Icon: Trying to destroy data not being owner of");
+        }
+    }
+
+    pub fn cache_key(&self) -> u64 {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.icon_funcs).cache_key)(obj.privd)
+        }
+    }
+}
+
+
+#[derive(Clone)]
 pub struct Application<'a> {
     data: Rc<Cell<Option<RUApplication>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
@@ -162,7 +219,7 @@ pub struct RUArray {
     pub count: i32,
 }
 
-pub struct Array<'a, T, F> {
+pub struct RefArray<'a, T, F> {
     array: RUArray,
     index: isize,
     owner: bool,
@@ -180,10 +237,7 @@ impl<'a> From<WrapperRcOwn> for ListWidgetItem<'a> {
     }
 }
 
-// T: is expected to be of Rust side Type (for example: ListWidgetItem)
-// F: is expected to be of FFI side Type (for example: PUListWidgetItem)
-
-impl<'a, T, F> Iterator for Array<'a, T, F> 
+impl<'a, T, F> Iterator for RefArray<'a, T, F> 
 where
     T: std::convert::From<WrapperRcOwn>,
     F: Clone,
@@ -199,21 +253,12 @@ where
                 let data = self.array.elements as *const WrapperRcOwn;
                 let t = &*data.offset(index);
                 Some(t.clone().into())
-
-                /*
-                Some(ListWidgetItem {
-                    data: Rc::from_raw(data as *const Cell<Option<RUListWidgetItem>>),
-                    _marker: PhantomData,
-                })
-                */
-                //Some(t.clone().into())
             }
         }
     }
 }
 
 unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
-    println!("delete callback");
     let d = Rc::from_raw(data as *const Cell<Option<T>>);
     d.set(None);
 }
@@ -330,13 +375,13 @@ impl<'a> ListWidget<'a> {
         self
     }
 
-    pub fn selected_items(&self) -> Array<ListWidgetItem, WrapperRcOwn> {
+    pub fn selected_items(&self) -> RefArray<ListWidgetItem, WrapperRcOwn> {
         let obj = self.data.get().unwrap();
         let raw_array = unsafe {
             ((*obj.list_widget_funcs).selected_items)(obj.privd)
         };
 
-        Array {
+        RefArray {
             array: raw_array,
             index: 0,
             owner: false,
@@ -389,6 +434,19 @@ impl<'a> ListWidgetItem<'a> {
 
     pub fn build(&self) -> ListWidgetItem<'a> {
         self.clone()
+    }
+
+    pub fn icon(&self) -> Icon {
+        let obj = self.data.get().unwrap();
+
+        let icon_ffi = unsafe {
+            ((*obj.list_widget_item_funcs).icon)(obj.privd)
+        };
+
+        Icon {
+            data: Rc::new(Cell::new(Some(icon_ffi))),
+            owner: true,
+        }
     }
 }
 
@@ -457,6 +515,7 @@ struct UiState {
 
 struct MyApp<'a> {
     ui: Rute<'a>,
+    icon: Option<Icon>,
     shared_state: RefCell<UiState>,
 }
 
@@ -464,7 +523,8 @@ impl<'a> MyApp<'a> {
     fn new() -> MyApp<'a> {
         MyApp {
             ui: Rute::new(),
-            shared_state: RefCell::new(UiState { value: 0 }),
+            icon: None,
+            shared_state: RefCell::new( UiState { value: 0 }),
         }
     }
 
@@ -478,15 +538,12 @@ impl<'a> MyApp<'a> {
         list.add_item(&item);
         list.set_current_row(0);
 
+        let icon = item.icon();
+        println!("hash {}", icon.cache_key());
+
         widget.show();
 
-        let mut test = None;
-
-        for item in list.selected_items() {
-            test = Some(item.clone());
-        }
-
-        test.unwrap().set_text("la la");
+        self.icon = Some(icon);
 
         //list.clear();
 

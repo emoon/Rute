@@ -1,6 +1,8 @@
 #include "rute_test_bed.h"
 #include <QApplication>
 #include <QWidget>
+#include <QIcon>
+#include <QDebug>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,6 +35,16 @@ struct RUListWidgetFuncs {
     void (*set_current_row)(struct RUBase* self_c, int item);
 };
 
+struct RUIconFuncs {
+    void (*destroy)(struct RUBase* self_c);
+    uint64_t (*cache_key)(struct RUBase* self_c);
+};
+
+struct RUIcon {
+    struct RUBase* priv_data;
+    struct RUIconFuncs* icon_funcs;
+};
+
 struct RUWidget {
     struct RUBase* priv_data;
     struct RUWidgetFuncs* widget_funcs;
@@ -48,6 +60,7 @@ struct RUListWidget {
 
 struct RUListWidgetItemFuncs {
     void (*set_text)(struct RUBase* self_c, const char* text);
+    RUIcon (*icon)(struct RUBase* self_c);
 };
 
 struct RUListWidgetItem {
@@ -71,6 +84,11 @@ typedef struct Rute {
     struct RUListWidgetItem (*create_list_widget_item)(
         struct RUBase* priv_data,
         DeleteCallback delete_callback, void* private_user_data);
+    /*
+    struct RUIcon (*create_list_widget_item)(
+        struct RUBase* priv_data,
+        DeleteCallback delete_callback, void* private_user_data);
+    */
 } Rute;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,8 +258,47 @@ static void list_widget_item_set_text(struct RUBase* base, const char* text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void icon_destroy(struct RUBase* base) {
+    WRIcon* item = (WRIcon*)base;
+    delete item;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint64_t icon_hash(struct RUBase* base) {
+    WRIcon* item = (WRIcon*)base;
+    return item->cacheKey();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUIconFuncs s_icon_funcs = {
+    icon_destroy,
+    icon_hash,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static RUIcon list_widget_item_icon(struct RUBase* base) {
+    RUIcon ctl;
+    WRListWidgetItem* item = (WRListWidgetItem*)base;
+    auto val = item->icon();
+
+    WRIcon* qt_obj = new WRIcon(val);
+    qt_obj->m_delete_callback = nullptr;
+    qt_obj->m_private_data = nullptr;
+
+    ctl.priv_data = (struct RUBase*)qt_obj;
+    ctl.icon_funcs = &s_icon_funcs; 
+
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
     list_widget_item_set_text,
+    list_widget_item_icon,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
