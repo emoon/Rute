@@ -32,6 +32,7 @@ pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub add_item: extern "C" fn(self_c: *const RUBase, in_0: *const RUListWidgetItem),
     pub clear: extern "C" fn(self_c: *const RUBase),
+    pub selected_items: extern "C" fn(self_c: *const RUBase) -> PUArray,
 }
 
 #[repr(C)]
@@ -150,6 +151,43 @@ impl<'a> WidgetType for ListWidget<'a> {
     }
 }
 
+#[repr(C)]
+pub struct PUArray {
+    pub elements: *const c_void,  // array of type T
+    pub count: i32,
+}
+
+pub struct Array<'a> {
+    array: PUArray,
+    index: isize,
+    owner: bool,
+    _dummy: PhantomData<&'a u32>,
+}
+
+// T: is expected to be of Rust side Type (for example: ListWidgetItem)
+// F: is expected to be of FFI side Type (for example: PUListWidgetItem)
+
+impl<'a> Iterator for Array<'a> {
+    type Item = ListWidgetItem<'a>;
+    fn next(&mut self) -> Option<Self::Item> {
+        let index = self.index;
+        if index >= self.array.count as isize {
+            None
+        } else {
+            self.index += 1;
+            unsafe {
+                let data = self.array.elements as *const c_void;
+                let ptr = data.offset(index);
+
+                Some(ListWidgetItem {
+                    data: Rc::from_raw(data as *const Cell<Option<RUListWidgetItem>>),
+                    _marker: PhantomData,
+                })
+                //Some(t.clone().into())
+            }
+        }
+    }
+}
 
 unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
     println!("delete callback");
@@ -259,6 +297,20 @@ impl<'a> ListWidget<'a> {
             ((*obj.list_widget_funcs).clear)(obj.privd);
         }
         self
+    }
+
+    pub fn selected_items(&self) -> Array {
+        let obj = self.data.get().unwrap();
+        let raw_array = unsafe {
+            ((*obj.list_widget_funcs).selected_items)(obj.privd)
+        };
+
+        Array {
+            array: raw_array,
+            index: 0,
+            owner: false,
+            _dummy: PhantomData,
+        }
     }
 
     pub fn add_item(&self, item: &ListWidgetItem) -> &ListWidget<'a> {
