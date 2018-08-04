@@ -192,7 +192,7 @@ impl CapiGenerator {
             .filter(|s| s.should_have_create_func())
         {
             f.write_fmt(format_args!(
-                "    struct RU{}* (*create_{})(struct RUBase* priv_data, void* user_data);\n",
+                "    struct RU{} (*create_{})(struct RUBase* priv_data, void* user_data);\n",
                 sdef.name,
                 sdef.name.to_snake_case()
             ))?;

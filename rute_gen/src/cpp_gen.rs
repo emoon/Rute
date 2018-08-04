@@ -120,7 +120,7 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
 
     f.write_all(b"\n")?;
     f.write_all(SEPARATOR)?;
-    f.write_all(b"static void create_enum_mappings() {\n")?;
+    f.write_all(b"void create_enum_mappings() {\n")?;
 
     for enum_def in &api_def.enums {
         let enum_name = enum_def.name.to_snake_case();
@@ -210,7 +210,11 @@ fn generate_wrapper_classes_defs<W: Write>(
     api_def: &ApiDef,
 ) -> io::Result<()> {
 
-    for sdef in &api_def.class_structs {
+    for sdef in api_def
+		.class_structs
+		.iter()
+		.filter(|s| s.should_gen_wrap_class()) 
+	{
         let inherits_widget = sdef.inherits_widget(api_def);
 
         let struct_name = sdef.name.as_str();
