@@ -60,17 +60,17 @@ typedef struct Rute {
     struct RUWidget (*create_widget)(struct RUBase* priv_data);
     struct RUListWidget (*create_list_widget)(
         struct RUBase* priv_data,
-        DeleteCallback delete_callback, void* delete_user_data);
+        DeleteCallback delete_callback, void* private_user_data);
     struct RUListWidgetItem (*create_list_widget_item)(
         struct RUBase* priv_data,
-        DeleteCallback delete_callback, void* delete_user_data);
+        DeleteCallback delete_callback, void* private_user_data);
 } Rute;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename T, typename QT> T create_widget_func(
     void* priv_data,
-    DeleteCallback delete_callback, void* delete_user_data) {
+    DeleteCallback delete_callback, void* private_user_data) {
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
     if (data) {
@@ -80,7 +80,7 @@ template<typename T, typename QT> T create_widget_func(
     }
 
     qt_obj->m_delete_callback = delete_callback;
-    qt_obj->m_delete_callback_data = delete_user_data;
+    qt_obj->m_private_data = private_user_data;
 
     T ctl;
     ctl.priv_data = (struct RUBase*)qt_obj;
@@ -92,12 +92,12 @@ template<typename T, typename QT> T create_widget_func(
 
 template<typename T, typename QT> T create_generic_func(
     void* priv_data,
-    DeleteCallback delete_callback, void* delete_user_data) {
+    DeleteCallback delete_callback, void* private_user_data) {
     (void)priv_data;
 
     QT* qt_obj = new QT();
     qt_obj->m_delete_callback = delete_callback;
-    qt_obj->m_delete_callback_data = delete_user_data;
+    qt_obj->m_private_data = private_user_data;
 
     T ctl;
     ctl.priv_data = (struct RUBase*)qt_obj;
@@ -177,10 +177,10 @@ static struct RUWidget create_widget(struct RUBase* priv_data) {
 
 static struct RUListWidget create_list_widget(
     struct RUBase* priv_data,
-    DeleteCallback delete_callback, void* delete_user_data) {
+    DeleteCallback delete_callback, void* private_user_data) {
 
     auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(
-        priv_data, delete_callback, delete_user_data);
+        priv_data, delete_callback, private_user_data);
 
     ctl.widget_funcs = &s_widget_funcs;
     ctl.list_widget_funcs = &s_list_widget_funcs;
@@ -204,10 +204,10 @@ struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
 
 static struct RUListWidgetItem create_list_widget_item(
     struct RUBase* priv_data,
-    DeleteCallback delete_callback, void* delete_user_data) {
+    DeleteCallback delete_callback, void* private_user_data) {
 
     auto ctl = create_generic_func<struct RUListWidgetItem, WRListWidgetItem>(
-        priv_data, delete_callback, delete_user_data);
+        priv_data, delete_callback, private_user_data);
 
     ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
     return ctl;

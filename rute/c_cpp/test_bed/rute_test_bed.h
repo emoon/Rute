@@ -14,12 +14,12 @@ public:
     WRWidget(QWidget* widget) : QWidget(widget) { }
     virtual ~WRWidget() {
         if (m_delete_callback) {
-            m_delete_callback(m_delete_callback_data);
+            m_delete_callback(m_private_data);
         }
     }
 
     DeleteCallback m_delete_callback = nullptr;
-    void* m_delete_callback_data = nullptr;
+    void* m_private_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,12 +30,12 @@ public:
     WRListWidget (QWidget* widget) : QListWidget(widget) { }
     virtual ~WRListWidget() {
         if (m_delete_callback) {
-            m_delete_callback(m_delete_callback_data);
+            m_delete_callback(m_private_data);
         }
     }
 
     DeleteCallback m_delete_callback = nullptr;
-    void* m_delete_callback_data = nullptr;
+    void* m_private_data = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,12 +45,12 @@ public:
     WRListWidgetItem() : QListWidgetItem() { }
     virtual ~WRListWidgetItem() {
         if (m_delete_callback) {
-            m_delete_callback(m_delete_callback_data);
+            m_delete_callback(m_private_data);
         }
     }
 
     DeleteCallback m_delete_callback = nullptr;
-    void* m_delete_callback_data = nullptr;
+    void* m_private_data = nullptr;
 };
 
 
