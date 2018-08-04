@@ -14,6 +14,11 @@ struct RUApplicationFuncs {
     void (*exec)(struct RUBase* self_c);
 };
 
+struct RUArray {
+    void** data;
+    int count;
+};
+
 struct RUWidgetFuncs {
     void (*show)(struct RUBase* self_c);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
@@ -24,6 +29,8 @@ struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self_c);
     void (*add_item)(struct RUBase* self_c, struct RUListWidgetItem* item);
     void (*clear)(struct RUBase* self_c);
+    RUArray (*selected_items)(struct RUBase* self_c);
+    void (*set_current_row)(struct RUBase* self_c, int item);
 };
 
 struct RUWidget {
@@ -151,6 +158,34 @@ static void list_widget_clear(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static RUArray list_widget_selected_items(struct RUBase* self_c) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto list = qt_data->selectedItems();
+    int count = list.count();
+    int real_count = 0;
+
+    void** data = new void*[count];
+
+    for (auto widget : list) {
+        auto item = (WRListWidgetItem*)widget;
+        // TODO: set user data on widget to make sure it's the correct type
+
+        /*
+        if (item == nullptr) {
+            printf("item is of non-WRListWidgetItem type when collecing list. Skipping");
+            continue;
+        }
+        */
+
+        data[real_count] = item->m_private_data;
+        real_count++;
+    }
+
+    return RUArray { data, real_count };
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void list_widget_add_item(struct RUBase* self_c, struct RUListWidgetItem* data) {
     WRListWidgetItem* qt_in = (WRListWidgetItem*)data->priv_data;
     WRListWidget* qt_data = (WRListWidget*)self_c;
@@ -159,10 +194,19 @@ static void list_widget_add_item(struct RUBase* self_c, struct RUListWidgetItem*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_set_current_row(struct RUBase* self_c, int item) {
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setCurrentRow(item);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUListWidgetFuncs s_list_widget_funcs = {
     list_widget_destroy,
     list_widget_add_item,
     list_widget_clear,
+    list_widget_selected_items,
+    list_widget_set_current_row,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

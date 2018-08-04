@@ -32,7 +32,8 @@ pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub add_item: extern "C" fn(self_c: *const RUBase, in_0: *const RUListWidgetItem),
     pub clear: extern "C" fn(self_c: *const RUBase),
-    pub selected_items: extern "C" fn(self_c: *const RUBase) -> PUArray,
+    pub selected_items: extern "C" fn(self_c: *const RUBase) -> RUArray,
+    pub set_current_row: extern "C" fn(self_c: *const RUBase, value: i32),
 }
 
 #[repr(C)]
@@ -152,23 +153,42 @@ impl<'a> WidgetType for ListWidget<'a> {
 }
 
 #[repr(C)]
-pub struct PUArray {
-    pub elements: *const c_void,  // array of type T
+#[derive(Clone, Copy)]
+pub struct WrapperRcOwn(*const c_void);
+
+#[repr(C)]
+pub struct RUArray {
+    pub elements: *const WrapperRcOwn,
     pub count: i32,
 }
 
-pub struct Array<'a> {
-    array: PUArray,
+pub struct Array<'a, T, F> {
+    array: RUArray,
     index: isize,
     owner: bool,
+    _temp_0: PhantomData<F>,
+    _temp_1: PhantomData<T>,
     _dummy: PhantomData<&'a u32>,
+}
+
+impl<'a> From<WrapperRcOwn> for ListWidgetItem<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        ListWidgetItem {
+            data: unsafe { Rc::from_raw(t.0 as *const Cell<Option<RUListWidgetItem>>) },
+            _marker: PhantomData,
+        }
+    }
 }
 
 // T: is expected to be of Rust side Type (for example: ListWidgetItem)
 // F: is expected to be of FFI side Type (for example: PUListWidgetItem)
 
-impl<'a> Iterator for Array<'a> {
-    type Item = ListWidgetItem<'a>;
+impl<'a, T, F> Iterator for Array<'a, T, F> 
+where
+    T: std::convert::From<WrapperRcOwn>,
+    F: Clone,
+{
+    type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
         let index = self.index;
         if index >= self.array.count as isize {
@@ -176,13 +196,16 @@ impl<'a> Iterator for Array<'a> {
         } else {
             self.index += 1;
             unsafe {
-                let data = self.array.elements as *const c_void;
-                let ptr = data.offset(index);
+                let data = self.array.elements as *const WrapperRcOwn;
+                let t = &*data.offset(index);
+                Some(t.clone().into())
 
+                /*
                 Some(ListWidgetItem {
                     data: Rc::from_raw(data as *const Cell<Option<RUListWidgetItem>>),
                     _marker: PhantomData,
                 })
+                */
                 //Some(t.clone().into())
             }
         }
@@ -299,7 +322,15 @@ impl<'a> ListWidget<'a> {
         self
     }
 
-    pub fn selected_items(&self) -> Array {
+    pub fn set_current_row(&self, value: i32) -> &ListWidget<'a> {
+        let obj = self.data.get().unwrap();
+        unsafe {
+            ((*obj.list_widget_funcs).set_current_row)(obj.privd, value);
+        }
+        self
+    }
+
+    pub fn selected_items(&self) -> Array<ListWidgetItem, WrapperRcOwn> {
         let obj = self.data.get().unwrap();
         let raw_array = unsafe {
             ((*obj.list_widget_funcs).selected_items)(obj.privd)
@@ -310,6 +341,8 @@ impl<'a> ListWidget<'a> {
             index: 0,
             owner: false,
             _dummy: PhantomData,
+            _temp_0: PhantomData,
+            _temp_1: PhantomData,
         }
     }
 
@@ -443,12 +476,21 @@ impl<'a> MyApp<'a> {
 
         list.set_parent(&widget);
         list.add_item(&item);
+        list.set_current_row(0);
 
         widget.show();
 
-        list.clear();
+        let mut test = None;
 
-        item.set_text("Test 2");
+        for item in list.selected_items() {
+            test = Some(item.clone());
+        }
+
+        test.unwrap().set_text("la la");
+
+        //list.clear();
+
+        //item.set_text("Test 2");
 
         //list.destroy();
 
