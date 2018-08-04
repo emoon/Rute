@@ -29,6 +29,7 @@ use api_parser::{ApiDef, ApiParser};
 use c_gen::CapiGenerator;
 use rust_ffi_gen::RustFFIGenerator;
 use cpp_gen::CppGenerator;
+use rust_gen::RustGenerator;
 use std::fs;
 
 fn main() {
@@ -57,4 +58,5 @@ fn main() {
     CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &api_def).unwrap();
     RustFFIGenerator::generate("../rute/src/auto/ffi.rs", &api_def).unwrap();
     CppGenerator::generate("../rute/c_cpp/auto/rute_cpp", &api_def).unwrap();
+    RustGenerator::generate("../rute/src/rute_auto.rs", &api_def).unwrap();
 }
