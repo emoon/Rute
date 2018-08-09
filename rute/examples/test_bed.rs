@@ -192,20 +192,44 @@ struct Rute<'a> {
 }
 
 pub trait WidgetType {
-    fn get_widget_type_obj(&self) -> *const RUBase;
+    fn show(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show)(obj_data);
+        }
+        self
+    }
+
+    fn set_size(&self, width: i32, height: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size)(obj_data, width, height);
+        }
+        self
+    }
+
+    fn set_parent<T: WidgetType>(&self, parent: &T) {
+        let (parent_obj, _) = parent.get_widget_obj_funcs();
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, parent_obj);
+        }
+    }
+
+    fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs);
 }
 
 impl<'a> WidgetType for Widget<'a> {
-    fn get_widget_type_obj(&self) -> *const RUBase {
+    fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
-        obj.privd
+        (obj.privd, obj.widget_funcs)
     }
 }
 
 impl<'a> WidgetType for ListWidget<'a> {
-    fn get_widget_type_obj(&self) -> *const RUBase {
+    fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
-        obj.privd
+        (obj.privd, obj.widget_funcs)
     }
 }
 
@@ -237,7 +261,7 @@ impl<'a> From<WrapperRcOwn> for ListWidgetItem<'a> {
     }
 }
 
-impl<'a, T, F> Iterator for RefArray<'a, T, F> 
+impl<'a, T, F> Iterator for RefArray<'a, T, F>
 where
     T: std::convert::From<WrapperRcOwn>,
     F: Clone,
@@ -325,40 +349,12 @@ impl<'a> Rute<'a> {
 }
 
 impl<'a> Widget<'a> {
-    pub fn show(self) -> Widget<'a> {
-        let obj = self.data.get().unwrap();
-        unsafe {
-            ((*obj.widget_funcs).show)(obj.privd);
-        }
-        self
-    }
-
-    pub fn set_size(self, width: i32, height: i32) -> Widget<'a> {
-        let obj = self.data.get().unwrap();
-        unsafe {
-            ((*obj.widget_funcs).set_size)(obj.privd, width, height);
-        }
-        self
-    }
-
-    pub fn set_parent(&self, parent: &WidgetType) {
-        let parent_obj = parent.get_widget_type_obj();
-        let obj = self.data.get().unwrap();
-        unsafe {
-            ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
-        }
+    pub fn build(&self) -> Widget<'a> {
+        self.clone()
     }
 }
 
 impl<'a> ListWidget<'a> {
-    pub fn show(&self) -> &ListWidget<'a> {
-        let obj = self.data.get().unwrap();
-        unsafe {
-            ((*obj.widget_funcs).show)(obj.privd);
-        }
-        self
-    }
-
     pub fn clear(&self) -> &ListWidget<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
@@ -410,14 +406,6 @@ impl<'a> ListWidget<'a> {
 
     pub fn build(&self) -> ListWidget<'a> {
         self.clone()
-    }
-
-    pub fn set_parent(&self, parent: &WidgetType) {
-        let parent_obj = parent.get_widget_type_obj();
-        let obj = self.data.get().unwrap();
-        unsafe {
-            ((*obj.widget_funcs).set_parent)(obj.privd, parent_obj);
-        }
     }
 }
 
@@ -529,8 +517,8 @@ impl<'a> MyApp<'a> {
     }
 
     fn setup_ui(&'a mut self) {
-        let widget = self.ui.create_widget().set_size(400, 400);
         let list = self.ui.create_list_widget().show().build();
+        let widget = self.ui.create_widget().set_size(400, 400).build();
 
         let item = self.ui.create_list_widget_item().set_text("Test").build();
 
