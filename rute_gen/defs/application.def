@@ -1,8 +1,8 @@
-#[attributes(ManualCreate, NoWrapClass, Drop)]
+#[attributes(ManualCreate, NoWrapClass)]
 struct Application {
 	set_style(String style),
 	//[manual] set_style_sheet(String filename) -> i32,
-	exec(),
+	exec() -> i32,
 	[callback] about_to_quit(),
 }
 

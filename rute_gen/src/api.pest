@@ -11,6 +11,7 @@ attributes   = { ("#[attributes(") ~ namelist ~ (")]") }
 traits       = { ("#[traits(") ~ namelist ~ (")]") }
 derive       = { (":") ~ name }
 callback     = { ("[callback]") }
+no_chain     = { ("[no_chain]") }
 event        = { ("[event]") }
 manual       = { ("[manual]") }
 static_typ   = { ("[static]") }
@@ -23,7 +24,7 @@ varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
 namelist     = { name ~ ((",") ~ name)* }
-function     = { static_typ? ~ manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function     = { static_typ? ~ no_chain? ~ manual? ~ event? ~ callback? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*

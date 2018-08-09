@@ -21,7 +21,7 @@ pub struct RUArray {
 #[repr(C)]
 pub struct RUApplicationFuncs {
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
-    pub exec: extern "C" fn(self_c: *const RUBase),
+    pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void,
                                             callback: extern "C" fn(self_c: *const c_void),
 }

@@ -61,13 +61,38 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
-/// 
+/// Generates the implementations for the structs
+///
+fn generate_struct_impl<W: Write>(f: &mut W, sdef: &Struct) -> io::Result<()> {
+    // Generate all regular functions
+    for func in sdef
+        .functions
+        .iter()
+        .filter(|f| f.func_type == FunctionType::Regular) {
+    }
+
+    Ok(())
+}
+
+
+///
+/// Generates the implementations for the structs
+///
+fn generate_structs_impl<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    api_def
+        .class_structs
+        .iter()
+        .try_for_each(|s| generate_struct_impl(f, s))
+}
+
+///
+///
 ///
 fn generate_rute<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     // write header
     f.write_all(RUTE_IMPL_HEADER)?;
 
-    // Generate all stucts that doesn't have owned data 
+    // Generate all stucts that doesn't have owned data
     // the generated style is
     //
     // pub fn create_widget(&self) -> Widget<'a> {
@@ -98,7 +123,6 @@ fn generate_rute<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 }
 
 
-
 impl RustGenerator {
     pub fn generate(filename: &str, api_def: &ApiDef) -> io::Result<()> {
         let mut f = BufWriter::new(File::create(filename)?);
@@ -109,7 +133,7 @@ impl RustGenerator {
         // write all the structs
         generate_structs(&mut f, api_def)?;
 
-        // Generate the main Rute entry 
+        // Generate the main Rute entry
         generate_rute(&mut f, api_def)?;
 
         Ok(())

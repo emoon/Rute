@@ -23,7 +23,7 @@ struct RUApplication;
 struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
     void (*set_style)(struct RUBase* self_c, const char* style);
-    void (*exec)(struct RUBase* self_c);
+    int (*exec)(struct RUBase* self_c);
     void (*set_about_to_quit_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c));
 };
 

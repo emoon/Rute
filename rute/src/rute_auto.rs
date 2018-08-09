@@ -12,8 +12,9 @@ pub struct Application<'a> {
     data: Rc<Cell<Option<RUApplication>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
-struct Rute<'a> {
+pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
+    priv_data: *const c_void,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
 

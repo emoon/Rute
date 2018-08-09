@@ -34,9 +34,10 @@ static void application_set_style(struct RUBase* self_c, const char* style) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_exec(struct RUBase* self_c) { 
+static int application_exec(struct RUBase* self_c) { 
     QApplication* qt_data = (QApplication*)self_c;
-    qt_data->exec();
+    auto ret_value = qt_data->exec();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

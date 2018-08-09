@@ -105,6 +105,8 @@ pub struct Function {
     pub func_type: FunctionType,
     /// If the function is manually implemented (not auto-generated)
     pub is_manual: bool,
+    // If a function supports chaining but shouldn't use it
+    //pub no_chain: bool,
 }
 
 ///
@@ -647,7 +649,7 @@ impl Struct {
     }
 
     ///
-    /// Check if no wrapping class should be generated 
+    /// Check if no wrapping class should be generated
     ///
     pub fn should_gen_wrap_class(&self) -> bool {
         self.attributes
