@@ -61,6 +61,63 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
+/// Generate a function implementation
+///
+fn generate_func_impl(func: &Function) -> String  {
+	let mut func_imp = String::with_capacity(128);
+
+	func_imp.push_str("(&self");
+
+	for arg in &func.function_args[1..] {
+		let tname = match arg.vtype {
+			VariableType::Regular => {
+				format!("&{}", arg.type_name)
+			}
+
+			VariableType::Primitive => {
+				arg.type_name.to_owned()
+			}
+
+			VariableType::Optional => {
+				if arg.type_name == "String" {
+					"Option<&str>".to_owned()
+				} else {
+					format!("Option<{}>", arg.type_name)
+				}
+			},
+
+			VariableType::Enum => {
+				arg.type_name.to_owned()
+			}
+
+			VariableType::Reference => {
+				format!("&{}", arg.type_name)
+			}
+
+			_ => "<illegal>".to_owned(),
+		};
+
+		if arg.array {
+			func_imp.push_str(&format!(", {}:& [{}]", arg.name, tname));
+		} else {
+			func_imp.push_str(&format!(", {}: {}", arg.name, tname));
+		}
+	}
+
+	func_imp.push_str(")");
+
+	//
+	// If we don't have any return value we alwayes return self
+	//
+	if func.return_val.is_none() {
+		func_imp.push_str(" -> &Self<'a>");
+	}
+
+	func_imp
+}
+
+
+///
 /// Generates the implementations for the structs
 ///
 fn generate_struct_impl<W: Write>(f: &mut W, sdef: &Struct) -> io::Result<()> {
@@ -69,6 +126,7 @@ fn generate_struct_impl<W: Write>(f: &mut W, sdef: &Struct) -> io::Result<()> {
         .functions
         .iter()
         .filter(|f| f.func_type == FunctionType::Regular) {
+
     }
 
     Ok(())
@@ -82,7 +140,13 @@ fn generate_structs_impl<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()
     api_def
         .class_structs
         .iter()
-        .try_for_each(|s| generate_struct_impl(f, s))
+        .try_for_each(|s| {
+			if s.should_generate_trait {
+        		generate_struct_impl(f, s)
+			} else {
+        		generate_struct_impl(f, s)
+			}
+		})
 }
 
 ///
@@ -138,5 +202,93 @@ impl RustGenerator {
 
         Ok(())
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    //
+    // Create a default function to reduce duplication a bit
+    //
+    fn build_default_func() -> Function {
+        Function {
+            name: "test".to_owned(),
+            function_args: vec![Variable {
+                name: "self".to_owned(),
+                .. Variable::default()
+            }],
+            ..Function::default()
+        }
+    }
+
+	//
+	// Test function def with self only
+	//
+	#[test]
+	fn test_function_self_only() {
+        let func = build_default_func();
+		let func_impl = generate_func_impl(&func);
+        assert_eq!(func_impl, "(&self) -> &Self<'a>");
+	}
+
+	//
+	// Test function def with one primitive 
+	//
+	#[test]
+	fn test_function_one_primitive() {
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+			name: "foo".to_owned(),
+			type_name: "i32".to_owned(),
+			vtype: VariableType::Primitive,
+			.. Variable::default()
+		});
+
+		let func_impl = generate_func_impl(&func);
+        assert_eq!(func_impl, "(&self, foo: i32) -> &Self<'a>");
+	}
+
+	//
+	// Test function def with two primitives
+	//
+	#[test]
+	fn test_function_two_primitive() {
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+			name: "width".to_owned(),
+			type_name: "i32".to_owned(),
+			vtype: VariableType::Primitive,
+			.. Variable::default()
+		});
+        func.function_args.push(Variable {
+			name: "height".to_owned(),
+			type_name: "f32".to_owned(),
+			vtype: VariableType::Primitive,
+			.. Variable::default()
+		});
+
+		let func_impl = generate_func_impl(&func);
+        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &Self<'a>");
+	}
+
+	//
+	// Test function def with self and primitive return 
+	//
+	/*
+	#[test]
+	fn test_function_two_primitive() {
+        let mut func = build_default_func();
+        func.return_val = Some(Variable {
+			type_name: "i32".to_owned(),
+			vtype: VariableType::Primitive,
+			.. Variable::default()
+		});
+
+		let func_impl = generate_func_impl(&func);
+        assert_eq!(func_impl, "(&self) -> i32");
+	}
+	*/
+
 }
 
