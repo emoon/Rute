@@ -143,6 +143,9 @@ pub struct Struct {
     pub inherit: Option<String>,
     /// If the struct is a widget or not
     pub is_widget: bool,
+    /// If there are other structs that inherits this one
+    /// we need to generate a trait implementation for it
+    pub should_generate_trait: bool,
 }
 
 ///
@@ -492,9 +495,13 @@ impl ApiParser {
     }
 
     ///
-    /// Patch up the types for enums as they can be out of order.
+    /// Do a second pass to match up things that may
+    /// be out of order
     ///
     pub fn second_pass(api_def: &mut ApiDef) {
+		//
+		// Patch up the types for enums as they can be out of order.
+		//
         let mut enums = HashSet::new();
 
         for enum_def in &api_def.enums {
@@ -511,6 +518,24 @@ impl ApiParser {
                     arg.vtype = VariableType::Enum;
                 }
             });
+
+        // Build a hash_set of all classes that are inherited
+
+		let mut inherited_classes = HashSet::new();
+
+		api_def
+			.class_structs
+			.iter()
+			.for_each(|s| s.inherit.as_ref().map_or((), |i| {
+				inherited_classes.insert(i.clone());
+			}));
+
+		api_def
+			.class_structs
+			.iter_mut()
+			.for_each(|s| {
+				s.should_generate_trait = inherited_classes.contains(&s.name);
+			});
     }
 }
 
