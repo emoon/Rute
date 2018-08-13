@@ -34,6 +34,12 @@ impl<'a> Rute<'a> {
     }
 ";
 
+#[derive(PartialEq)]
+enum IsTraitFunction {
+    Yes,
+    No,
+}
+
 ///
 /// Trait for handling different types that needs to be overriden
 ///
@@ -197,6 +203,22 @@ fn generate_func_impl(func: &Function, type_handler: &TypeHandler) -> String  {
 	func_imp
 }
 
+///
+///  
+///
+fn generate_get_obj_funcs(struct_name: &str) -> String {
+    format!("        let (obj_data, funcs) = self.get_{}_obj_funcs();", struct_name.to_snake_case())
+}
+
+//
+// Do the actual function generation
+//
+/*
+fn generate_function(func: &Function, struct_name: &str, type_handler: &TypeHandler) -> String {
+    // Generate function declaration
+    let mut func_impl = generate_func_impl(func, type_handler);
+}
+*/
 
 ///
 /// Generates the implementations for the structs
@@ -406,5 +428,11 @@ mod tests {
 		let func_impl = generate_func_impl(&func, &setup_type_handlers(&ApiDef::default()));
         assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self<'a>");
 	}
+
+	#[test]
+    fn test_generate_get_obj_funcs() {
+        let res = generate_get_obj_funcs("Foobar");
+        assert_eq!(res, "        let (obj_data, funcs) = self.get_foobar_obj_funcs();");
+    }
 }
 
