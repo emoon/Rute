@@ -25,11 +25,17 @@ impl<'a> Rute<'a> {
 
 pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
     pub fn {{func_name}}{{function_def}} {
-        {{ body_setup }}
+        {{ body_setup }}        
         let (obj_data, funcs) = self.get_{{obj_funcs_name}}_obj_funcs();
+    {% if return_value %}     let ret_value = unsafe {
+            ((*funcs).{{func_name}})({{function_args}})
+        };
+    {% else %}
         unsafe {
             ((*funcs).{{func_name}})({{function_args}});
         }
+        self
+    {% endif %}
     }
 ";
 

@@ -46,7 +46,7 @@ struct StringTypeHandler;
 /// pointer to it so have a generator for it
 ///
 impl TypeHandlerTrait for StringTypeHandler {
-    fn replace_type(&self, arg: &Variable, is_ret_value: bool) -> Cow<str> {
+    fn replace_type(&self, _arg: &Variable, is_ret_value: bool) -> Cow<str> {
         match is_ret_value {
             true => "String".into(),
             false => "str".into(),
@@ -245,7 +245,9 @@ impl RustGenerator {
             .iter()
             .filter(|tf| tf.func_type == FunctionType::Regular) {
 
-            self.generate_function(&func, &sdef.name);
+            let v = self.generate_function(&func, &sdef.name);
+
+            f.write_all(v.as_bytes())?;
         }
 
         Ok(())
@@ -258,7 +260,7 @@ impl RustGenerator {
         let mut template_data = Object::new();
 
         // Generate function declaration
-        let mut func_def = self.generate_func_def(func);
+        let func_def = self.generate_func_def(func);
 
         template_data.insert("func_name".to_owned(), Value::Str(func.name.clone()));
         template_data.insert("function_def".to_owned(), Value::Str(func_def));
@@ -300,11 +302,10 @@ impl RustGenerator {
             }
         }
 
+        template_data.insert("return_value".to_owned(), Value::Bool(func.return_val.is_some()));
         template_data.insert("function_args".to_owned(), Value::Str(func_args));
 
         let output = self.rust_func_template.render(&template_data).unwrap();
-
-        println!("output {}", output);
 
         output 
     }

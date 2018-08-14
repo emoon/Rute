@@ -718,7 +718,7 @@ fn generate_return_string<W: Write>(f: &mut W) -> io::Result<()> {
 fn generate_func_def<W: Write>(
     f: &mut W,
     sdef: &Struct,
-    api_def: &ApiDef,
+    _api_def: &ApiDef,
     func: &Function,
     struct_name_map: &HashMap<&str, &str>,
     type_handlers: &Vec<Box<TypeHandler>>,
