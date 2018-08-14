@@ -12,6 +12,31 @@ pub struct Application<'a> {
     data: Rc<Cell<Option<RUApplication>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
+    pub fn set_style(&self, style: &str) -> &Self<'a> {
+        let str_in_style_1 = CString::new(style).unwrap();
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_style)(obj_data, str_in_style_1.as_ptr());
+        }
+        self
+    
+    }
+
+    pub fn exec(&self) -> i32 {
+                
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+         
+        unsafe {
+            let ret_val = ((*funcs).exec)(obj_data);
+        
+            ret_val
+          
+        };
+    
+    }
+
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
     priv_data: *const c_void,

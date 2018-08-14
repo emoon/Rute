@@ -302,8 +302,47 @@ impl RustGenerator {
             }
         }
 
+        //
+        // Setup the return part of the template
+        //
+
         template_data.insert("return_value".to_owned(), Value::Bool(func.return_val.is_some()));
         template_data.insert("function_args".to_owned(), Value::Str(func_args));
+
+        func.return_val.as_ref().map(|ret_val| {
+            template_data.insert("return_type".to_owned(), Value::str("none"));
+
+            match self.type_handler.get(ret_val.type_name.as_str()) {
+                Some(handler) => {
+                    let ret = handler.gen_body_return(&ret_val);
+                    template_data.insert("return_type".to_owned(), Value::str("replaced"));
+                    template_data.insert("replaced_return".to_owned(), Value::Str(ret.into()));
+                },
+                None => {
+                    match ret_val.vtype {
+                        /*
+                        VariableType::Optional(ref vtype) => {
+                            template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                            template_data.insert("return_type".to_owned(), Value::str("optional"));
+                        },
+                        */
+                        /*
+                        VariableType::Regular => {
+                            template_data.insert("return_type".to_owned(), Value::str("replaced"));
+                            template_data.insert("replaced_return".to_owned(), Value::Str(format!("{} {{ obj: Some(ret_val) }}\n", vtype)));
+                        }
+                        */
+                        /*
+                        VariableType::Array(ref vtype) => {
+                            template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                            template_data.insert("return_type".to_owned(), Value::str("array"));
+                        },
+                        */
+                        _ => (),
+                    }
+                }
+            }
+        });
 
         let output = self.rust_func_template.render(&template_data).unwrap();
 
