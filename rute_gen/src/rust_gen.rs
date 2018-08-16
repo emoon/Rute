@@ -86,7 +86,7 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!("pub struct {}<'a> {{
     data: Rc<Cell<Option<RU{}>>>,
-    _marker: PhantomData<std::cell::Cell<&'a ()>>,\n}}",
+    _marker: PhantomData<std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name))?;
     }
 
@@ -239,6 +239,8 @@ impl RustGenerator {
     /// Generates the implementations for the structs
     ///
     fn generate_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
+        f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
+
         // Generate all regular functions
         for func in sdef
             .functions
@@ -250,7 +252,7 @@ impl RustGenerator {
             f.write_all(v.as_bytes())?;
         }
 
-        Ok(())
+        f.write_all(b"}\n")
     }
 
     //

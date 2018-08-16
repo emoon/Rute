@@ -59,8 +59,8 @@ fn main() {
     let rust_gen = RustGenerator::new(&api_def);
 
     CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &api_def).unwrap();
-    RustFFIGenerator::generate("../rute/src/auto/ffi.rs", &api_def).unwrap();
+    RustFFIGenerator::generate("../rute/src/auto/rute_auto_ffi.rs", &api_def).unwrap();
     CppGenerator::generate("../rute/c_cpp/auto/rute_cpp", &api_def).unwrap();
 
-    rust_gen.generate("../rute/src/rute_auto.rs", &api_def).unwrap();
+    rust_gen.generate("../rute/src/auto/rute_auto.rs", &api_def).unwrap();
 }

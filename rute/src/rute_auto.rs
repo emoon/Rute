@@ -12,6 +12,8 @@ pub struct Application<'a> {
     data: Rc<Cell<Option<RUApplication>>>,
     _marker: PhantomData<std::cell::Cell<&'a ()>>,
 }
+
+impl<'a> Application<'a> {
     pub fn set_style(&self, style: &str) -> &Self<'a> {
         let str_in_style_1 = CString::new(style).unwrap();
         
@@ -33,9 +35,10 @@ pub struct Application<'a> {
         
             ret_val
           
-        };
+        }
     
     }
+}
 
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
