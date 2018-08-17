@@ -24,6 +24,11 @@ pub struct RUArray {
     pub count: i32,
 }\n\n";
 
+static FOOTER: &'static [u8] = b"
+extern \"C\" {
+    pub fn rute_get() -> *const RuteFFI;
+}\n";
+
 ///
 /// Add function to convert a type into a Rust FFI type
 ///
@@ -181,9 +186,9 @@ impl RustFFIGenerator {
                     var.get_rust_ffi_type()
                 ))?;
             }
-        }
 
-        f.write_all(b"}\n\n")?;
+            f.write_all(b"}\n\n")?;
+        }
 
         //
         // Generate all the class defs
@@ -205,7 +210,7 @@ impl RustFFIGenerator {
             f.write_all(b"}\n\n")?;
             f.write_all(b"#[repr(C)]\n")?;
             f.write_all(b"#[derive(Copy, Clone)]\n")?;
-            f.write_fmt(format_args!("struct RU{} {{\n", sdef.name))?;
+            f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
                 f.write_fmt(format_args!(
@@ -231,7 +236,7 @@ impl RustFFIGenerator {
             .filter(|s| s.should_have_create_func())
         {
             f.write_fmt(format_args!(
-                "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase, user_data: *const c_void) -> *const RU{},\n",
+                "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase, user_data: *const c_void) -> RU{},\n",
                 sdef.name.to_snake_case(),
                 sdef.name
             ))?;
@@ -245,9 +250,9 @@ impl RustFFIGenerator {
             .try_for_each(|func| Self::generate_function(&mut f, &func))?;
 
         f.write_all(b"    pub privd: *const RUBase,\n")?;
-        f.write_all(b"}\n\n")?;
+        f.write_all(b"}\n")?;
 
-        Ok(())
+        f.write_all(FOOTER)
     }
 
     ///
@@ -289,7 +294,7 @@ impl RustFFIGenerator {
 
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern \"C\" fn({}),\n",
+                                            callback: extern \"C\" fn({})),\n",
             func.name, func_def
         ))
     }

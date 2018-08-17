@@ -27,7 +27,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
             .expect("failed to execute process");
 
     // TODO: cleanup
-    
+
     let i3 = Path::new(&qt_dir).join("include");
     let i4 = Path::new(&qt_dir).join("include/QtCore");
     let i5 = Path::new(&qt_dir).join("include/QtGui");
@@ -44,7 +44,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
             .include(i6)
             .compile("rute_cpp");
 
-    } else if target.contains("mac") {
+    } else if target.contains("apple") {
         let i0 = Path::new(&qt_dir).join("lib/QtWidgets.framework/Headers");
         let i1 = Path::new(&qt_dir).join("lib/QtCore.framework/Headers");
         let i2 = Path::new(&qt_dir).join("lib/QtGui.framework/Headers");

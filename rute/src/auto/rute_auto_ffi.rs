@@ -16,26 +16,27 @@ pub struct RUArray {
     pub count: i32,
 }
 
-}
-
 #[repr(C)]
 pub struct RUApplicationFuncs {
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern "C" fn(self_c: *const c_void),
+                                            callback: extern "C" fn(self_c: *const c_void)),
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
-struct RUApplication {
+pub struct RUApplication {
     pub application_funcs: *const RUApplicationFuncs,
     pub privd: *const RUBase,
 }
 
 #[repr(C)]
 pub struct RuteFFI {
-    pub create_application: extern "C" fn(priv_data: *const RUBase, user_data: *const c_void) -> *const RUApplication,
+    pub create_application: extern "C" fn(priv_data: *const RUBase, user_data: *const c_void) -> RUApplication,
     pub privd: *const RUBase,
 }
 
+extern "C" {
+    pub fn rute_get() -> *const RuteFFI;
+}

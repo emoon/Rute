@@ -16,14 +16,14 @@ type TypeHandler = HashMap<&'static str, Box<TypeHandlerTrait>>;
 
 pub struct RustGenerator {
     rust_func_template: Template,
-    type_handler: TypeHandler, 
+    type_handler: TypeHandler,
 }
 
 ///
 /// Trait for handling different types that needs to be overriden
 ///
 trait TypeHandlerTrait {
-    fn replace_type(&self, arg: &Variable, _is_return_value: bool) -> Cow<str> { 
+    fn replace_type(&self, arg: &Variable, _is_return_value: bool) -> Cow<str> {
         arg.type_name.clone().into()
     }
 
@@ -59,7 +59,7 @@ impl TypeHandlerTrait for StringTypeHandler {
 
     fn gen_body(&self, arg: &str, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("str_in_{}_{}", arg, index);
-        (format!("{}.as_ptr()", arg_name).into(), 
+        (format!("{}.as_ptr()", arg_name).into(),
          format!("let {} = CString::new({}).unwrap();\n", arg_name, arg).into())
     }
 }
@@ -70,7 +70,7 @@ impl TypeHandlerTrait for StringTypeHandler {
 ///
 /// pub struct Application<'a> {
 ///     data: Rc<Cell<Option<RUApplication>>>,
-///     _marker: PhantomData<std::cell::Cell<&'a ()>>,
+///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 /// }
 ///
 fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
@@ -86,7 +86,7 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!("pub struct {}<'a> {{
     data: Rc<Cell<Option<RU{}>>>,
-    _marker: PhantomData<std::cell::Cell<&'a ()>>,\n}}\n\n",
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name))?;
     }
 
@@ -119,12 +119,12 @@ fn generate_rute<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         let name = sdef.name.to_snake_case();
         f.write_fmt(format_args!("
     pub fn create_{}(&self) -> {}<'a> {{
-        let ffi_data = unsafe {{ ((*self.rute_ffi).create_{})(self.privd) }};
-        Widget {{
+        let ffi_data = unsafe {{ ((*self.rute_ffi).create_{})(::std::ptr::null(), ::std::ptr::null()) }};
+        {} {{
             data: Rc::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }}
-    }}\n", name, sdef.name, name))?;
+    }}\n", name, sdef.name, name, sdef.name))?;
     }
 
     f.write_all(b"}\n")
@@ -188,7 +188,7 @@ impl RustGenerator {
     ///
     /// Generate a function implementation
     ///
-    fn generate_func_def(&self, func: &Function) -> String  {
+    fn generate_func_def(&self, func: &Function, struct_name: &str) -> String  {
         let mut temp_str = String::with_capacity(128);
         let mut func_imp = String::with_capacity(128);
 
@@ -216,7 +216,9 @@ impl RustGenerator {
         // If we don't have any return value we alwayes return self
         //
         if func.return_val.is_none() {
-            func_imp.push_str(" -> &Self<'a>");
+            func_imp.push_str(" -> &");
+            func_imp.push_str(struct_name);
+            func_imp.push_str("<'a>");
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
@@ -252,7 +254,25 @@ impl RustGenerator {
             f.write_all(v.as_bytes())?;
         }
 
+        // Generate the functions
+        f.write_all(Self::generate_get_obj_funcs(&sdef.name).as_bytes())?;
+
         f.write_all(b"}\n")
+    }
+
+    ///
+    /// Generate something like this
+    ///
+    /// fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
+    ///     let obj = self.data.get().unwrap();
+    ///     (obj.privd, obj.widget_funcs)
+    /// }
+
+    fn generate_get_obj_funcs(struct_name: &str) -> String {
+        let snake_name = struct_name.to_snake_case();
+        format!("    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
+        let obj = self.data.get().unwrap();
+        (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
     }
 
     //
@@ -262,7 +282,7 @@ impl RustGenerator {
         let mut template_data = Object::new();
 
         // Generate function declaration
-        let func_def = self.generate_func_def(func);
+        let func_def = self.generate_func_def(func, struct_name);
 
         template_data.insert("func_name".to_owned(), Value::Str(func.name.clone()));
         template_data.insert("function_def".to_owned(), Value::Str(func_def));
@@ -348,7 +368,7 @@ impl RustGenerator {
 
         let output = self.rust_func_template.render(&template_data).unwrap();
 
-        output 
+        output
     }
 
     ///
@@ -412,8 +432,8 @@ mod tests {
 	fn test_function_self_only() {
 	    let rust_gen = RustGenerator::new(&ApiDef::default());
         let func = build_default_func();
-		let func_impl = rust_gen.generate_func_def(&func);
-        assert_eq!(func_impl, "(&self) -> &Self<'a>");
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "(&self) -> &TestStruct<'a>");
 	}
 
 	//
@@ -425,8 +445,8 @@ mod tests {
         let mut func = build_default_func();
         func.function_args.push(Variable { name: "foo".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
-        assert_eq!(func_impl, "(&self, foo: i32) -> &Self<'a>");
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "(&self, foo: i32) -> &TestStruct<'a>");
 	}
 
 	#[test]
@@ -435,8 +455,8 @@ mod tests {
         let mut func = build_default_func();
         func.function_args.push(Variable { name: "foo".to_owned(), type_name: "String".to_owned(), vtype: VariableType::Regular, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
-        assert_eq!(func_impl, "(&self, foo: &str) -> &Self<'a>");
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "(&self, foo: &str) -> &TestStruct<'a>");
 	}
 
 	//
@@ -450,8 +470,8 @@ mod tests {
         func.function_args.push(Variable { name: "width".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
         func.function_args.push(Variable { name: "height".to_owned(), type_name: "f32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
-        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &Self<'a>");
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &TestStruct<'a>");
 	}
 
 	//
@@ -464,7 +484,7 @@ mod tests {
 
         func.return_val = Some(Variable { type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> i32");
 	}
 
@@ -478,7 +498,7 @@ mod tests {
 
         func.return_val = Some(Variable { type_name: "f32".to_owned(), vtype: VariableType::Optional, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> Option<f32>");
 	}
 
@@ -492,7 +512,7 @@ mod tests {
 
         func.return_val = Some(Variable { type_name: "f32".to_owned(), vtype: VariableType::Primitive, array: true, .. Variable::default()});
 
-		let func_impl = rust_gen.generate_func_def(&func);
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> RefArray<f32, WrapperRcOwn>");
 	}
 
@@ -506,8 +526,8 @@ mod tests {
 
         func.function_args.push(Variable { name: "width".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, array: true, .. Variable::default() });
 
-		let func_impl = rust_gen.generate_func_def(&func);
-        assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self<'a>");
+		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "(&self, width: &[i32]) -> &TestStruct<'a>");
 	}
 }
 
