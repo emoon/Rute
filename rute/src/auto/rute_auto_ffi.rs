@@ -18,6 +18,7 @@ pub struct RUArray {
 
 #[repr(C)]
 pub struct RUApplicationFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void,
@@ -27,8 +28,8 @@ pub struct RUApplicationFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUApplication {
-    pub application_funcs: *const RUApplicationFuncs,
     pub privd: *const RUBase,
+    pub application_funcs: *const RUApplicationFuncs,
 }
 
 #[repr(C)]

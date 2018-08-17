@@ -14,10 +14,12 @@ struct RUApplication create_application(struct RUBase* priv_data, void* user_dat
     (void)user_data;
 
     create_enum_mappings();
-   
+
     RUApplication ctl;
     ctl.application_funcs = &s_application_funcs;
     ctl.priv_data = (struct RUBase*)qt_obj;
+
+    printf("ctl data %p funcs %p\n", ctl.priv_data, ctl.application_funcs);
 
     return ctl;
 }

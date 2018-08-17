@@ -198,6 +198,10 @@ impl RustFFIGenerator {
             f.write_all(b"#[repr(C)]\n")?;
             f.write_fmt(format_args!("pub struct RU{}Funcs {{\n", sdef.name))?;
 
+            if sdef.should_have_create_func() {
+                f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const RUBase),\n")?;
+            }
+
             for func in &sdef.functions {
                 match func.func_type {
                     FunctionType::Regular => Self::generate_function(&mut f, &func)?,
@@ -211,6 +215,7 @@ impl RustFFIGenerator {
             f.write_all(b"#[repr(C)]\n")?;
             f.write_all(b"#[derive(Copy, Clone)]\n")?;
             f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
+            f.write_all(b"    pub privd: *const RUBase,\n")?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
                 f.write_fmt(format_args!(
@@ -220,7 +225,6 @@ impl RustFFIGenerator {
                 ))?;
             }
 
-            f.write_all(b"    pub privd: *const RUBase,\n")?;
             f.write_all(b"}\n\n")?;
         }
 

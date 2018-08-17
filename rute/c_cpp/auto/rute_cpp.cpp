@@ -27,14 +27,14 @@ void create_enum_mappings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_style(struct RUBase* self_c, const char* style) {
+static void application_set_style(struct RUBase* self_c, const char* style) { 
     QApplication* qt_data = (QApplication*)self_c;
     qt_data->setStyle(QString::fromUtf8(style));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int application_exec(struct RUBase* self_c) {
+static int application_exec(struct RUBase* self_c) { 
     QApplication* qt_data = (QApplication*)self_c;
     auto ret_value = qt_data->exec();
     return ret_value;
@@ -59,7 +59,7 @@ struct RUApplicationFuncs s_application_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct Rute s_rute = {
+static struct Rute s_rute = { 
     create_application,
 };
 
