@@ -8,6 +8,7 @@
 #include "../rute_manual.h"
 #include <QApplication>
 #include <QWidget>
+#include <QFont>
 
 static char s_temp_string_buffer[1024*1024];
 
@@ -16,6 +17,7 @@ std::map<QWidget*, void*> s_widget_lookup;
 
 extern struct RUApplicationFuncs s_application_funcs;
 extern struct RUWidgetFuncs s_widget_funcs;
+extern struct RUFontFuncs s_font_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,6 +42,17 @@ static int application_exec(struct RUBase* self_c) {
     QApplication* qt_data = (QApplication*)self_c;
     auto ret_value = qt_data->exec();
     return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font(struct RUBase* self_c) { 
+    QApplication* qt_data = (QApplication*)self_c;
+    auto ret_value = qt_data->font();
+    RUFont ctl;
+    ctl.font_funcs = &s_font_funcs;
+    ctl.priv_data = (struct RUBase*)ret_value;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +100,13 @@ static void widget_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void font_set_pixel_size(struct RUBase* self_c, int size) { 
+    QFont* qt_data = (QFont*)self_c;
+    qt_data->setPixelSize(size);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget create_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -103,10 +123,27 @@ static void destroy_widget(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUFont create_font(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{
+    auto ctl = generic_create_func<struct RUFont, QFont>(priv_data, delete_callback, private_user_data);
+    ctl.font_funcs = &s_font_funcs;
+    return ctl;
+}
+
+static void destroy_font(struct RUBase* priv_data) {
+    destroy_generic<QFont>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_set_style,
     application_exec,
+    application_font,
     set_application_about_to_quit_event,
 };
 
@@ -123,10 +160,18 @@ struct RUWidgetFuncs s_widget_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct RUFontFuncs s_font_funcs = {
+    destroy_font,
+    font_set_pixel_size,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct Rute s_rute = { 
     nullptr,
     create_application,
     create_widget,
+    create_font,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

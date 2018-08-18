@@ -23,11 +23,14 @@ struct RUApplicationFuncs;
 struct RUApplication;
 struct RUWidgetFuncs;
 struct RUWidget;
+struct RUFontFuncs;
+struct RUFont;
 
 struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
     void (*set_style)(struct RUBase* self_c, const char* style);
     int (*exec)(struct RUBase* self_c);
+    struct RUFont (*font)(struct RUBase* self_c);
     void (*set_about_to_quit_event)(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c));
 };
 
@@ -50,6 +53,16 @@ struct RUWidget {
     struct RUWidgetFuncs* widget_funcs;
 };
 
+struct RUFontFuncs {
+    void (*destroy)(struct RUBase* self);
+    void (*set_pixel_size)(struct RUBase* self_c, int size);
+};
+
+struct RUFont {
+    struct RUBase* priv_data;
+    struct RUFontFuncs* font_funcs;
+};
+
 typedef struct Rute { 
     void* priv_data;
     struct RUApplication (*create_application)(
@@ -58,10 +71,14 @@ typedef struct Rute {
     struct RUWidget (*create_widget)(
           struct RUBase* priv_data,
           RUDeleteCallback delete_callback, void* private_user_data);
+    struct RUFont (*create_font)(
+          struct RUBase* priv_data,
+          RUDeleteCallback delete_callback, void* private_user_data);
 } Rute;
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
 #define RUApplication_exec(obj) obj.application_funcs->application_funcs(obj.priv_data)
+#define RUApplication_font(obj) obj.application_funcs->application_funcs(obj.priv_data)
 #define RUApplication_set_about_to_quit_event(obj, user_data, event) obj.about_to_quit->set_application_funcs_event(obj.priv_data, user_data, event)
 
 #define RUWidget_show(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
@@ -69,6 +86,8 @@ typedef struct Rute {
 #define RUWidget_set_fixed_width(obj, width) obj.widget_funcs->widget_funcs(obj.priv_data, width)
 #define RUWidget_resize(obj, width, height) obj.widget_funcs->widget_funcs(obj.priv_data, width, height)
 #define RUWidget_update(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
+
+#define RUFont_set_pixel_size(obj, size) obj.font_funcs->font_funcs(obj.priv_data, size)
 
 
 #ifdef __cplusplus

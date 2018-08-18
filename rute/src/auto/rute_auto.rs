@@ -26,6 +26,12 @@ pub struct Widget<'a> {
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
+#[derive(Clone)]
+pub struct Font<'a> {
+    data: Rc<Cell<Option<RUFont>>>,
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
 impl<'a> Application<'a> {
     pub fn set_style(&self, style: &str) -> &Application<'a> {
         let str_in_style_1 = CString::new(style).unwrap();
@@ -45,6 +51,19 @@ impl<'a> Application<'a> {
     
         unsafe {
             let ret_val = ((*funcs).exec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn font(&self) -> &Font {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data);
         
             ret_val
           
@@ -116,6 +135,22 @@ impl<'a> Widget<'a> {
         (obj.privd, obj.widget_funcs)
     }
 }
+impl<'a> Font<'a> {
+    pub fn set_pixel_size(&self, size: i32) -> &Font<'a> {
+        
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_pixel_size)(obj_data, size);
+        }
+        self
+    
+    }
+    fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
+        let obj = self.data.get().unwrap();
+        (obj.privd, obj.font_funcs)
+    }
+}
 
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
@@ -163,6 +198,24 @@ impl<'a> Rute<'a> {
         data.set(Some(ffi_data));
 
         Widget {
+            data,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn create_font(&self) -> Font<'a> {
+        let data = Rc::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*self.rute_ffi).create_font)(
+                ::std::ptr::null(),
+                transmute(rute_object_delete_callback::<RUFont> as usize),
+                Rc::into_raw(data.clone()) as *const c_void)
+        };
+
+        data.set(Some(ffi_data));
+
+        Font {
             data,
             _marker: PhantomData,
         }

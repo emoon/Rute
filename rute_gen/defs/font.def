@@ -1,0 +1,3 @@
+struct Font {
+    set_pixel_size(i32 size),
+}

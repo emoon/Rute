@@ -9,8 +9,10 @@
 #include "../rute_manual.h"
 #include <QApplication>
 #include <QWidget>
+#include <QFont>
 extern struct RUApplicationFuncs s_application_funcs;
 extern struct RUWidgetFuncs s_widget_funcs;
+extern struct RUFontFuncs s_font_funcs;
 
 typedef void (*Signal_self_void)(void* self_c, void* wrapped_func);
 
@@ -39,6 +41,20 @@ class WRWidget : public QWidget {
 public:
     WRWidget(QWidget* widget) : QWidget(widget) { }
     virtual ~WRWidget() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRFont : public QFont {
+public:
+    WRFont() : QFont() { }
+    virtual ~WRFont() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }

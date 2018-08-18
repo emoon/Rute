@@ -14,3 +14,4 @@ fn main() {
     // Start the application
     app.exec();
 }
+

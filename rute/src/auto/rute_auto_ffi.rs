@@ -33,6 +33,7 @@ pub struct RUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub font: extern "C" fn(self_c: *const RUBase) ->  RUFont,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void,
                                             callback: extern "C" fn(self_c: *const c_void)),
 }
@@ -62,6 +63,19 @@ pub struct RUWidget {
 }
 
 #[repr(C)]
+pub struct RUFontFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub set_pixel_size: extern "C" fn(self_c: *const RUBase, size: i32),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUFont {
+    pub privd: *const RUBase,
+    pub font_funcs: *const RUFontFuncs,
+}
+
+#[repr(C)]
 pub struct RuteFFI {
     pub privd: *const RUBase,
     pub create_application: extern "C" fn(
@@ -72,6 +86,10 @@ pub struct RuteFFI {
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         delete_data: *const c_void) -> RUWidget,
+    pub create_font: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        delete_data: *const c_void) -> RUFont,
 }
 
 extern "C" {
