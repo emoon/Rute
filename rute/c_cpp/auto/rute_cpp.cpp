@@ -7,6 +7,7 @@
 #include "rute_cpp.h"
 #include "../rute_manual.h"
 #include <QApplication>
+#include <QWidget>
 
 static char s_temp_string_buffer[1024*1024];
 
@@ -14,6 +15,7 @@ static char s_temp_string_buffer[1024*1024];
 std::map<QWidget*, void*> s_widget_lookup;
 
 extern struct RUApplicationFuncs s_application_funcs;
+extern struct RUWidgetFuncs s_widget_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,6 +52,57 @@ static void set_application_about_to_quit_event(void* object, void* user_data, v
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void widget_show(struct RUBase* self_c) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_height(struct RUBase* self_c, int width) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->setFixedHeight(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_width(struct RUBase* self_c, int width) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->setFixedWidth(width);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_resize(struct RUBase* self_c, int width, int height) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->resize(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_update(struct RUBase* self_c) { 
+    WRWidget* qt_data = (WRWidget*)self_c;
+    qt_data->update();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget create_widget(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{
+    auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, delete_callback, private_user_data);
+    ctl.widget_funcs = &s_widget_funcs;
+    return ctl;
+}
+
+static void destroy_widget(struct RUBase* priv_data) {
+    destroy_generic<WRWidget>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_set_style,
@@ -59,8 +112,21 @@ struct RUApplicationFuncs s_application_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct RUWidgetFuncs s_widget_funcs = {
+    destroy_widget,
+    widget_show,
+    widget_set_fixed_height,
+    widget_set_fixed_width,
+    widget_resize,
+    widget_update,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct Rute s_rute = { 
+    nullptr,
     create_application,
+    create_widget,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -24,7 +24,8 @@ struct RUArray {
     void* priv_data;
     void* elements;
     uint32_t count;
-};\n\n";
+};\n
+typedef void (*RUDeleteCallback)(void* data);\n\n";
 
 ///
 /// Footer that is generated at the end of the the Rute.h
@@ -68,17 +69,6 @@ impl CapiGenerator {
 
         for sdef in &api_def.pod_structs {
             f.write_fmt(format_args!("struct RU{};\n", sdef.name))?;
-        }
-
-        //
-        // Write traits structs forward declarations:
-        //
-        // struct RUWidget;
-        // struct RUPushBUtton;
-        // ...
-
-        for name in api_def.get_all_traits() {
-            f.write_fmt(format_args!("struct RU{};\n", name))?;
         }
 
         f.write_all(b"\n")?;
@@ -185,6 +175,7 @@ impl CapiGenerator {
         //
 
         f.write_all(b"typedef struct Rute { \n")?;
+        f.write_all(b"    void* priv_data;\n")?;
 
         for sdef in api_def
             .class_structs
@@ -192,7 +183,9 @@ impl CapiGenerator {
             .filter(|s| s.should_have_create_func())
         {
             f.write_fmt(format_args!(
-                "    struct RU{} (*create_{})(struct RUBase* priv_data, void* user_data);\n",
+                "    struct RU{} (*create_{})(
+          struct RUBase* priv_data,
+          RUDeleteCallback delete_callback, void* private_user_data);\n",
                 sdef.name,
                 sdef.name.to_snake_case()
             ))?;

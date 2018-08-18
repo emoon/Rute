@@ -8,6 +8,10 @@ use std::rc::Rc;
 use std::ffi::CString;
 use auto::rute_auto_ffi::*;
 
+unsafe extern \"C\" fn rute_object_delete_callback<T>(data: *const c_void) {
+    let d = Rc::from_raw(data as *const Cell<Option<T>>);
+    d.set(None);
+}
 \n\n";
 
 pub static RUTE_IMPL_HEADER: &'static [u8] = b"
@@ -22,6 +26,27 @@ impl<'a> Rute<'a> {
         Rute {
             rute_ffi: unsafe { rute_get() },
             priv_data: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+";
+
+
+pub static RUST_CREATE_TEMPLATE: &str = "
+    pub fn create_{{widget_snake_name}}(&self) -> {{widget_name}}<'a> {
+        let data = Rc::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*self.rute_ffi).create_{{widget_snake_name}})(
+                ::std::ptr::null(),
+                transmute(rute_object_delete_callback::<RU{{widget_name}}> as usize),
+                Rc::into_raw(data.clone()) as *const c_void)
+        };
+
+        data.set(Some(ffi_data));
+
+        {{widget_name}} {
+            data,
             _marker: PhantomData,
         }
     }

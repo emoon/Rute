@@ -8,7 +8,9 @@
 #include "rute_cpp.h"
 #include "../rute_manual.h"
 #include <QApplication>
+#include <QWidget>
 extern struct RUApplicationFuncs s_application_funcs;
+extern struct RUWidgetFuncs s_widget_funcs;
 
 typedef void (*Signal_self_void)(void* self_c, void* wrapped_func);
 
@@ -28,5 +30,20 @@ private:
     Signal_self_void m_func;
     void* m_data;
     void* m_wrapped_func;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRWidget : public QWidget {
+    Q_OBJECT
+public:
+    WRWidget(QWidget* widget) : QWidget(widget) { }
+    virtual ~WRWidget() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
 };
 

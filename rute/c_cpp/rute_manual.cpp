@@ -7,11 +7,13 @@ extern void create_enum_mappings();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct RUApplication create_application(struct RUBase* priv_data, void* user_data) {
+struct RUApplication create_application(struct RUBase* priv_data, RUDeleteCallback delete_callback, void* private_user_data) {
     static int argc = 0;
     QApplication* qt_obj = new QApplication(argc, 0);
 
-    (void)user_data;
+    (void)priv_data;
+    (void)delete_callback;
+    (void)private_user_data;
 
     create_enum_mappings();
 

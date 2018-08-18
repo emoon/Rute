@@ -14,9 +14,17 @@ struct PrivData {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> T* create_widget_func(void* priv_data, void* user_data) {
+template<typename QT> void destroy_generic(struct RUBase* qt_data) {
+    QT* qt_obj = (QT*)qt_data;
+    delete qt_obj;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T, typename QT> T create_widget_func(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback, void* private_user_data) {
     PrivData* data = (PrivData*)priv_data;
-    (void)user_data;
     QT* qt_obj = nullptr;
     if (data) {
         qt_obj = new QT(data->parent);
@@ -24,20 +32,18 @@ template<typename T, typename QT> T* create_widget_func(void* priv_data, void* u
         qt_obj = new QT(nullptr);
     }
 
-    // track a widget with accciated user data. This allows us to callback into Rust or other wrappers
-    // when a widget gets destroyed, or used in such way where we want this
-    //s_widget_lookup[qt_obj] = user_data;
+    qt_obj->m_delete_callback = delete_callback;
+    qt_obj->m_private_data = private_user_data;
 
-    T* ctl = new T;
-    ctl->priv_data = (struct RUBase*)qt_obj;
-    qt_obj->m_ru_ctl = ctl;
+    T ctl;
+    ctl.priv_data = (struct RUBase*)qt_obj;
 
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct RUApplication create_application(struct RUBase* priv_data, void* user_data);
+struct RUApplication create_application(struct RUBase* priv_data, RUDeleteCallback delete_callback, void* private_user_data);
 void destroy_application(struct RUBase* priv_data);
 
 

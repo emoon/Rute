@@ -16,6 +16,7 @@ type TypeHandler = HashMap<&'static str, Box<TypeHandlerTrait>>;
 
 pub struct RustGenerator {
     rust_func_template: Template,
+    rust_create_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -94,43 +95,6 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
-///
-///
-fn generate_rute<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    // write header
-    f.write_all(RUTE_IMPL_HEADER)?;
-
-    // Generate all stucts that doesn't have owned data
-    // the generated style is
-    //
-    // pub fn create_widget(&self) -> Widget<'a> {
-    //    let ffi_data = unsafe { ((*self.rute_ffi).create_widget)(self.privd) };
-    //    Widget {
-    //        data: Rc::new(Cell::new(Some(ffi_data))),
-    //        _marker: PhantomData,
-    //    }
-    //}
-
-    for sdef in api_def
-        .class_structs
-        .iter()
-        .filter(|s| s.should_have_create_func() && !s.should_gen_wrap_class())
-    {
-        let name = sdef.name.to_snake_case();
-        f.write_fmt(format_args!("
-    pub fn create_{}(&self) -> {}<'a> {{
-        let ffi_data = unsafe {{ ((*self.rute_ffi).create_{})(::std::ptr::null(), ::std::ptr::null()) }};
-        {} {{
-            data: Rc::new(Cell::new(Some(ffi_data))),
-            _marker: PhantomData,
-        }}
-    }}\n", name, sdef.name, name, sdef.name))?;
-    }
-
-    f.write_all(b"}\n")
-}
-
-///
 /// Setup the type handlers
 ///
 
@@ -147,6 +111,7 @@ impl RustGenerator {
         RustGenerator {
             type_handler: setup_type_handlers(api_def),
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
+            rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
         }
     }
 
@@ -387,6 +352,32 @@ impl RustGenerator {
             })
     }
 
+    ///
+    ///
+    ///
+    fn generate_rute<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        // write header
+        f.write_all(RUTE_IMPL_HEADER)?;
+
+        // Generate all stucts that have owned data the generated style is outlined in RUST_CREATE_TEMPLATE
+
+        for sdef in api_def
+            .class_structs
+            .iter()
+            .filter(|s| s.should_have_create_func())
+        {
+            let mut template_data = Object::new();
+            let name = sdef.name.to_snake_case();
+
+            template_data.insert("widget_snake_name".to_owned(), Value::Str(name.clone()));
+            template_data.insert("widget_name".to_owned(), Value::Str(sdef.name.clone()));
+
+            let output = self.rust_create_template.render(&template_data).unwrap();
+            f.write_all(output.as_bytes())?;
+        }
+
+        f.write_all(b"}\n")
+    }
 
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
         let mut f = BufWriter::new(File::create(filename)?);
@@ -401,7 +392,7 @@ impl RustGenerator {
         self.generate_structs_impl(&mut f, api_def)?;
 
         // Generate the main Rute entry
-        generate_rute(&mut f, api_def)?;
+        self.generate_rute(&mut f, api_def)?;
 
         Ok(())
     }

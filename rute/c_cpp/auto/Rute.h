@@ -17,8 +17,12 @@ struct RUArray {
     uint32_t count;
 };
 
+typedef void (*RUDeleteCallback)(void* data);
+
 struct RUApplicationFuncs;
 struct RUApplication;
+struct RUWidgetFuncs;
+struct RUWidget;
 
 struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
@@ -32,13 +36,39 @@ struct RUApplication {
     struct RUApplicationFuncs* application_funcs;
 };
 
+struct RUWidgetFuncs {
+    void (*destroy)(struct RUBase* self);
+    void (*show)(struct RUBase* self_c);
+    void (*set_fixed_height)(struct RUBase* self_c, int width);
+    void (*set_fixed_width)(struct RUBase* self_c, int width);
+    void (*resize)(struct RUBase* self_c, int width, int height);
+    void (*update)(struct RUBase* self_c);
+};
+
+struct RUWidget {
+    struct RUBase* priv_data;
+    struct RUWidgetFuncs* widget_funcs;
+};
+
 typedef struct Rute { 
-    struct RUApplication (*create_application)(struct RUBase* priv_data, void* user_data);
+    void* priv_data;
+    struct RUApplication (*create_application)(
+          struct RUBase* priv_data,
+          RUDeleteCallback delete_callback, void* private_user_data);
+    struct RUWidget (*create_widget)(
+          struct RUBase* priv_data,
+          RUDeleteCallback delete_callback, void* private_user_data);
 } Rute;
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
 #define RUApplication_exec(obj) obj.application_funcs->application_funcs(obj.priv_data)
 #define RUApplication_set_about_to_quit_event(obj, user_data, event) obj.about_to_quit->set_application_funcs_event(obj.priv_data, user_data, event)
+
+#define RUWidget_show(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
+#define RUWidget_set_fixed_height(obj, width) obj.widget_funcs->widget_funcs(obj.priv_data, width)
+#define RUWidget_set_fixed_width(obj, width) obj.widget_funcs->widget_funcs(obj.priv_data, width)
+#define RUWidget_resize(obj, width, height) obj.widget_funcs->widget_funcs(obj.priv_data, width, height)
+#define RUWidget_update(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
 
 
 #ifdef __cplusplus

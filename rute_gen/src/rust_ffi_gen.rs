@@ -234,16 +234,19 @@ impl RustFFIGenerator {
 
         f.write_all(b"#[repr(C)]\n")?;
         f.write_all(b"pub struct RuteFFI {\n")?;
+        f.write_all(b"    pub privd: *const RUBase,\n")?;
 
         for sdef in api_def.class_structs
             .iter()
             .filter(|s| s.should_have_create_func())
         {
             f.write_fmt(format_args!(
-                "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase, user_data: *const c_void) -> RU{},\n",
+                "    pub create_{}: extern \"C\" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern \"C\" fn(),
+        delete_data: *const c_void) -> RU{},\n",
                 sdef.name.to_snake_case(),
-                sdef.name
-            ))?;
+                sdef.name))?;
         }
 
         api_def
@@ -253,7 +256,6 @@ impl RustFFIGenerator {
             .filter(|f| f.func_type == FunctionType::Static)
             .try_for_each(|func| Self::generate_function(&mut f, &func))?;
 
-        f.write_all(b"    pub privd: *const RUBase,\n")?;
         f.write_all(b"}\n")?;
 
         f.write_all(FOOTER)

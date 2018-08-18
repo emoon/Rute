@@ -17,6 +17,18 @@ pub struct RUArray {
 }
 
 #[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]
+pub struct RUPaintDevice {
+    _unused: [u8; 0],
+}
+
+#[repr(C)]
+#[derive(Default, Copy, Clone, Debug)]
+pub struct RUWidgetType {
+    _unused: [u8; 0],
+}
+
+#[repr(C)]
 pub struct RUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
@@ -33,9 +45,33 @@ pub struct RUApplication {
 }
 
 #[repr(C)]
-pub struct RuteFFI {
-    pub create_application: extern "C" fn(priv_data: *const RUBase, user_data: *const c_void) -> RUApplication,
+pub struct RUWidgetFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub show: extern "C" fn(self_c: *const RUBase),
+    pub set_fixed_height: extern "C" fn(self_c: *const RUBase, width: i32),
+    pub set_fixed_width: extern "C" fn(self_c: *const RUBase, width: i32),
+    pub resize: extern "C" fn(self_c: *const RUBase, width: i32, height: i32),
+    pub update: extern "C" fn(self_c: *const RUBase),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUWidget {
     pub privd: *const RUBase,
+    pub widget_funcs: *const RUWidgetFuncs,
+}
+
+#[repr(C)]
+pub struct RuteFFI {
+    pub privd: *const RUBase,
+    pub create_application: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        delete_data: *const c_void) -> RUApplication,
+    pub create_widget: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        delete_data: *const c_void) -> RUWidget,
 }
 
 extern "C" {

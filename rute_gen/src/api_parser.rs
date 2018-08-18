@@ -711,7 +711,7 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference => format!("struct RU{}", tname).into(),
+            VariableType::Reference => "struct RUBase*".into(),
 
             VariableType::Regular => {
                 if tname == "String" {

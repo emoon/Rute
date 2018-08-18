@@ -202,7 +202,10 @@ fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<
 ///
 /// Generate wrapper classes for all the Widges. This allows us to override
 /// virtual functions from the outside (in C and other langs)
-/// defs and add custom data that we need
+/// defs and add custom data that we need. This also supports a callback that is called
+/// upon destruction of the object from the C++ side. This allows the callback to tag
+/// the object (on the Rust side) as invalid. This allows for proper error handling if user
+/// tries to access a "deleted" object
 ///
 fn generate_wrapper_classes_defs<W: Write>(
     f: &mut W,
@@ -213,7 +216,7 @@ fn generate_wrapper_classes_defs<W: Write>(
     for sdef in api_def
 		.class_structs
 		.iter()
-		.filter(|s| s.should_gen_wrap_class()) 
+		.filter(|s| s.should_gen_wrap_class())
 	{
         let inherits_widget = sdef.inherits_widget(api_def);
 
@@ -245,7 +248,11 @@ fn generate_wrapper_classes_defs<W: Write>(
             ))?;
         }
 
-        f.write_fmt(format_args!("    virtual ~WR{}() {{}}\n", struct_qt_name))?;
+        f.write_fmt(format_args!("    virtual ~WR{}() {{\n", struct_qt_name))?;
+        f.write_all(b"        if (m_delete_callback) {\n")?;
+        f.write_all(b"             m_delete_callback(m_private_data);\n")?;
+        f.write_all(b"         }\n")?;
+        f.write_all(b"    }\n")?;
 
         for func in sdef
             .functions
@@ -255,7 +262,8 @@ fn generate_wrapper_classes_defs<W: Write>(
             generate_event_setup_def(f, &func)?;
         }
 
-        f.write_fmt(format_args!("    RU{}* m_ru_ctl = nullptr;\n", struct_name))?;
+        f.write_all(b"    RUDeleteCallback m_delete_callback = nullptr;\n")?;
+        f.write_all(b"    void* m_private_data = nullptr;\n")?;
 
         f.write_all(b"};\n\n")?;
     }
@@ -816,10 +824,10 @@ fn generate_func_def<W: Write>(
             let name = ret_val.type_name.to_snake_case();
 
             f.write_fmt(format_args!(
-               "    ctl->{}_funcs = &s_{}_funcs;\n", name, name
+               "    ctl.{}_funcs = &s_{}_funcs;\n", name, name
             ))?;
             f.write_fmt(format_args!(
-                "    ctl->priv_data = (struct RUBase*)ret_value;\n"
+                "    ctl.priv_data = (struct RUBase*)ret_value;\n"
             ))?;
             f.write_all(b"    return ctl;\n")?;
         }
@@ -956,7 +964,11 @@ fn generate_create_functions<W: Write>(
         };
 
         f.write_fmt(format_args!(
-            "static struct RU{}* create_{}(struct RUBase* priv_data, void* user_data) {{\n",
+            "static struct RU{} create_{}(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{{\n",
             sdef.name,
             sdef.name.to_snake_case()
         ))?;
@@ -970,7 +982,7 @@ fn generate_create_functions<W: Write>(
             .unwrap_or_else(|| &struct_name);
 
         f.write_fmt(format_args!(
-            "    auto ctl = {}<struct RU{}, {}{}>(priv_data, user_data);\n", create_func,
+            "    auto ctl = {}<struct RU{}, {}{}>(priv_data, delete_callback, private_user_data);\n", create_func,
             struct_name,
             qt_type,
             struct_qt_name,
@@ -982,7 +994,7 @@ fn generate_create_functions<W: Write>(
             let snake_name = s.name.to_snake_case();
 
             f.write_fmt(format_args!(
-                "    ctl->{}_funcs = &s_{}_funcs;\n",
+                "    ctl.{}_funcs = &s_{}_funcs;\n",
                 snake_name,
                 snake_name
             ))?;
@@ -1068,6 +1080,7 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
 fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     f.write_all(SEPARATOR)?;
     f.write_all(b"static struct Rute s_rute = { \n")?;
+    f.write_all(b"    nullptr,\n")?;
 
     for sdef in api_def
         .class_structs
@@ -1082,57 +1095,6 @@ fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
 
     f.write_all(b"};\n")
 }
-
-///
-/// Type handlers
-///
-///
-/// Handling for Rect
-///
-struct RectTypeHandler;
-
-impl TypeHandler for RectTypeHandler {
-    fn match_type(&self) -> &str {
-        "Rect"
-    }
-
-    fn replace_arg(&self, arg: &Variable) -> String {
-        format!(
-            "QRect({}->x, {}->y, {}->width, {}->height)",
-            &arg.name, &arg.name, &arg.name, &arg.name)
-    }
-
-    fn gen_body_return(&self, function_name: &String) -> String {
-        format!(
-            "    const auto& t = qt_data->{}();
-    return RURect {{ t.x(), t.y(), t.width(), t.height() }};\n}}",
-            function_name.to_mixed_case())
-    }
-}
-///
-/// Handling for Color
-///
-struct ColorTypeHandler;
-
-impl TypeHandler for ColorTypeHandler {
-    fn match_type(&self) -> &str {
-        "Color"
-    }
-
-    fn replace_arg(&self, arg: &Variable) -> String {
-        format!(
-            "QColor({}->r, {}->g, {}->b, {}->a)",
-            &arg.name, &arg.name, &arg.name, &arg.name)
-    }
-
-    fn gen_body_return(&self, function_name: &String) -> String {
-        format!(
-            "    const auto& t = qt_data->{}();\n
-                 return RUColor {{ .r = uint16_t(t.red()), .g = uint16_t(t.green()), .b = uint16_t(t.blue()), .a = uint16_t(t.alpha()) }}",
-            function_name.to_mixed_case())
-    }
-}
-
 
 ///
 /// Handling for Traits
@@ -1173,9 +1135,6 @@ impl CppGenerator {
         // generation when needed
         let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
 
-        type_handlers.push(Box::new(RectTypeHandler {}));
-        type_handlers.push(Box::new(ColorTypeHandler {}));
-
         for trait_name in api_def.get_all_traits() {
             type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
         }
@@ -1206,7 +1165,7 @@ impl CppGenerator {
         generate_enum_mappings(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
-        generate_wrapper_classes_defs(&mut cpp_out, &struct_name_map, api_def)?;
+        generate_wrapper_classes_defs(&mut h_out, &struct_name_map, api_def)?;
 
         // Generate the wrapping implementation that is used as for Qt.
         generate_wrapper_classes_impl(&mut cpp_out, &struct_name_map, api_def)?;
