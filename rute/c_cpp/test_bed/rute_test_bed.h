@@ -54,20 +54,3 @@ public:
     void* m_private_data = nullptr;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class WRIcon : public QIcon {
-public:
-    WRIcon() : QIcon() { }
-    WRIcon(const QIcon& icon) : QIcon(icon) { }
-    virtual ~WRIcon() {
-        if (m_delete_callback) {
-            m_delete_callback(m_private_data);
-        }
-    }
-
-    DeleteCallback m_delete_callback = nullptr;
-    void* m_private_data = nullptr;
-};
-
-

@@ -259,14 +259,14 @@ static void list_widget_item_set_text(struct RUBase* base, const char* text) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void icon_destroy(struct RUBase* base) {
-    WRIcon* item = (WRIcon*)base;
+    QIcon* item = (QIcon*)base;
     delete item;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static uint64_t icon_hash(struct RUBase* base) {
-    WRIcon* item = (WRIcon*)base;
+    QIcon* item = (QIcon*)base;
     return item->cacheKey();
 }
 
@@ -284,12 +284,9 @@ static RUIcon list_widget_item_icon(struct RUBase* base) {
     WRListWidgetItem* item = (WRListWidgetItem*)base;
     auto val = item->icon();
 
-    WRIcon* qt_obj = new WRIcon(val);
-    qt_obj->m_delete_callback = nullptr;
-    qt_obj->m_private_data = nullptr;
-
+    QIcon* qt_obj = new QIcon(val);
     ctl.priv_data = (struct RUBase*)qt_obj;
-    ctl.icon_funcs = &s_icon_funcs; 
+    ctl.icon_funcs = &s_icon_funcs;
 
     return ctl;
 }

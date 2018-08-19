@@ -146,7 +146,7 @@ pub struct Icon {
 impl Drop for Icon {
     fn drop(&mut self) {
         println!("Icon: About to drop");
-        if self.owner {
+        if self.owner && Rc::strong_count(&self.data) == 1 {
             println!("Icon: Dropping as owner");
             let obj = self.data.get().unwrap();
             unsafe {
@@ -531,7 +531,7 @@ impl<'a> MyApp<'a> {
 
         widget.show();
 
-        self.icon = Some(icon);
+        self.icon = Some(icon.clone());
 
         //list.clear();
 
