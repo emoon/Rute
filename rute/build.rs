@@ -16,13 +16,26 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     });
 
     let moc_exe = format!("{}/bin/moc", qt_dir.as_str());
+    let rute_cpp_header;
+    let rute_cpp;
+
+    // This is used to switch to the test bed for testing things out in rute_test_bed.cpp and
+    // rute_test_bed.rs
+
+    let test_bed = true;
+
+    if test_bed {
+        rute_cpp_header = "c_cpp/test_bed/rute_test_bed.h";
+        rute_cpp = "c_cpp/test_bed/rute_test_bed.cpp";
+    } else {
+        rute_cpp_header = "c_cpp/auto/rute_cpp.h";
+        rute_cpp = "c_cpp/auto/rute_cpp.cpp";
+    }
 
     // Generate the moc code
 
     Command::new(moc_exe)
-            .args(&["c_cpp/auto/rute_cpp.h", "-o", "c_cpp/auto/rute_moc.cpp"])
-            // Used for temporary test-bed
-            //.args(&["c_cpp/test_bed/rute_test_bed.h", "-o", "c_cpp/auto/rute_moc.cpp"])
+            .args(&[&rute_cpp_header, "-o", "c_cpp/auto/rute_moc.cpp"])
             .spawn()
             .expect("failed to execute process");
 
@@ -35,7 +48,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
 
     if target.contains("windows") {
         cc::Build::new()
-            .file("c_cpp/auto/rute_cpp.cpp")
+            .file(&rute_cpp)
             .file("c_cpp/auto/rute_moc.cpp")
             .file("c_cpp/rute_manual.cpp")
             .include(i3)
@@ -53,7 +66,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
         let f_flag = format!("-F{}/lib", qt_dir.as_str());
 
         cc::Build::new()
-            .file("c_cpp/auto/rute_cpp.cpp")
+            .file(&rute_cpp)
             .file("c_cpp/auto/rute_moc.cpp")
             .file("c_cpp/rute_manual.cpp")
             .include(i0)
