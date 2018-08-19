@@ -43,7 +43,18 @@ template<typename T, typename QT> T create_widget_func(
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct RUApplication create_application(struct RUBase* priv_data, RUDeleteCallback delete_callback, void* private_user_data);
+template<typename T, typename QT> T generic_create_func(struct RUBase* priv_data) {
+    (void)priv_data;
+    QT* qt_obj = new QT();
+    T ctl;
+    ctl.priv_data = (struct RUBase*)qt_obj;
+
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUApplication create_application(struct RUBase* priv_data);
 void destroy_application(struct RUBase* priv_data);
 
 

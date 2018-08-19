@@ -240,13 +240,20 @@ impl RustFFIGenerator {
             .iter()
             .filter(|s| s.should_have_create_func())
         {
-            f.write_fmt(format_args!(
-                "    pub create_{}: extern \"C\" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern \"C\" fn(),
-        delete_data: *const c_void) -> RU{},\n",
-                sdef.name.to_snake_case(),
-                sdef.name))?;
+            if sdef.should_gen_wrap_class() {
+                f.write_fmt(format_args!(
+                    "    pub create_{}: extern \"C\" fn(
+            priv_data: *const RUBase,
+            callback: unsafe extern \"C\" fn(),
+            delete_data: *const c_void) -> RU{},\n",
+                    sdef.name.to_snake_case(),
+                    sdef.name))?;
+            } else {
+                f.write_fmt(format_args!(
+                    "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+                    sdef.name.to_snake_case(),
+                    sdef.name))?;
+            }
         }
 
         api_def

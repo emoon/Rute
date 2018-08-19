@@ -58,14 +58,17 @@ impl<'a> Application<'a> {
     
     }
 
-    pub fn font(&self) -> &Font {
+    pub fn font(&self) -> Font {
         
         let (obj_data, funcs) = self.get_application_obj_funcs();
     
         unsafe {
             let ret_val = ((*funcs).font)(obj_data);
         
-            ret_val
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
           
         }
     
@@ -146,6 +149,19 @@ impl<'a> Font<'a> {
         self
     
     }
+
+    pub fn pixel_size(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).pixel_size)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
         (obj.privd, obj.font_funcs)
@@ -168,19 +184,9 @@ impl<'a> Rute<'a> {
     }
 
     pub fn create_application(&self) -> Application<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*self.rute_ffi).create_application)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUApplication> as usize),
-                Rc::into_raw(data.clone()) as *const c_void)
-        };
-
-        data.set(Some(ffi_data));
-
+        let ffi_data = unsafe { ((*self.rute_ffi).create_application)(::std::ptr::null()) };
         Application {
-            data,
+            data: Rc::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }
     }
@@ -204,19 +210,9 @@ impl<'a> Rute<'a> {
     }
 
     pub fn create_font(&self) -> Font<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*self.rute_ffi).create_font)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUFont> as usize),
-                Rc::into_raw(data.clone()) as *const c_void)
-        };
-
-        data.set(Some(ffi_data));
-
+        let ffi_data = unsafe { ((*self.rute_ffi).create_font)(::std::ptr::null()) };
         Font {
-            data,
+            data: Rc::new(Cell::new(Some(ffi_data))),
             _marker: PhantomData,
         }
     }

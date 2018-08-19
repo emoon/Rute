@@ -66,6 +66,7 @@ pub struct RUWidget {
 pub struct RUFontFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_pixel_size: extern "C" fn(self_c: *const RUBase, size: i32),
+    pub pixel_size: extern "C" fn(self_c: *const RUBase) -> i32,
 }
 
 #[repr(C)]
@@ -78,18 +79,12 @@ pub struct RUFont {
 #[repr(C)]
 pub struct RuteFFI {
     pub privd: *const RUBase,
-    pub create_application: extern "C" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern "C" fn(),
-        delete_data: *const c_void) -> RUApplication,
+    pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern "C" fn(),
-        delete_data: *const c_void) -> RUWidget,
-    pub create_font: extern "C" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern "C" fn(),
-        delete_data: *const c_void) -> RUFont,
+            priv_data: *const RUBase,
+            callback: unsafe extern "C" fn(),
+            delete_data: *const c_void) -> RUWidget,
+    pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
 }
 
 extern "C" {

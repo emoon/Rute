@@ -182,13 +182,22 @@ impl CapiGenerator {
             .iter()
             .filter(|s| s.should_have_create_func())
         {
-            f.write_fmt(format_args!(
-                "    struct RU{} (*create_{})(
-          struct RUBase* priv_data,
-          RUDeleteCallback delete_callback, void* private_user_data);\n",
-                sdef.name,
-                sdef.name.to_snake_case()
-            ))?;
+            // Only supply delete callbacks to wrapped classes
+            if sdef.should_gen_wrap_class() {
+                f.write_fmt(format_args!(
+                    "    struct RU{} (*create_{})(
+            struct RUBase* priv_data,
+            RUDeleteCallback delete_callback, void* private_user_data);\n",
+                    sdef.name,
+                    sdef.name.to_snake_case()
+                ))?;
+            } else {
+                f.write_fmt(format_args!(
+                    "    struct RU{} (*create_{})(struct RUBase* priv_data);\n",
+                    sdef.name,
+                    sdef.name.to_snake_case()
+                ))?;
+            }
         }
 
         //

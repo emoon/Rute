@@ -56,6 +56,7 @@ struct RUWidget {
 struct RUFontFuncs {
     void (*destroy)(struct RUBase* self);
     void (*set_pixel_size)(struct RUBase* self_c, int size);
+    int (*pixel_size)(struct RUBase* self_c);
 };
 
 struct RUFont {
@@ -65,15 +66,11 @@ struct RUFont {
 
 typedef struct Rute { 
     void* priv_data;
-    struct RUApplication (*create_application)(
-          struct RUBase* priv_data,
-          RUDeleteCallback delete_callback, void* private_user_data);
+    struct RUApplication (*create_application)(struct RUBase* priv_data);
     struct RUWidget (*create_widget)(
-          struct RUBase* priv_data,
-          RUDeleteCallback delete_callback, void* private_user_data);
-    struct RUFont (*create_font)(
-          struct RUBase* priv_data,
-          RUDeleteCallback delete_callback, void* private_user_data);
+            struct RUBase* priv_data,
+            RUDeleteCallback delete_callback, void* private_user_data);
+    struct RUFont (*create_font)(struct RUBase* priv_data);
 } Rute;
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
@@ -88,6 +85,7 @@ typedef struct Rute {
 #define RUWidget_update(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
 
 #define RUFont_set_pixel_size(obj, size) obj.font_funcs->font_funcs(obj.priv_data, size)
+#define RUFont_pixel_size(obj) obj.font_funcs->font_funcs(obj.priv_data)
 
 
 #ifdef __cplusplus

@@ -14,6 +14,8 @@ unsafe extern \"C\" fn rute_object_delete_callback<T>(data: *const c_void) {
 }
 \n\n";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub static RUTE_IMPL_HEADER: &'static [u8] = b"
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
@@ -31,6 +33,19 @@ impl<'a> Rute<'a> {
     }
 ";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static RUST_NO_WRAP_TEMPLATE: &str = "
+    pub fn create_{{widget_snake_name}}(&self) -> {{widget_name}}<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).create_{{widget_snake_name}})(::std::ptr::null()) };
+        {{widget_name}} {
+            data: Rc::new(Cell::new(Some(ffi_data))),
+            _marker: PhantomData,
+        }
+    }
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CREATE_TEMPLATE: &str = "
     pub fn create_{{widget_snake_name}}(&self) -> {{widget_name}}<'a> {
@@ -52,6 +67,8 @@ pub static RUST_CREATE_TEMPLATE: &str = "
     }
 ";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
     pub fn {{func_name}}{{function_def}} {
         {{ body_setup }}
@@ -62,6 +79,11 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
         {% case return_type %}
           {% when 'replaced' %}
            {{replaced_return}}
+          {% when 'no_wrap' %}
+            {{return_vtype}} {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
           {% else %}
             ret_val
           {% endcase %}

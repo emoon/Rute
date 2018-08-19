@@ -49,17 +49,3 @@ public:
     void* m_private_data = nullptr;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class WRFont : public QFont {
-public:
-    WRFont() : QFont() { }
-    virtual ~WRFont() {
-        if (m_delete_callback) {
-             m_delete_callback(m_private_data);
-         }
-    }
-    RUDeleteCallback m_delete_callback = nullptr;
-    void* m_private_data = nullptr;
-};
-

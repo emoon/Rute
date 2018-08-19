@@ -826,9 +826,17 @@ fn generate_func_def<W: Write>(
             f.write_fmt(format_args!(
                "    ctl.{}_funcs = &s_{}_funcs;\n", name, name
             ))?;
-            f.write_fmt(format_args!(
-                "    ctl.priv_data = (struct RUBase*)ret_value;\n"
-            ))?;
+
+            if ret_val.vtype == VariableType::Regular {
+                f.write_fmt(format_args!(
+                    "    ctl.priv_data = (struct RUBase*)new Q{}(ret_value);\n", ret_val.type_name,
+                ))?;
+            } else {
+                f.write_fmt(format_args!(
+                    "    ctl.priv_data = (struct RUBase*)ret_value;\n"
+                ))?;
+            }
+
             f.write_all(b"    return ctl;\n")?;
         }
     }
@@ -963,16 +971,6 @@ fn generate_create_functions<W: Write>(
             false => ("Q", "generic_create_func"),
         };
 
-        f.write_fmt(format_args!(
-            "static struct RU{} create_{}(
-    struct RUBase* priv_data,
-    RUDeleteCallback delete_callback,
-    void* private_user_data)
-{{\n",
-            sdef.name,
-            sdef.name.to_snake_case()
-        ))?;
-
         //
         // Get the name if we have remapped the name (for example we use Button while Qt uses
         // AbstractButton)
@@ -981,12 +979,35 @@ fn generate_create_functions<W: Write>(
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
 
-        f.write_fmt(format_args!(
-            "    auto ctl = {}<struct RU{}, {}{}>(priv_data, delete_callback, private_user_data);\n", create_func,
-            struct_name,
-            qt_type,
-            struct_qt_name,
-        ))?;
+        if sdef.should_gen_wrap_class() {
+            f.write_fmt(format_args!(
+            "static struct RU{} create_{}(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{{\n",
+                sdef.name,
+                sdef.name.to_snake_case()
+            ))?;
+
+            f.write_fmt(format_args!(
+                "    auto ctl = {}<struct RU{}, {}{}>(priv_data, delete_callback, private_user_data);\n", create_func,
+                struct_name,
+                qt_type,
+                struct_qt_name,
+            ))?;
+        } else {
+            f.write_fmt(format_args!(
+                "static struct RU{} create_{}(struct RUBase* priv_data) {{\n", sdef.name, sdef.name.to_snake_case()
+            ))?;
+
+            f.write_fmt(format_args!(
+                "    auto ctl = {}<struct RU{}, {}{}>(priv_data);\n", create_func,
+                struct_name,
+                qt_type,
+                struct_qt_name,
+            ))?;
+        }
 
         // fill in the function ptr structs
         // TODO: Make to common function

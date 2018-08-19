@@ -16,6 +16,7 @@ type TypeHandler = HashMap<&'static str, Box<TypeHandlerTrait>>;
 
 pub struct RustGenerator {
     rust_func_template: Template,
+    rust_no_wrap_template: Template,
     rust_create_template: Template,
     type_handler: TypeHandler,
 }
@@ -50,7 +51,7 @@ impl TypeHandlerTrait for StringTypeHandler {
     fn replace_type(&self, _arg: &Variable, is_ret_value: bool) -> Cow<str> {
         match is_ret_value {
             true => "String".into(),
-            false => "str".into(),
+            false => "&str".into(),
         }
     }
 
@@ -112,6 +113,7 @@ impl RustGenerator {
             type_handler: setup_type_handlers(api_def),
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
+            rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
         }
     }
 
@@ -135,12 +137,12 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&type_name),
             VariableType::Regular => {
-                dest.push('&');
                 dest.push_str(&type_name)
             },
             VariableType::Reference => {
                 dest.push('&');
-                dest.push_str(&type_name)
+                dest.push_str(&type_name);
+                dest.push_str("<'a>");
             },
             VariableType::Optional => {
                 dest.push_str("Option<");
@@ -313,12 +315,10 @@ impl RustGenerator {
                             template_data.insert("return_type".to_owned(), Value::str("optional"));
                         },
                         */
-                        /*
                         VariableType::Regular => {
-                            template_data.insert("return_type".to_owned(), Value::str("replaced"));
-                            template_data.insert("replaced_return".to_owned(), Value::Str(format!("{} {{ obj: Some(ret_val) }}\n", vtype)));
+                            template_data.insert("return_type".to_owned(), Value::str("no_wrap"));
+                            template_data.insert("return_vtype".to_owned(), Value::Str(ret_val.type_name.to_owned()));
                         }
-                        */
                         /*
                         VariableType::Array(ref vtype) => {
                             template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
@@ -372,7 +372,14 @@ impl RustGenerator {
             template_data.insert("widget_snake_name".to_owned(), Value::Str(name.clone()));
             template_data.insert("widget_name".to_owned(), Value::Str(sdef.name.clone()));
 
-            let output = self.rust_create_template.render(&template_data).unwrap();
+            let output;
+
+            if sdef.should_gen_wrap_class() {
+                output = self.rust_create_template.render(&template_data).unwrap();
+            } else {
+                output = self.rust_no_wrap_template.render(&template_data).unwrap();
+            }
+
             f.write_all(output.as_bytes())?;
         }
 

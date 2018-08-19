@@ -51,7 +51,7 @@ static struct RUFont application_font(struct RUBase* self_c) {
     auto ret_value = qt_data->font();
     RUFont ctl;
     ctl.font_funcs = &s_font_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+    ctl.priv_data = (struct RUBase*)new QFont(ret_value);
     return ctl;
 }
 
@@ -107,6 +107,14 @@ static void font_set_pixel_size(struct RUBase* self_c, int size) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static int font_pixel_size(struct RUBase* self_c) { 
+    QFont* qt_data = (QFont*)self_c;
+    auto ret_value = qt_data->pixelSize();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget create_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -123,12 +131,8 @@ static void destroy_widget(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUFont create_font(
-    struct RUBase* priv_data,
-    RUDeleteCallback delete_callback,
-    void* private_user_data)
-{
-    auto ctl = generic_create_func<struct RUFont, QFont>(priv_data, delete_callback, private_user_data);
+static struct RUFont create_font(struct RUBase* priv_data) {
+    auto ctl = generic_create_func<struct RUFont, QFont>(priv_data);
     ctl.font_funcs = &s_font_funcs;
     return ctl;
 }
@@ -163,6 +167,7 @@ struct RUWidgetFuncs s_widget_funcs = {
 struct RUFontFuncs s_font_funcs = {
     destroy_font,
     font_set_pixel_size,
+    font_pixel_size,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

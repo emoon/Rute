@@ -22,7 +22,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     // This is used to switch to the test bed for testing things out in rute_test_bed.cpp and
     // rute_test_bed.rs
 
-    let test_bed = true;
+    let test_bed = false;
 
     if test_bed {
         rute_cpp_header = "c_cpp/test_bed/rute_test_bed.h";
