@@ -69,6 +69,23 @@ pub static RUST_CREATE_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+pub static RUST_DROP_TEMPLATE: &str ="
+impl Drop for {{type_name}} {
+    fn drop(&mut self) {
+        if Rc::strong_count(&self.data) == 1 {
+            let obj = self.data.get().unwrap();
+            unsafe {
+                ((*obj.{{type_snake_name}}_funcs).destroy)(obj.privd);
+            }
+
+            self.data.set(None);
+        }
+    }
+}
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
     pub fn {{func_name}}{{function_def}} {
         {{ body_setup }}

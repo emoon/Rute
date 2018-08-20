@@ -23,6 +23,7 @@ const PRMITIVE_TYPES: &[&str] = &[
 static ATTRIB_NO_CREATE: &'static str = "NoCreate";
 static ATTRIB_MANUAL_CREATE: &'static str = "ManualCreate";
 static ATTRIB_NO_WRAP_CLASS: &'static str = "NoWrapClass";
+static ATTRIB_DROP: &'static str = "Drop";
 
 ///
 /// Variable type
@@ -681,6 +682,16 @@ impl Struct {
             .iter()
             .find(|&s| s == ATTRIB_NO_WRAP_CLASS)
             .is_none()
+    }
+
+    ///
+    /// Check if no wrapping class should be generated
+    ///
+    pub fn should_generate_drop(&self) -> bool {
+        self.attributes
+            .iter()
+            .find(|&s| s == ATTRIB_DROP)
+            .is_some()
     }
 }
 

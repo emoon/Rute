@@ -168,6 +168,19 @@ impl<'a> Font<'a> {
     }
 }
 
+impl Drop for Font {
+    fn drop(&mut self) {
+        if Rc::strong_count(&self.data) == 1 {
+            let obj = self.data.get().unwrap();
+            unsafe {
+                ((*obj.font_funcs).destroy)(obj.privd);
+            }
+
+            self.data.set(None);
+        }
+    }
+}
+
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
     priv_data: *const c_void,

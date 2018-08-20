@@ -18,6 +18,7 @@ pub struct RustGenerator {
     rust_func_template: Template,
     rust_no_wrap_template: Template,
     rust_create_template: Template,
+    drop_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -114,6 +115,7 @@ impl RustGenerator {
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
             rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
+            drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
         }
     }
 
@@ -345,10 +347,25 @@ impl RustGenerator {
             .iter()
             .try_for_each(|s| {
                 if s.should_generate_trait {
-                    self.generate_struct_impl(f, s)
+                    self.generate_struct_impl(f, s)?;
                 } else {
-                    self.generate_struct_impl(f, s)
+                    self.generate_struct_impl(f, s)?;
                 }
+
+                // Implement drop for structs that needs it
+
+                if s.should_generate_drop() {
+                    let mut template_data = Object::new();
+
+                    template_data.insert("type_name".to_owned(), Value::Str(s.name.clone()));
+                    template_data.insert("type_snake_name".to_owned(), Value::Str(s.name.to_snake_case()));
+
+                    let output = self.drop_template.render(&template_data).unwrap();
+
+                    f.write_all(output.as_bytes())?;
+                }
+
+                Ok(())
             })
     }
 
