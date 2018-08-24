@@ -1,0 +1,25 @@
+// Notice that events doesn't have any create functions as they only get passed to callbacks
+
+#[attributes(NoCreate)]
+struct PaintEvent {
+	rect() -> Rect,
+}
+
+#[attributes(NoCreate)]
+struct CloseEvent {
+	accept(),
+}
+
+#[attributes(NoCreate)]
+struct DragEnterEvent {
+	accept(),
+}
+
+#[attributes(NoCreate)]
+struct DropEvent {
+	accept_proposed_action(),
+	mime_data() -> MimeData,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
+

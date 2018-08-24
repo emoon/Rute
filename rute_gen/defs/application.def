@@ -1,0 +1,11 @@
+#[attributes(ManualCreate, NoWrapClass)]
+struct Application {
+	set_style(String style),
+	//[manual] set_style_sheet(String filename) -> i32,
+	exec() -> i32,
+	font() -> Font,
+	[callback] about_to_quit(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
+

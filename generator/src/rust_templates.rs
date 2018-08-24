@@ -6,7 +6,7 @@ pub static HEADER: &'static [u8] = b"
 use ffi_gen::*;
 use std::ffi::CStr;
 use std::slice;
-pub use ffi_gen::RUBase as RUBase;\n\n
+pub use rust_auto_ffi::*;\n\n
 use std::ffi::CString;\n\n";
 
 pub static UI_HEADER: &'static [u8] =

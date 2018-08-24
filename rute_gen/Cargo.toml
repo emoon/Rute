@@ -1,0 +1,13 @@
+[package]
+name = "rute_gen"
+version = "0.1.0"
+authors = ["Daniel Collin <daniel@collin.com>"]
+
+[dependencies]
+pest = "1.0"
+pest_derive = "1.0.7"
+heck = "0.2.1"
+argparse = "0.2.1"
+liquid = "0.13"
+walkdir = "2"
+

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/emoon/Rute.svg?branch=experiments)](https://travis-ci.org/emoon/Rute)
+
 # Rute
 
 Rute is a Qt binding wrapper and generator for Rust and C. It allows usage of the [Qt](https://www.qt.io) C++ API from Rust and C. There are already several such projects such as [rust-qt](https://github.com/rust-qt) and [qmlrs](https://github.com/cyndis/qmlrs) so what maske Rute different?
