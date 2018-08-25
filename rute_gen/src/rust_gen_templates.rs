@@ -130,31 +130,59 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TEMPLATE: &str ="
-    unsafe extern \"C\" fn {{event_name}}_trampoline<T>(
+    unsafe extern \"C\" fn {{event_name}}_trampoline_ud<T>(
         user_data: *const c_void,
-        func: *const c_void
+        func: *const c_void,
         {{function_arguments}}
     ) {
-        let f: &&(Fn(&T{{function_arg_types}}) + 'static) = transmute(func);
+        let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
         let data = user_data as *const T;
-        f(&*data{{function_params}});
+        f(&*data, {{function_params}});
     }
 
-    pub fn {{event_name}}<F, T>(&self, data: &'a T, func: F) -> &{{widget_name}}<'a>
+    pub fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &{{widget_name}}<'a>
     where
-        F: Fn(&T{{function_arg_types}}) + 'a,
+        F: Fn(&T, {{function_arg_types}}) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_{{widget_snake_name}}_obj_funcs();
 
-        let f: Box<Box<Fn(&T{{function_arg_types}}) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, {{function_arg_types}}) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
             ((*funcs).set_{{event_name}}_event)(
                 obj_data,
                 user_data,
-                transmute(Self::{{event_name}}_trampoline::<T> as usize),
+                transmute(Self::{{event_name}}_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    unsafe extern \"C\" fn {{event_name}}_trampoline(
+        user_data: *const c_void,
+        func: *const c_void,
+        {{function_arguments}}
+    ) {
+        let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
+        f({{function_params}});
+    }
+
+    pub fn set_{{event_name}}_event<F>(&self, func: F) -> &{{widget_name}}<'a>
+    where
+        F: Fn({{function_arg_types}}) + 'a,
+    {
+        let (obj_data, funcs) = self.get_{{widget_snake_name}}_obj_funcs();
+        let f: Box<Box<Fn({{function_arg_types}}) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_{{event_name}}_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(Self::{{event_name}}_trampoline as usize),
                 Box::into_raw(f) as *const _,
             );
         }

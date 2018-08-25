@@ -17,7 +17,7 @@ fn main() {
 
     app.about_qt();
 
-    app.about_to_quit(&temp, |_| {
+    app.set_about_to_quit_event(|| {
         println!("About to quit!");
     });
 

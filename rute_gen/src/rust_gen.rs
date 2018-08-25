@@ -323,19 +323,24 @@ impl RustGenerator {
 
         let mut temp_str = String::with_capacity(128);
 
-        for arg in &func.function_args[1..] {
+        let len = func.function_args[1..].len().wrapping_sub(1);
+
+        for (index, arg) in func.function_args[1..].iter().enumerate() {
             self.generate_arg_type(&mut temp_str, &arg, false);
 
-            function_arguments.push_str(", ");
             function_arguments.push_str(&arg.name);
             function_arguments.push_str(": ");
             function_arguments.push_str(&arg.type_name);
 
-            function_params.push_str(", ");
             function_params.push_str(&arg.name);
 
-            function_arg_types.push_str(", ");
             function_arg_types.push_str(&arg.type_name);
+
+            if index != len {
+                function_arguments.push_str(", ");
+                function_params.push_str(", ");
+                function_arg_types.push_str(", ");
+            }
         }
 
         template_data.insert("event_name".to_owned(), Value::Str(func.name.clone()));
