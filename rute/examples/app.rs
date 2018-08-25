@@ -15,13 +15,13 @@ fn main() {
     let widget = rute.create_widget();
     widget.show();
 
-    rute.application().about_qt();
+    app.about_qt();
 
     app.about_to_quit(&temp, |_| {
         println!("About to quit!");
     });
 
     // Start the application
-    app.exec();
+    rute.application().exec();
 }
 

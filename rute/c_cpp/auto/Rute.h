@@ -115,7 +115,6 @@ typedef struct Rute {
 } Rute;
 
 #define RUApplication_set_style(obj, style) obj.application_funcs->application_funcs(obj.priv_data, style)
-#define RUApplication_exec(obj) obj.application_funcs->application_funcs(obj.priv_data)
 #define RUApplication_font(obj) obj.application_funcs->application_funcs(obj.priv_data)
 #define RUApplication_set_about_to_quit_event(obj, user_data, event) obj.about_to_quit->set_application_funcs_event(obj.priv_data, user_data, event)
 

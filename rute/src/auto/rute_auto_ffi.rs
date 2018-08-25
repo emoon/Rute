@@ -131,6 +131,7 @@ pub struct RuteFFI {
             callback: unsafe extern "C" fn(),
             delete_data: *const c_void) -> RUListWidget,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
+    pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub beep: extern "C" fn(self_c: *const RUBase),
     pub about_qt: extern "C" fn(self_c: *const RUBase),
 }

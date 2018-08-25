@@ -152,6 +152,19 @@ impl<'a> Application<'a> {
     }
 }
 impl<'a> ApplicationStatic<'a> {
+    pub fn exec(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).exec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
     pub fn beep(&self) -> &ApplicationStatic<'a> {
         
         let (obj_data, funcs) = self.get_application_static_obj_funcs();
