@@ -301,14 +301,16 @@ impl RustFFIGenerator {
     /// Generate callback function
     ///
     fn generate_callback<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
+        /*
         let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
             arg.get_rust_ffi_type().into()
         });
+        */
 
         f.write_fmt(format_args!(
-            "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern \"C\" fn({})),\n",
-            func.name, func_def
+            "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+                                            callback: *const c_void),\n",
+            func.name,
         ))
     }
 }

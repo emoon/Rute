@@ -18,6 +18,7 @@ pub struct RustGenerator {
     rust_func_template: Template,
     rust_no_wrap_template: Template,
     rust_create_template: Template,
+    callback_template: Template,
     drop_template: Template,
     type_handler: TypeHandler,
 }
@@ -116,6 +117,7 @@ impl RustGenerator {
             rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
             rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
+            callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
         }
     }
 
@@ -213,14 +215,16 @@ impl RustGenerator {
         f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
 
         // Generate all regular functions
-        for func in sdef
-            .functions
-            .iter()
-            .filter(|tf| tf.func_type == FunctionType::Regular) {
 
-            let v = self.generate_function(&func, &sdef.name);
+        for func in &sdef.functions {
+            let res = match func.func_type {
+                FunctionType::Regular => self.generate_function(&func, &sdef.name),
+                FunctionType::Static => self.generate_function(&func, &sdef.name),
+                FunctionType::Callback => self.generate_callback(&func, &sdef.name),
+                FunctionType::Event => self.generate_callback(&func, &sdef.name),
+            };
 
-            f.write_all(v.as_bytes())?;
+            f.write_all(res.as_bytes())?;
         }
 
         // Generate the functions
@@ -242,6 +246,42 @@ impl RustGenerator {
         format!("    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
         let obj = self.data.get().unwrap();
         (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
+    }
+
+    //
+    //
+    //
+    fn generate_callback(&self, func: &Function, struct_name: &str) -> String {
+        let mut template_data = Object::new();
+        let mut function_arguments = String::with_capacity(128);
+        let mut function_params = String::with_capacity(128);
+        let mut function_arg_types = String::with_capacity(128);
+
+        let mut temp_str = String::with_capacity(128);
+
+        for arg in &func.function_args[1..] {
+            self.generate_arg_type(&mut temp_str, &arg, false);
+
+            function_arguments.push_str(", ");
+            function_arguments.push_str(&arg.name);
+            function_arguments.push_str(": ");
+            function_arguments.push_str(&arg.type_name);
+
+            function_params.push_str(", ");
+            function_params.push_str(&arg.name);
+
+            function_arg_types.push_str(", ");
+            function_arg_types.push_str(&arg.type_name);
+        }
+
+        template_data.insert("event_name".to_owned(), Value::Str(func.name.clone()));
+        template_data.insert("function_arguments".to_owned(), Value::Str(function_arguments));
+        template_data.insert("function_params".to_owned(), Value::Str(function_params));
+        template_data.insert("function_arg_types".to_owned(), Value::Str(function_arg_types));
+        template_data.insert("widget_name".to_owned(), Value::str(struct_name));
+        template_data.insert("widget_snake_name".to_owned(), Value::Str(struct_name.to_snake_case()));
+
+        self.callback_template.render(&template_data).unwrap()
     }
 
     //

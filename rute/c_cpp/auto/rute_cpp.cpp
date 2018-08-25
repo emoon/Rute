@@ -8,6 +8,8 @@
 #include "../rute_manual.h"
 #include <QApplication>
 #include <QWidget>
+#include <QListWidgetItem>
+#include <QListWidget>
 #include <QFont>
 
 static char s_temp_string_buffer[1024*1024];
@@ -17,6 +19,8 @@ std::map<QWidget*, void*> s_widget_lookup;
 
 extern struct RUApplicationFuncs s_application_funcs;
 extern struct RUWidgetFuncs s_widget_funcs;
+extern struct RUListWidgetItemFuncs s_list_widget_item_funcs;
+extern struct RUListWidgetFuncs s_list_widget_funcs;
 extern struct RUFontFuncs s_font_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,8 +61,8 @@ static struct RUFont application_font(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(struct RUBase* widget, void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, wrapped_func);
+static void set_application_about_to_quit_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
 }
@@ -100,6 +104,77 @@ static void widget_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_item_set_text(struct RUBase* self_c, const char* text) { 
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    qt_data->setText(QString::fromUtf8(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* list_widget_item_text(struct RUBase* self_c) { 
+    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    auto ret_value = qt_data->text();
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));
+    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);
+    return s_temp_string_buffer;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_clear(struct RUBase* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->clear();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int list_widget_current_row(struct RUBase* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->currentRow();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_current_row(struct RUBase* self_c, int index) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setCurrentRow(index);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int list_widget_count(struct RUBase* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->count();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_drag_enabled(struct RUBase* self_c, bool state) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setDragEnabled(state);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool state) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    qt_data->setDropIndicatorShown(state);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_list_widget_current_row_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row)) {
+    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)trampoline_func, (void*)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(currentRowChanged(int)), wrap, SLOT(method(int)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void font_set_pixel_size(struct RUBase* self_c, int size) { 
     QFont* qt_data = (QFont*)self_c;
     qt_data->setPixelSize(size);
@@ -127,6 +202,39 @@ static struct RUWidget create_widget(
 
 static void destroy_widget(struct RUBase* priv_data) {
     destroy_generic<WRWidget>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUListWidgetItem create_list_widget_item(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{
+    auto ctl = generic_create_func_with_delete<struct RUListWidgetItem, WRListWidgetItem>(priv_data, delete_callback, private_user_data);
+    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
+    return ctl;
+}
+
+static void destroy_list_widget_item(struct RUBase* priv_data) {
+    destroy_generic<WRListWidgetItem>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUListWidget create_list_widget(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{
+    auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, delete_callback, private_user_data);
+    ctl.widget_funcs = &s_widget_funcs;
+    ctl.list_widget_funcs = &s_list_widget_funcs;
+    return ctl;
+}
+
+static void destroy_list_widget(struct RUBase* priv_data) {
+    destroy_generic<WRListWidget>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +272,27 @@ struct RUWidgetFuncs s_widget_funcs = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
+    destroy_list_widget_item,
+    list_widget_item_set_text,
+    list_widget_item_text,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUListWidgetFuncs s_list_widget_funcs = {
+    destroy_list_widget,
+    list_widget_clear,
+    list_widget_current_row,
+    list_widget_set_current_row,
+    list_widget_count,
+    list_widget_set_drag_enabled,
+    list_widget_set_drop_indicator_shown,
+    set_list_widget_current_row_changed_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUFontFuncs s_font_funcs = {
     destroy_font,
     font_set_pixel_size,
@@ -176,6 +305,8 @@ static struct Rute s_rute = {
     nullptr,
     create_application,
     create_widget,
+    create_list_widget_item,
+    create_list_widget,
     create_font,
 };
 

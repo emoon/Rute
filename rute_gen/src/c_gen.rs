@@ -255,12 +255,12 @@ impl CapiGenerator {
     pub fn callback_fun_def_name(def: bool, name: &str, func: &Function) -> String {
         let mut func_def = if def {
             format!(
-                "void (*set_{}_event)(void* object, void* user_data, void* wrapped_func, void (*event)(",
+                "void (*set_{}_event)(void* object, void* user_data, void* trampoline_func, void (*event)(",
                 name
             )
         } else {
             format!(
-                "void set_{}_event(void* object, void* user_data, void* wrapped_func, void (*event)(",
+                "void set_{}_event(void* object, void* user_data, void* trampoline_func, void (*event)(",
                 name
             )
         };
@@ -269,7 +269,7 @@ impl CapiGenerator {
 
         for (i, arg) in func.function_args.iter().enumerate() {
             if i == 0 {
-                func_def.push_str("struct RUBase* widget, void*");
+                func_def.push_str("void*");
             } else {
                 // References are passed as pointers to the C code
                 match arg.vtype {

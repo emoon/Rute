@@ -34,8 +34,8 @@ pub struct RUApplicationFuncs {
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub font: extern "C" fn(self_c: *const RUBase) ->  RUFont,
-    pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern "C" fn(self_c: *const c_void)),
+    pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+                                            callback: *const c_void),
 }
 
 #[repr(C)]
@@ -63,6 +63,41 @@ pub struct RUWidget {
 }
 
 #[repr(C)]
+pub struct RUListWidgetItemFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub set_text: extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char),
+    pub text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUListWidgetItem {
+    pub privd: *const RUBase,
+    pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
+}
+
+#[repr(C)]
+pub struct RUListWidgetFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub clear: extern "C" fn(self_c: *const RUBase),
+    pub current_row: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_current_row: extern "C" fn(self_c: *const RUBase, index: i32),
+    pub count: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_drag_enabled: extern "C" fn(self_c: *const RUBase, state: bool),
+    pub set_drop_indicator_shown: extern "C" fn(self_c: *const RUBase, state: bool),
+    pub set_current_row_changed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+                                            callback: *const c_void),
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct RUListWidget {
+    pub privd: *const RUBase,
+    pub widget_funcs: *const RUWidgetFuncs,
+    pub list_widget_funcs: *const RUListWidgetFuncs,
+}
+
+#[repr(C)]
 pub struct RUFontFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_pixel_size: extern "C" fn(self_c: *const RUBase, size: i32),
@@ -84,6 +119,14 @@ pub struct RuteFFI {
             priv_data: *const RUBase,
             callback: unsafe extern "C" fn(),
             delete_data: *const c_void) -> RUWidget,
+    pub create_list_widget_item: extern "C" fn(
+            priv_data: *const RUBase,
+            callback: unsafe extern "C" fn(),
+            delete_data: *const c_void) -> RUListWidgetItem,
+    pub create_list_widget: extern "C" fn(
+            priv_data: *const RUBase,
+            callback: unsafe extern "C" fn(),
+            delete_data: *const c_void) -> RUListWidget,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
 }
 

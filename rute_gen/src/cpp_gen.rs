@@ -426,7 +426,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
             if event_type == EventType::Event {
                 function_args.push_str("RUBase*, void*");
             } else {
-                function_args.push_str("void* self_c, void* wrapped_func");
+                function_args.push_str("void* self_c, void* trampoline_func");
             }
         } else {
             // References are passed as pointers to the C code
@@ -525,17 +525,17 @@ fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Fu
 /// class QSlotWrapperSignal_self_int_void : public QObject {
 ///     Q_OBJECT
 /// public:
-///     QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void func, void* wrapped_func) {
-///         m_func = func;
+///     QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void trampoline_func, void* wrapped_func) {
+///         m_tampoline_func = trampoline_func;
 ///         m_data = data;
 ///         m_wrapped_func = wrapped_func;
 ///     }
 ///
 ///     Q_SLOT void method(int row) {
-///         m_func(m_data, m_wrapped_func, row);
+///         m_tampoline_func(m_data, m_wrapped_func, row);
 ///     }
 /// private:
-///     Signal_self_int_void m_func;
+///     Signal_self_int_void m_tampoline_func;
 ///     void* m_data;
 ///     void* m_wrapped_func;
 /// };
@@ -557,10 +557,10 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             signal_type_name
         ))?;
         f.write_fmt(format_args!(
-            "    QSlotWrapper{}(void* data, {} func, void* wrapped_func) {{\n",
+            "    QSlotWrapper{}(void* data, {} trampoline_func, void* wrapped_func) {{\n",
             signal_type_name, signal_type_name
         ))?;
-        f.write_all(b"        m_func = func;\n")?;
+        f.write_all(b"        m_trampoline_func = trampoline_func;\n")?;
         f.write_all(b"        m_data = data;\n")?;
         f.write_all(b"        m_wrapped_func = wrapped_func;\n")?;
         f.write_all(b"    }\n\n")?;
@@ -611,11 +611,11 @@ pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Re
             },
         );
 
-        f.write_fmt(format_args!("        m_func({});\n", func_invoke))?;
+        f.write_fmt(format_args!("        m_trampoline_func({});\n", func_invoke))?;
         f.write_all(b"    }\n")?;
 
         f.write_all(b"private:\n")?;
-        f.write_fmt(format_args!("    {} m_func;\n", signal_type_name))?;
+        f.write_fmt(format_args!("    {} m_trampoline_func;\n", signal_type_name))?;
         f.write_all(b"    void* m_data;\n")?;
         f.write_all(b"    void* m_wrapped_func;\n")?;
         f.write_all(b"};\n\n")?;
@@ -886,7 +886,7 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
 
     //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
     f.write_fmt(format_args!(
-        "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})event, wrapped_func);\n",
+        "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})trampoline_func, (void*)event);\n",
         signal_type_name, signal_type_name, signal_type_name
     ))?;
     f.write_all(b"    QObject* q_obj = (QObject*)object;\n")?;
@@ -968,7 +968,13 @@ fn generate_create_functions<W: Write>(
         //
         let (qt_type, create_func) = match is_inherits_widget {
             true => ("WR", "create_widget_func"),
-            false => ("Q", "generic_create_func"),
+            false => {
+                if sdef.should_gen_wrap_class() {
+                    ("WR", "generic_create_func_with_delete")
+                } else {
+                    ("Q", "generic_create_func")
+                }
+            },
         };
 
         //
