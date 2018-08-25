@@ -144,6 +144,17 @@ static void list_widget_clear(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUListWidgetItem list_widget_current_item(struct RUBase* self_c) { 
+    WRListWidget* qt_data = (WRListWidget*)self_c;
+    auto ret_value = qt_data->currentItem();
+    RUListWidgetItem ctl;
+    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
+    ctl.priv_data = (struct RUBase*)ret_value;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static int list_widget_current_row(struct RUBase* self_c) { 
     WRListWidget* qt_data = (WRListWidget*)self_c;
     auto ret_value = qt_data->currentRow();
@@ -317,6 +328,7 @@ struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
 struct RUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_clear,
+    list_widget_current_item,
     list_widget_current_row,
     list_widget_set_current_row,
     list_widget_count,

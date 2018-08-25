@@ -9,7 +9,7 @@ struct ListWidget : Widget {
 	//add_item(&ListWidgetItem item),
 	//[manual] add_text_item(String text),
 
-	//current_item() -> ListWidgetItem?,
+	current_item() -> ListWidgetItem?,
 	current_row() -> i32,
 	// selected_items() -> <&ListWidgetItem>,
 

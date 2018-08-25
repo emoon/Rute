@@ -82,6 +82,7 @@ pub struct RUListWidgetItem {
 pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub clear: extern "C" fn(self_c: *const RUBase),
+    pub current_item: extern "C" fn(self_c: *const RUBase) ->  RUListWidgetItem,
     pub current_row: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_current_row: extern "C" fn(self_c: *const RUBase, index: i32),
     pub count: extern "C" fn(self_c: *const RUBase) -> i32,

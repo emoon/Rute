@@ -321,6 +321,19 @@ impl<'a> ListWidget<'a> {
     
     }
 
+    pub fn current_item(&self) -> Option<ListWidgetItem> {
+        
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).current_item)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
     pub fn current_row(&self) -> i32 {
         
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();

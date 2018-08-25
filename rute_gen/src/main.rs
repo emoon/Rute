@@ -22,6 +22,7 @@ mod c_helper;
 
 // Code for C++ generation
 mod cpp_gen;
+mod cpp_gen_templates;
 
 // Code for C generation
 mod c_gen;
@@ -32,10 +33,11 @@ use rust_ffi_gen::RustFFIGenerator;
 use cpp_gen::CppGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
+use std::thread;
+use std::sync::Arc;
 
 fn main() {
-    // This holds all the structs,variables,etc
-    let mut api_def = ApiDef::default();
+    let mut api = ApiDef::default();
 
     // Parse all the files in defs
     for entry in walkdir::WalkDir::new("defs") {
@@ -43,24 +45,46 @@ fn main() {
 
         // only parse files and skip directories.
         if entry.path().metadata().unwrap().is_file() {
-            ApiParser::parse_file(&entry.path(), &mut api_def);
+            ApiParser::parse_file(&entry.path(), &mut api);
         }
     }
 
     // Run a second pass to match up types that may be out of order
-    ApiParser::second_pass(&mut api_def);
+    ApiParser::second_pass(&mut api);
+
+    // This holds all the structs,variables,etc
+    let api_def = Arc::new(api);
+
 
     // TODO: Correct error handling here
     let _ = fs::create_dir("../rute/c_cpp/auto");
     let _ = fs::create_dir("../rute/src/auto");
 
-    // Generate bindings for each backend
+    // Generate bindings for each backend in threads
 
-    let rust_gen = RustGenerator::new(&api_def);
+    let c_api_def = api_def.clone();
+    let c_api_thread = thread::spawn(move || {
+        CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &c_api_def).unwrap();
+    });
 
-    CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &api_def).unwrap();
-    RustFFIGenerator::generate("../rute/src/auto/rute_auto_ffi.rs", &api_def).unwrap();
-    CppGenerator::generate("../rute/c_cpp/auto/rute_cpp", &api_def).unwrap();
+    let ffi_api_def = api_def.clone();
+    let ffi_api_thread = thread::spawn(move || {
+        RustFFIGenerator::generate("../rute/src/auto/rute_auto_ffi.rs", &ffi_api_def).unwrap();
+    });
 
-    rust_gen.generate("../rute/src/auto/rute_auto.rs", &api_def).unwrap();
+    let cpp_api_def = api_def.clone();
+    let cpp_api_thread = thread::spawn(move || {
+        let cpp_gen = CppGenerator::new();
+        cpp_gen.generate("../rute/c_cpp/auto/rute_cpp", &cpp_api_def).unwrap();
+    });
+
+    let rust_api_def = api_def.clone();
+    let rust_gen = RustGenerator::new(&rust_api_def);
+    rust_gen.generate("../rute/src/auto/rute_auto.rs", &rust_api_def).unwrap();
+
+    // wait for all of them to finish
+
+    c_api_thread.join().unwrap();
+    ffi_api_thread.join().unwrap();
+    cpp_api_thread.join().unwrap();
 }

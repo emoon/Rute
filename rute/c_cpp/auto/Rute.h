@@ -73,6 +73,7 @@ struct RUListWidgetItem {
 struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self);
     void (*clear)(struct RUBase* self_c);
+    struct RUListWidgetItem (*current_item)(struct RUBase* self_c);
     int (*current_row)(struct RUBase* self_c);
     void (*set_current_row)(struct RUBase* self_c, int index);
     int (*count)(struct RUBase* self_c);
@@ -133,6 +134,7 @@ typedef struct Rute {
 #define RUListWidget_resize(obj, width, height) obj.widget_funcs->widget_funcs(obj.priv_data, width, height)
 #define RUListWidget_update(obj) obj.widget_funcs->widget_funcs(obj.priv_data)
 #define RUListWidget_clear(obj) obj.list_widget_funcs->list_widget_funcs(obj.priv_data)
+#define RUListWidget_current_item(obj) obj.list_widget_funcs->list_widget_funcs(obj.priv_data)
 #define RUListWidget_current_row(obj) obj.list_widget_funcs->list_widget_funcs(obj.priv_data)
 #define RUListWidget_set_current_row(obj, index) obj.list_widget_funcs->list_widget_funcs(obj.priv_data, index)
 #define RUListWidget_count(obj) obj.list_widget_funcs->list_widget_funcs(obj.priv_data)

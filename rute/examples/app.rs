@@ -6,7 +6,6 @@ extern crate rute;
 use rute::Rute;
 
 fn main() {
-    let temp = 0;
     let rute = Rute::new();
 
     // Create the application
@@ -15,7 +14,7 @@ fn main() {
     let widget = rute.create_widget();
     widget.show();
 
-    app.about_qt();
+    rute.application().about_qt();
 
     app.set_about_to_quit_event(|| {
         println!("About to quit!");
