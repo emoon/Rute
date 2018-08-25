@@ -45,6 +45,12 @@ pub struct Font<'a> {
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
+#[derive(Clone)]
+pub struct ApplicationStatic<'a> {
+    data: RUApplication,
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
 impl<'a> Application<'a> {
     pub fn set_style(&self, style: &str) -> &Application<'a> {
         let str_in_style_1 = CString::new(style).unwrap();
@@ -118,8 +124,57 @@ impl<'a> Application<'a> {
 
         self
     }
+
+    pub fn beep(&self) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).beep)(obj_data);
+        }
+        self
+    
+    }
+
+    pub fn about_qt(&self) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).about_qt)(obj_data);
+        }
+        self
+    
+    }
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
+        (obj.privd, obj.application_funcs)
+    }
+}
+impl<'a> ApplicationStatic<'a> {
+    pub fn beep(&self) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).beep)(obj_data);
+        }
+        self
+    
+    }
+
+    pub fn about_qt(&self) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).about_qt)(obj_data);
+        }
+        self
+    
+    }
+    fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
+        let obj = self.data;
         (obj.privd, obj.application_funcs)
     }
 }
@@ -382,6 +437,14 @@ impl<'a> Rute<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_application)(::std::ptr::null()) };
         Application {
             data: Rc::new(Cell::new(Some(ffi_data))),
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn application(&self) -> ApplicationStatic<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).get_application)(::std::ptr::null()) };
+        ApplicationStatic {
+            data: ffi_data,
             _marker: PhantomData,
         }
     }

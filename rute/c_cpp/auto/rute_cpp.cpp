@@ -69,6 +69,20 @@ static void set_application_about_to_quit_event(void* object, void* user_data, v
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void application_beep(struct RUBase* self_c) { 
+    QApplication* qt_data = (QApplication*)self_c;
+    qt_data->beep();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_about_qt(struct RUBase* self_c) { 
+    QApplication* qt_data = (QApplication*)self_c;
+    qt_data->aboutQt();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void widget_show(struct RUBase* self_c) { 
     WRWidget* qt_data = (WRWidget*)self_c;
     qt_data->show();
@@ -200,6 +214,8 @@ static struct RUWidget create_widget(
     return ctl;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void destroy_widget(struct RUBase* priv_data) {
     destroy_generic<WRWidget>(priv_data);
 }
@@ -215,6 +231,8 @@ static struct RUListWidgetItem create_list_widget_item(
     ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
     return ctl;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_list_widget_item(struct RUBase* priv_data) {
     destroy_generic<WRListWidgetItem>(priv_data);
@@ -233,6 +251,8 @@ static struct RUListWidget create_list_widget(
     return ctl;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void destroy_list_widget(struct RUBase* priv_data) {
     destroy_generic<WRListWidget>(priv_data);
 }
@@ -245,8 +265,20 @@ static struct RUFont create_font(struct RUBase* priv_data) {
     return ctl;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void destroy_font(struct RUBase* priv_data) {
     destroy_generic<QFont>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUApplication get_application(struct RUBase* priv_data) {
+    (void)priv_data;
+    RUApplication ctl;
+    ctl.priv_data = nullptr;
+    ctl.application_funcs = &s_application_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,6 +289,8 @@ struct RUApplicationFuncs s_application_funcs = {
     application_exec,
     application_font,
     set_application_about_to_quit_event,
+    application_beep,
+    application_about_qt,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,6 +338,7 @@ struct RUFontFuncs s_font_funcs = {
 static struct Rute s_rute = { 
     nullptr,
     create_application,
+    get_application,
     create_widget,
     create_list_widget_item,
     create_list_widget,

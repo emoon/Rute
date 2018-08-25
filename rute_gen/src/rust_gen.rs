@@ -18,6 +18,7 @@ pub struct RustGenerator {
     rust_func_template: Template,
     rust_no_wrap_template: Template,
     rust_create_template: Template,
+    get_static_template: Template,
     callback_template: Template,
     drop_template: Template,
     type_handler: TypeHandler,
@@ -98,6 +99,30 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 }
 
 ///
+/// Generate the structs with static only functions. The structs will be generated in this style
+///
+/// pub struct ApplicationStatic<'a> {
+///     data: RUApplication,
+///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+/// }
+///
+fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    for sdef in api_def
+            .class_structs
+            .iter()
+            .filter(|s| s.has_static_functions())
+    {
+        f.write_all(b"#[derive(Clone)]\n")?;
+        f.write_fmt(format_args!("pub struct {}Static<'a> {{
+    data: RU{},
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+            sdef.name, sdef.name))?;
+    }
+
+    Ok(())
+}
+
+///
 /// Setup the type handlers
 ///
 
@@ -116,6 +141,7 @@ impl RustGenerator {
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
             rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
+            get_static_template: parser.parse(RUST_GET_STATIC_TEMPLATE).unwrap(),
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
             callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
         }
@@ -234,17 +260,55 @@ impl RustGenerator {
     }
 
     ///
+    /// Generates the implementations for the static structs
+    ///
+    fn generate_static_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
+        f.write_fmt(format_args!("impl<'a> {}Static<'a> {{", sdef.name))?;
+
+        let struct_static_name = format!("{}Static", sdef.name);
+
+        // Generate all regular functions
+
+        for func in &sdef.functions {
+            let res = match func.func_type {
+                FunctionType::Static => self.generate_function(&func, &struct_static_name),
+                _ => "".to_owned(),
+            };
+
+            f.write_all(res.as_bytes())?;
+        }
+
+        // Generate the functions
+        f.write_all(Self::generate_static_get_obj_funcs(&sdef.name).as_bytes())?;
+
+        f.write_all(b"}\n")
+    }
+
+    ///
     /// Generate something like this
     ///
     /// fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
     ///     let obj = self.data.get().unwrap();
     ///     (obj.privd, obj.widget_funcs)
     /// }
-
     fn generate_get_obj_funcs(struct_name: &str) -> String {
         let snake_name = struct_name.to_snake_case();
         format!("    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
         let obj = self.data.get().unwrap();
+        (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
+    }
+
+    ///
+    /// Generate something like this
+    ///
+    /// fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
+    ///     let obj = self.data.;
+    ///     (obj.privd, obj.widget_funcs)
+    /// }
+    fn generate_static_get_obj_funcs(struct_name: &str) -> String {
+        let snake_name = struct_name.to_snake_case();
+        format!("    fn get_{}_static_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
+        let obj = self.data;
         (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
     }
 
@@ -405,6 +469,10 @@ impl RustGenerator {
                     f.write_all(output.as_bytes())?;
                 }
 
+                if s.has_static_functions() {
+                    self.generate_static_struct_impl(f, s)?;
+                }
+
                 Ok(())
             })
     }
@@ -438,6 +506,11 @@ impl RustGenerator {
             }
 
             f.write_all(output.as_bytes())?;
+
+            if sdef.has_static_functions() {
+                let out = self.get_static_template.render(&template_data).unwrap();
+                f.write_all(out.as_bytes())?;
+            }
         }
 
         f.write_all(b"}\n")
@@ -451,6 +524,9 @@ impl RustGenerator {
 
         // write all the structs
         generate_structs(&mut f, api_def)?;
+
+        // write all the structs with static functions
+        generate_static_structs(&mut f, api_def)?;
 
         // Generate the implementations for the structs
         self.generate_structs_impl(&mut f, api_def)?;

@@ -931,11 +931,57 @@ fn generate_function_wrappers<W: Write>(
             f.write_all(SEPARATOR)?;
 
             match func.func_type {
+                FunctionType::Static => generate_func_def(f, &sdef, api_def, func, struct_name_map, type_handlers, is_widget)?,
                 FunctionType::Regular => generate_func_def(f, &sdef, api_def, func, struct_name_map, type_handlers, is_widget)?,
                 FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
                 _ => (),
             }
         }
+    }
+
+    Ok(())
+}
+
+///
+/// Generate get functions to be used with for static functions
+///
+fn generate_static_get_functions<W: Write>(
+    f: &mut W,
+    api_def: &ApiDef,
+) -> io::Result<()> {
+    //
+    // Generate create functions for all structs that are flagged with create function
+    // and doesn't have manual create selected on them
+    //
+    for sdef in api_def
+        .class_structs
+        .iter()
+        .filter(|s| s.has_static_functions())
+    {
+        f.write_all(SEPARATOR)?;
+
+        //
+        // Get the name if we have remapped the name (for example we use Button while Qt uses
+        // AbstractButton)
+        //
+        f.write_fmt(format_args!("static struct RU{} get_{}(struct RUBase* priv_data) {{\n", sdef.name, sdef.name.to_snake_case()))?;
+        f.write_all(b"    (void)priv_data;\n")?;
+        f.write_fmt(format_args!("    RU{} ctl;\n", sdef.name))?;
+        f.write_all(b"    ctl.priv_data = nullptr;\n")?;
+
+        // fill in the function ptr structs
+        // TODO: Make to common function
+        for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+            let snake_name = s.name.to_snake_case();
+
+            f.write_fmt(format_args!(
+                "    ctl.{}_funcs = &s_{}_funcs;\n",
+                snake_name,
+                snake_name
+            ))?;
+        }
+
+        f.write_all(b"    return ctl;\n}\n\n")?;
     }
 
     Ok(())
@@ -1029,6 +1075,8 @@ fn generate_create_functions<W: Write>(
 
         f.write_all(b"    return ctl;\n}\n\n")?;
 
+        f.write_all(SEPARATOR)?;
+
         //
         // Generate destroy functions as well
         //
@@ -1076,6 +1124,10 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
                     f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
                 },
 
+                 FunctionType::Static => {
+                    f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
+                },
+
                 FunctionType::Callback => {
                     f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
                 },
@@ -1083,8 +1135,6 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
                 FunctionType::Event => {
                     f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
                 },
-
-                _ => (),
             }
         }
 
@@ -1118,6 +1168,13 @@ fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
             "    create_{},\n",
             sdef.name.to_snake_case()
         ))?;
+
+        if sdef.has_static_functions() {
+            f.write_fmt(format_args!(
+                "    get_{},\n",
+                sdef.name.to_snake_case()
+            ))?;
+        }
     }
 
     f.write_all(b"};\n")
@@ -1202,6 +1259,9 @@ impl CppGenerator {
 
         // generate the create functions for all widgets
         generate_create_functions(&mut cpp_out, &struct_name_map, api_def)?;
+
+        // generate the static get functions that returns a struct to be used with static functions
+        generate_static_get_functions(&mut cpp_out, api_def)?;
 
         // generate the structs that holds the wrapper functions
         generate_struct_defs(&mut cpp_out, api_def)?;

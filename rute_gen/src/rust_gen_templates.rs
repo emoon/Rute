@@ -48,6 +48,18 @@ pub static RUST_NO_WRAP_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+pub static RUST_GET_STATIC_TEMPLATE: &str = "
+    pub fn {{widget_snake_name}}(&self) -> {{widget_name}}Static<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).get_{{widget_snake_name}})(::std::ptr::null()) };
+        {{widget_name}}Static {
+            data: ffi_data,
+            _marker: PhantomData,
+        }
+    }
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub static RUST_CREATE_TEMPLATE: &str = "
     pub fn create_{{widget_snake_name}}(&self) -> {{widget_name}}<'a> {
         let data = Rc::new(Cell::new(None));

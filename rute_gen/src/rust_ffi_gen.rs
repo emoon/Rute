@@ -205,9 +205,9 @@ impl RustFFIGenerator {
             for func in &sdef.functions {
                 match func.func_type {
                     FunctionType::Regular => Self::generate_function(&mut f, &func)?,
+                    FunctionType::Static => Self::generate_function(&mut f, &func)?,
                     FunctionType::Callback => Self::generate_callback(&mut f, &func)?,
                     FunctionType::Event => Self::generate_event(&mut f, &func)?,
-                    _ => (),
                 }
             }
 
@@ -251,6 +251,13 @@ impl RustFFIGenerator {
             } else {
                 f.write_fmt(format_args!(
                     "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+                    sdef.name.to_snake_case(),
+                    sdef.name))?;
+            }
+
+            if sdef.has_static_functions() {
+                f.write_fmt(format_args!(
+                    "    pub get_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
                     sdef.name.to_snake_case(),
                     sdef.name))?;
             }
@@ -301,12 +308,6 @@ impl RustFFIGenerator {
     /// Generate callback function
     ///
     fn generate_callback<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        /*
-        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
-            arg.get_rust_ffi_type().into()
-        });
-        */
-
         f.write_fmt(format_args!(
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),\n",

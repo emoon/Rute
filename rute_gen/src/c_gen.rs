@@ -145,6 +145,7 @@ impl CapiGenerator {
             for func in &sdef.functions {
                 match func.func_type {
                     FunctionType::Regular => Self::generate_func_def(&mut f, func)?,
+                    FunctionType::Static => Self::generate_func_def(&mut f, func)?,
                     FunctionType::Callback => Self::generate_callback_def(&mut f, func)?,
                     _ => (),
                 }
@@ -194,6 +195,14 @@ impl CapiGenerator {
             } else {
                 f.write_fmt(format_args!(
                     "    struct RU{} (*create_{})(struct RUBase* priv_data);\n",
+                    sdef.name,
+                    sdef.name.to_snake_case()
+                ))?;
+            }
+
+            if sdef.has_static_functions() {
+                f.write_fmt(format_args!(
+                    "    struct RU{} (*get_{})(struct RUBase* priv_data);\n",
                     sdef.name,
                     sdef.name.to_snake_case()
                 ))?;

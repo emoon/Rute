@@ -655,6 +655,15 @@ impl ApiDef {
 ///
 impl Struct {
     ///
+    /// Check if the struct should has static functions
+    ///
+    pub fn has_static_functions(&self) -> bool {
+        self.functions
+            .iter()
+            .find(|&f| f.func_type == FunctionType::Static)
+            .is_some()
+    }
+    ///
     /// Check if the struct should have a create function
     ///
     pub fn should_have_create_func(&self) -> bool {

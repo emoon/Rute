@@ -5,6 +5,8 @@ struct Application {
 	exec() -> i32,
 	font() -> Font,
 	[callback] about_to_quit(),
+	[static] beep(),
+	[static] about_qt(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

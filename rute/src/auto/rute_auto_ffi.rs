@@ -36,6 +36,8 @@ pub struct RUApplicationFuncs {
     pub font: extern "C" fn(self_c: *const RUBase) ->  RUFont,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
+    pub beep: extern "C" fn(self_c: *const RUBase),
+    pub about_qt: extern "C" fn(self_c: *const RUBase),
 }
 
 #[repr(C)]
@@ -115,6 +117,7 @@ pub struct RUFont {
 pub struct RuteFFI {
     pub privd: *const RUBase,
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
+    pub get_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(
             priv_data: *const RUBase,
             callback: unsafe extern "C" fn(),
@@ -128,6 +131,8 @@ pub struct RuteFFI {
             callback: unsafe extern "C" fn(),
             delete_data: *const c_void) -> RUListWidget,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
+    pub beep: extern "C" fn(self_c: *const RUBase),
+    pub about_qt: extern "C" fn(self_c: *const RUBase),
 }
 
 extern "C" {
