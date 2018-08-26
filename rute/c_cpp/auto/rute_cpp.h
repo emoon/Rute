@@ -18,19 +18,22 @@ extern struct RUListWidgetItemFuncs s_list_widget_item_funcs;
 extern struct RUListWidgetFuncs s_list_widget_funcs;
 extern struct RUFontFuncs s_font_funcs;
 
-typedef void (*Signal_self_int_void)(void* self_c, void* trampoline_func, int row);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_self_int_void)(void* self_c, void* trampoline_func, , int row);
 
 class QSlotWrapperSignal_self_int_void : public QObject {
     Q_OBJECT
 public:
-    QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void trampoline_func, void* wrapped_func) {
+    QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void, trampoline_func, void* wrapped_func) {
         m_trampoline_func = trampoline_func;
         m_data = data;
         m_wrapped_func = wrapped_func;
     }
 
-    Q_SLOT void method(int row) {
-        m_trampoline_func(m_data, m_wrapped_func, row);
+    Q_SLOT void method(, int row) {
+        m_trampoline_func(m_data, m_wrapped_func, self_c, row);
     }
 private:
     Signal_self_int_void m_trampoline_func;
@@ -38,19 +41,21 @@ private:
     void* m_wrapped_func;
 };
 
-typedef void (*Signal_self_void)(void* self_c, void* trampoline_func);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_self_void)(void* self_c, void* trampoline_func, );
 
 class QSlotWrapperSignal_self_void : public QObject {
     Q_OBJECT
 public:
-    QSlotWrapperSignal_self_void(void* data, Signal_self_void trampoline_func, void* wrapped_func) {
+    QSlotWrapperSignal_self_int_void(void* data, Signal_self_void, trampoline_func, void* wrapped_func) {
         m_trampoline_func = trampoline_func;
         m_data = data;
         m_wrapped_func = wrapped_func;
     }
 
     Q_SLOT void method() {
-        m_trampoline_func(m_data, m_wrapped_func);
+        m_trampoline_func(m_data, m_wrapped_func, self_c);
     }
 private:
     Signal_self_void m_trampoline_func;
@@ -63,12 +68,17 @@ private:
 class WRWidget : public QWidget {
     Q_OBJECT
 public:
+
     WRWidget(QWidget* widget) : QWidget(widget) { }
+
     virtual ~WRWidget() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
     }
+
+    
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };
@@ -76,13 +86,19 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WRListWidgetItem : public QListWidgetItem {
+    Q_OBJECT
 public:
+
     WRListWidgetItem() : QListWidgetItem() { }
+
     virtual ~WRListWidgetItem() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
     }
+
+    
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };
@@ -92,13 +108,17 @@ public:
 class WRListWidget : public QListWidget {
     Q_OBJECT
 public:
-    WRListWidget(QWidget* widget) : QListWidget(widget) { }
+
+    WRListWidget(QListWidget* widget) : QListWidget(widget) { }
+
     virtual ~WRListWidget() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
     }
+
+    
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };
-

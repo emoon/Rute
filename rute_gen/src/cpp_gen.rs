@@ -311,11 +311,13 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
     // write arguments
     for (i, arg) in func.function_args.iter().enumerate() {
         if i == 0 {
+            /*
             if event_type == EventType::Event {
                 function_args.push_str("RUBase*, void*");
             } else {
                 function_args.push_str("void* self_c, void* trampoline_func");
             }
+            */
         } else {
             // References are passed as pointers to the C code
             match arg.vtype {
@@ -369,10 +371,10 @@ fn generate_includes<W: Write>(
 ///
 /// Example:
 ///
-/// Signal_self_i32_u32_void
+/// self_i32_u32_void
 ///
 fn signal_type_callback(func: &Function) -> String {
-    let mut name_def = "Signal_".to_owned();
+    let mut name_def = String::with_capacity(128);
 
     for arg in &func.function_args {
         match arg.vtype {
@@ -406,111 +408,6 @@ fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Fu
     wrapper_info
 }
 
-/// Generate a signal wrapper that is in the style of this:
-///
-/// typedef void (*Signal_self_int_void)(void* self_c, void* wrapped_func, int row);
-///
-/// class QSlotWrapperSignal_self_int_void : public QObject {
-///     Q_OBJECT
-/// public:
-///     QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void trampoline_func, void* wrapped_func) {
-///         m_tampoline_func = trampoline_func;
-///         m_data = data;
-///         m_wrapped_func = wrapped_func;
-///     }
-///
-///     Q_SLOT void method(int row) {
-///         m_tampoline_func(m_data, m_wrapped_func, row);
-///     }
-/// private:
-///     Signal_self_int_void m_tampoline_func;
-///     void* m_data;
-///     void* m_wrapped_func;
-/// };
-///
-pub fn generate_signal_wrappers<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    // Sort the signals by their names to have stable generation
-    let temp = build_signal_wrappers_info(api_def);
-    let ordered: BTreeMap<_, _> = temp.iter().collect();
-
-    for (signal_type_name, func) in ordered {
-        f.write_fmt(format_args!(
-            "typedef void (*{})({});\n\n",
-            signal_type_name,
-            generate_c_function_args_signal_wrapper(EventType::Callback, func)
-        ))?;
-
-        f.write_fmt(format_args!(
-            "class QSlotWrapper{} : public QObject {{\n    Q_OBJECT\npublic:\n",
-            signal_type_name
-        ))?;
-        f.write_fmt(format_args!(
-            "    QSlotWrapper{}(void* data, {} trampoline_func, void* wrapped_func) {{\n",
-            signal_type_name, signal_type_name
-        ))?;
-        f.write_all(b"        m_trampoline_func = trampoline_func;\n")?;
-        f.write_all(b"        m_data = data;\n")?;
-        f.write_all(b"        m_wrapped_func = wrapped_func;\n")?;
-        f.write_all(b"    }\n\n")?;
-
-        //
-        // Generate a function defitition where we replace all references
-        // so the name starts with Q* (as these map to Qt events)
-        // We also remove the first parameter (as it's user data) which
-        // isn't used for the Qt method def
-        //
-        let func_def = func.gen_c_def_filter(Some(None), |_index, arg| match arg.vtype {
-            VariableType::Reference => Some(format!("Q{}*", arg.type_name).into()),
-            _ => None,
-        });
-
-        f.write_fmt(format_args!("    Q_SLOT void method({}) {{\n", func_def))?;
-
-        // generate temporaries for the case of reference for funcs
-        for (index, arg) in func.function_args.iter().enumerate() {
-            if index == 0 {
-                continue;
-            }
-
-            match arg.vtype {
-                VariableType::Reference => {
-                    let name = arg.type_name.as_str();
-                    f.write_fmt(format_args!(
-                        "        auto temp_arg_{} = RU{} {{ (struct RUBase*){}, &s_{}_funcs  }};\n",
-                        index,
-                        name,
-                        arg.name.to_owned(),
-                        name.to_snake_case()
-                    ))?;
-                }
-                _ => (),
-            }
-        }
-
-        // Generate the function invokation in the callback. First parameter is always m_data for
-        // the user_data that needs to be passed to the callback
-        let func_invoke = func.gen_c_invoke_filter(
-            Some("m_data, m_wrapped_func".into()),
-            |index, arg| match arg.vtype {
-                VariableType::Reference => {
-                    (Some(format!("(struct RUBase*)&temp_arg_{}", index).into()))
-                }
-                _ => None,
-            },
-        );
-
-        f.write_fmt(format_args!("        m_trampoline_func({});\n", func_invoke))?;
-        f.write_all(b"    }\n")?;
-
-        f.write_all(b"private:\n")?;
-        f.write_fmt(format_args!("    {} m_trampoline_func;\n", signal_type_name))?;
-        f.write_all(b"    void* m_data;\n")?;
-        f.write_all(b"    void* m_wrapped_func;\n")?;
-        f.write_all(b"};\n\n")?;
-    }
-
-    Ok(())
-}
 
 ///
 /// Generate all forward declarations function pointer structs
@@ -1092,6 +989,7 @@ impl TypeHandler for TraitTypeHandler {
 
 pub struct CppGenerator {
     wrapper_template: Template,
+    signal_wrapper_template: Template,
 }
 
 impl CppGenerator {
@@ -1100,7 +998,53 @@ impl CppGenerator {
 
         CppGenerator {
             wrapper_template: parser.parse(CPP_GEN_WRAPPER_TEMPLATE).unwrap(),
+            signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
         }
+    }
+
+    /// Generate a signal wrapper that is in the style of this:
+    ///
+    /// typedef void (*Signal_self_int_void)(void* self_c, void* wrapped_func, int row);
+    ///
+    /// class QSlotWrapperSignal_self_int_void : public QObject {
+    ///     Q_OBJECT
+    /// public:
+    ///     QSlotWrapperSignal_self_int_void(void* data, Signal_self_int_void trampoline_func, void* wrapped_func) {
+    ///         m_tampoline_func = trampoline_func;
+    ///         m_data = data;
+    ///         m_wrapped_func = wrapped_func;
+    ///     }
+    ///
+    ///     Q_SLOT void method(int row) {
+    ///         m_tampoline_func(m_data, m_wrapped_func, row);
+    ///     }
+    /// private:
+    ///     Signal_self_int_void m_tampoline_func;
+    ///     void* m_data;
+    ///     void* m_wrapped_func;
+    /// };
+    ///
+    pub fn generate_signal_wrappers<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        // Sort the signals by their names to have stable generation
+        let temp = build_signal_wrappers_info(api_def);
+        let ordered: BTreeMap<_, _> = temp.iter().collect();
+
+        for (signal_type_name, func) in ordered {
+            let mut template_data = Object::new();
+
+            let c_args = generate_c_function_args_signal_wrapper(EventType::Callback, func);
+            let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
+            let c_call_args = func.generate_invoke(None);
+
+            template_data.insert("signal_func_name".to_owned(), Value::Str(signal_type_name.clone()));
+            template_data.insert("c_args".to_owned(), Value::Str(c_args));
+            template_data.insert("c_call_args".to_owned(), Value::Str(c_call_args));
+
+            let res = self.signal_wrapper_template.render(&template_data).unwrap();
+            f.write_all(res.as_bytes())?;
+        }
+
+        Ok(())
     }
 
     ///
@@ -1114,7 +1058,6 @@ impl CppGenerator {
     fn generate_wrapper_classes_defs<W: Write>(
         &self,
         f: &mut W,
-        struct_name_map: &HashMap<&str, &str>,
         api_def: &ApiDef,
     ) -> io::Result<()> {
 
@@ -1123,42 +1066,14 @@ impl CppGenerator {
             .iter()
             .filter(|s| s.should_gen_wrap_class())
         {
+            let mut template_data = Object::new();
             let inherits_widget = sdef.inherits_widget(api_def);
 
-            let struct_name = sdef.name.as_str();
-            let struct_qt_name = struct_name_map
-                .get(struct_name)
-                .unwrap_or_else(|| &struct_name);
+            template_data.insert("struct_name".to_owned(), Value::Str(sdef.name.clone()));
+            template_data.insert("cpp_name".to_owned(), Value::Str(sdef.cpp_name.clone()));
+            template_data.insert("widget".to_owned(), Value::Bool(inherits_widget));
 
-            f.write_all(SEPARATOR)?;
-            f.write_fmt(format_args!(
-                "class WR{} : public Q{} {{\n",
-                struct_qt_name, struct_qt_name
-            ))?;
-
-            if inherits_widget {
-                f.write_all(b"    Q_OBJECT\n")?;
-                f.write_all(b"public:\n")?;
-
-                f.write_fmt(format_args!(
-                    "    WR{}(QWidget* widget) : Q{}(widget) {{ }}\n",
-                    struct_qt_name, struct_qt_name
-                ))?;
-            } else {
-                f.write_all(b"public:\n")?;
-
-                f.write_fmt(format_args!(
-                    "    WR{}() : Q{}() {{ }}\n",
-                    struct_qt_name, struct_qt_name
-                ))?;
-            }
-
-            f.write_fmt(format_args!("    virtual ~WR{}() {{\n", struct_qt_name))?;
-            f.write_all(b"        if (m_delete_callback) {\n")?;
-            f.write_all(b"             m_delete_callback(m_private_data);\n")?;
-            f.write_all(b"         }\n")?;
-            f.write_all(b"    }\n")?;
-
+            /*
             for func in sdef
                 .functions
                 .iter()
@@ -1166,11 +1081,14 @@ impl CppGenerator {
             {
                 generate_event_setup_def(f, &func)?;
             }
+            */
 
-            f.write_all(b"    RUDeleteCallback m_delete_callback = nullptr;\n")?;
-            f.write_all(b"    void* m_private_data = nullptr;\n")?;
 
-            f.write_all(b"};\n\n")?;
+            // TODO: Fix me
+            template_data.insert("events".to_owned(), Value::str(""));
+
+            let res = self.wrapper_template.render(&template_data).unwrap();
+            f.write_all(res.as_bytes())?;
         }
 
         Ok(())
@@ -1213,13 +1131,13 @@ impl CppGenerator {
         generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
         // Build the signals info used to generate the signal wrapper permutations
-        generate_signal_wrappers(&mut h_out, api_def)?;
+        self.generate_signal_wrappers(&mut h_out, api_def)?;
 
         // Generate the Matching for Qt enums to our enums
         generate_enum_mappings(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
-        self.generate_wrapper_classes_defs(&mut h_out, &struct_name_map, api_def)?;
+        self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
         // Generate the wrapping implementation that is used as for Qt.
         generate_wrapper_classes_impl(&mut cpp_out, &struct_name_map, api_def)?;
@@ -1266,7 +1184,7 @@ mod tests {
         };
 
         let signal_gen = signal_type_callback(&func);
-        assert_eq!(signal_gen, "Signal_int_void");
+        assert_eq!(signal_gen, "int_void");
     }
 
     //
@@ -1288,6 +1206,6 @@ mod tests {
         };
 
         let signal_gen = signal_type_callback(&func);
-        assert_eq!(signal_gen, "Signal_DropEvent_void");
+        assert_eq!(signal_gen, "DropEvent_void");
     }
 }

@@ -41,15 +41,17 @@ extern \"C\" struct Rute* rute_get() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static CPP_GEN_WRAPPER_TEMPLATE: &str = "
-class WR{{class_name}} : public Q{{class_name}} {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WR{{struct_name}} : public {{cpp_name}} {
     Q_OBJECT
 public:
 {% if widget %}
-    WR{{class_name}}(Q{{widget_name}}* widget) : Q{{class_name}}(widget) { }
+    WR{{struct_name}}({{cpp_name}}* widget) : {{cpp_name}}(widget) { }
 {% else %}
-    WR{{class_name}}() : Q{{class_name}}() { }
+    WR{{struct_name}}() : {{cpp_name}}() { }
 {% endif %}
-    virtual ~WR{{class_name}}() {
+    virtual ~WR{{struct_name}}() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
@@ -60,5 +62,31 @@ public:
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };
-
 ";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static SIGNAL_WRAPPER_TEMPLATE: &str = "
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_{{signal_func_name}})(void* self_c, void* trampoline_func, {{c_args}});
+
+class QSlotWrapperSignal_{{signal_func_name}} : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_int_void(void* data, Signal_{{signal_func_name}}, trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method({{c_args}}) {
+        m_trampoline_func(m_data, m_wrapped_func, {{c_call_args}});
+    }
+private:
+    Signal_{{signal_func_name}} m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
+};
+";
+

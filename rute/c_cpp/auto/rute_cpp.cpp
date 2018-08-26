@@ -62,7 +62,7 @@ static struct RUFont application_font(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void set_application_about_to_quit_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)trampoline_func, (void*)event);
+    QSlotWrapperself_void* wrap = new QSlotWrapperself_void(user_data, (self_void)trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
 }
@@ -193,7 +193,7 @@ static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool sta
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void set_list_widget_current_row_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row)) {
-    QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)trampoline_func, (void*)event);
+    QSlotWrapperself_int_void* wrap = new QSlotWrapperself_int_void(user_data, (self_int_void)trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(currentRowChanged(int)), wrap, SLOT(method(int)));
 }

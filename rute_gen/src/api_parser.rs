@@ -132,6 +132,8 @@ impl Default for Function {
 pub struct Struct {
     /// Name
     pub name: String,
+    /// Name for the C++ class in the generation
+    pub cpp_name: String,
     /// Variables in the struct
     pub variables: Vec<Variable>,
     /// Functions for the struct
@@ -269,6 +271,12 @@ impl ApiParser {
 
                 _ => (),
             }
+        }
+
+        // If nothing is set for the cpp name we construct a default one
+
+        if sdef.cpp_name.is_empty() {
+            sdef.cpp_name = format!("Q{}", sdef.name);
         }
 
         sdef
