@@ -1034,7 +1034,7 @@ impl CppGenerator {
 
             let c_args = generate_c_function_args_signal_wrapper(EventType::Callback, func);
             let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
-            let c_call_args = func.generate_invoke(None);
+            let c_call_args = func.generate_invoke(Some(""));
 
             template_data.insert("signal_func_name".to_owned(), Value::Str(signal_type_name.clone()));
             template_data.insert("c_args".to_owned(), Value::Str(c_args));

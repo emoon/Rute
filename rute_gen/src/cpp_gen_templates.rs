@@ -69,19 +69,19 @@ public:
 pub static SIGNAL_WRAPPER_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef void (*Signal_{{signal_func_name}})(void* self_c, void* trampoline_func, {{c_args}});
+typedef void (*Signal_{{signal_func_name}})(void* self_c, void* trampoline_func{{c_args}});
 
 class QSlotWrapperSignal_{{signal_func_name}} : public QObject {
     Q_OBJECT
 public:
-    QSlotWrapperSignal_self_int_void(void* data, Signal_{{signal_func_name}}, trampoline_func, void* wrapped_func) {
+    QSlotWrapperSignal_self_int_void(void* data, Signal_{{signal_func_name}} trampoline_func, void* wrapped_func) {
         m_trampoline_func = trampoline_func;
         m_data = data;
         m_wrapped_func = wrapped_func;
     }
 
     Q_SLOT void method({{c_args}}) {
-        m_trampoline_func(m_data, m_wrapped_func, {{c_call_args}});
+        m_trampoline_func(m_data, m_wrapped_func{{c_call_args}});
     }
 private:
     Signal_{{signal_func_name}} m_trampoline_func;
