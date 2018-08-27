@@ -17,24 +17,19 @@ pub trait HeaderFFIGen {
     fn gen_forward_declaration(dest: &mut String, struct_name: &str),
 
     ///
-    /// Generate start of enum declaration
+    /// Generate the enums
     ///
-    fn gen_enum_declaration(dest: &mut String, enum_name: &str),
+    fn gen_enums(dest: &mut String, enum_def: &EnumEntry),
 
     ///
-    /// Generate start of end enum declaration
+    /// Generate start of struct declaration
     ///
-    fn gen_enum_declaration_end(dest: &mut String, enum_name: &str),
+    fn gen_struct_declaration(dest: &mut String, struct_name: &str),
 
     ///
-    /// Generate the enum entry
+    /// Generate end of struct declaration
     ///
-    fn gen_enum_entry(dest: &mut String, enum_name: &str, enum_def: &EnumEntry),
-
-    ///
-    /// Generate start of struct funcs declaration
-    ///
-    fn gen_funcs_declaration(dest: &mut String, struct_name: &str),
+    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str),
 
     ///
     /// Generate destroy function
@@ -57,7 +52,12 @@ pub trait HeaderFFIGen {
     fn gen_function(dest: &mut String, func: &Function),
 
     ///
-    /// Generate forward declarations of needed
+    /// Generate void data entry
+    ///
+    fn gen_void_ptr_data(dest: &mut String, name: &str),
+
+    ///
+    /// Generate extra things if needed 
     ///
     fn generate_post_declarations(dest: &mut String, api_def: &ApiDef),
 }
