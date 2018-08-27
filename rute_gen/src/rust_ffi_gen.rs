@@ -332,7 +332,7 @@ impl HeaderFFIGen for RustFFIGenerator {
     fn gen_enums(dest: &mut String, enum_def: &EnumEntry) {
         dest.push_str(b"#[repr(C)]\n")?;
         dest.push_str(b"#[derive(Copy, Clone, Debug)]\n")?;
-        dest += format!("pub enum RU{} {{\n", enum_def.name));
+        dest += format!("pub enum RU{} {{\n", enum_def.name);
 
         for entry in &enum_def.entries {
             match *entry {
@@ -351,42 +351,56 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     /// Generate start of struct declaration
     ///
-    fn gen_struct_declaration(dest: &mut String, struct_name: &str),
+    fn gen_struct_declaration(dest: &mut String, struct_name: &str) {
+
+    }
 
     ///
     /// Generate end of struct declaration
     ///
-    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str),
+    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str) {
+
+    }
 
     ///
     /// Generate destroy function
     ///
-    fn gen_destroy_func(dest: &mut String, function_name: &str),
+    fn gen_destroy_func(dest: &mut String, function_name: &str) {
+
+    }
 
     ///
     /// Generate create function for owned data function
     ///
-    fn gen_owned_data_create(dest: &mut String, function_name: &str),
+    fn gen_owned_data_create(dest: &mut String, function_name: &str) {
+
+    }
 
     ///
     /// Generate create function
     ///
-    fn gen_create(dest: &mut String, function_name: &str),
+    fn gen_create(dest: &mut String, function_name: &str) {
+
+    }
 
     ///
     /// Generate function
     ///
-    fn gen_function(dest: &mut String, func: &Function),
+    fn gen_function(dest: &mut String, func: &Function) {
+
+    }
 
     ///
     /// Generate void data entry
     ///
-    fn gen_void_ptr_data(dest: &mut String, name: &str),
+    fn gen_void_ptr_data(dest: &mut String, name: &str) {
+
+    }
 
     ///
-    /// Generate extra things if needed 
+    /// Generate extra things if needed
     ///
-    fn generate_post_declarations(dest: &mut String, api_def: &ApiDef),
+    fn generate_post_declarations(dest: &mut String, api_def: &ApiDef) {
 
-
+    }
 }

@@ -39,7 +39,7 @@ static FOOTER: &str = b"
 
 pub struct CapiHeaderGen;
 
-impl HeaderFFIGen for CapiHeaderGen
+impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate the header for the file
     ///
@@ -55,7 +55,7 @@ impl HeaderFFIGen for CapiHeaderGen
     }
 
     ///
-    /// Generate enum 
+    /// Generate enum
     ///
     fn gen_enums(dest: &mut String, enums: &Enum) {
         dest += format!("typedef enum RU{} {{\n", enum_name)
@@ -97,7 +97,7 @@ impl HeaderFFIGen for CapiHeaderGen
         RUDeleteCallback delete_callback, void* private_user_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
-            ))?;
+            )?;
     }
 
     ///
@@ -110,7 +110,7 @@ impl HeaderFFIGen for CapiHeaderGen
         RUDeleteCallback delete_callback, void* private_user_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
-            ))?;
+            );
     }
 
     ///
@@ -128,7 +128,7 @@ impl HeaderFFIGen for CapiHeaderGen
     ///
     /// Generate forward declarations of needed
     ///
-    fn generate_post_declarations(dest: &mut String, _api_def: &ApiDef) { 
+    fn generate_post_declarations(dest: &mut String, _api_def: &ApiDef) {
         dest.push_str(FOOTER);
     }
 }
