@@ -192,6 +192,14 @@ static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool sta
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_list_widget_item_activated_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item)) {
+    QSlotWrapperself_ListWidgetItem_void* wrap = new QSlotWrapperself_ListWidgetItem_void(user_data, (self_ListWidgetItem_void)trampoline_func, (void*)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(itemActivated(QListWidgetItem*)), wrap, SLOT(method(QListWidgetItem*)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void set_list_widget_current_row_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row)) {
     QSlotWrapperself_int_void* wrap = new QSlotWrapperself_int_void(user_data, (self_int_void)trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
@@ -334,6 +342,7 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
     list_widget_count,
     list_widget_set_drag_enabled,
     list_widget_set_drop_indicator_shown,
+    set_list_widget_item_activated_event,
     set_list_widget_current_row_changed_event,
 };
 

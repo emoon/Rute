@@ -393,6 +393,66 @@ impl<'a> ListWidget<'a> {
     
     }
 
+    unsafe extern "C" fn item_activated_trampoline_ud<T>(
+        user_data: *const c_void,
+        func: *const c_void,
+        item: ListWidgetItem
+    ) {
+        let f: &&(Fn(&T, ListWidgetItem) + 'static) = transmute(func);
+        let data = user_data as *const T;
+        f(&*data, item);
+    }
+
+    pub fn set_item_activated_event_ud<F, T>(&self, data: &'a T, func: F) -> &ListWidget<'a>
+    where
+        F: Fn(&T, ListWidgetItem) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, ListWidgetItem) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_item_activated_event)(
+                obj_data,
+                user_data,
+                transmute(Self::item_activated_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    unsafe extern "C" fn item_activated_trampoline(
+        user_data: *const c_void,
+        func: *const c_void,
+        item: ListWidgetItem
+    ) {
+        let f: &&(Fn(ListWidgetItem) + 'static) = transmute(func);
+        f(item);
+    }
+
+    pub fn set_item_activated_event<F>(&self, func: F) -> &ListWidget<'a>
+    where
+        F: Fn(ListWidgetItem) + 'a,
+    {
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+        let f: Box<Box<Fn(ListWidgetItem) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_item_activated_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(Self::item_activated_trampoline as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
     unsafe extern "C" fn current_row_changed_trampoline_ud<T>(
         user_data: *const c_void,
         func: *const c_void,

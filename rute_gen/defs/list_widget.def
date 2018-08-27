@@ -13,6 +13,7 @@ struct ListWidget : Widget {
 	current_row() -> i32,
 	// selected_items() -> <&ListWidgetItem>,
 
+
 	//item(i32 index) -> ListWidgetItem?,
 	set_current_row(i32 index),
 	count() -> i32,
@@ -27,6 +28,7 @@ struct ListWidget : Widget {
     //[event] drop(&DropEvent event),
 
 	//[manual] add_widget_item(&ListWidgetItem item),
+	[callback] item_activated(&ListWidgetItem item),
 	[callback] current_row_changed(i32 row),
 	//[callback] item_clicked(&ListWidgetItem item),
 	//[callback] item_double_clicked(&ListWidgetItem item),

@@ -79,6 +79,7 @@ struct RUListWidgetFuncs {
     int (*count)(struct RUBase* self_c);
     void (*set_drag_enabled)(struct RUBase* self_c, bool state);
     void (*set_drop_indicator_shown)(struct RUBase* self_c, bool state);
+    void (*set_item_activated_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item));
     void (*set_current_row_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row));
 };
 
@@ -140,6 +141,7 @@ typedef struct Rute {
 #define RUListWidget_count(obj) obj.list_widget_funcs->list_widget_funcs(obj.priv_data)
 #define RUListWidget_set_drag_enabled(obj, state) obj.list_widget_funcs->list_widget_funcs(obj.priv_data, state)
 #define RUListWidget_set_drop_indicator_shown(obj, state) obj.list_widget_funcs->list_widget_funcs(obj.priv_data, state)
+#define RUListWidget_set_item_activated_event(obj, user_data, event) obj.item_activated->set_list_widget_funcs_event(obj.priv_data, user_data, event)
 #define RUListWidget_set_current_row_changed_event(obj, user_data, event) obj.current_row_changed->set_list_widget_funcs_event(obj.priv_data, user_data, event)
 
 #define RUFont_set_pixel_size(obj, size) obj.font_funcs->font_funcs(obj.priv_data, size)

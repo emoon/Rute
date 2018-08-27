@@ -80,7 +80,7 @@ public:
         m_wrapped_func = wrapped_func;
     }
 
-    Q_SLOT void method({{c_args}}) {
+    Q_SLOT void method({{c_args | remove_first: \",\"}}) {
         m_trampoline_func(m_data, m_wrapped_func{{c_call_args}});
     }
 private:

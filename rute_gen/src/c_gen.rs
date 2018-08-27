@@ -8,6 +8,8 @@ use std::io;
 use std::io::BufWriter;
 use std::io::Write;
 
+use header_ffi_gen::HeaderFFIGen;
+
 ///
 /// Header that is generated at the start of the Rute.h file
 ///
@@ -35,8 +37,103 @@ static FOOTER: &'static [u8] = b"
 }
 #endif\n";
 
-pub struct CapiGenerator;
+pub struct CapiHeaderGen;
 
+impl HeaderFFIGen for CapiHeaderGen
+    ///
+    /// Generate the header for the file
+    ///
+    fn gen_header(dest: &mut String) {
+        dest.push_str(HEADER);
+    }
+
+    ///
+    /// Generate forward declarations
+    ///
+    fn gen_forward_declaration(dest: &mut String, struct_name: &str) {
+        dest += format!("struct RU{}Funcs;\n", struct_name)
+    }
+
+    ///
+    /// Generate start of enum declaration
+    ///
+    fn gen_enum_declaration(dest: &mut String, enum_name: &str) {
+        dest += format!("typedef enum RU{} {{\n", enum_name)
+    }
+
+    ///
+    /// Generate end of enum declaration
+    ///
+    fn gen_enum_declaration_end(dest: &mut String, enum_name: &str) {
+        dest += format!("}} RU{};\n\n", enum_name)
+    }
+
+    ///
+    /// Generate the enum entry
+    ///
+    fn gen_enum_entry(dest: &mut String, enum_name: &str, entry: &EnumEntry) {
+        match *entry {
+            EnumEntry::Enum(ref name) => dest += format!("    RU{}_{},\n", enum_def.name, name),
+            EnumEntry::EnumValue(ref name, ref val) dest += mt(format_args!(
+                "    RU{}_{} = {},\n",
+                enum_def.name, name, val
+            ))?,
+        }
+    }
+
+    ///
+    /// Generate start of struct funcs declaration
+    ///
+    fn gen_funcs_declaration(dest: &mut String, struct_name: &str) {
+        dest += format!("struct RU{}Funcs {{\n", sdef.name)
+    }
+
+    ///
+    /// Generate destroy function
+    ///
+    fn gen_destroy_func(dest: &mut String, function_name: &str) {
+        dest.push_str("    void (*destroy)(struct RUBase* self);\n")
+    }
+
+    ///
+    /// Generate create function for owned data function
+    ///
+    fn gen_owned_data_create(dest: &mut String, struct_name: &str) {
+        dest += formats!(
+                "    struct RU{} (*create_{})(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* private_user_data);\n",
+                struct_name,
+                struct_name.to_snake_case()
+            ))?;
+    }
+
+    ///
+    /// Generate create function
+    ///
+    fn gen_create(dest: &mut String, struct_name: &str) {
+        dest += formats!(
+                "    struct RU{} (*create_{})(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* private_user_data);\n",
+                struct_name,
+                struct_name.to_snake_case()
+            ))?;
+    }
+
+    ///
+    /// Generate function
+    ///
+    fn gen_function(dest: &mut String, func: &Function),
+
+    ///
+    /// Generate forward declarations of needed
+    ///
+    fn generate_post_declarations(dest: &mut String, api_def: &ApiDef),
+}
+
+
+/*
 impl CapiGenerator {
     ///
     /// Generates the C API definition to the output filename
@@ -365,3 +462,4 @@ impl CapiGenerator {
         ))
     }
 }
+*/

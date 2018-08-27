@@ -88,6 +88,8 @@ pub struct RUListWidgetFuncs {
     pub count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_drag_enabled: extern "C" fn(self_c: *const RUBase, state: bool),
     pub set_drop_indicator_shown: extern "C" fn(self_c: *const RUBase, state: bool),
+    pub set_item_activated_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+                                            callback: *const c_void),
     pub set_current_row_changed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
 }
