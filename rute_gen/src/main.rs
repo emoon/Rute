@@ -7,6 +7,9 @@ extern crate walkdir;
 #[macro_use]
 extern crate pest_derive;
 
+// Trait for Header and FFI generation
+mod header_ffi_gen;
+
 // Code for parsing the API def
 mod api_parser;
 
@@ -28,8 +31,8 @@ mod cpp_gen_templates;
 mod c_gen;
 
 use api_parser::{ApiDef, ApiParser};
-use c_gen::CapiGenerator;
-use rust_ffi_gen::RustFFIGenerator;
+//use c_gen::CapiHeaderGen;
+//use rust_ffi_gen::RustFFIGenerator;
 use cpp_gen::CppGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
@@ -62,6 +65,7 @@ fn main() {
 
     // Generate bindings for each backend in threads
 
+    /*
     let c_api_def = api_def.clone();
     let c_api_thread = thread::spawn(move || {
         CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &c_api_def).unwrap();
@@ -71,6 +75,7 @@ fn main() {
     let ffi_api_thread = thread::spawn(move || {
         RustFFIGenerator::generate("../rute/src/auto/rute_auto_ffi.rs", &ffi_api_def).unwrap();
     });
+    */
 
     let cpp_api_def = api_def.clone();
     let cpp_api_thread = thread::spawn(move || {
@@ -84,7 +89,7 @@ fn main() {
 
     // wait for all of them to finish
 
-    c_api_thread.join().unwrap();
-    ffi_api_thread.join().unwrap();
+    //c_api_thread.join().unwrap();
+    //ffi_api_thread.join().unwrap();
     cpp_api_thread.join().unwrap();
 }

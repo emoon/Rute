@@ -1,12 +1,12 @@
 use api_parser::*;
 use heck::SnakeCase;
-use std::fs::File;
+//use std::fs::File;
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
 use std::io;
-use std::io::BufWriter;
-use std::io::Write;
+//use std::io::BufWriter;
+//use std::io::Write;
 
 use header_ffi_gen::HeaderFFIGen;
 
@@ -32,7 +32,7 @@ typedef void (*RUDeleteCallback)(void* data);\n\n";
 ///
 /// Footer that is generated at the end of the the Rute.h
 ///
-static FOOTER: &str = b"
+static FOOTER: &str = "
 #ifdef __cplusplus
 }
 #endif\n";
@@ -51,34 +51,50 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate forward declarations
     ///
     fn gen_forward_declaration(dest: &mut String, struct_name: &str) {
-        dest += format!("struct RU{}Funcs;\n", struct_name)
+        dest.push_str(&format!("struct RU{}Funcs;\n", struct_name));
     }
 
     ///
     /// Generate enum
     ///
     fn gen_enums(dest: &mut String, enums: &Enum) {
-        dest += format!("typedef enum RU{} {{\n", enum_name)
+        dest += format!("typedef enum RU{} {{\n", enums.name);
 
-        for enum_def in enums {
+        for entry in enums {
             match *entry {
                 EnumEntry::Enum(ref name) => {
-                    dest += format!("    RU{}_{},\n", enum_def.name, name),
+                    dest += format!("    RU{}_{},\n", entry.name, name);
                 },
 
                 EnumEntry::EnumValue(ref name, ref val) => {
-                    dest += format!("    RU{}_{} = {},\n", enum_def.name, name, val);
+                    dest += format!("    RU{}_{} = {},\n", entry.name, name, val);
                 }
             }
         }
+
+        dest += format!("RU{};\n\n", enums.name);
     }
 
     ///
-    /// Generate start of struct funcs declaration
+    /// Generate start of struct declaration
     ///
-    fn gen_funcs_declaration(dest: &mut String, struct_name: &str) {
-        dest += format!("struct RU{}Funcs {{\n", sdef.name)
+    fn gen_struct_declaration(dest: &mut String, struct_name: &str) {
+        dest += format!("typedef struct RU{} {{\n", struct_name);
     }
+
+    ///
+    /// Generate end of struct declaration
+    ///
+    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str) {
+        dest += format!("}} RU{};\n", struct_name);
+    }
+
+    //
+    // Generate start of struct funcs declaration
+    //
+    //fn gen_funcs_declaration(dest: &mut String, struct_name: &str) {
+    //   dest += format!("struct RU{}Funcs {{\n", sdef.name)
+    //}
 
     ///
     /// Generate destroy function
@@ -91,20 +107,20 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate create function for owned data function
     ///
     fn gen_owned_data_create(dest: &mut String, struct_name: &str) {
-        dest += formats!(
+        dest += format!(
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* private_user_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
-            )?;
+            );
     }
 
     ///
     /// Generate create function
     ///
     fn gen_create(dest: &mut String, struct_name: &str) {
-        dest += formats!(
+        dest += format!(
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* private_user_data);\n",
@@ -123,6 +139,12 @@ impl HeaderFFIGen for CapiHeaderGen {
             FunctionType::Callback => Self::generate_callback_def(dest, func)?,
             _ => (),
         }
+    }
+    ///
+    /// Generate void data entry
+    ///
+    fn gen_void_ptr_data(dest: &mut String, name: &str) {
+        dest += format!("    void* {},", name);
     }
 
     ///
@@ -159,7 +181,7 @@ impl CapiHeaderGen {
     ///
     fn generate_callback_def(dest: &mut String, func: &Function) -> io::Result<()> {
         dest.push_str("    ");
-        Self::callback_fun_def_name(dest, true, &func.name, func));
+        Self::callback_fun_def_name(dest, true, &func.name, func);
         dest.push_str(";\n");
     }
 
@@ -168,7 +190,7 @@ impl CapiHeaderGen {
     ///
     /// struct Foo (*foobar)(uint32_t x, uint32_t)
     ///
-    fn generate_func_def>(dest: &mut String, func: &Function) {
+    fn generate_func_def(dest: &mut String, func: &Function) {
         let ret_value = func
             .return_val
             .as_ref()
@@ -179,7 +201,7 @@ impl CapiHeaderGen {
             ret_value,
             func.name,
             func.generate_c_function_def(None)
-        ))
+        );
     }
 }
 

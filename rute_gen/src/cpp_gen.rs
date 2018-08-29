@@ -243,7 +243,7 @@ fn generate_event_setup_funcs<W: Write>(
 
     f.write_fmt(format_args!(
         "{} {{\n",
-        CapiGenerator::callback_fun_def_name(false, &func_name, func),
+        CapiHeaderGen::callback_fun_def_name(false, &func_name, func),
     ))?;
 
     f.write_fmt(format_args!(
@@ -666,7 +666,7 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
 
     f.write_fmt(format_args!(
         "static {} {{\n",
-        CapiGenerator::callback_fun_def_name(false, &func_name, func),
+        CapiHeaderGen::callback_fun_def_name(false, &func_name, func),
     ))?;
 
     //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
