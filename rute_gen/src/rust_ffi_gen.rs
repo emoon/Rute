@@ -1,10 +1,8 @@
 use api_parser::*;
 //use heck::{CamelCase, SnakeCase};
 use std::borrow::Cow;
-use std::fs::File;
-use std::io;
-use std::io::{BufWriter, Write};
-use header_ffi_gen::HeaderFFIGen;
+//use std::io::{BufWriter, Write};
+//use header_ffi_gen::HeaderFFIGen;
 
 ///
 /// Header for Rust FFI

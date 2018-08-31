@@ -241,10 +241,11 @@ fn generate_event_setup_funcs<W: Write>(
 ) -> io::Result<()> {
     let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
 
-    f.write_fmt(format_args!(
-        "{} {{\n",
-        CapiHeaderGen::callback_fun_def_name(false, &func_name, func),
-    ))?;
+    let mut func_def = String::with_capacity(128);
+
+    CapiHeaderGen::callback_fun_def_name(&mut func_def, false, &func_name, func);
+
+    f.write_fmt(format_args!( "{} {{\n", func_def))?;
 
     f.write_fmt(format_args!(
         "    WR{}* qt_object = (WR{}*)object;\n",
@@ -664,10 +665,10 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
     let signal_type_name = signal_type_callback(&func);
     let func_name = function_name(struct_name, func);
 
-    f.write_fmt(format_args!(
-        "static {} {{\n",
-        CapiHeaderGen::callback_fun_def_name(false, &func_name, func),
-    ))?;
+    let mut callback_def = String::with_capacity(128);
+    CapiHeaderGen::callback_fun_def_name(&mut callback_def, false, &func_name, func);
+
+    f.write_fmt(format_args!("static {} {{\n", callback_def))?;
 
     //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
     f.write_fmt(format_args!(
@@ -1033,7 +1034,7 @@ impl CppGenerator {
             let mut template_data = Object::new();
 
             let c_args = generate_c_function_args_signal_wrapper(EventType::Callback, func);
-            let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
+            //let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
             let c_call_args = func.generate_invoke(Some(""));
 
             template_data.insert("signal_func_name".to_owned(), Value::Str(signal_type_name.clone()));

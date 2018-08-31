@@ -27,11 +27,13 @@ mod c_helper;
 mod cpp_gen;
 mod cpp_gen_templates;
 
-// Code for C generation
+// Code for C/Header generation
 mod c_gen;
 
 use api_parser::{ApiDef, ApiParser};
-//use c_gen::CapiHeaderGen;
+use header_ffi_gen::HeaderFFIGenerator;
+
+use c_gen::CapiHeaderGen;
 //use rust_ffi_gen::RustFFIGenerator;
 use cpp_gen::CppGenerator;
 use rust_gen::RustGenerator;
@@ -65,12 +67,12 @@ fn main() {
 
     // Generate bindings for each backend in threads
 
-    /*
     let c_api_def = api_def.clone();
     let c_api_thread = thread::spawn(move || {
-        CapiGenerator::generate("../rute/c_cpp/auto/Rute.h", &c_api_def).unwrap();
+        HeaderFFIGenerator::generate("../rute/c_cpp/auto/Rute.h", &c_api_def, CapiHeaderGen::new()).unwrap();
     });
 
+    /*
     let ffi_api_def = api_def.clone();
     let ffi_api_thread = thread::spawn(move || {
         RustFFIGenerator::generate("../rute/src/auto/rute_auto_ffi.rs", &ffi_api_def).unwrap();
@@ -89,7 +91,7 @@ fn main() {
 
     // wait for all of them to finish
 
-    //c_api_thread.join().unwrap();
+    c_api_thread.join().unwrap();
     //ffi_api_thread.join().unwrap();
     cpp_api_thread.join().unwrap();
 }

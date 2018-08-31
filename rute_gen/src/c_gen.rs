@@ -5,9 +5,8 @@ use heck::SnakeCase;
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
 use std::io;
+use std::io::Write;
 //use std::io::BufWriter;
-//use std::io::Write;
-
 use header_ffi_gen::HeaderFFIGen;
 
 ///
@@ -37,56 +36,59 @@ static FOOTER: &str = "
 }
 #endif\n";
 
-pub struct CapiHeaderGen;
+pub struct CapiHeaderGen {
+    temp_string: String,
+}
 
 impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate the header for the file
     ///
-    fn gen_header(dest: &mut String) {
-        dest.push_str(HEADER);
+    fn gen_header<W: Write>(&mut self, dest: &mut W) -> io::Result<()> {
+        write!(dest, "{}", HEADER)
     }
 
     ///
     /// Generate forward declarations
     ///
-    fn gen_forward_declaration(dest: &mut String, struct_name: &str) {
-        dest.push_str(&format!("struct RU{}Funcs;\n", struct_name));
+    fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        dest.write_fmt(format_args!("struct RU{}Funcs;\n", struct_name))?;
+        dest.write_fmt(format_args!("struct RU{};\n", struct_name))
     }
 
     ///
     /// Generate enum
     ///
-    fn gen_enums(dest: &mut String, enums: &Enum) {
-        dest += format!("typedef enum RU{} {{\n", enums.name);
+    fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
+        write!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
 
-        for entry in enums {
+        for entry in &enum_def.entries {
             match *entry {
                 EnumEntry::Enum(ref name) => {
-                    dest += format!("    RU{}_{},\n", entry.name, name);
+                    write!(dest, "    RU{}_{},\n", enum_def.name, name)?;
                 },
 
                 EnumEntry::EnumValue(ref name, ref val) => {
-                    dest += format!("    RU{}_{} = {},\n", entry.name, name, val);
+                    write!(dest, "    RU{}_{} = {},\n", enum_def.name, name, val)?;
                 }
             }
         }
 
-        dest += format!("RU{};\n\n", enums.name);
+        write!(dest, "}} RU{};\n\n", enum_def.name)
     }
 
     ///
     /// Generate start of struct declaration
     ///
-    fn gen_struct_declaration(dest: &mut String, struct_name: &str) {
-        dest += format!("typedef struct RU{} {{\n", struct_name);
+    fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        write!(dest, "typedef struct RU{} {{\n", struct_name)
     }
 
     ///
     /// Generate end of struct declaration
     ///
-    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str) {
-        dest += format!("}} RU{};\n", struct_name);
+    fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        write!(dest, "}} RU{};\n", struct_name)
     }
 
     //
@@ -99,90 +101,99 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate destroy function
     ///
-    fn gen_destroy_func(dest: &mut String, function_name: &str) {
-        dest.push_str("    void (*destroy)(struct RUBase* self);\n")
+    fn gen_destroy_func<W: Write>(&mut self, dest: &mut W, _function_name: &str) -> io::Result<()> {
+        write!(dest, "    void (*destroy)(struct RUBase* self);\n")
     }
 
     ///
     /// Generate create function for owned data function
     ///
-    fn gen_owned_data_create(dest: &mut String, struct_name: &str) {
-        dest += format!(
+    fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        write!(dest,
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* private_user_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
-            );
+            )
     }
 
     ///
     /// Generate create function
     ///
-    fn gen_create(dest: &mut String, struct_name: &str) {
-        dest += format!(
+    fn gen_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        write!(dest,
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* private_user_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
-            );
+            )
     }
 
     ///
     /// Generate function
     ///
-    fn gen_function(dest: &mut String, func: &Function) {
+    fn gen_function<W: Write>(&mut self, dest: &mut W, func: &Function) -> io::Result<()> {
         match func.func_type {
-            FunctionType::Regular => Self::generate_func_def(dest, func)?,
-            FunctionType::Static => Self::generate_func_def(dest, func)?,
-            FunctionType::Callback => Self::generate_callback_def(dest, func)?,
+            FunctionType::Regular => self.generate_func_def(dest, func)?,
+            FunctionType::Static => self.generate_func_def(dest, func)?,
+            FunctionType::Callback => self.generate_callback_def(dest, func)?,
             _ => (),
         }
+
+        Ok(())
     }
+
     ///
     /// Generate void data entry
     ///
-    fn gen_void_ptr_data(dest: &mut String, name: &str) {
-        dest += format!("    void* {},", name);
+    fn gen_void_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+        write!(dest, "    void* {},", name)
     }
 
     ///
     /// Generate forward declarations of needed
     ///
-    fn generate_post_declarations(dest: &mut String, _api_def: &ApiDef) {
-        dest.push_str(FOOTER);
+    fn generate_post_declarations<W: Write>(&mut self, dest: &mut W, _api_def: &ApiDef) -> io::Result<()> {
+        write!(dest, "{}", FOOTER)
     }
 }
 
 impl CapiHeaderGen {
+    pub fn new() -> CapiHeaderGen {
+        CapiHeaderGen {
+            temp_string: String::with_capacity(1024),
+        }
+    }
+
     ///
     /// Generate def for connecting events
     ///
     /// TODO: Cleanup this code
     pub fn callback_fun_def_name(dest: &mut String, def: bool, name: &str, func: &Function) {
+        use std::fmt::Write;
         if def {
-            dest += format!(
+            write!(dest,
                 "void (*set_{}_event)(void* object, void* user_data, void* trampoline_func, void (*event)(",
-                name);
+                name).unwrap()
         } else {
-            dest += format!(
+            write!(dest,
                 "void set_{}_event(void* object, void* user_data, void* trampoline_func, void (*event)(",
-                name);
+                name).unwrap();
         };
 
-        dest += func.gen_c_def_filter(Some(Some("void*")), |_, _| None);
-
-        dest.push_str(")");
+        write!(dest, "{})", func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)).unwrap()
     }
 
     ///
     /// Code to write down callback def
     ///
-    fn generate_callback_def(dest: &mut String, func: &Function) -> io::Result<()> {
-        dest.push_str("    ");
-        Self::callback_fun_def_name(dest, true, &func.name, func);
-        dest.push_str(";\n");
+    fn generate_callback_def<W: Write>(&mut self, dest: &mut W, func: &Function) -> io::Result<()> {
+        self.temp_string.clear();
+
+        Self::callback_fun_def_name(&mut self.temp_string, true, &func.name, func);
+        dest.write_fmt(format_args!("    {}\n", self.temp_string))
     }
 
     ///
@@ -190,18 +201,17 @@ impl CapiHeaderGen {
     ///
     /// struct Foo (*foobar)(uint32_t x, uint32_t)
     ///
-    fn generate_func_def(dest: &mut String, func: &Function) {
+    fn generate_func_def<W: Write>(&mut self, dest: &mut W, func: &Function) -> io::Result<()> {
         let ret_value = func
             .return_val
             .as_ref()
             .map_or("void".into(), |r| r.get_c_type());
 
         // write return value and function name
-        dest += format!("    {} (*{})({});\n",
+        dest.write_fmt(format_args!("    {} (*{})({});\n",
             ret_value,
             func.name,
-            func.generate_c_function_def(None)
-        );
+            func.generate_c_function_def(None)))
     }
 }
 
