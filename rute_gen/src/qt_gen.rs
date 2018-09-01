@@ -7,7 +7,7 @@ use std::io;
 use std::io::{BufWriter, Write};
 
 use api_parser::*;
-use cpp_gen_templates::*;
+use qt_gen_templates::*;
 
 use liquid::{Template, ParserBuilder, Object, Value};
 
@@ -987,17 +987,17 @@ impl TypeHandler for TraitTypeHandler {
     }
 }
 
-pub struct CppGenerator {
+pub struct QtGenerator {
     wrapper_template: Template,
     signal_wrapper_template: Template,
 }
 
-impl CppGenerator {
-    pub fn new() -> CppGenerator {
+impl QtGenerator {
+    pub fn new() -> QtGenerator {
         let parser = ParserBuilder::with_liquid().build();
 
-        CppGenerator {
-            wrapper_template: parser.parse(CPP_GEN_WRAPPER_TEMPLATE).unwrap(),
+        QtGenerator {
+            wrapper_template: parser.parse(QT_GEN_WRAPPER_TEMPLATE).unwrap(),
             signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
         }
     }
@@ -1124,7 +1124,7 @@ impl CppGenerator {
         generate_includes(&mut h_out, &struct_name_map, &api_def)?;
         generate_includes(&mut cpp_out, &struct_name_map, &api_def)?;
 
-        cpp_out.write_all(CPP_HEADER)?;
+        cpp_out.write_all(QT_HEADER)?;
 
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;

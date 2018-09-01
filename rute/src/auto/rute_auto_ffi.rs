@@ -25,6 +25,7 @@ pub struct RUApplicationFuncs {
     pub font: extern "C" fn(self_c: *const RUBase) ->  RUFont,
     pub set_about_to_quit_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
+
     pub beep: extern "C" fn(self_c: *const RUBase),
     pub about_qt: extern "C" fn(self_c: *const RUBase),
 }
@@ -88,8 +89,10 @@ pub struct RUListWidgetFuncs {
     pub set_drop_indicator_shown: extern "C" fn(self_c: *const RUBase, state: bool),
     pub set_item_activated_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
+
     pub set_current_row_changed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
+
 }
 
 #[repr(C)]
@@ -123,7 +126,9 @@ pub struct RUFont {
 #[derive(Copy, Clone)]
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
+
     pub get_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
+
     pub create_widget: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -137,9 +142,11 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void) -> RUListWidget,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
+
 }
 
 
 extern "C" {
     pub fn rute_get() -> *const RuteFFI;
 }
+

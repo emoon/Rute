@@ -12,11 +12,11 @@ pub static HEADER: &'static [u8] = b"
 ";
 
 //
-// Used to make CPP generated code a bit easier to read
+// Used to make QT generated code a bit easier to read
 //
 pub static SEPARATOR: &'static [u8] = b"///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n\n";
 
-pub static CPP_HEADER: &'static [u8] = b"
+pub static QT_HEADER: &'static [u8] = b"
 static char s_temp_string_buffer[1024*1024];\n
 #include <map>
 std::map<QWidget*, void*> s_widget_lookup;\n
@@ -40,7 +40,7 @@ extern \"C\" struct Rute* rute_get() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static CPP_GEN_WRAPPER_TEMPLATE: &str = "
+pub static QT_GEN_WRAPPER_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WR{{struct_name}} : public {{cpp_name}} {

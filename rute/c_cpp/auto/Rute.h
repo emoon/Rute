@@ -19,6 +19,7 @@ struct RUArray {
 
 typedef void (*RUDeleteCallback)(void* data);
 
+
 struct RUApplicationFuncs;
 struct RUApplication;
 struct RUWidgetFuncs;
@@ -35,6 +36,7 @@ typedef struct RUApplicationFuncs {
     int (*exec)(struct RUBase* self_c);
     struct RUFont (*font)(struct RUBase* self_c);
     void (*set_about_to_quit_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c));
+
     void (*beep)(struct RUBase* self_c);
     void (*about_qt)(struct RUBase* self_c);
 } RUApplicationFuncs;
@@ -44,6 +46,7 @@ typedef struct RUApplication {
     RUBase* host_data;
     RUBase* extension;
     struct RUApplicationFuncs* application_funcs;
+
 } RUApplication;
 
 typedef struct RUWidgetFuncs {
@@ -60,6 +63,7 @@ typedef struct RUWidget {
     RUBase* host_data;
     RUBase* extension;
     struct RUWidgetFuncs* widget_funcs;
+
 } RUWidget;
 
 typedef struct RUListWidgetItemFuncs {
@@ -73,6 +77,7 @@ typedef struct RUListWidgetItem {
     RUBase* host_data;
     RUBase* extension;
     struct RUListWidgetItemFuncs* list_widget_item_funcs;
+
 } RUListWidgetItem;
 
 typedef struct RUListWidgetFuncs {
@@ -85,7 +90,9 @@ typedef struct RUListWidgetFuncs {
     void (*set_drag_enabled)(struct RUBase* self_c, bool state);
     void (*set_drop_indicator_shown)(struct RUBase* self_c, bool state);
     void (*set_item_activated_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item));
+
     void (*set_current_row_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row));
+
 } RUListWidgetFuncs;
 
 typedef struct RUListWidget {
@@ -93,7 +100,9 @@ typedef struct RUListWidget {
     RUBase* host_data;
     RUBase* extension;
     struct RUWidgetFuncs* widget_funcs;
+
     struct RUListWidgetFuncs* list_widget_funcs;
+
 } RUListWidget;
 
 typedef struct RUFontFuncs {
@@ -107,6 +116,7 @@ typedef struct RUFont {
     RUBase* host_data;
     RUBase* extension;
     struct RUFontFuncs* font_funcs;
+
 } RUFont;
 
 typedef struct RuteFFI {

@@ -23,9 +23,9 @@ mod rust_gen_templates;
 // Code for C generation (comman helpers for C style code)
 mod c_helper;
 
-// Code for C++ generation
-mod cpp_gen;
-mod cpp_gen_templates;
+// Code for Qt C++ generation
+mod qt_gen;
+mod qt_gen_templates;
 
 // Code for C/Header generation
 mod c_gen;
@@ -35,7 +35,7 @@ use header_ffi_gen::HeaderFFIGenerator;
 
 use c_gen::CapiHeaderGen;
 use rust_ffi_gen::RustFFIGenerator;
-use cpp_gen::CppGenerator;
+use qt_gen::QtGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
 use std::sync::Arc;
@@ -86,9 +86,9 @@ fn main() {
 
     let cpp_api_def = api_def.clone();
     let cpp_api_thread = thread::spawn(move || {
-        let cpp_gen = CppGenerator::new();
-        cpp_gen
-            .generate("../rute/c_cpp/auto/rute_cpp", &cpp_api_def)
+        let qt_gen = QtGenerator::new();
+        qt_gen
+            .generate("../rute/c_cpp/auto/rute_qt", &cpp_api_def)
             .unwrap();
     });
 
