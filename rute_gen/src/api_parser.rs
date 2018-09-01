@@ -759,9 +759,10 @@ impl Variable {
         }
     }
 
-    ///
-    /// Checks if this variable type has a wrapper class
-    ///
+    //
+    // Checks if this variable type has a wrapper class
+    //
+    /*
     pub fn has_wrapper_class(&self, api_def: &ApiDef) -> bool {
         match self.vtype {
             VariableType::Regular => {
@@ -775,6 +776,7 @@ impl Variable {
             _ => false,
         }
     }
+    */
 }
 
 ///

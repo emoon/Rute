@@ -202,14 +202,11 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     fn gen_function<W: Write>(&mut self, dest: &mut W, func: &Function) -> io::Result<()> {
         match func.func_type {
-            FunctionType::Regular => Self::generate_function(dest, func)?,
-            FunctionType::Static => Self::generate_function(dest, func)?,
-            FunctionType::Callback => Self::generate_callback(dest, func)?,
-            FunctionType::Event => Self::generate_event(dest, func)?,
-            _ => (),
+            FunctionType::Regular => Self::generate_function(dest, func),
+            FunctionType::Static => Self::generate_function(dest, func),
+            FunctionType::Callback => Self::generate_callback(dest, func),
+            FunctionType::Event => Self::generate_event(dest, func),
         }
-
-        Ok(())
     }
 
     ///

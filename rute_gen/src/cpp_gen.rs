@@ -132,6 +132,7 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
 ///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
+/*
 fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
     let event_type = &func.function_args[1];
 
@@ -158,6 +159,7 @@ fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<
 
     Ok(())
 }
+*/
 
 ///
 /// Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
