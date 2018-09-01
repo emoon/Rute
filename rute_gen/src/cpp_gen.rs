@@ -28,7 +28,7 @@ trait TypeHandler {
         arg.name.clone()
     }
 
-    fn gen_body_return(&self, function_name: &String) -> String {
+    fn gen_body_return(&self, function_name: &str) -> String {
         format!(
             "    return qt_data->{}()",
             function_name.to_mixed_case())
@@ -337,7 +337,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
         }
     }
 
-    if func.function_args.len() == 0 && event_type == EventType::Event {
+    if func.function_args.is_empty() && event_type == EventType::Event {
         function_args.push_str("RUBase*");
     }
 
@@ -517,7 +517,7 @@ fn generate_func_def<W: Write>(
     _api_def: &ApiDef,
     func: &Function,
     struct_name_map: &HashMap<&str, &str>,
-    type_handlers: &Vec<Box<TypeHandler>>,
+    type_handlers: &[Box<TypeHandler>],
     is_widget: bool,
 ) -> io::Result<()> {
     let ret_value = func.return_val
@@ -800,15 +800,12 @@ fn generate_create_functions<W: Write>(
         // We create wrapper widgets for all Qt widges so we can have our own functionallity there
         // So we prefix them with WR (WRapper) otherwise we assume it's a regular Q* class
         //
-        let (qt_type, create_func) = match is_inherits_widget {
-            true => ("WR", "create_widget_func"),
-            false => {
-                if sdef.should_gen_wrap_class() {
-                    ("WR", "generic_create_func_with_delete")
-                } else {
-                    ("Q", "generic_create_func")
-                }
-            },
+        let (qt_type, create_func) = if is_inherits_widget {
+            ("WR", "create_widget_func")
+        } else if sdef.should_gen_wrap_class() {
+            ("WR", "generic_create_func_with_delete")
+        } else {
+            ("Q", "generic_create_func")
         };
 
         //

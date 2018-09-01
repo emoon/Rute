@@ -43,88 +43,86 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate the header for the file
     ///
     fn gen_header<W: Write>(&mut self, dest: &mut W) -> io::Result<()> {
-        write!(dest, "{}", HEADER)
+        writeln!(dest, "{}", HEADER)
     }
 
     ///
     /// Generate forward declarations
     ///
     fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        dest.write_fmt(format_args!("struct RU{}Funcs;\n", struct_name))?;
-        dest.write_fmt(format_args!("struct RU{};\n", struct_name))
+        writeln!(dest, "struct RU{}Funcs;", struct_name)?;
+        writeln!(dest, "struct RU{};", struct_name)
     }
 
     ///
     /// Generate enum
     ///
     fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
-        write!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
+        writeln!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
 
         for entry in &enum_def.entries {
             match *entry {
                 EnumEntry::Enum(ref name) => {
-                    write!(dest, "    RU{}_{},\n", enum_def.name, name)?;
+                    writeln!(dest, "    RU{}_{},", enum_def.name, name)?;
                 },
 
                 EnumEntry::EnumValue(ref name, ref val) => {
-                    write!(dest, "    RU{}_{} = {},\n", enum_def.name, name, val)?;
+                    writeln!(dest, "    RU{}_{} = {},", enum_def.name, name, val)?;
                 }
             }
         }
 
-        write!(dest, "}} RU{};\n\n", enum_def.name)
+        writeln!(dest, "}} RU{};\n", enum_def.name)
     }
 
     ///
     /// Generate start of struct declaration
     ///
     fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest, "typedef struct {} {{\n", struct_name)
+        writeln!(dest, "typedef struct {} {{", struct_name)
     }
 
     ///
     /// Generate end of struct declaration
     ///
     fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest, "}} {};\n\n", struct_name)
+        writeln!(dest, "}} {};\n", struct_name)
     }
 
     ///
     /// Generate destroy function
     ///
     fn gen_destroy_func<W: Write>(&mut self, dest: &mut W, _function_name: &str) -> io::Result<()> {
-        write!(dest, "    void (*destroy)(struct RUBase* self);\n")
+        writeln!(dest, "    void (*destroy)(struct RUBase* self);")
     }
 
     ///
     /// Generate create function for owned data function
     ///
     fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest,
+        writeln!(dest,
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* host_data);\n",
+        RUDeleteCallback delete_callback, void* host_data);",
                 struct_name,
-                struct_name.to_snake_case()
-            )
+                struct_name.to_snake_case())
     }
 
     ///
     /// Generate create function
     ///
     fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
-        write!(dest,
-                "    struct RU{} (*{}_{})(struct RUBase* priv_data);\n",
+        writeln!(dest,
+                "    struct RU{} (*{}_{})(struct RUBase* priv_data);",
                 struct_name,
                 prefix,
-                struct_name.to_snake_case()
-            )
+                struct_name.to_snake_case())
     }
     ///
     /// Generate the funcs declaration
     ///
     fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        write!(dest, "    struct RU{}Funcs* {}_funcs;\n", name, name.to_snake_case())
+        writeln!(dest, "    struct RU{}Funcs* {}_funcs;\n", name, name.to_snake_case())
     }
 
     ///
@@ -136,7 +134,7 @@ impl HeaderFFIGen for CapiHeaderGen {
             FunctionType::Static => self.generate_func_def(dest, func)?,
             FunctionType::Callback => {
                 self.generate_callback_def(dest, func)?;
-                write!(dest, ");\n")?;
+                writeln!(dest, ");\n")?;
             }
             _ => (),
         }
@@ -148,7 +146,7 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate void data entry
     ///
     fn gen_rubase_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        write!(dest, "    RUBase* {};\n", name)
+        writeln!(dest, "    RUBase* {};", name)
     }
 
     ///
@@ -192,7 +190,7 @@ impl CapiHeaderGen {
         self.temp_string.clear();
 
         Self::callback_fun_def_name(&mut self.temp_string, true, &func.name, func);
-        dest.write_fmt(format_args!("    {}", self.temp_string))
+        write!(dest, "    {}", self.temp_string)
     }
 
     ///
@@ -207,10 +205,10 @@ impl CapiHeaderGen {
             .map_or("void".into(), |r| r.get_c_type());
 
         // write return value and function name
-        dest.write_fmt(format_args!("    {} (*{})({});\n",
+        writeln!(dest, "    {} (*{})({});",
             ret_value,
             func.name,
-            func.generate_c_function_def(None)))
+            func.generate_c_function_def(None))
     }
 }
 

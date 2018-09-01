@@ -132,52 +132,52 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// Generate enum
     ///
     fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
-        write!(dest, "#[repr(C)]\n")?;
-        write!(dest, "#[derive(Copy, Clone, Debug)]\n")?;
-        write!(dest, "pub enum RU{} {{\n", enum_def.name)?;
+        writeln!(dest, "#[repr(C)]")?;
+        writeln!(dest, "#[derive(Copy, Clone, Debug)]")?;
+        writeln!(dest, "pub enum RU{} {{", enum_def.name)?;
 
         for entry in &enum_def.entries {
             match *entry {
-                EnumEntry::Enum(ref name) => write!(dest, "    {},\n", name.to_camel_case())?,
-                EnumEntry::EnumValue(ref name, ref val) => write!(dest, "    {} = {},\n", name.to_camel_case(), val)?,
+                EnumEntry::Enum(ref name) => writeln!(dest, "    {},", name.to_camel_case())?,
+                EnumEntry::EnumValue(ref name, ref val) => writeln!(dest, "    {} = {},", name.to_camel_case(), val)?,
             }
         }
 
-        write!(dest, "}}\n\n")
+        writeln!(dest, "}}\n")
     }
 
     ///
     /// Generate start of struct declaration
     ///
     fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest, "#[repr(C)]\n")?;
-        write!(dest, "#[derive(Copy, Clone)]\n")?;
-        write!(dest, "pub struct {} {{\n", struct_name)
+        writeln!(dest, "#[repr(C)]")?;
+        writeln!(dest, "#[derive(Copy, Clone)]")?;
+        writeln!(dest, "pub struct {} {{", struct_name)
     }
 
     ///
     /// Generate end of struct declaration
     ///
     fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, _struct_name: &str) -> io::Result<()> {
-        write!(dest, "}}\n\n")
+        writeln!(dest, "}}\n")
     }
 
     ///
     /// Generate destroy function
     ///
     fn gen_destroy_func<W: Write>(&mut self, dest: &mut W, _function_name: &str) -> io::Result<()> {
-        write!(dest, "    pub destroy: extern \"C\" fn(self_c: *const RUBase),\n")
+        writeln!(dest, "    pub destroy: extern \"C\" fn(self_c: *const RUBase),")
     }
 
     ///
     /// Generate create function for owned data function
     ///
     fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-            write!(dest,
+            writeln!(dest,
                 "    pub create_{}: extern \"C\" fn(
         priv_data: *const RUBase,
         callback: unsafe extern \"C\" fn(),
-        host_data: *const c_void) -> RU{},\n",
+        host_data: *const c_void) -> RU{},",
                 struct_name.to_snake_case(), struct_name)
     }
 
@@ -185,7 +185,7 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// Generate create function
     ///
     fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
-        write!(dest, "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+        writeln!(dest, "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
                 prefix,
                 struct_name.to_snake_case(),
                 struct_name)
@@ -194,7 +194,7 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// Generate the funcs declaration
     ///
     fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        write!(dest, "    pub {}_funcs: *const RU{}Funcs,\n", name.to_snake_case(), name)
+        writeln!(dest, "    pub {}_funcs: *const RU{}Funcs,", name.to_snake_case(), name)
     }
 
     ///
@@ -213,14 +213,14 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// Generate void data entry
     ///
     fn gen_rubase_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        write!(dest, "    pub {}: *const RUBase,\n", name)
+        writeln!(dest, "    pub {}: *const RUBase,", name)
     }
 
     ///
     /// Generate forward declarations of needed
     ///
     fn generate_post_declarations<W: Write>(&mut self, dest: &mut W, _api_def: &ApiDef) -> io::Result<()> {
-        write!(dest, "{}", FOOTER)
+        writeln!(dest, "{}", FOOTER)
     }
 }
 
@@ -240,13 +240,9 @@ impl RustFFIGenerator {
     ///
     /// Generate ffi function
     ///
-    fn generate_function<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
+    fn generate_function<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
         let func_def = func.rust_func_def(true, None, |arg| arg.get_rust_ffi_type().into());
-
-        f.write_fmt(format_args!(
-            "    pub {}: extern \"C\" fn{},\n",
-            func.name, func_def
-        ))
+        writeln!(dest, "    pub {}: extern \"C\" fn{},", func.name, &func_def)
     }
 
     ///
@@ -256,25 +252,25 @@ impl RustFFIGenerator {
     ///                                      callback: extern "C" fn(widget: *const RUBase, test:
     ///                                      i32)),
     ///
-    fn generate_event<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
+    fn generate_event<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
         let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
             arg.get_rust_ffi_type().into()
         });
 
-        f.write_fmt(format_args!(
+        writeln!(dest,
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern \"C\" fn(widget: *const RUBase, {})),\n", func.name, func_def))
+                                            callback: extern \"C\" fn(widget: *const RUBase, {})),", func.name, func_def)
     }
 
     ///
     /// Generate callback function
     ///
-    fn generate_callback<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-        f.write_fmt(format_args!(
+    fn generate_callback<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
+        writeln!(dest,
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),\n",
             func.name,
-        ))
+        )
     }
 }
 

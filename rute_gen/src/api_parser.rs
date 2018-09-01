@@ -668,8 +668,7 @@ impl Struct {
     pub fn has_static_functions(&self) -> bool {
         self.functions
             .iter()
-            .find(|&f| f.func_type == FunctionType::Static)
-            .is_some()
+            .any(|ref f| f.func_type == FunctionType::Static)
     }
     ///
     /// Check if the struct should have a create function
@@ -687,8 +686,7 @@ impl Struct {
     pub fn has_manual_create(&self) -> bool {
         self.attributes
             .iter()
-            .find(|&s| s == ATTRIB_MANUAL_CREATE)
-            .is_some()
+            .any(|ref s| *s == ATTRIB_MANUAL_CREATE)
     }
 
     ///
@@ -707,8 +705,7 @@ impl Struct {
     pub fn should_generate_drop(&self) -> bool {
         self.attributes
             .iter()
-            .find(|&s| s == ATTRIB_DROP)
-            .is_some()
+            .any(|ref s| *s == ATTRIB_DROP)
     }
 }
 

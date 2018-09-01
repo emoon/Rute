@@ -442,9 +442,7 @@ impl RustGenerator {
             }
         });
 
-        let output = self.rust_func_template.render(&template_data).unwrap();
-
-        output
+        self.rust_func_template.render(&template_data).unwrap()
     }
 
     ///
@@ -455,11 +453,11 @@ impl RustGenerator {
             .class_structs
             .iter()
             .try_for_each(|s| {
-                if s.should_generate_trait {
-                    self.generate_struct_impl(f, s)?;
-                } else {
-                    self.generate_struct_impl(f, s)?;
-                }
+                //if s.should_generate_trait {
+                //    self.generate_struct_impl(f, s)?;
+                //} else {
+                self.generate_struct_impl(f, s)?;
+                //}
 
                 // Implement drop for structs that needs it
 
@@ -486,7 +484,6 @@ impl RustGenerator {
     ///
     ///
     fn generate_rute<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        // write header
         f.write_all(RUTE_IMPL_HEADER)?;
 
         // Generate all stucts that have owned data the generated style is outlined in RUST_CREATE_TEMPLATE
@@ -502,13 +499,11 @@ impl RustGenerator {
             template_data.insert("widget_snake_name".to_owned(), Value::Str(name.clone()));
             template_data.insert("widget_name".to_owned(), Value::Str(sdef.name.clone()));
 
-            let output;
-
-            if sdef.should_gen_wrap_class() {
-                output = self.rust_create_template.render(&template_data).unwrap();
+            let output = if sdef.should_gen_wrap_class() {
+                self.rust_create_template.render(&template_data).unwrap()
             } else {
-                output = self.rust_no_wrap_template.render(&template_data).unwrap();
-            }
+                self.rust_no_wrap_template.render(&template_data).unwrap()
+            };
 
             f.write_all(output.as_bytes())?;
 
