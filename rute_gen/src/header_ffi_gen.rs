@@ -18,11 +18,7 @@ pub trait HeaderFFIGen {
     ///
     /// Generate forward declarations of needed
     ///
-    fn gen_forward_declaration<W: Write>(
-        &mut self,
-        dest: &mut W,
-        struct_name: &str,
-    ) -> Result<()>;
+    fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> Result<()>;
 
     ///
     /// Generate the enum
@@ -56,7 +52,12 @@ pub trait HeaderFFIGen {
     ///
     /// Generate create function
     ///
-    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> Result<()>;
+    fn gen_create_gen<W: Write>(
+        &mut self,
+        dest: &mut W,
+        prefix: &str,
+        struct_name: &str,
+    ) -> Result<()>;
 
     ///
     /// Generate function
@@ -98,12 +99,12 @@ impl HeaderFFIGenerator {
 
         // Generate forward declarations if needed
         for sdef in &api_def.class_structs {
-           imp.gen_forward_declaration(&mut dest, &sdef.name)?;
+            imp.gen_forward_declaration(&mut dest, &sdef.name)?;
         }
 
         // Generate all enums
         for enum_def in &api_def.enums {
-           imp.gen_enum(&mut dest, enum_def)?;
+            imp.gen_enum(&mut dest, enum_def)?;
         }
 
         // generate all structs

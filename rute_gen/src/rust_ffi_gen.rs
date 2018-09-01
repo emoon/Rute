@@ -1,8 +1,12 @@
 use api_parser::*;
-//use heck::{CamelCase, SnakeCase};
 use std::borrow::Cow;
-//use std::io::{BufWriter, Write};
-//use header_ffi_gen::HeaderFFIGen;
+use heck::{SnakeCase, CamelCase};
+///
+/// This code is responisble for generating the Rute.h file that allows usage of Rute from C
+///
+use std::io;
+use std::io::Write;
+use header_ffi_gen::HeaderFFIGen;
 
 ///
 /// Header for Rust FFI
@@ -108,171 +112,132 @@ impl Function {
     }
 }
 
-pub struct RustFFIGenerator;
+pub struct RustFFIGenerator {
+    _dummy: u32,
+}
+
+impl HeaderFFIGen for RustFFIGenerator {
+    ///
+    /// Generate the header for the file
+    ///
+    fn gen_header<W: Write>(&mut self, dest: &mut W) -> io::Result<()> {
+        write!(dest, "{}", HEADER)
+    }
+
+    fn gen_forward_declaration<W: Write>(&mut self, _dest: &mut W, _struct_name: &str) -> io::Result<()> {
+        Ok(())
+    }
+
+    ///
+    /// Generate enum
+    ///
+    fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
+        write!(dest, "#[repr(C)]\n")?;
+        write!(dest, "#[derive(Copy, Clone, Debug)]\n")?;
+        write!(dest, "pub enum RU{} {{\n", enum_def.name)?;
+
+        for entry in &enum_def.entries {
+            match *entry {
+                EnumEntry::Enum(ref name) => write!(dest, "    {},\n", name.to_camel_case())?,
+                EnumEntry::EnumValue(ref name, ref val) => write!(dest, "    {} = {},\n", name.to_camel_case(), val)?,
+            }
+        }
+
+        write!(dest, "}}\n\n")
+    }
+
+    ///
+    /// Generate start of struct declaration
+    ///
+    fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+        write!(dest, "#[repr(C)]\n")?;
+        write!(dest, "#[derive(Copy, Clone)]\n")?;
+        write!(dest, "pub struct {} {{\n", struct_name)
+    }
+
+    ///
+    /// Generate end of struct declaration
+    ///
+    fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, _struct_name: &str) -> io::Result<()> {
+        write!(dest, "}}\n\n")
+    }
+
+    ///
+    /// Generate destroy function
+    ///
+    fn gen_destroy_func<W: Write>(&mut self, dest: &mut W, _function_name: &str) -> io::Result<()> {
+        write!(dest, "    pub destroy: extern \"C\" fn(self_c: *const RUBase),\n")
+    }
+
+    ///
+    /// Generate create function for owned data function
+    ///
+    fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+            write!(dest,
+                "    pub create_{}: extern \"C\" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern \"C\" fn(),
+        host_data: *const c_void) -> RU{},\n",
+                struct_name.to_snake_case(), struct_name)
+    }
+
+    ///
+    /// Generate create function
+    ///
+    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
+        write!(dest, "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+                prefix,
+                struct_name.to_snake_case(),
+                struct_name)
+    }
+    ///
+    /// Generate the funcs declaration
+    ///
+    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+        write!(dest, "    pub {}_funcs: *const RU{}Funcs,\n", name.to_snake_case(), name)
+    }
+
+    ///
+    /// Generate function
+    ///
+    fn gen_function<W: Write>(&mut self, dest: &mut W, func: &Function) -> io::Result<()> {
+        match func.func_type {
+            FunctionType::Regular => Self::generate_function(dest, func)?,
+            FunctionType::Static => Self::generate_function(dest, func)?,
+            FunctionType::Callback => Self::generate_callback(dest, func)?,
+            FunctionType::Event => Self::generate_event(dest, func)?,
+            _ => (),
+        }
+
+        Ok(())
+    }
+
+    ///
+    /// Generate void data entry
+    ///
+    fn gen_rubase_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+        write!(dest, "    pub {}: *const RUBase,\n", name)
+    }
+
+    ///
+    /// Generate forward declarations of needed
+    ///
+    fn generate_post_declarations<W: Write>(&mut self, dest: &mut W, _api_def: &ApiDef) -> io::Result<()> {
+        write!(dest, "{}", FOOTER)
+    }
+}
+
 
 //
 // Generator for Rust FFI bindings
 //
 //
-/*
 impl RustFFIGenerator {
     ///
-    /// Entry point for FFI generation
     ///
-    pub fn generate(filename: &str, api_def: &ApiDef) -> io::Result<()> {
-        let mut f = BufWriter::new(File::create(filename)?);
-
-        f.write_all(HEADER)?;
-
-        //
-        // Write the trait forward structs
-        //
-
-        for trait_name in api_def.get_all_traits() {
-            f.write_all(b"#[repr(C)]\n")?;
-            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]\n")?;
-            f.write_fmt(format_args!("pub struct RU{} {{\n", trait_name))?;
-            f.write_all(b"    _unused: [u8; 0],\n")?;
-            f.write_all(b"}\n\n")?;
-        }
-
-        //
-        // Generate all enums like:
-        //
-        // ...
-        // pub enum RUKeys {
-        //     KeyEscape,
-        //     KeySpace
-        //     ..
-        // }
-
-        for enum_def in &api_def.enums {
-            f.write_all(b"#[repr(C)]\n")?;
-            f.write_all(b"#[derive(Copy, Clone, Debug)]\n")?;
-            f.write_fmt(format_args!("pub enum RU{} {{\n", enum_def.name))?;
-
-            for entry in &enum_def.entries {
-                match *entry {
-                    EnumEntry::Enum(ref name) => {
-                        f.write_fmt(format_args!("    {},\n", name.to_camel_case()))?
-                    }
-                    EnumEntry::EnumValue(ref name, ref val) => {
-                        f.write_fmt(format_args!("    {} = {},\n", name.to_camel_case(), val))?
-                    }
-                }
-            }
-
-            f.write_all(b"}\n\n")?;
-        }
-
-        //
-        // Generate all pod structs like
-        //
-        // struct Foo {
-        //   pub x: f32,
-        //   ...
-        // }
-        //
-
-        for sdef in &api_def.pod_structs {
-            f.write_all(b"#[repr(C)]\n")?;
-            f.write_all(b"#[derive(Default, Copy, Clone, Debug)]")?;
-            f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
-
-            for var in &sdef.variables {
-                f.write_fmt(format_args!(
-                    "    pub {}: {},\n",
-                    var.name,
-                    var.get_rust_ffi_type()
-                ))?;
-            }
-
-            f.write_all(b"}\n\n")?;
-        }
-
-        //
-        // Generate all the class defs
-        //
-
-        for sdef in &api_def.class_structs {
-            f.write_all(b"#[repr(C)]\n")?;
-            f.write_fmt(format_args!("pub struct RU{}Funcs {{\n", sdef.name))?;
-
-            if sdef.should_have_create_func() {
-                f.write_all(b"    pub destroy: extern \"C\" fn(self_c: *const RUBase),\n")?;
-            }
-
-            for func in &sdef.functions {
-                match func.func_type {
-                    FunctionType::Regular => Self::generate_function(&mut f, &func)?,
-                    FunctionType::Static => Self::generate_function(&mut f, &func)?,
-                    FunctionType::Callback => Self::generate_callback(&mut f, &func)?,
-                    FunctionType::Event => Self::generate_event(&mut f, &func)?,
-                }
-            }
-
-            f.write_all(b"}\n\n")?;
-            f.write_all(b"#[repr(C)]\n")?;
-            f.write_all(b"#[derive(Copy, Clone)]\n")?;
-            f.write_fmt(format_args!("pub struct RU{} {{\n", sdef.name))?;
-            f.write_all(b"    pub privd: *const RUBase,\n")?;
-
-            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-                f.write_fmt(format_args!(
-                    "    pub {}_funcs: *const RU{}Funcs,\n",
-                    s.name.to_snake_case(),
-                    s.name
-                ))?;
-            }
-
-            f.write_all(b"}\n\n")?;
-        }
-
-        //
-        // Generate main Entry
-        //
-
-        f.write_all(b"#[repr(C)]\n")?;
-        f.write_all(b"pub struct RuteFFI {\n")?;
-        f.write_all(b"    pub privd: *const RUBase,\n")?;
-
-        for sdef in api_def.class_structs
-            .iter()
-            .filter(|s| s.should_have_create_func())
-        {
-            if sdef.should_gen_wrap_class() {
-                f.write_fmt(format_args!(
-                    "    pub create_{}: extern \"C\" fn(
-            priv_data: *const RUBase,
-            callback: unsafe extern \"C\" fn(),
-            delete_data: *const c_void) -> RU{},\n",
-                    sdef.name.to_snake_case(),
-                    sdef.name))?;
-            } else {
-                f.write_fmt(format_args!(
-                    "    pub create_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
-                    sdef.name.to_snake_case(),
-                    sdef.name))?;
-            }
-
-            if sdef.has_static_functions() {
-                f.write_fmt(format_args!(
-                    "    pub get_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
-                    sdef.name.to_snake_case(),
-                    sdef.name))?;
-            }
-        }
-
-        api_def
-            .class_structs
-            .iter()
-            .flat_map(|s| s.functions.iter())
-            .filter(|f| f.func_type == FunctionType::Static)
-            .try_for_each(|func| Self::generate_function(&mut f, &func))?;
-
-        f.write_all(b"}\n")?;
-
-        f.write_all(FOOTER)
+    ///
+    pub fn new() -> RustFFIGenerator {
+        RustFFIGenerator { _dummy: 0 }
     }
 
     ///
@@ -316,92 +281,3 @@ impl RustFFIGenerator {
     }
 }
 
-impl HeaderFFIGen for RustFFIGenerator {
-    ///
-    /// Generate the header for the file. Depending on the backend this includes, etc
-    ///
-    fn gen_header(dest: &mut String) {
-        dest.push_str(HEADER);
-    }
-
-    fn gen_forward_declaration(_dest: &mut String, _struct_name: &str) { }
-
-    ///
-    /// Generate the enums
-    ///
-    fn gen_enums(dest: &mut String, enum_def: &Enum) {
-        dest.push_str(b"#[repr(C)]\n")?;
-        dest.push_str(b"#[derive(Copy, Clone, Debug)]\n")?;
-        dest += format!("pub enum RU{} {{\n", enum_def.name);
-
-        for entry in &enum_def.entries {
-            match *entry {
-                EnumEntry::Enum(ref name) => {
-                    dest += format!("    {},\n", name.to_camel_case());
-                }
-                EnumEntry::EnumValue(ref name, ref val) => {
-                    dest += format!("    {} = {},\n", name.to_camel_case(), val);
-                }
-            }
-        }
-
-        dest.push_str(b"}\n\n")
-    }
-
-    ///
-    /// Generate start of struct declaration
-    ///
-    fn gen_struct_declaration(dest: &mut String, struct_name: &str) {
-
-    }
-
-    ///
-    /// Generate end of struct declaration
-    ///
-    fn gen_struct_end_declaration(dest: &mut String, struct_name: &str) {
-
-    }
-
-    ///
-    /// Generate destroy function
-    ///
-    fn gen_destroy_func(dest: &mut String, function_name: &str) {
-
-    }
-
-    ///
-    /// Generate create function for owned data function
-    ///
-    fn gen_owned_data_create(dest: &mut String, function_name: &str) {
-
-    }
-
-    ///
-    /// Generate create function
-    ///
-    fn gen_create(dest: &mut String, function_name: &str) {
-
-    }
-
-    ///
-    /// Generate function
-    ///
-    fn gen_function(dest: &mut String, func: &Function) {
-
-    }
-
-    ///
-    /// Generate void data entry
-    ///
-    fn gen_void_ptr_data(dest: &mut String, name: &str) {
-
-    }
-
-    ///
-    /// Generate extra things if needed
-    ///
-    fn generate_post_declarations(dest: &mut String, api_def: &ApiDef) {
-
-    }
-}
-*/

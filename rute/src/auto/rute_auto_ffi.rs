@@ -17,18 +17,7 @@ pub struct RUArray {
 }
 
 #[repr(C)]
-#[derive(Default, Copy, Clone, Debug)]
-pub struct RUPaintDevice {
-    _unused: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Default, Copy, Clone, Debug)]
-pub struct RUWidgetType {
-    _unused: [u8; 0],
-}
-
-#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_style: extern "C" fn(self_c: *const RUBase, style: *const ::std::os::raw::c_char),
@@ -43,11 +32,14 @@ pub struct RUApplicationFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUApplication {
-    pub privd: *const RUBase,
+    pub qt_data: *const RUBase,
+    pub host_data: *const RUBase,
+    pub extension: *const RUBase,
     pub application_funcs: *const RUApplicationFuncs,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub show: extern "C" fn(self_c: *const RUBase),
@@ -60,11 +52,14 @@ pub struct RUWidgetFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUWidget {
-    pub privd: *const RUBase,
+    pub qt_data: *const RUBase,
+    pub host_data: *const RUBase,
+    pub extension: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUListWidgetItemFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_text: extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char),
@@ -74,11 +69,14 @@ pub struct RUListWidgetItemFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUListWidgetItem {
-    pub privd: *const RUBase,
+    pub qt_data: *const RUBase,
+    pub host_data: *const RUBase,
+    pub extension: *const RUBase,
     pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub clear: extern "C" fn(self_c: *const RUBase),
@@ -97,12 +95,15 @@ pub struct RUListWidgetFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUListWidget {
-    pub privd: *const RUBase,
+    pub qt_data: *const RUBase,
+    pub host_data: *const RUBase,
+    pub extension: *const RUBase,
     pub widget_funcs: *const RUWidgetFuncs,
     pub list_widget_funcs: *const RUListWidgetFuncs,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUFontFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_pixel_size: extern "C" fn(self_c: *const RUBase, size: i32),
@@ -112,32 +113,32 @@ pub struct RUFontFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUFont {
-    pub privd: *const RUBase,
+    pub qt_data: *const RUBase,
+    pub host_data: *const RUBase,
+    pub extension: *const RUBase,
     pub font_funcs: *const RUFontFuncs,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RuteFFI {
-    pub privd: *const RUBase,
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub get_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub create_widget: extern "C" fn(
-            priv_data: *const RUBase,
-            callback: unsafe extern "C" fn(),
-            delete_data: *const c_void) -> RUWidget,
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void) -> RUWidget,
     pub create_list_widget_item: extern "C" fn(
-            priv_data: *const RUBase,
-            callback: unsafe extern "C" fn(),
-            delete_data: *const c_void) -> RUListWidgetItem,
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void) -> RUListWidgetItem,
     pub create_list_widget: extern "C" fn(
-            priv_data: *const RUBase,
-            callback: unsafe extern "C" fn(),
-            delete_data: *const c_void) -> RUListWidget,
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void) -> RUListWidget,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
-    pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub beep: extern "C" fn(self_c: *const RUBase),
-    pub about_qt: extern "C" fn(self_c: *const RUBase),
 }
+
 
 extern "C" {
     pub fn rute_get() -> *const RuteFFI;

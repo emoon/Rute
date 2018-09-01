@@ -1,12 +1,10 @@
 use api_parser::*;
 use heck::SnakeCase;
-//use std::fs::File;
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
 use std::io;
 use std::io::Write;
-//use std::io::BufWriter;
 use header_ffi_gen::HeaderFFIGen;
 
 ///
@@ -105,7 +103,7 @@ impl HeaderFFIGen for CapiHeaderGen {
         write!(dest,
                 "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* private_user_data);\n",
+        RUDeleteCallback delete_callback, void* host_data);\n",
                 struct_name,
                 struct_name.to_snake_case()
             )

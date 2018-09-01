@@ -114,13 +114,13 @@ typedef struct RuteFFI {
     struct RUApplication (*get_application)(struct RUBase* priv_data);
     struct RUWidget (*create_widget)(
         struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* private_user_data);
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUListWidgetItem (*create_list_widget_item)(
         struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* private_user_data);
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUListWidget (*create_list_widget)(
         struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* private_user_data);
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUFont (*create_font)(struct RUBase* priv_data);
 } RuteFFI;
 
