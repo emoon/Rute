@@ -81,22 +81,15 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate start of struct declaration
     ///
     fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest, "typedef struct RU{} {{\n", struct_name)
+        write!(dest, "typedef struct {} {{\n", struct_name)
     }
 
     ///
     /// Generate end of struct declaration
     ///
     fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        write!(dest, "}} RU{};\n", struct_name)
+        write!(dest, "}} {};\n\n", struct_name)
     }
-
-    //
-    // Generate start of struct funcs declaration
-    //
-    //fn gen_funcs_declaration(dest: &mut String, struct_name: &str) {
-    //   dest += format!("struct RU{}Funcs {{\n", sdef.name)
-    //}
 
     ///
     /// Generate destroy function
@@ -121,14 +114,19 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate create function
     ///
-    fn gen_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
         write!(dest,
-                "    struct RU{} (*create_{})(
-        struct RUBase* priv_data,
-        RUDeleteCallback delete_callback, void* private_user_data);\n",
+                "    struct RU{} (*{}_{})(struct RUBase* priv_data);\n",
                 struct_name,
+                prefix,
                 struct_name.to_snake_case()
             )
+    }
+    ///
+    /// Generate the funcs declaration
+    ///
+    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+        write!(dest, "    struct RU{}Funcs* {}_funcs;\n", name, name.to_snake_case())
     }
 
     ///
@@ -138,7 +136,10 @@ impl HeaderFFIGen for CapiHeaderGen {
         match func.func_type {
             FunctionType::Regular => self.generate_func_def(dest, func)?,
             FunctionType::Static => self.generate_func_def(dest, func)?,
-            FunctionType::Callback => self.generate_callback_def(dest, func)?,
+            FunctionType::Callback => {
+                self.generate_callback_def(dest, func)?;
+                write!(dest, ");\n")?;
+            }
             _ => (),
         }
 
@@ -148,8 +149,8 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate void data entry
     ///
-    fn gen_void_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        write!(dest, "    void* {},", name)
+    fn gen_rubase_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+        write!(dest, "    RUBase* {};\n", name)
     }
 
     ///
@@ -193,7 +194,7 @@ impl CapiHeaderGen {
         self.temp_string.clear();
 
         Self::callback_fun_def_name(&mut self.temp_string, true, &func.name, func);
-        dest.write_fmt(format_args!("    {}\n", self.temp_string))
+        dest.write_fmt(format_args!("    {}", self.temp_string))
     }
 
     ///

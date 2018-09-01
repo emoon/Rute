@@ -1,4 +1,4 @@
-use api_parser::{ApiDef, Enum, Function};
+use api_parser::{ApiDef, Enum, Function, RecurseIncludeSelf};
 use std::fs::File;
 use std::io::BufWriter;
 use std::io::Result;
@@ -56,7 +56,7 @@ pub trait HeaderFFIGen {
     ///
     /// Generate create function
     ///
-    fn gen_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> Result<()>;
+    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> Result<()>;
 
     ///
     /// Generate function
@@ -66,7 +66,12 @@ pub trait HeaderFFIGen {
     ///
     /// Generate void data entry
     ///
-    fn gen_void_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> Result<()>;
+    fn gen_rubase_ptr_data<W: Write>(&mut self, dest: &mut W, name: &str) -> Result<()>;
+
+    ///
+    /// Generate the funcs declaration
+    ///
+    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> Result<()>;
 
     ///
     /// Generate extra things if needed
@@ -85,10 +90,10 @@ impl HeaderFFIGenerator {
     /// Performe the generator
     ///
     pub fn generate<T: HeaderFFIGen>(filename: &str, api_def: &ApiDef, mut imp: T) -> Result<()> {
+        let mut temp_string = String::with_capacity(128);
         let mut dest = BufWriter::with_capacity(1024 * 1024, File::create(filename)?);
 
         // Generate header
-        imp.gen_forward_declaration(&mut dest, "test")?;
         imp.gen_header(&mut dest)?;
 
         // Generate forward declarations if needed
@@ -100,6 +105,63 @@ impl HeaderFFIGenerator {
         for enum_def in &api_def.enums {
            imp.gen_enum(&mut dest, enum_def)?;
         }
+
+        // generate all structs
+        for sdef in &api_def.class_structs {
+            // Construct Funcs name
+            temp_string.clear();
+            temp_string.push_str("RU");
+            temp_string.push_str(&sdef.name);
+            temp_string.push_str("Funcs");
+
+            // Generate the funcs implementation
+            imp.gen_struct_declaration(&mut dest, &temp_string)?;
+
+            if sdef.should_have_create_func() {
+                imp.gen_destroy_func(&mut dest, &sdef.name)?;
+            }
+
+            // Generate all functions
+            for func in &sdef.functions {
+                imp.gen_function(&mut dest, &func)?;
+            }
+
+            imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
+
+            // Construct struct name
+            temp_string.clear();
+            temp_string.push_str("RU");
+            temp_string.push_str(&sdef.name);
+
+            // Generate the struct implementation
+            imp.gen_struct_declaration(&mut dest, &temp_string)?;
+            imp.gen_rubase_ptr_data(&mut dest, "qt_data")?;
+            imp.gen_rubase_ptr_data(&mut dest, "host_data")?;
+            imp.gen_rubase_ptr_data(&mut dest, "extension")?;
+
+            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                imp.gen_funcs_declaration(&mut dest, &s.name)?;
+            }
+
+            imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
+        }
+
+        // Generate the main entry
+        imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
+
+        for sdef in &api_def.class_structs {
+            if sdef.should_gen_wrap_class() {
+                imp.gen_owned_data_create(&mut dest, &sdef.name)?;
+            } else {
+                imp.gen_create_gen(&mut dest, "create", &sdef.name)?;
+            }
+
+            if sdef.has_static_functions() {
+                imp.gen_create_gen(&mut dest, "get", &sdef.name)?;
+            }
+        }
+
+        imp.gen_struct_end_declaration(&mut dest, "RuteFFI")?;
 
         // Generate any last bits if needed
         imp.generate_post_declarations(&mut dest, api_def)
