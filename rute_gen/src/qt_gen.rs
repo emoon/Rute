@@ -62,60 +62,6 @@ impl Struct {
 }
 
 ///
-/// Generate enum remappings from rute enums to Qt
-///
-fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    // write enum mapping defs
-
-    f.write_all(SEPARATOR)?;
-    f.write_all(b"\n")?;
-    f.write_all(b"struct KeyVal { int val, key; };\n")?;
-
-    for enum_def in &api_def.enums {
-        f.write_fmt(format_args!(
-            "static std::map<int, int> s_{}_lookup;\n",
-            enum_def.name.to_snake_case()
-        ))?;
-    }
-
-    f.write_all(b"\n")?;
-    f.write_all(SEPARATOR)?;
-    f.write_all(b"void create_enum_mappings() {\n")?;
-
-    for enum_def in &api_def.enums {
-        let enum_name = enum_def.name.to_snake_case();
-
-        f.write_fmt(format_args!(
-            "    static KeyVal {}_vals[] = {{\n",
-            enum_name
-        ))?;
-
-        for (i, entry) in enum_def.entries.iter().enumerate() {
-            match *entry {
-                EnumEntry::Enum(ref value) => {
-                    let name = &value;
-                    f.write_fmt(format_args!("        {{ (int)Qt::{}, {} }},\n", name, i))?;
-                }
-                _ => (),
-            }
-        }
-
-        f.write_all(b"    };\n\n")?;
-
-        f.write_fmt(format_args!(
-            "    for (int i = 0; i < {}; ++i) {{\n",
-            enum_def.entries.len()
-        ))?;
-        f.write_fmt(format_args!(
-            "        s_{}_lookup[{}_vals[i].key] = {}_vals[i].val;\n",
-            enum_name, enum_name, enum_name
-        ))?;
-        f.write_all(b"    };\n")?;
-    }
-
-    f.write_all(b"}\n\n")
-}
-///
 /// Genarate event setup code. It will look something like this
 ///
 ///  void Class::paintEvent(QPaintEvent* event) {
@@ -1002,6 +948,7 @@ impl TypeHandler for TraitTypeHandler {
 pub struct QtGenerator {
     wrapper_template: Template,
     signal_wrapper_template: Template,
+    enum_mapping_template: Template,
 }
 
 impl QtGenerator {
@@ -1011,7 +958,64 @@ impl QtGenerator {
         QtGenerator {
             wrapper_template: parser.parse(QT_GEN_WRAPPER_TEMPLATE).unwrap(),
             signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
+            enum_mapping_template: parser.parse(QT_ENUM_MAPPING_TEMPLATE).unwrap(),
         }
+    }
+
+    ///
+    /// Generate enum remappings from rute enums to Qt
+    ///
+    fn generate_enum_mappings<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        f.write_all(SEPARATOR)?;
+
+        for enum_def in &api_def.enums {
+            f.write_fmt(format_args!(
+                "static std::map<int, int> s_{}_lookup;\n",
+                enum_def.name.to_snake_case()
+            ))?;
+        }
+
+        f.write_all(b"\n")?;
+        f.write_all(SEPARATOR)?;
+        f.write_all(b"void create_enum_mappings() {\n")?;
+
+        for enum_def in &api_def.enums {
+            let enum_name = enum_def.name.to_snake_case();
+            let mut template_data = Object::new();
+
+            template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
+
+            let mut values = Vec::with_capacity(enum_def.entries.len());
+            let mut index = 0;
+
+            for entry in &enum_def.entries {
+                match *entry {
+                    EnumEntry::Enum(ref name) => {
+                        let mut enum_data = Object::new();
+                        enum_data.insert("name".to_owned(), Value::Str(name.clone()));
+                        enum_data.insert("id".to_owned(), Value::Str(format!("{}", index)));
+                        values.push(Value::Object(enum_data));
+                        index += 1;
+                    },
+
+                    EnumEntry::EnumValue(ref name, ref value) => {
+                        let mut enum_data = Object::new();
+                        enum_data.insert("name".to_owned(), Value::Str(name.clone()));
+                        enum_data.insert("id".to_owned(), Value::Str(value.clone()));
+                        values.push(Value::Object(enum_data));
+                        index = value.parse().unwrap();
+                        index += 1;
+                    }
+                }
+            }
+
+            template_data.insert("enums".to_owned(), Value::Array(values));
+
+            let res = self.enum_mapping_template.render(&template_data).unwrap();
+            f.write_all(res.as_bytes())?;
+        }
+
+        f.write_all(b"}\n\n")
     }
 
     /// Generate a signal wrapper that is in the style of this:
@@ -1153,7 +1157,7 @@ impl QtGenerator {
         self.generate_signal_wrappers(&mut h_out, api_def)?;
 
         // Generate the Matching for Qt enums to our enums
-        generate_enum_mappings(&mut cpp_out, api_def)?;
+        self.generate_enum_mappings(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
         self.generate_wrapper_classes_defs(&mut h_out, api_def)?;

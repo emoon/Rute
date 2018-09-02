@@ -20,6 +20,7 @@ pub static QT_HEADER: &'static [u8] = b"
 static char s_temp_string_buffer[1024*1024];\n
 #include <map>
 std::map<QWidget*, void*> s_widget_lookup;\n
+struct KeyVal { int val, key; };\n
 ";
 
 ///
@@ -62,6 +63,20 @@ public:
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };
+";
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static QT_ENUM_MAPPING_TEMPLATE: &str = "
+    static KeyVal {{enum_name}}_vals[] =
+    {
+    {%- for enum in enums -%}
+        {  (int)Qt::{{enum.name}}, {{enum.id}} },
+    {% endfor %}};
+
+    for (int i = 0; i < {{enums | size }} ++i) {
+        s_{{enum_name}}_lookup[{{enum_name}}_vals[i].key] = {{enum_name}}_vals[i].val;
+    }
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,6 +17,8 @@ static char s_temp_string_buffer[1024*1024];
 #include <map>
 std::map<QWidget*, void*> s_widget_lookup;
 
+struct KeyVal { int val, key; };
+
 extern struct RUApplicationFuncs s_application_funcs;
 extern struct RUWidgetFuncs s_widget_funcs;
 extern struct RUListWidgetItemFuncs s_list_widget_item_funcs;
@@ -25,8 +27,6 @@ extern struct RUFontFuncs s_font_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-struct KeyVal { int val, key; };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
