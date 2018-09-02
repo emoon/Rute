@@ -782,22 +782,22 @@ impl Variable {
 pub enum FirstArgType {
     /// The agument as is
     Keep,
-    /// Remove the argument
-    Remove,
-    /// Replace the argument type with this
-    Replace(&'static str),
+    // Remove the argument
+    //Remove,
+    // Replace the argument type with this
+    //Replace(&'static str),
 }
 
 ///
 /// This is used to replace the name of the first argument (self)
 ///
 pub enum FirstArgName {
-    /// Keep the name
-    Keep,
+    // Keep the name
+    //Keep,
     /// Remove the name
     Remove,
-    /// Replace the name with this
-    Replace(&'static str),
+    // Replace the name with this
+    //Replace(&'static str),
 }
 
 ///
@@ -818,8 +818,8 @@ impl Function {
             if i == 0 {
                 match replace_first {
                    FirstArgType::Keep => function_args.push_str(&arg.get_c_type()),
-                   FirstArgType::Remove => continue,
-                   FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
+                   //FirstArgType::Remove => continue,
+                   //FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
                 }
             } else {
                 function_args.push_str(&arg.get_c_type());
@@ -849,9 +849,9 @@ impl Function {
         for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 {
                 match replace_first_arg {
-                    FirstArgName::Keep => function_invoke.push_str(&arg.name),
+                    //FirstArgName::Keep => function_invoke.push_str(&arg.name),
                     FirstArgName::Remove => continue,
-                    FirstArgName::Replace(ref name) => function_invoke.push_str(name),
+                    //FirstArgName::Replace(ref name) => function_invoke.push_str(name),
                 }
             } else {
                 function_invoke.push_str(&arg.name);
@@ -924,32 +924,15 @@ impl Function {
     {
         let mut output = String::with_capacity(256);
         let arg_count = self.function_args.len();
-        let mut skip_first = false;
-
-        /*
-        // This allows us to change the first parameter and it also supports to not have any parameter at all
-        replace_first.map(|arg| {
-            skip_first = true;
-
-            if arg != "" {
-                if arg_count > 0 {
-                    output.push_str(&format!("{}", arg));
-                }
-
-                if arg_count > 1 {
-                    output.push_str(", ");
-                }
-            }
-        });
-        */
 
         // iterater over all the parameters and run the filter
 
         for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 {
                 match replace_first {
-                    FirstArgName::Keep => (),
+                    //FirstArgName::Keep => (),
                     FirstArgName::Remove => continue,
+                    /*
                     FirstArgName::Replace(ref name) => {
                         if arg_count > 0 {
                             output.push_str(name);
@@ -961,6 +944,7 @@ impl Function {
 
                         continue;
                     }
+                    */
                 }
             }
 

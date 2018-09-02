@@ -132,6 +132,7 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
 ///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
+/*
 fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
     let event_type = &func.function_args[1];
 
@@ -158,6 +159,7 @@ fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<
 
     Ok(())
 }
+*/
 
 //
 // Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
@@ -269,24 +271,28 @@ fn generate_event_setup_funcs<W: Write>(
 /// defs
 ///
 fn generate_wrapper_classes_impl<W: Write>(
-    f: &mut W,
-    struct_name_map: &HashMap<&str, &str>,
+    _f: &mut W,
+    _struct_name_map: &HashMap<&str, &str>,
     api_def: &ApiDef,
 ) -> io::Result<()> {
-    for sdef in api_def
+    for _sdef in api_def
         .class_structs
         .iter()
         .filter(|v| v.inherits_widget(api_def))
     {
+        /*
         let struct_name = sdef.name.as_str();
         let struct_qt_name = struct_name_map
             .get(struct_name)
             .unwrap_or_else(|| &struct_name);
+        */
 
+        /*
         let iterator = sdef
             .functions
             .iter()
             .filter(|func| func.func_type == FunctionType::Event);
+        */
 
         // Get all the structs that thu current struct inherit from
 
