@@ -777,6 +777,30 @@ impl Variable {
 }
 
 ///
+/// This is used to replace the type of the first argument (self)
+///
+pub enum FirstArgType {
+    /// The agument as is
+    Keep,
+    /// Remove the argument
+    Remove,
+    /// Replace the argument type with this
+    Replace(&'static str),
+}
+
+///
+/// This is used to replace the name of the first argument (self)
+///
+pub enum FirstArgName {
+    /// Keep the name
+    Keep,
+    /// Remove the name
+    Remove,
+    /// Replace the name with this
+    Replace(&'static str),
+}
+
+///
 /// Impl for Function. Helper functions to make C and Rust generation easier
 ///
 impl Function {
@@ -785,14 +809,18 @@ impl Function {
     ///
     /// For example: "float test, uint32_t bar"
     ///
-    pub fn generate_c_function_def(&self, replace_first: Option<&'static str>) -> String {
+    pub fn generate_c_function_def(&self, replace_first: FirstArgType) -> String {
         let mut function_args = String::with_capacity(128);
         let len = self.function_args.len();
 
         // write arguments
         for (i, arg) in self.function_args.iter().enumerate() {
-            if replace_first.is_some() && i == 0 {
-                function_args.push_str(replace_first.unwrap());
+            if i == 0 {
+                match replace_first {
+                   FirstArgType::Keep => function_args.push_str(&arg.get_c_type()),
+                   FirstArgType::Remove => continue,
+                   FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
+                }
             } else {
                 function_args.push_str(&arg.get_c_type());
             }
@@ -805,10 +833,6 @@ impl Function {
             }
         }
 
-        if replace_first.is_some() && self.function_args.is_empty() {
-            function_args.push_str(replace_first.unwrap());
-        }
-
         function_args
     }
 
@@ -817,14 +841,18 @@ impl Function {
     ///
     /// For example: "self, test, bar"
     ///
-    pub fn generate_invoke(&self, replace_first_arg: Option<&'static str>) -> String {
+    pub fn generate_invoke(&self, replace_first_arg: FirstArgName) -> String {
         let mut function_invoke = String::with_capacity(128);
         let len = self.function_args.len();
 
         // write arguments
         for (i, arg) in self.function_args.iter().enumerate() {
-            if i == 0 && replace_first_arg.is_some() {
-                function_invoke.push_str(replace_first_arg.unwrap());
+            if i == 0 {
+                match replace_first_arg {
+                    FirstArgName::Keep => function_invoke.push_str(&arg.name),
+                    FirstArgName::Remove => continue,
+                    FirstArgName::Replace(ref name) => function_invoke.push_str(name),
+                }
             } else {
                 function_invoke.push_str(&arg.name);
             }
@@ -890,7 +918,7 @@ impl Function {
     /// This function allows to replace any of the parameter names when generating a c function
     /// definition
     ///
-    pub fn gen_c_invoke_filter<F>(&self, replace_first: Option<Cow<str>>, filter: F) -> String
+    pub fn gen_c_invoke_filter<F>(&self, replace_first: FirstArgName, filter: F) -> String
     where
         F: Fn(usize, &Variable) -> Option<Cow<str>>,
     {
@@ -898,6 +926,7 @@ impl Function {
         let arg_count = self.function_args.len();
         let mut skip_first = false;
 
+        /*
         // This allows us to change the first parameter and it also supports to not have any parameter at all
         replace_first.map(|arg| {
             skip_first = true;
@@ -912,12 +941,27 @@ impl Function {
                 }
             }
         });
+        */
 
         // iterater over all the parameters and run the filter
 
         for (i, arg) in self.function_args.iter().enumerate() {
-            if i == 0 && skip_first {
-                continue;
+            if i == 0 {
+                match replace_first {
+                    FirstArgName::Keep => (),
+                    FirstArgName::Remove => continue,
+                    FirstArgName::Replace(ref name) => {
+                        if arg_count > 0 {
+                            output.push_str(name);
+                        }
+
+                        if arg_count > 1 {
+                            output.push_str(", ");
+                        }
+
+                        continue;
+                    }
+                }
             }
 
             let filter_arg = filter(i, &arg);

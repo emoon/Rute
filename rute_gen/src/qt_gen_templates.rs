@@ -90,3 +90,23 @@ private:
 };
 ";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Definition for a Qt wrapping function
+
+/*
+pub static QT_FUNC_DEF_TEMPLATE: &str = "
+static {{func_name}}({{func_def}}) {
+    {{qt_type_name}} qt_data = ({{qt_type_name}}*)self_c;
+{% if early_return != "" %}
+    {{early_return}}
+{% else %}
+
+{% endif}
+
+
+
+}
+";
+*/
+
+

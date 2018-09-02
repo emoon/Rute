@@ -208,7 +208,7 @@ impl CapiHeaderGen {
         writeln!(dest, "    {} (*{})({});",
             ret_value,
             func.name,
-            func.generate_c_function_def(None))
+            func.generate_c_function_def(FirstArgType::Keep))
     }
 }
 

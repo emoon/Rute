@@ -132,7 +132,6 @@ fn generate_enum_mappings<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<(
 ///    RUPaintEventFunc m_paint_event = nullptr;
 ///    void* m_paint_user_data = nullptr;
 
-/*
 fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
     let event_type = &func.function_args[1];
 
@@ -159,11 +158,11 @@ fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<
 
     Ok(())
 }
-*/
 
-///
-/// Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
-///
+//
+// Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
+//
+/*
 fn generate_event_setup_impl<W: Write>(
     f: &mut W,
     sdef: &Struct,
@@ -227,6 +226,7 @@ fn generate_event_setup_impl<W: Write>(
 
     Ok(())
 }
+*/
 ///
 /// Generate something like this
 ///
@@ -236,6 +236,7 @@ fn generate_event_setup_impl<W: Write>(
 ///     qt_object->m_paint = event;
 /// }
 ///
+/*
 fn generate_event_setup_funcs<W: Write>(
     f: &mut W,
     struct_qt_name: &str,
@@ -260,6 +261,7 @@ fn generate_event_setup_funcs<W: Write>(
     f.write_fmt(format_args!("    qt_object->m_{} = event;\n", func.name))?;
     f.write_all(b"};\n\n")
 }
+*/
 
 ///
 /// Generate wrapper classes for all the Widges. This allows us to override
@@ -288,6 +290,7 @@ fn generate_wrapper_classes_impl<W: Write>(
 
         // Get all the structs that thu current struct inherit from
 
+        /*
         for func in iterator.clone() {
             generate_event_setup_impl(f, &sdef, &struct_qt_name, &func, api_def)?;
         }
@@ -297,6 +300,7 @@ fn generate_wrapper_classes_impl<W: Write>(
             f.write_all(SEPARATOR)?;
             generate_event_setup_funcs(f, &struct_qt_name, &func)?;
         }
+        */
     }
 
     Ok(())
@@ -451,6 +455,7 @@ fn function_name(struct_name: &str, func: &Function) -> String {
 ///     }
 ///     return array;
 
+/*
 fn generate_return_array<W: Write>(f: &mut W, ret_val: &Variable) -> io::Result<()> {
     // TODO: Use templates
 
@@ -480,6 +485,7 @@ fn generate_return_array<W: Write>(f: &mut W, ret_val: &Variable) -> io::Result<
 
     Ok(())
 }
+*/
 
 ///
 /// Generate code for returing string
@@ -529,7 +535,7 @@ fn generate_func_def<W: Write>(
         "static {} {}({}) {{ \n",
         ret_value,
         function_name(&sdef.name, func),
-        func.generate_c_function_def(None)
+        func.generate_c_function_def(FirstArgType::Keep)
     ))?;
 
     let struct_name: &str = &sdef.name;
@@ -565,7 +571,7 @@ fn generate_func_def<W: Write>(
         f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
     }
 
-    let func_def = func.gen_c_invoke_filter(Some("".into()), |_index, arg| {
+    let func_def = func.gen_c_invoke_filter(FirstArgName::Remove, |_index, arg| {
         if arg.type_name == "String" {
             Some(format!("QString::fromUtf8({})", &arg.name).into())
         } else {
@@ -588,8 +594,8 @@ fn generate_func_def<W: Write>(
     if let Some(ref ret_val) = func.return_val {
         if ret_val.vtype == VariableType::Primitive {
             f.write_all(b"    return ret_value;\n")?;
-        } else if ret_val.array {
-            generate_return_array(f, ret_val)?;
+        //} else if ret_val.array {
+            //generate_return_array(f, ret_val)?;
         } else if ret_val.type_name == "String" {
             generate_return_string(f)?;
         } else {
@@ -1034,11 +1040,18 @@ impl QtGenerator {
 
             let c_args = generate_c_function_args_signal_wrapper(EventType::Callback, func);
             //let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
-            let c_call_args = func.generate_invoke(Some(""));
+            let c_call_args = func.generate_invoke(FirstArgName::Remove);
 
             template_data.insert("signal_func_name".to_owned(), Value::Str(signal_type_name.clone()));
             template_data.insert("c_args".to_owned(), Value::Str(c_args));
-            template_data.insert("c_call_args".to_owned(), Value::Str(c_call_args));
+
+            // we need to add, at the front of the call args as this is being used inside a
+            // function call argument already if we have some args
+            if c_call_args != "" {
+                template_data.insert("c_call_args".to_owned(), Value::Str(format!(", {}", c_call_args)));
+            } else {
+                template_data.insert("c_call_args".to_owned(), Value::str(""));
+            }
 
             let res = self.signal_wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;
@@ -1079,7 +1092,7 @@ impl QtGenerator {
                 .iter()
                 .filter(|func| func.func_type == FunctionType::Event)
             {
-                generate_event_setup_def(f, &func)?;
+                self.generate_event_setup_def(f, &func)?;
             }
             */
 
