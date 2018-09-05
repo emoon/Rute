@@ -119,14 +119,14 @@ static void widget_update(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void list_widget_item_set_text(struct RUBase* self_c, const char* text) { 
-    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    WRListWidgetItem* qt_data = (WRListWidgetItem*)self_c;
     qt_data->setText(QString::fromUtf8(text));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const char* list_widget_item_text(struct RUBase* self_c) { 
-    QListWidgetItem* qt_data = (QListWidgetItem*)self_c;
+    WRListWidgetItem* qt_data = (WRListWidgetItem*)self_c;
     auto ret_value = qt_data->text();
     QByteArray ba = ret_value.toUtf8();
     const char* c_str = ba.data();

@@ -87,11 +87,11 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRWidget : public QWidget {
+class WRWidget : public WRWidget {
     Q_OBJECT
 public:
 
-    WRWidget(QWidget* widget) : QWidget(widget) { }
+    WRWidget(WRWidget* widget) : WRWidget(widget) { }
 
     virtual ~WRWidget() {
         if (m_delete_callback) {
@@ -107,11 +107,11 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRListWidgetItem : public QListWidgetItem {
+class WRListWidgetItem : public WRListWidgetItem {
     Q_OBJECT
 public:
 
-    WRListWidgetItem() : QListWidgetItem() { }
+    WRListWidgetItem() : WRListWidgetItem() { }
 
     virtual ~WRListWidgetItem() {
         if (m_delete_callback) {
@@ -127,11 +127,11 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRListWidget : public QListWidget {
+class WRListWidget : public WRListWidget {
     Q_OBJECT
 public:
 
-    WRListWidget(QListWidget* widget) : QListWidget(widget) { }
+    WRListWidget(WRListWidget* widget) : WRListWidget(widget) { }
 
     virtual ~WRListWidget() {
         if (m_delete_callback) {

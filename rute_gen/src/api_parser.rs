@@ -273,9 +273,10 @@ impl ApiParser {
             }
         }
 
-        // If nothing is set for the cpp name we construct a default one
-
-        if sdef.cpp_name.is_empty() {
+        // Set the name we use in C++
+        if sdef.should_gen_wrap_class() {
+            sdef.cpp_name = format!("WR{}", sdef.name);
+        } else if sdef.cpp_name.is_empty() {
             sdef.cpp_name = format!("Q{}", sdef.name);
         }
 
