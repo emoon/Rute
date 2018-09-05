@@ -776,6 +776,7 @@ pub struct QtGenerator {
     wrapper_template: Template,
     signal_wrapper_template: Template,
     enum_mapping_template: Template,
+    func_def_template: Template,
 }
 
 impl QtGenerator {
@@ -786,6 +787,7 @@ impl QtGenerator {
             wrapper_template: parser.parse(QT_GEN_WRAPPER_TEMPLATE).unwrap(),
             signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
             enum_mapping_template: parser.parse(QT_ENUM_MAPPING_TEMPLATE).unwrap(),
+            func_def_template: parser.parse(QT_FUNC_DEF_TEMPLATE).unwrap(),
         }
     }
 
@@ -801,48 +803,19 @@ impl QtGenerator {
         &self,
         f: &mut W,
         sdef: &Struct,
-        _api_def: &ApiDef,
         func: &Function,
         type_handlers: &[Box<TypeHandler>],
     ) -> io::Result<()> {
+        // TODO: This isn't fully correct
         let ret_value = func
             .return_val
             .as_ref()
             .map_or("void".into(), |v| v.get_c_type());
 
-        // write return value and function name
-        f.write_fmt(format_args!(
-            "static {} {}({}) {{ \n",
-            ret_value,
-            function_name(&sdef.name, func),
-            func.generate_c_function_def(FirstArgType::Keep)
-        ))?;
+        let mut object = Object::new();
 
-        //let struct_name: &str = &sdef.name;
-        let struct_qt_name = &sdef.cpp_name;
-
-        f.write_fmt(format_args!(
-            "    {}* qt_data = ({}*)self_c;\n",
-            struct_qt_name, struct_qt_name
-        ))?;
-
-        if let Some(ref ret_val) = func.return_val {
-            for handler in type_handlers.iter() {
-                if ret_val.type_name == handler.match_type() {
-                    let ret = handler.gen_body_return(&func.name);
-                    return f.write_fmt(format_args!("{};\n", ret));
-                }
-            }
-        }
-
-        if func.return_val.is_some() {
-            f.write_fmt(format_args!(
-                "    auto ret_value = qt_data->{}(",
-                func.name.to_mixed_case()
-            ))?;
-        } else {
-            f.write_fmt(format_args!("    qt_data->{}(", func.name.to_mixed_case()))?;
-        }
+        // Build function args:
+        // TODO: Cleanup
 
         let func_def = func.gen_c_invoke_filter(FirstArgName::Remove, |_index, arg| {
             if arg.type_name == "String" {
@@ -855,6 +828,7 @@ impl QtGenerator {
                 }
 
                 if arg.vtype == VariableType::Reference {
+                    // TODO: Should not hard-code to Q* here
                     Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
                 } else {
                     None
@@ -862,57 +836,33 @@ impl QtGenerator {
             }
         });
 
-        f.write_fmt(format_args!("{});\n", func_def))?;
+        object.insert("func_name".to_owned(), Value::Str(function_name(&sdef.name, func)));
+        object.insert("func_def".to_owned(), Value::Str(func.generate_c_function_def(FirstArgType::Keep)));
+        object.insert("qt_func_name".to_owned(), Value::Str(func.name.to_mixed_case()));
+        object.insert("cpp_type_name".to_owned(), Value::str(&sdef.cpp_name));
+        object.insert("qt_func_args".to_owned(), Value::Str(func_def));
+        object.insert("type_snake_name".to_owned(), Value::Str(func.name.to_snake_case()));
+        object.insert("c_return_type".to_owned(), Value::str(&ret_value));
 
         if let Some(ref ret_val) = func.return_val {
-            if ret_val.vtype == VariableType::Primitive {
-                f.write_all(b"    return ret_value;\n")?;
-            //} else if ret_val.array {
-            //generate_return_array(f, ret_val)?;
-            } else if ret_val.type_name == "String" {
-                generate_return_string(f)?;
-            } else {
-                // If we have a complex (currently assumed) Qt here we need to wrap it before we return
-                f.write_fmt(format_args!("    RU{} ctl;\n", ret_val.type_name))?;
+            object.insert("array_return".to_owned(), Value::Bool(ret_val.array));
+            object.insert("qt_ret_value".to_owned(), Value::str(""));
 
-                // fill in the function ptr structs
-                /*
-                for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-                    let snake_name = s.name.to_snake_case();
-
-                    f.write_fmt(format_args!(
-                        "    ctl->{}_funcs = &s_{}_funcs;\n",
-                        snake_name,
-                        snake_name
-                    ))?;
-                }
-                */
-
-                let name = ret_val.type_name.to_snake_case();
-
-                f.write_fmt(format_args!(
-                    "    ctl.{}_funcs = &s_{}_funcs;\n",
-                    name, name
-                ))?;
-
-                if ret_val.vtype == VariableType::Regular {
-                    f.write_fmt(format_args!(
-                        "    ctl.priv_data = (struct RUBase*)new Q{}(ret_value);\n",
-                        ret_val.type_name,
-                    ))?;
-                } else {
-                    f.write_fmt(format_args!(
-                        "    ctl.priv_data = (struct RUBase*)ret_value;\n"
-                    ))?;
-                }
-
-                f.write_all(b"    return ctl;\n")?;
-            }
+            match ret_val.vtype {
+                VariableType::Primitive => object.insert("return_type".to_owned(), Value::str("primitive")),
+                //VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
+                VariableType::Regular => object.insert("return_type".to_owned(), Value::str("regular")),
+                VariableType::Reference => object.insert("return_type".to_owned(), Value::str("reference")),
+                _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
+            };
+        } else {
+            object.insert("array_return".to_owned(), Value::Bool(false));
+            object.insert("return_type".to_owned(), Value::str(""));
+            object.insert("qt_ret_value".to_owned(), Value::str(""));
         }
 
-        f.write_all(b"}\n\n")?;
-
-        Ok(())
+        let res = self.func_def_template.render(&object).unwrap();
+        f.write_all(res.as_bytes())
     }
 
     ///
@@ -938,10 +888,10 @@ impl QtGenerator {
 
                 match func.func_type {
                     FunctionType::Static => {
-                        self.generate_func_def(f, &sdef, api_def, func, type_handlers)?
+                        self.generate_func_def(f, &sdef, func, type_handlers)?
                     }
                     FunctionType::Regular => {
-                        self.generate_func_def(f, &sdef, api_def, func, type_handlers)?
+                        self.generate_func_def(f, &sdef, func, type_handlers)?
                     }
                     FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
                     _ => (),
@@ -1185,6 +1135,31 @@ impl QtGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn init_wrapper_default_sdef() -> (Struct, QtGenerator) {
+        let generator = QtGenerator::new();
+        let mut sdef = Struct::default();
+        sdef.name = "Foo".to_owned();
+        sdef.qt_name = "QFoo".to_owned();
+        sdef.cpp_name = "WRFoo".to_owned();
+        (sdef, generator)
+    }
+
+    fn init_default_func() -> Function {
+        Function {
+            name: "test".to_owned(),
+            function_args: vec![Variable {
+                name: "self_c".to_owned(),
+                vtype: VariableType::SelfType,
+                type_name: "struct RUBase".to_owned(),
+                array: false,
+            }],
+            return_val: None,
+            func_type: FunctionType::Regular,
+            is_manual: false,
+        }
+    }
+
     //
     // This will test that the signal_type_callback generates the correct output
     //
@@ -1227,5 +1202,25 @@ mod tests {
 
         let signal_gen = signal_type_callback(&func);
         assert_eq!(signal_gen, "DropEvent_void");
+    }
+
+    //
+    // test and validate function generation
+    //
+    #[test]
+    fn test_qt_wrap_func_gen_no_return() {
+        let (sdef, gen) = init_wrapper_default_sdef();
+        let func = init_default_func();
+        let mut dest = Vec::new();
+
+        gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
+        assert_eq!(String::from_utf8(dest).unwrap(), "
+static void foo_test(struct RUBase* self_c) {
+    WRFoo* qt_value = (WRFoo*)self_c;
+
+    qt_value->test();
+
+}
+");
     }
 }

@@ -107,18 +107,46 @@ private:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition for a Qt wrapping function
 
-/*
 pub static QT_FUNC_DEF_TEMPLATE: &str = "
-static {{func_name}}({{func_def}}) {
-    {{qt_type_name}} qt_data = ({{qt_type_name}}*)self_c;
-{% if early_return != "" %}
-    {{early_return}}
+static {{c_return_type}} {{func_name}}({{func_def}}) {
+    {{cpp_type_name}}* qt_value = ({{cpp_type_name}}*)self_c;
+{% if c_return_type != 'void' %}
+    auto ret_value = qt_value->{{qt_func_name}}({{qt_func_args}});
+
+{% if array_return %}
+{% case return_type %}
+{% when 'string' %}
+    return return_string_array(ret_value);
+{% when 'primitive' %}
+    return return_primitive_array<{{c_primitive_type}}>(ret_value);
+{% when 'regular' %}
+    return return_by_value_array<{{qt_type}}>(ret_value);
+{% when 'reference' %}
+    return return_pointer_array<{{qt_type}}>(ret_value);
+{% endcase %}
+
 {% else %}
 
-{% endif}
+{% case return_type %}
+{% when 'string' %}
+    return q_string_to_const_char(&ret_value);
+{% when 'array' %}
+    return build_array(ret_value);
+{% when 'primitive' %}
+    return ret_value;
+{% else %}
+    RU{{return_type}} ctl = s_{{type_snake_name}}_template;
+    ctl.qt_data = (struct RUBase*){{qt_ret_value}};
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+{% endcase %}
 
+{% endif %}
 
-
+{% else %}
+    qt_value->{{qt_func_name}}({{qt_func_args}});
+{% endif %}
 }
 ";
-*/
+
+
