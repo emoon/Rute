@@ -34,8 +34,8 @@ use api_parser::{ApiDef, ApiParser};
 use header_ffi_gen::HeaderFFIGenerator;
 
 use c_gen::CapiHeaderGen;
-use rust_ffi_gen::RustFFIGenerator;
 use qt_gen::QtGenerator;
+use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
 use std::sync::Arc;

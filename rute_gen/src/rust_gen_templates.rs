@@ -82,7 +82,7 @@ pub static RUST_CREATE_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_DROP_TEMPLATE: &str ="
+pub static RUST_DROP_TEMPLATE: &str = "
 impl<'a> Drop for {{type_name}}<'a> {
     fn drop(&mut self) {
         if Rc::strong_count(&self.data) == 1 {
@@ -129,7 +129,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_CALLBACK_TEMPLATE: &str ="
+pub static RUST_CALLBACK_TEMPLATE: &str = "
     unsafe extern \"C\" fn {{event_name}}_trampoline_ud<T>(
         user_data: *const c_void,
         func: *const c_void,
@@ -190,6 +190,3 @@ pub static RUST_CALLBACK_TEMPLATE: &str ="
         self
     }
 ";
-
-
-

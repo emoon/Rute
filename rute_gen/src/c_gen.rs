@@ -1,11 +1,11 @@
 use api_parser::*;
+use header_ffi_gen::HeaderFFIGen;
 use heck::SnakeCase;
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
 use std::io;
 use std::io::Write;
-use header_ffi_gen::HeaderFFIGen;
 
 ///
 /// Header that is generated at the start of the Rute.h file
@@ -49,7 +49,11 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate forward declarations
     ///
-    fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+    fn gen_forward_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
         writeln!(dest, "struct RU{}Funcs;", struct_name)?;
         writeln!(dest, "struct RU{};", struct_name)
     }
@@ -64,7 +68,7 @@ impl HeaderFFIGen for CapiHeaderGen {
             match *entry {
                 EnumEntry::Enum(ref name) => {
                     writeln!(dest, "    RU{}_{},", enum_def.name, name)?;
-                },
+                }
 
                 EnumEntry::EnumValue(ref name, ref val) => {
                     writeln!(dest, "    RU{}_{} = {},", enum_def.name, name, val)?;
@@ -78,14 +82,22 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate start of struct declaration
     ///
-    fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+    fn gen_struct_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
         writeln!(dest, "typedef struct {} {{", struct_name)
     }
 
     ///
     /// Generate end of struct declaration
     ///
-    fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+    fn gen_struct_end_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
         writeln!(dest, "}} {};\n", struct_name)
     }
 
@@ -99,30 +111,48 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate create function for owned data function
     ///
-    fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-        writeln!(dest,
-                "    struct RU{} (*create_{})(
+    fn gen_owned_data_create<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
+        writeln!(
+            dest,
+            "    struct RU{} (*create_{})(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);",
-                struct_name,
-                struct_name.to_snake_case())
+            struct_name,
+            struct_name.to_snake_case()
+        )
     }
 
     ///
     /// Generate create function
     ///
-    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
-        writeln!(dest,
-                "    struct RU{} (*{}_{})(struct RUBase* priv_data);",
-                struct_name,
-                prefix,
-                struct_name.to_snake_case())
+    fn gen_create_gen<W: Write>(
+        &mut self,
+        dest: &mut W,
+        prefix: &str,
+        struct_name: &str,
+    ) -> io::Result<()> {
+        writeln!(
+            dest,
+            "    struct RU{} (*{}_{})(struct RUBase* priv_data);",
+            struct_name,
+            prefix,
+            struct_name.to_snake_case()
+        )
     }
     ///
     /// Generate the funcs declaration
     ///
     fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        writeln!(dest, "    struct RU{}Funcs* {}_funcs;\n", name, name.to_snake_case())
+        writeln!(
+            dest,
+            "    struct RU{}Funcs* {}_funcs;\n",
+            name,
+            name.to_snake_case()
+        )
     }
 
     ///
@@ -152,7 +182,11 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate forward declarations of needed
     ///
-    fn generate_post_declarations<W: Write>(&mut self, dest: &mut W, _api_def: &ApiDef) -> io::Result<()> {
+    fn generate_post_declarations<W: Write>(
+        &mut self,
+        dest: &mut W,
+        _api_def: &ApiDef,
+    ) -> io::Result<()> {
         write!(dest, "{}", FOOTER)
     }
 }
@@ -180,7 +214,11 @@ impl CapiHeaderGen {
                 name).unwrap();
         };
 
-        write!(dest, "{})", func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)).unwrap()
+        write!(
+            dest,
+            "{})",
+            func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)
+        ).unwrap()
     }
 
     ///
@@ -205,10 +243,12 @@ impl CapiHeaderGen {
             .map_or("void".into(), |r| r.get_c_type());
 
         // write return value and function name
-        writeln!(dest, "    {} (*{})({});",
+        writeln!(
+            dest,
+            "    {} (*{})({});",
             ret_value,
             func.name,
-            func.generate_c_function_def(FirstArgType::Keep))
+            func.generate_c_function_def(FirstArgType::Keep)
+        )
     }
 }
-

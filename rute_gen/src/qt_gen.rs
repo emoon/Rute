@@ -9,7 +9,7 @@ use std::io::{BufWriter, Write};
 use api_parser::*;
 use qt_gen_templates::*;
 
-use liquid::{Template, ParserBuilder, Object, Value};
+use liquid::{Object, ParserBuilder, Template, Value};
 
 #[derive(PartialEq)]
 pub enum EventType {
@@ -29,12 +29,9 @@ trait TypeHandler {
     }
 
     fn gen_body_return(&self, function_name: &str) -> String {
-        format!(
-            "    return qt_data->{}()",
-            function_name.to_mixed_case())
+        format!("    return qt_data->{}()", function_name.to_mixed_case())
     }
 }
-
 
 ///
 /// Adds some extra functionallity to Struct to make some checks easier
@@ -367,7 +364,6 @@ fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Fu
     wrapper_info
 }
 
-
 ///
 /// Generate all forward declarations function pointer structs
 ///
@@ -490,7 +486,11 @@ fn generate_func_def_input_parms_only(func: &Function) -> String {
 /// Generation function def for callbacks/slots
 ///
 
-fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Function) -> io::Result<()> {
+fn generate_func_callback<W: Write>(
+    f: &mut W,
+    struct_name: &str,
+    func: &Function,
+) -> io::Result<()> {
     let signal_type_name = signal_type_callback(&func);
     let func_name = function_name(struct_name, func);
 
@@ -523,10 +523,7 @@ fn generate_func_callback<W: Write>(f: &mut W, struct_name: &str, func: &Functio
 ///
 /// Generate get functions to be used with for static functions
 ///
-fn generate_static_get_functions<W: Write>(
-    f: &mut W,
-    api_def: &ApiDef,
-) -> io::Result<()> {
+fn generate_static_get_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     //
     // Generate create functions for all structs that are flagged with create function
     // and doesn't have manual create selected on them
@@ -542,7 +539,11 @@ fn generate_static_get_functions<W: Write>(
         // Get the name if we have remapped the name (for example we use Button while Qt uses
         // AbstractButton)
         //
-        f.write_fmt(format_args!("static struct RU{} get_{}(struct RUBase* priv_data) {{\n", sdef.name, sdef.name.to_snake_case()))?;
+        f.write_fmt(format_args!(
+            "static struct RU{} get_{}(struct RUBase* priv_data) {{\n",
+            sdef.name,
+            sdef.name.to_snake_case()
+        ))?;
         f.write_all(b"    (void)priv_data;\n")?;
         f.write_fmt(format_args!("    RU{} ctl;\n", sdef.name))?;
         f.write_all(b"    ctl.priv_data = nullptr;\n")?;
@@ -554,8 +555,7 @@ fn generate_static_get_functions<W: Write>(
 
             f.write_fmt(format_args!(
                 "    ctl.{}_funcs = &s_{}_funcs;\n",
-                snake_name,
-                snake_name
+                snake_name, snake_name
             ))?;
         }
 
@@ -602,7 +602,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
 
         if sdef.should_gen_wrap_class() {
             f.write_fmt(format_args!(
-            "static struct RU{} create_{}(
+                "static struct RU{} create_{}(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
     void* private_user_data)
@@ -618,13 +618,14 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
             ))?;
         } else {
             f.write_fmt(format_args!(
-                "static struct RU{} create_{}(struct RUBase* priv_data) {{\n", sdef.name, sdef.name.to_snake_case()
+                "static struct RU{} create_{}(struct RUBase* priv_data) {{\n",
+                sdef.name,
+                sdef.name.to_snake_case()
             ))?;
 
             f.write_fmt(format_args!(
-                "    auto ctl = {}<struct RU{}, {}>(priv_data);\n", create_func,
-                struct_name,
-                struct_qt_name,
+                "    auto ctl = {}<struct RU{}, {}>(priv_data);\n",
+                create_func, struct_name, struct_qt_name,
             ))?;
         }
 
@@ -635,8 +636,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
 
             f.write_fmt(format_args!(
                 "    ctl.{}_funcs = &s_{}_funcs;\n",
-                snake_name,
-                snake_name
+                snake_name, snake_name
             ))?;
         }
 
@@ -682,26 +682,35 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
         ))?;
 
         if sdef.should_have_create_func() {
-            f.write_fmt(format_args!("    destroy_{},\n", struct_name.to_snake_case()))?;
+            f.write_fmt(format_args!(
+                "    destroy_{},\n",
+                struct_name.to_snake_case()
+            ))?;
         }
 
         for func in &sdef.functions {
             match func.func_type {
-                 FunctionType::Regular => {
+                FunctionType::Regular => {
                     f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
-                },
+                }
 
-                 FunctionType::Static => {
+                FunctionType::Static => {
                     f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
-                },
+                }
 
                 FunctionType::Callback => {
-                    f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
-                },
+                    f.write_fmt(format_args!(
+                        "    set_{}_event,\n",
+                        function_name(struct_name, func)
+                    ))?;
+                }
 
                 FunctionType::Event => {
-                    f.write_fmt(format_args!( "    set_{}_event,\n", function_name(struct_name, func)))?;
-                },
+                    f.write_fmt(format_args!(
+                        "    set_{}_event,\n",
+                        function_name(struct_name, func)
+                    ))?;
+                }
             }
         }
 
@@ -731,16 +740,10 @@ fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
         .iter()
         .filter(|s| s.should_have_create_func())
     {
-        f.write_fmt(format_args!(
-            "    create_{},\n",
-            sdef.name.to_snake_case()
-        ))?;
+        f.write_fmt(format_args!("    create_{},\n", sdef.name.to_snake_case()))?;
 
         if sdef.has_static_functions() {
-            f.write_fmt(format_args!(
-                "    get_{},\n",
-                sdef.name.to_snake_case()
-            ))?;
+            f.write_fmt(format_args!("    get_{},\n", sdef.name.to_snake_case()))?;
         }
     }
 
@@ -802,7 +805,8 @@ impl QtGenerator {
         func: &Function,
         type_handlers: &[Box<TypeHandler>],
     ) -> io::Result<()> {
-        let ret_value = func.return_val
+        let ret_value = func
+            .return_val
             .as_ref()
             .map_or("void".into(), |v| v.get_c_type());
 
@@ -864,7 +868,7 @@ impl QtGenerator {
             if ret_val.vtype == VariableType::Primitive {
                 f.write_all(b"    return ret_value;\n")?;
             //} else if ret_val.array {
-                //generate_return_array(f, ret_val)?;
+            //generate_return_array(f, ret_val)?;
             } else if ret_val.type_name == "String" {
                 generate_return_string(f)?;
             } else {
@@ -887,12 +891,14 @@ impl QtGenerator {
                 let name = ret_val.type_name.to_snake_case();
 
                 f.write_fmt(format_args!(
-                "    ctl.{}_funcs = &s_{}_funcs;\n", name, name
+                    "    ctl.{}_funcs = &s_{}_funcs;\n",
+                    name, name
                 ))?;
 
                 if ret_val.vtype == VariableType::Regular {
                     f.write_fmt(format_args!(
-                        "    ctl.priv_data = (struct RUBase*)new Q{}(ret_value);\n", ret_val.type_name,
+                        "    ctl.priv_data = (struct RUBase*)new Q{}(ret_value);\n",
+                        ret_val.type_name,
                     ))?;
                 } else {
                     f.write_fmt(format_args!(
@@ -927,16 +933,16 @@ impl QtGenerator {
         for sdef in &api_def.class_structs {
             //let is_widget = sdef.inherits_widget(api_def);
 
-            for func in sdef
-                .functions
-                .iter()
-                .filter(|func| !func.is_manual)
-            {
+            for func in sdef.functions.iter().filter(|func| !func.is_manual) {
                 f.write_all(SEPARATOR)?;
 
                 match func.func_type {
-                    FunctionType::Static => self.generate_func_def(f, &sdef, api_def, func, type_handlers)?,
-                    FunctionType::Regular => self.generate_func_def(f, &sdef, api_def, func, type_handlers)?,
+                    FunctionType::Static => {
+                        self.generate_func_def(f, &sdef, api_def, func, type_handlers)?
+                    }
+                    FunctionType::Regular => {
+                        self.generate_func_def(f, &sdef, api_def, func, type_handlers)?
+                    }
                     FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
                     _ => (),
                 }
@@ -980,7 +986,7 @@ impl QtGenerator {
                         enum_data.insert("id".to_owned(), Value::Str(format!("{}", index)));
                         values.push(Value::Object(enum_data));
                         index += 1;
-                    },
+                    }
 
                     EnumEntry::EnumValue(ref name, ref value) => {
                         let mut enum_data = Object::new();
@@ -1024,7 +1030,11 @@ impl QtGenerator {
     ///     void* m_wrapped_func;
     /// };
     ///
-    pub fn generate_signal_wrappers<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    pub fn generate_signal_wrappers<W: Write>(
+        &self,
+        f: &mut W,
+        api_def: &ApiDef,
+    ) -> io::Result<()> {
         // Sort the signals by their names to have stable generation
         let temp = build_signal_wrappers_info(api_def);
         let ordered: BTreeMap<_, _> = temp.iter().collect();
@@ -1036,13 +1046,19 @@ impl QtGenerator {
             //let func_def = func.gen_c_def_filter(Some(None), |_, _| None);
             let c_call_args = func.generate_invoke(FirstArgName::Remove);
 
-            template_data.insert("signal_func_name".to_owned(), Value::Str(signal_type_name.clone()));
+            template_data.insert(
+                "signal_func_name".to_owned(),
+                Value::Str(signal_type_name.clone()),
+            );
             template_data.insert("c_args".to_owned(), Value::Str(c_args));
 
             // we need to add, at the front of the call args as this is being used inside a
             // function call argument already if we have some args
             if c_call_args != "" {
-                template_data.insert("c_call_args".to_owned(), Value::Str(format!(", {}", c_call_args)));
+                template_data.insert(
+                    "c_call_args".to_owned(),
+                    Value::Str(format!(", {}", c_call_args)),
+                );
             } else {
                 template_data.insert("c_call_args".to_owned(), Value::str(""));
             }
@@ -1067,7 +1083,6 @@ impl QtGenerator {
         f: &mut W,
         api_def: &ApiDef,
     ) -> io::Result<()> {
-
         for sdef in api_def
             .class_structs
             .iter()
@@ -1090,7 +1105,6 @@ impl QtGenerator {
             }
             */
 
-
             // TODO: Fix me
             template_data.insert("events".to_owned(), Value::str(""));
 
@@ -1100,7 +1114,6 @@ impl QtGenerator {
 
         Ok(())
     }
-
 
     pub fn generate(&self, target_name: &str, api_def: &ApiDef) -> io::Result<()> {
         let header_path = format!("{}.h", target_name);

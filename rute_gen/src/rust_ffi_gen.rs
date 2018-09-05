@@ -1,12 +1,12 @@
 use api_parser::*;
+use header_ffi_gen::HeaderFFIGen;
+use heck::{CamelCase, SnakeCase};
 use std::borrow::Cow;
-use heck::{SnakeCase, CamelCase};
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
 use std::io;
 use std::io::Write;
-use header_ffi_gen::HeaderFFIGen;
 
 ///
 /// Header for Rust FFI
@@ -124,7 +124,11 @@ impl HeaderFFIGen for RustFFIGenerator {
         write!(dest, "{}", HEADER)
     }
 
-    fn gen_forward_declaration<W: Write>(&mut self, _dest: &mut W, _struct_name: &str) -> io::Result<()> {
+    fn gen_forward_declaration<W: Write>(
+        &mut self,
+        _dest: &mut W,
+        _struct_name: &str,
+    ) -> io::Result<()> {
         Ok(())
     }
 
@@ -139,7 +143,9 @@ impl HeaderFFIGen for RustFFIGenerator {
         for entry in &enum_def.entries {
             match *entry {
                 EnumEntry::Enum(ref name) => writeln!(dest, "    {},", name.to_camel_case())?,
-                EnumEntry::EnumValue(ref name, ref val) => writeln!(dest, "    {} = {},", name.to_camel_case(), val)?,
+                EnumEntry::EnumValue(ref name, ref val) => {
+                    writeln!(dest, "    {} = {},", name.to_camel_case(), val)?
+                }
             }
         }
 
@@ -149,7 +155,11 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     /// Generate start of struct declaration
     ///
-    fn gen_struct_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
+    fn gen_struct_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
         writeln!(dest, "#[repr(C)]")?;
         writeln!(dest, "#[derive(Copy, Clone)]")?;
         writeln!(dest, "pub struct {} {{", struct_name)
@@ -158,7 +168,11 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     /// Generate end of struct declaration
     ///
-    fn gen_struct_end_declaration<W: Write>(&mut self, dest: &mut W, _struct_name: &str) -> io::Result<()> {
+    fn gen_struct_end_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        _struct_name: &str,
+    ) -> io::Result<()> {
         writeln!(dest, "}}\n")
     }
 
@@ -166,35 +180,58 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// Generate destroy function
     ///
     fn gen_destroy_func<W: Write>(&mut self, dest: &mut W, _function_name: &str) -> io::Result<()> {
-        writeln!(dest, "    pub destroy: extern \"C\" fn(self_c: *const RUBase),")
+        writeln!(
+            dest,
+            "    pub destroy: extern \"C\" fn(self_c: *const RUBase),"
+        )
     }
 
     ///
     /// Generate create function for owned data function
     ///
-    fn gen_owned_data_create<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> io::Result<()> {
-            writeln!(dest,
-                "    pub create_{}: extern \"C\" fn(
+    fn gen_owned_data_create<W: Write>(
+        &mut self,
+        dest: &mut W,
+        struct_name: &str,
+    ) -> io::Result<()> {
+        writeln!(
+            dest,
+            "    pub create_{}: extern \"C\" fn(
         priv_data: *const RUBase,
         callback: unsafe extern \"C\" fn(),
         host_data: *const c_void) -> RU{},",
-                struct_name.to_snake_case(), struct_name)
+            struct_name.to_snake_case(),
+            struct_name
+        )
     }
 
     ///
     /// Generate create function
     ///
-    fn gen_create_gen<W: Write>(&mut self, dest: &mut W, prefix: &str, struct_name: &str) -> io::Result<()> {
-        writeln!(dest, "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
-                prefix,
-                struct_name.to_snake_case(),
-                struct_name)
+    fn gen_create_gen<W: Write>(
+        &mut self,
+        dest: &mut W,
+        prefix: &str,
+        struct_name: &str,
+    ) -> io::Result<()> {
+        writeln!(
+            dest,
+            "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+            prefix,
+            struct_name.to_snake_case(),
+            struct_name
+        )
     }
     ///
     /// Generate the funcs declaration
     ///
     fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
-        writeln!(dest, "    pub {}_funcs: *const RU{}Funcs,", name.to_snake_case(), name)
+        writeln!(
+            dest,
+            "    pub {}_funcs: *const RU{}Funcs,",
+            name.to_snake_case(),
+            name
+        )
     }
 
     ///
@@ -219,11 +256,14 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     /// Generate forward declarations of needed
     ///
-    fn generate_post_declarations<W: Write>(&mut self, dest: &mut W, _api_def: &ApiDef) -> io::Result<()> {
+    fn generate_post_declarations<W: Write>(
+        &mut self,
+        dest: &mut W,
+        _api_def: &ApiDef,
+    ) -> io::Result<()> {
         writeln!(dest, "{}", FOOTER)
     }
 }
-
 
 //
 // Generator for Rust FFI bindings
@@ -257,9 +297,12 @@ impl RustFFIGenerator {
             arg.get_rust_ffi_type().into()
         });
 
-        writeln!(dest,
+        writeln!(
+            dest,
             "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void,
-                                            callback: extern \"C\" fn(widget: *const RUBase, {})),", func.name, func_def)
+                                            callback: extern \"C\" fn(widget: *const RUBase, {})),",
+            func.name, func_def
+        )
     }
 
     ///
@@ -273,4 +316,3 @@ impl RustFFIGenerator {
         )
     }
 }
-

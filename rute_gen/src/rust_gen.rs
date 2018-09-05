@@ -1,11 +1,11 @@
-use std::io;
-use std::io::{BufWriter, Write};
-use std::fs::File;
 use api_parser::*;
-use heck::{SnakeCase};
+use heck::SnakeCase;
+use liquid::{Object, ParserBuilder, Template, Value};
 use std::borrow::Cow;
 use std::collections::HashMap;
-use liquid::{Template, ParserBuilder, Object, Value};
+use std::fs::File;
+use std::io;
+use std::io::{BufWriter, Write};
 
 use rust_gen_templates::*;
 
@@ -39,7 +39,6 @@ trait TypeHandlerTrait {
     fn gen_body(&self, _arg: &str, _index: usize) -> (Cow<str>, Cow<str>);
 }
 
-
 ///
 /// String type handler
 ///
@@ -64,11 +63,12 @@ impl TypeHandlerTrait for StringTypeHandler {
 
     fn gen_body(&self, arg: &str, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("str_in_{}_{}", arg, index);
-        (format!("{}.as_ptr()", arg_name).into(),
-         format!("let {} = CString::new({}).unwrap();\n", arg_name, arg).into())
+        (
+            format!("{}.as_ptr()", arg_name).into(),
+            format!("let {} = CString::new({}).unwrap();\n", arg_name, arg).into(),
+        )
     }
 }
-
 
 ///
 /// Generate the structs. The structs will be generated in this style
@@ -89,10 +89,12 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 
     for sdef in &api_def.class_structs {
         f.write_all(b"#[derive(Clone)]\n")?;
-        f.write_fmt(format_args!("pub struct {}<'a> {{
+        f.write_fmt(format_args!(
+            "pub struct {}<'a> {{
     data: Rc<Cell<Option<RU{}>>>,
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
-            sdef.name, sdef.name))?;
+            sdef.name, sdef.name
+        ))?;
     }
 
     Ok(())
@@ -108,15 +110,17 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
 ///
 fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     for sdef in api_def
-            .class_structs
-            .iter()
-            .filter(|s| s.has_static_functions())
+        .class_structs
+        .iter()
+        .filter(|s| s.has_static_functions())
     {
         f.write_all(b"#[derive(Clone)]\n")?;
-        f.write_fmt(format_args!("pub struct {}Static<'a> {{
+        f.write_fmt(format_args!(
+            "pub struct {}Static<'a> {{
     data: RU{},
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
-            sdef.name, sdef.name))?;
+            sdef.name, sdef.name
+        ))?;
     }
 
     Ok(())
@@ -166,14 +170,12 @@ impl RustGenerator {
             VariableType::SelfType => dest.push_str("&self"),
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&type_name),
-            VariableType::Regular => {
-                dest.push_str(&type_name)
-            },
+            VariableType::Regular => dest.push_str(&type_name),
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
                 dest.push_str("<'a>");
-            },
+            }
             VariableType::Optional => {
                 dest.push_str("Option<");
                 dest.push_str(&type_name);
@@ -185,7 +187,7 @@ impl RustGenerator {
     ///
     /// Generate a function implementation
     ///
-    fn generate_func_def(&self, func: &Function, struct_name: &str) -> String  {
+    fn generate_func_def(&self, func: &Function, struct_name: &str) -> String {
         let mut temp_str = String::with_capacity(128);
         let mut func_imp = String::with_capacity(128);
 
@@ -293,9 +295,12 @@ impl RustGenerator {
     /// }
     fn generate_get_obj_funcs(struct_name: &str) -> String {
         let snake_name = struct_name.to_snake_case();
-        format!("    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
+        format!(
+            "    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
+        (obj.privd, obj.{}_funcs)\n    }}\n",
+            snake_name, struct_name, snake_name
+        )
     }
 
     ///
@@ -307,9 +312,12 @@ impl RustGenerator {
     /// }
     fn generate_static_get_obj_funcs(struct_name: &str) -> String {
         let snake_name = struct_name.to_snake_case();
-        format!("    fn get_{}_static_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
+        format!(
+            "    fn get_{}_static_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
         let obj = self.data;
-        (obj.privd, obj.{}_funcs)\n    }}\n", snake_name, struct_name, snake_name)
+        (obj.privd, obj.{}_funcs)\n    }}\n",
+            snake_name, struct_name, snake_name
+        )
     }
 
     //
@@ -344,11 +352,20 @@ impl RustGenerator {
         }
 
         template_data.insert("event_name".to_owned(), Value::Str(func.name.clone()));
-        template_data.insert("function_arguments".to_owned(), Value::Str(function_arguments));
+        template_data.insert(
+            "function_arguments".to_owned(),
+            Value::Str(function_arguments),
+        );
         template_data.insert("function_params".to_owned(), Value::Str(function_params));
-        template_data.insert("function_arg_types".to_owned(), Value::Str(function_arg_types));
+        template_data.insert(
+            "function_arg_types".to_owned(),
+            Value::Str(function_arg_types),
+        );
         template_data.insert("widget_name".to_owned(), Value::str(struct_name));
-        template_data.insert("widget_snake_name".to_owned(), Value::Str(struct_name.to_snake_case()));
+        template_data.insert(
+            "widget_snake_name".to_owned(),
+            Value::Str(struct_name.to_snake_case()),
+        );
 
         self.callback_template.render(&template_data).unwrap()
     }
@@ -364,7 +381,10 @@ impl RustGenerator {
 
         template_data.insert("func_name".to_owned(), Value::Str(func.name.clone()));
         template_data.insert("function_def".to_owned(), Value::Str(func_def));
-        template_data.insert("obj_funcs_name".to_owned(), Value::Str(struct_name.to_snake_case()));
+        template_data.insert(
+            "obj_funcs_name".to_owned(),
+            Value::Str(struct_name.to_snake_case()),
+        );
 
         let mut function_args = Vec::with_capacity(func.function_args.len());
         let mut body_setup = String::with_capacity(4096);
@@ -376,7 +396,7 @@ impl RustGenerator {
                     let (gen_arg, body) = handler.gen_body(&arg.name, i);
                     function_args.push((true, gen_arg));
                     body_setup += &body;
-                },
+                }
                 None => {
                     function_args.push((false, arg.name.clone().into()));
                 }
@@ -406,7 +426,10 @@ impl RustGenerator {
         // Setup the return part of the template
         //
 
-        template_data.insert("return_value".to_owned(), Value::Bool(func.return_val.is_some()));
+        template_data.insert(
+            "return_value".to_owned(),
+            Value::Bool(func.return_val.is_some()),
+        );
         template_data.insert("function_args".to_owned(), Value::Str(func_args));
 
         func.return_val.as_ref().map(|ret_val| {
@@ -417,7 +440,7 @@ impl RustGenerator {
                     let ret = handler.gen_body_return(&ret_val);
                     template_data.insert("return_type".to_owned(), Value::str("replaced"));
                     template_data.insert("replaced_return".to_owned(), Value::Str(ret.into()));
-                },
+                }
                 None => {
                     match ret_val.vtype {
                         /*
@@ -428,7 +451,10 @@ impl RustGenerator {
                         */
                         VariableType::Regular => {
                             template_data.insert("return_type".to_owned(), Value::str("no_wrap"));
-                            template_data.insert("return_vtype".to_owned(), Value::Str(ret_val.type_name.to_owned()));
+                            template_data.insert(
+                                "return_vtype".to_owned(),
+                                Value::Str(ret_val.type_name.to_owned()),
+                            );
                         }
                         /*
                         VariableType::Array(ref vtype) => {
@@ -449,35 +475,35 @@ impl RustGenerator {
     /// Generates the implementations for the structs
     ///
     fn generate_structs_impl<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        api_def
-            .class_structs
-            .iter()
-            .try_for_each(|s| {
-                //if s.should_generate_trait {
-                //    self.generate_struct_impl(f, s)?;
-                //} else {
-                self.generate_struct_impl(f, s)?;
-                //}
+        api_def.class_structs.iter().try_for_each(|s| {
+            //if s.should_generate_trait {
+            //    self.generate_struct_impl(f, s)?;
+            //} else {
+            self.generate_struct_impl(f, s)?;
+            //}
 
-                // Implement drop for structs that needs it
+            // Implement drop for structs that needs it
 
-                if s.should_generate_drop() {
-                    let mut template_data = Object::new();
+            if s.should_generate_drop() {
+                let mut template_data = Object::new();
 
-                    template_data.insert("type_name".to_owned(), Value::Str(s.name.clone()));
-                    template_data.insert("type_snake_name".to_owned(), Value::Str(s.name.to_snake_case()));
+                template_data.insert("type_name".to_owned(), Value::Str(s.name.clone()));
+                template_data.insert(
+                    "type_snake_name".to_owned(),
+                    Value::Str(s.name.to_snake_case()),
+                );
 
-                    let output = self.drop_template.render(&template_data).unwrap();
+                let output = self.drop_template.render(&template_data).unwrap();
 
-                    f.write_all(output.as_bytes())?;
-                }
+                f.write_all(output.as_bytes())?;
+            }
 
-                if s.has_static_functions() {
-                    self.generate_static_struct_impl(f, s)?;
-                }
+            if s.has_static_functions() {
+                self.generate_static_struct_impl(f, s)?;
+            }
 
-                Ok(())
-            })
+            Ok(())
+        })
     }
 
     ///
@@ -550,115 +576,156 @@ mod tests {
             name: "test".to_owned(),
             function_args: vec![Variable {
                 name: "self".to_owned(),
-                .. Variable::default()
+                ..Variable::default()
             }],
             ..Function::default()
         }
     }
 
-	//
-	// Test function def with self only
-	//
-	#[test]
-	fn test_function_self_only() {
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+    //
+    // Test function def with self only
+    //
+    #[test]
+    fn test_function_self_only() {
+        let rust_gen = RustGenerator::new(&ApiDef::default());
         let func = build_default_func();
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> &TestStruct<'a>");
-	}
+    }
 
-	//
-	// Test function def with one primitive
-	//
-	#[test]
-	fn test_function_one_primitive() {
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+    //
+    // Test function def with one primitive
+    //
+    #[test]
+    fn test_function_one_primitive() {
+        let rust_gen = RustGenerator::new(&ApiDef::default());
         let mut func = build_default_func();
-        func.function_args.push(Variable { name: "foo".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "i32".to_owned(),
+            vtype: VariableType::Primitive,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self, foo: i32) -> &TestStruct<'a>");
-	}
+    }
 
-	#[test]
-	fn test_function_string() {
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+    #[test]
+    fn test_function_string() {
+        let rust_gen = RustGenerator::new(&ApiDef::default());
         let mut func = build_default_func();
-        func.function_args.push(Variable { name: "foo".to_owned(), type_name: "String".to_owned(), vtype: VariableType::Regular, .. Variable::default() });
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "String".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self, foo: &str) -> &TestStruct<'a>");
-	}
+    }
 
-	//
-	// Test function def with two primitives
-	//
-	#[test]
-	fn test_function_two_primitive() {
+    //
+    // Test function def with two primitives
+    //
+    #[test]
+    fn test_function_two_primitive() {
         let mut func = build_default_func();
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new(&ApiDef::default());
 
-        func.function_args.push(Variable { name: "width".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
-        func.function_args.push(Variable { name: "height".to_owned(), type_name: "f32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
+        func.function_args.push(Variable {
+            name: "width".to_owned(),
+            type_name: "i32".to_owned(),
+            vtype: VariableType::Primitive,
+            ..Variable::default()
+        });
+        func.function_args.push(Variable {
+            name: "height".to_owned(),
+            type_name: "f32".to_owned(),
+            vtype: VariableType::Primitive,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &TestStruct<'a>");
-	}
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(
+            func_impl,
+            "(&self, width: i32, height: f32) -> &TestStruct<'a>"
+        );
+    }
 
-	//
-	// Test function def with self and primitive return
-	//
-	#[test]
-	fn test_function_primitive_return() {
+    //
+    // Test function def with self and primitive return
+    //
+    #[test]
+    fn test_function_primitive_return() {
         let mut func = build_default_func();
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new(&ApiDef::default());
 
-        func.return_val = Some(Variable { type_name: "i32".to_owned(), vtype: VariableType::Primitive, .. Variable::default() });
+        func.return_val = Some(Variable {
+            type_name: "i32".to_owned(),
+            vtype: VariableType::Primitive,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> i32");
-	}
+    }
 
-	//
-	// Test function def with self and optional return
-	//
-	#[test]
-	fn test_function_primitive_optional_return() {
+    //
+    // Test function def with self and optional return
+    //
+    #[test]
+    fn test_function_primitive_optional_return() {
         let mut func = build_default_func();
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new(&ApiDef::default());
 
-        func.return_val = Some(Variable { type_name: "f32".to_owned(), vtype: VariableType::Optional, .. Variable::default() });
+        func.return_val = Some(Variable {
+            type_name: "f32".to_owned(),
+            vtype: VariableType::Optional,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> Option<f32>");
-	}
+    }
 
-	//
-	// Test function def with self and array return
-	//
-	#[test]
-	fn test_function_primitive_array_return() {
+    //
+    // Test function def with self and array return
+    //
+    #[test]
+    fn test_function_primitive_array_return() {
         let mut func = build_default_func();
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new(&ApiDef::default());
 
-        func.return_val = Some(Variable { type_name: "f32".to_owned(), vtype: VariableType::Primitive, array: true, .. Variable::default()});
+        func.return_val = Some(Variable {
+            type_name: "f32".to_owned(),
+            vtype: VariableType::Primitive,
+            array: true,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> RefArray<f32, WrapperRcOwn>");
-	}
+    }
 
-	//
-	// Test function def with self, array input
-	//
-	#[test]
-	fn test_function_array_input() {
+    //
+    // Test function def with self, array input
+    //
+    #[test]
+    fn test_function_array_input() {
         let mut func = build_default_func();
-	    let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new(&ApiDef::default());
 
-        func.function_args.push(Variable { name: "width".to_owned(), type_name: "i32".to_owned(), vtype: VariableType::Primitive, array: true, .. Variable::default() });
+        func.function_args.push(Variable {
+            name: "width".to_owned(),
+            type_name: "i32".to_owned(),
+            vtype: VariableType::Primitive,
+            array: true,
+            ..Variable::default()
+        });
 
-		let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self, width: &[i32]) -> &TestStruct<'a>");
-	}
+    }
 }
-

@@ -509,9 +509,9 @@ impl ApiParser {
     /// be out of order
     ///
     pub fn second_pass(api_def: &mut ApiDef) {
-		//
-		// Patch up the types for enums as they can be out of order.
-		//
+        //
+        // Patch up the types for enums as they can be out of order.
+        //
         let mut enums = HashSet::new();
 
         for enum_def in &api_def.enums {
@@ -531,21 +531,17 @@ impl ApiParser {
 
         // Build a hash_set of all classes that are inherited
 
-		let mut inherited_classes = HashSet::new();
+        let mut inherited_classes = HashSet::new();
 
-		api_def
-			.class_structs
-			.iter()
-			.for_each(|s| s.inherit.as_ref().map_or((), |i| {
-				inherited_classes.insert(i.clone());
-			}));
+        api_def.class_structs.iter().for_each(|s| {
+            s.inherit.as_ref().map_or((), |i| {
+                inherited_classes.insert(i.clone());
+            })
+        });
 
-		api_def
-			.class_structs
-			.iter_mut()
-			.for_each(|s| {
-				s.should_generate_trait = inherited_classes.contains(&s.name);
-			});
+        api_def.class_structs.iter_mut().for_each(|s| {
+            s.should_generate_trait = inherited_classes.contains(&s.name);
+        });
     }
 }
 
@@ -704,9 +700,7 @@ impl Struct {
     /// Check if no wrapping class should be generated
     ///
     pub fn should_generate_drop(&self) -> bool {
-        self.attributes
-            .iter()
-            .any(|ref s| *s == ATTRIB_DROP)
+        self.attributes.iter().any(|ref s| *s == ATTRIB_DROP)
     }
 }
 
@@ -818,9 +812,9 @@ impl Function {
         for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 {
                 match replace_first {
-                   FirstArgType::Keep => function_args.push_str(&arg.get_c_type()),
-                   //FirstArgType::Remove => continue,
-                   //FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
+                    FirstArgType::Keep => function_args.push_str(&arg.get_c_type()),
+                    //FirstArgType::Remove => continue,
+                    //FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
                 }
             } else {
                 function_args.push_str(&arg.get_c_type());
@@ -883,8 +877,7 @@ impl Function {
             .map(|arg| {
                 skip_first = true;
                 arg
-            })
-            .and_then(|v| v)
+            }).and_then(|v| v)
             .map(|v| {
                 if arg_count > 0 {
                     output.push_str(&format!("{} {}", v, self.function_args[0].name));
