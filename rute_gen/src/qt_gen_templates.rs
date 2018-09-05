@@ -43,13 +43,13 @@ extern \"C\" struct Rute* rute_get() {
 pub static QT_GEN_WRAPPER_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WR{{struct_name}} : public {{cpp_name}} {
+class WR{{struct_name}} : public {{qt_name}} {
     Q_OBJECT
 public:
 {% if widget %}
-    WR{{struct_name}}({{cpp_name}}* widget) : {{cpp_name}}(widget) { }
+    WR{{struct_name}}({{qt_name}}* widget) : {{qt_name}}(widget) { }
 {% else %}
-    WR{{struct_name}}() : {{cpp_name}}() { }
+    WR{{struct_name}}() : {{qt_name}}() { }
 {% endif %}
     virtual ~WR{{struct_name}}() {
         if (m_delete_callback) {

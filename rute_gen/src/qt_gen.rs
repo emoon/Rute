@@ -1091,8 +1091,8 @@ impl QtGenerator {
             let mut template_data = Object::new();
             let inherits_widget = sdef.inherits_widget(api_def);
 
-            template_data.insert("struct_name".to_owned(), Value::Str(sdef.name.clone()));
-            template_data.insert("cpp_name".to_owned(), Value::Str(sdef.cpp_name.clone()));
+            template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("qt_name".to_owned(), Value::str(&sdef.qt_name));
             template_data.insert("widget".to_owned(), Value::Bool(inherits_widget));
 
             /*

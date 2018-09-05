@@ -134,6 +134,8 @@ pub struct Struct {
     pub name: String,
     /// Name for the C++ class in the generation
     pub cpp_name: String,
+    /// Name of the Qt Class/Struct
+    pub qt_name: String,
     /// Variables in the struct
     pub variables: Vec<Variable>,
     /// Functions for the struct
@@ -278,6 +280,13 @@ impl ApiParser {
             sdef.cpp_name = format!("WR{}", sdef.name);
         } else if sdef.cpp_name.is_empty() {
             sdef.cpp_name = format!("Q{}", sdef.name);
+        }
+
+        // TODO: We need to support the user to override this name if wanted
+        // this is to allow supporting generation of code that isn't in the qt
+        // strandard library but may be a user class not starting with Q
+        if sdef.qt_name.is_empty() {
+            sdef.qt_name = format!("Q{}", sdef.name);
         }
 
         sdef
