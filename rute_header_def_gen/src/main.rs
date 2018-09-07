@@ -5,8 +5,8 @@ extern crate walkdir;
 
 use clang::*;
 use heck::SnakeCase;
-use std::borrow::Cow;
 use rayon::prelude::*;
+use std::borrow::Cow;
 use std::collections::HashSet;
 use std::sync::RwLock;
 use walkdir::WalkDir;
@@ -28,7 +28,6 @@ const SKIP_NAMES: &[&'static str] = &[
     "dynamic_meta_object",
 ];
 
-
 ///
 /// Translate Qt/C++ type to API def type
 ///
@@ -47,8 +46,7 @@ fn get_pod_type<'a>(name: &'a str) -> &'a str {
 ///
 /// Translate a parsed type into API Def type
 ///
-fn get_arg_type<'a>(arg: &'a Entity) -> Cow<'static, str> {
-    let t = arg.get_type().unwrap();
+fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
     let name = t.get_display_name();
 
     if t.is_pod() {
@@ -59,19 +57,36 @@ fn get_arg_type<'a>(arg: &'a Entity) -> Cow<'static, str> {
         if name.starts_with("const ") {
             type_name = &name[6..];
         } else {
-            type_name = &name;
+            type_name = &name[1..];
+        }
+
+        if type_name.find("QList<").is_some() {
+            let end_tag = type_name.find('>').unwrap();
+            let t = &type_name[6..end_tag];
+            let ret;
+
+            // check if pointer
+            if t.find('*').is_some() {
+                ret = format!("<&{}Type>", &t[..t.len() - 2]);
+            } else {
+                ret = format!("<{}Type>", t);
+            }
+
+            return ret.into();
+        } else {
+
+
         }
 
         type_name.to_owned().into()
     }
 }
 
-
 ///
 ///
 ///
 fn print_arg(arg: &Entity, arg_count: &mut usize) {
-    let arg_type = get_arg_type(arg);
+    let arg_type = get_arg_type(&arg.get_type().unwrap());
 
     print!("{} ", arg_type);
 
@@ -127,7 +142,7 @@ fn print_func(entry: &Entity, func_type: FunctionType) {
         if display_name.contains("void") {
             println!(",");
         } else {
-            println!(" -> {},", display_name);
+            println!(" -> {},", get_arg_type(&res));
         }
     } else {
         print!("\n");
@@ -225,7 +240,7 @@ fn main() {
     // Acquire an instance of `Clang`
     let clang = Clang::new().unwrap();
 
-    //let mut lock = RwLock::new(HashSet::new());
+    let mut lock = RwLock::new(HashSet::new());
 
     // Get all the files to parse
 
@@ -275,11 +290,10 @@ fn main() {
         for struct_ in structs {
             if let Some(name) = struct_.get_name() {
                 let t = name.to_owned();
-                /*
                 {
                     let data = lock.read().unwrap();
 
-                    if data.contains(&t) {
+                    if data.contains(&t) || struct_.get_children().is_empty() {
                         continue;
                     }
                 }
@@ -288,7 +302,6 @@ fn main() {
                     let mut w = lock.write().unwrap();
                     w.insert(t);
                 }
-                */
 
                 print_class(&struct_);
             }
