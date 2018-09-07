@@ -1,0 +1,12 @@
+[package]
+name = "rute_header_def_gen"
+version = "0.1.0"
+authors = ["Daniel Collin <daniel@collin.com>"]
+
+[dependencies]
+heck = "0.3"
+walkdir = "2"
+rayon = "1.0"
+
+[dependencies.clang]
+features = ["clang_6_0"]
