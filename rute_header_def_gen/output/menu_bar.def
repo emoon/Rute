@@ -22,7 +22,7 @@ struct MenuBar : Widget {
     is_native_menu_bar() -> bool,
     set_native_menu_bar(bool native_menu_bar),
     platform_menu_bar() -> &PlatformMenuBarType,
-    set_visible(bool visible),
+    [callback] set_visible(bool visible),
     hovered(&ActionType action),
     change_event(&EventType arg0),
     key_press_event(&KeyEventType arg0),

@@ -59,12 +59,6 @@ struct PainterPath {
     united(&PainterPathType r) -> PainterPathType,
     intersected(&PainterPathType r) -> PainterPathType,
     simplified() -> PainterPathType,
-    ensure_data(),
-    ensure_data_helper(),
-    detach(),
-    detach_helper(),
-    set_dirty(bool arg0),
-    compute_bounding_rect(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

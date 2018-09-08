@@ -94,7 +94,6 @@ struct Color {
     is_valid_color(String name) -> bool,
     is_valid_color(StringViewType arg0) -> bool,
     is_valid_color(Latin1StringType arg0) -> bool,
-    invalidate(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

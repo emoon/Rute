@@ -31,7 +31,6 @@ struct MetaProperty {
     has_std_cpp_set() -> bool,
     is_valid() -> bool,
     enclosing_meta_object() -> &MetaObjectType,
-    register_property_type() -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

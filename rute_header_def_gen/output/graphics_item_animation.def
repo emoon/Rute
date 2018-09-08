@@ -21,8 +21,8 @@ struct GraphicsItemAnimation : Object {
     shear_list() -> <Pair<qreal,Type>,
     set_shear_at(f32 step, f32 sh, f32 sv),
     clear(),
-    set_step(f32 x),
-    reset(),
+    [callback] set_step(f32 x),
+    [callback] reset(),
     before_animation_step(f32 step),
     after_animation_step(f32 step),
 }

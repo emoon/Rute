@@ -5,8 +5,8 @@ struct UndoView : ListView {
     empty_label() -> String,
     set_clean_icon(&IconType icon),
     clean_icon() -> IconType,
-    set_stack(&UndoStackType stack),
-    set_group(&UndoGroupType group),
+    [callback] set_stack(&UndoStackType stack),
+    [callback] set_group(&UndoGroupType group),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -35,7 +35,6 @@ struct GraphicsLayoutItem {
     set_graphics_item(&GraphicsItemType item),
     set_owned_by_layout(bool owned_by_layout),
     size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
-    effective_size_hints(&SizeFType constraint) -> &SizeFType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

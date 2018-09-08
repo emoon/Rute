@@ -4,14 +4,6 @@ struct BasicMutex {
     unlock(),
     is_recursive() -> bool,
     is_recursive() -> bool,
-    fast_try_lock() -> bool,
-    fast_try_unlock() -> bool,
-    fast_try_lock(&MutexDataType current) -> bool,
-    fast_try_unlock(&MutexDataType current) -> bool,
-    lock_internal(),
-    lock_internal(i32 timeout) -> bool,
-    unlock_internal(),
-    dummy_locked() -> &MutexDataType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

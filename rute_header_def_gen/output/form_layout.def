@@ -51,10 +51,6 @@ struct FormLayout : Layout {
     expanding_directions() -> Rute::Orientations,
     count() -> i32,
     row_count() -> i32,
-    reset_field_growth_policy(),
-    reset_row_wrap_policy(),
-    reset_label_alignment(),
-    reset_form_alignment(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -26,9 +26,6 @@ struct Date {
     is_leap_year(i32 year) -> bool,
     from_julian_day(i64 jd) -> DateType,
     to_julian_day() -> i64,
-    null_jd() -> i64,
-    min_jd() -> i64,
-    max_jd() -> i64,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

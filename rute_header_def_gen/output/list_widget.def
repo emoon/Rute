@@ -36,8 +36,8 @@ struct ListWidget : ListView {
     is_item_hidden(&ListWidgetItemType item) -> bool,
     set_item_hidden(&ListWidgetItemType item, bool hide),
     drop_event(&DropEventType event),
-    scroll_to_item(&ListWidgetItemType item, AbstractItemView::ScrollHint hint),
-    clear(),
+    [callback] scroll_to_item(&ListWidgetItemType item, AbstractItemView::ScrollHint hint),
+    [callback] clear(),
     item_pressed(&ListWidgetItemType item),
     item_clicked(&ListWidgetItemType item),
     item_double_clicked(&ListWidgetItemType item),
@@ -56,8 +56,6 @@ struct ListWidget : ListView {
     items(&MimeDataType data) -> <&ListWidgetItemType>,
     index_from_item(&ListWidgetItemType item) -> ModelIndexType,
     item_from_index(&ModelIndexType index) -> &ListWidgetItemType,
-    set_model(&AbstractItemModelType model),
-    sort_order() -> Rute::SortOrder,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

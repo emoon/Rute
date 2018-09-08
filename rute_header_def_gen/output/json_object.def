@@ -31,13 +31,6 @@ struct JsonObject {
     const_find(Latin1StringType key) -> JsonObject::const_iterator,
     insert(String key, &JsonValueType value) -> JsonObject::iterator,
     empty() -> bool,
-    initialize(),
-    detach(uint reserve),
-    detach2(uint reserve) -> bool,
-    compact(),
-    key_at(i32 i) -> String,
-    value_at(i32 i) -> JsonValueType,
-    set_value_at(i32 i, &JsonValueType val),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

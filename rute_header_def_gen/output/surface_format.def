@@ -42,7 +42,6 @@ struct SurfaceFormat {
     set_color_space(SurfaceFormat::ColorSpace color_space),
     set_default_format(&SurfaceFormatType format),
     default_format() -> SurfaceFormatType,
-    detach(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

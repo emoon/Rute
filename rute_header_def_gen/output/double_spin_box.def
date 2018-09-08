@@ -18,7 +18,7 @@ struct DoubleSpinBox : AbstractSpinBox {
     value_from_text(String text) -> double,
     text_from_value(double val) -> String,
     fixup(String str),
-    set_value(double val),
+    [callback] set_value(double val),
     value_changed(double arg0),
     value_changed(String arg0),
 }

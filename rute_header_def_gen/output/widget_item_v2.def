@@ -3,9 +3,6 @@ struct WidgetItemV2 : WidgetItem {
     minimum_size() -> SizeType,
     maximum_size() -> SizeType,
     height_for_width(i32 width) -> i32,
-    use_size_cache() -> bool,
-    update_cache_if_necessary(),
-    invalidate_size_cache(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

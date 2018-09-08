@@ -43,7 +43,6 @@ struct Layout : Object, LayoutItem {
     add_child_widget(&WidgetType w),
     adopt_layout(&LayoutType layout) -> bool,
     alignment_rect(&RectType arg0) -> RectType,
-    activate_recursive_helper(&LayoutItemType item),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

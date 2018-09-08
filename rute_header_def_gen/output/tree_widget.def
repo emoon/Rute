@@ -44,10 +44,10 @@ struct TreeWidget : TreeView {
     item_above(&TreeWidgetItemType item) -> &TreeWidgetItemType,
     item_below(&TreeWidgetItemType item) -> &TreeWidgetItemType,
     set_selection_model(&ItemSelectionModelType selection_model),
-    scroll_to_item(&TreeWidgetItemType item, AbstractItemView::ScrollHint hint),
-    expand_item(&TreeWidgetItemType item),
-    collapse_item(&TreeWidgetItemType item),
-    clear(),
+    [callback] scroll_to_item(&TreeWidgetItemType item, AbstractItemView::ScrollHint hint),
+    [callback] expand_item(&TreeWidgetItemType item),
+    [callback] collapse_item(&TreeWidgetItemType item),
+    [callback] clear(),
     item_pressed(&TreeWidgetItemType item, i32 column),
     item_clicked(&TreeWidgetItemType item, i32 column),
     item_double_clicked(&TreeWidgetItemType item, i32 column),
@@ -68,7 +68,6 @@ struct TreeWidget : TreeView {
     index_from_item(&TreeWidgetItemType item, i32 column) -> ModelIndexType,
     item_from_index(&ModelIndexType index) -> &TreeWidgetItemType,
     drop_event(&DropEventType event),
-    set_model(&AbstractItemModelType model),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -10,11 +10,6 @@ struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
     cursor_width() -> i32,
     request_update(),
     document_changed(i32 from, i32 arg0, i32 chars_added),
-    set_text_width(f32 new_width),
-    text_width() -> f32,
-    layout_block(&TextBlockType block),
-    block_width(&TextBlockType block) -> f32,
-    priv() -> &PlainTextDocumentLayoutPrivateType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

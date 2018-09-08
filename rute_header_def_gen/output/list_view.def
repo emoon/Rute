@@ -65,7 +65,6 @@ struct ListView : AbstractItemView {
     selection_changed(&ItemSelectionType selected, &ItemSelectionType deselected),
     current_changed(&ModelIndexType current, &ModelIndexType previous),
     viewport_size_hint() -> SizeType,
-    visual_index(&ModelIndexType index) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -41,8 +41,6 @@ struct Matrix4x4 {
     data() -> &float,
     const_data() -> &float,
     optimize(),
-    orthonormal_inverse() -> Matrix4x4Type,
-    projected_rotate(float angle, float x, float y, float z),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

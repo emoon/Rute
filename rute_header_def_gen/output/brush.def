@@ -13,9 +13,6 @@ struct Brush {
     set_color(Rute::GlobalColor color),
     gradient() -> &GradientType,
     is_opaque() -> bool,
-    detach(Rute::BrushStyle new_style),
-    init(&ColorType color, Rute::BrushStyle bs),
-    clean_up(&BrushDataType x),
     is_detached() -> bool,
 }
 

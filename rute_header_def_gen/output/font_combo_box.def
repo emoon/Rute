@@ -5,7 +5,7 @@ struct FontComboBox : ComboBox {
     font_filters() -> FontFilters,
     current_font() -> FontType,
     size_hint() -> SizeType,
-    set_current_font(&FontType f),
+    [callback] set_current_font(&FontType f),
     current_font_changed(&FontType f),
     event(&EventType e) -> bool,
 }

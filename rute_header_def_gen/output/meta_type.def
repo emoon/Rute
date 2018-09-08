@@ -26,16 +26,6 @@ struct MetaType {
     compare(&void lhs, &void rhs, i32 type_id, &i32 result) -> bool,
     equals(&void lhs, &void rhs, i32 type_id, &i32 result) -> bool,
     has_registered_converter_function(i32 from_type_id, i32 to_type_id) -> bool,
-    type_info(i32 type) -> MetaTypeType,
-    is_extended(onst QMetaType::ExtensionFlag flag) -> bool,
-    ctor(&MetaTypeInterfaceType info),
-    dtor(),
-    size_extended() -> uint,
-    flags_extended() -> MetaType::TypeFlags,
-    create_extended(&void copy),
-    register_comparator_function(onst QtPrivate::AbstractComparatorFunction * f, i32 type) -> bool,
-    register_converter_function(onst QtPrivate::AbstractConverterFunction * f, i32 from, i32 to) -> bool,
-    unregister_converter_function(i32 from, i32 to),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

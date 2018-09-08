@@ -49,7 +49,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     bounding_rect() -> RectFType,
     shape() -> PainterPathType,
     layout_changed(),
-    close() -> bool,
+    [callback] close() -> bool,
     init_style_option(&StyleOptionType option),
     size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
     item_change(GraphicsItem::GraphicsItemChange change, &VariantType value) -> VariantType,

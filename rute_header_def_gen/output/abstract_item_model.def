@@ -56,8 +56,8 @@ struct AbstractItemModel : Object {
     rows_moved(&ModelIndexType parent, i32 start, i32 end, &ModelIndexType destination, i32 row, AbstractItemModel::QPrivateSignal arg0),
     columns_about_to_be_moved(&ModelIndexType source_parent, i32 source_start, i32 source_end, &ModelIndexType destination_parent, i32 destination_column, AbstractItemModel::QPrivateSignal arg0),
     columns_moved(&ModelIndexType parent, i32 start, i32 end, &ModelIndexType destination, i32 column, AbstractItemModel::QPrivateSignal arg0),
-    submit() -> bool,
-    revert(),
+    [callback] submit() -> bool,
+    [callback] revert(),
     reset_internal_data(),
     create_index(i32 row, i32 column, &void data) -> ModelIndexType,
     create_index(i32 row, i32 column, quintptr id) -> ModelIndexType,
@@ -80,8 +80,6 @@ struct AbstractItemModel : Object {
     change_persistent_index(&ModelIndexType from, &ModelIndexType to),
     change_persistent_index_list(&ModelIndexListType from, &ModelIndexListType to),
     persistent_index_list() -> ModelIndexListType,
-    do_set_role_names(&Hash<int,Type role_names),
-    do_set_supported_drag_actions(Rute::DropActions actions),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

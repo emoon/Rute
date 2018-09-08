@@ -41,10 +41,6 @@ struct Palette {
     resolve(&PaletteType arg0) -> PaletteType,
     resolve() -> uint,
     resolve(uint mask),
-    set_color_group(Palette::ColorGroup cr, &BrushType window_text, &BrushType button, &BrushType light, &BrushType dark, &BrushType mid, &BrushType text, &BrushType bright_text, &BrushType base, &BrushType alternate_base, &BrushType window, &BrushType midlight, &BrushType button_text, &BrushType shadow, &BrushType highlight, &BrushType highlighted_text, &BrushType link, &BrushType link_visited),
-    set_color_group(Palette::ColorGroup cr, &BrushType window_text, &BrushType button, &BrushType light, &BrushType dark, &BrushType mid, &BrushType text, &BrushType bright_text, &BrushType base, &BrushType alternate_base, &BrushType window, &BrushType midlight, &BrushType button_text, &BrushType shadow, &BrushType highlight, &BrushType highlighted_text, &BrushType link, &BrushType link_visited, &BrushType tool_tip_base, &BrushType tool_tip_text),
-    init(),
-    detach(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -60,10 +60,6 @@ struct TreeWidgetItem {
     type() -> i32,
     sort_children(i32 column, Rute::SortOrder order),
     emit_data_changed(),
-    sort_children(i32 column, Rute::SortOrder order, bool climb),
-    children_check_state(i32 column) -> VariantType,
-    item_changed(),
-    execute_pending_sort(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -63,7 +63,6 @@ struct Menu : Widget {
     event(&EventType arg0) -> bool,
     focus_next_prev_child(bool next) -> bool,
     init_style_option(&StyleOptionMenuItemType option, &ActionType action),
-    internal_delayed_popup(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -46,13 +46,13 @@ struct TableWidget : TableView {
     visual_item_rect(&TableWidgetItemType item) -> RectType,
     item_prototype() -> &TableWidgetItemType,
     set_item_prototype(&TableWidgetItemType item),
-    scroll_to_item(&TableWidgetItemType item, AbstractItemView::ScrollHint hint),
-    insert_row(i32 row),
-    insert_column(i32 column),
-    remove_row(i32 row),
-    remove_column(i32 column),
-    clear(),
-    clear_contents(),
+    [callback] scroll_to_item(&TableWidgetItemType item, AbstractItemView::ScrollHint hint),
+    [callback] insert_row(i32 row),
+    [callback] insert_column(i32 column),
+    [callback] remove_row(i32 row),
+    [callback] remove_column(i32 column),
+    [callback] clear(),
+    [callback] clear_contents(),
     item_pressed(&TableWidgetItemType item),
     item_clicked(&TableWidgetItemType item),
     item_double_clicked(&TableWidgetItemType item),
@@ -77,7 +77,6 @@ struct TableWidget : TableView {
     index_from_item(&TableWidgetItemType item) -> ModelIndexType,
     item_from_index(&ModelIndexType index) -> &TableWidgetItemType,
     drop_event(&DropEventType event),
-    set_model(&AbstractItemModelType model),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

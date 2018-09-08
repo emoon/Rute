@@ -6,7 +6,7 @@ struct EventLoop : Object {
     is_running() -> bool,
     wake_up(),
     event(&EventType event) -> bool,
-    quit(),
+    [callback] quit(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

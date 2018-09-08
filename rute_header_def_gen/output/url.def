@@ -51,7 +51,6 @@ struct Url {
     to_cfurl() -> CFURLRef,
     from_nsurl(&NSURL url) -> UrlType,
     to_nsurl() -> &NSURL,
-    from_encoded_component_helper(&ByteArrayType ba) -> String,
     from_ace(&ByteArrayType arg0) -> String,
     to_ace(String arg0) -> ByteArrayType,
     idn_whitelist() -> StringListType,

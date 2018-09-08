@@ -8,7 +8,6 @@ struct Event {
     accept(),
     ignore(),
     register_event_type(i32 hint) -> i32,
-    set_spontaneous(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

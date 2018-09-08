@@ -39,7 +39,7 @@ struct CoreApplication : Object {
     remove_native_event_filter(&AbstractNativeEventFilterType filter_obj),
     is_quit_lock_enabled() -> bool,
     set_quit_lock_enabled(bool enabled),
-    quit(),
+    [callback] quit(),
     about_to_quit(CoreApplication::QPrivateSignal arg0),
     organization_name_changed(),
     organization_domain_changed(),
@@ -47,10 +47,6 @@ struct CoreApplication : Object {
     application_version_changed(),
     event(&EventType arg0) -> bool,
     compress_event(&EventType arg0, &ObjectType receiver, &PostEventListType arg1) -> bool,
-    send_spontaneous_event(&ObjectType receiver, &EventType event) -> bool,
-    notify_internal(&ObjectType receiver, &EventType event) -> bool,
-    notify_internal2(&ObjectType receiver, &EventType arg0) -> bool,
-    forward_event(&ObjectType receiver, &EventType event, &EventType originating_event) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

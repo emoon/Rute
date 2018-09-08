@@ -22,12 +22,6 @@ struct Rgba64 {
     to_rgb16() -> ushort,
     premultiplied() -> Rgba64Type,
     unpremultiplied() -> Rgba64Type,
-    alpha_mask() -> quint64,
-    div_257_floor(uint x) -> u8,
-    div_257(u16 x) -> u8,
-    div_65535(uint x) -> u16,
-    unpremultiplied_32bit() -> Rgba64Type,
-    unpremultiplied_64bit() -> Rgba64Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

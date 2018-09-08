@@ -27,7 +27,6 @@ struct TextLine {
     line_number() -> i32,
     draw(&PainterType p, &PointFType point, onst QTextLayout::FormatRange * selection),
     glyph_runs(i32 from, i32 length) -> <GlyphRunType>,
-    layout_helper(i32 num_glyphs),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

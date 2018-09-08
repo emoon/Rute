@@ -45,8 +45,8 @@ struct TabWidget : Widget {
     set_tab_bar_auto_hide(bool enabled),
     clear(),
     tab_bar() -> &TabBarType,
-    set_current_index(i32 index),
-    set_current_widget(&WidgetType widget),
+    [callback] set_current_index(i32 index),
+    [callback] set_current_widget(&WidgetType widget),
     current_changed(i32 index),
     tab_close_requested(i32 index),
     tab_bar_clicked(i32 index),
@@ -61,7 +61,6 @@ struct TabWidget : Widget {
     change_event(&EventType arg0),
     event(&EventType arg0) -> bool,
     init_style_option(&StyleOptionTabWidgetFrameType option),
-    set_up_layout(bool arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

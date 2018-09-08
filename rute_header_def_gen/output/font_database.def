@@ -26,11 +26,6 @@ struct FontDatabase {
     remove_all_application_fonts() -> bool,
     supports_threaded_font_rendering() -> bool,
     system_font(FontDatabase::SystemFont type) -> FontType,
-    create_database(),
-    parse_font_name(String name, String foundry, String family),
-    resolve_font_family_alias(String family) -> String,
-    find_font(&FontDefType request, i32 script) -> &FontEngineType,
-    load(&FontPrivateType d, i32 script),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -8,10 +8,10 @@ struct ActionGroup : Object {
     is_exclusive() -> bool,
     is_enabled() -> bool,
     is_visible() -> bool,
-    set_enabled(bool arg0),
-    set_disabled(bool b),
-    set_visible(bool arg0),
-    set_exclusive(bool arg0),
+    [callback] set_enabled(bool arg0),
+    [callback] set_disabled(bool b),
+    [callback] set_visible(bool arg0),
+    [callback] set_exclusive(bool arg0),
     hovered(&ActionType arg0),
 }
 

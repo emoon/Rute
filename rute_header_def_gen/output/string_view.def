@@ -1,6 +1,5 @@
 
 struct StringView {
-    cast_helper(&storage_type str) -> &storage_type,
     size() -> i32,
     data() -> const_pointer,
     utf16() -> &storage_type,

@@ -46,7 +46,6 @@ struct Transform {
     to_affine() -> &MatrixType,
     from_translate(f32 dx, f32 dy) -> TransformType,
     from_scale(f32 dx, f32 dy) -> TransformType,
-    inline_type() -> Transform::TransformationType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

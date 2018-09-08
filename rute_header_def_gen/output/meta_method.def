@@ -22,7 +22,6 @@ struct MetaMethod {
     invoke_on_gadget(&void gadget, GenericReturnArgumentType return_value, GenericArgumentType val0, GenericArgumentType val1, GenericArgumentType val2, GenericArgumentType val3, GenericArgumentType val4, GenericArgumentType val5, GenericArgumentType val6, GenericArgumentType val7, GenericArgumentType val8, GenericArgumentType val9) -> bool,
     invoke_on_gadget(&void gadget, GenericArgumentType val0, GenericArgumentType val1, GenericArgumentType val2, GenericArgumentType val3, GenericArgumentType val4, GenericArgumentType val5, GenericArgumentType val6, GenericArgumentType val7, GenericArgumentType val8, GenericArgumentType val9) -> bool,
     is_valid() -> bool,
-    from_signal_impl(&MetaObjectType arg0, &void arg1) -> MetaMethodType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

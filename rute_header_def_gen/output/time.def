@@ -18,7 +18,6 @@ struct Time {
     start(),
     restart() -> i32,
     elapsed() -> i32,
-    ds() -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

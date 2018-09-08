@@ -79,10 +79,6 @@ struct Char {
     is_lower(uint ucs4) -> bool,
     is_upper(uint ucs4) -> bool,
     is_title_case(uint ucs4) -> bool,
-    is_space_helper(uint ucs4) -> bool,
-    is_letter_helper(uint ucs4) -> bool,
-    is_number_helper(uint ucs4) -> bool,
-    is_letter_or_number_helper(uint ucs4) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

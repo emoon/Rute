@@ -45,8 +45,6 @@ struct Pixmap : PaintDevice {
     is_q_bitmap() -> bool,
     paint_engine() -> &PaintEngineType,
     from_image_in_place(&ImageType image, Rute::ImageConversionFlags flags) -> PixmapType,
-    do_image_io(&ImageWriterType io, i32 quality) -> bool,
-    do_init(i32 arg0, i32 arg1, i32 arg2),
     handle() -> &PlatformPixmapType,
 }
 

@@ -36,7 +36,7 @@ struct Object {
     object_name_changed(String object_name, Object::QPrivateSignal arg0),
     parent() -> &ObjectType,
     inherits(&char classname) -> bool,
-    delete_later(),
+    [callback] delete_later(),
     sender() -> &ObjectType,
     sender_signal_index() -> i32,
     receivers(&char signal) -> i32,
@@ -46,8 +46,6 @@ struct Object {
     custom_event(&EventType event),
     connect_notify(&MetaMethodType signal),
     disconnect_notify(&MetaMethodType signal),
-    connect_impl(&ObjectType sender, &void signal, &ObjectType receiver, &void slot_ptr, tPrivate::QSlotObjectBase * slot, Rute::ConnectionType type, &i32 types, &MetaObjectType sender_meta_object) -> MetaObject::Connection,
-    disconnect_impl(&ObjectType sender, &void signal, &ObjectType receiver, &void slot, &MetaObjectType sender_meta_object) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -150,15 +150,6 @@ struct ByteArray {
     count() -> i32,
     length() -> i32,
     is_null() -> bool,
-    realloc_data(uint alloc, i32 options),
-    expand(i32 i),
-    nul_terminated() -> ByteArrayType,
-    to_lower_helper(&ByteArrayType a) -> ByteArrayType,
-    to_lower_helper(&ByteArrayType a) -> ByteArrayType,
-    to_upper_helper(&ByteArrayType a) -> ByteArrayType,
-    to_upper_helper(&ByteArrayType a) -> ByteArrayType,
-    simplified_helper(&ByteArrayType a) -> ByteArrayType,
-    simplified_helper(&ByteArrayType a) -> ByteArrayType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

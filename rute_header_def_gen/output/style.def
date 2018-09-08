@@ -25,7 +25,6 @@ struct Style : Object {
     layout_spacing(SizePolicy::ControlType control1, SizePolicy::ControlType control2, Rute::Orientation orientation, &StyleOptionType option, &WidgetType widget) -> i32,
     combined_layout_spacing(SizePolicy::ControlTypes controls1, SizePolicy::ControlTypes controls2, Rute::Orientation orientation, &StyleOptionType option, &WidgetType widget) -> i32,
     proxy() -> &StyleType,
-    set_proxy(&StyleType style),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

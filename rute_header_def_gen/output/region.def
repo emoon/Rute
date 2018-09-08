@@ -24,10 +24,6 @@ struct Region {
     rects() -> Vector<QRect>Type,
     set_rects(&RectType rect, i32 num),
     rect_count() -> i32,
-    copy() -> RegionType,
-    detach(),
-    exec(&ByteArrayType ba, i32 ver, DataStream::ByteOrder byte_order),
-    clean_up(Region::QRegionData * x),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -25,7 +25,6 @@ struct Pen {
     is_cosmetic() -> bool,
     set_cosmetic(bool cosmetic),
     is_detached() -> bool,
-    detach(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

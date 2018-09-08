@@ -21,7 +21,6 @@ struct GlyphRun {
     set_bounding_rect(&RectFType bounding_rect),
     bounding_rect() -> RectFType,
     is_empty() -> bool,
-    detach(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

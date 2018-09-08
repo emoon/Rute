@@ -9,7 +9,7 @@ struct GroupBox : Widget {
     is_checkable() -> bool,
     set_checkable(bool checkable),
     is_checked() -> bool,
-    set_checked(bool checked),
+    [callback] set_checked(bool checked),
     clicked(bool checked),
     toggled(bool arg0),
     event(&EventType event) -> bool,

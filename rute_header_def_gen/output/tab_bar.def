@@ -53,7 +53,7 @@ struct TabBar : Widget {
     set_change_current_on_drag(bool change),
     accessible_tab_name(i32 index) -> String,
     set_accessible_tab_name(i32 index, String name),
-    set_current_index(i32 index),
+    [callback] set_current_index(i32 index),
     current_changed(i32 index),
     tab_close_requested(i32 index),
     tab_moved(i32 from, i32 to),

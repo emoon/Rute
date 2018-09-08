@@ -61,7 +61,6 @@ struct Font {
     resolve(&FontType arg0) -> FontType,
     resolve() -> uint,
     resolve(uint mask),
-    detach(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

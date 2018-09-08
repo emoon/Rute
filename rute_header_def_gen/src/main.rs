@@ -9,13 +9,22 @@ use rayon::prelude::*;
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::{BufWriter, Write, SeekFrom, BufReader};
 use std::sync::RwLock;
+use std::io::{Seek, BufRead};
 use walkdir::WalkDir;
 
 enum FunctionType {
     Regular,
     Slot,
+}
+
+#[derive(PartialEq, Clone, Copy, Debug)]
+enum AccessLevel {
+    Public,
+    Slots,
+    Protected,
+    Private
 }
 
 #[derive(Default)]
@@ -109,6 +118,41 @@ fn get_non_array_type(arg: &mut ArgType, in_name: &str) {
 ///
 ///
 ///
+fn get_access_level(entry: &Entity) -> AccessLevel {
+    let mut level = AccessLevel::Public;
+
+    if let Some(clang_level) = entry.get_accessibility() {
+        match clang_level {
+            Accessibility::Private => level = AccessLevel::Private,
+            Accessibility::Public => level = AccessLevel::Public,
+            Accessibility::Protected => level = AccessLevel::Protected,
+        }
+    }
+
+    // Parse file to figure out if we have slots or not
+
+    if let Some(location) = entry.get_location() {
+        if let Some(filename) = location.get_file_location().file {
+            if let Ok(mut file) = File::open(filename.get_path()) {
+                file.seek(SeekFrom::Start(location.get_file_location().offset as u64)).unwrap();
+                let mut line = String::with_capacity(128);
+                let mut reader = BufReader::new(file);
+                reader.read_line(&mut line).unwrap();
+
+                if level == AccessLevel::Public && line.contains("SLOT") {
+                    level = AccessLevel::Slots;
+                }
+            }
+        }
+    }
+
+    level
+}
+
+
+///
+///
+///
 fn format_arg_type(arg: &ArgType) -> String {
     let mut res = String::with_capacity(128);
 
@@ -185,11 +229,16 @@ fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
 ///
 /// Print a functio/method definition
 ///
-fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: FunctionType) {
+fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
     };
+
+    // Never generate private functions
+    if func_type == AccessLevel::Private {
+        return;
+    }
 
     for skip in SKIP_NAMES {
         if name.contains(skip) {
@@ -197,7 +246,13 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: FunctionType) {
         }
     }
 
-    write!(dest, "    {}", name.to_snake_case());
+    if func_type == AccessLevel::Slots {
+        write!(dest, "    [callback] ");
+    } else {
+        write!(dest, "    ");
+    }
+
+    write!(dest, "{}", name.to_snake_case());
 
     if let Some(args) = entry.get_arguments() {
         if args.is_empty() {
@@ -302,15 +357,18 @@ fn print_class(target_path: &str, entry: &Entity) {
         }
     }
 
+    let mut access_level = AccessLevel::Public;
+
     // Find methods and print them
 
     for field in entry.get_children() {
         match field.get_kind() {
             EntityKind::Method => {
-                print_func(&mut dest, &field, FunctionType::Regular);
+                print_func(&mut dest, &field, access_level);
             }
 
             EntityKind::AccessSpecifier => {
+                access_level = get_access_level(&field);
                 //println!("{:?}", field);
             }
 
