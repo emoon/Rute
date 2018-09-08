@@ -70,8 +70,7 @@ fn get_non_array_type(arg: &mut ArgType, in_name: &str) {
         name = in_name;
     }
 
-    if name.find('*').is_some() ||
-       name.find('&').is_some() {
+    if name.find('*').is_some() || name.find('&').is_some() {
         arg.pointer = true;
     }
 
@@ -129,7 +128,19 @@ fn format_arg_type(arg: &ArgType) -> String {
 fn get_complex_arg(name: &str) -> String {
     let mut arg_type = ArgType::default();
 
-    if name.starts_with("QList<") {
+    // Check if this is an enum
+
+    if name.contains("::") {
+        if name.starts_with("Qt::") {
+            return format!("Rute::{}", &name[4..]).to_owned();
+        } else {
+            return name[1..].to_owned();
+        }
+    }
+
+    // Do the rest
+
+    if name.starts_with("QList<") || name.starts_with("Vector<") {
         arg_type.array = true;
         get_non_array_type(&mut arg_type, get_array_range(name));
     } else {
@@ -151,7 +162,8 @@ fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
 ///
 ///
 fn print_arg(arg: &Entity, arg_count: &mut usize) {
-    let arg_type = get_arg_type(&arg.get_type().unwrap());
+    let t = arg.get_type().unwrap();
+    let arg_type = get_arg_type(&t);
 
     print!("{} ", arg_type);
 
@@ -314,6 +326,7 @@ fn main() {
     let mut header_files = Vec::new();
 
     for entry in WalkDir::new(
+        //"/Users/danielcollin/temp/test.h",
         "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
     ) {
         let entry = entry.unwrap();
@@ -381,12 +394,23 @@ mod tests {
     use super::*;
 
     fn test_array_type_pointer() {
-        assert_eq!(get_complex_arg("QList<QListWidgetItem *>"), "<&ListWidgetItemType>");
+        assert_eq!(
+            get_complex_arg("QList<QListWidgetItem *>"),
+            "<&ListWidgetItemType>"
+        );
     }
 
     #[test]
     fn test_array_type() {
-        assert_eq!(get_complex_arg("QList<QListWidgetItem>"), "<ListWidgetItemType>");
+        assert_eq!(
+            get_complex_arg("QList<QListWidgetItem>"),
+            "<ListWidgetItemType>"
+        );
+    }
+
+    #[test]
+    fn test_array_vector_type() {
+        assert_eq!(get_complex_arg("Vector<int>"), "<int>");
     }
 
     #[test]
@@ -411,6 +435,16 @@ mod tests {
 
     #[test]
     fn test_list_int() {
-        assert_eq!(get_complex_arg("QList<int>"), "<int>");
+        assert_eq!(get_complex_arg("QList<int>"), "<i32>");
+    }
+
+    #[test]
+    fn test_qt_global_enum() {
+        assert_eq!(get_complex_arg("Qt::WindowState"), "Rute::WindowState");
+    }
+
+    #[test]
+    fn test_qt_local_enum() {
+        assert_eq!(get_complex_arg("QListWidget::State"), "ListWidget::State");
     }
 }
