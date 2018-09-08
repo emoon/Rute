@@ -1,0 +1,12 @@
+enum TypeInfoFixMeEnums {
+    isSpecialized,
+    isPointer,
+    isIntegral,
+    isComplex,
+    isStatic,
+    isRelocatable,
+    isLarge,
+    isDummy,
+    sizeOf,
+}
+

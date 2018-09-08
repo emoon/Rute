@@ -1,3 +1,14 @@
+enum ResultFlag {
+    Ignore,
+    MayBeGesture,
+    TriggerGesture,
+    FinishGesture,
+    CancelGesture,
+    ResultState_Mask,
+    ConsumeEventHint,
+    ResultHint_Mask,
+}
+
 
 struct GestureRecognizer {
     [override] create(target: &ObjectType) -> &GestureType,

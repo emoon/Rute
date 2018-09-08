@@ -1,3 +1,18 @@
+enum PaintDeviceMetric {
+    PdmWidth,
+    PdmHeight,
+    PdmWidthMM,
+    PdmHeightMM,
+    PdmNumColors,
+    PdmDepth,
+    PdmDpiX,
+    PdmDpiY,
+    PdmPhysicalDpiX,
+    PdmPhysicalDpiY,
+    PdmDevicePixelRatio,
+    PdmDevicePixelRatioScaled,
+}
+
 
 struct PaintDevice {
     [override] dev_type() -> i32,

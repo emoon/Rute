@@ -1,3 +1,11 @@
+enum SwipeDirection {
+    NoDirection,
+    Left,
+    Right,
+    Up,
+    Down,
+}
+
 struct SwipeGesture : Gesture {
     horizontal_direction() -> SwipeGesture::SwipeDirection,
     vertical_direction() -> SwipeGesture::SwipeDirection,

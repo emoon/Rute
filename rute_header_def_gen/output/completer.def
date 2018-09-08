@@ -1,3 +1,15 @@
+enum CompletionMode {
+    PopupCompletion,
+    UnfilteredPopupCompletion,
+    InlineCompletion,
+}
+
+enum ModelSorting {
+    UnsortedModel,
+    CaseSensitivelySortedModel,
+    CaseInsensitivelySortedModel,
+}
+
 struct Completer : Object {
     set_widget(widget: &WidgetType),
     widget() -> &WidgetType,

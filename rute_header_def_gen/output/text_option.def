@@ -1,3 +1,27 @@
+enum TabType {
+    LeftTab,
+    RightTab,
+    CenterTab,
+    DelimiterTab,
+}
+
+enum WrapMode {
+    NoWrap,
+    WordWrap,
+    ManualWrap,
+    WrapAnywhere,
+    WrapAtWordBoundaryOrAnywhere,
+}
+
+enum Flag {
+    ShowTabsAndSpaces,
+    ShowLineAndParagraphSeparators,
+    AddSpaceForLineAndParagraphSeparators,
+    SuppressColors,
+    ShowDocumentTerminator,
+    IncludeTrailingSpaces,
+}
+
 
 struct TextOption {
     set_alignment(alignment: Rute::Alignment),

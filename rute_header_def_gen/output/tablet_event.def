@@ -1,3 +1,20 @@
+enum TabletDevice {
+    NoDevice,
+    Puck,
+    Stylus,
+    Airbrush,
+    FourDMouse,
+    XFreeEraser,
+    RotationStylus,
+}
+
+enum PointerType {
+    UnknownPointer,
+    Pen,
+    Cursor,
+    Eraser,
+}
+
 struct TabletEvent : InputEvent {
     qt_check_for_qgadget_macro(),
     pos() -> PointType,

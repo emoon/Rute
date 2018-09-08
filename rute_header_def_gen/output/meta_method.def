@@ -1,3 +1,22 @@
+enum Access {
+    Private,
+    Protected,
+    Public,
+}
+
+enum MethodType {
+    Method,
+    Signal,
+    Slot,
+    Constructor,
+}
+
+enum Attributes {
+    Compatibility,
+    Cloned,
+    Scriptable,
+}
+
 
 struct MetaMethod {
     method_signature() -> ByteArrayType,

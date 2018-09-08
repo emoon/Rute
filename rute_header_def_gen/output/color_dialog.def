@@ -1,3 +1,9 @@
+enum ColorDialogOption {
+    ShowAlphaChannel,
+    NoButtons,
+    DontUseNativeDialog,
+}
+
 struct ColorDialog : Dialog {
     set_current_color(color: &ColorType),
     current_color() -> ColorType,

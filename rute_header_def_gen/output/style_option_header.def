@@ -1,0 +1,28 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum SectionPosition {
+    Beginning,
+    Middle,
+    End,
+    OnlyOneSection,
+}
+
+enum SelectedPosition {
+    NotAdjacent,
+    NextIsSelected,
+    PreviousIsSelected,
+    NextAndPreviousAreSelected,
+}
+
+enum SortIndicator {
+    None,
+    SortUp,
+    SortDown,
+}
+

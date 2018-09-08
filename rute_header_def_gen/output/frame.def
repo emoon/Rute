@@ -1,3 +1,24 @@
+enum Shape {
+    NoFrame,
+    Box,
+    Panel,
+    WinPanel,
+    HLine,
+    VLine,
+    StyledPanel,
+}
+
+enum Shadow {
+    Plain,
+    Raised,
+    Sunken,
+}
+
+enum StyleMask {
+    Shadow_Mask,
+    Shape_Mask,
+}
+
 struct Frame : Widget {
     frame_style() -> i32,
     set_frame_style(arg0: i32),

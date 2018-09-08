@@ -1,3 +1,8 @@
+enum Action {
+    Click,
+    ContextMenu,
+}
+
 struct InputMethod : Object {
     input_item_transform() -> TransformType,
     set_input_item_transform(transform: &TransformType),

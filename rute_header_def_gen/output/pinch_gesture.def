@@ -1,3 +1,9 @@
+enum ChangeFlag {
+    ScaleFactorChanged,
+    RotationAngleChanged,
+    CenterPointChanged,
+}
+
 struct PinchGesture : Gesture {
     total_change_flags() -> ChangeFlags,
     set_total_change_flags(value: ChangeFlags),

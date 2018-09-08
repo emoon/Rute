@@ -1,3 +1,11 @@
+enum GlyphRunFlag {
+    Overline,
+    Underline,
+    StrikeOut,
+    RightToLeft,
+    SplitLigature,
+}
+
 
 struct GlyphRun {
     swap(other: &GlyphRunType),

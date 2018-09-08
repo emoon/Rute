@@ -1,0 +1,32 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum Position {
+    Left,
+    Right,
+    Top,
+    Bottom,
+}
+
+enum ViewItemFeature {
+    None,
+    WrapText,
+    Alternate,
+    HasCheckIndicator,
+    HasDisplay,
+    HasDecoration,
+}
+
+enum ViewItemPosition {
+    Invalid,
+    Beginning,
+    Middle,
+    End,
+    OnlyOne,
+}
+

@@ -1,3 +1,16 @@
+enum LineWrapMode {
+    NoWrap,
+    WidgetWidth,
+    FixedPixelWidth,
+    FixedColumnWidth,
+}
+
+enum AutoFormattingFlag {
+    AutoNone,
+    AutoBulletList,
+    AutoAll,
+}
+
 struct TextEdit : AbstractScrollArea {
     set_document(document: &TextDocumentType),
     document() -> &TextDocumentType,

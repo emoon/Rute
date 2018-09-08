@@ -1,3 +1,13 @@
+enum ProcessEventsFlag {
+    AllEvents,
+    ExcludeUserInputEvents,
+    ExcludeSocketNotifiers,
+    WaitForMoreEvents,
+    X11ExcludeTimers,
+    EventLoopExec,
+    DialogExec,
+}
+
 struct EventLoop : Object {
     process_events(flags: ProcessEventsFlags) -> bool,
     process_events(flags: ProcessEventsFlags, maximum_time: i32),

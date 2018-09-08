@@ -1,3 +1,20 @@
+enum HorizontalHeaderFormat {
+    NoHorizontalHeader,
+    SingleLetterDayNames,
+    ShortDayNames,
+    LongDayNames,
+}
+
+enum VerticalHeaderFormat {
+    NoVerticalHeader,
+    ISOWeekNumbers,
+}
+
+enum SelectionMode {
+    NoSelection,
+    SingleSelection,
+}
+
 struct CalendarWidget : Widget {
     [override] size_hint() -> SizeType,
     [override] minimum_size_hint() -> SizeType,

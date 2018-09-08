@@ -1,3 +1,8 @@
+enum WidgetItemV2FixMeEnums {
+    Dirty,
+    HfwCacheMaxSize,
+}
+
 struct WidgetItemV2 : WidgetItem {
     [override] size_hint() -> SizeType,
     [override] minimum_size() -> SizeType,

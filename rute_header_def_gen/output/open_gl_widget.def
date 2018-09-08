@@ -1,3 +1,8 @@
+enum UpdateBehavior {
+    NoPartialUpdate,
+    PartialUpdate,
+}
+
 struct OpenGLWidget : Widget {
     set_update_behavior(update_behavior: OpenGLWidget::UpdateBehavior),
     update_behavior() -> OpenGLWidget::UpdateBehavior,

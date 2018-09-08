@@ -1,3 +1,39 @@
+enum ColorGroup {
+    Active,
+    Disabled,
+    Inactive,
+    NColorGroups,
+    Current,
+    All,
+    Normal,
+}
+
+enum ColorRole {
+    WindowText,
+    Button,
+    Light,
+    Midlight,
+    Dark,
+    Mid,
+    Text,
+    BrightText,
+    ButtonText,
+    Base,
+    Window,
+    Shadow,
+    Highlight,
+    HighlightedText,
+    Link,
+    LinkVisited,
+    AlternateBase,
+    NoRole,
+    ToolTipBase,
+    ToolTipText,
+    NColorRoles,
+    Foreground,
+    Background,
+}
+
 
 struct Palette {
     qt_check_for_qgadget_macro(),

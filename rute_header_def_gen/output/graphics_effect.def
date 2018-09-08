@@ -1,3 +1,16 @@
+enum ChangeFlag {
+    SourceAttached,
+    SourceDetached,
+    SourceBoundingRectChanged,
+    SourceInvalidated,
+}
+
+enum PixmapPadMode {
+    NoPad,
+    PadToTransparentBorder,
+    PadToEffectiveBoundingRect,
+}
+
 struct GraphicsEffect : Object {
     [override] bounding_rect_for(source_rect: &RectFType) -> RectFType,
     bounding_rect() -> RectFType,

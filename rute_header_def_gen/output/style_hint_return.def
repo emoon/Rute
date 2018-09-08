@@ -1,0 +1,14 @@
+enum HintReturnType {
+    SH_Default,
+    SH_Mask,
+    SH_Variant,
+}
+
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+

@@ -1,3 +1,40 @@
+enum OptionType {
+    SO_Default,
+    SO_FocusRect,
+    SO_Button,
+    SO_Tab,
+    SO_MenuItem,
+    SO_Frame,
+    SO_ProgressBar,
+    SO_ToolBox,
+    SO_Header,
+    SO_DockWidget,
+    SO_ViewItem,
+    SO_TabWidgetFrame,
+    SO_TabBarBase,
+    SO_RubberBand,
+    SO_ToolBar,
+    SO_GraphicsItem,
+    SO_Complex,
+    SO_Slider,
+    SO_SpinBox,
+    SO_ToolButton,
+    SO_ComboBox,
+    SO_TitleBar,
+    SO_GroupBox,
+    SO_SizeGrip,
+    SO_CustomBase,
+    SO_ComplexCustomBase,
+}
+
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
 
 struct StyleOption {
     init(w: &WidgetType),

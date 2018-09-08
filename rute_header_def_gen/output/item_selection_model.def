@@ -1,3 +1,17 @@
+enum SelectionFlag {
+    NoUpdate,
+    Clear,
+    Select,
+    Deselect,
+    Toggle,
+    Current,
+    Rows,
+    Columns,
+    SelectCurrent,
+    ToggleCurrent,
+    ClearAndSelect,
+}
+
 struct ItemSelectionModel : Object {
     current_index() -> ModelIndexType,
     is_selected(index: &ModelIndexType) -> bool,

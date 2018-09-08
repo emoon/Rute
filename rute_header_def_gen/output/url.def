@@ -1,3 +1,41 @@
+enum ParsingMode {
+    TolerantMode,
+    StrictMode,
+    DecodedMode,
+}
+
+enum UrlFormattingOption {
+    None,
+    RemoveScheme,
+    RemovePassword,
+    RemoveUserInfo,
+    RemovePort,
+    RemoveAuthority,
+    RemovePath,
+    RemoveQuery,
+    RemoveFragment,
+    PreferLocalFile,
+    StripTrailingSlash,
+    RemoveFilename,
+    NormalizePathSegments,
+}
+
+enum ComponentFormattingOption {
+    PrettyDecoded,
+    EncodeSpaces,
+    EncodeUnicode,
+    EncodeDelimiters,
+    EncodeReserved,
+    DecodeReserved,
+    FullyEncoded,
+    FullyDecoded,
+}
+
+enum UserInputResolutionOption {
+    DefaultResolution,
+    AssumeLocalFile,
+}
+
 
 struct Url {
     swap(other: &UrlType),

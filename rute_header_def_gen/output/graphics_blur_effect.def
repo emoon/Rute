@@ -1,3 +1,9 @@
+enum BlurHint {
+    PerformanceHint,
+    QualityHint,
+    AnimationHint,
+}
+
 struct GraphicsBlurEffect : GraphicsEffect {
     [override] bounding_rect_for(rect: &RectFType) -> RectFType,
     blur_radius() -> f32,

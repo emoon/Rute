@@ -1,3 +1,16 @@
+enum Mode {
+    Hex,
+    Dec,
+    Oct,
+    Bin,
+}
+
+enum SegmentStyle {
+    Outline,
+    Filled,
+    Flat,
+}
+
 struct LCDNumber : Frame {
     small_decimal_point() -> bool,
     digit_count() -> i32,

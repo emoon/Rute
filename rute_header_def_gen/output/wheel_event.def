@@ -1,3 +1,7 @@
+enum WheelEventFixMeEnums {
+    DefaultDeltasPerStep,
+}
+
 struct WheelEvent : InputEvent {
     pixel_delta() -> PointType,
     angle_delta() -> PointType,

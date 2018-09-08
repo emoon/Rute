@@ -1,3 +1,10 @@
+enum ElementType {
+    MoveToElement,
+    LineToElement,
+    CurveToElement,
+    CurveToDataElement,
+}
+
 
 struct PainterPath {
     swap(other: &PainterPathType),

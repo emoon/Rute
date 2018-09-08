@@ -1,3 +1,40 @@
+enum OvershootPolicy {
+    OvershootWhenScrollable,
+    OvershootAlwaysOff,
+    OvershootAlwaysOn,
+}
+
+enum FrameRates {
+    Standard,
+    Fps60,
+    Fps30,
+    Fps20,
+}
+
+enum ScrollMetric {
+    MousePressEventDelay,
+    DragStartDistance,
+    DragVelocitySmoothingFactor,
+    AxisLockThreshold,
+    ScrollingCurve,
+    DecelerationFactor,
+    MinimumVelocity,
+    MaximumVelocity,
+    MaximumClickThroughVelocity,
+    AcceleratingFlickMaximumTime,
+    AcceleratingFlickSpeedupFactor,
+    SnapPositionRatio,
+    SnapTime,
+    OvershootDragResistanceFactor,
+    OvershootDragDistanceFactor,
+    OvershootScrollDistanceFactor,
+    OvershootScrollTime,
+    HorizontalOvershootPolicy,
+    VerticalOvershootPolicy,
+    FrameRate,
+    ScrollMetricCount,
+}
+
 
 struct ScrollerProperties {
     [static] set_default_scroller_properties(sp: &ScrollerPropertiesType),

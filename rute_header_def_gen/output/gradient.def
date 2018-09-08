@@ -1,3 +1,27 @@
+enum Type {
+    LinearGradient,
+    RadialGradient,
+    ConicalGradient,
+    NoGradient,
+}
+
+enum Spread {
+    PadSpread,
+    ReflectSpread,
+    RepeatSpread,
+}
+
+enum CoordinateMode {
+    LogicalMode,
+    StretchToDeviceMode,
+    ObjectBoundingMode,
+}
+
+enum InterpolationMode {
+    ColorInterpolation,
+    ComponentInterpolation,
+}
+
 
 struct Gradient {
     qt_check_for_qgadget_macro(),

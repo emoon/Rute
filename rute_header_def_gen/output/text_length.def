@@ -1,3 +1,9 @@
+enum Type {
+    VariableLength,
+    FixedLength,
+    PercentageLength,
+}
+
 
 struct TextLength {
     type() -> TextLength::Type,

@@ -1,3 +1,11 @@
+enum LineHeightTypes {
+    SingleHeight,
+    ProportionalHeight,
+    FixedHeight,
+    MinimumHeight,
+    LineDistanceHeight,
+}
+
 struct TextBlockFormat : TextFormat {
     is_valid() -> bool,
     set_alignment(alignment: Rute::Alignment),

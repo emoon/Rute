@@ -1,3 +1,8 @@
+enum StackingMode {
+    StackOne,
+    StackAll,
+}
+
 struct StackedLayout : Layout {
     add_widget(w: &WidgetType) -> i32,
     insert_widget(index: i32, w: &WidgetType) -> i32,

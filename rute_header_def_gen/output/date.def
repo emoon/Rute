@@ -1,3 +1,8 @@
+enum MonthNameType {
+    DateFormat,
+    StandaloneFormat,
+}
+
 
 struct Date {
     is_null() -> bool,

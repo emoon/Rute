@@ -1,3 +1,9 @@
+enum ToolButtonPopupMode {
+    DelayedPopup,
+    MenuButtonPopup,
+    InstantPopup,
+}
+
 struct ToolButton : AbstractButton {
     [override] size_hint() -> SizeType,
     [override] minimum_size_hint() -> SizeType,

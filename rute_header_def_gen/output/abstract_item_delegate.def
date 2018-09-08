@@ -1,3 +1,11 @@
+enum EndEditHint {
+    NoHint,
+    EditNextItem,
+    EditPreviousItem,
+    SubmitModelCache,
+    RevertModelCache,
+}
+
 struct AbstractItemDelegate : Object {
     [override] paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     [override] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> SizeType,

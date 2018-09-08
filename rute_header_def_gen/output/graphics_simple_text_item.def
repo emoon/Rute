@@ -1,3 +1,7 @@
+enum GraphicsSimpleTextItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsSimpleTextItem : AbstractGraphicsShapeItem {
     set_text(text: String),
     text() -> String,

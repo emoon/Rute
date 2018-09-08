@@ -1,3 +1,13 @@
+enum Type {
+    Null,
+    Bool,
+    Double,
+    String,
+    Array,
+    Object,
+    Undefined,
+}
+
 
 struct JsonValue {
     swap(other: &JsonValueType),

@@ -1,3 +1,16 @@
+enum Spec {
+    Invalid,
+    Rgb,
+    Hsv,
+    Cmyk,
+    Hsl,
+}
+
+enum NameFormat {
+    HexRgb,
+    HexArgb,
+}
+
 
 struct Color {
     is_valid() -> bool,

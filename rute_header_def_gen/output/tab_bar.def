@@ -1,3 +1,25 @@
+enum Shape {
+    RoundedNorth,
+    RoundedSouth,
+    RoundedWest,
+    RoundedEast,
+    TriangularNorth,
+    TriangularSouth,
+    TriangularWest,
+    TriangularEast,
+}
+
+enum ButtonPosition {
+    LeftSide,
+    RightSide,
+}
+
+enum SelectionBehavior {
+    SelectLeftTab,
+    SelectRightTab,
+    SelectPreviousTab,
+}
+
 struct TabBar : Widget {
     shape() -> TabBar::Shape,
     set_shape(shape: TabBar::Shape),

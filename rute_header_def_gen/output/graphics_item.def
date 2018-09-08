@@ -1,3 +1,84 @@
+enum GraphicsItemFlag {
+    ItemIsMovable,
+    ItemIsSelectable,
+    ItemIsFocusable,
+    ItemClipsToShape,
+    ItemClipsChildrenToShape,
+    ItemIgnoresTransformations,
+    ItemIgnoresParentOpacity,
+    ItemDoesntPropagateOpacityToChildren,
+    ItemStacksBehindParent,
+    ItemUsesExtendedStyleOption,
+    ItemHasNoContents,
+    ItemSendsGeometryChanges,
+    ItemAcceptsInputMethod,
+    ItemNegativeZStacksBehindParent,
+    ItemIsPanel,
+    ItemIsFocusScope,
+    ItemSendsScenePositionChanges,
+    ItemStopsClickFocusPropagation,
+    ItemStopsFocusHandling,
+    ItemContainsChildrenInShape,
+}
+
+enum GraphicsItemChange {
+    ItemPositionChange,
+    ItemMatrixChange,
+    ItemVisibleChange,
+    ItemEnabledChange,
+    ItemSelectedChange,
+    ItemParentChange,
+    ItemChildAddedChange,
+    ItemChildRemovedChange,
+    ItemTransformChange,
+    ItemPositionHasChanged,
+    ItemTransformHasChanged,
+    ItemSceneChange,
+    ItemVisibleHasChanged,
+    ItemEnabledHasChanged,
+    ItemSelectedHasChanged,
+    ItemParentHasChanged,
+    ItemSceneHasChanged,
+    ItemCursorChange,
+    ItemCursorHasChanged,
+    ItemToolTipChange,
+    ItemToolTipHasChanged,
+    ItemFlagsChange,
+    ItemFlagsHaveChanged,
+    ItemZValueChange,
+    ItemZValueHasChanged,
+    ItemOpacityChange,
+    ItemOpacityHasChanged,
+    ItemScenePositionHasChanged,
+    ItemRotationChange,
+    ItemRotationHasChanged,
+    ItemScaleChange,
+    ItemScaleHasChanged,
+    ItemTransformOriginPointChange,
+    ItemTransformOriginPointHasChanged,
+}
+
+enum CacheMode {
+    NoCache,
+    ItemCoordinateCache,
+    DeviceCoordinateCache,
+}
+
+enum PanelModality {
+    NonModal,
+    PanelModal,
+    SceneModal,
+}
+
+enum GraphicsItemFixMeEnums {
+    Type,
+    UserType,
+}
+
+enum Extension {
+    UserExtension,
+}
+
 
 struct GraphicsItem {
     scene() -> &GraphicsSceneType,

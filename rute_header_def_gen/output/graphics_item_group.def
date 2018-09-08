@@ -1,3 +1,7 @@
+enum GraphicsItemGroupFixMeEnums {
+    Type,
+}
+
 struct GraphicsItemGroup : GraphicsItem {
     add_to_group(item: &GraphicsItemType),
     remove_from_group(item: &GraphicsItemType),

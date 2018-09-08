@@ -1,3 +1,9 @@
+enum State {
+    Invalid,
+    Intermediate,
+    Acceptable,
+}
+
 struct Validator : Object {
     set_locale(locale: &LocaleType),
     locale() -> LocaleType,

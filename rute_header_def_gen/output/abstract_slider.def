@@ -1,3 +1,21 @@
+enum SliderAction {
+    SliderNoAction,
+    SliderSingleStepAdd,
+    SliderSingleStepSub,
+    SliderPageStepAdd,
+    SliderPageStepSub,
+    SliderToMinimum,
+    SliderToMaximum,
+    SliderMove,
+}
+
+enum SliderChange {
+    SliderRangeChange,
+    SliderOrientationChange,
+    SliderStepsChange,
+    SliderValueChange,
+}
+
 struct AbstractSlider : Widget {
     orientation() -> Rute::Orientation,
     set_minimum(arg0: i32),

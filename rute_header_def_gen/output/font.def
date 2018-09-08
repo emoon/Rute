@@ -1,3 +1,108 @@
+enum StyleHint {
+    Helvetica,
+    SansSerif,
+    Times,
+    Serif,
+    Courier,
+    TypeWriter,
+    OldEnglish,
+    Decorative,
+    System,
+    AnyStyle,
+    Cursive,
+    Monospace,
+    Fantasy,
+}
+
+enum StyleStrategy {
+    PreferDefault,
+    PreferBitmap,
+    PreferDevice,
+    PreferOutline,
+    ForceOutline,
+    PreferMatch,
+    PreferQuality,
+    PreferAntialias,
+    NoAntialias,
+    OpenGLCompatible,
+    ForceIntegerMetrics,
+    NoSubpixelAntialias,
+    PreferNoShaping,
+    NoFontMerging,
+}
+
+enum HintingPreference {
+    PreferDefaultHinting,
+    PreferNoHinting,
+    PreferVerticalHinting,
+    PreferFullHinting,
+}
+
+enum Weight {
+    Thin,
+    ExtraLight,
+    Light,
+    Normal,
+    Medium,
+    DemiBold,
+    Bold,
+    ExtraBold,
+    Black,
+}
+
+enum Style {
+    StyleNormal,
+    StyleItalic,
+    StyleOblique,
+}
+
+enum Stretch {
+    AnyStretch,
+    UltraCondensed,
+    ExtraCondensed,
+    Condensed,
+    SemiCondensed,
+    Unstretched,
+    SemiExpanded,
+    Expanded,
+    ExtraExpanded,
+    UltraExpanded,
+}
+
+enum Capitalization {
+    MixedCase,
+    AllUppercase,
+    AllLowercase,
+    SmallCaps,
+    Capitalize,
+}
+
+enum SpacingType {
+    PercentageSpacing,
+    AbsoluteSpacing,
+}
+
+enum ResolveProperties {
+    FamilyResolved,
+    SizeResolved,
+    StyleHintResolved,
+    StyleStrategyResolved,
+    WeightResolved,
+    StyleResolved,
+    UnderlineResolved,
+    OverlineResolved,
+    StrikeOutResolved,
+    FixedPitchResolved,
+    StretchResolved,
+    KerningResolved,
+    CapitalizationResolved,
+    LetterSpacingResolved,
+    WordSpacingResolved,
+    HintingPreferenceResolved,
+    StyleNameResolved,
+    AllPropertiesResolved,
+}
+
 
 struct Font {
     qt_check_for_qgadget_macro(),

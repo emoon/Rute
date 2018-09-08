@@ -1,0 +1,17 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum ButtonFeature {
+    None,
+    Flat,
+    HasMenu,
+    DefaultButton,
+    AutoDefaultButton,
+    CommandLinkButton,
+}
+

@@ -1,3 +1,17 @@
+enum Section {
+    NoSection,
+    AmPmSection,
+    MSecSection,
+    SecondSection,
+    MinuteSection,
+    HourSection,
+    DaySection,
+    MonthSection,
+    YearSection,
+    TimeSections_Mask,
+    DateSections_Mask,
+}
+
 struct DateTimeEdit : AbstractSpinBox {
     date_time() -> DateTimeType,
     date() -> DateType,

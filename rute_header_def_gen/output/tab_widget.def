@@ -1,3 +1,15 @@
+enum TabPosition {
+    North,
+    South,
+    West,
+    East,
+}
+
+enum TabShape {
+    Rounded,
+    Triangular,
+}
+
 struct TabWidget : Widget {
     add_tab(widget: &WidgetType, arg0: String) -> i32,
     add_tab(widget: &WidgetType, icon: &IconType, label: String) -> i32,

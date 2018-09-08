@@ -1,3 +1,18 @@
+enum PatternSyntax {
+    RegExp,
+    Wildcard,
+    FixedString,
+    RegExp2,
+    WildcardUnix,
+    W3CXmlSchema11,
+}
+
+enum CaretMode {
+    CaretAtZero,
+    CaretAtOffset,
+    CaretWontMatch,
+}
+
 
 struct RegExp {
     swap(other: &RegExpType),

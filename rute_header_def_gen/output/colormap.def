@@ -1,3 +1,9 @@
+enum Mode {
+    Direct,
+    Indexed,
+    Gray,
+}
+
 
 struct Colormap {
     [static] initialize(),

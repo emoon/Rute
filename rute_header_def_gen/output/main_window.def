@@ -1,3 +1,12 @@
+enum DockOption {
+    AnimatedDocks,
+    AllowNestedDocks,
+    AllowTabbedDocks,
+    ForceTabbedDocks,
+    VerticalTabs,
+    GroupedDragging,
+}
+
 struct MainWindow : Widget {
     icon_size() -> SizeType,
     set_icon_size(icon_size: &SizeType),

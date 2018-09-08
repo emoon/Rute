@@ -1,3 +1,8 @@
+enum Latin1Content {
+    ContainsBinary,
+    ContainsLatin1,
+}
+
 
 struct Debug {
     put_ucs4(ucs4: uint),

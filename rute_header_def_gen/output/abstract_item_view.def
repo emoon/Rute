@@ -1,3 +1,77 @@
+enum SelectionMode {
+    NoSelection,
+    SingleSelection,
+    MultiSelection,
+    ExtendedSelection,
+    ContiguousSelection,
+}
+
+enum SelectionBehavior {
+    SelectItems,
+    SelectRows,
+    SelectColumns,
+}
+
+enum ScrollHint {
+    EnsureVisible,
+    PositionAtTop,
+    PositionAtBottom,
+    PositionAtCenter,
+}
+
+enum EditTrigger {
+    NoEditTriggers,
+    CurrentChanged,
+    DoubleClicked,
+    SelectedClicked,
+    EditKeyPressed,
+    AnyKeyPressed,
+    AllEditTriggers,
+}
+
+enum ScrollMode {
+    ScrollPerItem,
+    ScrollPerPixel,
+}
+
+enum DragDropMode {
+    NoDragDrop,
+    DragOnly,
+    DropOnly,
+    DragDrop,
+    InternalMove,
+}
+
+enum CursorAction {
+    MoveUp,
+    MoveDown,
+    MoveLeft,
+    MoveRight,
+    MoveHome,
+    MoveEnd,
+    MovePageUp,
+    MovePageDown,
+    MoveNext,
+    MovePrevious,
+}
+
+enum State {
+    NoState,
+    DraggingState,
+    DragSelectingState,
+    EditingState,
+    ExpandingState,
+    CollapsingState,
+    AnimatingState,
+}
+
+enum DropIndicatorPosition {
+    OnItem,
+    AboveItem,
+    BelowItem,
+    OnViewport,
+}
+
 struct AbstractItemView : AbstractScrollArea {
     [override] set_model(model: &AbstractItemModelType),
     model() -> &AbstractItemModelType,

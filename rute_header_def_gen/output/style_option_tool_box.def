@@ -1,0 +1,21 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum TabPosition {
+    Beginning,
+    Middle,
+    End,
+    OnlyOneTab,
+}
+
+enum SelectedPosition {
+    NotAdjacent,
+    NextIsSelected,
+    PreviousIsSelected,
+}
+

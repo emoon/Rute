@@ -1,3 +1,18 @@
+enum DeviceType {
+    TouchScreen,
+    TouchPad,
+}
+
+enum CapabilityFlag {
+    Position,
+    Area,
+    Pressure,
+    Velocity,
+    RawPositions,
+    NormalizedPosition,
+    MouseEmulation,
+}
+
 
 struct TouchDevice {
     qt_check_for_qgadget_macro(),

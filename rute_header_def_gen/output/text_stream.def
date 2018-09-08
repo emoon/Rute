@@ -1,3 +1,31 @@
+enum RealNumberNotation {
+    SmartNotation,
+    FixedNotation,
+    ScientificNotation,
+}
+
+enum FieldAlignment {
+    AlignLeft,
+    AlignRight,
+    AlignCenter,
+    AlignAccountingStyle,
+}
+
+enum Status {
+    Ok,
+    ReadPastEnd,
+    ReadCorruptData,
+    WriteFailed,
+}
+
+enum NumberFlag {
+    ShowBase,
+    ForcePoint,
+    ForceSign,
+    UppercaseBase,
+    UppercaseDigits,
+}
+
 
 struct TextStream {
     set_codec(codec: &TextCodecType),

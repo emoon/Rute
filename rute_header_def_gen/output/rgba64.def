@@ -1,3 +1,10 @@
+enum Shifts {
+    RedShift,
+    GreenShift,
+    BlueShift,
+    AlphaShift,
+}
+
 
 struct Rgba64 {
     [static] from_rgba64(c: quint64) -> Rgba64Type,

@@ -1,3 +1,9 @@
+enum Roles {
+    FileIconRole,
+    FilePathRole,
+    FileNameRole,
+}
+
 struct DirModel : AbstractItemModel {
     [override] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,
     [override] parent(child: &ModelIndexType) -> ModelIndexType,

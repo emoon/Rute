@@ -1,3 +1,14 @@
+enum ItemType {
+    Type,
+    UserType,
+}
+
+enum ChildIndicatorPolicy {
+    ShowIndicator,
+    DontShowIndicator,
+    DontShowIndicatorWhenChildless,
+}
+
 
 struct TreeWidgetItem {
     [override] clone() -> &TreeWidgetItemType,

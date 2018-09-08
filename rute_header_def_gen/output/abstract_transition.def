@@ -1,3 +1,8 @@
+enum TransitionType {
+    ExternalTransition,
+    InternalTransition,
+}
+
 struct AbstractTransition : Object {
     source_state() -> &StateType,
     target_state() -> &AbstractStateType,

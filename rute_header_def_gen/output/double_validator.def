@@ -1,3 +1,8 @@
+enum Notation {
+    StandardNotation,
+    ScientificNotation,
+}
+
 struct DoubleValidator : Validator {
     [override] validate(arg0: String, arg1: &i32) -> Validator::State,
     [override] set_range(bottom: double, top: double, decimals: i32),

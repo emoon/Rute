@@ -1,3 +1,7 @@
+enum GraphicsTextItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsTextItem : GraphicsObject {
     to_html() -> String,
     set_html(html: String),

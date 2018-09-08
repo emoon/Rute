@@ -1,3 +1,7 @@
+enum CoreApplicationFixMeEnums {
+    ApplicationFlags,
+}
+
 struct CoreApplication : Object {
     [static] arguments() -> StringListType,
     [static] set_organization_domain(org_domain: String),

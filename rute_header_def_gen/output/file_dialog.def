@@ -1,3 +1,40 @@
+enum ViewMode {
+    Detail,
+    List,
+}
+
+enum FileMode {
+    AnyFile,
+    ExistingFile,
+    Directory,
+    ExistingFiles,
+    DirectoryOnly,
+}
+
+enum AcceptMode {
+    AcceptOpen,
+    AcceptSave,
+}
+
+enum DialogLabel {
+    LookIn,
+    FileName,
+    FileType,
+    Accept,
+    Reject,
+}
+
+enum Option {
+    ShowDirsOnly,
+    DontResolveSymlinks,
+    DontConfirmOverwrite,
+    DontUseSheet,
+    DontUseNativeDialog,
+    ReadOnly,
+    HideNameFilterDetails,
+    DontUseCustomDirectoryIcons,
+}
+
 struct FileDialog : Dialog {
     set_directory(directory: String),
     set_directory(directory: &DirType),

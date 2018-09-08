@@ -1,3 +1,7 @@
+enum GraphicsLineItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsLineItem : GraphicsItem {
     pen() -> PenType,
     set_pen(pen: &PenType),

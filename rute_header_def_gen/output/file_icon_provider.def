@@ -1,3 +1,17 @@
+enum IconType {
+    Computer,
+    Desktop,
+    Trashcan,
+    Network,
+    Drive,
+    Folder,
+    File,
+}
+
+enum Option {
+    DontUseCustomDirectoryIcons,
+}
+
 
 struct FileIconProvider {
     [override] icon(type: FileIconProvider::IconType) -> IconType,

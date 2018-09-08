@@ -1,3 +1,29 @@
+enum PatternOption {
+    NoPatternOption,
+    CaseInsensitiveOption,
+    DotMatchesEverythingOption,
+    MultilineOption,
+    ExtendedPatternSyntaxOption,
+    InvertedGreedinessOption,
+    DontCaptureOption,
+    UseUnicodePropertiesOption,
+    OptimizeOnFirstUsageOption,
+    DontAutomaticallyOptimizeOption,
+}
+
+enum MatchType {
+    NormalMatch,
+    PartialPreferCompleteMatch,
+    PartialPreferFirstMatch,
+    NoMatch,
+}
+
+enum MatchOption {
+    NoMatchOption,
+    AnchoredMatchOption,
+    DontCheckSubjectStringMatchOption,
+}
+
 
 struct RegularExpression {
     pattern_options() -> PatternOptions,

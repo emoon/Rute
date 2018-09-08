@@ -1,3 +1,8 @@
+enum SurfaceEventType {
+    SurfaceCreated,
+    SurfaceAboutToBeDestroyed,
+}
+
 struct PlatformSurfaceEvent : Event {
     surface_event_type() -> PlatformSurfaceEvent::SurfaceEventType,
 }

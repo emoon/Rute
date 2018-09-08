@@ -1,3 +1,10 @@
+enum SubWindowOption {
+    AllowOutsideAreaHorizontally,
+    AllowOutsideAreaVertically,
+    RubberBandResize,
+    RubberBandMove,
+}
+
 struct MdiSubWindow : Widget {
     [override] size_hint() -> SizeType,
     [override] minimum_size_hint() -> SizeType,

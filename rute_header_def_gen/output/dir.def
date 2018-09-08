@@ -1,3 +1,41 @@
+enum Filter {
+    Dirs,
+    Files,
+    Drives,
+    NoSymLinks,
+    AllEntries,
+    TypeMask,
+    Readable,
+    Writable,
+    Executable,
+    PermissionMask,
+    Modified,
+    Hidden,
+    System,
+    AccessMask,
+    AllDirs,
+    CaseSensitive,
+    NoDot,
+    NoDotDot,
+    NoDotAndDotDot,
+    NoFilter,
+}
+
+enum SortFlag {
+    Name,
+    Time,
+    Size,
+    Unsorted,
+    SortByMask,
+    DirsFirst,
+    Reversed,
+    IgnoreCase,
+    DirsLast,
+    LocaleAware,
+    Type,
+    NoSort,
+}
+
 
 struct Dir {
     swap(other: &DirType),

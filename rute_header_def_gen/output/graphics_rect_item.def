@@ -1,3 +1,7 @@
+enum GraphicsRectItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsRectItem : AbstractGraphicsShapeItem {
     rect() -> RectFType,
     set_rect(rect: &RectFType),

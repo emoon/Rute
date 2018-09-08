@@ -1,3 +1,9 @@
+enum ColorSpec {
+    NormalColor,
+    CustomColor,
+    ManyColor,
+}
+
 struct Application : GuiApplication {
     [static] style() -> &StyleType,
     [static] set_style(arg0: &StyleType),

@@ -1,3 +1,29 @@
+enum Movement {
+    Static,
+    Free,
+    Snap,
+}
+
+enum Flow {
+    LeftToRight,
+    TopToBottom,
+}
+
+enum ResizeMode {
+    Fixed,
+    Adjust,
+}
+
+enum LayoutMode {
+    SinglePass,
+    Batched,
+}
+
+enum ViewMode {
+    ListMode,
+    IconMode,
+}
+
 struct ListView : AbstractItemView {
     set_movement(movement: ListView::Movement),
     movement() -> ListView::Movement,

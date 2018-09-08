@@ -1,3 +1,27 @@
+enum MetaInformation {
+    DocumentTitle,
+    DocumentUrl,
+}
+
+enum FindFlag {
+    FindBackward,
+    FindCaseSensitively,
+    FindWholeWords,
+}
+
+enum ResourceType {
+    HtmlResource,
+    ImageResource,
+    StyleSheetResource,
+    UserResource,
+}
+
+enum Stacks {
+    UndoStack,
+    RedoStack,
+    UndoAndRedoStacks,
+}
+
 struct TextDocument : Object {
     clone(parent: &ObjectType) -> &TextDocumentType,
     is_empty() -> bool,

@@ -1,3 +1,13 @@
+enum Edge {
+    Leading,
+    Trailing,
+}
+
+enum CursorPosition {
+    CursorBetweenCharacters,
+    CursorOnCharacter,
+}
+
 
 struct TextLine {
     is_valid() -> bool,

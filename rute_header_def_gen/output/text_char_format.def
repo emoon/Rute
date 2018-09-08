@@ -1,3 +1,29 @@
+enum VerticalAlignment {
+    AlignNormal,
+    AlignSuperScript,
+    AlignSubScript,
+    AlignMiddle,
+    AlignTop,
+    AlignBottom,
+    AlignBaseline,
+}
+
+enum UnderlineStyle {
+    NoUnderline,
+    SingleUnderline,
+    DashUnderline,
+    DotLine,
+    DashDotLine,
+    DashDotDotLine,
+    WaveUnderline,
+    SpellCheckUnderline,
+}
+
+enum FontPropertiesInheritanceBehavior {
+    FontPropertiesSpecifiedOnly,
+    FontPropertiesAll,
+}
+
 struct TextCharFormat : TextFormat {
     is_valid() -> bool,
     set_font(font: &FontType, behavior: TextCharFormat::FontPropertiesInheritanceBehavior),

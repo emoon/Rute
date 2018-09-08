@@ -1,3 +1,11 @@
+enum FontFilter {
+    AllFonts,
+    ScalableFonts,
+    NonScalableFonts,
+    MonospacedFonts,
+    ProportionalFonts,
+}
+
 struct FontComboBox : ComboBox {
     set_writing_system(arg0: FontDatabase::WritingSystem),
     writing_system() -> FontDatabase::WritingSystem,

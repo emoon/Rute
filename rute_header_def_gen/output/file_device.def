@@ -1,3 +1,53 @@
+enum FileError {
+    NoError,
+    ReadError,
+    WriteError,
+    FatalError,
+    ResourceError,
+    OpenError,
+    AbortError,
+    TimeOutError,
+    UnspecifiedError,
+    RemoveError,
+    RenameError,
+    PositionError,
+    ResizeError,
+    PermissionsError,
+    CopyError,
+}
+
+enum FileTime {
+    FileAccessTime,
+    FileBirthTime,
+    FileMetadataChangeTime,
+    FileModificationTime,
+}
+
+enum Permission {
+    ReadOwner,
+    WriteOwner,
+    ExeOwner,
+    ReadUser,
+    WriteUser,
+    ExeUser,
+    ReadGroup,
+    WriteGroup,
+    ExeGroup,
+    ReadOther,
+    WriteOther,
+    ExeOther,
+}
+
+enum FileHandleFlag {
+    AutoCloseHandle,
+    DontCloseHandle,
+}
+
+enum MemoryMapFlags {
+    NoOptions,
+    MapPrivateOption,
+}
+
 struct FileDevice : IODevice {
     error() -> FileDevice::FileError,
     unset_error(),

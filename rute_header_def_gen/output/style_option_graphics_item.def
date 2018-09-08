@@ -1,3 +1,11 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
 struct StyleOptionGraphicsItem : StyleOption {
     [static] level_of_detail_from_transform(world_transform: &TransformType) -> f32,
 }

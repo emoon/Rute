@@ -1,3 +1,14 @@
+enum DockWidgetFeature {
+    DockWidgetClosable,
+    DockWidgetMovable,
+    DockWidgetFloatable,
+    DockWidgetVerticalTitleBar,
+    DockWidgetFeatureMask,
+    AllDockWidgetFeatures,
+    NoDockWidgetFeatures,
+    Reserved,
+}
+
 struct DockWidget : Widget {
     widget() -> &WidgetType,
     set_widget(widget: &WidgetType),

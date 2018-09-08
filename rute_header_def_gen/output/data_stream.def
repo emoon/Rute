@@ -1,3 +1,51 @@
+enum Version {
+    Qt_1_0,
+    Qt_2_0,
+    Qt_2_1,
+    Qt_3_0,
+    Qt_3_1,
+    Qt_3_3,
+    Qt_4_0,
+    Qt_4_1,
+    Qt_4_2,
+    Qt_4_3,
+    Qt_4_4,
+    Qt_4_5,
+    Qt_4_6,
+    Qt_4_7,
+    Qt_4_8,
+    Qt_4_9,
+    Qt_5_0,
+    Qt_5_1,
+    Qt_5_2,
+    Qt_5_3,
+    Qt_5_4,
+    Qt_5_5,
+    Qt_5_6,
+    Qt_5_7,
+    Qt_5_8,
+    Qt_5_9,
+    Qt_5_10,
+    Qt_DefaultCompiledVersion,
+}
+
+enum ByteOrder {
+    BigEndian,
+    LittleEndian,
+}
+
+enum Status {
+    Ok,
+    ReadPastEnd,
+    ReadCorruptData,
+    WriteFailed,
+}
+
+enum FloatingPointPrecision {
+    SinglePrecision,
+    DoublePrecision,
+}
+
 
 struct DataStream {
     device() -> &IODeviceType,

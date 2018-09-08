@@ -1,3 +1,9 @@
+enum SizeAdjustPolicy {
+    AdjustIgnored,
+    AdjustToContentsOnFirstShow,
+    AdjustToContents,
+}
+
 struct AbstractScrollArea : Frame {
     vertical_scroll_bar_policy() -> Rute::ScrollBarPolicy,
     set_vertical_scroll_bar_policy(arg0: Rute::ScrollBarPolicy),

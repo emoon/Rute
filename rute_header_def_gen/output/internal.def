@@ -1,3 +1,37 @@
+enum PaintDeviceFlags {
+    UnknownDevice,
+    Widget,
+    Pixmap,
+    Image,
+    Printer,
+    Picture,
+    Pbuffer,
+    FramebufferObject,
+    CustomRaster,
+    MacQuartz,
+    PaintBuffer,
+    OpenGL,
+}
+
+enum RelayoutType {
+    RelayoutNormal,
+    RelayoutDragging,
+    RelayoutDropped,
+}
+
+enum DockPosition {
+    LeftDock,
+    RightDock,
+    TopDock,
+    BottomDock,
+    DockCount,
+}
+
+enum Callback {
+    EventNotifyCallback,
+    LastCallback,
+}
+
 
 struct Internal {
     [static] register_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,

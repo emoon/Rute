@@ -1,3 +1,7 @@
+enum GraphicsPolygonItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsPolygonItem : AbstractGraphicsShapeItem {
     polygon() -> PolygonFType,
     set_polygon(polygon: &PolygonFType),

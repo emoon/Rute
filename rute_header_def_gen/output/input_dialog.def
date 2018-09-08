@@ -1,3 +1,15 @@
+enum InputDialogOption {
+    NoButtons,
+    UseListViewForComboBoxItems,
+    UsePlainTextEditForTextInput,
+}
+
+enum InputMode {
+    TextInput,
+    IntInput,
+    DoubleInput,
+}
+
 struct InputDialog : Dialog {
     set_input_mode(mode: InputDialog::InputMode),
     input_mode() -> InputDialog::InputMode,

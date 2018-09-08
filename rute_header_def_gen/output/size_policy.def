@@ -1,3 +1,38 @@
+enum PolicyFlag {
+    GrowFlag,
+    ExpandFlag,
+    ShrinkFlag,
+    IgnoreFlag,
+}
+
+enum Policy {
+    Fixed,
+    Minimum,
+    Maximum,
+    Preferred,
+    MinimumExpanding,
+    Expanding,
+    Ignored,
+}
+
+enum ControlType {
+    DefaultType,
+    ButtonBox,
+    CheckBox,
+    ComboBox,
+    Frame,
+    GroupBox,
+    Label,
+    Line,
+    LineEdit,
+    PushButton,
+    RadioButton,
+    Slider,
+    SpinBox,
+    TabWidget,
+    ToolButton,
+}
+
 
 struct SizePolicy {
     qt_check_for_qgadget_macro(),

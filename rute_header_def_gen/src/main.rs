@@ -291,6 +291,29 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
 }
 
 ///
+/// Print enums
+///
+fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str) {
+    if let Some(enum_name) = entry.get_display_name() {
+        writeln!(dest, "enum {} {{", enum_name);
+    } else {
+        writeln!(dest, "enum {}FixMeEnums {{", struct_name);
+    }
+
+    for entry in entry.get_children() {
+        match entry.get_kind() {
+            EntityKind::EnumConstantDecl => {
+                writeln!(dest, "    {},", entry.get_display_name().unwrap());
+            }
+
+            _ => (),
+        }
+    }
+
+    writeln!(dest, "}}\n");
+}
+
+///
 /// Print a class. This code a a bit hacky but should do for this usage
 ///
 fn print_class(target_path: &str, entry: &Entity) {
@@ -321,6 +344,7 @@ fn print_class(target_path: &str, entry: &Entity) {
     //println!("name {}", name);
     let mut base_classes = Vec::new();
     let mut method_count = 0;
+    let mut enum_count = 0;
 
     for field in entry.get_children() {
         match field.get_kind() {
@@ -329,8 +353,25 @@ fn print_class(target_path: &str, entry: &Entity) {
                 base_classes.push(field.get_name().unwrap().to_owned());
             }
 
+            EntityKind::EnumDecl => enum_count += 1,
             EntityKind::Method => method_count += 1,
 
+            _ => (),
+        }
+    }
+
+    if method_count == 0 && enum_count == 0 {
+        return;
+    }
+
+    let filename = format!("{}/{}.def", target_path, &name[1..].to_snake_case());
+    let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
+
+    // print all enums for the class
+
+    for field in entry.get_children() {
+        match field.get_kind() {
+            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..]),
             _ => (),
         }
     }
@@ -338,9 +379,6 @@ fn print_class(target_path: &str, entry: &Entity) {
     if method_count == 0 {
         return;
     }
-
-    let filename = format!("{}/{}.def", target_path, &name[1..].to_snake_case());
-    let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
 
     // Print class and the inharitance
 

@@ -1,3 +1,18 @@
+enum AreaOption {
+    DontMaximizeSubWindowOnActivation,
+}
+
+enum WindowOrder {
+    CreationOrder,
+    StackingOrder,
+    ActivationHistoryOrder,
+}
+
+enum ViewMode {
+    SubWindowView,
+    TabbedView,
+}
+
 struct MdiArea : AbstractScrollArea {
     [override] size_hint() -> SizeType,
     [override] minimum_size_hint() -> SizeType,

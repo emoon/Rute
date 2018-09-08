@@ -1,3 +1,9 @@
+enum RenderFlag {
+    DrawWindowBackground,
+    DrawChildren,
+    IgnoreMask,
+}
+
 struct Widget : Object, PaintDevice {
     [override] dev_type() -> i32,
     win_id() -> WId,

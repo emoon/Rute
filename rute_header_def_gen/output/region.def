@@ -1,3 +1,8 @@
+enum RegionType {
+    Rectangle,
+    Ellipse,
+}
+
 
 struct Region {
     swap(other: &RegionType),

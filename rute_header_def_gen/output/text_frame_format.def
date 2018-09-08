@@ -1,3 +1,23 @@
+enum Position {
+    InFlow,
+    FloatLeft,
+    FloatRight,
+}
+
+enum BorderStyle {
+    BorderStyle_None,
+    BorderStyle_Dotted,
+    BorderStyle_Dashed,
+    BorderStyle_Solid,
+    BorderStyle_Double,
+    BorderStyle_DotDash,
+    BorderStyle_DotDotDash,
+    BorderStyle_Groove,
+    BorderStyle_Ridge,
+    BorderStyle_Inset,
+    BorderStyle_Outset,
+}
+
 struct TextFrameFormat : TextFormat {
     is_valid() -> bool,
     set_position(f: TextFrameFormat::Position),

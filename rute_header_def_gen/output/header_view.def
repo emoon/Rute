@@ -1,3 +1,11 @@
+enum ResizeMode {
+    Interactive,
+    Stretch,
+    Fixed,
+    ResizeToContents,
+    Custom,
+}
+
 struct HeaderView : AbstractItemView {
     [override] set_model(model: &AbstractItemModelType),
     orientation() -> Rute::Orientation,

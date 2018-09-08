@@ -1,3 +1,35 @@
+enum ViewportAnchor {
+    NoAnchor,
+    AnchorViewCenter,
+    AnchorUnderMouse,
+}
+
+enum CacheModeFlag {
+    CacheNone,
+    CacheBackground,
+}
+
+enum DragMode {
+    NoDrag,
+    ScrollHandDrag,
+    RubberBandDrag,
+}
+
+enum ViewportUpdateMode {
+    FullViewportUpdate,
+    MinimalViewportUpdate,
+    SmartViewportUpdate,
+    NoViewportUpdate,
+    BoundingRectViewportUpdate,
+}
+
+enum OptimizationFlag {
+    DontClipPainter,
+    DontSavePainterState,
+    DontAdjustForAntialiasing,
+    IndirectPainting,
+}
+
 struct GraphicsView : AbstractScrollArea {
     [override] size_hint() -> SizeType,
     render_hints() -> Painter::RenderHints,

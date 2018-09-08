@@ -1,3 +1,15 @@
+enum ActionPosition {
+    LeadingPosition,
+    TrailingPosition,
+}
+
+enum EchoMode {
+    Normal,
+    NoEcho,
+    Password,
+    PasswordEchoOnEdit,
+}
+
 struct LineEdit : Widget {
     text() -> String,
     display_text() -> String,

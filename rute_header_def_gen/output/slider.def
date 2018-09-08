@@ -1,3 +1,12 @@
+enum TickPosition {
+    NoTicks,
+    TicksAbove,
+    TicksLeft,
+    TicksBelow,
+    TicksRight,
+    TicksBothSides,
+}
+
 struct Slider : AbstractSlider {
     [override] size_hint() -> SizeType,
     [override] minimum_size_hint() -> SizeType,

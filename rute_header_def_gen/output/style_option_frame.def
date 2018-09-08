@@ -1,0 +1,14 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum FrameFeature {
+    None,
+    Flat,
+    Rounded,
+}
+

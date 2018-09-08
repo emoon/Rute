@@ -1,3 +1,12 @@
+enum ModelChangeType {
+    ModelReset,
+    DataChanged,
+    RowsInserted,
+    ColumnsInserted,
+    RowsRemoved,
+    ColumnsRemoved,
+}
+
 struct AccessibleTableModelChangeEvent : AccessibleEvent {
     set_model_change_type(change_type: AccessibleTableModelChangeEvent::ModelChangeType),
     model_change_type() -> AccessibleTableModelChangeEvent::ModelChangeType,

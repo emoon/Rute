@@ -1,3 +1,8 @@
+enum GestureCancelPolicy {
+    CancelNone,
+    CancelAllInContext,
+}
+
 struct Gesture : Object {
     gesture_type() -> Rute::GestureType,
     state() -> Rute::GestureState,

@@ -1,0 +1,20 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum ToolBarPosition {
+    Beginning,
+    Middle,
+    End,
+    OnlyOne,
+}
+
+enum ToolBarFeature {
+    None,
+    Movable,
+}
+

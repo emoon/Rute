@@ -1,3 +1,55 @@
+enum WizardButton {
+    BackButton,
+    NextButton,
+    CommitButton,
+    FinishButton,
+    CancelButton,
+    HelpButton,
+    CustomButton1,
+    CustomButton2,
+    CustomButton3,
+    Stretch,
+    NoButton,
+    NStandardButtons,
+    NButtons,
+}
+
+enum WizardPixmap {
+    WatermarkPixmap,
+    LogoPixmap,
+    BannerPixmap,
+    BackgroundPixmap,
+    NPixmaps,
+}
+
+enum WizardStyle {
+    ClassicStyle,
+    ModernStyle,
+    MacStyle,
+    AeroStyle,
+    NStyles,
+}
+
+enum WizardOption {
+    IndependentPages,
+    IgnoreSubTitles,
+    ExtendedWatermarkPixmap,
+    NoDefaultButton,
+    NoBackButtonOnStartPage,
+    NoBackButtonOnLastPage,
+    DisabledBackButtonOnLastPage,
+    HaveNextButtonOnLastPage,
+    HaveFinishButtonOnEarlyPages,
+    NoCancelButton,
+    CancelButtonOnLeft,
+    HaveHelpButton,
+    HelpButtonOnRight,
+    HaveCustomButton1,
+    HaveCustomButton2,
+    HaveCustomButton3,
+    NoCancelButtonOnLastPage,
+}
+
 struct Wizard : Dialog {
     add_page(page: &WizardPageType) -> i32,
     set_page(id: i32, page: &WizardPageType),

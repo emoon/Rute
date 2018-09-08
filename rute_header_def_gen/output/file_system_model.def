@@ -1,3 +1,10 @@
+enum Roles {
+    FileIconRole,
+    FilePathRole,
+    FileNameRole,
+    FilePermissions,
+}
+
 struct FileSystemModel : AbstractItemModel {
     [event] root_path_changed(new_path: String),
     [event] file_renamed(path: String, old_name: String, new_name: String),

@@ -1,0 +1,25 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum MenuItemType {
+    Normal,
+    DefaultItem,
+    Separator,
+    SubMenu,
+    Scroller,
+    TearOff,
+    Margin,
+    EmptyArea,
+}
+
+enum CheckType {
+    NotCheckable,
+    Exclusive,
+    NonExclusive,
+}
+

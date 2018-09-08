@@ -1,3 +1,9 @@
+enum Reason {
+    Mouse,
+    Keyboard,
+    Other,
+}
+
 struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
     pos() -> PointFType,
     set_pos(pos: &PointFType),

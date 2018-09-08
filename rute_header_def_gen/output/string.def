@@ -1,3 +1,23 @@
+enum SectionFlag {
+    SectionDefault,
+    SectionSkipEmpty,
+    SectionIncludeLeadingSep,
+    SectionIncludeTrailingSep,
+    SectionCaseInsensitiveSeps,
+}
+
+enum SplitBehavior {
+    KeepEmptyParts,
+    SkipEmptyParts,
+}
+
+enum NormalizationForm {
+    NormalizationForm_D,
+    NormalizationForm_C,
+    NormalizationForm_KD,
+    NormalizationForm_KC,
+}
+
 
 struct String {
     swap(other: String),

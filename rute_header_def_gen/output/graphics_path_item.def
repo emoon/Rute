@@ -1,3 +1,7 @@
+enum GraphicsPathItemFixMeEnums {
+    Type,
+}
+
 struct GraphicsPathItem : AbstractGraphicsShapeItem {
     path() -> PainterPathType,
     set_path(path: &PainterPathType),

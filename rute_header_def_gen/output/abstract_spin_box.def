@@ -1,3 +1,20 @@
+enum StepEnabledFlag {
+    StepNone,
+    StepUpEnabled,
+    StepDownEnabled,
+}
+
+enum ButtonSymbols {
+    UpDownArrows,
+    PlusMinus,
+    NoButtons,
+}
+
+enum CorrectionMode {
+    CorrectToPreviousValue,
+    CorrectToNearestValue,
+}
+
 struct AbstractSpinBox : Widget {
     button_symbols() -> AbstractSpinBox::ButtonSymbols,
     set_button_symbols(bs: AbstractSpinBox::ButtonSymbols),

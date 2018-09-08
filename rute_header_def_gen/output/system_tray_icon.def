@@ -1,3 +1,18 @@
+enum ActivationReason {
+    Unknown,
+    Context,
+    DoubleClick,
+    Trigger,
+    MiddleClick,
+}
+
+enum MessageIcon {
+    NoIcon,
+    Information,
+    Warning,
+    Critical,
+}
+
 struct SystemTrayIcon : Object {
     set_context_menu(menu: &MenuType),
     context_menu() -> &MenuType,

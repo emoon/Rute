@@ -1,3 +1,9 @@
+enum LayoutChangeHint {
+    NoLayoutChangeHint,
+    VerticalSortHint,
+    HorizontalSortHint,
+}
+
 struct AbstractItemModel : Object {
     has_index(row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [override] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,

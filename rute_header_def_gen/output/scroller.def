@@ -1,3 +1,23 @@
+enum State {
+    Inactive,
+    Pressed,
+    Dragging,
+    Scrolling,
+}
+
+enum ScrollerGestureType {
+    TouchGesture,
+    LeftMouseButtonGesture,
+    RightMouseButtonGesture,
+    MiddleMouseButtonGesture,
+}
+
+enum Input {
+    InputPress,
+    InputMove,
+    InputRelease,
+}
+
 struct Scroller : Object {
     [static] has_scroller(target: &ObjectType) -> bool,
     [static] scroller(target: &ObjectType) -> &ScrollerType,

@@ -1,3 +1,35 @@
+enum FormatOption {
+    StereoBuffers,
+    DebugContext,
+    DeprecatedFunctions,
+    ResetNotification,
+}
+
+enum SwapBehavior {
+    DefaultSwapBehavior,
+    SingleBuffer,
+    DoubleBuffer,
+    TripleBuffer,
+}
+
+enum RenderableType {
+    DefaultRenderableType,
+    OpenGL,
+    OpenGLES,
+    OpenVG,
+}
+
+enum OpenGLContextProfile {
+    NoProfile,
+    CoreProfile,
+    CompatibilityProfile,
+}
+
+enum ColorSpace {
+    DefaultColorSpace,
+    sRGBColorSpace,
+}
+
 
 struct SurfaceFormat {
     qt_check_for_qgadget_macro(),

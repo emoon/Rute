@@ -1,3 +1,12 @@
+enum TransformationType {
+    TxNone,
+    TxTranslate,
+    TxScale,
+    TxRotate,
+    TxShear,
+    TxProject,
+}
+
 
 struct Transform {
     is_affine() -> bool,

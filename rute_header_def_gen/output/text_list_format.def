@@ -1,3 +1,15 @@
+enum Style {
+    ListDisc,
+    ListCircle,
+    ListSquare,
+    ListDecimal,
+    ListLowerAlpha,
+    ListUpperAlpha,
+    ListLowerRoman,
+    ListUpperRoman,
+    ListStyleUndefined,
+}
+
 struct TextListFormat : TextFormat {
     is_valid() -> bool,
     set_style(style: TextListFormat::Style),

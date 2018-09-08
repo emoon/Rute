@@ -1,3 +1,9 @@
+enum IteratorFlag {
+    NoIteratorFlags,
+    FollowSymlinks,
+    Subdirectories,
+}
+
 
 struct DirIterator {
     next() -> String,

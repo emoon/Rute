@@ -1,3 +1,98 @@
+enum FieldWidth {
+    ModelFieldWidth,
+    FirstFieldWidth,
+    SecondFieldWidth,
+    ThirdFieldWidth,
+    FourthFieldWidth,
+    FifthFieldWidth,
+    AlphaFieldWidth,
+    AlphaUsageFieldWidth,
+    AlphaPositionFieldWidth,
+    PremulFieldWidth,
+    TypeInterpretationFieldWidth,
+    ByteOrderFieldWidth,
+    SubEnumFieldWidth,
+    UnusedFieldWidth,
+    TotalFieldWidthByWidths,
+}
+
+enum Field {
+    ModelField,
+    FirstField,
+    SecondField,
+    ThirdField,
+    FourthField,
+    FifthField,
+    AlphaField,
+    AlphaUsageField,
+    AlphaPositionField,
+    PremulField,
+    TypeInterpretationField,
+    ByteOrderField,
+    SubEnumField,
+    UnusedField,
+    TotalFieldWidthByOffsets,
+}
+
+enum ColorModel {
+    RGB,
+    BGR,
+    Indexed,
+    Grayscale,
+    CMYK,
+    HSL,
+    HSV,
+    YUV,
+    Alpha,
+}
+
+enum AlphaUsage {
+    UsesAlpha,
+    IgnoresAlpha,
+}
+
+enum AlphaPosition {
+    AtBeginning,
+    AtEnd,
+}
+
+enum AlphaPremultiplied {
+    NotPremultiplied,
+    Premultiplied,
+}
+
+enum TypeInterpretation {
+    UnsignedInteger,
+    UnsignedShort,
+    UnsignedByte,
+    FloatingPoint,
+}
+
+enum YUVLayout {
+    YUV444,
+    YUV422,
+    YUV411,
+    YUV420P,
+    YUV420SP,
+    YV12,
+    UYVY,
+    YUYV,
+    NV12,
+    NV21,
+    IMC1,
+    IMC2,
+    IMC3,
+    IMC4,
+    Y8,
+    Y16,
+}
+
+enum ByteOrder {
+    LittleEndian,
+    BigEndian,
+    CurrentSystemEndian,
+}
+
 
 struct PixelFormat {
     get(offset: PixelFormat::Field, width: PixelFormat::FieldWidth) -> uchar,

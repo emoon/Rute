@@ -1,3 +1,20 @@
+enum InsertPolicy {
+    NoInsert,
+    InsertAtTop,
+    InsertAtCurrent,
+    InsertAtBottom,
+    InsertAfterCurrent,
+    InsertBeforeCurrent,
+    InsertAlphabetically,
+}
+
+enum SizeAdjustPolicy {
+    AdjustToContents,
+    AdjustToContentsOnFirstShow,
+    AdjustToMinimumContentsLength,
+    AdjustToMinimumContentsLengthWithIcon,
+}
+
 struct ComboBox : Widget {
     max_visible_items() -> i32,
     set_max_visible_items(max_items: i32),

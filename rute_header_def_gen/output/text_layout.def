@@ -1,3 +1,8 @@
+enum CursorMode {
+    SkipCharacters,
+    SkipWords,
+}
+
 
 struct TextLayout {
     set_font(f: &FontType),

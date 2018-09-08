@@ -1,3 +1,49 @@
+enum ButtonRole {
+    InvalidRole,
+    AcceptRole,
+    RejectRole,
+    DestructiveRole,
+    ActionRole,
+    HelpRole,
+    YesRole,
+    NoRole,
+    ResetRole,
+    ApplyRole,
+    NRoles,
+}
+
+enum StandardButton {
+    NoButton,
+    Ok,
+    Save,
+    SaveAll,
+    Open,
+    Yes,
+    YesToAll,
+    No,
+    NoToAll,
+    Abort,
+    Retry,
+    Ignore,
+    Close,
+    Cancel,
+    Discard,
+    Help,
+    Apply,
+    Reset,
+    RestoreDefaults,
+    FirstButton,
+    LastButton,
+}
+
+enum ButtonLayout {
+    WinLayout,
+    MacLayout,
+    KdeLayout,
+    GnomeLayout,
+    AndroidLayout,
+}
+
 struct DialogButtonBox : Widget {
     set_orientation(orientation: Rute::Orientation),
     orientation() -> Rute::Orientation,

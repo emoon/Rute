@@ -1,3 +1,9 @@
+enum IntersectType {
+    NoIntersection,
+    BoundedIntersection,
+    UnboundedIntersection,
+}
+
 
 struct LineF {
     [static] from_polar(length: f32, angle: f32) -> LineFType,

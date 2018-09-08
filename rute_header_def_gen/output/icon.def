@@ -1,3 +1,15 @@
+enum Mode {
+    Normal,
+    Disabled,
+    Active,
+    Selected,
+}
+
+enum State {
+    On,
+    Off,
+}
+
 
 struct Icon {
     swap(other: &IconType),

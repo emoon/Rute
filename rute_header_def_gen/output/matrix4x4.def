@@ -1,3 +1,13 @@
+enum Matrix4x4FixMeEnums {
+    Identity,
+    Translation,
+    Scale,
+    Rotation2D,
+    Rotation,
+    Perspective,
+    General,
+}
+
 
 struct Matrix4x4 {
     column(index: i32) -> Vector4DType,

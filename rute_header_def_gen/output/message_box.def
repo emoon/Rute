@@ -1,3 +1,55 @@
+enum Icon {
+    NoIcon,
+    Information,
+    Warning,
+    Critical,
+    Question,
+}
+
+enum ButtonRole {
+    InvalidRole,
+    AcceptRole,
+    RejectRole,
+    DestructiveRole,
+    ActionRole,
+    HelpRole,
+    YesRole,
+    NoRole,
+    ResetRole,
+    ApplyRole,
+    NRoles,
+}
+
+enum StandardButton {
+    NoButton,
+    Ok,
+    Save,
+    SaveAll,
+    Open,
+    Yes,
+    YesToAll,
+    No,
+    NoToAll,
+    Abort,
+    Retry,
+    Ignore,
+    Close,
+    Cancel,
+    Discard,
+    Help,
+    Apply,
+    Reset,
+    RestoreDefaults,
+    FirstButton,
+    LastButton,
+    YesAll,
+    NoAll,
+    Default,
+    Escape,
+    FlagMask,
+    ButtonMask,
+}
+
 struct MessageBox : Dialog {
     add_button(button: &AbstractButtonType, role: MessageBox::ButtonRole),
     add_button(text: String, role: MessageBox::ButtonRole) -> &PushButtonType,

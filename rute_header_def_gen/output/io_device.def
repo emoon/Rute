@@ -1,3 +1,14 @@
+enum OpenModeFlag {
+    NotOpen,
+    ReadOnly,
+    WriteOnly,
+    ReadWrite,
+    Append,
+    Truncate,
+    Text,
+    Unbuffered,
+}
+
 struct IODevice : Object {
     open_mode() -> OpenMode,
     set_text_mode_enabled(enabled: bool),

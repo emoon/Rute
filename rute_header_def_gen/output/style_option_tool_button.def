@@ -1,0 +1,17 @@
+enum StyleOptionType {
+    Type,
+}
+
+enum StyleOptionVersion {
+    Version,
+}
+
+enum ToolButtonFeature {
+    None,
+    Arrow,
+    Menu,
+    MenuButtonPopup,
+    PopupDelay,
+    HasMenu,
+}
+

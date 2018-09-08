@@ -1,3 +1,15 @@
+enum ItemIndexMethod {
+    BspTreeIndex,
+    NoIndex,
+}
+
+enum SceneLayer {
+    ItemLayer,
+    BackgroundLayer,
+    ForegroundLayer,
+    AllLayers,
+}
+
 struct GraphicsScene : Object {
     scene_rect() -> RectFType,
     width() -> f32,

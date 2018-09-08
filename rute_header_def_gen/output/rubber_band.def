@@ -1,3 +1,8 @@
+enum Shape {
+    Line,
+    Rectangle,
+}
+
 struct RubberBand : Widget {
     shape() -> RubberBand::Shape,
     move(x: i32, y: i32),
