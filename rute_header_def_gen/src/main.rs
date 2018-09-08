@@ -16,6 +16,13 @@ enum FunctionType {
     Slot,
 }
 
+#[derive(Default)]
+struct ArgType {
+    name: String,
+    array: bool,
+    pointer: bool,
+}
+
 const SKIP_NAMES: &[&'static str] = &[
     "Private",
     "operator",
@@ -23,6 +30,7 @@ const SKIP_NAMES: &[&'static str] = &[
     "tr",
     "metacall",
     "metaObject",
+    "QString",
     "d_func",
     "qt_metacast",
     "dynamic_meta_object",
@@ -44,42 +52,99 @@ fn get_pod_type<'a>(name: &'a str) -> &'a str {
 }
 
 ///
+/// Get the range of the array
+///
+fn get_array_range<'a>(name: &'a str) -> &str {
+    let start = name.find('<').unwrap();
+    let end = name.find('>').unwrap();
+    &name[start + 1..end]
+}
+
+fn get_non_array_type(arg: &mut ArgType, in_name: &str) {
+    let name;
+
+    // remove const
+    if in_name.starts_with("const ") {
+        name = &in_name[6..];
+    } else {
+        name = in_name;
+    }
+
+    if name.find('*').is_some() ||
+       name.find('&').is_some() {
+        arg.pointer = true;
+    }
+
+    let new_name;
+
+    // find end marker if there has been a & or *
+
+    if let Some(offset) = name.find(" ") {
+        new_name = &name[..offset];
+    } else {
+        new_name = name;
+    }
+
+    let new_name = get_pod_type(new_name);
+
+    // Strip 'Q'
+
+    if new_name.as_bytes()[0] == b'Q' {
+        if new_name == "QString" {
+            arg.name = "String".to_owned();
+        } else {
+            arg.name = format!("{}Type", &new_name[1..]);
+        }
+    } else {
+        arg.name = new_name.to_owned();
+    }
+}
+
+///
+///
+///
+fn format_arg_type(arg: &ArgType) -> String {
+    let mut res = String::with_capacity(128);
+
+    if arg.array {
+        res.push('<');
+    }
+
+    if arg.pointer && arg.name != "String" {
+        res.push('&');
+    }
+
+    res.push_str(&arg.name);
+
+    if arg.array {
+        res.push('>');
+    }
+
+    res
+}
+
+///
+///
+///
+fn get_complex_arg(name: &str) -> String {
+    let mut arg_type = ArgType::default();
+
+    if name.starts_with("QList<") {
+        arg_type.array = true;
+        get_non_array_type(&mut arg_type, get_array_range(name));
+    } else {
+        get_non_array_type(&mut arg_type, name);
+    }
+
+    format_arg_type(&arg_type)
+}
+
+///
 /// Translate a parsed type into API Def type
 ///
 fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
     let name = t.get_display_name();
-
-    if t.is_pod() {
-        get_pod_type(&name).to_owned().into()
-    } else {
-        let type_name;
-
-        if name.starts_with("const ") {
-            type_name = &name[6..];
-        } else {
-            type_name = &name[1..];
-        }
-
-        if type_name.find("QList<").is_some() {
-            let end_tag = type_name.find('>').unwrap();
-            let t = &type_name[6..end_tag];
-            let ret;
-
-            // check if pointer
-            if t.find('*').is_some() {
-                ret = format!("<&{}Type>", &t[..t.len() - 2]);
-            } else {
-                ret = format!("<{}Type>", t);
-            }
-
-            return ret.into();
-        } else {
-
-
-        }
-
-        type_name.to_owned().into()
-    }
+    get_complex_arg(&name).into()
 }
 
 ///
@@ -201,17 +266,17 @@ fn print_class(entry: &Entity) {
     // Print class and the inharitance
 
     if base_classes.is_empty() {
-        println!("{}", &name[1..]);
+        println!("\nstruct {} {{", &name[1..]);
     } else {
         if base_classes.len() > 1 {
-            print!("{} : {}", &name[1..], &base_classes[0][6..]);
+            print!("{} : {}", &name[1..], &base_classes[0][7..]);
 
             for base in &base_classes[1..] {
-                print!(", {}", &base[6..]);
+                print!(", {}", &base[7..]);
             }
-            println!("");
+            println!(" {{");
         } else {
-            println!("{} : {}", name, &base_classes[0][6..]);
+            println!("struct {} : {} {{", &name[1..], &base_classes[0][7..]);
         }
     }
 
@@ -226,6 +291,8 @@ fn print_class(entry: &Entity) {
             _ => (),
         }
     }
+
+    println!("}}\n");
 }
 
 fn is_header_file(entry: &walkdir::DirEntry) -> bool {
@@ -307,4 +374,43 @@ fn main() {
             }
         }
     });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn test_array_type_pointer() {
+        assert_eq!(get_complex_arg("QList<QListWidgetItem *>"), "<&ListWidgetItemType>");
+    }
+
+    #[test]
+    fn test_array_type() {
+        assert_eq!(get_complex_arg("QList<QListWidgetItem>"), "<ListWidgetItemType>");
+    }
+
+    #[test]
+    fn test_pointer() {
+        assert_eq!(get_complex_arg("QListWidgetItem *"), "&ListWidgetItemType");
+    }
+
+    #[test]
+    fn test_ref() {
+        assert_eq!(get_complex_arg("QListWidgetItem &"), "&ListWidgetItemType");
+    }
+
+    #[test]
+    fn test_const_string() {
+        assert_eq!(get_complex_arg("const QString &"), "String");
+    }
+
+    #[test]
+    fn test_string() {
+        assert_eq!(get_complex_arg("QString"), "String");
+    }
+
+    #[test]
+    fn test_list_int() {
+        assert_eq!(get_complex_arg("QList<int>"), "<int>");
+    }
 }
