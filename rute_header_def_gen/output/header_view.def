@@ -91,7 +91,7 @@ struct HeaderView : AbstractItemView {
     horizontal_offset() -> i32,
     vertical_offset() -> i32,
     scroll_contents_by(i32 dx, i32 dy),
-    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, &Vector<int>Type roles),
+    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, <i32> roles),
     rows_inserted(&ModelIndexType parent, i32 start, i32 end),
     visual_rect(&ModelIndexType index) -> RectType,
     scroll_to(&ModelIndexType index, AbstractItemView::ScrollHint hint),

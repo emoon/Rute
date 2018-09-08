@@ -12,7 +12,7 @@ struct TextOption {
     tab_stop() -> f32,
     set_tab_stop_distance(f32 tab_stop_distance),
     tab_stop_distance() -> f32,
-    set_tab_array(&List<qreal>Type tab_stops),
+    set_tab_array(<f32> tab_stops),
     tab_array() -> <f32>,
     set_tabs(onst QList<QTextOption::Tab> & tab_stops),
     tabs() -> List<QTextOption::Tab>,

@@ -21,7 +21,7 @@ struct Region {
     intersects(&RegionType r) -> bool,
     intersects(&RectType r) -> bool,
     bounding_rect() -> RectType,
-    rects() -> Vector<QRect>Type,
+    rects() -> <RectType>,
     set_rects(&RectType rect, i32 num),
     rect_count() -> i32,
 }

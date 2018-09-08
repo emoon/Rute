@@ -41,7 +41,7 @@ struct MainWindow : Widget {
     remove_dock_widget(&DockWidgetType dockwidget),
     restore_dock_widget(&DockWidgetType dockwidget) -> bool,
     dock_widget_area(&DockWidgetType dockwidget) -> Rute::DockWidgetArea,
-    resize_docks(&List<QDockWidgetType docks, &List<int>Type sizes, Rute::Orientation orientation),
+    resize_docks(<&DockWidgetType> docks, <i32> sizes, Rute::Orientation orientation),
     save_state(i32 version) -> ByteArrayType,
     restore_state(&ByteArrayType state, i32 version) -> bool,
     create_popup_menu() -> &MenuType,

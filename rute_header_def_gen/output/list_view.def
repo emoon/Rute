@@ -39,7 +39,7 @@ struct ListView : AbstractItemView {
     scroll_contents_by(i32 dx, i32 dy),
     resize_contents(i32 width, i32 height),
     contents_size() -> SizeType,
-    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, &Vector<int>Type roles),
+    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, <i32> roles),
     rows_inserted(&ModelIndexType parent, i32 start, i32 end),
     rows_about_to_be_removed(&ModelIndexType parent, i32 start, i32 end),
     mouse_move_event(&MouseEventType e),

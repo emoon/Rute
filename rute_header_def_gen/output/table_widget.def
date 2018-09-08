@@ -70,7 +70,7 @@ struct TableWidget : TableView {
     [callback] current_cell_changed(i32 current_row, i32 current_column, i32 previous_row, i32 previous_column),
     event(&EventType e) -> bool,
     mime_types() -> StringListType,
-    mime_data(&List<QTableWidgetItemType items) -> &MimeDataType,
+    mime_data(<&TableWidgetItemType> items) -> &MimeDataType,
     drop_mime_data(i32 row, i32 column, &MimeDataType data, Rute::DropAction action) -> bool,
     supported_drop_actions() -> Rute::DropActions,
     items(&MimeDataType data) -> <&TableWidgetItemType>,

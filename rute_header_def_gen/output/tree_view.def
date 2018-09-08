@@ -49,7 +49,7 @@ struct TreeView : AbstractItemView {
     do_items_layout(),
     reset(),
     sort_by_column(i32 column, Rute::SortOrder order),
-    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, &Vector<int>Type roles),
+    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, <i32> roles),
     select_all(),
     [callback] expanded(&ModelIndexType index),
     [callback] collapsed(&ModelIndexType index),

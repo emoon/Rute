@@ -45,7 +45,7 @@ struct TextDocument : Object {
     print(&PagedPaintDeviceType printer),
     resource(i32 type, &UrlType name) -> VariantType,
     add_resource(i32 type, &UrlType name, &VariantType resource),
-    all_formats() -> Vector<QTextFormat>Type,
+    all_formats() -> <TextFormatType>,
     mark_contents_dirty(i32 from, i32 length),
     draw_contents(&PainterType painter, &RectFType rect),
     set_text_width(f32 width),

@@ -69,7 +69,7 @@ struct AbstractItemView : AbstractScrollArea {
     scroll_to_top(),
     scroll_to_bottom(),
     update(&ModelIndexType index),
-    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, &Vector<int>Type roles),
+    data_changed(&ModelIndexType top_left, &ModelIndexType bottom_right, <i32> roles),
     rows_inserted(&ModelIndexType parent, i32 start, i32 end),
     rows_about_to_be_removed(&ModelIndexType parent, i32 start, i32 end),
     selection_changed(&ItemSelectionType selected, &ItemSelectionType deselected),

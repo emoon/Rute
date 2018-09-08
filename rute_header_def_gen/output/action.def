@@ -21,7 +21,7 @@ struct Action : Object {
     is_separator() -> bool,
     set_shortcut(&KeySequenceType shortcut),
     shortcut() -> KeySequenceType,
-    set_shortcuts(&List<QKeySequence>Type shortcuts),
+    set_shortcuts(<KeySequenceType> shortcuts),
     set_shortcuts(KeySequence::StandardKey arg0),
     shortcuts() -> <KeySequenceType>,
     set_shortcut_context(Rute::ShortcutContext context),

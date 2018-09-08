@@ -90,7 +90,7 @@ struct GraphicsItem {
     rotation() -> f32,
     set_scale(f32 scale),
     scale() -> f32,
-    set_transformations(&List<QGraphicsTransformType transformations),
+    set_transformations(<&GraphicsTransformType> transformations),
     set_transform_origin_point(&PointFType origin),
     set_transform_origin_point(f32 ax, f32 ay),
     advance(i32 phase),

@@ -50,7 +50,7 @@ struct ListWidget : ListView {
     [callback] item_selection_changed(),
     event(&EventType e) -> bool,
     mime_types() -> StringListType,
-    mime_data(&List<QListWidgetItemType items) -> &MimeDataType,
+    mime_data(<&ListWidgetItemType> items) -> &MimeDataType,
     drop_mime_data(i32 index, &MimeDataType data, Rute::DropAction action) -> bool,
     supported_drop_actions() -> Rute::DropActions,
     items(&MimeDataType data) -> <&ListWidgetItemType>,

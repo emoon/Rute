@@ -3,7 +3,7 @@ struct AbstractTransition : Object {
     target_state() -> &AbstractStateType,
     set_target_state(&AbstractStateType target),
     target_states() -> <&AbstractStateType>,
-    set_target_states(&List<QAbstractStateType targets),
+    set_target_states(<&AbstractStateType> targets),
     set_transition_type(AbstractTransition::TransitionType type),
     machine() -> &StateMachineType,
     add_animation(&AbstractAnimationType animation),

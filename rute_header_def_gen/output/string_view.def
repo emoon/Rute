@@ -6,7 +6,7 @@ struct StringView {
     to_latin1() -> ByteArrayType,
     to_utf8() -> ByteArrayType,
     to_local8_bit() -> ByteArrayType,
-    to_ucs4() -> Vector<uint>Type,
+    to_ucs4() -> <uint>,
     at(i32 n) -> CharType,
     mid(i32 pos) -> StringViewType,
     left(i32 n) -> StringViewType,

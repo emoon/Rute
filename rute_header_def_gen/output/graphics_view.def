@@ -71,7 +71,7 @@ struct GraphicsView : AbstractScrollArea {
     set_background_brush(&BrushType brush),
     foreground_brush() -> BrushType,
     set_foreground_brush(&BrushType brush),
-    update_scene(&List<QRectF>Type rects),
+    update_scene(<RectFType> rects),
     invalidate_scene(&RectFType rect, GraphicsScene::SceneLayers layers),
     update_scene_rect(&RectFType rect),
     [callback] rubber_band_changed(RectType viewport_rect, PointFType from_scene_point, PointFType to_scene_point),

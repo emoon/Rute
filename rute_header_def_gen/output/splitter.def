@@ -14,7 +14,7 @@ struct Splitter : Frame {
     size_hint() -> SizeType,
     minimum_size_hint() -> SizeType,
     sizes() -> <i32>,
-    set_sizes(&List<int>Type list),
+    set_sizes(<i32> list),
     save_state() -> ByteArrayType,
     restore_state(&ByteArrayType state) -> bool,
     handle_width() -> i32,

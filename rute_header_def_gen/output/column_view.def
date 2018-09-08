@@ -12,7 +12,7 @@ struct ColumnView : AbstractItemView {
     resize_grips_visible() -> bool,
     preview_widget() -> &WidgetType,
     set_preview_widget(&WidgetType widget),
-    set_column_widths(&List<int>Type list),
+    set_column_widths(<i32> list),
     column_widths() -> <i32>,
     is_index_hidden(&ModelIndexType index) -> bool,
     move_cursor(AbstractItemView::CursorAction cursor_action, Rute::KeyboardModifiers modifiers) -> ModelIndexType,

@@ -22,7 +22,7 @@ enum AccessLevel {
     Private
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct ArgType {
     name: String,
     array: bool,
@@ -186,14 +186,16 @@ fn get_complex_arg(name: &str) -> String {
 
     // Do the rest
 
-    if name.starts_with("QList<") || name.starts_with("Vector<") {
+    if name.contains("QList<") || name.contains("QVector<") {
         arg_type.array = true;
         get_non_array_type(&mut arg_type, get_array_range(name));
     } else {
         get_non_array_type(&mut arg_type, name);
     }
 
-    format_arg_type(&arg_type)
+    let res = format_arg_type(&arg_type);
+
+    res
 }
 
 ///
@@ -469,6 +471,7 @@ fn main() {
 mod tests {
     use super::*;
 
+    #[test]
     fn test_array_type_pointer() {
         assert_eq!(
             get_complex_arg("QList<QListWidgetItem *>"),
@@ -486,7 +489,7 @@ mod tests {
 
     #[test]
     fn test_array_vector_type() {
-        assert_eq!(get_complex_arg("Vector<int>"), "<i32>");
+        assert_eq!(get_complex_arg("QVector<int>"), "<i32>");
     }
 
     #[test]
@@ -512,6 +515,11 @@ mod tests {
     #[test]
     fn test_list_int() {
         assert_eq!(get_complex_arg("QList<int>"), "<i32>");
+    }
+
+    #[test]
+    fn test_vector_type() {
+        assert_eq!(get_complex_arg("QVector<QCanBusFrame>"), "<CanBusFrameType>");
     }
 
     #[test]

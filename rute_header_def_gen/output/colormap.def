@@ -8,7 +8,7 @@ struct Colormap {
     size() -> i32,
     pixel(&ColorType color) -> uint,
     color_at(uint pixel) -> ColorType,
-    colormap() -> Vector<QColor>Type,
+    colormap() -> <ColorType>,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
