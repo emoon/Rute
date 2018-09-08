@@ -25,3 +25,4 @@ struct OpenGLWidget : Widget {
     paint_engine() -> &PaintEngineType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

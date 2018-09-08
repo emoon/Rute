@@ -53,3 +53,4 @@ struct CoreApplication : Object {
     forward_event(&ObjectType receiver, &EventType event, &EventType originating_event) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

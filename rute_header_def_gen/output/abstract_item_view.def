@@ -134,3 +134,4 @@ struct AbstractItemView : AbstractScrollArea {
     viewport_size_hint() -> SizeType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -4,3 +4,4 @@ struct FSCompleter {
     split_path(String path) -> StringListType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

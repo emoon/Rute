@@ -36,3 +36,4 @@ struct TextBrowser : TextEdit {
     paint_event(&PaintEventType e),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

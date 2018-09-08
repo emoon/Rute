@@ -29,3 +29,4 @@ struct Matrix {
     inverted(&bool invertible) -> MatrixType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

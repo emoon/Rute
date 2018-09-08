@@ -12,3 +12,4 @@ struct Point {
     to_cg_point() -> CGPoint,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

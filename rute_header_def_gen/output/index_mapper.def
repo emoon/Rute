@@ -12,3 +12,4 @@ struct IndexMapper {
     cost() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

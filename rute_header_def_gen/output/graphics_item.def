@@ -206,3 +206,4 @@ struct GraphicsItem {
     remove_from_index(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

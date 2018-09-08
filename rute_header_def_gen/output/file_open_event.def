@@ -4,3 +4,4 @@ struct FileOpenEvent : Event {
     open_file(&FileType file, IODevice::OpenMode flags) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

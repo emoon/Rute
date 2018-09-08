@@ -28,3 +28,4 @@ struct Scroller : Object {
     scroller_properties_changed(&ScrollerPropertiesType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

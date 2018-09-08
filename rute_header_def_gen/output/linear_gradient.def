@@ -7,3 +7,4 @@ struct LinearGradient : Gradient {
     set_final_stop(f32 x, f32 y),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

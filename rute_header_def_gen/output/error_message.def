@@ -6,3 +6,4 @@ struct ErrorMessage : Dialog {
     change_event(&EventType e),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

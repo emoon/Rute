@@ -67,3 +67,4 @@ struct PainterPath {
     compute_bounding_rect(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

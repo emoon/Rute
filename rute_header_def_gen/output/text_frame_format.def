@@ -30,3 +30,4 @@ struct TextFrameFormat : TextFormat {
     page_break_policy() -> PageBreakFlags,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

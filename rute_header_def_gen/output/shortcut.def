@@ -16,3 +16,4 @@ struct Shortcut : Object {
     event(&EventType e) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

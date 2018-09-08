@@ -28,3 +28,4 @@ struct ColumnView : AbstractItemView {
     initialize_column(&AbstractItemViewType column),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

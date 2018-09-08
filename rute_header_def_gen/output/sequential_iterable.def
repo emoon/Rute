@@ -7,3 +7,4 @@ struct SequentialIterable {
     can_reverse_iterate() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

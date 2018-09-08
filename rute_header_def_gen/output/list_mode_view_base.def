@@ -23,3 +23,4 @@ struct ListModeViewBase : CommonListViewBase {
     per_item_scrolling_page_steps(i32 length, i32 bounds, bool wrap) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

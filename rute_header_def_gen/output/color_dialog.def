@@ -21,3 +21,4 @@ struct ColorDialog : Dialog {
     done(i32 result),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

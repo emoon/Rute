@@ -5,3 +5,4 @@ struct ComboBoxDelegate : ItemDelegate {
     size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -29,3 +29,4 @@ struct FontMetricsF {
     line_width() -> f32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

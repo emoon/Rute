@@ -18,3 +18,4 @@ struct Size {
     to_cg_size() -> CGSize,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

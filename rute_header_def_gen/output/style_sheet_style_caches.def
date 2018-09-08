@@ -1,3 +1,4 @@
 struct StyleSheetStyleCaches : Object {
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

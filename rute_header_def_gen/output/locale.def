@@ -71,3 +71,4 @@ struct Locale {
     create_separated_list(&StringListType strl) -> String,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

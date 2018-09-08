@@ -46,3 +46,4 @@ struct Layout : Object, LayoutItem {
     activate_recursive_helper(&LayoutItemType item),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

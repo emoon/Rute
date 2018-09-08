@@ -2,3 +2,4 @@ struct StylePlugin : Object {
     create(String key) -> &StyleType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

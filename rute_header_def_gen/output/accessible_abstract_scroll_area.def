@@ -9,3 +9,4 @@ struct AccessibleAbstractScrollArea : AccessibleWidget {
     is_left_to_right() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

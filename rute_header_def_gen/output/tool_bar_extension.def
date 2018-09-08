@@ -4,3 +4,4 @@ struct ToolBarExtension : ToolButton {
     set_orientation(Rute::Orientation o),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

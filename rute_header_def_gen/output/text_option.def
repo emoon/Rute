@@ -18,3 +18,4 @@ struct TextOption {
     tabs() -> List<QTextOption::Tab>,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

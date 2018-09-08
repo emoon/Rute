@@ -30,3 +30,4 @@ struct Region {
     clean_up(Region::QRegionData * x),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

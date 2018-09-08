@@ -10,3 +10,4 @@ struct KeySequenceEdit : Widget {
     timer_event(&TimerEventType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -5,3 +5,4 @@ struct FlickGestureRecognizer {
     reset(&i32 state),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

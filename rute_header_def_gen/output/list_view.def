@@ -68,3 +68,4 @@ struct ListView : AbstractItemView {
     visual_index(&ModelIndexType index) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

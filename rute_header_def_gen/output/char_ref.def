@@ -36,3 +36,4 @@ struct CharRef {
     unicode() -> &ushort,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

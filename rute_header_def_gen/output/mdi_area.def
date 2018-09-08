@@ -44,3 +44,4 @@ struct MdiArea : AbstractScrollArea {
     scroll_contents_by(i32 dx, i32 dy),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

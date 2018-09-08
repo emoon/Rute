@@ -23,3 +23,4 @@ struct AccessibleLineEdit : AccessibleWidget, AccessibleTextInterface, Accessibl
     line_edit() -> &LineEditType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -7,3 +7,4 @@ struct AbstractTableModel : AbstractItemModel {
     has_children(&ModelIndexType parent) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -4,3 +4,4 @@ struct SortedModelEngine : CompletionEngine {
     sort_order(&ModelIndexType arg0) -> Rute::SortOrder,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

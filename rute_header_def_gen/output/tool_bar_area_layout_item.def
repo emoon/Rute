@@ -8,3 +8,4 @@ struct ToolBarAreaLayoutItem {
     extend_size(i32 o, i32 extent),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

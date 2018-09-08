@@ -32,3 +32,4 @@ struct WidgetWindow : Window {
     get_focus_widget(WidgetWindow::FocusWidgets fw) -> &WidgetType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

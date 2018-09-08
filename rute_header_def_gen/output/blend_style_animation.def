@@ -7,3 +7,4 @@ struct BlendStyleAnimation : StyleAnimation {
     update_current_time(i32 time),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -21,3 +21,4 @@ struct VariantAnimation : AbstractAnimation {
     register_interpolator(Interpolator func, i32 interpolation_type),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

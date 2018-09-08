@@ -8,3 +8,4 @@ struct ContextMenuEvent : InputEvent {
     reason() -> ContextMenuEvent::Reason,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -62,3 +62,4 @@ struct RectF {
     to_cg_rect() -> CGRect,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

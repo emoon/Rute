@@ -4,3 +4,4 @@ struct ComboMenuDelegate : AbstractItemDelegate {
     get_style_option(&StyleOptionViewItemType option, &ModelIndexType index) -> StyleOptionMenuItemType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

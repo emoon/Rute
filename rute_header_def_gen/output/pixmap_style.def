@@ -34,3 +34,4 @@ struct PixmapStyle : CommonStyle {
     item_view_size_from_contents(&StyleOptionType option, &SizeType contents_size, &WidgetType widget) -> SizeType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

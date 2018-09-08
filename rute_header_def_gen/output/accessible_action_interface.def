@@ -19,3 +19,4 @@ struct AccessibleActionInterface {
     previous_page_action() -> String,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -3,3 +3,4 @@ struct ResizeEvent : Event {
     old_size() -> &SizeType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

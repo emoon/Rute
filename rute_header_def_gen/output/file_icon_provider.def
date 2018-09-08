@@ -7,3 +7,4 @@ struct FileIconProvider {
     options() -> Options,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -30,3 +30,4 @@ struct TextLine {
     layout_helper(i32 num_glyphs),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

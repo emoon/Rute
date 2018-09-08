@@ -32,3 +32,4 @@ struct UndoStack : Object {
     redo_text_changed(String redo_text),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

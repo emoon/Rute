@@ -58,3 +58,4 @@ struct MainWindowLayout : Layout {
     update_tab_bar_shapes(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

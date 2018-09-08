@@ -13,3 +13,4 @@ struct ModelIndex {
     is_valid() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

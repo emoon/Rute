@@ -27,3 +27,4 @@ struct PixelFormat {
     resolve_byte_order(PixelFormat::ByteOrder bo) -> PixelFormat::ByteOrder,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

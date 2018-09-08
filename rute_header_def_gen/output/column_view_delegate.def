@@ -2,3 +2,4 @@ struct ColumnViewDelegate : ItemDelegate {
     paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

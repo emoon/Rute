@@ -16,3 +16,4 @@ struct Debug {
     maybe_quote(char c) -> &DebugType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

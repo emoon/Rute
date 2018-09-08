@@ -278,3 +278,4 @@ struct Widget : Object, PaintDevice {
     take_layout() -> &LayoutType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

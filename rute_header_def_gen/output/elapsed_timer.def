@@ -14,3 +14,4 @@ struct ElapsedTimer {
     secs_to(&ElapsedTimerType other) -> qint64,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

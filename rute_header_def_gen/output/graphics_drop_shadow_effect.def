@@ -18,3 +18,4 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     draw(&PainterType painter),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

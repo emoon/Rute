@@ -139,3 +139,4 @@ struct Window : Object, Surface {
     surface_handle() -> &PlatformSurfaceType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

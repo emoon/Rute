@@ -3,3 +3,4 @@ struct SideBarDelegate {
     init_style_option(&i32 option, &i32 index),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -8,3 +8,4 @@ struct AccessibleDockWidget : AccessibleWidget {
     dock_widget_layout() -> &DockWidgetLayoutType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

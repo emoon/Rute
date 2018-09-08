@@ -33,3 +33,4 @@ struct FontDatabase {
     load(&FontPrivateType d, i32 script),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

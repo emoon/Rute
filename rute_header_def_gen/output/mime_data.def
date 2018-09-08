@@ -22,3 +22,4 @@ struct MimeData : Object {
     clear(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

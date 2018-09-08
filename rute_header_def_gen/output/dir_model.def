@@ -39,3 +39,4 @@ struct DirModel : AbstractItemModel {
     refresh(&ModelIndexType parent),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -14,3 +14,4 @@ struct BasicMutex {
     dummy_locked() -> &MutexDataType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -47,3 +47,4 @@ struct Palette {
     detach(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

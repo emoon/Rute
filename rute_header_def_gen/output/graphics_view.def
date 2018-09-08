@@ -103,3 +103,4 @@ struct GraphicsView : AbstractScrollArea {
     draw_items(&PainterType painter, i32 num_items, &GraphicsItemType items, StyleOptionGraphicsItemType options),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

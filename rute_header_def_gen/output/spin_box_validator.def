@@ -3,3 +3,4 @@ struct SpinBoxValidator : Validator {
     fixup(String arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

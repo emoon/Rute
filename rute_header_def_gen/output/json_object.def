@@ -40,3 +40,4 @@ struct JsonObject {
     set_value_at(i32 i, &JsonValueType val),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

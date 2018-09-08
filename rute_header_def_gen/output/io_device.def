@@ -54,3 +54,4 @@ struct IODevice : Object {
     set_open_mode(OpenMode open_mode),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

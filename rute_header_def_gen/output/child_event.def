@@ -5,3 +5,4 @@ struct ChildEvent : Event {
     removed() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -11,3 +11,4 @@ struct TouchEvent : InputEvent {
     set_device(&TouchDeviceType adevice),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

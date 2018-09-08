@@ -8,3 +8,4 @@ struct WindowContainer : Widget {
     focus_window_changed(&WindowType focus_window),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -4,3 +4,4 @@ struct StyleFactory {
     create(String arg0) -> &StyleType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

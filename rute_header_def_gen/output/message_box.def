@@ -65,3 +65,4 @@ struct MessageBox : Dialog {
     change_event(&EventType event),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

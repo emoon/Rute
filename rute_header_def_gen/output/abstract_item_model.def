@@ -84,3 +84,4 @@ struct AbstractItemModel : Object {
     do_set_supported_drag_actions(Rute::DropActions actions),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -17,3 +17,4 @@ struct Simplex {
     collect_results(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

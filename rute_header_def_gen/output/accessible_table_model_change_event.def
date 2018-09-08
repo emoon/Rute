@@ -11,3 +11,4 @@ struct AccessibleTableModelChangeEvent : AccessibleEvent {
     last_column() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

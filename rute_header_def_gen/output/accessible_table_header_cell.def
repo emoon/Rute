@@ -14,3 +14,4 @@ struct AccessibleTableHeaderCell : AccessibleInterface {
     header_view() -> &HeaderViewType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

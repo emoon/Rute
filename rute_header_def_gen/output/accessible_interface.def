@@ -28,3 +28,4 @@ struct AccessibleInterface {
     interface_cast(Accessible::InterfaceType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

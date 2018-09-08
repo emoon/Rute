@@ -6,3 +6,4 @@ struct ToolBarSeparator : Widget {
     set_orientation(Rute::Orientation orientation),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

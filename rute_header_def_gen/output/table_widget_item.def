@@ -41,3 +41,4 @@ struct TableWidgetItem {
     type() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

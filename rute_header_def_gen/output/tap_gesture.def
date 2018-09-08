@@ -3,3 +3,4 @@ struct TapGesture : Gesture {
     set_position(&PointFType pos),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

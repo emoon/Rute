@@ -23,3 +23,4 @@ struct DockWidget : Widget {
     init_style_option(&StyleOptionDockWidgetType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

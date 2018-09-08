@@ -20,3 +20,4 @@ struct DockWidgetLayout : Layout {
     set_vertical_title_bar(bool b),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

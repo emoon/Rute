@@ -49,3 +49,4 @@ struct Transform {
     inline_type() -> Transform::TransformationType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

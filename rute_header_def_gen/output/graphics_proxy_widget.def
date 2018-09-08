@@ -37,3 +37,4 @@ struct GraphicsProxyWidget : GraphicsWidget {
     new_proxy_widget(&WidgetType arg0) -> &GraphicsProxyWidgetType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

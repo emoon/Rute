@@ -28,3 +28,4 @@ struct ItemSelectionModel : Object {
     emit_selection_changed(&ItemSelectionType new_selection, &ItemSelectionType old_selection),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

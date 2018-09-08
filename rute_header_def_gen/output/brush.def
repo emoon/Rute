@@ -19,3 +19,4 @@ struct Brush {
     is_detached() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

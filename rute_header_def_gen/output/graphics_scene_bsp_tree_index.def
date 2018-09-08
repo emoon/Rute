@@ -13,3 +13,4 @@ struct GraphicsSceneBspTreeIndex : GraphicsSceneIndex {
     item_change(&GraphicsItemType item, i32 change, &void value),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

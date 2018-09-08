@@ -5,3 +5,4 @@ struct WidgetAnimator {
     abort(&i32 widget),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

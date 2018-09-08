@@ -86,3 +86,4 @@ struct StandardItem {
     emit_data_changed(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -39,3 +39,4 @@ struct Quaternion {
     nlerp(&QuaternionType q1, &QuaternionType q2, float t) -> QuaternionType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

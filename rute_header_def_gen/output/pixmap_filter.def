@@ -4,3 +4,4 @@ struct PixmapFilter : Object {
     draw(&PainterType painter, &PointFType p, &PixmapType src, &RectFType src_rect),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

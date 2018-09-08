@@ -5,3 +5,4 @@ struct MacPanGestureRecognizer {
     reset(&i32 gesture),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

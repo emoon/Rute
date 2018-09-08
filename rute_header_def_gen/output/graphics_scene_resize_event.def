@@ -5,3 +5,4 @@ struct GraphicsSceneResizeEvent : GraphicsSceneEvent {
     set_new_size(&SizeFType size),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -66,3 +66,4 @@ struct Menu : Widget {
     internal_delayed_popup(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

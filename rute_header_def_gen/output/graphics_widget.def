@@ -76,3 +76,4 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     ungrab_keyboard_event(&EventType event),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

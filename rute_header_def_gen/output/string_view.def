@@ -40,3 +40,4 @@ struct StringView {
     last() -> CharType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

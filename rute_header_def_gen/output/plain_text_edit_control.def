@@ -13,3 +13,4 @@ struct PlainTextEditControl {
     load_resource(i32 type, &UrlType name) -> VariantType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

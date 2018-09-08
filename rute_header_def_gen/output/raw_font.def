@@ -36,3 +36,4 @@ struct RawFont {
     from_font(&FontType font, FontDatabase::WritingSystem writing_system) -> RawFontType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

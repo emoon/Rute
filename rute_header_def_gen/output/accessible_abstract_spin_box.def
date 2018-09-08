@@ -26,3 +26,4 @@ struct AccessibleAbstractSpinBox : AccessibleWidget, AccessibleValueInterface, A
     line_edit_iface() -> &AccessibleInterfaceType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

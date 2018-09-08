@@ -28,3 +28,4 @@ struct Style : Object {
     set_proxy(&StyleType style),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

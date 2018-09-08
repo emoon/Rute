@@ -67,3 +67,4 @@ struct GuiApplication : CoreApplication {
     compress_event(&EventType arg0, &ObjectType receiver, &PostEventListType arg1) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

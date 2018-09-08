@@ -38,3 +38,4 @@ struct GraphicsLayoutItem {
     effective_size_hints(&SizeFType constraint) -> &SizeFType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -37,3 +37,4 @@ struct GridLayout : Layout {
     add_item(&LayoutItemType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -18,3 +18,4 @@ struct CalendarPopup : Widget {
     verify_calendar_instance() -> &CalendarWidgetType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

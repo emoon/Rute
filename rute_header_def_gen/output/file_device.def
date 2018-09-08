@@ -22,3 +22,4 @@ struct FileDevice : IODevice {
     read_line_data(&char data, qint64 maxlen) -> qint64,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

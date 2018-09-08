@@ -2,3 +2,4 @@ struct ApplicationStateChangeEvent : Event {
     application_state() -> Rute::ApplicationState,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -10,3 +10,4 @@ struct IntValidator : Validator {
     top_changed(i32 top),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

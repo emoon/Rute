@@ -52,3 +52,4 @@ struct Wizard : Dialog {
     cleanup_page(i32 id),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

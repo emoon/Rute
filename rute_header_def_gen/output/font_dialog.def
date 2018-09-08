@@ -17,3 +17,4 @@ struct FontDialog : Dialog {
     event_filter(&ObjectType object, &EventType event) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

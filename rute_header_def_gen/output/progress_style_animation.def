@@ -6,3 +6,4 @@ struct ProgressStyleAnimation : StyleAnimation {
     is_update_needed() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

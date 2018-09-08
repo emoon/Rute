@@ -2,3 +2,4 @@ struct DateEdit : DateTimeEdit {
     user_date_changed(&DateType date),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

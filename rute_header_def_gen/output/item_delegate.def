@@ -24,3 +24,4 @@ struct ItemDelegate : AbstractItemDelegate {
     text_rectangle(&PainterType painter, &RectType rect, &FontType font, String text) -> RectType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

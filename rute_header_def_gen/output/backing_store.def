@@ -14,3 +14,4 @@ struct BackingStore {
     handle() -> &PlatformBackingStoreType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

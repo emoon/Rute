@@ -5,3 +5,4 @@ struct AccessibleImageInterface {
     image_position() -> PointType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

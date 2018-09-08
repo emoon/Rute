@@ -20,3 +20,4 @@ struct Timer : Object {
     single_shot_impl(i32 msec, Rute::TimerType timer_type, &ObjectType receiver, tPrivate::QSlotObjectBase * slot_obj),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -41,3 +41,4 @@ struct GraphicsGridLayout : GraphicsLayout {
     size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

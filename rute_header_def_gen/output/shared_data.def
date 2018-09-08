@@ -2,3 +2,4 @@
 struct SharedData {
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

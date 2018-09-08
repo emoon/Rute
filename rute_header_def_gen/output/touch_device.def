@@ -12,3 +12,4 @@ struct TouchDevice {
     set_maximum_touch_points(i32 max),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

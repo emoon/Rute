@@ -55,3 +55,4 @@ struct TextCharFormat : TextFormat {
     table_cell_column_span() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -268,3 +268,4 @@ struct String {
     replace_helper(&uint indices, i32 n_indices, i32 blen, &CharType after, i32 alen),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

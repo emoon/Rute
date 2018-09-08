@@ -13,3 +13,4 @@ struct RadialGradient : Gradient {
     set_focal_radius(f32 radius),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

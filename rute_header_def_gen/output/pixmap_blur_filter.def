@@ -7,3 +7,4 @@ struct PixmapBlurFilter : PixmapFilter {
     draw(&PainterType painter, &PointFType dest, &PixmapType src, &RectFType src_rect),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

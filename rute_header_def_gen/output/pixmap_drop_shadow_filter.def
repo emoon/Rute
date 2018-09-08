@@ -10,3 +10,4 @@ struct PixmapDropShadowFilter : PixmapFilter {
     set_offset(f32 dx, f32 dy),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

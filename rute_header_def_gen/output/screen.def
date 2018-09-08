@@ -36,3 +36,4 @@ struct Screen : Object {
     refresh_rate_changed(f32 refresh_rate),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -58,3 +58,4 @@ struct Url {
     set_idn_whitelist(&StringListType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

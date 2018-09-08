@@ -94,3 +94,4 @@ struct ComboBox : Widget {
     init_style_option(&StyleOptionComboBoxType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

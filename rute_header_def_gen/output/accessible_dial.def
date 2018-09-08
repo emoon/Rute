@@ -3,3 +3,4 @@ struct AccessibleDial : AccessibleAbstractSlider {
     dial() -> &DialType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

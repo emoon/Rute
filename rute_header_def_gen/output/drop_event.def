@@ -12,3 +12,4 @@ struct DropEvent : Event {
     mime_data() -> &MimeDataType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

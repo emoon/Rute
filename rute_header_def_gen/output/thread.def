@@ -31,3 +31,4 @@ struct Thread : Object {
     create_thread_impl(i32 arg0) -> &ThreadType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

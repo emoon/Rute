@@ -28,3 +28,4 @@ struct DataWidgetMapper : Object {
     current_index_changed(i32 index),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

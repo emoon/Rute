@@ -2,3 +2,4 @@ struct AccessibleTextBrowser : AccessibleTextEdit {
     role() -> Accessible::Role,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

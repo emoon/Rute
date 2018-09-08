@@ -12,3 +12,4 @@ struct TextTableFormat : TextFrameFormat {
     header_row_count() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -19,3 +19,4 @@ struct ButtonGroup : Object {
     button_toggled(i32 arg0, bool arg1),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

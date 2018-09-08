@@ -14,3 +14,4 @@ struct SizePolicy {
     set_retain_size_when_hidden(bool retain_size),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

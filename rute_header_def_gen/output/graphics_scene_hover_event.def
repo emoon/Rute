@@ -15,3 +15,4 @@ struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
     set_modifiers(Rute::KeyboardModifiers modifiers),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

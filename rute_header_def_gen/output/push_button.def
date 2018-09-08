@@ -18,3 +18,4 @@ struct PushButton : AbstractButton {
     init_style_option(&StyleOptionButtonType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

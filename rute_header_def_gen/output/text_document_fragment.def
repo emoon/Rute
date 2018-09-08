@@ -8,3 +8,4 @@ struct TextDocumentFragment {
     from_html(String html, &TextDocumentType resource_provider) -> TextDocumentFragmentType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

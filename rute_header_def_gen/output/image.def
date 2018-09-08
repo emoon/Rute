@@ -95,3 +95,4 @@ struct Image : PaintDevice {
     smooth_scaled(i32 w, i32 h) -> ImageType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

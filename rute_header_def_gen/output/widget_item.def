@@ -9,3 +9,4 @@ struct WidgetItem : LayoutItem {
     height_for_width(i32 arg0) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

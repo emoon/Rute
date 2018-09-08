@@ -5,3 +5,4 @@ struct MetaClassInfo {
     enclosing_meta_object() -> &MetaObjectType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

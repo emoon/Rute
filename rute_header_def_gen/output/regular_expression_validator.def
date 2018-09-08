@@ -5,3 +5,4 @@ struct RegularExpressionValidator : Validator {
     regular_expression_changed(&RegularExpressionType re),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

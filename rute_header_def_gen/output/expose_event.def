@@ -2,3 +2,4 @@ struct ExposeEvent : Event {
     region() -> &RegionType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

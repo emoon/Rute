@@ -45,3 +45,4 @@ struct AbstractButton : Widget {
     timer_event(&TimerEventType e),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

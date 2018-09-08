@@ -13,3 +13,4 @@ struct Gradient {
     set_interpolation_mode(Gradient::InterpolationMode mode),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

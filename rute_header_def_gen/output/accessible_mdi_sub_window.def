@@ -9,3 +9,4 @@ struct AccessibleMdiSubWindow : AccessibleWidget {
     mdi_sub_window() -> &MdiSubWindowType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

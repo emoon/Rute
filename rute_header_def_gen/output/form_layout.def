@@ -57,3 +57,4 @@ struct FormLayout : Layout {
     reset_form_alignment(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

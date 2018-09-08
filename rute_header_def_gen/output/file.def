@@ -30,3 +30,4 @@ struct File : FileDevice {
     set_permissions(String filename, Permissions permission_spec) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

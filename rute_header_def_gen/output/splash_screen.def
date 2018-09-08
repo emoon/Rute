@@ -12,3 +12,4 @@ struct SplashScreen : Widget {
     mouse_press_event(&MouseEventType arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

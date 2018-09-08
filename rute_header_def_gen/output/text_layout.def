@@ -45,3 +45,4 @@ struct TextLayout {
     set_flags(i32 flags),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

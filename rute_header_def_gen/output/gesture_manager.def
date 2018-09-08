@@ -15,3 +15,4 @@ struct GestureManager {
     cancel_gestures_for_children(&i32 originating_gesture),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

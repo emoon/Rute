@@ -30,3 +30,4 @@ struct Rgba64 {
     unpremultiplied_64bit() -> Rgba64Type,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

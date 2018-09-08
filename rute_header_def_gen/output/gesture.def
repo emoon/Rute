@@ -9,3 +9,4 @@ struct Gesture : Object {
     gesture_cancel_policy() -> Gesture::GestureCancelPolicy,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

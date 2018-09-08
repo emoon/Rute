@@ -13,3 +13,4 @@ struct GraphicsLayout : GraphicsLayoutItem {
     add_child_layout_item(&GraphicsLayoutItemType layout_item),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

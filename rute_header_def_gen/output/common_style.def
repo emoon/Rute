@@ -14,3 +14,4 @@ struct CommonStyle : Style {
     unpolish(&ApplicationType application),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

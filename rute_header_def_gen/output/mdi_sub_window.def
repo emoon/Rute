@@ -41,3 +41,4 @@ struct MdiSubWindow : Widget {
     child_event(&ChildEventType child_event),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

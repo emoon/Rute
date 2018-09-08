@@ -8,3 +8,4 @@ struct LayoutStyleInfo {
     per_item_spacing(SizePolicy::ControlType control1, SizePolicy::ControlType control2, Rute::Orientation orientation) -> f32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

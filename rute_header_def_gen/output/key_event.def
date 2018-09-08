@@ -10,3 +10,4 @@ struct KeyEvent : InputEvent {
     native_modifiers() -> quint32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

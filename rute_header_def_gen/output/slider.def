@@ -13,3 +13,4 @@ struct Slider : AbstractSlider {
     init_style_option(&StyleOptionSliderType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

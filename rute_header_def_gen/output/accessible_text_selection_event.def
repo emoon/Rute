@@ -4,3 +4,4 @@ struct AccessibleTextSelectionEvent : AccessibleTextCursorEvent {
     selection_end() -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

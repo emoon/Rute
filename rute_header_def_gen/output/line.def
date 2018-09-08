@@ -16,3 +16,4 @@ struct Line {
     set_line(i32 x1, i32 y1, i32 x2, i32 y2),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -92,3 +92,4 @@ struct TextDocument : Object {
     doc_handle() -> &TextDocumentPrivateType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

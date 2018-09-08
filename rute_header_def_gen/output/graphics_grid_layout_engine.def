@@ -6,3 +6,4 @@ struct GraphicsGridLayoutEngine {
     alignment(&i32 graphics_layout_item) -> Rute::Alignment,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

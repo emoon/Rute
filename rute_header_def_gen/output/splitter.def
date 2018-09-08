@@ -35,3 +35,4 @@ struct Splitter : Frame {
     closest_legal_position(i32 arg0, i32 arg1) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

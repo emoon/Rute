@@ -5,3 +5,4 @@ struct AccessibleEditableTextInterface {
     replace_text(i32 start_offset, i32 end_offset, String text),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -12,3 +12,4 @@ struct SpanCollection {
     clean_span_sub_index(&SubIndex subindex, i32 end, bool update) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

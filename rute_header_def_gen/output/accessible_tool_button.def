@@ -9,3 +9,4 @@ struct AccessibleToolButton : AccessibleButton {
     is_split_button() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

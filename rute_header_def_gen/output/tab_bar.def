@@ -79,3 +79,4 @@ struct TabBar : Widget {
     init_style_option(&StyleOptionTabType option, i32 tab_index),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

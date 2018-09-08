@@ -6,3 +6,4 @@ struct ConicalGradient : Gradient {
     set_angle(f32 angle),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

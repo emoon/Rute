@@ -7,3 +7,4 @@ struct FocusFrame : Widget {
     init_style_option(&StyleOptionType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

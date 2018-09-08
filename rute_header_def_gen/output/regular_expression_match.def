@@ -28,3 +28,4 @@ struct RegularExpressionMatch {
     captured_end(StringViewType name) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

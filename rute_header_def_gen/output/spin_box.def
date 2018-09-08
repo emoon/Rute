@@ -24,3 +24,4 @@ struct SpinBox : AbstractSpinBox {
     value_changed(String arg0),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

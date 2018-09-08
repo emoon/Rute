@@ -26,3 +26,4 @@ struct IconModeViewBase : CommonListViewBase {
     move_item(i32 index, &i32 dest),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

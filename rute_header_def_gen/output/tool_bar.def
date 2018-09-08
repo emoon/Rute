@@ -40,3 +40,4 @@ struct ToolBar : Widget {
     init_style_option(&StyleOptionToolBarType option),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

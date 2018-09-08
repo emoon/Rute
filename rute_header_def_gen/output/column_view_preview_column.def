@@ -13,3 +13,4 @@ struct ColumnViewPreviewColumn : AbstractItemView {
     set_selection(&RectType arg0, ItemSelectionModel::SelectionFlags arg1),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

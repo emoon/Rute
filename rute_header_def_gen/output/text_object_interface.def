@@ -3,3 +3,4 @@ struct TextObjectInterface {
     draw_object(&PainterType painter, &RectFType rect, &TextDocumentType doc, i32 pos_in_document, &TextFormatType format),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

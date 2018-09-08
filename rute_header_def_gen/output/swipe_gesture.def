@@ -5,3 +5,4 @@ struct SwipeGesture : Gesture {
     set_swipe_angle(f32 value),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

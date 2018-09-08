@@ -20,3 +20,4 @@ struct Accessible {
     q_accessible_text_boundary_helper(&TextCursorType cursor, Accessible::TextBoundaryType boundary_type) -> Pair<int,Type,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

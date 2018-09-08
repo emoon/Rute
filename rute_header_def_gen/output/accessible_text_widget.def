@@ -25,3 +25,4 @@ struct AccessibleTextWidget : AccessibleWidget, AccessibleTextInterface, Accessi
     viewport() -> &WidgetType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

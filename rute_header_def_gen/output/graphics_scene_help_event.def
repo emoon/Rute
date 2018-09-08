@@ -5,3 +5,4 @@ struct GraphicsSceneHelpEvent : GraphicsSceneEvent {
     set_screen_pos(&PointType pos),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -8,3 +8,4 @@ struct WidgetItemV2 : WidgetItem {
     invalidate_size_cache(),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

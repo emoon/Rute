@@ -9,3 +9,4 @@ struct UndoView : ListView {
     set_group(&UndoGroupType group),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

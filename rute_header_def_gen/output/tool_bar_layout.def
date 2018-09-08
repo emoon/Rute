@@ -23,3 +23,4 @@ struct ToolBarLayout : Layout {
     create_item(&ActionType action) -> &ToolBarItemType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -29,3 +29,4 @@ struct InputMethod : Object {
     input_direction_changed(Rute::LayoutDirection new_direction),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -5,3 +5,4 @@ struct GraphicsSceneMoveEvent : GraphicsSceneEvent {
     set_new_pos(&PointFType pos),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

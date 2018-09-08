@@ -17,3 +17,4 @@ struct GraphicsObject : Object, GraphicsItem {
     event(&EventType ev) -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

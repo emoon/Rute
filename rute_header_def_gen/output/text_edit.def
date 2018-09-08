@@ -124,3 +124,4 @@ struct TextEdit : AbstractScrollArea {
     zoom_in_f(float range),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

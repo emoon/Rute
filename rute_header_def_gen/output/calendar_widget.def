@@ -54,3 +54,4 @@ struct CalendarWidget : Widget {
     current_page_changed(i32 year, i32 month),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

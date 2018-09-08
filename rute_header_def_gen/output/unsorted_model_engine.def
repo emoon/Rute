@@ -4,3 +4,4 @@ struct UnsortedModelEngine : CompletionEngine {
     build_indices(String str, &ModelIndexType parent, i32 n, &IndexMapperType iv, &MatchDataType m) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

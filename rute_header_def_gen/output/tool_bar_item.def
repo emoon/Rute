@@ -2,3 +2,4 @@ struct ToolBarItem : WidgetItem {
     is_empty() -> bool,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

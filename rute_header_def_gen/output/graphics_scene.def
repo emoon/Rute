@@ -104,3 +104,4 @@ struct GraphicsScene : Object {
     focus_item_changed(&GraphicsItemType new_focus, &GraphicsItemType old_focus, Rute::FocusReason reason),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

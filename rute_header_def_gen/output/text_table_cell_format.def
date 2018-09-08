@@ -11,3 +11,4 @@ struct TextTableCellFormat : TextCharFormat {
     set_padding(f32 padding),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

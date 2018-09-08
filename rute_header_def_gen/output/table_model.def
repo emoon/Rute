@@ -45,3 +45,4 @@ struct TableModel {
     internal_mime_data() -> &i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

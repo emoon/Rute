@@ -5,3 +5,4 @@ struct AccessibleWindowContainer : AccessibleWidget {
     container() -> &WindowContainerType,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

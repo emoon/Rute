@@ -8,3 +8,4 @@ struct TextImageFormat : TextCharFormat {
     height() -> f32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

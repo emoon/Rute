@@ -5,3 +5,4 @@ struct SplitterLayoutStruct {
     pick(&i32 size, i32 orient) -> i32,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -80,3 +80,4 @@ struct TableWidget : TableView {
     set_model(&AbstractItemModelType model),
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4
