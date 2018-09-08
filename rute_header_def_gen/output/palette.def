@@ -37,7 +37,7 @@ struct Palette {
     link() -> &BrushType,
     link_visited() -> &BrushType,
     is_copy_of(&PaletteType p) -> bool,
-    cache_key() -> qint64,
+    cache_key() -> i64,
     resolve(&PaletteType arg0) -> PaletteType,
     resolve() -> uint,
     resolve(uint mask),

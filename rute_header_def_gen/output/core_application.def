@@ -27,7 +27,7 @@ struct CoreApplication : Object {
     closing_down() -> bool,
     application_dir_path() -> String,
     application_file_path() -> String,
-    application_pid() -> qint64,
+    application_pid() -> i64,
     set_library_paths(&StringListType arg0),
     library_paths() -> StringListType,
     add_library_path(String arg0),

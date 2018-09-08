@@ -12,7 +12,7 @@ struct TabletEvent : InputEvent {
     hi_res_global_y() -> f32,
     device() -> TabletEvent::TabletDevice,
     pointer_type() -> TabletEvent::PointerType,
-    unique_id() -> qint64,
+    unique_id() -> i64,
     pressure() -> f32,
     z() -> i32,
     tangential_pressure() -> f32,

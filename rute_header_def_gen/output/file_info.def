@@ -42,7 +42,7 @@ struct FileInfo {
     group_id() -> uint,
     permission(File::Permissions permissions) -> bool,
     permissions() -> File::Permissions,
-    size() -> qint64,
+    size() -> i64,
     created() -> DateTimeType,
     birth_time() -> DateTimeType,
     metadata_change_time() -> DateTimeType,

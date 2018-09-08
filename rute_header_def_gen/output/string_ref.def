@@ -78,7 +78,7 @@ struct StringRef {
     to_u_int(&bool ok, i32 base) -> uint,
     to_long(&bool ok, i32 base) -> long,
     to_u_long(&bool ok, i32 base) -> ulong,
-    to_long_long(&bool ok, i32 base) -> qlonglong,
+    to_long_long(&bool ok, i32 base) -> i64,
     to_u_long_long(&bool ok, i32 base) -> qulonglong,
     to_float(&bool ok) -> float,
     to_double(&bool ok) -> double,

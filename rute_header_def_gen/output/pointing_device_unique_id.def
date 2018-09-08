@@ -1,9 +1,9 @@
 
 struct PointingDeviceUniqueId {
     qt_check_for_qgadget_macro(),
-    from_numeric_id(qint64 id) -> PointingDeviceUniqueIdType,
+    from_numeric_id(i64 id) -> PointingDeviceUniqueIdType,
     is_valid() -> bool,
-    numeric_id() -> qint64,
+    numeric_id() -> i64,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

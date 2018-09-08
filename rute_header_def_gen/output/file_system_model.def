@@ -38,7 +38,7 @@ struct FileSystemModel : AbstractItemModel {
     name_filters() -> StringListType,
     file_path(&ModelIndexType index) -> String,
     is_dir(&ModelIndexType index) -> bool,
-    size(&ModelIndexType index) -> qint64,
+    size(&ModelIndexType index) -> i64,
     type(&ModelIndexType index) -> String,
     last_modified(&ModelIndexType index) -> DateTimeType,
     mkdir(&ModelIndexType parent, String name) -> ModelIndexType,

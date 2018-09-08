@@ -8,7 +8,7 @@ struct Scroller : Object {
     active_scrollers() -> <&ScrollerType>,
     target() -> &ObjectType,
     state() -> Scroller::State,
-    handle_input(Scroller::Input input, &PointFType position, qint64 timestamp) -> bool,
+    handle_input(Scroller::Input input, &PointFType position, i64 timestamp) -> bool,
     stop(),
     velocity() -> PointFType,
     final_position() -> PointFType,

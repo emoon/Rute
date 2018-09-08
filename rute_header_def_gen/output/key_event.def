@@ -5,9 +5,9 @@ struct KeyEvent : InputEvent {
     text() -> String,
     is_auto_repeat() -> bool,
     count() -> i32,
-    native_scan_code() -> quint32,
-    native_virtual_key() -> quint32,
-    native_modifiers() -> quint32,
+    native_scan_code() -> u32,
+    native_virtual_key() -> u32,
+    native_modifiers() -> u32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

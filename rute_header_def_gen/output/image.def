@@ -71,7 +71,7 @@ struct Image : PaintDevice {
     save(&IODeviceType device, &char format, i32 quality) -> bool,
     from_data(&uchar data, i32 size, &char format) -> ImageType,
     from_data(&ByteArrayType data, &char format) -> ImageType,
-    cache_key() -> qint64,
+    cache_key() -> i64,
     paint_engine() -> &PaintEngineType,
     dots_per_meter_x() -> i32,
     dots_per_meter_y() -> i32,

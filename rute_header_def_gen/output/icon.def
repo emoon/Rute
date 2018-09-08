@@ -13,7 +13,7 @@ struct Icon {
     is_null() -> bool,
     is_detached() -> bool,
     detach(),
-    cache_key() -> qint64,
+    cache_key() -> i64,
     add_pixmap(&PixmapType pixmap, Icon::Mode mode, Icon::State state),
     add_file(String file_name, &SizeType size, Icon::Mode mode, Icon::State state),
     available_sizes(Icon::Mode mode, Icon::State state) -> <SizeType>,

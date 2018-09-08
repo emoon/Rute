@@ -39,7 +39,7 @@ struct Pixmap : PaintDevice {
     copy(&RectType rect) -> PixmapType,
     scroll(i32 dx, i32 dy, i32 x, i32 y, i32 width, i32 height, &RegionType exposed),
     scroll(i32 dx, i32 dy, &RectType rect, &RegionType exposed),
-    cache_key() -> qint64,
+    cache_key() -> i64,
     is_detached() -> bool,
     detach(),
     is_q_bitmap() -> bool,

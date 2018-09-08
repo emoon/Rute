@@ -13,7 +13,7 @@ struct Variant {
     is_detached() -> bool,
     to_int(&bool ok) -> i32,
     to_u_int(&bool ok) -> uint,
-    to_long_long(&bool ok) -> qlonglong,
+    to_long_long(&bool ok) -> i64,
     to_u_long_long(&bool ok) -> qulonglong,
     to_bool() -> bool,
     to_double(&bool ok) -> double,

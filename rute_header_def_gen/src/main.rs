@@ -43,6 +43,11 @@ const SKIP_NAMES: &[&'static str] = &[
 ///
 fn get_pod_type<'a>(name: &'a str) -> &'a str {
     match name {
+        "quint8" => "u8",
+        "quint16" => "u16",
+        "quint32" => "u32",
+        "qlonglong" => "i64",
+        "qint64" => "i64",
         "int" => "i32",
         "bool" => "bool",
         "qreal64" => "f64",
