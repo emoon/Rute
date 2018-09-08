@@ -1,6 +1,6 @@
 
 struct RegularExpressionMatchIterator {
-    swap(&RegularExpressionMatchIteratorType other),
+    swap(other: &RegularExpressionMatchIteratorType),
     is_valid() -> bool,
     has_next() -> bool,
     next() -> RegularExpressionMatchType,

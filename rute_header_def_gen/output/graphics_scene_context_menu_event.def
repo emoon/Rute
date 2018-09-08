@@ -1,14 +1,14 @@
 struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
     pos() -> PointFType,
-    set_pos(&PointFType pos),
+    set_pos(pos: &PointFType),
     scene_pos() -> PointFType,
-    set_scene_pos(&PointFType pos),
+    set_scene_pos(pos: &PointFType),
     screen_pos() -> PointType,
-    set_screen_pos(&PointType pos),
+    set_screen_pos(pos: &PointType),
     modifiers() -> Rute::KeyboardModifiers,
-    set_modifiers(Rute::KeyboardModifiers modifiers),
+    set_modifiers(modifiers: Rute::KeyboardModifiers),
     reason() -> GraphicsSceneContextMenuEvent::Reason,
-    set_reason(GraphicsSceneContextMenuEvent::Reason reason),
+    set_reason(reason: GraphicsSceneContextMenuEvent::Reason),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

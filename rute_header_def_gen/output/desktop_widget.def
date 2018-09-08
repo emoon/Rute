@@ -3,14 +3,14 @@ struct DesktopWidget : Widget {
     num_screens() -> i32,
     screen_count() -> i32,
     primary_screen() -> i32,
-    screen_number(&WidgetType widget) -> i32,
-    screen_number(&PointType arg0) -> i32,
-    screen(i32 screen) -> &WidgetType,
-    [callback] resized(i32 arg0),
-    [callback] work_area_resized(i32 arg0),
-    [callback] screen_count_changed(i32 arg0),
+    screen_number(widget: &WidgetType) -> i32,
+    screen_number(arg0: &PointType) -> i32,
+    screen(screen: i32) -> &WidgetType,
+    [callback] resized(arg0: i32),
+    [callback] work_area_resized(arg0: i32),
+    [callback] screen_count_changed(arg0: i32),
     [callback] primary_screen_changed(),
-    resize_event(&ResizeEventType e),
+    resize_event(e: &ResizeEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -3,9 +3,9 @@ struct ScrollPrepareEvent : Event {
     viewport_size() -> SizeFType,
     content_pos_range() -> RectFType,
     content_pos() -> PointFType,
-    set_viewport_size(&SizeFType size),
-    set_content_pos_range(&RectFType rect),
-    set_content_pos(&PointFType pos),
+    set_viewport_size(size: &SizeFType),
+    set_content_pos_range(rect: &RectFType),
+    set_content_pos(pos: &PointFType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

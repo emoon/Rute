@@ -6,14 +6,14 @@ struct LayoutItem {
     expanding_directions() -> Rute::Orientations,
     is_empty() -> bool,
     has_height_for_width() -> bool,
-    height_for_width(i32 arg0) -> i32,
-    minimum_height_for_width(i32 arg0) -> i32,
+    height_for_width(arg0: i32) -> i32,
+    minimum_height_for_width(arg0: i32) -> i32,
     invalidate(),
     widget() -> &WidgetType,
     layout() -> &LayoutType,
     spacer_item() -> &SpacerItemType,
     alignment() -> Rute::Alignment,
-    set_alignment(Rute::Alignment a),
+    set_alignment(a: Rute::Alignment),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

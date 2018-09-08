@@ -4,13 +4,13 @@ struct PointF {
     is_null() -> bool,
     x() -> f32,
     y() -> f32,
-    set_x(f32 x),
-    set_y(f32 y),
+    set_x(x: f32),
+    set_y(y: f32),
     rx() -> &f32,
     ry() -> &f32,
-    dot_product(&PointFType p1, &PointFType p2) -> f32,
+    dot_product(p1: &PointFType, p2: &PointFType) -> f32,
     to_point() -> PointType,
-    from_cg_point(CGPoint point) -> PointFType,
+    from_cg_point(point: CGPoint) -> PointFType,
     to_cg_point() -> CGPoint,
 }
 

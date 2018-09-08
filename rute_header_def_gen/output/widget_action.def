@@ -1,13 +1,13 @@
 struct WidgetAction : Action {
-    set_default_widget(&WidgetType w),
+    set_default_widget(w: &WidgetType),
     default_widget() -> &WidgetType,
-    request_widget(&WidgetType parent) -> &WidgetType,
-    release_widget(&WidgetType widget),
-    event(&EventType arg0) -> bool,
-    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
-    create_widget(&WidgetType parent) -> &WidgetType,
-    delete_widget(&WidgetType widget),
-    created_widgets() -> <&WidgetType>,
+    request_widget(parent: &WidgetType) -> &WidgetType,
+    release_widget(widget: &WidgetType),
+    event(arg0: &EventType) -> bool,
+    event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
+    create_widget(parent: &WidgetType) -> &WidgetType,
+    delete_widget(widget: &WidgetType),
+    created_widgets() -> [&WidgetType],
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

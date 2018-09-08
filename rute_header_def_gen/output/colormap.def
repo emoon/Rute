@@ -2,13 +2,13 @@
 struct Colormap {
     initialize(),
     cleanup(),
-    instance(i32 screen) -> ColormapType,
+    instance(screen: i32) -> ColormapType,
     mode() -> Colormap::Mode,
     depth() -> i32,
     size() -> i32,
-    pixel(&ColorType color) -> uint,
-    color_at(uint pixel) -> ColorType,
-    colormap() -> <ColorType>,
+    pixel(color: &ColorType) -> uint,
+    color_at(pixel: uint) -> ColorType,
+    colormap() -> [ColorType],
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

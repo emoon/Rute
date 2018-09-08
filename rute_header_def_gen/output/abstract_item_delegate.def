@@ -1,16 +1,16 @@
 struct AbstractItemDelegate : Object {
-    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
-    size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
-    create_editor(&WidgetType parent, &StyleOptionViewItemType option, &ModelIndexType index) -> &WidgetType,
-    set_editor_data(&WidgetType editor, &ModelIndexType index),
-    set_model_data(&WidgetType editor, &AbstractItemModelType model, &ModelIndexType index),
-    editor_event(&EventType event, &AbstractItemModelType model, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
-    elided_text(&FontMetricsType font_metrics, i32 width, Rute::TextElideMode mode, String text) -> String,
-    help_event(&HelpEventType event, &AbstractItemViewType view, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
-    painting_roles() -> <i32>,
-    [callback] commit_data(&WidgetType editor),
-    [callback] close_editor(&WidgetType editor, AbstractItemDelegate::EndEditHint hint),
-    [callback] size_hint_changed(&ModelIndexType arg0),
+    paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
+    size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> SizeType,
+    create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> &WidgetType,
+    set_editor_data(editor: &WidgetType, index: &ModelIndexType),
+    set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
+    editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    elided_text(font_metrics: &FontMetricsType, width: i32, mode: Rute::TextElideMode, text: String) -> String,
+    help_event(event: &HelpEventType, view: &AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    painting_roles() -> [i32],
+    [callback] commit_data(editor: &WidgetType),
+    [callback] close_editor(editor: &WidgetType, hint: AbstractItemDelegate::EndEditHint),
+    [callback] size_hint_changed(arg0: &ModelIndexType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

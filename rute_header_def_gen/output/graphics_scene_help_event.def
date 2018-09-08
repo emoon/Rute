@@ -1,8 +1,8 @@
 struct GraphicsSceneHelpEvent : GraphicsSceneEvent {
     scene_pos() -> PointFType,
-    set_scene_pos(&PointFType pos),
+    set_scene_pos(pos: &PointFType),
     screen_pos() -> PointType,
-    set_screen_pos(&PointType pos),
+    set_screen_pos(pos: &PointType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

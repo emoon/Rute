@@ -1,6 +1,6 @@
 
 struct ItemEditorCreatorBase {
-    create_widget(&WidgetType parent) -> &WidgetType,
+    create_widget(parent: &WidgetType) -> &WidgetType,
     value_property_name() -> ByteArrayType,
 }
 

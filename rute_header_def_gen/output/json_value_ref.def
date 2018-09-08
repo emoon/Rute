@@ -13,9 +13,9 @@ struct JsonValueRef {
     to_double() -> double,
     to_array() -> JsonArrayType,
     to_object() -> JsonObjectType,
-    to_bool(bool default_value) -> bool,
-    to_int(i32 default_value) -> i32,
-    to_double(double default_value) -> double,
+    to_bool(default_value: bool) -> bool,
+    to_int(default_value: i32) -> i32,
+    to_double(default_value: double) -> double,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,19 +1,19 @@
 
 struct AccessibleTextInterface {
-    selection(i32 selection_index, &i32 start_offset, &i32 end_offset),
+    selection(selection_index: i32, start_offset: &i32, end_offset: &i32),
     selection_count() -> i32,
-    add_selection(i32 start_offset, i32 end_offset),
-    remove_selection(i32 selection_index),
-    set_selection(i32 selection_index, i32 start_offset, i32 end_offset),
+    add_selection(start_offset: i32, end_offset: i32),
+    remove_selection(selection_index: i32),
+    set_selection(selection_index: i32, start_offset: i32, end_offset: i32),
     cursor_position() -> i32,
-    set_cursor_position(i32 position),
-    text(i32 start_offset, i32 end_offset) -> String,
-    text_before_offset(i32 offset, Accessible::TextBoundaryType boundary_type, &i32 start_offset, &i32 end_offset) -> String,
-    text_after_offset(i32 offset, Accessible::TextBoundaryType boundary_type, &i32 start_offset, &i32 end_offset) -> String,
-    text_at_offset(i32 offset, Accessible::TextBoundaryType boundary_type, &i32 start_offset, &i32 end_offset) -> String,
+    set_cursor_position(position: i32),
+    text(start_offset: i32, end_offset: i32) -> String,
+    text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
     character_count() -> i32,
-    character_rect(i32 offset) -> RectType,
-    offset_at_point(&PointType point) -> i32,
+    character_rect(offset: i32) -> RectType,
+    offset_at_point(point: &PointType) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

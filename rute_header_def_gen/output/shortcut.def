@@ -1,19 +1,19 @@
 struct Shortcut : Object {
-    set_key(&KeySequenceType key),
+    set_key(key: &KeySequenceType),
     key() -> KeySequenceType,
-    set_enabled(bool enable),
+    set_enabled(enable: bool),
     is_enabled() -> bool,
-    set_context(Rute::ShortcutContext context),
+    set_context(context: Rute::ShortcutContext),
     context() -> Rute::ShortcutContext,
-    set_whats_this(String text),
+    set_whats_this(text: String),
     whats_this() -> String,
-    set_auto_repeat(bool on),
+    set_auto_repeat(on: bool),
     auto_repeat() -> bool,
     id() -> i32,
     parent_widget() -> &WidgetType,
     [callback] activated(),
     [callback] activated_ambiguously(),
-    event(&EventType e) -> bool,
+    event(e: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,9 +1,9 @@
 struct ConicalGradient : Gradient {
     center() -> PointFType,
-    set_center(&PointFType center),
-    set_center(f32 x, f32 y),
+    set_center(center: &PointFType),
+    set_center(x: f32, y: f32),
     angle() -> f32,
-    set_angle(f32 angle),
+    set_angle(angle: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

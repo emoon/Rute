@@ -7,7 +7,7 @@ struct DropEvent : Event {
     proposed_action() -> Rute::DropAction,
     accept_proposed_action(),
     drop_action() -> Rute::DropAction,
-    set_drop_action(Rute::DropAction action),
+    set_drop_action(action: Rute::DropAction),
     source() -> &ObjectType,
     mime_data() -> &MimeDataType,
 }

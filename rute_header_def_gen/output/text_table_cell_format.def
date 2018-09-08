@@ -1,14 +1,14 @@
 struct TextTableCellFormat : TextCharFormat {
     is_valid() -> bool,
-    set_top_padding(f32 padding),
+    set_top_padding(padding: f32),
     top_padding() -> f32,
-    set_bottom_padding(f32 padding),
+    set_bottom_padding(padding: f32),
     bottom_padding() -> f32,
-    set_left_padding(f32 padding),
+    set_left_padding(padding: f32),
     left_padding() -> f32,
-    set_right_padding(f32 padding),
+    set_right_padding(padding: f32),
     right_padding() -> f32,
-    set_padding(f32 padding),
+    set_padding(padding: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,5 +1,5 @@
 struct StyleOptionGraphicsItem : StyleOption {
-    level_of_detail_from_transform(&TransformType world_transform) -> f32,
+    level_of_detail_from_transform(world_transform: &TransformType) -> f32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

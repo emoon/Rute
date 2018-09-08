@@ -3,9 +3,9 @@ struct PanGesture : Gesture {
     offset() -> PointFType,
     delta() -> PointFType,
     acceleration() -> f32,
-    set_last_offset(&PointFType value),
-    set_offset(&PointFType value),
-    set_acceleration(f32 value),
+    set_last_offset(value: &PointFType),
+    set_offset(value: &PointFType),
+    set_acceleration(value: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,8 +1,8 @@
 struct GraphicsSceneMoveEvent : GraphicsSceneEvent {
     old_pos() -> PointFType,
-    set_old_pos(&PointFType pos),
+    set_old_pos(pos: &PointFType),
     new_pos() -> PointFType,
-    set_new_pos(&PointFType pos),
+    set_new_pos(pos: &PointFType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

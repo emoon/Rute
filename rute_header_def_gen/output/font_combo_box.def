@@ -1,13 +1,13 @@
 struct FontComboBox : ComboBox {
-    set_writing_system(FontDatabase::WritingSystem arg0),
+    set_writing_system(arg0: FontDatabase::WritingSystem),
     writing_system() -> FontDatabase::WritingSystem,
-    set_font_filters(FontFilters filters),
+    set_font_filters(filters: FontFilters),
     font_filters() -> FontFilters,
     current_font() -> FontType,
     size_hint() -> SizeType,
-    set_current_font(&FontType f),
-    [callback] current_font_changed(&FontType f),
-    event(&EventType e) -> bool,
+    set_current_font(f: &FontType),
+    [callback] current_font_changed(f: &FontType),
+    event(e: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

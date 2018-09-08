@@ -1,10 +1,10 @@
 
 struct ItemSelection {
-    select(&ModelIndexType top_left, &ModelIndexType bottom_right),
-    contains(&ModelIndexType index) -> bool,
+    select(top_left: &ModelIndexType, bottom_right: &ModelIndexType),
+    contains(index: &ModelIndexType) -> bool,
     indexes() -> ModelIndexListType,
-    merge(&ItemSelectionType other, ItemSelectionModel::SelectionFlags command),
-    split(&ItemSelectionRangeType range, &ItemSelectionRangeType other, &ItemSelectionType result),
+    merge(other: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
+    split(range: &ItemSelectionRangeType, other: &ItemSelectionRangeType, result: &ItemSelectionType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

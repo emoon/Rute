@@ -1,6 +1,6 @@
 
 struct ScrollerProperties {
-    set_default_scroller_properties(&ScrollerPropertiesType sp),
+    set_default_scroller_properties(sp: &ScrollerPropertiesType),
     unset_default_scroller_properties(),
 }
 

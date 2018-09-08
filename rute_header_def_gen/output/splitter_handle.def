@@ -1,17 +1,17 @@
 struct SplitterHandle : Widget {
-    set_orientation(Rute::Orientation o),
+    set_orientation(o: Rute::Orientation),
     orientation() -> Rute::Orientation,
     opaque_resize() -> bool,
     splitter() -> &SplitterType,
     size_hint() -> SizeType,
-    paint_event(&PaintEventType arg0),
-    mouse_move_event(&MouseEventType arg0),
-    mouse_press_event(&MouseEventType arg0),
-    mouse_release_event(&MouseEventType arg0),
-    resize_event(&ResizeEventType arg0),
-    event(&EventType arg0) -> bool,
-    move_splitter(i32 p),
-    closest_legal_position(i32 p) -> i32,
+    paint_event(arg0: &PaintEventType),
+    mouse_move_event(arg0: &MouseEventType),
+    mouse_press_event(arg0: &MouseEventType),
+    mouse_release_event(arg0: &MouseEventType),
+    resize_event(arg0: &ResizeEventType),
+    event(arg0: &EventType) -> bool,
+    move_splitter(p: i32),
+    closest_legal_position(p: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

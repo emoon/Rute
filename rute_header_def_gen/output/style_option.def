@@ -1,7 +1,7 @@
 
 struct StyleOption {
-    init(&WidgetType w),
-    init_from(&WidgetType w),
+    init(w: &WidgetType),
+    init_from(w: &WidgetType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

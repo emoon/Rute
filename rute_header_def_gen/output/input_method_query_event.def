@@ -1,7 +1,7 @@
 struct InputMethodQueryEvent : Event {
     queries() -> Rute::InputMethodQueries,
-    set_value(Rute::InputMethodQuery query, &VariantType value),
-    value(Rute::InputMethodQuery query) -> VariantType,
+    set_value(query: Rute::InputMethodQuery, value: &VariantType),
+    value(query: Rute::InputMethodQuery) -> VariantType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,12 +1,12 @@
 struct MouseEventTransition : EventTransition {
     button() -> Rute::MouseButton,
-    set_button(Rute::MouseButton button),
+    set_button(button: Rute::MouseButton),
     modifier_mask() -> Rute::KeyboardModifiers,
-    set_modifier_mask(Rute::KeyboardModifiers modifiers),
+    set_modifier_mask(modifiers: Rute::KeyboardModifiers),
     hit_test_path() -> PainterPathType,
-    set_hit_test_path(&PainterPathType path),
-    on_transition(&EventType event),
-    event_test(&EventType event) -> bool,
+    set_hit_test_path(path: &PainterPathType),
+    on_transition(event: &EventType),
+    event_test(event: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

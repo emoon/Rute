@@ -1,18 +1,18 @@
 struct DoubleValidator : Validator {
-    validate(String arg0, &i32 arg1) -> Validator::State,
-    set_range(double bottom, double top, i32 decimals),
-    set_bottom(double arg0),
-    set_top(double arg0),
-    set_decimals(i32 arg0),
-    set_notation(DoubleValidator::Notation arg0),
+    validate(arg0: String, arg1: &i32) -> Validator::State,
+    set_range(bottom: double, top: double, decimals: i32),
+    set_bottom(arg0: double),
+    set_top(arg0: double),
+    set_decimals(arg0: i32),
+    set_notation(arg0: DoubleValidator::Notation),
     bottom() -> double,
     top() -> double,
     decimals() -> i32,
     notation() -> DoubleValidator::Notation,
-    [callback] bottom_changed(double bottom),
-    [callback] top_changed(double top),
-    [callback] decimals_changed(i32 decimals),
-    [callback] notation_changed(DoubleValidator::Notation notation),
+    [callback] bottom_changed(bottom: double),
+    [callback] top_changed(top: double),
+    [callback] decimals_changed(decimals: i32),
+    [callback] notation_changed(notation: DoubleValidator::Notation),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

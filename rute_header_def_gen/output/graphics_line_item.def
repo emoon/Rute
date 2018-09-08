@@ -1,19 +1,19 @@
 struct GraphicsLineItem : GraphicsItem {
     pen() -> PenType,
-    set_pen(&PenType pen),
+    set_pen(pen: &PenType),
     line() -> LineFType,
-    set_line(&LineFType line),
-    set_line(f32 x1, f32 y1, f32 x2, f32 y2),
+    set_line(line: &LineFType),
+    set_line(x1: f32, y1: f32, x2: f32, y2: f32),
     bounding_rect() -> RectFType,
     shape() -> PainterPathType,
-    contains(&PointFType point) -> bool,
-    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
-    is_obscured_by(&GraphicsItemType item) -> bool,
+    contains(point: &PointFType) -> bool,
+    paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
+    is_obscured_by(item: &GraphicsItemType) -> bool,
     opaque_area() -> PainterPathType,
     type() -> i32,
-    supports_extension(GraphicsItem::Extension extension) -> bool,
-    set_extension(GraphicsItem::Extension extension, &VariantType variant),
-    extension(&VariantType variant) -> VariantType,
+    supports_extension(extension: GraphicsItem::Extension) -> bool,
+    set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
+    extension(variant: &VariantType) -> VariantType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

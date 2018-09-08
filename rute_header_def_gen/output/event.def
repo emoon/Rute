@@ -3,11 +3,11 @@ struct Event {
     qt_check_for_qgadget_macro(),
     type() -> Event::Type,
     spontaneous() -> bool,
-    set_accepted(bool accepted),
+    set_accepted(accepted: bool),
     is_accepted() -> bool,
     accept(),
     ignore(),
-    register_event_type(i32 hint) -> i32,
+    register_event_type(hint: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

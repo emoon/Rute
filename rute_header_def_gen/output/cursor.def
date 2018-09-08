@@ -1,18 +1,18 @@
 
 struct Cursor {
-    swap(&CursorType other),
+    swap(other: &CursorType),
     shape() -> Rute::CursorShape,
-    set_shape(Rute::CursorShape new_shape),
+    set_shape(new_shape: Rute::CursorShape),
     bitmap() -> &BitmapType,
     mask() -> &BitmapType,
     pixmap() -> PixmapType,
     hot_spot() -> PointType,
     pos() -> PointType,
-    pos(&ScreenType screen) -> PointType,
-    set_pos(i32 x, i32 y),
-    set_pos(&ScreenType screen, i32 x, i32 y),
-    set_pos(&PointType p),
-    set_pos(&ScreenType screen, &PointType p),
+    pos(screen: &ScreenType) -> PointType,
+    set_pos(x: i32, y: i32),
+    set_pos(screen: &ScreenType, x: i32, y: i32),
+    set_pos(p: &PointType),
+    set_pos(screen: &ScreenType, p: &PointType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

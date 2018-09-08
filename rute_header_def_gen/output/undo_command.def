@@ -4,13 +4,13 @@ struct UndoCommand {
     redo(),
     text() -> String,
     action_text() -> String,
-    set_text(String text),
+    set_text(text: String),
     is_obsolete() -> bool,
-    set_obsolete(bool obsolete),
+    set_obsolete(obsolete: bool),
     id() -> i32,
-    merge_with(&UndoCommandType other) -> bool,
+    merge_with(other: &UndoCommandType) -> bool,
     child_count() -> i32,
-    child(i32 index) -> &UndoCommandType,
+    child(index: i32) -> &UndoCommandType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

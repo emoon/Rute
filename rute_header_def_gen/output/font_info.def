@@ -1,6 +1,6 @@
 
 struct FontInfo {
-    swap(&FontInfoType other),
+    swap(other: &FontInfoType),
     family() -> String,
     style_name() -> String,
     pixel_size() -> i32,

@@ -1,9 +1,9 @@
 struct AbstractGraphicsShapeItem : GraphicsItem {
     pen() -> PenType,
-    set_pen(&PenType pen),
+    set_pen(pen: &PenType),
     brush() -> BrushType,
-    set_brush(&BrushType brush),
-    is_obscured_by(&GraphicsItemType item) -> bool,
+    set_brush(brush: &BrushType),
+    is_obscured_by(item: &GraphicsItemType) -> bool,
     opaque_area() -> PainterPathType,
 }
 

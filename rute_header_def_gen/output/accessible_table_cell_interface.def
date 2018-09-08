@@ -1,8 +1,8 @@
 
 struct AccessibleTableCellInterface {
     is_selected() -> bool,
-    column_header_cells() -> <&AccessibleInterfaceType>,
-    row_header_cells() -> <&AccessibleInterfaceType>,
+    column_header_cells() -> [&AccessibleInterfaceType],
+    row_header_cells() -> [&AccessibleInterfaceType],
     column_index() -> i32,
     row_index() -> i32,
     column_extent() -> i32,

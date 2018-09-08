@@ -2,15 +2,15 @@
 struct Gradient {
     qt_check_for_qgadget_macro(),
     type() -> Gradient::Type,
-    set_spread(Gradient::Spread spread),
+    set_spread(spread: Gradient::Spread),
     spread() -> Gradient::Spread,
-    set_color_at(f32 pos, &ColorType color),
-    set_stops(&GradientStopsType stops),
+    set_color_at(pos: f32, color: &ColorType),
+    set_stops(stops: &GradientStopsType),
     stops() -> GradientStopsType,
     coordinate_mode() -> Gradient::CoordinateMode,
-    set_coordinate_mode(Gradient::CoordinateMode mode),
+    set_coordinate_mode(mode: Gradient::CoordinateMode),
     interpolation_mode() -> Gradient::InterpolationMode,
-    set_interpolation_mode(Gradient::InterpolationMode mode),
+    set_interpolation_mode(mode: Gradient::InterpolationMode),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -4,11 +4,11 @@ struct TouchEvent : InputEvent {
     touch_point_states() -> Rute::TouchPointStates,
     touch_points() -> onst QList<QTouchEvent::TouchPoint> &,
     device() -> &TouchDeviceType,
-    set_window(&WindowType awindow),
-    set_target(&ObjectType atarget),
-    set_touch_point_states(Rute::TouchPointStates a_touch_point_states),
-    set_touch_points(onst QList<QTouchEvent::TouchPoint> & atouch_points),
-    set_device(&TouchDeviceType adevice),
+    set_window(awindow: &WindowType),
+    set_target(atarget: &ObjectType),
+    set_touch_point_states(a_touch_point_states: Rute::TouchPointStates),
+    set_touch_points(atouch_points: onst QList<QTouchEvent::TouchPoint> &),
+    set_device(adevice: &TouchDeviceType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

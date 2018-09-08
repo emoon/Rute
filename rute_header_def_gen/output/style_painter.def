@@ -1,9 +1,9 @@
 struct StylePainter : Painter {
-    begin(&WidgetType w) -> bool,
-    begin(&PaintDeviceType pd, &WidgetType w) -> bool,
-    draw_primitive(Style::PrimitiveElement pe, &StyleOptionType opt),
-    draw_item_text(&RectType r, i32 flags, &PaletteType pal, bool enabled, String text, Palette::ColorRole text_role),
-    draw_item_pixmap(&RectType r, i32 flags, &PixmapType pixmap),
+    begin(w: &WidgetType) -> bool,
+    begin(pd: &PaintDeviceType, w: &WidgetType) -> bool,
+    draw_primitive(pe: Style::PrimitiveElement, opt: &StyleOptionType),
+    draw_item_text(r: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
+    draw_item_pixmap(r: &RectType, flags: i32, pixmap: &PixmapType),
     style() -> &StyleType,
 }
 

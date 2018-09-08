@@ -1,8 +1,8 @@
 struct AbstractTableModel : AbstractItemModel {
-    index(i32 row, i32 column, &ModelIndexType parent) -> ModelIndexType,
-    sibling(i32 row, i32 column, &ModelIndexType idx) -> ModelIndexType,
-    drop_mime_data(&MimeDataType data, Rute::DropAction action, i32 row, i32 column, &ModelIndexType parent) -> bool,
-    flags(&ModelIndexType index) -> Rute::ItemFlags,
+    index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,
+    sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndexType,
+    drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    flags(index: &ModelIndexType) -> Rute::ItemFlags,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,15 +1,15 @@
 
 struct TouchDevice {
     qt_check_for_qgadget_macro(),
-    devices() -> <&TouchDeviceType>,
+    devices() -> [&TouchDeviceType],
     name() -> String,
     type() -> TouchDevice::DeviceType,
     capabilities() -> Capabilities,
     maximum_touch_points() -> i32,
-    set_name(String name),
-    set_type(TouchDevice::DeviceType dev_type),
-    set_capabilities(Capabilities caps),
-    set_maximum_touch_points(i32 max),
+    set_name(name: String),
+    set_type(dev_type: TouchDevice::DeviceType),
+    set_capabilities(caps: Capabilities),
+    set_maximum_touch_points(max: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

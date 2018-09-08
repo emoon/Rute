@@ -2,7 +2,7 @@ struct WidgetItemV2 : WidgetItem {
     size_hint() -> SizeType,
     minimum_size() -> SizeType,
     maximum_size() -> SizeType,
-    height_for_width(i32 width) -> i32,
+    height_for_width(width: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

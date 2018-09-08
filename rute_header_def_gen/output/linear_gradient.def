@@ -1,10 +1,10 @@
 struct LinearGradient : Gradient {
     start() -> PointFType,
-    set_start(&PointFType start),
-    set_start(f32 x, f32 y),
+    set_start(start: &PointFType),
+    set_start(x: f32, y: f32),
     final_stop() -> PointFType,
-    set_final_stop(&PointFType stop),
-    set_final_stop(f32 x, f32 y),
+    set_final_stop(stop: &PointFType),
+    set_final_stop(x: f32, y: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

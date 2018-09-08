@@ -1,11 +1,11 @@
 
 struct FileInfo {
-    swap(&FileInfoType other),
-    set_file(String file),
-    set_file(&FileType file),
-    set_file(&DirType dir, String file),
+    swap(other: &FileInfoType),
+    set_file(file: String),
+    set_file(file: &FileType),
+    set_file(dir: &DirType, file: String),
     exists() -> bool,
-    exists(String file) -> bool,
+    exists(file: String) -> bool,
     refresh(),
     file_path() -> String,
     absolute_file_path() -> String,
@@ -40,7 +40,7 @@ struct FileInfo {
     owner_id() -> uint,
     group() -> String,
     group_id() -> uint,
-    permission(File::Permissions permissions) -> bool,
+    permission(permissions: File::Permissions) -> bool,
     permissions() -> File::Permissions,
     size() -> i64,
     created() -> DateTimeType,
@@ -48,9 +48,9 @@ struct FileInfo {
     metadata_change_time() -> DateTimeType,
     last_modified() -> DateTimeType,
     last_read() -> DateTimeType,
-    file_time(File::FileTime time) -> DateTimeType,
+    file_time(time: File::FileTime) -> DateTimeType,
     caching() -> bool,
-    set_caching(bool on),
+    set_caching(on: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

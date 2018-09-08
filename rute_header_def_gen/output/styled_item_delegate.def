@@ -1,15 +1,15 @@
 struct StyledItemDelegate : AbstractItemDelegate {
-    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
-    size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
-    create_editor(&WidgetType parent, &StyleOptionViewItemType option, &ModelIndexType index) -> &WidgetType,
-    set_editor_data(&WidgetType editor, &ModelIndexType index),
-    set_model_data(&WidgetType editor, &AbstractItemModelType model, &ModelIndexType index),
+    paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
+    size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> SizeType,
+    create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> &WidgetType,
+    set_editor_data(editor: &WidgetType, index: &ModelIndexType),
+    set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
     item_editor_factory() -> &ItemEditorFactoryType,
-    set_item_editor_factory(&ItemEditorFactoryType factory),
-    display_text(&VariantType value, &LocaleType locale) -> String,
-    init_style_option(&StyleOptionViewItemType option, &ModelIndexType index),
-    event_filter(&ObjectType object, &EventType event) -> bool,
-    editor_event(&EventType event, &AbstractItemModelType model, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
+    set_item_editor_factory(factory: &ItemEditorFactoryType),
+    display_text(value: &VariantType, locale: &LocaleType) -> String,
+    init_style_option(option: &StyleOptionViewItemType, index: &ModelIndexType),
+    event_filter(object: &ObjectType, event: &EventType) -> bool,
+    editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

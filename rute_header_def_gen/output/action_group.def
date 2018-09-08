@@ -1,18 +1,18 @@
 struct ActionGroup : Object {
-    add_action(&ActionType a) -> &ActionType,
-    add_action(String text) -> &ActionType,
-    add_action(&IconType icon, String text) -> &ActionType,
-    remove_action(&ActionType a),
-    actions() -> <&ActionType>,
+    add_action(a: &ActionType) -> &ActionType,
+    add_action(text: String) -> &ActionType,
+    add_action(icon: &IconType, text: String) -> &ActionType,
+    remove_action(a: &ActionType),
+    actions() -> [&ActionType],
     checked_action() -> &ActionType,
     is_exclusive() -> bool,
     is_enabled() -> bool,
     is_visible() -> bool,
-    set_enabled(bool arg0),
-    set_disabled(bool b),
-    set_visible(bool arg0),
-    set_exclusive(bool arg0),
-    [callback] hovered(&ActionType arg0),
+    set_enabled(arg0: bool),
+    set_disabled(b: bool),
+    set_visible(arg0: bool),
+    set_exclusive(arg0: bool),
+    [callback] hovered(arg0: &ActionType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,6 +1,6 @@
 struct KeyEvent : InputEvent {
     key() -> i32,
-    matches(KeySequence::StandardKey key) -> bool,
+    matches(key: KeySequence::StandardKey) -> bool,
     modifiers() -> Rute::KeyboardModifiers,
     text() -> String,
     is_auto_repeat() -> bool,

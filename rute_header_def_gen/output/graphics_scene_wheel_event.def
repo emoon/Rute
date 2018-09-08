@@ -1,18 +1,18 @@
 struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
     pos() -> PointFType,
-    set_pos(&PointFType pos),
+    set_pos(pos: &PointFType),
     scene_pos() -> PointFType,
-    set_scene_pos(&PointFType pos),
+    set_scene_pos(pos: &PointFType),
     screen_pos() -> PointType,
-    set_screen_pos(&PointType pos),
+    set_screen_pos(pos: &PointType),
     buttons() -> Rute::MouseButtons,
-    set_buttons(Rute::MouseButtons buttons),
+    set_buttons(buttons: Rute::MouseButtons),
     modifiers() -> Rute::KeyboardModifiers,
-    set_modifiers(Rute::KeyboardModifiers modifiers),
+    set_modifiers(modifiers: Rute::KeyboardModifiers),
     delta() -> i32,
-    set_delta(i32 delta),
+    set_delta(delta: i32),
     orientation() -> Rute::Orientation,
-    set_orientation(Rute::Orientation orientation),
+    set_orientation(orientation: Rute::Orientation),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

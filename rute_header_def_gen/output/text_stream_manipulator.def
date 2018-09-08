@@ -1,6 +1,6 @@
 
 struct TextStreamManipulator {
-    exec(&TextStreamType s),
+    exec(s: &TextStreamType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

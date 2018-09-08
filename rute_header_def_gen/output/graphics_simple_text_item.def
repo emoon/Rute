@@ -1,18 +1,18 @@
 struct GraphicsSimpleTextItem : AbstractGraphicsShapeItem {
-    set_text(String text),
+    set_text(text: String),
     text() -> String,
-    set_font(&FontType font),
+    set_font(font: &FontType),
     font() -> FontType,
     bounding_rect() -> RectFType,
     shape() -> PainterPathType,
-    contains(&PointFType point) -> bool,
-    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
-    is_obscured_by(&GraphicsItemType item) -> bool,
+    contains(point: &PointFType) -> bool,
+    paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
+    is_obscured_by(item: &GraphicsItemType) -> bool,
     opaque_area() -> PainterPathType,
     type() -> i32,
-    supports_extension(GraphicsItem::Extension extension) -> bool,
-    set_extension(GraphicsItem::Extension extension, &VariantType variant),
-    extension(&VariantType variant) -> VariantType,
+    supports_extension(extension: GraphicsItem::Extension) -> bool,
+    set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
+    extension(variant: &VariantType) -> VariantType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

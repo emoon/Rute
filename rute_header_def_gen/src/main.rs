@@ -54,6 +54,7 @@ fn get_pod_type<'a>(name: &'a str) -> &'a str {
         "qint64" => "i64",
         "int" => "i32",
         "bool" => "bool",
+        "float" => "f32",
         "qreal64" => "f64",
         "qreal32" => "f32",
         "qreal" => "f32",
@@ -152,7 +153,7 @@ fn format_arg_type(arg: &ArgType) -> String {
     let mut res = String::with_capacity(128);
 
     if arg.array {
-        res.push('<');
+        res.push('[');
     }
 
     if arg.pointer && arg.name != "String" {
@@ -162,7 +163,7 @@ fn format_arg_type(arg: &ArgType) -> String {
     res.push_str(&arg.name);
 
     if arg.array {
-        res.push('>');
+        res.push(']');
     }
 
     res
@@ -213,14 +214,14 @@ fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
     let t = arg.get_type().unwrap();
     let arg_type = get_arg_type(&t);
 
-    write!(dest, "{} ", arg_type);
-
     if let Some(name) = arg.get_name() {
-        write!(dest, "{}", name.to_snake_case());
+        write!(dest, "{}: ", name.to_snake_case());
     } else {
-        write!(dest, "arg{}", arg_count);
+        write!(dest, "arg{}: ", arg_count);
         *arg_count += 1;
     }
+
+    write!(dest, "{}", arg_type);
 }
 
 ///

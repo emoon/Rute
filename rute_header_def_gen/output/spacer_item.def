@@ -1,5 +1,5 @@
 struct SpacerItem : LayoutItem {
-    change_size(i32 w, i32 h, SizePolicy::Policy h_data, SizePolicy::Policy v_data),
+    change_size(w: i32, h: i32, h_data: SizePolicy::Policy, v_data: SizePolicy::Policy),
     size_hint() -> SizeType,
     minimum_size() -> SizeType,
     maximum_size() -> SizeType,

@@ -5,10 +5,10 @@ struct MarginsF {
     top() -> f32,
     right() -> f32,
     bottom() -> f32,
-    set_left(f32 left),
-    set_top(f32 top),
-    set_right(f32 right),
-    set_bottom(f32 bottom),
+    set_left(left: f32),
+    set_top(top: f32),
+    set_right(right: f32),
+    set_bottom(bottom: f32),
     to_margins() -> MarginsType,
 }
 

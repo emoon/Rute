@@ -1,16 +1,16 @@
 struct GraphicsLayout : GraphicsLayoutItem {
-    set_contents_margins(f32 left, f32 top, f32 right, f32 bottom),
-    get_contents_margins(&f32 left, &f32 top, &f32 right, &f32 bottom),
+    set_contents_margins(left: f32, top: f32, right: f32, bottom: f32),
+    get_contents_margins(left: &f32, top: &f32, right: &f32, bottom: &f32),
     activate(),
     is_activated() -> bool,
     invalidate(),
-    widget_event(&EventType e),
+    widget_event(e: &EventType),
     count() -> i32,
-    item_at(i32 i) -> &GraphicsLayoutItemType,
-    remove_at(i32 index),
-    set_instant_invalidate_propagation(bool enable),
+    item_at(i: i32) -> &GraphicsLayoutItemType,
+    remove_at(index: i32),
+    set_instant_invalidate_propagation(enable: bool),
     instant_invalidate_propagation() -> bool,
-    add_child_layout_item(&GraphicsLayoutItemType layout_item),
+    add_child_layout_item(layout_item: &GraphicsLayoutItemType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

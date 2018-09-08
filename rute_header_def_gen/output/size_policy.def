@@ -3,15 +3,15 @@ struct SizePolicy {
     qt_check_for_qgadget_macro(),
     horizontal_policy() -> SizePolicy::Policy,
     vertical_policy() -> SizePolicy::Policy,
-    set_horizontal_policy(SizePolicy::Policy d),
-    set_vertical_policy(SizePolicy::Policy d),
+    set_horizontal_policy(d: SizePolicy::Policy),
+    set_vertical_policy(d: SizePolicy::Policy),
     expanding_directions() -> Rute::Orientations,
-    set_height_for_width(bool b),
+    set_height_for_width(b: bool),
     has_height_for_width() -> bool,
-    set_width_for_height(bool b),
+    set_width_for_height(b: bool),
     has_width_for_height() -> bool,
     retain_size_when_hidden() -> bool,
-    set_retain_size_when_hidden(bool retain_size),
+    set_retain_size_when_hidden(retain_size: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

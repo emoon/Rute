@@ -6,7 +6,7 @@ struct WidgetItem : LayoutItem {
     is_empty() -> bool,
     widget() -> &WidgetType,
     has_height_for_width() -> bool,
-    height_for_width(i32 arg0) -> i32,
+    height_for_width(arg0: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

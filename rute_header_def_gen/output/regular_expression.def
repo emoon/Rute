@@ -1,20 +1,20 @@
 
 struct RegularExpression {
     pattern_options() -> PatternOptions,
-    set_pattern_options(PatternOptions options),
-    swap(&RegularExpressionType other),
+    set_pattern_options(options: PatternOptions),
+    swap(other: &RegularExpressionType),
     pattern() -> String,
-    set_pattern(String pattern),
+    set_pattern(pattern: String),
     is_valid() -> bool,
     pattern_error_offset() -> i32,
     capture_count() -> i32,
     named_capture_groups() -> StringListType,
-    match(String subject, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchType,
-    match(&StringRefType subject_ref, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchType,
-    global_match(String subject, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchIteratorType,
-    global_match(&StringRefType subject_ref, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchIteratorType,
+    match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchType,
+    match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchType,
+    global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIteratorType,
+    global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIteratorType,
     optimize(),
-    escape(String str) -> String,
+    escape(str: String) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,15 +1,15 @@
 struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
-    draw(&PainterType arg0, onst QAbstractTextDocumentLayout::PaintContext & arg1),
-    hit_test(&PointFType arg0, Rute::HitTestAccuracy arg1) -> i32,
+    draw(arg0: &PainterType, arg1: onst QAbstractTextDocumentLayout::PaintContext &),
+    hit_test(arg0: &PointFType, arg1: Rute::HitTestAccuracy) -> i32,
     page_count() -> i32,
     document_size() -> SizeFType,
-    frame_bounding_rect(&TextFrameType arg0) -> RectFType,
-    block_bounding_rect(&TextBlockType block) -> RectFType,
-    ensure_block_layout(&TextBlockType block),
-    set_cursor_width(i32 width),
+    frame_bounding_rect(arg0: &TextFrameType) -> RectFType,
+    block_bounding_rect(block: &TextBlockType) -> RectFType,
+    ensure_block_layout(block: &TextBlockType),
+    set_cursor_width(width: i32),
     cursor_width() -> i32,
     request_update(),
-    document_changed(i32 from, i32 arg0, i32 chars_added),
+    document_changed(from: i32, arg0: i32, chars_added: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

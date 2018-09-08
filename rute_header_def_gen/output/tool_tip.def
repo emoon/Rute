@@ -1,15 +1,15 @@
 
 struct ToolTip {
-    show_text(&PointType pos, String text, &WidgetType w),
-    show_text(&PointType pos, String text, &WidgetType w, &RectType rect),
-    show_text(&PointType pos, String text, &WidgetType w, &RectType rect, i32 msec_show_time),
+    show_text(pos: &PointType, text: String, w: &WidgetType),
+    show_text(pos: &PointType, text: String, w: &WidgetType, rect: &RectType),
+    show_text(pos: &PointType, text: String, w: &WidgetType, rect: &RectType, msec_show_time: i32),
     hide_text(),
     is_visible() -> bool,
     text() -> String,
     palette() -> PaletteType,
-    set_palette(&PaletteType arg0),
+    set_palette(arg0: &PaletteType),
     font() -> FontType,
-    set_font(&FontType arg0),
+    set_font(arg0: &FontType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

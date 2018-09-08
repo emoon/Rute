@@ -1,10 +1,10 @@
 struct FocusFrame : Widget {
-    set_widget(&WidgetType widget),
+    set_widget(widget: &WidgetType),
     widget() -> &WidgetType,
-    event(&EventType e) -> bool,
-    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
-    paint_event(&PaintEventType arg0),
-    init_style_option(&StyleOptionType option),
+    event(e: &EventType) -> bool,
+    event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
+    paint_event(arg0: &PaintEventType),
+    init_style_option(option: &StyleOptionType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -2,8 +2,8 @@ struct DragMoveEvent : DropEvent {
     answer_rect() -> RectType,
     accept(),
     ignore(),
-    accept(&RectType r),
-    ignore(&RectType r),
+    accept(r: &RectType),
+    ignore(r: &RectType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

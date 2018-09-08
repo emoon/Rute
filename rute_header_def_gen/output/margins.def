@@ -5,10 +5,10 @@ struct Margins {
     top() -> i32,
     right() -> i32,
     bottom() -> i32,
-    set_left(i32 left),
-    set_top(i32 top),
-    set_right(i32 right),
-    set_bottom(i32 bottom),
+    set_left(left: i32),
+    set_top(top: i32),
+    set_right(right: i32),
+    set_bottom(bottom: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

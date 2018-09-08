@@ -1,7 +1,7 @@
 struct FileOpenEvent : Event {
     file() -> String,
     url() -> UrlType,
-    open_file(&FileType file, IODevice::OpenMode flags) -> bool,
+    open_file(file: &FileType, flags: IODevice::OpenMode) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,12 +1,12 @@
 struct TextListFormat : TextFormat {
     is_valid() -> bool,
-    set_style(TextListFormat::Style style),
+    set_style(style: TextListFormat::Style),
     style() -> TextListFormat::Style,
-    set_indent(i32 indent),
+    set_indent(indent: i32),
     indent() -> i32,
-    set_number_prefix(String number_prefix),
+    set_number_prefix(number_prefix: String),
     number_prefix() -> String,
-    set_number_suffix(String number_suffix),
+    set_number_suffix(number_suffix: String),
     number_suffix() -> String,
 }
 

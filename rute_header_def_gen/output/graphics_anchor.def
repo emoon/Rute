@@ -1,8 +1,8 @@
 struct GraphicsAnchor : Object {
-    set_spacing(f32 spacing),
+    set_spacing(spacing: f32),
     unset_spacing(),
     spacing() -> f32,
-    set_size_policy(SizePolicy::Policy policy),
+    set_size_policy(policy: SizePolicy::Policy),
     size_policy() -> SizePolicy::Policy,
 }
 

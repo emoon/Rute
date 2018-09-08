@@ -2,8 +2,8 @@ struct AccessibleObject : AccessibleInterface {
     is_valid() -> bool,
     object() -> &ObjectType,
     rect() -> RectType,
-    set_text(Accessible::Text t, String text),
-    child_at(i32 x, i32 y) -> &AccessibleInterfaceType,
+    set_text(t: Accessible::Text, text: String),
+    child_at(x: i32, y: i32) -> &AccessibleInterfaceType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,5 +1,5 @@
 struct AccessibleValueChangeEvent : AccessibleEvent {
-    set_value(&VariantType val),
+    set_value(val: &VariantType),
     value() -> VariantType,
 }
 

@@ -1,18 +1,18 @@
 struct GraphicsAnchorLayout : GraphicsLayout {
-    add_anchor(&GraphicsLayoutItemType first_item, Rute::AnchorPoint first_edge, &GraphicsLayoutItemType second_item, Rute::AnchorPoint second_edge) -> &GraphicsAnchorType,
-    anchor(&GraphicsLayoutItemType first_item, Rute::AnchorPoint first_edge, &GraphicsLayoutItemType second_item, Rute::AnchorPoint second_edge) -> &GraphicsAnchorType,
-    add_corner_anchors(&GraphicsLayoutItemType first_item, Rute::Corner first_corner, &GraphicsLayoutItemType second_item, Rute::Corner second_corner),
-    add_anchors(&GraphicsLayoutItemType first_item, &GraphicsLayoutItemType second_item, Rute::Orientations orientations),
-    set_horizontal_spacing(f32 spacing),
-    set_vertical_spacing(f32 spacing),
-    set_spacing(f32 spacing),
+    add_anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> &GraphicsAnchorType,
+    anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> &GraphicsAnchorType,
+    add_corner_anchors(first_item: &GraphicsLayoutItemType, first_corner: Rute::Corner, second_item: &GraphicsLayoutItemType, second_corner: Rute::Corner),
+    add_anchors(first_item: &GraphicsLayoutItemType, second_item: &GraphicsLayoutItemType, orientations: Rute::Orientations),
+    set_horizontal_spacing(spacing: f32),
+    set_vertical_spacing(spacing: f32),
+    set_spacing(spacing: f32),
     horizontal_spacing() -> f32,
     vertical_spacing() -> f32,
-    remove_at(i32 index),
+    remove_at(index: i32),
     count() -> i32,
-    item_at(i32 index) -> &GraphicsLayoutItemType,
+    item_at(index: i32) -> &GraphicsLayoutItemType,
     invalidate(),
-    size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
+    size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeFType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

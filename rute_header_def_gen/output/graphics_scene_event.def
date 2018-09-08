@@ -1,6 +1,6 @@
 struct GraphicsSceneEvent : Event {
     widget() -> &WidgetType,
-    set_widget(&WidgetType widget),
+    set_widget(widget: &WidgetType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

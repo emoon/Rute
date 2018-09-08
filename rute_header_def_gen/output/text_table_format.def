@@ -1,14 +1,14 @@
 struct TextTableFormat : TextFrameFormat {
     is_valid() -> bool,
     columns() -> i32,
-    set_columns(i32 columns),
+    set_columns(columns: i32),
     cell_spacing() -> f32,
-    set_cell_spacing(f32 spacing),
+    set_cell_spacing(spacing: f32),
     cell_padding() -> f32,
-    set_cell_padding(f32 padding),
-    set_alignment(Rute::Alignment alignment),
+    set_cell_padding(padding: f32),
+    set_alignment(alignment: Rute::Alignment),
     alignment() -> Rute::Alignment,
-    set_header_row_count(i32 count),
+    set_header_row_count(count: i32),
     header_row_count() -> i32,
 }
 

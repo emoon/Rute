@@ -1,6 +1,6 @@
 
 struct MessageLogContext {
-    copy(&MessageLogContextType log_context),
+    copy(log_context: &MessageLogContextType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

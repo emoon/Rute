@@ -1,7 +1,7 @@
 
 struct JsonValue {
-    swap(&JsonValueType other),
-    from_variant(&VariantType variant) -> JsonValueType,
+    swap(other: &JsonValueType),
+    from_variant(variant: &VariantType) -> JsonValueType,
     to_variant() -> VariantType,
     type() -> JsonValue::Type,
     is_null() -> bool,
@@ -10,13 +10,13 @@ struct JsonValue {
     is_array() -> bool,
     is_object() -> bool,
     is_undefined() -> bool,
-    to_bool(bool default_value) -> bool,
-    to_int(i32 default_value) -> i32,
-    to_double(double default_value) -> double,
+    to_bool(default_value: bool) -> bool,
+    to_int(default_value: i32) -> i32,
+    to_double(default_value: double) -> double,
     to_array() -> JsonArrayType,
-    to_array(&JsonArrayType default_value) -> JsonArrayType,
+    to_array(default_value: &JsonArrayType) -> JsonArrayType,
     to_object() -> JsonObjectType,
-    to_object(&JsonObjectType default_value) -> JsonObjectType,
+    to_object(default_value: &JsonObjectType) -> JsonObjectType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

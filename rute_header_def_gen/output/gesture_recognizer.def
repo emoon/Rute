@@ -1,10 +1,10 @@
 
 struct GestureRecognizer {
-    create(&ObjectType target) -> &GestureType,
-    recognize(&GestureType state, &ObjectType watched, &EventType event) -> Result,
-    reset(&GestureType state),
-    register_recognizer(&GestureRecognizerType recognizer) -> Rute::GestureType,
-    unregister_recognizer(Rute::GestureType type),
+    create(target: &ObjectType) -> &GestureType,
+    recognize(state: &GestureType, watched: &ObjectType, event: &EventType) -> Result,
+    reset(state: &GestureType),
+    register_recognizer(recognizer: &GestureRecognizerType) -> Rute::GestureType,
+    unregister_recognizer(type: Rute::GestureType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

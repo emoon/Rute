@@ -1,6 +1,6 @@
 struct GraphicsObject : Object, GraphicsItem {
-    grab_gesture(Rute::GestureType type, Rute::GestureFlags flags),
-    ungrab_gesture(Rute::GestureType type),
+    grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
+    ungrab_gesture(type: Rute::GestureType),
     update_micro_focus(),
     [callback] parent_changed(),
     [callback] opacity_changed(),
@@ -14,7 +14,7 @@ struct GraphicsObject : Object, GraphicsItem {
     [callback] children_changed(),
     [callback] width_changed(),
     [callback] height_changed(),
-    event(&EventType ev) -> bool,
+    event(ev: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
