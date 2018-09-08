@@ -1,13 +1,13 @@
 
 struct AccessibleTableCellInterface {
-    is_selected() -> bool,
-    column_header_cells() -> [&AccessibleInterfaceType],
-    row_header_cells() -> [&AccessibleInterfaceType],
-    column_index() -> i32,
-    row_index() -> i32,
-    column_extent() -> i32,
-    row_extent() -> i32,
-    table() -> &AccessibleInterfaceType,
+    [override] is_selected() -> bool,
+    [override] column_header_cells() -> [&AccessibleInterfaceType],
+    [override] row_header_cells() -> [&AccessibleInterfaceType],
+    [override] column_index() -> i32,
+    [override] row_index() -> i32,
+    [override] column_extent() -> i32,
+    [override] row_extent() -> i32,
+    [override] table() -> &AccessibleInterfaceType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

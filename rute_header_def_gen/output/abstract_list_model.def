@@ -1,8 +1,8 @@
 struct AbstractListModel : AbstractItemModel {
-    index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,
-    sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndexType,
-    drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
-    flags(index: &ModelIndexType) -> Rute::ItemFlags,
+    [override] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,
+    [override] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndexType,
+    [override] drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    [override] flags(index: &ModelIndexType) -> Rute::ItemFlags,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,15 +1,15 @@
 struct StyledItemDelegate : AbstractItemDelegate {
-    paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
-    size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> SizeType,
-    create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> &WidgetType,
-    set_editor_data(editor: &WidgetType, index: &ModelIndexType),
-    set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
+    [override] paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
+    [override] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> SizeType,
+    [override] create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> &WidgetType,
+    [override] set_editor_data(editor: &WidgetType, index: &ModelIndexType),
+    [override] set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
     item_editor_factory() -> &ItemEditorFactoryType,
     set_item_editor_factory(factory: &ItemEditorFactoryType),
-    display_text(value: &VariantType, locale: &LocaleType) -> String,
-    init_style_option(option: &StyleOptionViewItemType, index: &ModelIndexType),
-    event_filter(object: &ObjectType, event: &EventType) -> bool,
-    editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    [override] display_text(value: &VariantType, locale: &LocaleType) -> String,
+    [override] init_style_option(option: &StyleOptionViewItemType, index: &ModelIndexType),
+    [override] event_filter(object: &ObjectType, event: &EventType) -> bool,
+    [override] editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

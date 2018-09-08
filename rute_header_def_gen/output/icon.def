@@ -19,13 +19,13 @@ struct Icon {
     available_sizes(mode: Icon::Mode, state: Icon::State) -> [SizeType],
     set_is_mask(is_mask: bool),
     is_mask() -> bool,
-    from_theme(name: String) -> IconType,
-    from_theme(name: String, fallback: &IconType) -> IconType,
-    has_theme_icon(name: String) -> bool,
-    theme_search_paths() -> StringListType,
-    set_theme_search_paths(searchpath: &StringListType),
-    theme_name() -> String,
-    set_theme_name(path: String),
+    [static] from_theme(name: String) -> IconType,
+    [static] from_theme(name: String, fallback: &IconType) -> IconType,
+    [static] has_theme_icon(name: String) -> bool,
+    [static] theme_search_paths() -> StringListType,
+    [static] set_theme_search_paths(searchpath: &StringListType),
+    [static] theme_name() -> String,
+    [static] set_theme_name(path: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

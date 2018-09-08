@@ -40,8 +40,8 @@ struct SurfaceFormat {
     set_swap_interval(interval: i32),
     color_space() -> SurfaceFormat::ColorSpace,
     set_color_space(color_space: SurfaceFormat::ColorSpace),
-    set_default_format(format: &SurfaceFormatType),
-    default_format() -> SurfaceFormatType,
+    [static] set_default_format(format: &SurfaceFormatType),
+    [static] default_format() -> SurfaceFormatType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

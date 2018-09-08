@@ -5,17 +5,17 @@ struct SystemTrayIcon : Object {
     set_icon(icon: &IconType),
     tool_tip() -> String,
     set_tool_tip(tip: String),
-    is_system_tray_available() -> bool,
-    supports_messages() -> bool,
+    [static] is_system_tray_available() -> bool,
+    [static] supports_messages() -> bool,
     is_visible() -> bool,
     set_visible(visible: bool),
     show(),
     hide(),
     show_message(title: String, msg: String, icon: &IconType, msecs: i32),
     show_message(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
-    [callback] activated(reason: SystemTrayIcon::ActivationReason),
-    [callback] message_clicked(),
-    event(event: &EventType) -> bool,
+    [event] activated(reason: SystemTrayIcon::ActivationReason),
+    [event] message_clicked(),
+    [override] event(event: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

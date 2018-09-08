@@ -58,7 +58,7 @@ struct RectF {
     margins_removed(margins: &MarginsFType) -> RectFType,
     to_rect() -> RectType,
     to_aligned_rect() -> RectType,
-    from_cg_rect(rect: CGRect) -> RectFType,
+    [static] from_cg_rect(rect: CGRect) -> RectFType,
     to_cg_rect() -> CGRect,
 }
 

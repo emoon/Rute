@@ -16,7 +16,7 @@ struct SizeF {
     rwidth() -> &f32,
     rheight() -> &f32,
     to_size() -> SizeType,
-    from_cg_size(size: CGSize) -> SizeFType,
+    [static] from_cg_size(size: CGSize) -> SizeFType,
     to_cg_size() -> CGSize,
 }
 

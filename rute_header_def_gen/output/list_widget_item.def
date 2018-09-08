@@ -1,6 +1,6 @@
 
 struct ListWidgetItem {
-    clone() -> &ListWidgetItemType,
+    [override] clone() -> &ListWidgetItemType,
     list_widget() -> &ListWidgetType,
     set_selected(select: bool),
     is_selected() -> bool,
@@ -23,7 +23,7 @@ struct ListWidgetItem {
     text_alignment() -> i32,
     set_text_alignment(alignment: i32),
     background_color() -> ColorType,
-    set_background_color(color: &ColorType),
+    [override] set_background_color(color: &ColorType),
     background() -> BrushType,
     set_background(brush: &BrushType),
     text_color() -> ColorType,
@@ -34,10 +34,10 @@ struct ListWidgetItem {
     set_check_state(state: Rute::CheckState),
     size_hint() -> SizeType,
     set_size_hint(size: &SizeType),
-    data(role: i32) -> VariantType,
-    set_data(role: i32, value: &VariantType),
-    read(in: &DataStreamType),
-    write(out: &DataStreamType),
+    [override] data(role: i32) -> VariantType,
+    [override] set_data(role: i32, value: &VariantType),
+    [override] read(in: &DataStreamType),
+    [override] write(out: &DataStreamType),
     type() -> i32,
 }
 

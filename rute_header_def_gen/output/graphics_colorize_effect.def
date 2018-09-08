@@ -1,8 +1,8 @@
 struct GraphicsColorizeEffect : GraphicsEffect {
     color() -> ColorType,
     set_color(c: &ColorType),
-    [callback] color_changed(color: &ColorType),
-    draw(painter: &PainterType),
+    [event] color_changed(color: &ColorType),
+    [override] draw(painter: &PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

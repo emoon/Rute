@@ -7,14 +7,14 @@ struct FontDialog : Dialog {
     set_options(options: FontDialogOptions),
     options() -> FontDialogOptions,
     open(receiver: &ObjectType, member: &char),
-    set_visible(visible: bool),
-    get_font(ok: &bool, parent: &WidgetType) -> FontType,
-    get_font(ok: &bool, initial: &FontType, parent: &WidgetType, title: String, options: FontDialogOptions) -> FontType,
-    [callback] current_font_changed(font: &FontType),
-    [callback] font_selected(font: &FontType),
-    change_event(event: &EventType),
-    done(result: i32),
-    event_filter(object: &ObjectType, event: &EventType) -> bool,
+    [override] set_visible(visible: bool),
+    [static] get_font(ok: &bool, parent: &WidgetType) -> FontType,
+    [static] get_font(ok: &bool, initial: &FontType, parent: &WidgetType, title: String, options: FontDialogOptions) -> FontType,
+    [event] current_font_changed(font: &FontType),
+    [event] font_selected(font: &FontType),
+    [override] change_event(event: &EventType),
+    [override] done(result: i32),
+    [override] event_filter(object: &ObjectType, event: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

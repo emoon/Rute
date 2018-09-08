@@ -3,9 +3,9 @@ struct GraphicsOpacityEffect : GraphicsEffect {
     opacity_mask() -> BrushType,
     set_opacity(opacity: f32),
     set_opacity_mask(mask: &BrushType),
-    [callback] opacity_changed(opacity: f32),
-    [callback] opacity_mask_changed(mask: &BrushType),
-    draw(painter: &PainterType),
+    [event] opacity_changed(opacity: f32),
+    [event] opacity_mask_changed(mask: &BrushType),
+    [override] draw(painter: &PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

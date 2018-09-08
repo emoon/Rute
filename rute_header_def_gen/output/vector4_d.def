@@ -13,7 +13,7 @@ struct Vector4D {
     length_squared() -> f32,
     normalized() -> Vector4DType,
     normalize(),
-    dot_product(v1: &Vector4DType, v2: &Vector4DType) -> f32,
+    [static] dot_product(v1: &Vector4DType, v2: &Vector4DType) -> f32,
     to_vector2_d() -> Vector2DType,
     to_vector2_d_affine() -> Vector2DType,
     to_vector3_d() -> Vector3DType,

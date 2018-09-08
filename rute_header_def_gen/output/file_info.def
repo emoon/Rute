@@ -5,7 +5,7 @@ struct FileInfo {
     set_file(file: &FileType),
     set_file(dir: &DirType, file: String),
     exists() -> bool,
-    exists(file: String) -> bool,
+    [static] exists(file: String) -> bool,
     refresh(),
     file_path() -> String,
     absolute_file_path() -> String,

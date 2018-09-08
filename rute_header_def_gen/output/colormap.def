@@ -1,8 +1,8 @@
 
 struct Colormap {
-    initialize(),
-    cleanup(),
-    instance(screen: i32) -> ColormapType,
+    [static] initialize(),
+    [static] cleanup(),
+    [static] instance(screen: i32) -> ColormapType,
     mode() -> Colormap::Mode,
     depth() -> i32,
     size() -> i32,

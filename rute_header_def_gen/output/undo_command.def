@@ -1,14 +1,14 @@
 
 struct UndoCommand {
-    undo(),
-    redo(),
+    [override] undo(),
+    [override] redo(),
     text() -> String,
     action_text() -> String,
     set_text(text: String),
     is_obsolete() -> bool,
     set_obsolete(obsolete: bool),
-    id() -> i32,
-    merge_with(other: &UndoCommandType) -> bool,
+    [override] id() -> i32,
+    [override] merge_with(other: &UndoCommandType) -> bool,
     child_count() -> i32,
     child(index: i32) -> &UndoCommandType,
 }

@@ -44,15 +44,15 @@ struct MainWindow : Widget {
     resize_docks(docks: [&DockWidgetType], sizes: [i32], orientation: Rute::Orientation),
     save_state(version: i32) -> ByteArrayType,
     restore_state(state: &ByteArrayType, version: i32) -> bool,
-    create_popup_menu() -> &MenuType,
+    [override] create_popup_menu() -> &MenuType,
     set_animated(enabled: bool),
     set_dock_nesting_enabled(enabled: bool),
     set_unified_title_and_tool_bar_on_mac(set: bool),
-    [callback] icon_size_changed(icon_size: &SizeType),
-    [callback] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
-    [callback] tabified_dock_widget_activated(dock_widget: &DockWidgetType),
-    context_menu_event(event: &ContextMenuEventType),
-    event(event: &EventType) -> bool,
+    [event] icon_size_changed(icon_size: &SizeType),
+    [event] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
+    [event] tabified_dock_widget_activated(dock_widget: &DockWidgetType),
+    [override] context_menu_event(event: &ContextMenuEventType),
+    [override] event(event: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

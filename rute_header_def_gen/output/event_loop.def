@@ -5,7 +5,7 @@ struct EventLoop : Object {
     exit(return_code: i32),
     is_running() -> bool,
     wake_up(),
-    event(event: &EventType) -> bool,
+    [override] event(event: &EventType) -> bool,
     quit(),
 }
 

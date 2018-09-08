@@ -1,8 +1,8 @@
 
 struct Internal {
-    register_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
-    unregister_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
-    activate_callbacks(arg0: Internal::Callback, arg1: &void) -> bool,
+    [static] register_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
+    [static] unregister_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
+    [static] activate_callbacks(arg0: Internal::Callback, arg1: &void) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

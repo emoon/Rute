@@ -7,7 +7,7 @@ struct Event {
     is_accepted() -> bool,
     accept(),
     ignore(),
-    register_event_type(hint: i32) -> i32,
+    [static] register_event_type(hint: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

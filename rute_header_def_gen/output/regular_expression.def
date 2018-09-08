@@ -14,7 +14,7 @@ struct RegularExpression {
     global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIteratorType,
     global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIteratorType,
     optimize(),
-    escape(str: String) -> String,
+    [static] escape(str: String) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -8,9 +8,9 @@ struct PointF {
     set_y(y: f32),
     rx() -> &f32,
     ry() -> &f32,
-    dot_product(p1: &PointFType, p2: &PointFType) -> f32,
+    [static] dot_product(p1: &PointFType, p2: &PointFType) -> f32,
     to_point() -> PointType,
-    from_cg_point(point: CGPoint) -> PointFType,
+    [static] from_cg_point(point: CGPoint) -> PointFType,
     to_cg_point() -> CGPoint,
 }
 

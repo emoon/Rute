@@ -6,10 +6,10 @@ struct GraphicsRotation : GraphicsTransform {
     axis() -> Vector3DType,
     set_axis(axis: &Vector3DType),
     set_axis(axis: Rute::Axis),
-    apply_to(matrix: &Matrix4x4Type),
-    [callback] origin_changed(),
-    [callback] angle_changed(),
-    [callback] axis_changed(),
+    [override] apply_to(matrix: &Matrix4x4Type),
+    [event] origin_changed(),
+    [event] angle_changed(),
+    [event] axis_changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

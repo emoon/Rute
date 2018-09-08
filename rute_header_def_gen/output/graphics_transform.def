@@ -1,5 +1,5 @@
 struct GraphicsTransform : Object {
-    apply_to(matrix: &Matrix4x4Type),
+    [override] apply_to(matrix: &Matrix4x4Type),
     update(),
 }
 

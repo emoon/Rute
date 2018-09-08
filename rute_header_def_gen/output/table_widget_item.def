@@ -1,6 +1,6 @@
 
 struct TableWidgetItem {
-    clone() -> &TableWidgetItemType,
+    [override] clone() -> &TableWidgetItemType,
     table_widget() -> &TableWidgetType,
     row() -> i32,
     column() -> i32,
@@ -34,10 +34,10 @@ struct TableWidgetItem {
     set_check_state(state: Rute::CheckState),
     size_hint() -> SizeType,
     set_size_hint(size: &SizeType),
-    data(role: i32) -> VariantType,
-    set_data(role: i32, value: &VariantType),
-    read(in: &DataStreamType),
-    write(out: &DataStreamType),
+    [override] data(role: i32) -> VariantType,
+    [override] set_data(role: i32, value: &VariantType),
+    [override] read(in: &DataStreamType),
+    [override] write(out: &DataStreamType),
     type() -> i32,
 }
 

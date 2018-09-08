@@ -1,16 +1,16 @@
 
 struct SysInfo {
-    windows_version() -> SysInfo::WinVersion,
-    mac_version() -> SysInfo::MacVersion,
-    build_cpu_architecture() -> String,
-    current_cpu_architecture() -> String,
-    build_abi() -> String,
-    kernel_type() -> String,
-    kernel_version() -> String,
-    product_type() -> String,
-    product_version() -> String,
-    pretty_product_name() -> String,
-    machine_host_name() -> String,
+    [static] windows_version() -> SysInfo::WinVersion,
+    [static] mac_version() -> SysInfo::MacVersion,
+    [static] build_cpu_architecture() -> String,
+    [static] current_cpu_architecture() -> String,
+    [static] build_abi() -> String,
+    [static] kernel_type() -> String,
+    [static] kernel_version() -> String,
+    [static] product_type() -> String,
+    [static] product_version() -> String,
+    [static] pretty_product_name() -> String,
+    [static] machine_host_name() -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

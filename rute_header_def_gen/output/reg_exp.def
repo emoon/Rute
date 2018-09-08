@@ -22,7 +22,7 @@ struct RegExp {
     cap(nth: i32) -> String,
     pos(nth: i32) -> i32,
     pos(nth: i32) -> i32,
-    escape(str: String) -> String,
+    [static] escape(str: String) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

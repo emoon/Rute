@@ -1,6 +1,6 @@
 struct DoubleValidator : Validator {
-    validate(arg0: String, arg1: &i32) -> Validator::State,
-    set_range(bottom: double, top: double, decimals: i32),
+    [override] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [override] set_range(bottom: double, top: double, decimals: i32),
     set_bottom(arg0: double),
     set_top(arg0: double),
     set_decimals(arg0: i32),
@@ -9,10 +9,10 @@ struct DoubleValidator : Validator {
     top() -> double,
     decimals() -> i32,
     notation() -> DoubleValidator::Notation,
-    [callback] bottom_changed(bottom: double),
-    [callback] top_changed(top: double),
-    [callback] decimals_changed(decimals: i32),
-    [callback] notation_changed(notation: DoubleValidator::Notation),
+    [event] bottom_changed(bottom: double),
+    [event] top_changed(top: double),
+    [event] decimals_changed(decimals: i32),
+    [event] notation_changed(notation: DoubleValidator::Notation),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

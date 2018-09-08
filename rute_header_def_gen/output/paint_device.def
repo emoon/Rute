@@ -1,8 +1,8 @@
 
 struct PaintDevice {
-    dev_type() -> i32,
+    [override] dev_type() -> i32,
     painting_active() -> bool,
-    paint_engine() -> &PaintEngineType,
+    [override] paint_engine() -> &PaintEngineType,
     width() -> i32,
     height() -> i32,
     width_mm() -> i32,
@@ -15,10 +15,10 @@ struct PaintDevice {
     device_pixel_ratio_f() -> f32,
     color_count() -> i32,
     depth() -> i32,
-    device_pixel_ratio_f_scale() -> f32,
-    init_painter(painter: &PainterType),
-    redirected(offset: &PointType) -> &PaintDeviceType,
-    shared_painter() -> &PainterType,
+    [static] device_pixel_ratio_f_scale() -> f32,
+    [override] init_painter(painter: &PainterType),
+    [override] redirected(offset: &PointType) -> &PaintDeviceType,
+    [override] shared_painter() -> &PainterType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

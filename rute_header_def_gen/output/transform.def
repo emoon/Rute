@@ -26,9 +26,9 @@ struct Transform {
     shear(sh: f32, sv: f32) -> &TransformType,
     rotate(a: f32, axis: Rute::Axis) -> &TransformType,
     rotate_radians(a: f32, axis: Rute::Axis) -> &TransformType,
-    square_to_quad(square: &PolygonFType, result: &TransformType) -> bool,
-    quad_to_square(quad: &PolygonFType, result: &TransformType) -> bool,
-    quad_to_quad(one: &PolygonFType, two: &PolygonFType, result: &TransformType) -> bool,
+    [static] square_to_quad(square: &PolygonFType, result: &TransformType) -> bool,
+    [static] quad_to_square(quad: &PolygonFType, result: &TransformType) -> bool,
+    [static] quad_to_quad(one: &PolygonFType, two: &PolygonFType, result: &TransformType) -> bool,
     reset(),
     map(p: &PointType) -> PointType,
     map(p: &PointFType) -> PointFType,
@@ -44,8 +44,8 @@ struct Transform {
     map(x: i32, y: i32, tx: &i32, ty: &i32),
     map(x: f32, y: f32, tx: &f32, ty: &f32),
     to_affine() -> &MatrixType,
-    from_translate(dx: f32, dy: f32) -> TransformType,
-    from_scale(dx: f32, dy: f32) -> TransformType,
+    [static] from_translate(dx: f32, dy: f32) -> TransformType,
+    [static] from_scale(dx: f32, dy: f32) -> TransformType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -30,14 +30,14 @@ struct Completer : Object {
     set_completion_prefix(prefix: String),
     complete(rect: &RectType),
     set_wrap_around(wrap: bool),
-    path_from_index(index: &ModelIndexType) -> String,
-    split_path(path: String) -> StringListType,
-    event_filter(o: &ObjectType, e: &EventType) -> bool,
-    event(arg0: &EventType) -> bool,
-    [callback] activated(text: String),
-    [callback] activated(index: &ModelIndexType),
-    [callback] highlighted(text: String),
-    [callback] highlighted(index: &ModelIndexType),
+    [override] path_from_index(index: &ModelIndexType) -> String,
+    [override] split_path(path: String) -> StringListType,
+    [override] event_filter(o: &ObjectType, e: &EventType) -> bool,
+    [override] event(arg0: &EventType) -> bool,
+    [event] activated(text: String),
+    [event] activated(index: &ModelIndexType),
+    [event] highlighted(text: String),
+    [event] highlighted(index: &ModelIndexType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

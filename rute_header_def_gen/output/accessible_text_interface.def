@@ -1,19 +1,19 @@
 
 struct AccessibleTextInterface {
-    selection(selection_index: i32, start_offset: &i32, end_offset: &i32),
-    selection_count() -> i32,
-    add_selection(start_offset: i32, end_offset: i32),
-    remove_selection(selection_index: i32),
-    set_selection(selection_index: i32, start_offset: i32, end_offset: i32),
-    cursor_position() -> i32,
-    set_cursor_position(position: i32),
-    text(start_offset: i32, end_offset: i32) -> String,
-    text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
-    text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
-    text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
-    character_count() -> i32,
-    character_rect(offset: i32) -> RectType,
-    offset_at_point(point: &PointType) -> i32,
+    [override] selection(selection_index: i32, start_offset: &i32, end_offset: &i32),
+    [override] selection_count() -> i32,
+    [override] add_selection(start_offset: i32, end_offset: i32),
+    [override] remove_selection(selection_index: i32),
+    [override] set_selection(selection_index: i32, start_offset: i32, end_offset: i32),
+    [override] cursor_position() -> i32,
+    [override] set_cursor_position(position: i32),
+    [override] text(start_offset: i32, end_offset: i32) -> String,
+    [override] text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    [override] text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    [override] text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    [override] character_count() -> i32,
+    [override] character_rect(offset: i32) -> RectType,
+    [override] offset_at_point(point: &PointType) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

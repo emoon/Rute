@@ -1,8 +1,8 @@
 
 struct FileIconProvider {
-    icon(type: FileIconProvider::IconType) -> IconType,
-    icon(info: &FileInfoType) -> IconType,
-    type(info: &FileInfoType) -> String,
+    [override] icon(type: FileIconProvider::IconType) -> IconType,
+    [override] icon(info: &FileInfoType) -> IconType,
+    [override] type(info: &FileInfoType) -> String,
     set_options(options: Options),
     options() -> Options,
 }

@@ -1,11 +1,11 @@
 struct Scroller : Object {
-    has_scroller(target: &ObjectType) -> bool,
-    scroller(target: &ObjectType) -> &ScrollerType,
-    scroller(target: &ObjectType) -> &ScrollerType,
-    grab_gesture(target: &ObjectType, gesture_type: Scroller::ScrollerGestureType) -> Rute::GestureType,
-    grabbed_gesture(target: &ObjectType) -> Rute::GestureType,
-    ungrab_gesture(target: &ObjectType),
-    active_scrollers() -> [&ScrollerType],
+    [static] has_scroller(target: &ObjectType) -> bool,
+    [static] scroller(target: &ObjectType) -> &ScrollerType,
+    [static] scroller(target: &ObjectType) -> &ScrollerType,
+    [static] grab_gesture(target: &ObjectType, gesture_type: Scroller::ScrollerGestureType) -> Rute::GestureType,
+    [static] grabbed_gesture(target: &ObjectType) -> Rute::GestureType,
+    [static] ungrab_gesture(target: &ObjectType),
+    [static] active_scrollers() -> [&ScrollerType],
     target() -> &ObjectType,
     state() -> Scroller::State,
     handle_input(input: Scroller::Input, position: &PointFType, timestamp: i64) -> bool,
@@ -24,8 +24,8 @@ struct Scroller : Object {
     ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32),
     ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
     resend_prepare_event(),
-    [callback] state_changed(newstate: Scroller::State),
-    [callback] scroller_properties_changed(arg0: &ScrollerPropertiesType),
+    [event] state_changed(newstate: Scroller::State),
+    [event] scroller_properties_changed(arg0: &ScrollerPropertiesType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

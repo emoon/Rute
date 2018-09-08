@@ -1,8 +1,8 @@
 struct TapAndHoldGesture : Gesture {
     position() -> PointFType,
     set_position(pos: &PointFType),
-    set_timeout(msecs: i32),
-    timeout() -> i32,
+    [static] set_timeout(msecs: i32),
+    [static] timeout() -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

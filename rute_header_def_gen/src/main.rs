@@ -245,7 +245,11 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
     }
 
     if func_type == AccessLevel::Signal {
-        write!(dest, "    [callback] ");
+        write!(dest, "    [event] ");
+    } else if entry.is_virtual_method() {
+        write!(dest, "    [override] ");
+    } else if entry.is_static_method() {
+        write!(dest, "    [static] ");
     } else {
         write!(dest, "    ");
     }
@@ -367,7 +371,6 @@ fn print_class(target_path: &str, entry: &Entity) {
 
             EntityKind::AccessSpecifier => {
                 access_level = get_access_level(&field);
-                //println!("{:?}", field);
             }
 
             _ => (),

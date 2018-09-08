@@ -6,10 +6,10 @@ struct SplashScreen : Widget {
     message() -> String,
     show_message(message: String, alignment: i32, color: &ColorType),
     clear_message(),
-    [callback] message_changed(message: String),
-    event(e: &EventType) -> bool,
-    draw_contents(painter: &PainterType),
-    mouse_press_event(arg0: &MouseEventType),
+    [event] message_changed(message: String),
+    [override] event(e: &EventType) -> bool,
+    [override] draw_contents(painter: &PainterType),
+    [override] mouse_press_event(arg0: &MouseEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

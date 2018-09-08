@@ -1,9 +1,9 @@
 
 struct Rgba64 {
-    from_rgba64(c: quint64) -> Rgba64Type,
-    from_rgba64(red: u16, green: u16, blue: u16, alpha: u16) -> Rgba64Type,
-    from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Rgba64Type,
-    from_argb32(rgb: uint) -> Rgba64Type,
+    [static] from_rgba64(c: quint64) -> Rgba64Type,
+    [static] from_rgba64(red: u16, green: u16, blue: u16, alpha: u16) -> Rgba64Type,
+    [static] from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Rgba64Type,
+    [static] from_argb32(rgb: uint) -> Rgba64Type,
     is_opaque() -> bool,
     is_transparent() -> bool,
     red() -> u16,

@@ -11,7 +11,7 @@ struct Vector2D {
     normalize(),
     distance_to_point(point: &Vector2DType) -> f32,
     distance_to_line(point: &Vector2DType, direction: &Vector2DType) -> f32,
-    dot_product(v1: &Vector2DType, v2: &Vector2DType) -> f32,
+    [static] dot_product(v1: &Vector2DType, v2: &Vector2DType) -> f32,
     to_vector3_d() -> Vector3DType,
     to_vector4_d() -> Vector4DType,
     to_point() -> PointType,

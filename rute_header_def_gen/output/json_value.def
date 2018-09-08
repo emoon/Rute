@@ -1,7 +1,7 @@
 
 struct JsonValue {
     swap(other: &JsonValueType),
-    from_variant(variant: &VariantType) -> JsonValueType,
+    [static] from_variant(variant: &VariantType) -> JsonValueType,
     to_variant() -> VariantType,
     type() -> JsonValue::Type,
     is_null() -> bool,

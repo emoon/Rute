@@ -1,12 +1,12 @@
 struct GraphicsBlurEffect : GraphicsEffect {
-    bounding_rect_for(rect: &RectFType) -> RectFType,
+    [override] bounding_rect_for(rect: &RectFType) -> RectFType,
     blur_radius() -> f32,
     blur_hints() -> BlurHints,
     set_blur_radius(blur_radius: f32),
     set_blur_hints(hints: BlurHints),
-    [callback] blur_radius_changed(blur_radius: f32),
-    [callback] blur_hints_changed(hints: BlurHints),
-    draw(painter: &PainterType),
+    [event] blur_radius_changed(blur_radius: f32),
+    [event] blur_hints_changed(hints: BlurHints),
+    [override] draw(painter: &PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,5 +1,5 @@
 struct StylePlugin : Object {
-    create(key: String) -> &StyleType,
+    [override] create(key: String) -> &StyleType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

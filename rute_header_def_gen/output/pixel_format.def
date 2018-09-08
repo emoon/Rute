@@ -1,7 +1,7 @@
 
 struct PixelFormat {
     get(offset: PixelFormat::Field, width: PixelFormat::FieldWidth) -> uchar,
-    set(offset: PixelFormat::Field, width: PixelFormat::FieldWidth, value: uchar) -> quint64,
+    [static] set(offset: PixelFormat::Field, width: PixelFormat::FieldWidth, value: uchar) -> quint64,
     color_model() -> PixelFormat::ColorModel,
     channel_count() -> uchar,
     red_size() -> uchar,

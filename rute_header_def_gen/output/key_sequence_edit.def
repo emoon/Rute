@@ -2,12 +2,12 @@ struct KeySequenceEdit : Widget {
     key_sequence() -> KeySequenceType,
     set_key_sequence(key_sequence: &KeySequenceType),
     clear(),
-    [callback] editing_finished(),
-    [callback] key_sequence_changed(key_sequence: &KeySequenceType),
-    event(arg0: &EventType) -> bool,
-    key_press_event(arg0: &KeyEventType),
-    key_release_event(arg0: &KeyEventType),
-    timer_event(arg0: &TimerEventType),
+    [event] editing_finished(),
+    [event] key_sequence_changed(key_sequence: &KeySequenceType),
+    [override] event(arg0: &EventType) -> bool,
+    [override] key_press_event(arg0: &KeyEventType),
+    [override] key_release_event(arg0: &KeyEventType),
+    [override] timer_event(arg0: &TimerEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

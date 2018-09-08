@@ -1,7 +1,7 @@
 
 struct TouchDevice {
     qt_check_for_qgadget_macro(),
-    devices() -> [&TouchDeviceType],
+    [static] devices() -> [&TouchDeviceType],
     name() -> String,
     type() -> TouchDevice::DeviceType,
     capabilities() -> Capabilities,

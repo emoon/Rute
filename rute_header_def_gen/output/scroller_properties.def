@@ -1,7 +1,7 @@
 
 struct ScrollerProperties {
-    set_default_scroller_properties(sp: &ScrollerPropertiesType),
-    unset_default_scroller_properties(),
+    [static] set_default_scroller_properties(sp: &ScrollerPropertiesType),
+    [static] unset_default_scroller_properties(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

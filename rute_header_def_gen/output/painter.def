@@ -186,9 +186,9 @@ struct Painter {
     render_hints() -> RenderHints,
     test_render_hint(hint: Painter::RenderHint) -> bool,
     paint_engine() -> &PaintEngineType,
-    set_redirected(device: &PaintDeviceType, replacement: &PaintDeviceType, offset: &PointType),
-    redirected(device: &PaintDeviceType, offset: &PointType) -> &PaintDeviceType,
-    restore_redirected(device: &PaintDeviceType),
+    [static] set_redirected(device: &PaintDeviceType, replacement: &PaintDeviceType, offset: &PointType),
+    [static] redirected(device: &PaintDeviceType, offset: &PointType) -> &PaintDeviceType,
+    [static] restore_redirected(device: &PaintDeviceType),
     begin_native_painting(),
     end_native_painting(),
 }

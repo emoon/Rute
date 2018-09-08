@@ -1,7 +1,7 @@
 
 struct FontDatabase {
     qt_check_for_qgadget_macro(),
-    standard_sizes() -> [i32],
+    [static] standard_sizes() -> [i32],
     writing_systems() -> List<QFontDatabase::WritingSystem>,
     writing_systems(family: String) -> List<QFontDatabase::WritingSystem>,
     families(writing_system: FontDatabase::WritingSystem) -> StringListType,
@@ -17,15 +17,15 @@ struct FontDatabase {
     bold(family: String, style: String) -> bool,
     weight(family: String, style: String) -> i32,
     has_family(family: String) -> bool,
-    writing_system_name(writing_system: FontDatabase::WritingSystem) -> String,
-    writing_system_sample(writing_system: FontDatabase::WritingSystem) -> String,
-    add_application_font(file_name: String) -> i32,
-    add_application_font_from_data(font_data: &ByteArrayType) -> i32,
-    application_font_families(id: i32) -> StringListType,
-    remove_application_font(id: i32) -> bool,
-    remove_all_application_fonts() -> bool,
-    supports_threaded_font_rendering() -> bool,
-    system_font(type: FontDatabase::SystemFont) -> FontType,
+    [static] writing_system_name(writing_system: FontDatabase::WritingSystem) -> String,
+    [static] writing_system_sample(writing_system: FontDatabase::WritingSystem) -> String,
+    [static] add_application_font(file_name: String) -> i32,
+    [static] add_application_font_from_data(font_data: &ByteArrayType) -> i32,
+    [static] application_font_families(id: i32) -> StringListType,
+    [static] remove_application_font(id: i32) -> bool,
+    [static] remove_all_application_fonts() -> bool,
+    [static] supports_threaded_font_rendering() -> bool,
+    [static] system_font(type: FontDatabase::SystemFont) -> FontType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,15 +1,15 @@
 struct GraphicsLayout : GraphicsLayoutItem {
     set_contents_margins(left: f32, top: f32, right: f32, bottom: f32),
-    get_contents_margins(left: &f32, top: &f32, right: &f32, bottom: &f32),
+    [override] get_contents_margins(left: &f32, top: &f32, right: &f32, bottom: &f32),
     activate(),
     is_activated() -> bool,
-    invalidate(),
-    widget_event(e: &EventType),
-    count() -> i32,
-    item_at(i: i32) -> &GraphicsLayoutItemType,
-    remove_at(index: i32),
-    set_instant_invalidate_propagation(enable: bool),
-    instant_invalidate_propagation() -> bool,
+    [override] invalidate(),
+    [override] widget_event(e: &EventType),
+    [override] count() -> i32,
+    [override] item_at(i: i32) -> &GraphicsLayoutItemType,
+    [override] remove_at(index: i32),
+    [static] set_instant_invalidate_propagation(enable: bool),
+    [static] instant_invalidate_propagation() -> bool,
     add_child_layout_item(layout_item: &GraphicsLayoutItemType),
 }
 

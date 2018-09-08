@@ -19,12 +19,12 @@ struct ToolBox : Frame {
     count() -> i32,
     set_current_index(index: i32),
     set_current_widget(widget: &WidgetType),
-    [callback] current_changed(index: i32),
-    event(e: &EventType) -> bool,
-    item_inserted(index: i32),
-    item_removed(index: i32),
-    show_event(e: &ShowEventType),
-    change_event(arg0: &EventType),
+    [event] current_changed(index: i32),
+    [override] event(e: &EventType) -> bool,
+    [override] item_inserted(index: i32),
+    [override] item_removed(index: i32),
+    [override] show_event(e: &ShowEventType),
+    [override] change_event(arg0: &EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

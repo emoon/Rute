@@ -1,6 +1,6 @@
 
 struct LineF {
-    from_polar(length: f32, angle: f32) -> LineFType,
+    [static] from_polar(length: f32, angle: f32) -> LineFType,
     is_null() -> bool,
     p1() -> PointFType,
     p2() -> PointFType,

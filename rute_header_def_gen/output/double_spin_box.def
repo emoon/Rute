@@ -14,13 +14,13 @@ struct DoubleSpinBox : AbstractSpinBox {
     set_range(min: double, max: double),
     decimals() -> i32,
     set_decimals(prec: i32),
-    validate(input: String, pos: &i32) -> Validator::State,
-    value_from_text(text: String) -> double,
-    text_from_value(val: double) -> String,
-    fixup(str: String),
+    [override] validate(input: String, pos: &i32) -> Validator::State,
+    [override] value_from_text(text: String) -> double,
+    [override] text_from_value(val: double) -> String,
+    [override] fixup(str: String),
     set_value(val: double),
-    [callback] value_changed(arg0: double),
-    [callback] value_changed(arg0: String),
+    [event] value_changed(arg0: double),
+    [event] value_changed(arg0: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

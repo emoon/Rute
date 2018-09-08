@@ -1,6 +1,6 @@
 
 struct TreeWidgetItem {
-    clone() -> &TreeWidgetItemType,
+    [override] clone() -> &TreeWidgetItemType,
     set_selected(select: bool),
     is_selected() -> bool,
     set_hidden(hide: bool),
@@ -41,10 +41,10 @@ struct TreeWidgetItem {
     set_check_state(column: i32, state: Rute::CheckState),
     size_hint(column: i32) -> SizeType,
     set_size_hint(column: i32, size: &SizeType),
-    data(column: i32, role: i32) -> VariantType,
-    set_data(column: i32, role: i32, value: &VariantType),
-    read(in: &DataStreamType),
-    write(out: &DataStreamType),
+    [override] data(column: i32, role: i32) -> VariantType,
+    [override] set_data(column: i32, role: i32, value: &VariantType),
+    [override] read(in: &DataStreamType),
+    [override] write(out: &DataStreamType),
     parent() -> &TreeWidgetItemType,
     child(index: i32) -> &TreeWidgetItemType,
     child_count() -> i32,

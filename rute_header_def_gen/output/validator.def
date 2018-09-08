@@ -1,9 +1,9 @@
 struct Validator : Object {
     set_locale(locale: &LocaleType),
     locale() -> LocaleType,
-    validate(arg0: String, arg1: &i32) -> Validator::State,
-    fixup(arg0: String),
-    [callback] changed(),
+    [override] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [override] fixup(arg0: String),
+    [event] changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

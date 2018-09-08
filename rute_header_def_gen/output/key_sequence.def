@@ -4,8 +4,8 @@ struct KeySequence {
     count() -> i32,
     is_empty() -> bool,
     matches(seq: &KeySequenceType) -> KeySequence::SequenceMatch,
-    mnemonic(text: String) -> KeySequenceType,
-    key_bindings(key: KeySequence::StandardKey) -> [KeySequenceType],
+    [static] mnemonic(text: String) -> KeySequenceType,
+    [static] key_bindings(key: KeySequence::StandardKey) -> [KeySequenceType],
     swap(other: &KeySequenceType),
     is_detached() -> bool,
 }

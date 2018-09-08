@@ -1,7 +1,7 @@
 
 struct PointingDeviceUniqueId {
     qt_check_for_qgadget_macro(),
-    from_numeric_id(id: i64) -> PointingDeviceUniqueIdType,
+    [static] from_numeric_id(id: i64) -> PointingDeviceUniqueIdType,
     is_valid() -> bool,
     numeric_id() -> i64,
 }

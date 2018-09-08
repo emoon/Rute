@@ -48,16 +48,16 @@ struct Action : Object {
     parent_widget() -> &WidgetType,
     associated_widgets() -> [&WidgetType],
     associated_graphics_widgets() -> [&GraphicsWidgetType],
-    event(arg0: &EventType) -> bool,
+    [override] event(arg0: &EventType) -> bool,
     hover(),
     set_checked(arg0: bool),
     toggle(),
     set_enabled(arg0: bool),
     set_disabled(b: bool),
     set_visible(arg0: bool),
-    [callback] changed(),
-    [callback] hovered(),
-    [callback] toggled(arg0: bool),
+    [event] changed(),
+    [event] hovered(),
+    [event] toggled(arg0: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -14,14 +14,14 @@ struct SpinBox : AbstractSpinBox {
     set_range(min: i32, max: i32),
     display_integer_base() -> i32,
     set_display_integer_base(base: i32),
-    event(event: &EventType) -> bool,
-    validate(input: String, pos: &i32) -> Validator::State,
-    value_from_text(text: String) -> i32,
-    text_from_value(val: i32) -> String,
-    fixup(str: String),
+    [override] event(event: &EventType) -> bool,
+    [override] validate(input: String, pos: &i32) -> Validator::State,
+    [override] value_from_text(text: String) -> i32,
+    [override] text_from_value(val: i32) -> String,
+    [override] fixup(str: String),
     set_value(val: i32),
-    [callback] value_changed(arg0: i32),
-    [callback] value_changed(arg0: String),
+    [event] value_changed(arg0: i32),
+    [event] value_changed(arg0: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

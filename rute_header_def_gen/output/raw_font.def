@@ -33,7 +33,7 @@ struct RawFont {
     supports_character(character: CharType) -> bool,
     supported_writing_systems() -> List<QFontDatabase::WritingSystem>,
     font_table(tag_name: &char) -> ByteArrayType,
-    from_font(font: &FontType, writing_system: FontDatabase::WritingSystem) -> RawFontType,
+    [static] from_font(font: &FontType, writing_system: FontDatabase::WritingSystem) -> RawFontType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

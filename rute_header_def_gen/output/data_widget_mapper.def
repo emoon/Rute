@@ -23,9 +23,9 @@ struct DataWidgetMapper : Object {
     to_last(),
     to_next(),
     to_previous(),
-    set_current_index(index: i32),
+    [override] set_current_index(index: i32),
     set_current_model_index(index: &ModelIndexType),
-    [callback] current_index_changed(index: i32),
+    [event] current_index_changed(index: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,9 +1,9 @@
 
 struct JsonObject {
     swap(other: &JsonObjectType),
-    from_variant_map(map: &VariantMapType) -> JsonObjectType,
+    [static] from_variant_map(map: &VariantMapType) -> JsonObjectType,
     to_variant_map() -> VariantMapType,
-    from_variant_hash(map: &VariantHashType) -> JsonObjectType,
+    [static] from_variant_hash(map: &VariantHashType) -> JsonObjectType,
     to_variant_hash() -> VariantHashType,
     keys() -> StringListType,
     size() -> i32,

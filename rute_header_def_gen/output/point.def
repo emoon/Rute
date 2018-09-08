@@ -8,7 +8,7 @@ struct Point {
     manhattan_length() -> i32,
     rx() -> &i32,
     ry() -> &i32,
-    dot_product(p1: &PointType, p2: &PointType) -> i32,
+    [static] dot_product(p1: &PointType, p2: &PointType) -> i32,
     to_cg_point() -> CGPoint,
 }
 
