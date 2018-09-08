@@ -107,46 +107,46 @@ private:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition for a Qt wrapping function
 
-pub static QT_FUNC_DEF_TEMPLATE: &str = "
-static {{c_return_type}} {{func_name}}({{func_def}}) {
+pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}({{func_def}}) {
     {{cpp_type_name}}* qt_value = ({{cpp_type_name}}*)self_c;
 {% if c_return_type != 'void' %}
     auto ret_value = qt_value->{{qt_func_name}}({{qt_func_args}});
 
-{% if array_return %}
-{% case return_type %}
-{% when 'string' %}
+{%- if array_return %}
+{%- case return_type %}
+{%- when 'string' %}
     return return_string_array(ret_value);
-{% when 'primitive' %}
+{%- when 'primitive' %}
     return return_primitive_array<{{c_primitive_type}}>(ret_value);
-{% when 'regular' %}
+{%- when 'regular' %}
     return return_by_value_array<{{qt_type}}>(ret_value);
-{% when 'reference' %}
+{%- when 'reference' %}
     return return_pointer_array<{{qt_type}}>(ret_value);
-{% endcase %}
+{%- endcase %}
 
-{% else %}
+{%- else %}
 
-{% case return_type %}
-{% when 'string' %}
+{%- case return_type %}
+{%- when 'string' %}
     return q_string_to_const_char(&ret_value);
-{% when 'array' %}
+{%- when 'array' %}
     return build_array(ret_value);
-{% when 'primitive' %}
+{%- when 'primitive' %}
     return ret_value;
-{% else %}
+{%- else %}
     RU{{return_type}} ctl = s_{{type_snake_name}}_template;
     ctl.qt_data = (struct RUBase*){{qt_ret_value}};
     ctl.host_data = s_host_data_map[ret_value];
     return ctl;
-{% endcase %}
+{%- endcase %}
 
-{% endif %}
+{%- endif %}
 
-{% else %}
+{%- else %}
     qt_value->{{qt_func_name}}({{qt_func_args}});
-{% endif %}
+{%- endif %}
 }
+
 ";
 
 
