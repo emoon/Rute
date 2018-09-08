@@ -8,10 +8,10 @@ use heck::SnakeCase;
 use rayon::prelude::*;
 use std::borrow::Cow;
 use std::collections::HashSet;
+use std::fs::File;
+use std::io::{BufWriter, Write};
 use std::sync::RwLock;
 use walkdir::WalkDir;
-use std::io::{Write, BufWriter};
-use std::fs::File;
 
 enum FunctionType {
     Regular,
@@ -237,7 +237,6 @@ fn print_class(target_path: &str, entry: &Entity) {
         None => return,
     };
 
-
     // Only deal with Q* types
     if name.as_bytes()[0] != b'Q' {
         return;
@@ -308,13 +307,13 @@ fn print_class(target_path: &str, entry: &Entity) {
 
             EntityKind::AccessSpecifier => {
                 //println!("{:?}", field);
-            },
+            }
 
             _ => (),
         }
     }
 
-    writeln!(dest, "}}\n");
+    writeln!(dest, "}}\n\n// vim: syntax=rust expandtab ts=4 sw=4");
 }
 
 fn is_header_file(entry: &walkdir::DirEntry) -> bool {
@@ -323,6 +322,10 @@ fn is_header_file(entry: &walkdir::DirEntry) -> bool {
         .to_str()
         .map(|s| s.ends_with(".h"))
         .unwrap_or(false)
+}
+
+fn is_private_file(entry: &walkdir::DirEntry) -> bool {
+    entry.path().to_str().unwrap().contains("private")
 }
 
 fn main() {
@@ -343,6 +346,10 @@ fn main() {
         let entry = entry.unwrap();
 
         if !is_header_file(&entry) {
+            continue;
+        }
+
+        if is_private_file(&entry) {
             continue;
         }
 
