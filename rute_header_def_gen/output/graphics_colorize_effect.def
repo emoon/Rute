@@ -1,7 +1,7 @@
 struct GraphicsColorizeEffect : GraphicsEffect {
     color() -> ColorType,
-    [callback] set_color(&ColorType c),
-    color_changed(&ColorType color),
+    set_color(&ColorType c),
+    [callback] color_changed(&ColorType color),
     draw(&PainterType painter),
 }
 

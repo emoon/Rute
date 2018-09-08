@@ -2,7 +2,7 @@ struct RegExpValidator : Validator {
     validate(String input, &i32 pos) -> Validator::State,
     set_reg_exp(&RegExpType rx),
     reg_exp() -> &RegExpType,
-    reg_exp_changed(&RegExpType reg_exp),
+    [callback] reg_exp_changed(&RegExpType reg_exp),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

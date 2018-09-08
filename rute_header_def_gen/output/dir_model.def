@@ -36,7 +36,7 @@ struct DirModel : AbstractItemModel {
     file_name(&ModelIndexType index) -> String,
     file_icon(&ModelIndexType index) -> IconType,
     file_info(&ModelIndexType index) -> FileInfoType,
-    [callback] refresh(&ModelIndexType parent),
+    refresh(&ModelIndexType parent),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

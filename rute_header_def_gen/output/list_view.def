@@ -34,7 +34,7 @@ struct ListView : AbstractItemView {
     do_items_layout(),
     reset(),
     set_root_index(&ModelIndexType index),
-    indexes_moved(&ModelIndexListType indexes),
+    [callback] indexes_moved(&ModelIndexListType indexes),
     event(&EventType e) -> bool,
     scroll_contents_by(i32 dx, i32 dy),
     resize_contents(i32 width, i32 height),

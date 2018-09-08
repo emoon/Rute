@@ -11,8 +11,8 @@ struct Shortcut : Object {
     auto_repeat() -> bool,
     id() -> i32,
     parent_widget() -> &WidgetType,
-    activated(),
-    activated_ambiguously(),
+    [callback] activated(),
+    [callback] activated_ambiguously(),
     event(&EventType e) -> bool,
 }
 

@@ -9,10 +9,10 @@ struct DoubleValidator : Validator {
     top() -> double,
     decimals() -> i32,
     notation() -> DoubleValidator::Notation,
-    bottom_changed(double bottom),
-    top_changed(double top),
-    decimals_changed(i32 decimals),
-    notation_changed(DoubleValidator::Notation notation),
+    [callback] bottom_changed(double bottom),
+    [callback] top_changed(double top),
+    [callback] decimals_changed(i32 decimals),
+    [callback] notation_changed(DoubleValidator::Notation notation),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

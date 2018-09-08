@@ -14,15 +14,10 @@ use std::sync::RwLock;
 use std::io::{Seek, BufRead};
 use walkdir::WalkDir;
 
-enum FunctionType {
-    Regular,
-    Slot,
-}
-
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum AccessLevel {
     Public,
-    Slots,
+    Signal,
     Protected,
     Private
 }
@@ -139,8 +134,8 @@ fn get_access_level(entry: &Entity) -> AccessLevel {
                 let mut reader = BufReader::new(file);
                 reader.read_line(&mut line).unwrap();
 
-                if level == AccessLevel::Public && line.contains("SLOT") {
-                    level = AccessLevel::Slots;
+                if level == AccessLevel::Public && line.contains("SIGNAL") {
+                    level = AccessLevel::Signal;
                 }
             }
         }
@@ -246,7 +241,7 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
         }
     }
 
-    if func_type == AccessLevel::Slots {
+    if func_type == AccessLevel::Signal {
         write!(dest, "    [callback] ");
     } else {
         write!(dest, "    ");
@@ -395,7 +390,7 @@ fn main() {
     // Acquire an instance of `Clang`
     let clang = Clang::new().unwrap();
 
-    let mut lock = RwLock::new(HashSet::new());
+    let lock = RwLock::new(HashSet::new());
 
     // Get all the files to parse
 

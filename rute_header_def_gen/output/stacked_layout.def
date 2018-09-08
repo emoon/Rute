@@ -14,10 +14,10 @@ struct StackedLayout : Layout {
     take_at(i32 arg0) -> &LayoutItemType,
     has_height_for_width() -> bool,
     height_for_width(i32 width) -> i32,
-    widget_removed(i32 index),
-    current_changed(i32 index),
-    [callback] set_current_index(i32 index),
-    [callback] set_current_widget(&WidgetType w),
+    [callback] widget_removed(i32 index),
+    [callback] current_changed(i32 index),
+    set_current_index(i32 index),
+    set_current_widget(&WidgetType w),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,7 +1,7 @@
 struct FileSystemModel : AbstractItemModel {
-    root_path_changed(String new_path),
-    file_renamed(String path, String old_name, String new_name),
-    directory_loaded(String path),
+    [callback] root_path_changed(String new_path),
+    [callback] file_renamed(String path, String old_name, String new_name),
+    [callback] directory_loaded(String path),
     index(i32 row, i32 column, &ModelIndexType parent) -> ModelIndexType,
     index(String path, i32 column) -> ModelIndexType,
     parent(&ModelIndexType child) -> ModelIndexType,

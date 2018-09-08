@@ -16,7 +16,7 @@ struct WizardPage : Widget {
     validate_page() -> bool,
     is_complete() -> bool,
     next_id() -> i32,
-    complete_changed(),
+    [callback] complete_changed(),
     set_field(String name, &VariantType value),
     field(String name) -> VariantType,
     register_field(String name, &WidgetType widget, &char property, &char changed_signal),

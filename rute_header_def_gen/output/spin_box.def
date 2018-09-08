@@ -19,9 +19,9 @@ struct SpinBox : AbstractSpinBox {
     value_from_text(String text) -> i32,
     text_from_value(i32 val) -> String,
     fixup(String str),
-    [callback] set_value(i32 val),
-    value_changed(i32 arg0),
-    value_changed(String arg0),
+    set_value(i32 val),
+    [callback] value_changed(i32 arg0),
+    [callback] value_changed(String arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

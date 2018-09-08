@@ -9,7 +9,7 @@ struct PushButton : AbstractButton {
     menu() -> &MenuType,
     set_flat(bool arg0),
     is_flat() -> bool,
-    [callback] show_menu(),
+    show_menu(),
     event(&EventType e) -> bool,
     paint_event(&PaintEventType arg0),
     key_press_event(&KeyEventType arg0),

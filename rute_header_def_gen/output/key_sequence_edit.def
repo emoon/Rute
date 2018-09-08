@@ -1,9 +1,9 @@
 struct KeySequenceEdit : Widget {
     key_sequence() -> KeySequenceType,
-    [callback] set_key_sequence(&KeySequenceType key_sequence),
-    [callback] clear(),
-    editing_finished(),
-    key_sequence_changed(&KeySequenceType key_sequence),
+    set_key_sequence(&KeySequenceType key_sequence),
+    clear(),
+    [callback] editing_finished(),
+    [callback] key_sequence_changed(&KeySequenceType key_sequence),
     event(&EventType arg0) -> bool,
     key_press_event(&KeyEventType arg0),
     key_release_event(&KeyEventType arg0),

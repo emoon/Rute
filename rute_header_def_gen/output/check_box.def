@@ -5,7 +5,7 @@ struct CheckBox : AbstractButton {
     is_tristate() -> bool,
     check_state() -> Rute::CheckState,
     set_check_state(Rute::CheckState state),
-    state_changed(i32 arg0),
+    [callback] state_changed(i32 arg0),
     event(&EventType e) -> bool,
     hit_button(&PointType pos) -> bool,
     check_state_set(),

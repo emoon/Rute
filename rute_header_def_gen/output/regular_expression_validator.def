@@ -1,8 +1,8 @@
 struct RegularExpressionValidator : Validator {
     validate(String input, &i32 pos) -> Validator::State,
     regular_expression() -> RegularExpressionType,
-    [callback] set_regular_expression(&RegularExpressionType re),
-    regular_expression_changed(&RegularExpressionType re),
+    set_regular_expression(&RegularExpressionType re),
+    [callback] regular_expression_changed(&RegularExpressionType re),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

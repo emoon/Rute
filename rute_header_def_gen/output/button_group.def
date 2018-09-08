@@ -9,14 +9,14 @@ struct ButtonGroup : Object {
     set_id(&AbstractButtonType button, i32 id),
     id(&AbstractButtonType button) -> i32,
     checked_id() -> i32,
-    button_clicked(&AbstractButtonType arg0),
-    button_clicked(i32 arg0),
-    button_pressed(&AbstractButtonType arg0),
-    button_pressed(i32 arg0),
-    button_released(&AbstractButtonType arg0),
-    button_released(i32 arg0),
-    button_toggled(&AbstractButtonType arg0, bool arg1),
-    button_toggled(i32 arg0, bool arg1),
+    [callback] button_clicked(&AbstractButtonType arg0),
+    [callback] button_clicked(i32 arg0),
+    [callback] button_pressed(&AbstractButtonType arg0),
+    [callback] button_pressed(i32 arg0),
+    [callback] button_released(&AbstractButtonType arg0),
+    [callback] button_released(i32 arg0),
+    [callback] button_toggled(&AbstractButtonType arg0, bool arg1),
+    [callback] button_toggled(i32 arg0, bool arg1),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

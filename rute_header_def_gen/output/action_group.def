@@ -8,11 +8,11 @@ struct ActionGroup : Object {
     is_exclusive() -> bool,
     is_enabled() -> bool,
     is_visible() -> bool,
-    [callback] set_enabled(bool arg0),
-    [callback] set_disabled(bool b),
-    [callback] set_visible(bool arg0),
-    [callback] set_exclusive(bool arg0),
-    hovered(&ActionType arg0),
+    set_enabled(bool arg0),
+    set_disabled(bool b),
+    set_visible(bool arg0),
+    set_exclusive(bool arg0),
+    [callback] hovered(&ActionType arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

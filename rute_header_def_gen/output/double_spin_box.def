@@ -18,9 +18,9 @@ struct DoubleSpinBox : AbstractSpinBox {
     value_from_text(String text) -> double,
     text_from_value(double val) -> String,
     fixup(String str),
-    [callback] set_value(double val),
-    value_changed(double arg0),
-    value_changed(String arg0),
+    set_value(double val),
+    [callback] value_changed(double arg0),
+    [callback] value_changed(String arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

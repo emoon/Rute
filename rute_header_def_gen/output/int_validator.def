@@ -6,8 +6,8 @@ struct IntValidator : Validator {
     set_range(i32 bottom, i32 top),
     bottom() -> i32,
     top() -> i32,
-    bottom_changed(i32 bottom),
-    top_changed(i32 top),
+    [callback] bottom_changed(i32 bottom),
+    [callback] top_changed(i32 top),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

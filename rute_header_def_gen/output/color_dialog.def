@@ -15,8 +15,8 @@ struct ColorDialog : Dialog {
     set_custom_color(i32 index, ColorType color),
     standard_color(i32 index) -> ColorType,
     set_standard_color(i32 index, ColorType color),
-    current_color_changed(&ColorType color),
-    color_selected(&ColorType color),
+    [callback] current_color_changed(&ColorType color),
+    [callback] color_selected(&ColorType color),
     change_event(&EventType event),
     done(i32 result),
 }

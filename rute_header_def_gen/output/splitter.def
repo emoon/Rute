@@ -24,7 +24,7 @@ struct Splitter : Frame {
     count() -> i32,
     get_range(i32 index, &i32 arg0, &i32 arg1),
     handle(i32 index) -> &SplitterHandleType,
-    splitter_moved(i32 pos, i32 index),
+    [callback] splitter_moved(i32 pos, i32 index),
     create_handle() -> &SplitterHandleType,
     child_event(&ChildEventType arg0),
     event(&EventType arg0) -> bool,

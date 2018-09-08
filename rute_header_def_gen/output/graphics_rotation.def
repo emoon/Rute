@@ -7,9 +7,9 @@ struct GraphicsRotation : GraphicsTransform {
     set_axis(&Vector3DType axis),
     set_axis(Rute::Axis axis),
     apply_to(&Matrix4x4Type matrix),
-    origin_changed(),
-    angle_changed(),
-    axis_changed(),
+    [callback] origin_changed(),
+    [callback] angle_changed(),
+    [callback] axis_changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

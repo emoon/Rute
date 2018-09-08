@@ -56,7 +56,7 @@ struct MessageBox : Dialog {
     set_window_title(String title),
     set_window_modality(Rute::WindowModality window_modality),
     standard_icon(MessageBox::Icon icon) -> PixmapType,
-    button_clicked(&AbstractButtonType button),
+    [callback] button_clicked(&AbstractButtonType button),
     event(&EventType e) -> bool,
     resize_event(&ResizeEventType event),
     show_event(&ShowEventType event),

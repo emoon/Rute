@@ -1,5 +1,5 @@
 struct ColumnView : AbstractItemView {
-    update_preview_widget(&ModelIndexType index),
+    [callback] update_preview_widget(&ModelIndexType index),
     index_at(&PointType point) -> ModelIndexType,
     scroll_to(&ModelIndexType index, AbstractItemView::ScrollHint hint),
     size_hint() -> SizeType,

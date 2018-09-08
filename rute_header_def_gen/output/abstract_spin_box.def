@@ -29,10 +29,10 @@ struct AbstractSpinBox : Widget {
     validate(String input, &i32 pos) -> Validator::State,
     fixup(String input),
     step_by(i32 steps),
-    [callback] step_up(),
-    [callback] step_down(),
-    [callback] select_all(),
-    [callback] clear(),
+    step_up(),
+    step_down(),
+    select_all(),
+    clear(),
     resize_event(&ResizeEventType event),
     key_press_event(&KeyEventType event),
     key_release_event(&KeyEventType event),
@@ -53,7 +53,7 @@ struct AbstractSpinBox : Widget {
     line_edit() -> &LineEditType,
     set_line_edit(&LineEditType edit),
     step_enabled() -> StepEnabled,
-    editing_finished(),
+    [callback] editing_finished(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -8,11 +8,11 @@ struct GraphicsScale : GraphicsTransform {
     z_scale() -> f32,
     set_z_scale(f32 arg0),
     apply_to(&Matrix4x4Type matrix),
-    origin_changed(),
-    x_scale_changed(),
-    y_scale_changed(),
-    z_scale_changed(),
-    scale_changed(),
+    [callback] origin_changed(),
+    [callback] x_scale_changed(),
+    [callback] y_scale_changed(),
+    [callback] z_scale_changed(),
+    [callback] scale_changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

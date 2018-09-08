@@ -18,14 +18,14 @@ struct Scroller : Object {
     set_snap_positions_x(f32 first, f32 interval),
     set_snap_positions_y(&List<qreal>Type positions),
     set_snap_positions_y(f32 first, f32 interval),
-    [callback] set_scroller_properties(&ScrollerPropertiesType prop),
-    [callback] scroll_to(&PointFType pos),
-    [callback] scroll_to(&PointFType pos, i32 scroll_time),
-    [callback] ensure_visible(&RectFType rect, f32 xmargin, f32 ymargin),
-    [callback] ensure_visible(&RectFType rect, f32 xmargin, f32 ymargin, i32 scroll_time),
-    [callback] resend_prepare_event(),
-    state_changed(Scroller::State newstate),
-    scroller_properties_changed(&ScrollerPropertiesType arg0),
+    set_scroller_properties(&ScrollerPropertiesType prop),
+    scroll_to(&PointFType pos),
+    scroll_to(&PointFType pos, i32 scroll_time),
+    ensure_visible(&RectFType rect, f32 xmargin, f32 ymargin),
+    ensure_visible(&RectFType rect, f32 xmargin, f32 ymargin, i32 scroll_time),
+    resend_prepare_event(),
+    [callback] state_changed(Scroller::State newstate),
+    [callback] scroller_properties_changed(&ScrollerPropertiesType arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

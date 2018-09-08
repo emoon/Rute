@@ -3,7 +3,7 @@ struct Validator : Object {
     locale() -> LocaleType,
     validate(String arg0, &i32 arg1) -> Validator::State,
     fixup(String arg0),
-    changed(),
+    [callback] changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

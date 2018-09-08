@@ -8,9 +8,9 @@ struct AbstractItemDelegate : Object {
     elided_text(&FontMetricsType font_metrics, i32 width, Rute::TextElideMode mode, String text) -> String,
     help_event(&HelpEventType event, &AbstractItemViewType view, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
     painting_roles() -> Vector<int>Type,
-    commit_data(&WidgetType editor),
-    close_editor(&WidgetType editor, AbstractItemDelegate::EndEditHint hint),
-    size_hint_changed(&ModelIndexType arg0),
+    [callback] commit_data(&WidgetType editor),
+    [callback] close_editor(&WidgetType editor, AbstractItemDelegate::EndEditHint hint),
+    [callback] size_hint_changed(&ModelIndexType arg0),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

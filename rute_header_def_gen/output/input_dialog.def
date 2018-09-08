@@ -49,12 +49,12 @@ struct InputDialog : Dialog {
     get_double(&WidgetType parent, String title, String label, double value, double min_value, double max_value, i32 decimals, &bool ok, Rute::WindowFlags flags, double step) -> double,
     set_double_step(double step),
     double_step() -> double,
-    text_value_changed(String text),
-    text_value_selected(String text),
-    int_value_changed(i32 value),
-    int_value_selected(i32 value),
-    double_value_changed(double value),
-    double_value_selected(double value),
+    [callback] text_value_changed(String text),
+    [callback] text_value_selected(String text),
+    [callback] int_value_changed(i32 value),
+    [callback] int_value_selected(i32 value),
+    [callback] double_value_changed(double value),
+    [callback] double_value_selected(double value),
     done(i32 result),
 }
 
