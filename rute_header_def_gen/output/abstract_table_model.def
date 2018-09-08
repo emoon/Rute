@@ -1,0 +1,9 @@
+struct AbstractTableModel : AbstractItemModel {
+    index(i32 row, i32 column, &ModelIndexType parent) -> ModelIndexType,
+    sibling(i32 row, i32 column, &ModelIndexType idx) -> ModelIndexType,
+    drop_mime_data(&MimeDataType data, Rute::DropAction action, i32 row, i32 column, &ModelIndexType parent) -> bool,
+    flags(&ModelIndexType index) -> Rute::ItemFlags,
+    parent(&ModelIndexType child) -> ModelIndexType,
+    has_children(&ModelIndexType parent) -> bool,
+}
+

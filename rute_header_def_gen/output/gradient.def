@@ -1,0 +1,15 @@
+
+struct Gradient {
+    qt_check_for_qgadget_macro(),
+    type() -> Gradient::Type,
+    set_spread(Gradient::Spread spread),
+    spread() -> Gradient::Spread,
+    set_color_at(f32 pos, &ColorType color),
+    set_stops(&GradientStopsType stops),
+    stops() -> GradientStopsType,
+    coordinate_mode() -> Gradient::CoordinateMode,
+    set_coordinate_mode(Gradient::CoordinateMode mode),
+    interpolation_mode() -> Gradient::InterpolationMode,
+    set_interpolation_mode(Gradient::InterpolationMode mode),
+}
+

@@ -1,0 +1,8 @@
+struct ConicalGradient : Gradient {
+    center() -> PointFType,
+    set_center(&PointFType center),
+    set_center(f32 x, f32 y),
+    angle() -> f32,
+    set_angle(f32 angle),
+}
+

@@ -1,0 +1,11 @@
+struct AccessibleGroupBox : AccessibleWidget {
+    state() -> Accessible::State,
+    role() -> Accessible::Role,
+    text(Accessible::Text t) -> String,
+    relations(Accessible::Relation match) -> Vector<QPair<QAccessibleInterface *, QAccessible::Relation> >,
+    action_names() -> StringListType,
+    do_action(String action_name),
+    key_bindings_for_action(String arg0) -> StringListType,
+    group_box() -> &GroupBoxType,
+}
+

@@ -1,0 +1,4 @@
+struct TimeEdit : DateTimeEdit {
+    user_time_changed(&TimeType time),
+}
+

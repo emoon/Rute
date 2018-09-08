@@ -1,0 +1,12 @@
+struct KeyEvent : InputEvent {
+    key() -> i32,
+    matches(KeySequence::StandardKey key) -> bool,
+    modifiers() -> Rute::KeyboardModifiers,
+    text() -> String,
+    is_auto_repeat() -> bool,
+    count() -> i32,
+    native_scan_code() -> quint32,
+    native_virtual_key() -> quint32,
+    native_modifiers() -> quint32,
+}
+

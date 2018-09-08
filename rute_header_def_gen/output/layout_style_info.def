@@ -1,0 +1,10 @@
+
+struct LayoutStyleInfo {
+    invalidate(),
+    style() -> &StyleType,
+    widget() -> &WidgetType,
+    set_default_spacing(Rute::Orientation o, f32 spacing),
+    default_spacing(Rute::Orientation o) -> f32,
+    per_item_spacing(SizePolicy::ControlType control1, SizePolicy::ControlType control2, Rute::Orientation orientation) -> f32,
+}
+

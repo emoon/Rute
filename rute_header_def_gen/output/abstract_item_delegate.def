@@ -1,0 +1,15 @@
+struct AbstractItemDelegate : Object {
+    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
+    size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
+    create_editor(&WidgetType parent, &StyleOptionViewItemType option, &ModelIndexType index) -> &WidgetType,
+    set_editor_data(&WidgetType editor, &ModelIndexType index),
+    set_model_data(&WidgetType editor, &AbstractItemModelType model, &ModelIndexType index),
+    editor_event(&EventType event, &AbstractItemModelType model, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
+    elided_text(&FontMetricsType font_metrics, i32 width, Rute::TextElideMode mode, String text) -> String,
+    help_event(&HelpEventType event, &AbstractItemViewType view, &StyleOptionViewItemType option, &ModelIndexType index) -> bool,
+    painting_roles() -> Vector<int>Type,
+    commit_data(&WidgetType editor),
+    close_editor(&WidgetType editor, AbstractItemDelegate::EndEditHint hint),
+    size_hint_changed(&ModelIndexType arg0),
+}
+

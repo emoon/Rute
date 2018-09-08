@@ -1,0 +1,7 @@
+
+struct MacPinchGestureRecognizer {
+    create(&i32 target) -> &i32,
+    recognize(&i32 gesture, &i32 watched, &i32 event) -> i32,
+    reset(&i32 gesture),
+}
+

@@ -1,0 +1,19 @@
+struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
+    draw(&PainterType arg0, onst QAbstractTextDocumentLayout::PaintContext & arg1),
+    hit_test(&PointFType arg0, Rute::HitTestAccuracy arg1) -> i32,
+    page_count() -> i32,
+    document_size() -> SizeFType,
+    frame_bounding_rect(&TextFrameType arg0) -> RectFType,
+    block_bounding_rect(&TextBlockType block) -> RectFType,
+    ensure_block_layout(&TextBlockType block),
+    set_cursor_width(i32 width),
+    cursor_width() -> i32,
+    request_update(),
+    document_changed(i32 from, i32 arg0, i32 chars_added),
+    set_text_width(f32 new_width),
+    text_width() -> f32,
+    layout_block(&TextBlockType block),
+    block_width(&TextBlockType block) -> f32,
+    priv() -> &PlainTextDocumentLayoutPrivateType,
+}
+

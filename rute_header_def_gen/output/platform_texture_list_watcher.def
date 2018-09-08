@@ -1,0 +1,6 @@
+struct PlatformTextureListWatcher : Object {
+    watch(&PlatformTextureListType texture_list),
+    is_locked() -> bool,
+    on_lock_status_changed(bool locked),
+}
+

@@ -1,0 +1,6 @@
+
+struct FSCompleter {
+    path_from_index(&ModelIndexType index) -> String,
+    split_path(String path) -> StringListType,
+}
+

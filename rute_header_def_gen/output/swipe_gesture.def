@@ -1,0 +1,7 @@
+struct SwipeGesture : Gesture {
+    horizontal_direction() -> SwipeGesture::SwipeDirection,
+    vertical_direction() -> SwipeGesture::SwipeDirection,
+    swipe_angle() -> f32,
+    set_swipe_angle(f32 value),
+}
+

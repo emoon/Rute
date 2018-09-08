@@ -1,0 +1,6 @@
+struct AccessibleTextSelectionEvent : AccessibleTextCursorEvent {
+    set_selection(i32 start, i32 end),
+    selection_start() -> i32,
+    selection_end() -> i32,
+}
+

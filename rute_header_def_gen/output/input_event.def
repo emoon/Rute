@@ -1,0 +1,7 @@
+struct InputEvent : Event {
+    modifiers() -> Rute::KeyboardModifiers,
+    set_modifiers(Rute::KeyboardModifiers amodifiers),
+    timestamp() -> ulong,
+    set_timestamp(ulong atimestamp),
+}
+

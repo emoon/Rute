@@ -1,0 +1,8 @@
+struct Validator : Object {
+    set_locale(&LocaleType locale),
+    locale() -> LocaleType,
+    validate(String arg0, &i32 arg1) -> Validator::State,
+    fixup(String arg0),
+    changed(),
+}
+

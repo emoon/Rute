@@ -1,0 +1,7 @@
+
+struct MutexLocker {
+    unlock(),
+    relock(),
+    mutex() -> &MutexType,
+}
+

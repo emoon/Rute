@@ -1,0 +1,15 @@
+
+struct KeySequence {
+    qt_check_for_qgadget_macro(),
+    count() -> i32,
+    is_empty() -> bool,
+    matches(&KeySequenceType seq) -> KeySequence::SequenceMatch,
+    mnemonic(String text) -> KeySequenceType,
+    key_bindings(KeySequence::StandardKey key) -> <KeySequenceType>,
+    swap(&KeySequenceType other),
+    is_detached() -> bool,
+    assign(String str) -> i32,
+    assign(String str, KeySequence::SequenceFormat format) -> i32,
+    set_key(i32 key, i32 index),
+}
+

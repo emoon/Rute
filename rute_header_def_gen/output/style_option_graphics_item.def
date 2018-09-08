@@ -1,0 +1,4 @@
+struct StyleOptionGraphicsItem : StyleOption {
+    level_of_detail_from_transform(&TransformType world_transform) -> f32,
+}
+

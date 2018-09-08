@@ -1,0 +1,5 @@
+struct AccessibleTextInsertEvent : AccessibleTextCursorEvent {
+    text_inserted() -> String,
+    change_position() -> i32,
+}
+

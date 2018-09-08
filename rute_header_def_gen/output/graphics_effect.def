@@ -1,0 +1,17 @@
+struct GraphicsEffect : Object {
+    bounding_rect_for(&RectFType source_rect) -> RectFType,
+    bounding_rect() -> RectFType,
+    is_enabled() -> bool,
+    set_enabled(bool enable),
+    update(),
+    enabled_changed(bool enabled),
+    draw(&PainterType painter),
+    source_changed(ChangeFlags flags),
+    update_bounding_rect(),
+    source_is_pixmap() -> bool,
+    source_bounding_rect(Rute::CoordinateSystem system) -> RectFType,
+    draw_source(&PainterType painter),
+    source_pixmap(Rute::CoordinateSystem system, &PointType offset, GraphicsEffect::PixmapPadMode mode) -> PixmapType,
+    source() -> &GraphicsEffectSourceType,
+}
+

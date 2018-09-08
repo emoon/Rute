@@ -1,0 +1,14 @@
+struct GraphicsSceneIndex : Object {
+    scene() -> &i32,
+    items(Rute::SortOrder order) -> i32,
+    estimate_items(&PointFType point, Rute::SortOrder order) -> i32,
+    estimate_top_level_items(&RectFType arg0, Rute::SortOrder order) -> i32,
+    update_scene_rect(&RectFType rect),
+    clear(),
+    add_item(&i32 item),
+    remove_item(&i32 item),
+    delete_item(&i32 item),
+    item_change(&i32 item, i32 arg0, &void value),
+    prepare_bounding_rect_change(&i32 item),
+}
+

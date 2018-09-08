@@ -1,0 +1,9 @@
+
+struct GraphicsGridLayoutEngineItem {
+    size_policy(Rute::Orientation orientation) -> i32,
+    size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
+    is_hidden() -> bool,
+    is_ignored() -> bool,
+    layout_item() -> &i32,
+}
+

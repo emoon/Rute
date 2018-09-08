@@ -1,0 +1,19 @@
+
+struct RegularExpression {
+    pattern_options() -> PatternOptions,
+    set_pattern_options(PatternOptions options),
+    swap(&RegularExpressionType other),
+    pattern() -> String,
+    set_pattern(String pattern),
+    is_valid() -> bool,
+    pattern_error_offset() -> i32,
+    capture_count() -> i32,
+    named_capture_groups() -> StringListType,
+    match(String subject, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchType,
+    match(&StringRefType subject_ref, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchType,
+    global_match(String subject, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchIteratorType,
+    global_match(&StringRefType subject_ref, i32 offset, RegularExpression::MatchType match_type, MatchOptions match_options) -> RegularExpressionMatchIteratorType,
+    optimize(),
+    escape(String str) -> String,
+}
+

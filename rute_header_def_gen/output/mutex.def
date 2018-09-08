@@ -1,0 +1,6 @@
+struct Mutex : BasicMutex {
+    lock(),
+    unlock(),
+    is_recursive() -> bool,
+}
+

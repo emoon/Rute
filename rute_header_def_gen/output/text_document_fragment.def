@@ -1,0 +1,10 @@
+
+struct TextDocumentFragment {
+    is_empty() -> bool,
+    to_plain_text() -> String,
+    to_html(&ByteArrayType encoding) -> String,
+    from_plain_text(String plain_text) -> TextDocumentFragmentType,
+    from_html(String html) -> TextDocumentFragmentType,
+    from_html(String html, &TextDocumentType resource_provider) -> TextDocumentFragmentType,
+}
+

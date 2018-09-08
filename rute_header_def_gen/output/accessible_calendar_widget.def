@@ -1,0 +1,9 @@
+struct AccessibleCalendarWidget : AccessibleWidget {
+    child_count() -> i32,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    child(i32 index) -> &AccessibleInterfaceType,
+    calendar_widget() -> &CalendarWidgetType,
+    calendar_view() -> &AbstractItemViewType,
+    navigation_bar() -> &WidgetType,
+}
+

@@ -1,0 +1,5 @@
+struct AccessibleTextRemoveEvent : AccessibleTextCursorEvent {
+    text_removed() -> String,
+    change_position() -> i32,
+}
+

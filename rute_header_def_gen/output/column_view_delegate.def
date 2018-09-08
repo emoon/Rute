@@ -1,0 +1,4 @@
+struct ColumnViewDelegate : ItemDelegate {
+    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
+}
+

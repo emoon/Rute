@@ -1,0 +1,7 @@
+
+struct TextLength {
+    type() -> TextLength::Type,
+    value(f32 maximum_length) -> f32,
+    raw_value() -> f32,
+}
+

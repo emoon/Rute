@@ -1,0 +1,6 @@
+struct MacNativeWidget : Widget {
+    size_hint() -> SizeType,
+    native_view() -> &NSView,
+    event(&EventType ev) -> bool,
+}
+

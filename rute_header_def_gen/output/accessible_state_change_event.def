@@ -1,0 +1,4 @@
+struct AccessibleStateChangeEvent : AccessibleEvent {
+    changed_states() -> Accessible::State,
+}
+

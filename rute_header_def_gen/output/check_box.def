@@ -1,0 +1,17 @@
+struct CheckBox : AbstractButton {
+    size_hint() -> SizeType,
+    minimum_size_hint() -> SizeType,
+    set_tristate(bool y),
+    is_tristate() -> bool,
+    check_state() -> Rute::CheckState,
+    set_check_state(Rute::CheckState state),
+    state_changed(i32 arg0),
+    event(&EventType e) -> bool,
+    hit_button(&PointType pos) -> bool,
+    check_state_set(),
+    next_check_state(),
+    paint_event(&PaintEventType arg0),
+    mouse_move_event(&MouseEventType arg0),
+    init_style_option(&StyleOptionButtonType option),
+}
+

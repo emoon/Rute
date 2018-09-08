@@ -1,0 +1,20 @@
+struct GraphicsLinearLayout : GraphicsLayout {
+    set_orientation(Rute::Orientation orientation),
+    orientation() -> Rute::Orientation,
+    add_item(&GraphicsLayoutItemType item),
+    insert_item(i32 index, &GraphicsLayoutItemType item),
+    remove_item(&GraphicsLayoutItemType item),
+    remove_at(i32 index),
+    set_spacing(f32 spacing),
+    spacing() -> f32,
+    set_item_spacing(i32 index, f32 spacing),
+    item_spacing(i32 index) -> f32,
+    set_alignment(&GraphicsLayoutItemType item, Rute::Alignment alignment),
+    alignment(&GraphicsLayoutItemType item) -> Rute::Alignment,
+    count() -> i32,
+    item_at(i32 index) -> &GraphicsLayoutItemType,
+    invalidate(),
+    size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
+    dump(i32 indent),
+}
+

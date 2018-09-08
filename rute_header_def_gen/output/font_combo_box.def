@@ -1,0 +1,12 @@
+struct FontComboBox : ComboBox {
+    set_writing_system(FontDatabase::WritingSystem arg0),
+    writing_system() -> FontDatabase::WritingSystem,
+    set_font_filters(FontFilters filters),
+    font_filters() -> FontFilters,
+    current_font() -> FontType,
+    size_hint() -> SizeType,
+    set_current_font(&FontType f),
+    current_font_changed(&FontType f),
+    event(&EventType e) -> bool,
+}
+

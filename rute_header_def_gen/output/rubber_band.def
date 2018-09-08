@@ -1,0 +1,15 @@
+struct RubberBand : Widget {
+    shape() -> RubberBand::Shape,
+    move(i32 x, i32 y),
+    move(&PointType p),
+    resize(i32 w, i32 h),
+    resize(&SizeType s),
+    event(&EventType e) -> bool,
+    paint_event(&PaintEventType arg0),
+    change_event(&EventType arg0),
+    show_event(&ShowEventType arg0),
+    resize_event(&ResizeEventType arg0),
+    move_event(&MoveEventType arg0),
+    init_style_option(&StyleOptionRubberBandType option),
+}
+

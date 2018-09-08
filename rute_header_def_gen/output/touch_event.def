@@ -1,0 +1,13 @@
+struct TouchEvent : InputEvent {
+    window() -> &WindowType,
+    target() -> &ObjectType,
+    touch_point_states() -> Rute::TouchPointStates,
+    touch_points() -> onst QList<QTouchEvent::TouchPoint> &,
+    device() -> &TouchDeviceType,
+    set_window(&WindowType awindow),
+    set_target(&ObjectType atarget),
+    set_touch_point_states(Rute::TouchPointStates a_touch_point_states),
+    set_touch_points(onst QList<QTouchEvent::TouchPoint> & atouch_points),
+    set_device(&TouchDeviceType adevice),
+}
+

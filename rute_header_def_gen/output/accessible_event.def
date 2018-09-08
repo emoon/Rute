@@ -1,0 +1,10 @@
+
+struct AccessibleEvent {
+    type() -> Accessible::Event,
+    object() -> &ObjectType,
+    unique_id() -> Accessible::Id,
+    set_child(i32 chld),
+    child() -> i32,
+    accessible_interface() -> &AccessibleInterfaceType,
+}
+

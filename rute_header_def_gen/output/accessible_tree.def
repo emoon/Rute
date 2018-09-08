@@ -1,0 +1,14 @@
+struct AccessibleTree : AccessibleTable {
+    child_at(i32 x, i32 y) -> &AccessibleInterfaceType,
+    child_count() -> i32,
+    child(i32 index) -> &AccessibleInterfaceType,
+    index_of_child(&AccessibleInterfaceType arg0) -> i32,
+    row_count() -> i32,
+    cell_at(i32 row, i32 column) -> &AccessibleInterfaceType,
+    row_description(i32 row) -> String,
+    is_row_selected(i32 row) -> bool,
+    select_row(i32 row) -> bool,
+    index_from_logical(i32 row, i32 column) -> ModelIndexType,
+    logical_index(&ModelIndexType index) -> i32,
+}
+

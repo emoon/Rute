@@ -1,0 +1,11 @@
+struct Gesture : Object {
+    gesture_type() -> Rute::GestureType,
+    state() -> Rute::GestureState,
+    hot_spot() -> PointFType,
+    set_hot_spot(&PointFType value),
+    has_hot_spot() -> bool,
+    unset_hot_spot(),
+    set_gesture_cancel_policy(Gesture::GestureCancelPolicy policy),
+    gesture_cancel_policy() -> Gesture::GestureCancelPolicy,
+}
+

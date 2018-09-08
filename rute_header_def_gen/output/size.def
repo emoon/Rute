@@ -1,0 +1,20 @@
+
+struct Size {
+    is_null() -> bool,
+    is_empty() -> bool,
+    is_valid() -> bool,
+    width() -> i32,
+    height() -> i32,
+    set_width(i32 w),
+    set_height(i32 h),
+    scale(i32 w, i32 h, Rute::AspectRatioMode mode),
+    scale(&SizeType s, Rute::AspectRatioMode mode),
+    scaled(i32 w, i32 h, Rute::AspectRatioMode mode) -> SizeType,
+    scaled(&SizeType s, Rute::AspectRatioMode mode) -> SizeType,
+    expanded_to(&SizeType arg0) -> SizeType,
+    bounded_to(&SizeType arg0) -> SizeType,
+    rwidth() -> &i32,
+    rheight() -> &i32,
+    to_cg_size() -> CGSize,
+}
+

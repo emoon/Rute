@@ -1,0 +1,12 @@
+
+struct StringList {
+    contains(String str, Rute::CaseSensitivity cs) -> bool,
+    contains(Latin1StringType str, Rute::CaseSensitivity cs) -> bool,
+    index_of(&RegExpType rx, i32 from) -> i32,
+    last_index_of(&RegExpType rx, i32 from) -> i32,
+    index_of(&RegExpType rx, i32 from) -> i32,
+    last_index_of(&RegExpType rx, i32 from) -> i32,
+    index_of(&RegularExpressionType re, i32 from) -> i32,
+    last_index_of(&RegularExpressionType re, i32 from) -> i32,
+}
+

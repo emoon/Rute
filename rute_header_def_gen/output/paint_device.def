@@ -1,0 +1,23 @@
+
+struct PaintDevice {
+    dev_type() -> i32,
+    painting_active() -> bool,
+    paint_engine() -> &PaintEngineType,
+    width() -> i32,
+    height() -> i32,
+    width_mm() -> i32,
+    height_mm() -> i32,
+    logical_dpi_x() -> i32,
+    logical_dpi_y() -> i32,
+    physical_dpi_x() -> i32,
+    physical_dpi_y() -> i32,
+    device_pixel_ratio() -> i32,
+    device_pixel_ratio_f() -> f32,
+    color_count() -> i32,
+    depth() -> i32,
+    device_pixel_ratio_f_scale() -> f32,
+    init_painter(&PainterType painter),
+    redirected(&PointType offset) -> &PaintDeviceType,
+    shared_painter() -> &PainterType,
+}
+

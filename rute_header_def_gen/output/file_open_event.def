@@ -1,0 +1,6 @@
+struct FileOpenEvent : Event {
+    file() -> String,
+    url() -> UrlType,
+    open_file(&FileType file, IODevice::OpenMode flags) -> bool,
+}
+

@@ -1,0 +1,5 @@
+struct ResizeEvent : Event {
+    size() -> &SizeType,
+    old_size() -> &SizeType,
+}
+

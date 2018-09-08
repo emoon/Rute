@@ -1,0 +1,19 @@
+struct WheelEvent : InputEvent {
+    pixel_delta() -> PointType,
+    angle_delta() -> PointType,
+    delta() -> i32,
+    orientation() -> Rute::Orientation,
+    pos() -> PointType,
+    global_pos() -> PointType,
+    x() -> i32,
+    y() -> i32,
+    global_x() -> i32,
+    global_y() -> i32,
+    pos_f() -> &PointFType,
+    global_pos_f() -> &PointFType,
+    buttons() -> Rute::MouseButtons,
+    phase() -> Rute::ScrollPhase,
+    inverted() -> bool,
+    source() -> Rute::MouseEventSource,
+}
+

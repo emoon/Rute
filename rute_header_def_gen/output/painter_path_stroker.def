@@ -1,0 +1,19 @@
+
+struct PainterPathStroker {
+    set_width(f32 width),
+    width() -> f32,
+    set_cap_style(Rute::PenCapStyle style),
+    cap_style() -> Rute::PenCapStyle,
+    set_join_style(Rute::PenJoinStyle style),
+    join_style() -> Rute::PenJoinStyle,
+    set_miter_limit(f32 length),
+    miter_limit() -> f32,
+    set_curve_threshold(f32 threshold),
+    curve_threshold() -> f32,
+    set_dash_pattern(Rute::PenStyle arg0),
+    set_dash_pattern(&Vector<qreal>Type dash_pattern),
+    dash_pattern() -> Vector<qreal>Type,
+    set_dash_offset(f32 offset),
+    dash_offset() -> f32,
+}
+

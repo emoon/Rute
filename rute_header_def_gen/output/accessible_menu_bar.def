@@ -1,0 +1,7 @@
+struct AccessibleMenuBar : AccessibleWidget {
+    child(i32 index) -> &AccessibleInterfaceType,
+    child_count() -> i32,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    menu_bar() -> &MenuBarType,
+}
+

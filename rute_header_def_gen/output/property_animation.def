@@ -1,0 +1,10 @@
+struct PropertyAnimation : VariantAnimation {
+    target_object() -> &ObjectType,
+    set_target_object(&ObjectType target),
+    property_name() -> ByteArrayType,
+    set_property_name(&ByteArrayType property_name),
+    event(&EventType event) -> bool,
+    update_current_value(&VariantType value),
+    update_state(AbstractAnimation::State new_state, AbstractAnimation::State old_state),
+}
+

@@ -1,0 +1,20 @@
+struct CalendarPopup : Widget {
+    selected_date() -> DateType,
+    set_date(&DateType date),
+    set_date_range(&DateType min, &DateType max),
+    set_first_day_of_week(Rute::DayOfWeek dow),
+    calendar_widget() -> &CalendarWidgetType,
+    set_calendar_widget(&CalendarWidgetType cw),
+    activated(&DateType date),
+    new_date_selected(&DateType new_date),
+    hiding_calendar(&DateType old_date),
+    reset_button(),
+    date_selected(&DateType date),
+    date_selection_changed(),
+    hide_event(&HideEventType arg0),
+    mouse_press_event(&MouseEventType e),
+    mouse_release_event(&MouseEventType arg0),
+    event(&EventType e) -> bool,
+    verify_calendar_instance() -> &CalendarWidgetType,
+}
+

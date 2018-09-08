@@ -1,0 +1,7 @@
+
+struct Internal {
+    register_callback(Internal::Callback arg0, qInternalCallback arg1) -> bool,
+    unregister_callback(Internal::Callback arg0, qInternalCallback arg1) -> bool,
+    activate_callbacks(Internal::Callback arg0, &void arg1) -> bool,
+}
+

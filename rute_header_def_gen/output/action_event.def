@@ -1,0 +1,5 @@
+struct ActionEvent : Event {
+    action() -> &ActionType,
+    before() -> &ActionType,
+}
+

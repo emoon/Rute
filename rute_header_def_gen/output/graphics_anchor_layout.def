@@ -1,0 +1,17 @@
+struct GraphicsAnchorLayout : GraphicsLayout {
+    add_anchor(&GraphicsLayoutItemType first_item, Rute::AnchorPoint first_edge, &GraphicsLayoutItemType second_item, Rute::AnchorPoint second_edge) -> &GraphicsAnchorType,
+    anchor(&GraphicsLayoutItemType first_item, Rute::AnchorPoint first_edge, &GraphicsLayoutItemType second_item, Rute::AnchorPoint second_edge) -> &GraphicsAnchorType,
+    add_corner_anchors(&GraphicsLayoutItemType first_item, Rute::Corner first_corner, &GraphicsLayoutItemType second_item, Rute::Corner second_corner),
+    add_anchors(&GraphicsLayoutItemType first_item, &GraphicsLayoutItemType second_item, Rute::Orientations orientations),
+    set_horizontal_spacing(f32 spacing),
+    set_vertical_spacing(f32 spacing),
+    set_spacing(f32 spacing),
+    horizontal_spacing() -> f32,
+    vertical_spacing() -> f32,
+    remove_at(i32 index),
+    count() -> i32,
+    item_at(i32 index) -> &GraphicsLayoutItemType,
+    invalidate(),
+    size_hint(Rute::SizeHint which, &SizeFType constraint) -> SizeFType,
+}
+

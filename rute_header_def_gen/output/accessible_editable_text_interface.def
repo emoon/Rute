@@ -1,0 +1,7 @@
+
+struct AccessibleEditableTextInterface {
+    delete_text(i32 start_offset, i32 end_offset),
+    insert_text(i32 offset, String text),
+    replace_text(i32 start_offset, i32 end_offset, String text),
+}
+

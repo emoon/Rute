@@ -1,0 +1,17 @@
+struct DoubleValidator : Validator {
+    validate(String arg0, &i32 arg1) -> Validator::State,
+    set_range(double bottom, double top, i32 decimals),
+    set_bottom(double arg0),
+    set_top(double arg0),
+    set_decimals(i32 arg0),
+    set_notation(DoubleValidator::Notation arg0),
+    bottom() -> double,
+    top() -> double,
+    decimals() -> i32,
+    notation() -> DoubleValidator::Notation,
+    bottom_changed(double bottom),
+    top_changed(double top),
+    decimals_changed(i32 decimals),
+    notation_changed(DoubleValidator::Notation notation),
+}
+

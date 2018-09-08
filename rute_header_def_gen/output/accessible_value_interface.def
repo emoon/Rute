@@ -1,0 +1,9 @@
+
+struct AccessibleValueInterface {
+    current_value() -> VariantType,
+    set_current_value(&VariantType value),
+    maximum_value() -> VariantType,
+    minimum_value() -> VariantType,
+    minimum_step_size() -> VariantType,
+}
+

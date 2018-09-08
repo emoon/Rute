@@ -1,0 +1,14 @@
+struct SplashScreen : Widget {
+    set_pixmap(&PixmapType pixmap),
+    pixmap() -> PixmapType,
+    finish(&WidgetType w),
+    repaint(),
+    message() -> String,
+    show_message(String message, i32 alignment, &ColorType color),
+    clear_message(),
+    message_changed(String message),
+    event(&EventType e) -> bool,
+    draw_contents(&PainterType painter),
+    mouse_press_event(&MouseEventType arg0),
+}
+

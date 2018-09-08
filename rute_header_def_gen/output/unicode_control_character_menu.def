@@ -1,0 +1,5 @@
+
+struct UnicodeControlCharacterMenu {
+    menu_action_triggered(),
+}
+

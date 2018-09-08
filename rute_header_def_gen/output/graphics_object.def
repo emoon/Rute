@@ -1,0 +1,19 @@
+struct GraphicsObject : Object, GraphicsItem {
+    grab_gesture(Rute::GestureType type, Rute::GestureFlags flags),
+    ungrab_gesture(Rute::GestureType type),
+    update_micro_focus(),
+    parent_changed(),
+    opacity_changed(),
+    visible_changed(),
+    enabled_changed(),
+    x_changed(),
+    y_changed(),
+    z_changed(),
+    rotation_changed(),
+    scale_changed(),
+    children_changed(),
+    width_changed(),
+    height_changed(),
+    event(&EventType ev) -> bool,
+}
+

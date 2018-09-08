@@ -1,0 +1,10 @@
+struct PanGesture : Gesture {
+    last_offset() -> PointFType,
+    offset() -> PointFType,
+    delta() -> PointFType,
+    acceleration() -> f32,
+    set_last_offset(&PointFType value),
+    set_offset(&PointFType value),
+    set_acceleration(f32 value),
+}
+

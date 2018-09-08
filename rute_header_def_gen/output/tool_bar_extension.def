@@ -1,0 +1,6 @@
+struct ToolBarExtension : ToolButton {
+    paint_event(&PaintEventType arg0),
+    size_hint() -> SizeType,
+    set_orientation(Rute::Orientation o),
+}
+

@@ -1,0 +1,12 @@
+struct EnterEvent : Event {
+    pos() -> PointType,
+    global_pos() -> PointType,
+    x() -> i32,
+    y() -> i32,
+    global_x() -> i32,
+    global_y() -> i32,
+    local_pos() -> &PointFType,
+    window_pos() -> &PointFType,
+    screen_pos() -> &PointFType,
+}
+

@@ -1,0 +1,7 @@
+
+struct AccessibleImageInterface {
+    image_description() -> String,
+    image_size() -> SizeType,
+    image_position() -> PointType,
+}
+

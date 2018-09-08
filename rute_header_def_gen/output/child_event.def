@@ -1,0 +1,7 @@
+struct ChildEvent : Event {
+    child() -> &ObjectType,
+    added() -> bool,
+    polished() -> bool,
+    removed() -> bool,
+}
+

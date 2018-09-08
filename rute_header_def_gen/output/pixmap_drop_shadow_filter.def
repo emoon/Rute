@@ -1,0 +1,12 @@
+struct PixmapDropShadowFilter : PixmapFilter {
+    bounding_rect_for(&RectFType rect) -> RectFType,
+    draw(&PainterType p, &PointFType pos, &PixmapType px, &RectFType src),
+    blur_radius() -> f32,
+    set_blur_radius(f32 radius),
+    color() -> ColorType,
+    set_color(&ColorType color),
+    offset() -> PointFType,
+    set_offset(&PointFType offset),
+    set_offset(f32 dx, f32 dy),
+}
+

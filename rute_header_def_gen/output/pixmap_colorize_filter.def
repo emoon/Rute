@@ -1,0 +1,6 @@
+struct PixmapColorizeFilter : PixmapFilter {
+    set_color(&ColorType color),
+    color() -> ColorType,
+    draw(&PainterType painter, &PointFType dest, &PixmapType src, &RectFType src_rect),
+}
+

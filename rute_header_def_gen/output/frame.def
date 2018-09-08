@@ -1,0 +1,22 @@
+struct Frame : Widget {
+    frame_style() -> i32,
+    set_frame_style(i32 arg0),
+    frame_width() -> i32,
+    size_hint() -> SizeType,
+    frame_shape() -> Frame::Shape,
+    set_frame_shape(Frame::Shape arg0),
+    frame_shadow() -> Frame::Shadow,
+    set_frame_shadow(Frame::Shadow arg0),
+    line_width() -> i32,
+    set_line_width(i32 arg0),
+    mid_line_width() -> i32,
+    set_mid_line_width(i32 arg0),
+    frame_rect() -> RectType,
+    set_frame_rect(&RectType arg0),
+    event(&EventType e) -> bool,
+    paint_event(&PaintEventType arg0),
+    change_event(&EventType arg0),
+    draw_frame(&PainterType arg0),
+    init_style_option(&StyleOptionFrameType option),
+}
+

@@ -1,0 +1,10 @@
+
+struct DirIterator {
+    next() -> String,
+    has_next() -> bool,
+    file_name() -> String,
+    file_path() -> String,
+    file_info() -> FileInfoType,
+    path() -> String,
+}
+

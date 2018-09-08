@@ -1,0 +1,14 @@
+struct ScrollBar : AbstractSlider {
+    size_hint() -> SizeType,
+    event(&EventType event) -> bool,
+    wheel_event(&WheelEventType arg0),
+    paint_event(&PaintEventType arg0),
+    mouse_press_event(&MouseEventType arg0),
+    mouse_release_event(&MouseEventType arg0),
+    mouse_move_event(&MouseEventType arg0),
+    hide_event(&HideEventType arg0),
+    slider_change(AbstractSlider::SliderChange change),
+    context_menu_event(&ContextMenuEventType arg0),
+    init_style_option(&StyleOptionSliderType option),
+}
+

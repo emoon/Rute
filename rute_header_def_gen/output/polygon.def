@@ -1,0 +1,19 @@
+
+struct Polygon {
+    swap(&PolygonType other),
+    bounding_rect() -> RectType,
+    point(i32 i, &i32 x, &i32 y),
+    point(i32 i) -> PointType,
+    set_point(i32 index, i32 x, i32 y),
+    set_point(i32 index, &PointType p),
+    set_points(i32 n_points, &i32 points),
+    set_points(i32 n_points, i32 firstx, i32 firsty),
+    put_points(i32 index, i32 n_points, &i32 points),
+    put_points(i32 index, i32 n_points, i32 firstx, i32 firsty),
+    put_points(i32 index, i32 n_points, &PolygonType from, i32 from_index),
+    contains_point(&PointType pt, Rute::FillRule fill_rule) -> bool,
+    united(&PolygonType r) -> PolygonType,
+    intersected(&PolygonType r) -> PolygonType,
+    intersects(&PolygonType r) -> bool,
+}
+

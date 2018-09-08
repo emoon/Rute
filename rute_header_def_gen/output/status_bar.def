@@ -1,0 +1,20 @@
+struct StatusBar : Widget {
+    add_widget(&WidgetType widget, i32 stretch),
+    insert_widget(i32 index, &WidgetType widget, i32 stretch) -> i32,
+    add_permanent_widget(&WidgetType widget, i32 stretch),
+    insert_permanent_widget(i32 index, &WidgetType widget, i32 stretch) -> i32,
+    remove_widget(&WidgetType widget),
+    set_size_grip_enabled(bool arg0),
+    is_size_grip_enabled() -> bool,
+    current_message() -> String,
+    show_message(String text, i32 timeout),
+    clear_message(),
+    message_changed(String text),
+    show_event(&ShowEventType arg0),
+    paint_event(&PaintEventType arg0),
+    resize_event(&ResizeEventType arg0),
+    reformat(),
+    hide_or_show(),
+    event(&EventType arg0) -> bool,
+}
+

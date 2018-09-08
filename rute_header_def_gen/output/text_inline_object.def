@@ -1,0 +1,17 @@
+
+struct TextInlineObject {
+    is_valid() -> bool,
+    rect() -> RectFType,
+    width() -> f32,
+    ascent() -> f32,
+    descent() -> f32,
+    height() -> f32,
+    text_direction() -> Rute::LayoutDirection,
+    set_width(f32 w),
+    set_ascent(f32 a),
+    set_descent(f32 d),
+    text_position() -> i32,
+    format_index() -> i32,
+    format() -> TextFormatType,
+}
+

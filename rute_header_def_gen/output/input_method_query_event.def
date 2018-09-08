@@ -1,0 +1,6 @@
+struct InputMethodQueryEvent : Event {
+    queries() -> Rute::InputMethodQueries,
+    set_value(Rute::InputMethodQuery query, &VariantType value),
+    value(Rute::InputMethodQuery query) -> VariantType,
+}
+

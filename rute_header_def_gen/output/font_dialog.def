@@ -1,0 +1,19 @@
+struct FontDialog : Dialog {
+    set_current_font(&FontType font),
+    current_font() -> FontType,
+    selected_font() -> FontType,
+    set_option(FontDialog::FontDialogOption option, bool on),
+    test_option(FontDialog::FontDialogOption option) -> bool,
+    set_options(FontDialogOptions options),
+    options() -> FontDialogOptions,
+    open(&ObjectType receiver, &char member),
+    set_visible(bool visible),
+    get_font(&bool ok, &WidgetType parent) -> FontType,
+    get_font(&bool ok, &FontType initial, &WidgetType parent, String title, FontDialogOptions options) -> FontType,
+    current_font_changed(&FontType font),
+    font_selected(&FontType font),
+    change_event(&EventType event),
+    done(i32 result),
+    event_filter(&ObjectType object, &EventType event) -> bool,
+}
+

@@ -1,0 +1,4 @@
+struct DeferredDeleteEvent : Event {
+    loop_level() -> i32,
+}
+

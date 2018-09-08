@@ -1,0 +1,18 @@
+
+struct Debug {
+    put_ucs4(uint ucs4),
+    put_byte_array(&char begin, size_t length, Debug::Latin1Content content),
+    swap(&DebugType other),
+    reset_format() -> &DebugType,
+    space() -> &DebugType,
+    nospace() -> &DebugType,
+    maybe_space() -> &DebugType,
+    verbosity() -> i32,
+    set_verbosity(i32 verbosity_level),
+    auto_insert_spaces() -> bool,
+    set_auto_insert_spaces(bool b),
+    quote() -> &DebugType,
+    noquote() -> &DebugType,
+    maybe_quote(char c) -> &DebugType,
+}
+

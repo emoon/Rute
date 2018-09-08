@@ -1,0 +1,17 @@
+struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
+    pos() -> PointFType,
+    set_pos(&PointFType pos),
+    scene_pos() -> PointFType,
+    set_scene_pos(&PointFType pos),
+    screen_pos() -> PointType,
+    set_screen_pos(&PointType pos),
+    last_pos() -> PointFType,
+    set_last_pos(&PointFType pos),
+    last_scene_pos() -> PointFType,
+    set_last_scene_pos(&PointFType pos),
+    last_screen_pos() -> PointType,
+    set_last_screen_pos(&PointType pos),
+    modifiers() -> Rute::KeyboardModifiers,
+    set_modifiers(Rute::KeyboardModifiers modifiers),
+}
+

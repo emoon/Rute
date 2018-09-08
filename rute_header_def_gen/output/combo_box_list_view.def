@@ -1,0 +1,6 @@
+struct ComboBoxListView : ListView {
+    resize_event(&ResizeEventType event),
+    view_options() -> StyleOptionViewItemType,
+    paint_event(&PaintEventType e),
+}
+

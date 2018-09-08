@@ -1,0 +1,14 @@
+
+struct Point {
+    is_null() -> bool,
+    x() -> i32,
+    y() -> i32,
+    set_x(i32 x),
+    set_y(i32 y),
+    manhattan_length() -> i32,
+    rx() -> &i32,
+    ry() -> &i32,
+    dot_product(&PointType p1, &PointType p2) -> i32,
+    to_cg_point() -> CGPoint,
+}
+

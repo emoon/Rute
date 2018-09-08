@@ -1,0 +1,11 @@
+struct NativeGestureEvent : InputEvent {
+    gesture_type() -> Rute::NativeGestureType,
+    value() -> f32,
+    pos() -> PointType,
+    global_pos() -> PointType,
+    local_pos() -> &PointFType,
+    window_pos() -> &PointFType,
+    screen_pos() -> &PointFType,
+    device() -> &TouchDeviceType,
+}
+

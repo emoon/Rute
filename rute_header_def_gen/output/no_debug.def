@@ -1,0 +1,10 @@
+
+struct NoDebug {
+    space() -> &NoDebugType,
+    nospace() -> &NoDebugType,
+    maybe_space() -> &NoDebugType,
+    quote() -> &NoDebugType,
+    noquote() -> &NoDebugType,
+    maybe_quote(char arg0) -> &NoDebugType,
+}
+

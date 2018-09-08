@@ -1,0 +1,16 @@
+
+struct PersistentModelIndex {
+    swap(&PersistentModelIndexType other),
+    row() -> i32,
+    column() -> i32,
+    internal_pointer(),
+    internal_id() -> quintptr,
+    parent() -> ModelIndexType,
+    sibling(i32 row, i32 column) -> ModelIndexType,
+    child(i32 row, i32 column) -> ModelIndexType,
+    data(i32 role) -> VariantType,
+    flags() -> Rute::ItemFlags,
+    model() -> &AbstractItemModelType,
+    is_valid() -> bool,
+}
+

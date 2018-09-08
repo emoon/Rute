@@ -1,0 +1,18 @@
+struct GestureEvent : Event {
+    gestures() -> <&GestureType>,
+    gesture(Rute::GestureType type) -> &GestureType,
+    active_gestures() -> <&GestureType>,
+    canceled_gestures() -> <&GestureType>,
+    set_accepted(&GestureType arg0, bool arg1),
+    accept(&GestureType arg0),
+    ignore(&GestureType arg0),
+    is_accepted(&GestureType arg0) -> bool,
+    set_accepted(Rute::GestureType arg0, bool arg1),
+    accept(Rute::GestureType arg0),
+    ignore(Rute::GestureType arg0),
+    is_accepted(Rute::GestureType arg0) -> bool,
+    set_widget(&WidgetType widget),
+    widget() -> &WidgetType,
+    map_to_graphics_scene(&PointFType gesture_point) -> PointFType,
+}
+

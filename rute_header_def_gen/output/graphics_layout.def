@@ -1,0 +1,15 @@
+struct GraphicsLayout : GraphicsLayoutItem {
+    set_contents_margins(f32 left, f32 top, f32 right, f32 bottom),
+    get_contents_margins(&f32 left, &f32 top, &f32 right, &f32 bottom),
+    activate(),
+    is_activated() -> bool,
+    invalidate(),
+    widget_event(&EventType e),
+    count() -> i32,
+    item_at(i32 i) -> &GraphicsLayoutItemType,
+    remove_at(i32 index),
+    set_instant_invalidate_propagation(bool enable),
+    instant_invalidate_propagation() -> bool,
+    add_child_layout_item(&GraphicsLayoutItemType layout_item),
+}
+

@@ -1,0 +1,21 @@
+struct GraphicsPixmapItem : GraphicsItem {
+    pixmap() -> PixmapType,
+    set_pixmap(&PixmapType pixmap),
+    set_transformation_mode(Rute::TransformationMode mode),
+    offset() -> PointFType,
+    set_offset(&PointFType offset),
+    set_offset(f32 x, f32 y),
+    bounding_rect() -> RectFType,
+    shape() -> PainterPathType,
+    contains(&PointFType point) -> bool,
+    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
+    is_obscured_by(&GraphicsItemType item) -> bool,
+    opaque_area() -> PainterPathType,
+    type() -> i32,
+    shape_mode() -> GraphicsPixmapItem::ShapeMode,
+    set_shape_mode(GraphicsPixmapItem::ShapeMode mode),
+    supports_extension(GraphicsItem::Extension extension) -> bool,
+    set_extension(GraphicsItem::Extension extension, &VariantType variant),
+    extension(&VariantType variant) -> VariantType,
+}
+

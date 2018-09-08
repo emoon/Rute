@@ -1,0 +1,12 @@
+struct IntValidator : Validator {
+    validate(String arg0, &i32 arg1) -> Validator::State,
+    fixup(String input),
+    set_bottom(i32 arg0),
+    set_top(i32 arg0),
+    set_range(i32 bottom, i32 top),
+    bottom() -> i32,
+    top() -> i32,
+    bottom_changed(i32 bottom),
+    top_changed(i32 top),
+}
+

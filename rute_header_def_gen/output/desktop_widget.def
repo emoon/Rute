@@ -1,0 +1,15 @@
+struct DesktopWidget : Widget {
+    is_virtual_desktop() -> bool,
+    num_screens() -> i32,
+    screen_count() -> i32,
+    primary_screen() -> i32,
+    screen_number(&WidgetType widget) -> i32,
+    screen_number(&PointType arg0) -> i32,
+    screen(i32 screen) -> &WidgetType,
+    resized(i32 arg0),
+    work_area_resized(i32 arg0),
+    screen_count_changed(i32 arg0),
+    primary_screen_changed(),
+    resize_event(&ResizeEventType e),
+}
+

@@ -1,0 +1,10 @@
+struct AccessibleProgressBar : AccessibleDisplay, AccessibleValueInterface {
+    interface_cast(Accessible::InterfaceType t),
+    current_value() -> VariantType,
+    maximum_value() -> VariantType,
+    minimum_value() -> VariantType,
+    minimum_step_size() -> VariantType,
+    set_current_value(&VariantType arg0),
+    progress_bar() -> &ProgressBarType,
+}
+

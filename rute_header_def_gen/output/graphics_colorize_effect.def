@@ -1,0 +1,7 @@
+struct GraphicsColorizeEffect : GraphicsEffect {
+    color() -> ColorType,
+    set_color(&ColorType c),
+    color_changed(&ColorType color),
+    draw(&PainterType painter),
+}
+

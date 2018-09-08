@@ -1,0 +1,8 @@
+struct AccessibleObject : AccessibleInterface {
+    is_valid() -> bool,
+    object() -> &ObjectType,
+    rect() -> RectType,
+    set_text(Accessible::Text t, String text),
+    child_at(i32 x, i32 y) -> &AccessibleInterfaceType,
+}
+

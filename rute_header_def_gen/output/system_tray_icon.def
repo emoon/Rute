@@ -1,0 +1,20 @@
+struct SystemTrayIcon : Object {
+    set_context_menu(&MenuType menu),
+    context_menu() -> &MenuType,
+    icon() -> IconType,
+    set_icon(&IconType icon),
+    tool_tip() -> String,
+    set_tool_tip(String tip),
+    is_system_tray_available() -> bool,
+    supports_messages() -> bool,
+    is_visible() -> bool,
+    set_visible(bool visible),
+    show(),
+    hide(),
+    show_message(String title, String msg, &IconType icon, i32 msecs),
+    show_message(String title, String msg, SystemTrayIcon::MessageIcon icon, i32 msecs),
+    activated(SystemTrayIcon::ActivationReason reason),
+    message_clicked(),
+    event(&EventType event) -> bool,
+}
+

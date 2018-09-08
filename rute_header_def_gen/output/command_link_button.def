@@ -1,0 +1,10 @@
+struct CommandLinkButton : PushButton {
+    description() -> String,
+    set_description(String description),
+    size_hint() -> SizeType,
+    height_for_width(i32 arg0) -> i32,
+    minimum_size_hint() -> SizeType,
+    event(&EventType e) -> bool,
+    paint_event(&PaintEventType arg0),
+}
+

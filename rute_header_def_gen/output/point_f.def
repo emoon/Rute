@@ -1,0 +1,16 @@
+
+struct PointF {
+    manhattan_length() -> f32,
+    is_null() -> bool,
+    x() -> f32,
+    y() -> f32,
+    set_x(f32 x),
+    set_y(f32 y),
+    rx() -> &f32,
+    ry() -> &f32,
+    dot_product(&PointFType p1, &PointFType p2) -> f32,
+    to_point() -> PointType,
+    from_cg_point(CGPoint point) -> PointFType,
+    to_cg_point() -> CGPoint,
+}
+

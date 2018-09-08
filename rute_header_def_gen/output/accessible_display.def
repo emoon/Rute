@@ -1,0 +1,10 @@
+struct AccessibleDisplay : AccessibleWidget, AccessibleImageInterface {
+    text(Accessible::Text t) -> String,
+    role() -> Accessible::Role,
+    relations(Accessible::Relation match) -> Vector<QPair<QAccessibleInterface *, QAccessible::Relation> >,
+    interface_cast(Accessible::InterfaceType t),
+    image_description() -> String,
+    image_size() -> SizeType,
+    image_position() -> PointType,
+}
+

@@ -1,0 +1,22 @@
+struct StackedLayout : Layout {
+    add_widget(&WidgetType w) -> i32,
+    insert_widget(i32 index, &WidgetType w) -> i32,
+    current_widget() -> &WidgetType,
+    current_index() -> i32,
+    widget(i32 arg0) -> &WidgetType,
+    count() -> i32,
+    stacking_mode() -> StackedLayout::StackingMode,
+    set_stacking_mode(StackedLayout::StackingMode stacking_mode),
+    add_item(&LayoutItemType item),
+    size_hint() -> SizeType,
+    minimum_size() -> SizeType,
+    item_at(i32 arg0) -> &LayoutItemType,
+    take_at(i32 arg0) -> &LayoutItemType,
+    has_height_for_width() -> bool,
+    height_for_width(i32 width) -> i32,
+    widget_removed(i32 index),
+    current_changed(i32 index),
+    set_current_index(i32 index),
+    set_current_widget(&WidgetType w),
+}
+

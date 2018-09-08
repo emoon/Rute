@@ -1,0 +1,10 @@
+
+struct StringMatcher {
+    set_pattern(String pattern),
+    set_case_sensitivity(Rute::CaseSensitivity cs),
+    index_in(String str, i32 from) -> i32,
+    index_in(&CharType str, i32 length, i32 from) -> i32,
+    pattern() -> String,
+    case_sensitivity() -> Rute::CaseSensitivity,
+}
+

@@ -1,0 +1,18 @@
+struct Shortcut : Object {
+    set_key(&KeySequenceType key),
+    key() -> KeySequenceType,
+    set_enabled(bool enable),
+    is_enabled() -> bool,
+    set_context(Rute::ShortcutContext context),
+    context() -> Rute::ShortcutContext,
+    set_whats_this(String text),
+    whats_this() -> String,
+    set_auto_repeat(bool on),
+    auto_repeat() -> bool,
+    id() -> i32,
+    parent_widget() -> &WidgetType,
+    activated(),
+    activated_ambiguously(),
+    event(&EventType e) -> bool,
+}
+

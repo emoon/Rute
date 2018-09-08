@@ -1,0 +1,5 @@
+struct PaintEvent : Event {
+    rect() -> &RectType,
+    region() -> &RegionType,
+}
+

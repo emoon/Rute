@@ -1,0 +1,5 @@
+struct AccessibleTextCursorEvent : AccessibleEvent {
+    set_cursor_position(i32 position),
+    cursor_position() -> i32,
+}
+

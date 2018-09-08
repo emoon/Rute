@@ -1,0 +1,22 @@
+
+struct ItemSelectionRange {
+    swap(&ItemSelectionRangeType other),
+    top() -> i32,
+    left() -> i32,
+    bottom() -> i32,
+    right() -> i32,
+    width() -> i32,
+    height() -> i32,
+    top_left() -> &PersistentModelIndexType,
+    bottom_right() -> &PersistentModelIndexType,
+    parent() -> ModelIndexType,
+    model() -> &AbstractItemModelType,
+    contains(&ModelIndexType index) -> bool,
+    contains(i32 row, i32 column, &ModelIndexType parent_index) -> bool,
+    intersects(&ItemSelectionRangeType other) -> bool,
+    intersected(&ItemSelectionRangeType other) -> ItemSelectionRangeType,
+    is_valid() -> bool,
+    is_empty() -> bool,
+    indexes() -> ModelIndexListType,
+}
+

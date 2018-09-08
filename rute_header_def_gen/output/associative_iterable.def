@@ -1,0 +1,9 @@
+
+struct AssociativeIterable {
+    begin() -> AssociativeIterable::const_iterator,
+    end() -> AssociativeIterable::const_iterator,
+    find(&VariantType key) -> AssociativeIterable::const_iterator,
+    value(&VariantType key) -> VariantType,
+    size() -> i32,
+}
+

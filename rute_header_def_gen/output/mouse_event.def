@@ -1,0 +1,17 @@
+struct MouseEvent : InputEvent {
+    pos() -> PointType,
+    global_pos() -> PointType,
+    x() -> i32,
+    y() -> i32,
+    global_x() -> i32,
+    global_y() -> i32,
+    local_pos() -> &PointFType,
+    window_pos() -> &PointFType,
+    screen_pos() -> &PointFType,
+    button() -> Rute::MouseButton,
+    buttons() -> Rute::MouseButtons,
+    set_local_pos(&PointFType local_position),
+    source() -> Rute::MouseEventSource,
+    flags() -> Rute::MouseEventFlags,
+}
+

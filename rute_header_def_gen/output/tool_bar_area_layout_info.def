@@ -1,0 +1,17 @@
+
+struct ToolBarAreaLayoutInfo {
+    size_hint() -> i32,
+    minimum_size() -> i32,
+    fit_layout(),
+    insert_tool_bar(&ToolBarType before, &ToolBarType tool_bar) -> &LayoutItemType,
+    insert_item(&ToolBarType before, &LayoutItemType item),
+    remove_tool_bar(&ToolBarType tool_bar),
+    insert_tool_bar_break(&ToolBarType before),
+    remove_tool_bar_break(&ToolBarType before),
+    move_tool_bar(&ToolBarType toolbar, i32 pos),
+    insert_gap(i32 arg0) -> bool,
+    clear(),
+    item_rect(i32 arg0) -> i32,
+    distance(&i32 pos) -> i32,
+}
+

@@ -1,0 +1,5 @@
+
+struct ObjectData {
+    dynamic_meta_object() -> &MetaObjectType,
+}
+

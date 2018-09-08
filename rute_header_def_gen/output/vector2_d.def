@@ -1,0 +1,20 @@
+
+struct Vector2D {
+    is_null() -> bool,
+    x() -> float,
+    y() -> float,
+    set_x(float x),
+    set_y(float y),
+    length() -> float,
+    length_squared() -> float,
+    normalized() -> Vector2DType,
+    normalize(),
+    distance_to_point(&Vector2DType point) -> float,
+    distance_to_line(&Vector2DType point, &Vector2DType direction) -> float,
+    dot_product(&Vector2DType v1, &Vector2DType v2) -> float,
+    to_vector3_d() -> Vector3DType,
+    to_vector4_d() -> Vector4DType,
+    to_point() -> PointType,
+    to_point_f() -> PointFType,
+}
+

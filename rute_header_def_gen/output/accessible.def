@@ -1,0 +1,22 @@
+
+struct Accessible {
+    qt_check_for_qgadget_macro(),
+    install_factory(InterfaceFactory arg0),
+    remove_factory(InterfaceFactory arg0),
+    install_update_handler(UpdateHandler arg0) -> UpdateHandler,
+    install_root_object_handler(RootObjectHandler arg0) -> RootObjectHandler,
+    install_activation_observer(Accessible::ActivationObserver * arg0),
+    remove_activation_observer(Accessible::ActivationObserver * arg0),
+    query_accessible_interface(&ObjectType arg0) -> &AccessibleInterfaceType,
+    unique_id(&AccessibleInterfaceType iface) -> Id,
+    accessible_interface(Id unique_id) -> &AccessibleInterfaceType,
+    register_accessible_interface(&AccessibleInterfaceType iface) -> Id,
+    delete_accessible_interface(Id unique_id),
+    update_accessibility(&AccessibleEventType event),
+    is_active() -> bool,
+    set_active(bool active),
+    set_root_object(&ObjectType object),
+    cleanup(),
+    q_accessible_text_boundary_helper(&TextCursorType cursor, Accessible::TextBoundaryType boundary_type) -> Pair<int,Type,
+}
+

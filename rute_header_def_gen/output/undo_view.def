@@ -1,0 +1,11 @@
+struct UndoView : ListView {
+    stack() -> &UndoStackType,
+    group() -> &UndoGroupType,
+    set_empty_label(String label),
+    empty_label() -> String,
+    set_clean_icon(&IconType icon),
+    clean_icon() -> IconType,
+    set_stack(&UndoStackType stack),
+    set_group(&UndoGroupType group),
+}
+

@@ -1,0 +1,10 @@
+struct WindowContainer : Widget {
+    contained_window() -> &WindowType,
+    parent_was_changed(&WidgetType parent),
+    parent_was_moved(&WidgetType parent),
+    parent_was_raised(&WidgetType parent),
+    parent_was_lowered(&WidgetType parent),
+    event(&EventType ev) -> bool,
+    focus_window_changed(&WindowType focus_window),
+}
+

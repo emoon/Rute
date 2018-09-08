@@ -1,0 +1,24 @@
+
+struct Vector4D {
+    is_null() -> bool,
+    x() -> float,
+    y() -> float,
+    z() -> float,
+    w() -> float,
+    set_x(float x),
+    set_y(float y),
+    set_z(float z),
+    set_w(float w),
+    length() -> float,
+    length_squared() -> float,
+    normalized() -> Vector4DType,
+    normalize(),
+    dot_product(&Vector4DType v1, &Vector4DType v2) -> float,
+    to_vector2_d() -> Vector2DType,
+    to_vector2_d_affine() -> Vector2DType,
+    to_vector3_d() -> Vector3DType,
+    to_vector3_d_affine() -> Vector3DType,
+    to_point() -> PointType,
+    to_point_f() -> PointFType,
+}
+

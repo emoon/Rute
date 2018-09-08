@@ -1,0 +1,6 @@
+
+struct StyleFactory {
+    keys() -> StringListType,
+    create(String arg0) -> &StyleType,
+}
+

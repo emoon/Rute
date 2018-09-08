@@ -1,0 +1,8 @@
+struct ErrorMessage : Dialog {
+    qt_handler() -> &ErrorMessageType,
+    show_message(String message),
+    show_message(String message, String type),
+    done(i32 arg0),
+    change_event(&EventType e),
+}
+

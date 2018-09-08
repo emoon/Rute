@@ -1,0 +1,15 @@
+
+struct SysInfo {
+    windows_version() -> SysInfo::WinVersion,
+    mac_version() -> SysInfo::MacVersion,
+    build_cpu_architecture() -> String,
+    current_cpu_architecture() -> String,
+    build_abi() -> String,
+    kernel_type() -> String,
+    kernel_version() -> String,
+    product_type() -> String,
+    product_version() -> String,
+    pretty_product_name() -> String,
+    machine_host_name() -> String,
+}
+

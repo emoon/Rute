@@ -1,0 +1,17 @@
+struct ActionGroup : Object {
+    add_action(&ActionType a) -> &ActionType,
+    add_action(String text) -> &ActionType,
+    add_action(&IconType icon, String text) -> &ActionType,
+    remove_action(&ActionType a),
+    actions() -> <&ActionType>,
+    checked_action() -> &ActionType,
+    is_exclusive() -> bool,
+    is_enabled() -> bool,
+    is_visible() -> bool,
+    set_enabled(bool arg0),
+    set_disabled(bool b),
+    set_visible(bool arg0),
+    set_exclusive(bool arg0),
+    hovered(&ActionType arg0),
+}
+

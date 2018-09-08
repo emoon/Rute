@@ -1,0 +1,27 @@
+
+struct RegExp {
+    swap(&RegExpType other),
+    is_empty() -> bool,
+    is_valid() -> bool,
+    pattern() -> String,
+    set_pattern(String pattern),
+    case_sensitivity() -> Rute::CaseSensitivity,
+    set_case_sensitivity(Rute::CaseSensitivity cs),
+    pattern_syntax() -> RegExp::PatternSyntax,
+    set_pattern_syntax(RegExp::PatternSyntax syntax),
+    is_minimal() -> bool,
+    set_minimal(bool minimal),
+    exact_match(String str) -> bool,
+    index_in(String str, i32 offset, RegExp::CaretMode caret_mode) -> i32,
+    last_index_in(String str, i32 offset, RegExp::CaretMode caret_mode) -> i32,
+    matched_length() -> i32,
+    capture_count() -> i32,
+    captured_texts() -> StringListType,
+    captured_texts() -> StringListType,
+    cap(i32 nth) -> String,
+    cap(i32 nth) -> String,
+    pos(i32 nth) -> i32,
+    pos(i32 nth) -> i32,
+    escape(String str) -> String,
+}
+

@@ -1,0 +1,14 @@
+
+struct IndexMapper {
+    count() -> i32,
+    index_of(i32 x) -> i32,
+    is_valid() -> bool,
+    is_empty() -> bool,
+    append(i32 x),
+    first() -> i32,
+    last() -> i32,
+    from() -> i32,
+    to() -> i32,
+    cost() -> i32,
+}
+

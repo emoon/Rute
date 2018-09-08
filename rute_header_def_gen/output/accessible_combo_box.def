@@ -1,0 +1,13 @@
+struct AccessibleComboBox : AccessibleWidget {
+    child_count() -> i32,
+    child_at(i32 x, i32 y) -> &AccessibleInterfaceType,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    child(i32 index) -> &AccessibleInterfaceType,
+    text(Accessible::Text t) -> String,
+    action_names() -> StringListType,
+    localized_action_description(String action_name) -> String,
+    do_action(String action_name),
+    key_bindings_for_action(String action_name) -> StringListType,
+    combo_box() -> &ComboBoxType,
+}
+

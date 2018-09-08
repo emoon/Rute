@@ -1,0 +1,14 @@
+struct SizeGrip : Widget {
+    size_hint() -> SizeType,
+    set_visible(bool arg0),
+    paint_event(&PaintEventType arg0),
+    mouse_press_event(&MouseEventType arg0),
+    mouse_move_event(&MouseEventType arg0),
+    mouse_release_event(&MouseEventType mouse_event),
+    move_event(&MoveEventType move_event),
+    show_event(&ShowEventType show_event),
+    hide_event(&HideEventType hide_event),
+    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
+    event(&EventType arg0) -> bool,
+}
+

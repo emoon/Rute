@@ -1,0 +1,9 @@
+struct KeyEventTransition : EventTransition {
+    key() -> i32,
+    set_key(i32 key),
+    modifier_mask() -> Rute::KeyboardModifiers,
+    set_modifier_mask(Rute::KeyboardModifiers modifiers),
+    on_transition(&EventType event),
+    event_test(&EventType event) -> bool,
+}
+

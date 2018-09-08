@@ -1,0 +1,11 @@
+struct EventLoop : Object {
+    process_events(ProcessEventsFlags flags) -> bool,
+    process_events(ProcessEventsFlags flags, i32 maximum_time),
+    exec(ProcessEventsFlags flags) -> i32,
+    exit(i32 return_code),
+    is_running() -> bool,
+    wake_up(),
+    event(&EventType event) -> bool,
+    quit(),
+}
+

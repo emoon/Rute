@@ -1,0 +1,12 @@
+
+struct RegularExpressionMatchIterator {
+    swap(&RegularExpressionMatchIteratorType other),
+    is_valid() -> bool,
+    has_next() -> bool,
+    next() -> RegularExpressionMatchType,
+    peek_next() -> RegularExpressionMatchType,
+    regular_expression() -> RegularExpressionType,
+    match_type() -> RegularExpression::MatchType,
+    match_options() -> RegularExpression::MatchOptions,
+}
+

@@ -1,0 +1,8 @@
+struct ToolBarSeparator : Widget {
+    orientation() -> Rute::Orientation,
+    size_hint() -> SizeType,
+    paint_event(&PaintEventType arg0),
+    init_style_option(&StyleOptionType option),
+    set_orientation(Rute::Orientation orientation),
+}
+

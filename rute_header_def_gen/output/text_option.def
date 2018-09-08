@@ -1,0 +1,20 @@
+
+struct TextOption {
+    set_alignment(Rute::Alignment alignment),
+    alignment() -> Rute::Alignment,
+    set_text_direction(Rute::LayoutDirection a_direction),
+    text_direction() -> Rute::LayoutDirection,
+    set_wrap_mode(TextOption::WrapMode wrap),
+    wrap_mode() -> TextOption::WrapMode,
+    set_flags(Flags flags),
+    flags() -> Flags,
+    set_tab_stop(f32 tab_stop),
+    tab_stop() -> f32,
+    set_tab_stop_distance(f32 tab_stop_distance),
+    tab_stop_distance() -> f32,
+    set_tab_array(&List<qreal>Type tab_stops),
+    tab_array() -> <f32>,
+    set_tabs(onst QList<QTextOption::Tab> & tab_stops),
+    tabs() -> List<QTextOption::Tab>,
+}
+

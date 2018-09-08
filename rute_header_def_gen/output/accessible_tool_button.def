@@ -1,0 +1,11 @@
+struct AccessibleToolButton : AccessibleButton {
+    state() -> Accessible::State,
+    role() -> Accessible::Role,
+    child_count() -> i32,
+    child(i32 index) -> &AccessibleInterfaceType,
+    action_names() -> StringListType,
+    do_action(String action_name),
+    tool_button() -> &ToolButtonType,
+    is_split_button() -> bool,
+}
+

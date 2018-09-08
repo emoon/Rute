@@ -1,0 +1,11 @@
+struct AccessibleMenu : AccessibleWidget {
+    child_count() -> i32,
+    child_at(i32 x, i32 y) -> &AccessibleInterfaceType,
+    text(Accessible::Text t) -> String,
+    role() -> Accessible::Role,
+    child(i32 index) -> &AccessibleInterfaceType,
+    parent() -> &AccessibleInterfaceType,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    menu() -> &MenuType,
+}
+

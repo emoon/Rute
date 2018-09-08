@@ -1,0 +1,5 @@
+struct InputMethodEvent : Event {
+    replacement_start() -> i32,
+    replacement_length() -> i32,
+}
+

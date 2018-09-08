@@ -1,0 +1,4 @@
+struct AccessibleSpinBox : AccessibleAbstractSpinBox {
+    spin_box() -> &SpinBoxType,
+}
+

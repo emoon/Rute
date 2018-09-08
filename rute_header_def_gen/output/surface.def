@@ -1,0 +1,10 @@
+
+struct Surface {
+    surface_class() -> Surface::SurfaceClass,
+    format() -> SurfaceFormatType,
+    surface_handle() -> &PlatformSurfaceType,
+    surface_type() -> Surface::SurfaceType,
+    supports_open_gl() -> bool,
+    size() -> SizeType,
+}
+

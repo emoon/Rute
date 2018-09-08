@@ -1,0 +1,9 @@
+struct FocusFrame : Widget {
+    set_widget(&WidgetType widget),
+    widget() -> &WidgetType,
+    event(&EventType e) -> bool,
+    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
+    paint_event(&PaintEventType arg0),
+    init_style_option(&StyleOptionType option),
+}
+

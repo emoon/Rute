@@ -1,0 +1,5 @@
+struct GraphicsSceneEvent : Event {
+    widget() -> &WidgetType,
+    set_widget(&WidgetType widget),
+}
+

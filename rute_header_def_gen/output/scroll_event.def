@@ -1,0 +1,6 @@
+struct ScrollEvent : Event {
+    content_pos() -> PointFType,
+    overshoot_distance() -> PointFType,
+    scroll_state() -> ScrollEvent::ScrollState,
+}
+

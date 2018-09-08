@@ -1,0 +1,17 @@
+
+struct GestureManager {
+    register_gesture_recognizer(&i32 recognizer) -> i32,
+    unregister_gesture_recognizer(i32 type),
+    filter_event(&i32 receiver, &i32 event) -> bool,
+    instance() -> &GestureManagerType,
+    gesture_pending(&i32 o) -> bool,
+    cleanup_cached_gestures(&i32 target, i32 type),
+    recycle(&i32 gesture),
+    filter_event_through_contexts(i32 arg0) -> bool,
+    cleanup_gestures_for_removed_recognizer(&i32 gesture),
+    get_state(&i32 widget, &i32 recognizer, i32 gesture) -> &i32,
+    deliver_events(i32 arg0),
+    get_gesture_targets(i32 arg0),
+    cancel_gestures_for_children(&i32 originating_gesture),
+}
+

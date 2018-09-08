@@ -1,0 +1,14 @@
+
+struct ToolTip {
+    show_text(&PointType pos, String text, &WidgetType w),
+    show_text(&PointType pos, String text, &WidgetType w, &RectType rect),
+    show_text(&PointType pos, String text, &WidgetType w, &RectType rect, i32 msec_show_time),
+    hide_text(),
+    is_visible() -> bool,
+    text() -> String,
+    palette() -> PaletteType,
+    set_palette(&PaletteType arg0),
+    font() -> FontType,
+    set_font(&FontType arg0),
+}
+

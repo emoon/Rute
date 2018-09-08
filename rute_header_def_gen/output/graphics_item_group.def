@@ -1,0 +1,10 @@
+struct GraphicsItemGroup : GraphicsItem {
+    add_to_group(&GraphicsItemType item),
+    remove_from_group(&GraphicsItemType item),
+    bounding_rect() -> RectFType,
+    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
+    is_obscured_by(&GraphicsItemType item) -> bool,
+    opaque_area() -> PainterPathType,
+    type() -> i32,
+}
+

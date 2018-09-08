@@ -1,0 +1,10 @@
+struct LineEditIconButton : ToolButton {
+    opacity() -> f32,
+    set_opacity(f32 value),
+    animate_show(bool visible),
+    action_event(&ActionEventType e),
+    paint_event(&PaintEventType event),
+    update_cursor(),
+    start_opacity_animation(f32 end_value),
+}
+

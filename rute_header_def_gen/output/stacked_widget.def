@@ -1,0 +1,16 @@
+struct StackedWidget : Frame {
+    add_widget(&WidgetType w) -> i32,
+    insert_widget(i32 index, &WidgetType w) -> i32,
+    remove_widget(&WidgetType w),
+    current_widget() -> &WidgetType,
+    current_index() -> i32,
+    index_of(&WidgetType arg0) -> i32,
+    widget(i32 arg0) -> &WidgetType,
+    count() -> i32,
+    set_current_index(i32 index),
+    set_current_widget(&WidgetType w),
+    current_changed(i32 arg0),
+    widget_removed(i32 index),
+    event(&EventType e) -> bool,
+}
+

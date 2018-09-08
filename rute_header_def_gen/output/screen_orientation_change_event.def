@@ -1,0 +1,5 @@
+struct ScreenOrientationChangeEvent : Event {
+    screen() -> &ScreenType,
+    orientation() -> Rute::ScreenOrientation,
+}
+

@@ -1,0 +1,7 @@
+struct ComboBoxDelegate : ItemDelegate {
+    is_separator(&ModelIndexType index) -> bool,
+    set_separator(&AbstractItemModelType model, &ModelIndexType index),
+    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
+    size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
+}
+

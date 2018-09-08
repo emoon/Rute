@@ -1,0 +1,22 @@
+struct CompletionModel : AbstractProxyModel {
+    create_engine(),
+    set_filtered(bool arg0),
+    filter(&StringListType parts),
+    completion_count() -> i32,
+    current_row() -> i32,
+    set_current_row(i32 row) -> bool,
+    current_index(bool arg0) -> ModelIndexType,
+    index(i32 row, i32 column, &ModelIndexType arg0) -> ModelIndexType,
+    row_count(&ModelIndexType index) -> i32,
+    column_count(&ModelIndexType index) -> i32,
+    has_children(&ModelIndexType parent) -> bool,
+    parent(&ModelIndexType arg0) -> ModelIndexType,
+    data(&ModelIndexType index, i32 role) -> VariantType,
+    set_source_model(&AbstractItemModelType source_model),
+    map_to_source(&ModelIndexType proxy_index) -> ModelIndexType,
+    map_from_source(&ModelIndexType source_index) -> ModelIndexType,
+    rows_added(),
+    invalidate(),
+    rows_inserted(),
+}
+

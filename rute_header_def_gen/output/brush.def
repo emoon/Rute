@@ -1,0 +1,21 @@
+
+struct Brush {
+    swap(&BrushType other),
+    style() -> Rute::BrushStyle,
+    set_style(Rute::BrushStyle arg0),
+    set_transform(&TransformType arg0),
+    texture() -> PixmapType,
+    set_texture(&PixmapType pixmap),
+    texture_image() -> ImageType,
+    set_texture_image(&ImageType image),
+    color() -> &ColorType,
+    set_color(&ColorType color),
+    set_color(Rute::GlobalColor color),
+    gradient() -> &GradientType,
+    is_opaque() -> bool,
+    detach(Rute::BrushStyle new_style),
+    init(&ColorType color, Rute::BrushStyle bs),
+    clean_up(&BrushDataType x),
+    is_detached() -> bool,
+}
+

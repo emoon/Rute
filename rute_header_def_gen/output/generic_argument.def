@@ -1,0 +1,6 @@
+
+struct GenericArgument {
+    data(),
+    name() -> &char,
+}
+

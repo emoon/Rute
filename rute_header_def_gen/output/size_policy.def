@@ -1,0 +1,16 @@
+
+struct SizePolicy {
+    qt_check_for_qgadget_macro(),
+    horizontal_policy() -> SizePolicy::Policy,
+    vertical_policy() -> SizePolicy::Policy,
+    set_horizontal_policy(SizePolicy::Policy d),
+    set_vertical_policy(SizePolicy::Policy d),
+    expanding_directions() -> Rute::Orientations,
+    set_height_for_width(bool b),
+    has_height_for_width() -> bool,
+    set_width_for_height(bool b),
+    has_width_for_height() -> bool,
+    retain_size_when_hidden() -> bool,
+    set_retain_size_when_hidden(bool retain_size),
+}
+

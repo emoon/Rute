@@ -1,0 +1,5 @@
+struct AccessibleDial : AccessibleAbstractSlider {
+    text(Accessible::Text text_type) -> String,
+    dial() -> &DialType,
+}
+

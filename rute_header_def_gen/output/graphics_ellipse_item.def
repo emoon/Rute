@@ -1,0 +1,20 @@
+struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
+    rect() -> RectFType,
+    set_rect(&RectFType rect),
+    set_rect(f32 x, f32 y, f32 w, f32 h),
+    start_angle() -> i32,
+    set_start_angle(i32 angle),
+    span_angle() -> i32,
+    set_span_angle(i32 angle),
+    bounding_rect() -> RectFType,
+    shape() -> PainterPathType,
+    contains(&PointFType point) -> bool,
+    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
+    is_obscured_by(&GraphicsItemType item) -> bool,
+    opaque_area() -> PainterPathType,
+    type() -> i32,
+    supports_extension(GraphicsItem::Extension extension) -> bool,
+    set_extension(GraphicsItem::Extension extension, &VariantType variant),
+    extension(&VariantType variant) -> VariantType,
+}
+

@@ -1,0 +1,11 @@
+struct AccessibleMdiSubWindow : AccessibleWidget {
+    text(Accessible::Text text_type) -> String,
+    set_text(Accessible::Text text_type, String text),
+    state() -> Accessible::State,
+    child_count() -> i32,
+    child(i32 index) -> &AccessibleInterfaceType,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    rect() -> RectType,
+    mdi_sub_window() -> &MdiSubWindowType,
+}
+

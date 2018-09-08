@@ -1,0 +1,22 @@
+struct Timer : Object {
+    is_active() -> bool,
+    timer_id() -> i32,
+    set_interval(i32 msec),
+    interval() -> i32,
+    remaining_time() -> i32,
+    set_timer_type(Rute::TimerType atype),
+    timer_type() -> Rute::TimerType,
+    set_single_shot(bool single_shot),
+    is_single_shot() -> bool,
+    single_shot(i32 msec, &ObjectType receiver, &char member),
+    single_shot(i32 msec, Rute::TimerType timer_type, &ObjectType receiver, &char member),
+    start(),
+    stop(),
+    timeout(Timer::QPrivateSignal arg0),
+    timer_event(&TimerEventType arg0),
+    start_timer(i32 arg0) -> i32,
+    kill_timer(i32 arg0),
+    default_type_for(i32 msecs) -> Rute::TimerType,
+    single_shot_impl(i32 msec, Rute::TimerType timer_type, &ObjectType receiver, tPrivate::QSlotObjectBase * slot_obj),
+}
+

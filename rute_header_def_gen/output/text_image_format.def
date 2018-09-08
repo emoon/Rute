@@ -1,0 +1,10 @@
+struct TextImageFormat : TextCharFormat {
+    is_valid() -> bool,
+    set_name(String name),
+    name() -> String,
+    set_width(f32 width),
+    width() -> f32,
+    set_height(f32 height),
+    height() -> f32,
+}
+

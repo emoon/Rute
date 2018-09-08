@@ -1,0 +1,15 @@
+struct Slider : AbstractSlider {
+    size_hint() -> SizeType,
+    minimum_size_hint() -> SizeType,
+    set_tick_position(Slider::TickPosition position),
+    tick_position() -> Slider::TickPosition,
+    set_tick_interval(i32 ti),
+    tick_interval() -> i32,
+    event(&EventType event) -> bool,
+    paint_event(&PaintEventType ev),
+    mouse_press_event(&MouseEventType ev),
+    mouse_release_event(&MouseEventType ev),
+    mouse_move_event(&MouseEventType ev),
+    init_style_option(&StyleOptionSliderType option),
+}
+

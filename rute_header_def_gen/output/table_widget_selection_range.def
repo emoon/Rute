@@ -1,0 +1,10 @@
+
+struct TableWidgetSelectionRange {
+    top_row() -> i32,
+    bottom_row() -> i32,
+    left_column() -> i32,
+    right_column() -> i32,
+    row_count() -> i32,
+    column_count() -> i32,
+}
+

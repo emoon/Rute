@@ -1,0 +1,17 @@
+struct GraphicsScale : GraphicsTransform {
+    origin() -> Vector3DType,
+    set_origin(&Vector3DType point),
+    x_scale() -> f32,
+    set_x_scale(f32 arg0),
+    y_scale() -> f32,
+    set_y_scale(f32 arg0),
+    z_scale() -> f32,
+    set_z_scale(f32 arg0),
+    apply_to(&Matrix4x4Type matrix),
+    origin_changed(),
+    x_scale_changed(),
+    y_scale_changed(),
+    z_scale_changed(),
+    scale_changed(),
+}
+

@@ -1,0 +1,13 @@
+struct TextTableCellFormat : TextCharFormat {
+    is_valid() -> bool,
+    set_top_padding(f32 padding),
+    top_padding() -> f32,
+    set_bottom_padding(f32 padding),
+    bottom_padding() -> f32,
+    set_left_padding(f32 padding),
+    left_padding() -> f32,
+    set_right_padding(f32 padding),
+    right_padding() -> f32,
+    set_padding(f32 padding),
+}
+

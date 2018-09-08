@@ -1,0 +1,12 @@
+struct AccessibleApplication : AccessibleObject {
+    window() -> &WindowType,
+    child_count() -> i32,
+    index_of_child(&AccessibleInterfaceType arg0) -> i32,
+    focus_child() -> &AccessibleInterfaceType,
+    parent() -> &AccessibleInterfaceType,
+    child(i32 index) -> &AccessibleInterfaceType,
+    text(Accessible::Text t) -> String,
+    role() -> Accessible::Role,
+    state() -> Accessible::State,
+}
+

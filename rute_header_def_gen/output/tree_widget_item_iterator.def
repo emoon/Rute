@@ -1,0 +1,5 @@
+
+struct TreeWidgetItemIterator {
+    matches_flags(&TreeWidgetItemType item) -> bool,
+}
+

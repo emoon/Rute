@@ -1,0 +1,7 @@
+struct RegularExpressionValidator : Validator {
+    validate(String input, &i32 pos) -> Validator::State,
+    regular_expression() -> RegularExpressionType,
+    set_regular_expression(&RegularExpressionType re),
+    regular_expression_changed(&RegularExpressionType re),
+}
+

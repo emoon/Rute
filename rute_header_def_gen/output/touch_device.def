@@ -1,0 +1,14 @@
+
+struct TouchDevice {
+    qt_check_for_qgadget_macro(),
+    devices() -> <&TouchDeviceType>,
+    name() -> String,
+    type() -> TouchDevice::DeviceType,
+    capabilities() -> Capabilities,
+    maximum_touch_points() -> i32,
+    set_name(String name),
+    set_type(TouchDevice::DeviceType dev_type),
+    set_capabilities(Capabilities caps),
+    set_maximum_touch_points(i32 max),
+}
+

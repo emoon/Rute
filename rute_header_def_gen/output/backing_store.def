@@ -1,0 +1,16 @@
+
+struct BackingStore {
+    window() -> &WindowType,
+    paint_device() -> &PaintDeviceType,
+    flush(&RegionType region, &WindowType window, &PointType offset),
+    resize(&SizeType size),
+    size() -> SizeType,
+    scroll(&RegionType area, i32 dx, i32 dy) -> bool,
+    begin_paint(&RegionType arg0),
+    end_paint(),
+    set_static_contents(&RegionType region),
+    static_contents() -> RegionType,
+    has_static_contents() -> bool,
+    handle() -> &PlatformBackingStoreType,
+}
+

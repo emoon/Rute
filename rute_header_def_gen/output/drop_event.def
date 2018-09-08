@@ -1,0 +1,14 @@
+struct DropEvent : Event {
+    pos() -> PointType,
+    pos_f() -> &PointFType,
+    mouse_buttons() -> Rute::MouseButtons,
+    keyboard_modifiers() -> Rute::KeyboardModifiers,
+    possible_actions() -> Rute::DropActions,
+    proposed_action() -> Rute::DropAction,
+    accept_proposed_action(),
+    drop_action() -> Rute::DropAction,
+    set_drop_action(Rute::DropAction action),
+    source() -> &ObjectType,
+    mime_data() -> &MimeDataType,
+}
+

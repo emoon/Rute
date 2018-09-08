@@ -1,0 +1,4 @@
+struct TimerEvent : Event {
+    timer_id() -> i32,
+}
+

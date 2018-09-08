@@ -1,0 +1,7 @@
+
+struct SplitterLayoutStruct {
+    get_widget_size(i32 orient) -> i32,
+    get_handle_size(i32 orient) -> i32,
+    pick(&i32 size, i32 orient) -> i32,
+}
+

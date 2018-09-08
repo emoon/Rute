@@ -1,0 +1,5 @@
+struct TextEditMimeData : MimeData {
+    formats() -> StringListType,
+    setup(),
+}
+

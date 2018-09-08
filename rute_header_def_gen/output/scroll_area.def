@@ -1,0 +1,19 @@
+struct ScrollArea : AbstractScrollArea {
+    widget() -> &WidgetType,
+    set_widget(&WidgetType widget),
+    take_widget() -> &WidgetType,
+    widget_resizable() -> bool,
+    set_widget_resizable(bool resizable),
+    size_hint() -> SizeType,
+    focus_next_prev_child(bool next) -> bool,
+    alignment() -> Rute::Alignment,
+    set_alignment(Rute::Alignment arg0),
+    ensure_visible(i32 x, i32 y, i32 xmargin, i32 ymargin),
+    ensure_widget_visible(&WidgetType child_widget, i32 xmargin, i32 ymargin),
+    event(&EventType arg0) -> bool,
+    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
+    resize_event(&ResizeEventType arg0),
+    scroll_contents_by(i32 dx, i32 dy),
+    viewport_size_hint() -> SizeType,
+}
+

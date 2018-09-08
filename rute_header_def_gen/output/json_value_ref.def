@@ -1,0 +1,21 @@
+
+struct JsonValueRef {
+    to_variant() -> VariantType,
+    type() -> JsonValue::Type,
+    is_null() -> bool,
+    is_bool() -> bool,
+    is_double() -> bool,
+    is_array() -> bool,
+    is_object() -> bool,
+    is_undefined() -> bool,
+    to_bool() -> bool,
+    to_int() -> i32,
+    to_double() -> double,
+    to_array() -> JsonArrayType,
+    to_object() -> JsonObjectType,
+    to_bool(bool default_value) -> bool,
+    to_int(i32 default_value) -> i32,
+    to_double(double default_value) -> double,
+    to_value() -> JsonValueType,
+}
+

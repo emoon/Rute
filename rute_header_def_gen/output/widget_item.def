@@ -1,0 +1,11 @@
+struct WidgetItem : LayoutItem {
+    size_hint() -> SizeType,
+    minimum_size() -> SizeType,
+    maximum_size() -> SizeType,
+    expanding_directions() -> Rute::Orientations,
+    is_empty() -> bool,
+    widget() -> &WidgetType,
+    has_height_for_width() -> bool,
+    height_for_width(i32 arg0) -> i32,
+}
+

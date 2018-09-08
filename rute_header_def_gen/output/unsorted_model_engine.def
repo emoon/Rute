@@ -1,0 +1,6 @@
+struct UnsortedModelEngine : CompletionEngine {
+    filter_on_demand(i32 arg0),
+    filter(String arg0, &ModelIndexType arg1, i32 arg2) -> MatchDataType,
+    build_indices(String str, &ModelIndexType parent, i32 n, &IndexMapperType iv, &MatchDataType m) -> i32,
+}
+

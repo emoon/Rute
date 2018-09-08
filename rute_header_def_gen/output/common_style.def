@@ -1,0 +1,16 @@
+struct CommonStyle : Style {
+    draw_primitive(Style::PrimitiveElement pe, &StyleOptionType opt, &PainterType p, &WidgetType w),
+    sub_element_rect(Style::SubElement r, &StyleOptionType opt, &WidgetType widget) -> RectType,
+    size_from_contents(Style::ContentsType ct, &StyleOptionType opt, &SizeType contents_size, &WidgetType widget) -> SizeType,
+    style_hint(Style::StyleHint sh, &StyleOptionType opt, &WidgetType w, &StyleHintReturnType shret) -> i32,
+    standard_icon(Style::StandardPixmap standard_icon, &StyleOptionType opt, &WidgetType widget) -> IconType,
+    standard_pixmap(Style::StandardPixmap sp, &StyleOptionType opt, &WidgetType widget) -> PixmapType,
+    generated_icon_pixmap(Icon::Mode icon_mode, &PixmapType pixmap, &StyleOptionType opt) -> PixmapType,
+    layout_spacing(SizePolicy::ControlType control1, SizePolicy::ControlType control2, Rute::Orientation orientation, &StyleOptionType option, &WidgetType widget) -> i32,
+    polish(&PaletteType arg0),
+    polish(&ApplicationType app),
+    polish(&WidgetType widget),
+    unpolish(&WidgetType widget),
+    unpolish(&ApplicationType application),
+}
+

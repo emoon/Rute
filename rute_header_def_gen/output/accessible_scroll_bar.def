@@ -1,0 +1,5 @@
+struct AccessibleScrollBar : AccessibleAbstractSlider {
+    text(Accessible::Text t) -> String,
+    scroll_bar() -> &ScrollBarType,
+}
+

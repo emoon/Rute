@@ -1,0 +1,9 @@
+
+struct BasicTimer {
+    is_active() -> bool,
+    timer_id() -> i32,
+    start(i32 msec, &ObjectType obj),
+    start(i32 msec, Rute::TimerType timer_type, &ObjectType obj),
+    stop(),
+}
+

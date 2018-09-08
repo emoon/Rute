@@ -1,0 +1,8 @@
+struct AccessibleTabBar : AccessibleWidget {
+    child_count() -> i32,
+    text(Accessible::Text t) -> String,
+    child(i32 index) -> &AccessibleInterfaceType,
+    index_of_child(&AccessibleInterfaceType child) -> i32,
+    tab_bar() -> &TabBarType,
+}
+

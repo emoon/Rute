@@ -1,0 +1,6 @@
+struct SortedModelEngine : CompletionEngine {
+    filter(String arg0, &ModelIndexType arg1, i32 arg2) -> MatchDataType,
+    index_hint(String arg0, &ModelIndexType arg1, Rute::SortOrder arg2) -> IndexMapperType,
+    sort_order(&ModelIndexType arg0) -> Rute::SortOrder,
+}
+

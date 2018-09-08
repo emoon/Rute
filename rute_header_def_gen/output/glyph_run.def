@@ -1,0 +1,26 @@
+
+struct GlyphRun {
+    swap(&GlyphRunType other),
+    raw_font() -> RawFontType,
+    set_raw_font(&RawFontType raw_font),
+    set_raw_data(&quint32 glyph_index_array, &PointFType glyph_position_array, i32 size),
+    glyph_indexes() -> Vector<quint32>Type,
+    set_glyph_indexes(&Vector<quint32>Type glyph_indexes),
+    positions() -> Vector<QPointF>Type,
+    set_positions(&Vector<QPointF>Type positions),
+    clear(),
+    set_overline(bool overline),
+    overline() -> bool,
+    set_underline(bool underline),
+    underline() -> bool,
+    set_right_to_left(bool on),
+    is_right_to_left() -> bool,
+    set_flag(GlyphRun::GlyphRunFlag flag, bool enabled),
+    set_flags(GlyphRunFlags flags),
+    flags() -> GlyphRunFlags,
+    set_bounding_rect(&RectFType bounding_rect),
+    bounding_rect() -> RectFType,
+    is_empty() -> bool,
+    detach(),
+}
+

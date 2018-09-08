@@ -1,0 +1,6 @@
+struct FocusEvent : Event {
+    got_focus() -> bool,
+    lost_focus() -> bool,
+    reason() -> Rute::FocusReason,
+}
+

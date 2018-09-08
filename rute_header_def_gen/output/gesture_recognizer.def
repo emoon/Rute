@@ -1,0 +1,9 @@
+
+struct GestureRecognizer {
+    create(&ObjectType target) -> &GestureType,
+    recognize(&GestureType state, &ObjectType watched, &EventType event) -> Result,
+    reset(&GestureType state),
+    register_recognizer(&GestureRecognizerType recognizer) -> Rute::GestureType,
+    unregister_recognizer(Rute::GestureType type),
+}
+

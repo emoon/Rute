@@ -1,0 +1,6 @@
+
+struct StyleOption {
+    init(&WidgetType w),
+    init_from(&WidgetType w),
+}
+

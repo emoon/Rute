@@ -1,0 +1,17 @@
+
+struct Cursor {
+    swap(&CursorType other),
+    shape() -> Rute::CursorShape,
+    set_shape(Rute::CursorShape new_shape),
+    bitmap() -> &BitmapType,
+    mask() -> &BitmapType,
+    pixmap() -> PixmapType,
+    hot_spot() -> PointType,
+    pos() -> PointType,
+    pos(&ScreenType screen) -> PointType,
+    set_pos(i32 x, i32 y),
+    set_pos(&ScreenType screen, i32 x, i32 y),
+    set_pos(&PointType p),
+    set_pos(&ScreenType screen, &PointType p),
+}
+

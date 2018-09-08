@@ -1,0 +1,9 @@
+
+struct GraphicsSceneLinearIndex {
+    items(Rute::SortOrder order) -> <&GraphicsItemType>,
+    estimate_items(&RectFType rect, Rute::SortOrder order) -> <&GraphicsItemType>,
+    clear(),
+    add_item(&GraphicsItemType item),
+    remove_item(&GraphicsItemType item),
+}
+

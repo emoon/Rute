@@ -1,0 +1,15 @@
+struct GraphicsPathItem : AbstractGraphicsShapeItem {
+    path() -> PainterPathType,
+    set_path(&PainterPathType path),
+    bounding_rect() -> RectFType,
+    shape() -> PainterPathType,
+    contains(&PointFType point) -> bool,
+    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
+    is_obscured_by(&GraphicsItemType item) -> bool,
+    opaque_area() -> PainterPathType,
+    type() -> i32,
+    supports_extension(GraphicsItem::Extension extension) -> bool,
+    set_extension(GraphicsItem::Extension extension, &VariantType variant),
+    extension(&VariantType variant) -> VariantType,
+}
+

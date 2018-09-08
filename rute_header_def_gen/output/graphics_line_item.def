@@ -1,0 +1,18 @@
+struct GraphicsLineItem : GraphicsItem {
+    pen() -> PenType,
+    set_pen(&PenType pen),
+    line() -> LineFType,
+    set_line(&LineFType line),
+    set_line(f32 x1, f32 y1, f32 x2, f32 y2),
+    bounding_rect() -> RectFType,
+    shape() -> PainterPathType,
+    contains(&PointFType point) -> bool,
+    paint(&PainterType painter, &StyleOptionGraphicsItemType option, &WidgetType widget),
+    is_obscured_by(&GraphicsItemType item) -> bool,
+    opaque_area() -> PainterPathType,
+    type() -> i32,
+    supports_extension(GraphicsItem::Extension extension) -> bool,
+    set_extension(GraphicsItem::Extension extension, &VariantType variant),
+    extension(&VariantType variant) -> VariantType,
+}
+

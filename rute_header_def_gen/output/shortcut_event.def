@@ -1,0 +1,6 @@
+struct ShortcutEvent : Event {
+    key() -> &KeySequenceType,
+    shortcut_id() -> i32,
+    is_ambiguous() -> bool,
+}
+

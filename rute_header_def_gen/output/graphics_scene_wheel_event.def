@@ -1,0 +1,17 @@
+struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
+    pos() -> PointFType,
+    set_pos(&PointFType pos),
+    scene_pos() -> PointFType,
+    set_scene_pos(&PointFType pos),
+    screen_pos() -> PointType,
+    set_screen_pos(&PointType pos),
+    buttons() -> Rute::MouseButtons,
+    set_buttons(Rute::MouseButtons buttons),
+    modifiers() -> Rute::KeyboardModifiers,
+    set_modifiers(Rute::KeyboardModifiers modifiers),
+    delta() -> i32,
+    set_delta(i32 delta),
+    orientation() -> Rute::Orientation,
+    set_orientation(Rute::Orientation orientation),
+}
+

@@ -1,0 +1,4 @@
+struct ToolBarChangeEvent : Event {
+    toggle() -> bool,
+}
+

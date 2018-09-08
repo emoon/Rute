@@ -1,0 +1,4 @@
+struct DateEdit : DateTimeEdit {
+    user_date_changed(&DateType date),
+}
+

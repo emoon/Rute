@@ -1,0 +1,7 @@
+
+struct MetaClassInfo {
+    name() -> &char,
+    value() -> &char,
+    enclosing_meta_object() -> &MetaObjectType,
+}
+

@@ -1,0 +1,9 @@
+struct HelpEvent : Event {
+    x() -> i32,
+    y() -> i32,
+    global_x() -> i32,
+    global_y() -> i32,
+    pos() -> &PointType,
+    global_pos() -> &PointType,
+}
+

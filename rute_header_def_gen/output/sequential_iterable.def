@@ -1,0 +1,9 @@
+
+struct SequentialIterable {
+    begin() -> SequentialIterable::const_iterator,
+    end() -> SequentialIterable::const_iterator,
+    at(i32 idx) -> VariantType,
+    size() -> i32,
+    can_reverse_iterate() -> bool,
+}
+

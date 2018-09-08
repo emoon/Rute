@@ -1,0 +1,10 @@
+
+struct ToolBarAreaLayoutItem {
+    skip() -> bool,
+    minimum_size() -> i32,
+    size_hint() -> i32,
+    real_size_hint() -> i32,
+    resize(i32 o, i32 new_size),
+    extend_size(i32 o, i32 extent),
+}
+

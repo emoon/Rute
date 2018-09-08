@@ -1,0 +1,7 @@
+struct DockWidgetGroupWindowItem : WidgetItem {
+    minimum_size() -> SizeType,
+    maximum_size() -> SizeType,
+    size_hint() -> SizeType,
+    lay() -> &LayoutType,
+}
+

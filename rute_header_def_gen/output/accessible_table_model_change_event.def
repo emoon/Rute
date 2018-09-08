@@ -1,0 +1,13 @@
+struct AccessibleTableModelChangeEvent : AccessibleEvent {
+    set_model_change_type(AccessibleTableModelChangeEvent::ModelChangeType change_type),
+    model_change_type() -> AccessibleTableModelChangeEvent::ModelChangeType,
+    set_first_row(i32 row),
+    set_first_column(i32 col),
+    set_last_row(i32 row),
+    set_last_column(i32 col),
+    first_row() -> i32,
+    first_column() -> i32,
+    last_row() -> i32,
+    last_column() -> i32,
+}
+

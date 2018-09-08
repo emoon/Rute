@@ -1,0 +1,18 @@
+
+struct Line {
+    is_null() -> bool,
+    p1() -> PointType,
+    p2() -> PointType,
+    x1() -> i32,
+    y1() -> i32,
+    x2() -> i32,
+    y2() -> i32,
+    dx() -> i32,
+    dy() -> i32,
+    center() -> PointType,
+    set_p1(&PointType p1),
+    set_p2(&PointType p2),
+    set_points(&PointType p1, &PointType p2),
+    set_line(i32 x1, i32 y1, i32 x2, i32 y2),
+}
+

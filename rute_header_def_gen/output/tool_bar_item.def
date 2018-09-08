@@ -1,0 +1,4 @@
+struct ToolBarItem : WidgetItem {
+    is_empty() -> bool,
+}
+

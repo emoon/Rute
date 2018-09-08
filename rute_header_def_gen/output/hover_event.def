@@ -1,0 +1,7 @@
+struct HoverEvent : InputEvent {
+    pos() -> PointType,
+    old_pos() -> PointType,
+    pos_f() -> &PointFType,
+    old_pos_f() -> &PointFType,
+}
+

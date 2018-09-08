@@ -1,0 +1,22 @@
+
+struct SizeF {
+    is_null() -> bool,
+    is_empty() -> bool,
+    is_valid() -> bool,
+    width() -> f32,
+    height() -> f32,
+    set_width(f32 w),
+    set_height(f32 h),
+    scale(f32 w, f32 h, Rute::AspectRatioMode mode),
+    scale(&SizeFType s, Rute::AspectRatioMode mode),
+    scaled(f32 w, f32 h, Rute::AspectRatioMode mode) -> SizeFType,
+    scaled(&SizeFType s, Rute::AspectRatioMode mode) -> SizeFType,
+    expanded_to(&SizeFType arg0) -> SizeFType,
+    bounded_to(&SizeFType arg0) -> SizeFType,
+    rwidth() -> &f32,
+    rheight() -> &f32,
+    to_size() -> SizeType,
+    from_cg_size(CGSize size) -> SizeFType,
+    to_cg_size() -> CGSize,
+}
+

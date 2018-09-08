@@ -1,0 +1,6 @@
+
+struct DesktopScreenWidget {
+    screen_number() -> i32,
+    screen() -> &ScreenType,
+}
+

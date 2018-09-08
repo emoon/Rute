@@ -1,0 +1,20 @@
+struct GraphicsDropShadowEffect : GraphicsEffect {
+    bounding_rect_for(&RectFType rect) -> RectFType,
+    offset() -> PointFType,
+    x_offset() -> f32,
+    y_offset() -> f32,
+    blur_radius() -> f32,
+    color() -> ColorType,
+    set_offset(&PointFType ofs),
+    set_offset(f32 dx, f32 dy),
+    set_offset(f32 d),
+    set_x_offset(f32 dx),
+    set_y_offset(f32 dy),
+    set_blur_radius(f32 blur_radius),
+    set_color(&ColorType color),
+    offset_changed(&PointFType offset),
+    blur_radius_changed(f32 blur_radius),
+    color_changed(&ColorType color),
+    draw(&PainterType painter),
+}
+

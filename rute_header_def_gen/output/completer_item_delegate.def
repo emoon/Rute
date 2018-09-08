@@ -1,0 +1,4 @@
+struct CompleterItemDelegate : ItemDelegate {
+    paint(&PainterType p, &StyleOptionViewItemType opt, &ModelIndexType idx),
+}
+

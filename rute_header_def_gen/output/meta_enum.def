@@ -1,0 +1,17 @@
+
+struct MetaEnum {
+    name() -> &char,
+    is_flag() -> bool,
+    is_scoped() -> bool,
+    key_count() -> i32,
+    key(i32 index) -> &char,
+    value(i32 index) -> i32,
+    scope() -> &char,
+    key_to_value(&char key, &bool ok) -> i32,
+    value_to_key(i32 value) -> &char,
+    keys_to_value(&char keys, &bool ok) -> i32,
+    value_to_keys(i32 value) -> ByteArrayType,
+    enclosing_meta_object() -> &MetaObjectType,
+    is_valid() -> bool,
+}
+

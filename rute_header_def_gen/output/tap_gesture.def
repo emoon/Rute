@@ -1,0 +1,5 @@
+struct TapGesture : Gesture {
+    position() -> PointFType,
+    set_position(&PointFType pos),
+}
+

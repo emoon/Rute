@@ -1,0 +1,5 @@
+struct WindowStateChangeEvent : Event {
+    old_state() -> Rute::WindowStates,
+    is_override() -> bool,
+}
+

@@ -1,0 +1,18 @@
+struct AbstractTransition : Object {
+    source_state() -> &StateType,
+    target_state() -> &AbstractStateType,
+    set_target_state(&AbstractStateType target),
+    target_states() -> <&AbstractStateType>,
+    set_target_states(&List<QAbstractStateType targets),
+    set_transition_type(AbstractTransition::TransitionType type),
+    machine() -> &StateMachineType,
+    add_animation(&AbstractAnimationType animation),
+    remove_animation(&AbstractAnimationType animation),
+    animations() -> <&AbstractAnimationType>,
+    target_state_changed(AbstractTransition::QPrivateSignal arg0),
+    target_states_changed(AbstractTransition::QPrivateSignal arg0),
+    event_test(&EventType event) -> bool,
+    on_transition(&EventType event),
+    event(&EventType e) -> bool,
+}
+

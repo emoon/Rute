@@ -1,0 +1,23 @@
+struct ColorDialog : Dialog {
+    set_current_color(&ColorType color),
+    current_color() -> ColorType,
+    selected_color() -> ColorType,
+    set_option(ColorDialog::ColorDialogOption option, bool on),
+    test_option(ColorDialog::ColorDialogOption option) -> bool,
+    set_options(ColorDialogOptions options),
+    options() -> ColorDialogOptions,
+    open(&ObjectType receiver, &char member),
+    set_visible(bool visible),
+    get_color(&ColorType initial, &WidgetType parent, String title, ColorDialogOptions options) -> ColorType,
+    get_rgba(RgbType rgba, &bool ok, &WidgetType parent) -> RgbType,
+    custom_count() -> i32,
+    custom_color(i32 index) -> ColorType,
+    set_custom_color(i32 index, ColorType color),
+    standard_color(i32 index) -> ColorType,
+    set_standard_color(i32 index, ColorType color),
+    current_color_changed(&ColorType color),
+    color_selected(&ColorType color),
+    change_event(&EventType event),
+    done(i32 result),
+}
+

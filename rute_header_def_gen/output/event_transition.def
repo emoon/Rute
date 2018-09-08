@@ -1,0 +1,10 @@
+struct EventTransition : AbstractTransition {
+    event_source() -> &ObjectType,
+    set_event_source(&ObjectType object),
+    event_type() -> Event::Type,
+    set_event_type(Event::Type type),
+    event_test(&EventType event) -> bool,
+    on_transition(&EventType event),
+    event(&EventType e) -> bool,
+}
+

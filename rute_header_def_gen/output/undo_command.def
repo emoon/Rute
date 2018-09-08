@@ -1,0 +1,15 @@
+
+struct UndoCommand {
+    undo(),
+    redo(),
+    text() -> String,
+    action_text() -> String,
+    set_text(String text),
+    is_obsolete() -> bool,
+    set_obsolete(bool obsolete),
+    id() -> i32,
+    merge_with(&UndoCommandType other) -> bool,
+    child_count() -> i32,
+    child(i32 index) -> &UndoCommandType,
+}
+

@@ -1,0 +1,9 @@
+
+struct ItemSelection {
+    select(&ModelIndexType top_left, &ModelIndexType bottom_right),
+    contains(&ModelIndexType index) -> bool,
+    indexes() -> ModelIndexListType,
+    merge(&ItemSelectionType other, ItemSelectionModel::SelectionFlags command),
+    split(&ItemSelectionRangeType range, &ItemSelectionRangeType other, &ItemSelectionType result),
+}
+

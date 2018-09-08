@@ -1,0 +1,24 @@
+
+struct AccessibleTableInterface {
+    caption() -> &AccessibleInterfaceType,
+    summary() -> &AccessibleInterfaceType,
+    cell_at(i32 row, i32 column) -> &AccessibleInterfaceType,
+    selected_cell_count() -> i32,
+    selected_cells() -> <&AccessibleInterfaceType>,
+    column_description(i32 column) -> String,
+    row_description(i32 row) -> String,
+    selected_column_count() -> i32,
+    selected_row_count() -> i32,
+    column_count() -> i32,
+    row_count() -> i32,
+    selected_columns() -> <i32>,
+    selected_rows() -> <i32>,
+    is_column_selected(i32 column) -> bool,
+    is_row_selected(i32 row) -> bool,
+    select_row(i32 row) -> bool,
+    select_column(i32 column) -> bool,
+    unselect_row(i32 row) -> bool,
+    unselect_column(i32 column) -> bool,
+    model_change(&AccessibleTableModelChangeEventType event),
+}
+

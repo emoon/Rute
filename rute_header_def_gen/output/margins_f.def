@@ -1,0 +1,14 @@
+
+struct MarginsF {
+    is_null() -> bool,
+    left() -> f32,
+    top() -> f32,
+    right() -> f32,
+    bottom() -> f32,
+    set_left(f32 left),
+    set_top(f32 top),
+    set_right(f32 right),
+    set_bottom(f32 bottom),
+    to_margins() -> MarginsType,
+}
+

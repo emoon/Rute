@@ -1,0 +1,16 @@
+struct SplitterHandle : Widget {
+    set_orientation(Rute::Orientation o),
+    orientation() -> Rute::Orientation,
+    opaque_resize() -> bool,
+    splitter() -> &SplitterType,
+    size_hint() -> SizeType,
+    paint_event(&PaintEventType arg0),
+    mouse_move_event(&MouseEventType arg0),
+    mouse_press_event(&MouseEventType arg0),
+    mouse_release_event(&MouseEventType arg0),
+    resize_event(&ResizeEventType arg0),
+    event(&EventType arg0) -> bool,
+    move_splitter(i32 p),
+    closest_legal_position(i32 p) -> i32,
+}
+

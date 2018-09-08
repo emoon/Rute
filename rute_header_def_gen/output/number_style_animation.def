@@ -1,0 +1,9 @@
+struct NumberStyleAnimation : StyleAnimation {
+    start_value() -> f32,
+    set_start_value(f32 value),
+    end_value() -> f32,
+    set_end_value(f32 value),
+    current_value() -> f32,
+    is_update_needed() -> bool,
+}
+

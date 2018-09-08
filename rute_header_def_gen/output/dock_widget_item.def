@@ -1,0 +1,8 @@
+struct DockWidgetItem : WidgetItem {
+    minimum_size() -> SizeType,
+    maximum_size() -> SizeType,
+    size_hint() -> SizeType,
+    dock_widget_child_item() -> &LayoutItemType,
+    dock_widget_layout() -> &DockWidgetLayoutType,
+}
+

@@ -1,0 +1,10 @@
+struct GraphicsOpacityEffect : GraphicsEffect {
+    opacity() -> f32,
+    opacity_mask() -> BrushType,
+    set_opacity(f32 opacity),
+    set_opacity_mask(&BrushType mask),
+    opacity_changed(f32 opacity),
+    opacity_mask_changed(&BrushType mask),
+    draw(&PainterType painter),
+}
+

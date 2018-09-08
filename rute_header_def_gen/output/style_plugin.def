@@ -1,0 +1,4 @@
+struct StylePlugin : Object {
+    create(String key) -> &StyleType,
+}
+

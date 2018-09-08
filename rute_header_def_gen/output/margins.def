@@ -1,0 +1,13 @@
+
+struct Margins {
+    is_null() -> bool,
+    left() -> i32,
+    top() -> i32,
+    right() -> i32,
+    bottom() -> i32,
+    set_left(i32 left),
+    set_top(i32 top),
+    set_right(i32 right),
+    set_bottom(i32 bottom),
+}
+

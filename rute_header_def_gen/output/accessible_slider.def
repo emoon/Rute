@@ -1,0 +1,5 @@
+struct AccessibleSlider : AccessibleAbstractSlider {
+    text(Accessible::Text t) -> String,
+    slider() -> &SliderType,
+}
+

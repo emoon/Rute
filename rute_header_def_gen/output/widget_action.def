@@ -1,0 +1,12 @@
+struct WidgetAction : Action {
+    set_default_widget(&WidgetType w),
+    default_widget() -> &WidgetType,
+    request_widget(&WidgetType parent) -> &WidgetType,
+    release_widget(&WidgetType widget),
+    event(&EventType arg0) -> bool,
+    event_filter(&ObjectType arg0, &EventType arg1) -> bool,
+    create_widget(&WidgetType parent) -> &WidgetType,
+    delete_widget(&WidgetType widget),
+    created_widgets() -> <&WidgetType>,
+}
+

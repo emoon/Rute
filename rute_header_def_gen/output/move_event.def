@@ -1,0 +1,5 @@
+struct MoveEvent : Event {
+    pos() -> &PointType,
+    old_pos() -> &PointType,
+}
+
