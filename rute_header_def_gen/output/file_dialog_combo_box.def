@@ -1,9 +1,0 @@
-
-struct FileDialogComboBox {
-    show_popup(),
-    set_history(&i32 paths),
-    history() -> i32,
-    paint_event(&i32 arg0),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

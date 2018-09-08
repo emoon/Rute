@@ -1,8 +1,0 @@
-struct ScrollbarStyleAnimation : NumberStyleAnimation {
-    mode() -> ScrollbarStyleAnimation::Mode,
-    was_active() -> bool,
-    set_active(bool active),
-    update_current_time(i32 time),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

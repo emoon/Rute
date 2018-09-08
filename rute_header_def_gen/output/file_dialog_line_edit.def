@@ -1,6 +1,0 @@
-
-struct FileDialogLineEdit {
-    key_press_event(&i32 e),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

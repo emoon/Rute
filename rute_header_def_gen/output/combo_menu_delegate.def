@@ -1,7 +1,0 @@
-struct ComboMenuDelegate : AbstractItemDelegate {
-    paint(&PainterType painter, &StyleOptionViewItemType option, &ModelIndexType index),
-    size_hint(&StyleOptionViewItemType option, &ModelIndexType index) -> SizeType,
-    get_style_option(&StyleOptionViewItemType option, &ModelIndexType index) -> StyleOptionMenuItemType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

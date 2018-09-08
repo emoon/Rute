@@ -1,8 +1,0 @@
-
-struct TapAndHoldGestureRecognizer {
-    create(&i32 target) -> &i32,
-    recognize(&i32 state, &i32 watched, &i32 event) -> i32,
-    reset(&i32 state),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

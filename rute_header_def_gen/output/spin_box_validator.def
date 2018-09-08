@@ -1,6 +1,0 @@
-struct SpinBoxValidator : Validator {
-    validate(String input, &i32 arg0) -> Validator::State,
-    fixup(String arg0),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

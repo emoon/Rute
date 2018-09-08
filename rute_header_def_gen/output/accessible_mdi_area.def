@@ -1,8 +1,0 @@
-struct AccessibleMdiArea : AccessibleWidget {
-    child_count() -> i32,
-    child(i32 index) -> &AccessibleInterfaceType,
-    index_of_child(&AccessibleInterfaceType child) -> i32,
-    mdi_area() -> &MdiAreaType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

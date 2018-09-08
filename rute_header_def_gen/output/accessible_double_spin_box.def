@@ -1,6 +1,0 @@
-struct AccessibleDoubleSpinBox : AccessibleAbstractSpinBox {
-    text(Accessible::Text t) -> String,
-    double_spin_box() -> &DoubleSpinBoxType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

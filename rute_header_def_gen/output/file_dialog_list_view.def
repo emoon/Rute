@@ -1,7 +1,0 @@
-
-struct FileDialogListView {
-    size_hint() -> i32,
-    key_press_event(&i32 e),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

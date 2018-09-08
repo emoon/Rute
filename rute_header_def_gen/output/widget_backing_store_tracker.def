@@ -1,9 +1,0 @@
-
-struct WidgetBackingStoreTracker {
-    create(&WidgetType tlw),
-    register_widget(&WidgetType w),
-    unregister_widget(&WidgetType w),
-    data() -> &WidgetBackingStoreType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

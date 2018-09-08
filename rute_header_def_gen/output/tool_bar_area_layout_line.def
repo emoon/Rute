@@ -1,9 +1,0 @@
-
-struct ToolBarAreaLayoutLine {
-    size_hint() -> i32,
-    minimum_size() -> i32,
-    fit_layout(),
-    skip() -> bool,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

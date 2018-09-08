@@ -1,9 +1,0 @@
-struct ProgressStyleAnimation : StyleAnimation {
-    animation_step() -> i32,
-    progress_step(i32 width) -> i32,
-    speed() -> i32,
-    set_speed(i32 speed),
-    is_update_needed() -> bool,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

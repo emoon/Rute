@@ -1,6 +1,0 @@
-struct AccessibleDial : AccessibleAbstractSlider {
-    text(Accessible::Text text_type) -> String,
-    dial() -> &DialType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

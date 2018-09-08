@@ -1,6 +1,0 @@
-struct UndoAction : Action {
-    set_text_format(String text_format, String default_text),
-    set_prefixed_text(String text),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

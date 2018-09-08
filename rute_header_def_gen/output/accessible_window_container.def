@@ -1,8 +1,0 @@
-struct AccessibleWindowContainer : AccessibleWidget {
-    child_count() -> i32,
-    index_of_child(&AccessibleInterfaceType child) -> i32,
-    child(i32 i) -> &AccessibleInterfaceType,
-    container() -> &WindowContainerType,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

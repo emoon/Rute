@@ -1,6 +1,0 @@
-struct TextEditMimeData : MimeData {
-    formats() -> StringListType,
-    setup(),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

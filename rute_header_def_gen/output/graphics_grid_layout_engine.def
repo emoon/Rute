@@ -1,9 +1,0 @@
-
-struct GraphicsGridLayoutEngine {
-    find_layout_item(&i32 layout_item) -> &GraphicsGridLayoutEngineItemType,
-    index_of(&i32 item) -> i32,
-    set_alignment(&i32 graphics_layout_item, Rute::Alignment alignment),
-    alignment(&i32 graphics_layout_item) -> Rute::Alignment,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

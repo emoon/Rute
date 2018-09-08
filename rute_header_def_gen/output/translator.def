@@ -1,8 +1,0 @@
-struct Translator : Object {
-    is_empty() -> bool,
-    load(String filename, String directory, String search_delimiters, String suffix) -> bool,
-    load(&LocaleType locale, String filename, String prefix, String directory, String suffix) -> bool,
-    load(&uchar data, i32 len, String directory) -> bool,
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

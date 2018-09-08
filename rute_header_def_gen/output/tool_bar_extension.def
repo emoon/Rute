@@ -1,7 +1,0 @@
-struct ToolBarExtension : ToolButton {
-    paint_event(&PaintEventType arg0),
-    size_hint() -> SizeType,
-    set_orientation(Rute::Orientation o),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4

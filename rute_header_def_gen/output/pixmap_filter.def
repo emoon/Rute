@@ -1,7 +1,0 @@
-struct PixmapFilter : Object {
-    type() -> PixmapFilter::FilterType,
-    bounding_rect_for(&RectFType rect) -> RectFType,
-    draw(&PainterType painter, &PointFType p, &PixmapType src, &RectFType src_rect),
-}
-
-// vim: syntax=rust expandtab ts=4 sw=4
