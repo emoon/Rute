@@ -10,6 +10,8 @@ use std::borrow::Cow;
 use std::collections::HashSet;
 use std::sync::RwLock;
 use walkdir::WalkDir;
+use std::io::{Write, BufWriter};
+use std::fs::File;
 
 enum FunctionType {
     Regular,
@@ -161,16 +163,16 @@ fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
 ///
 ///
 ///
-fn print_arg(arg: &Entity, arg_count: &mut usize) {
+fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
     let t = arg.get_type().unwrap();
     let arg_type = get_arg_type(&t);
 
-    print!("{} ", arg_type);
+    write!(dest, "{} ", arg_type);
 
     if let Some(name) = arg.get_name() {
-        print!("{}", name);
+        write!(dest, "{}", name.to_snake_case());
     } else {
-        print!("arg{}", arg_count);
+        write!(dest, "arg{}", arg_count);
         *arg_count += 1;
     }
 }
@@ -178,7 +180,7 @@ fn print_arg(arg: &Entity, arg_count: &mut usize) {
 ///
 /// Print a functio/method definition
 ///
-fn print_func(entry: &Entity, func_type: FunctionType) {
+fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: FunctionType) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
@@ -190,50 +192,51 @@ fn print_func(entry: &Entity, func_type: FunctionType) {
         }
     }
 
-    print!("    {}", name.to_snake_case());
+    write!(dest, "    {}", name.to_snake_case());
 
     if let Some(args) = entry.get_arguments() {
         if args.is_empty() {
-            print!("()");
+            write!(dest, "()");
         } else {
             let mut count = 0;
 
-            print!("(");
+            write!(dest, "(");
 
-            print_arg(&args[0], &mut count);
+            print_arg(dest, &args[0], &mut count);
 
             for arg in &args[1..] {
-                print!(", ");
-                print_arg(arg, &mut count);
+                write!(dest, ", ");
+                print_arg(dest, arg, &mut count);
             }
 
-            print!(")");
+            write!(dest, ")");
         }
     } else {
-        print!("()");
+        write!(dest, "()");
     }
 
     if let Some(res) = entry.get_result_type() {
         let display_name = res.get_display_name();
 
         if display_name.contains("void") {
-            println!(",");
+            writeln!(dest, ",");
         } else {
-            println!(" -> {},", get_arg_type(&res));
+            writeln!(dest, " -> {},", get_arg_type(&res));
         }
     } else {
-        print!("\n");
+        writeln!(dest, "\n");
     }
 }
 
 ///
 /// Print a class. This code a a bit hacky but should do for this usage
 ///
-fn print_class(entry: &Entity) {
+fn print_class(target_path: &str, entry: &Entity) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
     };
+
 
     // Only deal with Q* types
     if name.as_bytes()[0] != b'Q' {
@@ -275,20 +278,23 @@ fn print_class(entry: &Entity) {
         return;
     }
 
+    let filename = format!("{}/{}.def", target_path, &name[1..].to_snake_case());
+    let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
+
     // Print class and the inharitance
 
     if base_classes.is_empty() {
-        println!("\nstruct {} {{", &name[1..]);
+        writeln!(dest, "\nstruct {} {{", &name[1..]);
     } else {
         if base_classes.len() > 1 {
-            print!("{} : {}", &name[1..], &base_classes[0][7..]);
+            write!(dest, "struct {} : {}", &name[1..], &base_classes[0][7..]);
 
             for base in &base_classes[1..] {
-                print!(", {}", &base[7..]);
+                write!(dest, ", {}", &base[7..]);
             }
-            println!(" {{");
+            writeln!(dest, " {{");
         } else {
-            println!("struct {} : {} {{", &name[1..], &base_classes[0][7..]);
+            writeln!(dest, "struct {} : {} {{", &name[1..], &base_classes[0][7..]);
         }
     }
 
@@ -297,14 +303,18 @@ fn print_class(entry: &Entity) {
     for field in entry.get_children() {
         match field.get_kind() {
             EntityKind::Method => {
-                print_func(&field, FunctionType::Regular);
+                print_func(&mut dest, &field, FunctionType::Regular);
             }
+
+            EntityKind::AccessSpecifier => {
+                //println!("{:?}", field);
+            },
 
             _ => (),
         }
     }
 
-    println!("}}\n");
+    writeln!(dest, "}}\n");
 }
 
 fn is_header_file(entry: &walkdir::DirEntry) -> bool {
@@ -327,7 +337,8 @@ fn main() {
 
     for entry in WalkDir::new(
         //"/Users/danielcollin/temp/test.h",
-        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
+        //"/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
+        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers",
     ) {
         let entry = entry.unwrap();
 
@@ -343,7 +354,7 @@ fn main() {
     // Do the thing on threads
 
     header_files.par_iter().for_each(|filename| {
-        println!("filename {:?}", filename);
+        println!("Processing filename {:?}", filename);
 
         // Create a new `Index`
         let index = Index::new(&clang, false, false);
@@ -383,7 +394,7 @@ fn main() {
                     w.insert(t);
                 }
 
-                print_class(&struct_);
+                print_class("output", &struct_);
             }
         }
     });
@@ -410,7 +421,7 @@ mod tests {
 
     #[test]
     fn test_array_vector_type() {
-        assert_eq!(get_complex_arg("Vector<int>"), "<int>");
+        assert_eq!(get_complex_arg("Vector<int>"), "<i32>");
     }
 
     #[test]
