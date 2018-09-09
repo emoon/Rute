@@ -4,7 +4,7 @@ struct WizardPage : Widget {
     set_sub_title(sub_title: String),
     sub_title() -> String,
     set_pixmap(which: Wizard::WizardPixmap, pixmap: &PixmapType),
-    pixmap(which: Wizard::WizardPixmap) -> PixmapType,
+    pixmap(which: Wizard::WizardPixmap) -> Pixmap,
     set_final_page(final_page: bool),
     is_final_page() -> bool,
     set_commit_page(commit_page: bool),
@@ -18,9 +18,9 @@ struct WizardPage : Widget {
     [override] next_id() -> i32,
     [event] complete_changed(),
     set_field(name: String, value: &VariantType),
-    field(name: String) -> VariantType,
+    field(name: String) -> Variant,
     register_field(name: String, widget: &WidgetType, property: &char, changed_signal: &char),
-    wizard() -> &WizardType,
+    wizard() -> Wizard?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

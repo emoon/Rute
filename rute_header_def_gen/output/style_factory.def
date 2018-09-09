@@ -1,7 +1,7 @@
 
 struct StyleFactory {
-    [static] keys() -> StringListType,
-    [static] create(arg0: String) -> &StyleType,
+    [static] keys() -> StringList,
+    [static] create(arg0: String) -> Style?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

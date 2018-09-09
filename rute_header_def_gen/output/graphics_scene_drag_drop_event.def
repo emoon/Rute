@@ -1,9 +1,9 @@
 struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
-    pos() -> PointFType,
+    pos() -> PointF,
     set_pos(pos: &PointFType),
-    scene_pos() -> PointFType,
+    scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
-    screen_pos() -> PointType,
+    screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     buttons() -> Rute::MouseButtons,
     set_buttons(buttons: Rute::MouseButtons),
@@ -16,9 +16,9 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     accept_proposed_action(),
     drop_action() -> Rute::DropAction,
     set_drop_action(action: Rute::DropAction),
-    source() -> &WidgetType,
+    source() -> Widget?,
     set_source(source: &WidgetType),
-    mime_data() -> &MimeDataType,
+    mime_data() -> MimeData?,
     set_mime_data(data: &MimeDataType),
 }
 

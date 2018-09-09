@@ -13,15 +13,15 @@ struct CharRef {
     is_upper() -> bool,
     is_title_case() -> bool,
     digit_value() -> i32,
-    to_lower() -> CharType,
-    to_upper() -> CharType,
-    to_title_case() -> CharType,
+    to_lower() -> Char,
+    to_upper() -> Char,
+    to_title_case() -> Char,
     category() -> Char::Category,
     direction() -> Char::Direction,
     joining_type() -> Char::JoiningType,
     joining() -> Char::Joining,
     has_mirrored() -> bool,
-    mirrored_char() -> CharType,
+    mirrored_char() -> Char,
     decomposition() -> String,
     decomposition_tag() -> Char::Decomposition,
     combining_class() -> uchar,
@@ -33,7 +33,7 @@ struct CharRef {
     set_row(row: uchar),
     to_latin1() -> char,
     unicode() -> ushort,
-    unicode() -> &ushort,
+    unicode() -> ushort?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

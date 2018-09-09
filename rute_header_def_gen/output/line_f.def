@@ -6,10 +6,10 @@ enum IntersectType {
 
 
 struct LineF {
-    [static] from_polar(length: f32, angle: f32) -> LineFType,
+    [static] from_polar(length: f32, angle: f32) -> LineF,
     is_null() -> bool,
-    p1() -> PointFType,
-    p2() -> PointFType,
+    p1() -> PointF,
+    p2() -> PointF,
     x1() -> f32,
     y1() -> f32,
     x2() -> f32,
@@ -21,17 +21,17 @@ struct LineF {
     angle() -> f32,
     set_angle(angle: f32),
     angle_to(l: &LineFType) -> f32,
-    unit_vector() -> LineFType,
-    normal_vector() -> LineFType,
+    unit_vector() -> LineF,
+    normal_vector() -> LineF,
     intersect(l: &LineFType, intersection_point: &PointFType) -> LineF::IntersectType,
     angle(l: &LineFType) -> f32,
-    point_at(t: f32) -> PointFType,
-    center() -> PointFType,
+    point_at(t: f32) -> PointF,
+    center() -> PointF,
     set_p1(p1: &PointFType),
     set_p2(p2: &PointFType),
     set_points(p1: &PointFType, p2: &PointFType),
     set_line(x1: f32, y1: f32, x2: f32, y2: f32),
-    to_line() -> LineType,
+    to_line() -> Line,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

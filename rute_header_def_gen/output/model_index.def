@@ -4,12 +4,12 @@ struct ModelIndex {
     column() -> i32,
     internal_id() -> quintptr,
     internal_pointer(),
-    parent() -> ModelIndexType,
-    sibling(row: i32, column: i32) -> ModelIndexType,
-    child(row: i32, column: i32) -> ModelIndexType,
-    data(role: i32) -> VariantType,
+    parent() -> ModelIndex,
+    sibling(row: i32, column: i32) -> ModelIndex,
+    child(row: i32, column: i32) -> ModelIndex,
+    data(role: i32) -> Variant,
     flags() -> Rute::ItemFlags,
-    model() -> &AbstractItemModelType,
+    model() -> AbstractItemModel?,
     is_valid() -> bool,
 }
 

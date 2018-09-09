@@ -1,8 +1,8 @@
 struct RadialGradient : Gradient {
-    center() -> PointFType,
+    center() -> PointF,
     set_center(center: &PointFType),
     set_center(x: f32, y: f32),
-    focal_point() -> PointFType,
+    focal_point() -> PointF,
     set_focal_point(focal_point: &PointFType),
     set_focal_point(x: f32, y: f32),
     radius() -> f32,

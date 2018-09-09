@@ -11,8 +11,8 @@ enum Type {
 
 struct JsonValue {
     swap(other: &JsonValueType),
-    [static] from_variant(variant: &VariantType) -> JsonValueType,
-    to_variant() -> VariantType,
+    [static] from_variant(variant: &VariantType) -> JsonValue,
+    to_variant() -> Variant,
     type() -> JsonValue::Type,
     is_null() -> bool,
     is_bool() -> bool,
@@ -23,10 +23,10 @@ struct JsonValue {
     to_bool(default_value: bool) -> bool,
     to_int(default_value: i32) -> i32,
     to_double(default_value: double) -> double,
-    to_array() -> JsonArrayType,
-    to_array(default_value: &JsonArrayType) -> JsonArrayType,
-    to_object() -> JsonObjectType,
-    to_object(default_value: &JsonObjectType) -> JsonObjectType,
+    to_array() -> JsonArray,
+    to_array(default_value: &JsonArrayType) -> JsonArray,
+    to_object() -> JsonObject,
+    to_object(default_value: &JsonObjectType) -> JsonObject,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

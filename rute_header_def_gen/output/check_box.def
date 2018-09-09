@@ -1,6 +1,6 @@
 struct CheckBox : AbstractButton {
-    [override] size_hint() -> SizeType,
-    [override] minimum_size_hint() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size_hint() -> Size,
     set_tristate(y: bool),
     is_tristate() -> bool,
     check_state() -> Rute::CheckState,

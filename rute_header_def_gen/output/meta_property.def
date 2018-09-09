@@ -1,7 +1,7 @@
 
 struct MetaProperty {
-    name() -> &char,
-    type_name() -> &char,
+    name() -> char?,
+    type_name() -> char?,
     type() -> Variant::Type,
     user_type() -> i32,
     property_index() -> i32,
@@ -17,20 +17,20 @@ struct MetaProperty {
     is_final() -> bool,
     is_flag_type() -> bool,
     is_enum_type() -> bool,
-    enumerator() -> MetaEnumType,
+    enumerator() -> MetaEnum,
     has_notify_signal() -> bool,
-    notify_signal() -> MetaMethodType,
+    notify_signal() -> MetaMethod,
     notify_signal_index() -> i32,
     revision() -> i32,
-    read(obj: &ObjectType) -> VariantType,
+    read(obj: &ObjectType) -> Variant,
     write(obj: &ObjectType, value: &VariantType) -> bool,
     reset(obj: &ObjectType) -> bool,
-    read_on_gadget(gadget: &void) -> VariantType,
+    read_on_gadget(gadget: &void) -> Variant,
     write_on_gadget(gadget: &void, value: &VariantType) -> bool,
     reset_on_gadget(gadget: &void) -> bool,
     has_std_cpp_set() -> bool,
     is_valid() -> bool,
-    enclosing_meta_object() -> &MetaObjectType,
+    enclosing_meta_object() -> MetaObject?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

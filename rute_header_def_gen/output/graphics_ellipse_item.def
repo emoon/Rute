@@ -3,23 +3,23 @@ enum GraphicsEllipseItemFixMeEnums {
 }
 
 struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
-    rect() -> RectFType,
+    rect() -> RectF,
     set_rect(rect: &RectFType),
     set_rect(x: f32, y: f32, w: f32, h: f32),
     start_angle() -> i32,
     set_start_angle(angle: i32),
     span_angle() -> i32,
     set_span_angle(angle: i32),
-    [override] bounding_rect() -> RectFType,
-    [override] shape() -> PainterPathType,
+    [override] bounding_rect() -> RectF,
+    [override] shape() -> PainterPath,
     [override] contains(point: &PointFType) -> bool,
     [override] paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
     [override] is_obscured_by(item: &GraphicsItemType) -> bool,
-    [override] opaque_area() -> PainterPathType,
+    [override] opaque_area() -> PainterPath,
     [override] type() -> i32,
     [override] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [override] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    [override] extension(variant: &VariantType) -> VariantType,
+    [override] extension(variant: &VariantType) -> Variant,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

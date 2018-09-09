@@ -1,13 +1,13 @@
 struct EnterEvent : Event {
-    pos() -> PointType,
-    global_pos() -> PointType,
+    pos() -> Point,
+    global_pos() -> Point,
     x() -> i32,
     y() -> i32,
     global_x() -> i32,
     global_y() -> i32,
-    local_pos() -> &PointFType,
-    window_pos() -> &PointFType,
-    screen_pos() -> &PointFType,
+    local_pos() -> PointF?,
+    window_pos() -> PointF?,
+    screen_pos() -> PointF?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

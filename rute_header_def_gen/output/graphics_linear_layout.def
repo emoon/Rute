@@ -12,9 +12,9 @@ struct GraphicsLinearLayout : GraphicsLayout {
     set_alignment(item: &GraphicsLayoutItemType, alignment: Rute::Alignment),
     alignment(item: &GraphicsLayoutItemType) -> Rute::Alignment,
     [override] count() -> i32,
-    [override] item_at(index: i32) -> &GraphicsLayoutItemType,
+    [override] item_at(index: i32) -> GraphicsLayoutItem?,
     [override] invalidate(),
-    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeFType,
+    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
     dump(indent: i32),
 }
 

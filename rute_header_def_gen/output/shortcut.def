@@ -1,6 +1,6 @@
 struct Shortcut : Object {
     set_key(key: &KeySequenceType),
-    key() -> KeySequenceType,
+    key() -> KeySequence,
     set_enabled(enable: bool),
     is_enabled() -> bool,
     set_context(context: Rute::ShortcutContext),
@@ -10,7 +10,7 @@ struct Shortcut : Object {
     set_auto_repeat(on: bool),
     auto_repeat() -> bool,
     id() -> i32,
-    parent_widget() -> &WidgetType,
+    parent_widget() -> Widget?,
     [event] activated(),
     [event] activated_ambiguously(),
     [override] event(e: &EventType) -> bool,

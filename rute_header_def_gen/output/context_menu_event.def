@@ -9,8 +9,8 @@ struct ContextMenuEvent : InputEvent {
     y() -> i32,
     global_x() -> i32,
     global_y() -> i32,
-    pos() -> &PointType,
-    global_pos() -> &PointType,
+    pos() -> Point?,
+    global_pos() -> Point?,
     reason() -> ContextMenuEvent::Reason,
 }
 

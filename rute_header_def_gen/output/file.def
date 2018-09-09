@@ -1,7 +1,7 @@
 struct File : FileDevice {
     [override] file_name() -> String,
     set_file_name(name: String),
-    [static] encode_name(file_name: String) -> ByteArrayType,
+    [static] encode_name(file_name: String) -> ByteArray,
     [static] decode_name(local_file_name: &ByteArrayType) -> String,
     [static] decode_name(local_file_name: &char) -> String,
     exists() -> bool,

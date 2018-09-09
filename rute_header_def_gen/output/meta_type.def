@@ -125,7 +125,7 @@ struct MetaType {
     [static] register_normalized_typedef(normalized_type_name: onst ::QByteArray &, alias_id: i32) -> i32,
     [static] type(type_name: &char) -> i32,
     [static] type(type_name: onst ::QByteArray &) -> i32,
-    [static] type_name(type: i32) -> &char,
+    [static] type_name(type: i32) -> char?,
     [static] size_of(type: i32) -> i32,
     [static] type_flags(type: i32) -> TypeFlags,
     [static] is_registered(type: i32) -> bool,

@@ -1,10 +1,10 @@
 
 struct AccessibleValueInterface {
-    [override] current_value() -> VariantType,
+    [override] current_value() -> Variant,
     [override] set_current_value(value: &VariantType),
-    [override] maximum_value() -> VariantType,
-    [override] minimum_value() -> VariantType,
-    [override] minimum_step_size() -> VariantType,
+    [override] maximum_value() -> Variant,
+    [override] minimum_value() -> Variant,
+    [override] minimum_step_size() -> Variant,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

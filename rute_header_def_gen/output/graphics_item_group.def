@@ -5,10 +5,10 @@ enum GraphicsItemGroupFixMeEnums {
 struct GraphicsItemGroup : GraphicsItem {
     add_to_group(item: &GraphicsItemType),
     remove_from_group(item: &GraphicsItemType),
-    [override] bounding_rect() -> RectFType,
+    [override] bounding_rect() -> RectF,
     [override] paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
     [override] is_obscured_by(item: &GraphicsItemType) -> bool,
-    [override] opaque_area() -> PainterPathType,
+    [override] opaque_area() -> PainterPath,
     [override] type() -> i32,
 }
 

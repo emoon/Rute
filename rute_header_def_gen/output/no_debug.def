@@ -1,11 +1,11 @@
 
 struct NoDebug {
-    space() -> &NoDebugType,
-    nospace() -> &NoDebugType,
-    maybe_space() -> &NoDebugType,
-    quote() -> &NoDebugType,
-    noquote() -> &NoDebugType,
-    maybe_quote(arg0: char) -> &NoDebugType,
+    space() -> NoDebug?,
+    nospace() -> NoDebug?,
+    maybe_space() -> NoDebug?,
+    quote() -> NoDebug?,
+    noquote() -> NoDebug?,
+    maybe_quote(arg0: char) -> NoDebug?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

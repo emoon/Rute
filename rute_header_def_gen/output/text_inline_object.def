@@ -1,7 +1,7 @@
 
 struct TextInlineObject {
     is_valid() -> bool,
-    rect() -> RectFType,
+    rect() -> RectF,
     width() -> f32,
     ascent() -> f32,
     descent() -> f32,
@@ -12,7 +12,7 @@ struct TextInlineObject {
     set_descent(d: f32),
     text_position() -> i32,
     format_index() -> i32,
-    format() -> TextFormatType,
+    format() -> TextFormat,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

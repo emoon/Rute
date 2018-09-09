@@ -1,6 +1,6 @@
 struct PaintEvent : Event {
-    rect() -> &RectType,
-    region() -> &RegionType,
+    rect() -> Rect?,
+    region() -> Region?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

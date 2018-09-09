@@ -1,11 +1,11 @@
 
 struct AccessibleEvent {
     type() -> Accessible::Event,
-    object() -> &ObjectType,
+    object() -> Object?,
     unique_id() -> Accessible::Id,
     set_child(chld: i32),
     child() -> i32,
-    [override] accessible_interface() -> &AccessibleInterfaceType,
+    [override] accessible_interface() -> AccessibleInterface?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

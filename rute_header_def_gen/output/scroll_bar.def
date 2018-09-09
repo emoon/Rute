@@ -1,5 +1,5 @@
 struct ScrollBar : AbstractSlider {
-    [override] size_hint() -> SizeType,
+    [override] size_hint() -> Size,
     [override] event(event: &EventType) -> bool,
     [override] wheel_event(arg0: &WheelEventType),
     [override] paint_event(arg0: &PaintEventType),

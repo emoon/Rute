@@ -1,8 +1,8 @@
 struct ScrollPrepareEvent : Event {
-    start_pos() -> PointFType,
-    viewport_size() -> SizeFType,
-    content_pos_range() -> RectFType,
-    content_pos() -> PointFType,
+    start_pos() -> PointF,
+    viewport_size() -> SizeF,
+    content_pos_range() -> RectF,
+    content_pos() -> PointF,
     set_viewport_size(size: &SizeFType),
     set_content_pos_range(rect: &RectFType),
     set_content_pos(pos: &PointFType),

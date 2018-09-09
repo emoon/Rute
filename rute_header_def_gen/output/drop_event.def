@@ -1,6 +1,6 @@
 struct DropEvent : Event {
-    pos() -> PointType,
-    pos_f() -> &PointFType,
+    pos() -> Point,
+    pos_f() -> PointF?,
     mouse_buttons() -> Rute::MouseButtons,
     keyboard_modifiers() -> Rute::KeyboardModifiers,
     possible_actions() -> Rute::DropActions,
@@ -8,8 +8,8 @@ struct DropEvent : Event {
     accept_proposed_action(),
     drop_action() -> Rute::DropAction,
     set_drop_action(action: Rute::DropAction),
-    source() -> &ObjectType,
-    mime_data() -> &MimeDataType,
+    source() -> Object?,
+    mime_data() -> MimeData?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

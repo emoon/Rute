@@ -7,10 +7,10 @@ enum Shifts {
 
 
 struct Rgba64 {
-    [static] from_rgba64(c: quint64) -> Rgba64Type,
-    [static] from_rgba64(red: u16, green: u16, blue: u16, alpha: u16) -> Rgba64Type,
-    [static] from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Rgba64Type,
-    [static] from_argb32(rgb: uint) -> Rgba64Type,
+    [static] from_rgba64(c: quint64) -> Rgba64,
+    [static] from_rgba64(red: u16, green: u16, blue: u16, alpha: u16) -> Rgba64,
+    [static] from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Rgba64,
+    [static] from_argb32(rgb: uint) -> Rgba64,
     is_opaque() -> bool,
     is_transparent() -> bool,
     red() -> u16,
@@ -27,8 +27,8 @@ struct Rgba64 {
     alpha8() -> u8,
     to_argb32() -> uint,
     to_rgb16() -> ushort,
-    premultiplied() -> Rgba64Type,
-    unpremultiplied() -> Rgba64Type,
+    premultiplied() -> Rgba64,
+    unpremultiplied() -> Rgba64,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

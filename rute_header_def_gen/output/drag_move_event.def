@@ -1,5 +1,5 @@
 struct DragMoveEvent : DropEvent {
-    answer_rect() -> RectType,
+    answer_rect() -> Rect,
     accept(),
     ignore(),
     accept(r: &RectType),

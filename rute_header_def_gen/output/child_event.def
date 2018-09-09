@@ -1,5 +1,5 @@
 struct ChildEvent : Event {
-    child() -> &ObjectType,
+    child() -> Object?,
     added() -> bool,
     polished() -> bool,
     removed() -> bool,

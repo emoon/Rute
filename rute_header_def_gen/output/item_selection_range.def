@@ -7,17 +7,17 @@ struct ItemSelectionRange {
     right() -> i32,
     width() -> i32,
     height() -> i32,
-    top_left() -> &PersistentModelIndexType,
-    bottom_right() -> &PersistentModelIndexType,
-    parent() -> ModelIndexType,
-    model() -> &AbstractItemModelType,
+    top_left() -> PersistentModelIndex?,
+    bottom_right() -> PersistentModelIndex?,
+    parent() -> ModelIndex,
+    model() -> AbstractItemModel?,
     contains(index: &ModelIndexType) -> bool,
     contains(row: i32, column: i32, parent_index: &ModelIndexType) -> bool,
     intersects(other: &ItemSelectionRangeType) -> bool,
-    intersected(other: &ItemSelectionRangeType) -> ItemSelectionRangeType,
+    intersected(other: &ItemSelectionRangeType) -> ItemSelectionRange,
     is_valid() -> bool,
     is_empty() -> bool,
-    indexes() -> ModelIndexListType,
+    indexes() -> ModelIndexList,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

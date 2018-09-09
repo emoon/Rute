@@ -3,7 +3,7 @@ struct MouseEventTransition : EventTransition {
     set_button(button: Rute::MouseButton),
     modifier_mask() -> Rute::KeyboardModifiers,
     set_modifier_mask(modifiers: Rute::KeyboardModifiers),
-    hit_test_path() -> PainterPathType,
+    hit_test_path() -> PainterPath,
     set_hit_test_path(path: &PainterPathType),
     [override] on_transition(event: &EventType),
     [override] event_test(event: &EventType) -> bool,

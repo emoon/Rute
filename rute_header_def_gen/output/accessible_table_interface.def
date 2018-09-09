@@ -1,10 +1,10 @@
 
 struct AccessibleTableInterface {
-    [override] caption() -> &AccessibleInterfaceType,
-    [override] summary() -> &AccessibleInterfaceType,
-    [override] cell_at(row: i32, column: i32) -> &AccessibleInterfaceType,
+    [override] caption() -> AccessibleInterface?,
+    [override] summary() -> AccessibleInterface?,
+    [override] cell_at(row: i32, column: i32) -> AccessibleInterface?,
     [override] selected_cell_count() -> i32,
-    [override] selected_cells() -> [&AccessibleInterfaceType],
+    [override] selected_cells() -> [AccessibleInterface?],
     [override] column_description(column: i32) -> String,
     [override] row_description(row: i32) -> String,
     [override] selected_column_count() -> i32,

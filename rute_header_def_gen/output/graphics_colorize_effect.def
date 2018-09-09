@@ -1,5 +1,5 @@
 struct GraphicsColorizeEffect : GraphicsEffect {
-    color() -> ColorType,
+    color() -> Color,
     set_color(c: &ColorType),
     [event] color_changed(color: &ColorType),
     [override] draw(painter: &PainterType),

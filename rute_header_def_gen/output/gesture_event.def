@@ -1,8 +1,8 @@
 struct GestureEvent : Event {
-    gestures() -> [&GestureType],
-    gesture(type: Rute::GestureType) -> &GestureType,
-    active_gestures() -> [&GestureType],
-    canceled_gestures() -> [&GestureType],
+    gestures() -> [Gesture?],
+    gesture(type: Rute::GestureType) -> Gesture?,
+    active_gestures() -> [Gesture?],
+    canceled_gestures() -> [Gesture?],
     set_accepted(arg0: &GestureType, arg1: bool),
     accept(arg0: &GestureType),
     ignore(arg0: &GestureType),
@@ -12,8 +12,8 @@ struct GestureEvent : Event {
     ignore(arg0: Rute::GestureType),
     is_accepted(arg0: Rute::GestureType) -> bool,
     set_widget(widget: &WidgetType),
-    widget() -> &WidgetType,
-    map_to_graphics_scene(gesture_point: &PointFType) -> PointFType,
+    widget() -> Widget?,
+    map_to_graphics_scene(gesture_point: &PointFType) -> PointF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

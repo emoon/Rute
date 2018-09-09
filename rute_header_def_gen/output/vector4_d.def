@@ -11,15 +11,15 @@ struct Vector4D {
     set_w(w: f32),
     length() -> f32,
     length_squared() -> f32,
-    normalized() -> Vector4DType,
+    normalized() -> Vector4D,
     normalize(),
     [static] dot_product(v1: &Vector4DType, v2: &Vector4DType) -> f32,
-    to_vector2_d() -> Vector2DType,
-    to_vector2_d_affine() -> Vector2DType,
-    to_vector3_d() -> Vector3DType,
-    to_vector3_d_affine() -> Vector3DType,
-    to_point() -> PointType,
-    to_point_f() -> PointFType,
+    to_vector2_d() -> Vector2D,
+    to_vector2_d_affine() -> Vector2D,
+    to_vector3_d() -> Vector3D,
+    to_vector3_d_affine() -> Vector3D,
+    to_point() -> Point,
+    to_point_f() -> PointF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

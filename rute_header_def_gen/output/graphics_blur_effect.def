@@ -5,7 +5,7 @@ enum BlurHint {
 }
 
 struct GraphicsBlurEffect : GraphicsEffect {
-    [override] bounding_rect_for(rect: &RectFType) -> RectFType,
+    [override] bounding_rect_for(rect: &RectFType) -> RectF,
     blur_radius() -> f32,
     blur_hints() -> BlurHints,
     set_blur_radius(blur_radius: f32),

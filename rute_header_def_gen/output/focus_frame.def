@@ -1,6 +1,6 @@
 struct FocusFrame : Widget {
     set_widget(widget: &WidgetType),
-    widget() -> &WidgetType,
+    widget() -> Widget?,
     [override] event(e: &EventType) -> bool,
     [override] event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
     [override] paint_event(arg0: &PaintEventType),

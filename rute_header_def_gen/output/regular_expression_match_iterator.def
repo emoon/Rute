@@ -3,9 +3,9 @@ struct RegularExpressionMatchIterator {
     swap(other: &RegularExpressionMatchIteratorType),
     is_valid() -> bool,
     has_next() -> bool,
-    next() -> RegularExpressionMatchType,
-    peek_next() -> RegularExpressionMatchType,
-    regular_expression() -> RegularExpressionType,
+    next() -> RegularExpressionMatch,
+    peek_next() -> RegularExpressionMatch,
+    regular_expression() -> RegularExpression,
     match_type() -> RegularExpression::MatchType,
     match_options() -> RegularExpression::MatchOptions,
 }

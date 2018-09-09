@@ -1,12 +1,12 @@
 struct NativeGestureEvent : InputEvent {
     gesture_type() -> Rute::NativeGestureType,
     value() -> f32,
-    pos() -> PointType,
-    global_pos() -> PointType,
-    local_pos() -> &PointFType,
-    window_pos() -> &PointFType,
-    screen_pos() -> &PointFType,
-    device() -> &TouchDeviceType,
+    pos() -> Point,
+    global_pos() -> Point,
+    local_pos() -> PointF?,
+    window_pos() -> PointF?,
+    screen_pos() -> PointF?,
+    device() -> TouchDevice?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

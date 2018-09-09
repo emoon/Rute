@@ -1,7 +1,7 @@
 struct GraphicsSceneMoveEvent : GraphicsSceneEvent {
-    old_pos() -> PointFType,
+    old_pos() -> PointF,
     set_old_pos(pos: &PointFType),
-    new_pos() -> PointFType,
+    new_pos() -> PointF,
     set_new_pos(pos: &PointFType),
 }
 

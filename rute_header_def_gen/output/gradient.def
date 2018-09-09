@@ -30,7 +30,7 @@ struct Gradient {
     spread() -> Gradient::Spread,
     set_color_at(pos: f32, color: &ColorType),
     set_stops(stops: &GradientStopsType),
-    stops() -> GradientStopsType,
+    stops() -> GradientStops,
     coordinate_mode() -> Gradient::CoordinateMode,
     set_coordinate_mode(mode: Gradient::CoordinateMode),
     interpolation_mode() -> Gradient::InterpolationMode,

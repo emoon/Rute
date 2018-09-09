@@ -6,7 +6,7 @@ enum State {
 
 struct Validator : Object {
     set_locale(locale: &LocaleType),
-    locale() -> LocaleType,
+    locale() -> Locale,
     [override] validate(arg0: String, arg1: &i32) -> Validator::State,
     [override] fixup(arg0: String),
     [event] changed(),

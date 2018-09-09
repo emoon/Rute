@@ -23,6 +23,12 @@ enum AccessLevel {
     Private
 }
 
+#[derive(PartialEq, Clone, Copy, Debug)]
+enum IsReturnType {
+    Yes,
+    No,
+}
+
 #[derive(Default, Debug)]
 struct ArgType {
     name: String,
@@ -73,7 +79,7 @@ fn get_array_range<'a>(name: &'a str) -> &str {
     &name[start + 1..end]
 }
 
-fn get_non_array_type(arg: &mut ArgType, in_name: &str) {
+fn get_non_array_type(arg: &mut ArgType, in_name: &str, is_return: IsReturnType) {
     let name;
 
     // remove const
@@ -105,7 +111,11 @@ fn get_non_array_type(arg: &mut ArgType, in_name: &str) {
         if new_name == "QString" {
             arg.name = "String".to_owned();
         } else {
-            arg.name = format!("{}Type", &new_name[1..]);
+            if is_return == IsReturnType::No {
+                arg.name = format!("{}Type", &new_name[1..]);
+            } else {
+                arg.name = format!("{}", &new_name[1..]);
+            }
         }
     } else {
         arg.name = new_name.to_owned();
@@ -150,18 +160,23 @@ fn get_access_level(entry: &Entity) -> AccessLevel {
 ///
 ///
 ///
-fn format_arg_type(arg: &ArgType) -> String {
+fn format_arg_type(arg: &ArgType, is_return: IsReturnType) -> String {
     let mut res = String::with_capacity(128);
 
     if arg.array {
         res.push('[');
     }
 
-    if arg.pointer && arg.name != "String" {
-        res.push('&');
-    }
+    if is_return == IsReturnType::Yes {
+        res.push_str(&arg.name);
+        if arg.pointer { res.push('?') }
+    } else {
+        if arg.pointer && arg.name != "String" {
+            res.push('&');
+        }
 
-    res.push_str(&arg.name);
+        res.push_str(&arg.name);
+    }
 
     if arg.array {
         res.push(']');
@@ -173,7 +188,7 @@ fn format_arg_type(arg: &ArgType) -> String {
 ///
 ///
 ///
-fn get_complex_arg(name: &str) -> String {
+fn get_complex_arg(name: &str, is_return: IsReturnType) -> String {
     let mut arg_type = ArgType::default();
 
     // Check if this is an enum
@@ -190,12 +205,12 @@ fn get_complex_arg(name: &str) -> String {
 
     if name.contains("QList<") || name.contains("QVector<") {
         arg_type.array = true;
-        get_non_array_type(&mut arg_type, get_array_range(name));
+        get_non_array_type(&mut arg_type, get_array_range(name), is_return);
     } else {
-        get_non_array_type(&mut arg_type, name);
+        get_non_array_type(&mut arg_type, name, is_return);
     }
 
-    let res = format_arg_type(&arg_type);
+    let res = format_arg_type(&arg_type, is_return);
 
     res
 }
@@ -203,9 +218,9 @@ fn get_complex_arg(name: &str) -> String {
 ///
 /// Translate a parsed type into API Def type
 ///
-fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
+fn get_arg_type<'a>(t: &'a Type, is_return: IsReturnType) -> Cow<'static, str> {
     let name = t.get_display_name();
-    get_complex_arg(&name).into()
+    get_complex_arg(&name, is_return).into()
 }
 
 ///
@@ -213,7 +228,7 @@ fn get_arg_type<'a>(t: &'a Type) -> Cow<'static, str> {
 ///
 fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
     let t = arg.get_type().unwrap();
-    let arg_type = get_arg_type(&t);
+    let arg_type = get_arg_type(&t, IsReturnType::No);
 
     if let Some(name) = arg.get_name() {
         write!(dest, "{}: ", name.to_snake_case());
@@ -284,7 +299,7 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
         if display_name.contains("void") {
             writeln!(dest, ",");
         } else {
-            writeln!(dest, " -> {},", get_arg_type(&res));
+            writeln!(dest, " -> {},", get_arg_type(&res, IsReturnType::Yes));
         }
     } else {
         writeln!(dest, "\n");
@@ -564,61 +579,71 @@ mod tests {
     #[test]
     fn test_array_type_pointer() {
         assert_eq!(
-            get_complex_arg("QList<QListWidgetItem *>"),
-            "<&ListWidgetItemType>"
+            get_complex_arg("QList<QListWidgetItem *>", IsReturnType::No),
+            "[&ListWidgetItemType]"
         );
     }
 
     #[test]
     fn test_array_type() {
         assert_eq!(
-            get_complex_arg("QList<QListWidgetItem>"),
-            "<ListWidgetItemType>"
+            get_complex_arg("QList<QListWidgetItem>", IsReturnType::No),
+            "[ListWidgetItemType]"
         );
     }
 
     #[test]
     fn test_array_vector_type() {
-        assert_eq!(get_complex_arg("QVector<int>"), "<i32>");
+        assert_eq!(get_complex_arg("QVector<int>", IsReturnType::No), "[i32]");
     }
 
     #[test]
     fn test_pointer() {
-        assert_eq!(get_complex_arg("QListWidgetItem *"), "&ListWidgetItemType");
+        assert_eq!(get_complex_arg("QListWidgetItem *", IsReturnType::No), "&ListWidgetItemType");
     }
 
     #[test]
     fn test_ref() {
-        assert_eq!(get_complex_arg("QListWidgetItem &"), "&ListWidgetItemType");
+        assert_eq!(get_complex_arg("QListWidgetItem &", IsReturnType::No), "&ListWidgetItemType");
     }
 
     #[test]
     fn test_const_string() {
-        assert_eq!(get_complex_arg("const QString &"), "String");
+        assert_eq!(get_complex_arg("const QString &", IsReturnType::No), "String");
     }
 
     #[test]
     fn test_string() {
-        assert_eq!(get_complex_arg("QString"), "String");
+        assert_eq!(get_complex_arg("QString", IsReturnType::No), "String");
     }
 
     #[test]
     fn test_list_int() {
-        assert_eq!(get_complex_arg("QList<int>"), "<i32>");
+        assert_eq!(get_complex_arg("QList<int>", IsReturnType::No), "[i32]");
     }
 
     #[test]
     fn test_vector_type() {
-        assert_eq!(get_complex_arg("QVector<QCanBusFrame>"), "<CanBusFrameType>");
+        assert_eq!(get_complex_arg("QVector<QCanBusFrame>", IsReturnType::No), "[CanBusFrameType]");
     }
 
     #[test]
     fn test_qt_global_enum() {
-        assert_eq!(get_complex_arg("Qt::WindowState"), "Rute::WindowState");
+        assert_eq!(get_complex_arg("Qt::WindowState", IsReturnType::No), "Rute::WindowState");
     }
 
     #[test]
     fn test_qt_local_enum() {
-        assert_eq!(get_complex_arg("QListWidget::State"), "ListWidget::State");
+        assert_eq!(get_complex_arg("QListWidget::State", IsReturnType::No), "ListWidget::State");
+    }
+
+    #[test]
+    fn test_return_pointer() {
+        assert_eq!(get_complex_arg("QListWidget *", IsReturnType::Yes), "ListWidget?");
+    }
+
+    #[test]
+    fn test_return_regular() {
+        assert_eq!(get_complex_arg("QListWidget", IsReturnType::Yes), "ListWidget");
     }
 }

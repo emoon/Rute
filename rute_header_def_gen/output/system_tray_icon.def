@@ -15,8 +15,8 @@ enum MessageIcon {
 
 struct SystemTrayIcon : Object {
     set_context_menu(menu: &MenuType),
-    context_menu() -> &MenuType,
-    icon() -> IconType,
+    context_menu() -> Menu?,
+    icon() -> Icon,
     set_icon(icon: &IconType),
     tool_tip() -> String,
     set_tool_tip(tip: String),

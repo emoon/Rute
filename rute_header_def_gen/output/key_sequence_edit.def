@@ -1,5 +1,5 @@
 struct KeySequenceEdit : Widget {
-    key_sequence() -> KeySequenceType,
+    key_sequence() -> KeySequence,
     set_key_sequence(key_sequence: &KeySequenceType),
     clear(),
     [event] editing_finished(),

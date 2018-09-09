@@ -4,12 +4,12 @@ enum GraphicsProxyWidgetFixMeEnums {
 
 struct GraphicsProxyWidget : GraphicsWidget {
     set_widget(widget: &WidgetType),
-    widget() -> &WidgetType,
-    sub_widget_rect(widget: &WidgetType) -> RectFType,
+    widget() -> Widget?,
+    sub_widget_rect(widget: &WidgetType) -> RectF,
     [override] paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
     [override] type() -> i32,
-    create_proxy_for_child_widget(child: &WidgetType) -> &GraphicsProxyWidgetType,
-    [override] item_change(change: GraphicsItem::GraphicsItemChange, value: &VariantType) -> VariantType,
+    create_proxy_for_child_widget(child: &WidgetType) -> GraphicsProxyWidget?,
+    [override] item_change(change: GraphicsItem::GraphicsItemChange, value: &VariantType) -> Variant,
     [override] event(event: &EventType) -> bool,
     [override] event_filter(object: &ObjectType, event: &EventType) -> bool,
     [override] show_event(event: &ShowEventType),
@@ -34,11 +34,11 @@ struct GraphicsProxyWidget : GraphicsWidget {
     [override] focus_in_event(event: &FocusEventType),
     [override] focus_out_event(event: &FocusEventType),
     [override] focus_next_prev_child(next: bool) -> bool,
-    [override] input_method_query(query: Rute::InputMethodQuery) -> VariantType,
+    [override] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     [override] input_method_event(event: &InputMethodEventType),
-    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeFType,
+    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
     [override] resize_event(event: &GraphicsSceneResizeEventType),
-    new_proxy_widget(arg0: &WidgetType) -> &GraphicsProxyWidgetType,
+    new_proxy_widget(arg0: &WidgetType) -> GraphicsProxyWidget?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

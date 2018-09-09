@@ -5,8 +5,8 @@ enum ScrollState {
 }
 
 struct ScrollEvent : Event {
-    content_pos() -> PointFType,
-    overshoot_distance() -> PointFType,
+    content_pos() -> PointF,
+    overshoot_distance() -> PointF,
     scroll_state() -> ScrollEvent::ScrollState,
 }
 

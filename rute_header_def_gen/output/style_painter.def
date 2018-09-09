@@ -4,7 +4,7 @@ struct StylePainter : Painter {
     draw_primitive(pe: Style::PrimitiveElement, opt: &StyleOptionType),
     draw_item_text(r: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
     draw_item_pixmap(r: &RectType, flags: i32, pixmap: &PixmapType),
-    style() -> &StyleType,
+    style() -> Style?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

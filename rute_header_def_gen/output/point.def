@@ -6,8 +6,8 @@ struct Point {
     set_x(x: i32),
     set_y(y: i32),
     manhattan_length() -> i32,
-    rx() -> &i32,
-    ry() -> &i32,
+    rx() -> i32?,
+    ry() -> i32?,
     [static] dot_product(p1: &PointType, p2: &PointType) -> i32,
     to_cg_point() -> CGPoint,
 }

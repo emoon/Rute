@@ -3,7 +3,7 @@ enum CoreApplicationFixMeEnums {
 }
 
 struct CoreApplication : Object {
-    [static] arguments() -> StringListType,
+    [static] arguments() -> StringList,
     [static] set_organization_domain(org_domain: String),
     [static] organization_domain() -> String,
     [static] set_organization_name(org_name: String),
@@ -14,7 +14,7 @@ struct CoreApplication : Object {
     [static] application_version() -> String,
     [static] set_setuid_allowed(allow: bool),
     [static] is_setuid_allowed() -> bool,
-    [static] instance() -> &CoreApplicationType,
+    [static] instance() -> CoreApplication?,
     [static] exec() -> i32,
     [static] process_events(flags: EventLoop::ProcessEventsFlags),
     [static] process_events(flags: EventLoop::ProcessEventsFlags, maxtime: i32),
@@ -24,7 +24,7 @@ struct CoreApplication : Object {
     [static] send_posted_events(receiver: &ObjectType, event_type: i32),
     [static] remove_posted_events(receiver: &ObjectType, event_type: i32),
     [static] has_pending_events() -> bool,
-    [static] event_dispatcher() -> &AbstractEventDispatcherType,
+    [static] event_dispatcher() -> AbstractEventDispatcher?,
     [static] set_event_dispatcher(event_dispatcher: &AbstractEventDispatcherType),
     [override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
     [static] starting_up() -> bool,
@@ -33,7 +33,7 @@ struct CoreApplication : Object {
     [static] application_file_path() -> String,
     [static] application_pid() -> i64,
     [static] set_library_paths(arg0: &StringListType),
-    [static] library_paths() -> StringListType,
+    [static] library_paths() -> StringList,
     [static] add_library_path(arg0: String),
     [static] remove_library_path(arg0: String),
     [static] install_translator(message_file: &TranslatorType) -> bool,

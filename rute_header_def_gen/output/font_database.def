@@ -50,11 +50,11 @@ struct FontDatabase {
     [static] standard_sizes() -> [i32],
     writing_systems() -> List<QFontDatabase::WritingSystem>,
     writing_systems(family: String) -> List<QFontDatabase::WritingSystem>,
-    families(writing_system: FontDatabase::WritingSystem) -> StringListType,
-    styles(family: String) -> StringListType,
+    families(writing_system: FontDatabase::WritingSystem) -> StringList,
+    styles(family: String) -> StringList,
     point_sizes(family: String, style: String) -> [i32],
     smooth_sizes(family: String, style: String) -> [i32],
-    font(family: String, style: String, point_size: i32) -> FontType,
+    font(family: String, style: String, point_size: i32) -> Font,
     is_bitmap_scalable(family: String, style: String) -> bool,
     is_smoothly_scalable(family: String, style: String) -> bool,
     is_scalable(family: String, style: String) -> bool,
@@ -67,11 +67,11 @@ struct FontDatabase {
     [static] writing_system_sample(writing_system: FontDatabase::WritingSystem) -> String,
     [static] add_application_font(file_name: String) -> i32,
     [static] add_application_font_from_data(font_data: &ByteArrayType) -> i32,
-    [static] application_font_families(id: i32) -> StringListType,
+    [static] application_font_families(id: i32) -> StringList,
     [static] remove_application_font(id: i32) -> bool,
     [static] remove_all_application_fonts() -> bool,
     [static] supports_threaded_font_rendering() -> bool,
-    [static] system_font(type: FontDatabase::SystemFont) -> FontType,
+    [static] system_font(type: FontDatabase::SystemFont) -> Font,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

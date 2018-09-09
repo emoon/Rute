@@ -9,12 +9,12 @@ struct Size {
     set_height(h: i32),
     scale(w: i32, h: i32, mode: Rute::AspectRatioMode),
     scale(s: &SizeType, mode: Rute::AspectRatioMode),
-    scaled(w: i32, h: i32, mode: Rute::AspectRatioMode) -> SizeType,
-    scaled(s: &SizeType, mode: Rute::AspectRatioMode) -> SizeType,
-    expanded_to(arg0: &SizeType) -> SizeType,
-    bounded_to(arg0: &SizeType) -> SizeType,
-    rwidth() -> &i32,
-    rheight() -> &i32,
+    scaled(w: i32, h: i32, mode: Rute::AspectRatioMode) -> Size,
+    scaled(s: &SizeType, mode: Rute::AspectRatioMode) -> Size,
+    expanded_to(arg0: &SizeType) -> Size,
+    bounded_to(arg0: &SizeType) -> Size,
+    rwidth() -> i32?,
+    rheight() -> i32?,
     to_cg_size() -> CGSize,
 }
 

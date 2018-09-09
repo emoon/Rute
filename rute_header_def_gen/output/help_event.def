@@ -3,8 +3,8 @@ struct HelpEvent : Event {
     y() -> i32,
     global_x() -> i32,
     global_y() -> i32,
-    pos() -> &PointType,
-    global_pos() -> &PointType,
+    pos() -> Point?,
+    global_pos() -> Point?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

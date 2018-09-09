@@ -1,6 +1,6 @@
 struct AbstractListModel : AbstractItemModel {
-    [override] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndexType,
-    [override] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndexType,
+    [override] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
+    [override] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
     [override] drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [override] flags(index: &ModelIndexType) -> Rute::ItemFlags,
 }

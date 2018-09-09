@@ -2,7 +2,7 @@
 struct MutexLocker {
     unlock(),
     relock(),
-    mutex() -> &MutexType,
+    mutex() -> Mutex?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

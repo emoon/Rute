@@ -1,6 +1,6 @@
 struct GraphicsAnchorLayout : GraphicsLayout {
-    add_anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> &GraphicsAnchorType,
-    anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> &GraphicsAnchorType,
+    add_anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> GraphicsAnchor?,
+    anchor(first_item: &GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: &GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> GraphicsAnchor?,
     add_corner_anchors(first_item: &GraphicsLayoutItemType, first_corner: Rute::Corner, second_item: &GraphicsLayoutItemType, second_corner: Rute::Corner),
     add_anchors(first_item: &GraphicsLayoutItemType, second_item: &GraphicsLayoutItemType, orientations: Rute::Orientations),
     set_horizontal_spacing(spacing: f32),
@@ -10,9 +10,9 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     vertical_spacing() -> f32,
     [override] remove_at(index: i32),
     [override] count() -> i32,
-    [override] item_at(index: i32) -> &GraphicsLayoutItemType,
+    [override] item_at(index: i32) -> GraphicsLayoutItem?,
     [override] invalidate(),
-    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeFType,
+    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

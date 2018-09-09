@@ -7,15 +7,15 @@ struct Vector2D {
     set_y(y: f32),
     length() -> f32,
     length_squared() -> f32,
-    normalized() -> Vector2DType,
+    normalized() -> Vector2D,
     normalize(),
     distance_to_point(point: &Vector2DType) -> f32,
     distance_to_line(point: &Vector2DType, direction: &Vector2DType) -> f32,
     [static] dot_product(v1: &Vector2DType, v2: &Vector2DType) -> f32,
-    to_vector3_d() -> Vector3DType,
-    to_vector4_d() -> Vector4DType,
-    to_point() -> PointType,
-    to_point_f() -> PointFType,
+    to_vector3_d() -> Vector3D,
+    to_vector4_d() -> Vector4D,
+    to_point() -> Point,
+    to_point_f() -> PointF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

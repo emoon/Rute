@@ -1,17 +1,17 @@
 
 struct LayoutItem {
-    [override] size_hint() -> SizeType,
-    [override] minimum_size() -> SizeType,
-    [override] maximum_size() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size() -> Size,
+    [override] maximum_size() -> Size,
     [override] expanding_directions() -> Rute::Orientations,
     [override] is_empty() -> bool,
     [override] has_height_for_width() -> bool,
     [override] height_for_width(arg0: i32) -> i32,
     [override] minimum_height_for_width(arg0: i32) -> i32,
     [override] invalidate(),
-    [override] widget() -> &WidgetType,
-    [override] layout() -> &LayoutType,
-    [override] spacer_item() -> &SpacerItemType,
+    [override] widget() -> Widget?,
+    [override] layout() -> Layout?,
+    [override] spacer_item() -> SpacerItem?,
     alignment() -> Rute::Alignment,
     set_alignment(a: Rute::Alignment),
 }

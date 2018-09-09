@@ -1,7 +1,7 @@
 struct GraphicsSceneResizeEvent : GraphicsSceneEvent {
-    old_size() -> SizeFType,
+    old_size() -> SizeF,
     set_old_size(size: &SizeFType),
-    new_size() -> SizeFType,
+    new_size() -> SizeF,
     set_new_size(size: &SizeFType),
 }
 

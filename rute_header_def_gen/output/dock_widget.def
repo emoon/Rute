@@ -10,7 +10,7 @@ enum DockWidgetFeature {
 }
 
 struct DockWidget : Widget {
-    widget() -> &WidgetType,
+    widget() -> Widget?,
     set_widget(widget: &WidgetType),
     set_features(features: DockWidgetFeatures),
     features() -> DockWidgetFeatures,
@@ -19,9 +19,9 @@ struct DockWidget : Widget {
     set_allowed_areas(areas: Rute::DockWidgetAreas),
     allowed_areas() -> Rute::DockWidgetAreas,
     set_title_bar_widget(widget: &WidgetType),
-    title_bar_widget() -> &WidgetType,
+    title_bar_widget() -> Widget?,
     is_area_allowed(area: Rute::DockWidgetArea) -> bool,
-    toggle_view_action() -> &ActionType,
+    toggle_view_action() -> Action?,
     [event] features_changed(features: DockWidget::DockWidgetFeatures),
     [event] top_level_changed(top_level: bool),
     [event] allowed_areas_changed(allowed_areas: Rute::DockWidgetAreas),

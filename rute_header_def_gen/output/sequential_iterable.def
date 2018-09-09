@@ -2,7 +2,7 @@
 struct SequentialIterable {
     begin() -> SequentialIterable::const_iterator,
     end() -> SequentialIterable::const_iterator,
-    at(idx: i32) -> VariantType,
+    at(idx: i32) -> Variant,
     size() -> i32,
     can_reverse_iterate() -> bool,
 }

@@ -10,7 +10,7 @@ struct UndoCommand {
     [override] id() -> i32,
     [override] merge_with(other: &UndoCommandType) -> bool,
     child_count() -> i32,
-    child(index: i32) -> &UndoCommandType,
+    child(index: i32) -> UndoCommand?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,9 +1,9 @@
 struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
-    pos() -> PointFType,
+    pos() -> PointF,
     set_pos(pos: &PointFType),
-    scene_pos() -> PointFType,
+    scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
-    screen_pos() -> PointType,
+    screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     buttons() -> Rute::MouseButtons,
     set_buttons(buttons: Rute::MouseButtons),

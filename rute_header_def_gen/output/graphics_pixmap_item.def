@@ -9,24 +9,24 @@ enum GraphicsPixmapItemFixMeEnums {
 }
 
 struct GraphicsPixmapItem : GraphicsItem {
-    pixmap() -> PixmapType,
+    pixmap() -> Pixmap,
     set_pixmap(pixmap: &PixmapType),
     set_transformation_mode(mode: Rute::TransformationMode),
-    offset() -> PointFType,
+    offset() -> PointF,
     set_offset(offset: &PointFType),
     set_offset(x: f32, y: f32),
-    [override] bounding_rect() -> RectFType,
-    [override] shape() -> PainterPathType,
+    [override] bounding_rect() -> RectF,
+    [override] shape() -> PainterPath,
     [override] contains(point: &PointFType) -> bool,
     [override] paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
     [override] is_obscured_by(item: &GraphicsItemType) -> bool,
-    [override] opaque_area() -> PainterPathType,
+    [override] opaque_area() -> PainterPath,
     [override] type() -> i32,
     shape_mode() -> GraphicsPixmapItem::ShapeMode,
     set_shape_mode(mode: GraphicsPixmapItem::ShapeMode),
     [override] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [override] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    [override] extension(variant: &VariantType) -> VariantType,
+    [override] extension(variant: &VariantType) -> Variant,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

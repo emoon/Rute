@@ -1,8 +1,8 @@
 struct LinearGradient : Gradient {
-    start() -> PointFType,
+    start() -> PointF,
     set_start(start: &PointFType),
     set_start(x: f32, y: f32),
-    final_stop() -> PointFType,
+    final_stop() -> PointF,
     set_final_stop(stop: &PointFType),
     set_final_stop(x: f32, y: f32),
 }

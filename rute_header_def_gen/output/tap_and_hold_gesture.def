@@ -1,5 +1,5 @@
 struct TapAndHoldGesture : Gesture {
-    position() -> PointFType,
+    position() -> PointF,
     set_position(pos: &PointFType),
     [static] set_timeout(msecs: i32),
     [static] timeout() -> i32,

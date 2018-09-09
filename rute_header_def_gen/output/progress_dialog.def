@@ -6,7 +6,7 @@ struct ProgressDialog : Dialog {
     minimum() -> i32,
     maximum() -> i32,
     value() -> i32,
-    [override] size_hint() -> SizeType,
+    [override] size_hint() -> Size,
     label_text() -> String,
     minimum_duration() -> i32,
     set_auto_reset(reset: bool),

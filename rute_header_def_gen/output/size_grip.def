@@ -1,5 +1,5 @@
 struct SizeGrip : Widget {
-    [override] size_hint() -> SizeType,
+    [override] size_hint() -> Size,
     [override] set_visible(arg0: bool),
     [override] paint_event(arg0: &PaintEventType),
     [override] mouse_press_event(arg0: &MouseEventType),

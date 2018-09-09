@@ -5,7 +5,7 @@ struct DesktopWidget : Widget {
     primary_screen() -> i32,
     screen_number(widget: &WidgetType) -> i32,
     screen_number(arg0: &PointType) -> i32,
-    screen(screen: i32) -> &WidgetType,
+    screen(screen: i32) -> Widget?,
     [event] resized(arg0: i32),
     [event] work_area_resized(arg0: i32),
     [event] screen_count_changed(arg0: i32),

@@ -6,7 +6,7 @@ enum GestureCancelPolicy {
 struct Gesture : Object {
     gesture_type() -> Rute::GestureType,
     state() -> Rute::GestureState,
-    hot_spot() -> PointFType,
+    hot_spot() -> PointF,
     set_hot_spot(value: &PointFType),
     has_hot_spot() -> bool,
     unset_hot_spot(),

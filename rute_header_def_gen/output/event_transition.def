@@ -1,5 +1,5 @@
 struct EventTransition : AbstractTransition {
-    event_source() -> &ObjectType,
+    event_source() -> Object?,
     set_event_source(object: &ObjectType),
     event_type() -> Event::Type,
     set_event_type(type: Event::Type),

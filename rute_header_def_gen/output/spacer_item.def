@@ -1,12 +1,12 @@
 struct SpacerItem : LayoutItem {
     change_size(w: i32, h: i32, h_data: SizePolicy::Policy, v_data: SizePolicy::Policy),
-    [override] size_hint() -> SizeType,
-    [override] minimum_size() -> SizeType,
-    [override] maximum_size() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size() -> Size,
+    [override] maximum_size() -> Size,
     [override] expanding_directions() -> Rute::Orientations,
     [override] is_empty() -> bool,
-    [override] spacer_item() -> &SpacerItemType,
-    size_policy() -> SizePolicyType,
+    [override] spacer_item() -> SpacerItem?,
+    size_policy() -> SizePolicy,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

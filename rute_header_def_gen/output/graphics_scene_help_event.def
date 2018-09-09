@@ -1,7 +1,7 @@
 struct GraphicsSceneHelpEvent : GraphicsSceneEvent {
-    scene_pos() -> PointFType,
+    scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
-    screen_pos() -> PointType,
+    screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
 }
 

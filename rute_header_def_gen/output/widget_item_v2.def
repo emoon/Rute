@@ -4,9 +4,9 @@ enum WidgetItemV2FixMeEnums {
 }
 
 struct WidgetItemV2 : WidgetItem {
-    [override] size_hint() -> SizeType,
-    [override] minimum_size() -> SizeType,
-    [override] maximum_size() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size() -> Size,
+    [override] maximum_size() -> Size,
     [override] height_for_width(width: i32) -> i32,
 }
 

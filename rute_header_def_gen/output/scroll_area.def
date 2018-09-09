@@ -1,10 +1,10 @@
 struct ScrollArea : AbstractScrollArea {
-    widget() -> &WidgetType,
+    widget() -> Widget?,
     set_widget(widget: &WidgetType),
-    take_widget() -> &WidgetType,
+    take_widget() -> Widget?,
     widget_resizable() -> bool,
     set_widget_resizable(resizable: bool),
-    [override] size_hint() -> SizeType,
+    [override] size_hint() -> Size,
     [override] focus_next_prev_child(next: bool) -> bool,
     alignment() -> Rute::Alignment,
     set_alignment(arg0: Rute::Alignment),
@@ -14,7 +14,7 @@ struct ScrollArea : AbstractScrollArea {
     [override] event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
     [override] resize_event(arg0: &ResizeEventType),
     [override] scroll_contents_by(dx: i32, dy: i32),
-    [override] viewport_size_hint() -> SizeType,
+    [override] viewport_size_hint() -> Size,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -58,7 +58,7 @@ struct SurfaceFormat {
     major_version() -> i32,
     set_minor_version(minor_version: i32),
     minor_version() -> i32,
-    version() -> Pair<int,Type,
+    version() -> Pair<int,,
     set_version(major: i32, minor: i32),
     stereo() -> bool,
     set_stereo(enable: bool),
@@ -73,7 +73,7 @@ struct SurfaceFormat {
     color_space() -> SurfaceFormat::ColorSpace,
     set_color_space(color_space: SurfaceFormat::ColorSpace),
     [static] set_default_format(format: &SurfaceFormatType),
-    [static] default_format() -> SurfaceFormatType,
+    [static] default_format() -> SurfaceFormat,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

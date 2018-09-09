@@ -1,9 +1,9 @@
 struct GraphicsRotation : GraphicsTransform {
-    origin() -> Vector3DType,
+    origin() -> Vector3D,
     set_origin(point: &Vector3DType),
     angle() -> f32,
     set_angle(arg0: f32),
-    axis() -> Vector3DType,
+    axis() -> Vector3D,
     set_axis(axis: &Vector3DType),
     set_axis(axis: Rute::Axis),
     [override] apply_to(matrix: &Matrix4x4Type),

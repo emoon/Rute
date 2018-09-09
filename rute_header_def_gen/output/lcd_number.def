@@ -23,7 +23,7 @@ struct LCDNumber : Frame {
     set_segment_style(arg0: LCDNumber::SegmentStyle),
     value() -> double,
     int_value() -> i32,
-    [override] size_hint() -> SizeType,
+    [override] size_hint() -> Size,
     display(str: String),
     display(num: i32),
     display(num: double),

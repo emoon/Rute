@@ -1,6 +1,6 @@
 struct MacCocoaViewContainer : Widget {
     set_cocoa_view(view: &NSView),
-    cocoa_view() -> &NSView,
+    cocoa_view() -> NSView?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

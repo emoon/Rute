@@ -1,7 +1,7 @@
 
 struct GenericArgument {
     data(),
-    name() -> &char,
+    name() -> char?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

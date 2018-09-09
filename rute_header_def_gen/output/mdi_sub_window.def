@@ -6,12 +6,12 @@ enum SubWindowOption {
 }
 
 struct MdiSubWindow : Widget {
-    [override] size_hint() -> SizeType,
-    [override] minimum_size_hint() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size_hint() -> Size,
     set_widget(widget: &WidgetType),
-    widget() -> &WidgetType,
-    maximized_buttons_widget() -> &WidgetType,
-    maximized_system_menu_icon_widget() -> &WidgetType,
+    widget() -> Widget?,
+    maximized_buttons_widget() -> Widget?,
+    maximized_system_menu_icon_widget() -> Widget?,
     is_shaded() -> bool,
     set_option(option: MdiSubWindow::SubWindowOption, on: bool),
     test_option(arg0: MdiSubWindow::SubWindowOption) -> bool,
@@ -20,8 +20,8 @@ struct MdiSubWindow : Widget {
     set_keyboard_page_step(step: i32),
     keyboard_page_step() -> i32,
     set_system_menu(system_menu: &MenuType),
-    system_menu() -> &MenuType,
-    mdi_area() -> &MdiAreaType,
+    system_menu() -> Menu?,
+    mdi_area() -> MdiArea?,
     [event] window_state_changed(old_state: Rute::WindowStates, new_state: Rute::WindowStates),
     [event] about_to_activate(),
     show_system_menu(),

@@ -1,12 +1,12 @@
 
 struct PolygonF {
     swap(other: &PolygonFType),
-    to_polygon() -> PolygonType,
+    to_polygon() -> Polygon,
     is_closed() -> bool,
-    bounding_rect() -> RectFType,
+    bounding_rect() -> RectF,
     contains_point(pt: &PointFType, fill_rule: Rute::FillRule) -> bool,
-    united(r: &PolygonFType) -> PolygonFType,
-    intersected(r: &PolygonFType) -> PolygonFType,
+    united(r: &PolygonFType) -> PolygonF,
+    intersected(r: &PolygonFType) -> PolygonF,
     intersects(r: &PolygonFType) -> bool,
 }
 

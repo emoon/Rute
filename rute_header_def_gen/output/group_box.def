@@ -3,7 +3,7 @@ struct GroupBox : Widget {
     set_title(title: String),
     alignment() -> Rute::Alignment,
     set_alignment(alignment: i32),
-    [override] minimum_size_hint() -> SizeType,
+    [override] minimum_size_hint() -> Size,
     is_flat() -> bool,
     set_flat(flat: bool),
     is_checkable() -> bool,

@@ -17,10 +17,10 @@ enum PointerType {
 
 struct TabletEvent : InputEvent {
     qt_check_for_qgadget_macro(),
-    pos() -> PointType,
-    global_pos() -> PointType,
-    pos_f() -> &PointFType,
-    global_pos_f() -> &PointFType,
+    pos() -> Point,
+    global_pos() -> Point,
+    pos_f() -> PointF?,
+    global_pos_f() -> PointF?,
     x() -> i32,
     y() -> i32,
     global_x() -> i32,

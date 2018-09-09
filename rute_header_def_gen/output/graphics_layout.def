@@ -6,7 +6,7 @@ struct GraphicsLayout : GraphicsLayoutItem {
     [override] invalidate(),
     [override] widget_event(e: &EventType),
     [override] count() -> i32,
-    [override] item_at(i: i32) -> &GraphicsLayoutItemType,
+    [override] item_at(i: i32) -> GraphicsLayoutItem?,
     [override] remove_at(index: i32),
     [static] set_instant_invalidate_propagation(enable: bool),
     [static] instant_invalidate_propagation() -> bool,

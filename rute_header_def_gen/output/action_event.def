@@ -1,6 +1,6 @@
 struct ActionEvent : Event {
-    action() -> &ActionType,
-    before() -> &ActionType,
+    action() -> Action?,
+    before() -> Action?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,6 +1,6 @@
 struct GraphicsOpacityEffect : GraphicsEffect {
     opacity() -> f32,
-    opacity_mask() -> BrushType,
+    opacity_mask() -> Brush,
     set_opacity(opacity: f32),
     set_opacity_mask(mask: &BrushType),
     [event] opacity_changed(opacity: f32),

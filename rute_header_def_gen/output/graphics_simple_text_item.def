@@ -6,17 +6,17 @@ struct GraphicsSimpleTextItem : AbstractGraphicsShapeItem {
     set_text(text: String),
     text() -> String,
     set_font(font: &FontType),
-    font() -> FontType,
-    [override] bounding_rect() -> RectFType,
-    [override] shape() -> PainterPathType,
+    font() -> Font,
+    [override] bounding_rect() -> RectF,
+    [override] shape() -> PainterPath,
     [override] contains(point: &PointFType) -> bool,
     [override] paint(painter: &PainterType, option: &StyleOptionGraphicsItemType, widget: &WidgetType),
     [override] is_obscured_by(item: &GraphicsItemType) -> bool,
-    [override] opaque_area() -> PainterPathType,
+    [override] opaque_area() -> PainterPath,
     [override] type() -> i32,
     [override] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [override] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    [override] extension(variant: &VariantType) -> VariantType,
+    [override] extension(variant: &VariantType) -> Variant,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

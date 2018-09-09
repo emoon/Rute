@@ -8,13 +8,13 @@ enum Mode {
 struct Colormap {
     [static] initialize(),
     [static] cleanup(),
-    [static] instance(screen: i32) -> ColormapType,
+    [static] instance(screen: i32) -> Colormap,
     mode() -> Colormap::Mode,
     depth() -> i32,
     size() -> i32,
     pixel(color: &ColorType) -> uint,
-    color_at(pixel: uint) -> ColorType,
-    colormap() -> [ColorType],
+    color_at(pixel: uint) -> Color,
+    colormap() -> [Color],
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

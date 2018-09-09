@@ -1,5 +1,5 @@
 struct DynamicPropertyChangeEvent : Event {
-    property_name() -> ByteArrayType,
+    property_name() -> ByteArray,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

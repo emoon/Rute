@@ -6,9 +6,9 @@ struct ToolTip {
     [static] hide_text(),
     [static] is_visible() -> bool,
     [static] text() -> String,
-    [static] palette() -> PaletteType,
+    [static] palette() -> Palette,
     [static] set_palette(arg0: &PaletteType),
-    [static] font() -> FontType,
+    [static] font() -> Font,
     [static] set_font(arg0: &FontType),
 }
 

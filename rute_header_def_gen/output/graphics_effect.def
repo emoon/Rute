@@ -12,8 +12,8 @@ enum PixmapPadMode {
 }
 
 struct GraphicsEffect : Object {
-    [override] bounding_rect_for(source_rect: &RectFType) -> RectFType,
-    bounding_rect() -> RectFType,
+    [override] bounding_rect_for(source_rect: &RectFType) -> RectF,
+    bounding_rect() -> RectF,
     is_enabled() -> bool,
     set_enabled(enable: bool),
     update(),
@@ -22,10 +22,10 @@ struct GraphicsEffect : Object {
     [override] source_changed(flags: ChangeFlags),
     update_bounding_rect(),
     source_is_pixmap() -> bool,
-    source_bounding_rect(system: Rute::CoordinateSystem) -> RectFType,
+    source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,
     draw_source(painter: &PainterType),
-    source_pixmap(system: Rute::CoordinateSystem, offset: &PointType, mode: GraphicsEffect::PixmapPadMode) -> PixmapType,
-    source() -> &GraphicsEffectSourceType,
+    source_pixmap(system: Rute::CoordinateSystem, offset: &PointType, mode: GraphicsEffect::PixmapPadMode) -> Pixmap,
+    source() -> GraphicsEffectSource?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -4,16 +4,16 @@ enum TransitionType {
 }
 
 struct AbstractTransition : Object {
-    source_state() -> &StateType,
-    target_state() -> &AbstractStateType,
+    source_state() -> State?,
+    target_state() -> AbstractState?,
     set_target_state(target: &AbstractStateType),
-    target_states() -> [&AbstractStateType],
+    target_states() -> [AbstractState?],
     set_target_states(targets: [&AbstractStateType]),
     set_transition_type(type: AbstractTransition::TransitionType),
-    machine() -> &StateMachineType,
+    machine() -> StateMachine?,
     add_animation(animation: &AbstractAnimationType),
     remove_animation(animation: &AbstractAnimationType),
-    animations() -> [&AbstractAnimationType],
+    animations() -> [AbstractAnimation?],
     [event] target_state_changed(arg0: AbstractTransition::QPrivateSignal),
     [event] target_states_changed(arg0: AbstractTransition::QPrivateSignal),
     [override] event_test(event: &EventType) -> bool,

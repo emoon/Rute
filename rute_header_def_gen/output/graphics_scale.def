@@ -1,5 +1,5 @@
 struct GraphicsScale : GraphicsTransform {
-    origin() -> Vector3DType,
+    origin() -> Vector3D,
     set_origin(point: &Vector3DType),
     x_scale() -> f32,
     set_x_scale(arg0: f32),

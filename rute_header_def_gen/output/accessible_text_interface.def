@@ -12,7 +12,7 @@ struct AccessibleTextInterface {
     [override] text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
     [override] text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
     [override] character_count() -> i32,
-    [override] character_rect(offset: i32) -> RectType,
+    [override] character_rect(offset: i32) -> Rect,
     [override] offset_at_point(point: &PointType) -> i32,
 }
 

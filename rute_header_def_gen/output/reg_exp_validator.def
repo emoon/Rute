@@ -1,7 +1,7 @@
 struct RegExpValidator : Validator {
     [override] validate(input: String, pos: &i32) -> Validator::State,
     set_reg_exp(rx: &RegExpType),
-    reg_exp() -> &RegExpType,
+    reg_exp() -> RegExp?,
     [event] reg_exp_changed(reg_exp: &RegExpType),
 }
 

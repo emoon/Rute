@@ -11,7 +11,7 @@ enum ResultFlag {
 
 
 struct GestureRecognizer {
-    [override] create(target: &ObjectType) -> &GestureType,
+    [override] create(target: &ObjectType) -> Gesture?,
     [override] recognize(state: &GestureType, watched: &ObjectType, event: &EventType) -> Result,
     [override] reset(state: &GestureType),
     [static] register_recognizer(recognizer: &GestureRecognizerType) -> Rute::GestureType,

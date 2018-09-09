@@ -195,9 +195,9 @@ struct Accessible {
     [static] install_root_object_handler(arg0: RootObjectHandler) -> RootObjectHandler,
     [static] install_activation_observer(arg0: Accessible::ActivationObserver *),
     [static] remove_activation_observer(arg0: Accessible::ActivationObserver *),
-    [static] query_accessible_interface(arg0: &ObjectType) -> &AccessibleInterfaceType,
+    [static] query_accessible_interface(arg0: &ObjectType) -> AccessibleInterface?,
     [static] unique_id(iface: &AccessibleInterfaceType) -> Id,
-    [static] accessible_interface(unique_id: Id) -> &AccessibleInterfaceType,
+    [static] accessible_interface(unique_id: Id) -> AccessibleInterface?,
     [static] register_accessible_interface(iface: &AccessibleInterfaceType) -> Id,
     [static] delete_accessible_interface(unique_id: Id),
     [static] update_accessibility(event: &AccessibleEventType),
@@ -205,7 +205,7 @@ struct Accessible {
     [static] set_active(active: bool),
     [static] set_root_object(object: &ObjectType),
     [static] cleanup(),
-    [static] q_accessible_text_boundary_helper(cursor: &TextCursorType, boundary_type: Accessible::TextBoundaryType) -> Pair<int,Type,
+    [static] q_accessible_text_boundary_helper(cursor: &TextCursorType, boundary_type: Accessible::TextBoundaryType) -> Pair<int,,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

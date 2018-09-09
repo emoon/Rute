@@ -6,11 +6,11 @@ struct PointF {
     y() -> f32,
     set_x(x: f32),
     set_y(y: f32),
-    rx() -> &f32,
-    ry() -> &f32,
+    rx() -> f32?,
+    ry() -> f32?,
     [static] dot_product(p1: &PointFType, p2: &PointFType) -> f32,
-    to_point() -> PointType,
-    [static] from_cg_point(point: CGPoint) -> PointFType,
+    to_point() -> Point,
+    [static] from_cg_point(point: CGPoint) -> PointF,
     to_cg_point() -> CGPoint,
 }
 

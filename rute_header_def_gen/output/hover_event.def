@@ -1,8 +1,8 @@
 struct HoverEvent : InputEvent {
-    pos() -> PointType,
-    old_pos() -> PointType,
-    pos_f() -> &PointFType,
-    old_pos_f() -> &PointFType,
+    pos() -> Point,
+    old_pos() -> Point,
+    pos_f() -> PointF?,
+    old_pos_f() -> PointF?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

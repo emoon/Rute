@@ -1,6 +1,6 @@
 struct SplashScreen : Widget {
     set_pixmap(pixmap: &PixmapType),
-    pixmap() -> PixmapType,
+    pixmap() -> Pixmap,
     finish(w: &WidgetType),
     repaint(),
     message() -> String,

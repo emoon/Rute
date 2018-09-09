@@ -9,7 +9,7 @@ struct MarginsF {
     set_top(top: f32),
     set_right(right: f32),
     set_bottom(bottom: f32),
-    to_margins() -> MarginsType,
+    to_margins() -> Margins,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -16,7 +16,7 @@ enum CapabilityFlag {
 
 struct TouchDevice {
     qt_check_for_qgadget_macro(),
-    [static] devices() -> [&TouchDeviceType],
+    [static] devices() -> [TouchDevice?],
     name() -> String,
     type() -> TouchDevice::DeviceType,
     capabilities() -> Capabilities,

@@ -5,16 +5,16 @@ enum ToolButtonPopupMode {
 }
 
 struct ToolButton : AbstractButton {
-    [override] size_hint() -> SizeType,
-    [override] minimum_size_hint() -> SizeType,
+    [override] size_hint() -> Size,
+    [override] minimum_size_hint() -> Size,
     tool_button_style() -> Rute::ToolButtonStyle,
     arrow_type() -> Rute::ArrowType,
     set_arrow_type(type: Rute::ArrowType),
     set_menu(menu: &MenuType),
-    menu() -> &MenuType,
+    menu() -> Menu?,
     set_popup_mode(mode: ToolButton::ToolButtonPopupMode),
     popup_mode() -> ToolButton::ToolButtonPopupMode,
-    default_action() -> &ActionType,
+    default_action() -> Action?,
     set_auto_raise(enable: bool),
     auto_raise() -> bool,
     show_menu(),

@@ -1,5 +1,5 @@
 struct ErrorMessage : Dialog {
-    [static] qt_handler() -> &ErrorMessageType,
+    [static] qt_handler() -> ErrorMessage?,
     show_message(message: String),
     show_message(message: String, type: String),
     [override] done(arg0: i32),

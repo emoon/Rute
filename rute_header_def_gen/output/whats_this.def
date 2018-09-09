@@ -5,7 +5,7 @@ struct WhatsThis {
     [static] leave_whats_this_mode(),
     [static] show_text(pos: &PointType, text: String, w: &WidgetType),
     [static] hide_text(),
-    [static] create_action(parent: &ObjectType) -> &ActionType,
+    [static] create_action(parent: &ObjectType) -> Action?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

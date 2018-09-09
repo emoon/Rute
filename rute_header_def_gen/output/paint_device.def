@@ -17,7 +17,7 @@ enum PaintDeviceMetric {
 struct PaintDevice {
     [override] dev_type() -> i32,
     painting_active() -> bool,
-    [override] paint_engine() -> &PaintEngineType,
+    [override] paint_engine() -> PaintEngine?,
     width() -> i32,
     height() -> i32,
     width_mm() -> i32,
@@ -32,8 +32,8 @@ struct PaintDevice {
     depth() -> i32,
     [static] device_pixel_ratio_f_scale() -> f32,
     [override] init_painter(painter: &PainterType),
-    [override] redirected(offset: &PointType) -> &PaintDeviceType,
-    [override] shared_painter() -> &PainterType,
+    [override] redirected(offset: &PointType) -> PaintDevice?,
+    [override] shared_painter() -> Painter?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
