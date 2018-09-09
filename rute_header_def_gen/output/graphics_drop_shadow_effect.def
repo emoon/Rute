@@ -1,5 +1,5 @@
 struct GraphicsDropShadowEffect : GraphicsEffect {
-    [override] bounding_rect_for(rect: &RectFType) -> RectF,
+    [replace] bounding_rect_for(rect: &RectFType) -> RectF,
     offset() -> PointF,
     x_offset() -> f32,
     y_offset() -> f32,
@@ -15,7 +15,7 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     [event] offset_changed(offset: &PointFType),
     [event] blur_radius_changed(blur_radius: f32),
     [event] color_changed(color: &ColorType),
-    [override] draw(painter: &PainterType),
+    [replace] draw(painter: &PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

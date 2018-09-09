@@ -30,7 +30,7 @@ struct SystemTrayIcon : Object {
     show_message(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
     [event] activated(reason: SystemTrayIcon::ActivationReason),
     [event] message_clicked(),
-    [override] event(event: &EventType) -> bool,
+    [replace] event(event: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

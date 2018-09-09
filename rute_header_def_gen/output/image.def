@@ -35,7 +35,7 @@ enum Format {
 struct Image : PaintDevice {
     swap(other: &ImageType),
     is_null() -> bool,
-    [override] dev_type() -> i32,
+    [replace] dev_type() -> i32,
     detach(),
     is_detached() -> bool,
     copy(rect: &RectType) -> Image,
@@ -106,7 +106,7 @@ struct Image : PaintDevice {
     [static] from_data(data: &uchar, size: i32, format: &char) -> Image,
     [static] from_data(data: &ByteArrayType, format: &char) -> Image,
     cache_key() -> i64,
-    [override] paint_engine() -> PaintEngine?,
+    [replace] paint_engine() -> PaintEngine?,
     dots_per_meter_x() -> i32,
     dots_per_meter_y() -> i32,
     set_dots_per_meter_x(arg0: i32),

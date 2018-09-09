@@ -8,11 +8,11 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     set_spacing(spacing: f32),
     horizontal_spacing() -> f32,
     vertical_spacing() -> f32,
-    [override] remove_at(index: i32),
-    [override] count() -> i32,
-    [override] item_at(index: i32) -> GraphicsLayoutItem?,
-    [override] invalidate(),
-    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
+    [replace] remove_at(index: i32),
+    [replace] count() -> i32,
+    [replace] item_at(index: i32) -> GraphicsLayoutItem?,
+    [replace] invalidate(),
+    [replace] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -14,8 +14,8 @@ enum ViewMode {
 }
 
 struct MdiArea : AbstractScrollArea {
-    [override] size_hint() -> Size,
-    [override] minimum_size_hint() -> Size,
+    [replace] size_hint() -> Size,
+    [replace] minimum_size_hint() -> Size,
     current_sub_window() -> MdiSubWindow?,
     active_sub_window() -> MdiSubWindow?,
     sub_window_list(order: MdiArea::WindowOrder) -> [MdiSubWindow?],
@@ -47,16 +47,16 @@ struct MdiArea : AbstractScrollArea {
     close_all_sub_windows(),
     activate_next_sub_window(),
     activate_previous_sub_window(),
-    [override] setup_viewport(viewport: &WidgetType),
-    [override] event(event: &EventType) -> bool,
-    [override] event_filter(object: &ObjectType, event: &EventType) -> bool,
-    [override] paint_event(paint_event: &PaintEventType),
-    [override] child_event(child_event: &ChildEventType),
-    [override] resize_event(resize_event: &ResizeEventType),
-    [override] timer_event(timer_event: &TimerEventType),
-    [override] show_event(show_event: &ShowEventType),
-    [override] viewport_event(event: &EventType) -> bool,
-    [override] scroll_contents_by(dx: i32, dy: i32),
+    [replace] setup_viewport(viewport: &WidgetType),
+    [replace] event(event: &EventType) -> bool,
+    [replace] event_filter(object: &ObjectType, event: &EventType) -> bool,
+    [replace] paint_event(paint_event: &PaintEventType),
+    [replace] child_event(child_event: &ChildEventType),
+    [replace] resize_event(resize_event: &ResizeEventType),
+    [replace] timer_event(timer_event: &TimerEventType),
+    [replace] show_event(show_event: &ShowEventType),
+    [replace] viewport_event(event: &EventType) -> bool,
+    [replace] scroll_contents_by(dx: i32, dy: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

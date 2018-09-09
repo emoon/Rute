@@ -1,7 +1,7 @@
 
 struct ItemEditorCreatorBase {
-    [override] create_widget(parent: &WidgetType) -> Widget?,
-    [override] value_property_name() -> ByteArray,
+    [replace] create_widget(parent: &WidgetType) -> Widget?,
+    [replace] value_property_name() -> ByteArray,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

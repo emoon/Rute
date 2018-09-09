@@ -42,7 +42,7 @@ struct GuiApplication : CoreApplication {
     [static] quit_on_last_window_closed() -> bool,
     [static] application_state() -> Rute::ApplicationState,
     [static] exec() -> i32,
-    [override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
+    [replace] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
     is_session_restored() -> bool,
     session_id() -> String,
     session_key() -> String,
@@ -63,8 +63,8 @@ struct GuiApplication : CoreApplication {
     [event] save_state_request(session_manager: &SessionManagerType),
     [event] palette_changed(pal: &PaletteType),
     [event] application_display_name_changed(),
-    [override] event(arg0: &EventType) -> bool,
-    [override] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
+    [replace] event(arg0: &EventType) -> bool,
+    [replace] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

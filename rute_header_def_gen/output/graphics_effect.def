@@ -12,14 +12,14 @@ enum PixmapPadMode {
 }
 
 struct GraphicsEffect : Object {
-    [override] bounding_rect_for(source_rect: &RectFType) -> RectF,
+    [replace] bounding_rect_for(source_rect: &RectFType) -> RectF,
     bounding_rect() -> RectF,
     is_enabled() -> bool,
     set_enabled(enable: bool),
     update(),
     [event] enabled_changed(enabled: bool),
-    [override] draw(painter: &PainterType),
-    [override] source_changed(flags: ChangeFlags),
+    [replace] draw(painter: &PainterType),
+    [replace] source_changed(flags: ChangeFlags),
     update_bounding_rect(),
     source_is_pixmap() -> bool,
     source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,

@@ -1,9 +1,9 @@
 struct IntValidator : Validator {
-    [override] validate(arg0: String, arg1: &i32) -> Validator::State,
-    [override] fixup(input: String),
+    [replace] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [replace] fixup(input: String),
     set_bottom(arg0: i32),
     set_top(arg0: i32),
-    [override] set_range(bottom: i32, top: i32),
+    [replace] set_range(bottom: i32, top: i32),
     bottom() -> i32,
     top() -> i32,
     [event] bottom_changed(bottom: i32),

@@ -33,12 +33,12 @@ struct GraphicsGridLayout : GraphicsLayout {
     row_count() -> i32,
     column_count() -> i32,
     item_at(row: i32, column: i32) -> GraphicsLayoutItem?,
-    [override] count() -> i32,
-    [override] item_at(index: i32) -> GraphicsLayoutItem?,
-    [override] remove_at(index: i32),
+    [replace] count() -> i32,
+    [replace] item_at(index: i32) -> GraphicsLayoutItem?,
+    [replace] remove_at(index: i32),
     remove_item(item: &GraphicsLayoutItemType),
-    [override] invalidate(),
-    [override] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
+    [replace] invalidate(),
+    [replace] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

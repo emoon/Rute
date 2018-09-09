@@ -68,15 +68,15 @@ struct TableWidget : TableView {
     [event] cell_entered(row: i32, column: i32),
     [event] cell_changed(row: i32, column: i32),
     [event] current_cell_changed(current_row: i32, current_column: i32, previous_row: i32, previous_column: i32),
-    [override] event(e: &EventType) -> bool,
-    [override] mime_types() -> StringList,
-    [override] mime_data(items: [&TableWidgetItemType]) -> MimeData?,
-    [override] drop_mime_data(row: i32, column: i32, data: &MimeDataType, action: Rute::DropAction) -> bool,
-    [override] supported_drop_actions() -> Rute::DropActions,
+    [replace] event(e: &EventType) -> bool,
+    [replace] mime_types() -> StringList,
+    [replace] mime_data(items: [&TableWidgetItemType]) -> MimeData?,
+    [replace] drop_mime_data(row: i32, column: i32, data: &MimeDataType, action: Rute::DropAction) -> bool,
+    [replace] supported_drop_actions() -> Rute::DropActions,
     items(data: &MimeDataType) -> [TableWidgetItem?],
     index_from_item(item: &TableWidgetItemType) -> ModelIndex,
     item_from_index(index: &ModelIndexType) -> TableWidgetItem?,
-    [override] drop_event(event: &DropEventType),
+    [replace] drop_event(event: &DropEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

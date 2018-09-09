@@ -3,9 +3,9 @@ struct EventTransition : AbstractTransition {
     set_event_source(object: &ObjectType),
     event_type() -> Event::Type,
     set_event_type(type: Event::Type),
-    [override] event_test(event: &EventType) -> bool,
-    [override] on_transition(event: &EventType),
-    [override] event(e: &EventType) -> bool,
+    [replace] event_test(event: &EventType) -> bool,
+    [replace] on_transition(event: &EventType),
+    [replace] event(e: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

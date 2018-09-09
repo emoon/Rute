@@ -1,8 +1,8 @@
 
 struct AccessibleEditableTextInterface {
-    [override] delete_text(start_offset: i32, end_offset: i32),
-    [override] insert_text(offset: i32, text: String),
-    [override] replace_text(start_offset: i32, end_offset: i32, text: String),
+    [replace] delete_text(start_offset: i32, end_offset: i32),
+    [replace] insert_text(offset: i32, text: String),
+    [replace] replace_text(start_offset: i32, end_offset: i32, text: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -20,14 +20,14 @@ struct OpenGLWidget : Widget {
     [event] frame_swapped(),
     [event] about_to_resize(),
     [event] resized(),
-    [override] initialize_gl(),
-    [override] resize_gl(w: i32, h: i32),
-    [override] paint_gl(),
-    [override] paint_event(e: &PaintEventType),
-    [override] resize_event(e: &ResizeEventType),
-    [override] event(e: &EventType) -> bool,
-    [override] redirected(p: &PointType) -> PaintDevice?,
-    [override] paint_engine() -> PaintEngine?,
+    [replace] initialize_gl(),
+    [replace] resize_gl(w: i32, h: i32),
+    [replace] paint_gl(),
+    [replace] paint_event(e: &PaintEventType),
+    [replace] resize_event(e: &ResizeEventType),
+    [replace] event(e: &EventType) -> bool,
+    [replace] redirected(p: &PointType) -> PaintDevice?,
+    [replace] paint_engine() -> PaintEngine?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

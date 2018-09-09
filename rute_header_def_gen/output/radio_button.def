@@ -1,10 +1,10 @@
 struct RadioButton : AbstractButton {
-    [override] size_hint() -> Size,
-    [override] minimum_size_hint() -> Size,
-    [override] event(e: &EventType) -> bool,
-    [override] hit_button(arg0: &PointType) -> bool,
-    [override] paint_event(arg0: &PaintEventType),
-    [override] mouse_move_event(arg0: &MouseEventType),
+    [replace] size_hint() -> Size,
+    [replace] minimum_size_hint() -> Size,
+    [replace] event(e: &EventType) -> bool,
+    [replace] hit_button(arg0: &PointType) -> bool,
+    [replace] paint_event(arg0: &PaintEventType),
+    [replace] mouse_move_event(arg0: &MouseEventType),
     init_style_option(button: &StyleOptionButtonType),
 }
 

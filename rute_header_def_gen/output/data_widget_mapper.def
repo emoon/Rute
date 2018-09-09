@@ -28,7 +28,7 @@ struct DataWidgetMapper : Object {
     to_last(),
     to_next(),
     to_previous(),
-    [override] set_current_index(index: i32),
+    [replace] set_current_index(index: i32),
     set_current_model_index(index: &ModelIndexType),
     [event] current_index_changed(index: i32),
 }

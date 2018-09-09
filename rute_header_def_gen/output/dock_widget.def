@@ -27,10 +27,10 @@ struct DockWidget : Widget {
     [event] allowed_areas_changed(allowed_areas: Rute::DockWidgetAreas),
     [event] visibility_changed(visible: bool),
     [event] dock_location_changed(area: Rute::DockWidgetArea),
-    [override] change_event(event: &EventType),
-    [override] close_event(event: &CloseEventType),
-    [override] paint_event(event: &PaintEventType),
-    [override] event(event: &EventType) -> bool,
+    [replace] change_event(event: &EventType),
+    [replace] close_event(event: &CloseEventType),
+    [replace] paint_event(event: &PaintEventType),
+    [replace] event(event: &EventType) -> bool,
     init_style_option(option: &StyleOptionDockWidgetType),
 }
 

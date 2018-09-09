@@ -1,7 +1,7 @@
 
 struct ItemEditorFactory {
-    [override] create_editor(user_type: i32, parent: &WidgetType) -> Widget?,
-    [override] value_property_name(user_type: i32) -> ByteArray,
+    [replace] create_editor(user_type: i32, parent: &WidgetType) -> Widget?,
+    [replace] value_property_name(user_type: i32) -> ByteArray,
     register_editor(user_type: i32, creator: &ItemEditorCreatorBaseType),
     [static] default_factory() -> ItemEditorFactory?,
     [static] set_default_factory(factory: &ItemEditorFactoryType),

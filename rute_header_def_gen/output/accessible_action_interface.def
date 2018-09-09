@@ -1,10 +1,10 @@
 
 struct AccessibleActionInterface {
-    [override] action_names() -> StringList,
-    [override] localized_action_name(name: String) -> String,
-    [override] localized_action_description(name: String) -> String,
-    [override] do_action(action_name: String),
-    [override] key_bindings_for_action(action_name: String) -> StringList,
+    [replace] action_names() -> StringList,
+    [replace] localized_action_name(name: String) -> String,
+    [replace] localized_action_description(name: String) -> String,
+    [replace] do_action(action_name: String),
+    [replace] key_bindings_for_action(action_name: String) -> StringList,
     [static] press_action() -> String?,
     [static] increase_action() -> String?,
     [static] decrease_action() -> String?,

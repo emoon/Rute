@@ -7,7 +7,7 @@ struct GraphicsScale : GraphicsTransform {
     set_y_scale(arg0: f32),
     z_scale() -> f32,
     set_z_scale(arg0: f32),
-    [override] apply_to(matrix: &Matrix4x4Type),
+    [replace] apply_to(matrix: &Matrix4x4Type),
     [event] origin_changed(),
     [event] x_scale_changed(),
     [event] y_scale_changed(),

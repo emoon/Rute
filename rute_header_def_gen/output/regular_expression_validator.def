@@ -1,5 +1,5 @@
 struct RegularExpressionValidator : Validator {
-    [override] validate(input: String, pos: &i32) -> Validator::State,
+    [replace] validate(input: String, pos: &i32) -> Validator::State,
     regular_expression() -> RegularExpression,
     set_regular_expression(re: &RegularExpressionType),
     [event] regular_expression_changed(re: &RegularExpressionType),

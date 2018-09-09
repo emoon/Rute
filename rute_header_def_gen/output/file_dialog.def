@@ -93,7 +93,7 @@ struct FileDialog : Dialog {
     set_options(options: Options),
     options() -> Options,
     open(receiver: &ObjectType, member: &char),
-    [override] set_visible(visible: bool),
+    [replace] set_visible(visible: bool),
     [event] file_selected(file: String),
     [event] files_selected(files: &StringListType),
     [event] current_changed(path: String),
@@ -111,9 +111,9 @@ struct FileDialog : Dialog {
     [static] get_existing_directory_url(parent: &WidgetType, caption: String, dir: &UrlType, options: Options, supported_schemes: &StringListType) -> Url,
     [static] get_open_file_names(parent: &WidgetType, caption: String, dir: String, filter: String, selected_filter: String, options: Options) -> StringList,
     [static] get_open_file_urls(parent: &WidgetType, caption: String, dir: &UrlType, filter: String, selected_filter: String, options: Options, supported_schemes: &StringListType) -> [Url],
-    [override] done(result: i32),
-    [override] accept(),
-    [override] change_event(e: &EventType),
+    [replace] done(result: i32),
+    [replace] accept(),
+    [replace] change_event(e: &EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

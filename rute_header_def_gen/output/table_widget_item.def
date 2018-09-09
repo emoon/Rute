@@ -5,7 +5,7 @@ enum ItemType {
 
 
 struct TableWidgetItem {
-    [override] clone() -> TableWidgetItem?,
+    [replace] clone() -> TableWidgetItem?,
     table_widget() -> TableWidget?,
     row() -> i32,
     column() -> i32,
@@ -39,10 +39,10 @@ struct TableWidgetItem {
     set_check_state(state: Rute::CheckState),
     size_hint() -> Size,
     set_size_hint(size: &SizeType),
-    [override] data(role: i32) -> Variant,
-    [override] set_data(role: i32, value: &VariantType),
-    [override] read(in: &DataStreamType),
-    [override] write(out: &DataStreamType),
+    [replace] data(role: i32) -> Variant,
+    [replace] set_data(role: i32, value: &VariantType),
+    [replace] read(in: &DataStreamType),
+    [replace] write(out: &DataStreamType),
     type() -> i32,
 }
 

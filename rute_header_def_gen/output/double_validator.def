@@ -4,8 +4,8 @@ enum Notation {
 }
 
 struct DoubleValidator : Validator {
-    [override] validate(arg0: String, arg1: &i32) -> Validator::State,
-    [override] set_range(bottom: double, top: double, decimals: i32),
+    [replace] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [replace] set_range(bottom: double, top: double, decimals: i32),
     set_bottom(arg0: double),
     set_top(arg0: double),
     set_decimals(arg0: i32),

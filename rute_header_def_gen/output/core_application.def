@@ -26,7 +26,7 @@ struct CoreApplication : Object {
     [static] has_pending_events() -> bool,
     [static] event_dispatcher() -> AbstractEventDispatcher?,
     [static] set_event_dispatcher(event_dispatcher: &AbstractEventDispatcherType),
-    [override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
+    [replace] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
     [static] starting_up() -> bool,
     [static] closing_down() -> bool,
     [static] application_dir_path() -> String,
@@ -49,8 +49,8 @@ struct CoreApplication : Object {
     [event] organization_domain_changed(),
     [event] application_name_changed(),
     [event] application_version_changed(),
-    [override] event(arg0: &EventType) -> bool,
-    [override] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
+    [replace] event(arg0: &EventType) -> bool,
+    [replace] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

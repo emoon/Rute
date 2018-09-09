@@ -33,10 +33,10 @@ struct ToolBar : Widget {
     [event] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
     [event] top_level_changed(top_level: bool),
     [event] visibility_changed(visible: bool),
-    [override] action_event(event: &ActionEventType),
-    [override] change_event(event: &EventType),
-    [override] paint_event(event: &PaintEventType),
-    [override] event(event: &EventType) -> bool,
+    [replace] action_event(event: &ActionEventType),
+    [replace] change_event(event: &EventType),
+    [replace] paint_event(event: &PaintEventType),
+    [replace] event(event: &EventType) -> bool,
     init_style_option(option: &StyleOptionToolBarType),
 }
 

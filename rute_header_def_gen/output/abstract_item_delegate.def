@@ -7,15 +7,15 @@ enum EndEditHint {
 }
 
 struct AbstractItemDelegate : Object {
-    [override] paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
-    [override] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
-    [override] create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
-    [override] set_editor_data(editor: &WidgetType, index: &ModelIndexType),
-    [override] set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
-    [override] editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    [replace] paint(painter: &PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
+    [replace] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
+    [replace] create_editor(parent: &WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
+    [replace] set_editor_data(editor: &WidgetType, index: &ModelIndexType),
+    [replace] set_model_data(editor: &WidgetType, model: &AbstractItemModelType, index: &ModelIndexType),
+    [replace] editor_event(event: &EventType, model: &AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
     [static] elided_text(font_metrics: &FontMetricsType, width: i32, mode: Rute::TextElideMode, text: String) -> String,
-    [override] help_event(event: &HelpEventType, view: &AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
-    [override] painting_roles() -> [i32],
+    [replace] help_event(event: &HelpEventType, view: &AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    [replace] painting_roles() -> [i32],
     [event] commit_data(editor: &WidgetType),
     [event] close_editor(editor: &WidgetType, hint: AbstractItemDelegate::EndEditHint),
     [event] size_hint_changed(arg0: &ModelIndexType),

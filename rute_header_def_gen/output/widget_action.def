@@ -3,10 +3,10 @@ struct WidgetAction : Action {
     default_widget() -> Widget?,
     request_widget(parent: &WidgetType) -> Widget?,
     release_widget(widget: &WidgetType),
-    [override] event(arg0: &EventType) -> bool,
-    [override] event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
-    [override] create_widget(parent: &WidgetType) -> Widget?,
-    [override] delete_widget(widget: &WidgetType),
+    [replace] event(arg0: &EventType) -> bool,
+    [replace] event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
+    [replace] create_widget(parent: &WidgetType) -> Widget?,
+    [replace] delete_widget(widget: &WidgetType),
     created_widgets() -> [Widget?],
 }
 

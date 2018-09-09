@@ -10,12 +10,12 @@ struct StatusBar : Widget {
     show_message(text: String, timeout: i32),
     clear_message(),
     [event] message_changed(text: String),
-    [override] show_event(arg0: &ShowEventType),
-    [override] paint_event(arg0: &PaintEventType),
-    [override] resize_event(arg0: &ResizeEventType),
+    [replace] show_event(arg0: &ShowEventType),
+    [replace] paint_event(arg0: &PaintEventType),
+    [replace] resize_event(arg0: &ResizeEventType),
     reformat(),
     hide_or_show(),
-    [override] event(arg0: &EventType) -> bool,
+    [replace] event(arg0: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

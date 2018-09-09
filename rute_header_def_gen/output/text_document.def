@@ -25,7 +25,7 @@ enum Stacks {
 struct TextDocument : Object {
     clone(parent: &ObjectType) -> TextDocument?,
     is_empty() -> bool,
-    [override] clear(),
+    [replace] clear(),
     set_undo_redo_enabled(enable: bool),
     is_undo_redo_enabled() -> bool,
     is_undo_available() -> bool,
@@ -111,8 +111,8 @@ struct TextDocument : Object {
     redo(),
     append_undo_item(arg0: &AbstractUndoItemType),
     set_modified(m: bool),
-    [override] create_object(f: &TextFormatType) -> TextObject?,
-    [override] load_resource(type: i32, name: &UrlType) -> Variant,
+    [replace] create_object(f: &TextFormatType) -> TextObject?,
+    [replace] load_resource(type: i32, name: &UrlType) -> Variant,
     doc_handle() -> TextDocumentPrivate?,
 }
 

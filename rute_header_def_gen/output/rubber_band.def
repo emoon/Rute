@@ -9,12 +9,12 @@ struct RubberBand : Widget {
     move(p: &PointType),
     resize(w: i32, h: i32),
     resize(s: &SizeType),
-    [override] event(e: &EventType) -> bool,
-    [override] paint_event(arg0: &PaintEventType),
-    [override] change_event(arg0: &EventType),
-    [override] show_event(arg0: &ShowEventType),
-    [override] resize_event(arg0: &ResizeEventType),
-    [override] move_event(arg0: &MoveEventType),
+    [replace] event(e: &EventType) -> bool,
+    [replace] paint_event(arg0: &PaintEventType),
+    [replace] change_event(arg0: &EventType),
+    [replace] show_event(arg0: &ShowEventType),
+    [replace] resize_event(arg0: &ResizeEventType),
+    [replace] move_event(arg0: &MoveEventType),
     init_style_option(option: &StyleOptionRubberBandType),
 }
 

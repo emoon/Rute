@@ -1,13 +1,13 @@
 struct AccessibleApplication : AccessibleObject {
-    [override] window() -> Window?,
-    [override] child_count() -> i32,
-    [override] index_of_child(arg0: &AccessibleInterfaceType) -> i32,
-    [override] focus_child() -> AccessibleInterface?,
-    [override] parent() -> AccessibleInterface?,
-    [override] child(index: i32) -> AccessibleInterface?,
-    [override] text(t: Accessible::Text) -> String,
-    [override] role() -> Accessible::Role,
-    [override] state() -> Accessible::State,
+    [replace] window() -> Window?,
+    [replace] child_count() -> i32,
+    [replace] index_of_child(arg0: &AccessibleInterfaceType) -> i32,
+    [replace] focus_child() -> AccessibleInterface?,
+    [replace] parent() -> AccessibleInterface?,
+    [replace] child(index: i32) -> AccessibleInterface?,
+    [replace] text(t: Accessible::Text) -> String,
+    [replace] role() -> Accessible::Role,
+    [replace] state() -> Accessible::State,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

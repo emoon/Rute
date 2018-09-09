@@ -11,7 +11,7 @@ enum ChildIndicatorPolicy {
 
 
 struct TreeWidgetItem {
-    [override] clone() -> TreeWidgetItem?,
+    [replace] clone() -> TreeWidgetItem?,
     set_selected(select: bool),
     is_selected() -> bool,
     set_hidden(hide: bool),
@@ -52,10 +52,10 @@ struct TreeWidgetItem {
     set_check_state(column: i32, state: Rute::CheckState),
     size_hint(column: i32) -> Size,
     set_size_hint(column: i32, size: &SizeType),
-    [override] data(column: i32, role: i32) -> Variant,
-    [override] set_data(column: i32, role: i32, value: &VariantType),
-    [override] read(in: &DataStreamType),
-    [override] write(out: &DataStreamType),
+    [replace] data(column: i32, role: i32) -> Variant,
+    [replace] set_data(column: i32, role: i32, value: &VariantType),
+    [replace] read(in: &DataStreamType),
+    [replace] write(out: &DataStreamType),
     parent() -> TreeWidgetItem?,
     child(index: i32) -> TreeWidgetItem?,
     child_count() -> i32,

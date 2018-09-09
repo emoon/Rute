@@ -48,7 +48,7 @@ struct Application : GuiApplication {
     [static] is_effect_enabled(arg0: Rute::UIEffect) -> bool,
     [static] set_effect_enabled(arg0: Rute::UIEffect, enable: bool),
     [static] exec() -> i32,
-    [override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
+    [replace] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
     [event] focus_changed(old: &WidgetType, now: &WidgetType),
     style_sheet() -> String,
     set_style_sheet(sheet: String),
@@ -56,8 +56,8 @@ struct Application : GuiApplication {
     auto_sip_enabled() -> bool,
     [static] close_all_windows(),
     [static] about_qt(),
-    [override] event(arg0: &EventType) -> bool,
-    [override] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
+    [replace] event(arg0: &EventType) -> bool,
+    [replace] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

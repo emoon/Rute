@@ -69,7 +69,7 @@ struct Action : Object {
     parent_widget() -> Widget?,
     associated_widgets() -> [Widget?],
     associated_graphics_widgets() -> [GraphicsWidget?],
-    [override] event(arg0: &EventType) -> bool,
+    [replace] event(arg0: &EventType) -> bool,
     hover(),
     set_checked(arg0: bool),
     toggle(),

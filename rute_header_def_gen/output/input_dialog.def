@@ -50,9 +50,9 @@ struct InputDialog : Dialog {
     set_cancel_button_text(text: String),
     cancel_button_text() -> String,
     open(receiver: &ObjectType, member: &char),
-    [override] minimum_size_hint() -> Size,
-    [override] size_hint() -> Size,
-    [override] set_visible(visible: bool),
+    [replace] minimum_size_hint() -> Size,
+    [replace] size_hint() -> Size,
+    [replace] set_visible(visible: bool),
     [static] get_text(parent: &WidgetType, title: String, label: String, echo: LineEdit::EchoMode, text: String, ok: &bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     [static] get_multi_line_text(parent: &WidgetType, title: String, label: String, text: String, ok: &bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     [static] get_item(parent: &WidgetType, title: String, label: String, items: &StringListType, current: i32, editable: bool, ok: &bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
@@ -67,7 +67,7 @@ struct InputDialog : Dialog {
     [event] int_value_selected(value: i32),
     [event] double_value_changed(value: double),
     [event] double_value_selected(value: double),
-    [override] done(result: i32),
+    [replace] done(result: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

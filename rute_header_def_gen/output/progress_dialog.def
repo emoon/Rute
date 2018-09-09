@@ -6,7 +6,7 @@ struct ProgressDialog : Dialog {
     minimum() -> i32,
     maximum() -> i32,
     value() -> i32,
-    [override] size_hint() -> Size,
+    [replace] size_hint() -> Size,
     label_text() -> String,
     minimum_duration() -> i32,
     set_auto_reset(reset: bool),
@@ -24,10 +24,10 @@ struct ProgressDialog : Dialog {
     set_cancel_button_text(text: String),
     set_minimum_duration(ms: i32),
     [event] canceled(),
-    [override] resize_event(event: &ResizeEventType),
-    [override] close_event(event: &CloseEventType),
-    [override] change_event(event: &EventType),
-    [override] show_event(event: &ShowEventType),
+    [replace] resize_event(event: &ResizeEventType),
+    [replace] close_event(event: &CloseEventType),
+    [replace] change_event(event: &EventType),
+    [replace] show_event(event: &ShowEventType),
     force_show(),
 }
 

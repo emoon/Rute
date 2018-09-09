@@ -11,7 +11,7 @@ struct StackedWidget : Frame {
     set_current_widget(w: &WidgetType),
     [event] current_changed(arg0: i32),
     [event] widget_removed(index: i32),
-    [override] event(e: &EventType) -> bool,
+    [replace] event(e: &EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

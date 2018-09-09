@@ -10,7 +10,7 @@ struct DesktopWidget : Widget {
     [event] work_area_resized(arg0: i32),
     [event] screen_count_changed(arg0: i32),
     [event] primary_screen_changed(),
-    [override] resize_event(e: &ResizeEventType),
+    [replace] resize_event(e: &ResizeEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
