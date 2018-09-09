@@ -13,6 +13,7 @@ use std::io::{BufWriter, Write, SeekFrom, BufReader};
 use std::sync::RwLock;
 use std::io::{Seek, BufRead};
 use walkdir::WalkDir;
+use std::path::PathBuf;
 
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum AccessLevel {
@@ -430,21 +431,11 @@ fn is_private_file(entry: &walkdir::DirEntry) -> bool {
     entry.path().to_str().unwrap().contains("private")
 }
 
-fn main() {
-    // Acquire an instance of `Clang`
-    let clang = Clang::new().unwrap();
-
-    let lock = RwLock::new(HashSet::new());
-
-    // Get all the files to parse
-
-    let mut header_files = Vec::new();
-
-    for entry in WalkDir::new(
-        //"/Users/danielcollin/temp/test.h",
-        //"/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
-        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers",
-    ) {
+///
+/// Function for adding files/paths to process
+///
+fn add_process_path(dest: &mut Vec<PathBuf>, path: &str) {
+    for entry in WalkDir::new(path) {
         let entry = entry.unwrap();
 
         if !is_header_file(&entry) {
@@ -455,13 +446,30 @@ fn main() {
             continue;
         }
 
-        header_files.push(entry.path().to_owned());
+        dest.push(entry.path().to_owned());
     }
+}
 
-    //println!("{:?}", header_files);
+fn main() {
+    // Acquire an instance of `Clang`
+    let clang = Clang::new().unwrap();
+    let lock = RwLock::new(HashSet::new());
 
-    // Do the thing on threads
+    // Get all the files to parse
 
+    let output_directory = "output";
+
+    let mut header_files: Vec<PathBuf> = Vec::new();
+
+    add_process_path(&mut header_files,
+        //"/Users/danielcollin/temp/test.h",
+        //"/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
+        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers");
+
+    add_process_path(&mut header_files,
+        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h");
+
+    // Process all files in parallel using Rayon
     header_files.par_iter().for_each(|filename| {
         println!("Processing filename {:?}", filename);
 
@@ -503,7 +511,47 @@ fn main() {
                     w.insert(t);
                 }
 
-                print_class("output", &struct_);
+                print_class(output_directory, &struct_);
+            }
+        }
+
+        // This is somewhat of a hack to get the global Qt enums
+
+        if filename.file_name().unwrap().to_str().unwrap().contains("qnamespace") {
+            let mut enums = Vec::new();
+
+            for e in tu.get_entity().get_children() {
+                match e.get_kind() {
+                    EntityKind::Namespace => {
+                        if let Some(name) = e.get_display_name() {
+                            if name != "Qt" {
+                                continue;
+                            }
+
+                            for t in e.get_children() {
+                                if t.get_kind() == EntityKind::EnumDecl {
+                                    enums.push(t);
+                                }
+                            }
+                        }
+                    }
+
+                    _ => (),
+                }
+            }
+
+            // Create enums for the file. We don't need to lock the type here as we take all the enums
+            // that isn't in any class and write to output with the same filename
+
+            if !enums.is_empty() {
+                let base_name = filename.file_name().unwrap().to_str().unwrap();
+                let base_name = &base_name[..base_name.len() - 2];
+                let target_filename = format!("{}/{}.def", output_directory, &base_name);
+                let mut dest = BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
+
+                for enum_def in enums {
+                    print_enums(&mut dest, &enum_def, &base_name);
+                }
             }
         }
     });
