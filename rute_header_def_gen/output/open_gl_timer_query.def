@@ -1,0 +1,13 @@
+struct OpenGLTimerQuery : Object {
+    create() -> bool,
+    is_created() -> bool,
+    object_id() -> GLuint,
+    begin(),
+    end(),
+    wait_for_timestamp() -> GLuint64,
+    record_timestamp(),
+    is_result_available() -> bool,
+    wait_for_result() -> GLuint64,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

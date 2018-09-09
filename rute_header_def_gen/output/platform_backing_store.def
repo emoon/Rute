@@ -1,0 +1,23 @@
+enum TextureFlag {
+    TextureSwizzle,
+    TextureFlip,
+    TexturePremultiplied,
+}
+
+
+struct PlatformBackingStore {
+    window() -> Window?,
+    backing_store() -> BackingStore?,
+    [replace] paint_device() -> PaintDevice?,
+    [replace] flush(window: &WindowType, region: &RegionType, offset: &PointType),
+    [replace] compose_and_flush(window: &WindowType, region: &RegionType, offset: &PointType, textures: &PlatformTextureListType, translucent_background: bool),
+    [replace] to_image() -> Image,
+    [replace] to_texture(dirty_region: &RegionType, texture_size: &SizeType, flags: &TextureFlags) -> GLuint,
+    [replace] graphics_buffer() -> PlatformGraphicsBuffer?,
+    [replace] resize(size: &SizeType, static_contents: &RegionType),
+    [replace] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
+    [replace] begin_paint(arg0: &RegionType),
+    [replace] end_paint(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

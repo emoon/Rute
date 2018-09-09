@@ -1,0 +1,37 @@
+enum MenuRole {
+    NoRole,
+    TextHeuristicRole,
+    ApplicationSpecificRole,
+    AboutQtRole,
+    AboutRole,
+    PreferencesRole,
+    QuitRole,
+    CutRole,
+    CopyRole,
+    PasteRole,
+    SelectAllRole,
+    RoleCount,
+}
+
+struct PlatformMenuItem : Object {
+    [replace] set_tag(tag: quintptr),
+    [replace] tag() -> quintptr,
+    [replace] set_text(text: String),
+    [replace] set_icon(icon: &IconType),
+    [replace] set_menu(menu: &PlatformMenuType),
+    [replace] set_visible(is_visible: bool),
+    [replace] set_is_separator(is_separator: bool),
+    [replace] set_font(font: &FontType),
+    [replace] set_role(role: PlatformMenuItem::MenuRole),
+    [replace] set_checkable(checkable: bool),
+    [replace] set_checked(is_checked: bool),
+    [replace] set_shortcut(shortcut: &KeySequenceType),
+    [replace] set_enabled(enabled: bool),
+    [replace] set_icon_size(size: i32),
+    [replace] set_native_contents(item: WId),
+    [replace] set_has_exclusive_group(has_exclusive_group: bool),
+    [event] activated(),
+    [event] hovered(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

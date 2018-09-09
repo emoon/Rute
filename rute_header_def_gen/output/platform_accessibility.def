@@ -1,0 +1,11 @@
+
+struct PlatformAccessibility {
+    [replace] notify_accessibility_update(event: &AccessibleEventType),
+    [replace] set_root_object(o: &ObjectType),
+    [replace] initialize(),
+    [replace] cleanup(),
+    is_active() -> bool,
+    set_active(active: bool),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

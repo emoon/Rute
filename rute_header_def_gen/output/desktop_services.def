@@ -1,0 +1,8 @@
+
+struct DesktopServices {
+    [static] open_url(url: &UrlType) -> bool,
+    [static] set_url_handler(scheme: String, receiver: &ObjectType, method: &char),
+    [static] unset_url_handler(scheme: String),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

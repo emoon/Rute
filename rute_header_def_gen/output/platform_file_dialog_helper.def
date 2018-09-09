@@ -1,0 +1,23 @@
+struct PlatformFileDialogHelper : PlatformDialogHelper {
+    [replace] default_name_filter_disables() -> bool,
+    [replace] set_directory(directory: &UrlType),
+    [replace] directory() -> Url,
+    [replace] select_file(filename: &UrlType),
+    [replace] selected_files() -> [Url],
+    [replace] set_filter(),
+    [replace] select_mime_type_filter(filter: String),
+    [replace] select_name_filter(filter: String),
+    [replace] selected_mime_type_filter() -> String,
+    [replace] selected_name_filter() -> String,
+    [replace] is_supported_url(url: &UrlType) -> bool,
+    options() -> SharedPointer<QFileDialogOptions>?,
+    set_options(options: &SharedPointer<QFileDialogOptions>Type),
+    [static] clean_filter_list(filter: String) -> StringList,
+    [event] file_selected(file: &UrlType),
+    [event] files_selected(files: [UrlType]),
+    [event] current_changed(path: &UrlType),
+    [event] directory_entered(directory: &UrlType),
+    [event] filter_selected(filter: String),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,16 @@
+struct TextFrame : TextObject {
+    set_frame_format(format: &TextFrameFormatType),
+    frame_format() -> TextFrameFormat,
+    first_cursor_position() -> TextCursor,
+    last_cursor_position() -> TextCursor,
+    first_position() -> i32,
+    last_position() -> i32,
+    layout_data() -> TextFrameLayoutData?,
+    set_layout_data(data: &TextFrameLayoutDataType),
+    child_frames() -> [TextFrame?],
+    parent_frame() -> TextFrame?,
+    begin() -> TextFrame::iterator,
+    end() -> TextFrame::iterator,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

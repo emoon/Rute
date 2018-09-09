@@ -1,0 +1,23 @@
+struct TextTable : TextFrame {
+    resize(rows: i32, cols: i32),
+    insert_rows(pos: i32, num: i32),
+    insert_columns(pos: i32, num: i32),
+    append_rows(count: i32),
+    append_columns(count: i32),
+    remove_rows(pos: i32, num: i32),
+    remove_columns(pos: i32, num: i32),
+    merge_cells(row: i32, col: i32, num_rows: i32, num_cols: i32),
+    merge_cells(cursor: &TextCursorType),
+    split_cell(row: i32, col: i32, num_rows: i32, num_cols: i32),
+    rows() -> i32,
+    columns() -> i32,
+    cell_at(row: i32, col: i32) -> TextTableCell,
+    cell_at(position: i32) -> TextTableCell,
+    cell_at(c: &TextCursorType) -> TextTableCell,
+    row_start(c: &TextCursorType) -> TextCursor,
+    row_end(c: &TextCursorType) -> TextCursor,
+    set_format(format: &TextTableFormatType),
+    format() -> TextTableFormat,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

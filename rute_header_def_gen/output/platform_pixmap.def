@@ -1,0 +1,50 @@
+enum PixelType {
+    PixmapType,
+    BitmapType,
+}
+
+enum ClassId {
+    RasterClass,
+    DirectFBClass,
+    BlitterClass,
+    Direct2DClass,
+    X11Class,
+    CustomClass,
+}
+
+
+struct PlatformPixmap {
+    [replace] create_compatible_platform_pixmap() -> PlatformPixmap?,
+    [replace] resize(width: i32, height: i32),
+    [replace] from_image(image: &ImageType, flags: Rute::ImageConversionFlags),
+    [replace] from_image_in_place(image: &ImageType, flags: Rute::ImageConversionFlags),
+    [replace] from_image_reader(image_reader: &ImageReaderType, flags: Rute::ImageConversionFlags),
+    [replace] from_file(filename: String, format: &char, flags: Rute::ImageConversionFlags) -> bool,
+    [replace] from_data(buffer: &uchar, len: uint, format: &char, flags: Rute::ImageConversionFlags) -> bool,
+    [replace] copy(data: &PlatformPixmapType, rect: &RectType),
+    [replace] scroll(dx: i32, dy: i32, rect: &RectType) -> bool,
+    [replace] fill(color: &ColorType),
+    [replace] mask() -> Bitmap,
+    [replace] set_mask(mask: &BitmapType),
+    [replace] has_alpha_channel() -> bool,
+    [replace] to_image() -> Image,
+    [replace] to_image(rect: &RectType) -> Image,
+    [replace] paint_engine() -> PaintEngine?,
+    serial_number() -> i32,
+    pixel_type() -> PlatformPixmap::PixelType,
+    class_id() -> PlatformPixmap::ClassId,
+    [replace] device_pixel_ratio() -> f32,
+    [replace] set_device_pixel_ratio(scale_factor: f32),
+    [replace] buffer() -> Image?,
+    width() -> i32,
+    height() -> i32,
+    color_count() -> i32,
+    depth() -> i32,
+    is_null() -> bool,
+    cache_key() -> i64,
+    [static] create(w: i32, h: i32, type: PlatformPixmap::PixelType) -> PlatformPixmap?,
+    set_serial_number(ser_no: i32),
+    set_detach_number(det_no: i32),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

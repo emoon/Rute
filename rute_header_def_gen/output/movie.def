@@ -1,0 +1,52 @@
+enum MovieState {
+    NotRunning,
+    Paused,
+    Running,
+}
+
+enum CacheMode {
+    CacheNone,
+    CacheAll,
+}
+
+struct Movie : Object {
+    [static] supported_formats() -> [ByteArray],
+    set_device(device: &IODeviceType),
+    device() -> IODevice?,
+    set_file_name(file_name: String),
+    file_name() -> String,
+    set_format(format: &ByteArrayType),
+    format() -> ByteArray,
+    set_background_color(color: &ColorType),
+    background_color() -> Color,
+    state() -> Movie::MovieState,
+    frame_rect() -> Rect,
+    current_image() -> Image,
+    current_pixmap() -> Pixmap,
+    is_valid() -> bool,
+    last_error() -> ImageReader::ImageReaderError,
+    jump_to_frame(frame_number: i32) -> bool,
+    loop_count() -> i32,
+    frame_count() -> i32,
+    next_frame_delay() -> i32,
+    current_frame_number() -> i32,
+    speed() -> i32,
+    scaled_size() -> Size,
+    set_scaled_size(size: &SizeType),
+    cache_mode() -> Movie::CacheMode,
+    set_cache_mode(mode: Movie::CacheMode),
+    [event] started(),
+    [event] resized(size: &SizeType),
+    [event] updated(rect: &RectType),
+    [event] state_changed(state: Movie::MovieState),
+    [event] error(error: ImageReader::ImageReaderError),
+    [event] finished(),
+    [event] frame_changed(frame_number: i32),
+    start(),
+    jump_to_next_frame() -> bool,
+    set_paused(paused: bool),
+    stop(),
+    set_speed(percent_speed: i32),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

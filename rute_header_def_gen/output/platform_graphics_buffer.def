@@ -1,0 +1,31 @@
+enum AccessType {
+    None,
+    SWReadAccess,
+    SWWriteAccess,
+    TextureAccess,
+    HWCompositor,
+}
+
+enum Origin {
+    OriginBottomLeft,
+    OriginTopLeft,
+}
+
+struct PlatformGraphicsBuffer : Object {
+    is_locked() -> AccessTypes,
+    lock(access: AccessTypes, rect: &RectType) -> bool,
+    unlock(),
+    [replace] bind_to_texture(rect: &RectType) -> bool,
+    [replace] data() -> uchar?,
+    [replace] data() -> uchar?,
+    [replace] bytes_per_line() -> i32,
+    byte_count() -> i32,
+    [replace] origin() -> PlatformGraphicsBuffer::Origin,
+    size() -> Size,
+    format() -> PixelFormat,
+    [event] unlocked(previous_access_types: AccessTypes),
+    [replace] do_lock(access: AccessTypes, rect: &RectType) -> bool,
+    [replace] do_unlock(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

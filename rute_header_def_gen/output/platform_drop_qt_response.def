@@ -1,0 +1,7 @@
+
+struct PlatformDropQtResponse {
+    is_accepted() -> bool,
+    accepted_action() -> Rute::DropAction,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,17 @@
+
+struct BackingStore {
+    window() -> Window?,
+    paint_device() -> PaintDevice?,
+    flush(region: &RegionType, window: &WindowType, offset: &PointType),
+    resize(size: &SizeType),
+    size() -> Size,
+    scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
+    begin_paint(arg0: &RegionType),
+    end_paint(),
+    set_static_contents(region: &RegionType),
+    static_contents() -> Region,
+    has_static_contents() -> bool,
+    handle() -> PlatformBackingStore?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

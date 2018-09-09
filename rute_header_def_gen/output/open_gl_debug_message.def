@@ -1,0 +1,50 @@
+enum Source {
+    InvalidSource,
+    APISource,
+    WindowSystemSource,
+    ShaderCompilerSource,
+    ThirdPartySource,
+    ApplicationSource,
+    OtherSource,
+    LastSource,
+    AnySource,
+}
+
+enum Type {
+    InvalidType,
+    ErrorType,
+    DeprecatedBehaviorType,
+    UndefinedBehaviorType,
+    PortabilityType,
+    PerformanceType,
+    OtherType,
+    MarkerType,
+    GroupPushType,
+    GroupPopType,
+    LastType,
+    AnyType,
+}
+
+enum Severity {
+    InvalidSeverity,
+    HighSeverity,
+    MediumSeverity,
+    LowSeverity,
+    NotificationSeverity,
+    LastSeverity,
+    AnySeverity,
+}
+
+
+struct OpenGLDebugMessage {
+    swap(other: &OpenGLDebugMessageType),
+    source() -> OpenGLDebugMessage::Source,
+    type() -> OpenGLDebugMessage::Type,
+    severity() -> OpenGLDebugMessage::Severity,
+    id() -> GLuint,
+    message() -> String,
+    [static] create_application_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+    [static] create_third_party_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

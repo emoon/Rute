@@ -1,0 +1,13 @@
+
+struct TextFragment {
+    is_valid() -> bool,
+    position() -> i32,
+    length() -> i32,
+    contains(position: i32) -> bool,
+    char_format() -> TextCharFormat,
+    char_format_index() -> i32,
+    text() -> String,
+    glyph_runs(from: i32, length: i32) -> [GlyphRun],
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

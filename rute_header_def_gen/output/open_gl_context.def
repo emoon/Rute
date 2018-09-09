@@ -1,0 +1,40 @@
+enum OpenGLModuleType {
+    LibGL,
+    LibGLES,
+}
+
+struct OpenGLContext : Object {
+    set_format(format: &SurfaceFormatType),
+    set_share_context(share_context: &OpenGLContextType),
+    set_screen(screen: &ScreenType),
+    set_native_handle(handle: &VariantType),
+    create() -> bool,
+    is_valid() -> bool,
+    format() -> SurfaceFormat,
+    share_context() -> OpenGLContext?,
+    share_group() -> OpenGLContextGroup?,
+    screen() -> Screen?,
+    native_handle() -> Variant,
+    default_framebuffer_object() -> GLuint,
+    make_current(surface: &SurfaceType) -> bool,
+    done_current(),
+    swap_buffers(surface: &SurfaceType),
+    get_proc_address(proc_name: &ByteArrayType) -> FunctionPointer,
+    get_proc_address(proc_name: &char) -> FunctionPointer,
+    surface() -> Surface?,
+    [static] current_context() -> OpenGLContext?,
+    [static] are_sharing(first: &OpenGLContextType, second: &OpenGLContextType) -> bool,
+    handle() -> PlatformOpenGLContext?,
+    share_handle() -> PlatformOpenGLContext?,
+    functions() -> OpenGLFunctions?,
+    version_functions(version_profile: &OpenGLVersionProfileType) -> AbstractOpenGLFunctions?,
+    extensions() -> Set<QByteArray>,
+    has_extension(extension: &ByteArrayType) -> bool,
+    [static] open_gl_module_handle(),
+    [static] open_gl_module_type() -> OpenGLContext::OpenGLModuleType,
+    is_open_gles() -> bool,
+    [static] supports_threaded_open_gl() -> bool,
+    [static] global_share_context() -> OpenGLContext?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

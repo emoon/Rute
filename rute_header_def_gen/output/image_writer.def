@@ -1,0 +1,41 @@
+enum ImageWriterError {
+    UnknownError,
+    DeviceError,
+    UnsupportedFormatError,
+    InvalidImageError,
+}
+
+
+struct ImageWriter {
+    set_format(format: &ByteArrayType),
+    format() -> ByteArray,
+    set_device(device: &IODeviceType),
+    device() -> IODevice?,
+    set_file_name(file_name: String),
+    file_name() -> String,
+    set_quality(quality: i32),
+    quality() -> i32,
+    set_compression(compression: i32),
+    compression() -> i32,
+    set_gamma(gamma: f32),
+    gamma() -> f32,
+    set_sub_type(type: &ByteArrayType),
+    sub_type() -> ByteArray,
+    supported_sub_types() -> [ByteArray],
+    set_optimized_write(optimize: bool),
+    optimized_write() -> bool,
+    set_progressive_scan_write(progressive: bool),
+    progressive_scan_write() -> bool,
+    set_transformation(orientation: ImageIOHandler::Transformations),
+    set_description(description: String),
+    description() -> String,
+    set_text(key: String, text: String),
+    can_write() -> bool,
+    write(image: &ImageType) -> bool,
+    error() -> ImageWriter::ImageWriterError,
+    supports_option(option: ImageIOHandler::ImageOption) -> bool,
+    [static] supported_image_formats() -> [ByteArray],
+    [static] supported_mime_types() -> [ByteArray],
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

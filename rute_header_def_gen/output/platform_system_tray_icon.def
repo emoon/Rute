@@ -1,0 +1,31 @@
+enum ActivationReason {
+    Unknown,
+    Context,
+    DoubleClick,
+    Trigger,
+    MiddleClick,
+}
+
+enum MessageIcon {
+    NoIcon,
+    Information,
+    Warning,
+    Critical,
+}
+
+struct PlatformSystemTrayIcon : Object {
+    [replace] init(),
+    [replace] cleanup(),
+    [replace] update_icon(icon: &IconType),
+    [replace] update_tool_tip(tooltip: String),
+    [replace] update_menu(menu: &PlatformMenuType),
+    [replace] show_message(title: String, msg: String, icon: &IconType, icon_type: PlatformSystemTrayIcon::MessageIcon, msecs: i32),
+    [replace] is_system_tray_available() -> bool,
+    [replace] supports_messages() -> bool,
+    [replace] create_menu() -> PlatformMenu?,
+    [event] activated(reason: PlatformSystemTrayIcon::ActivationReason),
+    [event] context_menu_requested(global_pos: PointType, screen: &PlatformScreenType),
+    [event] message_clicked(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

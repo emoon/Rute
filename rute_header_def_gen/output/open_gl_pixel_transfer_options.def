@@ -1,0 +1,22 @@
+
+struct OpenGLPixelTransferOptions {
+    swap(other: &OpenGLPixelTransferOptionsType),
+    set_alignment(alignment: i32),
+    alignment() -> i32,
+    set_skip_images(skip_images: i32),
+    skip_images() -> i32,
+    set_skip_rows(skip_rows: i32),
+    skip_rows() -> i32,
+    set_skip_pixels(skip_pixels: i32),
+    skip_pixels() -> i32,
+    set_image_height(image_height: i32),
+    image_height() -> i32,
+    set_row_length(row_length: i32),
+    row_length() -> i32,
+    set_least_significant_byte_first(lsb_first: bool),
+    is_least_significant_bit_first() -> bool,
+    set_swap_bytes_enabled(swap_bytes: bool),
+    is_swap_bytes_enabled() -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

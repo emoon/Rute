@@ -1,0 +1,19 @@
+enum RenderFlag {
+    RightToLeft,
+    Overline,
+    Underline,
+    StrikeOut,
+    Dummy,
+}
+
+
+struct TextItem {
+    descent() -> f32,
+    ascent() -> f32,
+    width() -> f32,
+    render_flags() -> RenderFlags,
+    text() -> String,
+    font() -> Font,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

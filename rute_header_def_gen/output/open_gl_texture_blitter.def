@@ -1,0 +1,21 @@
+enum Origin {
+    OriginBottomLeft,
+    OriginTopLeft,
+}
+
+
+struct OpenGLTextureBlitter {
+    create() -> bool,
+    is_created() -> bool,
+    supports_external_oes_target() -> bool,
+    bind(target: GLenum),
+    release(),
+    set_red_blue_swizzle(swizzle: bool),
+    set_opacity(opacity: f32),
+    blit(texture: GLuint, target_transform: &Matrix4x4Type, source_origin: OpenGLTextureBlitter::Origin),
+    blit(texture: GLuint, target_transform: &Matrix4x4Type, source_transform: &Matrix3x3Type),
+    [static] target_transform(target: &RectFType, viewport: &RectType) -> Matrix4x4,
+    [static] source_transform(sub_texture: &RectFType, texture_size: &SizeType, origin: OpenGLTextureBlitter::Origin) -> Matrix3x3,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

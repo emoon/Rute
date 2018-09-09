@@ -1,0 +1,22 @@
+struct Drag : Object {
+    set_mime_data(data: &MimeDataType),
+    mime_data() -> MimeData?,
+    set_pixmap(arg0: &PixmapType),
+    pixmap() -> Pixmap,
+    set_hot_spot(hotspot: &PointType),
+    hot_spot() -> Point,
+    source() -> Object?,
+    target() -> Object?,
+    start(supported_actions: Rute::DropActions) -> Rute::DropAction,
+    exec(supported_actions: Rute::DropActions) -> Rute::DropAction,
+    exec(supported_actions: Rute::DropActions, default_action: Rute::DropAction) -> Rute::DropAction,
+    set_drag_cursor(cursor: &PixmapType, action: Rute::DropAction),
+    drag_cursor(action: Rute::DropAction) -> Pixmap,
+    supported_actions() -> Rute::DropActions,
+    default_action() -> Rute::DropAction,
+    [static] cancel(),
+    [event] action_changed(action: Rute::DropAction),
+    [event] target_changed(new_target: &ObjectType),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

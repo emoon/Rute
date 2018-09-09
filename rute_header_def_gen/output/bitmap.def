@@ -1,0 +1,8 @@
+struct Bitmap : Pixmap {
+    swap(other: &BitmapType),
+    clear(),
+    [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Bitmap,
+    [static] from_data(size: &SizeType, bits: &uchar, mono_format: Image::Format) -> Bitmap,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

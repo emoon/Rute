@@ -1,0 +1,76 @@
+enum StyleHint {
+}
+
+enum DialogCode {
+    Rejected,
+    Accepted,
+}
+
+enum StandardButton {
+    NoButton,
+    Ok,
+    Save,
+    SaveAll,
+    Open,
+    Yes,
+    YesToAll,
+    No,
+    NoToAll,
+    Abort,
+    Retry,
+    Ignore,
+    Close,
+    Cancel,
+    Discard,
+    Help,
+    Apply,
+    Reset,
+    RestoreDefaults,
+    FirstButton,
+    LastButton,
+    LowestBit,
+    HighestBit,
+}
+
+enum ButtonRole {
+    InvalidRole,
+    AcceptRole,
+    RejectRole,
+    DestructiveRole,
+    ActionRole,
+    HelpRole,
+    YesRole,
+    NoRole,
+    ResetRole,
+    ApplyRole,
+    NRoles,
+    RoleMask,
+    AlternateRole,
+    Stretch,
+    Reverse,
+    EOL,
+}
+
+enum ButtonLayout {
+    UnknownLayout,
+    WinLayout,
+    MacLayout,
+    KdeLayout,
+    GnomeLayout,
+    MacModelessLayout,
+    AndroidLayout,
+}
+
+struct PlatformDialogHelper : Object {
+    [replace] style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
+    [replace] exec(),
+    [replace] show(window_flags: Rute::WindowFlags, window_modality: Rute::WindowModality, parent: &WindowType) -> bool,
+    [replace] hide(),
+    [static] default_style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
+    [static] button_layout(orientation: Rute::Orientation, policy: PlatformDialogHelper::ButtonLayout) -> i32?,
+    [static] button_role(button: PlatformDialogHelper::StandardButton) -> PlatformDialogHelper::ButtonRole,
+    [event] accept(),
+    [event] reject(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,14 @@
+struct TextList : TextBlockGroup {
+    count() -> i32,
+    is_empty() -> bool,
+    item(i: i32) -> TextBlock,
+    item_number(arg0: &TextBlockType) -> i32,
+    item_text(arg0: &TextBlockType) -> String,
+    remove_item(i: i32),
+    remove(arg0: &TextBlockType),
+    add(block: &TextBlockType),
+    set_format(format: &TextListFormatType),
+    format() -> TextListFormat,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

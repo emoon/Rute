@@ -1,0 +1,7 @@
+
+struct GenericPluginFactory {
+    [static] keys() -> StringList,
+    [static] create(arg0: String, arg1: String) -> Object?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

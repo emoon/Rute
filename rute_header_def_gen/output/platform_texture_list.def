@@ -1,0 +1,20 @@
+enum Flag {
+    StacksOnTop,
+    TextureIsSrgb,
+}
+
+struct PlatformTextureList : Object {
+    count() -> i32,
+    is_empty() -> bool,
+    texture_id(index: i32) -> GLuint,
+    clip_rect(index: i32) -> Rect,
+    source(index: i32),
+    flags(index: i32) -> Flags,
+    lock(on: bool),
+    is_locked() -> bool,
+    append_texture(source: &void, texture_id: GLuint, geometry: &RectType, clip_rect: &RectType, flags: Flags),
+    clear(),
+    [event] locked(arg0: bool),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

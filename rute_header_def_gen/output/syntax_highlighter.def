@@ -1,0 +1,19 @@
+struct SyntaxHighlighter : Object {
+    set_document(doc: &TextDocumentType),
+    document() -> TextDocument?,
+    rehighlight(),
+    rehighlight_block(block: &TextBlockType),
+    [replace] highlight_block(text: String),
+    set_format(start: i32, count: i32, format: &TextCharFormatType),
+    set_format(start: i32, count: i32, color: &ColorType),
+    set_format(start: i32, count: i32, font: &FontType),
+    format(pos: i32) -> TextCharFormat,
+    previous_block_state() -> i32,
+    current_block_state() -> i32,
+    set_current_block_state(new_state: i32),
+    set_current_block_user_data(data: &TextBlockUserDataType),
+    current_block_user_data() -> TextBlockUserData?,
+    current_block() -> TextBlock,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

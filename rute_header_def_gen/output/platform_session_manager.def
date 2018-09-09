@@ -1,0 +1,23 @@
+
+struct PlatformSessionManager {
+    [replace] session_id() -> String,
+    [replace] session_key() -> String,
+    [replace] allows_interaction() -> bool,
+    [replace] allows_error_interaction() -> bool,
+    [replace] release(),
+    [replace] cancel(),
+    [replace] set_restart_hint(restart_hint: SessionManager::RestartHint),
+    [replace] restart_hint() -> SessionManager::RestartHint,
+    [replace] set_restart_command(command: &StringListType),
+    [replace] restart_command() -> StringList,
+    [replace] set_discard_command(command: &StringListType),
+    [replace] discard_command() -> StringList,
+    [replace] set_manager_property(name: String, value: String),
+    [replace] set_manager_property(name: String, value: &StringListType),
+    [replace] is_phase2() -> bool,
+    [replace] request_phase2(),
+    app_commit_data(),
+    app_save_state(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

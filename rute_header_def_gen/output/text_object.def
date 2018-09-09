@@ -1,0 +1,10 @@
+struct TextObject : Object {
+    set_format(format: &TextFormatType),
+    format() -> TextFormat,
+    format_index() -> i32,
+    document() -> TextDocument?,
+    object_index() -> i32,
+    doc_handle() -> TextDocumentPrivate?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

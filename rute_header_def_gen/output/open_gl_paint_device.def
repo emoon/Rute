@@ -1,0 +1,17 @@
+struct OpenGLPaintDevice : PaintDevice {
+    [replace] dev_type() -> i32,
+    [replace] paint_engine() -> PaintEngine?,
+    context() -> OpenGLContext?,
+    size() -> Size,
+    set_size(size: &SizeType),
+    set_device_pixel_ratio(device_pixel_ratio: f32),
+    dots_per_meter_x() -> f32,
+    dots_per_meter_y() -> f32,
+    set_dots_per_meter_x(arg0: f32),
+    set_dots_per_meter_y(arg0: f32),
+    set_paint_flipped(flipped: bool),
+    paint_flipped() -> bool,
+    [replace] ensure_active_target(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,17 @@
+
+struct PixmapCache {
+    [static] cache_limit() -> i32,
+    [static] set_cache_limit(arg0: i32),
+    [static] find(key: String) -> Pixmap?,
+    [static] find(key: String, pixmap: &PixmapType) -> bool,
+    [static] find(key: String, pixmap: &PixmapType) -> bool,
+    [static] find(key: onst QPixmapCache::Key &, pixmap: &PixmapType) -> bool,
+    [static] insert(key: String, pixmap: &PixmapType) -> bool,
+    [static] insert(pixmap: &PixmapType) -> PixmapCache::Key,
+    [static] replace(key: onst QPixmapCache::Key &, pixmap: &PixmapType) -> bool,
+    [static] remove(key: String),
+    [static] remove(key: onst QPixmapCache::Key &),
+    [static] clear(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

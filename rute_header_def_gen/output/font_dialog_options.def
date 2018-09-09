@@ -1,0 +1,23 @@
+enum FontDialogOption {
+    NoButtons,
+    DontUseNativeDialog,
+    ScalableFonts,
+    NonScalableFonts,
+    MonospacedFonts,
+    ProportionalFonts,
+}
+
+
+struct FontDialogOptions {
+    qt_check_for_qgadget_macro(),
+    [static] create() -> SharedPointer<QFontDialogOptions>,
+    clone() -> SharedPointer<QFontDialogOptions>,
+    window_title() -> String,
+    set_window_title(arg0: String),
+    set_option(option: FontDialogOptions::FontDialogOption, on: bool),
+    test_option(option: FontDialogOptions::FontDialogOption) -> bool,
+    set_options(options: FontDialogOptions),
+    options() -> FontDialogOptions,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

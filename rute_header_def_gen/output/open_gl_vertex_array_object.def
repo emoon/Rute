@@ -1,0 +1,9 @@
+struct OpenGLVertexArrayObject : Object {
+    create() -> bool,
+    is_created() -> bool,
+    object_id() -> GLuint,
+    bind(),
+    release(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

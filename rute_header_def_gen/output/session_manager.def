@@ -1,0 +1,27 @@
+enum RestartHint {
+    RestartIfRunning,
+    RestartAnyway,
+    RestartImmediately,
+    RestartNever,
+}
+
+struct SessionManager : Object {
+    session_id() -> String,
+    session_key() -> String,
+    allows_interaction() -> bool,
+    allows_error_interaction() -> bool,
+    release(),
+    cancel(),
+    set_restart_hint(arg0: SessionManager::RestartHint),
+    restart_hint() -> SessionManager::RestartHint,
+    set_restart_command(arg0: &StringListType),
+    restart_command() -> StringList,
+    set_discard_command(arg0: &StringListType),
+    discard_command() -> StringList,
+    set_manager_property(name: String, value: String),
+    set_manager_property(name: String, value: &StringListType),
+    is_phase2() -> bool,
+    request_phase2(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

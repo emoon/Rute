@@ -1,0 +1,12 @@
+
+struct OpenGLVersionProfile {
+    version() -> Pair<int,,
+    set_version(major_version: i32, minor_version: i32),
+    profile() -> SurfaceFormat::OpenGLContextProfile,
+    set_profile(profile: SurfaceFormat::OpenGLContextProfile),
+    has_profiles() -> bool,
+    is_legacy_version() -> bool,
+    is_valid() -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

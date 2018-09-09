@@ -1,0 +1,14 @@
+struct OpenGLTimeMonitor : Object {
+    set_sample_count(sample_count: i32),
+    sample_count() -> i32,
+    create() -> bool,
+    is_created() -> bool,
+    object_ids() -> [GLuint],
+    record_sample() -> i32,
+    is_result_available() -> bool,
+    wait_for_samples() -> [GLuint64],
+    wait_for_intervals() -> [GLuint64],
+    reset(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

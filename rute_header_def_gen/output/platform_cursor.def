@@ -1,0 +1,17 @@
+enum Capability {
+    OverrideCursor,
+}
+
+struct PlatformCursor : Object {
+    [replace] pointer_event(event: &MouseEventType),
+    [replace] change_cursor(window_cursor: &CursorType, window: &WindowType),
+    [replace] set_override_cursor(arg0: &CursorType),
+    [replace] clear_override_cursor(),
+    [replace] pos() -> Point,
+    [replace] set_pos(pos: &PointType),
+    [static] capabilities() -> Capabilities,
+    [static] set_capabilities(c: Capabilities),
+    [static] set_capability(c: PlatformCursor::Capability),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

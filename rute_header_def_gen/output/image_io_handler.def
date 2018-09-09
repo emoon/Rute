@@ -1,0 +1,58 @@
+enum ImageOption {
+    Size,
+    ClipRect,
+    Description,
+    ScaledClipRect,
+    ScaledSize,
+    CompressionRatio,
+    Gamma,
+    Quality,
+    Name,
+    SubType,
+    IncrementalReading,
+    Endianness,
+    Animation,
+    BackgroundColor,
+    ImageFormat,
+    SupportedSubTypes,
+    OptimizedWrite,
+    ProgressiveScanWrite,
+    ImageTransformation,
+    TransformedByDefault,
+}
+
+enum Transformation {
+    TransformationNone,
+    TransformationMirror,
+    TransformationFlip,
+    TransformationRotate180,
+    TransformationRotate90,
+    TransformationMirrorAndRotate90,
+    TransformationFlipAndRotate90,
+    TransformationRotate270,
+}
+
+
+struct ImageIOHandler {
+    set_device(device: &IODeviceType),
+    device() -> IODevice?,
+    set_format(format: &ByteArrayType),
+    set_format(format: &ByteArrayType),
+    format() -> ByteArray,
+    [replace] name() -> ByteArray,
+    [replace] can_read() -> bool,
+    [replace] read(image: &ImageType) -> bool,
+    [replace] write(image: &ImageType) -> bool,
+    [replace] option(option: ImageIOHandler::ImageOption) -> Variant,
+    [replace] set_option(option: ImageIOHandler::ImageOption, value: &VariantType),
+    [replace] supports_option(option: ImageIOHandler::ImageOption) -> bool,
+    [replace] jump_to_next_image() -> bool,
+    [replace] jump_to_image(image_number: i32) -> bool,
+    [replace] loop_count() -> i32,
+    [replace] image_count() -> i32,
+    [replace] next_image_delay() -> i32,
+    [replace] current_image_number() -> i32,
+    [replace] current_image_rect() -> Rect,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

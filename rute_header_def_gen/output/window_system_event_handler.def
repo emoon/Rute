@@ -1,0 +1,6 @@
+
+struct WindowSystemEventHandler {
+    [replace] send_event(event: WindowSystemInterfacePrivate::WindowSystemEvent *) -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

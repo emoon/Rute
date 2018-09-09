@@ -1,0 +1,25 @@
+struct AbstractEventDispatcher : Object {
+    [static] instance(thread: &ThreadType) -> AbstractEventDispatcher?,
+    [replace] process_events(flags: EventLoop::ProcessEventsFlags) -> bool,
+    [replace] has_pending_events() -> bool,
+    [replace] register_socket_notifier(notifier: &SocketNotifierType),
+    [replace] unregister_socket_notifier(notifier: &SocketNotifierType),
+    register_timer(interval: i32, timer_type: Rute::TimerType, object: &ObjectType) -> i32,
+    [replace] register_timer(timer_id: i32, interval: i32, timer_type: Rute::TimerType, object: &ObjectType),
+    [replace] unregister_timer(timer_id: i32) -> bool,
+    [replace] unregister_timers(object: &ObjectType) -> bool,
+    [replace] registered_timers(object: &ObjectType) -> List<QAbstractEventDispatcher::TimerInfo>,
+    [replace] remaining_time(timer_id: i32) -> i32,
+    [replace] wake_up(),
+    [replace] interrupt(),
+    [replace] flush(),
+    [replace] starting_up(),
+    [replace] closing_down(),
+    install_native_event_filter(filter_obj: &AbstractNativeEventFilterType),
+    remove_native_event_filter(filter_obj: &AbstractNativeEventFilterType),
+    filter_native_event(event_type: &ByteArrayType, message: &void, result: &long) -> bool,
+    [event] about_to_block(),
+    [event] awake(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,30 @@
+enum Mode {
+    Clipboard,
+    Selection,
+    FindBuffer,
+    LastMode,
+}
+
+struct Clipboard : Object {
+    clear(mode: Clipboard::Mode),
+    supports_selection() -> bool,
+    supports_find_buffer() -> bool,
+    owns_selection() -> bool,
+    owns_clipboard() -> bool,
+    owns_find_buffer() -> bool,
+    text(mode: Clipboard::Mode) -> String,
+    text(subtype: String, mode: Clipboard::Mode) -> String,
+    set_text(arg0: String, mode: Clipboard::Mode),
+    mime_data(mode: Clipboard::Mode) -> MimeData?,
+    set_mime_data(data: &MimeDataType, mode: Clipboard::Mode),
+    image(mode: Clipboard::Mode) -> Image,
+    pixmap(mode: Clipboard::Mode) -> Pixmap,
+    set_image(arg0: &ImageType, mode: Clipboard::Mode),
+    set_pixmap(arg0: &PixmapType, mode: Clipboard::Mode),
+    [event] changed(mode: Clipboard::Mode),
+    [event] selection_changed(),
+    [event] find_buffer_changed(),
+    [event] data_changed(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

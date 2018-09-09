@@ -1,0 +1,27 @@
+enum ColorDialogOption {
+    ShowAlphaChannel,
+    NoButtons,
+    DontUseNativeDialog,
+}
+
+
+struct ColorDialogOptions {
+    qt_check_for_qgadget_macro(),
+    [static] create() -> SharedPointer<QColorDialogOptions>,
+    clone() -> SharedPointer<QColorDialogOptions>,
+    window_title() -> String,
+    set_window_title(arg0: String),
+    set_option(option: ColorDialogOptions::ColorDialogOption, on: bool),
+    test_option(option: ColorDialogOptions::ColorDialogOption) -> bool,
+    set_options(options: ColorDialogOptions),
+    options() -> ColorDialogOptions,
+    [static] custom_color_count() -> i32,
+    [static] custom_color(index: i32) -> Rgb,
+    [static] custom_colors() -> Rgb?,
+    [static] set_custom_color(index: i32, color: RgbType),
+    [static] standard_colors() -> Rgb?,
+    [static] standard_color(index: i32) -> Rgb,
+    [static] set_standard_color(index: i32, color: RgbType),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

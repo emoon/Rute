@@ -1,0 +1,7 @@
+
+struct SupportedWritingSystems {
+    set_supported(arg0: FontDatabase::WritingSystem, supported: bool),
+    supported(arg0: FontDatabase::WritingSystem) -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

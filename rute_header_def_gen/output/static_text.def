@@ -1,0 +1,23 @@
+enum PerformanceHint {
+    ModerateCaching,
+    AggressiveCaching,
+}
+
+
+struct StaticText {
+    swap(other: &StaticTextType),
+    set_text(text: String),
+    text() -> String,
+    set_text_format(text_format: Rute::TextFormat),
+    text_format() -> Rute::TextFormat,
+    set_text_width(text_width: f32),
+    text_width() -> f32,
+    set_text_option(text_option: &TextOptionType),
+    text_option() -> TextOption,
+    size() -> SizeF,
+    prepare(matrix: &TransformType, font: &FontType),
+    set_performance_hint(performance_hint: StaticText::PerformanceHint),
+    performance_hint() -> StaticText::PerformanceHint,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -1,0 +1,27 @@
+enum UpdateBehavior {
+    NoPartialUpdate,
+    PartialUpdateBlit,
+    PartialUpdateBlend,
+}
+
+struct OpenGLWindow : PaintDeviceWindow {
+    update_behavior() -> OpenGLWindow::UpdateBehavior,
+    is_valid() -> bool,
+    make_current(),
+    done_current(),
+    context() -> OpenGLContext?,
+    share_context() -> OpenGLContext?,
+    default_framebuffer_object() -> GLuint,
+    grab_framebuffer() -> Image,
+    [event] frame_swapped(),
+    [replace] initialize_gl(),
+    [replace] resize_gl(w: i32, h: i32),
+    [replace] paint_gl(),
+    [replace] paint_under_gl(),
+    [replace] paint_over_gl(),
+    [replace] paint_event(event: &PaintEventType),
+    [replace] resize_event(event: &ResizeEventType),
+    [replace] redirected(arg0: &PointType) -> PaintDevice?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

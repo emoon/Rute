@@ -484,6 +484,9 @@ fn main() {
     add_process_path(&mut header_files,
         "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h");
 
+    add_process_path(&mut header_files,
+        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtGui.framework/Versions/5/Headers");
+
     // Process all files in parallel using Rayon
     header_files.par_iter().for_each(|filename| {
         println!("Processing filename {:?}", filename);

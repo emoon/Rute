@@ -1,0 +1,22 @@
+
+struct PaintEngineState {
+    state() -> PaintEngine::DirtyFlags,
+    pen() -> Pen,
+    brush() -> Brush,
+    brush_origin() -> PointF,
+    background_brush() -> Brush,
+    background_mode() -> Rute::BGMode,
+    font() -> Font,
+    clip_operation() -> Rute::ClipOperation,
+    clip_region() -> Region,
+    clip_path() -> PainterPath,
+    is_clip_enabled() -> bool,
+    render_hints() -> Painter::RenderHints,
+    composition_mode() -> Painter::CompositionMode,
+    opacity() -> f32,
+    painter() -> Painter?,
+    brush_needs_resolving() -> bool,
+    pen_needs_resolving() -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

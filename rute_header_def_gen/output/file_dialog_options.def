@@ -1,0 +1,85 @@
+enum ViewMode {
+    Detail,
+    List,
+}
+
+enum FileMode {
+    AnyFile,
+    ExistingFile,
+    Directory,
+    ExistingFiles,
+    DirectoryOnly,
+}
+
+enum AcceptMode {
+    AcceptOpen,
+    AcceptSave,
+}
+
+enum DialogLabel {
+    LookIn,
+    FileName,
+    FileType,
+    Accept,
+    Reject,
+    DialogLabelCount,
+}
+
+enum FileDialogOption {
+    ShowDirsOnly,
+    DontResolveSymlinks,
+    DontConfirmOverwrite,
+    DontUseSheet,
+    DontUseNativeDialog,
+    ReadOnly,
+    HideNameFilterDetails,
+    DontUseCustomDirectoryIcons,
+}
+
+
+struct FileDialogOptions {
+    qt_check_for_qgadget_macro(),
+    [static] create() -> SharedPointer<QFileDialogOptions>,
+    clone() -> SharedPointer<QFileDialogOptions>,
+    window_title() -> String,
+    set_window_title(arg0: String),
+    set_option(option: FileDialogOptions::FileDialogOption, on: bool),
+    test_option(option: FileDialogOptions::FileDialogOption) -> bool,
+    set_options(options: FileDialogOptions),
+    options() -> FileDialogOptions,
+    filter() -> Dir::Filters,
+    set_filter(filters: Dir::Filters),
+    set_view_mode(mode: FileDialogOptions::ViewMode),
+    view_mode() -> FileDialogOptions::ViewMode,
+    set_file_mode(mode: FileDialogOptions::FileMode),
+    file_mode() -> FileDialogOptions::FileMode,
+    set_accept_mode(mode: FileDialogOptions::AcceptMode),
+    accept_mode() -> FileDialogOptions::AcceptMode,
+    set_sidebar_urls(urls: [UrlType]),
+    sidebar_urls() -> [Url],
+    use_default_name_filters() -> bool,
+    set_use_default_name_filters(d: bool),
+    set_name_filters(filters: &StringListType),
+    name_filters() -> StringList,
+    set_mime_type_filters(filters: &StringListType),
+    mime_type_filters() -> StringList,
+    set_default_suffix(suffix: String),
+    default_suffix() -> String,
+    set_history(paths: &StringListType),
+    history() -> StringList,
+    set_label_text(label: FileDialogOptions::DialogLabel, text: String),
+    label_text(label: FileDialogOptions::DialogLabel) -> String,
+    is_label_explicitly_set(label: FileDialogOptions::DialogLabel) -> bool,
+    initial_directory() -> Url,
+    set_initial_directory(arg0: &UrlType),
+    initially_selected_mime_type_filter() -> String,
+    set_initially_selected_mime_type_filter(arg0: String),
+    initially_selected_name_filter() -> String,
+    set_initially_selected_name_filter(arg0: String),
+    initially_selected_files() -> [Url],
+    set_initially_selected_files(arg0: [UrlType]),
+    set_supported_schemes(schemes: &StringListType),
+    supported_schemes() -> StringList,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

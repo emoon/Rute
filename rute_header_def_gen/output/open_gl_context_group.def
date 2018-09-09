@@ -1,0 +1,6 @@
+struct OpenGLContextGroup : Object {
+    shares() -> [OpenGLContext?],
+    [static] current_context_group() -> OpenGLContextGroup?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

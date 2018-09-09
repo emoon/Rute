@@ -1,0 +1,16 @@
+
+struct PlatformOpenGLContext {
+    [replace] initialize(),
+    [replace] format() -> SurfaceFormat,
+    [replace] swap_buffers(surface: &PlatformSurfaceType),
+    [replace] default_framebuffer_object(surface: &PlatformSurfaceType) -> GLuint,
+    [replace] make_current(surface: &PlatformSurfaceType) -> bool,
+    [replace] done_current(),
+    [replace] is_sharing() -> bool,
+    [replace] is_valid() -> bool,
+    [replace] get_proc_address(proc_name: &char) -> FunctionPointer,
+    context() -> OpenGLContext?,
+    [static] parse_open_gl_version(version_string: &ByteArrayType, major: &i32, minor: &i32) -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

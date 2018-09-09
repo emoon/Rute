@@ -1,0 +1,26 @@
+enum IconEngineHook {
+    AvailableSizesHook,
+    IconNameHook,
+    IsNullHook,
+    ScaledPixmapHook,
+}
+
+
+struct IconEngine {
+    [replace] paint(painter: &PainterType, rect: &RectType, mode: Icon::Mode, state: Icon::State),
+    [replace] actual_size(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
+    [replace] pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
+    [replace] add_pixmap(pixmap: &PixmapType, mode: Icon::Mode, state: Icon::State),
+    [replace] add_file(file_name: String, size: &SizeType, mode: Icon::Mode, state: Icon::State),
+    [replace] key() -> String,
+    [replace] clone() -> IconEngine?,
+    [replace] read(in: &DataStreamType) -> bool,
+    [replace] write(out: &DataStreamType) -> bool,
+    [replace] available_sizes(mode: Icon::Mode, state: Icon::State) -> [Size],
+    [replace] icon_name() -> String,
+    is_null() -> bool,
+    scaled_pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State, scale: f32) -> Pixmap,
+    [replace] virtual_hook(id: i32, data: &void),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

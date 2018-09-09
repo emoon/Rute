@@ -1,0 +1,43 @@
+enum StandardLocation {
+    DesktopLocation,
+    DocumentsLocation,
+    FontsLocation,
+    ApplicationsLocation,
+    MusicLocation,
+    MoviesLocation,
+    PicturesLocation,
+    TempLocation,
+    HomeLocation,
+    DataLocation,
+    CacheLocation,
+    GenericDataLocation,
+    RuntimeLocation,
+    ConfigLocation,
+    DownloadLocation,
+    GenericCacheLocation,
+    GenericConfigLocation,
+    AppDataLocation,
+    AppConfigLocation,
+    AppLocalDataLocation,
+}
+
+enum LocateOption {
+    LocateFile,
+    LocateDirectory,
+}
+
+
+struct StandardPaths {
+    qt_check_for_qgadget_macro(),
+    [static] writable_location(type: StandardPaths::StandardLocation) -> String,
+    [static] standard_locations(type: StandardPaths::StandardLocation) -> StringList,
+    [static] locate(type: StandardPaths::StandardLocation, file_name: String, options: LocateOptions) -> String,
+    [static] locate_all(type: StandardPaths::StandardLocation, file_name: String, options: LocateOptions) -> StringList,
+    [static] display_name(type: StandardPaths::StandardLocation) -> String,
+    [static] find_executable(executable_name: String, paths: &StringListType) -> String,
+    [static] enable_test_mode(test_mode: bool),
+    [static] set_test_mode_enabled(test_mode: bool),
+    [static] is_test_mode_enabled() -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

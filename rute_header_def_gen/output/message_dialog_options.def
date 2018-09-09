@@ -1,0 +1,28 @@
+enum Icon {
+    NoIcon,
+    Information,
+    Warning,
+    Critical,
+    Question,
+}
+
+
+struct MessageDialogOptions {
+    qt_check_for_qgadget_macro(),
+    [static] create() -> SharedPointer<QMessageDialogOptions>,
+    clone() -> SharedPointer<QMessageDialogOptions>,
+    window_title() -> String,
+    set_window_title(arg0: String),
+    set_icon(icon: MessageDialogOptions::Icon),
+    icon() -> MessageDialogOptions::Icon,
+    set_text(text: String),
+    text() -> String,
+    set_informative_text(text: String),
+    informative_text() -> String,
+    set_detailed_text(text: String),
+    detailed_text() -> String,
+    set_standard_buttons(buttons: PlatformDialogHelper::StandardButtons),
+    standard_buttons() -> PlatformDialogHelper::StandardButtons,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

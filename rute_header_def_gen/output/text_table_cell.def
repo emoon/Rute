@@ -1,0 +1,19 @@
+
+struct TextTableCell {
+    set_format(format: &TextCharFormatType),
+    format() -> TextCharFormat,
+    row() -> i32,
+    column() -> i32,
+    row_span() -> i32,
+    column_span() -> i32,
+    is_valid() -> bool,
+    first_cursor_position() -> TextCursor,
+    last_cursor_position() -> TextCursor,
+    first_position() -> i32,
+    last_position() -> i32,
+    begin() -> TextFrame::iterator,
+    end() -> TextFrame::iterator,
+    table_cell_format_index() -> i32,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

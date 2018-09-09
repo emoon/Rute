@@ -1,0 +1,56 @@
+enum Type {
+    VertexBuffer,
+    IndexBuffer,
+    PixelPackBuffer,
+    PixelUnpackBuffer,
+}
+
+enum UsagePattern {
+    StreamDraw,
+    StreamRead,
+    StreamCopy,
+    StaticDraw,
+    StaticRead,
+    StaticCopy,
+    DynamicDraw,
+    DynamicRead,
+    DynamicCopy,
+}
+
+enum Access {
+    ReadOnly,
+    WriteOnly,
+    ReadWrite,
+}
+
+enum RangeAccessFlag {
+    RangeRead,
+    RangeWrite,
+    RangeInvalidate,
+    RangeInvalidateBuffer,
+    RangeFlushExplicit,
+    RangeUnsynchronized,
+}
+
+
+struct OpenGLBuffer {
+    type() -> OpenGLBuffer::Type,
+    usage_pattern() -> OpenGLBuffer::UsagePattern,
+    set_usage_pattern(value: OpenGLBuffer::UsagePattern),
+    create() -> bool,
+    is_created() -> bool,
+    bind() -> bool,
+    release(),
+    [static] release(type: OpenGLBuffer::Type),
+    buffer_id() -> GLuint,
+    size() -> i32,
+    read(offset: i32, data: &void, count: i32) -> bool,
+    write(offset: i32, data: &void, count: i32),
+    allocate(data: &void, count: i32),
+    allocate(count: i32),
+    map(access: OpenGLBuffer::Access),
+    map_range(offset: i32, count: i32, access: OpenGLBuffer::RangeAccessFlags),
+    unmap() -> bool,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

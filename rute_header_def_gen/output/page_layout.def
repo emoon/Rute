@@ -1,0 +1,55 @@
+enum Unit {
+    Millimeter,
+    Point,
+    Inch,
+    Pica,
+    Didot,
+    Cicero,
+}
+
+enum Orientation {
+    Portrait,
+    Landscape,
+}
+
+enum Mode {
+    StandardMode,
+    FullPageMode,
+}
+
+
+struct PageLayout {
+    swap(other: &PageLayoutType),
+    is_equivalent_to(other: &PageLayoutType) -> bool,
+    is_valid() -> bool,
+    set_mode(mode: PageLayout::Mode),
+    mode() -> PageLayout::Mode,
+    set_page_size(page_size: &PageSizeType, min_margins: &MarginsFType),
+    page_size() -> PageSize,
+    set_orientation(orientation: PageLayout::Orientation),
+    orientation() -> PageLayout::Orientation,
+    set_units(units: PageLayout::Unit),
+    units() -> PageLayout::Unit,
+    set_margins(margins: &MarginsFType) -> bool,
+    set_left_margin(left_margin: f32) -> bool,
+    set_right_margin(right_margin: f32) -> bool,
+    set_top_margin(top_margin: f32) -> bool,
+    set_bottom_margin(bottom_margin: f32) -> bool,
+    margins() -> MarginsF,
+    margins(units: PageLayout::Unit) -> MarginsF,
+    margins_points() -> Margins,
+    margins_pixels(resolution: i32) -> Margins,
+    set_minimum_margins(min_margins: &MarginsFType),
+    minimum_margins() -> MarginsF,
+    maximum_margins() -> MarginsF,
+    full_rect() -> RectF,
+    full_rect(units: PageLayout::Unit) -> RectF,
+    full_rect_points() -> Rect,
+    full_rect_pixels(resolution: i32) -> Rect,
+    paint_rect() -> RectF,
+    paint_rect(units: PageLayout::Unit) -> RectF,
+    paint_rect_points() -> Rect,
+    paint_rect_pixels(resolution: i32) -> Rect,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

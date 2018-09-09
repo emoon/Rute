@@ -1,0 +1,50 @@
+enum SubpixelAntialiasingType {
+    Subpixel_None,
+    Subpixel_RGB,
+    Subpixel_BGR,
+    Subpixel_VRGB,
+    Subpixel_VBGR,
+}
+
+enum PowerState {
+    PowerStateOn,
+    PowerStateStandby,
+    PowerStateSuspend,
+    PowerStateOff,
+}
+
+
+struct PlatformScreen {
+    [replace] grab_window(window: WId, x: i32, y: i32, width: i32, height: i32) -> Pixmap,
+    [replace] depth() -> i32,
+    [replace] format() -> Image::Format,
+    [replace] physical_size() -> SizeF,
+    [replace] logical_dpi() -> Dpi,
+    [replace] device_pixel_ratio() -> f32,
+    [replace] pixel_density() -> f32,
+    [replace] refresh_rate() -> f32,
+    [replace] native_orientation() -> Rute::ScreenOrientation,
+    [replace] orientation() -> Rute::ScreenOrientation,
+    [replace] set_orientation_update_mask(mask: Rute::ScreenOrientations),
+    [replace] top_level_at(point: &PointType) -> Window?,
+    [replace] virtual_siblings() -> [PlatformScreen?],
+    screen_for_position(point: &PointType) -> PlatformScreen?,
+    screen() -> Screen?,
+    [static] platform_screen_for_window(window: &WindowType) -> PlatformScreen?,
+    [replace] name() -> String,
+    [replace] manufacturer() -> String,
+    [replace] model() -> String,
+    [replace] serial_number() -> String,
+    [replace] cursor() -> PlatformCursor?,
+    [replace] subpixel_antialiasing_type_hint() -> PlatformScreen::SubpixelAntialiasingType,
+    [replace] power_state() -> PlatformScreen::PowerState,
+    [replace] set_power_state(state: PlatformScreen::PowerState),
+    [replace] modes() -> Vector<QPlatformScreen::Mode>,
+    [replace] current_mode() -> i32,
+    [replace] preferred_mode() -> i32,
+    [static] angle_between(a: Rute::ScreenOrientation, b: Rute::ScreenOrientation) -> i32,
+    [static] map_between(a: Rute::ScreenOrientation, b: Rute::ScreenOrientation, rect: &RectType) -> Rect,
+    resize_maximized_windows(),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

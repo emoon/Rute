@@ -1,0 +1,8 @@
+struct TextBlockGroup : TextObject {
+    [replace] block_inserted(block: &TextBlockType),
+    [replace] block_removed(block: &TextBlockType),
+    [replace] block_format_changed(block: &TextBlockType),
+    block_list() -> [TextBlock],
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

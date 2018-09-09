@@ -1,0 +1,26 @@
+
+struct PlatformFontDatabase {
+    [replace] populate_font_database(),
+    [replace] populate_family_aliases() -> bool,
+    [replace] populate_family(family_name: String),
+    [replace] invalidate(),
+    [replace] font_engine_multi(font_engine: &FontEngineType, script: Char::Script) -> FontEngineMulti?,
+    [replace] font_engine(font_def: &FontDefType, handle: &void) -> FontEngine?,
+    [replace] fallbacks_for_family(family: String, style: Font::Style, style_hint: Font::StyleHint, script: Char::Script) -> StringList,
+    [replace] add_application_font(font_data: &ByteArrayType, file_name: String) -> StringList,
+    [replace] release_handle(handle: &void),
+    [replace] font_engine(font_data: &ByteArrayType, pixel_size: f32, hinting_preference: Font::HintingPreference) -> FontEngine?,
+    [replace] font_dir() -> String,
+    [replace] default_font() -> Font,
+    [replace] resolve_font_family_alias(family: String) -> String,
+    [replace] fonts_always_scalable() -> bool,
+    [replace] standard_sizes() -> [i32],
+    [static] writing_systems_from_true_type_bits(unicode_range: u32, code_page_range: u32) -> SupportedWritingSystems,
+    [static] weight_from_integer(weight: i32) -> Font::Weight,
+    [static] register_qpf2_font(data_array: &ByteArrayType, handle: &void),
+    [static] register_font(familyname: String, stylename: String, foundryname: String, weight: Font::Weight, style: Font::Style, stretch: Font::Stretch, antialiased: bool, scalable: bool, pixel_size: i32, fixed_pitch: bool, writing_systems: &SupportedWritingSystemsType, handle: &void),
+    [static] register_font_family(family_name: String),
+    [static] register_alias_to_font_family(family_name: String, alias: String),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
