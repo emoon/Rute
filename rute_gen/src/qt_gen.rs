@@ -215,7 +215,6 @@ fn generate_event_setup_funcs<W: Write>(
 ///
 fn generate_wrapper_classes_impl<W: Write>(
     _f: &mut W,
-    _struct_name_map: &HashMap<&str, &str>,
     api_def: &ApiDef,
 ) -> io::Result<()> {
     for _sdef in api_def
@@ -223,13 +222,6 @@ fn generate_wrapper_classes_impl<W: Write>(
         .iter()
         .filter(|v| v.inherits_widget(api_def))
     {
-        /*
-        let struct_name = sdef.name.as_str();
-        let struct_qt_name = struct_name_map
-            .get(struct_name)
-            .unwrap_or_else(|| &struct_name);
-        */
-
         /*
         let iterator = sdef
             .functions
@@ -302,7 +294,6 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
 ///
 fn generate_includes<W: Write>(
     f: &mut W,
-    struct_name_map: &HashMap<&str, &str>,
     api_def: &ApiDef,
 ) -> io::Result<()> {
     // There is a small hack here where we include generating includes for the static
@@ -312,11 +303,7 @@ fn generate_includes<W: Write>(
         .iter()
         .filter(|s| s.name != "StaticFuncs")
     {
-        let struct_name = sdef.name.as_str();
-        let struct_qt_name = struct_name_map
-            .get(struct_name)
-            .unwrap_or_else(|| &struct_name);
-        f.write_fmt(format_args!("#include <Q{}>\n", struct_qt_name))?;
+        f.write_fmt(format_args!("#include <{}>\n", sdef.qt_name))?;
     }
 
     Ok(())
@@ -1068,10 +1055,6 @@ impl QtGenerator {
     pub fn generate(&self, target_name: &str, api_def: &ApiDef) -> io::Result<()> {
         let header_path = format!("{}.h", target_name);
         let cpp_path = format!("{}.cpp", target_name);
-        let mut struct_name_map = HashMap::new();
-
-        // Remapping of the name Button -> AbstractButton for Qt
-        struct_name_map.insert("Button", "AbstractButton");
 
         // Set up all the type handlers that are being used to do special
         // generation when needed
@@ -1091,8 +1074,8 @@ impl QtGenerator {
         cpp_out.write_all(HEADER)?;
 
         // Generate includes for all non-POD structs(
-        generate_includes(&mut h_out, &struct_name_map, &api_def)?;
-        generate_includes(&mut cpp_out, &struct_name_map, &api_def)?;
+        generate_includes(&mut h_out, &api_def)?;
+        generate_includes(&mut cpp_out, &api_def)?;
 
         cpp_out.write_all(QT_HEADER)?;
 
@@ -1110,7 +1093,7 @@ impl QtGenerator {
         self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
         // Generate the wrapping implementation that is used as for Qt.
-        generate_wrapper_classes_impl(&mut cpp_out, &struct_name_map, api_def)?;
+        generate_wrapper_classes_impl(&mut cpp_out, api_def)?;
 
         // Generate wrapper functions for are regular defined functions
         self.generate_function_wrappers(&mut cpp_out, &type_handlers, api_def)?;
@@ -1214,7 +1197,8 @@ mod tests {
         let mut dest = Vec::new();
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
-        assert_eq!(String::from_utf8(dest).unwrap(), "static void foo_test(struct RUBase* self_c) {
+        assert_eq!(String::from_utf8(dest).unwrap(),
+"static void foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     qt_value->test();
