@@ -83,10 +83,10 @@ impl Default for Variable {
 pub enum FunctionType {
     /// This is a regular function in a Qt Class
     Regular,
-    /// Evet functions maps to a virtual override in a Qt Class
+    /// Replace functions maps to a virtual override in a Qt Class
+    Replace,
+    /// Event functions maps to a signal in Qt
     Event,
-    /// Callback functions maps to a slot/signal in Qt
-    Callback,
     /// Static function is that doesn't belong to a class
     Static,
 }
@@ -363,8 +363,8 @@ impl ApiParser {
         for entry in rule.into_inner() {
             match entry.as_rule() {
                 Rule::name => function.name = entry.as_str().to_owned(),
-                Rule::callback => function.func_type = FunctionType::Callback,
                 Rule::event => function.func_type = FunctionType::Event,
+                Rule::replace => function.func_type = FunctionType::Replace,
                 Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(entry)),
@@ -978,6 +978,7 @@ mod tests {
         assert_eq!(is_primitve("dummy"), false);
     }
 
+    /*
     #[test]
     fn test_basic_pod_struct() {
         let mut api_def = ApiDef::default();
@@ -992,6 +993,7 @@ mod tests {
         assert_eq!(sdef.functions.is_empty(), true);
         assert_eq!(sdef.variables[0].name, "test");
     }
+    */
 
     ///
     /// Make sure parsing of "struct Widget { show() }"

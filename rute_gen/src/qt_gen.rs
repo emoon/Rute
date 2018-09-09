@@ -354,7 +354,7 @@ fn signal_type_callback(func: &Function) -> String {
 ///
 fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Function> {
     let mut wrapper_info = HashMap::new();
-    let funcs = api_def.get_functions(FunctionType::Callback);
+    let funcs = api_def.get_functions(FunctionType::Event);
 
     funcs.iter().for_each(|func| {
         let input_args = signal_type_callback(func);
@@ -698,14 +698,14 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
                     f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
                 }
 
-                FunctionType::Callback => {
+                FunctionType::Event => {
                     f.write_fmt(format_args!(
                         "    set_{}_event,\n",
                         function_name(struct_name, func)
                     ))?;
                 }
 
-                FunctionType::Event => {
+                FunctionType::Replace => {
                     f.write_fmt(format_args!(
                         "    set_{}_event,\n",
                         function_name(struct_name, func)
@@ -893,7 +893,7 @@ impl QtGenerator {
                     FunctionType::Regular => {
                         self.generate_func_def(f, &sdef, func, type_handlers)?
                     }
-                    FunctionType::Callback => generate_func_callback(f, &sdef.name, func)?,
+                    FunctionType::Event => generate_func_callback(f, &sdef.name, func)?,
                     _ => (),
                 }
             }
@@ -1214,13 +1214,12 @@ mod tests {
         let mut dest = Vec::new();
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
-        assert_eq!(String::from_utf8(dest).unwrap(), "
-static void foo_test(struct RUBase* self_c) {
+        assert_eq!(String::from_utf8(dest).unwrap(), "static void foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     qt_value->test();
-
 }
+
 ");
     }
 }

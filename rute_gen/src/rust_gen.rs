@@ -248,7 +248,7 @@ impl RustGenerator {
             let res = match func.func_type {
                 FunctionType::Regular => self.generate_function(&func, &sdef.name),
                 FunctionType::Static => self.generate_function(&func, &sdef.name),
-                FunctionType::Callback => self.generate_callback(&func, &sdef.name),
+                FunctionType::Replace => self.generate_callback(&func, &sdef.name),
                 FunctionType::Event => self.generate_callback(&func, &sdef.name),
             };
 
