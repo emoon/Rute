@@ -37,6 +37,8 @@ pub enum VariableType {
     Enum,
     /// Struct/other type
     Regular,
+    /// Struct/other type
+    Str,
     /// Prmitive type (such as i32,u64,etc)
     Primitive,
     /// Reference type
@@ -443,7 +445,9 @@ impl ApiParser {
             Rule::refexp => VariableType::Reference,
             Rule::optional => VariableType::Optional,
             _ => {
-                if is_primitve(&type_name) {
+                if type_name == "String" {
+                    VariableType::Str
+                } else if is_primitve(&type_name) {
                     VariableType::Primitive
                 } else {
                     VariableType::Regular
@@ -752,6 +756,7 @@ impl Variable {
 
             VariableType::Optional => format!("struct RU{}", tname).into(),
             VariableType::Enum => format!("RU{}", tname).into(),
+            VariableType::Str => "const char*".into(),
 
             _ => {
                 println!("Should not be here {}", self.name);

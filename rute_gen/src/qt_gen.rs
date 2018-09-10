@@ -837,7 +837,7 @@ impl QtGenerator {
 
             match ret_val.vtype {
                 VariableType::Primitive => object.insert("return_type".to_owned(), Value::str("primitive")),
-                //VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
+                VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
                 VariableType::Regular => object.insert("return_type".to_owned(), Value::str("regular")),
                 VariableType::Reference => object.insert("return_type".to_owned(), Value::str("reference")),
                 _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
@@ -1202,6 +1202,62 @@ mod tests {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     qt_value->test();
+}
+
+");
+    }
+
+    //
+    // Test returing a 32-bit value
+    //
+    #[test]
+    fn test_qt_wrap_func_i32_return() {
+        let (sdef, gen) = init_wrapper_default_sdef();
+        let mut func = init_default_func();
+        let mut dest = Vec::new();
+
+        func.return_val = Some(Variable {
+            name: "ret".to_owned(),
+            vtype: VariableType::Primitive,
+            type_name: "i32".to_owned(),
+            array: false,
+        });
+
+        gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
+        assert_eq!(String::from_utf8(dest).unwrap(),
+"static int foo_test(struct RUBase* self_c) {
+    WRFoo* qt_value = (WRFoo*)self_c;
+
+    auto ret_value = qt_value->test();
+    return ret_value;
+}
+
+");
+    }
+
+    //
+    // Test returing a string value
+    //
+    #[test]
+    fn test_qt_wrap_func_string_return() {
+        let (sdef, gen) = init_wrapper_default_sdef();
+        let mut func = init_default_func();
+        let mut dest = Vec::new();
+
+        func.return_val = Some(Variable {
+            name: String::new(),
+            vtype: VariableType::Str,
+            type_name: String::new(),
+            array: false,
+        });
+
+        gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
+        assert_eq!(String::from_utf8(dest).unwrap(),
+"static const char* foo_test(struct RUBase* self_c) {
+    WRFoo* qt_value = (WRFoo*)self_c;
+
+    auto ret_value = qt_value->test();
+    return q_string_to_const_char(&ret_value);
 }
 
 ");

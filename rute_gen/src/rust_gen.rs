@@ -171,6 +171,7 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&type_name),
             VariableType::Regular => dest.push_str(&type_name),
+            VariableType::Str => dest.push_str("&str"),
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
