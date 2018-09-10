@@ -3,6 +3,7 @@ extern crate heck;
 extern crate liquid;
 extern crate pest;
 extern crate walkdir;
+extern crate rayon;
 
 #[macro_use]
 extern crate pest_derive;

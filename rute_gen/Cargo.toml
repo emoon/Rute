@@ -10,4 +10,5 @@ heck = "0.2.1"
 argparse = "0.2.1"
 liquid = "0.13"
 walkdir = "2"
+rayon = "1"
 
