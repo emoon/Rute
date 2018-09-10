@@ -103,27 +103,27 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
     pub fn {{func_name}}{{function_def}} {
         {{ body_setup }}
         let (obj_data, funcs) = self.get_{{obj_funcs_name}}_obj_funcs();
-    {% if return_value %}
+    {%- if return_value %}
         unsafe {
             let ret_val = ((*funcs).{{func_name}})({{function_args}});
-        {% case return_type %}
-          {% when 'replaced' %}
+        {%- case return_type %}
+          {%- when 'replaced' %}
            {{replaced_return}}
-          {% when 'no_wrap' %}
+          {%- when 'no_wrap' %}
             {{return_vtype}} {
                 data: Rc::new(Cell::new(Some(ret_val))),
                 _marker: PhantomData,
             }
-          {% else %}
+          {%- else %}
             ret_val
-          {% endcase %}
+          {%- endcase %}
         }
-    {% else %}
+    {%- else %}
         unsafe {
             ((*funcs).{{func_name}})({{function_args}});
         }
         self
-    {% endif %}
+    {%- endif %}
     }
 ";
 
