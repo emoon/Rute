@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/emoon/Rute.svg?branch=experiments)](https://travis-ci.org/emoon/Rute)
+[![Generator Coverage](https://codecov.io/gh/emoon/Rute/branch/master/graph/badge.svg)](https://codecov.io/gh/emoon/Rute)
 
 # Rute
 
