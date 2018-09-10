@@ -43,6 +43,28 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+typedef void (*Signal_self_WidgetType_WidgetType_void)(void* self_c, void* trampoline_func, struct RUBase* old, struct RUBase* now);
+
+class QSlotWrapperSignal_self_WidgetType_WidgetType_void : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_int_void(void* data, Signal_self_WidgetType_WidgetType_void trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method( struct RUBase* old, struct RUBase* now) {
+        m_trampoline_func(m_data, m_wrapped_func, old, now);
+    }
+private:
+    Signal_self_WidgetType_WidgetType_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 typedef void (*Signal_self_int_void)(void* self_c, void* trampoline_func, int row);
 
 class QSlotWrapperSignal_self_int_void : public QObject {
@@ -59,28 +81,6 @@ public:
     }
 private:
     Signal_self_int_void m_trampoline_func;
-    void* m_data;
-    void* m_wrapped_func;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-typedef void (*Signal_self_void)(void* self_c, void* trampoline_func);
-
-class QSlotWrapperSignal_self_void : public QObject {
-    Q_OBJECT
-public:
-    QSlotWrapperSignal_self_int_void(void* data, Signal_self_void trampoline_func, void* wrapped_func) {
-        m_trampoline_func = trampoline_func;
-        m_data = data;
-        m_wrapped_func = wrapped_func;
-    }
-
-    Q_SLOT void method() {
-        m_trampoline_func(m_data, m_wrapped_func);
-    }
-private:
-    Signal_self_void m_trampoline_func;
     void* m_data;
     void* m_wrapped_func;
 };

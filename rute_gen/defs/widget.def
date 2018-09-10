@@ -4,9 +4,9 @@
 struct Widget {
     show(),
 
-    set_fixed_height(i32 width),
-    set_fixed_width(i32 width),
-    resize(i32 width, i32 height),
+    set_fixed_height(width: i32),
+    set_fixed_width(width: i32),
+    resize(width: i32, height: i32),
     //set_parent(&WidgetType widget),
     //set_layout(&LayoutType layout),
     update(),

@@ -19,8 +19,16 @@ pub static SEPARATOR: &'static [u8] = b"////////////////////////////////////////
 pub static QT_HEADER: &'static [u8] = b"
 static char s_temp_string_buffer[1024*1024];\n
 #include <map>
-std::map<QWidget*, void*> s_widget_lookup;\n
+std::map<void*, void*> s_host_data_lookup;\n
 struct KeyVal { int val, key; };\n
+
+const char* q_string_to_const_char(const QString& ret_value) {
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert((ba.size() + 1) < sizeof(s_temp_string_buffer), \"buffer not large enough\");
+    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);
+    return s_temp_string_buffer;\n)
+}
 ";
 
 ///

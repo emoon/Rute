@@ -1,5 +1,5 @@
 struct ListWidgetItem {
-    set_text(String text),
+    set_text(text: String),
     text() -> String,
 }
 
@@ -15,21 +15,21 @@ struct ListWidget : Widget {
 
 
 	//item(i32 index) -> ListWidgetItem?,
-	set_current_row(i32 index),
+	set_current_row(index: i32),
 	count() -> i32,
 
 	// Drag'n'drop support
 
-	set_drag_enabled(bool state),
-	set_drop_indicator_shown(bool state),
+	set_drag_enabled(state: bool),
+	set_drop_indicator_shown(state: bool),
 	//[manual] set_accept_drops(bool state),
 
     //[event] drag_enter(&DragEnterEvent event),
     //[event] drop(&DropEvent event),
 
 	//[manual] add_widget_item(&ListWidgetItem item),
-	[callback] item_activated(&ListWidgetItem item),
-	[callback] current_row_changed(i32 row),
+	[event] item_activated(item: &ListWidgetItem),
+	[event] current_row_changed(row: i32),
 	//[callback] item_clicked(&ListWidgetItem item),
 	//[callback] item_double_clicked(&ListWidgetItem item),
 }

@@ -52,28 +52,108 @@ pub struct ApplicationStatic<'a> {
 }
 
 impl<'a> Application<'a> {
-    pub fn set_style(&self, style: &str) -> &Application<'a> {
-        let str_in_style_1 = CString::new(style).unwrap();
-
+    pub fn style(&self) -> Option<Style> {
+        
         let (obj_data, funcs) = self.get_application_obj_funcs();
     
         unsafe {
-            ((*funcs).set_style)(obj_data, str_in_style_1.as_ptr());
+            let ret_val = ((*funcs).style)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_style(&self, arg0: &StyleType<'a>) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_style)(obj_data, arg0);
         }
         self
     
     }
 
-    pub fn exec(&self) -> i32 {
-        
+    pub fn set_style(&self, arg0: &str) -> Option<Style> {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
         let (obj_data, funcs) = self.get_application_obj_funcs();
     
         unsafe {
-            let ret_val = ((*funcs).exec)(obj_data);
+            let ret_val = ((*funcs).set_style)(obj_data, str_in_arg0_1.as_ptr());
         
             ret_val
           
         }
+    
+    }
+
+    pub fn color_spec(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).color_spec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_color_spec(&self, arg0: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_color_spec)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn palette(&self, arg0: &WidgetType<'a>) -> Palette {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data, arg0);
+        
+            Palette {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn palette(&self, class_name: &char<'a>) -> Palette {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data, class_name);
+        
+            Palette {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn set_palette(&self, arg0: &PaletteType<'a>, class_name: &char<'a>) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_palette)(obj_data, arg0, class_name);
+        }
+        self
     
     }
 
@@ -93,64 +173,234 @@ impl<'a> Application<'a> {
     
     }
 
-    unsafe extern "C" fn about_to_quit_trampoline_ud<T>(
-        user_data: *const c_void,
-        func: *const c_void,
+    pub fn font(&self, arg0: &WidgetType<'a>) -> Font {
         
-    ) {
-        let f: &&(Fn(&T, ) + 'static) = transmute(func);
-        let data = user_data as *const T;
-        f(&*data, );
-    }
-
-    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Application<'a>
-    where
-        F: Fn(&T, ) + 'a,
-        T: 'a,
-    {
         let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T, ) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
+    
         unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                user_data,
-                transmute(Self::about_to_quit_trampoline_ud::<T> as usize),
-                Box::into_raw(f) as *const _,
-            );
-        }
-
-        self
-    }
-
-    unsafe extern "C" fn about_to_quit_trampoline(
-        user_data: *const c_void,
-        func: *const c_void,
+            let ret_val = ((*funcs).font)(obj_data, arg0);
         
-    ) {
-        let f: &&(Fn() + 'static) = transmute(func);
-        f();
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
     }
 
-    pub fn set_about_to_quit_event<F>(&self, func: F) -> &Application<'a>
-    where
-        F: Fn() + 'a,
-    {
+    pub fn font(&self, class_name: &char<'a>) -> Font {
+        
         let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
+    
         unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                ::std::ptr::null(),
-                transmute(Self::about_to_quit_trampoline as usize),
-                Box::into_raw(f) as *const _,
-            );
+            let ret_val = ((*funcs).font)(obj_data, class_name);
+        
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
         }
+    
+    }
 
+    pub fn set_font(&self, arg0: &FontType<'a>, class_name: &char<'a>) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_font)(obj_data, arg0, class_name);
+        }
         self
+    
+    }
+
+    pub fn set_window_icon(&self, icon: &IconType<'a>) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_window_icon)(obj_data, icon);
+        }
+        self
+    
+    }
+
+    pub fn window_icon(&self) -> Icon {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).window_icon)(obj_data);
+        
+            Icon {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn all_widgets(&self) -> WidgetList {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).all_widgets)(obj_data);
+        
+            WidgetList {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn top_level_widgets(&self) -> WidgetList {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_widgets)(obj_data);
+        
+            WidgetList {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn desktop(&self) -> Option<DesktopWidget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).desktop)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_popup_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_popup_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_modal_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_modal_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn focus_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).focus_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_window(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_window)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_active_window(&self, act: &WidgetType<'a>) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_active_window)(obj_data, act);
+        }
+        self
+    
+    }
+
+    pub fn widget_at(&self, p: &PointType<'a>) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).widget_at)(obj_data, p);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn widget_at(&self, x: i32, y: i32) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).widget_at)(obj_data, x, y);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn top_level_at(&self, p: &PointType<'a>) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_at)(obj_data, p);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn top_level_at(&self, x: i32, y: i32) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_at)(obj_data, x, y);
+        
+            ret_val
+          
+        }
+    
     }
 
     pub fn beep(&self) -> &Application<'a> {
@@ -159,6 +409,318 @@ impl<'a> Application<'a> {
     
         unsafe {
             ((*funcs).beep)(obj_data);
+        }
+        self
+    
+    }
+
+    pub fn alert(&self, widget: &WidgetType<'a>, duration: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).alert)(obj_data, widget, duration);
+        }
+        self
+    
+    }
+
+    pub fn set_cursor_flash_time(&self, arg0: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_cursor_flash_time)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn cursor_flash_time(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).cursor_flash_time)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_double_click_interval(&self, arg0: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_double_click_interval)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn double_click_interval(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).double_click_interval)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_keyboard_input_interval(&self, arg0: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_keyboard_input_interval)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn keyboard_input_interval(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).keyboard_input_interval)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_wheel_scroll_lines(&self, arg0: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_wheel_scroll_lines)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn wheel_scroll_lines(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).wheel_scroll_lines)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_start_drag_time(&self, ms: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_start_drag_time)(obj_data, ms);
+        }
+        self
+    
+    }
+
+    pub fn start_drag_time(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).start_drag_time)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_start_drag_distance(&self, l: i32) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_start_drag_distance)(obj_data, l);
+        }
+        self
+    
+    }
+
+    pub fn start_drag_distance(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).start_drag_distance)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn is_effect_enabled(&self, arg0: Rute::UIEffect) -> bool {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).is_effect_enabled)(obj_data, arg0);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_effect_enabled(&self, arg0: Rute::UIEffect, enable: bool) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_effect_enabled)(obj_data, arg0, enable);
+        }
+        self
+    
+    }
+
+    pub fn exec(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).exec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    unsafe extern "C" fn focus_changed_trampoline_ud<T>(
+        user_data: *const c_void,
+        func: *const c_void,
+        old: WidgetType, now: WidgetType
+    ) {
+        let f: &&(Fn(&T, WidgetType, WidgetType) + 'static) = transmute(func);
+        let data = user_data as *const T;
+        f(&*data, old, now);
+    }
+
+    pub fn set_focus_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Application<'a>
+    where
+        F: Fn(&T, WidgetType, WidgetType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T, WidgetType, WidgetType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_changed_event)(
+                obj_data,
+                user_data,
+                transmute(Self::focus_changed_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    unsafe extern "C" fn focus_changed_trampoline(
+        user_data: *const c_void,
+        func: *const c_void,
+        old: WidgetType, now: WidgetType
+    ) {
+        let f: &&(Fn(WidgetType, WidgetType) + 'static) = transmute(func);
+        f(old, now);
+    }
+
+    pub fn set_focus_changed_event<F>(&self, func: F) -> &Application<'a>
+    where
+        F: Fn(WidgetType, WidgetType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+        let f: Box<Box<Fn(WidgetType, WidgetType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(Self::focus_changed_trampoline as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    pub fn style_sheet(&self) -> &str {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).style_sheet)(obj_data);
+        
+           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+          
+        }
+    
+    }
+
+    pub fn set_style_sheet(&self, sheet: &str) -> &Application<'a> {
+        let str_in_sheet_1 = CString::new(sheet).unwrap();
+
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_style_sheet)(obj_data, str_in_sheet_1.as_ptr());
+        }
+        self
+    
+    }
+
+    pub fn set_auto_sip_enabled(&self, enabled: bool) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_auto_sip_enabled)(obj_data, enabled);
+        }
+        self
+    
+    }
+
+    pub fn auto_sip_enabled(&self) -> bool {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).auto_sip_enabled)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn close_all_windows(&self) -> &Application<'a> {
+        
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+    
+        unsafe {
+            ((*funcs).close_all_windows)(obj_data);
         }
         self
     
@@ -180,12 +742,350 @@ impl<'a> Application<'a> {
     }
 }
 impl<'a> ApplicationStatic<'a> {
-    pub fn exec(&self) -> i32 {
+    pub fn style(&self) -> Option<Style> {
         
         let (obj_data, funcs) = self.get_application_static_obj_funcs();
     
         unsafe {
-            let ret_val = ((*funcs).exec)(obj_data);
+            let ret_val = ((*funcs).style)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_style(&self, arg0: &StyleType<'a>) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_style)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn set_style(&self, arg0: &str) -> Option<Style> {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).set_style)(obj_data, str_in_arg0_1.as_ptr());
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn color_spec(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).color_spec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_color_spec(&self, arg0: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_color_spec)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn palette(&self, arg0: &WidgetType<'a>) -> Palette {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data, arg0);
+        
+            Palette {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn palette(&self, class_name: &char<'a>) -> Palette {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data, class_name);
+        
+            Palette {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn set_palette(&self, arg0: &PaletteType<'a>, class_name: &char<'a>) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_palette)(obj_data, arg0, class_name);
+        }
+        self
+    
+    }
+
+    pub fn font(&self) -> Font {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data);
+        
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn font(&self, arg0: &WidgetType<'a>) -> Font {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data, arg0);
+        
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn font(&self, class_name: &char<'a>) -> Font {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data, class_name);
+        
+            Font {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn set_font(&self, arg0: &FontType<'a>, class_name: &char<'a>) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_font)(obj_data, arg0, class_name);
+        }
+        self
+    
+    }
+
+    pub fn set_window_icon(&self, icon: &IconType<'a>) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_window_icon)(obj_data, icon);
+        }
+        self
+    
+    }
+
+    pub fn window_icon(&self) -> Icon {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).window_icon)(obj_data);
+        
+            Icon {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn all_widgets(&self) -> WidgetList {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).all_widgets)(obj_data);
+        
+            WidgetList {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn top_level_widgets(&self) -> WidgetList {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_widgets)(obj_data);
+        
+            WidgetList {
+                data: Rc::new(Cell::new(Some(ret_val))),
+                _marker: PhantomData,
+            }
+          
+        }
+    
+    }
+
+    pub fn desktop(&self) -> Option<DesktopWidget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).desktop)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_popup_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_popup_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_modal_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_modal_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn focus_widget(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).focus_widget)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn active_window(&self) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).active_window)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_active_window(&self, act: &WidgetType<'a>) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_active_window)(obj_data, act);
+        }
+        self
+    
+    }
+
+    pub fn widget_at(&self, p: &PointType<'a>) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).widget_at)(obj_data, p);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn widget_at(&self, x: i32, y: i32) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).widget_at)(obj_data, x, y);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn top_level_at(&self, p: &PointType<'a>) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_at)(obj_data, p);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn top_level_at(&self, x: i32, y: i32) -> Option<Widget> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).top_level_at)(obj_data, x, y);
         
             ret_val
           
@@ -199,6 +1099,209 @@ impl<'a> ApplicationStatic<'a> {
     
         unsafe {
             ((*funcs).beep)(obj_data);
+        }
+        self
+    
+    }
+
+    pub fn alert(&self, widget: &WidgetType<'a>, duration: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).alert)(obj_data, widget, duration);
+        }
+        self
+    
+    }
+
+    pub fn set_cursor_flash_time(&self, arg0: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_cursor_flash_time)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn cursor_flash_time(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).cursor_flash_time)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_double_click_interval(&self, arg0: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_double_click_interval)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn double_click_interval(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).double_click_interval)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_keyboard_input_interval(&self, arg0: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_keyboard_input_interval)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn keyboard_input_interval(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).keyboard_input_interval)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_wheel_scroll_lines(&self, arg0: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_wheel_scroll_lines)(obj_data, arg0);
+        }
+        self
+    
+    }
+
+    pub fn wheel_scroll_lines(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).wheel_scroll_lines)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_start_drag_time(&self, ms: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_start_drag_time)(obj_data, ms);
+        }
+        self
+    
+    }
+
+    pub fn start_drag_time(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).start_drag_time)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_start_drag_distance(&self, l: i32) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_start_drag_distance)(obj_data, l);
+        }
+        self
+    
+    }
+
+    pub fn start_drag_distance(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).start_drag_distance)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn is_effect_enabled(&self, arg0: Rute::UIEffect) -> bool {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).is_effect_enabled)(obj_data, arg0);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn set_effect_enabled(&self, arg0: Rute::UIEffect, enable: bool) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).set_effect_enabled)(obj_data, arg0, enable);
+        }
+        self
+    
+    }
+
+    pub fn exec(&self) -> i32 {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            let ret_val = ((*funcs).exec)(obj_data);
+        
+            ret_val
+          
+        }
+    
+    }
+
+    pub fn close_all_windows(&self) -> &ApplicationStatic<'a> {
+        
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+    
+        unsafe {
+            ((*funcs).close_all_windows)(obj_data);
         }
         self
     
@@ -292,7 +1395,7 @@ impl<'a> ListWidgetItem<'a> {
     
     }
 
-    pub fn text(&self) -> String {
+    pub fn text(&self) -> &str {
         
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
     

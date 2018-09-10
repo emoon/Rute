@@ -15,10 +15,19 @@
 static char s_temp_string_buffer[1024*1024];
 
 #include <map>
-std::map<QWidget*, void*> s_widget_lookup;
+std::map<void*, void*> s_host_data_lookup;
 
 struct KeyVal { int val, key; };
 
+
+const char* q_string_to_const_char(const QString& ret_value) {
+    QByteArray ba = ret_value.toUtf8();
+    const char* c_str = ba.data();
+    assert((ba.size() + 1) < sizeof(s_temp_string_buffer), "buffer not large enough");
+    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);
+    return s_temp_string_buffer;
+)
+}
 extern struct RUApplicationFuncs s_application_funcs;
 extern struct RUWidgetFuncs s_widget_funcs;
 extern struct RUListWidgetItemFuncs s_list_widget_item_funcs;
@@ -35,159 +44,608 @@ void create_enum_mappings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_style(struct RUBase* self_c, const char* style) { 
-    QApplication* qt_data = (QApplication*)self_c;
-    qt_data->setStyle(QString::fromUtf8(style));
-}
+static struct RUStyle application_style(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int application_exec(struct RUBase* self_c) { 
-    QApplication* qt_data = (QApplication*)self_c;
-    auto ret_value = qt_data->exec();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUFont application_font(struct RUBase* self_c) { 
-    QApplication* qt_data = (QApplication*)self_c;
-    auto ret_value = qt_data->font();
-    RUFont ctl;
-    ctl.font_funcs = &s_font_funcs;
-    ctl.priv_data = (struct RUBase*)new QFont(ret_value);
+    auto ret_value = qt_value->style();
+    RU<illegal> ctl = s_style_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_about_to_quit_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c) {
-    QSlotWrapperself_void* wrap = new QSlotWrapperself_void(user_data, (self_void)trampoline_func, (void*)event);
+static void application_set_style(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setStyle((QStyleType*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUStyle application_set_style(struct RUBase* self_c, const char* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->setStyle(QString::fromUtf8(arg0));
+    RU<illegal> ctl = s_set_style_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_color_spec(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->colorSpec();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_color_spec(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setColorSpec(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPalette application_palette(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->palette((QWidget*)arg0);
+    RUregular ctl = s_palette_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPalette application_palette(struct RUBase* self_c, struct RUBase* class_name) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->palette((Qchar*)class_name);
+    RUregular ctl = s_palette_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_palette(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* class_name) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setPalette((QPaletteType*)arg0, (Qchar*)class_name);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->font();
+    RUregular ctl = s_font_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->font((QWidget*)arg0);
+    RUregular ctl = s_font_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font(struct RUBase* self_c, struct RUBase* class_name) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->font((Qchar*)class_name);
+    RUregular ctl = s_font_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_font(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* class_name) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setFont((QFontType*)arg0, (Qchar*)class_name);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setWindowIcon((QIconType*)icon);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUIcon application_window_icon(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->windowIcon();
+    RUregular ctl = s_window_icon_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidgetList application_all_widgets(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->allWidgets();
+    RUregular ctl = s_all_widgets_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidgetList application_top_level_widgets(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->topLevelWidgets();
+    RUregular ctl = s_top_level_widgets_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUDesktopWidget application_desktop(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->desktop();
+    RU<illegal> ctl = s_desktop_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_active_popup_widget(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->activePopupWidget();
+    RU<illegal> ctl = s_active_popup_widget_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_active_modal_widget(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->activeModalWidget();
+    RU<illegal> ctl = s_active_modal_widget_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_focus_widget(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->focusWidget();
+    RU<illegal> ctl = s_focus_widget_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_active_window(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->activeWindow();
+    RU<illegal> ctl = s_active_window_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setActiveWindow((QWidget*)act);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_widget_at(struct RUBase* self_c, struct RUBase* p) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->widgetAt((QPointType*)p);
+    RU<illegal> ctl = s_widget_at_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->widgetAt(x, y);
+    RU<illegal> ctl = s_widget_at_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_top_level_at(struct RUBase* self_c, struct RUBase* p) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->topLevelAt((QPointType*)p);
+    RU<illegal> ctl = s_top_level_at_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, int y) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->topLevelAt(x, y);
+    RU<illegal> ctl = s_top_level_at_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_beep(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->beep();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->alert((QWidget*)widget, duration);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_cursor_flash_time(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setCursorFlashTime(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_cursor_flash_time(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->cursorFlashTime();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_double_click_interval(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setDoubleClickInterval(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_double_click_interval(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->doubleClickInterval();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_keyboard_input_interval(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setKeyboardInputInterval(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_keyboard_input_interval(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->keyboardInputInterval();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_wheel_scroll_lines(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setWheelScrollLines(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_wheel_scroll_lines(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->wheelScrollLines();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_start_drag_time(struct RUBase* self_c, int ms) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setStartDragTime(ms);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_start_drag_time(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->startDragTime();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_start_drag_distance(struct RUBase* self_c, int l) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setStartDragDistance(l);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_start_drag_distance(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->startDragDistance();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool application_is_effect_enabled(struct RUBase* self_c, struct RURute::UIEffect arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->isEffectEnabled(arg0);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_effect_enabled(struct RUBase* self_c, struct RURute::UIEffect arg0, bool enable) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setEffectEnabled(arg0, enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int application_exec(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->exec();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_application_focus_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* old, struct RUBase* now) {
+    QSlotWrapperself_WidgetType_WidgetType_void* wrap = new QSlotWrapperself_WidgetType_WidgetType_void(user_data, (self_WidgetType_WidgetType_void)trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
+    QObject::connect(q_obj, SIGNAL(focusChanged(QWidgetType*, QWidgetType*)), wrap, SLOT(method(QWidgetType*, QWidgetType*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_beep(struct RUBase* self_c) { 
-    QApplication* qt_data = (QApplication*)self_c;
-    qt_data->beep();
+static const char* application_style_sheet(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->styleSheet();
+    return q_string_to_const_char(&ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_about_qt(struct RUBase* self_c) { 
-    QApplication* qt_data = (QApplication*)self_c;
-    qt_data->aboutQt();
+static void application_set_style_sheet(struct RUBase* self_c, const char* sheet) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setStyleSheet(QString::fromUtf8(sheet));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_show(struct RUBase* self_c) { 
-    WRWidget* qt_data = (WRWidget*)self_c;
-    qt_data->show();
+static void application_set_auto_sip_enabled(struct RUBase* self_c, bool enabled) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setAutoSipEnabled(enabled);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_fixed_height(struct RUBase* self_c, int width) { 
-    WRWidget* qt_data = (WRWidget*)self_c;
-    qt_data->setFixedHeight(width);
+static bool application_auto_sip_enabled(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->autoSipEnabled();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_fixed_width(struct RUBase* self_c, int width) { 
-    WRWidget* qt_data = (WRWidget*)self_c;
-    qt_data->setFixedWidth(width);
+static void application_close_all_windows(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->closeAllWindows();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_resize(struct RUBase* self_c, int width, int height) { 
-    WRWidget* qt_data = (WRWidget*)self_c;
-    qt_data->resize(width, height);
+static void application_about_qt(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->aboutQt();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_update(struct RUBase* self_c) { 
-    WRWidget* qt_data = (WRWidget*)self_c;
-    qt_data->update();
+static void widget_show(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->show();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void list_widget_item_set_text(struct RUBase* self_c, const char* text) { 
-    WRListWidgetItem* qt_data = (WRListWidgetItem*)self_c;
-    qt_data->setText(QString::fromUtf8(text));
+static void widget_set_fixed_height(struct RUBase* self_c, int width) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->setFixedHeight(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* list_widget_item_text(struct RUBase* self_c) { 
-    WRListWidgetItem* qt_data = (WRListWidgetItem*)self_c;
-    auto ret_value = qt_data->text();
-    QByteArray ba = ret_value.toUtf8();
-    const char* c_str = ba.data();
-    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));
-    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);
-    return s_temp_string_buffer;
+static void widget_set_fixed_width(struct RUBase* self_c, int width) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->setFixedWidth(width);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void list_widget_clear(struct RUBase* self_c) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    qt_data->clear();
+static void widget_resize(struct RUBase* self_c, int width, int height) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->resize(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUListWidgetItem list_widget_current_item(struct RUBase* self_c) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    auto ret_value = qt_data->currentItem();
-    RUListWidgetItem ctl;
-    ctl.list_widget_item_funcs = &s_list_widget_item_funcs;
-    ctl.priv_data = (struct RUBase*)ret_value;
+static void widget_update(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->update();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_text(struct RUBase* self_c, const char* text) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+
+    qt_value->setText(QString::fromUtf8(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* list_widget_item_text(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+
+    auto ret_value = qt_value->text();
+    return q_string_to_const_char(&ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_clear(struct RUBase* self_c) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    qt_value->clear();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUListWidgetItem list_widget_current_item(struct RUBase* self_c) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    auto ret_value = qt_value->currentItem();
+    RU<illegal> ctl = s_current_item_template;
+    ctl.qt_data = (struct RUBase*);
+    ctl.host_data = s_host_data_map[ret_value];
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int list_widget_current_row(struct RUBase* self_c) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    auto ret_value = qt_data->currentRow();
+static int list_widget_current_row(struct RUBase* self_c) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    auto ret_value = qt_value->currentRow();
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void list_widget_set_current_row(struct RUBase* self_c, int index) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    qt_data->setCurrentRow(index);
+static void list_widget_set_current_row(struct RUBase* self_c, int index) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    qt_value->setCurrentRow(index);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int list_widget_count(struct RUBase* self_c) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    auto ret_value = qt_data->count();
+static int list_widget_count(struct RUBase* self_c) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    auto ret_value = qt_value->count();
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void list_widget_set_drag_enabled(struct RUBase* self_c, bool state) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    qt_data->setDragEnabled(state);
+static void list_widget_set_drag_enabled(struct RUBase* self_c, bool state) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    qt_value->setDragEnabled(state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool state) { 
-    WRListWidget* qt_data = (WRListWidget*)self_c;
-    qt_data->setDropIndicatorShown(state);
+static void list_widget_set_drop_indicator_shown(struct RUBase* self_c, bool state) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+
+    qt_value->setDropIndicatorShown(state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,16 +666,18 @@ static void set_list_widget_current_row_changed_event(void* object, void* user_d
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_pixel_size(struct RUBase* self_c, int size) { 
-    QFont* qt_data = (QFont*)self_c;
-    qt_data->setPixelSize(size);
+static void font_set_pixel_size(struct RUBase* self_c, int size) {
+    QFont* qt_value = (QFont*)self_c;
+
+    qt_value->setPixelSize(size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_pixel_size(struct RUBase* self_c) { 
-    QFont* qt_data = (QFont*)self_c;
-    auto ret_value = qt_data->pixelSize();
+static int font_pixel_size(struct RUBase* self_c) {
+    QFont* qt_value = (QFont*)self_c;
+
+    auto ret_value = qt_value->pixelSize();
     return ret_value;
 }
 
@@ -304,11 +764,55 @@ static struct RUApplication get_application(struct RUBase* priv_data) {
 
 struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
+    application_style,
     application_set_style,
-    application_exec,
+    application_set_style,
+    application_color_spec,
+    application_set_color_spec,
+    application_palette,
+    application_palette,
+    application_set_palette,
     application_font,
-    set_application_about_to_quit_event,
+    application_font,
+    application_font,
+    application_set_font,
+    application_set_window_icon,
+    application_window_icon,
+    application_all_widgets,
+    application_top_level_widgets,
+    application_desktop,
+    application_active_popup_widget,
+    application_active_modal_widget,
+    application_focus_widget,
+    application_active_window,
+    application_set_active_window,
+    application_widget_at,
+    application_widget_at,
+    application_top_level_at,
+    application_top_level_at,
     application_beep,
+    application_alert,
+    application_set_cursor_flash_time,
+    application_cursor_flash_time,
+    application_set_double_click_interval,
+    application_double_click_interval,
+    application_set_keyboard_input_interval,
+    application_keyboard_input_interval,
+    application_set_wheel_scroll_lines,
+    application_wheel_scroll_lines,
+    application_set_start_drag_time,
+    application_start_drag_time,
+    application_set_start_drag_distance,
+    application_start_drag_distance,
+    application_is_effect_enabled,
+    application_set_effect_enabled,
+    application_exec,
+    set_application_focus_changed_event,
+    application_style_sheet,
+    application_set_style_sheet,
+    application_set_auto_sip_enabled,
+    application_auto_sip_enabled,
+    application_close_all_windows,
     application_about_qt,
 };
 

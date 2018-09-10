@@ -4,7 +4,7 @@
 
 class QWidget;
 
-//extern std::map<QWidget*, void*> s_widget_lookup;
+extern std::map<void*, void*> s_host_data_lookup;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,7 +23,9 @@ template<typename QT> void destroy_generic(struct RUBase* qt_data) {
 
 template<typename T, typename QT> T create_widget_func(
     struct RUBase* priv_data,
-    RUDeleteCallback delete_callback, void* private_user_data) {
+    const T& ctl_template,
+    RUDeleteCallback delete_callback, void* host_data)
+{
     PrivData* data = (PrivData*)priv_data;
     QT* qt_obj = nullptr;
     if (data) {
@@ -32,10 +34,11 @@ template<typename T, typename QT> T create_widget_func(
         qt_obj = new QT(nullptr);
     }
 
-    qt_obj->m_delete_callback = delete_callback;
-    qt_obj->m_private_data = private_user_data;
+    s_host_data_lookup[qt_obj] = host_data;
 
-    T ctl;
+    qt_obj->m_delete_callback = delete_callback;
+
+    T ctl = ctl_template;
     ctl.priv_data = (struct RUBase*)qt_obj;
 
     return ctl;
@@ -43,7 +46,9 @@ template<typename T, typename QT> T create_widget_func(
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename QT> T generic_create_func(struct RUBase* priv_data) {
+template<typename T, typename QT> T generic_create_func(
+    struct RUBase* priv_data)
+{
     (void)priv_data;
     QT* qt_obj = new QT();
     T ctl;

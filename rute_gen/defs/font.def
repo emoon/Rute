@@ -1,6 +1,6 @@
 #[attributes(Drop, NoWrapClass)]
 struct Font {
-    set_pixel_size(i32 size),
+    set_pixel_size(size: i32),
     pixel_size() -> i32,
 }
 

@@ -423,28 +423,6 @@ fn generate_return_array<W: Write>(f: &mut W, ret_val: &Variable) -> io::Result<
 */
 
 ///
-/// Generate code for returing string
-/// We currently use a static buffer here to reduce mallocs. This isn't thread safe but it's
-/// only allowed to use QtData from one thread anyway.
-///
-///   QByteArray ba = ret_value.toUtf8();
-///   const char* c_str = ba.data();
-///   assert(ba.size() < sizeof(s_temp_string_buffer));
-///   memcpy(s_temp_string_buffer, c_str, ba.size());
-///   return s_temp_string_buffer;
-///
-
-fn generate_return_string<W: Write>(f: &mut W) -> io::Result<()> {
-    f.write_all(b"    QByteArray ba = ret_value.toUtf8();\n")?;
-    f.write_all(b"    const char* c_str = ba.data();\n")?;
-    f.write_all(b"    assert((ba.size() + 1) < sizeof(s_temp_string_buffer));\n")?;
-    f.write_all(b"    memcpy(s_temp_string_buffer, c_str, ba.size() + 1);\n")?;
-    f.write_all(b"    return s_temp_string_buffer;\n")?;
-
-    Ok(())
-}
-
-///
 /// Geerate a declaration with only function types. Used for the SIGNAL/SLOT macros
 ///
 
