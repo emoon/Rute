@@ -33,6 +33,9 @@ mod c_gen;
 
 use api_parser::{ApiDef, ApiParser};
 use header_ffi_gen::HeaderFFIGenerator;
+use walkdir::WalkDir;
+use rayon::prelude::*;
+use std::sync::Mutex;
 
 use c_gen::CapiHeaderGen;
 use qt_gen::QtGenerator;
@@ -42,8 +45,71 @@ use std::fs;
 use std::sync::Arc;
 use std::thread;
 
+///
+/// Function for creating a directory and just bail in case it already exists.
+/// If there is an error here this code will panic as these directories are required in order for
+/// this program to work correctly.
+///
+
+fn create_dir(path: &str) {
+    // dir already existits so just bail
+    if let Ok(p) = fs::metadata(path) {
+        if p.is_dir() {
+            println!("exints {}", path);
+            return;
+        }
+    }
+
+    // This function is expected to succed now when we have checked that the directory exists
+    fs::create_dir(path).unwrap();
+}
+
 fn main() {
     let mut api = ApiDef::default();
+    let wd = WalkDir::new("defs");
+
+    let rust_dest_dir = "../rute/src/auto";
+
+    // Create the output dirs before doing anything else
+
+    create_dir("../rute/qt_cpp/auto");
+    create_dir(rust_dest_dir);
+
+    // Collect all files that needs to be parsed
+
+    let files = wd
+        .into_iter()
+        .filter_map(|e| e.ok())
+        .filter(|e| e.path().metadata().unwrap().is_file())
+        //.map(|e| e.path().to_str().unwrap().to_owned())
+        .collect::<Vec<_>>();
+
+    let api_defs = Mutex::new(Vec::with_capacity(files.len()));
+
+    // Parse the files threaded
+
+    println!("Pass 1: Parsing the definition files...");
+
+    files.par_iter().enumerate().for_each(|(index, f)| {
+        let base_filename = f.path().file_name().unwrap().to_str().unwrap();
+        let base_filename = &base_filename[..base_filename.len() - 4];
+        let mut api_def = ApiDef::default();
+
+        println!("    Parsing file {:?}", f.path());
+        ApiParser::parse_file(&f.path(), &mut api_def);
+
+        // Generate the Rust high-level code
+        RustGenerator::new(&api_def)
+            .generate(&format!("{}/{}.rs", rust_dest_dir, base_filename), &api_def)
+            .unwrap();
+
+        {
+            let mut data = api_defs.lock().unwrap();
+            data.push(api_def);
+        }
+    })
+
+    /*
 
     // Parse all the files in defs
     for entry in walkdir::WalkDir::new("defs") {
@@ -104,4 +170,5 @@ fn main() {
     c_api_thread.join().unwrap();
     ffi_api_thread.join().unwrap();
     cpp_api_thread.join().unwrap();
+    */
 }

@@ -20,6 +20,8 @@ pub struct RustGenerator {
     rust_create_template: Template,
     get_static_template: Template,
     callback_template: Template,
+    trait_impl_end_template: Template,
+    trait_impl_template: Template,
     drop_template: Template,
     type_handler: TypeHandler,
 }
@@ -91,8 +93,8 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
             "pub struct {}<'a> {{
-    data: Rc<Cell<Option<RU{}>>>,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+data: Rc<Cell<Option<RU{}>>>,
+_marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
         ))?;
     }
@@ -117,8 +119,8 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
             "pub struct {}Static<'a> {{
-    data: RU{},
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+data: RU{},
+_marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
         ))?;
     }
@@ -148,6 +150,8 @@ impl RustGenerator {
             get_static_template: parser.parse(RUST_GET_STATIC_TEMPLATE).unwrap(),
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
             callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
+            trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
+            trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
         }
     }
 
@@ -175,7 +179,7 @@ impl RustGenerator {
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
-                dest.push_str("<'a>");
+                //dest.push_str("<'a>");
             }
             VariableType::Optional => {
                 dest.push_str("Option<");
@@ -216,9 +220,10 @@ impl RustGenerator {
         // If we don't have any return value we alwayes return self
         //
         if func.return_val.is_none() {
-            func_imp.push_str(" -> &");
-            func_imp.push_str(struct_name);
-            func_imp.push_str("<'a>");
+            func_imp.push_str(" -> &Self");
+            //func_imp.push_str(" -> &");
+            //func_imp.push_str(struct_name);
+            //func_imp.push_str("<'a>");
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
@@ -241,25 +246,51 @@ impl RustGenerator {
     /// Generates the implementations for the structs
     ///
     fn generate_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
-        f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
+        if sdef.has_event_replace_functions() {
+            f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
 
-        // Generate all regular functions
+            for func in &sdef.functions {
+                let res = match func.func_type {
+                    //FunctionType::Regular => self.generate_function(&func, &sdef.name),
+                    //FunctionType::Static => self.generate_function(&func, &sdef.name),
+                    FunctionType::Replace => self.generate_callback(&func, &sdef.name),
+                    FunctionType::Event => self.generate_callback(&func, &sdef.name),
+                    _ => String::new(),
+                };
 
-        for func in &sdef.functions {
-            let res = match func.func_type {
-                FunctionType::Regular => self.generate_function(&func, &sdef.name),
-                FunctionType::Static => self.generate_function(&func, &sdef.name),
-                FunctionType::Replace => self.generate_callback(&func, &sdef.name),
-                FunctionType::Event => self.generate_callback(&func, &sdef.name),
-            };
+                if !res.is_empty() {
+                    f.write_all(res.as_bytes())?;
+                }
+            }
 
-            f.write_all(res.as_bytes())?;
+            f.write_all(b"}\n")?;
+        }
+
+        if sdef.has_regular_functions() {
+            self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef)?;
+
+        }
+
+        if sdef.has_static_functions() {
+            let static_name = &format!("{}Static", sdef.name);
+            self.generate_trait_impl(f, static_name, FunctionType::Static, &sdef)?;
+
+            // implement the static trait for the regular one as well
+
+            let mut template_data = Object::new();
+            template_data.insert("trait_name".to_owned(), Value::str(&static_name));
+            template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("target_name_snake".to_owned(), Value::Str(static_name.to_snake_case()));
+            template_data.insert("target_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
+
+            let out = self.trait_impl_template.render(&template_data).unwrap();
+            f.write_all(out.as_bytes())?;
         }
 
         // Generate the functions
-        f.write_all(Self::generate_get_obj_funcs(&sdef.name).as_bytes())?;
+        //f.write_all(Self::generate_get_obj_funcs(&sdef.name).as_bytes())?;
 
-        f.write_all(b"}\n")
+        Ok(())
     }
 
     ///
@@ -298,8 +329,8 @@ impl RustGenerator {
         let snake_name = struct_name.to_snake_case();
         format!(
             "    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
-        let obj = self.data.get().unwrap();
-        (obj.privd, obj.{}_funcs)\n    }}\n",
+                let obj = self.data.get().unwrap();
+                (obj.privd, obj.{}_funcs)\n    }}\n",
             snake_name, struct_name, snake_name
         )
     }
@@ -315,8 +346,8 @@ impl RustGenerator {
         let snake_name = struct_name.to_snake_case();
         format!(
             "    fn get_{}_static_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
-        let obj = self.data;
-        (obj.privd, obj.{}_funcs)\n    }}\n",
+                let obj = self.data;
+                (obj.privd, obj.{}_funcs)\n    }}\n",
             snake_name, struct_name, snake_name
         )
     }
@@ -445,11 +476,11 @@ impl RustGenerator {
                 None => {
                     match ret_val.vtype {
                         /*
-                        VariableType::Optional(ref vtype) => {
-                            template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
-                            template_data.insert("return_type".to_owned(), Value::str("optional"));
-                        },
-                        */
+                   VariableType::Optional(ref vtype) => {
+                   template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                   template_data.insert("return_type".to_owned(), Value::str("optional"));
+                   },
+                   */
                         VariableType::Regular => {
                             template_data.insert("return_type".to_owned(), Value::str("no_wrap"));
                             template_data.insert(
@@ -458,11 +489,11 @@ impl RustGenerator {
                             );
                         }
                         /*
-                        VariableType::Array(ref vtype) => {
-                            template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
-                            template_data.insert("return_type".to_owned(), Value::str("array"));
-                        },
-                        */
+                   VariableType::Array(ref vtype) => {
+                   template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                   template_data.insert("return_type".to_owned(), Value::str("array"));
+                   },
+                   */
                         _ => (),
                     }
                 }
@@ -499,12 +530,45 @@ impl RustGenerator {
                 f.write_all(output.as_bytes())?;
             }
 
+            /*
             if s.has_static_functions() {
                 self.generate_static_struct_impl(f, s)?;
             }
+            */
 
             Ok(())
         })
+    }
+    ///
+    /// Generate trait implementation
+    ///
+    fn generate_trait_impl<W: Write>(
+        &self,
+        dest: &mut W,
+        name: &str,
+        func_type: FunctionType,
+        sdef: &Struct,
+    ) -> io::Result<()> {
+        let struct_name = format!("{}Type", name);
+        writeln!(dest, "pub trait {} {{", struct_name)?;
+
+        sdef.functions
+            .iter()
+            .filter(|f| f.func_type == func_type)
+            .for_each(|f| {
+
+            let res = self.generate_function(&f, &sdef.name);
+            dest.write_all(res.as_bytes());
+        });
+
+        let mut template_data = Object::new();
+        template_data.insert("name".to_owned(), Value::str(name));
+        template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+        template_data.insert("type_name_snake".to_owned(), Value::Str(name.to_snake_case()));
+        template_data.insert("type_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
+
+        let out = self.trait_impl_end_template.render(&template_data).unwrap();
+        dest.write_all(out.as_bytes())
     }
 
     ///
@@ -559,7 +623,7 @@ impl RustGenerator {
         self.generate_structs_impl(&mut f, api_def)?;
 
         // Generate the main Rute entry
-        self.generate_rute(&mut f, api_def)?;
+        //self.generate_rute(&mut f, api_def)?;
 
         Ok(())
     }
@@ -568,6 +632,7 @@ impl RustGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use api_parser::*;
 
     //
     // Create a default function to reduce duplication a bit
@@ -591,7 +656,7 @@ mod tests {
         let rust_gen = RustGenerator::new(&ApiDef::default());
         let func = build_default_func();
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self) -> &TestStruct<'a>");
+        assert_eq!(func_impl, "(&self) -> &Self");
     }
 
     //
@@ -609,7 +674,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, foo: i32) -> &TestStruct<'a>");
+        assert_eq!(func_impl, "(&self, foo: i32) -> &Self");
     }
 
     #[test]
@@ -624,7 +689,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, foo: &str) -> &TestStruct<'a>");
+        assert_eq!(func_impl, "(&self, foo: &str) -> &Self");
     }
 
     //
@@ -651,7 +716,7 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(
             func_impl,
-            "(&self, width: i32, height: f32) -> &TestStruct<'a>"
+            "(&self, width: i32, height: f32) -> &Self"
         );
     }
 
@@ -727,6 +792,49 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, width: &[i32]) -> &TestStruct<'a>");
+        assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self");
     }
+/*
+    //
+    // Test generation of static trait
+    //
+    #[test]
+    fn test_test_generate_static_trait() {
+        let mut res = Vec::new();
+        let mut api_def = ApiDef::default();
+        ApiParser::parse_string(
+            "struct Test { [static] test1(), test2() }",
+            "<none>",
+            &mut api_def,
+        );
+        let rust_gen = RustGenerator::new(&api_def);
+        rust_gen.generate_trait_impl(&mut res, "Test", FunctionType::Regular, &api_def.class_structs[0]).unwrap();
+
+        assert_eq!(
+            String::from_utf8(res).unwrap(),
+"pub trait TestType {
+
+    pub fn test1(&self) -> &TestType<'a> {
+
+        let (obj_data, funcs) = self.get_test_obj_funcs();
+        unsafe {
+            ((*funcs).test)(obj_data);
+        }
+        self
+    }
+
+    fn get_test_obj_funcs(&self) -> (*const RUBase, *const RUTestFuncs);
+}
+
+impl<'a> TestType for Test<'a> {
+    fn get_test_obj_funcs(&self) -> (*const RUBase, *const RUTestFuncs) {
+        let obj = self.data.get().unwrap();
+        (obj.privd, obj.test_funcs)
+    }
+}
+"
+        );
+    }
+*/
+
 }
