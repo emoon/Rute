@@ -12,8 +12,16 @@ use rust_gen_templates::*;
 ///
 /// Keeps track of all the type handlers and when to apply them
 ///
-type TypeHandler = HashMap<&'static str, Box<TypeHandlerTrait>>;
+struct TypeHandler {
+    pub mapping: HashMap<&'static str, Box<TypeHandlerTrait>>,
+    // We use a separate type handler for traits as we don't match the types for it as we do a
+    // basic string matching on the name instead of register all the types
+    pub trait_handler: Box<TypeHandlerTrait>,
+}
 
+///
+/// The Rust generator
+///
 pub struct RustGenerator {
     rust_func_template: Template,
     rust_no_wrap_template: Template,
@@ -38,7 +46,7 @@ trait TypeHandlerTrait {
         "".into()
     }
 
-    fn gen_body(&self, _arg: &str, _index: usize) -> (Cow<str>, Cow<str>);
+    fn gen_body(&self, _arg: &Variable, _index: usize) -> (Cow<str>, Cow<str>);
 }
 
 ///
@@ -63,12 +71,62 @@ impl TypeHandlerTrait for StringTypeHandler {
         "CStr::from_ptr(ret_val).to_string_lossy().into_owned()".into()
     }
 
-    fn gen_body(&self, arg: &str, index: usize) -> (Cow<str>, Cow<str>) {
-        let arg_name = format!("str_in_{}_{}", arg, index);
+    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+        let arg_name = format!("str_in_{}_{}", arg.name, index);
         (
             format!("{}.as_ptr()", arg_name).into(),
-            format!("let {} = CString::new({}).unwrap();\n", arg_name, arg).into(),
+            format!("let {} = CString::new({}).unwrap();\n", arg_name, arg.name).into(),
         )
+    }
+}
+
+///
+/// String type handler
+///
+#[derive(Clone)]
+struct TraitTypeHandler;
+
+///
+/// We need to handle strings in a special way. They need to be sent down using CString and the
+/// pointer to it so have a generator for it
+///
+impl TypeHandlerTrait for TraitTypeHandler {
+    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+        let type_name = &arg.type_name[..arg.type_name.len() - 4];
+        let arg_name = format!("obj_{}_{}", arg.name, index);
+        (
+            arg_name.to_owned().into(),
+            //format!("{}.as_ptr()", arg_name).into(),
+            format!("let ({}, _funcs) = {}.get_{}_obj_funcs();\n", arg_name, arg.name, type_name.to_snake_case()).into(),
+        )
+    }
+}
+
+///
+///
+///
+impl TypeHandler {
+    ///
+    /// Create a new instance of the handle
+    ///
+    fn new(trait_handler: Box<TraitTypeHandler>) -> TypeHandler {
+        TypeHandler {
+            mapping: HashMap::new(),
+            trait_handler,
+        }
+    }
+
+    ///
+    /// Get a handler for a given type. This code will special case if the type ends with "Type"
+    /// such as "WidgetType". In that case it will return a TraitHandler as "*Type" is expected to
+    /// always be traits. If no handler was found None is returned
+    ///
+    fn get(&self, type_name: &str) -> Option<&Box<TypeHandlerTrait>> {
+        if type_name.ends_with("Type") {
+            Some(&self.trait_handler)
+        } else {
+            self.mapping.get(type_name)
+        }
     }
 }
 
@@ -133,8 +191,8 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
 ///
 
 fn setup_type_handlers(_api_def: &ApiDef) -> TypeHandler {
-    let mut type_handler = TypeHandler::new();
-    type_handler.insert("String", Box::new(StringTypeHandler {}));
+    let mut type_handler = TypeHandler::new(Box::new(TraitTypeHandler {}));
+    type_handler.mapping.insert("String", Box::new(StringTypeHandler {}));
     type_handler
 }
 
@@ -425,8 +483,9 @@ impl RustGenerator {
         for (i, arg) in func.function_args.iter().enumerate() {
             match self.type_handler.get(arg.type_name.as_str()) {
                 Some(handler) => {
-                    let (gen_arg, body) = handler.gen_body(&arg.name, i);
+                    let (gen_arg, body) = handler.gen_body(&arg, i);
                     function_args.push((true, gen_arg));
+                    body_setup.push_str("        ");
                     body_setup += &body;
                 }
                 None => {
