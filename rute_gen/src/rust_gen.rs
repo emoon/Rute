@@ -93,8 +93,8 @@ fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
             "pub struct {}<'a> {{
-data: Rc<Cell<Option<RU{}>>>,
-_marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+    data: Rc<Cell<Option<RU{}>>>,
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
         ))?;
     }
@@ -118,9 +118,9 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
     {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
-            "pub struct {}Static<'a> {{
-data: RU{},
-_marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+"pub struct {}Static<'a> {{
+    data: RU{},
+    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
         ))?;
     }
@@ -173,7 +173,7 @@ impl RustGenerator {
             VariableType::None => dest.push_str("<None>"),
             VariableType::SelfType => dest.push_str("&self"),
             VariableType::Primitive => dest.push_str(&type_name),
-            VariableType::Enum => dest.push_str(&type_name),
+            VariableType::Enum => dest.push_str(&var.enum_sub_type),
             VariableType::Regular => dest.push_str(&type_name),
             VariableType::Str => dest.push_str("&str"),
             VariableType::Reference => {
@@ -508,11 +508,7 @@ impl RustGenerator {
     ///
     fn generate_structs_impl<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         api_def.class_structs.iter().try_for_each(|s| {
-            //if s.should_generate_trait {
-            //    self.generate_struct_impl(f, s)?;
-            //} else {
             self.generate_struct_impl(f, s)?;
-            //}
 
             // Implement drop for structs that needs it
 
@@ -529,12 +525,6 @@ impl RustGenerator {
 
                 f.write_all(output.as_bytes())?;
             }
-
-            /*
-            if s.has_static_functions() {
-                self.generate_static_struct_impl(f, s)?;
-            }
-            */
 
             Ok(())
         })
@@ -612,6 +602,9 @@ impl RustGenerator {
 
         // write header
         f.write_all(HEADER)?;
+
+        // As we may need types/enums/etc from other types we need to generate that
+        //self.generate_mod_usage(&mut f, api_def);
 
         // write all the structs
         generate_structs(&mut f, api_def)?;

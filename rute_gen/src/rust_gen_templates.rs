@@ -7,8 +7,10 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_auto_ffi::*;
+use auto::rute_enums::*;
+\n\n";
 
+pub static CREATE_HEADER: &'static [u8] = b"
 unsafe extern \"C\" fn rute_object_delete_callback<T>(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<T>>);
     d.set(None);

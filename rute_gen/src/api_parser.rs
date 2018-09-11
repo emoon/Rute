@@ -467,6 +467,7 @@ impl ApiParser {
 
         var.type_name = type_name;
         var.vtype = var_type;
+        var
     }
 
     ///

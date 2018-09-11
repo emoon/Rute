@@ -1113,7 +1113,7 @@ mod tests {
                 name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
                 type_name: "struct RUBase".to_owned(),
-                array: false,
+                .. Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1132,7 +1132,7 @@ mod tests {
                 name: "var0".to_owned(),
                 vtype: VariableType::Primitive,
                 type_name: "i32".to_owned(),
-                array: false,
+                .. Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1154,7 +1154,7 @@ mod tests {
                 name: "var0".to_owned(),
                 vtype: VariableType::Reference,
                 type_name: "DropEvent".to_owned(),
-                array: false,
+                .. Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1198,7 +1198,7 @@ mod tests {
             name: "ret".to_owned(),
             vtype: VariableType::Primitive,
             type_name: "i32".to_owned(),
-            array: false,
+            .. Variable::default()
         });
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
@@ -1226,7 +1226,7 @@ mod tests {
             name: String::new(),
             vtype: VariableType::Str,
             type_name: String::new(),
-            array: false,
+            .. Variable::default()
         });
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
