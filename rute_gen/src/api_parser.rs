@@ -28,7 +28,7 @@ static ATTRIB_DROP: &'static str = "Drop";
 ///
 /// Variable type
 ///
-#[derive(PartialEq, Debug, Clone)]
+#[derive(PartialEq, Debug, Clone, Copy)]
 pub enum VariableType {
     None,
     /// Self (aka this pointer in C++ and self in Rust)
@@ -60,6 +60,8 @@ pub struct Variable {
     pub vtype: VariableType,
     /// Name of the variable type
     pub type_name: String,
+    /// Rest name of a enum. "test" in the case of Rute::test
+    pub enum_sub_type: String,
     /// If variable is an array
     pub array: bool,
 }
@@ -73,6 +75,7 @@ impl Default for Variable {
             name: String::new(),
             vtype: VariableType::None,
             type_name: String::new(),
+            enum_sub_type: String::new(),
             array: false,
         }
     }
@@ -424,6 +427,12 @@ impl ApiParser {
                 Rule::refexp => vtype = Rule::refexp,
                 Rule::optional => vtype = Rule::optional,
                 Rule::vtype => type_name = entry.as_str().to_owned(),
+                Rule::enum_use => {
+                    let name = entry.as_str();
+                    var.enum_sub_type = name[2..].to_owned();
+                    vtype = Rule::enum_use;
+                },
+
                 Rule::array => {
                     // Get the type if we have an array
                     for entry in entry.into_inner() {
@@ -444,6 +453,7 @@ impl ApiParser {
         let var_type = match vtype {
             Rule::refexp => VariableType::Reference,
             Rule::optional => VariableType::Optional,
+            Rule::enum_use => VariableType::Enum,
             _ => {
                 if type_name == "String" {
                     VariableType::Str
@@ -457,7 +467,6 @@ impl ApiParser {
 
         var.type_name = type_name;
         var.vtype = var_type;
-        var
     }
 
     ///

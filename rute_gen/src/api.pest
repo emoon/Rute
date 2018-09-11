@@ -18,8 +18,9 @@ static_typ   = { ("[static]") }
 refexp       = { ("&") }
 optional     = { ("?") }
 array        = { ("[") ~ refexp? ~ vtype ~ ("]") }
+enum_use     = { ("::") ~ vtype }
 retexp       = { ("->") ~ refexp? ~ (vtype | array) ~ optional? }
-var          = { name ~ (":") ~ refexp? ~ vtype }
+var          = { name ~ (":") ~ refexp? ~ vtype ~ enum_use? }
 varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
@@ -35,7 +36,7 @@ name_or_num = @{
 }
 
 vtype = @{
-	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ("::") | ('0'..'9'))*
+	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
 }
 
 comment = _{

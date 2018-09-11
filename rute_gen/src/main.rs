@@ -2,8 +2,8 @@ extern crate argparse;
 extern crate heck;
 extern crate liquid;
 extern crate pest;
-extern crate walkdir;
 extern crate rayon;
+extern crate walkdir;
 
 #[macro_use]
 extern crate pest_derive;
@@ -33,9 +33,9 @@ mod c_gen;
 
 use api_parser::{ApiDef, ApiParser};
 use header_ffi_gen::HeaderFFIGenerator;
-use walkdir::WalkDir;
 use rayon::prelude::*;
 use std::sync::Mutex;
+use walkdir::WalkDir;
 
 use c_gen::CapiHeaderGen;
 use qt_gen::QtGenerator;
@@ -67,6 +67,12 @@ fn create_dir(path: &str) {
 fn main() {
     let mut api = ApiDef::default();
     let wd = WalkDir::new("defs");
+
+    // temporary set to one thread during debugging
+    rayon::ThreadPoolBuilder::new()
+        .num_threads(1)
+        .build_global()
+        .unwrap();
 
     let rust_dest_dir = "../rute/src/auto";
 
