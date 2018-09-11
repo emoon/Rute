@@ -19,7 +19,7 @@ struct Color {
     set_named_color(name: String),
     set_named_color(name: StringViewType),
     set_named_color(name: Latin1StringType),
-    [static] color_names() -> StringList,
+    [static] color_names() -> [String],
     spec() -> Color::Spec,
     alpha() -> i32,
     set_alpha(alpha: i32),

@@ -16,7 +16,7 @@ struct RegularExpressionMatch {
     captured(name: StringViewType) -> String,
     captured_ref(name: StringViewType) -> StringRef,
     captured_view(name: StringViewType) -> StringView,
-    captured_texts() -> StringList,
+    captured_texts() -> [String],
     captured_start(nth: i32) -> i32,
     captured_length(nth: i32) -> i32,
     captured_end(nth: i32) -> i32,

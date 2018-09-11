@@ -75,7 +75,7 @@ struct TreeView : AbstractItemView {
     [replace] vertical_offset() -> i32,
     [replace] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
     [replace] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    [replace] selected_indexes() -> ModelIndexList,
+    [replace] selected_indexes() -> [ModelIndex],
     [replace] timer_event(event: &TimerEventType),
     [replace] paint_event(event: &PaintEventType),
     draw_tree(painter: &PainterType, region: &RegionType),

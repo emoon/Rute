@@ -17,8 +17,8 @@ struct Picture : PaintDevice {
     [static] picture_format(file_name: String) -> char?,
     [static] input_formats() -> [ByteArray],
     [static] output_formats() -> [ByteArray],
-    [static] input_format_list() -> StringList,
-    [static] output_format_list() -> StringList,
+    [static] input_format_list() -> [String],
+    [static] output_format_list() -> [String],
     [replace] paint_engine() -> PaintEngine?,
 }
 

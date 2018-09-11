@@ -63,7 +63,7 @@ struct TableView : AbstractItemView {
     [replace] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
     [replace] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
     [replace] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    [replace] selected_indexes() -> ModelIndexList,
+    [replace] selected_indexes() -> [ModelIndex],
     [replace] viewport_size_hint() -> Size,
     [replace] size_hint_for_row(row: i32) -> i32,
     [replace] size_hint_for_column(column: i32) -> i32,

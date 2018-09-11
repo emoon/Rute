@@ -1,7 +1,7 @@
 struct TextBrowser : TextEdit {
     source() -> Url,
-    search_paths() -> StringList,
-    set_search_paths(paths: &StringListType),
+    search_paths() -> [String],
+    set_search_paths(paths: &[String]),
     [replace] load_resource(type: i32, name: &UrlType) -> Variant,
     is_backward_available() -> bool,
     is_forward_available() -> bool,

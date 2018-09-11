@@ -2,7 +2,7 @@
 struct ItemSelection {
     select(top_left: &ModelIndexType, bottom_right: &ModelIndexType),
     contains(index: &ModelIndexType) -> bool,
-    indexes() -> ModelIndexList,
+    indexes() -> [ModelIndex],
     merge(other: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
     [static] split(range: &ItemSelectionRangeType, other: &ItemSelectionRangeType, result: &ItemSelectionType),
 }

@@ -43,7 +43,7 @@ struct Completer : Object {
     complete(rect: &RectType),
     set_wrap_around(wrap: bool),
     [replace] path_from_index(index: &ModelIndexType) -> String,
-    [replace] split_path(path: String) -> StringList,
+    [replace] split_path(path: String) -> [String],
     [replace] event_filter(o: &ObjectType, e: &EventType) -> bool,
     [replace] event(arg0: &EventType) -> bool,
     [event] activated(text: String),

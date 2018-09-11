@@ -3,7 +3,7 @@ enum CoreApplicationFixMeEnums {
 }
 
 struct CoreApplication : Object {
-    [static] arguments() -> StringList,
+    [static] arguments() -> [String],
     [static] set_organization_domain(org_domain: String),
     [static] organization_domain() -> String,
     [static] set_organization_name(org_name: String),
@@ -32,8 +32,8 @@ struct CoreApplication : Object {
     [static] application_dir_path() -> String,
     [static] application_file_path() -> String,
     [static] application_pid() -> i64,
-    [static] set_library_paths(arg0: &StringListType),
-    [static] library_paths() -> StringList,
+    [static] set_library_paths(arg0: &[String]),
+    [static] library_paths() -> [String],
     [static] add_library_path(arg0: String),
     [static] remove_library_path(arg0: String),
     [static] install_translator(message_file: &TranslatorType) -> bool,

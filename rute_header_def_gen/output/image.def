@@ -113,7 +113,7 @@ struct Image : PaintDevice {
     set_dots_per_meter_y(arg0: i32),
     offset() -> Point,
     set_offset(arg0: &PointType),
-    text_keys() -> StringList,
+    text_keys() -> [String],
     text(key: String) -> String,
     set_text(key: String, value: String),
     pixel_format() -> PixelFormat,

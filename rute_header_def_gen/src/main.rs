@@ -201,6 +201,21 @@ fn get_complex_arg(name: &str, is_return: IsReturnType) -> String {
         }
     }
 
+    let fixed_lists = &[
+        ("StringList", "[String]"),
+        ("ModelIndexList", "[ModelIndex]"),
+    ];
+
+    for (list_name, replace) in fixed_lists {
+        if name.find(list_name).is_some() {
+            if is_return == IsReturnType::No {
+                return format!("&{}", replace);
+            } else {
+                return replace.to_string();
+            }
+        }
+    }
+
     // Do the rest
 
     if name.contains("QList<") || name.contains("QVector<") {

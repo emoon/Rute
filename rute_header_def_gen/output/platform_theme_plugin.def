@@ -1,5 +1,5 @@
 struct PlatformThemePlugin : Object {
-    [replace] create(key: String, param_list: &StringListType) -> PlatformTheme?,
+    [replace] create(key: String, param_list: &[String]) -> PlatformTheme?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

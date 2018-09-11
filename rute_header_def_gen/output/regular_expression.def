@@ -34,7 +34,7 @@ struct RegularExpression {
     is_valid() -> bool,
     pattern_error_offset() -> i32,
     capture_count() -> i32,
-    named_capture_groups() -> StringList,
+    named_capture_groups() -> [String],
     match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatch,
     match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatch,
     global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIterator,

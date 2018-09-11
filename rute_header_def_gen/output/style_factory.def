@@ -1,6 +1,6 @@
 
 struct StyleFactory {
-    [static] keys() -> StringList,
+    [static] keys() -> [String],
     [static] create(arg0: String) -> Style?,
 }
 

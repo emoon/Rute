@@ -20,7 +20,7 @@ struct ImageReader {
     file_name() -> String,
     size() -> Size,
     image_format() -> Image::Format,
-    text_keys() -> StringList,
+    text_keys() -> [String],
     text(key: String) -> String,
     set_clip_rect(rect: &RectType),
     clip_rect() -> Rect,

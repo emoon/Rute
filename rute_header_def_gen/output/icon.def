@@ -34,8 +34,8 @@ struct Icon {
     [static] from_theme(name: String) -> Icon,
     [static] from_theme(name: String, fallback: &IconType) -> Icon,
     [static] has_theme_icon(name: String) -> bool,
-    [static] theme_search_paths() -> StringList,
-    [static] set_theme_search_paths(searchpath: &StringListType),
+    [static] theme_search_paths() -> [String],
+    [static] set_theme_search_paths(searchpath: &[String]),
     [static] theme_name() -> String,
     [static] set_theme_name(path: String),
 }

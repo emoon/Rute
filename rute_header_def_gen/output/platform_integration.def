@@ -66,7 +66,7 @@ struct PlatformIntegration {
     [replace] default_window_state(arg0: Rute::WindowFlags) -> Rute::WindowState,
     [replace] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
     [replace] possible_keys(arg0: &KeyEventType) -> [i32],
-    [replace] theme_names() -> StringList,
+    [replace] theme_names() -> [String],
     [replace] create_platform_theme(name: String) -> PlatformTheme?,
     [replace] create_platform_offscreen_surface(surface: &OffscreenSurfaceType) -> PlatformOffscreenSurface?,
     [replace] create_platform_session_manager(id: String, key: String) -> PlatformSessionManager?,

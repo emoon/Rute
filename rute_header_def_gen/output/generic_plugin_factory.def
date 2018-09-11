@@ -1,6 +1,6 @@
 
 struct GenericPluginFactory {
-    [static] keys() -> StringList,
+    [static] keys() -> [String],
     [static] create(arg0: String, arg1: String) -> Object?,
 }
 

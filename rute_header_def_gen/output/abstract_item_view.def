@@ -172,7 +172,7 @@ struct AbstractItemView : AbstractScrollArea {
     [replace] is_index_hidden(index: &ModelIndexType) -> bool,
     [replace] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
     [replace] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    [replace] selected_indexes() -> ModelIndexList,
+    [replace] selected_indexes() -> [ModelIndex],
     [replace] edit(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: &EventType) -> bool,
     [replace] selection_command(index: &ModelIndexType, event: &EventType) -> ItemSelectionModel::SelectionFlags,
     [replace] start_drag(supported_actions: Rute::DropActions),

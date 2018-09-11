@@ -5,7 +5,7 @@ struct JsonObject {
     to_variant_map() -> VariantMap,
     [static] from_variant_hash(map: &VariantHashType) -> JsonObject,
     to_variant_hash() -> VariantHash,
-    keys() -> StringList,
+    keys() -> [String],
     size() -> i32,
     count() -> i32,
     length() -> i32,

@@ -905,14 +905,14 @@ struct Locale {
     to_lower(str: String) -> String,
     currency_symbol(arg0: Locale::CurrencySymbolFormat) -> String,
     formatted_data_size(bytes: i64, precision: i32, format: DataSizeFormats) -> String,
-    ui_languages() -> StringList,
+    ui_languages() -> [String],
     [static] set_default(locale: &LocaleType),
     [static] c() -> Locale,
     [static] system() -> Locale,
     [static] matching_locales(language: Locale::Language, script: Locale::Script, country: Locale::Country) -> [Locale],
     set_number_options(options: NumberOptions),
     number_options() -> NumberOptions,
-    create_separated_list(strl: &StringListType) -> String,
+    create_separated_list(strl: &[String]) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

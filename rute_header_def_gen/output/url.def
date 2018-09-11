@@ -91,8 +91,8 @@ struct Url {
     to_nsurl() -> NSURL?,
     [static] from_ace(arg0: &ByteArrayType) -> String,
     [static] to_ace(arg0: String) -> ByteArray,
-    [static] idn_whitelist() -> StringList,
-    [static] set_idn_whitelist(arg0: &StringListType),
+    [static] idn_whitelist() -> [String],
+    [static] set_idn_whitelist(arg0: &[String]),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
