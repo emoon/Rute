@@ -105,7 +105,7 @@ fn main() {
         ApiParser::parse_file(&f.path(), &mut api_def);
 
         // Generate the Rust high-level code
-        RustGenerator::new(&api_def)
+        RustGenerator::new()
             .generate(&format!("{}/{}.rs", rust_dest_dir, base_filename), &api_def)
             .unwrap();
 
@@ -113,7 +113,13 @@ fn main() {
             let mut data = api_defs.lock().unwrap();
             data.push(api_def);
         }
-    })
+    });
+
+    let mut data = api_defs.lock().unwrap();
+
+    // Generate the main rute.rs file
+    RustGenerator::new()
+        .generate_rute(&format!("{}/{}.rs", rust_dest_dir, "rute.rs"), &data).unwrap();
 
     /*
 

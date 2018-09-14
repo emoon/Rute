@@ -190,18 +190,18 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
 /// Setup the type handlers
 ///
 
-fn setup_type_handlers(_api_def: &ApiDef) -> TypeHandler {
+fn setup_type_handlers() -> TypeHandler {
     let mut type_handler = TypeHandler::new(Box::new(TraitTypeHandler {}));
     type_handler.mapping.insert("String", Box::new(StringTypeHandler {}));
     type_handler
 }
 
 impl RustGenerator {
-    pub fn new(api_def: &ApiDef) -> RustGenerator {
+    pub fn new() -> RustGenerator {
         let parser = ParserBuilder::with_liquid().build();
 
         RustGenerator {
-            type_handler: setup_type_handlers(api_def),
+            type_handler: setup_type_handlers(),
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
             rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
@@ -623,14 +623,20 @@ impl RustGenerator {
     ///
     ///
     ///
-    fn generate_rute<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    pub fn generate_rute(&self, filename: &str, api_defs: &[ApiDef]) -> io::Result<()> {
+        let mut f = BufWriter::new(File::create(filename)?);
+
+        // write header
+        f.write_all(HEADER)?;
+
+        // impl header
         f.write_all(RUTE_IMPL_HEADER)?;
 
         // Generate all stucts that have owned data the generated style is outlined in RUST_CREATE_TEMPLATE
 
-        for sdef in api_def
-            .class_structs
+        for sdef in api_defs
             .iter()
+            .flat_map(|s| s.class_structs.iter())
             .filter(|s| s.should_have_create_func())
         {
             let mut template_data = Object::new();
@@ -653,7 +659,7 @@ impl RustGenerator {
             }
         }
 
-        f.write_all(b"}\n")
+        f.write_all(b"}")
     }
 
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
