@@ -1009,23 +1009,6 @@ mod tests {
         assert_eq!(is_primitve("dummy"), false);
     }
 
-    /*
-    #[test]
-    fn test_basic_pod_struct() {
-        let mut api_def = ApiDef::default();
-        ApiParser::parse_string("struct Foo { i32 test }", "", &mut api_def);
-        assert_eq!(api_def.pod_structs.is_empty(), false);
-        assert_eq!(api_def.class_structs.is_empty(), true);
-
-        let sdef = &api_def.pod_structs[0];
-
-        assert_eq!(sdef.name, "Foo");
-        assert_eq!(sdef.variables.len(), 1);
-        assert_eq!(sdef.functions.is_empty(), true);
-        assert_eq!(sdef.variables[0].name, "test");
-    }
-    */
-
     ///
     /// Make sure parsing of "struct Widget { show() }"
     ///
