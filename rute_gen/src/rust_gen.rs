@@ -17,6 +17,9 @@ struct TypeHandler {
     // We use a separate type handler for traits as we don't match the types for it as we do a
     // basic string matching on the name instead of register all the types
     pub trait_handler: Box<TypeHandlerTrait>,
+    // We also use a separate handler for enums with same motivation as above as we can just check
+    // the type instead of matching all enum names
+    pub enum_handler: Box<TypeHandlerTrait>,
 }
 
 ///
@@ -103,16 +106,40 @@ impl TypeHandlerTrait for TraitTypeHandler {
 }
 
 ///
+/// Enum type handler
+///
+#[derive(Clone)]
+struct EnumTypeHandler;
+
+///
+/// Enums are being handled separately as we need to cast them between Rust and native for C++
+///
+impl TypeHandlerTrait for EnumTypeHandler {
+    fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
+        format!("unsafe {{ transmute::<i32, {}>(ret_val) }}", varible.type_name).into()
+    }
+
+    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+        let arg_name = format!("enum_{}_{}", arg.name, index);
+        (
+            arg_name.to_owned().into(),
+            format!("let {} = {} as i32;\n", arg_name, arg.name).into()
+        )
+    }
+}
+
+///
 ///
 ///
 impl TypeHandler {
     ///
     /// Create a new instance of the handle
     ///
-    fn new(trait_handler: Box<TraitTypeHandler>) -> TypeHandler {
+    fn new() -> TypeHandler {
         TypeHandler {
             mapping: HashMap::new(),
-            trait_handler,
+            trait_handler: Box::new(TraitTypeHandler {}),
+            enum_handler: Box::new(EnumTypeHandler {}),
         }
     }
 
@@ -121,8 +148,12 @@ impl TypeHandler {
     /// such as "WidgetType". In that case it will return a TraitHandler as "*Type" is expected to
     /// always be traits. If no handler was found None is returned
     ///
-    fn get(&self, type_name: &str) -> Option<&Box<TypeHandlerTrait>> {
-        if type_name.ends_with("Type") {
+    fn get(&self, arg: &Variable) -> Option<&Box<TypeHandlerTrait>> {
+        let type_name = arg.type_name.as_str();
+
+        if arg.vtype == VariableType::Enum {
+            Some(&self.enum_handler)
+        } else if type_name.ends_with("Type") {
             Some(&self.trait_handler)
         } else {
             self.mapping.get(type_name)
@@ -191,7 +222,7 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
 ///
 
 fn setup_type_handlers() -> TypeHandler {
-    let mut type_handler = TypeHandler::new(Box::new(TraitTypeHandler {}));
+    let mut type_handler = TypeHandler::new();
     type_handler.mapping.insert("String", Box::new(StringTypeHandler {}));
     type_handler
 }
@@ -221,7 +252,7 @@ impl RustGenerator {
 
         // Run code to replace type if neeed
         let type_name = {
-            match self.type_handler.get(var.type_name.as_str()) {
+            match self.type_handler.get(var) {
                 Some(handler) => handler.replace_type(var, return_arg),
                 None => var.type_name.clone().into(),
             }
@@ -484,7 +515,7 @@ impl RustGenerator {
 
         // Setup the input args
         for (i, arg) in func.function_args.iter().enumerate() {
-            match self.type_handler.get(arg.type_name.as_str()) {
+            match self.type_handler.get(&arg) {
                 Some(handler) => {
                     let (gen_arg, body) = handler.gen_body(&arg, i);
                     function_args.push((true, gen_arg));
@@ -530,7 +561,7 @@ impl RustGenerator {
             template_data.insert("return_type".to_owned(), Value::str("none"));
             template_data.insert("optional_return".to_owned(), Value::Bool(ret_val.optional));
 
-            match self.type_handler.get(ret_val.type_name.as_str()) {
+            match self.type_handler.get(&ret_val) {
                 Some(handler) => {
                     let ret = handler.gen_body_return(&ret_val);
                     template_data.insert("return_type".to_owned(), Value::str("replaced"));
@@ -686,9 +717,6 @@ impl RustGenerator {
 
         // Generate the implementations for the structs
         self.generate_structs_impl(&mut f, api_def)?;
-
-        // Generate the main Rute entry
-        //self.generate_rute(&mut f, api_def)?;
 
         Ok(())
     }
@@ -860,47 +888,4 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self");
     }
-/*
-    //
-    // Test generation of static trait
-    //
-    #[test]
-    fn test_test_generate_static_trait() {
-        let mut res = Vec::new();
-        let mut api_def = ApiDef::default();
-        ApiParser::parse_string(
-            "struct Test { [static] test1(), test2() }",
-            "<none>",
-            &mut api_def,
-        );
-        let rust_gen = RustGenerator::new(&api_def);
-        rust_gen.generate_trait_impl(&mut res, "Test", FunctionType::Regular, &api_def.class_structs[0]).unwrap();
-
-        assert_eq!(
-            String::from_utf8(res).unwrap(),
-"pub trait TestType {
-
-    pub fn test1(&self) -> &TestType<'a> {
-
-        let (obj_data, funcs) = self.get_test_obj_funcs();
-        unsafe {
-            ((*funcs).test)(obj_data);
-        }
-        self
-    }
-
-    fn get_test_obj_funcs(&self) -> (*const RUBase, *const RUTestFuncs);
-}
-
-impl<'a> TestType for Test<'a> {
-    fn get_test_obj_funcs(&self) -> (*const RUBase, *const RUTestFuncs) {
-        let obj = self.data.get().unwrap();
-        (obj.privd, obj.test_funcs)
-    }
-}
-"
-        );
-    }
-*/
-
 }
