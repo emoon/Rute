@@ -102,6 +102,12 @@ fn main() {
         println!("    Parsing file {:?}", f.path());
         ApiParser::parse_file(&f.path(), &mut api_def);
 
+        // Generate Rust FFI
+        let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
+        println!("        Generateing Rust FFI: {}", rust_ffi_target);
+
+        HeaderFFIGenerator::generate(&rust_ffi_target, &api_def, RustFFIGenerator::new()).unwrap();
+
         // Generate the Rust high-level code
         RustGenerator::new()
             .generate(&format!("{}/{}.rs", rust_dest_dir, base_filename), &api_def)
@@ -117,7 +123,7 @@ fn main() {
 
     // Generate the main rute.rs file
     RustGenerator::new()
-        .generate_rute(&format!("{}/{}.rs", rust_dest_dir, "rute.rs"), &data).unwrap();
+        .generate_rute(&format!("{}/{}.rs", rust_dest_dir, "rute"), &data).unwrap();
 
     /*
 

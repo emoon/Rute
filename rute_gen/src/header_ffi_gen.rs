@@ -1,4 +1,4 @@
-use api_parser::{ApiDef, Enum, Function, RecurseIncludeSelf};
+use api_parser::{ApiDef, Enum, Function, RecurseIncludeSelf, Struct};
 use std::fs::File;
 use std::io::BufWriter;
 use std::io::Result;
@@ -18,7 +18,7 @@ pub trait HeaderFFIGen {
     ///
     /// Generate forward declarations of needed
     ///
-    fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, struct_name: &str) -> Result<()>;
+    fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, sdef: &Struct) -> Result<()>;
 
     ///
     /// Generate the enum
@@ -88,7 +88,7 @@ pub struct HeaderFFIGenerator;
 
 impl HeaderFFIGenerator {
     ///
-    /// Performe the generator
+    ///  Main generation function that generates the structs
     ///
     pub fn generate<T: HeaderFFIGen>(filename: &str, api_def: &ApiDef, mut imp: T) -> Result<()> {
         let mut temp_string = String::with_capacity(128);
@@ -99,7 +99,7 @@ impl HeaderFFIGenerator {
 
         // Generate forward declarations if needed
         for sdef in &api_def.class_structs {
-            imp.gen_forward_declaration(&mut dest, &sdef.name)?;
+            imp.gen_forward_declaration(&mut dest, &sdef)?;
         }
 
         // Generate all enums
@@ -147,6 +147,14 @@ impl HeaderFFIGenerator {
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
         }
 
+        Ok(())
+    }
+
+    ///
+    /// Generate the main file (main entry + create functions and such)
+    ///
+    pub fn generate_main<T: HeaderFFIGen>(filename: &str, api_defs: &[ApiDef], mut imp: T) -> Result<()> {
+        /*
         // Generate the main entry
         imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
 
@@ -166,5 +174,8 @@ impl HeaderFFIGenerator {
 
         // Generate any last bits if needed
         imp.generate_post_declarations(&mut dest, api_def)
+        */
+
+        Ok(())
     }
 }

@@ -52,10 +52,10 @@ impl HeaderFFIGen for CapiHeaderGen {
     fn gen_forward_declaration<W: Write>(
         &mut self,
         dest: &mut W,
-        struct_name: &str,
+        sdef: &Struct,
     ) -> io::Result<()> {
-        writeln!(dest, "struct RU{}Funcs;", struct_name)?;
-        writeln!(dest, "struct RU{};", struct_name)
+        writeln!(dest, "struct RU{}Funcs;", sdef.name)?;
+        writeln!(dest, "struct RU{};", sdef.name)
     }
 
     ///
