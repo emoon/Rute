@@ -645,7 +645,7 @@ impl RustGenerator {
             .for_each(|f| {
 
             let res = self.generate_function(&f, &sdef.name);
-            dest.write_all(res.as_bytes());
+            dest.write_all(res.as_bytes()).unwrap();
         });
 
         let mut template_data = Object::new();
