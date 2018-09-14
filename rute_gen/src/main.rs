@@ -55,7 +55,6 @@ fn create_dir(path: &str) {
     // dir already existits so just bail
     if let Ok(p) = fs::metadata(path) {
         if p.is_dir() {
-            println!("exints {}", path);
             return;
         }
     }
@@ -104,46 +103,50 @@ fn main() {
         .unwrap();
 
     let rust_dest_dir = "../rute/src/auto";
+    let qt_dest = "../rute/qt_cpp/auto";
 
     // Create the output dirs before doing anything else
-
-    create_dir("../rute/qt_cpp/auto");
+    create_dir(qt_dest);
     create_dir(rust_dest_dir);
 
     // Collect all files that needs to be parsed
-
     let files = wd
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().metadata().unwrap().is_file())
-        //.map(|e| e.path().to_str().unwrap().to_owned())
         .collect::<Vec<_>>();
 
     let api_defs = Mutex::new(Vec::with_capacity(files.len()));
 
     // Parse the files threaded
 
-    println!("Pass 1: Parsing the definition files...");
-
     files.par_iter().enumerate().for_each(|(index, f)| {
         let base_filename = f.path().file_name().unwrap().to_str().unwrap();
         let base_filename = &base_filename[..base_filename.len() - 4];
         let mut api_def = ApiDef::default();
 
-        println!("    Parsing file {:?}", f.path());
+        println!("Parsing file {:?}", f.path());
         ApiParser::parse_file(&f.path(), &mut api_def);
 
-        // Generate Rust FFI
+        // Build target filenames
         let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
-        println!("        Generateing Rust FFI: {}", rust_ffi_target);
+        let rust_target = format!("{}/{}.rs", rust_dest_dir, base_filename);
+        let header_target = format!("{}/{}.h", qt_dest, base_filename);
 
+        // Generate Rust FFI
+        println!("    Generateing Rust FFI: {}", rust_ffi_target);
         HeaderFFIGenerator::generate(&rust_ffi_target, &api_def, RustFFIGenerator::new()).unwrap();
 
-        // Generate the Rust high-level code
-        RustGenerator::new()
-            .generate(&format!("{}/{}.rs", rust_dest_dir, base_filename), &api_def)
-            .unwrap();
+        // Generate C/C++ Header for FFI structs
+        println!("    Generateing C/C++ header: {}", header_target);
+        HeaderFFIGenerator::generate(&header_target, &api_def, CapiHeaderGen::new()).unwrap();
 
+        // Generate the Rust high-level code
+        println!("    Generateing Rust: {}", rust_target);
+        RustGenerator::new().generate(&rust_target, &api_def).unwrap();
+
+
+        // Insert the api_def for later usage
         {
             let mut data = api_defs.lock().unwrap();
             data.push(api_def);
