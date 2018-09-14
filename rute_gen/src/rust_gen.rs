@@ -227,6 +227,10 @@ impl RustGenerator {
             }
         };
 
+        if var.optional {
+            dest.push_str("Option<");
+        }
+
         match var.vtype {
             VariableType::None => dest.push_str("<None>"),
             VariableType::SelfType => dest.push_str("&self"),
@@ -239,11 +243,10 @@ impl RustGenerator {
                 dest.push_str(&type_name);
                 //dest.push_str("<'a>");
             }
-            VariableType::Optional => {
-                dest.push_str("Option<");
-                dest.push_str(&type_name);
-                dest.push('>');
-            }
+        }
+
+        if var.optional {
+            dest.push('>');
         }
     }
 
@@ -525,6 +528,7 @@ impl RustGenerator {
 
         func.return_val.as_ref().map(|ret_val| {
             template_data.insert("return_type".to_owned(), Value::str("none"));
+            template_data.insert("optional_return".to_owned(), Value::Bool(ret_val.optional));
 
             match self.type_handler.get(ret_val.type_name.as_str()) {
                 Some(handler) => {
@@ -534,19 +538,22 @@ impl RustGenerator {
                 }
                 None => {
                     match ret_val.vtype {
-                        /*
-                   VariableType::Optional(ref vtype) => {
-                   template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
-                   template_data.insert("return_type".to_owned(), Value::str("optional"));
-                   },
-                   */
                         VariableType::Regular => {
-                            template_data.insert("return_type".to_owned(), Value::str("no_wrap"));
+                            template_data.insert("return_type".to_owned(), Value::str("pointer_ref"));
                             template_data.insert(
                                 "return_vtype".to_owned(),
                                 Value::Str(ret_val.type_name.to_owned()),
                             );
                         }
+
+                        VariableType::Reference => {
+                            template_data.insert("return_type".to_owned(), Value::str("pointer_ref"));
+                            template_data.insert(
+                                "return_vtype".to_owned(),
+                                Value::Str(ret_val.type_name.to_owned()),
+                            );
+                        }
+
                         /*
                    VariableType::Array(ref vtype) => {
                    template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
@@ -711,7 +718,7 @@ mod tests {
     //
     #[test]
     fn test_function_self_only() {
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
         let func = build_default_func();
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self) -> &Self");
@@ -722,7 +729,7 @@ mod tests {
     //
     #[test]
     fn test_function_one_primitive() {
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
         let mut func = build_default_func();
         func.function_args.push(Variable {
             name: "foo".to_owned(),
@@ -737,7 +744,7 @@ mod tests {
 
     #[test]
     fn test_function_string() {
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
         let mut func = build_default_func();
         func.function_args.push(Variable {
             name: "foo".to_owned(),
@@ -756,7 +763,7 @@ mod tests {
     #[test]
     fn test_function_two_primitive() {
         let mut func = build_default_func();
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
 
         func.function_args.push(Variable {
             name: "width".to_owned(),
@@ -784,7 +791,7 @@ mod tests {
     #[test]
     fn test_function_primitive_return() {
         let mut func = build_default_func();
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
 
         func.return_val = Some(Variable {
             type_name: "i32".to_owned(),
@@ -802,11 +809,12 @@ mod tests {
     #[test]
     fn test_function_primitive_optional_return() {
         let mut func = build_default_func();
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
 
         func.return_val = Some(Variable {
             type_name: "f32".to_owned(),
-            vtype: VariableType::Optional,
+            vtype: VariableType::Primitive,
+            optional: true,
             ..Variable::default()
         });
 
@@ -820,7 +828,7 @@ mod tests {
     #[test]
     fn test_function_primitive_array_return() {
         let mut func = build_default_func();
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
 
         func.return_val = Some(Variable {
             type_name: "f32".to_owned(),
@@ -839,7 +847,7 @@ mod tests {
     #[test]
     fn test_function_array_input() {
         let mut func = build_default_func();
-        let rust_gen = RustGenerator::new(&ApiDef::default());
+        let rust_gen = RustGenerator::new();
 
         func.function_args.push(Variable {
             name: "width".to_owned(),

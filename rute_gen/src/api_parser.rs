@@ -43,8 +43,6 @@ pub enum VariableType {
     Primitive,
     /// Reference type
     Reference,
-    /// Optional type
-    Optional,
 }
 
 ///
@@ -64,6 +62,8 @@ pub struct Variable {
     pub enum_sub_type: String,
     /// If variable is an array
     pub array: bool,
+    /// If variable is optional (nullable)
+    pub optional: bool,
 }
 
 ///
@@ -77,6 +77,7 @@ impl Default for Variable {
             type_name: String::new(),
             enum_sub_type: String::new(),
             array: false,
+            optional: false,
         }
     }
 }
@@ -425,7 +426,7 @@ impl ApiParser {
             match entry.as_rule() {
                 Rule::name => var.name = entry.as_str().to_owned(),
                 Rule::refexp => vtype = Rule::refexp,
-                Rule::optional => vtype = Rule::optional,
+                Rule::optional => var.optional = true,
                 Rule::vtype => type_name = entry.as_str().to_owned(),
                 Rule::enum_use => {
                     let name = entry.as_str();
@@ -452,7 +453,6 @@ impl ApiParser {
         // match up with the correct type
         let var_type = match vtype {
             Rule::refexp => VariableType::Reference,
-            Rule::optional => VariableType::Optional,
             Rule::enum_use => VariableType::Enum,
             _ => {
                 if type_name == "String" {
@@ -781,7 +781,6 @@ impl Variable {
                 }
             }
 
-            VariableType::Optional => format!("struct RU{}", tname).into(),
             VariableType::Enum => format!("RU{}", tname).into(),
             VariableType::Str => "const char*".into(),
 

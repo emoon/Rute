@@ -42,8 +42,6 @@ use qt_gen::QtGenerator;
 use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
-use std::sync::Arc;
-use std::thread;
 
 ///
 /// Function for creating a directory and just bail in case it already exists.

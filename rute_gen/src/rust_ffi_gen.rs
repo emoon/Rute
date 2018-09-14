@@ -49,8 +49,6 @@ impl Variable {
             VariableType::SelfType => "*const RUBase".into(),
             VariableType::Primitive => name.to_owned().into(),
             VariableType::Reference => "*const RUBase".into(),
-            VariableType::Optional => format!(" RU{}", name).into(),
-            //VariableType::Enum(ref name) => format!(" RU{}", name).into(),
             VariableType::Regular => format!(" RU{}", name).into(),
             VariableType::Str => "*const ::std::os::raw::c_char".into(),
         }

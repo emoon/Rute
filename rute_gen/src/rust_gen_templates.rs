@@ -10,16 +10,14 @@ use std::ffi::CStr;
 use auto::rute_enums::*;
 \n\n";
 
-pub static CREATE_HEADER: &'static [u8] = b"
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static RUTE_IMPL_HEADER: &'static [u8] = b"
 unsafe extern \"C\" fn rute_object_delete_callback<T>(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<T>>);
     d.set(None);
 }
-\n\n";
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-pub static RUTE_IMPL_HEADER: &'static [u8] = b"
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
     priv_data: *const c_void,
@@ -108,17 +106,34 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
     {%- if return_value %}
         unsafe {
             let ret_val = ((*funcs).{{func_name}})({{function_args}});
+        {%- if optional_return %}
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+       {%- endif %}
         {%- case return_type %}
           {%- when 'replaced' %}
-           {{replaced_return}}
-          {%- when 'no_wrap' %}
-            {{return_vtype}} {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+           let ret_val = {{replaced_return}};
+          {%- when 'pointer_ref' %}
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = {{return_vtype}} {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RU{{return_vtype}}>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = {{return_vtype}} {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
-          {%- else %}
-            ret_val
           {%- endcase %}
+        {%- if optional_return %}
+            Some(ret_val)
+        {%- else %}
+            ret_val
+        {%- endif %}
         }
     {%- else %}
         unsafe {
