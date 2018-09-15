@@ -102,10 +102,12 @@ impl HeaderFFIGenerator {
             imp.gen_forward_declaration(&mut dest, &sdef)?;
         }
 
+        /*
         // Generate all enums
         for enum_def in &api_def.enums {
             imp.gen_enum(&mut dest, enum_def)?;
         }
+        */
 
         // generate all structs
         for sdef in &api_def.class_structs {
