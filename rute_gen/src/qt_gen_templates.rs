@@ -75,7 +75,7 @@ pub static QT_ENUM_MAPPING_TEMPLATE: &str = "
     static KeyVal {{enum_name}}_vals[] =
     {
     {%- for enum in enums -%}
-        {  (int)Qt::{{enum.name}}, {{enum.id}} },
+        {  (int){{qt_class}}::{{enum.name}}, {{enum.id}} },
     {% endfor %}};
 
     for (int i = 0; i < {{enums | size }} ++i) {

@@ -342,12 +342,6 @@ fn build_signal_wrappers_info<'a>(api_defs: &'a [ApiDef]) -> HashMap<String, &'a
             funcs.push(t);
         }
     }
-    /*
-    = api_defs
-        .iter()
-        .flat_map(|sdef| sdef.class_structs.iter())
-        .get_functions(FunctionType::Event);
-    */
 
     funcs.iter().for_each(|func| {
         let input_args = signal_type_callback(func);
@@ -896,25 +890,33 @@ impl QtGenerator {
     ///
     /// Generate enum remappings from rute enums to Qt
     ///
-    fn generate_enum_mappings<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        f.write_all(SEPARATOR)?;
+    pub fn generate_enum_mappings(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
+        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
+        let mut enums = BTreeMap::new();
 
-        for enum_def in &api_def.enums {
-            f.write_fmt(format_args!(
-                "static std::map<int, int> s_{}_lookup;\n",
-                enum_def.name.to_snake_case()
+        for api_def in api_defs {
+            for enum_def in &api_def.enums {
+                enums.insert(enum_def.name.clone(), enum_def);
+            }
+        }
+
+        for (name, _) in &enums {
+            dest.write_fmt(format_args!(
+                "extern std::map<int, int> s_{}_lookup;\n",
+                name.to_snake_case()
             ))?;
         }
 
-        f.write_all(b"\n")?;
-        f.write_all(SEPARATOR)?;
-        f.write_all(b"void create_enum_mappings() {\n")?;
+        dest.write_all(b"\n")?;
+        dest.write_all(SEPARATOR)?;
+        dest.write_all(b"extern void create_enum_mappings() {\n")?;
 
-        for enum_def in &api_def.enums {
+        for (_, enum_def) in enums {
             let enum_name = enum_def.name.to_snake_case();
             let mut template_data = Object::new();
 
             template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
+            template_data.insert("qt_class".to_owned(), Value::str(&enum_def.original_class_name));
 
             let mut values = Vec::with_capacity(enum_def.entries.len());
             let mut index = 0;
@@ -943,10 +945,10 @@ impl QtGenerator {
             template_data.insert("enums".to_owned(), Value::Array(values));
 
             let res = self.enum_mapping_template.render(&template_data).unwrap();
-            f.write_all(res.as_bytes())?;
+            dest.write_all(res.as_bytes())?;
         }
 
-        f.write_all(b"}\n\n")
+        dest.write_all(b"}\n")
     }
 
     /// Generate a signal wrapper that is in the style of this:
@@ -1089,12 +1091,6 @@ impl QtGenerator {
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
         generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
-        // Build the signals info used to generate the signal wrapper permutations
-        //self.generate_signal_wrappers(&mut h_out, api_def)?;
-
-        // Generate the Matching for Qt enums to our enums
-        //self.generate_enum_mappings(&mut cpp_out, api_def)?;
-
         // Generate the wrapping classes declartion is used as for Qt.
         self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
@@ -1131,7 +1127,6 @@ impl QtGenerator {
         api_defs: &[ApiDef],
     ) -> io::Result<()> {
         let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
-
 
         // Write header first
 

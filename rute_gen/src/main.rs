@@ -94,7 +94,6 @@ fn generate_auto_mod(filename: &str, api_defs: &[ApiDef]) {
 ///
 fn main() {
     let wd = WalkDir::new("defs");
-
     /*
     // temporary set to one thread during debugging
     rayon::ThreadPoolBuilder::new()
@@ -129,27 +128,39 @@ fn main() {
         println!("Parsing file {:?}", f.path());
         ApiParser::parse_file(&f.path(), &mut api_def);
 
-        // Build target filenames
-        let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
-        let rust_target = format!("{}/{}.rs", rust_dest_dir, base_filename);
-        let header_target = format!("{}/{}_ffi.h", qt_dest, base_filename);
-        let qt_cpp_target = format!("{}/{}", qt_dest, base_filename);
+        // We handle this file a bit special because it contains enums that are used for pretty
+        // much all of the Qt code. So we generated only a special Rust file for it and then
+        // it will be used for the general enum mapping generation in the C++ code
+        if base_filename == "qnamespace" {
+            let rust_target = format!("{}/{}.rs", rust_dest_dir, "rute_enums");
 
-        // Generate Rust FFI
-        println!("    Generateing Rust FFI: {}", rust_ffi_target);
-        HeaderFFIGenerator::generate(&rust_ffi_target, &api_def, RustFFIGenerator::new()).unwrap();
+            // Generate the Rust high-level code
+            println!("    Generateing Rust global enums: {}", rust_target);
+            RustGenerator::new().generate(&rust_target, &api_def).unwrap();
 
-        // Generate C/C++ Header for FFI structs
-        println!("    Generateing C/C++ header: {}", header_target);
-        HeaderFFIGenerator::generate(&header_target, &api_def, CapiHeaderGen::new()).unwrap();
+        } else {
+            // Build target filenames
+            let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
+            let rust_target = format!("{}/{}.rs", rust_dest_dir, base_filename);
+            let header_target = format!("{}/{}_ffi.h", qt_dest, base_filename);
+            let qt_cpp_target = format!("{}/{}", qt_dest, base_filename);
 
-        // Generate the Rust high-level code
-        println!("    Generateing Rust: {}", rust_target);
-        RustGenerator::new().generate(&rust_target, &api_def).unwrap();
+            // Generate Rust FFI
+            println!("    Generateing Rust FFI: {}", rust_ffi_target);
+            HeaderFFIGenerator::generate(&rust_ffi_target, &api_def, RustFFIGenerator::new()).unwrap();
 
-        // Generate the Qt wrapping
-        println!("    Generateing Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
-        QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
+            // Generate C/C++ Header for FFI structs
+            println!("    Generateing C/C++ header: {}", header_target);
+            HeaderFFIGenerator::generate(&header_target, &api_def, CapiHeaderGen::new()).unwrap();
+
+            // Generate the Rust high-level code
+            println!("    Generateing Rust: {}", rust_target);
+            RustGenerator::new().generate(&rust_target, &api_def).unwrap();
+
+            // Generate the Qt wrapping
+            println!("    Generateing Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
+            QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
+        }
 
         // Insert the api_def for later usage
         {
@@ -161,6 +172,7 @@ fn main() {
     let main_rute_rust = format!("{}/{}.rs", rust_dest_dir, "rute");
     let main_mod_rust = format!("{}/{}.rs", rust_dest_dir, "mod");
     let signal_wrappers = format!("{}/{}.h", qt_dest, "rute_signal_wrappers");
+    let enum_mapping = format!("{}/{}.cpp", qt_dest, "qt_enum_mapping");
 
     // This mutex will be forever be locked from here but this part is single threaded anyway
     let data = api_defs.lock().unwrap();
@@ -176,6 +188,10 @@ fn main() {
     // Generate all the signal wrappers for Qt C++
     println!("    Generateing Qt signal wrappers: {}", signal_wrappers);
     QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &data).unwrap();
+
+    // Generate all the signal wrappers for Qt C++
+    println!("    Generateing Qt enum mapping: {}", enum_mapping);
+    QtGenerator::new().generate_enum_mappings(&enum_mapping, &data).unwrap();
 
     // All done!
     println!("Generation complete!");
