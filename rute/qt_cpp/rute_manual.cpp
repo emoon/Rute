@@ -1,5 +1,4 @@
 #include "rute_manual.h"
-#include "auto/Rute.h"
 #include <QApplication>
 
 extern RUApplicationFuncs s_application_funcs;

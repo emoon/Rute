@@ -16,7 +16,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     });
 
     let moc_exe = format!("{}/bin/moc", qt_dir.as_str());
-    let rute_cpp_header;
+    let rute_signal_wrappers;
     let rute_cpp;
 
     // This is used to switch to the test bed for testing things out in rute_test_bed.cpp and
@@ -25,17 +25,21 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     let test_bed = false;
 
     if test_bed {
-        rute_cpp_header = "c_cpp/test_bed/rute_test_bed.h";
+        rute_signal_wrappers = "c_cpp/test_bed/rute_test_bed.h";
         rute_cpp = "c_cpp/test_bed/rute_test_bed.cpp";
     } else {
-        rute_cpp_header = "c_cpp/auto/rute_cpp.h";
-        rute_cpp = "c_cpp/auto/rute_cpp.cpp";
+        rute_signal_wrappers = "qt_cpp/auto/rute_signal_wrappers.h";
+        rute_cpp = "qt_cpp/auto/qt_bulk.cpp";
     }
+
+    let out_dir = env::var("OUT_DIR").unwrap();
+    let dest_path = Path::new(&out_dir).join("rute_signal_wrapper.cpp");
+    let dest_path_str = dest_path.into_os_string().into_string().unwrap();
 
     // Generate the moc code
 
     Command::new(moc_exe)
-            .args(&[&rute_cpp_header, "-o", "c_cpp/auto/rute_moc.cpp"])
+            .args(&[&rute_signal_wrappers, "-o", &dest_path_str])
             .spawn()
             .expect("failed to execute process");
 
@@ -49,8 +53,8 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     if target.contains("windows") {
         cc::Build::new()
             .file(&rute_cpp)
-            .file("c_cpp/auto/rute_moc.cpp")
-            .file("c_cpp/rute_manual.cpp")
+            .file(&dest_path_str)
+            .file("qt_cpp/rute_manual.cpp")
             .include(i3)
             .include(i4)
             .include(i5)
@@ -67,8 +71,8 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
 
         cc::Build::new()
             .file(&rute_cpp)
-            .file("c_cpp/auto/rute_moc.cpp")
-            .file("c_cpp/rute_manual.cpp")
+            .file(&dest_path_str)
+            .file("qt_cpp/rute_manual.cpp")
             .include(i0)
             .include(i1)
             .include(i2)

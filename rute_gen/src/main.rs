@@ -109,7 +109,7 @@ fn generate_bulk_cpp(filename: &str, paths: &[walkdir::DirEntry]) {
     files.sort();
 
     for f in files {
-        writeln!(&mut dest, "#include \"{}.cpp", f);
+        writeln!(&mut dest, "#include \"{}.cpp\"", f);
     }
 }
 
@@ -159,7 +159,7 @@ fn main() {
             let rust_target = format!("{}/{}.rs", rust_dest_dir, "rute_enums");
 
             // Generate the Rust high-level code
-            println!("    Generateing Rust global enums: {}", rust_target);
+            println!("    Generating Rust global enums: {}", rust_target);
             RustGenerator::new().generate(&rust_target, &api_def).unwrap();
 
         } else {
@@ -170,19 +170,19 @@ fn main() {
             let qt_cpp_target = format!("{}/{}", qt_dest, base_filename);
 
             // Generate Rust FFI
-            println!("    Generateing Rust FFI: {}", rust_ffi_target);
+            println!("    Generating Rust FFI: {}", rust_ffi_target);
             HeaderFFIGenerator::generate(&rust_ffi_target, &api_def, RustFFIGenerator::new()).unwrap();
 
             // Generate C/C++ Header for FFI structs
-            println!("    Generateing C/C++ header: {}", header_target);
+            println!("    Generating C/C++ header: {}", header_target);
             HeaderFFIGenerator::generate(&header_target, &api_def, CapiHeaderGen::new()).unwrap();
 
             // Generate the Rust high-level code
-            println!("    Generateing Rust: {}", rust_target);
+            println!("    Generating Rust: {}", rust_target);
             RustGenerator::new().generate(&rust_target, &api_def).unwrap();
 
             // Generate the Qt wrapping
-            println!("    Generateing Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
+            println!("    Generating Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
             QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
         }
 
@@ -203,23 +203,23 @@ fn main() {
     let data = api_defs.lock().unwrap();
 
     // Generate the main rute.rs file
-    println!("    Generateing main Rute Rust: {}", main_rute_rust);
+    println!("    Generating main Rute Rust: {}", main_rute_rust);
     RustGenerator::new().generate_rute(&main_rute_rust, &data).unwrap();
 
     // Generate the mod file for the auto generated Rust code
-    println!("    Generateing Rute auto mod: {}", main_mod_rust);
+    println!("    Generating Rute auto mod: {}", main_mod_rust);
     generate_auto_mod(&main_mod_rust, &data);
 
     // Generate all the signal wrappers for Qt C++
-    println!("    Generateing Qt signal wrappers: {}", signal_wrappers);
+    println!("    Generating Qt signal wrappers: {}", signal_wrappers);
     QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &data).unwrap();
 
     // Generate all the signal wrappers for Qt C++
-    println!("    Generateing Qt enum mapping: {}", enum_mapping);
+    println!("    Generating Qt enum mapping: {}", enum_mapping);
     QtGenerator::new().generate_enum_mappings(&enum_mapping, &data).unwrap();
 
     // Generate bulk cpp file for Qt C++ wrapper code
-    println!("    Generateing Qt bulk file mapping: {}", qt_bulk_cpp);
+    println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);
     generate_bulk_cpp(&qt_bulk_cpp, &files);
 
     // All done!
