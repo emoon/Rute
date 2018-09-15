@@ -1,12 +1,13 @@
 chunk = _{ soi ~ (structdef | enumdef)+ ~ eoi }
 
 structdef   =  { attributes? ~ traits? ~ ("struct") ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
-enumdef     =  { attributes? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
+enumdef     =  { attributes? ~ org_name? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
 fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
 field       =  { var | function | enum_type }
 fieldsep    = _{ (",") }
 
 rettype      = { name }
+org_name     = { ("#[org_name(") ~ name_with_namespace ~ (")]") }
 attributes   = { ("#[attributes(") ~ namelist ~ (")]") }
 traits       = { ("#[traits(") ~ namelist ~ (")]") }
 derive       = { (":") ~ name }
@@ -29,6 +30,10 @@ function     = { static_typ? ~ no_chain? ~ manual? ~ event? ~ replace? ~ name ~ 
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
+}
+
+name_with_namespace = @{
+	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("::") | ("_") | ('0'..'9'))*
 }
 
 name_or_num = @{

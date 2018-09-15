@@ -177,6 +177,8 @@ pub enum EnumEntry {
 pub struct Enum {
     /// Name of the enum
     pub name: String,
+    /// Original class name (like Qt, QAccesibility)
+    pub original_class_name: String,
     /// All the enem entries
     pub entries: Vec<EnumEntry>,
 }
@@ -247,6 +249,14 @@ impl ApiParser {
                         match entry.as_rule() {
                             Rule::name => enum_def.name = entry.as_str().to_owned(),
                             Rule::fieldlist => enum_def.entries = Self::fill_field_list_enum(entry),
+                            Rule::org_name => {
+                                enum_def.original_class_name = entry
+                                    .into_inner()
+                                    .next()
+                                    .map(|e| e.as_str())
+                                    .unwrap()
+                                    .to_owned();
+                            }
                             _ => (),
                         }
                     }
@@ -432,7 +442,7 @@ impl ApiParser {
                     let name = entry.as_str();
                     var.enum_sub_type = name[2..].to_owned();
                     vtype = Rule::enum_use;
-                },
+                }
 
                 Rule::array => {
                     // Get the type if we have an array
@@ -528,46 +538,46 @@ impl ApiParser {
     }
 
     /*
-    ///
-    /// Do a second pass to match up things that may
-    /// be out of order
-    ///
-    pub fn second_pass(api_def: &mut ApiDef) {
-        //
-        // Patch up the types for enums as they can be out of order.
-        //
-        let mut enums = HashSet::new();
+///
+/// Do a second pass to match up things that may
+/// be out of order
+///
+pub fn second_pass(api_def: &mut ApiDef) {
+//
+// Patch up the types for enums as they can be out of order.
+//
+let mut enums = HashSet::new();
 
-        for enum_def in &api_def.enums {
-            enums.insert(enum_def.name.clone());
-        }
+for enum_def in &api_def.enums {
+enums.insert(enum_def.name.clone());
+}
 
-        api_def
-            .class_structs
-            .iter_mut()
-            .flat_map(|s| s.functions.iter_mut())
-            .flat_map(|func| func.function_args.iter_mut())
-            .for_each(|arg| {
-                if enums.contains(&arg.type_name) {
-                    arg.vtype = VariableType::Enum;
-                }
-            });
+api_def
+.class_structs
+.iter_mut()
+.flat_map(|s| s.functions.iter_mut())
+.flat_map(|func| func.function_args.iter_mut())
+.for_each(|arg| {
+if enums.contains(&arg.type_name) {
+arg.vtype = VariableType::Enum;
+}
+});
 
-        // Build a hash_set of all classes that are inherited
+// Build a hash_set of all classes that are inherited
 
-        let mut inherited_classes = HashSet::new();
+let mut inherited_classes = HashSet::new();
 
-        api_def.class_structs.iter().for_each(|s| {
-            s.inherit.as_ref().map_or((), |i| {
-                inherited_classes.insert(i.clone());
-            })
-        });
+api_def.class_structs.iter().for_each(|s| {
+s.inherit.as_ref().map_or((), |i| {
+inherited_classes.insert(i.clone());
+})
+});
 
-        api_def.class_structs.iter_mut().for_each(|s| {
-            s.should_generate_trait = inherited_classes.contains(&s.name);
-        });
-    }
-    */
+api_def.class_structs.iter_mut().for_each(|s| {
+s.should_generate_trait = inherited_classes.contains(&s.name);
+});
+}
+*/
 }
 
 ///
@@ -664,20 +674,20 @@ impl ApiDef {
     }
 
     /*
-    pub fn get_functions_recursive<'a>(
+       pub fn get_functions_recursive<'a>(
     ///
     /// Get functions of given type in a recrusive fashion (to include inheritance)
-        &'a self,
-        sdef: &'a Struct,
-        func_type: FunctionType,
-    ) -> Vec<&'a Function> {
-        self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes)
-            .iter()
-            .flat_map(|s| s.functions.iter())
-            .filter(|func| func.func_type == func_type)
-            .collect()
-    }
-    */
+    &'a self,
+sdef: &'a Struct,
+func_type: FunctionType,
+) -> Vec<&'a Function> {
+self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes)
+.iter()
+.flat_map(|s| s.functions.iter())
+.filter(|func| func.func_type == func_type)
+.collect()
+}
+*/
 }
 
 ///
@@ -706,8 +716,7 @@ impl Struct {
     pub fn has_event_replace_functions(&self) -> bool {
         self.functions
             .iter()
-            .any(|ref f| f.func_type == FunctionType::Replace ||
-                         f.func_type == FunctionType::Event)
+            .any(|ref f| f.func_type == FunctionType::Replace || f.func_type == FunctionType::Event)
     }
     ///
     /// Check if the struct should have a create function
@@ -797,20 +806,20 @@ impl Variable {
     // Checks if this variable type has a wrapper class
     //
     /*
-    pub fn has_wrapper_class(&self, api_def: &ApiDef) -> bool {
-        match self.vtype {
-            VariableType::Regular => {
-                api_def
-                    .class_structs
-                    .iter()
-                    .find(|s| s.name == self.name)
-                    .map(|s| s.should_gen_wrap_class())
-                    .is_some()
-            },
-            _ => false,
-        }
-    }
-    */
+       pub fn has_wrapper_class(&self, api_def: &ApiDef) -> bool {
+       match self.vtype {
+       VariableType::Regular => {
+       api_def
+       .class_structs
+       .iter()
+       .find(|s| s.name == self.name)
+       .map(|s| s.should_gen_wrap_class())
+       .is_some()
+       },
+       _ => false,
+       }
+       }
+       */
 }
 
 ///
@@ -969,18 +978,18 @@ impl Function {
                     //FirstArgName::Keep => (),
                     FirstArgName::Remove => continue,
                     /*
-                    FirstArgName::Replace(ref name) => {
-                        if arg_count > 0 {
-                            output.push_str(name);
-                        }
+                               FirstArgName::Replace(ref name) => {
+                               if arg_count > 0 {
+                               output.push_str(name);
+                               }
 
-                        if arg_count > 1 {
-                            output.push_str(", ");
-                        }
+                               if arg_count > 1 {
+                               output.push_str(", ");
+                               }
 
-                        continue;
-                    }
-                    */
+                               continue;
+                               }
+                               */
                 }
             }
 
