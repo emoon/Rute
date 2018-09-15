@@ -527,6 +527,7 @@ impl ApiParser {
         name_or_num
     }
 
+    /*
     ///
     /// Do a second pass to match up things that may
     /// be out of order
@@ -566,6 +567,7 @@ impl ApiParser {
             s.should_generate_trait = inherited_classes.contains(&s.name);
         });
     }
+    */
 }
 
 ///
