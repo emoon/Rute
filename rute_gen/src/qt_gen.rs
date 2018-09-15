@@ -887,70 +887,6 @@ impl QtGenerator {
         Ok(())
     }
 
-    ///
-    /// Generate enum remappings from rute enums to Qt
-    ///
-    pub fn generate_enum_mappings(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
-        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
-        let mut enums = BTreeMap::new();
-
-        for api_def in api_defs {
-            for enum_def in &api_def.enums {
-                enums.insert(enum_def.name.clone(), enum_def);
-            }
-        }
-
-        for (name, _) in &enums {
-            dest.write_fmt(format_args!(
-                "extern std::map<int, int> s_{}_lookup;\n",
-                name.to_snake_case()
-            ))?;
-        }
-
-        dest.write_all(b"\n")?;
-        dest.write_all(SEPARATOR)?;
-        dest.write_all(b"extern void create_enum_mappings() {\n")?;
-
-        for (_, enum_def) in enums {
-            let enum_name = enum_def.name.to_snake_case();
-            let mut template_data = Object::new();
-
-            template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
-            template_data.insert("qt_class".to_owned(), Value::str(&enum_def.original_class_name));
-
-            let mut values = Vec::with_capacity(enum_def.entries.len());
-            let mut index = 0;
-
-            for entry in &enum_def.entries {
-                match *entry {
-                    EnumEntry::Enum(ref name) => {
-                        let mut enum_data = Object::new();
-                        enum_data.insert("name".to_owned(), Value::str(name));
-                        enum_data.insert("id".to_owned(), Value::Str(format!("{}", index)));
-                        values.push(Value::Object(enum_data));
-                        index += 1;
-                    }
-
-                    EnumEntry::EnumValue(ref name, ref value) => {
-                        let mut enum_data = Object::new();
-                        enum_data.insert("name".to_owned(), Value::str(name));
-                        enum_data.insert("id".to_owned(), Value::str(value));
-                        values.push(Value::Object(enum_data));
-                        index = value.parse().unwrap();
-                        index += 1;
-                    }
-                }
-            }
-
-            template_data.insert("enums".to_owned(), Value::Array(values));
-
-            let res = self.enum_mapping_template.render(&template_data).unwrap();
-            dest.write_all(res.as_bytes())?;
-        }
-
-        dest.write_all(b"}\n")
-    }
-
     /// Generate a signal wrapper that is in the style of this:
     ///
     /// typedef void (*Signal_self_int_void)(void* self_c, void* wrapped_func, int row);
@@ -1138,6 +1074,82 @@ impl QtGenerator {
         }
 
         self.generate_signal_wrappers(&mut dest, api_defs)
+    }
+
+    ///
+    /// Generate enum remappings from rute enums to Qt
+    ///
+    pub fn generate_enum_mappings(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
+        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
+        let mut enums = BTreeMap::new();
+
+        for api_def in api_defs {
+            for enum_def in &api_def.enums {
+                enums.insert(enum_def.name.clone(), enum_def);
+            }
+        }
+
+        let mut enum_org_names = BTreeMap::new();
+
+        for (_, enum_def) in &enums {
+            enum_org_names.insert(&enum_def.original_class_name, ());
+        }
+
+        for (name, _) in enum_org_names {
+            writeln!(dest, "#include <{}>", name);
+        }
+
+        dest.write_all(b"#include <map>\n\n")?;
+
+        for (name, _) in &enums {
+            dest.write_fmt(format_args!(
+                "extern std::map<int, int> s_{}_lookup;\n",
+                name.to_snake_case()
+            ))?;
+        }
+
+        dest.write_all(b"\n")?;
+        dest.write_all(SEPARATOR)?;
+        dest.write_all(b"extern void create_enum_mappings() {\n")?;
+
+        for (_, enum_def) in enums {
+            let enum_name = enum_def.name.to_snake_case();
+            let mut template_data = Object::new();
+
+            template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
+            template_data.insert("qt_class".to_owned(), Value::str(&enum_def.original_class_name));
+
+            let mut values = Vec::with_capacity(enum_def.entries.len());
+            let mut index = 0;
+
+            for entry in &enum_def.entries {
+                match *entry {
+                    EnumEntry::Enum(ref name) => {
+                        let mut enum_data = Object::new();
+                        enum_data.insert("name".to_owned(), Value::str(name));
+                        enum_data.insert("id".to_owned(), Value::Str(format!("{}", index)));
+                        values.push(Value::Object(enum_data));
+                        index += 1;
+                    }
+
+                    EnumEntry::EnumValue(ref name, ref value) => {
+                        let mut enum_data = Object::new();
+                        enum_data.insert("name".to_owned(), Value::str(name));
+                        enum_data.insert("id".to_owned(), Value::str(value));
+                        values.push(Value::Object(enum_data));
+                        index = value.parse().unwrap();
+                        index += 1;
+                    }
+                }
+            }
+
+            template_data.insert("enums".to_owned(), Value::Array(values));
+
+            let res = self.enum_mapping_template.render(&template_data).unwrap();
+            dest.write_all(res.as_bytes())?;
+        }
+
+        dest.write_all(b"}\n")
     }
 }
 
