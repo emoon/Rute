@@ -1,3 +1,6 @@
+#include <Qt>
+#include <map>
+
 extern std::map<int, int> s_alignment_flag_lookup;
 extern std::map<int, int> s_anchor_point_lookup;
 extern std::map<int, int> s_application_attribute_lookup;
@@ -1843,3 +1846,4 @@ extern void create_enum_mappings() {
     for (int i = 0; i < 38 ++i) {
         s_window_type_lookup[window_type_vals[i].key] = window_type_vals[i].val;
     }
+}

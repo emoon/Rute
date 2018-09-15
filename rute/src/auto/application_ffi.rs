@@ -2,13 +2,13 @@
 use std::os::raw::c_void;
 use rute::auto::base_ffi::*;
 
-use rute::auto::widget_list_ffi::RUWidgetList;
 use rute::auto::desktop_widget_ffi::RUDesktopWidget;
-use rute::auto::icon_ffi::RUIcon;
 use rute::auto::font_ffi::RUFont;
-use rute::auto::widget_ffi::RUWidget;
-use rute::auto::style_ffi::RUStyle;
+use rute::auto::icon_ffi::RUIcon;
 use rute::auto::palette_ffi::RUPalette;
+use rute::auto::style_ffi::RUStyle;
+use rute::auto::widget_ffi::RUWidget;
+use rute::auto::widget_list_ffi::RUWidgetList;
 
 #[repr(C)]
 #[derive(Copy, Clone)]

@@ -6,11 +6,11 @@
 
 #include "rute_base.h"
 #include "desktop_widget_ffi.h"
-#include "palette_ffi.h"
-#include "icon_ffi.h"
-#include "widget_ffi.h"
 #include "font_ffi.h"
+#include "icon_ffi.h"
+#include "palette_ffi.h"
 #include "style_ffi.h"
+#include "widget_ffi.h"
 #include "widget_list_ffi.h"
 
 struct RUApplicationFuncs;
