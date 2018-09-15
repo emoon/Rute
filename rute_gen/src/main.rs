@@ -93,14 +93,15 @@ fn generate_auto_mod(filename: &str, api_defs: &[ApiDef]) {
 /// Main
 ///
 fn main() {
-    let mut api = ApiDef::default();
     let wd = WalkDir::new("defs");
 
+    /*
     // temporary set to one thread during debugging
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
+    */
 
     let rust_dest_dir = "../rute/src/auto";
     let qt_dest = "../rute/qt_cpp/auto";
@@ -120,7 +121,7 @@ fn main() {
 
     // Parse the files threaded
 
-    files.par_iter().enumerate().for_each(|(index, f)| {
+    files.par_iter().enumerate().for_each(|(_index, f)| {
         let base_filename = f.path().file_name().unwrap().to_str().unwrap();
         let base_filename = &base_filename[..base_filename.len() - 4];
         let mut api_def = ApiDef::default();
@@ -131,7 +132,8 @@ fn main() {
         // Build target filenames
         let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
         let rust_target = format!("{}/{}.rs", rust_dest_dir, base_filename);
-        let header_target = format!("{}/{}.h", qt_dest, base_filename);
+        let header_target = format!("{}/{}_ffi.h", qt_dest, base_filename);
+        let qt_cpp_target = format!("{}/{}", qt_dest, base_filename);
 
         // Generate Rust FFI
         println!("    Generateing Rust FFI: {}", rust_ffi_target);
@@ -145,6 +147,9 @@ fn main() {
         println!("    Generateing Rust: {}", rust_target);
         RustGenerator::new().generate(&rust_target, &api_def).unwrap();
 
+        // Generate the Qt wrapping
+        println!("    Generateing Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
+        QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
 
         // Insert the api_def for later usage
         {
@@ -153,77 +158,25 @@ fn main() {
         }
     });
 
+    let main_rute_rust = format!("{}/{}.rs", rust_dest_dir, "rute");
+    let main_mod_rust = format!("{}/{}.rs", rust_dest_dir, "mod");
+    let signal_wrappers = format!("{}/{}.h", qt_dest, "rute_signal_wrappers");
+
     // This mutex will be forever be locked from here but this part is single threaded anyway
-    let mut data = api_defs.lock().unwrap();
+    let data = api_defs.lock().unwrap();
 
     // Generate the main rute.rs file
-    RustGenerator::new()
-        .generate_rute(&format!("{}/{}.rs", rust_dest_dir, "rute"), &data).unwrap();
+    println!("    Generateing main Rute Rust: {}", main_rute_rust);
+    RustGenerator::new().generate_rute(&main_rute_rust, &data).unwrap();
 
     // Generate the mod file for the auto generated Rust code
-    generate_auto_mod(&format!("{}/{}.rs", rust_dest_dir, "mod"), &data);
+    println!("    Generateing Rute auto mod: {}", main_mod_rust);
+    generate_auto_mod(&main_mod_rust, &data);
 
+    // Generate all the signal wrappers for Qt C++
+    println!("    Generateing Qt signal wrappers: {}", signal_wrappers);
+    QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &data).unwrap();
 
-/*
-
-    // Parse all the files in defs
-    for entry in walkdir::WalkDir::new("defs") {
-        let entry = entry.unwrap();
-
-        // only parse files and skip directories.
-        if entry.path().metadata().unwrap().is_file() {
-            ApiParser::parse_file(&entry.path(), &mut api);
-        }
-    }
-
-    // Run a second pass to match up types that may be out of order
-    ApiParser::second_pass(&mut api);
-
-    // This holds all the structs,variables,etc
-    let api_def = Arc::new(api);
-
-    // TODO: Correct error handling here
-    let _ = fs::create_dir("../rute/c_cpp/auto");
-    let _ = fs::create_dir("../rute/src/auto");
-
-    // Generate bindings for each backend in threads
-
-    let c_api_def = api_def.clone();
-    let c_api_thread = thread::spawn(move || {
-        HeaderFFIGenerator::generate(
-            "../rute/c_cpp/auto/Rute.h",
-            &c_api_def,
-            CapiHeaderGen::new(),
-        ).unwrap();
-    });
-
-    let ffi_api_def = api_def.clone();
-    let ffi_api_thread = thread::spawn(move || {
-        HeaderFFIGenerator::generate(
-            "../rute/src/auto/rute_auto_ffi.rs",
-            &ffi_api_def,
-            RustFFIGenerator::new(),
-        ).unwrap();
-    });
-
-    let cpp_api_def = api_def.clone();
-    let cpp_api_thread = thread::spawn(move || {
-        let qt_gen = QtGenerator::new();
-        qt_gen
-            .generate("../rute/c_cpp/auto/rute_qt", &cpp_api_def)
-            .unwrap();
-    });
-
-    let rust_api_def = api_def.clone();
-    let rust_gen = RustGenerator::new(&rust_api_def);
-    rust_gen
-        .generate("../rute/src/auto/rute_auto.rs", &rust_api_def)
-        .unwrap();
-
-    // wait for all of them to finish
-
-    c_api_thread.join().unwrap();
-    ffi_api_thread.join().unwrap();
-    cpp_api_thread.join().unwrap();
-    */
+    // All done!
+    println!("Generation complete!");
 }

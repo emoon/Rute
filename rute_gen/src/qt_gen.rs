@@ -213,10 +213,7 @@ fn generate_event_setup_funcs<W: Write>(
 /// virtual functions from the outside (in C and other langs)
 /// defs
 ///
-fn generate_wrapper_classes_impl<W: Write>(
-    _f: &mut W,
-    api_def: &ApiDef,
-) -> io::Result<()> {
+fn generate_wrapper_classes_impl<W: Write>(_f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     for _sdef in api_def
         .class_structs
         .iter()
@@ -292,10 +289,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
 ///
 /// Generate includes from all the structs which are non-pod
 ///
-fn generate_includes<W: Write>(
-    f: &mut W,
-    api_def: &ApiDef,
-) -> io::Result<()> {
+fn generate_includes<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     // There is a small hack here where we include generating includes for the static
     // funcs structs as it doesn't map to a qt class
     for sdef in api_def
@@ -339,9 +333,21 @@ fn signal_type_callback(func: &Function) -> String {
 /// function arguments. This way we get one unique function wrapper in the cases
 /// where several wrapers has the same input
 ///
-fn build_signal_wrappers_info<'a>(api_def: &'a ApiDef) -> HashMap<String, &'a Function> {
+fn build_signal_wrappers_info<'a>(api_defs: &'a [ApiDef]) -> HashMap<String, &'a Function> {
     let mut wrapper_info = HashMap::new();
-    let funcs = api_def.get_functions(FunctionType::Event);
+    let mut funcs = Vec::new();
+
+    for api_def in api_defs {
+        for t in api_def.get_functions(FunctionType::Event) {
+            funcs.push(t);
+        }
+    }
+    /*
+    = api_defs
+        .iter()
+        .flat_map(|sdef| sdef.class_structs.iter())
+        .get_functions(FunctionType::Event);
+    */
 
     funcs.iter().for_each(|func| {
         let input_args = signal_type_callback(func);
@@ -718,6 +724,7 @@ fn generate_rute_struct<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
 ///
 /// Handling for Traits
 ///
+/*
 struct TraitTypeHandler(String);
 
 impl TypeHandler for TraitTypeHandler {
@@ -736,6 +743,7 @@ impl TypeHandler for TraitTypeHandler {
         }
     }
 }
+*/
 
 pub struct QtGenerator {
     wrapper_template: Template,
@@ -801,12 +809,24 @@ impl QtGenerator {
             }
         });
 
-        object.insert("func_name".to_owned(), Value::Str(function_name(&sdef.name, func)));
-        object.insert("func_def".to_owned(), Value::Str(func.generate_c_function_def(FirstArgType::Keep)));
-        object.insert("qt_func_name".to_owned(), Value::Str(func.name.to_mixed_case()));
+        object.insert(
+            "func_name".to_owned(),
+            Value::Str(function_name(&sdef.name, func)),
+        );
+        object.insert(
+            "func_def".to_owned(),
+            Value::Str(func.generate_c_function_def(FirstArgType::Keep)),
+        );
+        object.insert(
+            "qt_func_name".to_owned(),
+            Value::Str(func.name.to_mixed_case()),
+        );
         object.insert("cpp_type_name".to_owned(), Value::str(&sdef.cpp_name));
         object.insert("qt_func_args".to_owned(), Value::Str(func_def));
-        object.insert("type_snake_name".to_owned(), Value::Str(func.name.to_snake_case()));
+        object.insert(
+            "type_snake_name".to_owned(),
+            Value::Str(func.name.to_snake_case()),
+        );
         object.insert("c_return_type".to_owned(), Value::str(&ret_value));
 
         if let Some(ref ret_val) = func.return_val {
@@ -814,10 +834,16 @@ impl QtGenerator {
             object.insert("qt_ret_value".to_owned(), Value::str(""));
 
             match ret_val.vtype {
-                VariableType::Primitive => object.insert("return_type".to_owned(), Value::str("primitive")),
+                VariableType::Primitive => {
+                    object.insert("return_type".to_owned(), Value::str("primitive"))
+                }
                 VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
-                VariableType::Regular => object.insert("return_type".to_owned(), Value::str("regular")),
-                VariableType::Reference => object.insert("return_type".to_owned(), Value::str("reference")),
+                VariableType::Regular => {
+                    object.insert("return_type".to_owned(), Value::str("regular"))
+                }
+                VariableType::Reference => {
+                    object.insert("return_type".to_owned(), Value::str("reference"))
+                }
                 _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
             };
         } else {
@@ -948,10 +974,10 @@ impl QtGenerator {
     pub fn generate_signal_wrappers<W: Write>(
         &self,
         f: &mut W,
-        api_def: &ApiDef,
+        api_defs: &[ApiDef],
     ) -> io::Result<()> {
         // Sort the signals by their names to have stable generation
-        let temp = build_signal_wrappers_info(api_def);
+        let temp = build_signal_wrappers_info(api_defs);
         let ordered: BTreeMap<_, _> = temp.iter().collect();
 
         for (signal_type_name, func) in ordered {
@@ -1038,9 +1064,11 @@ impl QtGenerator {
         // generation when needed
         let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
 
+        /*
         for trait_name in api_def.get_all_traits() {
             type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
         }
+        */
 
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);
@@ -1055,17 +1083,17 @@ impl QtGenerator {
         generate_includes(&mut h_out, &api_def)?;
         generate_includes(&mut cpp_out, &api_def)?;
 
-        cpp_out.write_all(QT_HEADER)?;
+        //cpp_out.write_all(QT_HEADER)?;
 
         // Generate all the struct func forward declarations
         generate_forward_declare_struct_defs(&mut h_out, api_def)?;
         generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
         // Build the signals info used to generate the signal wrapper permutations
-        self.generate_signal_wrappers(&mut h_out, api_def)?;
+        //self.generate_signal_wrappers(&mut h_out, api_def)?;
 
         // Generate the Matching for Qt enums to our enums
-        self.generate_enum_mappings(&mut cpp_out, api_def)?;
+        //self.generate_enum_mappings(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
         self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
@@ -1086,10 +1114,35 @@ impl QtGenerator {
         generate_struct_defs(&mut cpp_out, api_def)?;
 
         // Generate the main Rute struct definition
-        generate_rute_struct(&mut cpp_out, api_def)?;
+        //generate_rute_struct(&mut cpp_out, api_def)?;
 
         // write the end footer of the file that is used for the export
-        cpp_out.write_all(FOOTER)
+        //cpp_out.write_all(QT_MAIN_FOOTER)
+
+        Ok(())
+    }
+
+    ///
+    /// Generate all the signal wrappers
+    ///
+    pub fn generate_all_signal_wrappers(
+        &self,
+        target_name: &str,
+        api_defs: &[ApiDef],
+    ) -> io::Result<()> {
+        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
+
+
+        // Write header first
+
+        dest.write_all(b"#pragma once\n")?;
+        dest.write_all(HEADER)?;
+
+        for api_def in api_defs {
+            generate_includes(&mut dest, &api_def)?;
+        }
+
+        self.generate_signal_wrappers(&mut dest, api_defs)
     }
 }
 
@@ -1113,7 +1166,7 @@ mod tests {
                 name: "self_c".to_owned(),
                 vtype: VariableType::SelfType,
                 type_name: "struct RUBase".to_owned(),
-                .. Variable::default()
+                ..Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1132,7 +1185,7 @@ mod tests {
                 name: "var0".to_owned(),
                 vtype: VariableType::Primitive,
                 type_name: "i32".to_owned(),
-                .. Variable::default()
+                ..Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1154,7 +1207,7 @@ mod tests {
                 name: "var0".to_owned(),
                 vtype: VariableType::Reference,
                 type_name: "DropEvent".to_owned(),
-                .. Variable::default()
+                ..Variable::default()
             }],
             return_val: None,
             func_type: FunctionType::Regular,
@@ -1175,14 +1228,16 @@ mod tests {
         let mut dest = Vec::new();
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
-        assert_eq!(String::from_utf8(dest).unwrap(),
-"static void foo_test(struct RUBase* self_c) {
+        assert_eq!(
+            String::from_utf8(dest).unwrap(),
+            "static void foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     qt_value->test();
 }
 
-");
+"
+        );
     }
 
     //
@@ -1198,19 +1253,21 @@ mod tests {
             name: "ret".to_owned(),
             vtype: VariableType::Primitive,
             type_name: "i32".to_owned(),
-            .. Variable::default()
+            ..Variable::default()
         });
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
-        assert_eq!(String::from_utf8(dest).unwrap(),
-"static int foo_test(struct RUBase* self_c) {
+        assert_eq!(
+            String::from_utf8(dest).unwrap(),
+            "static int foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     auto ret_value = qt_value->test();
     return ret_value;
 }
 
-");
+"
+        );
     }
 
     //
@@ -1226,18 +1283,20 @@ mod tests {
             name: String::new(),
             vtype: VariableType::Str,
             type_name: String::new(),
-            .. Variable::default()
+            ..Variable::default()
         });
 
         gen.generate_func_def(&mut dest, &sdef, &func, &[]).unwrap();
-        assert_eq!(String::from_utf8(dest).unwrap(),
-"static const char* foo_test(struct RUBase* self_c) {
+        assert_eq!(
+            String::from_utf8(dest).unwrap(),
+            "static const char* foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     auto ret_value = qt_value->test();
     return q_string_to_const_char(&ret_value);
 }
 
-");
+"
+        );
     }
 }

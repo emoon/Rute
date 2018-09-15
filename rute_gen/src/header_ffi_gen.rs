@@ -153,7 +153,7 @@ impl HeaderFFIGenerator {
     ///
     /// Generate the main file (main entry + create functions and such)
     ///
-    pub fn generate_main<T: HeaderFFIGen>(filename: &str, api_defs: &[ApiDef], mut imp: T) -> Result<()> {
+    pub fn generate_main<T: HeaderFFIGen>(_filename: &str, _api_defs: &[ApiDef], mut _imp: T) -> Result<()> {
         /*
         // Generate the main entry
         imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
