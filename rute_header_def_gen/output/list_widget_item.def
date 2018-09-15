@@ -1,3 +1,4 @@
+#[org_name(QListWidgetItem)]
 enum ItemType {
     Type,
     UserType,

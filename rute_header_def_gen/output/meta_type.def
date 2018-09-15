@@ -1,3 +1,4 @@
+#[org_name(QMetaType)]
 enum ExtensionFlag {
     NoExtensionFlags,
     CreateEx,
@@ -12,6 +13,7 @@ enum ExtensionFlag {
     MetaObjectEx,
 }
 
+#[org_name(QMetaType)]
 enum Type {
     Void,
     Bool,
@@ -100,6 +102,7 @@ enum Type {
     User,
 }
 
+#[org_name(QMetaType)]
 enum TypeFlag {
     NeedsConstruction,
     NeedsDestruction,

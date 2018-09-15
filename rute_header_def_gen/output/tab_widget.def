@@ -1,3 +1,4 @@
+#[org_name(QTabWidget)]
 enum TabPosition {
     North,
     South,
@@ -5,6 +6,7 @@ enum TabPosition {
     East,
 }
 
+#[org_name(QTabWidget)]
 enum TabShape {
     Rounded,
     Triangular,

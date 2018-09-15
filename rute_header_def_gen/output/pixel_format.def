@@ -1,3 +1,4 @@
+#[org_name(QPixelFormat)]
 enum FieldWidth {
     ModelFieldWidth,
     FirstFieldWidth,
@@ -16,6 +17,7 @@ enum FieldWidth {
     TotalFieldWidthByWidths,
 }
 
+#[org_name(QPixelFormat)]
 enum Field {
     ModelField,
     FirstField,
@@ -34,6 +36,7 @@ enum Field {
     TotalFieldWidthByOffsets,
 }
 
+#[org_name(QPixelFormat)]
 enum ColorModel {
     RGB,
     BGR,
@@ -46,21 +49,25 @@ enum ColorModel {
     Alpha,
 }
 
+#[org_name(QPixelFormat)]
 enum AlphaUsage {
     UsesAlpha,
     IgnoresAlpha,
 }
 
+#[org_name(QPixelFormat)]
 enum AlphaPosition {
     AtBeginning,
     AtEnd,
 }
 
+#[org_name(QPixelFormat)]
 enum AlphaPremultiplied {
     NotPremultiplied,
     Premultiplied,
 }
 
+#[org_name(QPixelFormat)]
 enum TypeInterpretation {
     UnsignedInteger,
     UnsignedShort,
@@ -68,6 +75,7 @@ enum TypeInterpretation {
     FloatingPoint,
 }
 
+#[org_name(QPixelFormat)]
 enum YUVLayout {
     YUV444,
     YUV422,
@@ -87,6 +95,7 @@ enum YUVLayout {
     Y16,
 }
 
+#[org_name(QPixelFormat)]
 enum ByteOrder {
     LittleEndian,
     BigEndian,

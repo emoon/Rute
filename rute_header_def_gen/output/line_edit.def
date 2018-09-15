@@ -1,8 +1,10 @@
+#[org_name(QLineEdit)]
 enum ActionPosition {
     LeadingPosition,
     TrailingPosition,
 }
 
+#[org_name(QLineEdit)]
 enum EchoMode {
     Normal,
     NoEcho,

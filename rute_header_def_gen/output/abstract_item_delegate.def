@@ -1,3 +1,4 @@
+#[org_name(QAbstractItemDelegate)]
 enum EndEditHint {
     NoHint,
     EditNextItem,

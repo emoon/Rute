@@ -1,3 +1,4 @@
+#[org_name(QTime)]
 enum TimeFlag {
     NullTime,
 }

@@ -1,3 +1,4 @@
+#[org_name(QChar)]
 enum SpecialCharacter {
     Null,
     Tabulation,
@@ -15,6 +16,7 @@ enum SpecialCharacter {
     LastValidCodePoint,
 }
 
+#[org_name(QChar)]
 enum Category {
     Mark_NonSpacing,
     Mark_SpacingCombining,
@@ -48,6 +50,7 @@ enum Category {
     Symbol_Other,
 }
 
+#[org_name(QChar)]
 enum Script {
     Script_Unknown,
     Script_Inherited,
@@ -184,6 +187,7 @@ enum Script {
     ScriptCount,
 }
 
+#[org_name(QChar)]
 enum Direction {
     DirL,
     DirR,
@@ -210,6 +214,7 @@ enum Direction {
     DirPDI,
 }
 
+#[org_name(QChar)]
 enum Decomposition {
     NoDecomposition,
     Canonical,
@@ -231,6 +236,7 @@ enum Decomposition {
     Fraction,
 }
 
+#[org_name(QChar)]
 enum JoiningType {
     Joining_None,
     Joining_Causing,
@@ -240,6 +246,7 @@ enum JoiningType {
     Joining_Transparent,
 }
 
+#[org_name(QChar)]
 enum Joining {
     OtherJoining,
     Dual,
@@ -247,6 +254,7 @@ enum Joining {
     Center,
 }
 
+#[org_name(QChar)]
 enum CombiningClass {
     Combining_BelowLeftAttached,
     Combining_BelowAttached,
@@ -269,6 +277,7 @@ enum CombiningClass {
     Combining_IotaSubscript,
 }
 
+#[org_name(QChar)]
 enum UnicodeVersion {
     Unicode_Unassigned,
     Unicode_1_1,

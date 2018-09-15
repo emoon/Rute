@@ -1,3 +1,4 @@
+#[org_name(QTextEdit)]
 enum LineWrapMode {
     NoWrap,
     WidgetWidth,
@@ -5,6 +6,7 @@ enum LineWrapMode {
     FixedColumnWidth,
 }
 
+#[org_name(QTextEdit)]
 enum AutoFormattingFlag {
     AutoNone,
     AutoBulletList,

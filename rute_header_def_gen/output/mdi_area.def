@@ -1,13 +1,16 @@
+#[org_name(QMdiArea)]
 enum AreaOption {
     DontMaximizeSubWindowOnActivation,
 }
 
+#[org_name(QMdiArea)]
 enum WindowOrder {
     CreationOrder,
     StackingOrder,
     ActivationHistoryOrder,
 }
 
+#[org_name(QMdiArea)]
 enum ViewMode {
     SubWindowView,
     TabbedView,

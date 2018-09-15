@@ -1,3 +1,4 @@
+#[org_name(QPlatformBackingStore)]
 enum TextureFlag {
     TextureSwizzle,
     TextureFlip,

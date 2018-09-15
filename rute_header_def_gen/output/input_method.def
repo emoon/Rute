@@ -1,3 +1,4 @@
+#[org_name(QInputMethod)]
 enum Action {
     Click,
     ContextMenu,

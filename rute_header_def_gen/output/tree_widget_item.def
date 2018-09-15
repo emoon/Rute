@@ -1,8 +1,10 @@
+#[org_name(QTreeWidgetItem)]
 enum ItemType {
     Type,
     UserType,
 }
 
+#[org_name(QTreeWidgetItem)]
 enum ChildIndicatorPolicy {
     ShowIndicator,
     DontShowIndicator,

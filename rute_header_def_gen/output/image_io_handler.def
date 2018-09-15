@@ -1,3 +1,4 @@
+#[org_name(QImageIOHandler)]
 enum ImageOption {
     Size,
     ClipRect,
@@ -21,6 +22,7 @@ enum ImageOption {
     TransformedByDefault,
 }
 
+#[org_name(QImageIOHandler)]
 enum Transformation {
     TransformationNone,
     TransformationMirror,

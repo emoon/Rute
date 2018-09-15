@@ -1,3 +1,4 @@
+#[org_name(QScroller)]
 enum State {
     Inactive,
     Pressed,
@@ -5,6 +6,7 @@ enum State {
     Scrolling,
 }
 
+#[org_name(QScroller)]
 enum ScrollerGestureType {
     TouchGesture,
     LeftMouseButtonGesture,
@@ -12,6 +14,7 @@ enum ScrollerGestureType {
     MiddleMouseButtonGesture,
 }
 
+#[org_name(QScroller)]
 enum Input {
     InputPress,
     InputMove,

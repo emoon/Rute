@@ -1,3 +1,4 @@
+#[org_name(QWizard)]
 enum WizardButton {
     BackButton,
     NextButton,
@@ -14,6 +15,7 @@ enum WizardButton {
     NButtons,
 }
 
+#[org_name(QWizard)]
 enum WizardPixmap {
     WatermarkPixmap,
     LogoPixmap,
@@ -22,6 +24,7 @@ enum WizardPixmap {
     NPixmaps,
 }
 
+#[org_name(QWizard)]
 enum WizardStyle {
     ClassicStyle,
     ModernStyle,
@@ -30,6 +33,7 @@ enum WizardStyle {
     NStyles,
 }
 
+#[org_name(QWizard)]
 enum WizardOption {
     IndependentPages,
     IgnoreSubTitles,

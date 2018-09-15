@@ -1,3 +1,4 @@
+#[org_name(QClipboard)]
 enum Mode {
     Clipboard,
     Selection,

@@ -1,3 +1,4 @@
+#[org_name(QGraphicsItem)]
 enum GraphicsItemFlag {
     ItemIsMovable,
     ItemIsSelectable,
@@ -21,6 +22,7 @@ enum GraphicsItemFlag {
     ItemContainsChildrenInShape,
 }
 
+#[org_name(QGraphicsItem)]
 enum GraphicsItemChange {
     ItemPositionChange,
     ItemMatrixChange,
@@ -58,23 +60,27 @@ enum GraphicsItemChange {
     ItemTransformOriginPointHasChanged,
 }
 
+#[org_name(QGraphicsItem)]
 enum CacheMode {
     NoCache,
     ItemCoordinateCache,
     DeviceCoordinateCache,
 }
 
+#[org_name(QGraphicsItem)]
 enum PanelModality {
     NonModal,
     PanelModal,
     SceneModal,
 }
 
+#[org_name(QGraphicsItem)]
 enum GraphicsItemFixMeEnums {
     Type,
     UserType,
 }
 
+#[org_name(QGraphicsItem)]
 enum Extension {
     UserExtension,
 }

@@ -1,7 +1,9 @@
+#[org_name(QStyleOptionComboBox)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionComboBox)]
 enum StyleOptionVersion {
     Version,
 }

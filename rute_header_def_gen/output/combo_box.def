@@ -1,3 +1,4 @@
+#[org_name(QComboBox)]
 enum InsertPolicy {
     NoInsert,
     InsertAtTop,
@@ -8,6 +9,7 @@ enum InsertPolicy {
     InsertAlphabetically,
 }
 
+#[org_name(QComboBox)]
 enum SizeAdjustPolicy {
     AdjustToContents,
     AdjustToContentsOnFirstShow,

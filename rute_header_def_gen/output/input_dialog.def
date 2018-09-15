@@ -1,9 +1,11 @@
+#[org_name(QInputDialog)]
 enum InputDialogOption {
     NoButtons,
     UseListViewForComboBoxItems,
     UsePlainTextEditForTextInput,
 }
 
+#[org_name(QInputDialog)]
 enum InputMode {
     TextInput,
     IntInput,

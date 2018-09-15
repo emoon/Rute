@@ -1,3 +1,4 @@
+#[org_name(QAbstractTransition)]
 enum TransitionType {
     ExternalTransition,
     InternalTransition,

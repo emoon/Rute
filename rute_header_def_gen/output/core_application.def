@@ -1,3 +1,4 @@
+#[org_name(QCoreApplication)]
 enum CoreApplicationFixMeEnums {
     ApplicationFlags,
 }

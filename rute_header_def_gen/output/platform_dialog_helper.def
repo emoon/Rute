@@ -1,11 +1,14 @@
+#[org_name(QPlatformDialogHelper)]
 enum StyleHint {
 }
 
+#[org_name(QPlatformDialogHelper)]
 enum DialogCode {
     Rejected,
     Accepted,
 }
 
+#[org_name(QPlatformDialogHelper)]
 enum StandardButton {
     NoButton,
     Ok,
@@ -32,6 +35,7 @@ enum StandardButton {
     HighestBit,
 }
 
+#[org_name(QPlatformDialogHelper)]
 enum ButtonRole {
     InvalidRole,
     AcceptRole,
@@ -51,6 +55,7 @@ enum ButtonRole {
     EOL,
 }
 
+#[org_name(QPlatformDialogHelper)]
 enum ButtonLayout {
     UnknownLayout,
     WinLayout,

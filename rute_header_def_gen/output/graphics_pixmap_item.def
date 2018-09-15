@@ -1,9 +1,11 @@
+#[org_name(QGraphicsPixmapItem)]
 enum ShapeMode {
     MaskShape,
     BoundingRectShape,
     HeuristicMaskShape,
 }
 
+#[org_name(QGraphicsPixmapItem)]
 enum GraphicsPixmapItemFixMeEnums {
     Type,
 }

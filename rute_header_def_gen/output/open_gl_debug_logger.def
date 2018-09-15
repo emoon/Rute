@@ -1,3 +1,4 @@
+#[org_name(QOpenGLDebugLogger)]
 enum LoggingMode {
     AsynchronousLogging,
     SynchronousLogging,

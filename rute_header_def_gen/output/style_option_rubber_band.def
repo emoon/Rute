@@ -1,7 +1,9 @@
+#[org_name(QStyleOptionRubberBand)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionRubberBand)]
 enum StyleOptionVersion {
     Version,
 }

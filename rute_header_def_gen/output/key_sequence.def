@@ -1,3 +1,4 @@
+#[org_name(QKeySequence)]
 enum StandardKey {
     UnknownKey,
     HelpContents,
@@ -72,11 +73,13 @@ enum StandardKey {
     Cancel,
 }
 
+#[org_name(QKeySequence)]
 enum SequenceFormat {
     NativeText,
     PortableText,
 }
 
+#[org_name(QKeySequence)]
 enum SequenceMatch {
     NoMatch,
     PartialMatch,

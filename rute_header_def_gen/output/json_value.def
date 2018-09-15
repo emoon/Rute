@@ -1,3 +1,4 @@
+#[org_name(QJsonValue)]
 enum Type {
     Null,
     Bool,

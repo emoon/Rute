@@ -1,3 +1,4 @@
+#[org_name(QStackedLayout)]
 enum StackingMode {
     StackOne,
     StackAll,

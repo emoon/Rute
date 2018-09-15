@@ -1,7 +1,9 @@
+#[org_name(QStyleOptionFocusRect)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionFocusRect)]
 enum StyleOptionVersion {
     Version,
 }

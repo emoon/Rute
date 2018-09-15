@@ -1,3 +1,4 @@
+#[org_name(QRgba64)]
 enum Shifts {
     RedShift,
     GreenShift,

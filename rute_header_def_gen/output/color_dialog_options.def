@@ -1,3 +1,4 @@
+#[org_name(QColorDialogOptions)]
 enum ColorDialogOption {
     ShowAlphaChannel,
     NoButtons,

@@ -1,8 +1,10 @@
+#[org_name(QRawFont)]
 enum AntialiasingType {
     PixelAntialiasing,
     SubPixelAntialiasing,
 }
 
+#[org_name(QRawFont)]
 enum LayoutFlag {
     SeparateAdvances,
     KernedAdvances,

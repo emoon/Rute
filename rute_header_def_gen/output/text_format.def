@@ -1,3 +1,4 @@
+#[org_name(QTextFormat)]
 enum FormatType {
     InvalidFormat,
     BlockFormat,
@@ -8,6 +9,7 @@ enum FormatType {
     UserFormat,
 }
 
+#[org_name(QTextFormat)]
 enum Property {
     ObjectIndex,
     CssFloat,
@@ -93,6 +95,7 @@ enum Property {
     UserProperty,
 }
 
+#[org_name(QTextFormat)]
 enum ObjectTypes {
     NoObject,
     ImageObject,
@@ -101,6 +104,7 @@ enum ObjectTypes {
     UserObject,
 }
 
+#[org_name(QTextFormat)]
 enum PageBreakFlag {
     PageBreak_Auto,
     PageBreak_AlwaysBefore,

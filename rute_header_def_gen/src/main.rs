@@ -324,7 +324,9 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
 ///
 /// Print enums
 ///
-fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str) {
+fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str) {
+    writeln!(dest, "#[org_name({})]", org_class_name);
+
     if let Some(enum_name) = entry.get_display_name() {
         writeln!(dest, "enum {} {{", enum_name);
     } else {
@@ -402,7 +404,7 @@ fn print_class(target_path: &str, entry: &Entity) {
 
     for field in entry.get_children() {
         match field.get_kind() {
-            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..]),
+            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name),
             _ => (),
         }
     }
@@ -583,7 +585,7 @@ fn main() {
                 let mut dest = BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
 
                 for enum_def in enums {
-                    print_enums(&mut dest, &enum_def, &base_name);
+                    print_enums(&mut dest, &enum_def, &base_name, "Qt");
                 }
             }
         }

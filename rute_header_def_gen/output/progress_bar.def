@@ -1,3 +1,4 @@
+#[org_name(QProgressBar)]
 enum Direction {
     TopToBottom,
     BottomToTop,

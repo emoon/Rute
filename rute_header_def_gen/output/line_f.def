@@ -1,3 +1,4 @@
+#[org_name(QLineF)]
 enum IntersectType {
     NoIntersection,
     BoundedIntersection,

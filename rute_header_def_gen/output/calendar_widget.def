@@ -1,3 +1,4 @@
+#[org_name(QCalendarWidget)]
 enum HorizontalHeaderFormat {
     NoHorizontalHeader,
     SingleLetterDayNames,
@@ -5,11 +6,13 @@ enum HorizontalHeaderFormat {
     LongDayNames,
 }
 
+#[org_name(QCalendarWidget)]
 enum VerticalHeaderFormat {
     NoVerticalHeader,
     ISOWeekNumbers,
 }
 
+#[org_name(QCalendarWidget)]
 enum SelectionMode {
     NoSelection,
     SingleSelection,

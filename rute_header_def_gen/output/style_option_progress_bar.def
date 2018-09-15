@@ -1,7 +1,9 @@
+#[org_name(QStyleOptionProgressBar)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionProgressBar)]
 enum StyleOptionVersion {
     Version,
 }

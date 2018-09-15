@@ -1,3 +1,4 @@
+#[org_name(QOpenGLFunctions)]
 enum OpenGLFeature {
     Multitexture,
     Shaders,

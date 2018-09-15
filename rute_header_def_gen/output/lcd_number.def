@@ -1,3 +1,4 @@
+#[org_name(QLCDNumber)]
 enum Mode {
     Hex,
     Dec,
@@ -5,6 +6,7 @@ enum Mode {
     Bin,
 }
 
+#[org_name(QLCDNumber)]
 enum SegmentStyle {
     Outline,
     Filled,

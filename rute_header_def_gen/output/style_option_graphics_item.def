@@ -1,7 +1,9 @@
+#[org_name(QStyleOptionGraphicsItem)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionGraphicsItem)]
 enum StyleOptionVersion {
     Version,
 }

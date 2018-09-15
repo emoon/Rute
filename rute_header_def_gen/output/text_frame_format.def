@@ -1,9 +1,11 @@
+#[org_name(QTextFrameFormat)]
 enum Position {
     InFlow,
     FloatLeft,
     FloatRight,
 }
 
+#[org_name(QTextFrameFormat)]
 enum BorderStyle {
     BorderStyle_None,
     BorderStyle_Dotted,

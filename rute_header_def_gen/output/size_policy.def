@@ -1,3 +1,4 @@
+#[org_name(QSizePolicy)]
 enum PolicyFlag {
     GrowFlag,
     ExpandFlag,
@@ -5,6 +6,7 @@ enum PolicyFlag {
     IgnoreFlag,
 }
 
+#[org_name(QSizePolicy)]
 enum Policy {
     Fixed,
     Minimum,
@@ -15,6 +17,7 @@ enum Policy {
     Ignored,
 }
 
+#[org_name(QSizePolicy)]
 enum ControlType {
     DefaultType,
     ButtonBox,

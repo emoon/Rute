@@ -1,3 +1,4 @@
+#[org_name(QWindow)]
 enum Visibility {
     Hidden,
     AutomaticVisibility,
@@ -7,6 +8,7 @@ enum Visibility {
     FullScreen,
 }
 
+#[org_name(QWindow)]
 enum AncestorMode {
     ExcludeTransients,
     IncludeTransients,

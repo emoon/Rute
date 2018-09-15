@@ -1,3 +1,4 @@
+#[org_name(QGraphicsWidget)]
 enum GraphicsWidgetFixMeEnums {
     Type,
 }

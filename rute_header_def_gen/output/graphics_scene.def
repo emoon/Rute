@@ -1,8 +1,10 @@
+#[org_name(QGraphicsScene)]
 enum ItemIndexMethod {
     BspTreeIndex,
     NoIndex,
 }
 
+#[org_name(QGraphicsScene)]
 enum SceneLayer {
     ItemLayer,
     BackgroundLayer,

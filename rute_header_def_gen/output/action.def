@@ -1,3 +1,4 @@
+#[org_name(QAction)]
 enum MenuRole {
     NoRole,
     TextHeuristicRole,
@@ -8,12 +9,14 @@ enum MenuRole {
     QuitRole,
 }
 
+#[org_name(QAction)]
 enum Priority {
     LowPriority,
     NormalPriority,
     HighPriority,
 }
 
+#[org_name(QAction)]
 enum ActionEvent {
     Trigger,
     Hover,

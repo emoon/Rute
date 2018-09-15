@@ -1,3 +1,4 @@
+#[org_name(QIconEngine)]
 enum IconEngineHook {
     AvailableSizesHook,
     IconNameHook,

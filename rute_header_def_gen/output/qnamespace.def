@@ -1,3 +1,4 @@
+#[org_name(Qt)]
 enum GlobalColor {
     color0,
     color1,
@@ -21,6 +22,7 @@ enum GlobalColor {
     transparent,
 }
 
+#[org_name(Qt)]
 enum KeyboardModifier {
     NoModifier,
     ShiftModifier,
@@ -32,6 +34,7 @@ enum KeyboardModifier {
     KeyboardModifierMask,
 }
 
+#[org_name(Qt)]
 enum Modifier {
     META,
     SHIFT,
@@ -41,6 +44,7 @@ enum Modifier {
     UNICODE_ACCEL,
 }
 
+#[org_name(Qt)]
 enum MouseButton {
     NoButton,
     LeftButton,
@@ -81,11 +85,13 @@ enum MouseButton {
     MouseButtonMask,
 }
 
+#[org_name(Qt)]
 enum Orientation {
     Horizontal,
     Vertical,
 }
 
+#[org_name(Qt)]
 enum FocusPolicy {
     NoFocus,
     TabFocus,
@@ -94,6 +100,7 @@ enum FocusPolicy {
     WheelFocus,
 }
 
+#[org_name(Qt)]
 enum TabFocusBehavior {
     NoTabFocus,
     TabFocusTextControls,
@@ -101,17 +108,20 @@ enum TabFocusBehavior {
     TabFocusAllControls,
 }
 
+#[org_name(Qt)]
 enum SortOrder {
     AscendingOrder,
     DescendingOrder,
 }
 
+#[org_name(Qt)]
 enum TileRule {
     StretchTile,
     RepeatTile,
     RoundTile,
 }
 
+#[org_name(Qt)]
 enum AlignmentFlag {
     AlignLeft,
     AlignLeading,
@@ -129,6 +139,7 @@ enum AlignmentFlag {
     AlignCenter,
 }
 
+#[org_name(Qt)]
 enum TextFlag {
     TextSingleLine,
     TextDontClip,
@@ -146,6 +157,7 @@ enum TextFlag {
     TextBypassShaping,
 }
 
+#[org_name(Qt)]
 enum TextElideMode {
     ElideLeft,
     ElideRight,
@@ -153,6 +165,7 @@ enum TextElideMode {
     ElideNone,
 }
 
+#[org_name(Qt)]
 enum WhiteSpaceMode {
     WhiteSpaceNormal,
     WhiteSpacePre,
@@ -160,11 +173,13 @@ enum WhiteSpaceMode {
     WhiteSpaceModeUndefined,
 }
 
+#[org_name(Qt)]
 enum HitTestAccuracy {
     ExactHit,
     FuzzyHit,
 }
 
+#[org_name(Qt)]
 enum WindowType {
     Widget,
     Window,
@@ -206,6 +221,7 @@ enum WindowType {
     WindowFullscreenButtonHint,
 }
 
+#[org_name(Qt)]
 enum WindowState {
     WindowNoState,
     WindowMinimized,
@@ -214,6 +230,7 @@ enum WindowState {
     WindowActive,
 }
 
+#[org_name(Qt)]
 enum ApplicationState {
     ApplicationSuspended,
     ApplicationHidden,
@@ -221,6 +238,7 @@ enum ApplicationState {
     ApplicationActive,
 }
 
+#[org_name(Qt)]
 enum ScreenOrientation {
     PrimaryOrientation,
     PortraitOrientation,
@@ -229,6 +247,7 @@ enum ScreenOrientation {
     InvertedLandscapeOrientation,
 }
 
+#[org_name(Qt)]
 enum WidgetAttribute {
     WA_Disabled,
     WA_UnderMouse,
@@ -345,6 +364,7 @@ enum WidgetAttribute {
     WA_AttributeCount,
 }
 
+#[org_name(Qt)]
 enum ApplicationAttribute {
     AA_ImmediateWidgetCreation,
     AA_MSWindowsUseDirect3DByDefault,
@@ -380,6 +400,7 @@ enum ApplicationAttribute {
     AA_AttributeCount,
 }
 
+#[org_name(Qt)]
 enum ImageConversionFlag {
     ColorMode_Mask,
     AutoColor,
@@ -402,11 +423,13 @@ enum ImageConversionFlag {
     NoFormatConversion,
 }
 
+#[org_name(Qt)]
 enum BGMode {
     TransparentMode,
     OpaqueMode,
 }
 
+#[org_name(Qt)]
 enum Key {
     Key_Escape,
     Key_Tab,
@@ -849,6 +872,7 @@ enum Key {
     Key_unknown,
 }
 
+#[org_name(Qt)]
 enum ArrowType {
     NoArrow,
     UpArrow,
@@ -857,6 +881,7 @@ enum ArrowType {
     RightArrow,
 }
 
+#[org_name(Qt)]
 enum PenStyle {
     NoPen,
     SolidLine,
@@ -868,6 +893,7 @@ enum PenStyle {
     MPenStyle,
 }
 
+#[org_name(Qt)]
 enum PenCapStyle {
     FlatCap,
     SquareCap,
@@ -875,6 +901,7 @@ enum PenCapStyle {
     MPenCapStyle,
 }
 
+#[org_name(Qt)]
 enum PenJoinStyle {
     MiterJoin,
     BevelJoin,
@@ -883,6 +910,7 @@ enum PenJoinStyle {
     MPenJoinStyle,
 }
 
+#[org_name(Qt)]
 enum BrushStyle {
     NoBrush,
     SolidPattern,
@@ -905,11 +933,13 @@ enum BrushStyle {
     TexturePattern,
 }
 
+#[org_name(Qt)]
 enum SizeMode {
     AbsoluteSize,
     RelativeSize,
 }
 
+#[org_name(Qt)]
 enum UIEffect {
     UI_General,
     UI_AnimateMenu,
@@ -920,6 +950,7 @@ enum UIEffect {
     UI_AnimateToolBox,
 }
 
+#[org_name(Qt)]
 enum CursorShape {
     ArrowCursor,
     UpArrowCursor,
@@ -948,18 +979,21 @@ enum CursorShape {
     CustomCursor,
 }
 
+#[org_name(Qt)]
 enum TextFormat {
     PlainText,
     RichText,
     AutoText,
 }
 
+#[org_name(Qt)]
 enum AspectRatioMode {
     IgnoreAspectRatio,
     KeepAspectRatio,
     KeepAspectRatioByExpanding,
 }
 
+#[org_name(Qt)]
 enum DockWidgetArea {
     LeftDockWidgetArea,
     RightDockWidgetArea,
@@ -970,10 +1004,12 @@ enum DockWidgetArea {
     NoDockWidgetArea,
 }
 
+#[org_name(Qt)]
 enum DockWidgetAreaSizes {
     NDockWidgetAreas,
 }
 
+#[org_name(Qt)]
 enum ToolBarArea {
     LeftToolBarArea,
     RightToolBarArea,
@@ -984,10 +1020,12 @@ enum ToolBarArea {
     NoToolBarArea,
 }
 
+#[org_name(Qt)]
 enum ToolBarAreaSizes {
     NToolBarAreas,
 }
 
+#[org_name(Qt)]
 enum DateFormat {
     TextDate,
     ISODate,
@@ -1002,6 +1040,7 @@ enum DateFormat {
     ISODateWithMs,
 }
 
+#[org_name(Qt)]
 enum TimeSpec {
     LocalTime,
     UTC,
@@ -1009,6 +1048,7 @@ enum TimeSpec {
     TimeZone,
 }
 
+#[org_name(Qt)]
 enum DayOfWeek {
     Monday,
     Tuesday,
@@ -1019,17 +1059,20 @@ enum DayOfWeek {
     Sunday,
 }
 
+#[org_name(Qt)]
 enum ScrollBarPolicy {
     ScrollBarAsNeeded,
     ScrollBarAlwaysOff,
     ScrollBarAlwaysOn,
 }
 
+#[org_name(Qt)]
 enum CaseSensitivity {
     CaseInsensitive,
     CaseSensitive,
 }
 
+#[org_name(Qt)]
 enum Corner {
     TopLeftCorner,
     TopRightCorner,
@@ -1037,6 +1080,7 @@ enum Corner {
     BottomRightCorner,
 }
 
+#[org_name(Qt)]
 enum Edge {
     TopEdge,
     LeftEdge,
@@ -1044,6 +1088,7 @@ enum Edge {
     BottomEdge,
 }
 
+#[org_name(Qt)]
 enum ConnectionType {
     AutoConnection,
     DirectConnection,
@@ -1052,6 +1097,7 @@ enum ConnectionType {
     UniqueConnection,
 }
 
+#[org_name(Qt)]
 enum ShortcutContext {
     WidgetShortcut,
     WindowShortcut,
@@ -1059,22 +1105,26 @@ enum ShortcutContext {
     WidgetWithChildrenShortcut,
 }
 
+#[org_name(Qt)]
 enum FillRule {
     OddEvenFill,
     WindingFill,
 }
 
+#[org_name(Qt)]
 enum MaskMode {
     MaskInColor,
     MaskOutColor,
 }
 
+#[org_name(Qt)]
 enum ClipOperation {
     NoClip,
     ReplaceClip,
     IntersectClip,
 }
 
+#[org_name(Qt)]
 enum ItemSelectionMode {
     ContainsItemShape,
     IntersectsItemShape,
@@ -1082,22 +1132,26 @@ enum ItemSelectionMode {
     IntersectsItemBoundingRect,
 }
 
+#[org_name(Qt)]
 enum ItemSelectionOperation {
     ReplaceSelection,
     AddToSelection,
 }
 
+#[org_name(Qt)]
 enum TransformationMode {
     FastTransformation,
     SmoothTransformation,
 }
 
+#[org_name(Qt)]
 enum Axis {
     XAxis,
     YAxis,
     ZAxis,
 }
 
+#[org_name(Qt)]
 enum FocusReason {
     MouseFocusReason,
     TabFocusReason,
@@ -1110,6 +1164,7 @@ enum FocusReason {
     NoFocusReason,
 }
 
+#[org_name(Qt)]
 enum ContextMenuPolicy {
     NoContextMenu,
     DefaultContextMenu,
@@ -1118,6 +1173,7 @@ enum ContextMenuPolicy {
     PreventContextMenu,
 }
 
+#[org_name(Qt)]
 enum InputMethodQuery {
     ImEnabled,
     ImCursorRectangle,
@@ -1141,6 +1197,7 @@ enum InputMethodQuery {
     ImQueryAll,
 }
 
+#[org_name(Qt)]
 enum InputMethodHint {
     ImhNone,
     ImhHiddenText,
@@ -1165,6 +1222,7 @@ enum InputMethodHint {
     ImhExclusiveInputMask,
 }
 
+#[org_name(Qt)]
 enum EnterKeyType {
     EnterKeyDefault,
     EnterKeyReturn,
@@ -1176,6 +1234,7 @@ enum EnterKeyType {
     EnterKeyPrevious,
 }
 
+#[org_name(Qt)]
 enum ToolButtonStyle {
     ToolButtonIconOnly,
     ToolButtonTextOnly,
@@ -1184,12 +1243,14 @@ enum ToolButtonStyle {
     ToolButtonFollowStyle,
 }
 
+#[org_name(Qt)]
 enum LayoutDirection {
     LeftToRight,
     RightToLeft,
     LayoutDirectionAuto,
 }
 
+#[org_name(Qt)]
 enum AnchorPoint {
     AnchorLeft,
     AnchorHorizontalCenter,
@@ -1199,11 +1260,13 @@ enum AnchorPoint {
     AnchorBottom,
 }
 
+#[org_name(Qt)]
 enum FindChildOption {
     FindDirectChildrenOnly,
     FindChildrenRecursively,
 }
 
+#[org_name(Qt)]
 enum DropAction {
     CopyAction,
     MoveAction,
@@ -1213,12 +1276,14 @@ enum DropAction {
     IgnoreAction,
 }
 
+#[org_name(Qt)]
 enum CheckState {
     Unchecked,
     PartiallyChecked,
     Checked,
 }
 
+#[org_name(Qt)]
 enum ItemDataRole {
     DisplayRole,
     DecorationRole,
@@ -1245,6 +1310,7 @@ enum ItemDataRole {
     UserRole,
 }
 
+#[org_name(Qt)]
 enum ItemFlag {
     NoItemFlags,
     ItemIsSelectable,
@@ -1259,6 +1325,7 @@ enum ItemFlag {
     ItemIsUserTristate,
 }
 
+#[org_name(Qt)]
 enum MatchFlag {
     MatchExactly,
     MatchContains,
@@ -1272,12 +1339,14 @@ enum MatchFlag {
     MatchRecursive,
 }
 
+#[org_name(Qt)]
 enum WindowModality {
     NonModal,
     WindowModal,
     ApplicationModal,
 }
 
+#[org_name(Qt)]
 enum TextInteractionFlag {
     NoTextInteraction,
     TextSelectableByMouse,
@@ -1289,12 +1358,14 @@ enum TextInteractionFlag {
     TextBrowserInteraction,
 }
 
+#[org_name(Qt)]
 enum EventPriority {
     HighEventPriority,
     NormalEventPriority,
     LowEventPriority,
 }
 
+#[org_name(Qt)]
 enum SizeHint {
     MinimumSize,
     PreferredSize,
@@ -1303,6 +1374,7 @@ enum SizeHint {
     NSizeHints,
 }
 
+#[org_name(Qt)]
 enum WindowFrameSection {
     NoSection,
     LeftSection,
@@ -1316,15 +1388,18 @@ enum WindowFrameSection {
     TitleBarArea,
 }
 
+#[org_name(Qt)]
 enum Initialization {
     Uninitialized,
 }
 
+#[org_name(Qt)]
 enum CoordinateSystem {
     DeviceCoordinates,
     LogicalCoordinates,
 }
 
+#[org_name(Qt)]
 enum TouchPointState {
     TouchPointPressed,
     TouchPointMoved,
@@ -1332,6 +1407,7 @@ enum TouchPointState {
     TouchPointReleased,
 }
 
+#[org_name(Qt)]
 enum GestureState {
     NoGesture,
     GestureStarted,
@@ -1340,6 +1416,7 @@ enum GestureState {
     GestureCanceled,
 }
 
+#[org_name(Qt)]
 enum GestureType {
     TapGesture,
     TapAndHoldGesture,
@@ -1350,12 +1427,14 @@ enum GestureType {
     LastGestureType,
 }
 
+#[org_name(Qt)]
 enum GestureFlag {
     DontStartGestureOnChildren,
     ReceivePartialGestures,
     IgnoredGesturesPropagateToParent,
 }
 
+#[org_name(Qt)]
 enum NativeGestureType {
     BeginNativeGesture,
     EndNativeGesture,
@@ -1366,6 +1445,7 @@ enum NativeGestureType {
     SwipeNativeGesture,
 }
 
+#[org_name(Qt)]
 enum NavigationMode {
     NavigationModeNone,
     NavigationModeKeypadTabOrder,
@@ -1374,17 +1454,20 @@ enum NavigationMode {
     NavigationModeCursorForceVisible,
 }
 
+#[org_name(Qt)]
 enum CursorMoveStyle {
     LogicalMoveStyle,
     VisualMoveStyle,
 }
 
+#[org_name(Qt)]
 enum TimerType {
     PreciseTimer,
     CoarseTimer,
     VeryCoarseTimer,
 }
 
+#[org_name(Qt)]
 enum ScrollPhase {
     NoScrollPhase,
     ScrollBegin,
@@ -1392,6 +1475,7 @@ enum ScrollPhase {
     ScrollEnd,
 }
 
+#[org_name(Qt)]
 enum MouseEventSource {
     MouseEventNotSynthesized,
     MouseEventSynthesizedBySystem,
@@ -1399,11 +1483,13 @@ enum MouseEventSource {
     MouseEventSynthesizedByApplication,
 }
 
+#[org_name(Qt)]
 enum MouseEventFlag {
     MouseEventCreatedDoubleClick,
     MouseEventFlagMask,
 }
 
+#[org_name(Qt)]
 enum ChecksumType {
     ChecksumIso3309,
     ChecksumItuV41,

@@ -1,3 +1,4 @@
+#[org_name(QPinchGesture)]
 enum ChangeFlag {
     ScaleFactorChanged,
     RotationAngleChanged,

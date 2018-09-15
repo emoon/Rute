@@ -1,3 +1,4 @@
+#[org_name(QWidget)]
 enum RenderFlag {
     DrawWindowBackground,
     DrawChildren,

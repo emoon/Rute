@@ -1,3 +1,4 @@
+#[org_name(QDirIterator)]
 enum IteratorFlag {
     NoIteratorFlags,
     FollowSymlinks,

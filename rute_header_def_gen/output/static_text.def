@@ -1,3 +1,4 @@
+#[org_name(QStaticText)]
 enum PerformanceHint {
     ModerateCaching,
     AggressiveCaching,

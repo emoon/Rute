@@ -1,15 +1,18 @@
+#[org_name(QFormLayout)]
 enum FieldGrowthPolicy {
     FieldsStayAtSizeHint,
     ExpandingFieldsGrow,
     AllNonFixedFieldsGrow,
 }
 
+#[org_name(QFormLayout)]
 enum RowWrapPolicy {
     DontWrapRows,
     WrapLongRows,
     WrapAllRows,
 }
 
+#[org_name(QFormLayout)]
 enum ItemRole {
     LabelRole,
     FieldRole,

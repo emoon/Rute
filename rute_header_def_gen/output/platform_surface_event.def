@@ -1,3 +1,4 @@
+#[org_name(QPlatformSurfaceEvent)]
 enum SurfaceEventType {
     SurfaceCreated,
     SurfaceAboutToBeDestroyed,

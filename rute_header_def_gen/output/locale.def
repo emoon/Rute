@@ -1,3 +1,4 @@
+#[org_name(QLocale)]
 enum Language {
     AnyLanguage,
     C,
@@ -376,6 +377,7 @@ enum Language {
     LastLanguage,
 }
 
+#[org_name(QLocale)]
 enum Script {
     AnyScript,
     ArabicScript,
@@ -524,6 +526,7 @@ enum Script {
     LastScript,
 }
 
+#[org_name(QLocale)]
 enum Country {
     AnyCountry,
     Afghanistan,
@@ -796,6 +799,7 @@ enum Country {
     LastCountry,
 }
 
+#[org_name(QLocale)]
 enum MeasurementSystem {
     MetricSystem,
     ImperialUSSystem,
@@ -803,12 +807,14 @@ enum MeasurementSystem {
     ImperialSystem,
 }
 
+#[org_name(QLocale)]
 enum FormatType {
     LongFormat,
     ShortFormat,
     NarrowFormat,
 }
 
+#[org_name(QLocale)]
 enum NumberOption {
     DefaultNumberOptions,
     OmitGroupSeparator,
@@ -819,16 +825,19 @@ enum NumberOption {
     RejectTrailingZeroesAfterDot,
 }
 
+#[org_name(QLocale)]
 enum FloatingPointPrecisionOption {
     FloatingPointShortest,
 }
 
+#[org_name(QLocale)]
 enum CurrencySymbolFormat {
     CurrencyIsoCode,
     CurrencySymbol,
     CurrencyDisplayName,
 }
 
+#[org_name(QLocale)]
 enum DataSizeFormat {
     DataSizeBase1000,
     DataSizeSIQuantifiers,
@@ -837,6 +846,7 @@ enum DataSizeFormat {
     DataSizeSIFormat,
 }
 
+#[org_name(QLocale)]
 enum QuotationStyle {
     StandardQuotation,
     AlternateQuotation,

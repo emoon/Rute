@@ -1,11 +1,14 @@
+#[org_name(QStyleOptionViewItem)]
 enum StyleOptionType {
     Type,
 }
 
+#[org_name(QStyleOptionViewItem)]
 enum StyleOptionVersion {
     Version,
 }
 
+#[org_name(QStyleOptionViewItem)]
 enum Position {
     Left,
     Right,
@@ -13,6 +16,7 @@ enum Position {
     Bottom,
 }
 
+#[org_name(QStyleOptionViewItem)]
 enum ViewItemFeature {
     None,
     WrapText,
@@ -22,6 +26,7 @@ enum ViewItemFeature {
     HasDecoration,
 }
 
+#[org_name(QStyleOptionViewItem)]
 enum ViewItemPosition {
     Invalid,
     Beginning,

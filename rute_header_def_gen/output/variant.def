@@ -1,3 +1,4 @@
+#[org_name(QVariant)]
 enum Type {
     Invalid,
     Bool,

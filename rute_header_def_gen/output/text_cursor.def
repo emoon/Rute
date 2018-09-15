@@ -1,8 +1,10 @@
+#[org_name(QTextCursor)]
 enum MoveMode {
     MoveAnchor,
     KeepAnchor,
 }
 
+#[org_name(QTextCursor)]
 enum MoveOperation {
     NoMove,
     Start,
@@ -31,6 +33,7 @@ enum MoveOperation {
     PreviousRow,
 }
 
+#[org_name(QTextCursor)]
 enum SelectionType {
     WordUnderCursor,
     LineUnderCursor,

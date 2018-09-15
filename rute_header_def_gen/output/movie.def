@@ -1,9 +1,11 @@
+#[org_name(QMovie)]
 enum MovieState {
     NotRunning,
     Paused,
     Running,
 }
 
+#[org_name(QMovie)]
 enum CacheMode {
     CacheNone,
     CacheAll,

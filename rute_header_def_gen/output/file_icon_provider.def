@@ -1,3 +1,4 @@
+#[org_name(QFileIconProvider)]
 enum IconType {
     Computer,
     Desktop,
@@ -8,6 +9,7 @@ enum IconType {
     File,
 }
 
+#[org_name(QFileIconProvider)]
 enum Option {
     DontUseCustomDirectoryIcons,
 }

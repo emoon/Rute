@@ -1,15 +1,18 @@
+#[org_name(QAbstractSpinBox)]
 enum StepEnabledFlag {
     StepNone,
     StepUpEnabled,
     StepDownEnabled,
 }
 
+#[org_name(QAbstractSpinBox)]
 enum ButtonSymbols {
     UpDownArrows,
     PlusMinus,
     NoButtons,
 }
 
+#[org_name(QAbstractSpinBox)]
 enum CorrectionMode {
     CorrectToPreviousValue,
     CorrectToNearestValue,

@@ -1,3 +1,4 @@
+#[org_name(QFrame)]
 enum Shape {
     NoFrame,
     Box,
@@ -8,12 +9,14 @@ enum Shape {
     StyledPanel,
 }
 
+#[org_name(QFrame)]
 enum Shadow {
     Plain,
     Raised,
     Sunken,
 }
 
+#[org_name(QFrame)]
 enum StyleMask {
     Shadow_Mask,
     Shape_Mask,

@@ -1,3 +1,4 @@
+#[org_name(QDate)]
 enum MonthNameType {
     DateFormat,
     StandaloneFormat,

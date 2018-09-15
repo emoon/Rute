@@ -1,3 +1,4 @@
+#[org_name(QPageSize)]
 enum PageSizeId {
     A4,
     B5,
@@ -128,6 +129,7 @@ enum PageSizeId {
     Envelope10,
 }
 
+#[org_name(QPageSize)]
 enum Unit {
     Millimeter,
     Point,
@@ -137,6 +139,7 @@ enum Unit {
     Cicero,
 }
 
+#[org_name(QPageSize)]
 enum SizeMatchPolicy {
     FuzzyMatch,
     FuzzyOrientationMatch,

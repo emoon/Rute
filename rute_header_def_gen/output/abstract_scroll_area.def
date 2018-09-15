@@ -1,3 +1,4 @@
+#[org_name(QAbstractScrollArea)]
 enum SizeAdjustPolicy {
     AdjustIgnored,
     AdjustToContentsOnFirstShow,

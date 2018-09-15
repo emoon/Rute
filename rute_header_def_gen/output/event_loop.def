@@ -1,3 +1,4 @@
+#[org_name(QEventLoop)]
 enum ProcessEventsFlag {
     AllEvents,
     ExcludeUserInputEvents,

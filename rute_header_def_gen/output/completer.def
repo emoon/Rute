@@ -1,9 +1,11 @@
+#[org_name(QCompleter)]
 enum CompletionMode {
     PopupCompletion,
     UnfilteredPopupCompletion,
     InlineCompletion,
 }
 
+#[org_name(QCompleter)]
 enum ModelSorting {
     UnsortedModel,
     CaseSensitivelySortedModel,

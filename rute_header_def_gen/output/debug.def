@@ -1,3 +1,4 @@
+#[org_name(QDebug)]
 enum Latin1Content {
     ContainsBinary,
     ContainsLatin1,

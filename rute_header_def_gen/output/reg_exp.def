@@ -1,3 +1,4 @@
+#[org_name(QRegExp)]
 enum PatternSyntax {
     RegExp,
     Wildcard,
@@ -7,6 +8,7 @@ enum PatternSyntax {
     W3CXmlSchema11,
 }
 
+#[org_name(QRegExp)]
 enum CaretMode {
     CaretAtZero,
     CaretAtOffset,

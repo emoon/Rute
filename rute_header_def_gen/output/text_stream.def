@@ -1,9 +1,11 @@
+#[org_name(QTextStream)]
 enum RealNumberNotation {
     SmartNotation,
     FixedNotation,
     ScientificNotation,
 }
 
+#[org_name(QTextStream)]
 enum FieldAlignment {
     AlignLeft,
     AlignRight,
@@ -11,6 +13,7 @@ enum FieldAlignment {
     AlignAccountingStyle,
 }
 
+#[org_name(QTextStream)]
 enum Status {
     Ok,
     ReadPastEnd,
@@ -18,6 +21,7 @@ enum Status {
     WriteFailed,
 }
 
+#[org_name(QTextStream)]
 enum NumberFlag {
     ShowBase,
     ForcePoint,

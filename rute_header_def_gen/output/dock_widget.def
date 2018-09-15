@@ -1,3 +1,4 @@
+#[org_name(QDockWidget)]
 enum DockWidgetFeature {
     DockWidgetClosable,
     DockWidgetMovable,

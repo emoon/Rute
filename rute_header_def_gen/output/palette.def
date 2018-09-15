@@ -1,3 +1,4 @@
+#[org_name(QPalette)]
 enum ColorGroup {
     Active,
     Disabled,
@@ -8,6 +9,7 @@ enum ColorGroup {
     Normal,
 }
 
+#[org_name(QPalette)]
 enum ColorRole {
     WindowText,
     Button,

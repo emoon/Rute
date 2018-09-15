@@ -1,8 +1,10 @@
+#[org_name(QImage)]
 enum InvertMode {
     InvertRgb,
     InvertRgba,
 }
 
+#[org_name(QImage)]
 enum Format {
     Format_Invalid,
     Format_Mono,

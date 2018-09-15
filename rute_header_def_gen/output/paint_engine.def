@@ -1,3 +1,4 @@
+#[org_name(QPaintEngine)]
 enum PaintEngineFeature {
     PrimitiveTransform,
     PatternTransform,
@@ -21,6 +22,7 @@ enum PaintEngineFeature {
     AllFeatures,
 }
 
+#[org_name(QPaintEngine)]
 enum DirtyFlag {
     DirtyPen,
     DirtyBrush,
@@ -38,6 +40,7 @@ enum DirtyFlag {
     AllDirty,
 }
 
+#[org_name(QPaintEngine)]
 enum PolygonDrawMode {
     OddEvenMode,
     WindingMode,
@@ -45,6 +48,7 @@ enum PolygonDrawMode {
     PolylineMode,
 }
 
+#[org_name(QPaintEngine)]
 enum Type {
     X11,
     Windows,

@@ -1,3 +1,4 @@
+#[org_name(QTextItem)]
 enum RenderFlag {
     RightToLeft,
     Overline,

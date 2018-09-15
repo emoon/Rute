@@ -1,3 +1,4 @@
+#[org_name(QIcon)]
 enum Mode {
     Normal,
     Disabled,
@@ -5,6 +6,7 @@ enum Mode {
     Selected,
 }
 
+#[org_name(QIcon)]
 enum State {
     On,
     Off,

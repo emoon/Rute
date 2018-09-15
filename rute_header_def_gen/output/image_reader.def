@@ -1,3 +1,4 @@
+#[org_name(QImageReader)]
 enum ImageReaderError {
     UnknownError,
     FileNotFoundError,

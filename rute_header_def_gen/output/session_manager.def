@@ -1,3 +1,4 @@
+#[org_name(QSessionManager)]
 enum RestartHint {
     RestartIfRunning,
     RestartAnyway,

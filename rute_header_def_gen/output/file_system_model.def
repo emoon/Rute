@@ -1,3 +1,4 @@
+#[org_name(QFileSystemModel)]
 enum Roles {
     FileIconRole,
     FilePathRole,

@@ -1,3 +1,4 @@
+#[org_name(QContextMenuEvent)]
 enum Reason {
     Mouse,
     Keyboard,

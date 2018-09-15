@@ -1,3 +1,4 @@
+#[org_name(QOpenGLTexture)]
 enum Target {
     Target1D,
     Target1DArray,
@@ -12,6 +13,7 @@ enum Target {
     TargetBuffer,
 }
 
+#[org_name(QOpenGLTexture)]
 enum BindingTarget {
     BindingTarget1D,
     BindingTarget1DArray,
@@ -26,16 +28,19 @@ enum BindingTarget {
     BindingTargetBuffer,
 }
 
+#[org_name(QOpenGLTexture)]
 enum MipMapGeneration {
     GenerateMipMaps,
     DontGenerateMipMaps,
 }
 
+#[org_name(QOpenGLTexture)]
 enum TextureUnitReset {
     ResetTextureUnit,
     DontResetTextureUnit,
 }
 
+#[org_name(QOpenGLTexture)]
 enum TextureFormat {
     NoFormat,
     R8_UNorm,
@@ -165,6 +170,7 @@ enum TextureFormat {
     LuminanceAlphaFormat,
 }
 
+#[org_name(QOpenGLTexture)]
 enum TextureFormatClass {
     NoFormatClass,
     FormatClass_128Bit,
@@ -186,6 +192,7 @@ enum TextureFormatClass {
     FormatClass_Unique,
 }
 
+#[org_name(QOpenGLTexture)]
 enum CubeMapFace {
     CubeMapPositiveX,
     CubeMapNegativeX,
@@ -195,6 +202,7 @@ enum CubeMapFace {
     CubeMapNegativeZ,
 }
 
+#[org_name(QOpenGLTexture)]
 enum PixelFormat {
     NoSourceFormat,
     Red,
@@ -217,6 +225,7 @@ enum PixelFormat {
     LuminanceAlpha,
 }
 
+#[org_name(QOpenGLTexture)]
 enum PixelType {
     NoPixelType,
     Int8,
@@ -246,6 +255,7 @@ enum PixelType {
     Float32_D32_UInt32_S8_X24,
 }
 
+#[org_name(QOpenGLTexture)]
 enum SwizzleComponent {
     SwizzleRed,
     SwizzleGreen,
@@ -253,6 +263,7 @@ enum SwizzleComponent {
     SwizzleAlpha,
 }
 
+#[org_name(QOpenGLTexture)]
 enum SwizzleValue {
     RedValue,
     GreenValue,
@@ -262,6 +273,7 @@ enum SwizzleValue {
     OneValue,
 }
 
+#[org_name(QOpenGLTexture)]
 enum WrapMode {
     Repeat,
     MirroredRepeat,
@@ -269,12 +281,14 @@ enum WrapMode {
     ClampToBorder,
 }
 
+#[org_name(QOpenGLTexture)]
 enum CoordinateDirection {
     DirectionS,
     DirectionT,
     DirectionR,
 }
 
+#[org_name(QOpenGLTexture)]
 enum Feature {
     ImmutableStorage,
     ImmutableMultisampleStorage,
@@ -295,11 +309,13 @@ enum Feature {
     MaxFeatureFlag,
 }
 
+#[org_name(QOpenGLTexture)]
 enum DepthStencilMode {
     DepthMode,
     StencilMode,
 }
 
+#[org_name(QOpenGLTexture)]
 enum ComparisonFunction {
     CompareLessEqual,
     CompareGreaterEqual,
@@ -311,11 +327,13 @@ enum ComparisonFunction {
     CompareNever,
 }
 
+#[org_name(QOpenGLTexture)]
 enum ComparisonMode {
     CompareRefToTexture,
     CompareNone,
 }
 
+#[org_name(QOpenGLTexture)]
 enum Filter {
     Nearest,
     Linear,

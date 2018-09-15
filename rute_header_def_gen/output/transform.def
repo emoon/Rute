@@ -1,3 +1,4 @@
+#[org_name(QTransform)]
 enum TransformationType {
     TxNone,
     TxTranslate,

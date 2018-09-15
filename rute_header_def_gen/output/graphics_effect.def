@@ -1,3 +1,4 @@
+#[org_name(QGraphicsEffect)]
 enum ChangeFlag {
     SourceAttached,
     SourceDetached,
@@ -5,6 +6,7 @@ enum ChangeFlag {
     SourceInvalidated,
 }
 
+#[org_name(QGraphicsEffect)]
 enum PixmapPadMode {
     NoPad,
     PadToTransparentBorder,

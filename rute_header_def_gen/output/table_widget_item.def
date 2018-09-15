@@ -1,3 +1,4 @@
+#[org_name(QTableWidgetItem)]
 enum ItemType {
     Type,
     UserType,

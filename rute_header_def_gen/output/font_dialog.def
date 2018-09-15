@@ -1,3 +1,4 @@
+#[org_name(QFontDialog)]
 enum FontDialogOption {
     NoButtons,
     DontUseNativeDialog,

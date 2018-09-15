@@ -1,3 +1,4 @@
+#[org_name(QSurfaceFormat)]
 enum FormatOption {
     StereoBuffers,
     DebugContext,
@@ -5,6 +6,7 @@ enum FormatOption {
     ResetNotification,
 }
 
+#[org_name(QSurfaceFormat)]
 enum SwapBehavior {
     DefaultSwapBehavior,
     SingleBuffer,
@@ -12,6 +14,7 @@ enum SwapBehavior {
     TripleBuffer,
 }
 
+#[org_name(QSurfaceFormat)]
 enum RenderableType {
     DefaultRenderableType,
     OpenGL,
@@ -19,12 +22,14 @@ enum RenderableType {
     OpenVG,
 }
 
+#[org_name(QSurfaceFormat)]
 enum OpenGLContextProfile {
     NoProfile,
     CoreProfile,
     CompatibilityProfile,
 }
 
+#[org_name(QSurfaceFormat)]
 enum ColorSpace {
     DefaultColorSpace,
     sRGBColorSpace,

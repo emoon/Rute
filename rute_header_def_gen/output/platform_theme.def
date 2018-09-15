@@ -1,3 +1,4 @@
+#[org_name(QPlatformTheme)]
 enum ThemeHint {
     CursorFlashTime,
     KeyboardInputInterval,
@@ -37,6 +38,7 @@ enum ThemeHint {
     ShowShortcutsInContextMenus,
 }
 
+#[org_name(QPlatformTheme)]
 enum DialogType {
     FileDialog,
     ColorDialog,
@@ -44,6 +46,7 @@ enum DialogType {
     MessageDialog,
 }
 
+#[org_name(QPlatformTheme)]
 enum Palette {
     SystemPalette,
     ToolTipPalette,
@@ -66,6 +69,7 @@ enum Palette {
     NPalettes,
 }
 
+#[org_name(QPlatformTheme)]
 enum Font {
     SystemFont,
     MenuFont,
@@ -97,6 +101,7 @@ enum Font {
     NFonts,
 }
 
+#[org_name(QPlatformTheme)]
 enum StandardPixmap {
     TitleBarMenuButton,
     TitleBarMinButton,
@@ -172,6 +177,7 @@ enum StandardPixmap {
     CustomBase,
 }
 
+#[org_name(QPlatformTheme)]
 enum KeyboardSchemes {
     WindowsKeyboardScheme,
     MacKeyboardScheme,
@@ -181,6 +187,7 @@ enum KeyboardSchemes {
     CdeKeyboardScheme,
 }
 
+#[org_name(QPlatformTheme)]
 enum UiEffect {
     GeneralUiEffect,
     AnimateMenuUiEffect,
@@ -192,6 +199,7 @@ enum UiEffect {
     HoverEffect,
 }
 
+#[org_name(QPlatformTheme)]
 enum IconOption {
     DontUseCustomDirectoryIcons,
 }

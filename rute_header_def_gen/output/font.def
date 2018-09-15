@@ -1,3 +1,4 @@
+#[org_name(QFont)]
 enum StyleHint {
     Helvetica,
     SansSerif,
@@ -14,6 +15,7 @@ enum StyleHint {
     Fantasy,
 }
 
+#[org_name(QFont)]
 enum StyleStrategy {
     PreferDefault,
     PreferBitmap,
@@ -31,6 +33,7 @@ enum StyleStrategy {
     NoFontMerging,
 }
 
+#[org_name(QFont)]
 enum HintingPreference {
     PreferDefaultHinting,
     PreferNoHinting,
@@ -38,6 +41,7 @@ enum HintingPreference {
     PreferFullHinting,
 }
 
+#[org_name(QFont)]
 enum Weight {
     Thin,
     ExtraLight,
@@ -50,12 +54,14 @@ enum Weight {
     Black,
 }
 
+#[org_name(QFont)]
 enum Style {
     StyleNormal,
     StyleItalic,
     StyleOblique,
 }
 
+#[org_name(QFont)]
 enum Stretch {
     AnyStretch,
     UltraCondensed,
@@ -69,6 +75,7 @@ enum Stretch {
     UltraExpanded,
 }
 
+#[org_name(QFont)]
 enum Capitalization {
     MixedCase,
     AllUppercase,
@@ -77,11 +84,13 @@ enum Capitalization {
     Capitalize,
 }
 
+#[org_name(QFont)]
 enum SpacingType {
     PercentageSpacing,
     AbsoluteSpacing,
 }
 
+#[org_name(QFont)]
 enum ResolveProperties {
     FamilyResolved,
     SizeResolved,

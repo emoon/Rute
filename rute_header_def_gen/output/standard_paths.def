@@ -1,3 +1,4 @@
+#[org_name(QStandardPaths)]
 enum StandardLocation {
     DesktopLocation,
     DocumentsLocation,
@@ -21,6 +22,7 @@ enum StandardLocation {
     AppLocalDataLocation,
 }
 
+#[org_name(QStandardPaths)]
 enum LocateOption {
     LocateFile,
     LocateDirectory,

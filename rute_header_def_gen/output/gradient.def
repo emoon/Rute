@@ -1,3 +1,4 @@
+#[org_name(QGradient)]
 enum Type {
     LinearGradient,
     RadialGradient,
@@ -5,18 +6,21 @@ enum Type {
     NoGradient,
 }
 
+#[org_name(QGradient)]
 enum Spread {
     PadSpread,
     ReflectSpread,
     RepeatSpread,
 }
 
+#[org_name(QGradient)]
 enum CoordinateMode {
     LogicalMode,
     StretchToDeviceMode,
     ObjectBoundingMode,
 }
 
+#[org_name(QGradient)]
 enum InterpolationMode {
     ColorInterpolation,
     ComponentInterpolation,

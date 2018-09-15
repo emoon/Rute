@@ -1,3 +1,4 @@
+#[org_name(QByteArray)]
 enum Base64Option {
     Base64Encoding,
     Base64UrlEncoding,
