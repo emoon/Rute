@@ -2,7 +2,7 @@ use api_parser::*;
 use header_ffi_gen::HeaderFFIGen;
 use heck::{CamelCase, SnakeCase};
 use std::borrow::Cow;
-use std::collections::HashSet;
+use std::collections::BTreeMap;
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
 ///
@@ -129,16 +129,16 @@ impl HeaderFFIGen for RustFFIGenerator {
     /// This will find all the variables and figure out what use
     ///
     fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, sdef: &Struct) -> io::Result<()> {
-        let mut imports = HashSet::new();
+        let mut imports = BTreeMap::new();
 
         for func in &sdef.functions {
             if let Some(ref ret_val) = func.return_val {
                 match ret_val.vtype {
                     VariableType::Regular => {
-                        imports.insert((ret_val.type_name.clone(), format!("RU{}", ret_val.type_name)));
+                        imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
                     }
                     VariableType::Reference => {
-                        imports.insert((ret_val.type_name.clone(), format!("RU{}", ret_val.type_name)));
+                        imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
                     }
 
                     _ => (),

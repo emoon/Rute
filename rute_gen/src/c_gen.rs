@@ -1,6 +1,6 @@
 use api_parser::*;
 use header_ffi_gen::HeaderFFIGen;
-use std::collections::HashSet;
+use std::collections::BTreeMap;
 use heck::SnakeCase;
 ///
 /// This code is responisble for generating the Rute.h file that allows usage of Rute from C
@@ -64,16 +64,16 @@ impl HeaderFFIGen for CapiHeaderGen {
         dest: &mut W,
         sdef: &Struct,
     ) -> io::Result<()> {
-        let mut includes = HashSet::new();
+        let mut includes = BTreeMap::new();
 
         for func in &sdef.functions {
             if let Some(ref ret_val) = func.return_val {
                 match ret_val.vtype {
                     VariableType::Regular => {
-                        includes.insert(ret_val.type_name.clone());
+                        includes.insert(&ret_val.type_name, ());
                     }
                     VariableType::Reference => {
-                        includes.insert(ret_val.type_name.clone());
+                        includes.insert(&ret_val.type_name, ());
                     }
 
                     _ => (),
@@ -81,7 +81,7 @@ impl HeaderFFIGen for CapiHeaderGen {
             }
         }
 
-        for name in includes {
+        for (name, _) in includes {
             writeln!(dest, "#include \"{}_ffi.h\"", name.to_snake_case());
         }
 
