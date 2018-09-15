@@ -39,7 +39,8 @@ pub trait ListWidgetItemType {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).text)(obj_data);
-           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+           let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
         }
     }
 
@@ -189,7 +190,23 @@ pub trait ListWidgetType {
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).current_item)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = ListWidgetItem {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUListWidgetItem>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = ListWidgetItem {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 

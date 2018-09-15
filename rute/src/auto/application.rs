@@ -90,7 +90,8 @@ pub trait ApplicationType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_sheet)(obj_data);
-           CStr::from_ptr(ret_val).to_string_lossy().into_owned()
+           let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
         }
     }
 
@@ -138,15 +139,32 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUStyle>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Style {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
     pub fn set_style(&self, arg0: test) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
-            ((*funcs).set_style)(obj_data, arg0);
+            ((*funcs).set_style)(obj_data, enum_arg0_1);
         }
         self
     }
@@ -167,7 +185,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).set_style)(obj_data, str_in_arg0_1.as_ptr());
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUStyle>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Style {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -195,10 +229,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).palette)(obj_data, obj_arg0_1);
-            Palette {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Palette {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUPalette>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Palette {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -208,10 +252,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).palette)(obj_data, str_in_class_name_1.as_ptr());
-            Palette {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Palette {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUPalette>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Palette {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -231,10 +285,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).font)(obj_data);
-            Font {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Font {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -244,10 +308,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).font)(obj_data, obj_arg0_1);
-            Font {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Font {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -257,10 +331,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).font)(obj_data, str_in_class_name_1.as_ptr());
-            Font {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Font {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -290,10 +374,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_icon)(obj_data);
-            Icon {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Icon {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUIcon>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Icon {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -302,10 +396,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).all_widgets)(obj_data);
-            WidgetList {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = WidgetList {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidgetList>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = WidgetList {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -314,10 +418,20 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top_level_widgets)(obj_data);
-            WidgetList {
-                data: Rc::new(Cell::new(Some(ret_val))),
-                _marker: PhantomData,
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = WidgetList {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidgetList>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = WidgetList {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
             }
+            ret_val
         }
     }
 
@@ -326,7 +440,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).desktop)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = DesktopWidget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUDesktopWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = DesktopWidget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -335,7 +465,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).active_popup_widget)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -344,7 +490,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).active_modal_widget)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -353,7 +515,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).focus_widget)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -362,7 +540,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).active_window)(obj_data);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -382,7 +576,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).widget_at)(obj_data, obj_p_1);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -391,7 +601,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).widget_at)(obj_data, x, y);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -401,7 +627,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top_level_at)(obj_data, obj_p_1);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -410,7 +652,23 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top_level_at)(obj_data, x, y);
-            ret_val
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget {
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    _marker: PhantomData,
+                };
+            } else {
+                ret_val = Widget {
+                    data: Rc::new(Cell::new(Some(t))),
+                    _marker: PhantomData,
+                };
+            }
+            Some(ret_val)
         }
     }
 
@@ -542,19 +800,21 @@ pub trait ApplicationStaticType {
     }
 
     pub fn is_effect_enabled(&self, arg0: UIEffect) -> bool {
+        let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).is_effect_enabled)(obj_data, arg0);
+            let ret_val = ((*funcs).is_effect_enabled)(obj_data, enum_arg0_1);
             ret_val
         }
     }
 
     pub fn set_effect_enabled(&self, arg0: UIEffect, enable: bool) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
-            ((*funcs).set_effect_enabled)(obj_data, arg0, enable);
+            ((*funcs).set_effect_enabled)(obj_data, enum_arg0_1, enable);
         }
         self
     }
