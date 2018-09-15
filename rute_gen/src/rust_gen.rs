@@ -284,7 +284,7 @@ impl RustGenerator {
     ///
     /// Generate a function implementation
     ///
-    fn generate_func_def(&self, func: &Function, struct_name: &str) -> String {
+    fn generate_func_def(&self, func: &Function, _struct_name: &str) -> String {
         let mut temp_str = String::with_capacity(128);
         let mut func_imp = String::with_capacity(128);
 
@@ -379,69 +379,7 @@ impl RustGenerator {
             f.write_all(out.as_bytes())?;
         }
 
-        // Generate the functions
-        //f.write_all(Self::generate_get_obj_funcs(&sdef.name).as_bytes())?;
-
         Ok(())
-    }
-
-    ///
-    /// Generates the implementations for the static structs
-    ///
-    fn generate_static_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
-        f.write_fmt(format_args!("impl<'a> {}Static<'a> {{", sdef.name))?;
-
-        let struct_static_name = format!("{}Static", sdef.name);
-
-        // Generate all regular functions
-
-        for func in &sdef.functions {
-            let res = match func.func_type {
-                FunctionType::Static => self.generate_function(&func, &struct_static_name),
-                _ => "".to_owned(),
-            };
-
-            f.write_all(res.as_bytes())?;
-        }
-
-        // Generate the functions
-        f.write_all(Self::generate_static_get_obj_funcs(&sdef.name).as_bytes())?;
-
-        f.write_all(b"}\n")
-    }
-
-    ///
-    /// Generate something like this
-    ///
-    /// fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
-    ///     let obj = self.data.get().unwrap();
-    ///     (obj.privd, obj.widget_funcs)
-    /// }
-    fn generate_get_obj_funcs(struct_name: &str) -> String {
-        let snake_name = struct_name.to_snake_case();
-        format!(
-            "    fn get_{}_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
-                let obj = self.data.get().unwrap();
-                (obj.privd, obj.{}_funcs)\n    }}\n",
-            snake_name, struct_name, snake_name
-        )
-    }
-
-    ///
-    /// Generate something like this
-    ///
-    /// fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
-    ///     let obj = self.data.;
-    ///     (obj.privd, obj.widget_funcs)
-    /// }
-    fn generate_static_get_obj_funcs(struct_name: &str) -> String {
-        let snake_name = struct_name.to_snake_case();
-        format!(
-            "    fn get_{}_static_obj_funcs(&self) -> (*const RUBase, *const RU{}Funcs) {{
-                let obj = self.data;
-                (obj.privd, obj.{}_funcs)\n    }}\n",
-            snake_name, struct_name, snake_name
-        )
     }
 
     //
