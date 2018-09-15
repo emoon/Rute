@@ -82,7 +82,7 @@ impl HeaderFFIGen for CapiHeaderGen {
         }
 
         for name in includes {
-            writeln!(dest, "#include \"{}.h\"", name.to_snake_case());
+            writeln!(dest, "#include \"{}_ffi.h\"", name.to_snake_case());
         }
 
         writeln!(dest, "");
