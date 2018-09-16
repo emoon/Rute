@@ -672,22 +672,6 @@ impl ApiDef {
             .filter(|f| f.func_type == func_type)
             .collect()
     }
-
-    /*
-       pub fn get_functions_recursive<'a>(
-    ///
-    /// Get functions of given type in a recrusive fashion (to include inheritance)
-    &'a self,
-sdef: &'a Struct,
-func_type: FunctionType,
-) -> Vec<&'a Function> {
-self.get_inherit_structs(sdef, RecurseIncludeSelf::Yes)
-.iter()
-.flat_map(|s| s.functions.iter())
-.filter(|func| func.func_type == func_type)
-.collect()
-}
-*/
 }
 
 ///
@@ -801,25 +785,6 @@ impl Variable {
             }
         }
     }
-
-    //
-    // Checks if this variable type has a wrapper class
-    //
-    /*
-       pub fn has_wrapper_class(&self, api_def: &ApiDef) -> bool {
-       match self.vtype {
-       VariableType::Regular => {
-       api_def
-       .class_structs
-       .iter()
-       .find(|s| s.name == self.name)
-       .map(|s| s.should_gen_wrap_class())
-       .is_some()
-       },
-       _ => false,
-       }
-       }
-       */
 }
 
 ///
