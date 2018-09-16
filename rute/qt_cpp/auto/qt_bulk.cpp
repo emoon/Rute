@@ -3,5 +3,6 @@
 #include "application.cpp"
 #include "font.cpp"
 #include "list_widget.cpp"
+#include "list_widget_item.cpp"
 #include "qnamespace.cpp"
 #include "widget.cpp"

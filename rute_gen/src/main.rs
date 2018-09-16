@@ -118,13 +118,11 @@ fn generate_bulk_cpp(filename: &str, paths: &[walkdir::DirEntry]) {
 ///
 fn main() {
     let wd = WalkDir::new("defs");
-    /*
     // temporary set to one thread during debugging
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
-    */
 
     let rust_dest_dir = "../rute/src/auto";
     let qt_dest = "../rute/qt_cpp/auto";
@@ -142,15 +140,32 @@ fn main() {
 
     let api_defs = Mutex::new(Vec::with_capacity(files.len()));
 
+    // Pass 1: Parse all the files
     // Parse the files threaded
 
-    files.par_iter().enumerate().for_each(|(_index, f)| {
-        let base_filename = f.path().file_name().unwrap().to_str().unwrap();
-        let base_filename = &base_filename[..base_filename.len() - 4];
+    files.par_iter().for_each(|f| {
         let mut api_def = ApiDef::default();
 
         println!("Parsing file {:?}", f.path());
         ApiParser::parse_file(&f.path(), &mut api_def);
+
+        // Insert the api_def for later usage
+        {
+            let mut data = api_defs.lock().unwrap();
+            data.push(api_def);
+        }
+    }
+
+    // patch up some refs and such for second pass
+
+    let mut data = api_defs.lock().unwrap();
+    ApiParser::second_pass(data);
+
+    // Second pass
+
+    daat.par_iter().for_each(|api_def| {
+        let base_filename = Path::new(&api.filename).file_name().unwrap().to_str().unwrap();
+        let base_filename = &base_filename[..base_filename.len() - 4];
 
         // We handle this file a bit special because it contains enums that are used for pretty
         // much all of the Qt code. So we generated only a special Rust file for it and then

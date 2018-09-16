@@ -4,50 +4,22 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "rute_base.h"
+#include "../rute_base.h"
 
-struct RUListWidgetItemFuncs;
-struct RUListWidgetItem;
-
-#include "list_widget_item_ffi.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct RUListWidgetFuncs;
 struct RUListWidget;
 
-typedef struct RUListWidgetItemFuncs {
-    void (*destroy)(struct RUBase* self);
-    void (*set_text)(struct RUBase* self_c, const char* text);
-    const char* (*text)(struct RUBase* self_c);
-} RUListWidgetItemFuncs;
-
-typedef struct RUListWidgetItemAllFuncs {
-    struct RUListWidgetItemFuncs* list_widget_item_funcs;
-} RUListWidgetItemFuncs;
-
-typedef struct RUListWidgetItem {
-    RUBase* qt_data;
-    RUBase* host_data;
-    struct RUFontAllFuncs* all_funcs;
-} RUListWidgetItem;
-
 typedef struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self);
-    void (*clear)(struct RUBase* self_c);
-    struct RUListWidgetItem (*current_item)(struct RUBase* self_c);
-    int (*current_row)(struct RUBase* self_c);
-    void (*set_current_row)(struct RUBase* self_c, int index);
-    int (*count)(struct RUBase* self_c);
-    void (*set_drag_enabled)(struct RUBase* self_c, bool state);
-    void (*set_drop_indicator_shown)(struct RUBase* self_c, bool state);
-    void (*set_item_activated_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item));
-
-    void (*set_current_row_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, int row));
-
 } RUListWidgetFuncs;
 
 typedef struct RUListWidgetAllFuncs {
     struct RUListWidgetFuncs* list_widget_funcs;
-} RUListWidgetFuncs;
+} RUListWidgetAllFuncs;
 
 typedef struct RUListWidget {
     RUBase* qt_data;
@@ -55,3 +27,7 @@ typedef struct RUListWidget {
     struct RUFontAllFuncs* all_funcs;
 } RUListWidget;
 
+
+#ifdef __cplusplus
+}
+#endif

@@ -4,7 +4,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "rute_base.h"
+#include "../rute_base.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "desktop_widget_ffi.h"
 #include "font_ffi.h"
 #include "icon_ffi.h"
@@ -74,7 +78,7 @@ typedef struct RUApplicationFuncs {
 
 typedef struct RUApplicationAllFuncs {
     struct RUApplicationFuncs* application_funcs;
-} RUApplicationFuncs;
+} RUApplicationAllFuncs;
 
 typedef struct RUApplication {
     RUBase* qt_data;
@@ -82,3 +86,7 @@ typedef struct RUApplication {
     struct RUFontAllFuncs* all_funcs;
 } RUApplication;
 
+
+#ifdef __cplusplus
+}
+#endif

@@ -20,7 +20,7 @@ refexp       = { ("&") }
 optional     = { ("?") }
 array        = { ("[") ~ refexp? ~ vtype ~ ("]") }
 enum_use     = { ("::") ~ vtype }
-retexp       = { ("->") ~ refexp? ~ (vtype | array) ~ optional? }
+retexp       = { ("->") ~ refexp? ~ (vtype | array) ~ enum_use? ~ optional? }
 var          = { name ~ (":") ~ refexp? ~ vtype ~ enum_use? }
 varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }

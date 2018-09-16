@@ -1,3 +1,4 @@
+#include <QListWidgetItem>
 #include <Qt>
 #include <map>
 
@@ -45,6 +46,7 @@ extern std::map<int, int> s_item_data_role_lookup;
 extern std::map<int, int> s_item_flag_lookup;
 extern std::map<int, int> s_item_selection_mode_lookup;
 extern std::map<int, int> s_item_selection_operation_lookup;
+extern std::map<int, int> s_item_type_lookup;
 extern std::map<int, int> s_key_lookup;
 extern std::map<int, int> s_keyboard_modifier_lookup;
 extern std::map<int, int> s_layout_direction_lookup;
@@ -742,6 +744,15 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 2 ++i) {
         s_item_selection_operation_lookup[item_selection_operation_vals[i].key] = item_selection_operation_vals[i].val;
+    }
+
+    static KeyVal item_type_vals[] =
+    {{  (int)QListWidgetItem::Type, 0 },
+    {  (int)QListWidgetItem::UserType, 1 },
+    };
+
+    for (int i = 0; i < 2 ++i) {
+        s_item_type_lookup[item_type_vals[i].key] = item_type_vals[i].val;
     }
 
     static KeyVal key_vals[] =

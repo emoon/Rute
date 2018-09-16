@@ -92,8 +92,7 @@ impl HeaderFFIGenerator {
     ///
     pub fn generate<T: HeaderFFIGen>(filename: &str, api_def: &ApiDef, mut imp: T) -> Result<()> {
         let mut temp_string = String::with_capacity(128);
-        let mut all_funcs_struct = String::with_capacity(128);
-        let mut dest = BufWriter::with_capacity(1024 * 1024, File::create(filename)?);
+        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(filename)?);
 
         // Generate header
         imp.gen_header(&mut dest)?;
@@ -126,14 +125,15 @@ impl HeaderFFIGenerator {
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
 
             // Generate the AllFuncs struct
-            all_funcs_struct.clear();
-            all_funcs_struct.push_str("RU");
-            all_funcs_struct.push_str(&sdef.name);
-            all_funcs_struct.push_str("AllFuncs");
+            temp_string.clear();
+            temp_string.push_str("RU");
+            temp_string.push_str(&sdef.name);
+            temp_string.push_str("AllFuncs");
 
-            imp.gen_struct_declaration(&mut dest, &all_funcs_struct)?;
+            imp.gen_struct_declaration(&mut dest, &temp_string)?;
 
             for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                println!("in {}", s.name);
                 imp.gen_funcs_declaration(&mut dest, &s.name, &s.name)?;
             }
 
@@ -152,7 +152,7 @@ impl HeaderFFIGenerator {
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
         }
 
-        Ok(())
+        imp.generate_post_declarations(&mut dest, api_def)
     }
 
     ///

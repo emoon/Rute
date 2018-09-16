@@ -146,7 +146,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Style {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUStyle>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -192,7 +192,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Style {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUStyle>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -233,7 +233,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Palette {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUPalette>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -256,7 +256,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Palette {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUPalette>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -289,7 +289,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Font {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -312,7 +312,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Font {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -335,7 +335,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Font {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUFont>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -378,7 +378,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Icon {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUIcon>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -400,7 +400,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = WidgetList {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidgetList>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -422,7 +422,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = WidgetList {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidgetList>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -447,7 +447,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = DesktopWidget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUDesktopWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -472,7 +472,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -497,7 +497,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -522,7 +522,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -547,7 +547,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -583,7 +583,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -608,7 +608,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -634,7 +634,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {
@@ -659,7 +659,7 @@ pub trait ApplicationStaticType {
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = Widget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RUWidget>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {

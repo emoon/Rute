@@ -229,6 +229,8 @@ impl ApiParser {
         let chunks = ApiParser::parse(Rule::chunk, buffer)
             .unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
+        api_def.filename = filename.to_owned();
+
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::structdef => {
@@ -535,6 +537,88 @@ impl ApiParser {
         }
 
         name_or_num
+    }
+
+    ///
+    /// Recursive get the structs
+    ///
+    fn recursive_get_inherit_structs(
+        name: &str,
+        include_self: RecurseIncludeSelf,
+        lookup: &HashMap::<String, Vec<String>>,
+        out_names: &mut Vec<String>)
+    {
+        match lookup.get(name) {
+            S
+
+        }
+
+
+        sdef.inherit.as_ref().map(|name| {
+
+recursive_get_inherit_structs
+            api_def
+                .class_structs
+                .iter()
+                .find(|s| s.name == *name)
+                .map(|s| {
+                    Self::recursive_get_inherit_structs(
+                        s,
+                        api_def,
+                        RecurseIncludeSelf::Yes,
+                        out_structs,
+                    );
+                })
+        });
+
+        if include_self == RecurseIncludeSelf::Yes {
+            out_structs.push(name.to_owned());
+        }
+    }
+
+    ///
+    /// Get a list of all the traits
+    ///
+    fn get_inherit_structs(name: &str,
+        include_self: RecurseIncludeSelf,
+        lookup: &HashMap::<String, Vec<String>>,
+    ) -> Vec<String> {
+        let mut out_structs = Vec::new();
+
+        Self::recursive_get_inherit_structs(name, include_self, &mut out_structs);
+
+        out_structs
+    }
+
+
+    pub fn second_pass(api_defs: &mut [ApiDef]) {
+        // Build a hash_set of all classes that are inherited
+
+        let mut inherited_classes = HashMap::<String, Vec<String>>::new();
+
+        for api_def in &api_defs {
+            api_def.class_structs.for_each(|s| {
+                s.inherit.as_ref().map_or((), |i| {
+                    let mut in_values = Vec::new();
+                    in_values.push(i.to_owned());
+                    // Using vec here to support multiple classes later
+                    inherited_classes.insert(api_def.name.to_owned(), in_values);
+                })
+            });
+        }
+
+        for api_def in api_defs.iter_mut() {
+
+        }
+
+        api_defs.for_each(|s| {
+            let
+
+
+            s.inherit.as_ref().map_or((), |i| {
+                inherited_classes.insert(i.clone());
+            })
+        });
     }
 
     /*

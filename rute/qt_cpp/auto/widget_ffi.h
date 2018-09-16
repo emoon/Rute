@@ -4,7 +4,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "rute_base.h"
+#include "../rute_base.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct RUWidgetFuncs;
 struct RUWidget;
@@ -20,7 +24,7 @@ typedef struct RUWidgetFuncs {
 
 typedef struct RUWidgetAllFuncs {
     struct RUWidgetFuncs* widget_funcs;
-} RUWidgetFuncs;
+} RUWidgetAllFuncs;
 
 typedef struct RUWidget {
     RUBase* qt_data;
@@ -28,3 +32,7 @@ typedef struct RUWidget {
     struct RUFontAllFuncs* all_funcs;
 } RUWidget;
 
+
+#ifdef __cplusplus
+}
+#endif
