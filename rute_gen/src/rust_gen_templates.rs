@@ -13,8 +13,8 @@ use auto::rute_enums::*;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUTE_IMPL_HEADER: &'static [u8] = b"
-unsafe extern \"C\" fn rute_object_delete_callback<T>(data: *const c_void) {
-    let d = Rc::from_raw(data as *const Cell<Option<T>>);
+unsafe extern \"C\" fn rute_object_delete_callback(data: *const c_void) {
+    let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
 }
 
@@ -40,7 +40,8 @@ pub static RUST_NO_WRAP_TEMPLATE: &str = "
     pub fn create_{{widget_snake_name}}(&self) -> {{widget_name}}<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_{{widget_snake_name}})(::std::ptr::null()) };
         {{widget_name}} {
-            data: Rc::new(Cell::new(Some(ffi_data))),
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -52,7 +53,8 @@ pub static RUST_GET_STATIC_TEMPLATE: &str = "
     pub fn {{widget_snake_name}}(&self) -> {{widget_name}}Static<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).get_{{widget_snake_name}})(::std::ptr::null()) };
         {{widget_name}}Static {
-            data: ffi_data,
+            data: ffi_data.qt_data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -71,10 +73,11 @@ pub static RUST_CREATE_TEMPLATE: &str = "
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
-        data.set(Some(ffi_data));
+        data.set(Some(ffi_data.qt_data));
 
         {{widget_name}} {
             data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -88,7 +91,7 @@ impl<'a> Drop for {{type_name}}<'a> {
         if Rc::strong_count(&self.data) == 1 {
             let obj = self.data.get().unwrap();
             unsafe {
-                ((*obj.{{type_snake_name}}_funcs).destroy)(obj.privd);
+                ((*self.all_funcs.{{type_snake_name}}_funcs).destroy)(obj.privd);
             }
 
             self.data.set(None);
@@ -153,7 +156,7 @@ pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
 impl<'a> {{name}}Type for {{name}}<'a> {
     fn get_{{type_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.{{type_name_snake_org}}_funcs)
+        (obj, self.all_funcs.{{type_name_snake_org}}_funcs)
     }
 }
 ";
@@ -164,7 +167,7 @@ pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type for {{target_name}}<'a> {
     fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{target_name}}Funcs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.{{target_name_snake_org}}_funcs)
+        (obj, self.all_funcs.{{target_name_snake_org}}_funcs)
     }
 }
 ";

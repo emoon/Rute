@@ -129,7 +129,7 @@ pub trait ApplicationType {
 impl<'a> ApplicationType for Application<'a> {
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.application_funcs)
+        (obj, self.all_funcs.application_funcs)
     }
 }
 pub trait ApplicationStaticType {
@@ -852,13 +852,13 @@ pub trait ApplicationStaticType {
 impl<'a> ApplicationStaticType for ApplicationStatic<'a> {
     fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.application_funcs)
+        (obj, self.all_funcs.application_funcs)
     }
 }
 
 impl<'a> ApplicationStaticType for Application<'a> {
     fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.application_funcs)
+        (obj, self.all_funcs.application_funcs)
     }
 }

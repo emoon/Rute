@@ -71,10 +71,15 @@ pub struct RUApplicationFuncs {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct RUApplicationAllFuncs {
+    pub application_funcs: *const RUApplicationFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUApplication {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub extension: *const RUBase,
-    pub application_funcs: *const RUApplicationFuncs,
+    pub all_funcs: *const RUFontAllFuncs,
 }
 

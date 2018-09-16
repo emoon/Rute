@@ -20,12 +20,14 @@ typedef struct RUListWidgetItemFuncs {
     const char* (*text)(struct RUBase* self_c);
 } RUListWidgetItemFuncs;
 
+typedef struct RUListWidgetItemAllFuncs {
+    struct RUListWidgetItemFuncs* list_widget_item_funcs;
+} RUListWidgetItemFuncs;
+
 typedef struct RUListWidgetItem {
     RUBase* qt_data;
     RUBase* host_data;
-    RUBase* extension;
-    struct RUListWidgetItemFuncs* list_widget_item_funcs;
-
+    struct RUFontAllFuncs* all_funcs;
 } RUListWidgetItem;
 
 typedef struct RUListWidgetFuncs {
@@ -43,11 +45,13 @@ typedef struct RUListWidgetFuncs {
 
 } RUListWidgetFuncs;
 
+typedef struct RUListWidgetAllFuncs {
+    struct RUListWidgetFuncs* list_widget_funcs;
+} RUListWidgetFuncs;
+
 typedef struct RUListWidget {
     RUBase* qt_data;
     RUBase* host_data;
-    RUBase* extension;
-    struct RUListWidgetFuncs* list_widget_funcs;
-
+    struct RUFontAllFuncs* all_funcs;
 } RUListWidget;
 

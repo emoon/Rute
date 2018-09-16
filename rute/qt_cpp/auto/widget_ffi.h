@@ -18,11 +18,13 @@ typedef struct RUWidgetFuncs {
     void (*update)(struct RUBase* self_c);
 } RUWidgetFuncs;
 
+typedef struct RUWidgetAllFuncs {
+    struct RUWidgetFuncs* widget_funcs;
+} RUWidgetFuncs;
+
 typedef struct RUWidget {
     RUBase* qt_data;
     RUBase* host_data;
-    RUBase* extension;
-    struct RUWidgetFuncs* widget_funcs;
-
+    struct RUFontAllFuncs* all_funcs;
 } RUWidget;
 

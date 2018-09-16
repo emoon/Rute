@@ -50,7 +50,7 @@ pub trait ListWidgetItemType {
 impl<'a> ListWidgetItemType for ListWidgetItem<'a> {
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.list_widget_item_funcs)
+        (obj, self.all_funcs.list_widget_item_funcs)
     }
 }
 impl<'a> ListWidget<'a> {
@@ -261,6 +261,6 @@ pub trait ListWidgetType {
 impl<'a> ListWidgetType for ListWidget<'a> {
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.list_widget_funcs)
+        (obj, self.all_funcs.list_widget_funcs)
     }
 }

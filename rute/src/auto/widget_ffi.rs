@@ -16,10 +16,15 @@ pub struct RUWidgetFuncs {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct RUWidgetAllFuncs {
+    pub widget_funcs: *const RUWidgetFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUWidget {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub extension: *const RUBase,
-    pub widget_funcs: *const RUWidgetFuncs,
+    pub all_funcs: *const RUFontAllFuncs,
 }
 

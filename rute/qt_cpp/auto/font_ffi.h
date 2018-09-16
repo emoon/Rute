@@ -15,11 +15,13 @@ typedef struct RUFontFuncs {
     int (*pixel_size)(struct RUBase* self_c);
 } RUFontFuncs;
 
+typedef struct RUFontAllFuncs {
+    struct RUFontFuncs* font_funcs;
+} RUFontFuncs;
+
 typedef struct RUFont {
     RUBase* qt_data;
     RUBase* host_data;
-    RUBase* extension;
-    struct RUFontFuncs* font_funcs;
-
+    struct RUFontAllFuncs* all_funcs;
 } RUFont;
 

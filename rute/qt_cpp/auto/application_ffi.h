@@ -72,11 +72,13 @@ typedef struct RUApplicationFuncs {
     void (*about_qt)(struct RUBase* self_c);
 } RUApplicationFuncs;
 
+typedef struct RUApplicationAllFuncs {
+    struct RUApplicationFuncs* application_funcs;
+} RUApplicationFuncs;
+
 typedef struct RUApplication {
     RUBase* qt_data;
     RUBase* host_data;
-    RUBase* extension;
-    struct RUApplicationFuncs* application_funcs;
-
+    struct RUFontAllFuncs* all_funcs;
 } RUApplication;
 

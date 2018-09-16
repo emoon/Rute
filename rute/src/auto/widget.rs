@@ -69,6 +69,6 @@ pub trait WidgetType {
 impl<'a> WidgetType for Widget<'a> {
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.widget_funcs)
+        (obj, self.all_funcs.widget_funcs)
     }
 }

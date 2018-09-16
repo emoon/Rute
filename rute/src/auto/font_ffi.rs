@@ -13,10 +13,15 @@ pub struct RUFontFuncs {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct RUFontAllFuncs {
+    pub font_funcs: *const RUFontFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUFont {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub extension: *const RUBase,
-    pub font_funcs: *const RUFontFuncs,
+    pub all_funcs: *const RUFontAllFuncs,
 }
 

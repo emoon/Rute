@@ -11,8 +11,8 @@ use auto::rute_enums::*;
 
 
 
-unsafe extern "C" fn rute_object_delete_callback<T>(data: *const c_void) {
-    let d = Rc::from_raw(data as *const Cell<Option<T>>);
+unsafe extern "C" fn rute_object_delete_callback(data: *const c_void) {
+    let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
 }
 
@@ -34,7 +34,8 @@ impl<'a> Rute<'a> {
     pub fn create_font(&self) -> Font<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_font)(::std::ptr::null()) };
         Font {
-            data: Rc::new(Cell::new(Some(ffi_data))),
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -49,10 +50,11 @@ impl<'a> Rute<'a> {
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
-        data.set(Some(ffi_data));
+        data.set(Some(ffi_data.qt_data));
 
         Widget {
             data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -67,10 +69,11 @@ impl<'a> Rute<'a> {
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
-        data.set(Some(ffi_data));
+        data.set(Some(ffi_data.qt_data));
 
         ListWidgetItem {
             data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -85,10 +88,11 @@ impl<'a> Rute<'a> {
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
-        data.set(Some(ffi_data));
+        data.set(Some(ffi_data.qt_data));
 
         ListWidget {
             data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -96,7 +100,8 @@ impl<'a> Rute<'a> {
     pub fn create_application(&self) -> Application<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).create_application)(::std::ptr::null()) };
         Application {
-            data: Rc::new(Cell::new(Some(ffi_data))),
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }
@@ -104,7 +109,8 @@ impl<'a> Rute<'a> {
     pub fn application(&self) -> ApplicationStatic<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).get_application)(::std::ptr::null()) };
         ApplicationStatic {
-            data: ffi_data,
+            data: ffi_data.qt_data,
+            all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
     }

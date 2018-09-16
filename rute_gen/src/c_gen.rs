@@ -181,11 +181,11 @@ impl HeaderFFIGen for CapiHeaderGen {
     ///
     /// Generate the funcs declaration
     ///
-    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> io::Result<()> {
+    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str, type_name: &str) -> io::Result<()> {
         writeln!(
             dest,
-            "    struct RU{}Funcs* {}_funcs;\n",
-            name,
+            "    struct RU{}Funcs* {}_funcs;",
+            type_name,
             name.to_snake_case()
         )
     }

@@ -15,11 +15,16 @@ pub struct RUListWidgetItemFuncs {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct RUListWidgetItemAllFuncs {
+    pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUListWidgetItem {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub extension: *const RUBase,
-    pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
+    pub all_funcs: *const RUFontAllFuncs,
 }
 
 #[repr(C)]
@@ -43,10 +48,15 @@ pub struct RUListWidgetFuncs {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct RUListWidgetAllFuncs {
+    pub list_widget_funcs: *const RUListWidgetFuncs,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct RUListWidget {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub extension: *const RUBase,
-    pub list_widget_funcs: *const RUListWidgetFuncs,
+    pub all_funcs: *const RUFontAllFuncs,
 }
 

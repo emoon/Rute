@@ -72,7 +72,7 @@ pub trait HeaderFFIGen {
     ///
     /// Generate the funcs declaration
     ///
-    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str) -> Result<()>;
+    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str, type_name: &str) -> Result<()>;
 
     ///
     /// Generate extra things if needed
@@ -92,6 +92,7 @@ impl HeaderFFIGenerator {
     ///
     pub fn generate<T: HeaderFFIGen>(filename: &str, api_def: &ApiDef, mut imp: T) -> Result<()> {
         let mut temp_string = String::with_capacity(128);
+        let mut all_funcs_struct = String::with_capacity(128);
         let mut dest = BufWriter::with_capacity(1024 * 1024, File::create(filename)?);
 
         // Generate header
@@ -101,13 +102,6 @@ impl HeaderFFIGenerator {
         for sdef in &api_def.class_structs {
             imp.gen_forward_declaration(&mut dest, &sdef)?;
         }
-
-        /*
-        // Generate all enums
-        for enum_def in &api_def.enums {
-            imp.gen_enum(&mut dest, enum_def)?;
-        }
-        */
 
         // generate all structs
         for sdef in &api_def.class_structs {
@@ -131,6 +125,20 @@ impl HeaderFFIGenerator {
 
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
 
+            // Generate the AllFuncs struct
+            all_funcs_struct.clear();
+            all_funcs_struct.push_str("RU");
+            all_funcs_struct.push_str(&sdef.name);
+            all_funcs_struct.push_str("AllFuncs");
+
+            imp.gen_struct_declaration(&mut dest, &all_funcs_struct)?;
+
+            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
+                imp.gen_funcs_declaration(&mut dest, &s.name, &s.name)?;
+            }
+
+            imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
+
             // Construct struct name
             temp_string.clear();
             temp_string.push_str("RU");
@@ -140,12 +148,7 @@ impl HeaderFFIGenerator {
             imp.gen_struct_declaration(&mut dest, &temp_string)?;
             imp.gen_rubase_ptr_data(&mut dest, "qt_data")?;
             imp.gen_rubase_ptr_data(&mut dest, "host_data")?;
-            imp.gen_rubase_ptr_data(&mut dest, "extension")?;
-
-            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-                imp.gen_funcs_declaration(&mut dest, &s.name)?;
-            }
-
+            imp.gen_funcs_declaration(&mut dest, "all", "FontAll")?;
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
         }
 

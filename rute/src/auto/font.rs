@@ -42,7 +42,7 @@ pub trait FontType {
 impl<'a> FontType for Font<'a> {
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
-        (obj.privd, obj.font_funcs)
+        (obj, self.all_funcs.font_funcs)
     }
 }
 
@@ -51,7 +51,7 @@ impl<'a> Drop for Font<'a> {
         if Rc::strong_count(&self.data) == 1 {
             let obj = self.data.get().unwrap();
             unsafe {
-                ((*obj.font_funcs).destroy)(obj.privd);
+                ((*self.all_funcs.font_funcs).destroy)(obj.privd);
             }
 
             self.data.set(None);
