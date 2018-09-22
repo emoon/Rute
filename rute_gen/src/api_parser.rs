@@ -611,48 +611,6 @@ impl ApiParser {
             });
         }
     }
-
-    /*
-///
-/// Do a second pass to match up things that may
-/// be out of order
-///
-pub fn second_pass(api_def: &mut ApiDef) {
-//
-// Patch up the types for enums as they can be out of order.
-//
-let mut enums = HashSet::new();
-
-for enum_def in &api_def.enums {
-enums.insert(enum_def.name.clone());
-}
-
-api_def
-.class_structs
-.iter_mut()
-.flat_map(|s| s.functions.iter_mut())
-.flat_map(|func| func.function_args.iter_mut())
-.for_each(|arg| {
-if enums.contains(&arg.type_name) {
-arg.vtype = VariableType::Enum;
-}
-});
-
-// Build a hash_set of all classes that are inherited
-
-let mut inherited_classes = HashSet::new();
-
-api_def.class_structs.iter().for_each(|s| {
-s.inherit.as_ref().map_or((), |i| {
-inherited_classes.insert(i.clone());
-})
-});
-
-api_def.class_structs.iter_mut().for_each(|s| {
-s.should_generate_trait = inherited_classes.contains(&s.name);
-});
-}
-*/
 }
 
 ///
