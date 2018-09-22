@@ -600,7 +600,7 @@ impl ApiParser {
         // Fill all
         for api_def in api_defs.iter_mut() {
             api_def.class_structs.iter_mut().for_each(|s| {
-                if let Some(ref in_name) = s.inherit {
+                if s.inherit.is_some() {
                     s.full_inherit = Self::get_inherit_structs(
                         &s.name,
                         RecurseIncludeSelf::Yes,

@@ -152,20 +152,13 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
 pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
     fn get_{{type_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs);
 }
-
-impl<'a> {{name}}Type for {{name}}<'a> {
-    fn get_{{type_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
-        let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.{{type_name_snake_org}}_funcs)
-    }
-}
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type for {{target_name}}<'a> {
-    fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{target_name}}Funcs) {
+    fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
         (obj, self.all_funcs.{{target_name_snake_org}}_funcs)
     }

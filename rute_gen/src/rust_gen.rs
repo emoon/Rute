@@ -358,9 +358,18 @@ impl RustGenerator {
             f.write_all(b"}\n")?;
         }
 
-        if sdef.has_regular_functions() {
-            self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef)?;
+        self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef)?;
 
+        for name in &sdef.full_inherit {
+            let mut template_data = Object::new();
+            template_data.insert("trait_name".to_owned(), Value::str(&name));
+            template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("type_name".to_owned(), Value::str(&name));
+            template_data.insert("target_name_snake".to_owned(), Value::Str(name.to_snake_case()));
+            template_data.insert("target_name_snake_org".to_owned(), Value::Str(name.to_snake_case()));
+
+            let out = self.trait_impl_template.render(&template_data).unwrap();
+            f.write_all(out.as_bytes())?;
         }
 
         if sdef.has_static_functions() {
@@ -372,6 +381,7 @@ impl RustGenerator {
             let mut template_data = Object::new();
             template_data.insert("trait_name".to_owned(), Value::str(&static_name));
             template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
             template_data.insert("target_name_snake".to_owned(), Value::Str(static_name.to_snake_case()));
             template_data.insert("target_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
 
@@ -587,10 +597,8 @@ impl RustGenerator {
         });
 
         let mut template_data = Object::new();
-        template_data.insert("name".to_owned(), Value::str(name));
         template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
         template_data.insert("type_name_snake".to_owned(), Value::Str(name.to_snake_case()));
-        template_data.insert("type_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
 
         let out = self.trait_impl_end_template.render(&template_data).unwrap();
         dest.write_all(out.as_bytes())

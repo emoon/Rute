@@ -101,6 +101,13 @@ pub trait ListWidgetType {
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs);
 }
 
+impl<'a> WidgetType for ListWidget<'a> {
+    fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
+        let obj = self.data.get().unwrap();
+        (obj, self.all_funcs.widget_funcs)
+    }
+}
+
 impl<'a> ListWidgetType for ListWidget<'a> {
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();

@@ -849,13 +849,6 @@ pub trait ApplicationStaticType {
     fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs);
 }
 
-impl<'a> ApplicationStaticType for ApplicationStatic<'a> {
-    fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
-        let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.application_funcs)
-    }
-}
-
 impl<'a> ApplicationStaticType for Application<'a> {
     fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
