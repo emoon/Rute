@@ -122,7 +122,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
             let ret_val;
             if t.host_data != ::std::ptr::null() {
                 ret_val = {{return_vtype}} {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<RU{{return_vtype}}>>),
+                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
                     _marker: PhantomData,
                 };
             } else {

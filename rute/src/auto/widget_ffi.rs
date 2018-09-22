@@ -28,3 +28,8 @@ pub struct RUWidget {
     pub all_funcs: *const RUFontAllFuncs,
 }
 
+
+extern "C" {
+    pub fn rute_get() -> *const RuteFFI;
+}
+

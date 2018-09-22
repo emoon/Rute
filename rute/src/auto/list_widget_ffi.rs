@@ -3,45 +3,13 @@ use std::os::raw::c_void;
 use rute::auto::base_ffi::*;
 
 
-use rute::auto::list_widget_item_ffi::RUListWidgetItem;
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct RUListWidgetItemFuncs {
-    pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub set_text: extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char),
-    pub text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct RUListWidgetItemAllFuncs {
-    pub list_widget_item_funcs: *const RUListWidgetItemFuncs,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct RUListWidgetItem {
-    pub qt_data: *const RUBase,
-    pub host_data: *const RUBase,
-    pub all_funcs: *const RUFontAllFuncs,
-}
-
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub add_item: extern "C" fn(self_c: *const RUBase, label: *const ::std::os::raw::c_char),
     pub clear: extern "C" fn(self_c: *const RUBase),
-    pub current_item: extern "C" fn(self_c: *const RUBase) ->  RUListWidgetItem,
-    pub current_row: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_current_row: extern "C" fn(self_c: *const RUBase, index: i32),
-    pub count: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_drag_enabled: extern "C" fn(self_c: *const RUBase, state: bool),
-    pub set_drop_indicator_shown: extern "C" fn(self_c: *const RUBase, state: bool),
-    pub set_item_activated_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
-                                            callback: *const c_void),
-
-    pub set_current_row_changed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+    pub set_item_pressed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),
 
 }
@@ -49,6 +17,7 @@ pub struct RUListWidgetFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUListWidgetAllFuncs {
+    pub widget_funcs: *const RUWidgetFuncs,
     pub list_widget_funcs: *const RUListWidgetFuncs,
 }
 
@@ -58,5 +27,10 @@ pub struct RUListWidget {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
     pub all_funcs: *const RUFontAllFuncs,
+}
+
+
+extern "C" {
+    pub fn rute_get() -> *const RuteFFI;
 }
 

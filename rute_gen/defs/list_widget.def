@@ -1,37 +1,7 @@
-struct ListWidgetItem {
-    set_text(text: String),
-    text() -> String,
-}
-
 struct ListWidget : Widget {
-	clear(),
-
-	//add_item(&ListWidgetItem item),
-	//[manual] add_text_item(String text),
-
-	current_item() -> ListWidgetItem?,
-	current_row() -> i32,
-	// selected_items() -> <&ListWidgetItem>,
-
-
-	//item(i32 index) -> ListWidgetItem?,
-	set_current_row(index: i32),
-	count() -> i32,
-
-	// Drag'n'drop support
-
-	set_drag_enabled(state: bool),
-	set_drop_indicator_shown(state: bool),
-	//[manual] set_accept_drops(bool state),
-
-    //[event] drag_enter(&DragEnterEvent event),
-    //[event] drop(&DropEvent event),
-
-	//[manual] add_widget_item(&ListWidgetItem item),
-	[event] item_activated(item: &ListWidgetItem),
-	[event] current_row_changed(row: i32),
-	//[callback] item_clicked(&ListWidgetItem item),
-	//[callback] item_double_clicked(&ListWidgetItem item),
+    add_item(label: String),
+    clear(),
+    [event] item_pressed(item: &ListWidgetItemType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

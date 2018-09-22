@@ -5,17 +5,17 @@
 
 #include "../rute_base.h"
 #include "../rute_manual.h"
-#include <QListWidget>
-extern struct RUListWidgetFuncs s_list_widget_funcs;
+#include <QListWidgetItem>
+extern struct RUListWidgetItemFuncs s_list_widget_item_funcs;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WRListWidget : public QListWidget {
+class WRListWidgetItem : public QListWidgetItem {
     Q_OBJECT
 public:
-    WRListWidget(QListWidget* widget) : QListWidget(widget) { }
-    virtual ~WRListWidget() {
+    WRListWidgetItem() : QListWidgetItem() { }
+    virtual ~WRListWidgetItem() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
