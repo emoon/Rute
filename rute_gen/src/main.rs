@@ -42,7 +42,9 @@ use rust_gen::RustGenerator;
 use std::fs::File;
 use std::fs;
 use std::io::{BufWriter, Write};
-use std::sync::Mutex;
+use std::path::Path;
+//use std::sync::Mutex;
+use std::sync::RwLock;
 use walkdir::WalkDir;
 
 ///
@@ -118,11 +120,13 @@ fn generate_bulk_cpp(filename: &str, paths: &[walkdir::DirEntry]) {
 ///
 fn main() {
     let wd = WalkDir::new("defs");
+    /*
     // temporary set to one thread during debugging
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
+    */
 
     let rust_dest_dir = "../rute/src/auto";
     let qt_dest = "../rute/qt_cpp/auto";
@@ -138,7 +142,7 @@ fn main() {
         .filter(|e| e.path().metadata().unwrap().is_file())
         .collect::<Vec<_>>();
 
-    let api_defs = Mutex::new(Vec::with_capacity(files.len()));
+    let api_defs = RwLock::new(Vec::with_capacity(files.len()));
 
     // Pass 1: Parse all the files
     // Parse the files threaded
@@ -151,21 +155,60 @@ fn main() {
 
         // Insert the api_def for later usage
         {
-            let mut data = api_defs.lock().unwrap();
+            let mut data = api_defs.write().unwrap();
             data.push(api_def);
         }
-    }
+    });
 
     // patch up some refs and such for second pass
 
-    let mut data = api_defs.lock().unwrap();
-    ApiParser::second_pass(data);
+    {
+        let mut data = api_defs.write().unwrap();
+        ApiParser::second_pass(&mut data);
+    }
+
+    let api_defs_read = api_defs.read().unwrap();
 
     // Second pass
 
-    daat.par_iter().for_each(|api_def| {
-        let base_filename = Path::new(&api.filename).file_name().unwrap().to_str().unwrap();
+    api_defs_read.par_iter().enumerate().for_each(|(index, api_def)| {
+        let base_filename = Path::new(&api_def.filename).file_name().unwrap().to_str().unwrap();
         let base_filename = &base_filename[..base_filename.len() - 4];
+
+        // On the first thread we start with generating a bunch of main files so we have this
+        // generation running threaded as well. Next time when index isn't 0 anymore regular work
+        // will come along here.
+
+        if index == 0 {
+            let main_rute_rust = format!("{}/{}.rs", rust_dest_dir, "rute");
+            let main_mod_rust = format!("{}/{}.rs", rust_dest_dir, "mod");
+            let signal_wrappers = format!("{}/{}.h", qt_dest, "rute_signal_wrappers");
+            let enum_mapping = format!("{}/{}.cpp", qt_dest, "qt_enum_mapping");
+            let qt_bulk_cpp = format!("{}/{}.cpp", qt_dest, "qt_bulk");
+
+            // This mutex will be forever be locked from here but this part is single threaded anyway
+            //let data = api_defs.lock().unwrap();
+
+            // Generate the main rute.rs file
+            println!("    Generating main Rute Rust: {}", main_rute_rust);
+            RustGenerator::new().generate_rute(&main_rute_rust, &api_defs_read).unwrap();
+
+            // Generate the mod file for the auto generated Rust code
+            println!("    Generating Rute auto mod: {}", main_mod_rust);
+            generate_auto_mod(&main_mod_rust, &api_defs_read);
+
+            // Generate all the signal wrappers for Qt C++
+            println!("    Generating Qt signal wrappers: {}", signal_wrappers);
+            QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &api_defs_read).unwrap();
+
+            // Generate all the signal wrappers for Qt C++
+            println!("    Generating Qt enum mapping: {}", enum_mapping);
+            QtGenerator::new().generate_enum_mappings(&enum_mapping, &api_defs_read).unwrap();
+
+            // Generate bulk cpp file for Qt C++ wrapper code
+            println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);
+            generate_bulk_cpp(&qt_bulk_cpp, &files);
+        }
 
         // We handle this file a bit special because it contains enums that are used for pretty
         // much all of the Qt code. So we generated only a special Rust file for it and then
@@ -200,42 +243,7 @@ fn main() {
             println!("    Generating Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
             QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
         }
-
-        // Insert the api_def for later usage
-        {
-            let mut data = api_defs.lock().unwrap();
-            data.push(api_def);
-        }
     });
-
-    let main_rute_rust = format!("{}/{}.rs", rust_dest_dir, "rute");
-    let main_mod_rust = format!("{}/{}.rs", rust_dest_dir, "mod");
-    let signal_wrappers = format!("{}/{}.h", qt_dest, "rute_signal_wrappers");
-    let enum_mapping = format!("{}/{}.cpp", qt_dest, "qt_enum_mapping");
-    let qt_bulk_cpp = format!("{}/{}.cpp", qt_dest, "qt_bulk");
-
-    // This mutex will be forever be locked from here but this part is single threaded anyway
-    let data = api_defs.lock().unwrap();
-
-    // Generate the main rute.rs file
-    println!("    Generating main Rute Rust: {}", main_rute_rust);
-    RustGenerator::new().generate_rute(&main_rute_rust, &data).unwrap();
-
-    // Generate the mod file for the auto generated Rust code
-    println!("    Generating Rute auto mod: {}", main_mod_rust);
-    generate_auto_mod(&main_mod_rust, &data);
-
-    // Generate all the signal wrappers for Qt C++
-    println!("    Generating Qt signal wrappers: {}", signal_wrappers);
-    QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &data).unwrap();
-
-    // Generate all the signal wrappers for Qt C++
-    println!("    Generating Qt enum mapping: {}", enum_mapping);
-    QtGenerator::new().generate_enum_mappings(&enum_mapping, &data).unwrap();
-
-    // Generate bulk cpp file for Qt C++ wrapper code
-    println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);
-    generate_bulk_cpp(&qt_bulk_cpp, &files);
 
     // All done!
     println!("Generation complete!");

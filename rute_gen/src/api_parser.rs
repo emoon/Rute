@@ -5,6 +5,7 @@ use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
+use std::collections::HashMap;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
@@ -152,6 +153,8 @@ pub struct Struct {
     pub traits: Vec<String>,
     /// If the struct inherits another
     pub inherit: Option<String>,
+    /// The full inherit chain
+    pub full_inherit: Vec<String>,
     /// If the struct is a widget or not
     pub is_widget: bool,
     /// If there are other structs that inherits this one
@@ -545,31 +548,18 @@ impl ApiParser {
     fn recursive_get_inherit_structs(
         name: &str,
         include_self: RecurseIncludeSelf,
-        lookup: &HashMap::<String, Vec<String>>,
-        out_names: &mut Vec<String>)
+        lookup: &HashMap<String, Vec<String>>,
+        out_structs: &mut Vec<String>)
     {
-        match lookup.get(name) {
-            S
-
+        if let Some(values) = lookup.get(name) {
+            for v in values {
+                Self::recursive_get_inherit_structs(
+                    v,
+                    RecurseIncludeSelf::Yes,
+                    lookup,
+                    out_structs);
+            }
         }
-
-
-        sdef.inherit.as_ref().map(|name| {
-
-recursive_get_inherit_structs
-            api_def
-                .class_structs
-                .iter()
-                .find(|s| s.name == *name)
-                .map(|s| {
-                    Self::recursive_get_inherit_structs(
-                        s,
-                        api_def,
-                        RecurseIncludeSelf::Yes,
-                        out_structs,
-                    );
-                })
-        });
 
         if include_self == RecurseIncludeSelf::Yes {
             out_structs.push(name.to_owned());
@@ -579,13 +569,14 @@ recursive_get_inherit_structs
     ///
     /// Get a list of all the traits
     ///
-    fn get_inherit_structs(name: &str,
+    fn get_inherit_structs(
+        name: &str,
         include_self: RecurseIncludeSelf,
-        lookup: &HashMap::<String, Vec<String>>,
+        lookup: &HashMap<String, Vec<String>>,
     ) -> Vec<String> {
         let mut out_structs = Vec::new();
 
-        Self::recursive_get_inherit_structs(name, include_self, &mut out_structs);
+        Self::recursive_get_inherit_structs(name, include_self, lookup, &mut out_structs);
 
         out_structs
     }
@@ -593,32 +584,32 @@ recursive_get_inherit_structs
 
     pub fn second_pass(api_defs: &mut [ApiDef]) {
         // Build a hash_set of all classes that are inherited
+        let mut inherited_classes = HashMap::new();
 
-        let mut inherited_classes = HashMap::<String, Vec<String>>::new();
-
-        for api_def in &api_defs {
-            api_def.class_structs.for_each(|s| {
+        for api_def in api_defs.iter() {
+            api_def.class_structs.iter().for_each(|s| {
                 s.inherit.as_ref().map_or((), |i| {
                     let mut in_values = Vec::new();
                     in_values.push(i.to_owned());
                     // Using vec here to support multiple classes later
-                    inherited_classes.insert(api_def.name.to_owned(), in_values);
+                    inherited_classes.insert(s.name.to_owned(), in_values);
                 })
             });
         }
 
+        // Fill all
         for api_def in api_defs.iter_mut() {
-
+            api_def.class_structs.iter_mut().for_each(|s| {
+                if let Some(ref in_name) = s.inherit {
+                    s.full_inherit = Self::get_inherit_structs(
+                        &s.name,
+                        RecurseIncludeSelf::Yes,
+                        &inherited_classes);
+                } else {
+                    s.full_inherit = vec![s.name.to_owned()];
+                }
+            });
         }
-
-        api_defs.for_each(|s| {
-            let
-
-
-            s.inherit.as_ref().map_or((), |i| {
-                inherited_classes.insert(i.clone());
-            })
-        });
     }
 
     /*

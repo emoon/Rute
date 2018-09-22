@@ -132,9 +132,8 @@ impl HeaderFFIGenerator {
 
             imp.gen_struct_declaration(&mut dest, &temp_string)?;
 
-            for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-                println!("in {}", s.name);
-                imp.gen_funcs_declaration(&mut dest, &s.name, &s.name)?;
+            for name in &sdef.full_inherit {
+                imp.gen_funcs_declaration(&mut dest, name, name)?;
             }
 
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;

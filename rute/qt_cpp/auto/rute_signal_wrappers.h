@@ -5,11 +5,11 @@
 
 #include "../rute_base.h"
 #include "../rute_manual.h"
-#include <QApplication>
-#include <QListWidgetItem>
-#include <QWidget>
 #include <QListWidget>
 #include <QFont>
+#include <QWidget>
+#include <QListWidgetItem>
+#include <QApplication>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
