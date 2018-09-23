@@ -2,7 +2,10 @@
 use std::cell::Cell;
 use std::marker::PhantomData;
 use std::rc::Rc;
+
+#[allow(unused_imports)]
 use std::ffi::{CString, CStr};
+
 use rute_ffi_base::*;
 
 
@@ -27,15 +30,6 @@ impl<'a> Rute<'a> {
         }
     }
 
-    pub fn create_font(&self) -> Font<'a> {
-        let ffi_data = unsafe { ((*self.rute_ffi).create_font)(::std::ptr::null()) };
-        Font {
-            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
-            all_funcs: ffi_data.all_funcs,
-            _marker: PhantomData,
-        }
-    }
-
     pub fn create_list_widget(&self) -> ListWidget<'a> {
         let data = Rc::new(Cell::new(None));
 
@@ -50,6 +44,15 @@ impl<'a> Rute<'a> {
 
         ListWidget {
             data,
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn create_font(&self) -> Font<'a> {
+        let ffi_data = unsafe { ((*self.rute_ffi).create_font)(::std::ptr::null()) };
+        Font {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
             all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }

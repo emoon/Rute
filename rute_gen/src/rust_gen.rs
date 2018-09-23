@@ -171,6 +171,7 @@ impl TypeHandler {
 ///
 fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     // TODO: Fix me, import only what we need
+    f.write_all(b"#[allow(unused_imports)]")?;
     f.write_all(b"use auto::*;\n")?;
 
     // generate the pod structs which re-uses the FFI structs

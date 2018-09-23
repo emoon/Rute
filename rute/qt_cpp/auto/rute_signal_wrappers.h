@@ -5,9 +5,9 @@
 
 #include "../rute_base.h"
 #include "../rute_manual.h"
-#include <QFont>
-
 #include <QListWidget>
+
+#include <QFont>
 
 #include <QWidget>
 
