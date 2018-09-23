@@ -180,6 +180,7 @@ fn main() {
     {
         let mut data = api_defs.write().unwrap();
         ApiParser::second_pass(&mut data);
+        data.sort_by(|a, b| a.filename.cmp(&b.filename))
     }
 
     let api_defs_read = api_defs.read().unwrap();
