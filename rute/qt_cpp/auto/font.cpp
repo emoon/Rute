@@ -5,7 +5,6 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QFont>
-extern struct RUFontFuncs s_font_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +27,7 @@ static int font_pixel_size(struct RUBase* self_c) {
 
 static struct RUFont create_font(struct RUBase* priv_data) {
     auto ctl = generic_create_func<struct RUFont, QFont>(priv_data);
-    ctl.font_funcs = &s_font_funcs;
+    ctl.all_funcs = &s_font_all_funcs;
     return ctl;
 }
 
@@ -44,5 +43,11 @@ struct RUFontFuncs s_font_funcs = {
     destroy_font,
     font_set_pixel_size,
     font_pixel_size,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUFontAllFuncs s_font_all_funcs = {
+    &s_font_funcs,
 };
 

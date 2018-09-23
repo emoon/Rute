@@ -300,7 +300,7 @@ fn generate_includes<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         f.write_fmt(format_args!("#include <{}>\n", sdef.qt_name))?;
     }
 
-    Ok(())
+    f.write_all(b"\n")
 }
 
 ///
@@ -356,13 +356,18 @@ fn build_signal_wrappers_info<'a>(api_defs: &'a [ApiDef]) -> HashMap<String, &'a
 ///
 /// Example output:
 ///
-/// extern struct RUWidgetFuncts s_widget_funcs;
-/// extern struct RUListFuncts s_list_funcs;
+/// extern struct RUWidgetFuncs s_widget_funcs;
+/// extern struct RUWidgetAllFuncs s_widget_all_funcs;
 ///
 fn generate_forward_declare_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
     for s in &api_def.class_structs {
         f.write_fmt(format_args!(
             "extern struct RU{}Funcs s_{}_funcs;\n",
+            s.name,
+            s.name.to_snake_case()
+        ))?;
+        f.write_fmt(format_args!(
+            "extern struct RU{}AllFuncs s_{}_all_funcs;\n",
             s.name,
             s.name.to_snake_case()
         ))?;
@@ -489,6 +494,7 @@ fn generate_func_callback<W: Write>(
 /// Generate get functions to be used with for static functions
 ///
 fn generate_static_get_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    // TODO: Template here
     //
     // Generate create functions for all structs that are flagged with create function
     // and doesn't have manual create selected on them
@@ -499,6 +505,7 @@ fn generate_static_get_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::R
         .filter(|s| s.has_static_functions())
     {
         f.write_all(SEPARATOR)?;
+        let snake_name = sdef.name.to_snake_case();
 
         //
         // Get the name if we have remapped the name (for example we use Button while Qt uses
@@ -507,23 +514,13 @@ fn generate_static_get_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::R
         f.write_fmt(format_args!(
             "static struct RU{} get_{}(struct RUBase* priv_data) {{\n",
             sdef.name,
-            sdef.name.to_snake_case()
+            snake_name
         ))?;
         f.write_all(b"    (void)priv_data;\n")?;
         f.write_fmt(format_args!("    RU{} ctl;\n", sdef.name))?;
-        f.write_all(b"    ctl.priv_data = nullptr;\n")?;
-
-        // fill in the function ptr structs
-        // TODO: Make to common function
-        for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-            let snake_name = s.name.to_snake_case();
-
-            f.write_fmt(format_args!(
-                "    ctl.{}_funcs = &s_{}_funcs;\n",
-                snake_name, snake_name
-            ))?;
-        }
-
+        f.write_all(b"    ctl.qt_data = nullptr;\n")?;
+        f.write_all(b"    ctl.host_data = nullptr;\n")?;
+        f.write_fmt(format_args!("    ctl.all_funcs = &s_{}_all_funcs;\n", snake_name))?;
         f.write_all(b"    return ctl;\n}\n\n")?;
     }
 
@@ -543,6 +540,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
         .iter()
         .filter(|s| s.should_have_create_func() && !s.has_manual_create())
     {
+        let snake_name = sdef.name.to_snake_case();
         let struct_name = sdef.name.as_str();
         let struct_qt_name = &sdef.cpp_name;
         let is_inherits_widget = sdef.inherits_widget(api_def);
@@ -573,7 +571,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
     void* private_user_data)
 {{\n",
                 sdef.name,
-                sdef.name.to_snake_case()
+                snake_name,
             ))?;
 
             f.write_fmt(format_args!(
@@ -594,17 +592,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
             ))?;
         }
 
-        // fill in the function ptr structs
-        // TODO: Make to common function
-        for s in api_def.get_inherit_structs(&sdef, RecurseIncludeSelf::Yes) {
-            let snake_name = s.name.to_snake_case();
-
-            f.write_fmt(format_args!(
-                "    ctl.{}_funcs = &s_{}_funcs;\n",
-                snake_name, snake_name
-            ))?;
-        }
-
+        f.write_fmt(format_args!( "    ctl.all_funcs = &s_{}_all_funcs;\n", snake_name))?;
         f.write_all(b"    return ctl;\n}\n\n")?;
 
         f.write_all(SEPARATOR)?;
@@ -680,6 +668,26 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
         }
 
         f.write_all(b"};\n\n")?;
+
+        f.write_all(SEPARATOR)?;
+        // generate the alla funcs
+
+        for sdef in &api_def.class_structs {
+            f.write_fmt(format_args!(
+                "struct RU{}AllFuncs s_{}_all_funcs = {{\n",
+                struct_name,
+                struct_name.to_snake_case()
+            ))?;
+
+            for name in &sdef.full_inherit {
+                f.write_fmt(format_args!(
+                    "    &s_{}_funcs,\n",
+                    name.to_snake_case()
+                ))?;
+            }
+
+            f.write_all(b"};\n\n")?;
+        }
     }
 
     Ok(())
@@ -794,11 +802,24 @@ impl QtGenerator {
                     }
                 }
 
-                if arg.vtype == VariableType::Reference {
-                    // TODO: Should not hard-code to Q* here
-                    Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
-                } else {
-                    None
+                match arg.vtype {
+                    VariableType::Reference => {
+                        // TODO: We should propage the real Qt type here instead
+                        if arg.type_name.ends_with("Type") {
+                            Some(format!("(Q{}*){}", &arg.type_name[..arg.type_name.len()-4], &arg.name).into())
+                        } else {
+                            // TODO: Should not hard-code to Q* here
+                            Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
+                        }
+                    }
+
+                    _ => None,
+
+                    /*
+                    VariableType::Enum => {
+
+                    }
+                    */
                 }
             }
         });
@@ -825,7 +846,8 @@ impl QtGenerator {
 
         if let Some(ref ret_val) = func.return_val {
             object.insert("array_return".to_owned(), Value::Bool(ret_val.array));
-            object.insert("qt_ret_value".to_owned(), Value::str(""));
+            object.insert("qt_ret_value".to_owned(), Value::str("ret_value"));
+            object.insert("funcs_name".to_owned(), Value::str(""));
 
             match ret_val.vtype {
                 VariableType::Primitive => {
@@ -833,9 +855,11 @@ impl QtGenerator {
                 }
                 VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
                 VariableType::Regular => {
+                    object.insert("funcs_name".to_owned(), Value::Str(ret_val.type_name.to_snake_case()));
                     object.insert("return_type".to_owned(), Value::str("regular"))
                 }
                 VariableType::Reference => {
+                    object.insert("funcs_name".to_owned(), Value::Str(ret_val.type_name.to_snake_case()));
                     object.insert("return_type".to_owned(), Value::str("reference"))
                 }
                 _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
@@ -1024,8 +1048,8 @@ impl QtGenerator {
         //cpp_out.write_all(QT_HEADER)?;
 
         // Generate all the struct func forward declarations
-        generate_forward_declare_struct_defs(&mut h_out, api_def)?;
-        generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
+        //generate_forward_declare_struct_defs(&mut h_out, api_def)?;
+        //generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
         self.generate_wrapper_classes_defs(&mut h_out, api_def)?;

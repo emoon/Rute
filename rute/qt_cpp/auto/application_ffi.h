@@ -9,45 +9,21 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "desktop_widget_ffi.h"
-#include "font_ffi.h"
-#include "icon_ffi.h"
-#include "palette_ffi.h"
-#include "style_ffi.h"
 #include "widget_ffi.h"
-#include "widget_list_ffi.h"
 
 struct RUApplicationFuncs;
 struct RUApplication;
 
 typedef struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
-    struct RUStyle (*style)(struct RUBase* self_c);
-    void (*set_style)(struct RUBase* self_c, RURute arg0);
-    void (*set_style)(struct RUBase* self_c, struct RUBase* arg0);
-    struct RUStyle (*set_style)(struct RUBase* self_c, const char* arg0);
     int (*color_spec)(struct RUBase* self_c);
     void (*set_color_spec)(struct RUBase* self_c, int arg0);
-    struct RUPalette (*palette)(struct RUBase* self_c, struct RUBase* arg0);
-    struct RUPalette (*palette)(struct RUBase* self_c, const char* class_name);
-    void (*set_palette)(struct RUBase* self_c, struct RUBase* arg0, const char* class_name);
-    struct RUFont (*font)(struct RUBase* self_c);
-    struct RUFont (*font)(struct RUBase* self_c, struct RUBase* arg0);
-    struct RUFont (*font)(struct RUBase* self_c, const char* class_name);
-    void (*set_font)(struct RUBase* self_c, struct RUBase* arg0, const char* class_name);
-    void (*set_window_icon)(struct RUBase* self_c, struct RUBase* icon);
-    struct RUIcon (*window_icon)(struct RUBase* self_c);
-    struct RUWidgetList (*all_widgets)(struct RUBase* self_c);
-    struct RUWidgetList (*top_level_widgets)(struct RUBase* self_c);
-    struct RUDesktopWidget (*desktop)(struct RUBase* self_c);
     struct RUWidget (*active_popup_widget)(struct RUBase* self_c);
     struct RUWidget (*active_modal_widget)(struct RUBase* self_c);
     struct RUWidget (*focus_widget)(struct RUBase* self_c);
     struct RUWidget (*active_window)(struct RUBase* self_c);
     void (*set_active_window)(struct RUBase* self_c, struct RUBase* act);
-    struct RUWidget (*widget_at)(struct RUBase* self_c, struct RUBase* p);
     struct RUWidget (*widget_at)(struct RUBase* self_c, int x, int y);
-    struct RUWidget (*top_level_at)(struct RUBase* self_c, struct RUBase* p);
     struct RUWidget (*top_level_at)(struct RUBase* self_c, int x, int y);
     void (*beep)(struct RUBase* self_c);
     void (*alert)(struct RUBase* self_c, struct RUBase* widget, int duration);
@@ -63,11 +39,7 @@ typedef struct RUApplicationFuncs {
     int (*start_drag_time)(struct RUBase* self_c);
     void (*set_start_drag_distance)(struct RUBase* self_c, int l);
     int (*start_drag_distance)(struct RUBase* self_c);
-    bool (*is_effect_enabled)(struct RUBase* self_c, RURute arg0);
-    void (*set_effect_enabled)(struct RUBase* self_c, RURute arg0, bool enable);
     int (*exec)(struct RUBase* self_c);
-    void (*set_focus_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* old, struct RUBase* now));
-
     const char* (*style_sheet)(struct RUBase* self_c);
     void (*set_style_sheet)(struct RUBase* self_c, const char* sheet);
     void (*set_auto_sip_enabled)(struct RUBase* self_c, bool enabled);
@@ -83,9 +55,11 @@ typedef struct RUApplicationAllFuncs {
 typedef struct RUApplication {
     RUBase* qt_data;
     RUBase* host_data;
-    struct RUFontAllFuncs* all_funcs;
+    struct RUApplicationAllFuncs* all_funcs;
 } RUApplication;
 
+extern RUApplicationFuncs s_application_funcs;
+extern RUApplicationAllFuncs s_application_all_funcs;
 
 #ifdef __cplusplus
 }

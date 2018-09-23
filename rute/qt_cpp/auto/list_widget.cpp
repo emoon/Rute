@@ -5,7 +5,6 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QListWidget>
-extern struct RUListWidgetFuncs s_list_widget_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,21 +24,13 @@ static void list_widget_clear(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_list_widget_item_pressed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item) {
-    QSlotWrapperself_ListWidgetItemType_void* wrap = new QSlotWrapperself_ListWidgetItemType_void(user_data, (self_ListWidgetItemType_void)trampoline_func, (void*)event);
-    QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(itemPressed(QListWidgetItemType*)), wrap, SLOT(method(QListWidgetItemType*)));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUListWidget create_list_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
     void* private_user_data)
 {
     auto ctl = create_widget_func<struct RUListWidget, WRListWidget>(priv_data, delete_callback, private_user_data);
-    ctl.list_widget_funcs = &s_list_widget_funcs;
+    ctl.all_funcs = &s_list_widget_all_funcs;
     return ctl;
 }
 
@@ -55,6 +46,12 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_add_item,
     list_widget_clear,
-    set_list_widget_item_pressed_event,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUListWidgetAllFuncs s_list_widget_all_funcs = {
+    &s_widget_funcs,
+    &s_list_widget_funcs,
 };
 

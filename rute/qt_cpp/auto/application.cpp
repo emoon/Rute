@@ -5,47 +5,6 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QApplication>
-extern struct RUApplicationFuncs s_application_funcs;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUStyle application_style(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->style();
-    RUregular ctl = s_style_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_style(struct RUBase* self_c, RURute arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setStyle(arg0);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_style(struct RUBase* self_c, struct RUBase* arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setStyle((QStyleType*)arg0);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUStyle application_set_style(struct RUBase* self_c, const char* arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->setStyle(QString::fromUtf8(arg0));
-    RUregular ctl = s_set_style_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,145 +25,14 @@ static void application_set_color_spec(struct RUBase* self_c, int arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPalette application_palette(struct RUBase* self_c, struct RUBase* arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->palette((QWidgetType*)arg0);
-    RUregular ctl = s_palette_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPalette application_palette(struct RUBase* self_c, const char* class_name) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->palette(QString::fromUtf8(class_name));
-    RUregular ctl = s_palette_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_palette(struct RUBase* self_c, struct RUBase* arg0, const char* class_name) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setPalette((QPaletteType*)arg0, QString::fromUtf8(class_name));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUFont application_font(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->font();
-    RUregular ctl = s_font_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUFont application_font(struct RUBase* self_c, struct RUBase* arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->font((QWidgetType*)arg0);
-    RUregular ctl = s_font_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUFont application_font(struct RUBase* self_c, const char* class_name) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->font(QString::fromUtf8(class_name));
-    RUregular ctl = s_font_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_font(struct RUBase* self_c, struct RUBase* arg0, const char* class_name) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setFont((QFontType*)arg0, QString::fromUtf8(class_name));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setWindowIcon((QIconType*)icon);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUIcon application_window_icon(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->windowIcon();
-    RUregular ctl = s_window_icon_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidgetList application_all_widgets(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->allWidgets();
-    RUregular ctl = s_all_widgets_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidgetList application_top_level_widgets(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->topLevelWidgets();
-    RUregular ctl = s_top_level_widgets_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUDesktopWidget application_desktop(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->desktop();
-    RUregular ctl = s_desktop_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUWidget application_active_popup_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->activePopupWidget();
-    RUregular ctl = s_active_popup_widget_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -214,9 +42,10 @@ static struct RUWidget application_active_modal_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->activeModalWidget();
-    RUregular ctl = s_active_modal_widget_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -226,9 +55,10 @@ static struct RUWidget application_focus_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->focusWidget();
-    RUregular ctl = s_focus_widget_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -238,9 +68,10 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->activeWindow();
-    RUregular ctl = s_active_window_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -249,19 +80,7 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
     QApplication* qt_value = (QApplication*)self_c;
 
-    qt_value->setActiveWindow((QWidgetType*)act);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidget application_widget_at(struct RUBase* self_c, struct RUBase* p) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->widgetAt((QPointType*)p);
-    RUregular ctl = s_widget_at_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
+    qt_value->setActiveWindow((QWidget*)act);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,21 +89,10 @@ static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->widgetAt(x, y);
-    RUregular ctl = s_widget_at_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidget application_top_level_at(struct RUBase* self_c, struct RUBase* p) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->topLevelAt((QPointType*)p);
-    RUregular ctl = s_top_level_at_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -294,9 +102,10 @@ static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, in
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->topLevelAt(x, y);
-    RUregular ctl = s_top_level_at_template;
-    ctl.qt_data = (struct RUBase*);
-    ctl.host_data = s_host_data_map[ret_value];
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -313,7 +122,7 @@ static void application_beep(struct RUBase* self_c) {
 static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
     QApplication* qt_value = (QApplication*)self_c;
 
-    qt_value->alert((QWidgetType*)widget, duration);
+    qt_value->alert((QWidget*)widget, duration);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,36 +229,11 @@ static int application_start_drag_distance(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool application_is_effect_enabled(struct RUBase* self_c, RURute arg0) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->isEffectEnabled(arg0);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_set_effect_enabled(struct RUBase* self_c, RURute arg0, bool enable) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setEffectEnabled(arg0, enable);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int application_exec(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     auto ret_value = qt_value->exec();
     return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_application_focus_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* old, struct RUBase* now) {
-    QSlotWrapperself_Widget_Widget_void* wrap = new QSlotWrapperself_Widget_Widget_void(user_data, (self_Widget_Widget_void)trampoline_func, (void*)event);
-    QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(focusChanged(QWidget*, QWidget*)), wrap, SLOT(method(QWidget*, QWidget*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -507,8 +291,9 @@ static void application_about_qt(struct RUBase* self_c) {
 static struct RUApplication get_application(struct RUBase* priv_data) {
     (void)priv_data;
     RUApplication ctl;
-    ctl.priv_data = nullptr;
-    ctl.application_funcs = &s_application_funcs;
+    ctl.qt_data = nullptr;
+    ctl.host_data = nullptr;
+    ctl.all_funcs = &s_application_all_funcs;
     return ctl;
 }
 
@@ -516,32 +301,14 @@ static struct RUApplication get_application(struct RUBase* priv_data) {
 
 struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
-    application_style,
-    application_set_style,
-    application_set_style,
-    application_set_style,
     application_color_spec,
     application_set_color_spec,
-    application_palette,
-    application_palette,
-    application_set_palette,
-    application_font,
-    application_font,
-    application_font,
-    application_set_font,
-    application_set_window_icon,
-    application_window_icon,
-    application_all_widgets,
-    application_top_level_widgets,
-    application_desktop,
     application_active_popup_widget,
     application_active_modal_widget,
     application_focus_widget,
     application_active_window,
     application_set_active_window,
     application_widget_at,
-    application_widget_at,
-    application_top_level_at,
     application_top_level_at,
     application_beep,
     application_alert,
@@ -557,15 +324,18 @@ struct RUApplicationFuncs s_application_funcs = {
     application_start_drag_time,
     application_set_start_drag_distance,
     application_start_drag_distance,
-    application_is_effect_enabled,
-    application_set_effect_enabled,
     application_exec,
-    set_application_focus_changed_event,
     application_style_sheet,
     application_set_style_sheet,
     application_set_auto_sip_enabled,
     application_auto_sip_enabled,
     application_close_all_windows,
     application_about_qt,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUApplicationAllFuncs s_application_all_funcs = {
+    &s_application_funcs,
 };
 

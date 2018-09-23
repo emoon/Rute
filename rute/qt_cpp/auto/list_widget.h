@@ -6,7 +6,6 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QListWidget>
-extern struct RUListWidgetFuncs s_list_widget_funcs;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,7 +13,7 @@ extern struct RUListWidgetFuncs s_list_widget_funcs;
 class WRListWidget : public QListWidget {
     Q_OBJECT
 public:
-    WRListWidget(QListWidget* widget) : QListWidget(widget) { }
+    WRListWidget(QWidget* widget) : QListWidget(widget) { }
     virtual ~WRListWidget() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);

@@ -84,6 +84,8 @@ impl HeaderFFIGen for CapiHeaderGen {
     fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
         writeln!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
 
+        println!("{}", enum_def.name);
+
         for entry in &enum_def.entries {
             match *entry {
                 EnumEntry::Enum(ref name) => {
@@ -205,8 +207,16 @@ impl HeaderFFIGen for CapiHeaderGen {
     fn generate_post_declarations<W: Write>(
         &mut self,
         dest: &mut W,
-        _api_def: &ApiDef,
+        api_def: &ApiDef,
     ) -> io::Result<()> {
+        // generate extern declarations for all funcs so other files can access them
+
+        for sdef in &api_def.class_structs {
+            let snake_name = sdef.name.to_snake_case();
+            writeln!(dest, "extern RU{}Funcs s_{}_funcs;", sdef.name, snake_name);
+            writeln!(dest, "extern RU{}AllFuncs s_{}_all_funcs;", sdef.name, snake_name);
+        }
+
         write!(dest, "{}", FOOTER)
     }
 }

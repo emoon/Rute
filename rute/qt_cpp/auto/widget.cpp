@@ -5,7 +5,6 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QWidget>
-extern struct RUWidgetFuncs s_widget_funcs;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +54,7 @@ static struct RUWidget create_widget(
     void* private_user_data)
 {
     auto ctl = create_widget_func<struct RUWidget, WRWidget>(priv_data, delete_callback, private_user_data);
-    ctl.widget_funcs = &s_widget_funcs;
+    ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
@@ -74,5 +73,11 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_fixed_width,
     widget_resize,
     widget_update,
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct RUWidgetAllFuncs s_widget_all_funcs = {
+    &s_widget_funcs,
 };
 

@@ -11,11 +11,11 @@ struct ListWidgetItem {
     is_selected() -> bool,
     set_hidden(hide: bool),
     is_hidden() -> bool,
-    flags() -> Rute::ItemFlags,
-    set_flags(flags: Rute::ItemFlags),
+    //flags() -> Rute::ItemFlags,
+    //set_flags(flags: Rute::ItemFlags),
     text() -> String,
     set_text(text: String),
-    icon() -> Icon,
+    //icon() -> Icon,
     //set_icon(icon: &IconType),
     status_tip() -> String,
     set_status_tip(status_tip: String),
@@ -23,8 +23,8 @@ struct ListWidgetItem {
     set_tool_tip(tool_tip: String),
     whats_this() -> String,
     set_whats_this(whats_this: String),
-    font() -> Font,
-    set_font(font: &FontType),
+    //font() -> Font,
+    //set_font(font: &FontType),
     text_alignment() -> i32,
     set_text_alignment(alignment: i32),
     //background_color() -> Color,
@@ -35,9 +35,9 @@ struct ListWidgetItem {
     //set_text_color(color: &ColorType),
     //foreground() -> Brush,
     //set_foreground(brush: &BrushType),
-    check_state() -> Rute::CheckState,
-    set_check_state(state: Rute::CheckState),
-    size_hint() -> Size,
+    //check_state() -> Rute::CheckState,
+    //set_check_state(state: Rute::CheckState),
+    //size_hint() -> Size,
     //set_size_hint(size: &SizeType),
     //[replace] data(role: i32) -> Variant,
     //[replace] set_data(role: i32, value: &VariantType),
@@ -45,7 +45,7 @@ struct ListWidgetItem {
     //[replace] write(out: &DataStreamType),
 
     //#org_name[type()]
-    get_type() -> i32,
+    //get_type() -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

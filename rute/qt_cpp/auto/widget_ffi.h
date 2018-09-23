@@ -29,9 +29,11 @@ typedef struct RUWidgetAllFuncs {
 typedef struct RUWidget {
     RUBase* qt_data;
     RUBase* host_data;
-    struct RUFontAllFuncs* all_funcs;
+    struct RUWidgetAllFuncs* all_funcs;
 } RUWidget;
 
+extern RUWidgetFuncs s_widget_funcs;
+extern RUWidgetAllFuncs s_widget_all_funcs;
 
 #ifdef __cplusplus
 }

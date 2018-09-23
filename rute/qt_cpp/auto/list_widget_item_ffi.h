@@ -9,10 +9,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "font_ffi.h"
-#include "icon_ffi.h"
 #include "list_widget_ffi.h"
-#include "size_ffi.h"
 
 struct RUListWidgetItemFuncs;
 struct RUListWidgetItem;
@@ -24,25 +21,16 @@ typedef struct RUListWidgetItemFuncs {
     bool (*is_selected)(struct RUBase* self_c);
     void (*set_hidden)(struct RUBase* self_c, bool hide);
     bool (*is_hidden)(struct RUBase* self_c);
-    RURute (*flags)(struct RUBase* self_c);
-    void (*set_flags)(struct RUBase* self_c, RURute flags);
     const char* (*text)(struct RUBase* self_c);
     void (*set_text)(struct RUBase* self_c, const char* text);
-    struct RUIcon (*icon)(struct RUBase* self_c);
     const char* (*status_tip)(struct RUBase* self_c);
     void (*set_status_tip)(struct RUBase* self_c, const char* status_tip);
     const char* (*tool_tip)(struct RUBase* self_c);
     void (*set_tool_tip)(struct RUBase* self_c, const char* tool_tip);
     const char* (*whats_this)(struct RUBase* self_c);
     void (*set_whats_this)(struct RUBase* self_c, const char* whats_this);
-    struct RUFont (*font)(struct RUBase* self_c);
-    void (*set_font)(struct RUBase* self_c, struct RUBase* font);
     int (*text_alignment)(struct RUBase* self_c);
     void (*set_text_alignment)(struct RUBase* self_c, int alignment);
-    RURute (*check_state)(struct RUBase* self_c);
-    void (*set_check_state)(struct RUBase* self_c, RURute state);
-    struct RUSize (*size_hint)(struct RUBase* self_c);
-    int (*get_type)(struct RUBase* self_c);
 } RUListWidgetItemFuncs;
 
 typedef struct RUListWidgetItemAllFuncs {
@@ -52,9 +40,11 @@ typedef struct RUListWidgetItemAllFuncs {
 typedef struct RUListWidgetItem {
     RUBase* qt_data;
     RUBase* host_data;
-    struct RUFontAllFuncs* all_funcs;
+    struct RUListWidgetItemAllFuncs* all_funcs;
 } RUListWidgetItem;
 
+extern RUListWidgetItemFuncs s_list_widget_item_funcs;
+extern RUListWidgetItemAllFuncs s_list_widget_item_all_funcs;
 
 #ifdef __cplusplus
 }

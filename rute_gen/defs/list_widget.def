@@ -1,7 +1,7 @@
 struct ListWidget : Widget {
     add_item(label: String),
     clear(),
-    [event] item_pressed(item: &ListWidgetItemType),
+    //[event] item_pressed(item: &ListWidgetItemType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

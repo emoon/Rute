@@ -29,6 +29,8 @@ typedef struct RUFont {
     struct RUFontAllFuncs* all_funcs;
 } RUFont;
 
+extern RUFontFuncs s_font_funcs;
+extern RUFontAllFuncs s_font_all_funcs;
 
 #ifdef __cplusplus
 }

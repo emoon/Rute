@@ -105,12 +105,21 @@ fn generate_bulk_cpp(filename: &str, paths: &[walkdir::DirEntry]) {
     for f in paths {
         let base_filename = f.path().file_name().unwrap().to_str().unwrap();
         let base_filename = &base_filename[..base_filename.len() - 4];
-        files.push(base_filename.to_owned());
+        if base_filename != "qnamespace" {
+            files.push(base_filename.to_owned());
+        }
     }
 
     files.sort();
 
-    for f in files {
+    for f in &files {
+        writeln!(&mut dest, "#include \"{}_ffi.h\"", f);
+        writeln!(&mut dest, "#include \"{}.h\"", f);
+    }
+
+    writeln!(&mut dest, "");
+
+    for f in &files {
         writeln!(&mut dest, "#include \"{}.cpp\"", f);
     }
 }

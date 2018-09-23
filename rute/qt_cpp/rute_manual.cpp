@@ -1,7 +1,9 @@
 #include "rute_manual.h"
+#include "auto/application.h"
+#include "auto/application_ffi.h"
 #include <QApplication>
 
-extern RUApplicationFuncs s_application_funcs;
+extern RUApplicationAllFuncs s_application_all_funcs;
 extern void create_enum_mappings();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,8 +17,9 @@ struct RUApplication create_application(struct RUBase* priv_data) {
     create_enum_mappings();
 
     RUApplication ctl;
-    ctl.application_funcs = &s_application_funcs;
-    ctl.priv_data = (struct RUBase*)qt_obj;
+    ctl.qt_data = (struct RUBase*)qt_obj;
+    ctl.host_data = nullptr;
+    ctl.all_funcs = &s_application_all_funcs;
 
     return ctl;
 }

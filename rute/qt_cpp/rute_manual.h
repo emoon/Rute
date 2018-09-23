@@ -4,6 +4,7 @@
 #include "rute_base.h"
 
 class QWidget;
+class QString;
 
 extern std::map<void*, void*> s_host_data_lookup;
 
@@ -22,8 +23,8 @@ template<typename QT> void destroy_generic(struct RUBase* qt_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename F, typename QT> T create_widget_func(
-    struct RUBase* priv_data, const F* all_funcs,
+template<typename T, typename QT> T create_widget_func(
+    struct RUBase* priv_data,
     RUDeleteCallback delete_callback, void* host_data)
 {
     PrivData* data = (PrivData*)priv_data;
@@ -34,20 +35,19 @@ template<typename T, typename F, typename QT> T create_widget_func(
         qt_obj = new QT(nullptr);
     }
 
-    s_host_data_lookup[qt_obj] = host_data;
+    s_host_data_lookup[(void*)qt_obj] = host_data;
     qt_obj->m_delete_callback = delete_callback;
 
-    T ctl = ctl_template;
+    T ctl;
     ctl.qt_data = (struct RUBase*)qt_obj;
     ctl.host_data = nullptr;
-    ctl.all_funcs = all_funcs;
 
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename F, typename QT> T generic_create_func(F* funcs)
+template<typename T, typename QT> T generic_create_func(void* priv_data)
 {
     (void)priv_data;
     QT* qt_obj = new QT();
@@ -55,15 +55,14 @@ template<typename T, typename F, typename QT> T generic_create_func(F* funcs)
     T ctl;
     ctl.qt_data = (struct RUBase*)qt_obj;
     ctl.host_data = nullptr;
-    ctl.all_funcs = all_funcs;
 
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename F, typename QT> T generic_create_func_with_delete(
-    struct RUBase* priv_data, F* all_funcs,
+template<typename T, typename QT> T generic_create_func_with_delete(
+    struct RUBase* priv_data,
     RUDeleteCallback delete_callback, void* private_user_data) {
 
     (void)priv_data;
@@ -75,10 +74,13 @@ template<typename T, typename F, typename QT> T generic_create_func_with_delete(
     T ctl;
     ctl.qt_data = (struct RUBase*)qt_obj;
     ctl.host_data = nullptr;
-    ctl.all_funs = all_funcs;
 
     return ctl;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const char* q_string_to_const_char(const QString* v);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

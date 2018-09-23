@@ -9,9 +9,6 @@ pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub add_item: extern "C" fn(self_c: *const RUBase, label: *const ::std::os::raw::c_char),
     pub clear: extern "C" fn(self_c: *const RUBase),
-    pub set_item_pressed_event: extern "C" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
-                                            callback: *const c_void),
-
 }
 
 #[repr(C)]
@@ -26,7 +23,7 @@ pub struct RUListWidgetAllFuncs {
 pub struct RUListWidget {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub all_funcs: *const RUFontAllFuncs,
+    pub all_funcs: *const RUListWidgetAllFuncs,
 }
 
 

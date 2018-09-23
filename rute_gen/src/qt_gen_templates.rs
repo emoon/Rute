@@ -53,7 +53,7 @@ class WR{{struct_name}} : public {{qt_name}} {
     Q_OBJECT
 public:
 {%- if widget %}
-    WR{{struct_name}}({{qt_name}}* widget) : {{qt_name}}(widget) { }
+    WR{{struct_name}}(QWidget* widget) : {{qt_name}}(widget) { }
 {%- else %}
     WR{{struct_name}}() : {{qt_name}}() { }
 {%- endif %}
@@ -138,9 +138,10 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}(
 {%- when 'primitive' %}
     return ret_value;
 {%- else %}
-    RU{{return_type}} ctl = s_{{type_snake_name}}_template;
+    {{c_return_type}} ctl;
     ctl.qt_data = (struct RUBase*){{qt_ret_value}};
-    ctl.host_data = s_host_data_map[ret_value];
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_{{funcs_name}}_all_funcs;
     return ctl;
 {%- endcase %}
 

@@ -147,7 +147,7 @@ impl HeaderFFIGenerator {
             imp.gen_struct_declaration(&mut dest, &temp_string)?;
             imp.gen_rubase_ptr_data(&mut dest, "qt_data")?;
             imp.gen_rubase_ptr_data(&mut dest, "host_data")?;
-            imp.gen_funcs_declaration(&mut dest, "all", "FontAll")?;
+            imp.gen_funcs_declaration(&mut dest, "all", &format!("{}All", sdef.name))?;
             imp.gen_struct_end_declaration(&mut dest, &temp_string)?;
         }
 

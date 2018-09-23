@@ -25,7 +25,7 @@ pub struct RUWidgetAllFuncs {
 pub struct RUWidget {
     pub qt_data: *const RUBase,
     pub host_data: *const RUBase,
-    pub all_funcs: *const RUFontAllFuncs,
+    pub all_funcs: *const RUWidgetAllFuncs,
 }
 
 

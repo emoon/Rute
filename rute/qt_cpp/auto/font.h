@@ -6,5 +6,4 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QFont>
-extern struct RUFontFuncs s_font_funcs;
 

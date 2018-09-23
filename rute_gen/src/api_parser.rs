@@ -809,7 +809,7 @@ impl Variable {
                 }
             }
 
-            VariableType::Enum => format!("RU{}", tname).into(),
+            VariableType::Enum => "int".into(),
             VariableType::Str => "const char*".into(),
 
             _ => {

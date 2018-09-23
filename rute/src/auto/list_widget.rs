@@ -16,67 +16,6 @@ pub struct ListWidget<'a> {
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
-impl<'a> ListWidget<'a> {
-    unsafe extern "C" fn item_pressed_trampoline_ud<T>(
-        user_data: *const c_void,
-        func: *const c_void,
-        item: ListWidgetItemType
-    ) {
-        let f: &&(Fn(&T, ListWidgetItemType) + 'static) = transmute(func);
-        let data = user_data as *const T;
-        f(&*data, item);
-    }
-
-    pub fn set_item_pressed_event_ud<F, T>(&self, data: &'a T, func: F) -> &ListWidget<'a>
-    where
-        F: Fn(&T, ListWidgetItemType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, ListWidgetItemType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_item_pressed_event)(
-                obj_data,
-                user_data,
-                transmute(Self::item_pressed_trampoline_ud::<T> as usize),
-                Box::into_raw(f) as *const _,
-            );
-        }
-
-        self
-    }
-
-    unsafe extern "C" fn item_pressed_trampoline(
-        user_data: *const c_void,
-        func: *const c_void,
-        item: ListWidgetItemType
-    ) {
-        let f: &&(Fn(ListWidgetItemType) + 'static) = transmute(func);
-        f(item);
-    }
-
-    pub fn set_item_pressed_event<F>(&self, func: F) -> &ListWidget<'a>
-    where
-        F: Fn(ListWidgetItemType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
-        let f: Box<Box<Fn(ListWidgetItemType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_item_pressed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                transmute(Self::item_pressed_trampoline as usize),
-                Box::into_raw(f) as *const _,
-            );
-        }
-
-        self
-    }
-}
 pub trait ListWidgetType {
 
     pub fn add_item(&self, label: &str) -> &Self {

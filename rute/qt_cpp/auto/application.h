@@ -6,5 +6,4 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QApplication>
-extern struct RUApplicationFuncs s_application_funcs;
 

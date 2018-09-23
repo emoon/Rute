@@ -17,8 +17,6 @@ typedef struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self);
     void (*add_item)(struct RUBase* self_c, const char* label);
     void (*clear)(struct RUBase* self_c);
-    void (*set_item_pressed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* item));
-
 } RUListWidgetFuncs;
 
 typedef struct RUListWidgetAllFuncs {
@@ -29,9 +27,11 @@ typedef struct RUListWidgetAllFuncs {
 typedef struct RUListWidget {
     RUBase* qt_data;
     RUBase* host_data;
-    struct RUFontAllFuncs* all_funcs;
+    struct RUListWidgetAllFuncs* all_funcs;
 } RUListWidget;
 
+extern RUListWidgetFuncs s_list_widget_funcs;
+extern RUListWidgetAllFuncs s_list_widget_all_funcs;
 
 #ifdef __cplusplus
 }
