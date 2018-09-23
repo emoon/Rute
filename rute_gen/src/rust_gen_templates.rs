@@ -7,7 +7,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_enums::*;
+use rute_ffi_base::*;
 \n\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ impl<'a> Drop for {{type_name}}<'a> {
         if Rc::strong_count(&self.data) == 1 {
             let obj = self.data.get().unwrap();
             unsafe {
-                ((*self.all_funcs.{{type_snake_name}}_funcs).destroy)(obj.privd);
+                ((*(*self.all_funcs).{{type_snake_name}}_funcs).destroy)(obj);
             }
 
             self.data.set(None);
@@ -103,7 +103,7 @@ impl<'a> Drop for {{type_name}}<'a> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
-    pub fn {{func_name}}{{function_def}} {
+    fn {{func_name}}{{function_def}} {
 {{ body_setup }}
         let (obj_data, funcs) = self.get_{{obj_funcs_name}}_obj_funcs();
     {%- if return_value %}
@@ -123,11 +123,13 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
             if t.host_data != ::std::ptr::null() {
                 ret_val = {{return_vtype}} {
                     data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
+                    all_funcs: t.all_funcs,
                     _marker: PhantomData,
                 };
             } else {
                 ret_val = {{return_vtype}} {
-                    data: Rc::new(Cell::new(Some(t))),
+                    data: Rc::new(Cell::new(Some(t.qt_data as *const RUBase))),
+                    all_funcs: t.all_funcs,
                     _marker: PhantomData,
                 };
             }
@@ -160,7 +162,9 @@ pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type for {{target_name}}<'a> {
     fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.{{target_name_snake_org}}_funcs)
+        unsafe {
+            (obj, (*self.all_funcs).{{target_name_snake_org}}_funcs)
+        }
     }
 }
 ";

@@ -22,11 +22,9 @@ typedef struct RUApplicationFuncs {
     struct RUWidget (*active_modal_widget)(struct RUBase* self_c);
     struct RUWidget (*focus_widget)(struct RUBase* self_c);
     struct RUWidget (*active_window)(struct RUBase* self_c);
-    void (*set_active_window)(struct RUBase* self_c, struct RUBase* act);
     struct RUWidget (*widget_at)(struct RUBase* self_c, int x, int y);
     struct RUWidget (*top_level_at)(struct RUBase* self_c, int x, int y);
     void (*beep)(struct RUBase* self_c);
-    void (*alert)(struct RUBase* self_c, struct RUBase* widget, int duration);
     void (*set_cursor_flash_time)(struct RUBase* self_c, int arg0);
     int (*cursor_flash_time)(struct RUBase* self_c);
     void (*set_double_click_interval)(struct RUBase* self_c, int arg0);
@@ -40,7 +38,6 @@ typedef struct RUApplicationFuncs {
     void (*set_start_drag_distance)(struct RUBase* self_c, int l);
     int (*start_drag_distance)(struct RUBase* self_c);
     int (*exec)(struct RUBase* self_c);
-    const char* (*style_sheet)(struct RUBase* self_c);
     void (*set_style_sheet)(struct RUBase* self_c, const char* sheet);
     void (*set_auto_sip_enabled)(struct RUBase* self_c, bool enabled);
     bool (*auto_sip_enabled)(struct RUBase* self_c);

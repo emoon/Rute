@@ -7,18 +7,22 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_enums::*;
+use rute_ffi_base::*;
 
+
+use auto::*;
+use auto::widget_ffi::*;
 
 #[derive(Clone)]
 pub struct Widget<'a> {
-    data: Rc<Cell<Option<RUWidget>>>,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    pub data: Rc<Cell<Option<*const RUBase>>>,
+    pub all_funcs: *const RUWidgetAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 pub trait WidgetType {
 
-    pub fn show(&self) -> &Self {
+    fn show(&self) -> &Self {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -27,7 +31,7 @@ pub trait WidgetType {
         self
     }
 
-    pub fn set_fixed_height(&self, width: i32) -> &Self {
+    fn set_fixed_height(&self, width: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -36,7 +40,7 @@ pub trait WidgetType {
         self
     }
 
-    pub fn set_fixed_width(&self, width: i32) -> &Self {
+    fn set_fixed_width(&self, width: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -45,7 +49,7 @@ pub trait WidgetType {
         self
     }
 
-    pub fn resize(&self, width: i32, height: i32) -> &Self {
+    fn resize(&self, width: i32, height: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -54,7 +58,7 @@ pub trait WidgetType {
         self
     }
 
-    pub fn update(&self) -> &Self {
+    fn update(&self) -> &Self {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -69,6 +73,8 @@ pub trait WidgetType {
 impl<'a> WidgetType for Widget<'a> {
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.widget_funcs)
+        unsafe {
+            (obj, (*self.all_funcs).widget_funcs)
+        }
     }
 }

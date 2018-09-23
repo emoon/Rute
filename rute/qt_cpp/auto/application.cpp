@@ -77,14 +77,6 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->setActiveWindow((QWidget*)act);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -115,14 +107,6 @@ static void application_beep(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     qt_value->beep();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->alert((QWidget*)widget, duration);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,15 +222,6 @@ static int application_exec(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* application_style_sheet(struct RUBase* self_c) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    auto ret_value = qt_value->styleSheet();
-    return q_string_to_const_char(&ret_value);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void application_set_style_sheet(struct RUBase* self_c, const char* sheet) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -307,11 +282,9 @@ struct RUApplicationFuncs s_application_funcs = {
     application_active_modal_widget,
     application_focus_widget,
     application_active_window,
-    application_set_active_window,
     application_widget_at,
     application_top_level_at,
     application_beep,
-    application_alert,
     application_set_cursor_flash_time,
     application_cursor_flash_time,
     application_set_double_click_interval,
@@ -325,7 +298,6 @@ struct RUApplicationFuncs s_application_funcs = {
     application_set_start_drag_distance,
     application_start_drag_distance,
     application_exec,
-    application_style_sheet,
     application_set_style_sheet,
     application_set_auto_sip_enabled,
     application_auto_sip_enabled,

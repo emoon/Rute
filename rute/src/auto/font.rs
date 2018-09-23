@@ -7,18 +7,22 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_enums::*;
+use rute_ffi_base::*;
 
+
+use auto::*;
+use auto::font_ffi::*;
 
 #[derive(Clone)]
 pub struct Font<'a> {
-    data: Rc<Cell<Option<RUFont>>>,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    pub data: Rc<Cell<Option<*const RUBase>>>,
+    pub all_funcs: *const RUFontAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 pub trait FontType {
 
-    pub fn set_pixel_size(&self, size: i32) -> &Self {
+    fn set_pixel_size(&self, size: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -27,7 +31,7 @@ pub trait FontType {
         self
     }
 
-    pub fn pixel_size(&self) -> i32 {
+    fn pixel_size(&self) -> i32 {
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -42,7 +46,9 @@ pub trait FontType {
 impl<'a> FontType for Font<'a> {
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.font_funcs)
+        unsafe {
+            (obj, (*self.all_funcs).font_funcs)
+        }
     }
 }
 
@@ -51,7 +57,7 @@ impl<'a> Drop for Font<'a> {
         if Rc::strong_count(&self.data) == 1 {
             let obj = self.data.get().unwrap();
             unsafe {
-                ((*self.all_funcs.font_funcs).destroy)(obj.privd);
+                ((*(*self.all_funcs).font_funcs).destroy)(obj);
             }
 
             self.data.set(None);

@@ -82,12 +82,18 @@ fn generate_auto_mod(filename: &str, api_defs: &[ApiDef]) {
         .collect::<Vec<String>>();
 
     // rute auto has some extra stuff used by all the files
-    names.push("rute_auto".to_owned());
+    //names.push("rute_auto".to_owned());
     names.sort();
 
-    for entry in names {
+    for entry in &names {
         writeln!(dest, "pub mod {}_ffi;", entry);
         writeln!(dest, "pub mod {};", entry);
+    }
+
+    for entry in &names {
+        writeln!(dest, "pub use {}::*;", entry);
+        // TODO: Fixme
+        writeln!(dest, "pub use {}_ffi::*;", entry);
     }
 }
 

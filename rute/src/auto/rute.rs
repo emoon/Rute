@@ -7,7 +7,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_enums::*;
+use rute_ffi_base::*;
 
 
 

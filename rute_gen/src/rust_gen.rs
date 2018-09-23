@@ -170,21 +170,28 @@ impl TypeHandler {
 /// }
 ///
 fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    // TODO: Fix me, import only what we need
+    f.write_all(b"use auto::*;\n")?;
+
     // generate the pod structs which re-uses the FFI structs
-    for sdef in &api_def.pod_structs {
+    for sdef in &api_def.class_structs {
         f.write_fmt(format_args!(
-            "pub use ffi_gen::RU{} as {};\n",
-            sdef.name, sdef.name
+            "use auto::{}_ffi::*;\n",
+            sdef.name.to_snake_case(),
         ))?;
     }
+
+    writeln!(f, "");
 
     for sdef in &api_def.class_structs {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
             "pub struct {}<'a> {{
-    data: Rc<Cell<Option<RU{}>>>,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
-            sdef.name, sdef.name
+    pub data: Rc<Cell<Option<*const RUBase>>>,
+    pub all_funcs: *const RU{}AllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+            sdef.name,
+            sdef.name
         ))?;
     }
 
@@ -268,7 +275,13 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&var.enum_sub_type),
             VariableType::Regular => dest.push_str(&type_name),
-            VariableType::Str => dest.push_str("&str"),
+            VariableType::Str =>  {
+                if return_arg {
+                    dest.push_str("String");
+                } else {
+                    dest.push_str("&str");
+                }
+            },
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
@@ -592,7 +605,7 @@ impl RustGenerator {
             .filter(|f| f.func_type == func_type)
             .for_each(|f| {
 
-            let res = self.generate_function(&f, &sdef.name);
+            let res = self.generate_function(&f, name);
             dest.write_all(res.as_bytes()).unwrap();
         });
 

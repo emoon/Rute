@@ -7,18 +7,22 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::ffi::CString;
 use std::ffi::CStr;
-use auto::rute_enums::*;
+use rute_ffi_base::*;
 
+
+use auto::*;
+use auto::list_widget_item_ffi::*;
 
 #[derive(Clone)]
 pub struct ListWidgetItem<'a> {
-    data: Rc<Cell<Option<RUListWidgetItem>>>,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    pub data: Rc<Cell<Option<*const RUBase>>>,
+    pub all_funcs: *const RUListWidgetItemAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 pub trait ListWidgetItemType {
 
-    pub fn list_widget(&self) -> Option<ListWidget> {
+    fn list_widget(&self) -> Option<ListWidget> {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -31,11 +35,13 @@ pub trait ListWidgetItemType {
             if t.host_data != ::std::ptr::null() {
                 ret_val = ListWidget {
                     data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
+                    all_funcs: t.all_funcs,
                     _marker: PhantomData,
                 };
             } else {
                 ret_val = ListWidget {
-                    data: Rc::new(Cell::new(Some(t))),
+                    data: Rc::new(Cell::new(Some(t.qt_data as *const RUBase))),
+                    all_funcs: t.all_funcs,
                     _marker: PhantomData,
                 };
             }
@@ -43,7 +49,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_selected(&self, select: bool) -> &Self {
+    fn set_selected(&self, select: bool) -> &Self {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -52,7 +58,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn is_selected(&self) -> bool {
+    fn is_selected(&self) -> bool {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -61,7 +67,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_hidden(&self, hide: bool) -> &Self {
+    fn set_hidden(&self, hide: bool) -> &Self {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -70,7 +76,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn is_hidden(&self) -> bool {
+    fn is_hidden(&self) -> bool {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -79,7 +85,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn text(&self) -> &str {
+    fn text(&self) -> String {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -89,7 +95,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_text(&self, text: &str) -> &Self {
+    fn set_text(&self, text: &str) -> &Self {
         let str_in_text_1 = CString::new(text).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
@@ -99,7 +105,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn status_tip(&self) -> &str {
+    fn status_tip(&self) -> String {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -109,7 +115,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_status_tip(&self, status_tip: &str) -> &Self {
+    fn set_status_tip(&self, status_tip: &str) -> &Self {
         let str_in_status_tip_1 = CString::new(status_tip).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
@@ -119,7 +125,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn tool_tip(&self) -> &str {
+    fn tool_tip(&self) -> String {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -129,7 +135,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_tool_tip(&self, tool_tip: &str) -> &Self {
+    fn set_tool_tip(&self, tool_tip: &str) -> &Self {
         let str_in_tool_tip_1 = CString::new(tool_tip).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
@@ -139,7 +145,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn whats_this(&self) -> &str {
+    fn whats_this(&self) -> String {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -149,7 +155,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_whats_this(&self, whats_this: &str) -> &Self {
+    fn set_whats_this(&self, whats_this: &str) -> &Self {
         let str_in_whats_this_1 = CString::new(whats_this).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
@@ -159,7 +165,7 @@ pub trait ListWidgetItemType {
         self
     }
 
-    pub fn text_alignment(&self) -> i32 {
+    fn text_alignment(&self) -> i32 {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -168,7 +174,7 @@ pub trait ListWidgetItemType {
         }
     }
 
-    pub fn set_text_alignment(&self, alignment: i32) -> &Self {
+    fn set_text_alignment(&self, alignment: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -183,6 +189,8 @@ pub trait ListWidgetItemType {
 impl<'a> ListWidgetItemType for ListWidgetItem<'a> {
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs) {
         let obj = self.data.get().unwrap();
-        (obj, self.all_funcs.list_widget_item_funcs)
+        unsafe {
+            (obj, (*self.all_funcs).list_widget_item_funcs)
+        }
     }
 }
