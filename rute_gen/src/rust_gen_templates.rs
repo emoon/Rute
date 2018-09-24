@@ -7,6 +7,9 @@ use std::rc::Rc;
 use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
+
+#[allow(unused_imports)]
+use auto::*;
 \n\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,6 +47,36 @@ pub static RUST_NO_WRAP_TEMPLATE: &str = "
             _marker: PhantomData,
         }
     }
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static RUST_STRUCT_IMPL_TEMPLATE: &str =
+"#[derive(Clone)]
+pub struct {{struct_name}}<'a> {
+    pub data: Rc<Cell<Option<*const RUBase>>>,
+    pub all_funcs: *const RU{{struct_name}}AllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
+impl <'a>{{struct_name}}<'a> {
+    pub fn new_from_rc(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+        {{struct_name}} {
+            data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn new_from_owned(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+        {{struct_name}} {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+}
+
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,17 +153,9 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
-                ret_val = {{return_vtype}} {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
-                    all_funcs: t.all_funcs,
-                    _marker: PhantomData,
-                };
+                ret_val = {{return_vtype}}::new_from_rc(t);
             } else {
-                ret_val = {{return_vtype}} {
-                    data: Rc::new(Cell::new(Some(t.qt_data as *const RUBase))),
-                    all_funcs: t.all_funcs,
-                    _marker: PhantomData,
-                };
+                ret_val = {{return_vtype}}::new_from_owned(t);
             }
           {%- endcase %}
         {%- if optional_return %}

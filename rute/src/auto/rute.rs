@@ -8,6 +8,9 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
+#[allow(unused_imports)]
+use auto::*;
+
 
 
 unsafe extern "C" fn rute_object_delete_callback(data: *const c_void) {

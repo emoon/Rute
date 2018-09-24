@@ -8,6 +8,7 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
+#[allow(unused_imports)]
+use auto::*;
 
-#[allow(unused_imports)]use auto::*;
 

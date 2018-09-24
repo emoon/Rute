@@ -33,6 +33,7 @@ pub struct RustGenerator {
     callback_template: Template,
     trait_impl_end_template: Template,
     trait_impl_template: Template,
+    struct_impl_template: Template,
     drop_template: Template,
     type_handler: TypeHandler,
 }
@@ -162,44 +163,6 @@ impl TypeHandler {
 }
 
 ///
-/// Generate the structs. The structs will be generated in this style
-///
-/// pub struct Application<'a> {
-///     data: Rc<Cell<Option<RUApplication>>>,
-///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-/// }
-///
-fn generate_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    // TODO: Fix me, import only what we need
-    f.write_all(b"#[allow(unused_imports)]")?;
-    f.write_all(b"use auto::*;\n")?;
-
-    // generate the pod structs which re-uses the FFI structs
-    for sdef in &api_def.class_structs {
-        f.write_fmt(format_args!(
-            "use auto::{}_ffi::*;\n",
-            sdef.name.to_snake_case(),
-        ))?;
-    }
-
-    writeln!(f, "");
-
-    for sdef in &api_def.class_structs {
-        f.write_all(b"#[derive(Clone)]\n")?;
-        f.write_fmt(format_args!(
-            "pub struct {}<'a> {{
-    pub data: Rc<Cell<Option<*const RUBase>>>,
-    pub all_funcs: *const RU{}AllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
-            sdef.name,
-            sdef.name
-        ))?;
-    }
-
-    Ok(())
-}
-
-///
 /// Generate the structs with static only functions. The structs will be generated in this style
 ///
 /// pub struct ApplicationStatic<'a> {
@@ -248,6 +211,7 @@ impl RustGenerator {
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
             callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
             trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
+            struct_impl_template: parser.parse(RUST_STRUCT_IMPL_TEMPLATE).unwrap(),
             trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
         }
     }
@@ -563,6 +527,26 @@ impl RustGenerator {
     }
 
     ///
+    /// Generate the structs. The structs will be generated in this style
+    ///
+    /// pub struct Application<'a> {
+    ///     data: Rc<Cell<Option<RUApplication>>>,
+    ///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    /// }
+    ///
+    fn generate_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        for sdef in &api_def.class_structs {
+            let mut template_data = Object::new();
+            template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
+
+            let output = self.struct_impl_template.render(&template_data).unwrap();
+            dest.write_all(output.as_bytes())?;
+        }
+
+        Ok(())
+    }
+
+    ///
     /// Generates the implementations for the structs
     ///
     fn generate_structs_impl<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
@@ -670,7 +654,7 @@ impl RustGenerator {
         //self.generate_mod_usage(&mut f, api_def);
 
         // write all the structs
-        generate_structs(&mut f, api_def)?;
+        self.generate_structs(&mut f, api_def)?;
 
         // write all the structs with static functions
         generate_static_structs(&mut f, api_def)?;

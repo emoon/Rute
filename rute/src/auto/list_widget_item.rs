@@ -8,15 +8,33 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
+#[allow(unused_imports)]
+use auto::*;
 
-#[allow(unused_imports)]use auto::*;
-use auto::list_widget_item_ffi::*;
 
 #[derive(Clone)]
 pub struct ListWidgetItem<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUListWidgetItemAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
+impl <'a>ListWidgetItem<'a> {
+    pub fn new_from_rc(ffi_data: RUListWidgetItem) -> ListWidgetItem<'a> {
+        ListWidgetItem {
+            data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn new_from_owned(ffi_data: RUListWidgetItem) -> ListWidgetItem<'a> {
+        ListWidgetItem {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
 }
 
 pub trait ListWidgetItemType {
@@ -32,17 +50,9 @@ pub trait ListWidgetItemType {
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
-                ret_val = ListWidget {
-                    data: Rc::from_raw(t.host_data as *const Cell<Option<*const RUBase>>),
-                    all_funcs: t.all_funcs,
-                    _marker: PhantomData,
-                };
+                ret_val = ListWidget::new_from_rc(t);
             } else {
-                ret_val = ListWidget {
-                    data: Rc::new(Cell::new(Some(t.qt_data as *const RUBase))),
-                    all_funcs: t.all_funcs,
-                    _marker: PhantomData,
-                };
+                ret_val = ListWidget::new_from_owned(t);
             }
             Some(ret_val)
         }

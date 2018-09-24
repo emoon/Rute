@@ -8,15 +8,33 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
+#[allow(unused_imports)]
+use auto::*;
 
-#[allow(unused_imports)]use auto::*;
-use auto::font_ffi::*;
 
 #[derive(Clone)]
 pub struct Font<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUFontAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
+impl <'a>Font<'a> {
+    pub fn new_from_rc(ffi_data: RUFont) -> Font<'a> {
+        Font {
+            data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn new_from_owned(ffi_data: RUFont) -> Font<'a> {
+        Font {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
 }
 
 pub trait FontType {

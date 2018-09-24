@@ -8,15 +8,33 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
+#[allow(unused_imports)]
+use auto::*;
 
-#[allow(unused_imports)]use auto::*;
-use auto::widget_ffi::*;
 
 #[derive(Clone)]
 pub struct Widget<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUWidgetAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
+impl <'a>Widget<'a> {
+    pub fn new_from_rc(ffi_data: RUWidget) -> Widget<'a> {
+        Widget {
+            data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
+
+    pub fn new_from_owned(ffi_data: RUWidget) -> Widget<'a> {
+        Widget {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            _marker: PhantomData,
+        }
+    }
 }
 
 pub trait WidgetType {
