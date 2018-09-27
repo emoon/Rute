@@ -1159,15 +1159,13 @@ impl QtGenerator {
     pub fn generate_rute_struct(filename: &str, api_defs: &[ApiDef]) {
         let mut dest = BufWriter::new(File::create(filename).unwrap());
 
-        writeln!(dest, "{}", SEPARATOR_STR);
-        writeln!(dest, "static struct Rute s_rute = {{");
-        writeln!(dest, "    nullptr,");
+        writeln!(dest, "{}", QT_MAIN_HEADER);
 
         api_defs
             .iter()
             .flat_map(|d| d.class_structs.iter())
             .filter(|s| s.should_have_create_func())
-            .for_each(|sdef| 
+            .for_each(|sdef|
         {
             writeln!(dest, "    create_{},", sdef.name.to_snake_case());
 
@@ -1176,9 +1174,7 @@ impl QtGenerator {
             }
         });
 
-        writeln!(dest, "}};\n");
-
-        writeln!(dest, "extern \"C\" struct Rute* rute_get() {{ return &s_rute; }}");
+        writeln!(dest, "{}", QT_MAIN_FOOTER);
     }
 
     ///
@@ -1214,7 +1210,7 @@ impl QtGenerator {
         }
 
         // include main file as last file
-        writeln!(dest, "#include \"rute.cpp\"");
+        writeln!(dest, "#include \"qt_rute.cpp\"");
     }
 }
 
