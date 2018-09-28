@@ -1,7 +1,6 @@
 use pest::iterators::Pair;
 use pest::Parser;
 use std::borrow::Cow;
-use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -632,9 +631,10 @@ pub enum RecurseIncludeSelf {
 /// Some helper functions for ApiDef
 ///
 impl ApiDef {
-    ///
-    /// Get a list of all the traits
-    ///
+    //
+    // Get a list of all the traits
+    //
+   	/* 
     pub fn get_all_traits<'a>(&'a self) -> Vec<&'a String> {
         // Get all the traits name into a hashset so we can stort them afterwards
         let traits = self
@@ -657,11 +657,13 @@ impl ApiDef {
 
         sorted_traits
     }
+    */
 
-    ///
-    /// Recursive get the structs
-    ///
-    fn recursive_get_inherit_structs<'a>(
+    //
+    // Recursive get the structs
+    //
+	/*
+	fn recursive_get_inherit_structs<'a>(
         sdef: &'a Struct,
         api_def: &'a ApiDef,
         include_self: RecurseIncludeSelf,
@@ -686,11 +688,13 @@ impl ApiDef {
             out_structs.push(sdef);
         }
     }
+    */
 
-    ///
-    /// Get a list of all the traits
-    ///
-    pub fn get_inherit_structs<'a>(
+    //
+    // Get a list of all the traits
+    //
+	/*
+	pub fn get_inherit_structs<'a>(
         &'a self,
         sdef: &'a Struct,
         include_self: RecurseIncludeSelf,
@@ -701,6 +705,7 @@ impl ApiDef {
 
         out_structs
     }
+    */
 
     ///
     /// Get functions from all structs that matches the filter
@@ -726,14 +731,16 @@ impl Struct {
             .iter()
             .any(|ref f| f.func_type == FunctionType::Static)
     }
-    ///
-    /// Check if the struct should has static functions
-    ///
+    //
+    // Check if the struct should has static functions
+    //
+    /*
     pub fn has_regular_functions(&self) -> bool {
         self.functions
             .iter()
             .any(|ref f| f.func_type == FunctionType::Regular)
     }
+    */
     ///
     /// Check if the struct should has static functions
     ///

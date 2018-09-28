@@ -82,13 +82,13 @@ impl HeaderFFIGen for CapiHeaderGen {
         }
 
         for (name, _) in includes {
-            writeln!(dest, "#include \"{}_ffi.h\"", name.to_snake_case());
+            writeln!(dest, "#include \"{}_ffi.h\"", name.to_snake_case())?;
         }
 
-        writeln!(dest, "");
+        writeln!(dest, "")?;
 
-        writeln!(dest, "struct RU{}Funcs;", sdef.name);
-        writeln!(dest, "struct RU{};", sdef.name);
+        writeln!(dest, "struct RU{}Funcs;", sdef.name)?;
+        writeln!(dest, "struct RU{};", sdef.name)?;
 
         writeln!(dest, "")
     }
@@ -228,8 +228,8 @@ impl HeaderFFIGen for CapiHeaderGen {
 
         for sdef in &api_def.class_structs {
             let snake_name = sdef.name.to_snake_case();
-            writeln!(dest, "extern RU{}Funcs s_{}_funcs;", sdef.name, snake_name);
-            writeln!(dest, "extern RU{}AllFuncs s_{}_all_funcs;", sdef.name, snake_name);
+            writeln!(dest, "extern RU{}Funcs s_{}_funcs;", sdef.name, snake_name)?;
+            writeln!(dest, "extern RU{}AllFuncs s_{}_all_funcs;", sdef.name, snake_name)?;
         }
         write!(dest, "{}", FOOTER)
     }
@@ -238,12 +238,12 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate header for the main FFI file
     ///
     fn gen_main_header<W: Write>(&mut self, dest: &mut W, api_defs: &[ApiDef]) -> io::Result<()> {
-        writeln!(dest, "{}", MAIN_HEADER);
+        writeln!(dest, "{}", MAIN_HEADER)?;
 
         for sdef in api_defs {
             // TODO: Fix me
             if sdef.base_filename != "qnamespace" {
-                writeln!(dest, "#include \"{}_ffi.h\"", sdef.base_filename.to_snake_case());
+                writeln!(dest, "#include \"{}_ffi.h\"", sdef.base_filename.to_snake_case())?;
             }
         }
 
@@ -254,7 +254,7 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate the footer for the main FFI file
     ///
     fn gen_main_footer<W: Write>(&mut self, dest: &mut W, _api_defs: &[ApiDef]) -> io::Result<()> {
-        writeln!(dest, "extern RuteFFI* rute_get();\n");
+        writeln!(dest, "extern RuteFFI* rute_get();\n")?;
         writeln!(dest, "{}", FOOTER)
     }
 }
@@ -298,6 +298,8 @@ impl CapiHeaderGen {
         Self::callback_fun_def_name(&mut self.temp_string, true, &func.name, func);
         write!(dest, "    {}", self.temp_string)
     }
+
+
 
     ///
     /// Generate function definition in the style of

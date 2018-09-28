@@ -39,7 +39,6 @@ use rayon::prelude::*;
 use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
 use std::fs;
-use std::path::Path;
 use std::sync::RwLock;
 use walkdir::WalkDir;
 
@@ -142,7 +141,7 @@ fn main() {
 
             // Generate the mod file for the auto generated Rust code
             println!("    Generating Rute auto mod: {}", main_mod_rust);
-            RustGenerator::generate_auto_mod(&main_mod_rust, &api_defs_read);
+            RustGenerator::generate_auto_mod(&main_mod_rust, &api_defs_read).unwrap();
 
             // Generate all the signal wrappers for Qt C++
             println!("    Generating Qt signal wrappers: {}", signal_wrappers);
@@ -154,11 +153,11 @@ fn main() {
 
             // Generate bulk cpp file for Qt C++ wrapper code
             println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);
-            QtGenerator::generate_bulk_cpp(&qt_bulk_cpp, &api_defs_read);
+            QtGenerator::generate_bulk_cpp(&qt_bulk_cpp, &api_defs_read).unwrap();
 
             // Generate the rute main file
             println!("    Generating Main Qt file {}", qt_rute_cpp);
-            QtGenerator::generate_rute_struct(&qt_rute_cpp, &api_defs_read);
+            QtGenerator::generate_rute_struct(&qt_rute_cpp, &api_defs_read).unwrap();
 
             // Generate rute main FFI for C++
             println!("    Generating C++ main header: {}", main_ffi_header);
