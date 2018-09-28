@@ -1228,6 +1228,7 @@ impl QtGenerator {
         }
 
         // include main file as last file
+        writeln!(dest, "#include \"qt_enum_mapping.cpp\"")?;
         writeln!(dest, "#include \"qt_rute.cpp\"")
     }
 }

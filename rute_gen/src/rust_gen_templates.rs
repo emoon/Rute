@@ -25,7 +25,7 @@ unsafe extern \"C\" fn rute_object_delete_callback(data: *const c_void) {
 
 pub struct Rute<'a> {
     rute_ffi: *const RuteFFI,
-    priv_data: *const c_void,
+    _priv_data: *const c_void,
     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -33,7 +33,7 @@ impl<'a> Rute<'a> {
     pub fn new() -> Rute<'a> {
         Rute {
             rute_ffi: unsafe { rute_get() },
-            priv_data: ::std::ptr::null(),
+            _priv_data: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }

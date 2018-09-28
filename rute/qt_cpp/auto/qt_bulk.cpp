@@ -16,4 +16,5 @@
 #include "list_widget.cpp"
 #include "list_widget_item.cpp"
 #include "widget.cpp"
+#include "qt_enum_mapping.cpp"
 #include "qt_rute.cpp"

@@ -635,7 +635,7 @@ impl ApiDef {
     //
     // Get a list of all the traits
     //
-   	/* 
+   	/*
     pub fn get_all_traits<'a>(&'a self) -> Vec<&'a String> {
         // Get all the traits name into a hashset so we can stort them afterwards
         let traits = self
@@ -1039,7 +1039,7 @@ mod tests {
     #[test]
     fn test_basic_class_struct() {
         let mut api_def = ApiDef::default();
-        ApiParser::parse_string("struct Widget { show() }", "", &mut api_def);
+        ApiParser::parse_string("struct Widget { show() }", "dummy_filename.def", &mut api_def);
         assert_eq!(api_def.pod_structs.is_empty(), true);
         assert_eq!(api_def.class_structs.is_empty(), false);
 
