@@ -39,8 +39,8 @@ impl <'a>Application<'a> {
 
 #[derive(Clone)]
 pub struct ApplicationStatic<'a> {
-    data: RUApplication,
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    pub all_funcs: *const RUApplicationAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 pub trait ApplicationType {
@@ -370,6 +370,14 @@ impl<'a> ApplicationStaticType for Application<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
             (obj, (*self.all_funcs).application_funcs)
+        }
+    }
+}
+
+impl<'a> ApplicationStaticType for ApplicationStatic<'a> {
+    fn get_application_static_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
+        unsafe {
+            (::std::ptr::null(), (*self.all_funcs).application_funcs)
         }
     }
 }

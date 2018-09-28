@@ -13,6 +13,9 @@ use auto::*;
 
 
 
+use std::os::raw::c_void;
+use std::mem::transmute;
+
 unsafe extern "C" fn rute_object_delete_callback(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
@@ -45,7 +48,6 @@ impl<'a> Rute<'a> {
     pub fn application(&self) -> ApplicationStatic<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).get_application)(::std::ptr::null()) };
         ApplicationStatic {
-            data: ffi_data.qt_data,
             all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
@@ -66,7 +68,7 @@ impl<'a> Rute<'a> {
         let ffi_data = unsafe {
             ((*self.rute_ffi).create_list_widget)(
                 ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUListWidget> as usize),
+                transmute(rute_object_delete_callback as usize),
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
@@ -85,7 +87,7 @@ impl<'a> Rute<'a> {
         let ffi_data = unsafe {
             ((*self.rute_ffi).create_list_widget_item)(
                 ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUListWidgetItem> as usize),
+                transmute(rute_object_delete_callback as usize),
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
@@ -104,7 +106,7 @@ impl<'a> Rute<'a> {
         let ffi_data = unsafe {
             ((*self.rute_ffi).create_widget)(
                 ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RUWidget> as usize),
+                transmute(rute_object_delete_callback as usize),
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 

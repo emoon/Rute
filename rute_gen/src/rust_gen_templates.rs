@@ -15,6 +15,9 @@ use auto::*;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUTE_IMPL_HEADER: &'static [u8] = b"
+use std::os::raw::c_void;
+use std::mem::transmute;
+
 unsafe extern \"C\" fn rute_object_delete_callback(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
@@ -85,7 +88,6 @@ pub static RUST_GET_STATIC_TEMPLATE: &str = "
     pub fn {{widget_snake_name}}(&self) -> {{widget_name}}Static<'a> {
         let ffi_data = unsafe { ((*self.rute_ffi).get_{{widget_snake_name}})(::std::ptr::null()) };
         {{widget_name}}Static {
-            data: ffi_data.qt_data,
             all_funcs: ffi_data.all_funcs,
             _marker: PhantomData,
         }
@@ -101,7 +103,7 @@ pub static RUST_CREATE_TEMPLATE: &str = "
         let ffi_data = unsafe {
             ((*self.rute_ffi).create_{{widget_snake_name}})(
                 ::std::ptr::null(),
-                transmute(rute_object_delete_callback::<RU{{widget_name}}> as usize),
+                transmute(rute_object_delete_callback as usize),
                 Rc::into_raw(data.clone()) as *const c_void)
         };
 
@@ -188,6 +190,18 @@ impl<'a> {{trait_name}}Type for {{target_name}}<'a> {
         let obj = self.data.get().unwrap();
         unsafe {
             (obj, (*self.all_funcs).{{target_name_snake_org}}_funcs)
+        }
+    }
+}
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static RUST_IMPL_TRAIT_STATIC_TEMPLATE: &str = "
+impl<'a> {{trait_name}}Type for {{trait_name}}<'a> {
+    fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
+        unsafe {
+            (::std::ptr::null(), (*self.all_funcs).{{target_name_snake_org}}_funcs)
         }
     }
 }

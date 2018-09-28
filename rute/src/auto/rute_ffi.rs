@@ -1,4 +1,5 @@
 use rute_ffi_base::*;
+use std::os::raw::c_void;
 use auto::application_ffi::*;
 use auto::font_ffi::*;
 use auto::list_widget_ffi::*;

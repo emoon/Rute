@@ -61,7 +61,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
             .include(i6)
             .compile("rute_cpp");
 
-    } else if target.contains("apple") {
+    } else if target.contains("darwin") {
         let i0 = Path::new(&qt_dir).join("lib/QtWidgets.framework/Headers");
         let i1 = Path::new(&qt_dir).join("lib/QtCore.framework/Headers");
         let i2 = Path::new(&qt_dir).join("lib/QtGui.framework/Headers");
@@ -82,10 +82,12 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
             .include(i6)
             .flag(&f_flag)
             .flag("-std=c++11")
-            .cpp_link_stdlib("stdc++")
+            .cpp(true)
+            .cpp_link_stdlib("c++")
+            .cpp_set_stdlib("c++")
             .compile("rute_cpp");
 
-            println!("cargo:rustc-link-lib={}", "stdc++");
+            //println!("cargo:rustc-link-lib={}", "stdc++");
             println!("cargo:rustc-link-search=framework={}", &framework_dir);
             println!("cargo:rustc-link-lib=framework={}", "Cocoa");
             println!("cargo:rustc-link-lib=framework={}", "QtWidgets");

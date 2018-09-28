@@ -35,6 +35,7 @@ pub struct RustGenerator {
     trait_impl_template: Template,
     struct_impl_template: Template,
     drop_template: Template,
+    impl_trait_static_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -179,8 +180,8 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
 "pub struct {}Static<'a> {{
-    data: RU{},
-    _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
+    pub all_funcs: *const RU{}AllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
         ))?;
     }
@@ -213,6 +214,7 @@ impl RustGenerator {
             trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
             struct_impl_template: parser.parse(RUST_STRUCT_IMPL_TEMPLATE).unwrap(),
             trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
+            impl_trait_static_template: parser.parse(RUST_IMPL_TRAIT_STATIC_TEMPLATE).unwrap(),
         }
     }
 
@@ -364,6 +366,11 @@ impl RustGenerator {
             template_data.insert("target_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
 
             let out = self.trait_impl_template.render(&template_data).unwrap();
+            f.write_all(out.as_bytes())?;
+
+            // Implement the static trait for the static type
+
+            let out = self.impl_trait_static_template.render(&template_data).unwrap();
             f.write_all(out.as_bytes())?;
         }
 
@@ -668,11 +675,17 @@ impl RustGenerator {
             writeln!(dest, "pub mod {};", entry);
         }
 
+        writeln!(dest, "pub mod rute_ffi;");
+        writeln!(dest, "pub mod rute;\n");
+
         for entry in &names {
             // TODO: Fixme
             writeln!(dest, "pub use {}::*;", entry);
             writeln!(dest, "pub use {}_ffi::*;", entry);
         }
+
+        writeln!(dest, "pub use rute_ffi::*;");
+        writeln!(dest, "pub use rute::*;");
     }
 
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {

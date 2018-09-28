@@ -129,6 +129,7 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     fn gen_main_header<W: Write>(&mut self, dest: &mut W, api_defs: &[ApiDef]) -> io::Result<()> {
         writeln!(dest, "use rute_ffi_base::*;");
+        writeln!(dest, "use std::os::raw::c_void;");
 
         for sdef in api_defs {
             // TODO: Fix me
