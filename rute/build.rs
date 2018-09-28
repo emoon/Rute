@@ -26,7 +26,7 @@ macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
     // Generate the moc code
     Command::new(moc_exe)
             .args(&[&rute_signal_wrappers, "-o", &dest_path_str])
-            .spawn()
+            .output()
             .expect("failed to execute process");
 
     // Add base include dirs for all targets
