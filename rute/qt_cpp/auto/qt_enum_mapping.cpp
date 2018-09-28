@@ -2,93 +2,95 @@
 #include <Qt>
 #include <map>
 
-extern std::map<int, int> s_alignment_flag_lookup;
-extern std::map<int, int> s_anchor_point_lookup;
-extern std::map<int, int> s_application_attribute_lookup;
-extern std::map<int, int> s_application_state_lookup;
-extern std::map<int, int> s_arrow_type_lookup;
-extern std::map<int, int> s_aspect_ratio_mode_lookup;
-extern std::map<int, int> s_axis_lookup;
-extern std::map<int, int> s_bg_mode_lookup;
-extern std::map<int, int> s_brush_style_lookup;
-extern std::map<int, int> s_case_sensitivity_lookup;
-extern std::map<int, int> s_check_state_lookup;
-extern std::map<int, int> s_checksum_type_lookup;
-extern std::map<int, int> s_clip_operation_lookup;
-extern std::map<int, int> s_connection_type_lookup;
-extern std::map<int, int> s_context_menu_policy_lookup;
-extern std::map<int, int> s_coordinate_system_lookup;
-extern std::map<int, int> s_corner_lookup;
-extern std::map<int, int> s_cursor_move_style_lookup;
-extern std::map<int, int> s_cursor_shape_lookup;
-extern std::map<int, int> s_date_format_lookup;
-extern std::map<int, int> s_day_of_week_lookup;
-extern std::map<int, int> s_dock_widget_area_lookup;
-extern std::map<int, int> s_dock_widget_area_sizes_lookup;
-extern std::map<int, int> s_drop_action_lookup;
-extern std::map<int, int> s_edge_lookup;
-extern std::map<int, int> s_enter_key_type_lookup;
-extern std::map<int, int> s_event_priority_lookup;
-extern std::map<int, int> s_fill_rule_lookup;
-extern std::map<int, int> s_find_child_option_lookup;
-extern std::map<int, int> s_focus_policy_lookup;
-extern std::map<int, int> s_focus_reason_lookup;
-extern std::map<int, int> s_gesture_flag_lookup;
-extern std::map<int, int> s_gesture_state_lookup;
-extern std::map<int, int> s_gesture_type_lookup;
-extern std::map<int, int> s_global_color_lookup;
-extern std::map<int, int> s_hit_test_accuracy_lookup;
-extern std::map<int, int> s_image_conversion_flag_lookup;
-extern std::map<int, int> s_initialization_lookup;
-extern std::map<int, int> s_input_method_hint_lookup;
-extern std::map<int, int> s_input_method_query_lookup;
-extern std::map<int, int> s_item_data_role_lookup;
-extern std::map<int, int> s_item_flag_lookup;
-extern std::map<int, int> s_item_selection_mode_lookup;
-extern std::map<int, int> s_item_selection_operation_lookup;
-extern std::map<int, int> s_item_type_lookup;
-extern std::map<int, int> s_key_lookup;
-extern std::map<int, int> s_keyboard_modifier_lookup;
-extern std::map<int, int> s_layout_direction_lookup;
-extern std::map<int, int> s_mask_mode_lookup;
-extern std::map<int, int> s_match_flag_lookup;
-extern std::map<int, int> s_modifier_lookup;
-extern std::map<int, int> s_mouse_button_lookup;
-extern std::map<int, int> s_mouse_event_flag_lookup;
-extern std::map<int, int> s_mouse_event_source_lookup;
-extern std::map<int, int> s_native_gesture_type_lookup;
-extern std::map<int, int> s_navigation_mode_lookup;
-extern std::map<int, int> s_orientation_lookup;
-extern std::map<int, int> s_pen_cap_style_lookup;
-extern std::map<int, int> s_pen_join_style_lookup;
-extern std::map<int, int> s_pen_style_lookup;
-extern std::map<int, int> s_screen_orientation_lookup;
-extern std::map<int, int> s_scroll_bar_policy_lookup;
-extern std::map<int, int> s_scroll_phase_lookup;
-extern std::map<int, int> s_shortcut_context_lookup;
-extern std::map<int, int> s_size_hint_lookup;
-extern std::map<int, int> s_size_mode_lookup;
-extern std::map<int, int> s_sort_order_lookup;
-extern std::map<int, int> s_tab_focus_behavior_lookup;
-extern std::map<int, int> s_text_elide_mode_lookup;
-extern std::map<int, int> s_text_flag_lookup;
-extern std::map<int, int> s_text_format_lookup;
-extern std::map<int, int> s_text_interaction_flag_lookup;
-extern std::map<int, int> s_tile_rule_lookup;
-extern std::map<int, int> s_time_spec_lookup;
-extern std::map<int, int> s_timer_type_lookup;
-extern std::map<int, int> s_tool_bar_area_lookup;
-extern std::map<int, int> s_tool_bar_area_sizes_lookup;
-extern std::map<int, int> s_tool_button_style_lookup;
-extern std::map<int, int> s_touch_point_state_lookup;
-extern std::map<int, int> s_transformation_mode_lookup;
-extern std::map<int, int> s_ui_effect_lookup;
-extern std::map<int, int> s_white_space_mode_lookup;
-extern std::map<int, int> s_widget_attribute_lookup;
-extern std::map<int, int> s_window_frame_section_lookup;
-extern std::map<int, int> s_window_modality_lookup;
-extern std::map<int, int> s_window_state_lookup;
-extern std::map<int, int> s_window_type_lookup;
+struct KeyVal { int val, key; };
+
+std::map<int, int> s_alignment_flag_lookup;
+std::map<int, int> s_anchor_point_lookup;
+std::map<int, int> s_application_attribute_lookup;
+std::map<int, int> s_application_state_lookup;
+std::map<int, int> s_arrow_type_lookup;
+std::map<int, int> s_aspect_ratio_mode_lookup;
+std::map<int, int> s_axis_lookup;
+std::map<int, int> s_bg_mode_lookup;
+std::map<int, int> s_brush_style_lookup;
+std::map<int, int> s_case_sensitivity_lookup;
+std::map<int, int> s_check_state_lookup;
+std::map<int, int> s_checksum_type_lookup;
+std::map<int, int> s_clip_operation_lookup;
+std::map<int, int> s_connection_type_lookup;
+std::map<int, int> s_context_menu_policy_lookup;
+std::map<int, int> s_coordinate_system_lookup;
+std::map<int, int> s_corner_lookup;
+std::map<int, int> s_cursor_move_style_lookup;
+std::map<int, int> s_cursor_shape_lookup;
+std::map<int, int> s_date_format_lookup;
+std::map<int, int> s_day_of_week_lookup;
+std::map<int, int> s_dock_widget_area_lookup;
+std::map<int, int> s_dock_widget_area_sizes_lookup;
+std::map<int, int> s_drop_action_lookup;
+std::map<int, int> s_edge_lookup;
+std::map<int, int> s_enter_key_type_lookup;
+std::map<int, int> s_event_priority_lookup;
+std::map<int, int> s_fill_rule_lookup;
+std::map<int, int> s_find_child_option_lookup;
+std::map<int, int> s_focus_policy_lookup;
+std::map<int, int> s_focus_reason_lookup;
+std::map<int, int> s_gesture_flag_lookup;
+std::map<int, int> s_gesture_state_lookup;
+std::map<int, int> s_gesture_type_lookup;
+std::map<int, int> s_global_color_lookup;
+std::map<int, int> s_hit_test_accuracy_lookup;
+std::map<int, int> s_image_conversion_flag_lookup;
+std::map<int, int> s_initialization_lookup;
+std::map<int, int> s_input_method_hint_lookup;
+std::map<int, int> s_input_method_query_lookup;
+std::map<int, int> s_item_data_role_lookup;
+std::map<int, int> s_item_flag_lookup;
+std::map<int, int> s_item_selection_mode_lookup;
+std::map<int, int> s_item_selection_operation_lookup;
+std::map<int, int> s_item_type_lookup;
+std::map<int, int> s_key_lookup;
+std::map<int, int> s_keyboard_modifier_lookup;
+std::map<int, int> s_layout_direction_lookup;
+std::map<int, int> s_mask_mode_lookup;
+std::map<int, int> s_match_flag_lookup;
+std::map<int, int> s_modifier_lookup;
+std::map<int, int> s_mouse_button_lookup;
+std::map<int, int> s_mouse_event_flag_lookup;
+std::map<int, int> s_mouse_event_source_lookup;
+std::map<int, int> s_native_gesture_type_lookup;
+std::map<int, int> s_navigation_mode_lookup;
+std::map<int, int> s_orientation_lookup;
+std::map<int, int> s_pen_cap_style_lookup;
+std::map<int, int> s_pen_join_style_lookup;
+std::map<int, int> s_pen_style_lookup;
+std::map<int, int> s_screen_orientation_lookup;
+std::map<int, int> s_scroll_bar_policy_lookup;
+std::map<int, int> s_scroll_phase_lookup;
+std::map<int, int> s_shortcut_context_lookup;
+std::map<int, int> s_size_hint_lookup;
+std::map<int, int> s_size_mode_lookup;
+std::map<int, int> s_sort_order_lookup;
+std::map<int, int> s_tab_focus_behavior_lookup;
+std::map<int, int> s_text_elide_mode_lookup;
+std::map<int, int> s_text_flag_lookup;
+std::map<int, int> s_text_format_lookup;
+std::map<int, int> s_text_interaction_flag_lookup;
+std::map<int, int> s_tile_rule_lookup;
+std::map<int, int> s_time_spec_lookup;
+std::map<int, int> s_timer_type_lookup;
+std::map<int, int> s_tool_bar_area_lookup;
+std::map<int, int> s_tool_bar_area_sizes_lookup;
+std::map<int, int> s_tool_button_style_lookup;
+std::map<int, int> s_touch_point_state_lookup;
+std::map<int, int> s_transformation_mode_lookup;
+std::map<int, int> s_ui_effect_lookup;
+std::map<int, int> s_white_space_mode_lookup;
+std::map<int, int> s_widget_attribute_lookup;
+std::map<int, int> s_window_frame_section_lookup;
+std::map<int, int> s_window_modality_lookup;
+std::map<int, int> s_window_state_lookup;
+std::map<int, int> s_window_type_lookup;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,7 +113,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::AlignCenter, 13 },
     };
 
-    for (int i = 0; i < 14 ++i) {
+    for (int i = 0; i < 14; ++i) {
         s_alignment_flag_lookup[alignment_flag_vals[i].key] = alignment_flag_vals[i].val;
     }
 
@@ -124,7 +126,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::AnchorBottom, 5 },
     };
 
-    for (int i = 0; i < 6 ++i) {
+    for (int i = 0; i < 6; ++i) {
         s_anchor_point_lookup[anchor_point_vals[i].key] = anchor_point_vals[i].val;
     }
 
@@ -163,7 +165,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::AA_AttributeCount, 31 },
     };
 
-    for (int i = 0; i < 32 ++i) {
+    for (int i = 0; i < 32; ++i) {
         s_application_attribute_lookup[application_attribute_vals[i].key] = application_attribute_vals[i].val;
     }
 
@@ -174,7 +176,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ApplicationActive, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_application_state_lookup[application_state_vals[i].key] = application_state_vals[i].val;
     }
 
@@ -186,7 +188,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::RightArrow, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_arrow_type_lookup[arrow_type_vals[i].key] = arrow_type_vals[i].val;
     }
 
@@ -196,7 +198,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::KeepAspectRatioByExpanding, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_aspect_ratio_mode_lookup[aspect_ratio_mode_vals[i].key] = aspect_ratio_mode_vals[i].val;
     }
 
@@ -206,7 +208,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ZAxis, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_axis_lookup[axis_vals[i].key] = axis_vals[i].val;
     }
 
@@ -215,7 +217,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::OpaqueMode, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_bg_mode_lookup[bg_mode_vals[i].key] = bg_mode_vals[i].val;
     }
 
@@ -241,7 +243,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TexturePattern, 18 },
     };
 
-    for (int i = 0; i < 19 ++i) {
+    for (int i = 0; i < 19; ++i) {
         s_brush_style_lookup[brush_style_vals[i].key] = brush_style_vals[i].val;
     }
 
@@ -250,7 +252,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::CaseSensitive, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_case_sensitivity_lookup[case_sensitivity_vals[i].key] = case_sensitivity_vals[i].val;
     }
 
@@ -260,7 +262,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::Checked, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_check_state_lookup[check_state_vals[i].key] = check_state_vals[i].val;
     }
 
@@ -269,7 +271,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ChecksumItuV41, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_checksum_type_lookup[checksum_type_vals[i].key] = checksum_type_vals[i].val;
     }
 
@@ -279,7 +281,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::IntersectClip, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_clip_operation_lookup[clip_operation_vals[i].key] = clip_operation_vals[i].val;
     }
 
@@ -291,7 +293,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::UniqueConnection, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_connection_type_lookup[connection_type_vals[i].key] = connection_type_vals[i].val;
     }
 
@@ -303,7 +305,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::PreventContextMenu, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_context_menu_policy_lookup[context_menu_policy_vals[i].key] = context_menu_policy_vals[i].val;
     }
 
@@ -312,7 +314,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::LogicalCoordinates, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_coordinate_system_lookup[coordinate_system_vals[i].key] = coordinate_system_vals[i].val;
     }
 
@@ -323,7 +325,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::BottomRightCorner, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_corner_lookup[corner_vals[i].key] = corner_vals[i].val;
     }
 
@@ -332,7 +334,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::VisualMoveStyle, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_cursor_move_style_lookup[cursor_move_style_vals[i].key] = cursor_move_style_vals[i].val;
     }
 
@@ -364,7 +366,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::CustomCursor, 24 },
     };
 
-    for (int i = 0; i < 25 ++i) {
+    for (int i = 0; i < 25; ++i) {
         s_cursor_shape_lookup[cursor_shape_vals[i].key] = cursor_shape_vals[i].val;
     }
 
@@ -382,7 +384,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ISODateWithMs, 10 },
     };
 
-    for (int i = 0; i < 11 ++i) {
+    for (int i = 0; i < 11; ++i) {
         s_date_format_lookup[date_format_vals[i].key] = date_format_vals[i].val;
     }
 
@@ -396,7 +398,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::Sunday, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_day_of_week_lookup[day_of_week_vals[i].key] = day_of_week_vals[i].val;
     }
 
@@ -410,7 +412,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NoDockWidgetArea, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_dock_widget_area_lookup[dock_widget_area_vals[i].key] = dock_widget_area_vals[i].val;
     }
 
@@ -418,7 +420,7 @@ extern void create_enum_mappings() {
     {{  (int)Qt::NDockWidgetAreas, 0 },
     };
 
-    for (int i = 0; i < 1 ++i) {
+    for (int i = 0; i < 1; ++i) {
         s_dock_widget_area_sizes_lookup[dock_widget_area_sizes_vals[i].key] = dock_widget_area_sizes_vals[i].val;
     }
 
@@ -431,7 +433,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::IgnoreAction, 5 },
     };
 
-    for (int i = 0; i < 6 ++i) {
+    for (int i = 0; i < 6; ++i) {
         s_drop_action_lookup[drop_action_vals[i].key] = drop_action_vals[i].val;
     }
 
@@ -442,7 +444,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::BottomEdge, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_edge_lookup[edge_vals[i].key] = edge_vals[i].val;
     }
 
@@ -457,7 +459,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::EnterKeyPrevious, 7 },
     };
 
-    for (int i = 0; i < 8 ++i) {
+    for (int i = 0; i < 8; ++i) {
         s_enter_key_type_lookup[enter_key_type_vals[i].key] = enter_key_type_vals[i].val;
     }
 
@@ -467,7 +469,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::LowEventPriority, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_event_priority_lookup[event_priority_vals[i].key] = event_priority_vals[i].val;
     }
 
@@ -476,7 +478,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WindingFill, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_fill_rule_lookup[fill_rule_vals[i].key] = fill_rule_vals[i].val;
     }
 
@@ -485,7 +487,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::FindChildrenRecursively, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_find_child_option_lookup[find_child_option_vals[i].key] = find_child_option_vals[i].val;
     }
 
@@ -497,7 +499,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WheelFocus, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_focus_policy_lookup[focus_policy_vals[i].key] = focus_policy_vals[i].val;
     }
 
@@ -513,7 +515,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NoFocusReason, 8 },
     };
 
-    for (int i = 0; i < 9 ++i) {
+    for (int i = 0; i < 9; ++i) {
         s_focus_reason_lookup[focus_reason_vals[i].key] = focus_reason_vals[i].val;
     }
 
@@ -523,7 +525,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::IgnoredGesturesPropagateToParent, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_gesture_flag_lookup[gesture_flag_vals[i].key] = gesture_flag_vals[i].val;
     }
 
@@ -535,7 +537,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::GestureCanceled, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_gesture_state_lookup[gesture_state_vals[i].key] = gesture_state_vals[i].val;
     }
 
@@ -549,7 +551,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::LastGestureType, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_gesture_type_lookup[gesture_type_vals[i].key] = gesture_type_vals[i].val;
     }
 
@@ -576,7 +578,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::transparent, 19 },
     };
 
-    for (int i = 0; i < 20 ++i) {
+    for (int i = 0; i < 20; ++i) {
         s_global_color_lookup[global_color_vals[i].key] = global_color_vals[i].val;
     }
 
@@ -585,7 +587,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::FuzzyHit, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_hit_test_accuracy_lookup[hit_test_accuracy_vals[i].key] = hit_test_accuracy_vals[i].val;
     }
 
@@ -611,7 +613,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NoFormatConversion, 18 },
     };
 
-    for (int i = 0; i < 19 ++i) {
+    for (int i = 0; i < 19; ++i) {
         s_image_conversion_flag_lookup[image_conversion_flag_vals[i].key] = image_conversion_flag_vals[i].val;
     }
 
@@ -619,7 +621,7 @@ extern void create_enum_mappings() {
     {{  (int)Qt::Uninitialized, 0 },
     };
 
-    for (int i = 0; i < 1 ++i) {
+    for (int i = 0; i < 1; ++i) {
         s_initialization_lookup[initialization_vals[i].key] = initialization_vals[i].val;
     }
 
@@ -647,7 +649,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ImhExclusiveInputMask, 20 },
     };
 
-    for (int i = 0; i < 21 ++i) {
+    for (int i = 0; i < 21; ++i) {
         s_input_method_hint_lookup[input_method_hint_vals[i].key] = input_method_hint_vals[i].val;
     }
 
@@ -674,7 +676,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ImQueryAll, 19 },
     };
 
-    for (int i = 0; i < 20 ++i) {
+    for (int i = 0; i < 20; ++i) {
         s_input_method_query_lookup[input_method_query_vals[i].key] = input_method_query_vals[i].val;
     }
 
@@ -704,7 +706,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::UserRole, 22 },
     };
 
-    for (int i = 0; i < 23 ++i) {
+    for (int i = 0; i < 23; ++i) {
         s_item_data_role_lookup[item_data_role_vals[i].key] = item_data_role_vals[i].val;
     }
 
@@ -722,7 +724,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ItemIsUserTristate, 10 },
     };
 
-    for (int i = 0; i < 11 ++i) {
+    for (int i = 0; i < 11; ++i) {
         s_item_flag_lookup[item_flag_vals[i].key] = item_flag_vals[i].val;
     }
 
@@ -733,7 +735,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::IntersectsItemBoundingRect, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_item_selection_mode_lookup[item_selection_mode_vals[i].key] = item_selection_mode_vals[i].val;
     }
 
@@ -742,7 +744,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::AddToSelection, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_item_selection_operation_lookup[item_selection_operation_vals[i].key] = item_selection_operation_vals[i].val;
     }
 
@@ -751,7 +753,7 @@ extern void create_enum_mappings() {
     {  (int)QListWidgetItem::UserType, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_item_type_lookup[item_type_vals[i].key] = item_type_vals[i].val;
     }
 
@@ -1197,7 +1199,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::Key_unknown, 438 },
     };
 
-    for (int i = 0; i < 439 ++i) {
+    for (int i = 0; i < 439; ++i) {
         s_key_lookup[key_vals[i].key] = key_vals[i].val;
     }
 
@@ -1212,7 +1214,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::KeyboardModifierMask, 7 },
     };
 
-    for (int i = 0; i < 8 ++i) {
+    for (int i = 0; i < 8; ++i) {
         s_keyboard_modifier_lookup[keyboard_modifier_vals[i].key] = keyboard_modifier_vals[i].val;
     }
 
@@ -1222,7 +1224,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::LayoutDirectionAuto, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_layout_direction_lookup[layout_direction_vals[i].key] = layout_direction_vals[i].val;
     }
 
@@ -1231,7 +1233,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MaskOutColor, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_mask_mode_lookup[mask_mode_vals[i].key] = mask_mode_vals[i].val;
     }
 
@@ -1248,7 +1250,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MatchRecursive, 9 },
     };
 
-    for (int i = 0; i < 10 ++i) {
+    for (int i = 0; i < 10; ++i) {
         s_match_flag_lookup[match_flag_vals[i].key] = match_flag_vals[i].val;
     }
 
@@ -1261,7 +1263,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::UNICODE_ACCEL, 5 },
     };
 
-    for (int i = 0; i < 6 ++i) {
+    for (int i = 0; i < 6; ++i) {
         s_modifier_lookup[modifier_vals[i].key] = modifier_vals[i].val;
     }
 
@@ -1305,7 +1307,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MouseButtonMask, 36 },
     };
 
-    for (int i = 0; i < 37 ++i) {
+    for (int i = 0; i < 37; ++i) {
         s_mouse_button_lookup[mouse_button_vals[i].key] = mouse_button_vals[i].val;
     }
 
@@ -1314,7 +1316,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MouseEventFlagMask, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_mouse_event_flag_lookup[mouse_event_flag_vals[i].key] = mouse_event_flag_vals[i].val;
     }
 
@@ -1325,7 +1327,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MouseEventSynthesizedByApplication, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_mouse_event_source_lookup[mouse_event_source_vals[i].key] = mouse_event_source_vals[i].val;
     }
 
@@ -1339,7 +1341,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::SwipeNativeGesture, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_native_gesture_type_lookup[native_gesture_type_vals[i].key] = native_gesture_type_vals[i].val;
     }
 
@@ -1351,7 +1353,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NavigationModeCursorForceVisible, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_navigation_mode_lookup[navigation_mode_vals[i].key] = navigation_mode_vals[i].val;
     }
 
@@ -1360,7 +1362,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::Vertical, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_orientation_lookup[orientation_vals[i].key] = orientation_vals[i].val;
     }
 
@@ -1371,7 +1373,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MPenCapStyle, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_pen_cap_style_lookup[pen_cap_style_vals[i].key] = pen_cap_style_vals[i].val;
     }
 
@@ -1383,7 +1385,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MPenJoinStyle, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_pen_join_style_lookup[pen_join_style_vals[i].key] = pen_join_style_vals[i].val;
     }
 
@@ -1398,7 +1400,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::MPenStyle, 7 },
     };
 
-    for (int i = 0; i < 8 ++i) {
+    for (int i = 0; i < 8; ++i) {
         s_pen_style_lookup[pen_style_vals[i].key] = pen_style_vals[i].val;
     }
 
@@ -1410,7 +1412,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::InvertedLandscapeOrientation, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_screen_orientation_lookup[screen_orientation_vals[i].key] = screen_orientation_vals[i].val;
     }
 
@@ -1420,7 +1422,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ScrollBarAlwaysOn, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_scroll_bar_policy_lookup[scroll_bar_policy_vals[i].key] = scroll_bar_policy_vals[i].val;
     }
 
@@ -1431,7 +1433,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ScrollEnd, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_scroll_phase_lookup[scroll_phase_vals[i].key] = scroll_phase_vals[i].val;
     }
 
@@ -1442,7 +1444,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WidgetWithChildrenShortcut, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_shortcut_context_lookup[shortcut_context_vals[i].key] = shortcut_context_vals[i].val;
     }
 
@@ -1454,7 +1456,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NSizeHints, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_size_hint_lookup[size_hint_vals[i].key] = size_hint_vals[i].val;
     }
 
@@ -1463,7 +1465,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::RelativeSize, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_size_mode_lookup[size_mode_vals[i].key] = size_mode_vals[i].val;
     }
 
@@ -1472,7 +1474,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::DescendingOrder, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_sort_order_lookup[sort_order_vals[i].key] = sort_order_vals[i].val;
     }
 
@@ -1483,7 +1485,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TabFocusAllControls, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_tab_focus_behavior_lookup[tab_focus_behavior_vals[i].key] = tab_focus_behavior_vals[i].val;
     }
 
@@ -1494,7 +1496,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ElideNone, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_text_elide_mode_lookup[text_elide_mode_vals[i].key] = text_elide_mode_vals[i].val;
     }
 
@@ -1515,7 +1517,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TextBypassShaping, 13 },
     };
 
-    for (int i = 0; i < 14 ++i) {
+    for (int i = 0; i < 14; ++i) {
         s_text_flag_lookup[text_flag_vals[i].key] = text_flag_vals[i].val;
     }
 
@@ -1525,7 +1527,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::AutoText, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_text_format_lookup[text_format_vals[i].key] = text_format_vals[i].val;
     }
 
@@ -1540,7 +1542,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TextBrowserInteraction, 7 },
     };
 
-    for (int i = 0; i < 8 ++i) {
+    for (int i = 0; i < 8; ++i) {
         s_text_interaction_flag_lookup[text_interaction_flag_vals[i].key] = text_interaction_flag_vals[i].val;
     }
 
@@ -1550,7 +1552,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::RoundTile, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_tile_rule_lookup[tile_rule_vals[i].key] = tile_rule_vals[i].val;
     }
 
@@ -1561,7 +1563,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TimeZone, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_time_spec_lookup[time_spec_vals[i].key] = time_spec_vals[i].val;
     }
 
@@ -1571,7 +1573,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::VeryCoarseTimer, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_timer_type_lookup[timer_type_vals[i].key] = timer_type_vals[i].val;
     }
 
@@ -1585,7 +1587,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::NoToolBarArea, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_tool_bar_area_lookup[tool_bar_area_vals[i].key] = tool_bar_area_vals[i].val;
     }
 
@@ -1593,7 +1595,7 @@ extern void create_enum_mappings() {
     {{  (int)Qt::NToolBarAreas, 0 },
     };
 
-    for (int i = 0; i < 1 ++i) {
+    for (int i = 0; i < 1; ++i) {
         s_tool_bar_area_sizes_lookup[tool_bar_area_sizes_vals[i].key] = tool_bar_area_sizes_vals[i].val;
     }
 
@@ -1605,7 +1607,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ToolButtonFollowStyle, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_tool_button_style_lookup[tool_button_style_vals[i].key] = tool_button_style_vals[i].val;
     }
 
@@ -1616,7 +1618,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TouchPointReleased, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_touch_point_state_lookup[touch_point_state_vals[i].key] = touch_point_state_vals[i].val;
     }
 
@@ -1625,7 +1627,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::SmoothTransformation, 1 },
     };
 
-    for (int i = 0; i < 2 ++i) {
+    for (int i = 0; i < 2; ++i) {
         s_transformation_mode_lookup[transformation_mode_vals[i].key] = transformation_mode_vals[i].val;
     }
 
@@ -1639,7 +1641,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::UI_AnimateToolBox, 6 },
     };
 
-    for (int i = 0; i < 7 ++i) {
+    for (int i = 0; i < 7; ++i) {
         s_ui_effect_lookup[ui_effect_vals[i].key] = ui_effect_vals[i].val;
     }
 
@@ -1650,7 +1652,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WhiteSpaceModeUndefined, 3 },
     };
 
-    for (int i = 0; i < 4 ++i) {
+    for (int i = 0; i < 4; ++i) {
         s_white_space_mode_lookup[white_space_mode_vals[i].key] = white_space_mode_vals[i].val;
     }
 
@@ -1770,7 +1772,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WA_AttributeCount, 112 },
     };
 
-    for (int i = 0; i < 113 ++i) {
+    for (int i = 0; i < 113; ++i) {
         s_widget_attribute_lookup[widget_attribute_vals[i].key] = widget_attribute_vals[i].val;
     }
 
@@ -1787,7 +1789,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::TitleBarArea, 9 },
     };
 
-    for (int i = 0; i < 10 ++i) {
+    for (int i = 0; i < 10; ++i) {
         s_window_frame_section_lookup[window_frame_section_vals[i].key] = window_frame_section_vals[i].val;
     }
 
@@ -1797,7 +1799,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::ApplicationModal, 2 },
     };
 
-    for (int i = 0; i < 3 ++i) {
+    for (int i = 0; i < 3; ++i) {
         s_window_modality_lookup[window_modality_vals[i].key] = window_modality_vals[i].val;
     }
 
@@ -1809,7 +1811,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WindowActive, 4 },
     };
 
-    for (int i = 0; i < 5 ++i) {
+    for (int i = 0; i < 5; ++i) {
         s_window_state_lookup[window_state_vals[i].key] = window_state_vals[i].val;
     }
 
@@ -1854,7 +1856,7 @@ extern void create_enum_mappings() {
     {  (int)Qt::WindowFullscreenButtonHint, 37 },
     };
 
-    for (int i = 0; i < 38 ++i) {
+    for (int i = 0; i < 38; ++i) {
         s_window_type_lookup[window_type_vals[i].key] = window_type_vals[i].val;
     }
 }

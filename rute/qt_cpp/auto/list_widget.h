@@ -5,21 +5,3 @@
 
 #include "../rute_base.h"
 #include "../rute_manual.h"
-#include <QListWidget>
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class WRListWidget : public QListWidget {
-    Q_OBJECT
-public:
-    WRListWidget(QWidget* widget) : QListWidget(widget) { }
-    virtual ~WRListWidget() {
-        if (m_delete_callback) {
-             m_delete_callback(m_private_data);
-         }
-    }
-    
-    RUDeleteCallback m_delete_callback = nullptr;
-    void* m_private_data = nullptr;
-};

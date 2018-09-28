@@ -59,7 +59,7 @@ static const char* list_widget_item_text(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
 
     auto ret_value = qt_value->text();
-    return q_string_to_const_char(&ret_value);
+    return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ static const char* list_widget_item_status_tip(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
 
     auto ret_value = qt_value->statusTip();
-    return q_string_to_const_char(&ret_value);
+    return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ static const char* list_widget_item_tool_tip(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
 
     auto ret_value = qt_value->toolTip();
-    return q_string_to_const_char(&ret_value);
+    return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ static const char* list_widget_item_whats_this(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
 
     auto ret_value = qt_value->whatsThis();
-    return q_string_to_const_char(&ret_value);
+    return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

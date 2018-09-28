@@ -10,6 +10,7 @@
 #include "list_widget_item.h"
 #include "widget_ffi.h"
 #include "widget.h"
+#include "rute_signal_wrappers.h"
 
 #include "application.cpp"
 #include "font.cpp"

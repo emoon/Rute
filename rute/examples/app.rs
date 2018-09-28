@@ -10,7 +10,7 @@ fn main() {
     let rute = Rute::new();
 
     // Create the application
-    //let app = rute.create_application();
+    let app = rute.create_application();
 
     //let widget = rute.create_widget();
     //widget.show();

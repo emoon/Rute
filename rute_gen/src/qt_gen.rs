@@ -1021,7 +1021,7 @@ impl QtGenerator {
         cpp_out.write_all(HEADER)?;
 
         // Generate includes for all non-POD structs(
-        generate_includes(&mut h_out, &api_def)?;
+        //generate_includes(&mut h_out, &api_def)?;
         generate_includes(&mut cpp_out, &api_def)?;
 
         //cpp_out.write_all(QT_HEADER)?;
@@ -1031,7 +1031,7 @@ impl QtGenerator {
         //generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
 
         // Generate the wrapping classes declartion is used as for Qt.
-        self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
+        //self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
         // Generate the wrapping implementation that is used as for Qt.
         generate_wrapper_classes_impl(&mut cpp_out, api_def)?;
@@ -1076,6 +1076,10 @@ impl QtGenerator {
             generate_includes(&mut dest, &api_def)?;
         }
 
+        for api_def in api_defs {
+            self.generate_wrapper_classes_defs(&mut dest, api_def)?;
+        }
+
         self.generate_signal_wrappers(&mut dest, api_defs)
     }
 
@@ -1103,10 +1107,11 @@ impl QtGenerator {
         }
 
         dest.write_all(b"#include <map>\n\n")?;
+        dest.write_all(b"struct KeyVal { int val, key; };\n\n")?;
 
         for (name, _) in &enums {
             dest.write_fmt(format_args!(
-                "extern std::map<int, int> s_{}_lookup;\n",
+                "std::map<int, int> s_{}_lookup;\n",
                 name.to_snake_case()
             ))?;
         }
@@ -1221,6 +1226,7 @@ impl QtGenerator {
             writeln!(dest, "#include \"{}.h\"", f)?;
         }
 
+        writeln!(dest, "#include \"rute_signal_wrappers.h\"")?;
         writeln!(dest, "")?;
 
         for f in &files {
@@ -1380,7 +1386,7 @@ mod tests {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     auto ret_value = qt_value->test();
-    return q_string_to_const_char(&ret_value);
+    return q_string_to_const_char(uet_value);
 }
 
 "

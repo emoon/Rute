@@ -7,7 +7,6 @@
 static char* s_temp_string_buffer = nullptr;
 static int s_largest_string_size = 0;
 std::map<void*, void*> s_host_data_lookup;
-struct KeyVal { int val, key; };
 
 const char* q_string_to_const_char(const QString& ret_value) {
     QByteArray ba = ret_value.toUtf8();
