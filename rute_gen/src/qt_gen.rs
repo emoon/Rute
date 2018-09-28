@@ -1386,7 +1386,7 @@ mod tests {
     WRFoo* qt_value = (WRFoo*)self_c;
 
     auto ret_value = qt_value->test();
-    return q_string_to_const_char(uet_value);
+    return q_string_to_const_char(ret_value);
 }
 
 "
