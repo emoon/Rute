@@ -82,7 +82,12 @@ pub trait HeaderFFIGen {
     ///
     /// Generate the funcs declaration
     ///
-    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str, type_name: &str) -> Result<()>;
+    fn gen_funcs_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        name: &str,
+        type_name: &str,
+    ) -> Result<()>;
 
     ///
     /// Generate extra things if needed
@@ -167,7 +172,11 @@ impl HeaderFFIGenerator {
     ///
     /// Generate the main file (main entry + create functions and such)
     ///
-    pub fn generate_main<T: HeaderFFIGen>(filename: &str, api_defs: &[ApiDef], mut imp: T) -> Result<()> {
+    pub fn generate_main<T: HeaderFFIGen>(
+        filename: &str,
+        api_defs: &[ApiDef],
+        mut imp: T,
+    ) -> Result<()> {
         let mut dest = BufWriter::new(File::create(filename)?);
 
         imp.gen_main_header(&mut dest, api_defs)?;
@@ -175,10 +184,7 @@ impl HeaderFFIGenerator {
         // Generate the main entry
         imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
 
-        for sdef in api_defs
-            .iter()
-            .flat_map(|d| d.class_structs.iter())
-        {
+        for sdef in api_defs.iter().flat_map(|d| d.class_structs.iter()) {
             if sdef.should_gen_wrap_class() {
                 imp.gen_owned_data_create(&mut dest, &sdef.name)?;
             } else {

@@ -102,7 +102,12 @@ impl TypeHandlerTrait for TraitTypeHandler {
         (
             arg_name.to_owned().into(),
             //format!("{}.as_ptr()", arg_name).into(),
-            format!("let ({}, _funcs) = {}.get_{}_obj_funcs();\n", arg_name, arg.name, type_name.to_snake_case()).into(),
+            format!(
+                "let ({}, _funcs) = {}.get_{}_obj_funcs();\n",
+                arg_name,
+                arg.name,
+                type_name.to_snake_case()
+            ).into(),
         )
     }
 }
@@ -118,14 +123,17 @@ struct EnumTypeHandler;
 ///
 impl TypeHandlerTrait for EnumTypeHandler {
     fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
-        format!("unsafe {{ transmute::<i32, {}>(ret_val) }}", varible.type_name).into()
+        format!(
+            "unsafe {{ transmute::<i32, {}>(ret_val) }}",
+            varible.type_name
+        ).into()
     }
 
     fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("enum_{}_{}", arg.name, index);
         (
             arg_name.to_owned().into(),
-            format!("let {} = {} as i32;\n", arg_name, arg.name).into()
+            format!("let {} = {} as i32;\n", arg_name, arg.name).into(),
         )
     }
 }
@@ -179,7 +187,7 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
     {
         f.write_all(b"#[derive(Clone)]\n")?;
         f.write_fmt(format_args!(
-"pub struct {}Static<'a> {{
+            "pub struct {}Static<'a> {{
     pub all_funcs: *const RU{}AllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
             sdef.name, sdef.name
@@ -195,7 +203,9 @@ fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<
 
 fn setup_type_handlers() -> TypeHandler {
     let mut type_handler = TypeHandler::new();
-    type_handler.mapping.insert("String", Box::new(StringTypeHandler {}));
+    type_handler
+        .mapping
+        .insert("String", Box::new(StringTypeHandler {}));
     type_handler
 }
 
@@ -242,13 +252,13 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&var.enum_sub_type),
             VariableType::Regular => dest.push_str(&type_name),
-            VariableType::Str =>  {
+            VariableType::Str => {
                 if return_arg {
                     dest.push_str("String");
                 } else {
                     dest.push_str("&str");
                 }
-            },
+            }
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
@@ -293,9 +303,9 @@ impl RustGenerator {
         //
         if func.return_val.is_none() {
             func_imp.push_str(" -> &Self");
-            //func_imp.push_str(" -> &");
-            //func_imp.push_str(struct_name);
-            //func_imp.push_str("<'a>");
+        //func_imp.push_str(" -> &");
+        //func_imp.push_str(struct_name);
+        //func_imp.push_str("<'a>");
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
@@ -345,8 +355,14 @@ impl RustGenerator {
             template_data.insert("trait_name".to_owned(), Value::str(&name));
             template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
             template_data.insert("type_name".to_owned(), Value::str(&name));
-            template_data.insert("target_name_snake".to_owned(), Value::Str(name.to_snake_case()));
-            template_data.insert("target_name_snake_org".to_owned(), Value::Str(name.to_snake_case()));
+            template_data.insert(
+                "target_name_snake".to_owned(),
+                Value::Str(name.to_snake_case()),
+            );
+            template_data.insert(
+                "target_name_snake_org".to_owned(),
+                Value::Str(name.to_snake_case()),
+            );
 
             let out = self.trait_impl_template.render(&template_data).unwrap();
             f.write_all(out.as_bytes())?;
@@ -362,15 +378,24 @@ impl RustGenerator {
             template_data.insert("trait_name".to_owned(), Value::str(&static_name));
             template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
             template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
-            template_data.insert("target_name_snake".to_owned(), Value::Str(static_name.to_snake_case()));
-            template_data.insert("target_name_snake_org".to_owned(), Value::Str(sdef.name.to_snake_case()));
+            template_data.insert(
+                "target_name_snake".to_owned(),
+                Value::Str(static_name.to_snake_case()),
+            );
+            template_data.insert(
+                "target_name_snake_org".to_owned(),
+                Value::Str(sdef.name.to_snake_case()),
+            );
 
             let out = self.trait_impl_template.render(&template_data).unwrap();
             f.write_all(out.as_bytes())?;
 
             // Implement the static trait for the static type
 
-            let out = self.impl_trait_static_template.render(&template_data).unwrap();
+            let out = self
+                .impl_trait_static_template
+                .render(&template_data)
+                .unwrap();
             f.write_all(out.as_bytes())?;
         }
 
@@ -503,7 +528,8 @@ impl RustGenerator {
                 None => {
                     match ret_val.vtype {
                         VariableType::Regular => {
-                            template_data.insert("return_type".to_owned(), Value::str("pointer_ref"));
+                            template_data
+                                .insert("return_type".to_owned(), Value::str("pointer_ref"));
                             template_data.insert(
                                 "return_vtype".to_owned(),
                                 Value::Str(ret_val.type_name.to_owned()),
@@ -511,7 +537,8 @@ impl RustGenerator {
                         }
 
                         VariableType::Reference => {
-                            template_data.insert("return_type".to_owned(), Value::str("pointer_ref"));
+                            template_data
+                                .insert("return_type".to_owned(), Value::str("pointer_ref"));
                             template_data.insert(
                                 "return_vtype".to_owned(),
                                 Value::Str(ret_val.type_name.to_owned()),
@@ -596,14 +623,16 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == func_type)
             .for_each(|f| {
-
-            let res = self.generate_function(&f, name);
-            dest.write_all(res.as_bytes()).unwrap();
-        });
+                let res = self.generate_function(&f, name);
+                dest.write_all(res.as_bytes()).unwrap();
+            });
 
         let mut template_data = Object::new();
         template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
-        template_data.insert("type_name_snake".to_owned(), Value::Str(name.to_snake_case()));
+        template_data.insert(
+            "type_name_snake".to_owned(),
+            Value::Str(name.to_snake_case()),
+        );
 
         let out = self.trait_impl_end_template.render(&template_data).unwrap();
         dest.write_all(out.as_bytes())
@@ -656,15 +685,17 @@ impl RustGenerator {
     pub fn generate_auto_mod(filename: &str, api_defs: &[ApiDef]) -> io::Result<()> {
         let mut dest = BufWriter::new(File::create(filename).unwrap());
 
-        writeln!(dest, "// This file is auto-generated by rute_gen. DO NOT EDIT.\n")?;
+        writeln!(
+            dest,
+            "// This file is auto-generated by rute_gen. DO NOT EDIT.\n"
+        )?;
 
         // Collect all then struct names (snake case) and get a sorted list in the end
-        let mut names =
-            api_defs
+        let mut names = api_defs
             .iter()
-                .flat_map(|api_def| api_def.class_structs.iter())
-                .map(|s| s.name.to_snake_case())
-                .collect::<Vec<String>>();
+            .flat_map(|api_def| api_def.class_structs.iter())
+            .map(|s| s.name.to_snake_case())
+            .collect::<Vec<String>>();
 
         // rute auto has some extra stuff used by all the files
         //names.push("rute_auto".to_owned());
@@ -714,7 +745,6 @@ impl RustGenerator {
 mod tests {
     use super::*;
     use api_parser::*;
-
 
     //
     // Create a default function to reduce duplication a bit
@@ -796,10 +826,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(
-            func_impl,
-            "(&self, width: i32, height: f32) -> &Self"
-        );
+        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &Self");
     }
 
     //

@@ -1,10 +1,10 @@
 use pest::iterators::Pair;
 use pest::Parser;
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use std::collections::HashMap;
 
 #[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
@@ -555,15 +555,16 @@ impl ApiParser {
         name: &str,
         include_self: RecurseIncludeSelf,
         lookup: &HashMap<String, Vec<String>>,
-        out_structs: &mut Vec<String>)
-    {
+        out_structs: &mut Vec<String>,
+    ) {
         if let Some(values) = lookup.get(name) {
             for v in values {
                 Self::recursive_get_inherit_structs(
                     v,
                     RecurseIncludeSelf::Yes,
                     lookup,
-                    out_structs);
+                    out_structs,
+                );
             }
         }
 
@@ -587,7 +588,6 @@ impl ApiParser {
         out_structs
     }
 
-
     pub fn second_pass(api_defs: &mut [ApiDef]) {
         // Build a hash_set of all classes that are inherited
         let mut inherited_classes = HashMap::new();
@@ -610,7 +610,8 @@ impl ApiParser {
                     s.full_inherit = Self::get_inherit_structs(
                         &s.name,
                         RecurseIncludeSelf::Yes,
-                        &inherited_classes);
+                        &inherited_classes,
+                    );
                 } else {
                     s.full_inherit = vec![s.name.to_owned()];
                 }

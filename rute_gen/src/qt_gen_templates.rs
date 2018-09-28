@@ -172,5 +172,3 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}(
 }
 
 ";
-
-

@@ -54,8 +54,7 @@ pub static RUST_NO_WRAP_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_STRUCT_IMPL_TEMPLATE: &str =
-"#[derive(Clone)]
+pub static RUST_STRUCT_IMPL_TEMPLATE: &str = "#[derive(Clone)]
 pub struct {{struct_name}}<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RU{{struct_name}}AllFuncs,

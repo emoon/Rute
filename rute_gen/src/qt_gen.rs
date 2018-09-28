@@ -516,14 +516,16 @@ fn generate_static_get_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::R
         //
         f.write_fmt(format_args!(
             "static struct RU{} get_{}(struct RUBase* priv_data) {{\n",
-            sdef.name,
-            snake_name
+            sdef.name, snake_name
         ))?;
         f.write_all(b"    (void)priv_data;\n")?;
         f.write_fmt(format_args!("    RU{} ctl;\n", sdef.name))?;
         f.write_all(b"    ctl.qt_data = nullptr;\n")?;
         f.write_all(b"    ctl.host_data = nullptr;\n")?;
-        f.write_fmt(format_args!("    ctl.all_funcs = &s_{}_all_funcs;\n", snake_name))?;
+        f.write_fmt(format_args!(
+            "    ctl.all_funcs = &s_{}_all_funcs;\n",
+            snake_name
+        ))?;
         f.write_all(b"    return ctl;\n}\n\n")?;
     }
 
@@ -573,8 +575,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
     RUDeleteCallback delete_callback,
     void* private_user_data)
 {{\n",
-                sdef.name,
-                snake_name,
+                sdef.name, snake_name,
             ))?;
 
             f.write_fmt(format_args!(
@@ -595,7 +596,10 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
             ))?;
         }
 
-        f.write_fmt(format_args!( "    ctl.all_funcs = &s_{}_all_funcs;\n", snake_name))?;
+        f.write_fmt(format_args!(
+            "    ctl.all_funcs = &s_{}_all_funcs;\n",
+            snake_name
+        ))?;
         f.write_all(b"    return ctl;\n}\n\n")?;
 
         f.write_all(SEPARATOR)?;
@@ -683,10 +687,7 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
             ))?;
 
             for name in &sdef.full_inherit {
-                f.write_fmt(format_args!(
-                    "    &s_{}_funcs,\n",
-                    name.to_snake_case()
-                ))?;
+                f.write_fmt(format_args!("    &s_{}_funcs,\n", name.to_snake_case()))?;
             }
 
             f.write_all(b"};\n\n")?;
@@ -779,7 +780,13 @@ impl QtGenerator {
                     VariableType::Reference => {
                         // TODO: We should propage the real Qt type here instead
                         if arg.type_name.ends_with("Type") {
-                            Some(format!("(Q{}*){}", &arg.type_name[..arg.type_name.len()-4], &arg.name).into())
+                            Some(
+                                format!(
+                                    "(Q{}*){}",
+                                    &arg.type_name[..arg.type_name.len() - 4],
+                                    &arg.name
+                                ).into(),
+                            )
                         } else {
                             // TODO: Should not hard-code to Q* here
                             Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
@@ -787,7 +794,6 @@ impl QtGenerator {
                     }
 
                     _ => None,
-
                     /*
                     VariableType::Enum => {
 
@@ -828,11 +834,17 @@ impl QtGenerator {
                 }
                 VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
                 VariableType::Regular => {
-                    object.insert("funcs_name".to_owned(), Value::Str(ret_val.type_name.to_snake_case()));
+                    object.insert(
+                        "funcs_name".to_owned(),
+                        Value::Str(ret_val.type_name.to_snake_case()),
+                    );
                     object.insert("return_type".to_owned(), Value::str("regular"))
                 }
                 VariableType::Reference => {
-                    object.insert("funcs_name".to_owned(), Value::Str(ret_val.type_name.to_snake_case()));
+                    object.insert(
+                        "funcs_name".to_owned(),
+                        Value::Str(ret_val.type_name.to_snake_case()),
+                    );
                     object.insert("return_type".to_owned(), Value::str("reference"))
                 }
                 _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
@@ -1108,7 +1120,10 @@ impl QtGenerator {
             let mut template_data = Object::new();
 
             template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
-            template_data.insert("qt_class".to_owned(), Value::str(&enum_def.original_class_name));
+            template_data.insert(
+                "qt_class".to_owned(),
+                Value::str(&enum_def.original_class_name),
+            );
 
             let mut values = Vec::with_capacity(enum_def.entries.len());
             let mut index = 0;
@@ -1179,12 +1194,19 @@ impl QtGenerator {
     pub fn generate_bulk_cpp(filename: &str, api_defs: &[ApiDef]) -> io::Result<()> {
         let mut dest = BufWriter::new(File::create(filename).unwrap());
 
-        writeln!(&mut dest, "// This file is auto-generated by rute_gen. DO NOT EDIT!\n")?;
+        writeln!(
+            &mut dest,
+            "// This file is auto-generated by rute_gen. DO NOT EDIT!\n"
+        )?;
 
         let mut files = Vec::new();
 
         for sdef in api_defs {
-            let base_filename = Path::new(&sdef.filename).file_name().unwrap().to_str().unwrap();
+            let base_filename = Path::new(&sdef.filename)
+                .file_name()
+                .unwrap()
+                .to_str()
+                .unwrap();
             let base_filename = &base_filename[..base_filename.len() - 4];
             // TODO: Fixme
             if base_filename != "qnamespace" {

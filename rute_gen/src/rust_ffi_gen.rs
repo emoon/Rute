@@ -116,7 +116,11 @@ impl HeaderFFIGen for RustFFIGenerator {
         for sdef in api_defs {
             // TODO: Fix me
             if sdef.base_filename != "qnamespace" {
-                writeln!(dest, "use auto::{}_ffi::*;", sdef.base_filename.to_snake_case())?;
+                writeln!(
+                    dest,
+                    "use auto::{}_ffi::*;",
+                    sdef.base_filename.to_snake_case()
+                )?;
             }
         }
 
@@ -257,7 +261,12 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     /// Generate the funcs declaration
     ///
-    fn gen_funcs_declaration<W: Write>(&mut self, dest: &mut W, name: &str, type_name: &str) -> io::Result<()> {
+    fn gen_funcs_declaration<W: Write>(
+        &mut self,
+        dest: &mut W,
+        name: &str,
+        type_name: &str,
+    ) -> io::Result<()> {
         writeln!(
             dest,
             "    pub {}_funcs: *const RU{}Funcs,",
