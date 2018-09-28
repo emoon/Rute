@@ -995,13 +995,7 @@ impl QtGenerator {
 
         // Set up all the type handlers that are being used to do special
         // generation when needed
-        let mut type_handlers: Vec<Box<TypeHandler>> = Vec::new();
-
-        /*
-        for trait_name in api_def.get_all_traits() {
-            type_handlers.push(Box::new(TraitTypeHandler(trait_name.clone())));
-        }
-        */
+        let type_handlers: Vec<Box<TypeHandler>> = Vec::new();
 
         // Create the header and cpp out
         let mut h_out = BufWriter::new(File::create(header_path)?);

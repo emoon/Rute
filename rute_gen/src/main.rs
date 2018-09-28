@@ -34,14 +34,11 @@ mod c_gen;
 use api_parser::{ApiDef, ApiParser};
 use c_gen::CapiHeaderGen;
 use header_ffi_gen::HeaderFFIGenerator;
-use heck::SnakeCase;
 use qt_gen::QtGenerator;
 use rayon::prelude::*;
 use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
-use std::fs::File;
 use std::fs;
-use std::io::{BufWriter, Write};
 use std::path::Path;
 use std::sync::RwLock;
 use walkdir::WalkDir;
@@ -109,7 +106,7 @@ fn main() {
         }
     });
 
-    // patch up some refs and such for second pass
+    // patch up some refs, sort by filename for second pass
 
     {
         let mut data = api_defs.write().unwrap();
@@ -119,11 +116,11 @@ fn main() {
 
     let api_defs_read = api_defs.read().unwrap();
 
-    // Second pass
+    // Pass 2:
+    // Generate all the code.
 
     api_defs_read.par_iter().enumerate().for_each(|(index, api_def)| {
-        let base_filename = Path::new(&api_def.filename).file_name().unwrap().to_str().unwrap();
-        let base_filename = &base_filename[..base_filename.len() - 4];
+        let base_filename = &api_def.base_filename;
 
         // On the first thread we start with generating a bunch of main files so we have this
         // generation running threaded as well. Next time when index isn't 0 anymore regular work
@@ -136,9 +133,8 @@ fn main() {
             let enum_mapping = format!("{}/{}.cpp", qt_dest, "qt_enum_mapping");
             let qt_bulk_cpp = format!("{}/{}.cpp", qt_dest, "qt_bulk");
             let qt_rute_cpp = format!("{}/{}.cpp", qt_dest, "qt_rute");
-
-            // This mutex will be forever be locked from here but this part is single threaded anyway
-            //let data = api_defs.lock().unwrap();
+            let main_ffi_header = format!("{}/{}.h", qt_dest, "rute");
+            let main_ffi = format!("{}/{}.rs", rust_dest_dir, "rute_ffi");
 
             // Generate the main rute.rs file
             println!("    Generating main Rute Rust: {}", main_rute_rust);
@@ -163,6 +159,14 @@ fn main() {
             // Generate the rute main file
             println!("    Generating Main Qt file {}", qt_rute_cpp);
             QtGenerator::generate_rute_struct(&qt_rute_cpp, &api_defs_read);
+
+            // Generate rute main FFI for C++
+            println!("    Generating C++ main header: {}", main_ffi_header);
+            HeaderFFIGenerator::generate_main(&main_ffi_header, &api_defs_read, CapiHeaderGen::new()).unwrap();
+
+            // Generate rute main FFI for Rust
+            println!("    Generating Rust main file: {}", main_ffi);
+            HeaderFFIGenerator::generate_main(&main_ffi, &api_defs_read, RustFFIGenerator::new()).unwrap();
         }
 
         // We handle this file a bit special because it contains enums that are used for pretty

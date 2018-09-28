@@ -16,6 +16,16 @@ pub trait HeaderFFIGen {
     fn gen_header<W: Write>(&mut self, dest: &mut W) -> Result<()>;
 
     ///
+    /// Generate header for the main FFI file
+    ///
+    fn gen_main_header<W: Write>(&mut self, dest: &mut W, api_defs: &[ApiDef]) -> Result<()>;
+
+    ///
+    /// Generate the footer for the main FFI file
+    ///
+    fn gen_main_footer<W: Write>(&mut self, dest: &mut W, api_defs: &[ApiDef]) -> Result<()>;
+
+    ///
     /// Generate forward declarations of needed
     ///
     fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, sdef: &Struct) -> Result<()>;
@@ -157,12 +167,18 @@ impl HeaderFFIGenerator {
     ///
     /// Generate the main file (main entry + create functions and such)
     ///
-    pub fn generate_main<T: HeaderFFIGen>(_filename: &str, _api_defs: &[ApiDef], mut _imp: T) -> Result<()> {
-        /*
+    pub fn generate_main<T: HeaderFFIGen>(filename: &str, api_defs: &[ApiDef], mut imp: T) -> Result<()> {
+        let mut dest = BufWriter::new(File::create(filename)?);
+
+        imp.gen_main_header(&mut dest, api_defs)?;
+
         // Generate the main entry
         imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
 
-        for sdef in &api_def.class_structs {
+        for sdef in api_defs
+            .iter()
+            .flat_map(|d| d.class_structs.iter())
+        {
             if sdef.should_gen_wrap_class() {
                 imp.gen_owned_data_create(&mut dest, &sdef.name)?;
             } else {
@@ -175,11 +191,6 @@ impl HeaderFFIGenerator {
         }
 
         imp.gen_struct_end_declaration(&mut dest, "RuteFFI")?;
-
-        // Generate any last bits if needed
-        imp.generate_post_declarations(&mut dest, api_def)
-        */
-
-        Ok(())
+        imp.gen_main_footer(&mut dest, api_defs)
     }
 }

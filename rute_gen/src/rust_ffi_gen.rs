@@ -125,6 +125,29 @@ impl HeaderFFIGen for RustFFIGenerator {
     }
 
     ///
+    /// Generate header for the main FFI file
+    ///
+    fn gen_main_header<W: Write>(&mut self, dest: &mut W, api_defs: &[ApiDef]) -> io::Result<()> {
+        writeln!(dest, "use rute_ffi_base::*;");
+
+        for sdef in api_defs {
+            // TODO: Fix me
+            if sdef.base_filename != "qnamespace" {
+                writeln!(dest, "use auto::{}_ffi::*;", sdef.base_filename.to_snake_case());
+            }
+        }
+
+        writeln!(dest, "")
+    }
+
+    ///
+    /// Generate the footer for the main FFI file
+    ///
+    fn gen_main_footer<W: Write>(&mut self, dest: &mut W, _api_defs: &[ApiDef]) -> io::Result<()> {
+        write!(dest, "{}", FOOTER)
+    }
+
+    ///
     /// This will find all the variables and figure out what use
     ///
     fn gen_forward_declaration<W: Write>(&mut self, dest: &mut W, sdef: &Struct) -> io::Result<()> {
@@ -242,7 +265,7 @@ impl HeaderFFIGen for RustFFIGenerator {
     ) -> io::Result<()> {
         writeln!(
             dest,
-            "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},\n",
+            "    pub {}_{}: extern \"C\" fn(priv_data: *const RUBase) -> RU{},",
             prefix,
             struct_name.to_snake_case(),
             struct_name
@@ -284,8 +307,8 @@ impl HeaderFFIGen for RustFFIGenerator {
     ///
     fn generate_post_declarations<W: Write>(
         &mut self,
-        dest: &mut W,
-        api_def: &ApiDef,
+        _dest: &mut W,
+        _api_def: &ApiDef,
     ) -> io::Result<()> {
         Ok(())
     }

@@ -191,8 +191,11 @@ pub struct Enum {
 ///
 #[derive(Debug, Default)]
 pub struct ApiDef {
+    /// full filename path
     pub filename: String,
-    /// Structs that only holds data (such as Rect)
+    /// Base filename (such as foo/file/some_name.def) is some_name
+    pub base_filename: String,
+    /// Structs that only holds data (such as Rect, NOTE: currently not in use)
     pub pod_structs: Vec<Struct>,
     /// Structs that holds functions (such as QPushButton)
     pub class_structs: Vec<Struct>,
@@ -232,7 +235,11 @@ impl ApiParser {
         let chunks = ApiParser::parse(Rule::chunk, buffer)
             .unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
+        let base_filename = Path::new(filename).file_name().unwrap().to_str().unwrap();
+        let base_filename = &base_filename[..base_filename.len() - 4];
+
         api_def.filename = filename.to_owned();
+        api_def.base_filename = base_filename.to_owned();
 
         for chunk in chunks {
             match chunk.as_rule() {
