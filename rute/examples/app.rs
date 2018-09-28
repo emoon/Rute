@@ -3,8 +3,8 @@
 ///
 extern crate rute;
 
-use rute::Rute;
-use rute::ApplicationStaticType;
+use rute::*;
+//use rute::ApplicationStaticType;
 
 fn main() {
     let rute = Rute::new();
@@ -12,16 +12,8 @@ fn main() {
     // Create the application
     let app = rute.create_application();
 
-    //let widget = rute.create_widget();
-    //widget.show();
-
-    rute.application().about_qt();
-
-    /*
-    app.set_about_to_quit_event(|| {
-        println!("About to quit!");
-    });
-    */
+    // Show built-in about qt dialog
+    app.about_qt();
 
     // Start the application
     rute.application().exec();
