@@ -8,7 +8,7 @@ repository = "https://github.com/emoon/rute"
 keywords = ["gui", "ui", "qt"]
 categories = ["gui"]
 build = "build.rs"
-readme = "readme.md"
+readme = "../readme.md"
 
 [badges]
 maintenance = { status = "actively-developed" }
