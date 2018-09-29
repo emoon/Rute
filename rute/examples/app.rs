@@ -4,7 +4,6 @@
 extern crate rute;
 
 use rute::*;
-//use rute::ApplicationStaticType;
 
 fn main() {
     let rute = Rute::new();
