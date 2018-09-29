@@ -4,9 +4,11 @@ version = "0.0.1"
 license = "MIT/Apache-2.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
 description = "UI library implemented on top of Qt"
+repository = "https://github.com/emoon/rute"
 keywords = ["gui", "ui", "qt"]
 categories = ["gui"]
 build = "build.rs"
+readme = "readme.md"
 
 [badges]
 maintenance = { status = "actively-developed" }
