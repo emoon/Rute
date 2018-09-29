@@ -1,8 +1,15 @@
 [package]
 name = "rute"
-version = "0.1.0"
+version = "0.0.1"
+license = "MIT/Apache-2.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
+description = "UI library implemented on top of Qt"
+keywords = ["gui", "ui", "qt"]
+categories = ["gui"]
 build = "build.rs"
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [dependencies]
 libloading = "0.5"
