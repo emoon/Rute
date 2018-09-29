@@ -49,7 +49,7 @@ Licensed under either of
 
 at your option.
 
-Remember if you are planning to release an application using Rute you will have to obey the Qt licence which you can read about [here](https://doc.qt.io/qt-5.6/licensing.html)
+Remember if you are planning to release an application using Rute you will have use a Qt licence as well which you can read about [here](https://doc.qt.io/qt-5.6/licensing.html)
 
 ### Contribution
 
