@@ -27,7 +27,7 @@ before_script:
       export QT5="`brew --prefix qt5`";
     fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-      sudo add-apt-repository ppa:beineri/opt-qt-5.11.1-trusty --yes;
+      sudo add-apt-repository ppa:beineri/opt-qt-5.11.1-xenial --yes;
       sudo apt-get update;
       sudo apt-get install qt511base mesa-common-dev;
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90;
