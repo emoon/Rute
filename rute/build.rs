@@ -9,8 +9,6 @@ extern crate cc;
 fn main() {
     let target = env::var("TARGET").unwrap();
 
-    panic!(target);
-
     let qt_dir = env::var("QT5").unwrap_or_else(|_| { panic!(
 "\n\nUnable to find QT5 environment variable. This needs to be set in order to use Rute.
 You can download Qt from https://www.qt.io and the set the variable. Examples:
