@@ -77,10 +77,12 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
             println!("cargo:rustc-link-lib=framework={}", "QtGui");
             println!("cargo:rustc-link-lib=framework={}", "QtCore");
     } else if target.contains("linux") {
+        let lib_dir = format!("{}/lib", qt_dir.as_str());
         build
         .flag("-std=c++11")
         .cpp(true);
 
+        println!("cargo:rustc-link-search=static={}", &lib_dir);
         println!("cargo:rustc-link-lib=static={}", "QtWidgets");
         println!("cargo:rustc-link-lib=static={}", "QtGui");
         println!("cargo:rustc-link-lib=static={}", "QtCore");
