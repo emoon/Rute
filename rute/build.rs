@@ -10,9 +10,10 @@ fn main() {
     let target = env::var("TARGET").unwrap();
 
     let qt_dir = env::var("QT5").unwrap_or_else(|_| { panic!(
-"\n\nUnable to find QT5 enviroment variable. This needs to be set in order to use this Crate.
-You can download Qt from https://www.qt.io and the set the varible. Examples:
-macOS: export QT5=/Users/USER_NAME/Qt/5.10.0/clang_64\n\n");
+"\n\nUnable to find QT5 environment variable. This needs to be set in order to use Rute.
+You can download Qt from https://www.qt.io and the set the variable. Examples:
+macOS: export QT5=/Users/USER_NAME/Qt/5.11.2/clang_64\n
+GNU/Linux: export QT5=/opt/qt510\n\n");
     });
 
     let moc_exe = format!("{}/bin/moc", qt_dir.as_str());
