@@ -1,6 +1,6 @@
 language: rust
 os:
-  - linux
+  # - linux
   - osx
 rust:
   - stable
