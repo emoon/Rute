@@ -38,11 +38,11 @@ static struct RuteFFI s_rute = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef _WIN32
-extern "C" __declspec(dllexport) struct RuteFFI* rute_get() {
-#else
+//#ifdef _WIN32
+//extern "C" __declspec(dllexport) struct RuteFFI* rute_get() {
+//#else
 extern "C" struct RuteFFI* rute_get() {
-#endif
+//#endif
     return (RuteFFI*)&s_rute;
 }
 
