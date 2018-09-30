@@ -84,9 +84,9 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
         .cpp(true);
 
         println!("cargo:rustc-link-search=static={}", &lib_dir);
-        println!("cargo:rustc-link-lib=static={}", "QtWidgets");
-        println!("cargo:rustc-link-lib=static={}", "QtGui");
-        println!("cargo:rustc-link-lib=static={}", "QtCore");
+        println!("cargo:rustc-link-lib=static={}", "Qt5Widgets");
+        println!("cargo:rustc-link-lib=static={}", "Qt5Gui");
+        println!("cargo:rustc-link-lib=static={}", "Qt5Core");
     }
 
     build.compile("rute_cpp");
