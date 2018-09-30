@@ -80,8 +80,6 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
         build
         .flag("-std=c++11")
         .cpp(true)
-        .cpp_link_stdlib("c++")
-        .cpp_set_stdlib("c++");
 
         println!("cargo:rustc-link-lib=static={}", "QtWidgets");
         println!("cargo:rustc-link-lib=static={}", "QtGui");
