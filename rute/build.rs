@@ -76,6 +76,17 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
             println!("cargo:rustc-link-lib=framework={}", "QtWidgets");
             println!("cargo:rustc-link-lib=framework={}", "QtGui");
             println!("cargo:rustc-link-lib=framework={}", "QtCore");
+    } else if target.contains("linux") {
+        build
+        .flag(&f_flag)
+        .flag("-std=c++11")
+        .cpp(true)
+        .cpp_link_stdlib("c++")
+        .cpp_set_stdlib("c++");
+
+        println!("cargo:rustc-link-lib=static={}", "QtWidgets");
+        println!("cargo:rustc-link-lib=static={}", "QtGui");
+        println!("cargo:rustc-link-lib=static={}", "QtCore");
     }
 
     build.compile("rute_cpp");
