@@ -36,7 +36,7 @@ before_script:
    fi
 
 script:
-    - cd rute && find . /opt/qt510 && cargo build --example app && cd ..
+    - cd rute && find . /opt/qt510/lib && cargo build --example app && cd ..
     - cd rute_gen && cargo test
 
 after_success:

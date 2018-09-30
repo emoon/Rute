@@ -80,6 +80,7 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
         let lib_dir = format!("{}/lib", qt_dir.as_str());
         build
         .flag("-std=c++11")
+        .cpp_link_stdlib("stdc++")
         .cpp(true);
 
         println!("cargo:rustc-link-search=static={}", &lib_dir);
