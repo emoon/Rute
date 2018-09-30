@@ -79,7 +79,7 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
     } else if target.contains("linux") {
         build
         .flag("-std=c++11")
-        .cpp(true)
+        .cpp(true);
 
         println!("cargo:rustc-link-lib=static={}", "QtWidgets");
         println!("cargo:rustc-link-lib=static={}", "QtGui");
