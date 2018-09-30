@@ -35,8 +35,9 @@ before_script:
       export QT5=/opt/qt510;
    fi
 
-
-script: cd rute_gen && cargo test
+script:
+    - cd rute && cargo build --example app && cd ..
+    - cd rute_gen && cargo test
 
 after_success:
   # Coverage report
