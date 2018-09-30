@@ -5,6 +5,6 @@ install:
   - rust-beta-x86_64-pc-windows-msvc.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
   - set QT5=C:\Qt\5.11\msvc2017_64
   - SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin
-build:
+build_script:
 - cd rute && cargo build --example app
 
