@@ -496,13 +496,13 @@ fn main() {
     add_process_path(&mut header_files,
         //"/Users/danielcollin/temp/test.h",
         //"/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/qlistwidget.h",
-        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers");
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers");
 
     add_process_path(&mut header_files,
-        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h");
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h");
 
     add_process_path(&mut header_files,
-        "/Users/danielcollin/Qt/5.10.0/clang_64/lib/QtGui.framework/Versions/5/Headers");
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtGui.framework/Versions/5/Headers");
 
     // Process all files in parallel using Rayon
     header_files.par_iter().for_each(|filename| {
@@ -516,9 +516,9 @@ fn main() {
             .parser(&filename)
             .arguments(&[
                 "-std=c++11",
-                "-F/Users/danielcollin/Qt/5.10.0/clang_64/lib",
-                "-i /Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers",
-                "-i /Users/danielcollin/Qt/5.10.0/clang_64/lib/QtWidgets.framework/Headers/5.10.0",
+                "-F/Users/danielcollin/Qt/5.11.2/clang_64/lib",
+                "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
+                "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2",
             ]).parse()
             .unwrap();
 
