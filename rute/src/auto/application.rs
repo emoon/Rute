@@ -181,6 +181,16 @@ pub trait ApplicationStaticType {
         }
     }
 
+    fn set_active_window<W: WidgetType>(&self, act: &W) -> &Self {
+        let (obj_act_1, _funcs) = act.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+        unsafe {
+            ((*funcs).set_active_window)(obj_data, obj_act_1);
+        }
+        self
+    }
+
     fn widget_at(&self, x: i32, y: i32) -> Option<Widget> {
 
         let (obj_data, funcs) = self.get_application_static_obj_funcs();

@@ -77,6 +77,14 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->setActiveWindow((QWidget*)act);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -282,6 +290,7 @@ struct RUApplicationFuncs s_application_funcs = {
     application_active_modal_widget,
     application_focus_widget,
     application_active_window,
+    application_set_active_window,
     application_widget_at,
     application_top_level_at,
     application_beep,

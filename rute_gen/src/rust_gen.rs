@@ -3,6 +3,7 @@ use heck::SnakeCase;
 use liquid::{Object, ParserBuilder, Template, Value};
 use std::borrow::Cow;
 use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -172,6 +173,58 @@ impl TypeHandler {
 }
 
 ///
+/// Used for creating single letter assignments for generics
+///
+struct GenericLabelAssign<'a> {
+    lookup: BTreeMap<&'a str, u32>,
+}
+
+impl<'a> GenericLabelAssign<'a> {
+    pub fn new() -> GenericLabelAssign<'a> {
+        GenericLabelAssign {
+            lookup: BTreeMap::new(),
+        }
+    }
+
+    ///
+    /// Returns a new char for a type and tries to use the starting
+    /// type name, if fails goes from A,B,C,... and will panic if it runs out
+    ///
+    pub fn get(&mut self, gen_type: &'a str) -> Option<char> {
+        if !gen_type.ends_with("Type") {
+            return None;
+        }
+
+        // If we have the type we just return it
+        if let Some(label) = self.lookup.get(gen_type) {
+            return Some(*label as u8 as char);
+        }
+
+        let mut current_char = gen_type.chars().next().unwrap() as u32;
+
+        for _c in 0..27 {
+            // See if we have it
+            let found = self.lookup.iter().any(|(_, c)| *c == current_char);
+
+            if !found {
+                self.lookup.insert(gen_type, current_char);
+                return Some(current_char as u8 as char);
+            }
+
+            current_char += 1;
+
+            if current_char >= b'W' as u32 {
+                current_char = b'A' as u32;
+            }
+        }
+
+        // This should never happen (unless we have > 27 unique TypeParameters which we wont)
+        panic!("Unable to find a character to use for {}", gen_type);
+    }
+}
+
+
+///
 /// Generate the structs with static only functions. The structs will be generated in this style
 ///
 /// pub struct ApplicationStatic<'a> {
@@ -277,11 +330,42 @@ impl RustGenerator {
     fn generate_func_def(&self, func: &Function, _struct_name: &str) -> String {
         let mut temp_str = String::with_capacity(128);
         let mut func_imp = String::with_capacity(128);
+        let mut gen_labels = GenericLabelAssign::new();
+
+        // Check if we have any generic types, then we need to start with constructing the labels
+        // for it
+
+        for arg in &func.function_args[1..] {
+            gen_labels.get(&arg.type_name);
+        }
+
+        // if we have some types we need to generated the generic setup
+        if !gen_labels.lookup.is_empty() {
+            let len = gen_labels.lookup.len() - 1;
+
+            func_imp.push('<');
+
+            for (i, (name, label)) in gen_labels.lookup.iter().enumerate() {
+                func_imp.push_str(&format!("{}: {}", *label as u8 as char, name));
+
+                if len != i {
+                    func_imp.push_str(", ");
+                }
+            }
+
+            func_imp.push('>');
+        }
 
         func_imp.push_str("(&self");
 
         for arg in &func.function_args[1..] {
-            self.generate_arg_type(&mut temp_str, &arg, false);
+            if let Some(label) = gen_labels.get(&arg.type_name) {
+                temp_str.clear();
+                temp_str.push('&');
+                temp_str.push(label);
+            } else {
+                self.generate_arg_type(&mut temp_str, &arg, false);
+            }
 
             func_imp.push_str(", ");
             func_imp.push_str(&arg.name);
@@ -805,6 +889,81 @@ mod tests {
     }
 
     //
+    // Test with one generic widget type
+    //
+    #[test]
+    fn test_function_widget_type() {
+        let rust_gen = RustGenerator::new();
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "WidgetType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "<W: WidgetType>(&self, foo: &W) -> &Self");
+    }
+
+    //
+    // Test with two generic widget type
+    //
+    #[test]
+    fn test_function_two_widget_type() {
+        let rust_gen = RustGenerator::new();
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "WidgetType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        func.function_args.push(Variable {
+            name: "bar".to_owned(),
+            type_name: "WidgetType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "<W: WidgetType>(&self, foo: &W, bar: &W) -> &Self");
+    }
+
+    //
+    // Test with two generic widget type
+    //
+    #[test]
+    fn test_function_three_types_overlap_char() {
+        let rust_gen = RustGenerator::new();
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "WidgetType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        func.function_args.push(Variable {
+            name: "bar".to_owned(),
+            type_name: "PaintType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        func.function_args.push(Variable {
+            name: "pole".to_owned(),
+            type_name: "PoleType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+        assert_eq!(func_impl, "<P: PaintType, Q: PoleType, W: WidgetType>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
+    }
+
+    //
     // Test function def with two primitives
     //
     #[test]
@@ -903,5 +1062,48 @@ mod tests {
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self");
+    }
+
+    #[test]
+    fn test_generic_label_incorrect_type() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!(None, label_assign.get("i32"));
+    }
+
+    #[test]
+    fn test_generic_label_assign_single() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!('A', label_assign.get("AType").unwrap());
+    }
+
+    #[test]
+    fn test_generic_label_assign_single_extra_check() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!('A', label_assign.get("AType").unwrap());
+        assert_eq!('A', label_assign.get("AType").unwrap());
+    }
+
+    #[test]
+    fn test_generic_label_assign_double_new_char() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!('A', label_assign.get("AType").unwrap());
+        assert_eq!('B', label_assign.get("ANextType").unwrap());
+    }
+
+    #[test]
+    fn test_generic_label_wrap() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!('W', label_assign.get("WidgetType").unwrap());
+        assert_eq!('A', label_assign.get("WillType").unwrap());
+    }
+
+    #[test]
+    fn test_generic_many() {
+        let mut label_assign = GenericLabelAssign::new();
+        assert_eq!('W', label_assign.get("WidgetType").unwrap());
+        assert_eq!('L', label_assign.get("LobsterType").unwrap());
+        assert_eq!('A', label_assign.get("AstroType").unwrap());
+        assert_eq!('B', label_assign.get("Astro2Type").unwrap());
+        assert_eq!('C', label_assign.get("BrokenType").unwrap());
     }
 }

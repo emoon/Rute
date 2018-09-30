@@ -13,6 +13,7 @@ pub struct RUApplicationFuncs {
     pub active_modal_widget: extern "C" fn(self_c: *const RUBase) ->  RUWidget,
     pub focus_widget: extern "C" fn(self_c: *const RUBase) ->  RUWidget,
     pub active_window: extern "C" fn(self_c: *const RUBase) ->  RUWidget,
+    pub set_active_window: extern "C" fn(self_c: *const RUBase, act: *const RUBase),
     pub widget_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) ->  RUWidget,
     pub top_level_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) ->  RUWidget,
     pub beep: extern "C" fn(self_c: *const RUBase),
