@@ -38,8 +38,8 @@ use qt_gen::QtGenerator;
 use rayon::prelude::*;
 use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
-use std::process::Command;
 use std::fs;
+use std::process::Command;
 use std::sync::RwLock;
 use walkdir::WalkDir;
 
@@ -65,8 +65,7 @@ fn create_dir(path: &str) {
 /// Run Rustfmt on generated file
 ///
 fn run_rustfmt(filename: &str) {
-    Command::new("cargo")
-        .arg("fmt")
+    Command::new("rustfmt")
         .arg(filename)
         .output()
         .expect("failed to execute cargo fmt");
