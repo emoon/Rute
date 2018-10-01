@@ -17,4 +17,3 @@ fn main() {
     // Start the application
     rute.application().exec();
 }
-
