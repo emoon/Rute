@@ -2,7 +2,7 @@
 struct BackingStore {
     window() -> Window?,
     paint_device() -> PaintDevice?,
-    flush(region: &RegionType, window: &WindowType, offset: &PointType),
+    flush(region: &RegionType, window: *WindowType, offset: &PointType),
     resize(size: &SizeType),
     size() -> Size,
     scroll(area: &RegionType, dx: i32, dy: i32) -> bool,

@@ -1,8 +1,8 @@
 
 struct ToolTip {
-    [static] show_text(pos: &PointType, text: String, w: &WidgetType),
-    [static] show_text(pos: &PointType, text: String, w: &WidgetType, rect: &RectType),
-    [static] show_text(pos: &PointType, text: String, w: &WidgetType, rect: &RectType, msec_show_time: i32),
+    [static] show_text(pos: &PointType, text: String, w: *WidgetType),
+    [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType),
+    [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType, msec_show_time: i32),
     [static] hide_text(),
     [static] is_visible() -> bool,
     [static] text() -> String,

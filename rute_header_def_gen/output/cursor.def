@@ -8,11 +8,11 @@ struct Cursor {
     pixmap() -> Pixmap,
     hot_spot() -> Point,
     [static] pos() -> Point,
-    [static] pos(screen: &ScreenType) -> Point,
+    [static] pos(screen: *ScreenType) -> Point,
     [static] set_pos(x: i32, y: i32),
-    [static] set_pos(screen: &ScreenType, x: i32, y: i32),
+    [static] set_pos(screen: *ScreenType, x: i32, y: i32),
     [static] set_pos(p: &PointType),
-    [static] set_pos(screen: &ScreenType, p: &PointType),
+    [static] set_pos(screen: *ScreenType, p: &PointType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

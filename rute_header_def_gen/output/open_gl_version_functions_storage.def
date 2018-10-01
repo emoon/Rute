@@ -1,6 +1,6 @@
 
 struct OpenGLVersionFunctionsStorage {
-    backend(context: &OpenGLContextType, v: OpenGLVersionFunctionsBackend::Version) -> OpenGLVersionFunctionsBackend?,
+    backend(context: *OpenGLContextType, v: OpenGLVersionFunctionsBackend::Version) -> OpenGLVersionFunctionsBackend?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

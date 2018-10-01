@@ -13,7 +13,7 @@ struct GraphicsBlurEffect : GraphicsEffect {
     set_blur_hints(hints: BlurHints),
     [event] blur_radius_changed(blur_radius: f32),
     [event] blur_hints_changed(hints: BlurHints),
-    [replace] draw(painter: &PainterType),
+    [replace] draw(painter: *PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

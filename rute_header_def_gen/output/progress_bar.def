@@ -30,9 +30,9 @@ struct ProgressBar : Widget {
     set_value(value: i32),
     set_orientation(arg0: Rute::Orientation),
     [event] value_changed(value: i32),
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(arg0: &PaintEventType),
-    init_style_option(option: &StyleOptionProgressBarType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(arg0: *PaintEventType),
+    init_style_option(option: *StyleOptionProgressBarType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

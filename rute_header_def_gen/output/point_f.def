@@ -10,8 +10,6 @@ struct PointF {
     ry() -> f32?,
     [static] dot_product(p1: &PointFType, p2: &PointFType) -> f32,
     to_point() -> Point,
-    [static] from_cg_point(point: CGPoint) -> PointF,
-    to_cg_point() -> CGPoint,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

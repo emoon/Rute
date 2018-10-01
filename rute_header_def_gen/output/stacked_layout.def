@@ -5,15 +5,15 @@ enum StackingMode {
 }
 
 struct StackedLayout : Layout {
-    add_widget(w: &WidgetType) -> i32,
-    insert_widget(index: i32, w: &WidgetType) -> i32,
+    add_widget(w: *WidgetType) -> i32,
+    insert_widget(index: i32, w: *WidgetType) -> i32,
     current_widget() -> Widget?,
     current_index() -> i32,
     widget(arg0: i32) -> Widget?,
     [replace] count() -> i32,
     stacking_mode() -> StackedLayout::StackingMode,
     set_stacking_mode(stacking_mode: StackedLayout::StackingMode),
-    [replace] add_item(item: &LayoutItemType),
+    [replace] add_item(item: *LayoutItemType),
     [replace] size_hint() -> Size,
     [replace] minimum_size() -> Size,
     [replace] item_at(arg0: i32) -> LayoutItem?,
@@ -23,7 +23,7 @@ struct StackedLayout : Layout {
     [event] widget_removed(index: i32),
     [event] current_changed(index: i32),
     set_current_index(index: i32),
-    set_current_widget(w: &WidgetType),
+    set_current_widget(w: *WidgetType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

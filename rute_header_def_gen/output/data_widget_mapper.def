@@ -5,9 +5,9 @@ enum SubmitPolicy {
 }
 
 struct DataWidgetMapper : Object {
-    set_model(model: &AbstractItemModelType),
+    set_model(model: *AbstractItemModelType),
     model() -> AbstractItemModel?,
-    set_item_delegate(delegate: &AbstractItemDelegateType),
+    set_item_delegate(delegate: *AbstractItemDelegateType),
     item_delegate() -> AbstractItemDelegate?,
     set_root_index(index: &ModelIndexType),
     root_index() -> ModelIndex,
@@ -15,11 +15,11 @@ struct DataWidgetMapper : Object {
     orientation() -> Rute::Orientation,
     set_submit_policy(policy: DataWidgetMapper::SubmitPolicy),
     submit_policy() -> DataWidgetMapper::SubmitPolicy,
-    add_mapping(widget: &WidgetType, section: i32),
-    add_mapping(widget: &WidgetType, section: i32, property_name: &ByteArrayType),
-    remove_mapping(widget: &WidgetType),
-    mapped_section(widget: &WidgetType) -> i32,
-    mapped_property_name(widget: &WidgetType) -> ByteArray,
+    add_mapping(widget: *WidgetType, section: i32),
+    add_mapping(widget: *WidgetType, section: i32, property_name: &ByteArrayType),
+    remove_mapping(widget: *WidgetType),
+    mapped_section(widget: *WidgetType) -> i32,
+    mapped_property_name(widget: *WidgetType) -> ByteArray,
     mapped_widget_at(section: i32) -> Widget?,
     clear_mapping(),
     current_index() -> i32,

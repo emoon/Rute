@@ -22,12 +22,12 @@ enum Input {
 }
 
 struct Scroller : Object {
-    [static] has_scroller(target: &ObjectType) -> bool,
-    [static] scroller(target: &ObjectType) -> Scroller?,
-    [static] scroller(target: &ObjectType) -> Scroller?,
-    [static] grab_gesture(target: &ObjectType, gesture_type: Scroller::ScrollerGestureType) -> Rute::GestureType,
-    [static] grabbed_gesture(target: &ObjectType) -> Rute::GestureType,
-    [static] ungrab_gesture(target: &ObjectType),
+    [static] has_scroller(target: *ObjectType) -> bool,
+    [static] scroller(target: *ObjectType) -> Scroller?,
+    [static] scroller(target: *ObjectType) -> Scroller?,
+    [static] grab_gesture(target: *ObjectType, gesture_type: Scroller::ScrollerGestureType) -> Rute::GestureType,
+    [static] grabbed_gesture(target: *ObjectType) -> Rute::GestureType,
+    [static] ungrab_gesture(target: *ObjectType),
     [static] active_scrollers() -> [Scroller?],
     target() -> Object?,
     state() -> Scroller::State,

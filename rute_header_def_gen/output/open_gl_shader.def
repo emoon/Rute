@@ -10,15 +10,15 @@ enum ShaderTypeBit {
 
 struct OpenGLShader : Object {
     shader_type() -> OpenGLShader::ShaderType,
-    compile_source_code(source: &char) -> bool,
+    compile_source_code(source: *char) -> bool,
     compile_source_code(source: &ByteArrayType) -> bool,
     compile_source_code(source: String) -> bool,
     compile_source_file(file_name: String) -> bool,
     source_code() -> ByteArray,
     is_compiled() -> bool,
     log() -> String,
-    shader_id() -> GLuint,
-    [static] has_open_gl_shaders(type: ShaderType, context: &OpenGLContextType) -> bool,
+    shader_id() -> i32,
+    [static] has_open_gl_shaders(type: ShaderType, context: *OpenGLContextType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

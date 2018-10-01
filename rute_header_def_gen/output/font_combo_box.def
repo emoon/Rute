@@ -16,7 +16,7 @@ struct FontComboBox : ComboBox {
     [replace] size_hint() -> Size,
     set_current_font(f: &FontType),
     [event] current_font_changed(f: &FontType),
-    [replace] event(e: &EventType) -> bool,
+    [replace] event(e: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

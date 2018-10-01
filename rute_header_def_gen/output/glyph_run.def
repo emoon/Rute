@@ -12,7 +12,7 @@ struct GlyphRun {
     swap(other: &GlyphRunType),
     raw_font() -> RawFont,
     set_raw_font(raw_font: &RawFontType),
-    set_raw_data(glyph_index_array: &u32, glyph_position_array: &PointFType, size: i32),
+    set_raw_data(glyph_index_array: *u32, glyph_position_array: *PointFType, size: i32),
     glyph_indexes() -> [u32],
     set_glyph_indexes(glyph_indexes: [u32]),
     positions() -> [PointF],

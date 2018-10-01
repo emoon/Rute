@@ -1,5 +1,5 @@
 struct PictureFormatPlugin : Object {
-    [replace] load_picture(format: String, filename: String, pic: &PictureType) -> bool,
+    [replace] load_picture(format: String, filename: String, pic: *PictureType) -> bool,
     [replace] save_picture(format: String, filename: String, pic: &PictureType) -> bool,
     [replace] install_io_handler(format: String) -> bool,
 }

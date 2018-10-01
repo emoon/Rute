@@ -26,7 +26,7 @@ struct TextLine {
     natural_text_width() -> f32,
     horizontal_advance() -> f32,
     natural_text_rect() -> RectF,
-    cursor_to_x(cursor_pos: &i32, edge: TextLine::Edge) -> f32,
+    cursor_to_x(cursor_pos: *i32, edge: TextLine::Edge) -> f32,
     cursor_to_x(cursor_pos: i32, edge: TextLine::Edge) -> f32,
     x_to_cursor(x: f32, arg0: TextLine::CursorPosition) -> i32,
     set_line_width(width: f32),
@@ -37,7 +37,7 @@ struct TextLine {
     text_start() -> i32,
     text_length() -> i32,
     line_number() -> i32,
-    draw(p: &PainterType, point: &PointFType, selection: onst QTextLayout::FormatRange *),
+    draw(p: *PainterType, point: &PointFType, selection: onst QTextLayout::FormatRange *),
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
 }
 

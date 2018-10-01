@@ -3,7 +3,7 @@ struct StringMatcher {
     set_pattern(pattern: String),
     set_case_sensitivity(cs: Rute::CaseSensitivity),
     index_in(str: String, from: i32) -> i32,
-    index_in(str: &CharType, length: i32, from: i32) -> i32,
+    index_in(str: *CharType, length: i32, from: i32) -> i32,
     pattern() -> String,
     case_sensitivity() -> Rute::CaseSensitivity,
 }

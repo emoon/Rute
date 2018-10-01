@@ -13,10 +13,10 @@ struct Region {
     cbegin() -> const_iterator,
     end() -> const_iterator,
     cend() -> const_iterator,
-    rbegin() -> const_reverse_iterator,
-    crbegin() -> const_reverse_iterator,
-    rend() -> const_reverse_iterator,
-    crend() -> const_reverse_iterator,
+    rbegin() -> i32,
+    crbegin() -> i32,
+    rend() -> i32,
+    crend() -> i32,
     contains(p: &PointType) -> bool,
     contains(r: &RectType) -> bool,
     united(r: &RegionType) -> Region,
@@ -28,7 +28,7 @@ struct Region {
     intersects(r: &RectType) -> bool,
     bounding_rect() -> Rect,
     rects() -> [Rect],
-    set_rects(rect: &RectType, num: i32),
+    set_rects(rect: *RectType, num: i32),
     rect_count() -> i32,
 }
 

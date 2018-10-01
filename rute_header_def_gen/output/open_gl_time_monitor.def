@@ -3,7 +3,7 @@ struct OpenGLTimeMonitor : Object {
     sample_count() -> i32,
     create() -> bool,
     is_created() -> bool,
-    object_ids() -> [GLuint],
+    object_ids() -> i32,
     record_sample() -> i32,
     is_result_available() -> bool,
     wait_for_samples() -> [GLuint64],

@@ -44,10 +44,10 @@ struct OpenGLDebugMessage {
     source() -> OpenGLDebugMessage::Source,
     type() -> OpenGLDebugMessage::Type,
     severity() -> OpenGLDebugMessage::Severity,
-    id() -> GLuint,
+    id() -> i32,
     message() -> String,
-    [static] create_application_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
-    [static] create_third_party_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+    [static] create_application_message(text: String, id: i32, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+    [static] create_third_party_message(text: String, id: i32, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

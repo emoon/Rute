@@ -8,7 +8,7 @@ struct UndoCommand {
     is_obsolete() -> bool,
     set_obsolete(obsolete: bool),
     [replace] id() -> i32,
-    [replace] merge_with(other: &UndoCommandType) -> bool,
+    [replace] merge_with(other: *UndoCommandType) -> bool,
     child_count() -> i32,
     child(index: i32) -> UndoCommand?,
 }

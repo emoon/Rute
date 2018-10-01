@@ -9,7 +9,6 @@ struct Point {
     rx() -> i32?,
     ry() -> i32?,
     [static] dot_product(p1: &PointType, p2: &PointType) -> i32,
-    to_cg_point() -> CGPoint,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

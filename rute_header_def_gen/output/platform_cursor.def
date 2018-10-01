@@ -5,7 +5,7 @@ enum Capability {
 
 struct PlatformCursor : Object {
     [replace] pointer_event(event: &MouseEventType),
-    [replace] change_cursor(window_cursor: &CursorType, window: &WindowType),
+    [replace] change_cursor(window_cursor: *CursorType, window: *WindowType),
     [replace] set_override_cursor(arg0: &CursorType),
     [replace] clear_override_cursor(),
     [replace] pos() -> Point,

@@ -5,9 +5,9 @@ enum MenuType {
 }
 
 struct PlatformMenu : Object {
-    [replace] insert_menu_item(menu_item: &PlatformMenuItemType, before: &PlatformMenuItemType),
-    [replace] remove_menu_item(menu_item: &PlatformMenuItemType),
-    [replace] sync_menu_item(menu_item: &PlatformMenuItemType),
+    [replace] insert_menu_item(menu_item: *PlatformMenuItemType, before: *PlatformMenuItemType),
+    [replace] remove_menu_item(menu_item: *PlatformMenuItemType),
+    [replace] sync_menu_item(menu_item: *PlatformMenuItemType),
     [replace] sync_separators_collapsible(enable: bool),
     [replace] set_tag(tag: quintptr),
     [replace] tag() -> quintptr,
@@ -19,7 +19,7 @@ struct PlatformMenu : Object {
     [replace] set_minimum_width(width: i32),
     [replace] set_font(font: &FontType),
     [replace] set_menu_type(type: PlatformMenu::MenuType),
-    [replace] show_popup(parent_window: &WindowType, target_rect: &RectType, item: &PlatformMenuItemType),
+    [replace] show_popup(parent_window: *WindowType, target_rect: &RectType, item: *PlatformMenuItemType),
     [replace] dismiss(),
     [replace] menu_item_at(position: i32) -> PlatformMenuItem?,
     [replace] menu_item_for_tag(tag: quintptr) -> PlatformMenuItem?,

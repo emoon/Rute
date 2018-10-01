@@ -1,15 +1,15 @@
 struct ScrollBar : AbstractSlider {
     [replace] size_hint() -> Size,
-    [replace] event(event: &EventType) -> bool,
-    [replace] wheel_event(arg0: &WheelEventType),
-    [replace] paint_event(arg0: &PaintEventType),
-    [replace] mouse_press_event(arg0: &MouseEventType),
-    [replace] mouse_release_event(arg0: &MouseEventType),
-    [replace] mouse_move_event(arg0: &MouseEventType),
-    [replace] hide_event(arg0: &HideEventType),
+    [replace] event(event: *EventType) -> bool,
+    [replace] wheel_event(arg0: *WheelEventType),
+    [replace] paint_event(arg0: *PaintEventType),
+    [replace] mouse_press_event(arg0: *MouseEventType),
+    [replace] mouse_release_event(arg0: *MouseEventType),
+    [replace] mouse_move_event(arg0: *MouseEventType),
+    [replace] hide_event(arg0: *HideEventType),
     [replace] slider_change(change: AbstractSlider::SliderChange),
-    [replace] context_menu_event(arg0: &ContextMenuEventType),
-    init_style_option(option: &StyleOptionSliderType),
+    [replace] context_menu_event(arg0: *ContextMenuEventType),
+    init_style_option(option: *StyleOptionSliderType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

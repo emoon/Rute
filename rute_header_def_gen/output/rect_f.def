@@ -37,9 +37,9 @@ struct RectF {
     move_to(x: f32, y: f32),
     move_to(p: &PointFType),
     set_rect(x: f32, y: f32, w: f32, h: f32),
-    get_rect(x: &f32, y: &f32, w: &f32, h: &f32),
+    get_rect(x: *f32, y: *f32, w: *f32, h: *f32),
     set_coords(x1: f32, y1: f32, x2: f32, y2: f32),
-    get_coords(x1: &f32, y1: &f32, x2: &f32, y2: &f32),
+    get_coords(x1: *f32, y1: *f32, x2: *f32, y2: *f32),
     adjust(x1: f32, y1: f32, x2: f32, y2: f32),
     adjusted(x1: f32, y1: f32, x2: f32, y2: f32) -> RectF,
     size() -> SizeF,
@@ -58,8 +58,6 @@ struct RectF {
     margins_removed(margins: &MarginsFType) -> RectF,
     to_rect() -> Rect,
     to_aligned_rect() -> Rect,
-    [static] from_cg_rect(rect: CGRect) -> RectF,
-    to_cg_rect() -> CGRect,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

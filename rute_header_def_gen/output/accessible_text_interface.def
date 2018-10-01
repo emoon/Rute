@@ -1,6 +1,6 @@
 
 struct AccessibleTextInterface {
-    [replace] selection(selection_index: i32, start_offset: &i32, end_offset: &i32),
+    [replace] selection(selection_index: i32, start_offset: *i32, end_offset: *i32),
     [replace] selection_count() -> i32,
     [replace] add_selection(start_offset: i32, end_offset: i32),
     [replace] remove_selection(selection_index: i32),
@@ -8,9 +8,9 @@ struct AccessibleTextInterface {
     [replace] cursor_position() -> i32,
     [replace] set_cursor_position(position: i32),
     [replace] text(start_offset: i32, end_offset: i32) -> String,
-    [replace] text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
-    [replace] text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
-    [replace] text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: &i32, end_offset: &i32) -> String,
+    [replace] text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
+    [replace] text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
+    [replace] text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
     [replace] character_count() -> i32,
     [replace] character_rect(offset: i32) -> Rect,
     [replace] offset_at_point(point: &PointType) -> i32,

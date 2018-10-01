@@ -16,7 +16,7 @@ enum MessageIcon {
 }
 
 struct SystemTrayIcon : Object {
-    set_context_menu(menu: &MenuType),
+    set_context_menu(menu: *MenuType),
     context_menu() -> Menu?,
     icon() -> Icon,
     set_icon(icon: &IconType),
@@ -32,7 +32,7 @@ struct SystemTrayIcon : Object {
     show_message(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
     [event] activated(reason: SystemTrayIcon::ActivationReason),
     [event] message_clicked(),
-    [replace] event(event: &EventType) -> bool,
+    [replace] event(event: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

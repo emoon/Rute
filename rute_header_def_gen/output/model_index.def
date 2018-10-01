@@ -6,6 +6,8 @@ struct ModelIndex {
     internal_pointer(),
     parent() -> ModelIndex,
     sibling(row: i32, column: i32) -> ModelIndex,
+    sibling_at_column(column: i32) -> ModelIndex,
+    sibling_at_row(row: i32) -> ModelIndex,
     child(row: i32, column: i32) -> ModelIndex,
     data(role: i32) -> Variant,
     flags() -> Rute::ItemFlags,

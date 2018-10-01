@@ -12,7 +12,7 @@ struct OpenGLWindow : PaintDeviceWindow {
     done_current(),
     context() -> OpenGLContext?,
     share_context() -> OpenGLContext?,
-    default_framebuffer_object() -> GLuint,
+    default_framebuffer_object() -> i32,
     grab_framebuffer() -> Image,
     [event] frame_swapped(),
     [replace] initialize_gl(),
@@ -20,9 +20,9 @@ struct OpenGLWindow : PaintDeviceWindow {
     [replace] paint_gl(),
     [replace] paint_under_gl(),
     [replace] paint_over_gl(),
-    [replace] paint_event(event: &PaintEventType),
-    [replace] resize_event(event: &ResizeEventType),
-    [replace] redirected(arg0: &PointType) -> PaintDevice?,
+    [replace] paint_event(event: *PaintEventType),
+    [replace] resize_event(event: *ResizeEventType),
+    [replace] redirected(arg0: *PointType) -> PaintDevice?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

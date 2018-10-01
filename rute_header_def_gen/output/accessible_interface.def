@@ -9,7 +9,7 @@ struct AccessibleInterface {
     [replace] parent() -> AccessibleInterface?,
     [replace] child(index: i32) -> AccessibleInterface?,
     [replace] child_count() -> i32,
-    [replace] index_of_child(arg0: &AccessibleInterfaceType) -> i32,
+    [replace] index_of_child(arg0: *AccessibleInterfaceType) -> i32,
     [replace] text(t: Accessible::Text) -> String,
     [replace] set_text(t: Accessible::Text, text: String),
     [replace] rect() -> Rect,
@@ -24,7 +24,7 @@ struct AccessibleInterface {
     image_interface() -> AccessibleImageInterface?,
     table_interface() -> AccessibleTableInterface?,
     table_cell_interface() -> AccessibleTableCellInterface?,
-    [replace] virtual_hook(id: i32, data: &void),
+    [replace] virtual_hook(id: i32, data: *void),
     [replace] interface_cast(arg0: Accessible::InterfaceType),
 }
 

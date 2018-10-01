@@ -1,7 +1,7 @@
 
 struct PlatformAccessibility {
-    [replace] notify_accessibility_update(event: &AccessibleEventType),
-    [replace] set_root_object(o: &ObjectType),
+    [replace] notify_accessibility_update(event: *AccessibleEventType),
+    [replace] set_root_object(o: *ObjectType),
     [replace] initialize(),
     [replace] cleanup(),
     is_active() -> bool,

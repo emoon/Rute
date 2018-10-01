@@ -3,7 +3,7 @@ struct AbstractGraphicsShapeItem : GraphicsItem {
     set_pen(pen: &PenType),
     brush() -> Brush,
     set_brush(brush: &BrushType),
-    [replace] is_obscured_by(item: &GraphicsItemType) -> bool,
+    [replace] is_obscured_by(item: *GraphicsItemType) -> bool,
     [replace] opaque_area() -> PainterPath,
 }
 

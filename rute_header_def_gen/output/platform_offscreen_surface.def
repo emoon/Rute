@@ -1,6 +1,6 @@
 struct PlatformOffscreenSurface : PlatformSurface {
     offscreen_surface() -> OffscreenSurface?,
-    screen() -> PlatformScreen?,
+    [replace] screen() -> PlatformScreen?,
     [replace] format() -> SurfaceFormat,
     [replace] is_valid() -> bool,
 }

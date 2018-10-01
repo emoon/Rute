@@ -1,9 +1,9 @@
 struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
-    [replace] draw(arg0: &PainterType, arg1: onst QAbstractTextDocumentLayout::PaintContext &),
+    [replace] draw(arg0: *PainterType, arg1: onst QAbstractTextDocumentLayout::PaintContext &),
     [replace] hit_test(arg0: &PointFType, arg1: Rute::HitTestAccuracy) -> i32,
     [replace] page_count() -> i32,
     [replace] document_size() -> SizeF,
-    [replace] frame_bounding_rect(arg0: &TextFrameType) -> RectF,
+    [replace] frame_bounding_rect(arg0: *TextFrameType) -> RectF,
     [replace] block_bounding_rect(block: &TextBlockType) -> RectF,
     ensure_block_layout(block: &TextBlockType),
     set_cursor_width(width: i32),

@@ -6,7 +6,7 @@ struct GraphicsRotation : GraphicsTransform {
     axis() -> Vector3D,
     set_axis(axis: &Vector3DType),
     set_axis(axis: Rute::Axis),
-    [replace] apply_to(matrix: &Matrix4x4Type),
+    [replace] apply_to(matrix: *Matrix4x4Type),
     [event] origin_changed(),
     [event] angle_changed(),
     [event] axis_changed(),

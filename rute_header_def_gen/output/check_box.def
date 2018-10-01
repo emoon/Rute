@@ -6,13 +6,13 @@ struct CheckBox : AbstractButton {
     check_state() -> Rute::CheckState,
     set_check_state(state: Rute::CheckState),
     [event] state_changed(arg0: i32),
-    [replace] event(e: &EventType) -> bool,
+    [replace] event(e: *EventType) -> bool,
     [replace] hit_button(pos: &PointType) -> bool,
     [replace] check_state_set(),
     [replace] next_check_state(),
-    [replace] paint_event(arg0: &PaintEventType),
-    [replace] mouse_move_event(arg0: &MouseEventType),
-    init_style_option(option: &StyleOptionButtonType),
+    [replace] paint_event(arg0: *PaintEventType),
+    [replace] mouse_move_event(arg0: *MouseEventType),
+    init_style_option(option: *StyleOptionButtonType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

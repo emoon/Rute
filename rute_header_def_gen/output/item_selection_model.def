@@ -27,7 +27,7 @@ struct ItemSelectionModel : Object {
     selection() -> ItemSelection,
     model() -> AbstractItemModel?,
     model() -> AbstractItemModel?,
-    set_model(model: &AbstractItemModelType),
+    set_model(model: *AbstractItemModelType),
     [replace] set_current_index(index: &ModelIndexType, command: ItemSelectionModel::SelectionFlags),
     [replace] select(index: &ModelIndexType, command: ItemSelectionModel::SelectionFlags),
     [replace] select(selection: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
@@ -39,7 +39,7 @@ struct ItemSelectionModel : Object {
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
     [event] current_row_changed(current: &ModelIndexType, previous: &ModelIndexType),
     [event] current_column_changed(current: &ModelIndexType, previous: &ModelIndexType),
-    [event] model_changed(model: &AbstractItemModelType),
+    [event] model_changed(model: *AbstractItemModelType),
     emit_selection_changed(new_selection: &ItemSelectionType, old_selection: &ItemSelectionType),
 }
 

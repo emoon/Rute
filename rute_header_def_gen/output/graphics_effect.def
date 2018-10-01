@@ -20,13 +20,13 @@ struct GraphicsEffect : Object {
     set_enabled(enable: bool),
     update(),
     [event] enabled_changed(enabled: bool),
-    [replace] draw(painter: &PainterType),
+    [replace] draw(painter: *PainterType),
     [replace] source_changed(flags: ChangeFlags),
     update_bounding_rect(),
     source_is_pixmap() -> bool,
     source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,
-    draw_source(painter: &PainterType),
-    source_pixmap(system: Rute::CoordinateSystem, offset: &PointType, mode: GraphicsEffect::PixmapPadMode) -> Pixmap,
+    draw_source(painter: *PainterType),
+    source_pixmap(system: Rute::CoordinateSystem, offset: *PointType, mode: GraphicsEffect::PixmapPadMode) -> Pixmap,
     source() -> GraphicsEffectSource?,
 }
 

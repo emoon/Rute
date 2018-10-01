@@ -1,8 +1,8 @@
 struct PlatformMenuBar : Object {
-    [replace] insert_menu(menu: &PlatformMenuType, before: &PlatformMenuType),
-    [replace] remove_menu(menu: &PlatformMenuType),
-    [replace] sync_menu(menu_item: &PlatformMenuType),
-    [replace] handle_reparent(new_parent_window: &WindowType),
+    [replace] insert_menu(menu: *PlatformMenuType, before: *PlatformMenuType),
+    [replace] remove_menu(menu: *PlatformMenuType),
+    [replace] sync_menu(menu_item: *PlatformMenuType),
+    [replace] handle_reparent(new_parent_window: *WindowType),
     [replace] menu_for_tag(tag: quintptr) -> PlatformMenu?,
     [replace] create_menu() -> PlatformMenu?,
 }

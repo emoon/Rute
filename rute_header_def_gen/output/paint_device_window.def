@@ -2,9 +2,9 @@ struct PaintDeviceWindow : Window, PaintDevice {
     update(rect: &RectType),
     update(region: &RegionType),
     update(),
-    [replace] paint_event(event: &PaintEventType),
-    [replace] expose_event(arg0: &ExposeEventType),
-    [replace] event(event: &EventType) -> bool,
+    [replace] paint_event(event: *PaintEventType),
+    [replace] expose_event(arg0: *ExposeEventType),
+    [replace] event(event: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

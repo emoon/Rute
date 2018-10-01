@@ -1,6 +1,6 @@
 struct UndoStack : Object {
     clear(),
-    push(cmd: &UndoCommandType),
+    push(cmd: *UndoCommandType),
     can_undo() -> bool,
     can_redo() -> bool,
     undo_text() -> String,
@@ -8,8 +8,8 @@ struct UndoStack : Object {
     count() -> i32,
     index() -> i32,
     text(idx: i32) -> String,
-    create_undo_action(parent: &ObjectType, prefix: String) -> Action?,
-    create_redo_action(parent: &ObjectType, prefix: String) -> Action?,
+    create_undo_action(parent: *ObjectType, prefix: String) -> Action?,
+    create_redo_action(parent: *ObjectType, prefix: String) -> Action?,
     is_active() -> bool,
     is_clean() -> bool,
     clean_index() -> i32,

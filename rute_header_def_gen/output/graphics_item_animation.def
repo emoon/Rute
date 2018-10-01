@@ -1,8 +1,8 @@
 struct GraphicsItemAnimation : Object {
     item() -> GraphicsItem?,
-    set_item(item: &GraphicsItemType),
+    set_item(item: *GraphicsItemType),
     time_line() -> TimeLine?,
-    set_time_line(time_line: &TimeLineType),
+    set_time_line(time_line: *TimeLineType),
     pos_at(step: f32) -> PointF,
     pos_list() -> [Pair<qreal,],
     set_pos_at(step: f32, pos: &PointFType),

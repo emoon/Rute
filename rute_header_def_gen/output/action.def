@@ -23,7 +23,7 @@ enum ActionEvent {
 }
 
 struct Action : Object {
-    set_action_group(group: &ActionGroupType),
+    set_action_group(group: *ActionGroupType),
     action_group() -> ActionGroup?,
     set_icon(icon: &IconType),
     icon() -> Icon,
@@ -40,7 +40,7 @@ struct Action : Object {
     set_priority(priority: Action::Priority),
     priority() -> Action::Priority,
     menu() -> Menu?,
-    set_menu(menu: &MenuType),
+    set_menu(menu: *MenuType),
     set_separator(b: bool),
     is_separator() -> bool,
     set_shortcut(shortcut: &KeySequenceType),
@@ -62,7 +62,7 @@ struct Action : Object {
     is_enabled() -> bool,
     is_visible() -> bool,
     activate(event: Action::ActionEvent),
-    show_status_text(widget: &WidgetType) -> bool,
+    show_status_text(widget: *WidgetType) -> bool,
     set_menu_role(menu_role: Action::MenuRole),
     menu_role() -> Action::MenuRole,
     set_icon_visible_in_menu(visible: bool),
@@ -72,7 +72,7 @@ struct Action : Object {
     parent_widget() -> Widget?,
     associated_widgets() -> [Widget?],
     associated_graphics_widgets() -> [GraphicsWidget?],
-    [replace] event(arg0: &EventType) -> bool,
+    [replace] event(arg0: *EventType) -> bool,
     hover(),
     set_checked(arg0: bool),
     toggle(),

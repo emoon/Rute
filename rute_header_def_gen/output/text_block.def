@@ -16,7 +16,7 @@ struct TextBlock {
     document() -> TextDocument?,
     text_list() -> TextList?,
     user_data() -> TextBlockUserData?,
-    set_user_data(data: &TextBlockUserDataType),
+    set_user_data(data: *TextBlockUserDataType),
     user_state() -> i32,
     set_user_state(state: i32),
     revision() -> i32,

@@ -15,12 +15,12 @@ struct Slider : AbstractSlider {
     tick_position() -> Slider::TickPosition,
     set_tick_interval(ti: i32),
     tick_interval() -> i32,
-    [replace] event(event: &EventType) -> bool,
-    [replace] paint_event(ev: &PaintEventType),
-    [replace] mouse_press_event(ev: &MouseEventType),
-    [replace] mouse_release_event(ev: &MouseEventType),
-    [replace] mouse_move_event(ev: &MouseEventType),
-    init_style_option(option: &StyleOptionSliderType),
+    [replace] event(event: *EventType) -> bool,
+    [replace] paint_event(ev: *PaintEventType),
+    [replace] mouse_press_event(ev: *MouseEventType),
+    [replace] mouse_release_event(ev: *MouseEventType),
+    [replace] mouse_move_event(ev: *MouseEventType),
+    init_style_option(option: *StyleOptionSliderType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

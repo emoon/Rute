@@ -27,6 +27,7 @@ enum Version {
     Qt_5_8,
     Qt_5_9,
     Qt_5_10,
+    Qt_5_11,
     Qt_DefaultCompiledVersion,
 }
 
@@ -53,7 +54,7 @@ enum FloatingPointPrecision {
 
 struct DataStream {
     device() -> IODevice?,
-    set_device(arg0: &IODeviceType),
+    set_device(arg0: *IODeviceType),
     unset_device(),
     at_end() -> bool,
     status() -> DataStream::Status,
@@ -65,10 +66,10 @@ struct DataStream {
     set_byte_order(arg0: DataStream::ByteOrder),
     version() -> i32,
     set_version(arg0: i32),
-    read_bytes(arg0: &char, len: &uint) -> DataStream?,
-    read_raw_data(arg0: &char, len: i32) -> i32,
-    write_bytes(arg0: &char, len: uint) -> DataStream?,
-    write_raw_data(arg0: &char, len: i32) -> i32,
+    read_bytes(arg0: &*char, len: &uint) -> DataStream?,
+    read_raw_data(arg0: *char, len: i32) -> i32,
+    write_bytes(arg0: *char, len: uint) -> DataStream?,
+    write_raw_data(arg0: *char, len: i32) -> i32,
     skip_raw_data(len: i32) -> i32,
     start_transaction(),
     commit_transaction() -> bool,

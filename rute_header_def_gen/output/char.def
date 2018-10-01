@@ -184,6 +184,16 @@ enum Script {
     Script_Multani,
     Script_OldHungarian,
     Script_SignWriting,
+    Script_Adlam,
+    Script_Bhaiksuki,
+    Script_Marchen,
+    Script_Newa,
+    Script_Osage,
+    Script_Tangut,
+    Script_MasaramGondi,
+    Script_Nushu,
+    Script_Soyombo,
+    Script_ZanabazarSquare,
     ScriptCount,
 }
 
@@ -297,6 +307,8 @@ enum UnicodeVersion {
     Unicode_6_3,
     Unicode_7_0,
     Unicode_8_0,
+    Unicode_9_0,
+    Unicode_10_0,
 }
 
 

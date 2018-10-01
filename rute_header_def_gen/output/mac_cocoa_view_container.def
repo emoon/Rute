@@ -1,5 +1,5 @@
 struct MacCocoaViewContainer : Widget {
-    set_cocoa_view(view: &NSView),
+    set_cocoa_view(view: *NSView),
     cocoa_view() -> NSView?,
 }
 

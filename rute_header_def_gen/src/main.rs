@@ -34,6 +34,7 @@ struct ArgType {
     name: String,
     array: bool,
     pointer: bool,
+    reference: bool,
 }
 
 const SKIP_NAMES: &[&'static str] = &[
@@ -89,8 +90,12 @@ fn get_non_array_type(arg: &mut ArgType, in_name: &str, is_return: IsReturnType)
         name = in_name;
     }
 
-    if name.find('*').is_some() || name.find('&').is_some() {
+    if name.find('*').is_some() {
         arg.pointer = true;
+    }
+
+    if name.find('&').is_some() {
+        arg.reference = true;
     }
 
     let new_name;
@@ -169,10 +174,14 @@ fn format_arg_type(arg: &ArgType, is_return: IsReturnType) -> String {
 
     if is_return == IsReturnType::Yes {
         res.push_str(&arg.name);
-        if arg.pointer { res.push('?') }
+        if arg.pointer || arg.reference { res.push('?') }
     } else {
-        if arg.pointer && arg.name != "String" {
+        if arg.reference && arg.name != "String" {
             res.push('&');
+        }
+
+        if arg.pointer && arg.name != "String" {
+            res.push('*');
         }
 
         res.push_str(&arg.name);

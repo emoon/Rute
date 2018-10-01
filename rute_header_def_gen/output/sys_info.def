@@ -118,6 +118,8 @@ struct SysInfo {
     [static] product_version() -> String,
     [static] pretty_product_name() -> String,
     [static] machine_host_name() -> String,
+    [static] machine_unique_id() -> ByteArray,
+    [static] boot_unique_id() -> ByteArray,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

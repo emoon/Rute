@@ -5,6 +5,14 @@ enum LayoutChangeHint {
     HorizontalSortHint,
 }
 
+[org_name(QAbstractItemModel)]
+enum CheckIndexOption {
+    NoOption,
+    IndexIsValid,
+    DoNotUseParent,
+    ParentIsInvalid,
+}
+
 struct AbstractItemModel : Object {
     has_index(row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [replace] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
@@ -21,8 +29,8 @@ struct AbstractItemModel : Object {
     [replace] set_item_data(index: &ModelIndexType, roles: &Map<int,Type) -> bool,
     [replace] mime_types() -> [String],
     [replace] mime_data(indexes: &[ModelIndex]) -> MimeData?,
-    [replace] can_drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
-    [replace] drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    [replace] can_drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    [replace] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [replace] supported_drop_actions() -> Rute::DropActions,
     [replace] supported_drag_actions() -> Rute::DropActions,
     [replace] insert_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
@@ -45,6 +53,7 @@ struct AbstractItemModel : Object {
     [replace] match(start: &ModelIndexType, role: i32, value: &VariantType, hits: i32, flags: Rute::MatchFlags) -> [ModelIndex],
     [replace] span(index: &ModelIndexType) -> Size,
     [replace] role_names() -> Hash<int,,
+    check_index(index: &ModelIndexType, options: CheckIndexOptions) -> bool,
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
     [event] header_data_changed(orientation: Rute::Orientation, first: i32, last: i32),
     [event] layout_changed(parents: [PersistentModelIndexType], hint: AbstractItemModel::LayoutChangeHint),
@@ -66,7 +75,7 @@ struct AbstractItemModel : Object {
     [replace] submit() -> bool,
     [replace] revert(),
     reset_internal_data(),
-    create_index(row: i32, column: i32, data: &void) -> ModelIndex,
+    create_index(row: i32, column: i32, data: *void) -> ModelIndex,
     create_index(row: i32, column: i32, id: quintptr) -> ModelIndex,
     encode_data(indexes: &[ModelIndex], stream: &DataStreamType),
     decode_data(row: i32, column: i32, parent: &ModelIndexType, stream: &DataStreamType) -> bool,

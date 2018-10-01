@@ -16,8 +16,6 @@ struct SizeF {
     rwidth() -> f32?,
     rheight() -> f32?,
     to_size() -> Size,
-    [static] from_cg_size(size: CGSize) -> SizeF,
-    to_cg_size() -> CGSize,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,5 +1,5 @@
 struct SyntaxHighlighter : Object {
-    set_document(doc: &TextDocumentType),
+    set_document(doc: *TextDocumentType),
     document() -> TextDocument?,
     rehighlight(),
     rehighlight_block(block: &TextBlockType),
@@ -11,7 +11,7 @@ struct SyntaxHighlighter : Object {
     previous_block_state() -> i32,
     current_block_state() -> i32,
     set_current_block_state(new_state: i32),
-    set_current_block_user_data(data: &TextBlockUserDataType),
+    set_current_block_user_data(data: *TextBlockUserDataType),
     current_block_user_data() -> TextBlockUserData?,
     current_block() -> TextBlock,
 }

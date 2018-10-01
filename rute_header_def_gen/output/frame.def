@@ -37,11 +37,11 @@ struct Frame : Widget {
     set_mid_line_width(arg0: i32),
     frame_rect() -> Rect,
     set_frame_rect(arg0: &RectType),
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(arg0: &PaintEventType),
-    [replace] change_event(arg0: &EventType),
-    draw_frame(arg0: &PainterType),
-    init_style_option(option: &StyleOptionFrameType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(arg0: *PaintEventType),
+    [replace] change_event(arg0: *EventType),
+    draw_frame(arg0: *PainterType),
+    init_style_option(option: *StyleOptionFrameType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

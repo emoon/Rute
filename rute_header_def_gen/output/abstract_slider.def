@@ -46,14 +46,14 @@ struct AbstractSlider : Widget {
     [event] slider_released(),
     [event] range_changed(min: i32, max: i32),
     [event] action_triggered(action: i32),
-    [replace] event(e: &EventType) -> bool,
+    [replace] event(e: *EventType) -> bool,
     set_repeat_action(action: AbstractSlider::SliderAction, threshold_time: i32, repeat_time: i32),
     repeat_action() -> AbstractSlider::SliderAction,
     [replace] slider_change(change: AbstractSlider::SliderChange),
-    [replace] key_press_event(ev: &KeyEventType),
-    [replace] timer_event(arg0: &TimerEventType),
-    [replace] wheel_event(e: &WheelEventType),
-    [replace] change_event(e: &EventType),
+    [replace] key_press_event(ev: *KeyEventType),
+    [replace] timer_event(arg0: *TimerEventType),
+    [replace] wheel_event(e: *WheelEventType),
+    [replace] change_event(e: *EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

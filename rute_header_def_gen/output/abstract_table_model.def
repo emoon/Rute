@@ -1,7 +1,7 @@
 struct AbstractTableModel : AbstractItemModel {
     [replace] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
     [replace] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
-    [replace] drop_mime_data(data: &MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    [replace] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [replace] flags(index: &ModelIndexType) -> Rute::ItemFlags,
 }
 

@@ -12,14 +12,14 @@ enum DockWidgetFeature {
 
 struct DockWidget : Widget {
     widget() -> Widget?,
-    set_widget(widget: &WidgetType),
+    set_widget(widget: *WidgetType),
     set_features(features: DockWidgetFeatures),
     features() -> DockWidgetFeatures,
     set_floating(floating: bool),
     is_floating() -> bool,
     set_allowed_areas(areas: Rute::DockWidgetAreas),
     allowed_areas() -> Rute::DockWidgetAreas,
-    set_title_bar_widget(widget: &WidgetType),
+    set_title_bar_widget(widget: *WidgetType),
     title_bar_widget() -> Widget?,
     is_area_allowed(area: Rute::DockWidgetArea) -> bool,
     toggle_view_action() -> Action?,
@@ -28,11 +28,11 @@ struct DockWidget : Widget {
     [event] allowed_areas_changed(allowed_areas: Rute::DockWidgetAreas),
     [event] visibility_changed(visible: bool),
     [event] dock_location_changed(area: Rute::DockWidgetArea),
-    [replace] change_event(event: &EventType),
-    [replace] close_event(event: &CloseEventType),
-    [replace] paint_event(event: &PaintEventType),
-    [replace] event(event: &EventType) -> bool,
-    init_style_option(option: &StyleOptionDockWidgetType),
+    [replace] change_event(event: *EventType),
+    [replace] close_event(event: *CloseEventType),
+    [replace] paint_event(event: *PaintEventType),
+    [replace] event(event: *EventType) -> bool,
+    init_style_option(option: *StyleOptionDockWidgetType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

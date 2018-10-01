@@ -36,14 +36,14 @@ enum Transformation {
 
 
 struct ImageIOHandler {
-    set_device(device: &IODeviceType),
+    set_device(device: *IODeviceType),
     device() -> IODevice?,
     set_format(format: &ByteArrayType),
     set_format(format: &ByteArrayType),
     format() -> ByteArray,
     [replace] name() -> ByteArray,
     [replace] can_read() -> bool,
-    [replace] read(image: &ImageType) -> bool,
+    [replace] read(image: *ImageType) -> bool,
     [replace] write(image: &ImageType) -> bool,
     [replace] option(option: ImageIOHandler::ImageOption) -> Variant,
     [replace] set_option(option: ImageIOHandler::ImageOption, value: &VariantType),

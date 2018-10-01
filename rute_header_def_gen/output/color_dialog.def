@@ -13,10 +13,10 @@ struct ColorDialog : Dialog {
     test_option(option: ColorDialog::ColorDialogOption) -> bool,
     set_options(options: ColorDialogOptions),
     options() -> ColorDialogOptions,
-    open(receiver: &ObjectType, member: &char),
+    open(receiver: *ObjectType, member: *char),
     [replace] set_visible(visible: bool),
-    [static] get_color(initial: &ColorType, parent: &WidgetType, title: String, options: ColorDialogOptions) -> Color,
-    [static] get_rgba(rgba: RgbType, ok: &bool, parent: &WidgetType) -> Rgb,
+    [static] get_color(initial: &ColorType, parent: *WidgetType, title: String, options: ColorDialogOptions) -> Color,
+    [static] get_rgba(rgba: RgbType, ok: *bool, parent: *WidgetType) -> Rgb,
     [static] custom_count() -> i32,
     [static] custom_color(index: i32) -> Color,
     [static] set_custom_color(index: i32, color: ColorType),
@@ -24,7 +24,7 @@ struct ColorDialog : Dialog {
     [static] set_standard_color(index: i32, color: ColorType),
     [event] current_color_changed(color: &ColorType),
     [event] color_selected(color: &ColorType),
-    [replace] change_event(event: &EventType),
+    [replace] change_event(event: *EventType),
     [replace] done(result: i32),
 }
 

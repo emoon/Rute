@@ -17,7 +17,7 @@ struct Clipboard : Object {
     text(subtype: String, mode: Clipboard::Mode) -> String,
     set_text(arg0: String, mode: Clipboard::Mode),
     mime_data(mode: Clipboard::Mode) -> MimeData?,
-    set_mime_data(data: &MimeDataType, mode: Clipboard::Mode),
+    set_mime_data(data: *MimeDataType, mode: Clipboard::Mode),
     image(mode: Clipboard::Mode) -> Image,
     pixmap(mode: Clipboard::Mode) -> Pixmap,
     set_image(arg0: &ImageType, mode: Clipboard::Mode),

@@ -3,7 +3,7 @@ struct ErrorMessage : Dialog {
     show_message(message: String),
     show_message(message: String, type: String),
     [replace] done(arg0: i32),
-    [replace] change_event(e: &EventType),
+    [replace] change_event(e: *EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

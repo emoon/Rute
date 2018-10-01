@@ -8,7 +8,7 @@ enum IconEngineHook {
 
 
 struct IconEngine {
-    [replace] paint(painter: &PainterType, rect: &RectType, mode: Icon::Mode, state: Icon::State),
+    [replace] paint(painter: *PainterType, rect: &RectType, mode: Icon::Mode, state: Icon::State),
     [replace] actual_size(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
     [replace] pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
     [replace] add_pixmap(pixmap: &PixmapType, mode: Icon::Mode, state: Icon::State),
@@ -21,7 +21,7 @@ struct IconEngine {
     [replace] icon_name() -> String,
     is_null() -> bool,
     scaled_pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State, scale: f32) -> Pixmap,
-    [replace] virtual_hook(id: i32, data: &void),
+    [replace] virtual_hook(id: i32, data: *void),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

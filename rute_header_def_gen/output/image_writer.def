@@ -10,7 +10,7 @@ enum ImageWriterError {
 struct ImageWriter {
     set_format(format: &ByteArrayType),
     format() -> ByteArray,
-    set_device(device: &IODeviceType),
+    set_device(device: *IODeviceType),
     device() -> IODevice?,
     set_file_name(file_name: String),
     file_name() -> String,

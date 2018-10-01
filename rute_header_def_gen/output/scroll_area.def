@@ -1,6 +1,6 @@
 struct ScrollArea : AbstractScrollArea {
     widget() -> Widget?,
-    set_widget(widget: &WidgetType),
+    set_widget(widget: *WidgetType),
     take_widget() -> Widget?,
     widget_resizable() -> bool,
     set_widget_resizable(resizable: bool),
@@ -9,10 +9,10 @@ struct ScrollArea : AbstractScrollArea {
     alignment() -> Rute::Alignment,
     set_alignment(arg0: Rute::Alignment),
     ensure_visible(x: i32, y: i32, xmargin: i32, ymargin: i32),
-    ensure_widget_visible(child_widget: &WidgetType, xmargin: i32, ymargin: i32),
-    [replace] event(arg0: &EventType) -> bool,
-    [replace] event_filter(arg0: &ObjectType, arg1: &EventType) -> bool,
-    [replace] resize_event(arg0: &ResizeEventType),
+    ensure_widget_visible(child_widget: *WidgetType, xmargin: i32, ymargin: i32),
+    [replace] event(arg0: *EventType) -> bool,
+    [replace] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    [replace] resize_event(arg0: *ResizeEventType),
     [replace] scroll_contents_by(dx: i32, dy: i32),
     [replace] viewport_size_hint() -> Size,
 }

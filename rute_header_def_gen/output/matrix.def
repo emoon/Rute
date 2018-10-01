@@ -6,8 +6,8 @@ struct Matrix {
     m22() -> f32,
     dx() -> f32,
     dy() -> f32,
-    map(x: i32, y: i32, tx: &i32, ty: &i32),
-    map(x: f32, y: f32, tx: &f32, ty: &f32),
+    map(x: i32, y: i32, tx: *i32, ty: *i32),
+    map(x: f32, y: f32, tx: *f32, ty: *f32),
     map_rect(arg0: &RectType) -> Rect,
     map_rect(arg0: &RectFType) -> RectF,
     map(p: &PointType) -> Point,
@@ -26,7 +26,7 @@ struct Matrix {
     rotate(a: f32) -> Matrix?,
     is_invertible() -> bool,
     determinant() -> f32,
-    inverted(invertible: &bool) -> Matrix,
+    inverted(invertible: *bool) -> Matrix,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

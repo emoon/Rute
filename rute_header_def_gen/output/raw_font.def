@@ -21,9 +21,9 @@ struct RawFont {
     weight() -> i32,
     advances_for_glyph_indexes(glyph_indexes: [u32]) -> [PointF],
     advances_for_glyph_indexes(glyph_indexes: [u32], layout_flags: LayoutFlags) -> [PointF],
-    glyph_indexes_for_chars(chars: &CharType, num_chars: i32, glyph_indexes: &u32, num_glyphs: &i32) -> bool,
-    advances_for_glyph_indexes(glyph_indexes: &u32, advances: &PointFType, num_glyphs: i32) -> bool,
-    advances_for_glyph_indexes(glyph_indexes: &u32, advances: &PointFType, num_glyphs: i32, layout_flags: LayoutFlags) -> bool,
+    glyph_indexes_for_chars(chars: *CharType, num_chars: i32, glyph_indexes: *u32, num_glyphs: *i32) -> bool,
+    advances_for_glyph_indexes(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32) -> bool,
+    advances_for_glyph_indexes(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32, layout_flags: LayoutFlags) -> bool,
     alpha_map_for_glyph(glyph_index: u32, antialiasing_type: RawFont::AntialiasingType, transform: &TransformType) -> Image,
     path_for_glyph(glyph_index: u32) -> PainterPath,
     bounding_rect(glyph_index: u32) -> RectF,
@@ -45,7 +45,7 @@ struct RawFont {
     supports_character(ucs4: uint) -> bool,
     supports_character(character: CharType) -> bool,
     supported_writing_systems() -> List<QFontDatabase::WritingSystem>,
-    font_table(tag_name: &char) -> ByteArray,
+    font_table(tag_name: *char) -> ByteArray,
     [static] from_font(font: &FontType, writing_system: FontDatabase::WritingSystem) -> RawFont,
 }
 

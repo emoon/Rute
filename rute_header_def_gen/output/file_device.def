@@ -69,12 +69,12 @@ struct FileDevice : IODevice {
     [replace] permissions() -> Permissions,
     [replace] set_permissions(permission_spec: Permissions) -> bool,
     map(offset: i64, size: i64, flags: FileDevice::MemoryMapFlags) -> uchar?,
-    unmap(address: &uchar) -> bool,
+    unmap(address: *uchar) -> bool,
     file_time(time: FileDevice::FileTime) -> DateTime,
     set_file_time(new_date: &DateTimeType, file_time: FileDevice::FileTime) -> bool,
-    [replace] read_data(data: &char, maxlen: i64) -> i64,
-    [replace] write_data(data: &char, len: i64) -> i64,
-    [replace] read_line_data(data: &char, maxlen: i64) -> i64,
+    [replace] read_data(data: *char, maxlen: i64) -> i64,
+    [replace] write_data(data: *char, len: i64) -> i64,
+    [replace] read_line_data(data: *char, maxlen: i64) -> i64,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

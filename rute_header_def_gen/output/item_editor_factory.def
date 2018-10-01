@@ -1,10 +1,10 @@
 
 struct ItemEditorFactory {
-    [replace] create_editor(user_type: i32, parent: &WidgetType) -> Widget?,
+    [replace] create_editor(user_type: i32, parent: *WidgetType) -> Widget?,
     [replace] value_property_name(user_type: i32) -> ByteArray,
-    register_editor(user_type: i32, creator: &ItemEditorCreatorBaseType),
+    register_editor(user_type: i32, creator: *ItemEditorCreatorBaseType),
     [static] default_factory() -> ItemEditorFactory?,
-    [static] set_default_factory(factory: &ItemEditorFactoryType),
+    [static] set_default_factory(factory: *ItemEditorFactoryType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

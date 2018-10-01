@@ -19,7 +19,7 @@ struct WizardPage : Widget {
     [event] complete_changed(),
     set_field(name: String, value: &VariantType),
     field(name: String) -> Variant,
-    register_field(name: String, widget: &WidgetType, property: &char, changed_signal: &char),
+    register_field(name: String, widget: *WidgetType, property: *char, changed_signal: *char),
     wizard() -> Wizard?,
 }
 

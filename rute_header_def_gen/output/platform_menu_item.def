@@ -19,7 +19,7 @@ struct PlatformMenuItem : Object {
     [replace] tag() -> quintptr,
     [replace] set_text(text: String),
     [replace] set_icon(icon: &IconType),
-    [replace] set_menu(menu: &PlatformMenuType),
+    [replace] set_menu(menu: *PlatformMenuType),
     [replace] set_visible(is_visible: bool),
     [replace] set_is_separator(is_separator: bool),
     [replace] set_font(font: &FontType),

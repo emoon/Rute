@@ -32,8 +32,8 @@ enum NumberFlag {
 
 
 struct TextStream {
-    set_codec(codec: &TextCodecType),
-    set_codec(codec_name: &char),
+    set_codec(codec: *TextCodecType),
+    set_codec(codec_name: *char),
     codec() -> TextCodec?,
     set_auto_detect_unicode(enabled: bool),
     auto_detect_unicode() -> bool,
@@ -41,7 +41,7 @@ struct TextStream {
     generate_byte_order_mark() -> bool,
     set_locale(locale: &LocaleType),
     locale() -> Locale,
-    set_device(device: &IODeviceType),
+    set_device(device: *IODeviceType),
     device() -> IODevice?,
     status() -> TextStream::Status,
     set_status(status: TextStream::Status),

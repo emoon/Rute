@@ -8,7 +8,7 @@ enum ResizeMode {
 }
 
 struct HeaderView : AbstractItemView {
-    [replace] set_model(model: &AbstractItemModelType),
+    [replace] set_model(model: *AbstractItemModelType),
     orientation() -> Rute::Orientation,
     offset() -> i32,
     length() -> i32,
@@ -36,6 +36,8 @@ struct HeaderView : AbstractItemView {
     logical_index(visual_index: i32) -> i32,
     set_sections_movable(movable: bool),
     sections_movable() -> bool,
+    set_first_section_movable(movable: bool),
+    is_first_section_movable() -> bool,
     set_sections_clickable(clickable: bool),
     sections_clickable() -> bool,
     set_highlight_sections(highlight: bool),
@@ -88,14 +90,14 @@ struct HeaderView : AbstractItemView {
     initialize_sections(),
     initialize_sections(start: i32, end: i32),
     [replace] current_changed(current: &ModelIndexType, old: &ModelIndexType),
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(e: &PaintEventType),
-    [replace] mouse_press_event(e: &MouseEventType),
-    [replace] mouse_move_event(e: &MouseEventType),
-    [replace] mouse_release_event(e: &MouseEventType),
-    [replace] mouse_double_click_event(e: &MouseEventType),
-    [replace] viewport_event(e: &EventType) -> bool,
-    [replace] paint_section(painter: &PainterType, rect: &RectType, logical_index: i32),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(e: *PaintEventType),
+    [replace] mouse_press_event(e: *MouseEventType),
+    [replace] mouse_move_event(e: *MouseEventType),
+    [replace] mouse_release_event(e: *MouseEventType),
+    [replace] mouse_double_click_event(e: *MouseEventType),
+    [replace] viewport_event(e: *EventType) -> bool,
+    [replace] paint_section(painter: *PainterType, rect: &RectType, logical_index: i32),
     [replace] section_size_from_contents(logical_index: i32) -> Size,
     [replace] horizontal_offset() -> i32,
     [replace] vertical_offset() -> i32,
@@ -109,7 +111,7 @@ struct HeaderView : AbstractItemView {
     [replace] move_cursor(arg0: AbstractItemView::CursorAction, arg1: Rute::KeyboardModifiers) -> ModelIndex,
     [replace] set_selection(rect: &RectType, flags: ItemSelectionModel::SelectionFlags),
     [replace] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    init_style_option(option: &StyleOptionHeaderType),
+    init_style_option(option: *StyleOptionHeaderType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

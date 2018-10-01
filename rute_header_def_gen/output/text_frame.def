@@ -6,7 +6,7 @@ struct TextFrame : TextObject {
     first_position() -> i32,
     last_position() -> i32,
     layout_data() -> TextFrameLayoutData?,
-    set_layout_data(data: &TextFrameLayoutDataType),
+    set_layout_data(data: *TextFrameLayoutDataType),
     child_frames() -> [TextFrame?],
     parent_frame() -> TextFrame?,
     begin() -> TextFrame::iterator,

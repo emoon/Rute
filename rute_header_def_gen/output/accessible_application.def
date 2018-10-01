@@ -1,7 +1,7 @@
 struct AccessibleApplication : AccessibleObject {
     [replace] window() -> Window?,
     [replace] child_count() -> i32,
-    [replace] index_of_child(arg0: &AccessibleInterfaceType) -> i32,
+    [replace] index_of_child(arg0: *AccessibleInterfaceType) -> i32,
     [replace] focus_child() -> AccessibleInterface?,
     [replace] parent() -> AccessibleInterface?,
     [replace] child(index: i32) -> AccessibleInterface?,

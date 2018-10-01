@@ -69,7 +69,7 @@ enum ButtonLayout {
 struct PlatformDialogHelper : Object {
     [replace] style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
     [replace] exec(),
-    [replace] show(window_flags: Rute::WindowFlags, window_modality: Rute::WindowModality, parent: &WindowType) -> bool,
+    [replace] show(window_flags: Rute::WindowFlags, window_modality: Rute::WindowModality, parent: *WindowType) -> bool,
     [replace] hide(),
     [static] default_style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
     [static] button_layout(orientation: Rute::Orientation, policy: PlatformDialogHelper::ButtonLayout) -> i32?,

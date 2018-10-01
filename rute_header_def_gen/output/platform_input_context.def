@@ -10,7 +10,7 @@ struct PlatformInputContext : Object {
     [replace] commit(),
     [replace] update(arg0: Rute::InputMethodQueries),
     [replace] invoke_action(arg0: InputMethod::Action, cursor_position: i32),
-    [replace] filter_event(event: &EventType) -> bool,
+    [replace] filter_event(event: *EventType) -> bool,
     [replace] keyboard_rect() -> RectF,
     emit_keyboard_rect_changed(),
     [replace] is_animating() -> bool,
@@ -23,7 +23,7 @@ struct PlatformInputContext : Object {
     emit_locale_changed(),
     [replace] input_direction() -> Rute::LayoutDirection,
     emit_input_direction_changed(new_direction: Rute::LayoutDirection),
-    [replace] set_focus_object(object: &ObjectType),
+    [replace] set_focus_object(object: *ObjectType),
     input_method_accepted() -> bool,
     [static] set_selection_on_focus_object(anchor_pos: &PointFType, cursor_pos: &PointFType),
 }

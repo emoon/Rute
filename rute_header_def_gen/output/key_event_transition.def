@@ -3,8 +3,8 @@ struct KeyEventTransition : EventTransition {
     set_key(key: i32),
     modifier_mask() -> Rute::KeyboardModifiers,
     set_modifier_mask(modifiers: Rute::KeyboardModifiers),
-    [replace] on_transition(event: &EventType),
-    [replace] event_test(event: &EventType) -> bool,
+    [replace] on_transition(event: *EventType),
+    [replace] event_test(event: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

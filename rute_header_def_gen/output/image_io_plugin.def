@@ -6,8 +6,8 @@ enum Capability {
 }
 
 struct ImageIOPlugin : Object {
-    [replace] capabilities(device: &IODeviceType, format: &ByteArrayType) -> Capabilities,
-    [replace] create(device: &IODeviceType, format: &ByteArrayType) -> ImageIOHandler?,
+    [replace] capabilities(device: *IODeviceType, format: &ByteArrayType) -> Capabilities,
+    [replace] create(device: *IODeviceType, format: &ByteArrayType) -> ImageIOHandler?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

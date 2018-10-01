@@ -1,9 +1,9 @@
 struct PlatformNativeInterface : Object {
     [replace] native_resource_for_integration(resource: &ByteArrayType),
-    [replace] native_resource_for_context(resource: &ByteArrayType, context: &OpenGLContextType),
-    [replace] native_resource_for_screen(resource: &ByteArrayType, screen: &ScreenType),
-    [replace] native_resource_for_window(resource: &ByteArrayType, window: &WindowType),
-    [replace] native_resource_for_backing_store(resource: &ByteArrayType, backing_store: &BackingStoreType),
+    [replace] native_resource_for_context(resource: &ByteArrayType, context: *OpenGLContextType),
+    [replace] native_resource_for_screen(resource: &ByteArrayType, screen: *ScreenType),
+    [replace] native_resource_for_window(resource: &ByteArrayType, window: *WindowType),
+    [replace] native_resource_for_backing_store(resource: &ByteArrayType, backing_store: *BackingStoreType),
     [replace] native_resource_for_cursor(resource: &ByteArrayType, cursor: &CursorType),
     [replace] native_resource_function_for_integration(resource: &ByteArrayType) -> NativeResourceForIntegrationFunction,
     [replace] native_resource_function_for_context(resource: &ByteArrayType) -> NativeResourceForContextFunction,
@@ -11,11 +11,11 @@ struct PlatformNativeInterface : Object {
     [replace] native_resource_function_for_window(resource: &ByteArrayType) -> NativeResourceForWindowFunction,
     [replace] native_resource_function_for_backing_store(resource: &ByteArrayType) -> NativeResourceForBackingStoreFunction,
     [replace] platform_function(function: &ByteArrayType) -> FunctionPointer,
-    [replace] window_properties(window: &PlatformWindowType) -> VariantMap,
-    [replace] window_property(window: &PlatformWindowType, name: String) -> Variant,
-    [replace] window_property(window: &PlatformWindowType, name: String, default_value: &VariantType) -> Variant,
-    [replace] set_window_property(window: &PlatformWindowType, name: String, value: &VariantType),
-    [event] window_property_changed(window: &PlatformWindowType, property_name: String),
+    [replace] window_properties(window: *PlatformWindowType) -> VariantMap,
+    [replace] window_property(window: *PlatformWindowType, name: String) -> Variant,
+    [replace] window_property(window: *PlatformWindowType, name: String, default_value: &VariantType) -> Variant,
+    [replace] set_window_property(window: *PlatformWindowType, name: String, value: &VariantType),
+    [event] window_property_changed(window: *PlatformWindowType, property_name: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

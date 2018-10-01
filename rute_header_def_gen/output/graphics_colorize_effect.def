@@ -2,7 +2,7 @@ struct GraphicsColorizeEffect : GraphicsEffect {
     color() -> Color,
     set_color(c: &ColorType),
     [event] color_changed(color: &ColorType),
-    [replace] draw(painter: &PainterType),
+    [replace] draw(painter: *PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -35,8 +35,8 @@ struct LCDNumber : Frame {
     set_bin_mode(),
     set_small_decimal_point(arg0: bool),
     [event] overflow(),
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(arg0: &PaintEventType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(arg0: *PaintEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

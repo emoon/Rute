@@ -10,13 +10,13 @@ struct RubberBand : Widget {
     move(p: &PointType),
     resize(w: i32, h: i32),
     resize(s: &SizeType),
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(arg0: &PaintEventType),
-    [replace] change_event(arg0: &EventType),
-    [replace] show_event(arg0: &ShowEventType),
-    [replace] resize_event(arg0: &ResizeEventType),
-    [replace] move_event(arg0: &MoveEventType),
-    init_style_option(option: &StyleOptionRubberBandType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(arg0: *PaintEventType),
+    [replace] change_event(arg0: *EventType),
+    [replace] show_event(arg0: *ShowEventType),
+    [replace] resize_event(arg0: *ResizeEventType),
+    [replace] move_event(arg0: *MoveEventType),
+    init_style_option(option: *StyleOptionRubberBandType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

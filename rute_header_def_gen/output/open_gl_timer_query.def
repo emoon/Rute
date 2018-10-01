@@ -1,7 +1,7 @@
 struct OpenGLTimerQuery : Object {
     create() -> bool,
     is_created() -> bool,
-    object_id() -> GLuint,
+    object_id() -> i32,
     begin(),
     end(),
     wait_for_timestamp() -> GLuint64,

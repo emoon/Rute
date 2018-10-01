@@ -26,14 +26,14 @@ struct TextBrowser : TextEdit {
     [event] highlighted(arg0: &UrlType),
     [event] highlighted(arg0: String),
     [event] anchor_clicked(arg0: &UrlType),
-    [replace] event(e: &EventType) -> bool,
-    [replace] key_press_event(ev: &KeyEventType),
-    [replace] mouse_move_event(ev: &MouseEventType),
-    [replace] mouse_press_event(ev: &MouseEventType),
-    [replace] mouse_release_event(ev: &MouseEventType),
-    [replace] focus_out_event(ev: &FocusEventType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] key_press_event(ev: *KeyEventType),
+    [replace] mouse_move_event(ev: *MouseEventType),
+    [replace] mouse_press_event(ev: *MouseEventType),
+    [replace] mouse_release_event(ev: *MouseEventType),
+    [replace] focus_out_event(ev: *FocusEventType),
     [replace] focus_next_prev_child(next: bool) -> bool,
-    [replace] paint_event(e: &PaintEventType),
+    [replace] paint_event(e: *PaintEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -4,10 +4,10 @@ struct KeySequenceEdit : Widget {
     clear(),
     [event] editing_finished(),
     [event] key_sequence_changed(key_sequence: &KeySequenceType),
-    [replace] event(arg0: &EventType) -> bool,
-    [replace] key_press_event(arg0: &KeyEventType),
-    [replace] key_release_event(arg0: &KeyEventType),
-    [replace] timer_event(arg0: &TimerEventType),
+    [replace] event(arg0: *EventType) -> bool,
+    [replace] key_press_event(arg0: *KeyEventType),
+    [replace] key_release_event(arg0: *KeyEventType),
+    [replace] timer_event(arg0: *TimerEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

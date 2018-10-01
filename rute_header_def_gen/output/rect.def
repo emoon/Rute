@@ -37,9 +37,9 @@ struct Rect {
     move_to(x: i32, t: i32),
     move_to(p: &PointType),
     set_rect(x: i32, y: i32, w: i32, h: i32),
-    get_rect(x: &i32, y: &i32, w: &i32, h: &i32),
+    get_rect(x: *i32, y: *i32, w: *i32, h: *i32),
     set_coords(x1: i32, y1: i32, x2: i32, y2: i32),
-    get_coords(x1: &i32, y1: &i32, x2: &i32, y2: &i32),
+    get_coords(x1: *i32, y1: *i32, x2: *i32, y2: *i32),
     adjust(x1: i32, y1: i32, x2: i32, y2: i32),
     adjusted(x1: i32, y1: i32, x2: i32, y2: i32) -> Rect,
     size() -> Size,
@@ -57,7 +57,6 @@ struct Rect {
     intersects(r: &RectType) -> bool,
     margins_added(margins: &MarginsType) -> Rect,
     margins_removed(margins: &MarginsType) -> Rect,
-    to_cg_rect() -> CGRect,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

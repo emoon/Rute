@@ -36,6 +36,8 @@ enum ThemeHint {
     WheelScrollLines,
     TouchDoubleTapDistance,
     ShowShortcutsInContextMenus,
+    IconFallbackSearchPaths,
+    MouseQuickSelectionThreshold,
 }
 
 [org_name(QPlatformTheme)]

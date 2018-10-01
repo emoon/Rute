@@ -40,8 +40,8 @@ enum StyleOptionVersion {
 
 
 struct StyleOption {
-    init(w: &WidgetType),
-    init_from(w: &WidgetType),
+    init(w: *WidgetType),
+    init_from(w: *WidgetType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

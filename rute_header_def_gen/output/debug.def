@@ -7,7 +7,7 @@ enum Latin1Content {
 
 struct Debug {
     put_ucs4(ucs4: uint),
-    put_byte_array(begin: &char, length: size_t, content: Debug::Latin1Content),
+    put_byte_array(begin: *char, length: i32, content: Debug::Latin1Content),
     swap(other: &DebugType),
     reset_format() -> Debug?,
     space() -> Debug?,

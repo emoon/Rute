@@ -2,7 +2,7 @@ struct AccessibleWidget : AccessibleObject, AccessibleActionInterface {
     [replace] is_valid() -> bool,
     [replace] window() -> Window?,
     [replace] child_count() -> i32,
-    [replace] index_of_child(child: &AccessibleInterfaceType) -> i32,
+    [replace] index_of_child(child: *AccessibleInterfaceType) -> i32,
     [replace] relations(match: Accessible::Relation) -> Vector<QPair<QAccessibleInterface *, QAccessible::Relation> >,
     [replace] focus_child() -> AccessibleInterface?,
     [replace] rect() -> Rect,

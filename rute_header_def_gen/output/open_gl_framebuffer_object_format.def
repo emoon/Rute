@@ -6,10 +6,10 @@ struct OpenGLFramebufferObjectFormat {
     mipmap() -> bool,
     set_attachment(attachment: OpenGLFramebufferObject::Attachment),
     attachment() -> OpenGLFramebufferObject::Attachment,
-    set_texture_target(target: GLenum),
-    texture_target() -> GLenum,
-    set_internal_texture_format(internal_texture_format: GLenum),
-    internal_texture_format() -> GLenum,
+    set_texture_target(target: i32),
+    texture_target() -> i32,
+    set_internal_texture_format(internal_texture_format: i32),
+    internal_texture_format() -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

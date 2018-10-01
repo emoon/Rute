@@ -1,15 +1,15 @@
 struct SplashScreen : Widget {
     set_pixmap(pixmap: &PixmapType),
     pixmap() -> Pixmap,
-    finish(w: &WidgetType),
+    finish(w: *WidgetType),
     repaint(),
     message() -> String,
     show_message(message: String, alignment: i32, color: &ColorType),
     clear_message(),
     [event] message_changed(message: String),
-    [replace] event(e: &EventType) -> bool,
-    [replace] draw_contents(painter: &PainterType),
-    [replace] mouse_press_event(arg0: &MouseEventType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] draw_contents(painter: *PainterType),
+    [replace] mouse_press_event(arg0: *MouseEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -4,8 +4,8 @@ struct CommandLinkButton : PushButton {
     [replace] size_hint() -> Size,
     [replace] height_for_width(arg0: i32) -> i32,
     [replace] minimum_size_hint() -> Size,
-    [replace] event(e: &EventType) -> bool,
-    [replace] paint_event(arg0: &PaintEventType),
+    [replace] event(e: *EventType) -> bool,
+    [replace] paint_event(arg0: *PaintEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

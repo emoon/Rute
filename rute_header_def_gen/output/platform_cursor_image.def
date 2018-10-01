@@ -2,7 +2,7 @@
 struct PlatformCursorImage {
     image() -> Image?,
     hotspot() -> Point,
-    set(data: &uchar, mask: &uchar, width: i32, height: i32, hot_x: i32, hot_y: i32),
+    set(data: *uchar, mask: *uchar, width: i32, height: i32, hot_x: i32, hot_y: i32),
     set(image: &ImageType, hx: i32, hy: i32),
     set(arg0: Rute::CursorShape),
 }

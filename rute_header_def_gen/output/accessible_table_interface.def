@@ -19,7 +19,7 @@ struct AccessibleTableInterface {
     [replace] select_column(column: i32) -> bool,
     [replace] unselect_row(row: i32) -> bool,
     [replace] unselect_column(column: i32) -> bool,
-    [replace] model_change(event: &AccessibleTableModelChangeEventType),
+    [replace] model_change(event: *AccessibleTableModelChangeEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

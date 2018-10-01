@@ -5,7 +5,7 @@ struct TextDocumentFragment {
     to_html(encoding: &ByteArrayType) -> String,
     [static] from_plain_text(plain_text: String) -> TextDocumentFragment,
     [static] from_html(html: String) -> TextDocumentFragment,
-    [static] from_html(html: String, resource_provider: &TextDocumentType) -> TextDocumentFragment,
+    [static] from_html(html: String, resource_provider: *TextDocumentType) -> TextDocumentFragment,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

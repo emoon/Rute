@@ -24,7 +24,7 @@ struct LineF {
     angle_to(l: &LineFType) -> f32,
     unit_vector() -> LineF,
     normal_vector() -> LineF,
-    intersect(l: &LineFType, intersection_point: &PointFType) -> LineF::IntersectType,
+    intersect(l: &LineFType, intersection_point: *PointFType) -> LineF::IntersectType,
     angle(l: &LineFType) -> f32,
     point_at(t: f32) -> PointF,
     center() -> PointF,
