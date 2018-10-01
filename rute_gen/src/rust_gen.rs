@@ -2,8 +2,8 @@ use api_parser::*;
 use heck::SnakeCase;
 use liquid::{Object, ParserBuilder, Template, Value};
 use std::borrow::Cow;
-use std::collections::HashMap;
 use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -222,7 +222,6 @@ impl<'a> GenericLabelAssign<'a> {
         panic!("Unable to find a character to use for {}", gen_type);
     }
 }
-
 
 ///
 /// Generate the structs with static only functions. The structs will be generated in this style
@@ -928,7 +927,10 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "<W: WidgetType>(&self, foo: &W, bar: &W) -> &Self");
+        assert_eq!(
+            func_impl,
+            "<W: WidgetType>(&self, foo: &W, bar: &W) -> &Self"
+        );
     }
 
     //

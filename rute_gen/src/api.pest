@@ -16,12 +16,13 @@ no_chain     = { ("[no_chain]") }
 event        = { ("[event]") }
 manual       = { ("[manual]") }
 static_typ   = { ("[static]") }
+pointer_exp  = { ("*") }
 refexp       = { ("&") }
 optional     = { ("?") }
-array        = { ("[") ~ refexp? ~ vtype ~ ("]") }
+array        = { ("[") ~ (refexp | pointer_exp)? ~ vtype ~ ("]") }
 enum_use     = { ("::") ~ vtype }
-retexp       = { ("->") ~ refexp? ~ (vtype | array) ~ enum_use? ~ optional? }
-var          = { name ~ (":") ~ refexp? ~ vtype ~ enum_use? }
+retexp       = { ("->") ~ (refexp | pointer_exp)? ~ (vtype | array) ~ enum_use? ~ optional? }
+var          = { name ~ (":") ~ (refexp | pointer_exp)? ~ vtype ~ enum_use? }
 varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
