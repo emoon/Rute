@@ -1,6 +1,6 @@
 language: rust
 os:
-  # - linux
+  - linux
   - osx
 rust:
   - stable
@@ -36,7 +36,9 @@ before_script:
    fi
 
 script:
-    - cd rute && cargo build --example app && cd ..
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+        cd rute && cargo build --example app && cd ..
+      fi
     - cd rute_gen && cargo test
 
 after_success:
