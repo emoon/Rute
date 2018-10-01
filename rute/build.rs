@@ -9,7 +9,8 @@ extern crate cc;
 fn main() {
     let target = env::var("TARGET").unwrap();
 
-    let qt_dir = env::var("QT5").unwrap_or_else(|_| { panic!(
+    let qt_dir = env::var("QT5").unwrap_or_else(|_| {
+        panic!(
 "\n\nUnable to find QT5 environment variable. This needs to be set in order to use Rute.
 You can download Qt from https://www.qt.io and the set the variable. Examples:
 macOS: export QT5=/Users/USER_NAME/Qt/5.11.2/clang_64\n
@@ -26,9 +27,9 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
 
     // Generate the moc code
     Command::new(moc_exe)
-            .args(&[&rute_signal_wrappers, "-o", &dest_path_str])
-            .output()
-            .expect("failed to execute process");
+        .args(&[&rute_signal_wrappers, "-o", &dest_path_str])
+        .output()
+        .expect("failed to execute process");
 
     // Add base include dirs for all targets
     let mut build = cc::Build::new();
@@ -64,24 +65,21 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
 
         let framework_dir = format!("{}/lib", qt_dir.as_str());
         let f_flag = format!("-F{}/lib", qt_dir.as_str());
-            build
+        build
             .flag(&f_flag)
             .flag("-std=c++11")
             .cpp(true)
             .cpp_link_stdlib("c++")
             .cpp_set_stdlib("c++");
 
-            println!("cargo:rustc-link-search=framework={}", &framework_dir);
-            println!("cargo:rustc-link-lib=framework={}", "Cocoa");
-            println!("cargo:rustc-link-lib=framework={}", "QtWidgets");
-            println!("cargo:rustc-link-lib=framework={}", "QtGui");
-            println!("cargo:rustc-link-lib=framework={}", "QtCore");
+        println!("cargo:rustc-link-search=framework={}", &framework_dir);
+        println!("cargo:rustc-link-lib=framework={}", "Cocoa");
+        println!("cargo:rustc-link-lib=framework={}", "QtWidgets");
+        println!("cargo:rustc-link-lib=framework={}", "QtGui");
+        println!("cargo:rustc-link-lib=framework={}", "QtCore");
     } else if target.contains("linux") {
         let lib_dir = format!("{}/lib", qt_dir.as_str());
-        build
-        .flag("-std=c++11")
-        .cpp_link_stdlib("stdc++")
-        .cpp(true);
+        build.flag("-std=c++11").cpp_link_stdlib("stdc++").cpp(true);
 
         println!("cargo:rustc-link-search=static={}", &lib_dir);
         println!("cargo:rustc-link-lib=static={}", "Qt5Widgets");
@@ -98,4 +96,3 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
 
     build.compile("rute_cpp");
 }
-
