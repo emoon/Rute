@@ -39,7 +39,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
         cd rute && cargo build --example app && cd ..;
     fi
-    - cd rute_gen && cargo test
+    cd rute_gen && cargo test
 
 after_success:
   # Coverage report
