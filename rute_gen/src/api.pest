@@ -26,7 +26,7 @@ varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
 namelist     = { name ~ ((",") ~ name)* }
-function     = { static_typ? ~ org_name? ~ no_chain? ~ manual? ~ event? ~ replace? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function     = { (static_typ | org_name | no_chain | manual | event | replace)*? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
