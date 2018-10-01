@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionToolBar)]
+[org_name(QStyleOptionToolBar)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionToolBar)]
+[org_name(QStyleOptionToolBar)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionToolBar)]
+[org_name(QStyleOptionToolBar)]
 enum ToolBarPosition {
     Beginning,
     Middle,
@@ -16,7 +16,7 @@ enum ToolBarPosition {
     OnlyOne,
 }
 
-#[org_name(QStyleOptionToolBar)]
+[org_name(QStyleOptionToolBar)]
 enum ToolBarFeature {
     None,
     Movable,

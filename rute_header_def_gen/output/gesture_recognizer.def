@@ -1,4 +1,4 @@
-#[org_name(QGestureRecognizer)]
+[org_name(QGestureRecognizer)]
 enum ResultFlag {
     Ignore,
     MayBeGesture,

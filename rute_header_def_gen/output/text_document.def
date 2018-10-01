@@ -1,17 +1,17 @@
-#[org_name(QTextDocument)]
+[org_name(QTextDocument)]
 enum MetaInformation {
     DocumentTitle,
     DocumentUrl,
 }
 
-#[org_name(QTextDocument)]
+[org_name(QTextDocument)]
 enum FindFlag {
     FindBackward,
     FindCaseSensitively,
     FindWholeWords,
 }
 
-#[org_name(QTextDocument)]
+[org_name(QTextDocument)]
 enum ResourceType {
     HtmlResource,
     ImageResource,
@@ -19,7 +19,7 @@ enum ResourceType {
     UserResource,
 }
 
-#[org_name(QTextDocument)]
+[org_name(QTextDocument)]
 enum Stacks {
     UndoStack,
     RedoStack,

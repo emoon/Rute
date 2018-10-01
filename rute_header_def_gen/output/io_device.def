@@ -1,4 +1,4 @@
-#[org_name(QIODevice)]
+[org_name(QIODevice)]
 enum OpenModeFlag {
     NotOpen,
     ReadOnly,

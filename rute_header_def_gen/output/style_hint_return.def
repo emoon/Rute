@@ -1,16 +1,16 @@
-#[org_name(QStyleHintReturn)]
+[org_name(QStyleHintReturn)]
 enum HintReturnType {
     SH_Default,
     SH_Mask,
     SH_Variant,
 }
 
-#[org_name(QStyleHintReturn)]
+[org_name(QStyleHintReturn)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleHintReturn)]
+[org_name(QStyleHintReturn)]
 enum StyleOptionVersion {
     Version,
 }

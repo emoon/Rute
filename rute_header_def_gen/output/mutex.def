@@ -1,4 +1,4 @@
-#[org_name(QMutex)]
+[org_name(QMutex)]
 enum RecursionMode {
     NonRecursive,
     Recursive,

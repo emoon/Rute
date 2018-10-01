@@ -1,4 +1,4 @@
-#[org_name(QFontDatabase)]
+[org_name(QFontDatabase)]
 enum WritingSystem {
     Any,
     Latin,
@@ -38,7 +38,7 @@ enum WritingSystem {
     WritingSystemsCount,
 }
 
-#[org_name(QFontDatabase)]
+[org_name(QFontDatabase)]
 enum SystemFont {
     GeneralFont,
     FixedFont,

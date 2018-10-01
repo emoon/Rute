@@ -1,4 +1,4 @@
-#[org_name(QGesture)]
+[org_name(QGesture)]
 enum GestureCancelPolicy {
     CancelNone,
     CancelAllInContext,

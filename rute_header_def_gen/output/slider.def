@@ -1,4 +1,4 @@
-#[org_name(QSlider)]
+[org_name(QSlider)]
 enum TickPosition {
     NoTicks,
     TicksAbove,

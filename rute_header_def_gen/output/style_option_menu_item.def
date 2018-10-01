@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionMenuItem)]
+[org_name(QStyleOptionMenuItem)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionMenuItem)]
+[org_name(QStyleOptionMenuItem)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionMenuItem)]
+[org_name(QStyleOptionMenuItem)]
 enum MenuItemType {
     Normal,
     DefaultItem,
@@ -20,7 +20,7 @@ enum MenuItemType {
     EmptyArea,
 }
 
-#[org_name(QStyleOptionMenuItem)]
+[org_name(QStyleOptionMenuItem)]
 enum CheckType {
     NotCheckable,
     Exclusive,

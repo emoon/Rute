@@ -1,4 +1,4 @@
-#[org_name(QDirModel)]
+[org_name(QDirModel)]
 enum Roles {
     FileIconRole,
     FilePathRole,

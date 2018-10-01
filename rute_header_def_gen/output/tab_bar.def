@@ -1,4 +1,4 @@
-#[org_name(QTabBar)]
+[org_name(QTabBar)]
 enum Shape {
     RoundedNorth,
     RoundedSouth,
@@ -10,13 +10,13 @@ enum Shape {
     TriangularEast,
 }
 
-#[org_name(QTabBar)]
+[org_name(QTabBar)]
 enum ButtonPosition {
     LeftSide,
     RightSide,
 }
 
-#[org_name(QTabBar)]
+[org_name(QTabBar)]
 enum SelectionBehavior {
     SelectLeftTab,
     SelectRightTab,

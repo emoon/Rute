@@ -1,4 +1,4 @@
-#[attributes(ManualCreate, NoWrapClass)]
+[attributes(ManualCreate, NoWrapClass)]
 struct Application {
     //[static] style() -> Style?,
     //[static] set_style(arg0: Rute::test),
@@ -22,13 +22,17 @@ struct Application {
     [static] active_modal_widget() -> Widget?,
     [static] focus_widget() -> Widget?,
     [static] active_window() -> Widget?,
-    [static] set_active_window(act: &WidgetType),
+
+    [static]
+    [org_name(set_active_window)]
+    set_active_window(act: &WidgetType),
+
     //[static] widget_at(p: &PointType) -> Widget?,
     [static] widget_at(x: i32, y: i32) -> Widget?,
     //[static] top_level_at(p: &PointType) -> Widget?,
     [static] top_level_at(x: i32, y: i32) -> Widget?,
     [static] beep(),
-    //[static] alert(widget: &WidgetType, duration: i32),
+    [static] alert(widget: &WidgetType, duration: i32),
     [static] set_cursor_flash_time(arg0: i32),
     [static] cursor_flash_time() -> i32,
     [static] set_double_click_interval(arg0: i32),

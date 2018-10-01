@@ -1,10 +1,10 @@
-#[org_name(QSurface)]
+[org_name(QSurface)]
 enum SurfaceClass {
     Window,
     Offscreen,
 }
 
-#[org_name(QSurface)]
+[org_name(QSurface)]
 enum SurfaceType {
     RasterSurface,
     OpenGLSurface,

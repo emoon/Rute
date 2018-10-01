@@ -1,29 +1,29 @@
-#[org_name(QListView)]
+[org_name(QListView)]
 enum Movement {
     Static,
     Free,
     Snap,
 }
 
-#[org_name(QListView)]
+[org_name(QListView)]
 enum Flow {
     LeftToRight,
     TopToBottom,
 }
 
-#[org_name(QListView)]
+[org_name(QListView)]
 enum ResizeMode {
     Fixed,
     Adjust,
 }
 
-#[org_name(QListView)]
+[org_name(QListView)]
 enum LayoutMode {
     SinglePass,
     Batched,
 }
 
-#[org_name(QListView)]
+[org_name(QListView)]
 enum ViewMode {
     ListMode,
     IconMode,

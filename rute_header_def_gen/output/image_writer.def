@@ -1,4 +1,4 @@
-#[org_name(QImageWriter)]
+[org_name(QImageWriter)]
 enum ImageWriterError {
     UnknownError,
     DeviceError,

@@ -1,4 +1,4 @@
-#[org_name(QMessageBox)]
+[org_name(QMessageBox)]
 enum Icon {
     NoIcon,
     Information,
@@ -7,7 +7,7 @@ enum Icon {
     Question,
 }
 
-#[org_name(QMessageBox)]
+[org_name(QMessageBox)]
 enum ButtonRole {
     InvalidRole,
     AcceptRole,
@@ -22,7 +22,7 @@ enum ButtonRole {
     NRoles,
 }
 
-#[org_name(QMessageBox)]
+[org_name(QMessageBox)]
 enum StandardButton {
     NoButton,
     Ok,

@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionDockWidget)]
+[org_name(QStyleOptionDockWidget)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionDockWidget)]
+[org_name(QStyleOptionDockWidget)]
 enum StyleOptionVersion {
     Version,
 }

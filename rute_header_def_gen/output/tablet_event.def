@@ -1,4 +1,4 @@
-#[org_name(QTabletEvent)]
+[org_name(QTabletEvent)]
 enum TabletDevice {
     NoDevice,
     Puck,
@@ -9,7 +9,7 @@ enum TabletDevice {
     RotationStylus,
 }
 
-#[org_name(QTabletEvent)]
+[org_name(QTabletEvent)]
 enum PointerType {
     UnknownPointer,
     Pen,

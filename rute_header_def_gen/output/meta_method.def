@@ -1,11 +1,11 @@
-#[org_name(QMetaMethod)]
+[org_name(QMetaMethod)]
 enum Access {
     Private,
     Protected,
     Public,
 }
 
-#[org_name(QMetaMethod)]
+[org_name(QMetaMethod)]
 enum MethodType {
     Method,
     Signal,
@@ -13,7 +13,7 @@ enum MethodType {
     Constructor,
 }
 
-#[org_name(QMetaMethod)]
+[org_name(QMetaMethod)]
 enum Attributes {
     Compatibility,
     Cloned,

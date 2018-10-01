@@ -1,4 +1,4 @@
-#[org_name(QPaintDevice)]
+[org_name(QPaintDevice)]
 enum PaintDeviceMetric {
     PdmWidth,
     PdmHeight,

@@ -1,4 +1,4 @@
-#[org_name(QPlatformTextureList)]
+[org_name(QPlatformTextureList)]
 enum Flag {
     StacksOnTop,
     TextureIsSrgb,

@@ -1,4 +1,4 @@
-#[org_name(QEvent)]
+[org_name(QEvent)]
 enum Type {
     None,
     Timer,

@@ -1,11 +1,11 @@
-#[org_name(QOpenGLFramebufferObject)]
+[org_name(QOpenGLFramebufferObject)]
 enum Attachment {
     NoAttachment,
     CombinedDepthStencil,
     Depth,
 }
 
-#[org_name(QOpenGLFramebufferObject)]
+[org_name(QOpenGLFramebufferObject)]
 enum FramebufferRestorePolicy {
     DontRestoreFramebufferBinding,
     RestoreFramebufferBindingToDefault,

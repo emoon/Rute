@@ -1,4 +1,4 @@
-#[org_name(QGraphicsPolygonItem)]
+[org_name(QGraphicsPolygonItem)]
 enum GraphicsPolygonItemFixMeEnums {
     Type,
 }

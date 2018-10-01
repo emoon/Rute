@@ -1,4 +1,4 @@
-#[org_name(QItemSelectionModel)]
+[org_name(QItemSelectionModel)]
 enum SelectionFlag {
     NoUpdate,
     Clear,

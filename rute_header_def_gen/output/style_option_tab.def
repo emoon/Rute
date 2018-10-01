@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum TabPosition {
     Beginning,
     Middle,
@@ -16,21 +16,21 @@ enum TabPosition {
     OnlyOneTab,
 }
 
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum SelectedPosition {
     NotAdjacent,
     NextIsSelected,
     PreviousIsSelected,
 }
 
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum CornerWidget {
     NoCornerWidgets,
     LeftCornerWidget,
     RightCornerWidget,
 }
 
-#[org_name(QStyleOptionTab)]
+[org_name(QStyleOptionTab)]
 enum TabFeature {
     None,
     HasFrame,

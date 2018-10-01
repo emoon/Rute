@@ -1,4 +1,4 @@
-#[org_name(QOpenGLVersionFunctionsBackend)]
+[org_name(QOpenGLVersionFunctionsBackend)]
 enum Version {
     OpenGL_1_0_Core,
     OpenGL_1_1_Core,

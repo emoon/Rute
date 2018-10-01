@@ -1,4 +1,4 @@
-#[org_name(QAbstractSlider)]
+[org_name(QAbstractSlider)]
 enum SliderAction {
     SliderNoAction,
     SliderSingleStepAdd,
@@ -10,7 +10,7 @@ enum SliderAction {
     SliderMove,
 }
 
-#[org_name(QAbstractSlider)]
+[org_name(QAbstractSlider)]
 enum SliderChange {
     SliderRangeChange,
     SliderOrientationChange,

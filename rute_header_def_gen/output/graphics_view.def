@@ -1,24 +1,24 @@
-#[org_name(QGraphicsView)]
+[org_name(QGraphicsView)]
 enum ViewportAnchor {
     NoAnchor,
     AnchorViewCenter,
     AnchorUnderMouse,
 }
 
-#[org_name(QGraphicsView)]
+[org_name(QGraphicsView)]
 enum CacheModeFlag {
     CacheNone,
     CacheBackground,
 }
 
-#[org_name(QGraphicsView)]
+[org_name(QGraphicsView)]
 enum DragMode {
     NoDrag,
     ScrollHandDrag,
     RubberBandDrag,
 }
 
-#[org_name(QGraphicsView)]
+[org_name(QGraphicsView)]
 enum ViewportUpdateMode {
     FullViewportUpdate,
     MinimalViewportUpdate,
@@ -27,7 +27,7 @@ enum ViewportUpdateMode {
     BoundingRectViewportUpdate,
 }
 
-#[org_name(QGraphicsView)]
+[org_name(QGraphicsView)]
 enum OptimizationFlag {
     DontClipPainter,
     DontSavePainterState,

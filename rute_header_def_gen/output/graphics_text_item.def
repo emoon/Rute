@@ -1,4 +1,4 @@
-#[org_name(QGraphicsTextItem)]
+[org_name(QGraphicsTextItem)]
 enum GraphicsTextItemFixMeEnums {
     Type,
 }

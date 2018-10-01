@@ -1,4 +1,4 @@
-#[org_name(QPlatformMenu)]
+[org_name(QPlatformMenu)]
 enum MenuType {
     DefaultMenu,
     EditMenu,

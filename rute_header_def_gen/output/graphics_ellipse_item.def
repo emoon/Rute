@@ -1,4 +1,4 @@
-#[org_name(QGraphicsEllipseItem)]
+[org_name(QGraphicsEllipseItem)]
 enum GraphicsEllipseItemFixMeEnums {
     Type,
 }

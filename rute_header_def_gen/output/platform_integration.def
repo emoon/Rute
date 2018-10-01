@@ -1,4 +1,4 @@
-#[org_name(QPlatformIntegration)]
+[org_name(QPlatformIntegration)]
 enum Capability {
     ThreadedPixmaps,
     OpenGL,
@@ -20,7 +20,7 @@ enum Capability {
     TopStackedNativeChildWindows,
 }
 
-#[org_name(QPlatformIntegration)]
+[org_name(QPlatformIntegration)]
 enum StyleHint {
     CursorFlashTime,
     KeyboardInputInterval,

@@ -1,4 +1,4 @@
-#[org_name(QOpenGLBuffer)]
+[org_name(QOpenGLBuffer)]
 enum Type {
     VertexBuffer,
     IndexBuffer,
@@ -6,7 +6,7 @@ enum Type {
     PixelUnpackBuffer,
 }
 
-#[org_name(QOpenGLBuffer)]
+[org_name(QOpenGLBuffer)]
 enum UsagePattern {
     StreamDraw,
     StreamRead,
@@ -19,14 +19,14 @@ enum UsagePattern {
     DynamicCopy,
 }
 
-#[org_name(QOpenGLBuffer)]
+[org_name(QOpenGLBuffer)]
 enum Access {
     ReadOnly,
     WriteOnly,
     ReadWrite,
 }
 
-#[org_name(QOpenGLBuffer)]
+[org_name(QOpenGLBuffer)]
 enum RangeAccessFlag {
     RangeRead,
     RangeWrite,

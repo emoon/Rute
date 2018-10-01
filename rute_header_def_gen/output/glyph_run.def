@@ -1,4 +1,4 @@
-#[org_name(QGlyphRun)]
+[org_name(QGlyphRun)]
 enum GlyphRunFlag {
     Overline,
     Underline,

@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionToolButton)]
+[org_name(QStyleOptionToolButton)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionToolButton)]
+[org_name(QStyleOptionToolButton)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionToolButton)]
+[org_name(QStyleOptionToolButton)]
 enum ToolButtonFeature {
     None,
     Arrow,

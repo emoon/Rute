@@ -1,4 +1,4 @@
-#[org_name(QTypeInfo)]
+[org_name(QTypeInfo)]
 enum TypeInfoFixMeEnums {
     isSpecialized,
     isPointer,

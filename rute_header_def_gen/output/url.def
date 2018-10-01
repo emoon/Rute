@@ -1,11 +1,11 @@
-#[org_name(QUrl)]
+[org_name(QUrl)]
 enum ParsingMode {
     TolerantMode,
     StrictMode,
     DecodedMode,
 }
 
-#[org_name(QUrl)]
+[org_name(QUrl)]
 enum UrlFormattingOption {
     None,
     RemoveScheme,
@@ -22,7 +22,7 @@ enum UrlFormattingOption {
     NormalizePathSegments,
 }
 
-#[org_name(QUrl)]
+[org_name(QUrl)]
 enum ComponentFormattingOption {
     PrettyDecoded,
     EncodeSpaces,
@@ -34,7 +34,7 @@ enum ComponentFormattingOption {
     FullyDecoded,
 }
 
-#[org_name(QUrl)]
+[org_name(QUrl)]
 enum UserInputResolutionOption {
     DefaultResolution,
     AssumeLocalFile,

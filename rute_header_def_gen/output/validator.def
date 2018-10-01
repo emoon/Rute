@@ -1,4 +1,4 @@
-#[org_name(QValidator)]
+[org_name(QValidator)]
 enum State {
     Invalid,
     Intermediate,

@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionHeader)]
+[org_name(QStyleOptionHeader)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionHeader)]
+[org_name(QStyleOptionHeader)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionHeader)]
+[org_name(QStyleOptionHeader)]
 enum SectionPosition {
     Beginning,
     Middle,
@@ -16,7 +16,7 @@ enum SectionPosition {
     OnlyOneSection,
 }
 
-#[org_name(QStyleOptionHeader)]
+[org_name(QStyleOptionHeader)]
 enum SelectedPosition {
     NotAdjacent,
     NextIsSelected,
@@ -24,7 +24,7 @@ enum SelectedPosition {
     NextAndPreviousAreSelected,
 }
 
-#[org_name(QStyleOptionHeader)]
+[org_name(QStyleOptionHeader)]
 enum SortIndicator {
     None,
     SortUp,

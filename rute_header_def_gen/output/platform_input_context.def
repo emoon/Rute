@@ -1,4 +1,4 @@
-#[org_name(QPlatformInputContext)]
+[org_name(QPlatformInputContext)]
 enum Capability {
     HiddenTextCapability,
 }

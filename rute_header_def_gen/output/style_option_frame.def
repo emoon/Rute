@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionFrame)]
+[org_name(QStyleOptionFrame)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionFrame)]
+[org_name(QStyleOptionFrame)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionFrame)]
+[org_name(QStyleOptionFrame)]
 enum FrameFeature {
     None,
     Flat,

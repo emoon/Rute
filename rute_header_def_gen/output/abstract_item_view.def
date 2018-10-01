@@ -1,4 +1,4 @@
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum SelectionMode {
     NoSelection,
     SingleSelection,
@@ -7,14 +7,14 @@ enum SelectionMode {
     ContiguousSelection,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum SelectionBehavior {
     SelectItems,
     SelectRows,
     SelectColumns,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum ScrollHint {
     EnsureVisible,
     PositionAtTop,
@@ -22,7 +22,7 @@ enum ScrollHint {
     PositionAtCenter,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum EditTrigger {
     NoEditTriggers,
     CurrentChanged,
@@ -33,13 +33,13 @@ enum EditTrigger {
     AllEditTriggers,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum ScrollMode {
     ScrollPerItem,
     ScrollPerPixel,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum DragDropMode {
     NoDragDrop,
     DragOnly,
@@ -48,7 +48,7 @@ enum DragDropMode {
     InternalMove,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum CursorAction {
     MoveUp,
     MoveDown,
@@ -62,7 +62,7 @@ enum CursorAction {
     MovePrevious,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum State {
     NoState,
     DraggingState,
@@ -73,7 +73,7 @@ enum State {
     AnimatingState,
 }
 
-#[org_name(QAbstractItemView)]
+[org_name(QAbstractItemView)]
 enum DropIndicatorPosition {
     OnItem,
     AboveItem,

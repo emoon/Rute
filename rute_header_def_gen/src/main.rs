@@ -325,7 +325,7 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
 /// Print enums
 ///
 fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str) {
-    writeln!(dest, "#[org_name({})]", org_class_name);
+    writeln!(dest, "[org_name({})]", org_class_name);
 
     if let Some(enum_name) = entry.get_display_name() {
         writeln!(dest, "enum {} {{", enum_name);

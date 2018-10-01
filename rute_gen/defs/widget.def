@@ -1,6 +1,6 @@
 // See documentation.md for format infomation
 
-#[traits(PaintDevice, WidgetType)]
+[traits(PaintDevice, WidgetType)]
 struct Widget {
     show(),
 

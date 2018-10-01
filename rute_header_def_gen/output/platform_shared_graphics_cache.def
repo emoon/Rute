@@ -1,9 +1,9 @@
-#[org_name(QPlatformSharedGraphicsCache)]
+[org_name(QPlatformSharedGraphicsCache)]
 enum PixelFormat {
     Alpha8,
 }
 
-#[org_name(QPlatformSharedGraphicsCache)]
+[org_name(QPlatformSharedGraphicsCache)]
 enum BufferType {
     OpenGLTexture,
 }

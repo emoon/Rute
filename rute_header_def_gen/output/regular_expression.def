@@ -1,4 +1,4 @@
-#[org_name(QRegularExpression)]
+[org_name(QRegularExpression)]
 enum PatternOption {
     NoPatternOption,
     CaseInsensitiveOption,
@@ -12,7 +12,7 @@ enum PatternOption {
     DontAutomaticallyOptimizeOption,
 }
 
-#[org_name(QRegularExpression)]
+[org_name(QRegularExpression)]
 enum MatchType {
     NormalMatch,
     PartialPreferCompleteMatch,
@@ -20,7 +20,7 @@ enum MatchType {
     NoMatch,
 }
 
-#[org_name(QRegularExpression)]
+[org_name(QRegularExpression)]
 enum MatchOption {
     NoMatchOption,
     AnchoredMatchOption,

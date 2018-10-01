@@ -1,4 +1,4 @@
-#[org_name(QMainWindow)]
+[org_name(QMainWindow)]
 enum DockOption {
     AnimatedDocks,
     AllowNestedDocks,

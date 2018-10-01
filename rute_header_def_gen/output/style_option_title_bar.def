@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionTitleBar)]
+[org_name(QStyleOptionTitleBar)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionTitleBar)]
+[org_name(QStyleOptionTitleBar)]
 enum StyleOptionVersion {
     Version,
 }

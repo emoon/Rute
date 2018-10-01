@@ -1,4 +1,4 @@
-#[org_name(QOpenGLWidget)]
+[org_name(QOpenGLWidget)]
 enum UpdateBehavior {
     NoPartialUpdate,
     PartialUpdate,

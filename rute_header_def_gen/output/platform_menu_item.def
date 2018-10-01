@@ -1,4 +1,4 @@
-#[org_name(QPlatformMenuItem)]
+[org_name(QPlatformMenuItem)]
 enum MenuRole {
     NoRole,
     TextHeuristicRole,

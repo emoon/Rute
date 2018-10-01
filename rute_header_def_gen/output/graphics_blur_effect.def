@@ -1,4 +1,4 @@
-#[org_name(QGraphicsBlurEffect)]
+[org_name(QGraphicsBlurEffect)]
 enum BlurHint {
     PerformanceHint,
     QualityHint,

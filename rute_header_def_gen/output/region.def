@@ -1,4 +1,4 @@
-#[org_name(QRegion)]
+[org_name(QRegion)]
 enum RegionType {
     Rectangle,
     Ellipse,

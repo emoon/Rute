@@ -1,4 +1,4 @@
-#[org_name(QApplication)]
+[org_name(QApplication)]
 enum ColorSpec {
     NormalColor,
     CustomColor,

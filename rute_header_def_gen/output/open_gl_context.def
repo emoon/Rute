@@ -1,4 +1,4 @@
-#[org_name(QOpenGLContext)]
+[org_name(QOpenGLContext)]
 enum OpenGLModuleType {
     LibGL,
     LibGLES,

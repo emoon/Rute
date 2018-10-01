@@ -1,4 +1,4 @@
-#[org_name(QGraphicsPathItem)]
+[org_name(QGraphicsPathItem)]
 enum GraphicsPathItemFixMeEnums {
     Type,
 }

@@ -1,4 +1,4 @@
-#[org_name(QPagedPaintDevice)]
+[org_name(QPagedPaintDevice)]
 enum PageSize {
     A4,
     B5,
@@ -129,7 +129,7 @@ enum PageSize {
     Envelope10,
 }
 
-#[org_name(QPagedPaintDevice)]
+[org_name(QPagedPaintDevice)]
 enum PdfVersion {
     PdfVersion_1_4,
     PdfVersion_A1b,

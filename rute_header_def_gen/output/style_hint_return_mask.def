@@ -1,9 +1,9 @@
-#[org_name(QStyleHintReturnMask)]
+[org_name(QStyleHintReturnMask)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleHintReturnMask)]
+[org_name(QStyleHintReturnMask)]
 enum StyleOptionVersion {
     Version,
 }

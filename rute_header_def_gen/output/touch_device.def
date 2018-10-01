@@ -1,10 +1,10 @@
-#[org_name(QTouchDevice)]
+[org_name(QTouchDevice)]
 enum DeviceType {
     TouchScreen,
     TouchPad,
 }
 
-#[org_name(QTouchDevice)]
+[org_name(QTouchDevice)]
 enum CapabilityFlag {
     Position,
     Area,

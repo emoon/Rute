@@ -1,4 +1,4 @@
-#[org_name(QGraphicsProxyWidget)]
+[org_name(QGraphicsProxyWidget)]
 enum GraphicsProxyWidgetFixMeEnums {
     Type,
 }

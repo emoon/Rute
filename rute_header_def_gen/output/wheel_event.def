@@ -1,4 +1,4 @@
-#[org_name(QWheelEvent)]
+[org_name(QWheelEvent)]
 enum WheelEventFixMeEnums {
     DefaultDeltasPerStep,
 }

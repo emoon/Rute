@@ -1,10 +1,10 @@
-#[org_name(QFileDialogOptions)]
+[org_name(QFileDialogOptions)]
 enum ViewMode {
     Detail,
     List,
 }
 
-#[org_name(QFileDialogOptions)]
+[org_name(QFileDialogOptions)]
 enum FileMode {
     AnyFile,
     ExistingFile,
@@ -13,13 +13,13 @@ enum FileMode {
     DirectoryOnly,
 }
 
-#[org_name(QFileDialogOptions)]
+[org_name(QFileDialogOptions)]
 enum AcceptMode {
     AcceptOpen,
     AcceptSave,
 }
 
-#[org_name(QFileDialogOptions)]
+[org_name(QFileDialogOptions)]
 enum DialogLabel {
     LookIn,
     FileName,
@@ -29,7 +29,7 @@ enum DialogLabel {
     DialogLabelCount,
 }
 
-#[org_name(QFileDialogOptions)]
+[org_name(QFileDialogOptions)]
 enum FileDialogOption {
     ShowDirsOnly,
     DontResolveSymlinks,

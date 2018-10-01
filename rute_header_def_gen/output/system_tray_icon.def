@@ -1,4 +1,4 @@
-#[org_name(QSystemTrayIcon)]
+[org_name(QSystemTrayIcon)]
 enum ActivationReason {
     Unknown,
     Context,
@@ -7,7 +7,7 @@ enum ActivationReason {
     MiddleClick,
 }
 
-#[org_name(QSystemTrayIcon)]
+[org_name(QSystemTrayIcon)]
 enum MessageIcon {
     NoIcon,
     Information,

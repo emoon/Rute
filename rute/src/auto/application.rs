@@ -238,6 +238,16 @@ pub trait ApplicationStaticType {
         self
     }
 
+    fn alert<W: WidgetType>(&self, widget: &W, duration: i32) -> &Self {
+        let (obj_widget_1, _funcs) = widget.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+        unsafe {
+            ((*funcs).alert)(obj_data, obj_widget_1, duration);
+        }
+        self
+    }
+
     fn set_cursor_flash_time(&self, arg0: i32) -> &Self {
 
         let (obj_data, funcs) = self.get_application_static_obj_funcs();

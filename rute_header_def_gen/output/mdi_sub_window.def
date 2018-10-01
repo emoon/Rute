@@ -1,4 +1,4 @@
-#[org_name(QMdiSubWindow)]
+[org_name(QMdiSubWindow)]
 enum SubWindowOption {
     AllowOutsideAreaHorizontally,
     AllowOutsideAreaVertically,

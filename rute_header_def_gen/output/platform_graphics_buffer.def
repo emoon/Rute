@@ -1,4 +1,4 @@
-#[org_name(QPlatformGraphicsBuffer)]
+[org_name(QPlatformGraphicsBuffer)]
 enum AccessType {
     None,
     SWReadAccess,
@@ -7,7 +7,7 @@ enum AccessType {
     HWCompositor,
 }
 
-#[org_name(QPlatformGraphicsBuffer)]
+[org_name(QPlatformGraphicsBuffer)]
 enum Origin {
     OriginBottomLeft,
     OriginTopLeft,

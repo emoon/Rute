@@ -1,4 +1,4 @@
-#[org_name(QDir)]
+[org_name(QDir)]
 enum Filter {
     Dirs,
     Files,
@@ -22,7 +22,7 @@ enum Filter {
     NoFilter,
 }
 
-#[org_name(QDir)]
+[org_name(QDir)]
 enum SortFlag {
     Name,
     Time,

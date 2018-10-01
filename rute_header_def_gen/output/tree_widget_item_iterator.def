@@ -1,4 +1,4 @@
-#[org_name(QTreeWidgetItemIterator)]
+[org_name(QTreeWidgetItemIterator)]
 enum IteratorFlag {
     All,
     Hidden,

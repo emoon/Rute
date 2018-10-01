@@ -1,16 +1,16 @@
-#[org_name(QSysInfo)]
+[org_name(QSysInfo)]
 enum Sizes {
     WordSize,
 }
 
-#[org_name(QSysInfo)]
+[org_name(QSysInfo)]
 enum Endian {
     BigEndian,
     LittleEndian,
     ByteOrder,
 }
 
-#[org_name(QSysInfo)]
+[org_name(QSysInfo)]
 enum WinVersion {
     WV_None,
     WV_32s,
@@ -44,7 +44,7 @@ enum WinVersion {
     WV_CE_based,
 }
 
-#[org_name(QSysInfo)]
+[org_name(QSysInfo)]
 enum MacVersion {
     MV_None,
     MV_Unknown,

@@ -1,4 +1,4 @@
-#[org_name(QFileDevice)]
+[org_name(QFileDevice)]
 enum FileError {
     NoError,
     ReadError,
@@ -17,7 +17,7 @@ enum FileError {
     CopyError,
 }
 
-#[org_name(QFileDevice)]
+[org_name(QFileDevice)]
 enum FileTime {
     FileAccessTime,
     FileBirthTime,
@@ -25,7 +25,7 @@ enum FileTime {
     FileModificationTime,
 }
 
-#[org_name(QFileDevice)]
+[org_name(QFileDevice)]
 enum Permission {
     ReadOwner,
     WriteOwner,
@@ -41,13 +41,13 @@ enum Permission {
     ExeOther,
 }
 
-#[org_name(QFileDevice)]
+[org_name(QFileDevice)]
 enum FileHandleFlag {
     AutoCloseHandle,
     DontCloseHandle,
 }
 
-#[org_name(QFileDevice)]
+[org_name(QFileDevice)]
 enum MemoryMapFlags {
     NoOptions,
     MapPrivateOption,

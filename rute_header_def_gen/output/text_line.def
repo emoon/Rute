@@ -1,10 +1,10 @@
-#[org_name(QTextLine)]
+[org_name(QTextLine)]
 enum Edge {
     Leading,
     Trailing,
 }
 
-#[org_name(QTextLine)]
+[org_name(QTextLine)]
 enum CursorPosition {
     CursorBetweenCharacters,
     CursorOnCharacter,

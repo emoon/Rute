@@ -1,4 +1,4 @@
-#[org_name(QHeaderView)]
+[org_name(QHeaderView)]
 enum ResizeMode {
     Interactive,
     Stretch,

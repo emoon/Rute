@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionTabWidgetFrame)]
+[org_name(QStyleOptionTabWidgetFrame)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionTabWidgetFrame)]
+[org_name(QStyleOptionTabWidgetFrame)]
 enum StyleOptionVersion {
     Version,
 }

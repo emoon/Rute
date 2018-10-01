@@ -1,4 +1,4 @@
-#[org_name(QColor)]
+[org_name(QColor)]
 enum Spec {
     Invalid,
     Rgb,
@@ -7,7 +7,7 @@ enum Spec {
     Hsl,
 }
 
-#[org_name(QColor)]
+[org_name(QColor)]
 enum NameFormat {
     HexRgb,
     HexArgb,

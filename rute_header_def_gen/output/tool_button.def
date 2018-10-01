@@ -1,4 +1,4 @@
-#[org_name(QToolButton)]
+[org_name(QToolButton)]
 enum ToolButtonPopupMode {
     DelayedPopup,
     MenuButtonPopup,

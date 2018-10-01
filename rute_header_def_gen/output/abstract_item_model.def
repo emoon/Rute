@@ -1,4 +1,4 @@
-#[org_name(QAbstractItemModel)]
+[org_name(QAbstractItemModel)]
 enum LayoutChangeHint {
     NoLayoutChangeHint,
     VerticalSortHint,

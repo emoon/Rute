@@ -1,4 +1,4 @@
-#[org_name(QDoubleValidator)]
+[org_name(QDoubleValidator)]
 enum Notation {
     StandardNotation,
     ScientificNotation,

@@ -1,4 +1,4 @@
-#[org_name(QRubberBand)]
+[org_name(QRubberBand)]
 enum Shape {
     Line,
     Rectangle,

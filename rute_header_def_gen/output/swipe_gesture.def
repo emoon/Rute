@@ -1,4 +1,4 @@
-#[org_name(QSwipeGesture)]
+[org_name(QSwipeGesture)]
 enum SwipeDirection {
     NoDirection,
     Left,

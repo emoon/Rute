@@ -1,4 +1,4 @@
-#[org_name(QDataWidgetMapper)]
+[org_name(QDataWidgetMapper)]
 enum SubmitPolicy {
     AutoSubmit,
     ManualSubmit,

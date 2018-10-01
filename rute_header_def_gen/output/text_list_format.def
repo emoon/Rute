@@ -1,4 +1,4 @@
-#[org_name(QTextListFormat)]
+[org_name(QTextListFormat)]
 enum Style {
     ListDisc,
     ListCircle,

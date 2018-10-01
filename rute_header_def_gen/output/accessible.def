@@ -1,4 +1,4 @@
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum Event {
     SoundPlayed,
     Alert,
@@ -71,7 +71,7 @@ enum Event {
     InvalidEvent,
 }
 
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum Role {
     NoRole,
     TitleBar,
@@ -151,7 +151,7 @@ enum Role {
     UserRole,
 }
 
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum Text {
     Name,
     Description,
@@ -162,7 +162,7 @@ enum Text {
     UserText,
 }
 
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum RelationFlag {
     Label,
     Labelled,
@@ -171,7 +171,7 @@ enum RelationFlag {
     AllRelations,
 }
 
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum InterfaceType {
     TextInterface,
     EditableTextInterface,
@@ -182,7 +182,7 @@ enum InterfaceType {
     TableCellInterface,
 }
 
-#[org_name(QAccessible)]
+[org_name(QAccessible)]
 enum TextBoundaryType {
     CharBoundary,
     WordBoundary,

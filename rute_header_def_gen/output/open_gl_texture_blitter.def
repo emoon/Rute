@@ -1,4 +1,4 @@
-#[org_name(QOpenGLTextureBlitter)]
+[org_name(QOpenGLTextureBlitter)]
 enum Origin {
     OriginBottomLeft,
     OriginTopLeft,

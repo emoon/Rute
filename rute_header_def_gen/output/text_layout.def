@@ -1,4 +1,4 @@
-#[org_name(QTextLayout)]
+[org_name(QTextLayout)]
 enum CursorMode {
     SkipCharacters,
     SkipWords,

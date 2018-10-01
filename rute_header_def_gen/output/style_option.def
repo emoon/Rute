@@ -1,4 +1,4 @@
-#[org_name(QStyleOption)]
+[org_name(QStyleOption)]
 enum OptionType {
     SO_Default,
     SO_FocusRect,
@@ -28,12 +28,12 @@ enum OptionType {
     SO_ComplexCustomBase,
 }
 
-#[org_name(QStyleOption)]
+[org_name(QStyleOption)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOption)]
+[org_name(QStyleOption)]
 enum StyleOptionVersion {
     Version,
 }

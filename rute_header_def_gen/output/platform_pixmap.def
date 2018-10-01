@@ -1,10 +1,10 @@
-#[org_name(QPlatformPixmap)]
+[org_name(QPlatformPixmap)]
 enum PixelType {
     PixmapType,
     BitmapType,
 }
 
-#[org_name(QPlatformPixmap)]
+[org_name(QPlatformPixmap)]
 enum ClassId {
     RasterClass,
     DirectFBClass,

@@ -1,4 +1,4 @@
-#[org_name(QGraphicsSceneContextMenuEvent)]
+[org_name(QGraphicsSceneContextMenuEvent)]
 enum Reason {
     Mouse,
     Keyboard,

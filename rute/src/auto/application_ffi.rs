@@ -17,6 +17,7 @@ pub struct RUApplicationFuncs {
     pub widget_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) ->  RUWidget,
     pub top_level_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) ->  RUWidget,
     pub beep: extern "C" fn(self_c: *const RUBase),
+    pub alert: extern "C" fn(self_c: *const RUBase, widget: *const RUBase, duration: i32),
     pub set_cursor_flash_time: extern "C" fn(self_c: *const RUBase, arg0: i32),
     pub cursor_flash_time: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_double_click_interval: extern "C" fn(self_c: *const RUBase, arg0: i32),

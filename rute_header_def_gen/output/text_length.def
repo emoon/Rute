@@ -1,4 +1,4 @@
-#[org_name(QTextLength)]
+[org_name(QTextLength)]
 enum Type {
     VariableLength,
     FixedLength,

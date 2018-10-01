@@ -1,4 +1,4 @@
-#[org_name(QInternal)]
+[org_name(QInternal)]
 enum PaintDeviceFlags {
     UnknownDevice,
     Widget,
@@ -14,14 +14,14 @@ enum PaintDeviceFlags {
     OpenGL,
 }
 
-#[org_name(QInternal)]
+[org_name(QInternal)]
 enum RelayoutType {
     RelayoutNormal,
     RelayoutDragging,
     RelayoutDropped,
 }
 
-#[org_name(QInternal)]
+[org_name(QInternal)]
 enum DockPosition {
     LeftDock,
     RightDock,
@@ -30,7 +30,7 @@ enum DockPosition {
     DockCount,
 }
 
-#[org_name(QInternal)]
+[org_name(QInternal)]
 enum Callback {
     EventNotifyCallback,
     LastCallback,

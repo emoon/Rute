@@ -1,4 +1,4 @@
-#[org_name(QWidgetItemV2)]
+[org_name(QWidgetItemV2)]
 enum WidgetItemV2FixMeEnums {
     Dirty,
     HfwCacheMaxSize,

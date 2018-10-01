@@ -1,4 +1,4 @@
-#[org_name(QScrollEvent)]
+[org_name(QScrollEvent)]
 enum ScrollState {
     ScrollStarted,
     ScrollUpdated,

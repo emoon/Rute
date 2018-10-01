@@ -119,6 +119,14 @@ static void application_beep(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    qt_value->alert((QWidget*)widget, duration);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void application_set_cursor_flash_time(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -294,6 +302,7 @@ struct RUApplicationFuncs s_application_funcs = {
     application_widget_at,
     application_top_level_at,
     application_beep,
+    application_alert,
     application_set_cursor_flash_time,
     application_cursor_flash_time,
     application_set_double_click_interval,

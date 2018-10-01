@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionButton)]
+[org_name(QStyleOptionButton)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionButton)]
+[org_name(QStyleOptionButton)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionButton)]
+[org_name(QStyleOptionButton)]
 enum ButtonFeature {
     None,
     Flat,

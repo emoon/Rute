@@ -1,11 +1,11 @@
-#[org_name(QScrollerProperties)]
+[org_name(QScrollerProperties)]
 enum OvershootPolicy {
     OvershootWhenScrollable,
     OvershootAlwaysOff,
     OvershootAlwaysOn,
 }
 
-#[org_name(QScrollerProperties)]
+[org_name(QScrollerProperties)]
 enum FrameRates {
     Standard,
     Fps60,
@@ -13,7 +13,7 @@ enum FrameRates {
     Fps20,
 }
 
-#[org_name(QScrollerProperties)]
+[org_name(QScrollerProperties)]
 enum ScrollMetric {
     MousePressEventDelay,
     DragStartDistance,

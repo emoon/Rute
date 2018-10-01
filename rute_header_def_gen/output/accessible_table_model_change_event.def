@@ -1,4 +1,4 @@
-#[org_name(QAccessibleTableModelChangeEvent)]
+[org_name(QAccessibleTableModelChangeEvent)]
 enum ModelChangeType {
     ModelReset,
     DataChanged,

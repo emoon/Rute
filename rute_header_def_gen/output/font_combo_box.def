@@ -1,4 +1,4 @@
-#[org_name(QFontComboBox)]
+[org_name(QFontComboBox)]
 enum FontFilter {
     AllFonts,
     ScalableFonts,

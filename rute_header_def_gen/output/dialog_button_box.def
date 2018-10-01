@@ -1,4 +1,4 @@
-#[org_name(QDialogButtonBox)]
+[org_name(QDialogButtonBox)]
 enum ButtonRole {
     InvalidRole,
     AcceptRole,
@@ -13,7 +13,7 @@ enum ButtonRole {
     NRoles,
 }
 
-#[org_name(QDialogButtonBox)]
+[org_name(QDialogButtonBox)]
 enum StandardButton {
     NoButton,
     Ok,
@@ -38,7 +38,7 @@ enum StandardButton {
     LastButton,
 }
 
-#[org_name(QDialogButtonBox)]
+[org_name(QDialogButtonBox)]
 enum ButtonLayout {
     WinLayout,
     MacLayout,

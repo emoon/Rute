@@ -1,4 +1,4 @@
-#[org_name(QMessageDialogOptions)]
+[org_name(QMessageDialogOptions)]
 enum Icon {
     NoIcon,
     Information,

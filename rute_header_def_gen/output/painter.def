@@ -1,4 +1,4 @@
-#[org_name(QPainter)]
+[org_name(QPainter)]
 enum RenderHint {
     Antialiasing,
     TextAntialiasing,
@@ -8,12 +8,12 @@ enum RenderHint {
     Qt4CompatiblePainting,
 }
 
-#[org_name(QPainter)]
+[org_name(QPainter)]
 enum PixmapFragmentHint {
     OpaqueHint,
 }
 
-#[org_name(QPainter)]
+[org_name(QPainter)]
 enum CompositionMode {
     CompositionMode_SourceOver,
     CompositionMode_DestinationOver,

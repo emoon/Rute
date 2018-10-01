@@ -1,4 +1,4 @@
-#[org_name(QOpenGLShader)]
+[org_name(QOpenGLShader)]
 enum ShaderTypeBit {
     Vertex,
     Fragment,

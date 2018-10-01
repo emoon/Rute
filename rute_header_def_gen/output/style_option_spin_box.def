@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionSpinBox)]
+[org_name(QStyleOptionSpinBox)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionSpinBox)]
+[org_name(QStyleOptionSpinBox)]
 enum StyleOptionVersion {
     Version,
 }

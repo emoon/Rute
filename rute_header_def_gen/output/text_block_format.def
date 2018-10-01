@@ -1,4 +1,4 @@
-#[org_name(QTextBlockFormat)]
+[org_name(QTextBlockFormat)]
 enum LineHeightTypes {
     SingleHeight,
     ProportionalHeight,

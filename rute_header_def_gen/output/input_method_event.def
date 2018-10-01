@@ -1,4 +1,4 @@
-#[org_name(QInputMethodEvent)]
+[org_name(QInputMethodEvent)]
 enum AttributeType {
     TextFormat,
     Cursor,

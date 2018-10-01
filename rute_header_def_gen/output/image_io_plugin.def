@@ -1,4 +1,4 @@
-#[org_name(QImageIOPlugin)]
+[org_name(QImageIOPlugin)]
 enum Capability {
     CanRead,
     CanWrite,

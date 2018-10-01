@@ -1,4 +1,4 @@
-#[org_name(QBoxLayout)]
+[org_name(QBoxLayout)]
 enum Direction {
     LeftToRight,
     RightToLeft,

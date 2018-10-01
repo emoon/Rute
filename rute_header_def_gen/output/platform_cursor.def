@@ -1,4 +1,4 @@
-#[org_name(QPlatformCursor)]
+[org_name(QPlatformCursor)]
 enum Capability {
     OverrideCursor,
 }

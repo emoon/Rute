@@ -1,4 +1,4 @@
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum StateFlag {
     State_None,
     State_Enabled,
@@ -30,7 +30,7 @@ enum StateFlag {
     State_Mini,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum PrimitiveElement {
     PE_Frame,
     PE_FrameDefaultButton,
@@ -88,7 +88,7 @@ enum PrimitiveElement {
     PE_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum ControlElement {
     CE_PushButton,
     CE_PushButtonBevel,
@@ -140,7 +140,7 @@ enum ControlElement {
     CE_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum SubElement {
     SE_PushButtonContents,
     SE_PushButtonFocusRect,
@@ -204,7 +204,7 @@ enum SubElement {
     SE_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum ComplexControl {
     CC_SpinBox,
     CC_ComboBox,
@@ -218,7 +218,7 @@ enum ComplexControl {
     CC_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum SubControl {
     SC_None,
     SC_ScrollBarAddLine,
@@ -265,7 +265,7 @@ enum SubControl {
     SC_All,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum PixelMetric {
     PM_ButtonMargin,
     PM_ButtonDefaultIndicator,
@@ -368,7 +368,7 @@ enum PixelMetric {
     PM_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum ContentsType {
     CT_PushButton,
     CT_CheckBox,
@@ -396,13 +396,13 @@ enum ContentsType {
     CT_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum RequestSoftwareInputPanel {
     RSIP_OnMouseClickAndAlreadyFocused,
     RSIP_OnMouseClick,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum StyleHint {
     SH_EtchDisabledText,
     SH_DitherDisabledText,
@@ -523,7 +523,7 @@ enum StyleHint {
     SH_CustomBase,
 }
 
-#[org_name(QStyle)]
+[org_name(QStyle)]
 enum StandardPixmap {
     SP_TitleBarMenuButton,
     SP_TitleBarMinButton,

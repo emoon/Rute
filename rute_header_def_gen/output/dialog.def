@@ -1,4 +1,4 @@
-#[org_name(QDialog)]
+[org_name(QDialog)]
 enum DialogCode {
     Rejected,
     Accepted,

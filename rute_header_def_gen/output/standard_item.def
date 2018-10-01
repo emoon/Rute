@@ -1,4 +1,4 @@
-#[org_name(QStandardItem)]
+[org_name(QStandardItem)]
 enum ItemType {
     Type,
     UserType,

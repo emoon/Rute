@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionGroupBox)]
+[org_name(QStyleOptionGroupBox)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionGroupBox)]
+[org_name(QStyleOptionGroupBox)]
 enum StyleOptionVersion {
     Version,
 }

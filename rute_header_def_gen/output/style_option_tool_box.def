@@ -1,14 +1,14 @@
-#[org_name(QStyleOptionToolBox)]
+[org_name(QStyleOptionToolBox)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionToolBox)]
+[org_name(QStyleOptionToolBox)]
 enum StyleOptionVersion {
     Version,
 }
 
-#[org_name(QStyleOptionToolBox)]
+[org_name(QStyleOptionToolBox)]
 enum TabPosition {
     Beginning,
     Middle,
@@ -16,7 +16,7 @@ enum TabPosition {
     OnlyOneTab,
 }
 
-#[org_name(QStyleOptionToolBox)]
+[org_name(QStyleOptionToolBox)]
 enum SelectedPosition {
     NotAdjacent,
     NextIsSelected,

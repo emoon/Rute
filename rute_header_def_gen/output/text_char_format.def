@@ -1,4 +1,4 @@
-#[org_name(QTextCharFormat)]
+[org_name(QTextCharFormat)]
 enum VerticalAlignment {
     AlignNormal,
     AlignSuperScript,
@@ -9,7 +9,7 @@ enum VerticalAlignment {
     AlignBaseline,
 }
 
-#[org_name(QTextCharFormat)]
+[org_name(QTextCharFormat)]
 enum UnderlineStyle {
     NoUnderline,
     SingleUnderline,
@@ -21,7 +21,7 @@ enum UnderlineStyle {
     SpellCheckUnderline,
 }
 
-#[org_name(QTextCharFormat)]
+[org_name(QTextCharFormat)]
 enum FontPropertiesInheritanceBehavior {
     FontPropertiesSpecifiedOnly,
     FontPropertiesAll,

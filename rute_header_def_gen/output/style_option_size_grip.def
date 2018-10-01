@@ -1,9 +1,9 @@
-#[org_name(QStyleOptionSizeGrip)]
+[org_name(QStyleOptionSizeGrip)]
 enum StyleOptionType {
     Type,
 }
 
-#[org_name(QStyleOptionSizeGrip)]
+[org_name(QStyleOptionSizeGrip)]
 enum StyleOptionVersion {
     Version,
 }

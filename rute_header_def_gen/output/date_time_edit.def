@@ -1,4 +1,4 @@
-#[org_name(QDateTimeEdit)]
+[org_name(QDateTimeEdit)]
 enum Section {
     NoSection,
     AmPmSection,

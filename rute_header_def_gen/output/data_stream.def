@@ -1,4 +1,4 @@
-#[org_name(QDataStream)]
+[org_name(QDataStream)]
 enum Version {
     Qt_1_0,
     Qt_2_0,
@@ -30,13 +30,13 @@ enum Version {
     Qt_DefaultCompiledVersion,
 }
 
-#[org_name(QDataStream)]
+[org_name(QDataStream)]
 enum ByteOrder {
     BigEndian,
     LittleEndian,
 }
 
-#[org_name(QDataStream)]
+[org_name(QDataStream)]
 enum Status {
     Ok,
     ReadPastEnd,
@@ -44,7 +44,7 @@ enum Status {
     WriteFailed,
 }
 
-#[org_name(QDataStream)]
+[org_name(QDataStream)]
 enum FloatingPointPrecision {
     SinglePrecision,
     DoublePrecision,

@@ -1,4 +1,4 @@
-#[org_name(QString)]
+[org_name(QString)]
 enum SectionFlag {
     SectionDefault,
     SectionSkipEmpty,
@@ -7,13 +7,13 @@ enum SectionFlag {
     SectionCaseInsensitiveSeps,
 }
 
-#[org_name(QString)]
+[org_name(QString)]
 enum SplitBehavior {
     KeepEmptyParts,
     SkipEmptyParts,
 }
 
-#[org_name(QString)]
+[org_name(QString)]
 enum NormalizationForm {
     NormalizationForm_D,
     NormalizationForm_C,

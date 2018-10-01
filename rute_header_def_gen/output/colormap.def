@@ -1,4 +1,4 @@
-#[org_name(QColormap)]
+[org_name(QColormap)]
 enum Mode {
     Direct,
     Indexed,

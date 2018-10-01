@@ -1,4 +1,4 @@
-#[org_name(QPageLayout)]
+[org_name(QPageLayout)]
 enum Unit {
     Millimeter,
     Point,
@@ -8,13 +8,13 @@ enum Unit {
     Cicero,
 }
 
-#[org_name(QPageLayout)]
+[org_name(QPageLayout)]
 enum Orientation {
     Portrait,
     Landscape,
 }
 
-#[org_name(QPageLayout)]
+[org_name(QPageLayout)]
 enum Mode {
     StandardMode,
     FullPageMode,
