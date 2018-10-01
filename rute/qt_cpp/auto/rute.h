@@ -10,6 +10,7 @@
 #include "font_ffi.h"
 #include "list_widget_ffi.h"
 #include "list_widget_item_ffi.h"
+#include "size_ffi.h"
 #include "widget_ffi.h"
 
 #ifdef __cplusplus
@@ -24,6 +25,9 @@ typedef struct RuteFFI {
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUListWidgetItem (*create_list_widget_item)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUSize (*create_size)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUWidget (*create_widget)(

@@ -14,6 +14,8 @@
 #include <QListWidgetItem>
 
 
+#include <QSize>
+
 #include <QWidget>
 
 
@@ -40,6 +42,22 @@ class WRListWidgetItem : public QListWidgetItem {
 public:
     WRListWidgetItem() : QListWidgetItem() { }
     virtual ~WRListWidgetItem() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRSize : public QSize {
+    //Q_OBJECT
+public:
+    WRSize() : QSize() { }
+    virtual ~WRSize() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }

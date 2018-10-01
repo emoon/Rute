@@ -1,2 +1,2 @@
 [target.x86_64-apple-darwin]
-rustflags = ["-C", "link-arg=-Wl,-rpath,/Users/danielcollin/Qt/5.10.0/clang_64/lib"]
+rustflags = ["-C", "link-arg=-Wl,-rpath,/Users/danielcollin/Qt/5.11.2/clang_64/lib"]

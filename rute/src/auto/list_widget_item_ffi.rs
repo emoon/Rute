@@ -7,7 +7,7 @@ use auto::list_widget_ffi::RUListWidget;
 #[derive(Copy, Clone)]
 pub struct RUListWidgetItemFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub list_widget: extern "C" fn(self_c: *const RUBase) ->  RUListWidget,
+    pub list_widget: extern "C" fn(self_c: *const RUBase) -> RUListWidget,
     pub set_selected: extern "C" fn(self_c: *const RUBase, select: bool),
     pub is_selected: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_hidden: extern "C" fn(self_c: *const RUBase, hide: bool),
@@ -15,11 +15,13 @@ pub struct RUListWidgetItemFuncs {
     pub text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_text: extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char),
     pub status_tip: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
-    pub set_status_tip: extern "C" fn(self_c: *const RUBase, status_tip: *const ::std::os::raw::c_char),
+    pub set_status_tip:
+        extern "C" fn(self_c: *const RUBase, status_tip: *const ::std::os::raw::c_char),
     pub tool_tip: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_tool_tip: extern "C" fn(self_c: *const RUBase, tool_tip: *const ::std::os::raw::c_char),
     pub whats_this: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
-    pub set_whats_this: extern "C" fn(self_c: *const RUBase, whats_this: *const ::std::os::raw::c_char),
+    pub set_whats_this:
+        extern "C" fn(self_c: *const RUBase, whats_this: *const ::std::os::raw::c_char),
     pub text_alignment: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_text_alignment: extern "C" fn(self_c: *const RUBase, alignment: i32),
 }
@@ -37,4 +39,3 @@ pub struct RUListWidgetItem {
     pub host_data: *const RUBase,
     pub all_funcs: *const RUListWidgetItemAllFuncs,
 }
-

@@ -38,6 +38,7 @@ use qt_gen::QtGenerator;
 use rayon::prelude::*;
 use rust_ffi_gen::RustFFIGenerator;
 use rust_gen::RustGenerator;
+use std::process::Command;
 use std::fs;
 use std::sync::RwLock;
 use walkdir::WalkDir;
@@ -58,6 +59,17 @@ fn create_dir(path: &str) {
 
     // This function is expected to succed now when we have checked that the directory exists
     fs::create_dir(path).unwrap();
+}
+
+///
+/// Run Rustfmt on generated file
+///
+fn run_rustfmt(filename: &str) {
+    Command::new("cargo")
+        .arg("fmt")
+        .arg(filename)
+        .output()
+        .expect("failed to execute cargo fmt");
 }
 
 ///
@@ -166,6 +178,11 @@ fn main() {
             // Generate rute main FFI for Rust
             println!("    Generating Rust main file: {}", main_ffi);
             HeaderFFIGenerator::generate_main(&main_ffi, &api_defs_read, RustFFIGenerator::new()).unwrap();
+
+            // Rust Rustfmt on rust files
+            run_rustfmt(&main_rute_rust);
+            run_rustfmt(&main_mod_rust);
+            run_rustfmt(&main_ffi);
         }
 
         // We handle this file a bit special because it contains enums that are used for pretty
@@ -178,6 +195,8 @@ fn main() {
             println!("    Generating Rust global enums: {}", rust_target);
             RustGenerator::new().generate(&rust_target, &api_def).unwrap();
 
+            // Rust Rustfmt on rust files
+            run_rustfmt(&rust_target);
         } else {
             // Build target filenames
             let rust_ffi_target = format!("{}/{}_ffi.rs", rust_dest_dir, base_filename);
@@ -200,6 +219,10 @@ fn main() {
             // Generate the Qt wrapping
             println!("    Generating Qt C++ wrapper: {}.cpp/h", qt_cpp_target);
             QtGenerator::new().generate(&qt_cpp_target, &api_def).unwrap();
+
+            // Rust Rustfmt on rust files
+            run_rustfmt(&rust_ffi_target);
+            run_rustfmt(&rust_target);
         }
     });
 

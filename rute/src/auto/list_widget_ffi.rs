@@ -25,4 +25,3 @@ pub struct RUListWidget {
     pub host_data: *const RUBase,
     pub all_funcs: *const RUListWidgetAllFuncs,
 }
-
