@@ -1271,6 +1271,7 @@ mod tests {
             return_val: None,
             func_type: FunctionType::Regular,
             is_manual: false,
+            cpp_name: "test".to_owned(),
         }
     }
 
@@ -1290,6 +1291,7 @@ mod tests {
             return_val: None,
             func_type: FunctionType::Regular,
             is_manual: false,
+            cpp_name: "test".to_owned(),
         };
 
         let signal_gen = signal_type_callback(&func);
@@ -1312,6 +1314,7 @@ mod tests {
             return_val: None,
             func_type: FunctionType::Regular,
             is_manual: false,
+            cpp_name: "test".to_owned(),
         };
 
         let signal_gen = signal_type_callback(&func);
