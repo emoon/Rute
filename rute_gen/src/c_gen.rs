@@ -317,7 +317,7 @@ impl CapiHeaderGen {
         let ret_value = func
             .return_val
             .as_ref()
-            .map_or("void".into(), |r| r.get_c_type());
+            .map_or("void".into(), |r| r.get_c_type(IsReturnType::Yes));
 
         // write return value and function name
         writeln!(

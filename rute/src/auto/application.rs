@@ -15,6 +15,7 @@ use auto::*;
 pub struct Application<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUApplicationAllFuncs,
+    pub owned: bool,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -23,6 +24,7 @@ impl<'a> Application<'a> {
         Application {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -31,6 +33,7 @@ impl<'a> Application<'a> {
         Application {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -167,12 +170,12 @@ pub trait ApplicationStaticType {
         }
     }
 
-    fn set_active_window<W: WidgetType>(&self, act: &W) -> &Self {
-        let (obj_act_1, _funcs) = act.get_widget_obj_funcs();
+    fn set_active_window<W: WidgetType>(&self, actor: &W) -> &Self {
+        let (obj_actor_1, _funcs) = actor.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_application_static_obj_funcs();
         unsafe {
-            ((*funcs).set_active_window)(obj_data, obj_act_1);
+            ((*funcs).set_active_window)(obj_data, obj_actor_1);
         }
         self
     }
@@ -217,16 +220,6 @@ pub trait ApplicationStaticType {
         let (obj_data, funcs) = self.get_application_static_obj_funcs();
         unsafe {
             ((*funcs).beep)(obj_data);
-        }
-        self
-    }
-
-    fn alert<W: WidgetType>(&self, widget: &W, duration: i32) -> &Self {
-        let (obj_widget_1, _funcs) = widget.get_widget_obj_funcs();
-
-        let (obj_data, funcs) = self.get_application_static_obj_funcs();
-        unsafe {
-            ((*funcs).alert)(obj_data, obj_widget_1, duration);
         }
         self
     }

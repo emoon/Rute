@@ -22,11 +22,10 @@ typedef struct RUApplicationFuncs {
     struct RUWidget (*active_modal_widget)(struct RUBase* self_c);
     struct RUWidget (*focus_widget)(struct RUBase* self_c);
     struct RUWidget (*active_window)(struct RUBase* self_c);
-    void (*set_active_window)(struct RUBase* self_c, struct RUBase* act);
+    void (*set_active_window)(struct RUBase* self_c, struct RUBase* actor);
     struct RUWidget (*widget_at)(struct RUBase* self_c, int x, int y);
     struct RUWidget (*top_level_at)(struct RUBase* self_c, int x, int y);
     void (*beep)(struct RUBase* self_c);
-    void (*alert)(struct RUBase* self_c, struct RUBase* widget, int duration);
     void (*set_cursor_flash_time)(struct RUBase* self_c, int arg0);
     int (*cursor_flash_time)(struct RUBase* self_c);
     void (*set_double_click_interval)(struct RUBase* self_c, int arg0);

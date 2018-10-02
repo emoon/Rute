@@ -313,7 +313,9 @@ impl RustGenerator {
             }
 
             VariableType::Reference => {
-                dest.push('&');
+                if !return_arg {
+                    dest.push('&');
+                }
                 dest.push_str(&type_name);
             }
         }

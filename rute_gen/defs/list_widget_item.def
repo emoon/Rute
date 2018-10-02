@@ -6,7 +6,7 @@ enum ItemType {
 
 struct ListWidgetItem {
     //[replace] clone() -> ListWidgetItem?,
-    list_widget() -> ListWidget?,
+    list_widget() -> &ListWidget?,
     set_selected(select: bool),
     is_selected() -> bool,
     set_hidden(hide: bool),

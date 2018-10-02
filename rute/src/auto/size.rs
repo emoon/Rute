@@ -15,6 +15,7 @@ use auto::*;
 pub struct Size<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUSizeAllFuncs,
+    pub owned: bool,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -23,6 +24,7 @@ impl<'a> Size<'a> {
         Size {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -31,6 +33,7 @@ impl<'a> Size<'a> {
         Size {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -91,6 +94,23 @@ pub trait SizeType {
             ((*funcs).set_height)(obj_data, h);
         }
         self
+    }
+
+    fn expanded_to<S: SizeType>(&self, arg0: &S) -> Size {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_size_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).expanded_to)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
     }
 
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs);

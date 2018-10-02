@@ -56,6 +56,8 @@ pub struct Variable {
     pub vtype: VariableType,
     /// Name of the variable type
     pub type_name: String,
+    /// Name that maps to the QClass/Typename
+    pub qt_type_name: String,
     /// Rest name of a enum. "test" in the case of Rute::test
     pub enum_sub_type: String,
     /// If variable is an array
@@ -79,6 +81,7 @@ impl Default for Variable {
             vtype: VariableType::None,
             type_name: String::new(),
             enum_sub_type: String::new(),
+            qt_type_name: String::new(),
             array: false,
             optional: false,
             pointer: false,
@@ -633,6 +636,34 @@ impl ApiParser {
                 }
             });
         }
+
+        // Build a hash map of all type and their QtName
+        let mut struct_name_map = HashMap::new();
+
+        for api_def in api_defs.iter() {
+            api_def.class_structs.iter().for_each(|s| {
+                struct_name_map.insert(s.name.to_owned(), s.cpp_name.to_owned());
+            });
+        }
+
+        // Patch up the qt names in the function arguments
+        for func in api_defs
+            .iter_mut()
+            .flat_map(|api| api.class_structs.iter_mut())
+            .flat_map(|s| s.functions.iter_mut())
+        {
+            for arg in func.function_args.iter_mut() {
+                if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
+                    arg.qt_type_name = qt_name.to_owned();
+                }
+            }
+
+            if let Some(ref mut ret_val) = func.return_val {
+                if let Some(qt_name) = struct_name_map.get(&ret_val.type_name) {
+                    ret_val.qt_type_name = qt_name.to_owned();
+                }
+            }
+        }
     }
 }
 
@@ -642,6 +673,15 @@ impl ApiParser {
 #[derive(Copy, Clone, PartialEq)]
 pub enum RecurseIncludeSelf {
     Yes,
+}
+
+///
+/// Used when returning types that may differ if used as input or not
+///
+#[derive(Copy, Clone, PartialEq)]
+pub enum IsReturnType {
+    Yes,
+    No,
 }
 
 ///
@@ -807,7 +847,7 @@ impl Struct {
 /// Impl for Variable. Helper functions to make C and Rust generation easier
 ///
 impl Variable {
-    pub fn get_c_type(&self) -> Cow<str> {
+    pub fn get_c_type(&self, is_ret_type: IsReturnType) -> Cow<str> {
         if self.array {
             return "struct RUArray".into();
         }
@@ -830,7 +870,12 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference => "struct RUBase*".into(),
+            VariableType::Reference => {
+                match is_ret_type {
+                    IsReturnType::Yes => format!("struct RU{}", tname).into(),
+                    IsReturnType::No => "struct RUBase*".into(),
+                }
+            }
 
             VariableType::Regular => {
                 if tname == "String" {
@@ -892,12 +937,12 @@ impl Function {
         for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 {
                 match replace_first {
-                    FirstArgType::Keep => function_args.push_str(&arg.get_c_type()),
+                    FirstArgType::Keep => function_args.push_str(&arg.get_c_type(IsReturnType::No)),
                     //FirstArgType::Remove => continue,
                     //FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
                 }
             } else {
-                function_args.push_str(&arg.get_c_type());
+                function_args.push_str(&arg.get_c_type(IsReturnType::No));
             }
 
             function_args.push_str(" ");
@@ -976,7 +1021,7 @@ impl Function {
             }
 
             let filter_arg = filter(i, &arg);
-            let current_arg = filter_arg.map_or_else(|| arg.get_c_type(), |v| v);
+            let current_arg = filter_arg.map_or_else(|| arg.get_c_type(IsReturnType::No), |v| v);
 
             output.push_str(&format!("{} {}", current_arg, arg.name));
 

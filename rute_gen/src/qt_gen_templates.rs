@@ -73,6 +73,7 @@ public:
 {%- if widget %}
     WR{{struct_name}}(QWidget* widget) : {{qt_name}}(widget) { }
 {%- else %}
+    WR{{struct_name}}(const {{qt_name}}& clone) : {{qt_name}}(clone) { }
     WR{{struct_name}}() : {{qt_name}}() { }
 {%- endif %}
     virtual ~WR{{struct_name}}() {
@@ -155,10 +156,18 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}(
     return build_array(ret_value);
 {%- when 'primitive' %}
     return ret_value;
-{%- else %}
+{%- when 'reference' %}
     {{c_return_type}} ctl;
     ctl.qt_data = (struct RUBase*){{qt_ret_value}};
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*){{qt_ret_value}}];
+    ctl.all_funcs = &s_{{funcs_name}}_all_funcs;
+    return ctl;
+{%- else %}
+    {{qt_return_type}}* new_val = new {{qt_return_type}}();
+    *new_val = {{qt_ret_value}};
+    {{c_return_type}} ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
     ctl.all_funcs = &s_{{funcs_name}}_all_funcs;
     return ctl;
 {%- endcase %}

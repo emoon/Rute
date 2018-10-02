@@ -9,6 +9,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "size_ffi.h"
 
 struct RUSizeFuncs;
 struct RUSize;
@@ -22,6 +23,7 @@ typedef struct RUSizeFuncs {
     int (*height)(struct RUBase* self_c);
     void (*set_width)(struct RUBase* self_c, int w);
     void (*set_height)(struct RUBase* self_c, int h);
+    struct RUSize (*expanded_to)(struct RUBase* self_c, struct RUBase* arg0);
 } RUSizeFuncs;
 
 typedef struct RUSizeAllFuncs {

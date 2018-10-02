@@ -15,6 +15,7 @@ use auto::*;
 pub struct ListWidgetItem<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RUListWidgetItemAllFuncs,
+    pub owned: bool,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -23,6 +24,7 @@ impl<'a> ListWidgetItem<'a> {
         ListWidgetItem {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -31,6 +33,7 @@ impl<'a> ListWidgetItem<'a> {
         ListWidgetItem {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }

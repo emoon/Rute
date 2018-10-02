@@ -40,6 +40,7 @@ public:
 class WRListWidgetItem : public QListWidgetItem {
     //Q_OBJECT
 public:
+    WRListWidgetItem(const QListWidgetItem& clone) : QListWidgetItem(clone) { }
     WRListWidgetItem() : QListWidgetItem() { }
     virtual ~WRListWidgetItem() {
         if (m_delete_callback) {
@@ -56,6 +57,7 @@ public:
 class WRSize : public QSize {
     //Q_OBJECT
 public:
+    WRSize(const QSize& clone) : QSize(clone) { }
     WRSize() : QSize() { }
     virtual ~WRSize() {
         if (m_delete_callback) {

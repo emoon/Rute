@@ -268,7 +268,7 @@ pub fn generate_c_function_args_signal_wrapper(event_type: EventType, func: &Fun
             // References are passed as pointers to the C code
             match arg.vtype {
                 VariableType::Reference => function_args.push_str("struct RUBase*"),
-                _ => function_args.push_str(&arg.get_c_type()),
+                _ => function_args.push_str(&arg.get_c_type(IsReturnType::No)),
             }
 
             function_args.push_str(" ");
@@ -318,7 +318,7 @@ fn signal_type_callback(func: &Function) -> String {
         match arg.vtype {
             VariableType::SelfType => name_def.push_str("self"),
             VariableType::Reference => name_def.push_str(&arg.type_name),
-            _ => name_def.push_str(&arg.get_c_type()),
+            _ => name_def.push_str(&arg.get_c_type(IsReturnType::No)),
         }
 
         name_def.push_str("_")
@@ -449,7 +449,7 @@ fn generate_func_def_input_parms_only(func: &Function) -> String {
                 }
             }
 
-            _ => arg.get_c_type(),
+            _ => arg.get_c_type(IsReturnType::No),
         };
 
         function_args.push_str(&a);
@@ -766,7 +766,7 @@ impl QtGenerator {
         let ret_value = func
             .return_val
             .as_ref()
-            .map_or("void".into(), |v| v.get_c_type());
+            .map_or("void".into(), |v| v.get_c_type(IsReturnType::Yes));
 
         let mut object = Object::new();
 
@@ -833,6 +833,7 @@ impl QtGenerator {
             object.insert("array_return".to_owned(), Value::Bool(ret_val.array));
             object.insert("qt_ret_value".to_owned(), Value::str("ret_value"));
             object.insert("funcs_name".to_owned(), Value::str(""));
+            object.insert("qt_return_type".to_owned(), Value::Str(ret_val.qt_type_name.to_owned()));
 
             match ret_val.vtype {
                 VariableType::Primitive => {

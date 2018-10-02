@@ -13,8 +13,8 @@ struct Size {
     //scaled(w: i32, h: i32, mode: Rute::AspectRatioMode) -> Size,
     //[org_name(scaled)] scaled_by_size(s: &SizeType, mode: Rute::AspectRatioMode) -> Size,
 
-    //expanded_to(arg0: &SizeType) -> Size,
-    //bounded_to(arg0: &SizeType) -> Size,
+    expanded_to(arg0: &SizeType) -> Size,
+    //bounded_to(arg0: SizeType) -> Size,
     //rwidth() -> i32?,
     //rheight() -> i32?,
 }

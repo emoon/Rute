@@ -77,10 +77,10 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
+static void application_set_active_window(struct RUBase* self_c, struct RUBase* actor) {
     QApplication* qt_value = (QApplication*)self_c;
 
-    qt_value->setActiveWindow((QWidget*)act);
+    qt_value->setActiveWindow((QWidget*)actor);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,14 +115,6 @@ static void application_beep(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
     qt_value->beep();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
-    QApplication* qt_value = (QApplication*)self_c;
-
-    qt_value->alert((QWidget*)widget, duration);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -302,7 +294,6 @@ struct RUApplicationFuncs s_application_funcs = {
     application_widget_at,
     application_top_level_at,
     application_beep,
-    application_alert,
     application_set_cursor_flash_time,
     application_cursor_flash_time,
     application_set_double_click_interval,

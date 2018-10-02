@@ -25,7 +25,7 @@ extern \"C\" {
 /// Add function to convert a type into a Rust FFI type
 ///
 impl Variable {
-    pub fn get_rust_ffi_type(&self) -> Cow<str> {
+    pub fn get_rust_ffi_type(&self, is_return: bool) -> Cow<str> {
         if self.array {
             return "RUArray".into();
         }
@@ -37,7 +37,13 @@ impl Variable {
             VariableType::Enum => "i32".into(),
             VariableType::SelfType => "*const RUBase".into(),
             VariableType::Primitive => name.to_owned().into(),
-            VariableType::Reference => "*const RUBase".into(),
+            VariableType::Reference => {
+                if is_return {
+                    format!(" RU{}", name).into()
+                } else {
+                    "*const RUBase".into()
+                }
+            },
             VariableType::Regular => format!(" RU{}", name).into(),
             VariableType::Str => "*const ::std::os::raw::c_char".into(),
         }
@@ -53,7 +59,7 @@ impl Function {
     ///
     /// (test: i32, foo: u32) -> u32
     ///
-    pub fn rust_func_def<F: Fn(&Variable) -> String>(
+    pub fn rust_func_def<F: Fn(&Variable, bool) -> String>(
         &self,
         include_parens: bool,
         replace_first_arg: Option<&'static str>,
@@ -68,7 +74,7 @@ impl Function {
         }
 
         for (i, arg) in self.function_args.iter().enumerate() {
-            let filter_arg = filter(&arg);
+            let filter_arg = filter(&arg, false);
 
             if i == 0 && replace_first_arg.is_some() {
                 res += &format!("{}: {}", arg.name, replace_first_arg.unwrap());
@@ -86,7 +92,7 @@ impl Function {
         }
 
         if let Some(ref ret_var) = self.return_val {
-            let filter_arg = filter(&ret_var);
+            let filter_arg = filter(&ret_var, true);
             res += &format!(" -> {}", filter_arg);
         }
 
@@ -144,10 +150,14 @@ impl HeaderFFIGen for RustFFIGenerator {
             if let Some(ref ret_val) = func.return_val {
                 match ret_val.vtype {
                     VariableType::Regular => {
-                        imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
+                        if ret_val.type_name != sdef.name {
+                            imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
+                        }
                     }
                     VariableType::Reference => {
-                        imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
+                        if ret_val.type_name != sdef.name {
+                            imports.insert(&ret_val.type_name, format!("RU{}", ret_val.type_name));
+                        }
                     }
 
                     _ => (),
@@ -322,7 +332,7 @@ impl RustFFIGenerator {
     /// Generate ffi function
     ///
     fn generate_function<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(true, None, |arg| arg.get_rust_ffi_type().into());
+        let func_def = func.rust_func_def(true, None, |arg, is_ret| arg.get_rust_ffi_type(is_ret).into());
         writeln!(dest, "    pub {}: extern \"C\" fn{},", func.name, &func_def)
     }
 
@@ -334,8 +344,8 @@ impl RustFFIGenerator {
     ///                                      i32)),
     ///
     fn generate_event<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg| {
-            arg.get_rust_ffi_type().into()
+        let func_def = func.rust_func_def(false, Some("*const c_void"), |arg, is_ret| {
+            arg.get_rust_ffi_type(is_ret).into()
         });
 
         writeln!(

@@ -40,6 +40,7 @@ impl<'a> Rute<'a> {
         Application {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -57,6 +58,7 @@ impl<'a> Rute<'a> {
         Font {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -77,6 +79,7 @@ impl<'a> Rute<'a> {
         ListWidget {
             data,
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -97,6 +100,7 @@ impl<'a> Rute<'a> {
         ListWidgetItem {
             data,
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -117,6 +121,7 @@ impl<'a> Rute<'a> {
         Size {
             data,
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -137,6 +142,7 @@ impl<'a> Rute<'a> {
         Widget {
             data,
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
