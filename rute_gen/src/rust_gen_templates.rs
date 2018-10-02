@@ -49,6 +49,7 @@ pub static RUST_NO_WRAP_TEMPLATE: &str = "
         {{widget_name}} {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -60,6 +61,7 @@ pub static RUST_STRUCT_IMPL_TEMPLATE: &str = "#[derive(Clone)]
 pub struct {{struct_name}}<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
     pub all_funcs: *const RU{{struct_name}}AllFuncs,
+    pub owned: bool,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -68,6 +70,7 @@ impl <'a>{{struct_name}}<'a> {
         {{struct_name}} {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
+            owned: false,
             _marker: PhantomData,
         }
     }
@@ -76,6 +79,7 @@ impl <'a>{{struct_name}}<'a> {
         {{struct_name}} {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -113,6 +117,7 @@ pub static RUST_CREATE_TEMPLATE: &str = "
         {{widget_name}} {
             data,
             all_funcs: ffi_data.all_funcs,
+            owned: true,
             _marker: PhantomData,
         }
     }
@@ -123,7 +128,7 @@ pub static RUST_CREATE_TEMPLATE: &str = "
 pub static RUST_DROP_TEMPLATE: &str = "
 impl<'a> Drop for {{type_name}}<'a> {
     fn drop(&mut self) {
-        if Rc::strong_count(&self.data) == 1 {
+        if self.owned && Rc::strong_count(&self.data) == 1 {
             let obj = self.data.get().unwrap();
             unsafe {
                 ((*(*self.all_funcs).{{type_snake_name}}_funcs).destroy)(obj);

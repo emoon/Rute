@@ -311,10 +311,10 @@ impl RustGenerator {
                     dest.push_str("&str");
                 }
             }
+
             VariableType::Reference => {
                 dest.push('&');
                 dest.push_str(&type_name);
-                //dest.push_str("<'a>");
             }
         }
 

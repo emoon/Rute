@@ -441,7 +441,14 @@ fn generate_func_def_input_parms_only(func: &Function) -> String {
     // write arguments
     for (i, arg) in func.function_args[1..].iter().enumerate() {
         let a = match arg.vtype {
-            VariableType::Reference => format!("Q{}*", arg.type_name).into(),
+            VariableType::Reference => {
+                if arg.pointer {
+                    format!("Q{}*", arg.type_name).into()
+                } else {
+                    format!("*(Q{})*", arg.type_name).into()
+                }
+            }
+
             _ => arg.get_c_type(),
         };
 
@@ -778,18 +785,17 @@ impl QtGenerator {
 
                 match arg.vtype {
                     VariableType::Reference => {
-                        // TODO: We should propage the real Qt type here instead
+                        let t_name;
                         if arg.type_name.ends_with("Type") {
-                            Some(
-                                format!(
-                                    "(Q{}*){}",
-                                    &arg.type_name[..arg.type_name.len() - 4],
-                                    &arg.name
-                                ).into(),
-                            )
+                            t_name = &arg.type_name[..arg.type_name.len() - 4];
                         } else {
-                            // TODO: Should not hard-code to Q* here
-                            Some(format!("(Q{}*){}", &arg.type_name, &arg.name).into())
+                            t_name = &arg.type_name;
+                        }
+
+                        if arg.pointer {
+                            Some(format!("(Q{}*){}", t_name, &arg.name).into())
+                        } else {
+                            Some(format!("*((Q{}*){})", t_name, &arg.name).into())
                         }
                     }
 

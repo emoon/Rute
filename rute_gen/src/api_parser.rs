@@ -46,9 +46,7 @@ pub enum VariableType {
 }
 
 ///
-
-///
-/// Holds the data for a variable. It's name and it's type
+/// Holds the data for a variable. It's name and it's type and additional flags
 ///
 #[derive(Debug, Clone)]
 pub struct Variable {
@@ -64,6 +62,11 @@ pub struct Variable {
     pub array: bool,
     /// If variable is optional (nullable)
     pub optional: bool,
+    /// If the type is a reference it may be a pointer on the C++ side
+    /// so this flag is used for the Qt C++ code generation
+    pub pointer: bool,
+    /// If the type is of Regular it can be either a class or pod type
+    pub class_type: bool,
 }
 
 ///
@@ -78,6 +81,8 @@ impl Default for Variable {
             enum_sub_type: String::new(),
             array: false,
             optional: false,
+            pointer: false,
+            class_type: false,
         }
     }
 }
@@ -112,8 +117,6 @@ pub struct Function {
     pub func_type: FunctionType,
     /// If the function is manually implemented (not auto-generated)
     pub is_manual: bool,
-    // If a function supports chaining but shouldn't use it
-    //pub no_chain: bool,
 }
 
 ///
@@ -447,6 +450,7 @@ impl ApiParser {
             match entry.as_rule() {
                 Rule::name => var.name = entry.as_str().to_owned(),
                 Rule::refexp => vtype = Rule::refexp,
+                Rule::pointer_exp => vtype = Rule::pointer_exp,
                 Rule::optional => var.optional = true,
                 Rule::vtype => type_name = entry.as_str().to_owned(),
                 Rule::enum_use => {
@@ -461,6 +465,7 @@ impl ApiParser {
                         match entry.as_rule() {
                             Rule::vtype => type_name = entry.as_str().to_owned(),
                             Rule::refexp => vtype = Rule::refexp,
+                            Rule::pointer_exp => vtype = Rule::pointer_exp,
                             _ => (),
                         }
                     }
@@ -474,6 +479,7 @@ impl ApiParser {
         // match up with the correct type
         let var_type = match vtype {
             Rule::refexp => VariableType::Reference,
+            Rule::pointer_exp => VariableType::Reference,
             Rule::enum_use => VariableType::Enum,
             _ => {
                 if type_name == "String" {
@@ -485,6 +491,16 @@ impl ApiParser {
                 }
             }
         };
+
+        if vtype == Rule::pointer_exp {
+            var.pointer = true;
+        }
+
+        // TODO: We assume regular is class type now but this will change
+        // when we have POD structs
+        if var_type == VariableType::Regular {
+            var.class_type = true;
+        }
 
         var.type_name = type_name;
         var.vtype = var_type;
