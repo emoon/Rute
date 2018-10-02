@@ -112,6 +112,9 @@ pub enum FunctionType {
 pub struct Function {
     /// Name of the function
     pub name: String,
+    /// This is the C++ name of the function. Most of the time it will
+    /// be the same as name but it can vary
+    pub cpp_name: String,
     /// Function argumnts
     pub function_args: Vec<Variable>,
     /// Return value
@@ -129,6 +132,7 @@ impl Default for Function {
     fn default() -> Self {
         Function {
             name: String::new(),
+            cpp_name: String::new(),
             function_args: Vec::new(),
             return_val: None,
             func_type: FunctionType::Regular,
@@ -401,6 +405,15 @@ impl ApiParser {
                 Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(entry)),
+                Rule::org_name => {
+                    function.cpp_name = entry
+                        .into_inner()
+                        .next()
+                        .map(|e| e.as_str())
+                        .unwrap()
+                        .to_owned();
+                },
+
                 Rule::manual => {
                     function.is_manual = true;
                     function.func_type = FunctionType::Regular;
@@ -417,6 +430,10 @@ impl ApiParser {
                 type_name: "self".to_owned(),
                 ..Variable::default()
             });
+        }
+
+        if function.cpp_name.is_empty() {
+            function.cpp_name = function.name.to_owned();
         }
 
         function

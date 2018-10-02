@@ -9,7 +9,11 @@ struct Application {
     //[static] palette(arg0: &WidgetType) -> Palette,
     //[static] palette(class_name: String) -> Palette,
     //[static] set_palette(arg0: &PaletteType, class_name: String),
-    //[static] font() -> Font,
+
+    [static]
+    [org_name(font)]
+    get_font() -> Font,
+
     //[static] font(arg0: &WidgetType) -> Font,
     //[static] font(class_name: String) -> Font,
     //[static] set_font(arg0: &FontType, class_name: String),

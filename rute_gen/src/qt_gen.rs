@@ -819,7 +819,7 @@ impl QtGenerator {
         );
         object.insert(
             "qt_func_name".to_owned(),
-            Value::Str(func.name.to_mixed_case()),
+            Value::Str(func.cpp_name.to_mixed_case()),
         );
         object.insert("cpp_type_name".to_owned(), Value::str(&sdef.cpp_name));
         object.insert("qt_func_args".to_owned(), Value::Str(func_def));
