@@ -1,4 +1,4 @@
-chunk = _{ soi ~ (structdef | enumdef)+ ~ eoi }
+chunk = _{ SOI ~ (structdef | enumdef)+ ~ EOI }
 
 structdef   =  { attributes? ~ traits? ~ ("struct") ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
 enumdef     =  { attributes? ~ org_name? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
@@ -45,9 +45,9 @@ vtype = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*
 }
 
-comment = _{
-	("//") ~ (!(("\r") | ("\n")) ~ any)* ~ (("\n") | ("\r\n") | ("\r") | eoi)
+COMMENT = _{
+	("//") ~ (!(("\r") | ("\n")) ~ ANY)* ~ (("\n") | ("\r\n") | ("\r") | EOI)
 }
 
-whitespace = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }
+WHITESPACE = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }
 
