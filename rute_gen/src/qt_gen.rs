@@ -799,12 +799,28 @@ impl QtGenerator {
                         }
                     }
 
-                    _ => None,
-                    /*
                     VariableType::Enum => {
+                        let base_name;
 
+                        if arg.type_name == "Rute" {
+                            base_name = "Qt";
+                        } else {
+                            base_name = &arg.type_name;
+                        }
+
+                        println!("{:?}", arg);
+                        Some(
+                            format!(
+                                "({}::{})s_{}_lookup[{}]",
+                                base_name,
+                                arg.enum_sub_type,
+                                arg.enum_sub_type.to_snake_case(),
+                                &arg.name
+                            ).into(),
+                        )
                     }
-                    */
+
+                    _ => None,
                 }
             }
         });
@@ -833,7 +849,10 @@ impl QtGenerator {
             object.insert("array_return".to_owned(), Value::Bool(ret_val.array));
             object.insert("qt_ret_value".to_owned(), Value::str("ret_value"));
             object.insert("funcs_name".to_owned(), Value::str(""));
-            object.insert("qt_return_type".to_owned(), Value::Str(ret_val.qt_type_name.to_owned()));
+            object.insert(
+                "qt_return_type".to_owned(),
+                Value::Str(ret_val.qt_type_name.to_owned()),
+            );
 
             match ret_val.vtype {
                 VariableType::Primitive => {
@@ -1171,6 +1190,39 @@ impl QtGenerator {
     }
 
     ///
+    /// Generate enum remappings from rute enums to Qt
+    ///
+    pub fn generate_enum_mappings_header(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
+        let mut dest = BufWriter::with_capacity(4 * 1024, File::create(target_name)?);
+        let mut enums = BTreeMap::new();
+
+        for api_def in api_defs {
+            for enum_def in &api_def.enums {
+                enums.insert(enum_def.name.clone(), enum_def);
+            }
+        }
+
+        let mut enum_org_names = BTreeMap::new();
+
+        for (_, enum_def) in &enums {
+            enum_org_names.insert(&enum_def.original_class_name, ());
+        }
+
+        dest.write_all(b"#pragma once\n")?;
+        dest.write_all(AUTO_GEN_HEADER)?;
+        dest.write_all(b"#include <map>\n\n")?;
+
+        for (name, _) in &enums {
+            dest.write_fmt(format_args!(
+                "extern std::map<int, int> s_{}_lookup;\n",
+                name.to_snake_case()
+            ))?;
+        }
+
+        Ok(())
+    }
+
+    ///
     /// Generate the function struct defs in the following style
     ///
     /// struct Rute s_mime_data_funcs = {
@@ -1234,6 +1286,7 @@ impl QtGenerator {
         }
 
         writeln!(dest, "#include \"rute_signal_wrappers.h\"")?;
+        writeln!(dest, "#include \"qt_enum_mapping.h\"")?;
         writeln!(dest, "")?;
 
         for f in &files {

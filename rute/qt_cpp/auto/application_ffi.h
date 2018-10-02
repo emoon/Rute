@@ -9,6 +9,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "font_ffi.h"
 #include "widget_ffi.h"
 
 struct RUApplicationFuncs;
@@ -18,6 +19,7 @@ typedef struct RUApplicationFuncs {
     void (*destroy)(struct RUBase* self);
     int (*color_spec)(struct RUBase* self_c);
     void (*set_color_spec)(struct RUBase* self_c, int arg0);
+    struct RUFont (*get_font)(struct RUBase* self_c);
     struct RUWidget (*active_popup_widget)(struct RUBase* self_c);
     struct RUWidget (*active_modal_widget)(struct RUBase* self_c);
     struct RUWidget (*focus_widget)(struct RUBase* self_c);

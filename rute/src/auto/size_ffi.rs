@@ -12,7 +12,9 @@ pub struct RUSizeFuncs {
     pub height: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_width: extern "C" fn(self_c: *const RUBase, w: i32),
     pub set_height: extern "C" fn(self_c: *const RUBase, h: i32),
+    pub scale: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, mode: i32),
     pub expanded_to: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUSize,
+    pub bounded_to: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUSize,
 }
 
 #[repr(C)]

@@ -77,6 +77,7 @@ fn run_rustfmt(filename: &str) {
 fn main() {
     let wd = WalkDir::new("defs");
     // temporary set to one thread during debugging
+
     /*
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
@@ -141,6 +142,7 @@ fn main() {
             let main_mod_rust = format!("{}/{}.rs", rust_dest_dir, "mod");
             let signal_wrappers = format!("{}/{}.h", qt_dest, "rute_signal_wrappers");
             let enum_mapping = format!("{}/{}.cpp", qt_dest, "qt_enum_mapping");
+            let enum_mapping_header = format!("{}/{}.h", qt_dest, "qt_enum_mapping");
             let qt_bulk_cpp = format!("{}/{}.cpp", qt_dest, "qt_bulk");
             let qt_rute_cpp = format!("{}/{}.cpp", qt_dest, "qt_rute");
             let main_ffi_header = format!("{}/{}.h", qt_dest, "rute");
@@ -161,6 +163,10 @@ fn main() {
             // Generate all the signal wrappers for Qt C++
             println!("    Generating Qt enum mapping: {}", enum_mapping);
             QtGenerator::new().generate_enum_mappings(&enum_mapping, &api_defs_read).unwrap();
+
+            // Generate all the signal wrappers for Qt C++
+            println!("    Generating Qt enum mapping header: {}", enum_mapping_header);
+            QtGenerator::new().generate_enum_mappings_header(&enum_mapping_header, &api_defs_read).unwrap();
 
             // Generate bulk cpp file for Qt C++ wrapper code
             println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);
@@ -192,7 +198,7 @@ fn main() {
 
             // Generate the Rust high-level code
             println!("    Generating Rust global enums: {}", rust_target);
-            RustGenerator::new().generate(&rust_target, &api_def).unwrap();
+            RustGenerator::new().generate_global_enums(&rust_target, &api_def).unwrap();
 
             // Rust Rustfmt on rust files
             run_rustfmt(&rust_target);

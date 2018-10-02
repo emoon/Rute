@@ -23,7 +23,9 @@ typedef struct RUSizeFuncs {
     int (*height)(struct RUBase* self_c);
     void (*set_width)(struct RUBase* self_c, int w);
     void (*set_height)(struct RUBase* self_c, int h);
+    void (*scale)(struct RUBase* self_c, int w, int h, int mode);
     struct RUSize (*expanded_to)(struct RUBase* self_c, struct RUBase* arg0);
+    struct RUSize (*bounded_to)(struct RUBase* self_c, struct RUBase* arg0);
 } RUSizeFuncs;
 
 typedef struct RUSizeAllFuncs {

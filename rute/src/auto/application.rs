@@ -98,6 +98,21 @@ pub trait ApplicationStaticType {
         self
     }
 
+    fn get_font(&self) -> Font {
+        let (obj_data, funcs) = self.get_application_static_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).get_font)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+
     fn active_popup_widget(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_application_static_obj_funcs();
         unsafe {

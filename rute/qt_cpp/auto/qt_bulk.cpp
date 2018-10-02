@@ -13,6 +13,7 @@
 #include "widget_ffi.h"
 #include "widget.h"
 #include "rute_signal_wrappers.h"
+#include "qt_enum_mapping.h"
 
 #include "application.cpp"
 #include "font.cpp"

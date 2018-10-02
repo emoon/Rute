@@ -25,6 +25,21 @@ static void application_set_color_spec(struct RUBase* self_c, int arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUFont application_get_font(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+
+    auto ret_value = qt_value->font();
+    QFont* new_val = new QFont();
+    *new_val = ret_value;
+    struct RUFont ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_font_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget application_active_popup_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -286,6 +301,7 @@ struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
     application_color_spec,
     application_set_color_spec,
+    application_get_font,
     application_active_popup_widget,
     application_active_modal_widget,
     application_focus_widget,
