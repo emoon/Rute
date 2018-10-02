@@ -106,6 +106,52 @@ pub trait SizeType {
         self
     }
 
+    fn scale_by_size<S: SizeType>(&self, s: &S, mode: AspectRatioMode) -> &Self {
+        let (obj_s_1, _funcs) = s.get_size_obj_funcs();
+        let enum_mode_2 = mode as i32;
+
+        let (obj_data, funcs) = self.get_size_obj_funcs();
+        unsafe {
+            ((*funcs).scale_by_size)(obj_data, obj_s_1, enum_mode_2);
+        }
+        self
+    }
+
+    fn scaled(&self, w: i32, h: i32, mode: AspectRatioMode) -> Size {
+        let enum_mode_3 = mode as i32;
+
+        let (obj_data, funcs) = self.get_size_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).scaled)(obj_data, w, h, enum_mode_3);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+
+    fn scaled_by_size<S: SizeType>(&self, s: &S, mode: AspectRatioMode) -> Size {
+        let (obj_s_1, _funcs) = s.get_size_obj_funcs();
+        let enum_mode_2 = mode as i32;
+
+        let (obj_data, funcs) = self.get_size_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).scaled_by_size)(obj_data, obj_s_1, enum_mode_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+
     fn expanded_to<S: SizeType>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 

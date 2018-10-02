@@ -77,6 +77,44 @@ static void size_scale(struct RUBase* self_c, int w, int h, int mode) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void size_scale_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
+    WRSize* qt_value = (WRSize*)self_c;
+
+    qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) {
+    WRSize* qt_value = (WRSize*)self_c;
+
+    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize size_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
+    WRSize* qt_value = (WRSize*)self_c;
+
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUSize size_expanded_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRSize* qt_value = (WRSize*)self_c;
 
@@ -135,6 +173,9 @@ struct RUSizeFuncs s_size_funcs = {
     size_set_width,
     size_set_height,
     size_scale,
+    size_scale_by_size,
+    size_scaled,
+    size_scaled_by_size,
     size_expanded_to,
     size_bounded_to,
 };
