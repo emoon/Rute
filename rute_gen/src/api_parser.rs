@@ -805,24 +805,6 @@ impl Struct {
             .iter()
             .any(|ref f| f.func_type == FunctionType::Static)
     }
-    //
-    // Check if the struct should has static functions
-    //
-    /*
-    pub fn has_regular_functions(&self) -> bool {
-        self.functions
-            .iter()
-            .any(|ref f| f.func_type == FunctionType::Regular)
-    }
-    */
-    ///
-    /// Check if the struct should has static functions
-    ///
-    pub fn has_event_replace_functions(&self) -> bool {
-        self.functions
-            .iter()
-            .any(|ref f| f.func_type == FunctionType::Replace || f.func_type == FunctionType::Event)
-    }
     ///
     /// Check if the struct should have a create function
     ///

@@ -29,6 +29,7 @@ struct TypeHandler {
 pub struct RustGenerator {
     rust_func_template: Template,
     callback_template: Template,
+    callback_trampoline_template: Template,
     trait_impl_end_template: Template,
     trait_impl_template: Template,
     struct_impl_template: Template,
@@ -267,6 +268,7 @@ impl RustGenerator {
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
             callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
+            callback_trampoline_template: parser.parse(RUST_CALLBACK_TRAMPOLINE_TEMPLATE).unwrap(),
             trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
             struct_impl_template: parser.parse(RUST_STRUCT_IMPL_TEMPLATE).unwrap(),
             trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
@@ -358,7 +360,7 @@ impl RustGenerator {
             }
 
             for (i, (name, label)) in gen_labels.lookup.iter().enumerate() {
-                func_imp.push_str(&format!("{}: {}", *label as u8 as char, name));
+                func_imp.push_str(&format!("{}: {}<'a>", *label as u8 as char, name));
 
                 if len != i {
                     func_imp.push_str(", ");
@@ -433,6 +435,7 @@ impl RustGenerator {
     /// Generates the implementations for the structs
     ///
     fn generate_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
+        /*
         if sdef.has_event_replace_functions() {
             f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
 
@@ -452,8 +455,19 @@ impl RustGenerator {
 
             f.write_all(b"}\n")?;
         }
+        */
 
-        self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef)?;
+        // Generate all the trampoline functions
+
+        sdef.functions
+            .iter()
+            .filter(|f| f.func_type == FunctionType::Event)
+            .for_each(|func| {
+                let res = self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
+                f.write_all(res.as_bytes()).unwrap();
+        });
+
+        self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef, true)?;
 
         for name in &sdef.full_inherit {
             let mut template_data = Object::new();
@@ -475,7 +489,7 @@ impl RustGenerator {
 
         if sdef.has_static_functions() {
             let static_name = &format!("{}Static", sdef.name);
-            self.generate_trait_impl(f, static_name, FunctionType::Static, &sdef)?;
+            self.generate_trait_impl(f, static_name, FunctionType::Static, &sdef, false)?;
 
             // implement the static trait for the regular one as well
 
@@ -512,12 +526,11 @@ impl RustGenerator {
     //
     //
     //
-    fn generate_callback(&self, func: &Function, struct_name: &str) -> String {
+    fn generate_callback(&self, func: &Function, struct_name: &str, template: &Template) -> String {
         let mut template_data = Object::new();
         let mut function_arguments = String::with_capacity(128);
         let mut function_params = String::with_capacity(128);
         let mut function_arg_types = String::with_capacity(128);
-
         let mut temp_str = String::with_capacity(128);
 
         let len = func.function_args[1..].len().wrapping_sub(1);
@@ -556,7 +569,7 @@ impl RustGenerator {
             Value::Str(struct_name.to_snake_case()),
         );
 
-        self.callback_template.render(&template_data).unwrap()
+        template.render(&template_data).unwrap()
     }
 
     //
@@ -744,9 +757,14 @@ impl RustGenerator {
         name: &str,
         func_type: FunctionType,
         sdef: &Struct,
+        should_have_lifetime: bool,
     ) -> io::Result<()> {
         let struct_name = format!("{}Type", name);
-        writeln!(dest, "pub trait {} {{", struct_name)?;
+        if should_have_lifetime {
+            writeln!(dest, "pub trait {}<'a> {{", struct_name)?;
+        } else {
+            writeln!(dest, "pub trait {} {{", struct_name)?;
+        }
 
         sdef.functions
             .iter()
@@ -757,6 +775,15 @@ impl RustGenerator {
             });
 
         if func_type != FunctionType::Static {
+            // generate the event functions in the not static trait
+            sdef.functions
+                .iter()
+                .filter(|f| f.func_type == FunctionType::Event)
+                .for_each(|f| {
+                    let res = self.generate_callback(&f, name, &self.callback_template);
+                    dest.write_all(res.as_bytes()).unwrap();
+            });
+
             let mut template_data = Object::new();
             template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
             template_data.insert(
@@ -963,7 +990,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl.1, "<W: WidgetType>(&self, foo: &W) -> &Self");
+        assert_eq!(func_impl.1, "<W: WidgetType<'a>>(&self, foo: &W) -> &Self");
     }
 
     //
@@ -984,7 +1011,7 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
 
         assert_eq!(func_impl.0, true);
-        assert_eq!(func_impl.1, "<'a, W: WidgetType>(foo: &W)");
+        assert_eq!(func_impl.1, "<'a, W: WidgetType<'a>>(foo: &W)");
     }
 
     //
@@ -1011,7 +1038,7 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(
             func_impl.1,
-            "<W: WidgetType>(&self, foo: &W, bar: &W) -> &Self"
+            "<W: WidgetType<'a>>(&self, foo: &W, bar: &W) -> &Self"
         );
     }
 
@@ -1044,7 +1071,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl.1, "<P: PaintType, Q: PoleType, W: WidgetType>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
+        assert_eq!(func_impl.1, "<P: PaintType<'a>, Q: PoleType<'a>, W: WidgetType<'a>>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
     }
 
     //

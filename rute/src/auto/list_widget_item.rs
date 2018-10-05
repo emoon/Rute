@@ -67,7 +67,7 @@ impl<'a> ListWidgetItem<'a> {
         }
     }
 }
-pub trait ListWidgetItemType {
+pub trait ListWidgetItemType<'a> {
     fn list_widget(&self) -> Option<ListWidget> {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -213,7 +213,7 @@ pub trait ListWidgetItemType {
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs);
 }
 
-impl<'a> ListWidgetItemType for ListWidgetItem<'a> {
+impl<'a> ListWidgetItemType<'a> for ListWidgetItem<'a> {
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).list_widget_item_funcs) }

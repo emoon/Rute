@@ -67,7 +67,7 @@ impl<'a> Size<'a> {
         }
     }
 }
-pub trait SizeType {
+pub trait SizeType<'a> {
     fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -134,7 +134,7 @@ pub trait SizeType {
         self
     }
 
-    fn scale_by_size<S: SizeType>(&self, s: &S, mode: AspectRatioMode) -> &Self {
+    fn scale_by_size<S: SizeType<'a>>(&self, s: &S, mode: AspectRatioMode) -> &Self {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -162,7 +162,7 @@ pub trait SizeType {
         }
     }
 
-    fn scaled_by_size<S: SizeType>(&self, s: &S, mode: AspectRatioMode) -> Size {
+    fn scaled_by_size<S: SizeType<'a>>(&self, s: &S, mode: AspectRatioMode) -> Size {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -180,7 +180,7 @@ pub trait SizeType {
         }
     }
 
-    fn expanded_to<S: SizeType>(&self, arg0: &S) -> Size {
+    fn expanded_to<S: SizeType<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
@@ -197,7 +197,7 @@ pub trait SizeType {
         }
     }
 
-    fn bounded_to<S: SizeType>(&self, arg0: &S) -> Size {
+    fn bounded_to<S: SizeType<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
@@ -217,7 +217,7 @@ pub trait SizeType {
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs);
 }
 
-impl<'a> SizeType for Size<'a> {
+impl<'a> SizeType<'a> for Size<'a> {
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).size_funcs) }

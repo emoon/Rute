@@ -67,7 +67,7 @@ impl<'a> ListWidget<'a> {
         }
     }
 }
-pub trait ListWidgetType {
+pub trait ListWidgetType<'a> {
     fn add_item(&self, label: &str) -> &Self {
         let str_in_label_1 = CString::new(label).unwrap();
 
@@ -89,14 +89,14 @@ pub trait ListWidgetType {
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs);
 }
 
-impl<'a> WidgetType for ListWidget<'a> {
+impl<'a> WidgetType<'a> for ListWidget<'a> {
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
     }
 }
 
-impl<'a> ListWidgetType for ListWidget<'a> {
+impl<'a> ListWidgetType<'a> for ListWidget<'a> {
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).list_widget_funcs) }

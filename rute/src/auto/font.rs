@@ -56,7 +56,7 @@ impl<'a> Font<'a> {
         }
     }
 }
-pub trait FontType {
+pub trait FontType<'a> {
     fn set_pixel_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -76,7 +76,7 @@ pub trait FontType {
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs);
 }
 
-impl<'a> FontType for Font<'a> {
+impl<'a> FontType<'a> for Font<'a> {
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).font_funcs) }

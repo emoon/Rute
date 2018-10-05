@@ -67,7 +67,7 @@ impl<'a> Widget<'a> {
         }
     }
 }
-pub trait WidgetType {
+pub trait WidgetType<'a> {
     fn show(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -111,7 +111,7 @@ pub trait WidgetType {
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs);
 }
 
-impl<'a> WidgetType for Widget<'a> {
+impl<'a> WidgetType<'a> for Widget<'a> {
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }

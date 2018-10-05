@@ -198,7 +198,7 @@ pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
-impl<'a> {{trait_name}}Type for {{target_name}}<'a> {
+impl<'a> {{trait_name}}Type<'a> for {{target_name}}<'a> {
     fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
         unsafe {
@@ -214,20 +214,35 @@ pub static RUST_IMPL_TRAIT_STATIC_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type for {{target_name}}<'a> {}
 ";
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static RUST_CALLBACK_TRAMPOLINE_TEMPLATE: &str = "
+unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>(
+    user_data: *const c_void,
+    func: *const c_void,
+    {{function_arguments}}
+) {
+    let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
+    let data = user_data as *const T;
+    f(&*data, {{function_params}});
+}
+
+unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline(
+    _user_data: *const c_void,
+    func: *const c_void,
+    {{function_arguments}}
+) {
+    let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
+    f({{function_params}});
+}
+
+";
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TEMPLATE: &str = "
-    unsafe extern \"C\" fn {{event_name}}_trampoline_ud<T>(
-        user_data: *const c_void,
-        func: *const c_void,
-        {{function_arguments}}
-    ) {
-        let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
-        let data = user_data as *const T;
-        f(&*data, {{function_params}});
-    }
-
-    pub fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &{{widget_name}}<'a>
+    fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
         F: Fn(&T, {{function_arg_types}}) + 'a,
         T: 'a,
@@ -241,7 +256,7 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
             ((*funcs).set_{{event_name}}_event)(
                 obj_data,
                 user_data,
-                transmute(Self::{{event_name}}_trampoline_ud::<T> as usize),
+                transmute({{widget_snake_name}}_{{event_name}}_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
             );
         }
@@ -249,16 +264,7 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
         self
     }
 
-    unsafe extern \"C\" fn {{event_name}}_trampoline(
-        _user_data: *const c_void,
-        func: *const c_void,
-        {{function_arguments}}
-    ) {
-        let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
-        f({{function_params}});
-    }
-
-    pub fn set_{{event_name}}_event<F>(&self, func: F) -> &{{widget_name}}<'a>
+    fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
     where
         F: Fn({{function_arg_types}}) + 'a,
     {
@@ -269,7 +275,7 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
             ((*funcs).set_{{event_name}}_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(Self::{{event_name}}_trampoline as usize),
+                transmute({{widget_snake_name}}_{{event_name}}_trampoline as usize),
                 Box::into_raw(f) as *const _,
             );
         }

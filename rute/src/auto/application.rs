@@ -62,63 +62,24 @@ pub struct ApplicationStatic<'a> {
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
-impl<'a> Application<'a> {
-    unsafe extern "C" fn about_to_quit_trampoline_ud<T>(
-        user_data: *const c_void,
-        func: *const c_void,
-    ) {
-        let f: &&(Fn(&T) + 'static) = transmute(func);
-        let data = user_data as *const T;
-        f(&*data);
-    }
-
-    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Application<'a>
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                user_data,
-                transmute(Self::about_to_quit_trampoline_ud::<T> as usize),
-                Box::into_raw(f) as *const _,
-            );
-        }
-
-        self
-    }
-
-    unsafe extern "C" fn about_to_quit_trampoline(_user_data: *const c_void, func: *const c_void) {
-        let f: &&(Fn() + 'static) = transmute(func);
-        f();
-    }
-
-    pub fn set_about_to_quit_event<F>(&self, func: F) -> &Application<'a>
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                ::std::ptr::null(),
-                transmute(Self::about_to_quit_trampoline as usize),
-                Box::into_raw(f) as *const _,
-            );
-        }
-
-        self
-    }
+unsafe extern "C" fn application_about_to_quit_trampoline_ud<T>(
+    user_data: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+    let data = user_data as *const T;
+    f(&*data);
 }
-pub trait ApplicationType {
+
+unsafe extern "C" fn application_about_to_quit_trampoline(
+    _user_data: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn() + 'static) = transmute(func);
+    f();
+}
+
+pub trait ApplicationType<'a> {
     fn set_style_sheet(&self, sheet: &str) -> &Self {
         let str_in_sheet_1 = CString::new(sheet).unwrap();
 
@@ -145,10 +106,51 @@ pub trait ApplicationType {
         }
     }
 
+    fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                user_data,
+                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    fn set_about_to_quit_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(application_about_to_quit_trampoline as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs);
 }
 
-impl<'a> ApplicationType for Application<'a> {
+impl<'a> ApplicationType<'a> for Application<'a> {
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).application_funcs) }
@@ -299,7 +301,7 @@ pub trait ApplicationStaticType {
         }
     }
 
-    fn set_active_window<'a, W: WidgetType>(actor: &W) {
+    fn set_active_window<'a, W: WidgetType<'a>>(actor: &W) {
         let (obj_actor_1, _funcs) = actor.get_widget_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
