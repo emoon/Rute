@@ -9,7 +9,7 @@ fn main() {
     Rute::new();
 
     // Create the application
-    let app = Application::new();
+    let _app = Application::new();
 
     let button = PushButton::new();
 
