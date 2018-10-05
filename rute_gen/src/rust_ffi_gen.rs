@@ -18,7 +18,7 @@ use rute_ffi_base::*;
 
 static FOOTER: &str = "
 extern \"C\" {
-    pub fn rute_get() -> *const RuteFFI;
+    pub fn rute_static_ffi_get() -> *const RuteFFI;
 }\n";
 
 ///

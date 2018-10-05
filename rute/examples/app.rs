@@ -6,14 +6,14 @@ extern crate rute;
 use rute::*;
 
 fn main() {
-    let rute = Rute::new();
+    Rute::new();
 
     // Create the application
-    let app = rute.create_application();
+    let _app = Application::new();
 
     // Show built-in about qt dialog
-    app.about_qt();
+    Application::about_qt();
 
     // Start the application
-    rute.application().exec();
+    Application::exec();
 }

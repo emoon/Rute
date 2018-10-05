@@ -36,5 +36,5 @@ pub struct RuteFFI {
 }
 
 extern "C" {
-    pub fn rute_get() -> *const RuteFFI;
+    pub fn rute_static_ffi_get() -> *const RuteFFI;
 }

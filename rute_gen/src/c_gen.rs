@@ -263,7 +263,7 @@ impl HeaderFFIGen for CapiHeaderGen {
     /// Generate the footer for the main FFI file
     ///
     fn gen_main_footer<W: Write>(&mut self, dest: &mut W, _api_defs: &[ApiDef]) -> io::Result<()> {
-        writeln!(dest, "extern RuteFFI* rute_get();\n")?;
+        writeln!(dest, "extern RuteFFI* rute_static_ffi_get();\n")?;
         writeln!(dest, "{}", FOOTER)
     }
 }

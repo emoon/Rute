@@ -35,7 +35,7 @@ typedef struct RuteFFI {
         RUDeleteCallback delete_callback, void* host_data);
 } RuteFFI;
 
-extern RuteFFI* rute_get();
+extern RuteFFI* rute_static_ffi_get();
 
 
 #ifdef __cplusplus

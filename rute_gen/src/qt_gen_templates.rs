@@ -60,9 +60,9 @@ pub static QT_MAIN_FOOTER: &str = "};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //#ifdef _WIN32
-//extern \"C\" __declspec(dllexport) struct RuteFFI* rute_get() {
+//extern \"C\" __declspec(dllexport) struct RuteFFI* rute_static_ffi_get() {
 //#else
-extern \"C\" struct RuteFFI* rute_get() {
+extern \"C\" struct RuteFFI* rute_static_ffi_get() {
 //#endif
     return (RuteFFI*)&s_rute;
 }

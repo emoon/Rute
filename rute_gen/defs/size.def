@@ -15,8 +15,6 @@ struct Size {
 
     expanded_to(arg0: &SizeType) -> Size,
     bounded_to(arg0: &SizeType) -> Size,
-    //rwidth() -> i32?,
-    //rheight() -> i32?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

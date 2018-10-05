@@ -28,9 +28,6 @@ struct TypeHandler {
 ///
 pub struct RustGenerator {
     rust_func_template: Template,
-    rust_no_wrap_template: Template,
-    rust_create_template: Template,
-    get_static_template: Template,
     callback_template: Template,
     trait_impl_end_template: Template,
     trait_impl_template: Template,
@@ -268,9 +265,6 @@ impl RustGenerator {
         RustGenerator {
             type_handler: setup_type_handlers(),
             rust_func_template: parser.parse(RUST_FUNC_IMPL_TEMPLATE).unwrap(),
-            rust_create_template: parser.parse(RUST_CREATE_TEMPLATE).unwrap(),
-            rust_no_wrap_template: parser.parse(RUST_NO_WRAP_TEMPLATE).unwrap(),
-            get_static_template: parser.parse(RUST_GET_STATIC_TEMPLATE).unwrap(),
             drop_template: parser.parse(RUST_DROP_TEMPLATE).unwrap(),
             callback_template: parser.parse(RUST_CALLBACK_TEMPLATE).unwrap(),
             trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
@@ -283,7 +277,7 @@ impl RustGenerator {
     ///
     /// Takes in a varibale and generates a Rust function variable argument
     ///
-    fn generate_arg_type(&self, dest: &mut String, var: &Variable, return_arg: bool) {
+    fn generate_arg_type(&self, dest: &mut String, var: &Variable, return_arg: bool, need_lifetime: bool) {
         dest.clear();
 
         // Run code to replace type if neeed
@@ -303,7 +297,13 @@ impl RustGenerator {
             VariableType::SelfType => dest.push_str("&self"),
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&var.enum_sub_type),
-            VariableType::Regular => dest.push_str(&type_name),
+            VariableType::Regular => {
+                dest.push_str(&type_name);
+
+                if need_lifetime {
+                    dest.push_str("<'a>");
+                }
+            },
             VariableType::Str => {
                 if return_arg {
                     dest.push_str("String");
@@ -317,6 +317,10 @@ impl RustGenerator {
                     dest.push('&');
                 }
                 dest.push_str(&type_name);
+
+                if need_lifetime {
+                    dest.push_str("<'a>");
+                }
             }
         }
 
@@ -328,10 +332,12 @@ impl RustGenerator {
     ///
     /// Generate a function implementation
     ///
-    fn generate_func_def(&self, func: &Function, _struct_name: &str) -> String {
+    fn generate_func_def(&self, func: &Function, _struct_name: &str) -> (bool, String) {
         let mut temp_str = String::with_capacity(128);
         let mut func_imp = String::with_capacity(128);
         let mut gen_labels = GenericLabelAssign::new();
+        let is_static_func = func.func_type == FunctionType::Static;
+        let mut has_generic_params = false;
 
         // Check if we have any generic types, then we need to start with constructing the labels
         // for it
@@ -342,9 +348,14 @@ impl RustGenerator {
 
         // if we have some types we need to generated the generic setup
         if !gen_labels.lookup.is_empty() {
+            has_generic_params = true;
             let len = gen_labels.lookup.len() - 1;
 
             func_imp.push('<');
+
+            if func.func_type == FunctionType::Static {
+                func_imp.push_str("'a, ");
+            }
 
             for (i, (name, label)) in gen_labels.lookup.iter().enumerate() {
                 func_imp.push_str(&format!("{}: {}", *label as u8 as char, name));
@@ -357,18 +368,25 @@ impl RustGenerator {
             func_imp.push('>');
         }
 
-        func_imp.push_str("(&self");
+        if is_static_func {
+            func_imp.push_str("(");
+        } else {
+            func_imp.push_str("(&self");
+        }
 
-        for arg in &func.function_args[1..] {
+        for (index, arg) in func.function_args[1..].iter().enumerate() {
             if let Some(label) = gen_labels.get(&arg.type_name) {
                 temp_str.clear();
                 temp_str.push('&');
                 temp_str.push(label);
             } else {
-                self.generate_arg_type(&mut temp_str, &arg, false);
+                self.generate_arg_type(&mut temp_str, &arg, false, is_static_func);
             }
 
-            func_imp.push_str(", ");
+            if !(is_static_func && index == 0) {
+                func_imp.push_str(", ");
+            }
+
             func_imp.push_str(&arg.name);
             func_imp.push_str(": ");
 
@@ -387,14 +405,16 @@ impl RustGenerator {
         // If we don't have any return value we alwayes return self
         //
         if func.return_val.is_none() {
-            func_imp.push_str(" -> &Self");
+            if !is_static_func {
+                func_imp.push_str(" -> &Self");
+            }
         //func_imp.push_str(" -> &");
         //func_imp.push_str(struct_name);
         //func_imp.push_str("<'a>");
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
-            self.generate_arg_type(&mut temp_str, ret_val, true);
+            self.generate_arg_type(&mut temp_str, ret_val, true, is_static_func);
             func_imp.push_str(" -> ");
 
             if ret_val.array {
@@ -406,7 +426,7 @@ impl RustGenerator {
             }
         }
 
-        func_imp
+        (has_generic_params, func_imp)
     }
 
     ///
@@ -472,10 +492,12 @@ impl RustGenerator {
                 Value::Str(sdef.name.to_snake_case()),
             );
 
-            let out = self.trait_impl_template.render(&template_data).unwrap();
+            let out = self.impl_trait_static_template.render(&template_data).unwrap();
             f.write_all(out.as_bytes())?;
 
             // Implement the static trait for the static type
+
+            template_data.insert("target_name".to_owned(), Value::str(&static_name));
 
             let out = self
                 .impl_trait_static_template
@@ -501,7 +523,7 @@ impl RustGenerator {
         let len = func.function_args[1..].len().wrapping_sub(1);
 
         for (index, arg) in func.function_args[1..].iter().enumerate() {
-            self.generate_arg_type(&mut temp_str, &arg, false);
+            self.generate_arg_type(&mut temp_str, &arg, false, false);
 
             function_arguments.push_str(&arg.name);
             function_arguments.push_str(": ");
@@ -540,18 +562,38 @@ impl RustGenerator {
     //
     // Do the actual function generation
     //
-    fn generate_function(&self, func: &Function, struct_name: &str) -> String {
+    fn generate_function(&self, func: &Function, struct_name: &str, base_name: &str) -> String {
         let mut template_data = Object::new();
+        let is_static_func = func.func_type == FunctionType::Static;
 
         // Generate function declaration
-        let func_def = self.generate_func_def(func, struct_name);
+        let (has_generic_params, func_def) = self.generate_func_def(func, struct_name);
 
-        template_data.insert("func_name".to_owned(), Value::Str(func.name.clone()));
+        template_data.insert("func_name".to_owned(), Value::str(&func.name));
+
+        // If it's a static func but doesn't have any generic parametres we need to append the
+        // lifetime at the end of the function name
+
+        if !has_generic_params && is_static_func {
+            template_data.insert("func_name_header".to_owned(), Value::Str(format!("{}<'a>",func.name)));
+        } else {
+            template_data.insert("func_name_header".to_owned(), Value::str(&func.name));
+        }
+
+        template_data.insert("static_func".to_owned(), Value::Bool(is_static_func));
         template_data.insert("function_def".to_owned(), Value::Str(func_def));
-        template_data.insert(
-            "obj_funcs_name".to_owned(),
-            Value::Str(struct_name.to_snake_case()),
-        );
+
+        if is_static_func {
+            template_data.insert(
+                "obj_funcs_name".to_owned(),
+                Value::Str(base_name.to_snake_case()),
+            );
+        } else {
+            template_data.insert(
+                "obj_funcs_name".to_owned(),
+                Value::Str(struct_name.to_snake_case()),
+            );
+        }
 
         let mut function_args = Vec::with_capacity(func.function_args.len());
         let mut body_setup = String::with_capacity(4096);
@@ -657,6 +699,8 @@ impl RustGenerator {
         for sdef in &api_def.class_structs {
             let mut template_data = Object::new();
             template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("snake_struct_name".to_owned(), Value::Str(sdef.name.to_snake_case()));
+            template_data.insert("wrap_create".to_owned(), Value::Bool(sdef.should_gen_wrap_class()));
 
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;
@@ -708,25 +752,29 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == func_type)
             .for_each(|f| {
-                let res = self.generate_function(&f, name);
+                let res = self.generate_function(&f, name, &sdef.name);
                 dest.write_all(res.as_bytes()).unwrap();
             });
 
-        let mut template_data = Object::new();
-        template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
-        template_data.insert(
-            "type_name_snake".to_owned(),
-            Value::Str(name.to_snake_case()),
-        );
+        if func_type != FunctionType::Static {
+            let mut template_data = Object::new();
+            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert(
+                "type_name_snake".to_owned(),
+                Value::Str(name.to_snake_case()),
+            );
 
-        let out = self.trait_impl_end_template.render(&template_data).unwrap();
-        dest.write_all(out.as_bytes())
+            let out = self.trait_impl_end_template.render(&template_data).unwrap();
+            dest.write_all(out.as_bytes())
+        } else {
+            dest.write_all(b"}\n")
+        }
     }
 
     ///
     ///
     ///
-    pub fn generate_rute(&self, filename: &str, api_defs: &[ApiDef]) -> io::Result<()> {
+    pub fn generate_rute(&self, filename: &str, _api_defs: &[ApiDef]) -> io::Result<()> {
         let mut f = BufWriter::new(File::create(filename)?);
 
         // write header
@@ -735,34 +783,7 @@ impl RustGenerator {
         // impl header
         f.write_all(RUTE_IMPL_HEADER)?;
 
-        // Generate all stucts that have owned data the generated style is outlined in RUST_CREATE_TEMPLATE
-
-        for sdef in api_defs
-            .iter()
-            .flat_map(|s| s.class_structs.iter())
-            .filter(|s| s.should_have_create_func())
-        {
-            let mut template_data = Object::new();
-            let name = sdef.name.to_snake_case();
-
-            template_data.insert("widget_snake_name".to_owned(), Value::Str(name.clone()));
-            template_data.insert("widget_name".to_owned(), Value::Str(sdef.name.clone()));
-
-            let output = if sdef.should_gen_wrap_class() {
-                self.rust_create_template.render(&template_data).unwrap()
-            } else {
-                self.rust_no_wrap_template.render(&template_data).unwrap()
-            };
-
-            f.write_all(output.as_bytes())?;
-
-            if sdef.has_static_functions() {
-                let out = self.get_static_template.render(&template_data).unwrap();
-                f.write_all(out.as_bytes())?;
-            }
-        }
-
-        f.write_all(b"}")
+        Ok(())
     }
     ///
     /// Generates the Rust mod file to import all FFI and Rust generated code
@@ -865,6 +886,8 @@ impl RustGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[allow(unused_imports)]
     use api_parser::*;
 
     //
@@ -889,7 +912,7 @@ mod tests {
         let rust_gen = RustGenerator::new();
         let func = build_default_func();
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self) -> &Self");
+        assert_eq!(func_impl.1, "(&self) -> &Self");
     }
 
     //
@@ -907,7 +930,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, foo: i32) -> &Self");
+        assert_eq!(func_impl.1, "(&self, foo: i32) -> &Self");
     }
 
     #[test]
@@ -922,7 +945,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, foo: &str) -> &Self");
+        assert_eq!(func_impl.1, "(&self, foo: &str) -> &Self");
     }
 
     //
@@ -940,7 +963,28 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "<W: WidgetType>(&self, foo: &W) -> &Self");
+        assert_eq!(func_impl.1, "<W: WidgetType>(&self, foo: &W) -> &Self");
+    }
+
+    //
+    // Test with one generic widget type
+    //
+    #[test]
+    fn test_staic_function_widget_lifetime_type() {
+        let rust_gen = RustGenerator::new();
+        let mut func = build_default_func();
+        func.function_args.push(Variable {
+            name: "foo".to_owned(),
+            type_name: "WidgetType".to_owned(),
+            vtype: VariableType::Regular,
+            ..Variable::default()
+        });
+
+        func.func_type = FunctionType::Static;
+        let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
+
+        assert_eq!(func_impl.0, true);
+        assert_eq!(func_impl.1, "<'a, W: WidgetType>(foo: &W)");
     }
 
     //
@@ -966,7 +1010,7 @@ mod tests {
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(
-            func_impl,
+            func_impl.1,
             "<W: WidgetType>(&self, foo: &W, bar: &W) -> &Self"
         );
     }
@@ -1000,7 +1044,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "<P: PaintType, Q: PoleType, W: WidgetType>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
+        assert_eq!(func_impl.1, "<P: PaintType, Q: PoleType, W: WidgetType>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
     }
 
     //
@@ -1025,7 +1069,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, width: i32, height: f32) -> &Self");
+        assert_eq!(func_impl.1, "(&self, width: i32, height: f32) -> &Self");
     }
 
     //
@@ -1043,7 +1087,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self) -> i32");
+        assert_eq!(func_impl.1, "(&self) -> i32");
     }
 
     //
@@ -1062,7 +1106,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self) -> Option<f32>");
+        assert_eq!(func_impl.1, "(&self) -> Option<f32>");
     }
 
     //
@@ -1081,7 +1125,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self) -> RefArray<f32, WrapperRcOwn>");
+        assert_eq!(func_impl.1, "(&self) -> RefArray<f32, WrapperRcOwn>");
     }
 
     //
@@ -1101,7 +1145,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl, "(&self, width: &[i32]) -> &Self");
+        assert_eq!(func_impl.1, "(&self, width: &[i32]) -> &Self");
     }
 
     #[test]
