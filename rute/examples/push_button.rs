@@ -21,6 +21,3 @@ fn main() {
     // Start the application
     Application::exec();
 }
-
-
-
