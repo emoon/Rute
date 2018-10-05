@@ -41,6 +41,8 @@ typedef struct RUApplicationFuncs {
     void (*set_start_drag_distance)(struct RUBase* self_c, int l);
     int (*start_drag_distance)(struct RUBase* self_c);
     int (*exec)(struct RUBase* self_c);
+    void (*set_about_to_quit_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c));
+
     void (*set_style_sheet)(struct RUBase* self_c, const char* sheet);
     void (*set_auto_sip_enabled)(struct RUBase* self_c, bool enabled);
     bool (*auto_sip_enabled)(struct RUBase* self_c);

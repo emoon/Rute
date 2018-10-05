@@ -54,6 +54,7 @@ struct Application {
     //[override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
     //[event] focus_changed(old: &Widget, now: &Widget),
     //style_sheet() -> String,
+    [event] about_to_quit(),
     set_style_sheet(sheet: String),
     set_auto_sip_enabled(enabled: bool),
     auto_sip_enabled() -> bool,

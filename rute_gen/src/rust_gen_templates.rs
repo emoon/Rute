@@ -250,7 +250,7 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
     }
 
     unsafe extern \"C\" fn {{event_name}}_trampoline(
-        user_data: *const c_void,
+        _user_data: *const c_void,
         func: *const c_void,
         {{function_arguments}}
     ) {

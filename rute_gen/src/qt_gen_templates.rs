@@ -117,7 +117,7 @@ typedef void (*Signal_{{signal_func_name}})(void* self_c, void* trampoline_func{
 class QSlotWrapperSignal_{{signal_func_name}} : public QObject {
     Q_OBJECT
 public:
-    QSlotWrapperSignal_self_int_void(void* data, Signal_{{signal_func_name}} trampoline_func, void* wrapped_func) {
+    QSlotWrapperSignal_{{signal_func_name}}(void* data, Signal_{{signal_func_name}} trampoline_func, void* wrapped_func) {
         m_trampoline_func = trampoline_func;
         m_data = data;
         m_wrapped_func = wrapped_func;
@@ -131,6 +131,16 @@ private:
     void* m_data;
     void* m_wrapped_func;
 };
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static SET_EVENT_TEMPLATE: &str = "static {{event_def}}) {
+    QSlotWrapperSignal_{{signal_type_name}}* wrap = new QSlotWrapperSignal_{{signal_type_name}}(user_data, (Signal_{{signal_type_name}})trampoline_func, (void*)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL({{qt_signal_name}}({{func_def}})), wrap, SLOT(method({{func_def}})));
+}
+
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

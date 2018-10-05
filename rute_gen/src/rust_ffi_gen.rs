@@ -175,7 +175,8 @@ impl HeaderFFIGen for RustFFIGenerator {
             }
         }
 
-        writeln!(dest, "")
+        writeln!(dest, "#[allow(unused_imports)]")?;
+        writeln!(dest, "use std::os::raw::c_void;")
     }
 
     ///

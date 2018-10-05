@@ -3,7 +3,8 @@ use rute_ffi_base::*;
 
 use auto::font_ffi::RUFont;
 use auto::widget_ffi::RUWidget;
-
+#[allow(unused_imports)]
+use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUApplicationFuncs {
@@ -32,6 +33,13 @@ pub struct RUApplicationFuncs {
     pub set_start_drag_distance: extern "C" fn(self_c: *const RUBase, l: i32),
     pub start_drag_distance: extern "C" fn(self_c: *const RUBase) -> i32,
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_about_to_quit_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
     pub set_style_sheet: extern "C" fn(self_c: *const RUBase, sheet: *const ::std::os::raw::c_char),
     pub set_auto_sip_enabled: extern "C" fn(self_c: *const RUBase, enabled: bool),
     pub auto_sip_enabled: extern "C" fn(self_c: *const RUBase) -> bool,

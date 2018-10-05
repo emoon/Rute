@@ -2,7 +2,8 @@
 use rute_ffi_base::*;
 
 use auto::list_widget_ffi::RUListWidget;
-
+#[allow(unused_imports)]
+use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUListWidgetItemFuncs {
