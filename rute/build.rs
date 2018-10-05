@@ -81,10 +81,10 @@ GNU/Linux: export QT5=/opt/qt510\n\n");
         let lib_dir = format!("{}/lib", qt_dir.as_str());
         build.flag("-std=c++11").cpp_link_stdlib("stdc++").cpp(true);
 
-        println!("cargo:rustc-link-search=static={}", &lib_dir);
-        println!("cargo:rustc-link-lib=static={}", "Qt5Widgets");
-        println!("cargo:rustc-link-lib=static={}", "Qt5Gui");
-        println!("cargo:rustc-link-lib=static={}", "Qt5Core");
+        println!("cargo:rustc-link-search={}", &lib_dir);
+        println!("cargo:rustc-link-lib={}", "Qt5Widgets");
+        println!("cargo:rustc-link-lib={}", "Qt5Gui");
+        println!("cargo:rustc-link-lib={}", "Qt5Core");
     } else if target.contains("windows") {
         let lib_dir = format!("{}\\lib", qt_dir.as_str());
 
