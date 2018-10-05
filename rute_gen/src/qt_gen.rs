@@ -727,7 +727,6 @@ impl QtGenerator {
         CapiHeaderGen::callback_fun_def_name(&mut callback_def, false, &func_name, func);
 
         let func_def = generate_func_def_input_parms_only(func);
-
         let mut object = Object::new();
 
         object.insert("event_def".to_owned(), Value::str(&callback_def));
@@ -737,30 +736,6 @@ impl QtGenerator {
 
         let res = self.set_event_template.render(&object).unwrap();
         dest.write_all(res.as_bytes())
-
-        /*
-        f.write_fmt(format_args!("static {} {{\n", callback_def))?;
-
-        //QSlotWrapperNoArgs* wrap = new QSlotWrapperNoArgs(reciver, (SignalNoArgs)callback);
-        f.write_fmt(format_args!(
-            "    QSlotWrapper{}* wrap = new QSlotWrapper{}(user_data, ({})trampoline_func, (void*)event);\n",
-            signal_type_name, signal_type_name, signal_type_name
-        ))?;
-        f.write_all(b"    QObject* q_obj = (QObject*)object;\n")?;
-
-        f.write_fmt(format_args!(
-            "    QObject::connect(q_obj, SIGNAL({}(",
-            func.name.to_mixed_case()
-        ))?;
-
-        let func_def = generate_func_def_input_parms_only(func);
-
-        f.write_fmt(format_args!("{})), wrap, SLOT(method(", func_def))?;
-        f.write_fmt(format_args!("{})));\n", func_def))?;
-        f.write_all(b"}\n\n")?;
-
-        Ok(())
-        */
     }
 
     ///
