@@ -40,6 +40,14 @@ static void widget_resize(struct RUBase* self_c, int width, int height) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+
+    qt_value->setParent((QWidget*)parent);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void widget_update(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
 
@@ -72,6 +80,7 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_fixed_height,
     widget_set_fixed_width,
     widget_resize,
+    widget_set_parent,
     widget_update,
 };
 

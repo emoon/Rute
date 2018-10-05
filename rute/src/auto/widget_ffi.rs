@@ -11,6 +11,7 @@ pub struct RUWidgetFuncs {
     pub set_fixed_height: extern "C" fn(self_c: *const RUBase, width: i32),
     pub set_fixed_width: extern "C" fn(self_c: *const RUBase, width: i32),
     pub resize: extern "C" fn(self_c: *const RUBase, width: i32, height: i32),
+    pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
     pub update: extern "C" fn(self_c: *const RUBase),
 }
 

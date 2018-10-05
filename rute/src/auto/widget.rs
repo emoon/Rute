@@ -100,6 +100,16 @@ pub trait WidgetType<'a> {
         self
     }
 
+    fn set_parent<W: WidgetType<'a>>(&self, parent: &W) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, obj_parent_1);
+        }
+        self
+    }
+
     fn update(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {

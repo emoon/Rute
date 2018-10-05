@@ -33,6 +33,7 @@ static struct RuteFFI s_rute = {
     create_font,
     create_list_widget,
     create_list_widget_item,
+    create_push_button,
     create_size,
     create_widget,
 };

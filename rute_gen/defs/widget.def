@@ -7,8 +7,7 @@ struct Widget {
     set_fixed_height(width: i32),
     set_fixed_width(width: i32),
     resize(width: i32, height: i32),
-    //set_parent(&WidgetType widget),
-    //set_layout(&LayoutType layout),
+    set_parent(parent: *WidgetType),
     update(),
 
     //[event] paint(&PaintEvent event),

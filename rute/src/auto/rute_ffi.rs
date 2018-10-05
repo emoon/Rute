@@ -2,6 +2,7 @@ use auto::application_ffi::*;
 use auto::font_ffi::*;
 use auto::list_widget_ffi::*;
 use auto::list_widget_item_ffi::*;
+use auto::push_button_ffi::*;
 use auto::size_ffi::*;
 use auto::widget_ffi::*;
 use rute_ffi_base::*;
@@ -23,6 +24,11 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUListWidgetItem,
+    pub create_push_button: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPushButton,
     pub create_size: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

@@ -1,0 +1,30 @@
+struct PushButton : Widget {
+    //[replace] size_hint() -> Size,
+    //[replace] minimum_size_hint() -> Size,
+    auto_default() -> bool,
+    set_auto_default(arg0: bool),
+    is_default() -> bool,
+    set_default(arg0: bool),
+    //set_menu(menu: *MenuType),
+    //menu() -> Menu?,
+    set_flat(arg0: bool),
+    is_flat() -> bool,
+    show_menu(),
+    //[replace] event(e: *EventType) -> bool,
+    //[replace] paint_event(arg0: *PaintEventType),
+    //[replace] key_press_event(arg0: *KeyEventType),
+    //[replace] focus_in_event(arg0: *FocusEventType),
+    //[replace] focus_out_event(arg0: *FocusEventType),
+    //init_style_option(option: *StyleOptionButtonType),
+
+    // From AbstractButton (to be moved there when support that)
+    set_text(text: String),
+    text() -> String,
+    [event] pressed(),
+    [event] released(),
+    [event] clicked(checked: bool),
+    [event] toggled(checked: bool),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
+

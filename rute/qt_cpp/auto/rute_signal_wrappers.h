@@ -13,6 +13,8 @@
 
 #include <QListWidgetItem>
 
+#include <QPushButton>
+
 
 #include <QSize>
 
@@ -54,6 +56,22 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRPushButton : public QPushButton {
+    //Q_OBJECT
+public:
+    WRPushButton(QWidget* widget) : QPushButton(widget) { }
+    virtual ~WRPushButton() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRSize : public QSize {
     //Q_OBJECT
 public:
@@ -83,6 +101,28 @@ public:
     
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_self_bool_void)(void* self_c, void* trampoline_func, bool checked);
+
+class QSlotWrapperSignal_self_bool_void : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_bool_void(void* data, Signal_self_bool_void trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method( bool checked) {
+        m_trampoline_func(m_data, m_wrapped_func, checked);
+    }
+private:
+    Signal_self_bool_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
