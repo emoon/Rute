@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/emoon/Rute.svg?branch=master)](https://travis-ci.org/emoon/Rute)
 [![Build status](https://ci.appveyor.com/api/projects/status/sd72ee6sbm17b0l3/branch/master?svg=true)](https://ci.appveyor.com/project/emoon/rute/branch/master)
-[![Generator Coverage](https://codecov.io/gh/emoon/Rute/branch/master/graph/badge.svg)](https://codecov.io/gh/emoon/Rute)
 
 # Rute
 
