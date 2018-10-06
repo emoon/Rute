@@ -14,6 +14,7 @@
 #include "paint_event_ffi.h"
 #include "push_button_ffi.h"
 #include "rect_ffi.h"
+#include "screen_ffi.h"
 #include "size_ffi.h"
 #include "widget_ffi.h"
 

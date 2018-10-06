@@ -6,6 +6,7 @@ use auto::list_widget_item_ffi::*;
 use auto::paint_event_ffi::*;
 use auto::push_button_ffi::*;
 use auto::rect_ffi::*;
+use auto::screen_ffi::*;
 use auto::size_ffi::*;
 use auto::widget_ffi::*;
 use rute_ffi_base::*;

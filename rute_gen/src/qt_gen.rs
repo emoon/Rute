@@ -6,6 +6,7 @@ use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
 use std::path::Path;
+use std::borrow::Cow;
 
 use api_parser::*;
 use qt_gen_templates::*;
@@ -35,29 +36,27 @@ trait TypeHandler {
 }
 
 ///
+/// Trait for handling different types that needs to be overriden
+///
+trait TypeHandlerTrait {
+    fn replace_type(&self, arg: &Variable, _is_return_value: bool) -> Cow<str> {
+        arg.type_name.clone().into()
+    }
+
+    fn gen_body_return(&self, _varible: &Variable) -> Cow<str> {
+        "".into()
+    }
+
+    fn gen_body(&self, _arg: &Variable, _index: usize) -> (Cow<str>, Cow<str>);
+}
+
+
+///
 /// Adds some extra functionallity to Struct to make some checks easier
 ///
 impl Struct {
-    fn inherits_widget(&self, api_def: &ApiDef) -> bool {
-        if self.name == "Widget" {
-            return true;
-        }
-
-        if let Some(ref inherit_name) = self.inherit {
-            if inherit_name == "Widget" {
-                return true;
-            }
-
-            for sdef in &api_def.class_structs {
-                if sdef.name != self.name {
-                    if sdef.inherits_widget(api_def) == true {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        false
+    fn inherits_widget(&self) -> bool {
+        self.full_inherit.iter().any(|i| i == "Widget")
     }
 }
 
@@ -220,7 +219,7 @@ fn generate_wrapper_classes_impl<W: Write>(_f: &mut W, api_def: &ApiDef) -> io::
     for _sdef in api_def
         .class_structs
         .iter()
-        .filter(|v| v.inherits_widget(api_def))
+        .filter(|v| v.inherits_widget())
     {
         /*
         let iterator = sdef
@@ -353,33 +352,6 @@ fn build_signal_wrappers_info<'a>(api_defs: &'a [ApiDef]) -> HashMap<String, &'a
 
     wrapper_info
 }
-
-//
-// Generate all forward declarations function pointer structs
-//
-// Example output:
-//
-// extern struct RUWidgetFuncs s_widget_funcs;
-// extern struct RUWidgetAllFuncs s_widget_all_funcs;
-//
-/*
-fn generate_forward_declare_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    for s in &api_def.class_structs {
-        f.write_fmt(format_args!(
-            "extern struct RU{}Funcs s_{}_funcs;\n",
-            s.name,
-            s.name.to_snake_case()
-        ))?;
-        f.write_fmt(format_args!(
-            "extern struct RU{}AllFuncs s_{}_all_funcs;\n",
-            s.name,
-            s.name.to_snake_case()
-        ))?;
-    }
-
-    f.write_all(b"\n")
-}
-*/
 
 fn function_name(struct_name: &str, func: &Function) -> String {
     format!("{}_{}", struct_name.to_snake_case(), func.name)
@@ -519,7 +491,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
         let snake_name = sdef.name.to_snake_case();
         let struct_name = sdef.name.as_str();
         let struct_qt_name = &sdef.cpp_name;
-        let is_inherits_widget = sdef.inherits_widget(api_def);
+        let is_inherits_widget = sdef.inherits_widget();
         f.write_all(SEPARATOR)?;
 
         //
@@ -996,7 +968,7 @@ impl QtGenerator {
             .filter(|s| s.should_gen_wrap_class())
         {
             let mut template_data = Object::new();
-            let inherits_widget = sdef.inherits_widget(api_def);
+            let inherits_widget = sdef.inherits_widget();
 
             template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
             template_data.insert("qt_name".to_owned(), Value::str(&sdef.qt_name));

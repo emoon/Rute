@@ -22,6 +22,8 @@
 
 #include <QRect>
 
+#include <QScreen>
+
 #include <QSize>
 
 #include <QWidget>
