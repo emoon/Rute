@@ -1,7 +1,7 @@
 struct Pixmap : PaintDevice {
     swap(other: &PixmapType),
     is_null() -> bool,
-    [replace] dev_type() -> i32,
+    [event] dev_type() -> i32,
     width() -> i32,
     height() -> i32,
     size() -> Size,
@@ -44,7 +44,7 @@ struct Pixmap : PaintDevice {
     is_detached() -> bool,
     detach(),
     is_q_bitmap() -> bool,
-    [replace] paint_engine() -> PaintEngine?,
+    [event] paint_engine() -> PaintEngine?,
     [static] from_image_in_place(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     handle() -> PlatformPixmap?,
 }

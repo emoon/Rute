@@ -67,15 +67,15 @@ enum ButtonLayout {
 }
 
 struct PlatformDialogHelper : Object {
-    [replace] style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
-    [replace] exec(),
-    [replace] show(window_flags: Rute::WindowFlags, window_modality: Rute::WindowModality, parent: *WindowType) -> bool,
-    [replace] hide(),
+    [event] style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
+    [event] exec(),
+    [event] show(window_flags: Rute::WindowFlags, window_modality: Rute::WindowModality, parent: *WindowType) -> bool,
+    [event] hide(),
     [static] default_style_hint(hint: PlatformDialogHelper::StyleHint) -> Variant,
     [static] button_layout(orientation: Rute::Orientation, policy: PlatformDialogHelper::ButtonLayout) -> i32?,
     [static] button_role(button: PlatformDialogHelper::StandardButton) -> PlatformDialogHelper::ButtonRole,
-    [event] accept(),
-    [event] reject(),
+    [signal] accept(),
+    [signal] reject(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

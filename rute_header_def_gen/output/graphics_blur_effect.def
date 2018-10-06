@@ -6,14 +6,14 @@ enum BlurHint {
 }
 
 struct GraphicsBlurEffect : GraphicsEffect {
-    [replace] bounding_rect_for(rect: &RectFType) -> RectF,
+    [event] bounding_rect_for(rect: &RectFType) -> RectF,
     blur_radius() -> f32,
     blur_hints() -> BlurHints,
     set_blur_radius(blur_radius: f32),
     set_blur_hints(hints: BlurHints),
-    [event] blur_radius_changed(blur_radius: f32),
-    [event] blur_hints_changed(hints: BlurHints),
-    [replace] draw(painter: *PainterType),
+    [signal] blur_radius_changed(blur_radius: f32),
+    [signal] blur_hints_changed(hints: BlurHints),
+    [event] draw(painter: *PainterType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

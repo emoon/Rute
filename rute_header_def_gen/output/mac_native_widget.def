@@ -1,7 +1,7 @@
 struct MacNativeWidget : Widget {
-    [replace] size_hint() -> Size,
+    [event] size_hint() -> Size,
     native_view() -> NSView?,
-    [replace] event(ev: *EventType) -> bool,
+    [event] event(ev: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

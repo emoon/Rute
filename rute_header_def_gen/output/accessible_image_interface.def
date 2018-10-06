@@ -1,8 +1,8 @@
 
 struct AccessibleImageInterface {
-    [replace] image_description() -> String,
-    [replace] image_size() -> Size,
-    [replace] image_position() -> Point,
+    [event] image_description() -> String,
+    [event] image_size() -> Size,
+    [event] image_position() -> Point,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

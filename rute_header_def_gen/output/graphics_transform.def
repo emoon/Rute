@@ -1,5 +1,5 @@
 struct GraphicsTransform : Object {
-    [replace] apply_to(matrix: *Matrix4x4Type),
+    [event] apply_to(matrix: *Matrix4x4Type),
     update(),
 }
 

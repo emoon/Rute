@@ -1,8 +1,8 @@
 struct PlatformOffscreenSurface : PlatformSurface {
     offscreen_surface() -> OffscreenSurface?,
-    [replace] screen() -> PlatformScreen?,
-    [replace] format() -> SurfaceFormat,
-    [replace] is_valid() -> bool,
+    [event] screen() -> PlatformScreen?,
+    [event] format() -> SurfaceFormat,
+    [event] is_valid() -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

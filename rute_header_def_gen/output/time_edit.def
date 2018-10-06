@@ -1,5 +1,5 @@
 struct TimeEdit : DateTimeEdit {
-    [event] user_time_changed(time: &TimeType),
+    [signal] user_time_changed(time: &TimeType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

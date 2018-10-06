@@ -16,9 +16,9 @@ enum PaintDeviceMetric {
 
 
 struct PaintDevice {
-    [replace] dev_type() -> i32,
+    [event] dev_type() -> i32,
     painting_active() -> bool,
-    [replace] paint_engine() -> PaintEngine?,
+    [event] paint_engine() -> PaintEngine?,
     width() -> i32,
     height() -> i32,
     width_mm() -> i32,
@@ -32,9 +32,9 @@ struct PaintDevice {
     color_count() -> i32,
     depth() -> i32,
     [static] device_pixel_ratio_f_scale() -> f32,
-    [replace] init_painter(painter: *PainterType),
-    [replace] redirected(offset: *PointType) -> PaintDevice?,
-    [replace] shared_painter() -> Painter?,
+    [event] init_painter(painter: *PainterType),
+    [event] redirected(offset: *PointType) -> PaintDevice?,
+    [event] shared_painter() -> Painter?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

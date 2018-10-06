@@ -1,9 +1,9 @@
 struct Picture : PaintDevice {
     is_null() -> bool,
-    [replace] dev_type() -> i32,
+    [event] dev_type() -> i32,
     size() -> uint,
     data() -> char?,
-    [replace] set_data(data: *char, size: uint),
+    [event] set_data(data: *char, size: uint),
     play(p: *PainterType) -> bool,
     load(dev: *IODeviceType, format: *char) -> bool,
     load(file_name: String, format: *char) -> bool,
@@ -19,7 +19,7 @@ struct Picture : PaintDevice {
     [static] output_formats() -> [ByteArray],
     [static] input_format_list() -> [String],
     [static] output_format_list() -> [String],
-    [replace] paint_engine() -> PaintEngine?,
+    [event] paint_engine() -> PaintEngine?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

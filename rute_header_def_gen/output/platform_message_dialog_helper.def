@@ -1,7 +1,7 @@
 struct PlatformMessageDialogHelper : PlatformDialogHelper {
     options() -> SharedPointer<QMessageDialogOptions>?,
     set_options(options: &SharedPointer<QMessageDialogOptions>Type),
-    [event] clicked(button: PlatformDialogHelper::StandardButton, role: PlatformDialogHelper::ButtonRole),
+    [signal] clicked(button: PlatformDialogHelper::StandardButton, role: PlatformDialogHelper::ButtonRole),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

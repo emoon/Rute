@@ -1,5 +1,5 @@
 struct IconEnginePlugin : Object {
-    [replace] create(filename: String) -> IconEngine?,
+    [event] create(filename: String) -> IconEngine?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

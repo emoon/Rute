@@ -1,15 +1,15 @@
 struct SizeGrip : Widget {
-    [replace] size_hint() -> Size,
-    [replace] set_visible(arg0: bool),
-    [replace] paint_event(arg0: *PaintEventType),
-    [replace] mouse_press_event(arg0: *MouseEventType),
-    [replace] mouse_move_event(arg0: *MouseEventType),
-    [replace] mouse_release_event(mouse_event: *MouseEventType),
-    [replace] move_event(move_event: *MoveEventType),
-    [replace] show_event(show_event: *ShowEventType),
-    [replace] hide_event(hide_event: *HideEventType),
-    [replace] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
-    [replace] event(arg0: *EventType) -> bool,
+    [event] size_hint() -> Size,
+    [event] set_visible(arg0: bool),
+    [event] paint_event(arg0: *PaintEventType),
+    [event] mouse_press_event(arg0: *MouseEventType),
+    [event] mouse_move_event(arg0: *MouseEventType),
+    [event] mouse_release_event(mouse_event: *MouseEventType),
+    [event] move_event(move_event: *MoveEventType),
+    [event] show_event(show_event: *ShowEventType),
+    [event] hide_event(hide_event: *HideEventType),
+    [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    [event] event(arg0: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

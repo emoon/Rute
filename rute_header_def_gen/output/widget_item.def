@@ -1,12 +1,12 @@
 struct WidgetItem : LayoutItem {
-    [replace] size_hint() -> Size,
-    [replace] minimum_size() -> Size,
-    [replace] maximum_size() -> Size,
-    [replace] expanding_directions() -> Rute::Orientations,
-    [replace] is_empty() -> bool,
-    [replace] widget() -> Widget?,
-    [replace] has_height_for_width() -> bool,
-    [replace] height_for_width(arg0: i32) -> i32,
+    [event] size_hint() -> Size,
+    [event] minimum_size() -> Size,
+    [event] maximum_size() -> Size,
+    [event] expanding_directions() -> Rute::Orientations,
+    [event] is_empty() -> bool,
+    [event] widget() -> Widget?,
+    [event] has_height_for_width() -> bool,
+    [event] height_for_width(arg0: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

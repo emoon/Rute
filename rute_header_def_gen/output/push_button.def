@@ -1,6 +1,6 @@
 struct PushButton : AbstractButton {
-    [replace] size_hint() -> Size,
-    [replace] minimum_size_hint() -> Size,
+    [event] size_hint() -> Size,
+    [event] minimum_size_hint() -> Size,
     auto_default() -> bool,
     set_auto_default(arg0: bool),
     is_default() -> bool,
@@ -10,11 +10,11 @@ struct PushButton : AbstractButton {
     set_flat(arg0: bool),
     is_flat() -> bool,
     show_menu(),
-    [replace] event(e: *EventType) -> bool,
-    [replace] paint_event(arg0: *PaintEventType),
-    [replace] key_press_event(arg0: *KeyEventType),
-    [replace] focus_in_event(arg0: *FocusEventType),
-    [replace] focus_out_event(arg0: *FocusEventType),
+    [event] event(e: *EventType) -> bool,
+    [event] paint_event(arg0: *PaintEventType),
+    [event] key_press_event(arg0: *KeyEventType),
+    [event] focus_in_event(arg0: *FocusEventType),
+    [event] focus_out_event(arg0: *FocusEventType),
     init_style_option(option: *StyleOptionButtonType),
 }
 

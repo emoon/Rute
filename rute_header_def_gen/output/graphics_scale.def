@@ -7,12 +7,12 @@ struct GraphicsScale : GraphicsTransform {
     set_y_scale(arg0: f32),
     z_scale() -> f32,
     set_z_scale(arg0: f32),
-    [replace] apply_to(matrix: *Matrix4x4Type),
-    [event] origin_changed(),
-    [event] x_scale_changed(),
-    [event] y_scale_changed(),
-    [event] z_scale_changed(),
-    [event] scale_changed(),
+    [event] apply_to(matrix: *Matrix4x4Type),
+    [signal] origin_changed(),
+    [signal] x_scale_changed(),
+    [signal] y_scale_changed(),
+    [signal] z_scale_changed(),
+    [signal] scale_changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

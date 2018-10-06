@@ -4,12 +4,12 @@ enum Capability {
 }
 
 struct PlatformCursor : Object {
-    [replace] pointer_event(event: &MouseEventType),
-    [replace] change_cursor(window_cursor: *CursorType, window: *WindowType),
-    [replace] set_override_cursor(arg0: &CursorType),
-    [replace] clear_override_cursor(),
-    [replace] pos() -> Point,
-    [replace] set_pos(pos: &PointType),
+    [event] pointer_event(event: &MouseEventType),
+    [event] change_cursor(window_cursor: *CursorType, window: *WindowType),
+    [event] set_override_cursor(arg0: &CursorType),
+    [event] clear_override_cursor(),
+    [event] pos() -> Point,
+    [event] set_pos(pos: &PointType),
     [static] capabilities() -> Capabilities,
     [static] set_capabilities(c: Capabilities),
     [static] set_capability(c: PlatformCursor::Capability),

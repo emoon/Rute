@@ -47,8 +47,8 @@ struct Scroller : Object {
     ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32),
     ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
     resend_prepare_event(),
-    [event] state_changed(newstate: Scroller::State),
-    [event] scroller_properties_changed(arg0: &ScrollerPropertiesType),
+    [signal] state_changed(newstate: Scroller::State),
+    [signal] scroller_properties_changed(arg0: &ScrollerPropertiesType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

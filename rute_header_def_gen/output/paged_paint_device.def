@@ -136,18 +136,18 @@ enum PdfVersion {
 }
 
 struct PagedPaintDevice : PaintDevice {
-    [replace] new_page() -> bool,
+    [event] new_page() -> bool,
     set_page_layout(page_layout: &PageLayoutType) -> bool,
     set_page_size(page_size: &PageSizeType) -> bool,
     set_page_orientation(orientation: PageLayout::Orientation) -> bool,
     set_page_margins(margins: &MarginsFType) -> bool,
     set_page_margins(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
     page_layout() -> PageLayout,
-    [replace] set_page_size(size: PagedPaintDevice::PageSize),
+    [event] set_page_size(size: PagedPaintDevice::PageSize),
     page_size() -> PagedPaintDevice::PageSize,
-    [replace] set_page_size_mm(size: &SizeFType),
+    [event] set_page_size_mm(size: &SizeFType),
     page_size_mm() -> SizeF,
-    [replace] set_margins(margins: onst QPagedPaintDevice::Margins &),
+    [event] set_margins(margins: onst QPagedPaintDevice::Margins &),
     margins() -> PagedPaintDevice::Margins,
     dd() -> PagedPaintDevicePrivate?,
     device_page_layout() -> PageLayout,

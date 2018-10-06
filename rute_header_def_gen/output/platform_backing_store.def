@@ -9,16 +9,16 @@ enum TextureFlag {
 struct PlatformBackingStore {
     window() -> Window?,
     backing_store() -> BackingStore?,
-    [replace] paint_device() -> PaintDevice?,
-    [replace] flush(window: *WindowType, region: &RegionType, offset: &PointType),
-    [replace] compose_and_flush(window: *WindowType, region: &RegionType, offset: &PointType, textures: *PlatformTextureListType, translucent_background: bool),
-    [replace] to_image() -> Image,
+    [event] paint_device() -> PaintDevice?,
+    [event] flush(window: *WindowType, region: &RegionType, offset: &PointType),
+    [event] compose_and_flush(window: *WindowType, region: &RegionType, offset: &PointType, textures: *PlatformTextureListType, translucent_background: bool),
+    [event] to_image() -> Image,
     to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: *TextureFlags) -> i32,
-    [replace] graphics_buffer() -> PlatformGraphicsBuffer?,
-    [replace] resize(size: &SizeType, static_contents: &RegionType),
-    [replace] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
-    [replace] begin_paint(arg0: &RegionType),
-    [replace] end_paint(),
+    [event] graphics_buffer() -> PlatformGraphicsBuffer?,
+    [event] resize(size: &SizeType, static_contents: &RegionType),
+    [event] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
+    [event] begin_paint(arg0: &RegionType),
+    [event] end_paint(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -16,11 +16,11 @@ enum SurfaceType {
 
 struct Surface {
     surface_class() -> Surface::SurfaceClass,
-    [replace] format() -> SurfaceFormat,
-    [replace] surface_handle() -> PlatformSurface?,
-    [replace] surface_type() -> Surface::SurfaceType,
+    [event] format() -> SurfaceFormat,
+    [event] surface_handle() -> PlatformSurface?,
+    [event] surface_type() -> Surface::SurfaceType,
     supports_open_gl() -> bool,
-    [replace] size() -> Size,
+    [event] size() -> Size,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

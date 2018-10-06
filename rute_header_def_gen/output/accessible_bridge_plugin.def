@@ -1,5 +1,5 @@
 struct AccessibleBridgePlugin : Object {
-    [replace] create(key: String) -> AccessibleBridge?,
+    [event] create(key: String) -> AccessibleBridge?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

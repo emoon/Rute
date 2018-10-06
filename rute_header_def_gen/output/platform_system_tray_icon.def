@@ -16,18 +16,18 @@ enum MessageIcon {
 }
 
 struct PlatformSystemTrayIcon : Object {
-    [replace] init(),
-    [replace] cleanup(),
-    [replace] update_icon(icon: &IconType),
-    [replace] update_tool_tip(tooltip: String),
-    [replace] update_menu(menu: *PlatformMenuType),
-    [replace] show_message(title: String, msg: String, icon: &IconType, icon_type: PlatformSystemTrayIcon::MessageIcon, msecs: i32),
-    [replace] is_system_tray_available() -> bool,
-    [replace] supports_messages() -> bool,
-    [replace] create_menu() -> PlatformMenu?,
-    [event] activated(reason: PlatformSystemTrayIcon::ActivationReason),
-    [event] context_menu_requested(global_pos: PointType, screen: *PlatformScreenType),
-    [event] message_clicked(),
+    [event] init(),
+    [event] cleanup(),
+    [event] update_icon(icon: &IconType),
+    [event] update_tool_tip(tooltip: String),
+    [event] update_menu(menu: *PlatformMenuType),
+    [event] show_message(title: String, msg: String, icon: &IconType, icon_type: PlatformSystemTrayIcon::MessageIcon, msecs: i32),
+    [event] is_system_tray_available() -> bool,
+    [event] supports_messages() -> bool,
+    [event] create_menu() -> PlatformMenu?,
+    [signal] activated(reason: PlatformSystemTrayIcon::ActivationReason),
+    [signal] context_menu_requested(global_pos: PointType, screen: *PlatformScreenType),
+    [signal] message_clicked(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,13 +1,13 @@
 struct IntValidator : Validator {
-    [replace] validate(arg0: String, arg1: &i32) -> Validator::State,
-    [replace] fixup(input: String),
+    [event] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [event] fixup(input: String),
     set_bottom(arg0: i32),
     set_top(arg0: i32),
-    [replace] set_range(bottom: i32, top: i32),
+    [event] set_range(bottom: i32, top: i32),
     bottom() -> i32,
     top() -> i32,
-    [event] bottom_changed(bottom: i32),
-    [event] top_changed(top: i32),
+    [signal] bottom_changed(bottom: i32),
+    [signal] top_changed(top: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

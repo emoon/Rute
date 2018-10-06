@@ -30,9 +30,9 @@ struct SystemTrayIcon : Object {
     hide(),
     show_message(title: String, msg: String, icon: &IconType, msecs: i32),
     show_message(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
-    [event] activated(reason: SystemTrayIcon::ActivationReason),
-    [event] message_clicked(),
-    [replace] event(event: *EventType) -> bool,
+    [signal] activated(reason: SystemTrayIcon::ActivationReason),
+    [signal] message_clicked(),
+    [event] event(event: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,7 +1,7 @@
 
 struct AccessibleBridge {
-    [replace] set_root_object(arg0: *AccessibleInterfaceType),
-    [replace] notify_accessibility_update(event: *AccessibleEventType),
+    [event] set_root_object(arg0: *AccessibleInterfaceType),
+    [event] notify_accessibility_update(event: *AccessibleEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

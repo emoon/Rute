@@ -2,8 +2,8 @@ struct ErrorMessage : Dialog {
     [static] qt_handler() -> ErrorMessage?,
     show_message(message: String),
     show_message(message: String, type: String),
-    [replace] done(arg0: i32),
-    [replace] change_event(e: *EventType),
+    [event] done(arg0: i32),
+    [event] change_event(e: *EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

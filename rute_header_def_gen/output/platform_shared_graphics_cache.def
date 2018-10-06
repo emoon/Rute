@@ -9,22 +9,22 @@ enum BufferType {
 }
 
 struct PlatformSharedGraphicsCache : Object {
-    [replace] begin_request_batch(),
-    [replace] ensure_cache_initialized(cache_id: &ByteArrayType, buffer_type: PlatformSharedGraphicsCache::BufferType, pixel_format: PlatformSharedGraphicsCache::PixelFormat),
-    [replace] request_items(cache_id: &ByteArrayType, item_ids: [u32]),
-    [replace] insert_items(cache_id: &ByteArrayType, item_ids: [u32], items: [ImageType]),
-    [replace] release_items(cache_id: &ByteArrayType, item_ids: [u32]),
-    [replace] end_request_batch(),
-    [replace] request_batch_started() -> bool,
-    [replace] texture_id_for_buffer(buffer_id: *void) -> uint,
-    [replace] reference_buffer(buffer_id: *void),
-    [replace] dereference_buffer(buffer_id: *void) -> bool,
-    [replace] size_of_buffer(buffer_id: *void) -> Size,
-    [replace] egl_image_for_buffer(buffer_id: *void),
-    [event] items_missing(cache_id: &ByteArrayType, item_ids: [u32]),
-    [event] items_available(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
-    [event] items_invalidated(cache_id: &ByteArrayType, item_ids: [u32]),
-    [event] items_updated(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
+    [event] begin_request_batch(),
+    [event] ensure_cache_initialized(cache_id: &ByteArrayType, buffer_type: PlatformSharedGraphicsCache::BufferType, pixel_format: PlatformSharedGraphicsCache::PixelFormat),
+    [event] request_items(cache_id: &ByteArrayType, item_ids: [u32]),
+    [event] insert_items(cache_id: &ByteArrayType, item_ids: [u32], items: [ImageType]),
+    [event] release_items(cache_id: &ByteArrayType, item_ids: [u32]),
+    [event] end_request_batch(),
+    [event] request_batch_started() -> bool,
+    [event] texture_id_for_buffer(buffer_id: *void) -> uint,
+    [event] reference_buffer(buffer_id: *void),
+    [event] dereference_buffer(buffer_id: *void) -> bool,
+    [event] size_of_buffer(buffer_id: *void) -> Size,
+    [event] egl_image_for_buffer(buffer_id: *void),
+    [signal] items_missing(cache_id: &ByteArrayType, item_ids: [u32]),
+    [signal] items_available(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
+    [signal] items_invalidated(cache_id: &ByteArrayType, item_ids: [u32]),
+    [signal] items_updated(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

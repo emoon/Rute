@@ -24,12 +24,12 @@ struct UndoStack : Object {
     undo(),
     redo(),
     set_active(active: bool),
-    [event] index_changed(idx: i32),
-    [event] clean_changed(clean: bool),
-    [event] can_undo_changed(can_undo: bool),
-    [event] can_redo_changed(can_redo: bool),
-    [event] undo_text_changed(undo_text: String),
-    [event] redo_text_changed(redo_text: String),
+    [signal] index_changed(idx: i32),
+    [signal] clean_changed(clean: bool),
+    [signal] can_undo_changed(can_undo: bool),
+    [signal] can_redo_changed(can_redo: bool),
+    [signal] undo_text_changed(undo_text: String),
+    [signal] redo_text_changed(redo_text: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

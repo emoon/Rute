@@ -11,9 +11,9 @@ struct Shortcut : Object {
     auto_repeat() -> bool,
     id() -> i32,
     parent_widget() -> Widget?,
-    [event] activated(),
-    [event] activated_ambiguously(),
-    [replace] event(e: *EventType) -> bool,
+    [signal] activated(),
+    [signal] activated_ambiguously(),
+    [event] event(e: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

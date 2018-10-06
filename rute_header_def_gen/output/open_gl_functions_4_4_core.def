@@ -1,5 +1,5 @@
 struct OpenGLFunctions_4_4_Core : AbstractOpenGLFunctions {
-    [replace] initialize_open_gl_functions() -> bool,
+    [event] initialize_open_gl_functions() -> bool,
     gl_viewport(x: GLint, y: GLint, width: i32, height: i32),
     gl_depth_range(near_val: i32, far_val: i32),
     gl_is_enabled(cap: i32) -> i32,

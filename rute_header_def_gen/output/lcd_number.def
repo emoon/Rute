@@ -25,7 +25,7 @@ struct LCDNumber : Frame {
     set_segment_style(arg0: LCDNumber::SegmentStyle),
     value() -> double,
     int_value() -> i32,
-    [replace] size_hint() -> Size,
+    [event] size_hint() -> Size,
     display(str: String),
     display(num: i32),
     display(num: double),
@@ -34,9 +34,9 @@ struct LCDNumber : Frame {
     set_oct_mode(),
     set_bin_mode(),
     set_small_decimal_point(arg0: bool),
-    [event] overflow(),
-    [replace] event(e: *EventType) -> bool,
-    [replace] paint_event(arg0: *PaintEventType),
+    [signal] overflow(),
+    [event] event(e: *EventType) -> bool,
+    [event] paint_event(arg0: *PaintEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

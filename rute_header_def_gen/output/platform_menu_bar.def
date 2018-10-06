@@ -1,10 +1,10 @@
 struct PlatformMenuBar : Object {
-    [replace] insert_menu(menu: *PlatformMenuType, before: *PlatformMenuType),
-    [replace] remove_menu(menu: *PlatformMenuType),
-    [replace] sync_menu(menu_item: *PlatformMenuType),
-    [replace] handle_reparent(new_parent_window: *WindowType),
-    [replace] menu_for_tag(tag: quintptr) -> PlatformMenu?,
-    [replace] create_menu() -> PlatformMenu?,
+    [event] insert_menu(menu: *PlatformMenuType, before: *PlatformMenuType),
+    [event] remove_menu(menu: *PlatformMenuType),
+    [event] sync_menu(menu_item: *PlatformMenuType),
+    [event] handle_reparent(new_parent_window: *WindowType),
+    [event] menu_for_tag(tag: quintptr) -> PlatformMenu?,
+    [event] create_menu() -> PlatformMenu?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

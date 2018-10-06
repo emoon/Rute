@@ -15,7 +15,7 @@ struct PlatformTextureList : Object {
     is_locked() -> bool,
     append_texture(source: *void, texture_id: i32, geometry: &RectType, clip_rect: &RectType, flags: Flags),
     clear(),
-    [event] locked(arg0: bool),
+    [signal] locked(arg0: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

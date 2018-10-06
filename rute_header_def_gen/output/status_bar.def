@@ -9,13 +9,13 @@ struct StatusBar : Widget {
     current_message() -> String,
     show_message(text: String, timeout: i32),
     clear_message(),
-    [event] message_changed(text: String),
-    [replace] show_event(arg0: *ShowEventType),
-    [replace] paint_event(arg0: *PaintEventType),
-    [replace] resize_event(arg0: *ResizeEventType),
+    [signal] message_changed(text: String),
+    [event] show_event(arg0: *ShowEventType),
+    [event] paint_event(arg0: *PaintEventType),
+    [event] resize_event(arg0: *ResizeEventType),
     reformat(),
     hide_or_show(),
-    [replace] event(arg0: *EventType) -> bool,
+    [event] event(arg0: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,5 +1,5 @@
 struct GenericPlugin : Object {
-    [replace] create(name: String, spec: String) -> Object?,
+    [event] create(name: String, spec: String) -> Object?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -23,8 +23,8 @@ struct GraphicsItemAnimation : Object {
     clear(),
     set_step(x: f32),
     reset(),
-    [replace] before_animation_step(step: f32),
-    [replace] after_animation_step(step: f32),
+    [event] before_animation_step(step: f32),
+    [event] after_animation_step(step: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

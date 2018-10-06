@@ -1,11 +1,11 @@
 struct SpacerItem : LayoutItem {
     change_size(w: i32, h: i32, h_data: SizePolicy::Policy, v_data: SizePolicy::Policy),
-    [replace] size_hint() -> Size,
-    [replace] minimum_size() -> Size,
-    [replace] maximum_size() -> Size,
-    [replace] expanding_directions() -> Rute::Orientations,
-    [replace] is_empty() -> bool,
-    [replace] spacer_item() -> SpacerItem?,
+    [event] size_hint() -> Size,
+    [event] minimum_size() -> Size,
+    [event] maximum_size() -> Size,
+    [event] expanding_directions() -> Rute::Orientations,
+    [event] is_empty() -> bool,
+    [event] spacer_item() -> SpacerItem?,
     size_policy() -> SizePolicy,
 }
 

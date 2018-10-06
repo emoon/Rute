@@ -1,5 +1,5 @@
 struct File : FileDevice {
-    [replace] file_name() -> String,
+    [event] file_name() -> String,
     set_file_name(name: String),
     [static] encode_name(file_name: String) -> ByteArray,
     [static] decode_name(local_file_name: &ByteArrayType) -> String,
@@ -18,14 +18,14 @@ struct File : FileDevice {
     [static] link(oldname: String, new_name: String) -> bool,
     copy(new_name: String) -> bool,
     [static] copy(file_name: String, new_name: String) -> bool,
-    [replace] open(flags: OpenMode) -> bool,
+    [event] open(flags: OpenMode) -> bool,
     open(fd: i32, io_flags: OpenMode, handle_flags: FileHandleFlags) -> bool,
-    [replace] size() -> i64,
-    [replace] resize(sz: i64) -> bool,
+    [event] size() -> i64,
+    [event] resize(sz: i64) -> bool,
     [static] resize(filename: String, sz: i64) -> bool,
-    [replace] permissions() -> Permissions,
+    [event] permissions() -> Permissions,
     [static] permissions(filename: String) -> Permissions,
-    [replace] set_permissions(permission_spec: Permissions) -> bool,
+    [event] set_permissions(permission_spec: Permissions) -> bool,
     [static] set_permissions(filename: String, permission_spec: Permissions) -> bool,
 }
 

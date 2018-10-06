@@ -111,13 +111,13 @@ struct MessageBox : Dialog {
     set_window_title(title: String),
     set_window_modality(window_modality: Rute::WindowModality),
     [static] standard_icon(icon: MessageBox::Icon) -> Pixmap,
-    [event] button_clicked(button: *AbstractButtonType),
-    [replace] event(e: *EventType) -> bool,
-    [replace] resize_event(event: *ResizeEventType),
-    [replace] show_event(event: *ShowEventType),
-    [replace] close_event(event: *CloseEventType),
-    [replace] key_press_event(event: *KeyEventType),
-    [replace] change_event(event: *EventType),
+    [signal] button_clicked(button: *AbstractButtonType),
+    [event] event(e: *EventType) -> bool,
+    [event] resize_event(event: *ResizeEventType),
+    [event] show_event(event: *ShowEventType),
+    [event] close_event(event: *CloseEventType),
+    [event] key_press_event(event: *KeyEventType),
+    [event] change_event(event: *EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

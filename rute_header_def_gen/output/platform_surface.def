@@ -1,8 +1,8 @@
 
 struct PlatformSurface {
-    [replace] format() -> SurfaceFormat,
+    [event] format() -> SurfaceFormat,
     surface() -> Surface?,
-    [replace] screen() -> PlatformScreen?,
+    [event] screen() -> PlatformScreen?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

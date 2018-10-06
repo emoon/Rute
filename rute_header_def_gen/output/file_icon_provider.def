@@ -16,9 +16,9 @@ enum Option {
 
 
 struct FileIconProvider {
-    [replace] icon(type: FileIconProvider::IconType) -> Icon,
-    [replace] icon(info: &FileInfoType) -> Icon,
-    [replace] type(info: &FileInfoType) -> String,
+    [event] icon(type: FileIconProvider::IconType) -> Icon,
+    [event] icon(info: &FileInfoType) -> Icon,
+    [event] type(info: &FileInfoType) -> String,
     set_options(options: Options),
     options() -> Options,
 }

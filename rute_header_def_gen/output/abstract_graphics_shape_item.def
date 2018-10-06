@@ -3,8 +3,8 @@ struct AbstractGraphicsShapeItem : GraphicsItem {
     set_pen(pen: &PenType),
     brush() -> Brush,
     set_brush(brush: &BrushType),
-    [replace] is_obscured_by(item: *GraphicsItemType) -> bool,
-    [replace] opaque_area() -> PainterPath,
+    [event] is_obscured_by(item: *GraphicsItemType) -> bool,
+    [event] opaque_area() -> PainterPath,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

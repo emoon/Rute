@@ -1,7 +1,7 @@
 struct PictureFormatPlugin : Object {
-    [replace] load_picture(format: String, filename: String, pic: *PictureType) -> bool,
-    [replace] save_picture(format: String, filename: String, pic: &PictureType) -> bool,
-    [replace] install_io_handler(format: String) -> bool,
+    [event] load_picture(format: String, filename: String, pic: *PictureType) -> bool,
+    [event] save_picture(format: String, filename: String, pic: &PictureType) -> bool,
+    [event] install_io_handler(format: String) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

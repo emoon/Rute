@@ -1,7 +1,7 @@
 
 struct AbstractUndoItem {
-    [replace] undo(),
-    [replace] redo(),
+    [event] undo(),
+    [event] redo(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

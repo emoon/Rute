@@ -17,8 +17,8 @@ enum ViewMode {
 }
 
 struct MdiArea : AbstractScrollArea {
-    [replace] size_hint() -> Size,
-    [replace] minimum_size_hint() -> Size,
+    [event] size_hint() -> Size,
+    [event] minimum_size_hint() -> Size,
     current_sub_window() -> MdiSubWindow?,
     active_sub_window() -> MdiSubWindow?,
     sub_window_list(order: MdiArea::WindowOrder) -> [MdiSubWindow?],
@@ -42,7 +42,7 @@ struct MdiArea : AbstractScrollArea {
     tab_shape() -> TabWidget::TabShape,
     set_tab_position(position: TabWidget::TabPosition),
     tab_position() -> TabWidget::TabPosition,
-    [event] sub_window_activated(arg0: *MdiSubWindowType),
+    [signal] sub_window_activated(arg0: *MdiSubWindowType),
     set_active_sub_window(window: *MdiSubWindowType),
     tile_sub_windows(),
     cascade_sub_windows(),
@@ -50,16 +50,16 @@ struct MdiArea : AbstractScrollArea {
     close_all_sub_windows(),
     activate_next_sub_window(),
     activate_previous_sub_window(),
-    [replace] setup_viewport(viewport: *WidgetType),
-    [replace] event(event: *EventType) -> bool,
-    [replace] event_filter(object: *ObjectType, event: *EventType) -> bool,
-    [replace] paint_event(paint_event: *PaintEventType),
-    [replace] child_event(child_event: *ChildEventType),
-    [replace] resize_event(resize_event: *ResizeEventType),
-    [replace] timer_event(timer_event: *TimerEventType),
-    [replace] show_event(show_event: *ShowEventType),
-    [replace] viewport_event(event: *EventType) -> bool,
-    [replace] scroll_contents_by(dx: i32, dy: i32),
+    [event] setup_viewport(viewport: *WidgetType),
+    [event] event(event: *EventType) -> bool,
+    [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
+    [event] paint_event(paint_event: *PaintEventType),
+    [event] child_event(child_event: *ChildEventType),
+    [event] resize_event(resize_event: *ResizeEventType),
+    [event] timer_event(timer_event: *TimerEventType),
+    [event] show_event(show_event: *ShowEventType),
+    [event] viewport_event(event: *EventType) -> bool,
+    [event] scroll_contents_by(dx: i32, dy: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

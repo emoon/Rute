@@ -1,6 +1,6 @@
 
 struct AbstractOpenGLFunctions {
-    [replace] initialize_open_gl_functions() -> bool,
+    [event] initialize_open_gl_functions() -> bool,
     is_initialized() -> bool,
     set_owning_context(context: *OpenGLContextType),
     owning_context() -> OpenGLContext?,

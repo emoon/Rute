@@ -44,14 +44,14 @@ struct Completer : Object {
     set_completion_prefix(prefix: String),
     complete(rect: &RectType),
     set_wrap_around(wrap: bool),
-    [replace] path_from_index(index: &ModelIndexType) -> String,
-    [replace] split_path(path: String) -> [String],
-    [replace] event_filter(o: *ObjectType, e: *EventType) -> bool,
-    [replace] event(arg0: *EventType) -> bool,
-    [event] activated(text: String),
-    [event] activated(index: &ModelIndexType),
-    [event] highlighted(text: String),
-    [event] highlighted(index: &ModelIndexType),
+    [event] path_from_index(index: &ModelIndexType) -> String,
+    [event] split_path(path: String) -> [String],
+    [event] event_filter(o: *ObjectType, e: *EventType) -> bool,
+    [event] event(arg0: *EventType) -> bool,
+    [signal] activated(text: String),
+    [signal] activated(index: &ModelIndexType),
+    [signal] highlighted(text: String),
+    [signal] highlighted(index: &ModelIndexType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

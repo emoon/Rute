@@ -28,12 +28,12 @@ struct Screen : Object {
     is_landscape(orientation: Rute::ScreenOrientation) -> bool,
     grab_window(window: WId, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     refresh_rate() -> f32,
-    [event] physical_size_changed(size: &SizeFType),
-    [event] physical_dots_per_inch_changed(dpi: f32),
-    [event] logical_dots_per_inch_changed(dpi: f32),
-    [event] primary_orientation_changed(orientation: Rute::ScreenOrientation),
-    [event] orientation_changed(orientation: Rute::ScreenOrientation),
-    [event] refresh_rate_changed(refresh_rate: f32),
+    [signal] physical_size_changed(size: &SizeFType),
+    [signal] physical_dots_per_inch_changed(dpi: f32),
+    [signal] logical_dots_per_inch_changed(dpi: f32),
+    [signal] primary_orientation_changed(orientation: Rute::ScreenOrientation),
+    [signal] orientation_changed(orientation: Rute::ScreenOrientation),
+    [signal] refresh_rate_changed(refresh_rate: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

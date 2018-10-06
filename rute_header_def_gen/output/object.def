@@ -1,7 +1,7 @@
 
 struct Object {
-    [replace] event(event: *EventType) -> bool,
-    [replace] event_filter(watched: *ObjectType, event: *EventType) -> bool,
+    [event] event(event: *EventType) -> bool,
+    [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
     object_name() -> String,
     set_object_name(name: String),
     is_widget_type() -> bool,
@@ -33,7 +33,7 @@ struct Object {
     [static] register_user_data() -> uint,
     set_user_data(id: uint, data: *ObjectUserDataType),
     user_data(id: uint) -> ObjectUserData?,
-    [event] object_name_changed(object_name: String, arg0: Object::QPrivateSignal),
+    [signal] object_name_changed(object_name: String, arg0: Object::QPrivateSignal),
     parent() -> Object?,
     inherits(classname: *char) -> bool,
     delete_later(),
@@ -41,11 +41,11 @@ struct Object {
     sender_signal_index() -> i32,
     receivers(signal: *char) -> i32,
     is_signal_connected(signal: &MetaMethodType) -> bool,
-    [replace] timer_event(event: *TimerEventType),
-    [replace] child_event(event: *ChildEventType),
-    [replace] custom_event(event: *EventType),
-    [replace] connect_notify(signal: &MetaMethodType),
-    [replace] disconnect_notify(signal: &MetaMethodType),
+    [event] timer_event(event: *TimerEventType),
+    [event] child_event(event: *ChildEventType),
+    [event] custom_event(event: *EventType),
+    [event] connect_notify(signal: &MetaMethodType),
+    [event] disconnect_notify(signal: &MetaMethodType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

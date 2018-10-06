@@ -6,7 +6,7 @@ enum ItemType {
 
 
 struct ListWidgetItem {
-    [replace] clone() -> ListWidgetItem?,
+    [event] clone() -> ListWidgetItem?,
     list_widget() -> ListWidget?,
     set_selected(select: bool),
     is_selected() -> bool,
@@ -29,7 +29,7 @@ struct ListWidgetItem {
     text_alignment() -> i32,
     set_text_alignment(alignment: i32),
     background_color() -> Color,
-    [replace] set_background_color(color: &ColorType),
+    [event] set_background_color(color: &ColorType),
     background() -> Brush,
     set_background(brush: &BrushType),
     text_color() -> Color,
@@ -40,10 +40,10 @@ struct ListWidgetItem {
     set_check_state(state: Rute::CheckState),
     size_hint() -> Size,
     set_size_hint(size: &SizeType),
-    [replace] data(role: i32) -> Variant,
-    [replace] set_data(role: i32, value: &VariantType),
-    [replace] read(in: &DataStreamType),
-    [replace] write(out: &DataStreamType),
+    [event] data(role: i32) -> Variant,
+    [event] set_data(role: i32, value: &VariantType),
+    [event] read(in: &DataStreamType),
+    [event] write(out: &DataStreamType),
     type() -> i32,
 }
 

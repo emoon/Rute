@@ -1,10 +1,10 @@
 struct PlatformColorDialogHelper : PlatformDialogHelper {
     options() -> SharedPointer<QColorDialogOptions>?,
     set_options(options: &SharedPointer<QColorDialogOptions>Type),
-    [replace] set_current_color(arg0: &ColorType),
-    [replace] current_color() -> Color,
-    [event] current_color_changed(color: &ColorType),
-    [event] color_selected(color: &ColorType),
+    [event] set_current_color(arg0: &ColorType),
+    [event] current_color() -> Color,
+    [signal] current_color_changed(color: &ColorType),
+    [signal] color_selected(color: &ColorType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

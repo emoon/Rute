@@ -1,17 +1,17 @@
 struct OffscreenSurface : Object, Surface {
-    [replace] surface_type() -> Surface::SurfaceType,
+    [event] surface_type() -> Surface::SurfaceType,
     create(),
     is_valid() -> bool,
     set_format(format: &SurfaceFormatType),
-    [replace] format() -> SurfaceFormat,
+    [event] format() -> SurfaceFormat,
     requested_format() -> SurfaceFormat,
-    [replace] size() -> Size,
+    [event] size() -> Size,
     screen() -> Screen?,
     set_screen(screen: *ScreenType),
     handle() -> PlatformOffscreenSurface?,
     native_handle(),
     set_native_handle(handle: *void),
-    [event] screen_changed(screen: *ScreenType),
+    [signal] screen_changed(screen: *ScreenType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

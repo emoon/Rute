@@ -22,10 +22,10 @@ struct Clipboard : Object {
     pixmap(mode: Clipboard::Mode) -> Pixmap,
     set_image(arg0: &ImageType, mode: Clipboard::Mode),
     set_pixmap(arg0: &PixmapType, mode: Clipboard::Mode),
-    [event] changed(mode: Clipboard::Mode),
-    [event] selection_changed(),
-    [event] find_buffer_changed(),
-    [event] data_changed(),
+    [signal] changed(mode: Clipboard::Mode),
+    [signal] selection_changed(),
+    [signal] find_buffer_changed(),
+    [signal] data_changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

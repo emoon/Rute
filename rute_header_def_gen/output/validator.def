@@ -8,9 +8,9 @@ enum State {
 struct Validator : Object {
     set_locale(locale: &LocaleType),
     locale() -> Locale,
-    [replace] validate(arg0: String, arg1: &i32) -> Validator::State,
-    [replace] fixup(arg0: String),
-    [event] changed(),
+    [event] validate(arg0: String, arg1: &i32) -> Validator::State,
+    [event] fixup(arg0: String),
+    [signal] changed(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

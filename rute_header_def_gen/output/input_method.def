@@ -25,14 +25,14 @@ struct InputMethod : Object {
     reset(),
     commit(),
     invoke_action(a: InputMethod::Action, cursor_position: i32),
-    [event] cursor_rectangle_changed(),
-    [event] anchor_rectangle_changed(),
-    [event] keyboard_rectangle_changed(),
-    [event] input_item_clip_rectangle_changed(),
-    [event] visible_changed(),
-    [event] animating_changed(),
-    [event] locale_changed(),
-    [event] input_direction_changed(new_direction: Rute::LayoutDirection),
+    [signal] cursor_rectangle_changed(),
+    [signal] anchor_rectangle_changed(),
+    [signal] keyboard_rectangle_changed(),
+    [signal] input_item_clip_rectangle_changed(),
+    [signal] visible_changed(),
+    [signal] animating_changed(),
+    [signal] locale_changed(),
+    [signal] input_direction_changed(new_direction: Rute::LayoutDirection),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

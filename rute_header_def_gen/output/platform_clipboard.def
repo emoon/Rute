@@ -1,9 +1,9 @@
 
 struct PlatformClipboard {
-    [replace] mime_data(mode: Clipboard::Mode) -> MimeData?,
-    [replace] set_mime_data(data: *MimeDataType, mode: Clipboard::Mode),
-    [replace] supports_mode(mode: Clipboard::Mode) -> bool,
-    [replace] owns_mode(mode: Clipboard::Mode) -> bool,
+    [event] mime_data(mode: Clipboard::Mode) -> MimeData?,
+    [event] set_mime_data(data: *MimeDataType, mode: Clipboard::Mode),
+    [event] supports_mode(mode: Clipboard::Mode) -> bool,
+    [event] owns_mode(mode: Clipboard::Mode) -> bool,
     emit_changed(mode: Clipboard::Mode),
 }
 

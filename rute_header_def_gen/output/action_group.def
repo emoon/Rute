@@ -12,7 +12,7 @@ struct ActionGroup : Object {
     set_disabled(b: bool),
     set_visible(arg0: bool),
     set_exclusive(arg0: bool),
-    [event] hovered(arg0: *ActionType),
+    [signal] hovered(arg0: *ActionType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

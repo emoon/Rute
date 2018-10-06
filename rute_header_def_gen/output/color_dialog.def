@@ -14,7 +14,7 @@ struct ColorDialog : Dialog {
     set_options(options: ColorDialogOptions),
     options() -> ColorDialogOptions,
     open(receiver: *ObjectType, member: *char),
-    [replace] set_visible(visible: bool),
+    [event] set_visible(visible: bool),
     [static] get_color(initial: &ColorType, parent: *WidgetType, title: String, options: ColorDialogOptions) -> Color,
     [static] get_rgba(rgba: RgbType, ok: *bool, parent: *WidgetType) -> Rgb,
     [static] custom_count() -> i32,
@@ -22,10 +22,10 @@ struct ColorDialog : Dialog {
     [static] set_custom_color(index: i32, color: ColorType),
     [static] standard_color(index: i32) -> Color,
     [static] set_standard_color(index: i32, color: ColorType),
-    [event] current_color_changed(color: &ColorType),
-    [event] color_selected(color: &ColorType),
-    [replace] change_event(event: *EventType),
-    [replace] done(result: i32),
+    [signal] current_color_changed(color: &ColorType),
+    [signal] color_selected(color: &ColorType),
+    [event] change_event(event: *EventType),
+    [event] done(result: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

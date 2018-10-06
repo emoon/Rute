@@ -13,10 +13,10 @@ struct FontComboBox : ComboBox {
     set_font_filters(filters: FontFilters),
     font_filters() -> FontFilters,
     current_font() -> Font,
-    [replace] size_hint() -> Size,
+    [event] size_hint() -> Size,
     set_current_font(f: &FontType),
-    [event] current_font_changed(f: &FontType),
-    [replace] event(e: *EventType) -> bool,
+    [signal] current_font_changed(f: &FontType),
+    [event] event(e: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

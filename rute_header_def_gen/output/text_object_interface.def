@@ -1,6 +1,6 @@
 
 struct TextObjectInterface {
-    [replace] draw_object(painter: *PainterType, rect: &RectFType, doc: *TextDocumentType, pos_in_document: i32, format: &TextFormatType),
+    [event] draw_object(painter: *PainterType, rect: &RectFType, doc: *TextDocumentType, pos_in_document: i32, format: &TextFormatType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

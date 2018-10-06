@@ -6,8 +6,8 @@ enum ItemType {
 
 
 struct StandardItem {
-    [replace] data(role: i32) -> Variant,
-    [replace] set_data(value: &VariantType, role: i32),
+    [event] data(role: i32) -> Variant,
+    [event] set_data(value: &VariantType, role: i32),
     text() -> String,
     set_text(text: String),
     icon() -> Icon,
@@ -85,10 +85,10 @@ struct StandardItem {
     take_row(row: i32) -> [StandardItem?],
     take_column(column: i32) -> [StandardItem?],
     sort_children(column: i32, order: Rute::SortOrder),
-    [replace] clone() -> StandardItem?,
-    [replace] type() -> i32,
-    [replace] read(in: &DataStreamType),
-    [replace] write(out: &DataStreamType),
+    [event] clone() -> StandardItem?,
+    [event] type() -> i32,
+    [event] read(in: &DataStreamType),
+    [event] write(out: &DataStreamType),
     emit_data_changed(),
 }
 

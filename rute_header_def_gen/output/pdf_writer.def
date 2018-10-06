@@ -5,13 +5,13 @@ struct PdfWriter : Object, PagedPaintDevice {
     set_title(title: String),
     creator() -> String,
     set_creator(creator: String),
-    [replace] new_page() -> bool,
+    [event] new_page() -> bool,
     set_resolution(resolution: i32),
     resolution() -> i32,
-    [replace] set_page_size(size: PagedPaintDevice::PageSize),
-    [replace] set_page_size_mm(size: &SizeFType),
-    [replace] set_margins(m: onst QPagedPaintDevice::Margins &),
-    [replace] paint_engine() -> PaintEngine?,
+    [event] set_page_size(size: PagedPaintDevice::PageSize),
+    [event] set_page_size_mm(size: &SizeFType),
+    [event] set_margins(m: onst QPagedPaintDevice::Margins &),
+    [event] paint_engine() -> PaintEngine?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

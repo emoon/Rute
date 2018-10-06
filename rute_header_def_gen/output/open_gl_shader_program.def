@@ -11,7 +11,7 @@ struct OpenGLShaderProgram : Object {
     add_cacheable_shader_from_source_code(type: OpenGLShader::ShaderType, source: String) -> bool,
     add_cacheable_shader_from_source_file(type: OpenGLShader::ShaderType, file_name: String) -> bool,
     remove_all_shaders(),
-    [replace] link() -> bool,
+    [event] link() -> bool,
     is_linked() -> bool,
     log() -> String,
     bind() -> bool,

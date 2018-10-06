@@ -1,6 +1,6 @@
 struct PlatformIntegrationPlugin : Object {
-    [replace] create(key: String, param_list: &[String]) -> PlatformIntegration?,
-    [replace] create(key: String, param_list: &[String], argc: &i32, argv: *char) -> PlatformIntegration?,
+    [event] create(key: String, param_list: &[String]) -> PlatformIntegration?,
+    [event] create(key: String, param_list: &[String], argc: &i32, argv: *char) -> PlatformIntegration?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

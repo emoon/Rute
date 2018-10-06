@@ -1,12 +1,12 @@
 
 struct PlatformDrag {
     current_drag() -> Drag?,
-    [replace] drag(m_drag: *DragType) -> Rute::DropAction,
-    [replace] cancel_drag(),
+    [event] drag(m_drag: *DragType) -> Rute::DropAction,
+    [event] cancel_drag(),
     update_action(action: Rute::DropAction),
-    [replace] default_action(possible_actions: Rute::DropActions, modifiers: Rute::KeyboardModifiers) -> Rute::DropAction,
+    [event] default_action(possible_actions: Rute::DropActions, modifiers: Rute::KeyboardModifiers) -> Rute::DropAction,
     [static] default_pixmap() -> Pixmap,
-    [replace] owns_drag_object() -> bool,
+    [event] owns_drag_object() -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

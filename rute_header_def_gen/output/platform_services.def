@@ -1,8 +1,8 @@
 
 struct PlatformServices {
-    [replace] open_url(url: &UrlType) -> bool,
-    [replace] open_document(url: &UrlType) -> bool,
-    [replace] desktop_environment() -> ByteArray,
+    [event] open_url(url: &UrlType) -> bool,
+    [event] open_document(url: &UrlType) -> bool,
+    [event] desktop_environment() -> ByteArray,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

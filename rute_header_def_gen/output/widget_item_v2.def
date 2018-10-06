@@ -5,10 +5,10 @@ enum WidgetItemV2FixMeEnums {
 }
 
 struct WidgetItemV2 : WidgetItem {
-    [replace] size_hint() -> Size,
-    [replace] minimum_size() -> Size,
-    [replace] maximum_size() -> Size,
-    [replace] height_for_width(width: i32) -> i32,
+    [event] size_hint() -> Size,
+    [event] minimum_size() -> Size,
+    [event] maximum_size() -> Size,
+    [event] height_for_width(width: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

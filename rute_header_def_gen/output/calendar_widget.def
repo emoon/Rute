@@ -19,8 +19,8 @@ enum SelectionMode {
 }
 
 struct CalendarWidget : Widget {
-    [replace] size_hint() -> Size,
-    [replace] minimum_size_hint() -> Size,
+    [event] size_hint() -> Size,
+    [event] minimum_size_hint() -> Size,
     selected_date() -> Date,
     year_shown() -> i32,
     month_shown() -> i32,
@@ -49,12 +49,12 @@ struct CalendarWidget : Widget {
     set_date_edit_enabled(enable: bool),
     date_edit_accept_delay() -> i32,
     set_date_edit_accept_delay(delay: i32),
-    [replace] event(event: *EventType) -> bool,
-    [replace] event_filter(watched: *ObjectType, event: *EventType) -> bool,
-    [replace] mouse_press_event(event: *MouseEventType),
-    [replace] resize_event(event: *ResizeEventType),
-    [replace] key_press_event(event: *KeyEventType),
-    [replace] paint_cell(painter: *PainterType, rect: &RectType, date: &DateType),
+    [event] event(event: *EventType) -> bool,
+    [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
+    [event] mouse_press_event(event: *MouseEventType),
+    [event] resize_event(event: *ResizeEventType),
+    [event] key_press_event(event: *KeyEventType),
+    [event] paint_cell(painter: *PainterType, rect: &RectType, date: &DateType),
     update_cell(date: &DateType),
     update_cells(),
     set_selected_date(date: &DateType),
@@ -68,10 +68,10 @@ struct CalendarWidget : Widget {
     show_previous_year(),
     show_selected_date(),
     show_today(),
-    [event] selection_changed(),
-    [event] clicked(date: &DateType),
-    [event] activated(date: &DateType),
-    [event] current_page_changed(year: i32, month: i32),
+    [signal] selection_changed(),
+    [signal] clicked(date: &DateType),
+    [signal] activated(date: &DateType),
+    [signal] current_page_changed(year: i32, month: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

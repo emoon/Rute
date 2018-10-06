@@ -1,10 +1,10 @@
 struct PlatformFontDialogHelper : PlatformDialogHelper {
-    [replace] set_current_font(arg0: &FontType),
-    [replace] current_font() -> Font,
+    [event] set_current_font(arg0: &FontType),
+    [event] current_font() -> Font,
     options() -> SharedPointer<QFontDialogOptions>?,
     set_options(options: &SharedPointer<QFontDialogOptions>Type),
-    [event] current_font_changed(font: &FontType),
-    [event] font_selected(font: &FontType),
+    [signal] current_font_changed(font: &FontType),
+    [signal] font_selected(font: &FontType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

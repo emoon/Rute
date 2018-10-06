@@ -17,7 +17,7 @@ struct OpenGLDebugLogger : Object {
     log_message(debug_message: &OpenGLDebugMessageType),
     start_logging(logging_mode: OpenGLDebugLogger::LoggingMode),
     stop_logging(),
-    [event] message_logged(debug_message: &OpenGLDebugMessageType),
+    [signal] message_logged(debug_message: &OpenGLDebugMessageType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

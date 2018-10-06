@@ -9,9 +9,9 @@ struct StackedWidget : Frame {
     count() -> i32,
     set_current_index(index: i32),
     set_current_widget(w: *WidgetType),
-    [event] current_changed(arg0: i32),
-    [event] widget_removed(index: i32),
-    [replace] event(e: *EventType) -> bool,
+    [signal] current_changed(arg0: i32),
+    [signal] widget_removed(index: i32),
+    [event] event(e: *EventType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

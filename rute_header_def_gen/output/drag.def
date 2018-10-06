@@ -15,8 +15,8 @@ struct Drag : Object {
     supported_actions() -> Rute::DropActions,
     default_action() -> Rute::DropAction,
     [static] cancel(),
-    [event] action_changed(action: Rute::DropAction),
-    [event] target_changed(new_target: *ObjectType),
+    [signal] action_changed(action: Rute::DropAction),
+    [signal] target_changed(new_target: *ObjectType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
