@@ -1,6 +1,6 @@
 [package]
 name = "rute"
-version = "0.0.1"
+version = "0.0.2"
 license = "MIT/Apache-2.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
 description = "UI library implemented on top of Qt"
@@ -15,6 +15,10 @@ plugin-compatible = []
 
 [badges]
 maintenance = { status = "actively-developed" }
+appveyor = { repository = "emoon/rute", branch = "master" }
+travis-ci = { repository = "emoon/rute", branch = "master" }
+is-it-maintained-issue-resolution = { repository = "emoon/rute" }
+is-it-maintained-open-issues = { repository = "emoon/rute" }
 
 [dependencies]
 libloading = "0.5"
