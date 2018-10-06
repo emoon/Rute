@@ -634,7 +634,7 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
                     ))?;
                 }
 
-                FunctionType::Replace => {
+                FunctionType::Event => {
                     f.write_fmt(format_args!(
                         "    set_{}_event,\n",
                         function_name(struct_name, func)

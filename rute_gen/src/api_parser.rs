@@ -97,8 +97,8 @@ impl Default for Variable {
 pub enum FunctionType {
     /// This is a regular function in a Qt Class
     Regular,
-    /// Replace functions maps to a virtual override in a Qt Class
-    Replace,
+    /// Event functions maps to a virtual override in a Qt Class
+    Event,
     /// Signal functions maps to a signal in Qt
     Signal,
     /// Static function is that doesn't belong to a class
@@ -401,7 +401,7 @@ impl ApiParser {
             match entry.as_rule() {
                 Rule::name => function.name = entry.as_str().to_owned(),
                 Rule::signal => function.func_type = FunctionType::Signal,
-                Rule::replace => function.func_type = FunctionType::Replace,
+                Rule::event => function.func_type = FunctionType::Event,
                 Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(entry),
                 Rule::retexp => function.return_val = Some(Self::get_variable(entry)),
@@ -938,7 +938,7 @@ impl Function {
                 match replace_first {
                     FirstArgType::Keep => function_args.push_str(&arg.get_c_type(IsReturnType::No)),
                     //FirstArgType::Remove => continue,
-                    //FirstArgType::Replace(ref arg) => function_args.push_str(&arg),
+                    //FirstArgType::Event(ref arg) => function_args.push_str(&arg),
                 }
             } else {
                 function_args.push_str(&arg.get_c_type(IsReturnType::No));
@@ -970,7 +970,7 @@ impl Function {
                 match replace_first_arg {
                     //FirstArgName::Keep => function_invoke.push_str(&arg.name),
                     FirstArgName::Remove => continue,
-                    //FirstArgName::Replace(ref name) => function_invoke.push_str(name),
+                    //FirstArgName::Event(ref name) => function_invoke.push_str(name),
                 }
             } else {
                 function_invoke.push_str(&arg.name);
@@ -1051,7 +1051,7 @@ impl Function {
                     //FirstArgName::Keep => (),
                     FirstArgName::Remove => continue,
                     /*
-                               FirstArgName::Replace(ref name) => {
+                               FirstArgName::Event(ref name) => {
                                if arg_count > 0 {
                                output.push_str(name);
                                }

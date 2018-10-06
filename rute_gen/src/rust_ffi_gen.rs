@@ -293,7 +293,7 @@ impl HeaderFFIGen for RustFFIGenerator {
         match func.func_type {
             FunctionType::Regular => Self::generate_function(dest, func),
             FunctionType::Static => Self::generate_function(dest, func),
-            FunctionType::Replace => Self::generate_event(dest, func),
+            FunctionType::Event => Self::generate_event(dest, func),
             FunctionType::Signal => Self::generate_callback(dest, func),
         }
     }
