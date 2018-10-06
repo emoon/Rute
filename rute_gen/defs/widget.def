@@ -10,7 +10,8 @@ struct Widget {
     set_parent(parent: *WidgetType),
     update(),
 
-    //[event] paint(&PaintEvent event),
+    //[signal] window_title_changed(title: String),
+    //[event] paint_event(event: *PaintEventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

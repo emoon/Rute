@@ -135,12 +135,32 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static SET_EVENT_TEMPLATE: &str = "static {{event_def}}) {
+pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
     QSlotWrapperSignal_{{signal_type_name}}* wrap = new QSlotWrapperSignal_{{signal_type_name}}(user_data, (Signal_{{signal_type_name}})trampoline_func, (void*)event);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL({{qt_signal_name}}({{func_def}})), wrap, SLOT(method({{func_def}})));
 }
 
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+pub static SET_EVENT_TEMPLATE: &str = "
+    {{c_return_value}} Class::{{qt_event_name}}({{qt_event_args}}) {
+        if (m_paint_event) {
+            RU{{event_type}} e;
+            e.qt_data = (struct RUBase*)event;
+            e.host_data = nullptr;
+            e.all_funcs = &s_{{event_type}}_all_funcs;
+            m_{{event_type}}_trampoline((RUPainteEvent*)&e, m_{{event_type}}_user_data,
+            m_{{event_type}}_wrapped_func);
+        } else {
+            {{qt_widget_name}}::{{qt_event_name}}({{event_args}});
+        }
+    }
+
+    RUPaintEventFunc m_{{event_type}}_event = nullptr;
+    void* m_{{event_type}}_user_data = nullptr;
+    void* m_{{event_type}}_function = nullptr;
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

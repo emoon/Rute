@@ -7,14 +7,20 @@
 #include "../rute_manual.h"
 #include <QApplication>
 
+#include <QEvent>
+
 #include <QFont>
 
 #include <QListWidget>
 
 #include <QListWidgetItem>
 
+#include <QPaintEvent>
+
 #include <QPushButton>
 
+
+#include <QRect>
 
 #include <QSize>
 
@@ -61,6 +67,23 @@ class WRPushButton : public QPushButton {
 public:
     WRPushButton(QWidget* widget) : QPushButton(widget) { }
     virtual ~WRPushButton() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRRect : public QRect {
+    //Q_OBJECT
+public:
+    WRRect(const QRect& clone) : QRect(clone) { }
+    WRRect() : QRect() { }
+    virtual ~WRRect() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }

@@ -184,7 +184,11 @@ impl HeaderFFIGenerator {
         // Generate the main entry
         imp.gen_struct_declaration(&mut dest, "RuteFFI")?;
 
-        for sdef in api_defs.iter().flat_map(|d| d.class_structs.iter()) {
+        for sdef in api_defs
+            .iter()
+            .flat_map(|d| d.class_structs.iter())
+            .filter(|sdef| sdef.should_have_create_func())
+        {
             if sdef.should_gen_wrap_class() {
                 imp.gen_owned_data_create(&mut dest, &sdef.name)?;
             } else {

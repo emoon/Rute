@@ -70,6 +70,7 @@ pub struct {{struct_name}}<'a> {
 }
 
 impl <'a>{{struct_name}}<'a> {
+{%- if has_new_method %}
     pub fn new() -> {{struct_name}}<'a> {
     {%- if wrap_create %}
         let data = Rc::new(Cell::new(None));
@@ -99,7 +100,7 @@ impl <'a>{{struct_name}}<'a> {
         }
     {% endif %}
     }
-
+{%- endif %}
     pub fn new_from_rc(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
         {{struct_name}} {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },

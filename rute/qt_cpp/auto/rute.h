@@ -7,10 +7,13 @@
 #include "../rute_base.h"
 
 #include "application_ffi.h"
+#include "event_ffi.h"
 #include "font_ffi.h"
 #include "list_widget_ffi.h"
 #include "list_widget_item_ffi.h"
+#include "paint_event_ffi.h"
 #include "push_button_ffi.h"
+#include "rect_ffi.h"
 #include "size_ffi.h"
 #include "widget_ffi.h"
 
@@ -29,6 +32,9 @@ typedef struct RuteFFI {
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUPushButton (*create_push_button)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RURect (*create_rect)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUSize (*create_size)(

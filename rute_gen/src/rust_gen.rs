@@ -714,6 +714,7 @@ impl RustGenerator {
             template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
             template_data.insert("snake_struct_name".to_owned(), Value::Str(sdef.name.to_snake_case()));
             template_data.insert("wrap_create".to_owned(), Value::Bool(sdef.should_gen_wrap_class()));
+            template_data.insert("has_new_method".to_owned(), Value::Bool(sdef.should_have_create_func()));
 
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;

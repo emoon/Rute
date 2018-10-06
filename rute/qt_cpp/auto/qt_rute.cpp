@@ -34,6 +34,7 @@ static struct RuteFFI s_rute = {
     create_list_widget,
     create_list_widget_item,
     create_push_button,
+    create_rect,
     create_size,
     create_widget,
 };

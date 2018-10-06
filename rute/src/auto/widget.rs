@@ -48,7 +48,6 @@ impl<'a> Widget<'a> {
             _marker: PhantomData,
         }
     }
-
     pub fn new_from_rc(ffi_data: RUWidget) -> Widget<'a> {
         Widget {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },

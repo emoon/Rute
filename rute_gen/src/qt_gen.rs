@@ -49,8 +49,10 @@ impl Struct {
             }
 
             for sdef in &api_def.class_structs {
-                if sdef.inherits_widget(api_def) == true {
-                    return true;
+                if sdef.name != self.name {
+                    if sdef.inherits_widget(api_def) == true {
+                        return true;
+                    }
                 }
             }
         }
@@ -695,7 +697,7 @@ pub struct QtGenerator {
     signal_wrapper_template: Template,
     enum_mapping_template: Template,
     func_def_template: Template,
-    set_event_template: Template,
+    set_signal_template: Template,
 }
 
 impl QtGenerator {
@@ -707,7 +709,7 @@ impl QtGenerator {
             signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
             enum_mapping_template: parser.parse(QT_ENUM_MAPPING_TEMPLATE).unwrap(),
             func_def_template: parser.parse(QT_FUNC_DEF_TEMPLATE).unwrap(),
-            set_event_template: parser.parse(SET_EVENT_TEMPLATE).unwrap(),
+            set_signal_template: parser.parse(SET_SIGNAL_TEMPLATE).unwrap(),
         }
     }
     ///
@@ -724,7 +726,7 @@ impl QtGenerator {
         let func_name = function_name(struct_name, func);
 
         let mut callback_def = String::with_capacity(128);
-        CapiHeaderGen::callback_fun_def_name(&mut callback_def, false, &func_name, func);
+        CapiHeaderGen::callback_fun_def_name(&mut callback_def, false, &func_name, "_event", func);
 
         let func_def = generate_func_def_input_parms_only(func);
         let mut object = Object::new();
@@ -734,7 +736,7 @@ impl QtGenerator {
         object.insert("qt_signal_name".to_owned(), Value::Str(func.name.to_mixed_case()));
         object.insert("func_def".to_owned(), Value::str(&func_def));
 
-        let res = self.set_event_template.render(&object).unwrap();
+        let res = self.set_signal_template.render(&object).unwrap();
         dest.write_all(res.as_bytes())
     }
 
@@ -1041,12 +1043,6 @@ impl QtGenerator {
         //generate_includes(&mut h_out, &api_def)?;
         generate_includes(&mut cpp_out, &api_def)?;
 
-        //cpp_out.write_all(QT_HEADER)?;
-
-        // Generate all the struct func forward declarations
-        //generate_forward_declare_struct_defs(&mut h_out, api_def)?;
-        //generate_forward_declare_struct_defs(&mut cpp_out, api_def)?;
-
         // Generate the wrapping classes declartion is used as for Qt.
         //self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
@@ -1064,12 +1060,6 @@ impl QtGenerator {
 
         // generate the structs that holds the wrapper functions
         generate_struct_defs(&mut cpp_out, api_def)?;
-
-        // Generate the main Rute struct definition
-        //generate_rute_struct(&mut cpp_out, api_def)?;
-
-        // write the end footer of the file that is used for the export
-        //cpp_out.write_all(QT_MAIN_FOOTER)
 
         Ok(())
     }

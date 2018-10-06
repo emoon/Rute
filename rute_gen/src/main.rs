@@ -77,7 +77,6 @@ fn run_rustfmt(filename: &str) {
 fn main() {
     let wd = WalkDir::new("defs");
     // temporary set to one thread during debugging
-
     /*
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
