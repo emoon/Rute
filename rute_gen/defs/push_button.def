@@ -20,10 +20,10 @@ struct PushButton : Widget {
     // From AbstractButton (to be moved there when support that)
     set_text(text: String),
     text() -> String,
-    [event] pressed(),
-    [event] released(),
-    [event] clicked(checked: bool),
-    [event] toggled(checked: bool),
+    [signal] pressed(),
+    [signal] released(),
+    [signal] clicked(checked: bool),
+    [signal] toggled(checked: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

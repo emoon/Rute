@@ -200,7 +200,7 @@ impl HeaderFFIGen for CapiHeaderGen {
         match func.func_type {
             FunctionType::Regular => self.generate_func_def(dest, func)?,
             FunctionType::Static => self.generate_func_def(dest, func)?,
-            FunctionType::Event => {
+            FunctionType::Signal => {
                 self.generate_callback_def(dest, func)?;
                 writeln!(dest, ");\n")?;
             }

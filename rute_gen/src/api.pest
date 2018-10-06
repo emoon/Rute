@@ -13,7 +13,7 @@ traits       = { ("[traits(") ~ namelist ~ (")]") }
 derive       = { (":") ~ name }
 replace      = { ("[replace]") }
 no_chain     = { ("[no_chain]") }
-event        = { ("[event]") }
+signal       = { ("[signal]") }
 manual       = { ("[manual]") }
 static_typ   = { ("[static]") }
 pointer_exp  = { ("*") }
@@ -27,7 +27,7 @@ varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
 namelist     = { name ~ ((",") ~ name)* }
-function     = { (static_typ | org_name | no_chain | manual | event | replace)*? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
+function     = { (static_typ | org_name | no_chain | manual | signal | replace)*? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
 name = @{
 	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("_") | ('0'..'9'))*

@@ -224,7 +224,7 @@ fn generate_wrapper_classes_impl<W: Write>(_f: &mut W, api_def: &ApiDef) -> io::
         let iterator = sdef
             .functions
             .iter()
-            .filter(|func| func.func_type == FunctionType::Event);
+            .filter(|func| func.func_type == FunctionType::Signal);
         */
 
         // Get all the structs that thu current struct inherit from
@@ -339,7 +339,7 @@ fn build_signal_wrappers_info<'a>(api_defs: &'a [ApiDef]) -> HashMap<String, &'a
     let mut funcs = Vec::new();
 
     for api_def in api_defs {
-        for t in api_def.get_functions(FunctionType::Event) {
+        for t in api_def.get_functions(FunctionType::Signal) {
             funcs.push(t);
         }
     }
@@ -627,7 +627,7 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
                     f.write_fmt(format_args!("    {},\n", function_name(struct_name, func)))?;
                 }
 
-                FunctionType::Event => {
+                FunctionType::Signal => {
                     f.write_fmt(format_args!(
                         "    set_{}_event,\n",
                         function_name(struct_name, func)
@@ -904,7 +904,7 @@ impl QtGenerator {
                     FunctionType::Regular => {
                         self.generate_func_def(f, &sdef, func, type_handlers)?
                     }
-                    FunctionType::Event => self.generate_func_callback(f, &sdef.name, func)?,
+                    FunctionType::Signal => self.generate_func_callback(f, &sdef.name, func)?,
                     _ => (),
                 }
             }
@@ -1004,7 +1004,7 @@ impl QtGenerator {
             for func in sdef
                 .functions
                 .iter()
-                .filter(|func| func.func_type == FunctionType::Event)
+                .filter(|func| func.func_type == FunctionType::Signal)
             {
                 self.generate_event_setup_def(f, &func)?;
             }

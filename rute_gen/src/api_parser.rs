@@ -99,8 +99,8 @@ pub enum FunctionType {
     Regular,
     /// Replace functions maps to a virtual override in a Qt Class
     Replace,
-    /// Event functions maps to a signal in Qt
-    Event,
+    /// Signal functions maps to a signal in Qt
+    Signal,
     /// Static function is that doesn't belong to a class
     Static,
 }
@@ -400,7 +400,7 @@ impl ApiParser {
         for entry in rule.into_inner() {
             match entry.as_rule() {
                 Rule::name => function.name = entry.as_str().to_owned(),
-                Rule::event => function.func_type = FunctionType::Event,
+                Rule::signal => function.func_type = FunctionType::Signal,
                 Rule::replace => function.func_type = FunctionType::Replace,
                 Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(entry),

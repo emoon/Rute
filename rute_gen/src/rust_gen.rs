@@ -444,7 +444,7 @@ impl RustGenerator {
                     //FunctionType::Regular => self.generate_function(&func, &sdef.name),
                     //FunctionType::Static => self.generate_function(&func, &sdef.name),
                     FunctionType::Replace => self.generate_callback(&func, &sdef.name),
-                    FunctionType::Event => self.generate_callback(&func, &sdef.name),
+                    FunctionType::Signal => self.generate_callback(&func, &sdef.name),
                     _ => String::new(),
                 };
 
@@ -461,7 +461,7 @@ impl RustGenerator {
 
         sdef.functions
             .iter()
-            .filter(|f| f.func_type == FunctionType::Event)
+            .filter(|f| f.func_type == FunctionType::Signal)
             .for_each(|func| {
                 let res = self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
                 f.write_all(res.as_bytes()).unwrap();
@@ -778,7 +778,7 @@ impl RustGenerator {
             // generate the event functions in the not static trait
             sdef.functions
                 .iter()
-                .filter(|f| f.func_type == FunctionType::Event)
+                .filter(|f| f.func_type == FunctionType::Signal)
                 .for_each(|f| {
                     let res = self.generate_callback(&f, name, &self.callback_template);
                     dest.write_all(res.as_bytes()).unwrap();
