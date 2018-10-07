@@ -65,6 +65,15 @@ impl<'a> ListWidget<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RUListWidget) -> ListWidget<'a> {
+        ListWidget {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 pub trait ListWidgetType<'a> {
     fn add_item(&self, label: &str) -> &Self {

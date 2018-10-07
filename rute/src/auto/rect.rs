@@ -65,6 +65,15 @@ impl<'a> Rect<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RURect) -> Rect<'a> {
+        Rect {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 pub trait RectType<'a> {
     fn is_null(&self) -> bool {

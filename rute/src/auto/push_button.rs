@@ -65,77 +65,88 @@ impl<'a> PushButton<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RUPushButton) -> PushButton<'a> {
+        PushButton {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 
 unsafe extern "C" fn push_button_pressed_trampoline_ud<T>(
-    user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
 ) {
     let f: &&(Fn(&T) + 'static) = transmute(func);
-    let data = user_data as *const T;
+
+    let data = self_c as *const T;
     f(&*data);
 }
 
-unsafe extern "C" fn push_button_pressed_trampoline(
-    _user_data: *const c_void,
-    func: *const c_void,
-) {
+unsafe extern "C" fn push_button_pressed_trampoline(self_c: *const c_void, func: *const c_void) {
     let f: &&(Fn() + 'static) = transmute(func);
+
     f();
 }
 
 unsafe extern "C" fn push_button_released_trampoline_ud<T>(
-    user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
 ) {
     let f: &&(Fn(&T) + 'static) = transmute(func);
-    let data = user_data as *const T;
+
+    let data = self_c as *const T;
     f(&*data);
 }
 
-unsafe extern "C" fn push_button_released_trampoline(
-    _user_data: *const c_void,
-    func: *const c_void,
-) {
+unsafe extern "C" fn push_button_released_trampoline(self_c: *const c_void, func: *const c_void) {
     let f: &&(Fn() + 'static) = transmute(func);
+
     f();
 }
 
 unsafe extern "C" fn push_button_clicked_trampoline_ud<T>(
-    user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
     checked: bool,
 ) {
     let f: &&(Fn(&T, bool) + 'static) = transmute(func);
-    let data = user_data as *const T;
+
+    let data = self_c as *const T;
     f(&*data, checked);
 }
 
 unsafe extern "C" fn push_button_clicked_trampoline(
-    _user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
     checked: bool,
 ) {
     let f: &&(Fn(bool) + 'static) = transmute(func);
+
     f(checked);
 }
 
 unsafe extern "C" fn push_button_toggled_trampoline_ud<T>(
-    user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
     checked: bool,
 ) {
     let f: &&(Fn(&T, bool) + 'static) = transmute(func);
-    let data = user_data as *const T;
+
+    let data = self_c as *const T;
     f(&*data, checked);
 }
 
 unsafe extern "C" fn push_button_toggled_trampoline(
-    _user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
     checked: bool,
 ) {
     let f: &&(Fn(bool) + 'static) = transmute(func);
+
     f(checked);
 }
 

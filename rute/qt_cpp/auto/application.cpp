@@ -253,6 +253,14 @@ static void set_application_about_to_quit_event(void* object, void* user_data, v
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_application_screen_added_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* screen)) {
+    QSlotWrapperSignal_self_ScreenType_void* wrap = new QSlotWrapperSignal_self_ScreenType_void(user_data, (Signal_self_ScreenType_void)trampoline_func, (void*)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(screenAdded(QScreen*)), wrap, SLOT(method(QScreen*)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void application_set_style_sheet(struct RUBase* self_c, const char* sheet) {
     QApplication* qt_value = (QApplication*)self_c;
 
@@ -332,6 +340,7 @@ struct RUApplicationFuncs s_application_funcs = {
     application_start_drag_distance,
     application_exec,
     set_application_about_to_quit_event,
+    set_application_screen_added_event,
     application_set_style_sheet,
     application_set_auto_sip_enabled,
     application_auto_sip_enabled,

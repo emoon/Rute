@@ -54,6 +54,15 @@ impl<'a> Application<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RUApplication) -> Application<'a> {
+        Application {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 
 pub struct ApplicationStatic<'a> {
@@ -62,20 +71,43 @@ pub struct ApplicationStatic<'a> {
 }
 
 unsafe extern "C" fn application_about_to_quit_trampoline_ud<T>(
-    user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
 ) {
     let f: &&(Fn(&T) + 'static) = transmute(func);
-    let data = user_data as *const T;
+
+    let data = self_c as *const T;
     f(&*data);
 }
 
 unsafe extern "C" fn application_about_to_quit_trampoline(
-    _user_data: *const c_void,
+    self_c: *const c_void,
     func: *const c_void,
 ) {
     let f: &&(Fn() + 'static) = transmute(func);
+
     f();
+}
+
+unsafe extern "C" fn application_screen_added_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    screen: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ScreenType) + 'static) = transmute(func);
+    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
+    let data = self_c as *const T;
+    f(&*data, &obj_screen_0);
+}
+
+unsafe extern "C" fn application_screen_added_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    screen: *const RUBase,
+) {
+    let f: &&(Fn(&ScreenType) + 'static) = transmute(func);
+    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
+    f(&obj_screen_0);
 }
 
 pub trait ApplicationType<'a> {
@@ -139,6 +171,47 @@ pub trait ApplicationType<'a> {
                 obj_data,
                 ::std::ptr::null(),
                 transmute(application_about_to_quit_trampoline as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ScreenType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ScreenType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_screen_added_event)(
+                obj_data,
+                user_data,
+                transmute(application_screen_added_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    fn set_screen_added_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ScreenType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+        let f: Box<Box<Fn(&ScreenType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_screen_added_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(application_screen_added_trampoline as usize),
                 Box::into_raw(f) as *const _,
             );
         }

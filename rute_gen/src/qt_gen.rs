@@ -783,7 +783,6 @@ impl QtGenerator {
                             base_name = &arg.type_name;
                         }
 
-                        println!("{:?}", arg);
                         Some(
                             format!(
                                 "({}::{})s_{}_lookup[{}]",

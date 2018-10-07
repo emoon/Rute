@@ -44,7 +44,7 @@ pub struct RustGenerator {
 /// Trait for handling different types that needs to be overriden
 ///
 trait TypeHandlerTrait {
-    fn replace_type(&self, arg: &Variable, _is_return_value: bool) -> Cow<str> {
+    fn replace_type(&self, arg: &Variable, _is_return_value: IsReturnArg) -> Cow<str> {
         arg.type_name.clone().into()
     }
 
@@ -52,7 +52,17 @@ trait TypeHandlerTrait {
         "".into()
     }
 
-    fn gen_body(&self, _arg: &Variable, _index: usize) -> (Cow<str>, Cow<str>);
+    ///
+    /// Generater from Rust to FFI call
+    ///
+    fn gen_body_to_ffi(&self, _arg: &Variable, _index: usize) -> (Cow<str>, Cow<str>);
+
+    ///
+    /// Generate from FFI call to Rust
+    ///
+    fn gen_body_to_rust(&self, _arg: &Variable, _index: usize) -> (Cow<str>, Cow<str>) {
+        ("".into(), "".into())
+    }
 }
 
 ///
@@ -66,10 +76,10 @@ struct StringTypeHandler;
 /// pointer to it so have a generator for it
 ///
 impl TypeHandlerTrait for StringTypeHandler {
-    fn replace_type(&self, _arg: &Variable, is_ret_value: bool) -> Cow<str> {
+    fn replace_type(&self, _arg: &Variable, is_ret_value: IsReturnArg) -> Cow<str> {
         match is_ret_value {
-            true => "String".into(),
-            false => "&str".into(),
+            IsReturnArg::Yes => "String".into(),
+            IsReturnArg::No => "&str".into(),
         }
     }
 
@@ -77,11 +87,19 @@ impl TypeHandlerTrait for StringTypeHandler {
         "CStr::from_ptr(ret_val).to_string_lossy().into_owned()".into()
     }
 
-    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+    fn gen_body_to_ffi(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("str_in_{}_{}", arg.name, index);
         (
             format!("{}.as_ptr()", arg_name).into(),
             format!("let {} = CString::new({}).unwrap();\n", arg_name, arg.name).into(),
+        )
+    }
+
+    fn gen_body_to_rust(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+        let arg_name = format!("str_in_{}_{}", arg.name, index);
+        (
+            format!("{}.as_str().unwrap()", arg_name).into(),
+            format!("let {} = CStr::from_ptr({});\n", arg_name, arg.name).into(),
         )
     }
 }
@@ -93,11 +111,10 @@ impl TypeHandlerTrait for StringTypeHandler {
 struct TraitTypeHandler;
 
 ///
-/// We need to handle strings in a special way. They need to be sent down using CString and the
-/// pointer to it so have a generator for it
+/// Handling of TraitTypes
 ///
 impl TypeHandlerTrait for TraitTypeHandler {
-    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+    fn gen_body_to_ffi(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let type_name = &arg.type_name[..arg.type_name.len() - 4];
         let arg_name = format!("obj_{}_{}", arg.name, index);
         (
@@ -108,6 +125,21 @@ impl TypeHandlerTrait for TraitTypeHandler {
                 arg_name,
                 arg.name,
                 type_name.to_snake_case()
+            ).into(),
+        )
+    }
+
+    fn gen_body_to_rust(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+        let type_name = &arg.type_name[..arg.type_name.len() - 4];
+        let arg_name = format!("obj_{}_{}", arg.name, index);
+        (
+            format!("&{}", arg_name).into(),
+            format!(
+                "let {} = {}::new_from_temporary(*({} as *const RU{}));",
+                arg_name,
+                type_name,
+                arg.name,
+                type_name
             ).into(),
         )
     }
@@ -130,7 +162,7 @@ impl TypeHandlerTrait for EnumTypeHandler {
         ).into()
     }
 
-    fn gen_body(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
+    fn gen_body_to_ffi(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("enum_{}_{}", arg.name, index);
         (
             arg_name.to_owned().into(),
@@ -223,6 +255,15 @@ impl<'a> GenericLabelAssign<'a> {
 }
 
 ///
+/// ReturnType bool
+///
+#[derive(PartialEq, Clone, Copy)]
+enum IsReturnArg {
+    Yes,
+    No,
+}
+
+///
 /// Setup the type handlers
 ///
 
@@ -259,7 +300,7 @@ impl RustGenerator {
         &self,
         dest: &mut String,
         var: &Variable,
-        return_arg: bool,
+        return_arg: IsReturnArg,
         need_lifetime: bool,
     ) {
         dest.clear();
@@ -289,7 +330,7 @@ impl RustGenerator {
                 }
             }
             VariableType::Str => {
-                if return_arg {
+                if return_arg == IsReturnArg::Yes {
                     dest.push_str("String");
                 } else {
                     dest.push_str("&str");
@@ -297,7 +338,7 @@ impl RustGenerator {
             }
 
             VariableType::Reference => {
-                if !return_arg {
+                if return_arg == IsReturnArg::No {
                     dest.push('&');
                 }
                 dest.push_str(&type_name);
@@ -364,7 +405,7 @@ impl RustGenerator {
                 temp_str.push('&');
                 temp_str.push(label);
             } else {
-                self.generate_arg_type(&mut temp_str, &arg, false, is_static_func);
+                self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
             }
 
             if !(is_static_func && index == 0) {
@@ -375,9 +416,7 @@ impl RustGenerator {
             func_imp.push_str(": ");
 
             if arg.array {
-                func_imp.push_str("&[");
-                func_imp.push_str(&temp_str);
-                func_imp.push(']');
+                func_imp.push_str(&format!("&[{}]", temp_str));
             } else {
                 func_imp.push_str(&temp_str);
             }
@@ -398,7 +437,7 @@ impl RustGenerator {
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
-            self.generate_arg_type(&mut temp_str, ret_val, true, is_static_func);
+            self.generate_arg_type(&mut temp_str, ret_val, IsReturnArg::Yes, is_static_func);
             func_imp.push_str(" -> ");
 
             if ret_val.array {
@@ -491,37 +530,61 @@ impl RustGenerator {
     //
     fn generate_callback(&self, func: &Function, struct_name: &str, template: &Template) -> String {
         let mut template_data = Object::new();
-        let mut function_arguments = String::with_capacity(128);
-        let mut function_params = String::with_capacity(128);
+        //let mut function_params = String::with_capacity(128);
         let mut function_arg_types = String::with_capacity(128);
         let mut temp_str = String::with_capacity(128);
 
+        let ffi_func_def = func.rust_func_def(
+            true,
+            Some("*const c_void, func: *const c_void"),
+            |arg, is_ret| arg.get_rust_ffi_type(is_ret).into(),
+        );
+
         let len = func.function_args[1..].len().wrapping_sub(1);
-
         for (index, arg) in func.function_args[1..].iter().enumerate() {
-            self.generate_arg_type(&mut temp_str, &arg, false, false);
-
-            function_arguments.push_str(&arg.name);
-            function_arguments.push_str(": ");
-            function_arguments.push_str(&arg.type_name);
-
-            function_params.push_str(&arg.name);
-
-            function_arg_types.push_str(&arg.type_name);
+            self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, false);
+            function_arg_types.push_str(&temp_str);
 
             if index != len {
-                function_arguments.push_str(", ");
-                function_params.push_str(", ");
                 function_arg_types.push_str(", ");
             }
         }
 
+        let mut function_args = Vec::with_capacity(func.function_args.len());
+        let mut body_setup = String::with_capacity(4096);
+
+        // Setup the input args
+        for (i, arg) in func.function_args[1..].iter().enumerate() {
+            match self.type_handler.get(&arg) {
+                Some(handler) => {
+                    let (gen_arg, body) = handler.gen_body_to_rust(&arg, i);
+                    function_args.push((true, gen_arg));
+                    body_setup.push_str("        ");
+                    body_setup += &body;
+                }
+                None => {
+                    function_args.push((false, arg.name.clone().into()));
+                }
+            }
+        }
+
+        template_data.insert("body_setup".into(), Value::scalar(body_setup));
+
+        let mut func_args = String::with_capacity(128);
+
+        let len = function_args.len().wrapping_sub(1);
+        // Generate the function call
+        for (index, _arg) in function_args.iter().enumerate() {
+            func_args.push_str(&function_args[index].1);
+
+            if index != len {
+                func_args.push_str(", ");
+            }
+        }
+
         template_data.insert("event_name".into(), Value::scalar(func.name.clone()));
-        template_data.insert(
-            "function_arguments".into(),
-            Value::scalar(function_arguments),
-        );
-        template_data.insert("function_params".into(), Value::scalar(function_params));
+        template_data.insert("function_arguments".into(), Value::scalar(ffi_func_def));
+        template_data.insert("function_params".into(), Value::scalar(func_args ));
         template_data.insert(
             "function_arg_types".into(),
             Value::scalar(function_arg_types),
@@ -581,7 +644,7 @@ impl RustGenerator {
         for (i, arg) in func.function_args.iter().enumerate() {
             match self.type_handler.get(&arg) {
                 Some(handler) => {
-                    let (gen_arg, body) = handler.gen_body(&arg, i);
+                    let (gen_arg, body) = handler.gen_body_to_ffi(&arg, i);
                     function_args.push((true, gen_arg));
                     body_setup.push_str("        ");
                     body_setup += &body;

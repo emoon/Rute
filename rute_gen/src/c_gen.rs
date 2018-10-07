@@ -95,8 +95,6 @@ impl HeaderFFIGen for CapiHeaderGen {
     fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
         writeln!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
 
-        println!("{}", enum_def.name);
-
         for entry in &enum_def.entries {
             match *entry {
                 EnumEntry::Enum(ref name) => {

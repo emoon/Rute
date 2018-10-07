@@ -45,6 +45,15 @@ impl<'a> PaintEvent<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RUPaintEvent) -> PaintEvent<'a> {
+        PaintEvent {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 pub trait PaintEventType<'a> {
     fn rect(&self) -> Option<Rect> {

@@ -40,6 +40,13 @@ pub struct RUApplicationFuncs {
         callback: *const c_void,
     ),
 
+    pub set_screen_added_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
     pub set_style_sheet: extern "C" fn(self_c: *const RUBase, sheet: *const ::std::os::raw::c_char),
     pub set_auto_sip_enabled: extern "C" fn(self_c: *const RUBase, enabled: bool),
     pub auto_sip_enabled: extern "C" fn(self_c: *const RUBase) -> bool,

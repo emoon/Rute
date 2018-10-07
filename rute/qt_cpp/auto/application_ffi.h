@@ -43,6 +43,8 @@ typedef struct RUApplicationFuncs {
     int (*exec)(struct RUBase* self_c);
     void (*set_about_to_quit_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c));
 
+    void (*set_screen_added_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* screen));
+
     void (*set_style_sheet)(struct RUBase* self_c, const char* sheet);
     void (*set_auto_sip_enabled)(struct RUBase* self_c, bool enabled);
     bool (*auto_sip_enabled)(struct RUBase* self_c);

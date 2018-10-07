@@ -45,6 +45,15 @@ impl<'a> Screen<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RUScreen) -> Screen<'a> {
+        Screen {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 pub trait ScreenType<'a> {
     fn name(&self) -> String {

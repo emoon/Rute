@@ -118,6 +118,15 @@ impl <'a>{{struct_name}}<'a> {
             _marker: PhantomData,
         }
     }
+
+    pub fn new_from_temporary(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+        {{struct_name}} {
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
+            all_funcs: ffi_data.all_funcs,
+            owned: false,
+            _marker: PhantomData,
+        }
+    }
 }
 ";
 
@@ -219,22 +228,16 @@ impl<'a> {{trait_name}}Type for {{target_name}}<'a> {}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TRAMPOLINE_TEMPLATE: &str = "
-unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>(
-    user_data: *const c_void,
-    func: *const c_void,
-    {{function_arguments}}
-) {
+unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>{{function_arguments}} {
     let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
-    let data = user_data as *const T;
+    {{body_setup}}
+    let data = self_c as *const T;
     f(&*data, {{function_params}});
 }
 
-unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline(
-    _user_data: *const c_void,
-    func: *const c_void,
-    {{function_arguments}}
-) {
+unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline{{function_arguments}} {
     let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
+    {{body_setup}}
     f({{function_params}});
 }
 
