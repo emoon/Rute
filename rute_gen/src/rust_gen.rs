@@ -1,7 +1,7 @@
 use api_parser::*;
 use heck::{CamelCase, SnakeCase};
-use liquid::{ParserBuilder, Template};
 use liquid::value::{Object, Value};
+use liquid::{ParserBuilder, Template};
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
@@ -417,38 +417,15 @@ impl RustGenerator {
     /// Generates the implementations for the structs
     ///
     fn generate_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
-        /*
-        if sdef.has_event_replace_functions() {
-            f.write_fmt(format_args!("impl<'a> {}<'a> {{", sdef.name))?;
-
-            for func in &sdef.functions {
-                let res = match func.func_type {
-                    //FunctionType::Regular => self.generate_function(&func, &sdef.name),
-                    //FunctionType::Static => self.generate_function(&func, &sdef.name),
-                    FunctionType::Replace => self.generate_callback(&func, &sdef.name),
-                    FunctionType::Signal => self.generate_callback(&func, &sdef.name),
-                    _ => String::new(),
-                };
-
-                if !res.is_empty() {
-                    f.write_all(res.as_bytes())?;
-                }
-            }
-
-            f.write_all(b"}\n")?;
-        }
-        */
-
         // Generate all the trampoline functions
-
         sdef.functions
             .iter()
             .filter(|f| f.func_type == FunctionType::Signal)
-            .for_each(|func| {
+            .try_for_each(|func| {
                 let res =
                     self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
-                f.write_all(res.as_bytes()).unwrap();
-            });
+                f.write_all(res.as_bytes())
+            })?;
 
         self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef, true)?;
 
@@ -615,11 +592,7 @@ impl RustGenerator {
             }
         }
 
-        if body_setup.is_empty() {
-            template_data.insert("body_setup".into(), Value::Nil);
-        } else {
-            template_data.insert("body_setup".into(), Value::scalar(body_setup));
-        }
+        template_data.insert("body_setup".into(), Value::scalar(body_setup));
 
         let mut func_args = String::with_capacity(128);
 
@@ -778,10 +751,10 @@ impl RustGenerator {
             sdef.functions
                 .iter()
                 .filter(|f| f.func_type == FunctionType::Signal)
-                .for_each(|f| {
+                .try_for_each(|f| {
                     let res = self.generate_callback(&f, name, &self.callback_template);
-                    dest.write_all(res.as_bytes()).unwrap();
-                });
+                    dest.write_all(res.as_bytes())
+                })?;
 
             let mut template_data = Object::new();
             template_data.insert("type_name".into(), Value::scalar(&sdef.name));
