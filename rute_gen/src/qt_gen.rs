@@ -11,7 +11,8 @@ use std::borrow::Cow;
 use api_parser::*;
 use qt_gen_templates::*;
 
-use liquid::{Object, ParserBuilder, Template, Value};
+use liquid::{ParserBuilder, Template};
+use liquid::value::{Object, Value};
 
 #[derive(PartialEq)]
 pub enum EventType {
@@ -712,10 +713,10 @@ impl QtGenerator {
         let func_def = generate_func_def_input_parms_only(func);
         let mut object = Object::new();
 
-        object.insert("event_def".to_owned(), Value::str(&callback_def));
-        object.insert("signal_type_name".to_owned(), Value::str(&signal_type_name));
-        object.insert("qt_signal_name".to_owned(), Value::Str(func.name.to_mixed_case()));
-        object.insert("func_def".to_owned(), Value::str(&func_def));
+        object.insert("event_def".into(), Value::scalar(&callback_def));
+        object.insert("signal_type_name".into(), Value::scalar(&signal_type_name));
+        object.insert("qt_signal_name".into(), Value::scalar(func.name.to_mixed_case()));
+        object.insert("func_def".into(), Value::scalar(&func_def));
 
         let res = self.set_signal_template.render(&object).unwrap();
         dest.write_all(res.as_bytes())
@@ -800,59 +801,59 @@ impl QtGenerator {
         });
 
         object.insert(
-            "func_name".to_owned(),
-            Value::Str(function_name(&sdef.name, func)),
+            "func_name".into(),
+            Value::scalar(function_name(&sdef.name, func)),
         );
         object.insert(
-            "func_def".to_owned(),
-            Value::Str(func.generate_c_function_def(FirstArgType::Keep)),
+            "func_def".into(),
+            Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
         );
         object.insert(
-            "qt_func_name".to_owned(),
-            Value::Str(func.cpp_name.to_mixed_case()),
+            "qt_func_name".into(),
+            Value::scalar(func.cpp_name.to_mixed_case()),
         );
-        object.insert("cpp_type_name".to_owned(), Value::str(&sdef.cpp_name));
-        object.insert("qt_func_args".to_owned(), Value::Str(func_def));
+        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
+        object.insert("qt_func_args".into(), Value::scalar(func_def));
         object.insert(
-            "type_snake_name".to_owned(),
-            Value::Str(func.name.to_snake_case()),
+            "type_snake_name".into(),
+            Value::scalar(func.name.to_snake_case()),
         );
-        object.insert("c_return_type".to_owned(), Value::str(&ret_value));
+        object.insert("c_return_type".into(), Value::scalar(ret_value.into_owned()));
 
         if let Some(ref ret_val) = func.return_val {
-            object.insert("array_return".to_owned(), Value::Bool(ret_val.array));
-            object.insert("qt_ret_value".to_owned(), Value::str("ret_value"));
-            object.insert("funcs_name".to_owned(), Value::str(""));
+            object.insert("array_return".into(), Value::scalar(ret_val.array));
+            object.insert("qt_ret_value".into(), Value::scalar("ret_value"));
+            object.insert("funcs_name".into(), Value::scalar(""));
             object.insert(
-                "qt_return_type".to_owned(),
-                Value::Str(ret_val.qt_type_name.to_owned()),
+                "qt_return_type".into(),
+                Value::scalar(&ret_val.qt_type_name)
             );
 
             match ret_val.vtype {
                 VariableType::Primitive => {
-                    object.insert("return_type".to_owned(), Value::str("primitive"))
+                    object.insert("return_type".into(), Value::scalar("primitive"))
                 }
-                VariableType::Str => object.insert("return_type".to_owned(), Value::str("string")),
+                VariableType::Str => object.insert("return_type".into(), Value::scalar("string")),
                 VariableType::Regular => {
                     object.insert(
-                        "funcs_name".to_owned(),
-                        Value::Str(ret_val.type_name.to_snake_case()),
+                        "funcs_name".into(),
+                        Value::scalar(ret_val.type_name.to_snake_case()),
                     );
-                    object.insert("return_type".to_owned(), Value::str("regular"))
+                    object.insert("return_type".into(), Value::scalar("regular"))
                 }
                 VariableType::Reference => {
                     object.insert(
-                        "funcs_name".to_owned(),
-                        Value::Str(ret_val.type_name.to_snake_case()),
+                        "funcs_name".into(),
+                        Value::scalar(ret_val.type_name.to_snake_case()),
                     );
-                    object.insert("return_type".to_owned(), Value::str("reference"))
+                    object.insert("return_type".into(), Value::scalar("reference"))
                 }
-                _ => object.insert("return_type".to_owned(), Value::str("<illegal>")),
+                _ => object.insert("return_type".into(), Value::scalar("<illegal>")),
             };
         } else {
-            object.insert("array_return".to_owned(), Value::Bool(false));
-            object.insert("return_type".to_owned(), Value::str(""));
-            object.insert("qt_ret_value".to_owned(), Value::str(""));
+            object.insert("array_return".into(), Value::scalar(false));
+            object.insert("return_type".into(), Value::scalar(""));
+            object.insert("qt_ret_value".into(), Value::scalar(""));
         }
 
         let res = self.func_def_template.render(&object).unwrap();
@@ -935,20 +936,20 @@ impl QtGenerator {
             let c_call_args = func.generate_invoke(FirstArgName::Remove);
 
             template_data.insert(
-                "signal_func_name".to_owned(),
-                Value::Str(signal_type_name.clone()),
+                "signal_func_name".into(),
+                Value::scalar(signal_type_name.clone()),
             );
-            template_data.insert("c_args".to_owned(), Value::Str(c_args));
+            template_data.insert("c_args".into(), Value::scalar(c_args));
 
             // we need to add, at the front of the call args as this is being used inside a
             // function call argument already if we have some args
             if c_call_args != "" {
                 template_data.insert(
-                    "c_call_args".to_owned(),
-                    Value::Str(format!(", {}", c_call_args)),
+                    "c_call_args".into(),
+                    Value::scalar(format!(", {}", c_call_args)),
                 );
             } else {
-                template_data.insert("c_call_args".to_owned(), Value::str(""));
+                template_data.insert("c_call_args".into(), Value::scalar(""));
             }
 
             let res = self.signal_wrapper_template.render(&template_data).unwrap();
@@ -979,9 +980,9 @@ impl QtGenerator {
             let mut template_data = Object::new();
             let inherits_widget = sdef.inherits_widget();
 
-            template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
-            template_data.insert("qt_name".to_owned(), Value::str(&sdef.qt_name));
-            template_data.insert("widget".to_owned(), Value::Bool(inherits_widget));
+            template_data.insert("struct_name".into(), Value::scalar(&sdef.name));
+            template_data.insert("qt_name".into(), Value::scalar(&sdef.qt_name));
+            template_data.insert("widget".into(), Value::scalar(inherits_widget));
 
             /*
             for func in sdef
@@ -994,7 +995,7 @@ impl QtGenerator {
             */
 
             // TODO: Fix me
-            template_data.insert("events".to_owned(), Value::str(""));
+            template_data.insert("events".into(), Value::scalar(""));
 
             let res = self.wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;
@@ -1112,10 +1113,10 @@ impl QtGenerator {
             let enum_name = enum_def.name.to_snake_case();
             let mut template_data = Object::new();
 
-            template_data.insert("enum_name".to_owned(), Value::Str(enum_name));
+            template_data.insert("enum_name".into(), Value::scalar(enum_name));
             template_data.insert(
-                "qt_class".to_owned(),
-                Value::str(&enum_def.original_class_name),
+                "qt_class".into(),
+                Value::scalar(&enum_def.original_class_name),
             );
 
             let mut values = Vec::with_capacity(enum_def.entries.len());
@@ -1125,16 +1126,16 @@ impl QtGenerator {
                 match *entry {
                     EnumEntry::Enum(ref name) => {
                         let mut enum_data = Object::new();
-                        enum_data.insert("name".to_owned(), Value::str(name));
-                        enum_data.insert("id".to_owned(), Value::Str(format!("{}", index)));
+                        enum_data.insert("name".into(), Value::scalar(name));
+                        enum_data.insert("id".into(), Value::scalar(format!("{}", index)));
                         values.push(Value::Object(enum_data));
                         index += 1;
                     }
 
                     EnumEntry::EnumValue(ref name, ref value) => {
                         let mut enum_data = Object::new();
-                        enum_data.insert("name".to_owned(), Value::str(name));
-                        enum_data.insert("id".to_owned(), Value::str(value));
+                        enum_data.insert("name".into(), Value::scalar(name));
+                        enum_data.insert("id".into(), Value::scalar(value));
                         values.push(Value::Object(enum_data));
                         index = value.parse().unwrap();
                         index += 1;
@@ -1142,7 +1143,7 @@ impl QtGenerator {
                 }
             }
 
-            template_data.insert("enums".to_owned(), Value::Array(values));
+            template_data.insert("enums".into(), Value::Array(values));
 
             let res = self.enum_mapping_template.render(&template_data).unwrap();
             dest.write_all(res.as_bytes())?;

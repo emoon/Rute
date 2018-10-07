@@ -1,6 +1,7 @@
 use api_parser::*;
-use heck::{SnakeCase, CamelCase};
-use liquid::{Object, ParserBuilder, Template, Value};
+use heck::{CamelCase, SnakeCase};
+use liquid::{ParserBuilder, Template};
+use liquid::value::{Object, Value};
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
@@ -254,7 +255,13 @@ impl RustGenerator {
     ///
     /// Takes in a varibale and generates a Rust function variable argument
     ///
-    fn generate_arg_type(&self, dest: &mut String, var: &Variable, return_arg: bool, need_lifetime: bool) {
+    fn generate_arg_type(
+        &self,
+        dest: &mut String,
+        var: &Variable,
+        return_arg: bool,
+        need_lifetime: bool,
+    ) {
         dest.clear();
 
         // Run code to replace type if neeed
@@ -280,7 +287,7 @@ impl RustGenerator {
                 if need_lifetime {
                     dest.push_str("<'a>");
                 }
-            },
+            }
             VariableType::Str => {
                 if return_arg {
                     dest.push_str("String");
@@ -438,24 +445,25 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == FunctionType::Signal)
             .for_each(|func| {
-                let res = self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
+                let res =
+                    self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
                 f.write_all(res.as_bytes()).unwrap();
-        });
+            });
 
         self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef, true)?;
 
         for name in &sdef.full_inherit {
             let mut template_data = Object::new();
-            template_data.insert("trait_name".to_owned(), Value::str(&name));
-            template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
-            template_data.insert("type_name".to_owned(), Value::str(&name));
+            template_data.insert("trait_name".into(), Value::scalar(name));
+            template_data.insert("target_name".into(), Value::scalar(&sdef.name));
+            template_data.insert("type_name".into(), Value::scalar(name));
             template_data.insert(
-                "target_name_snake".to_owned(),
-                Value::Str(name.to_snake_case()),
+                "target_name_snake".into(),
+                Value::scalar(name.to_snake_case()),
             );
             template_data.insert(
-                "target_name_snake_org".to_owned(),
-                Value::Str(name.to_snake_case()),
+                "target_name_snake_org".into(),
+                Value::scalar(name.to_snake_case()),
             );
 
             let out = self.trait_impl_template.render(&template_data).unwrap();
@@ -469,24 +477,27 @@ impl RustGenerator {
             // implement the static trait for the regular one as well
 
             let mut template_data = Object::new();
-            template_data.insert("trait_name".to_owned(), Value::str(&static_name));
-            template_data.insert("target_name".to_owned(), Value::str(&sdef.name));
-            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("trait_name".into(), Value::scalar(static_name));
+            template_data.insert("target_name".into(), Value::scalar(&sdef.name));
+            template_data.insert("type_name".into(), Value::scalar(&sdef.name));
             template_data.insert(
-                "target_name_snake".to_owned(),
-                Value::Str(static_name.to_snake_case()),
+                "target_name_snake".into(),
+                Value::scalar(static_name.to_snake_case()),
             );
             template_data.insert(
-                "target_name_snake_org".to_owned(),
-                Value::Str(sdef.name.to_snake_case()),
+                "target_name_snake_org".into(),
+                Value::scalar(sdef.name.to_snake_case()),
             );
 
-            let out = self.impl_trait_static_template.render(&template_data).unwrap();
+            let out = self
+                .impl_trait_static_template
+                .render(&template_data)
+                .unwrap();
             f.write_all(out.as_bytes())?;
 
             // Implement the static trait for the static type
 
-            template_data.insert("target_name".to_owned(), Value::str(&static_name));
+            template_data.insert("target_name".into(), Value::scalar(static_name));
 
             let out = self
                 .impl_trait_static_template
@@ -528,20 +539,20 @@ impl RustGenerator {
             }
         }
 
-        template_data.insert("event_name".to_owned(), Value::Str(func.name.clone()));
+        template_data.insert("event_name".into(), Value::scalar(func.name.clone()));
         template_data.insert(
-            "function_arguments".to_owned(),
-            Value::Str(function_arguments),
+            "function_arguments".into(),
+            Value::scalar(function_arguments),
         );
-        template_data.insert("function_params".to_owned(), Value::Str(function_params));
+        template_data.insert("function_params".into(), Value::scalar(function_params));
         template_data.insert(
-            "function_arg_types".to_owned(),
-            Value::Str(function_arg_types),
+            "function_arg_types".into(),
+            Value::scalar(function_arg_types),
         );
-        template_data.insert("widget_name".to_owned(), Value::str(struct_name));
+        template_data.insert("widget_name".into(), Value::scalar(struct_name.to_owned()));
         template_data.insert(
-            "widget_snake_name".to_owned(),
-            Value::Str(struct_name.to_snake_case()),
+            "widget_snake_name".into(),
+            Value::scalar(struct_name.to_snake_case()),
         );
 
         template.render(&template_data).unwrap()
@@ -557,29 +568,32 @@ impl RustGenerator {
         // Generate function declaration
         let (has_generic_params, func_def) = self.generate_func_def(func, struct_name);
 
-        template_data.insert("func_name".to_owned(), Value::str(&func.name));
+        template_data.insert("func_name".into(), Value::scalar(&func.name));
 
         // If it's a static func but doesn't have any generic parametres we need to append the
         // lifetime at the end of the function name
 
         if !has_generic_params && is_static_func {
-            template_data.insert("func_name_header".to_owned(), Value::Str(format!("{}<'a>",func.name)));
+            template_data.insert(
+                "func_name_header".into(),
+                Value::scalar(format!("{}<'a>", func.name)),
+            );
         } else {
-            template_data.insert("func_name_header".to_owned(), Value::str(&func.name));
+            template_data.insert("func_name_header".into(), Value::scalar(&func.name));
         }
 
-        template_data.insert("static_func".to_owned(), Value::Bool(is_static_func));
-        template_data.insert("function_def".to_owned(), Value::Str(func_def));
+        template_data.insert("static_func".into(), Value::scalar(is_static_func));
+        template_data.insert("function_def".into(), Value::scalar(func_def));
 
         if is_static_func {
             template_data.insert(
-                "obj_funcs_name".to_owned(),
-                Value::Str(base_name.to_snake_case()),
+                "obj_funcs_name".into(),
+                Value::scalar(base_name.to_snake_case()),
             );
         } else {
             template_data.insert(
-                "obj_funcs_name".to_owned(),
-                Value::Str(struct_name.to_snake_case()),
+                "obj_funcs_name".into(),
+                Value::scalar(struct_name.to_snake_case()),
             );
         }
 
@@ -602,9 +616,9 @@ impl RustGenerator {
         }
 
         if body_setup.is_empty() {
-            template_data.insert("body_setup".to_owned(), Value::Nil);
+            template_data.insert("body_setup".into(), Value::Nil);
         } else {
-            template_data.insert("body_setup".to_owned(), Value::Str(body_setup));
+            template_data.insert("body_setup".into(), Value::scalar(body_setup));
         }
 
         let mut func_args = String::with_capacity(128);
@@ -625,44 +639,44 @@ impl RustGenerator {
         //
 
         template_data.insert(
-            "return_value".to_owned(),
-            Value::Bool(func.return_val.is_some()),
+            "return_value".into(),
+            Value::scalar(func.return_val.is_some()),
         );
-        template_data.insert("function_args".to_owned(), Value::Str(func_args));
+        template_data.insert("function_args".into(), Value::scalar(func_args));
 
         func.return_val.as_ref().map(|ret_val| {
-            template_data.insert("return_type".to_owned(), Value::str("none"));
-            template_data.insert("optional_return".to_owned(), Value::Bool(ret_val.optional));
+            template_data.insert("return_type".into(), Value::scalar("none"));
+            template_data.insert("optional_return".into(), Value::scalar(ret_val.optional));
 
             match self.type_handler.get(&ret_val) {
                 Some(handler) => {
                     let ret = handler.gen_body_return(&ret_val);
-                    template_data.insert("return_type".to_owned(), Value::str("replaced"));
-                    template_data.insert("replaced_return".to_owned(), Value::Str(ret.into()));
+                    template_data.insert("return_type".into(), Value::scalar("replaced"));
+                    template_data.insert("replaced_return".into(), Value::scalar(ret.into_owned()));
                 }
                 None => {
                     match ret_val.vtype {
                         VariableType::Regular => {
                             template_data
-                                .insert("return_type".to_owned(), Value::str("pointer_ref"));
+                                .insert("return_type".into(), Value::scalar("pointer_ref"));
                             template_data.insert(
-                                "return_vtype".to_owned(),
-                                Value::Str(ret_val.type_name.to_owned()),
+                                "return_vtype".into(),
+                                Value::scalar(ret_val.type_name.to_owned()),
                             );
                         }
 
                         VariableType::Reference => {
                             template_data
-                                .insert("return_type".to_owned(), Value::str("pointer_ref"));
+                                .insert("return_type".into(), Value::scalar("pointer_ref"));
                             template_data.insert(
-                                "return_vtype".to_owned(),
-                                Value::Str(ret_val.type_name.to_owned()),
+                                "return_vtype".into(),
+                                Value::scalar(ret_val.type_name.to_owned()),
                             );
                         }
 
                         /*
                    VariableType::Array(ref vtype) => {
-                   template_data.insert("rust_return_type".to_owned(), Value::Str(vtype.clone()));
+                   template_data.insert("rust_return_type".to_owned(), Value::scalar(vtype.clone()));
                    template_data.insert("return_type".to_owned(), Value::str("array"));
                    },
                    */
@@ -686,10 +700,19 @@ impl RustGenerator {
     fn generate_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
         for sdef in &api_def.class_structs {
             let mut template_data = Object::new();
-            template_data.insert("struct_name".to_owned(), Value::str(&sdef.name));
-            template_data.insert("snake_struct_name".to_owned(), Value::Str(sdef.name.to_snake_case()));
-            template_data.insert("wrap_create".to_owned(), Value::Bool(sdef.should_gen_wrap_class()));
-            template_data.insert("has_new_method".to_owned(), Value::Bool(sdef.should_have_create_func()));
+            template_data.insert("struct_name".into(), Value::scalar(&sdef.name));
+            template_data.insert(
+                "snake_struct_name".into(),
+                Value::scalar(sdef.name.to_snake_case()),
+            );
+            template_data.insert(
+                "wrap_create".into(),
+                Value::scalar(sdef.should_gen_wrap_class()),
+            );
+            template_data.insert(
+                "has_new_method".into(),
+                Value::scalar(sdef.should_have_create_func()),
+            );
 
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;
@@ -710,10 +733,10 @@ impl RustGenerator {
             if s.should_generate_drop() {
                 let mut template_data = Object::new();
 
-                template_data.insert("type_name".to_owned(), Value::Str(s.name.clone()));
+                template_data.insert("type_name".into(), Value::scalar(s.name.clone()));
                 template_data.insert(
-                    "type_snake_name".to_owned(),
-                    Value::Str(s.name.to_snake_case()),
+                    "type_snake_name".into(),
+                    Value::scalar(s.name.to_snake_case()),
                 );
 
                 let output = self.drop_template.render(&template_data).unwrap();
@@ -758,13 +781,13 @@ impl RustGenerator {
                 .for_each(|f| {
                     let res = self.generate_callback(&f, name, &self.callback_template);
                     dest.write_all(res.as_bytes()).unwrap();
-            });
+                });
 
             let mut template_data = Object::new();
-            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+            template_data.insert("type_name".into(), Value::scalar(&sdef.name));
             template_data.insert(
-                "type_name_snake".to_owned(),
-                Value::Str(name.to_snake_case()),
+                "type_name_snake".into(),
+                Value::scalar(name.to_snake_case()),
             );
 
             let out = self.trait_impl_end_template.render(&template_data).unwrap();
@@ -843,14 +866,13 @@ impl RustGenerator {
             .class_structs
             .iter()
             .filter(|s| s.has_static_functions())
-            .try_for_each(|sdef|
-        {
-            let mut template_data = Object::new();
-            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+            .try_for_each(|sdef| {
+                let mut template_data = Object::new();
+                template_data.insert("type_name".into(), Value::scalar(&sdef.name));
 
-            let out = self.static_struct_template.render(&template_data).unwrap();
-            dest.write_all(out.as_bytes())
-        })
+                let out = self.static_struct_template.render(&template_data).unwrap();
+                dest.write_all(out.as_bytes())
+            })
     }
 
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
