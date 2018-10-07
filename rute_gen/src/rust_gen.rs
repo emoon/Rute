@@ -98,7 +98,7 @@ impl TypeHandlerTrait for StringTypeHandler {
     fn gen_body_to_rust(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("str_in_{}_{}", arg.name, index);
         (
-            format!("{}.as_str().unwrap()", arg_name).into(),
+            format!("{}.to_str().unwrap()", arg_name).into(),
             format!("let {} = CStr::from_ptr({});\n", arg_name, arg.name).into(),
         )
     }
@@ -157,7 +157,7 @@ struct EnumTypeHandler;
 impl TypeHandlerTrait for EnumTypeHandler {
     fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
         format!(
-            "unsafe {{ transmute::<i32, {}>(ret_val) }}",
+            "{{ transmute::<i32, {}>(ret_val) }}",
             varible.enum_sub_type
         ).into()
     }

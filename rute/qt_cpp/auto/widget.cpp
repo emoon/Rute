@@ -56,6 +56,14 @@ static void widget_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_widget_window_title_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, const char* title)) {
+    QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)trampoline_func, (void*)event);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget create_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -82,6 +90,7 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_resize,
     widget_set_parent,
     widget_update,
+    set_widget_window_title_changed_event,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

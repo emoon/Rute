@@ -10,7 +10,7 @@ struct Widget {
     set_parent(parent: *WidgetType),
     update(),
 
-    //[signal] window_title_changed(title: String),
+    [signal] window_title_changed(title: String),
     //[event] paint_event(event: *PaintEventType),
 }
 

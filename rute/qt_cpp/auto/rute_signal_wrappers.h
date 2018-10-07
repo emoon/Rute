@@ -174,6 +174,28 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+typedef void (*Signal_self_string_void)(void* self_c, void* trampoline_func, const char* title);
+
+class QSlotWrapperSignal_self_string_void : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_string_void(void* data, Signal_self_string_void trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method( const char* title) {
+        m_trampoline_func(m_data, m_wrapped_func, title);
+    }
+private:
+    Signal_self_string_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 typedef void (*Signal_self_void)(void* self_c, void* trampoline_func);
 
 class QSlotWrapperSignal_self_void : public QObject {

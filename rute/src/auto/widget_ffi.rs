@@ -13,6 +13,12 @@ pub struct RUWidgetFuncs {
     pub resize: extern "C" fn(self_c: *const RUBase, width: i32, height: i32),
     pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
     pub update: extern "C" fn(self_c: *const RUBase),
+    pub set_window_title_changed_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
 }
 
 #[repr(C)]

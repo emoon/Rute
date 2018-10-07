@@ -75,6 +75,30 @@ impl<'a> Widget<'a> {
         }
     }
 }
+
+unsafe extern "C" fn widget_window_title_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    title: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&T, &str) + 'static) = transmute(func);
+    let str_in_title_0 = CStr::from_ptr(title);
+
+    let data = self_c as *const T;
+    f(&*data, str_in_title_0.to_str().unwrap());
+}
+
+unsafe extern "C" fn widget_window_title_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    title: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&str) + 'static) = transmute(func);
+    let str_in_title_0 = CStr::from_ptr(title);
+
+    f(str_in_title_0.to_str().unwrap());
+}
+
 pub trait WidgetType<'a> {
     fn show(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -123,6 +147,47 @@ pub trait WidgetType<'a> {
         unsafe {
             ((*funcs).update)(obj_data);
         }
+        self
+    }
+
+    fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &str) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                user_data,
+                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
+        self
+    }
+
+    fn set_window_title_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&str) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                transmute(widget_window_title_changed_trampoline as usize),
+                Box::into_raw(f) as *const _,
+            );
+        }
+
         self
     }
 

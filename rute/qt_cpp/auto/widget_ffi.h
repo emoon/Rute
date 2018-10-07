@@ -21,6 +21,8 @@ typedef struct RUWidgetFuncs {
     void (*resize)(struct RUBase* self_c, int width, int height);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
     void (*update)(struct RUBase* self_c);
+    void (*set_window_title_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, const char* title));
+
 } RUWidgetFuncs;
 
 typedef struct RUWidgetAllFuncs {

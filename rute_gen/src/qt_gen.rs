@@ -320,6 +320,7 @@ fn signal_type_callback(func: &Function) -> String {
         match arg.vtype {
             VariableType::SelfType => name_def.push_str("self"),
             VariableType::Reference => name_def.push_str(&arg.type_name),
+            VariableType::Str => name_def.push_str("string"),
             _ => name_def.push_str(&arg.get_c_type(IsReturnType::No)),
         }
 

@@ -205,7 +205,7 @@ pub trait ScreenType<'a> {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).primary_orientation)(obj_data);
-            let ret_val = unsafe { transmute::<i32, ScreenOrientation>(ret_val) };
+            let ret_val = { transmute::<i32, ScreenOrientation>(ret_val) };
             ret_val
         }
     }
