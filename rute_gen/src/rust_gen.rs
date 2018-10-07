@@ -35,6 +35,7 @@ pub struct RustGenerator {
     struct_impl_template: Template,
     drop_template: Template,
     impl_trait_static_template: Template,
+    static_struct_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -201,7 +202,6 @@ impl<'a> GenericLabelAssign<'a> {
         let mut current_char = gen_type.chars().next().unwrap() as u32;
 
         for _c in 0..27 {
-            // See if we have it
             let found = self.lookup.iter().any(|(_, c)| *c == current_char);
 
             if !found {
@@ -219,32 +219,6 @@ impl<'a> GenericLabelAssign<'a> {
         // This should never happen (unless we have > 27 unique TypeParameters which we wont)
         panic!("Unable to find a character to use for {}", gen_type);
     }
-}
-
-///
-/// Generate the structs with static only functions. The structs will be generated in this style
-///
-/// pub struct ApplicationStatic<'a> {
-///     data: RUApplication,
-///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-/// }
-///
-fn generate_static_structs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    for sdef in api_def
-        .class_structs
-        .iter()
-        .filter(|s| s.has_static_functions())
-    {
-        f.write_all(b"#[derive(Clone)]\n")?;
-        f.write_fmt(format_args!(
-            "pub struct {}Static<'a> {{
-    pub all_funcs: *const RU{}AllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,\n}}\n\n",
-            sdef.name, sdef.name
-        ))?;
-    }
-
-    Ok(())
 }
 
 ///
@@ -273,6 +247,7 @@ impl RustGenerator {
             struct_impl_template: parser.parse(RUST_STRUCT_IMPL_TEMPLATE).unwrap(),
             trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
             impl_trait_static_template: parser.parse(RUST_IMPL_TRAIT_STATIC_TEMPLATE).unwrap(),
+            static_struct_template: parser.parse(RUST_STATIC_STRUCT_TEMPLATE).unwrap(),
         }
     }
 
@@ -855,25 +830,46 @@ impl RustGenerator {
         writeln!(dest, "pub use rute::*;")
     }
 
+    ///
+    /// Generate the structs with static only functions. The structs will be generated in this style
+    ///
+    /// pub struct ApplicationStatic<'a> {
+    ///     pub all_funcs: *const RUApplicationAllFuncs,
+    ///     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+    /// }
+    ///
+    fn generate_static_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        api_def
+            .class_structs
+            .iter()
+            .filter(|s| s.has_static_functions())
+            .try_for_each(|sdef|
+        {
+            let mut template_data = Object::new();
+            template_data.insert("type_name".to_owned(), Value::str(&sdef.name));
+
+            let out = self.static_struct_template.render(&template_data).unwrap();
+            dest.write_all(out.as_bytes())
+        })
+    }
+
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
-        let mut f = BufWriter::new(File::create(filename)?);
+        let mut dest = BufWriter::new(File::create(filename)?);
 
         // write header
-        f.write_all(HEADER)?;
+        dest.write_all(HEADER)?;
 
         // As we may need types/enums/etc from other types we need to generate that
         //self.generate_mod_usage(&mut f, api_def);
 
         // write all the structs
-        self.generate_structs(&mut f, api_def)?;
+        self.generate_structs(&mut dest, api_def)?;
 
         // write all the structs with static functions
-        generate_static_structs(&mut f, api_def)?;
+        self.generate_static_structs(&mut dest, api_def)?;
 
         // Generate the implementations for the structs
-        self.generate_structs_impl(&mut f, api_def)?;
-
-        Ok(())
+        self.generate_structs_impl(&mut dest, api_def)
     }
 
     ///

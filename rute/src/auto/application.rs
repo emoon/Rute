@@ -55,7 +55,7 @@ impl<'a> Application<'a> {
         }
     }
 }
-#[derive(Clone)]
+
 pub struct ApplicationStatic<'a> {
     pub all_funcs: *const RUApplicationAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,

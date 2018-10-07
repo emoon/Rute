@@ -242,6 +242,15 @@ unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline(
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+pub static RUST_STATIC_STRUCT_TEMPLATE: &str ="
+pub struct {{type_name}}Static<'a> {
+    pub all_funcs: *const RU{{type_name}}AllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub static RUST_CALLBACK_TEMPLATE: &str = "
     fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where

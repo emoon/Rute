@@ -55,6 +55,8 @@ struct Application {
     //[event] focus_changed(old: &Widget, now: &Widget),
     //style_sheet() -> String,
     [signal] about_to_quit(),
+    //[signal] application_state_changed(state: Rute::ApplicationState),
+    //[signal] screen_added(screen: *ScreenType),
     set_style_sheet(sheet: String),
     set_auto_sip_enabled(enabled: bool),
     auto_sip_enabled() -> bool,

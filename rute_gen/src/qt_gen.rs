@@ -416,12 +416,21 @@ fn generate_func_def_input_parms_only(func: &Function) -> String {
     for (i, arg) in func.function_args[1..].iter().enumerate() {
         let a = match arg.vtype {
             VariableType::Reference => {
-                if arg.pointer {
-                    format!("Q{}*", arg.type_name).into()
+                let t_name;
+                if arg.type_name.ends_with("Type") {
+                    t_name = &arg.type_name[..arg.type_name.len() - 4];
                 } else {
-                    format!("*(Q{})*", arg.type_name).into()
+                    t_name = &arg.type_name;
+                }
+
+                if arg.pointer {
+                    format!("Q{}*", t_name).into()
+                } else {
+                    format!("*(Q{})*", t_name).into()
                 }
             }
+
+            VariableType::Str => "QString".into(),
 
             _ => arg.get_c_type(IsReturnType::No),
         };
