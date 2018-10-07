@@ -161,6 +161,15 @@ static struct RUSize screen_available_virtual_size(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static int screen_primary_orientation(struct RUBase* self_c) {
+    QScreen* qt_value = (QScreen*)self_c;
+
+    auto ret_value = qt_value->primaryOrientation();
+    return s_screen_orientation_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static int screen_angle_between(struct RUBase* self_c, int a, int b) {
     QScreen* qt_value = (QScreen*)self_c;
 
@@ -204,6 +213,7 @@ struct RUScreenFuncs s_screen_funcs = {
     screen_available_size,
     screen_virtual_size,
     screen_available_virtual_size,
+    screen_primary_orientation,
     screen_angle_between,
     screen_is_landscape,
     screen_refresh_rate,

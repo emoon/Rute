@@ -201,6 +201,15 @@ pub trait ScreenType<'a> {
         }
     }
 
+    fn primary_orientation(&self) -> ScreenOrientation {
+        let (obj_data, funcs) = self.get_screen_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).primary_orientation)(obj_data);
+            let ret_val = unsafe { transmute::<i32, ScreenOrientation>(ret_val) };
+            ret_val
+        }
+    }
+
     fn angle_between(&self, a: ScreenOrientation, b: ScreenOrientation) -> i32 {
         let enum_a_1 = a as i32;
         let enum_b_2 = b as i32;

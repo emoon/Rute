@@ -158,7 +158,7 @@ impl TypeHandlerTrait for EnumTypeHandler {
     fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
         format!(
             "unsafe {{ transmute::<i32, {}>(ret_val) }}",
-            varible.type_name
+            varible.enum_sub_type
         ).into()
     }
 

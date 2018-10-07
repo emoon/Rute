@@ -823,6 +823,7 @@ impl QtGenerator {
             object.insert("array_return".into(), Value::scalar(ret_val.array));
             object.insert("qt_ret_value".into(), Value::scalar("ret_value"));
             object.insert("funcs_name".into(), Value::scalar(""));
+            object.insert("enum_type_name".into(), Value::scalar(""));
             object.insert(
                 "qt_return_type".into(),
                 Value::scalar(&ret_val.qt_type_name)
@@ -846,6 +847,10 @@ impl QtGenerator {
                         Value::scalar(ret_val.type_name.to_snake_case()),
                     );
                     object.insert("return_type".into(), Value::scalar("reference"))
+                }
+                VariableType::Enum => {
+                    object.insert("return_type".into(), Value::scalar("enum_type"));
+                    object.insert("enum_type_name".into(), Value::scalar(ret_val.enum_sub_type.to_snake_case()))
                 }
                 _ => object.insert("return_type".into(), Value::scalar("<illegal>")),
             };

@@ -192,6 +192,8 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}(
     return build_array(ret_value);
 {%- when 'primitive' %}
     return ret_value;
+{%- when 'enum_type' %}
+    return s_{{enum_type_name}}_lookup[(int)ret_value];
 {%- when 'reference' %}
     {{c_return_type}} ctl;
     ctl.qt_data = (struct RUBase*){{qt_ret_value}};

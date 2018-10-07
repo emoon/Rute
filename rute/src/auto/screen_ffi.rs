@@ -22,6 +22,7 @@ pub struct RUScreenFuncs {
     pub available_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub virtual_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub available_virtual_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub primary_orientation: extern "C" fn(self_c: *const RUBase) -> i32,
     pub angle_between: extern "C" fn(self_c: *const RUBase, a: i32, b: i32) -> i32,
     pub is_landscape: extern "C" fn(self_c: *const RUBase, orientation: i32) -> bool,
     pub refresh_rate: extern "C" fn(self_c: *const RUBase) -> f32,

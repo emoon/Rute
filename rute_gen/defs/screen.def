@@ -19,7 +19,7 @@ struct Screen {
     //virtual_siblings() -> [Screen?],
     virtual_size() -> Size,
     available_virtual_size() -> Size,
-    //primary_orientation() -> Rute::ScreenOrientation,
+    primary_orientation() -> Rute::ScreenOrientation,
     //orientation() -> Rute::ScreenOrientation,
     //native_orientation() -> Rute::ScreenOrientation,
     //orientation_update_mask() -> Rute::ScreenOrientations,
