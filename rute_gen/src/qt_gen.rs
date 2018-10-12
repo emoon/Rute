@@ -1,7 +1,6 @@
 use c_gen::*;
 use heck::MixedCase;
 use heck::SnakeCase;
-use std::borrow::Cow;
 use std::collections::{BTreeMap, HashMap};
 use std::fs::File;
 use std::io;
@@ -630,7 +629,7 @@ fn generate_create_functions<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Resul
 
         if sdef.should_gen_wrap_class() {
             f.write_fmt(format_args!(
-"static struct RU{} create_{}(
+                "static struct RU{} create_{}(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
     void* private_user_data)
@@ -777,7 +776,9 @@ impl QtGenerator {
         let mut type_handler = TypeHandler::new(&parser);
 
         // Insert handler for strings
-        type_handler.mapping.insert("String", Box::new(StringTypeHandler {}));
+        type_handler
+            .mapping
+            .insert("String", Box::new(StringTypeHandler {}));
 
         QtGenerator {
             wrapper_template: parser.parse(QT_GEN_WRAPPER_TEMPLATE).unwrap(),
@@ -1118,13 +1119,12 @@ impl QtGenerator {
     ///    void* m_paint_user_data = nullptr;
     ///    void* m_paint_event_wrapped_func = nullptr;
     ///
-    fn generate_event_setup_def<W: Write>(
+    fn generate_event_setup_def(
         &self,
-        dest: &mut W,
         sdef: &Struct,
         func: &Function,
-    ) -> io::Result<()> {
-        Ok(())
+    ) -> String {
+        "".to_owned()
     }
 
     ///
@@ -1152,15 +1152,15 @@ impl QtGenerator {
             template_data.insert("qt_name".into(), Value::scalar(&sdef.qt_name));
             template_data.insert("widget".into(), Value::scalar(inherits_widget));
 
-            /*
-                                       for func in sdef
-                                       .functions
-                                       .iter()
-                                       .filter(|func| func.func_type == FunctionType::Signal)
-                                       {
-                                       self.generate_event_setup_def(f, &func)?;
-                                       }
-                                       */
+            let mut events = String::with_capacity(64 * 1024);
+
+            sdef.functions
+                .iter()
+                .filter(|func| func.func_type == FunctionType::Signal)
+                .for_each(|f| {
+                    let setup = self.generate_event_setup_def(&sdef, &f);
+                    events.push_str(&setup);
+                });
 
             // TODO: Fix me
             template_data.insert("events".into(), Value::scalar(""));
@@ -1519,14 +1519,13 @@ mod tests {
         let dest = gen.generate_func_def(
             &sdef,
             &func,
-            &[],
             "qt_value->",
             "",
             &gen.regular_func_template,
         );
         assert_eq!(
             dest,
-"static void foo_test(struct RUBase* self_c) {
+            "static void foo_test(struct RUBase* self_c) {
     WRFoo* qt_value = (WRFoo*)self_c;
     qt_value->test();
 }
@@ -1553,7 +1552,6 @@ mod tests {
         let dest = gen.generate_func_def(
             &sdef,
             &func,
-            &[],
             "qt_value->",
             "",
             &gen.regular_func_template,
@@ -1588,7 +1586,6 @@ mod tests {
         let dest = gen.generate_func_def(
             &sdef,
             &func,
-            &[],
             "qt_value->",
             "",
             &gen.regular_func_template,
