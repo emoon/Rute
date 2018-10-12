@@ -10,7 +10,6 @@
 
 static int application_color_spec(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->colorSpec();
     return ret_value;
 }
@@ -19,7 +18,6 @@ static int application_color_spec(struct RUBase* self_c) {
 
 static void application_set_color_spec(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setColorSpec(arg0);
 }
 
@@ -27,7 +25,6 @@ static void application_set_color_spec(struct RUBase* self_c, int arg0) {
 
 static struct RUFont application_get_font(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->font();
     QFont* new_val = new QFont();
     *new_val = ret_value;
@@ -42,7 +39,6 @@ static struct RUFont application_get_font(struct RUBase* self_c) {
 
 static struct RUWidget application_active_popup_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->activePopupWidget();
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -55,7 +51,6 @@ static struct RUWidget application_active_popup_widget(struct RUBase* self_c) {
 
 static struct RUWidget application_active_modal_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->activeModalWidget();
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -68,7 +63,6 @@ static struct RUWidget application_active_modal_widget(struct RUBase* self_c) {
 
 static struct RUWidget application_focus_widget(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->focusWidget();
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -81,7 +75,6 @@ static struct RUWidget application_focus_widget(struct RUBase* self_c) {
 
 static struct RUWidget application_active_window(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->activeWindow();
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -94,7 +87,6 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 static void application_set_active_window(struct RUBase* self_c, struct RUBase* actor) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setActiveWindow((QWidget*)actor);
 }
 
@@ -102,7 +94,6 @@ static void application_set_active_window(struct RUBase* self_c, struct RUBase* 
 
 static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->widgetAt(x, y);
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -115,7 +106,6 @@ static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y
 
 static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->topLevelAt(x, y);
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -128,7 +118,6 @@ static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, in
 
 static void application_beep(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->beep();
 }
 
@@ -136,7 +125,6 @@ static void application_beep(struct RUBase* self_c) {
 
 static void application_set_cursor_flash_time(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setCursorFlashTime(arg0);
 }
 
@@ -144,7 +132,6 @@ static void application_set_cursor_flash_time(struct RUBase* self_c, int arg0) {
 
 static int application_cursor_flash_time(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->cursorFlashTime();
     return ret_value;
 }
@@ -153,7 +140,6 @@ static int application_cursor_flash_time(struct RUBase* self_c) {
 
 static void application_set_double_click_interval(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setDoubleClickInterval(arg0);
 }
 
@@ -161,7 +147,6 @@ static void application_set_double_click_interval(struct RUBase* self_c, int arg
 
 static int application_double_click_interval(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->doubleClickInterval();
     return ret_value;
 }
@@ -170,7 +155,6 @@ static int application_double_click_interval(struct RUBase* self_c) {
 
 static void application_set_keyboard_input_interval(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setKeyboardInputInterval(arg0);
 }
 
@@ -178,7 +162,6 @@ static void application_set_keyboard_input_interval(struct RUBase* self_c, int a
 
 static int application_keyboard_input_interval(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->keyboardInputInterval();
     return ret_value;
 }
@@ -187,7 +170,6 @@ static int application_keyboard_input_interval(struct RUBase* self_c) {
 
 static void application_set_wheel_scroll_lines(struct RUBase* self_c, int arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setWheelScrollLines(arg0);
 }
 
@@ -195,7 +177,6 @@ static void application_set_wheel_scroll_lines(struct RUBase* self_c, int arg0) 
 
 static int application_wheel_scroll_lines(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->wheelScrollLines();
     return ret_value;
 }
@@ -204,7 +185,6 @@ static int application_wheel_scroll_lines(struct RUBase* self_c) {
 
 static void application_set_start_drag_time(struct RUBase* self_c, int ms) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setStartDragTime(ms);
 }
 
@@ -212,7 +192,6 @@ static void application_set_start_drag_time(struct RUBase* self_c, int ms) {
 
 static int application_start_drag_time(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->startDragTime();
     return ret_value;
 }
@@ -221,7 +200,6 @@ static int application_start_drag_time(struct RUBase* self_c) {
 
 static void application_set_start_drag_distance(struct RUBase* self_c, int l) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setStartDragDistance(l);
 }
 
@@ -229,7 +207,6 @@ static void application_set_start_drag_distance(struct RUBase* self_c, int l) {
 
 static int application_start_drag_distance(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->startDragDistance();
     return ret_value;
 }
@@ -238,7 +215,6 @@ static int application_start_drag_distance(struct RUBase* self_c) {
 
 static int application_exec(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->exec();
     return ret_value;
 }
@@ -263,7 +239,6 @@ static void set_application_screen_added_event(void* object, void* user_data, vo
 
 static void application_set_style_sheet(struct RUBase* self_c, const char* sheet) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setStyleSheet(QString::fromUtf8(sheet));
 }
 
@@ -271,7 +246,6 @@ static void application_set_style_sheet(struct RUBase* self_c, const char* sheet
 
 static void application_set_auto_sip_enabled(struct RUBase* self_c, bool enabled) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->setAutoSipEnabled(enabled);
 }
 
@@ -279,7 +253,6 @@ static void application_set_auto_sip_enabled(struct RUBase* self_c, bool enabled
 
 static bool application_auto_sip_enabled(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     auto ret_value = qt_value->autoSipEnabled();
     return ret_value;
 }
@@ -288,7 +261,6 @@ static bool application_auto_sip_enabled(struct RUBase* self_c) {
 
 static void application_close_all_windows(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->closeAllWindows();
 }
 
@@ -296,7 +268,6 @@ static void application_close_all_windows(struct RUBase* self_c) {
 
 static void application_about_qt(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
-
     qt_value->aboutQt();
 }
 

@@ -693,6 +693,15 @@ pub enum RecurseIncludeSelf {
 }
 
 ///
+/// ReturnType bool
+///
+#[derive(PartialEq, Clone, Copy)]
+pub enum IsReturnArg {
+    Yes,
+    No,
+}
+
+///
 /// Used when returning types that may differ if used as input or not
 ///
 #[derive(Copy, Clone, PartialEq)]
@@ -891,6 +900,17 @@ impl Variable {
                 println!("Should not be here {}", self.name);
                 "<error>".into()
             }
+        }
+    }
+
+    ///
+    /// If the typename ends with "Type" return a name without it
+    ///
+    pub fn get_untyped_name(&self) -> &str {
+        if self.type_name.ends_with("Type") {
+            &self.type_name[..self.type_name.len() - 4]
+        } else {
+            &self.type_name
         }
     }
 }
@@ -1112,5 +1132,31 @@ mod tests {
         assert_eq!(sdef.name, "Widget");
         assert_eq!(sdef.functions.len(), 1);
         assert_eq!(sdef.functions[0].name, "show");
+    }
+
+    ///
+    /// Tests that get_untyped_name() returs correct
+    ///
+    #[test]
+    fn test_var_untyped_name_typed() {
+        let var = Variable {
+            type_name: "WidgetType".to_owned(),
+            .. Variable::default()
+        };
+
+        assert_eq!(var.get_untyped_name(), "Widget");
+    }
+
+    ///
+    /// Tests that get_untyped_name() returs correct
+    ///
+    #[test]
+    fn test_var_untyped_name() {
+        let var = Variable {
+            type_name: "Widget".to_owned(),
+            .. Variable::default()
+        };
+
+        assert_eq!(var.get_untyped_name(), "Widget");
     }
 }

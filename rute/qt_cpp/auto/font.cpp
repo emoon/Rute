@@ -10,7 +10,6 @@
 
 static void font_set_pixel_size(struct RUBase* self_c, int size) {
     QFont* qt_value = (QFont*)self_c;
-
     qt_value->setPixelSize(size);
 }
 
@@ -18,7 +17,6 @@ static void font_set_pixel_size(struct RUBase* self_c, int size) {
 
 static int font_pixel_size(struct RUBase* self_c) {
     QFont* qt_value = (QFont*)self_c;
-
     auto ret_value = qt_value->pixelSize();
     return ret_value;
 }

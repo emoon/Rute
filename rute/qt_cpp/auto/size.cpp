@@ -10,7 +10,6 @@
 
 static bool size_is_null(struct RUBase* self_c) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->isNull();
     return ret_value;
 }
@@ -19,7 +18,6 @@ static bool size_is_null(struct RUBase* self_c) {
 
 static bool size_is_empty(struct RUBase* self_c) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->isEmpty();
     return ret_value;
 }
@@ -28,7 +26,6 @@ static bool size_is_empty(struct RUBase* self_c) {
 
 static bool size_is_valid(struct RUBase* self_c) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->isValid();
     return ret_value;
 }
@@ -37,7 +34,6 @@ static bool size_is_valid(struct RUBase* self_c) {
 
 static int size_width(struct RUBase* self_c) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->width();
     return ret_value;
 }
@@ -46,7 +42,6 @@ static int size_width(struct RUBase* self_c) {
 
 static int size_height(struct RUBase* self_c) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->height();
     return ret_value;
 }
@@ -55,7 +50,6 @@ static int size_height(struct RUBase* self_c) {
 
 static void size_set_width(struct RUBase* self_c, int w) {
     WRSize* qt_value = (WRSize*)self_c;
-
     qt_value->setWidth(w);
 }
 
@@ -63,7 +57,6 @@ static void size_set_width(struct RUBase* self_c, int w) {
 
 static void size_set_height(struct RUBase* self_c, int h) {
     WRSize* qt_value = (WRSize*)self_c;
-
     qt_value->setHeight(h);
 }
 
@@ -71,7 +64,6 @@ static void size_set_height(struct RUBase* self_c, int h) {
 
 static void size_scale(struct RUBase* self_c, int w, int h, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
-
     qt_value->scale(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
 }
 
@@ -79,7 +71,6 @@ static void size_scale(struct RUBase* self_c, int w, int h, int mode) {
 
 static void size_scale_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
-
     qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
 }
 
@@ -87,7 +78,6 @@ static void size_scale_by_size(struct RUBase* self_c, struct RUBase* s, int mode
 
 static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -102,7 +92,6 @@ static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) 
 
 static struct RUSize size_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -117,7 +106,6 @@ static struct RUSize size_scaled_by_size(struct RUBase* self_c, struct RUBase* s
 
 static struct RUSize size_expanded_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->expandedTo(*((QSize*)arg0));
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -132,7 +120,6 @@ static struct RUSize size_expanded_to(struct RUBase* self_c, struct RUBase* arg0
 
 static struct RUSize size_bounded_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRSize* qt_value = (WRSize*)self_c;
-
     auto ret_value = qt_value->boundedTo(*((QSize*)arg0));
     WRSize* new_val = new WRSize();
     *new_val = ret_value;

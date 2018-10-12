@@ -10,7 +10,6 @@
 
 static const char* screen_name(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->name();
     return q_string_to_const_char(ret_value);
 }
@@ -19,7 +18,6 @@ static const char* screen_name(struct RUBase* self_c) {
 
 static const char* screen_manufacturer(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->manufacturer();
     return q_string_to_const_char(ret_value);
 }
@@ -28,7 +26,6 @@ static const char* screen_manufacturer(struct RUBase* self_c) {
 
 static const char* screen_model(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->model();
     return q_string_to_const_char(ret_value);
 }
@@ -37,7 +34,6 @@ static const char* screen_model(struct RUBase* self_c) {
 
 static const char* screen_serial_number(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->serialNumber();
     return q_string_to_const_char(ret_value);
 }
@@ -46,7 +42,6 @@ static const char* screen_serial_number(struct RUBase* self_c) {
 
 static int screen_depth(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->depth();
     return ret_value;
 }
@@ -55,7 +50,6 @@ static int screen_depth(struct RUBase* self_c) {
 
 static float screen_physical_dots_per_inch_x(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->physicalDotsPerInchX();
     return ret_value;
 }
@@ -64,7 +58,6 @@ static float screen_physical_dots_per_inch_x(struct RUBase* self_c) {
 
 static float screen_physical_dots_per_inch_y(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->physicalDotsPerInchY();
     return ret_value;
 }
@@ -73,7 +66,6 @@ static float screen_physical_dots_per_inch_y(struct RUBase* self_c) {
 
 static float screen_physical_dots_per_inch(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->physicalDotsPerInch();
     return ret_value;
 }
@@ -82,7 +74,6 @@ static float screen_physical_dots_per_inch(struct RUBase* self_c) {
 
 static float screen_logical_dots_per_inch_x(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->logicalDotsPerInchX();
     return ret_value;
 }
@@ -91,7 +82,6 @@ static float screen_logical_dots_per_inch_x(struct RUBase* self_c) {
 
 static float screen_logical_dots_per_inch_y(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->logicalDotsPerInchY();
     return ret_value;
 }
@@ -100,7 +90,6 @@ static float screen_logical_dots_per_inch_y(struct RUBase* self_c) {
 
 static float screen_logical_dots_per_inch(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->logicalDotsPerInch();
     return ret_value;
 }
@@ -109,7 +98,6 @@ static float screen_logical_dots_per_inch(struct RUBase* self_c) {
 
 static float screen_device_pixel_ratio(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->devicePixelRatio();
     return ret_value;
 }
@@ -118,7 +106,6 @@ static float screen_device_pixel_ratio(struct RUBase* self_c) {
 
 static struct RUSize screen_available_size(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->availableSize();
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -133,7 +120,6 @@ static struct RUSize screen_available_size(struct RUBase* self_c) {
 
 static struct RUSize screen_virtual_size(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->virtualSize();
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -148,7 +134,6 @@ static struct RUSize screen_virtual_size(struct RUBase* self_c) {
 
 static struct RUSize screen_available_virtual_size(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->availableVirtualSize();
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
@@ -163,7 +148,6 @@ static struct RUSize screen_available_virtual_size(struct RUBase* self_c) {
 
 static int screen_primary_orientation(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->primaryOrientation();
     return s_screen_orientation_lookup[(int)ret_value];
 }
@@ -172,7 +156,6 @@ static int screen_primary_orientation(struct RUBase* self_c) {
 
 static int screen_angle_between(struct RUBase* self_c, int a, int b) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->angleBetween((Qt::ScreenOrientation)s_screen_orientation_lookup[a], (Qt::ScreenOrientation)s_screen_orientation_lookup[b]);
     return ret_value;
 }
@@ -181,7 +164,6 @@ static int screen_angle_between(struct RUBase* self_c, int a, int b) {
 
 static bool screen_is_landscape(struct RUBase* self_c, int orientation) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->isLandscape((Qt::ScreenOrientation)s_screen_orientation_lookup[orientation]);
     return ret_value;
 }
@@ -190,7 +172,6 @@ static bool screen_is_landscape(struct RUBase* self_c, int orientation) {
 
 static float screen_refresh_rate(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
-
     auto ret_value = qt_value->refreshRate();
     return ret_value;
 }

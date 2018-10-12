@@ -144,32 +144,53 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-pub static SET_EVENT_TEMPLATE: &str = "
+pub static WRAP_EVENT_TEMPLATE: &str = "
     {{c_return_value}} Class::{{qt_event_name}}({{qt_event_args}}) {
         if (m_paint_event) {
             RU{{event_type}} e;
             e.qt_data = (struct RUBase*)event;
             e.host_data = nullptr;
             e.all_funcs = &s_{{event_type}}_all_funcs;
-            m_{{event_type}}_trampoline((RUPainteEvent*)&e, m_{{event_type}}_user_data,
-            m_{{event_type}}_wrapped_func);
+            m_{{event_type}}_trampoline((RU{{event_type}}*)&e, m_{{event_type}}_user_data, m_{{event_type}}_wrapped_func
+            {{-body_setup}}
         } else {
+        {%- if c_return_type == \"void\" %}
             {{qt_widget_name}}::{{qt_event_name}}({{event_args}});
+        {%- else %}
+            return {{qt_widget_name}}::{{qt_event_name}}({{event_args}});
+        {%- endif %}
         }
     }
 
-    RUPaintEventFunc m_{{event_type}}_event = nullptr;
-    void* m_{{event_type}}_user_data = nullptr;
-    void* m_{{event_type}}_function = nullptr;
+    RU{{event_type}}Func m_{{event_type_snake}}_event = nullptr;
+    void* m_{{event_type_snake}}_user_data = nullptr;
+    void* m_{{event_type_snake}}_wrapped_func = nullptr;
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static QT_REGULAR_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}({{func_def}}) {
+    {{cpp_type_name}}* qt_value = ({{cpp_type_name}}*)self_c;
+    {{-body_setup}}
+}
+
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static QT_TRAIT_TYPE_TEMPLATE: &str ="
+            RU{{type_name}} {{var_name}};
+            {{var_name}}.qt_data = (struct RUBase*){{input_var}};
+            {{var_name}}.host_data = nullptr;
+            {{var_name}}.all_funcs = &s_{{type_name_snake}}_all_funcs;
+
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition for a Qt wrapping function
-
-pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}({{func_def}}) {
-    {{cpp_type_name}}* qt_value = ({{cpp_type_name}}*)self_c;
-{% if c_return_type != 'void' %}
-    auto ret_value = qt_value->{{qt_func_name}}({{qt_func_args}});
+pub static QT_FUNC_DEF_TEMPLATE: &str =
+"{% if c_return_type != 'void' %}
+    auto ret_value = {{qt_instance_call}}{{qt_func_name}}({{-extra_args}}{{qt_func_args}});
 
 {%- if array_return %}
 {%- case return_type %}
@@ -213,8 +234,5 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}(
 {%- endif %}
 
 {%- else %}
-    qt_value->{{qt_func_name}}({{qt_func_args}});
-{%- endif %}
-}
-
-";
+    {{qt_instance_call}}{{qt_func_name}}({{qt_func_args}});
+{%- endif %}";

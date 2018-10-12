@@ -10,7 +10,6 @@
 
 static bool rect_is_null(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->isNull();
     return ret_value;
 }
@@ -19,7 +18,6 @@ static bool rect_is_null(struct RUBase* self_c) {
 
 static bool rect_is_empty(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->isEmpty();
     return ret_value;
 }
@@ -28,7 +26,6 @@ static bool rect_is_empty(struct RUBase* self_c) {
 
 static bool rect_is_valid(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->isValid();
     return ret_value;
 }
@@ -37,7 +34,6 @@ static bool rect_is_valid(struct RUBase* self_c) {
 
 static int rect_left(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->left();
     return ret_value;
 }
@@ -46,7 +42,6 @@ static int rect_left(struct RUBase* self_c) {
 
 static int rect_top(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->top();
     return ret_value;
 }
@@ -55,7 +50,6 @@ static int rect_top(struct RUBase* self_c) {
 
 static int rect_right(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->right();
     return ret_value;
 }
@@ -64,7 +58,6 @@ static int rect_right(struct RUBase* self_c) {
 
 static int rect_bottom(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->bottom();
     return ret_value;
 }
@@ -73,7 +66,6 @@ static int rect_bottom(struct RUBase* self_c) {
 
 static int rect_x(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->x();
     return ret_value;
 }
@@ -82,7 +74,6 @@ static int rect_x(struct RUBase* self_c) {
 
 static int rect_y(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->y();
     return ret_value;
 }
@@ -91,7 +82,6 @@ static int rect_y(struct RUBase* self_c) {
 
 static void rect_set_left(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setLeft(pos);
 }
 
@@ -99,7 +89,6 @@ static void rect_set_left(struct RUBase* self_c, int pos) {
 
 static void rect_set_top(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setTop(pos);
 }
 
@@ -107,7 +96,6 @@ static void rect_set_top(struct RUBase* self_c, int pos) {
 
 static void rect_set_right(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setRight(pos);
 }
 
@@ -115,7 +103,6 @@ static void rect_set_right(struct RUBase* self_c, int pos) {
 
 static void rect_set_bottom(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setBottom(pos);
 }
 
@@ -123,7 +110,6 @@ static void rect_set_bottom(struct RUBase* self_c, int pos) {
 
 static void rect_set_x(struct RUBase* self_c, int x) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setX(x);
 }
 
@@ -131,7 +117,6 @@ static void rect_set_x(struct RUBase* self_c, int x) {
 
 static void rect_set_y(struct RUBase* self_c, int y) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setY(y);
 }
 
@@ -139,7 +124,6 @@ static void rect_set_y(struct RUBase* self_c, int y) {
 
 static void rect_move_left(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->moveLeft(pos);
 }
 
@@ -147,7 +131,6 @@ static void rect_move_left(struct RUBase* self_c, int pos) {
 
 static void rect_move_top(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->moveTop(pos);
 }
 
@@ -155,7 +138,6 @@ static void rect_move_top(struct RUBase* self_c, int pos) {
 
 static void rect_move_right(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->moveRight(pos);
 }
 
@@ -163,7 +145,6 @@ static void rect_move_right(struct RUBase* self_c, int pos) {
 
 static void rect_move_bottom(struct RUBase* self_c, int pos) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->moveBottom(pos);
 }
 
@@ -171,7 +152,6 @@ static void rect_move_bottom(struct RUBase* self_c, int pos) {
 
 static void rect_move_to(struct RUBase* self_c, int x, int t) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->moveTo(x, t);
 }
 
@@ -179,7 +159,6 @@ static void rect_move_to(struct RUBase* self_c, int x, int t) {
 
 static int rect_width(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->width();
     return ret_value;
 }
@@ -188,7 +167,6 @@ static int rect_width(struct RUBase* self_c) {
 
 static int rect_height(struct RUBase* self_c) {
     WRRect* qt_value = (WRRect*)self_c;
-
     auto ret_value = qt_value->height();
     return ret_value;
 }
@@ -197,7 +175,6 @@ static int rect_height(struct RUBase* self_c) {
 
 static void rect_set_width(struct RUBase* self_c, int w) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setWidth(w);
 }
 
@@ -205,7 +182,6 @@ static void rect_set_width(struct RUBase* self_c, int w) {
 
 static void rect_set_height(struct RUBase* self_c, int h) {
     WRRect* qt_value = (WRRect*)self_c;
-
     qt_value->setHeight(h);
 }
 

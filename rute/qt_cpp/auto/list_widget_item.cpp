@@ -10,7 +10,6 @@
 
 static struct RUListWidget list_widget_item_list_widget(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->listWidget();
     struct RUListWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
@@ -23,7 +22,6 @@ static struct RUListWidget list_widget_item_list_widget(struct RUBase* self_c) {
 
 static void list_widget_item_set_selected(struct RUBase* self_c, bool select) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setSelected(select);
 }
 
@@ -31,7 +29,6 @@ static void list_widget_item_set_selected(struct RUBase* self_c, bool select) {
 
 static bool list_widget_item_is_selected(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->isSelected();
     return ret_value;
 }
@@ -40,7 +37,6 @@ static bool list_widget_item_is_selected(struct RUBase* self_c) {
 
 static void list_widget_item_set_hidden(struct RUBase* self_c, bool hide) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setHidden(hide);
 }
 
@@ -48,7 +44,6 @@ static void list_widget_item_set_hidden(struct RUBase* self_c, bool hide) {
 
 static bool list_widget_item_is_hidden(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->isHidden();
     return ret_value;
 }
@@ -57,7 +52,6 @@ static bool list_widget_item_is_hidden(struct RUBase* self_c) {
 
 static const char* list_widget_item_text(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->text();
     return q_string_to_const_char(ret_value);
 }
@@ -66,7 +60,6 @@ static const char* list_widget_item_text(struct RUBase* self_c) {
 
 static void list_widget_item_set_text(struct RUBase* self_c, const char* text) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setText(QString::fromUtf8(text));
 }
 
@@ -74,7 +67,6 @@ static void list_widget_item_set_text(struct RUBase* self_c, const char* text) {
 
 static const char* list_widget_item_status_tip(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->statusTip();
     return q_string_to_const_char(ret_value);
 }
@@ -83,7 +75,6 @@ static const char* list_widget_item_status_tip(struct RUBase* self_c) {
 
 static void list_widget_item_set_status_tip(struct RUBase* self_c, const char* status_tip) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setStatusTip(QString::fromUtf8(status_tip));
 }
 
@@ -91,7 +82,6 @@ static void list_widget_item_set_status_tip(struct RUBase* self_c, const char* s
 
 static const char* list_widget_item_tool_tip(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->toolTip();
     return q_string_to_const_char(ret_value);
 }
@@ -100,7 +90,6 @@ static const char* list_widget_item_tool_tip(struct RUBase* self_c) {
 
 static void list_widget_item_set_tool_tip(struct RUBase* self_c, const char* tool_tip) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setToolTip(QString::fromUtf8(tool_tip));
 }
 
@@ -108,7 +97,6 @@ static void list_widget_item_set_tool_tip(struct RUBase* self_c, const char* too
 
 static const char* list_widget_item_whats_this(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->whatsThis();
     return q_string_to_const_char(ret_value);
 }
@@ -117,7 +105,6 @@ static const char* list_widget_item_whats_this(struct RUBase* self_c) {
 
 static void list_widget_item_set_whats_this(struct RUBase* self_c, const char* whats_this) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setWhatsThis(QString::fromUtf8(whats_this));
 }
 
@@ -125,7 +112,6 @@ static void list_widget_item_set_whats_this(struct RUBase* self_c, const char* w
 
 static int list_widget_item_text_alignment(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     auto ret_value = qt_value->textAlignment();
     return ret_value;
 }
@@ -134,7 +120,6 @@ static int list_widget_item_text_alignment(struct RUBase* self_c) {
 
 static void list_widget_item_set_text_alignment(struct RUBase* self_c, int alignment) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-
     qt_value->setTextAlignment(alignment);
 }
 

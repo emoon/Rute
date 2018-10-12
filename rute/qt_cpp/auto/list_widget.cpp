@@ -10,7 +10,6 @@
 
 static void list_widget_add_item(struct RUBase* self_c, const char* label) {
     WRListWidget* qt_value = (WRListWidget*)self_c;
-
     qt_value->addItem(QString::fromUtf8(label));
 }
 
@@ -18,7 +17,6 @@ static void list_widget_add_item(struct RUBase* self_c, const char* label) {
 
 static void list_widget_clear(struct RUBase* self_c) {
     WRListWidget* qt_value = (WRListWidget*)self_c;
-
     qt_value->clear();
 }
 

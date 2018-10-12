@@ -10,7 +10,6 @@
 
 static void widget_show(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->show();
 }
 
@@ -18,7 +17,6 @@ static void widget_show(struct RUBase* self_c) {
 
 static void widget_set_fixed_height(struct RUBase* self_c, int width) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->setFixedHeight(width);
 }
 
@@ -26,7 +24,6 @@ static void widget_set_fixed_height(struct RUBase* self_c, int width) {
 
 static void widget_set_fixed_width(struct RUBase* self_c, int width) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->setFixedWidth(width);
 }
 
@@ -34,7 +31,6 @@ static void widget_set_fixed_width(struct RUBase* self_c, int width) {
 
 static void widget_resize(struct RUBase* self_c, int width, int height) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->resize(width, height);
 }
 
@@ -42,7 +38,6 @@ static void widget_resize(struct RUBase* self_c, int width, int height) {
 
 static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->setParent((QWidget*)parent);
 }
 
@@ -50,7 +45,6 @@ static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
 
 static void widget_update(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
-
     qt_value->update();
 }
 

@@ -10,7 +10,6 @@
 
 static bool push_button_auto_default(struct RUBase* self_c) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     auto ret_value = qt_value->autoDefault();
     return ret_value;
 }
@@ -19,7 +18,6 @@ static bool push_button_auto_default(struct RUBase* self_c) {
 
 static void push_button_set_auto_default(struct RUBase* self_c, bool arg0) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     qt_value->setAutoDefault(arg0);
 }
 
@@ -27,7 +25,6 @@ static void push_button_set_auto_default(struct RUBase* self_c, bool arg0) {
 
 static bool push_button_is_default(struct RUBase* self_c) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     auto ret_value = qt_value->isDefault();
     return ret_value;
 }
@@ -36,7 +33,6 @@ static bool push_button_is_default(struct RUBase* self_c) {
 
 static void push_button_set_default(struct RUBase* self_c, bool arg0) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     qt_value->setDefault(arg0);
 }
 
@@ -44,7 +40,6 @@ static void push_button_set_default(struct RUBase* self_c, bool arg0) {
 
 static void push_button_set_flat(struct RUBase* self_c, bool arg0) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     qt_value->setFlat(arg0);
 }
 
@@ -52,7 +47,6 @@ static void push_button_set_flat(struct RUBase* self_c, bool arg0) {
 
 static bool push_button_is_flat(struct RUBase* self_c) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     auto ret_value = qt_value->isFlat();
     return ret_value;
 }
@@ -61,7 +55,6 @@ static bool push_button_is_flat(struct RUBase* self_c) {
 
 static void push_button_show_menu(struct RUBase* self_c) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     qt_value->showMenu();
 }
 
@@ -69,7 +62,6 @@ static void push_button_show_menu(struct RUBase* self_c) {
 
 static void push_button_set_text(struct RUBase* self_c, const char* text) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     qt_value->setText(QString::fromUtf8(text));
 }
 
@@ -77,7 +69,6 @@ static void push_button_set_text(struct RUBase* self_c, const char* text) {
 
 static const char* push_button_text(struct RUBase* self_c) {
     WRPushButton* qt_value = (WRPushButton*)self_c;
-
     auto ret_value = qt_value->text();
     return q_string_to_const_char(ret_value);
 }

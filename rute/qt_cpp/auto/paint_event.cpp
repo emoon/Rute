@@ -10,7 +10,6 @@
 
 static struct RURect paint_event_rect(struct RUBase* self_c) {
     QPaintEvent* qt_value = (QPaintEvent*)self_c;
-
     auto ret_value = qt_value->rect();
     WRRect* new_val = new WRRect();
     *new_val = ret_value;

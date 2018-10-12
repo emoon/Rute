@@ -84,6 +84,8 @@ fn main() {
         .unwrap();
     */
 
+    //let qt_gen = QtGenerator::new();
+
     let rust_dest_dir = "../rute/src/auto";
     let qt_dest = "../rute/qt_cpp/auto";
 

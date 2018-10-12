@@ -10,7 +10,6 @@
 
 static bool event_spontaneous(struct RUBase* self_c) {
     QEvent* qt_value = (QEvent*)self_c;
-
     auto ret_value = qt_value->spontaneous();
     return ret_value;
 }
@@ -19,7 +18,6 @@ static bool event_spontaneous(struct RUBase* self_c) {
 
 static void event_set_accepted(struct RUBase* self_c, bool accepted) {
     QEvent* qt_value = (QEvent*)self_c;
-
     qt_value->setAccepted(accepted);
 }
 
@@ -27,7 +25,6 @@ static void event_set_accepted(struct RUBase* self_c, bool accepted) {
 
 static bool event_is_accepted(struct RUBase* self_c) {
     QEvent* qt_value = (QEvent*)self_c;
-
     auto ret_value = qt_value->isAccepted();
     return ret_value;
 }
@@ -36,7 +33,6 @@ static bool event_is_accepted(struct RUBase* self_c) {
 
 static void event_accept(struct RUBase* self_c) {
     QEvent* qt_value = (QEvent*)self_c;
-
     qt_value->accept();
 }
 
@@ -44,7 +40,6 @@ static void event_accept(struct RUBase* self_c) {
 
 static void event_ignore(struct RUBase* self_c) {
     QEvent* qt_value = (QEvent*)self_c;
-
     qt_value->ignore();
 }
 
