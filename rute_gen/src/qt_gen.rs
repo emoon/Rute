@@ -1,6 +1,5 @@
 use c_gen::*;
-use heck::MixedCase;
-use heck::SnakeCase;
+use heck::{MixedCase, SnakeCase, CamelCase};
 use std::collections::{BTreeMap, HashMap};
 use std::fs::File;
 use std::io;
@@ -767,6 +766,7 @@ pub struct QtGenerator {
     set_signal_template: Template,
     wrap_event_template: Template,
     regular_func_template: Template,
+    wrap_func_def_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -788,6 +788,7 @@ impl QtGenerator {
             set_signal_template: parser.parse(SET_SIGNAL_TEMPLATE).unwrap(),
             wrap_event_template: parser.parse(WRAP_EVENT_TEMPLATE).unwrap(),
             regular_func_template: parser.parse(QT_REGULAR_FUNC_DEF_TEMPLATE).unwrap(),
+            wrap_func_def_template: parser.parse(QT_WRAP_FUNC_DEF_TEMPLATE).unwrap(),
             type_handler: type_handler,
         }
     }
@@ -855,66 +856,6 @@ impl QtGenerator {
                 Some(handler) => Some(handler.replace_arg(&arg, IsReturnArg::No).into()),
                 _ => None,
             }
-
-            /*
-            match arg.vtype {
-                VariableType::Reference => {
-                    let name = arg.get_untyped_name();
-                    // TODO: Not hard-code to Q* type but use actual typename
-                    if arg.pointer {
-                        Some(format!("(Q{}*){}", name, &arg.name).into())
-                    } else {
-                        Some(format!("*((Q{}*){})", name, &arg.name).into())
-                    }
-                }
-            }
-            */
-
-            /*
-            // TODO: Fix me. Move to type handler
-            if arg.type_name == "String" {
-                Some(format!("QString::fromUtf8({})", &arg.name).into())
-            } else {
-                for handler in type_handlers.iter() {
-                    if arg.type_name == handler.match_type() {
-                        return Some(handler.replace_arg(&arg).into());
-                    }
-                }
-
-                match arg.vtype {
-                    VariableType::Reference => {
-                        let t_name = arg.get_untyped_name();
-
-                        // TODO: Not hard-code to Q* type but use actual typename
-                        if arg.pointer {
-                            Some(format!("(Q{}*){}", t_name, &arg.name).into())
-                        } else {
-                            Some(format!("*((Q{}*){})", t_name, &arg.name).into())
-                        }
-                    }
-
-                    VariableType::Enum => {
-                        let mut base_name = arg.type_name.as_str();
-
-                        if arg.type_name == "Rute" {
-                            base_name = "Qt";
-                        }
-
-                        Some(
-                            format!(
-                                "({}::{})s_{}_lookup[{}]",
-                                base_name,
-                                arg.enum_sub_type,
-                                arg.enum_sub_type.to_snake_case(),
-                                &arg.name
-                            ).into(),
-                        )
-                    }
-
-                    _ => None,
-                }
-            }
-            */
         });
 
         object.insert(
@@ -1124,7 +1065,33 @@ impl QtGenerator {
         sdef: &Struct,
         func: &Function,
     ) -> String {
-        "".to_owned()
+        // Setup return value
+        let ret_value = func
+            .return_val
+            .as_ref()
+            .map_or("void".into(), |v| v.get_c_type(IsReturnType::Yes));
+
+        let mut object = Object::new();
+
+        object.insert(
+            "c_return_type".into(),
+            Value::scalar(ret_value.into_owned()),
+        );
+
+        object.insert("qt_event_name".into(), Value::scalar(func.cpp_name.to_mixed_case()));
+        object.insert("qt_event_args".into(), Value::scalar(func.generate_c_function_def(FirstArgType::Keep)));
+        object.insert("qt_class_name".into(), Value::scalar(&sdef.name));
+        object.insert("class_name".into(), Value::scalar(&sdef.name));
+        object.insert("qt_class_name".into(), Value::scalar(&sdef.qt_name));
+        object.insert("event_args".into(), Value::scalar(func.generate_invoke(FirstArgName::Remove)));
+
+        let func_setup = self.generate_func_def(sdef, func, "", "test_extra", &self.wrap_func_def_template);
+
+        object.insert("func_setup".into(), Value::scalar(&func_setup));
+        object.insert("event_type".into(), Value::scalar(&func.name.to_camel_case()));
+        object.insert("event_type_snake".into(), Value::scalar(&func.name.to_snake_case()));
+
+        self.wrap_event_template.render(&object).unwrap()
     }
 
     ///
@@ -1156,14 +1123,13 @@ impl QtGenerator {
 
             sdef.functions
                 .iter()
-                .filter(|func| func.func_type == FunctionType::Signal)
+                .filter(|func| func.func_type == FunctionType::Event)
                 .for_each(|f| {
                     let setup = self.generate_event_setup_def(&sdef, &f);
                     events.push_str(&setup);
                 });
 
-            // TODO: Fix me
-            template_data.insert("events".into(), Value::scalar(""));
+            template_data.insert("events".into(), Value::scalar(events));
 
             let res = self.wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;

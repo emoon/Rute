@@ -145,19 +145,14 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 pub static WRAP_EVENT_TEMPLATE: &str = "
-    {{c_return_value}} Class::{{qt_event_name}}({{qt_event_args}}) {
+    {{c_return_type}} WR{{class_name}}::{{qt_event_name}}({{qt_event_args}}) {
         if (m_paint_event) {
-            RU{{event_type}} e;
-            e.qt_data = (struct RUBase*)event;
-            e.host_data = nullptr;
-            e.all_funcs = &s_{{event_type}}_all_funcs;
-            m_{{event_type}}_trampoline((RU{{event_type}}*)&e, m_{{event_type}}_user_data, m_{{event_type}}_wrapped_func
-            {{-body_setup}}
+            {{func_setup}}
         } else {
         {%- if c_return_type == \"void\" %}
-            {{qt_widget_name}}::{{qt_event_name}}({{event_args}});
+            {{qt_class_name}}::{{qt_event_name}}({{event_args}});
         {%- else %}
-            return {{qt_widget_name}}::{{qt_event_name}}({{event_args}});
+            return {{qt_class_name}}::{{qt_event_name}}({{event_args}});
         {%- endif %}
         }
     }
@@ -166,6 +161,10 @@ pub static WRAP_EVENT_TEMPLATE: &str = "
     void* m_{{event_type_snake}}_user_data = nullptr;
     void* m_{{event_type_snake}}_wrapped_func = nullptr;
 ";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static QT_WRAP_FUNC_DEF_TEMPLATE: &str = "    {{body_setup}}";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -236,3 +235,12 @@ pub static QT_FUNC_DEF_TEMPLATE: &str =
 {%- else %}
     {{qt_instance_call}}{{qt_func_name}}({{qt_func_args}});
 {%- endif %}";
+
+
+/*
+            m_{{event_type}}_trampoline(
+                (RU{{event_type}}*)&e,
+                m_{{event_type}}_user_data,
+                m_{{event_type}}_wrapped_func
+                {{-body_setup}}
+*/
