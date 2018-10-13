@@ -5,6 +5,7 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QWidget>
+#include "widget_ffi.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -58,6 +59,24 @@ static void set_widget_window_title_changed_event(void* object, void* user_data,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_widget_paint_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_paint_event = event;
+    qt_object->m_paint_event_user_data = user_data;
+    qt_object->m_paint_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_paint_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_paint_event = nullptr;
+    qt_object->m_paint_event_user_data = nullptr;
+    qt_object->m_paint_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget create_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -85,6 +104,8 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_parent,
     widget_update,
     set_widget_window_title_changed_event,
+    set_widget_paint_event,
+    remove_widget_paint_event,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

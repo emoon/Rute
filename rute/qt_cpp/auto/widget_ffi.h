@@ -22,7 +22,8 @@ typedef struct RUWidgetFuncs {
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
     void (*update)(struct RUBase* self_c);
     void (*set_window_title_changed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, const char* title));
-
+    void (*set_paint_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void*, void* self_c, struct RUBase* event));
+    void (*remove_paint_event)(void* object);
 } RUWidgetFuncs;
 
 typedef struct RUWidgetAllFuncs {

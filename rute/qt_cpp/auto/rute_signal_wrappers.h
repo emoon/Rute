@@ -6,27 +6,38 @@
 #include "../rute_base.h"
 #include "../rute_manual.h"
 #include <QApplication>
+#include "application_ffi.h"
 
 #include <QEvent>
+#include "event_ffi.h"
 
 #include <QFont>
+#include "font_ffi.h"
 
 #include <QListWidget>
+#include "list_widget_ffi.h"
 
 #include <QListWidgetItem>
+#include "list_widget_item_ffi.h"
 
 #include <QPaintEvent>
+#include "paint_event_ffi.h"
 
 #include <QPushButton>
+#include "push_button_ffi.h"
 
 
 #include <QRect>
+#include "rect_ffi.h"
 
 #include <QScreen>
+#include "screen_ffi.h"
 
 #include <QSize>
+#include "size_ffi.h"
 
 #include <QWidget>
+#include "widget_ffi.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +135,23 @@ public:
          }
     }
     
+    void paintEvent(QPaintEvent* event) {
+        if (m_paint_event) {
+            RUPaintEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_paint_event_all_funcs;
+            
+            m_paint_event(m_paint_event_user_data, m_paint_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::paintEvent(event);
+        }
+    }
+
+    void (*m_paint_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_paint_event_user_data = nullptr;
+    void* m_paint_event_wrapped_func = nullptr;
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };

@@ -145,8 +145,8 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 pub static WRAP_EVENT_TEMPLATE: &str = "
-    {{c_return_type}} WR{{class_name}}::{{qt_event_name}}({{qt_event_args}}) {
-        if (m_paint_event) {
+    {{c_return_type}} {{qt_event_name}}({{qt_event_args}}) {
+        if (m_{{event_type_snake}}) {
             {{body_init}}
             {{body_setup}}
         } else {
@@ -158,9 +158,29 @@ pub static WRAP_EVENT_TEMPLATE: &str = "
         }
     }
 
-    RU{{event_type}}Func m_{{event_type_snake}}_event = nullptr;
+    void (*m_{{event_type_snake}})({{c_event_args}}) = nullptr;
     void* m_{{event_type_snake}}_user_data = nullptr;
     void* m_{{event_type_snake}}_wrapped_func = nullptr;
+";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub static QT_SET_EVENT_TEMPLATE: &str = "static void set_{{type_name}}_{{event_type_snake}}(void* object, void* user_data, void* wrapped_func, void (*event)({{event_args}})) {
+    WR{{event_type}}* qt_object = (WR{{event_type}}*)object;
+    qt_object->m_{{event_type_snake}} = event;
+    qt_object->m_{{event_type_snake}}_user_data = user_data;
+    qt_object->m_{{event_type_snake}}_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_{{type_name}}_{{event_type_snake}}(void* object) {
+    WR{{event_type}}* qt_object = (WR{{event_type}}*)object;
+    qt_object->m_{{event_type_snake}} = nullptr;
+    qt_object->m_{{event_type_snake}}_user_data = nullptr;
+    qt_object->m_{{event_type_snake}}_wrapped_func = nullptr;
+}
+
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

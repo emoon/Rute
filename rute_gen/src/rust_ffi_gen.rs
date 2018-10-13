@@ -349,6 +349,11 @@ impl RustFFIGenerator {
             "    pub set_{}: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),\n",
             func.name,
+        )?;
+
+        writeln!(dest,
+            "    pub remove_{}: extern \"C\" fn(object: *const RUBase),\n",
+            func.name,
         )
     }
 

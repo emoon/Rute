@@ -19,6 +19,15 @@ pub struct RUWidgetFuncs {
         trampoline_func: *const c_void,
         callback: *const c_void,
     ),
+
+    pub set_paint_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_paint_event: extern "C" fn(object: *const RUBase),
 }
 
 #[repr(C)]

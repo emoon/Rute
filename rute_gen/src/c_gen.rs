@@ -200,11 +200,12 @@ impl HeaderFFIGen for CapiHeaderGen {
             FunctionType::Static => self.generate_func_def(dest, func)?,
             FunctionType::Signal => {
                 self.generate_callback_def(dest, "_event", func)?;
-                writeln!(dest, ");\n")?;
+                writeln!(dest, ");")?;
             }
             FunctionType::Event => {
                 self.generate_callback_def(dest, "", func)?;
-                writeln!(dest, ");\n")?;
+                writeln!(dest, ");")?;
+                writeln!(dest, "    void (*remove_{})(void* object);", func.name);
             }
         }
 
@@ -292,11 +293,20 @@ impl CapiHeaderGen {
                 name, post_name).unwrap();
         };
 
-        write!(
-            dest,
-            "{})",
-            func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)
-        ).unwrap()
+        // TODO: Fix this hack
+        if post_name != "_event" {
+            write!(
+                dest,
+                "{})",
+                func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)
+            ).unwrap()
+        } else {
+            write!(
+                dest,
+                "{})",
+                func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)
+            ).unwrap()
+        }
     }
 
     ///

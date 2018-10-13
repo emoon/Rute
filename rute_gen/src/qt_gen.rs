@@ -1,7 +1,7 @@
 use c_gen::*;
-use heck::{MixedCase, SnakeCase, CamelCase};
-use std::collections::{BTreeMap, HashMap};
+use heck::{CamelCase, MixedCase, SnakeCase};
 use std::borrow::Cow;
+use std::collections::{BTreeMap, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -122,7 +122,7 @@ impl TypeHandlerTrait for TraitTypeHandler {
 
         // Render using the QT_TRAIT_TYPE_TEMPLATE template
         (
-            format!("(RUBase*)&{}", arg_name).into(),
+            format!("(struct RUBase*)&{}", arg_name).into(),
             self.template.render(&object).unwrap().into(),
         )
     }
@@ -171,189 +171,6 @@ impl Struct {
         self.full_inherit.iter().any(|i| i == "Widget")
     }
 }
-
-///
-/// Genarate event setup code. It will look something like this
-///
-///  void Class::paintEvent(QPaintEvent* event) {
-///        if (m_paint_event) {
-///            RUPainteEvent e;
-///            memcpy(&e, s_paint_event, sizeof(e));
-///            e.priv_data = event;
-///            m_paint_event((RUPainteEvent*)&e, m_paint_user_data);
-///        } else {
-///            QWidget::paintEvent(event);
-///        }
-///    }
-///
-///    RUPaintEventFunc m_paint_event = nullptr;
-///    void* m_paint_user_data = nullptr;
-
-/*
-   fn generate_event_setup_def<W: Write>(f: &mut W, func: &Function) -> io::Result<()> {
-   let event_type = &func.function_args[1];
-
-// Write virtual function def
-f.write_fmt(format_args!(
-"\n    virtual void {}Event(Q{}* event);\n",
-func.name.to_mixed_case(),
-event_type.type_name
-))?;
-
-f.write_fmt(format_args!(
-"    void (*m_{})({})",
-func.name,
-generate_c_function_args_signal_wrapper(EventType::Event, func)
-))?;
-
-//func.write_c_func_def(f, |_, arg| (arg.get_c_type(), arg.name.to_owned()))?;
-
-f.write_fmt(format_args!(" = nullptr;\n"))?;
-f.write_fmt(format_args!(
-"    void* m_{}_user_data = nullptr;\n",
-func.name
-))?;
-
-Ok(())
-}
-*/
-
-//
-// Generates wrapping code fore "Events" (i.e virtual overrides on Qt objects)
-//
-/*
-   fn generate_event_setup_impl<W: Write>(
-f: &mut W,
-sdef: &Struct,
-class_name: &str,
-func: &Function,
-api_def: &ApiDef,
-) -> io::Result<()> {
-let event_type = &func.function_args[1];
-
-f.write_all(SEPARATOR)?;
-
-f.write_fmt(format_args!(
-"void WR{}::{}Event(Q{}* event) {{\n",
-sdef.name,
-func.name.to_mixed_case(),
-event_type.type_name
-))?;
-f.write_fmt(format_args!("    if (m_{}) {{\n", func.name))?;
-f.write_fmt(format_args!("        RU{} e;\n", event_type.type_name,))?;
-f.write_fmt(format_args!(
-"        e.{}_event_funcs = &s_{}_event_funcs;\n",
-func.name,
-func.name
-))?;
-f.write_fmt(format_args!(
-"        e.priv_data = (struct RUBase*)event;\n"
-))?;
-
-f.write_fmt(format_args!("        RU{} w;\n", sdef.name))?;
-
-// TODO: We should do a use a lookup here to find the object for this instead. The reason is
-// that we are tracking the destruction of this object so we can't access bad data on the Rust
-// side. The way we use this here that would still be possible to fail
-
-for s in api_def.get_inherit_structs(sdef, RecurseIncludeSelf::Yes) {
-let snake_name = s.name.to_snake_case();
-
-f.write_fmt(format_args!(
-"        w.{}_funcs = &s_{}_funcs;\n",
-snake_name,
-snake_name
-))?;
-}
-
-f.write_fmt(format_args!(
-"        w.priv_data = (struct RUBase*)this;\n"
-))?;
-
-f.write_fmt(format_args!(
-"        m_{}((struct RUBase*)&w, m_{}_user_data, (struct RUBase*)&e);\n",
-func.name, func.name,
-))?;
-f.write_fmt(format_args!("    }} else {{\n"))?;
-f.write_fmt(format_args!(
-"        Q{}::{}Event(event);\n",
-class_name,
-func.name.to_mixed_case()
-))?;
-f.write_fmt(format_args!("    }}\n"))?;
-f.write_fmt(format_args!("}}\n\n"))?;
-
-Ok(())
-}
-*/
-///
-/// Generate something like this
-///
-/// static void set_paint_event(void* object, void* user_data, void (*event)(void* self_c, struct RUBase* event)) {
-///     WRWidget* qt_object = (WRWidget*)object;
-///     qt_object->m_paint_user_data = user_data;
-///     qt_object->m_paint = event;
-/// }
-///
-/*
-   fn generate_event_setup_funcs<W: Write>(
-f: &mut W,
-struct_qt_name: &str,
-func: &Function,
-) -> io::Result<()> {
-let func_name = format!("{}_{}", struct_qt_name.to_snake_case(), func.name);
-
-let mut func_def = String::with_capacity(128);
-
-CapiHeaderGen::callback_fun_def_name(&mut func_def, false, &func_name, func);
-
-f.write_fmt(format_args!( "{} {{\n", func_def))?;
-
-f.write_fmt(format_args!(
-"    WR{}* qt_object = (WR{}*)object;\n",
-struct_qt_name, struct_qt_name
-))?;
-f.write_fmt(format_args!(
-"    qt_object->m_{}_user_data = user_data;\n",
-func.name
-))?;
-f.write_fmt(format_args!("    qt_object->m_{} = event;\n", func.name))?;
-f.write_all(b"};\n\n")
-}
-*/
-
-///
-/// Generate wrapper classes for all the Widges. This allows us to override
-/// virtual functions from the outside (in C and other langs)
-/// defs
-///
-fn generate_wrapper_classes_impl<W: Write>(_f: &mut W, api_def: &ApiDef) -> io::Result<()> {
-    for _sdef in api_def.class_structs.iter().filter(|v| v.inherits_widget()) {
-        /*
-                   let iterator = sdef
-                   .functions
-                   .iter()
-                   .filter(|func| func.func_type == FunctionType::Signal);
-                   */
-
-        // Get all the structs that thu current struct inherit from
-
-        /*
-                   for func in iterator.clone() {
-                   generate_event_setup_impl(f, &sdef, &struct_qt_name, &func, api_def)?;
-                   }
-
-                // Generate the setup functions for events
-                for func in iterator {
-                f.write_all(SEPARATOR)?;
-                generate_event_setup_funcs(f, &struct_qt_name, &func)?;
-                }
-                */
-    }
-
-    Ok(())
-}
-
 ///
 /// Generate a string in this style;
 ///
@@ -408,6 +225,7 @@ fn generate_includes<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| s.name != "StaticFuncs")
     {
         f.write_fmt(format_args!("#include <{}>\n", sdef.qt_name))?;
+        f.write_fmt(format_args!("#include \"{}_ffi.h\"\n", sdef.name.to_snake_case()))?;
     }
 
     f.write_all(b"\n")
@@ -541,12 +359,10 @@ fn get_qt_parameter_type(var: &Variable) -> Cow<str> {
 /// Generate a Qt function declaration
 ///
 fn generate_qt_func_def(func: &Function) -> String {
-    func.gen_c_def_filter(Some(None), |_index, arg| {
-        match arg.vtype {
-            VariableType::Reference => Some(get_qt_ref_type(&arg)),
-            VariableType::Str => Some("QString&".into()),
-            _ => None,
-        }
+    func.gen_c_def_filter(Some(None), |_index, arg| match arg.vtype {
+        VariableType::Reference => Some(get_qt_ref_type(&arg)),
+        VariableType::Str => Some("QString&".into()),
+        _ => None,
     })
 }
 
@@ -743,7 +559,12 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
 
                 FunctionType::Event => {
                     f.write_fmt(format_args!(
-                        "    set_{}_event,\n",
+                        "    set_{},\n",
+                        function_name(struct_name, func)
+                    ))?;
+
+                    f.write_fmt(format_args!(
+                        "    remove_{},\n",
                         function_name(struct_name, func)
                     ))?;
                 }
@@ -784,6 +605,7 @@ pub struct QtGenerator {
     set_signal_template: Template,
     wrap_event_template: Template,
     regular_func_template: Template,
+    set_event_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -805,8 +627,42 @@ impl QtGenerator {
             set_signal_template: parser.parse(SET_SIGNAL_TEMPLATE).unwrap(),
             wrap_event_template: parser.parse(WRAP_EVENT_TEMPLATE).unwrap(),
             regular_func_template: parser.parse(QT_REGULAR_FUNC_DEF_TEMPLATE).unwrap(),
+            set_event_template: parser.parse(QT_SET_EVENT_TEMPLATE).unwrap(),
             type_handler: type_handler,
         }
+    }
+
+    ///
+    /// Generate the set/remove functions for events
+    ///
+    fn generate_event_remove_set<W: Write>(
+        &self,
+        dest: &mut W,
+        sdef: &Struct,
+        func: &Function,
+    ) -> io::Result<()> {
+        let mut object = Object::new();
+
+        object.insert(
+            "type_name".into(),
+            Value::scalar(sdef.name.to_snake_case())
+        );
+        object.insert(
+            "event_type_snake".into(),
+            Value::scalar(&func.name)
+        );
+        object.insert("event_type".into(), Value::scalar(&sdef.name));
+        object.insert(
+            "event_name".into(),
+            Value::scalar(func.name.to_snake_case()),
+        );
+        object.insert(
+            "event_args".into(),
+            Value::scalar(&func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)),
+        );
+
+        let res = self.set_event_template.render(&object).unwrap();
+        dest.write_all(res.as_bytes())
     }
 
     ///
@@ -969,7 +825,7 @@ impl QtGenerator {
 
         // Setup event name. Notice these are not part of any template in order to keep func def
         // separate and not put inside two places
-        let event_name = format!("m_{}_event", func_snake_name);
+        let event_name = format!("m_{}", func_snake_name);
         let user_data = format!("m_{}_user_data", func_snake_name);
         let wrapped_func = format!("m_{}_wrapped_func", func_snake_name);
         let extra_args = format!("{}, {}", user_data, wrapped_func);
@@ -986,7 +842,6 @@ impl QtGenerator {
                 Some(handler) => {
                     let (gen_arg, body) = handler.gen_body(&arg, i);
                     function_args.push((true, gen_arg));
-                    //body_init.push_str("        ");
                     body_init += &body;
                 }
                 None => {
@@ -1017,15 +872,9 @@ impl QtGenerator {
             "func_def".into(),
             Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
         );
-        object.insert(
-            "qt_func_name".into(),
-            Value::scalar(event_name),
-        );
+        object.insert("qt_func_name".into(), Value::scalar(event_name));
         object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
-        object.insert(
-            "type_snake_name".into(),
-            Value::scalar(func_snake_name)
-        );
+        object.insert("type_snake_name".into(), Value::scalar(func_snake_name));
 
         Self::generate_func_ret_value(object, func);
 
@@ -1053,32 +902,22 @@ impl QtGenerator {
                 match func.func_type {
                     FunctionType::Static => {
                         let mut object = Object::new();
-                        let func_output = self.generate_func_def(
-                            &mut object,
-                            &sdef,
-                            func,
-                            "qt_value->",
-                            "",
-                        );
+                        let func_output =
+                            self.generate_func_def(&mut object, &sdef, func, "qt_value->", "");
                         object.insert("body_setup".into(), Value::scalar(func_output));
                         let output = self.regular_func_template.render(&object).unwrap();
                         dest.write_all(output.as_bytes())?;
                     }
                     FunctionType::Regular => {
                         let mut object = Object::new();
-                        let func_output = self.generate_func_def(
-                            &mut object,
-                            &sdef,
-                            func,
-                            "qt_value->",
-                            "",
-                        );
+                        let func_output =
+                            self.generate_func_def(&mut object, &sdef, func, "qt_value->", "");
                         object.insert("body_setup".into(), Value::scalar(func_output));
                         let output = self.regular_func_template.render(&object).unwrap();
                         dest.write_all(output.as_bytes())?;
                     }
                     FunctionType::Signal => self.generate_func_callback(dest, &sdef.name, func)?,
-                    _ => (),
+                    FunctionType::Event => self.generate_event_remove_set(dest, &sdef, func)?,
                 }
             }
         }
@@ -1167,24 +1006,39 @@ impl QtGenerator {
     ///    void* m_paint_user_data = nullptr;
     ///    void* m_paint_event_wrapped_func = nullptr;
     ///
-    fn generate_event_setup_def(
-        &self,
-        sdef: &Struct,
-        func: &Function,
-    ) -> String {
+    fn generate_event_setup_def(&self, sdef: &Struct, func: &Function) -> String {
         let mut object = Object::new();
 
         let body_setup = self.generate_event_func_def(&mut object, sdef, func);
 
-        object.insert("qt_event_name".into(), Value::scalar(func.cpp_name.to_mixed_case()));
-        object.insert("qt_event_args".into(), Value::scalar(generate_qt_func_def(func)));
+        object.insert(
+            "qt_event_name".into(),
+            Value::scalar(func.cpp_name.to_mixed_case()),
+        );
+        object.insert(
+            "qt_event_args".into(),
+            Value::scalar(generate_qt_func_def(func)),
+        );
         object.insert("qt_class_name".into(), Value::scalar(&sdef.name));
         object.insert("class_name".into(), Value::scalar(&sdef.name));
         object.insert("qt_class_name".into(), Value::scalar(&sdef.qt_name));
-        object.insert("event_args".into(), Value::scalar(func.generate_invoke(FirstArgName::Remove)));
+        object.insert(
+            "event_args".into(),
+            Value::scalar(func.generate_invoke(FirstArgName::Remove)),
+        );
         object.insert("body_setup".into(), Value::scalar(body_setup));
-        object.insert("event_type".into(), Value::scalar(&func.name.to_camel_case()));
-        object.insert("event_type_snake".into(), Value::scalar(&func.name.to_snake_case()));
+        object.insert(
+            "event_type".into(),
+            Value::scalar(&func.name.to_camel_case()),
+        );
+        object.insert(
+            "event_type_snake".into(),
+            Value::scalar(&func.name.to_snake_case()),
+        );
+        object.insert(
+            "c_event_args".into(),
+            Value::scalar(&func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)),
+        );
 
         self.wrap_event_template.render(&object).unwrap()
     }
@@ -1256,9 +1110,6 @@ impl QtGenerator {
 
         // Generate the wrapping classes declartion is used as for Qt.
         //self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
-
-        // Generate the wrapping implementation that is used as for Qt.
-        generate_wrapper_classes_impl(&mut cpp_out, api_def)?;
 
         // Generate wrapper functions for are regular defined functions
         self.generate_function_wrappers(&mut cpp_out, api_def)?;
@@ -1577,15 +1428,12 @@ mod tests {
     fn test_qt_wrap_func_gen_no_return() {
         let (sdef, gen) = init_wrapper_default_sdef();
         let func = init_default_func();
-        let dest = gen.generate_func_def(
-            &mut Object::new(),
-            &sdef,
-            &func,
-            "qt_value->",
-            "",
+        let dest = gen.generate_func_def(&mut Object::new(), &sdef, &func, "qt_value->", "");
+        assert_eq!(
+            dest,
+            "
+    qt_value->test();"
         );
-        assert_eq!(dest,"
-    qt_value->test();");
     }
 
     //
@@ -1603,15 +1451,10 @@ mod tests {
             ..Variable::default()
         });
 
-        let dest = gen.generate_func_def(
-            &mut Object::new(),
-            &sdef,
-            &func,
-            "qt_value->",
-            ""
-        );
+        let dest = gen.generate_func_def(&mut Object::new(), &sdef, &func, "qt_value->", "");
         assert_eq!(
-            dest,"
+            dest,
+            "
     auto ret_value = qt_value->test();
     return ret_value;"
         );
@@ -1632,22 +1475,15 @@ mod tests {
             ..Variable::default()
         });
 
-        let dest = gen.generate_func_def(
-            &mut Object::new(),
-            &sdef,
-            &func,
-            "qt_value->",
-            "",
-        );
+        let dest = gen.generate_func_def(&mut Object::new(), &sdef, &func, "qt_value->", "");
         assert_eq!(
-            dest,"
+            dest,
+            "
     auto ret_value = qt_value->test();
     return q_string_to_const_char(ret_value);"
         );
     }
 
     #[test]
-    fn test_generate_qt_func_def() {
-
-    }
+    fn test_generate_qt_func_def() {}
 }
