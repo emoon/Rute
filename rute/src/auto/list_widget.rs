@@ -94,10 +94,12 @@ pub trait ListWidgetType<'a> {
         self
     }
 
+    #[inline]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs);
 }
 
 impl<'a> WidgetType<'a> for ListWidget<'a> {
+    #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
@@ -105,6 +107,7 @@ impl<'a> WidgetType<'a> for ListWidget<'a> {
 }
 
 impl<'a> ListWidgetType<'a> for ListWidget<'a> {
+    #[inline]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).list_widget_funcs) }

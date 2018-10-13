@@ -218,10 +218,12 @@ pub trait ListWidgetItemType<'a> {
         self
     }
 
+    #[inline]
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs);
 }
 
 impl<'a> ListWidgetItemType<'a> for ListWidgetItem<'a> {
+    #[inline]
     fn get_list_widget_item_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).list_widget_item_funcs) }

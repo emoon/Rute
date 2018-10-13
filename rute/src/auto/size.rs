@@ -222,10 +222,12 @@ pub trait SizeType<'a> {
         }
     }
 
+    #[inline]
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs);
 }
 
 impl<'a> SizeType<'a> for Size<'a> {
+    #[inline]
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).size_funcs) }

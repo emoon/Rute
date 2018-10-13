@@ -74,10 +74,12 @@ pub trait PaintEventType<'a> {
         }
     }
 
+    #[inline]
     fn get_paint_event_obj_funcs(&self) -> (*const RUBase, *const RUPaintEventFuncs);
 }
 
 impl<'a> EventType<'a> for PaintEvent<'a> {
+    #[inline]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -85,6 +87,7 @@ impl<'a> EventType<'a> for PaintEvent<'a> {
 }
 
 impl<'a> PaintEventType<'a> for PaintEvent<'a> {
+    #[inline]
     fn get_paint_event_obj_funcs(&self) -> (*const RUBase, *const RUPaintEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_event_funcs) }

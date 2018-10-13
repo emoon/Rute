@@ -268,10 +268,12 @@ pub trait RectType<'a> {
         self
     }
 
+    #[inline]
     fn get_rect_obj_funcs(&self) -> (*const RUBase, *const RURectFuncs);
 }
 
 impl<'a> RectType<'a> for Rect<'a> {
+    #[inline]
     fn get_rect_obj_funcs(&self) -> (*const RUBase, *const RURectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).rect_funcs) }

@@ -252,10 +252,12 @@ pub trait WidgetType<'a> {
         self
     }
 
+    #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs);
 }
 
 impl<'a> WidgetType<'a> for Widget<'a> {
+    #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }

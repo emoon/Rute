@@ -239,10 +239,12 @@ pub trait ScreenType<'a> {
         }
     }
 
+    #[inline]
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs);
 }
 
 impl<'a> ScreenType<'a> for Screen<'a> {
+    #[inline]
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).screen_funcs) }

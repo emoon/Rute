@@ -219,10 +219,12 @@ pub trait ApplicationType<'a> {
         self
     }
 
+    #[inline]
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs);
 }
 
 impl<'a> ApplicationType<'a> for Application<'a> {
+    #[inline]
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).application_funcs) }

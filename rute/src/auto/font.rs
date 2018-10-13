@@ -81,10 +81,12 @@ pub trait FontType<'a> {
         }
     }
 
+    #[inline]
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs);
 }
 
 impl<'a> FontType<'a> for Font<'a> {
+    #[inline]
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).font_funcs) }

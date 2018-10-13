@@ -203,6 +203,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
+    #[inline]
     fn get_{{type_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs);
 }
 ";
@@ -211,6 +212,7 @@ pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
 
 pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type<'a> for {{target_name}}<'a> {
+    #[inline]
     fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
         unsafe {

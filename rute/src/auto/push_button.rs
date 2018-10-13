@@ -390,10 +390,12 @@ pub trait PushButtonType<'a> {
         self
     }
 
+    #[inline]
     fn get_push_button_obj_funcs(&self) -> (*const RUBase, *const RUPushButtonFuncs);
 }
 
 impl<'a> WidgetType<'a> for PushButton<'a> {
+    #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
@@ -401,6 +403,7 @@ impl<'a> WidgetType<'a> for PushButton<'a> {
 }
 
 impl<'a> PushButtonType<'a> for PushButton<'a> {
+    #[inline]
     fn get_push_button_obj_funcs(&self) -> (*const RUBase, *const RUPushButtonFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).push_button_funcs) }
