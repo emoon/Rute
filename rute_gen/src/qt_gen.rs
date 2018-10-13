@@ -1,6 +1,7 @@
 use c_gen::*;
 use heck::{MixedCase, SnakeCase, CamelCase};
 use std::collections::{BTreeMap, HashMap};
+use std::borrow::Cow;
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -107,6 +108,8 @@ impl TypeHandlerTrait for TraitTypeHandler {
         let arg_name = format!("obj_in_{}_{}", arg.name, index);
         let mut object = Object::new();
 
+        object.insert("input_var".into(), Value::scalar(&arg.name));
+
         object.insert(
             "type_name".into(),
             Value::scalar(arg.get_untyped_name().to_owned()),
@@ -114,12 +117,12 @@ impl TypeHandlerTrait for TraitTypeHandler {
         object.insert("var_name".into(), Value::scalar(&arg_name));
         object.insert(
             "type_name_snake".into(),
-            Value::scalar(arg.get_untyped_name().to_owned()),
+            Value::scalar(arg.get_untyped_name().to_snake_case()),
         );
 
         // Render using the QT_TRAIT_TYPE_TEMPLATE template
         (
-            arg_name.into(),
+            format!("(RUBase*)&{}", arg_name).into(),
             self.template.render(&object).unwrap().into(),
         )
     }
@@ -511,37 +514,52 @@ Ok(())
 */
 
 ///
+/// Get type for Qt Ref
+///
+fn get_qt_ref_type(var: &Variable) -> Cow<str> {
+    let t_name = var.get_untyped_name();
+
+    if var.pointer {
+        format!("Q{}*", t_name).into()
+    } else {
+        format!("*(Q{})*", t_name).into()
+    }
+}
+
+///
+/// Get a Qt parameter for a variable
+///
+fn get_qt_parameter_type(var: &Variable) -> Cow<str> {
+    match var.vtype {
+        VariableType::Reference => get_qt_ref_type(var),
+        VariableType::Str => "QString".into(),
+        _ => var.get_c_type(IsReturnType::No),
+    }
+}
+
+///
+/// Generate a Qt function declaration
+///
+fn generate_qt_func_def(func: &Function) -> String {
+    func.gen_c_def_filter(Some(None), |_index, arg| {
+        match arg.vtype {
+            VariableType::Reference => Some(get_qt_ref_type(&arg)),
+            VariableType::Str => Some("QString&".into()),
+            _ => None,
+        }
+    })
+}
+
+///
 /// Geerate a declaration with only function types. Used for the SIGNAL/SLOT macros
 ///
-
 fn generate_func_def_input_parms_only(func: &Function) -> String {
     let mut function_args = String::with_capacity(128);
     let len = func.function_args.len() - 1;
 
     // write arguments
     for (i, arg) in func.function_args[1..].iter().enumerate() {
-        let a = match arg.vtype {
-            VariableType::Reference => {
-                let t_name;
-                if arg.type_name.ends_with("Type") {
-                    t_name = &arg.type_name[..arg.type_name.len() - 4];
-                } else {
-                    t_name = &arg.type_name;
-                }
-
-                if arg.pointer {
-                    format!("Q{}*", t_name).into()
-                } else {
-                    format!("*(Q{})*", t_name).into()
-                }
-            }
-
-            VariableType::Str => "QString".into(),
-
-            _ => arg.get_c_type(IsReturnType::No),
-        };
-
-        function_args.push_str(&a);
+        function_args.push_str(&get_qt_parameter_type(&arg));
 
         if i != len - 1 {
             function_args.push_str(", ");
@@ -766,7 +784,6 @@ pub struct QtGenerator {
     set_signal_template: Template,
     wrap_event_template: Template,
     regular_func_template: Template,
-    wrap_func_def_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -788,7 +805,6 @@ impl QtGenerator {
             set_signal_template: parser.parse(SET_SIGNAL_TEMPLATE).unwrap(),
             wrap_event_template: parser.parse(WRAP_EVENT_TEMPLATE).unwrap(),
             regular_func_template: parser.parse(QT_REGULAR_FUNC_DEF_TEMPLATE).unwrap(),
-            wrap_func_def_template: parser.parse(QT_WRAP_FUNC_DEF_TEMPLATE).unwrap(),
             type_handler: type_handler,
         }
     }
@@ -824,62 +840,14 @@ impl QtGenerator {
     }
 
     ///
-    /// Generate function def for a wrapping call to Qt. Some examples:
+    /// Shared handling of return value
     ///
-    ///  resize(width, height);
-    ///
-    ///  auto ret = getData();
-    ///  return ret;
-    ///
-    fn generate_func_def(
-        &self,
-        sdef: &Struct,
-        func: &Function,
-        instance_call: &'static str,
-        extra_args: &str,
-        context_template: &Template,
-    ) -> String {
+    fn generate_func_ret_value(object: &mut Object, func: &Function) {
         // Setup return value
         let ret_value = func
             .return_val
             .as_ref()
             .map_or("void".into(), |v| v.get_c_type(IsReturnType::Yes));
-
-        let mut object = Object::new();
-
-        object.insert("qt_instance_call".into(), Value::scalar(instance_call));
-        object.insert("extra_args".into(), Value::scalar(extra_args.to_owned()));
-
-        // Build function args
-        let func_def = func.gen_c_invoke_filter(FirstArgName::Remove, |_index, arg| {
-            match self.type_handler.get(&arg) {
-                Some(handler) => Some(handler.replace_arg(&arg, IsReturnArg::No).into()),
-                _ => None,
-            }
-        });
-
-        object.insert(
-            "func_name".into(),
-            Value::scalar(function_name(&sdef.name, func)),
-        );
-        object.insert(
-            "func_def".into(),
-            Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
-        );
-        object.insert(
-            "qt_func_name".into(),
-            Value::scalar(func.cpp_name.to_mixed_case()),
-        );
-        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
-        object.insert("qt_func_args".into(), Value::scalar(func_def));
-        object.insert(
-            "type_snake_name".into(),
-            Value::scalar(func.name.to_snake_case()),
-        );
-        object.insert(
-            "c_return_type".into(),
-            Value::scalar(ret_value.into_owned()),
-        );
 
         if let Some(ref ret_val) = func.return_val {
             object.insert("array_return".into(), Value::scalar(ret_val.array));
@@ -925,10 +893,144 @@ impl QtGenerator {
             object.insert("qt_ret_value".into(), Value::scalar(""));
         }
 
+        object.insert(
+            "c_return_type".into(),
+            Value::scalar(ret_value.into_owned()),
+        );
+    }
+
+    ///
+    /// Generate function def for a wrapping call to Qt. Some examples:
+    ///
+    ///  resize(width, height);
+    ///
+    ///  auto ret = getData();
+    ///  return ret;
+    ///
+    fn generate_func_def(
+        &self,
+        object: &mut Object,
+        sdef: &Struct,
+        func: &Function,
+        instance_call: &'static str,
+        extra_args: &str,
+    ) -> String {
+        object.insert("qt_instance_call".into(), Value::scalar(instance_call));
+        object.insert("extra_args".into(), Value::scalar(extra_args.to_owned()));
+
+        // Build function args
+        let func_def = func.gen_c_invoke_filter(FirstArgName::Remove, |_index, arg| {
+            match self.type_handler.get(&arg) {
+                Some(handler) => Some(handler.replace_arg(&arg, IsReturnArg::No).into()),
+                _ => None,
+            }
+        });
+
+        object.insert(
+            "func_name".into(),
+            Value::scalar(function_name(&sdef.name, func)),
+        );
+        object.insert(
+            "func_def".into(),
+            Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
+        );
+        object.insert(
+            "qt_func_name".into(),
+            Value::scalar(func.cpp_name.to_mixed_case()),
+        );
+        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
+        object.insert("qt_func_args".into(), Value::scalar(func_def));
+        object.insert(
+            "type_snake_name".into(),
+            Value::scalar(func.name.to_snake_case()),
+        );
+
+        Self::generate_func_ret_value(object, func);
+
         // Render the output data
-        let res = self.func_def_template.render(&object).unwrap();
-        object.insert("body_setup".into(), Value::scalar(res));
-        context_template.render(&object).unwrap()
+        self.func_def_template.render(object).unwrap()
+    }
+
+    ///
+    /// Generate function def for a wrapping call to Qt. Some examples:
+    ///
+    ///  resize(width, height);
+    ///
+    ///  auto ret = getData();
+    ///  return ret;
+    ///
+    fn generate_event_func_def(
+        &self,
+        object: &mut Object,
+        sdef: &Struct,
+        func: &Function,
+    ) -> String {
+        let func_snake_name = func.name.to_snake_case();
+
+        // Setup event name. Notice these are not part of any template in order to keep func def
+        // separate and not put inside two places
+        let event_name = format!("m_{}_event", func_snake_name);
+        let user_data = format!("m_{}_user_data", func_snake_name);
+        let wrapped_func = format!("m_{}_wrapped_func", func_snake_name);
+        let extra_args = format!("{}, {}", user_data, wrapped_func);
+
+        object.insert("qt_instance_call".into(), Value::scalar("        "));
+        object.insert("extra_args".into(), Value::scalar(extra_args));
+
+        let mut body_init = String::with_capacity(4096);
+        let mut func_args = String::with_capacity(128);
+        let mut function_args = Vec::with_capacity(func.function_args.len());
+
+        for (i, arg) in func.function_args.iter().enumerate() {
+            match self.type_handler.get(&arg) {
+                Some(handler) => {
+                    let (gen_arg, body) = handler.gen_body(&arg, i);
+                    function_args.push((true, gen_arg));
+                    //body_init.push_str("        ");
+                    body_init += &body;
+                }
+                None => {
+                    function_args.push((false, arg.name.clone().into()));
+                }
+            }
+        }
+
+        // Generate the function call
+        for (index, arg) in func.function_args.iter().enumerate() {
+            match arg.vtype {
+                VariableType::SelfType => (),
+                _ => {
+                    func_args.push_str(", ");
+                    func_args.push_str(&function_args[index].1);
+                }
+            }
+        }
+
+        object.insert("body_init".into(), Value::scalar(body_init));
+        object.insert("qt_func_args".into(), Value::scalar(func_args));
+
+        object.insert(
+            "func_name".into(),
+            Value::scalar(function_name(&sdef.name, func)),
+        );
+        object.insert(
+            "func_def".into(),
+            Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
+        );
+        object.insert(
+            "qt_func_name".into(),
+            Value::scalar(event_name),
+        );
+        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
+        object.insert(
+            "type_snake_name".into(),
+            Value::scalar(func_snake_name)
+        );
+
+        Self::generate_func_ret_value(object, func);
+
+        // Render the output data
+        self.func_def_template.render(object).unwrap()
     }
 
     ///
@@ -939,7 +1041,6 @@ impl QtGenerator {
     ///     qt_data->resize(width, height);
     /// }
     ///
-
     fn generate_function_wrappers<W: Write>(
         &self,
         dest: &mut W,
@@ -951,23 +1052,29 @@ impl QtGenerator {
 
                 match func.func_type {
                     FunctionType::Static => {
-                        let output = self.generate_func_def(
+                        let mut object = Object::new();
+                        let func_output = self.generate_func_def(
+                            &mut object,
                             &sdef,
                             func,
                             "qt_value->",
                             "",
-                            &self.regular_func_template,
                         );
+                        object.insert("body_setup".into(), Value::scalar(func_output));
+                        let output = self.regular_func_template.render(&object).unwrap();
                         dest.write_all(output.as_bytes())?;
                     }
                     FunctionType::Regular => {
-                        let output = self.generate_func_def(
+                        let mut object = Object::new();
+                        let func_output = self.generate_func_def(
+                            &mut object,
                             &sdef,
                             func,
                             "qt_value->",
                             "",
-                            &self.regular_func_template,
                         );
+                        object.insert("body_setup".into(), Value::scalar(func_output));
+                        let output = self.regular_func_template.render(&object).unwrap();
                         dest.write_all(output.as_bytes())?;
                     }
                     FunctionType::Signal => self.generate_func_callback(dest, &sdef.name, func)?,
@@ -1065,29 +1172,17 @@ impl QtGenerator {
         sdef: &Struct,
         func: &Function,
     ) -> String {
-        // Setup return value
-        let ret_value = func
-            .return_val
-            .as_ref()
-            .map_or("void".into(), |v| v.get_c_type(IsReturnType::Yes));
-
         let mut object = Object::new();
 
-        object.insert(
-            "c_return_type".into(),
-            Value::scalar(ret_value.into_owned()),
-        );
+        let body_setup = self.generate_event_func_def(&mut object, sdef, func);
 
         object.insert("qt_event_name".into(), Value::scalar(func.cpp_name.to_mixed_case()));
-        object.insert("qt_event_args".into(), Value::scalar(func.generate_c_function_def(FirstArgType::Keep)));
+        object.insert("qt_event_args".into(), Value::scalar(generate_qt_func_def(func)));
         object.insert("qt_class_name".into(), Value::scalar(&sdef.name));
         object.insert("class_name".into(), Value::scalar(&sdef.name));
         object.insert("qt_class_name".into(), Value::scalar(&sdef.qt_name));
         object.insert("event_args".into(), Value::scalar(func.generate_invoke(FirstArgName::Remove)));
-
-        let func_setup = self.generate_func_def(sdef, func, "", "test_extra", &self.wrap_func_def_template);
-
-        object.insert("func_setup".into(), Value::scalar(&func_setup));
+        object.insert("body_setup".into(), Value::scalar(body_setup));
         object.insert("event_type".into(), Value::scalar(&func.name.to_camel_case()));
         object.insert("event_type_snake".into(), Value::scalar(&func.name.to_snake_case()));
 
@@ -1483,21 +1578,14 @@ mod tests {
         let (sdef, gen) = init_wrapper_default_sdef();
         let func = init_default_func();
         let dest = gen.generate_func_def(
+            &mut Object::new(),
             &sdef,
             &func,
             "qt_value->",
             "",
-            &gen.regular_func_template,
         );
-        assert_eq!(
-            dest,
-            "static void foo_test(struct RUBase* self_c) {
-    WRFoo* qt_value = (WRFoo*)self_c;
-    qt_value->test();
-}
-
-"
-        );
+        assert_eq!(dest,"
+    qt_value->test();");
     }
 
     //
@@ -1516,21 +1604,16 @@ mod tests {
         });
 
         let dest = gen.generate_func_def(
+            &mut Object::new(),
             &sdef,
             &func,
             "qt_value->",
-            "",
-            &gen.regular_func_template,
+            ""
         );
         assert_eq!(
-            dest,
-            "static int foo_test(struct RUBase* self_c) {
-    WRFoo* qt_value = (WRFoo*)self_c;
+            dest,"
     auto ret_value = qt_value->test();
-    return ret_value;
-}
-
-"
+    return ret_value;"
         );
     }
 
@@ -1550,21 +1633,21 @@ mod tests {
         });
 
         let dest = gen.generate_func_def(
+            &mut Object::new(),
             &sdef,
             &func,
             "qt_value->",
             "",
-            &gen.regular_func_template,
         );
         assert_eq!(
-            dest,
-            "static const char* foo_test(struct RUBase* self_c) {
-    WRFoo* qt_value = (WRFoo*)self_c;
+            dest,"
     auto ret_value = qt_value->test();
-    return q_string_to_const_char(ret_value);
-}
-
-"
+    return q_string_to_const_char(ret_value);"
         );
+    }
+
+    #[test]
+    fn test_generate_qt_func_def() {
+
     }
 }

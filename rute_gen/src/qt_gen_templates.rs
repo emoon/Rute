@@ -147,10 +147,11 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 pub static WRAP_EVENT_TEMPLATE: &str = "
     {{c_return_type}} WR{{class_name}}::{{qt_event_name}}({{qt_event_args}}) {
         if (m_paint_event) {
-            {{func_setup}}
+            {{body_init}}
+            {{body_setup}}
         } else {
         {%- if c_return_type == \"void\" %}
-            {{qt_class_name}}::{{qt_event_name}}({{event_args}});
+            {{qt_class_name}}::{{qt_event_name}}({{event_args | remove_first: \",\"}});
         {%- else %}
             return {{qt_class_name}}::{{qt_event_name}}({{event_args}});
         {%- endif %}
@@ -164,10 +165,6 @@ pub static WRAP_EVENT_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static QT_WRAP_FUNC_DEF_TEMPLATE: &str = "    {{body_setup}}";
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 pub static QT_REGULAR_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func_name}}({{func_def}}) {
     {{cpp_type_name}}* qt_value = ({{cpp_type_name}}*)self_c;
     {{-body_setup}}
@@ -177,13 +174,10 @@ pub static QT_REGULAR_FUNC_DEF_TEMPLATE: &str = "static {{c_return_type}} {{func
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static QT_TRAIT_TYPE_TEMPLATE: &str ="
-            RU{{type_name}} {{var_name}};
+pub static QT_TRAIT_TYPE_TEMPLATE: &str = "RU{{type_name}} {{var_name}};
             {{var_name}}.qt_data = (struct RUBase*){{input_var}};
             {{var_name}}.host_data = nullptr;
-            {{var_name}}.all_funcs = &s_{{type_name_snake}}_all_funcs;
-
-";
+            {{var_name}}.all_funcs = &s_{{type_name_snake}}_all_funcs;";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition for a Qt wrapping function
@@ -233,7 +227,7 @@ pub static QT_FUNC_DEF_TEMPLATE: &str =
 {%- endif %}
 
 {%- else %}
-    {{qt_instance_call}}{{qt_func_name}}({{qt_func_args}});
+    {{qt_instance_call}}{{qt_func_name}}({{-extra_args}}{{qt_func_args}});
 {%- endif %}";
 
 
