@@ -222,16 +222,16 @@ static int application_exec(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_about_to_quit_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)trampoline_func, (void*)event);
+static void set_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_screen_added_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, struct RUBase* screen)) {
-    QSlotWrapperSignal_self_ScreenType_void* wrap = new QSlotWrapperSignal_self_ScreenType_void(user_data, (Signal_self_ScreenType_void)trampoline_func, (void*)event);
+static void set_application_screen_added_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, struct RUBase* screen)) {
+    QSlotWrapperSignal_self_ScreenType_void* wrap = new QSlotWrapperSignal_self_ScreenType_void(user_data, (Signal_self_ScreenType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(screenAdded(QScreen*)), wrap, SLOT(method(QScreen*)));
 }

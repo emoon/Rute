@@ -151,8 +151,8 @@ pub trait ApplicationType<'a> {
             ((*funcs).set_about_to_quit_event)(
                 obj_data,
                 user_data,
-                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
             );
         }
 
@@ -170,8 +170,8 @@ pub trait ApplicationType<'a> {
             ((*funcs).set_about_to_quit_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(application_about_to_quit_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(application_about_to_quit_trampoline as usize),
             );
         }
 
@@ -192,8 +192,8 @@ pub trait ApplicationType<'a> {
             ((*funcs).set_screen_added_event)(
                 obj_data,
                 user_data,
-                transmute(application_screen_added_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(application_screen_added_trampoline_ud::<T> as usize),
             );
         }
 
@@ -211,8 +211,8 @@ pub trait ApplicationType<'a> {
             ((*funcs).set_screen_added_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(application_screen_added_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(application_screen_added_trampoline as usize),
             );
         }
 

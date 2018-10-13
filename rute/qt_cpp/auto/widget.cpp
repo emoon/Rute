@@ -51,17 +51,17 @@ static void widget_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_title_changed_event(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, const char* title)) {
-    QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)trampoline_func, (void*)event);
+static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, const char* title)) {
+    QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_paint_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_paint_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_paint_event = event;
+    qt_object->m_paint_event = trampoline_func;
     qt_object->m_paint_event_user_data = user_data;
     qt_object->m_paint_event_wrapped_func = wrapped_func;
 }

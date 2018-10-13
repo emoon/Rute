@@ -240,8 +240,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_pressed_event)(
                 obj_data,
                 user_data,
-                transmute(push_button_pressed_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_pressed_trampoline_ud::<T> as usize),
             );
         }
 
@@ -259,8 +259,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_pressed_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(push_button_pressed_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_pressed_trampoline as usize),
             );
         }
 
@@ -281,8 +281,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_released_event)(
                 obj_data,
                 user_data,
-                transmute(push_button_released_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_released_trampoline_ud::<T> as usize),
             );
         }
 
@@ -300,8 +300,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_released_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(push_button_released_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_released_trampoline as usize),
             );
         }
 
@@ -322,8 +322,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_clicked_event)(
                 obj_data,
                 user_data,
-                transmute(push_button_clicked_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_clicked_trampoline_ud::<T> as usize),
             );
         }
 
@@ -341,8 +341,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_clicked_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(push_button_clicked_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_clicked_trampoline as usize),
             );
         }
 
@@ -363,8 +363,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_toggled_event)(
                 obj_data,
                 user_data,
-                transmute(push_button_toggled_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_toggled_trampoline_ud::<T> as usize),
             );
         }
 
@@ -382,8 +382,8 @@ pub trait PushButtonType<'a> {
             ((*funcs).set_toggled_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(push_button_toggled_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(push_button_toggled_trampoline as usize),
             );
         }
 

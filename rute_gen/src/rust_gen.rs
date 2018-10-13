@@ -459,7 +459,7 @@ impl RustGenerator {
         // Generate all the trampoline functions
         sdef.functions
             .iter()
-            .filter(|f| f.func_type == FunctionType::Signal)
+            .filter(|f| f.func_type == FunctionType::Signal || f.func_type == FunctionType::Event)
             .try_for_each(|func| {
                 let res =
                     self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
@@ -534,6 +534,14 @@ impl RustGenerator {
         let mut function_arg_types = String::with_capacity(128);
         let mut temp_str = String::with_capacity(128);
 
+        // As events are stored in the regular struct (and not trait) we need to mark them as
+        // public to the outside
+        if func.func_type == FunctionType::Event {
+            template_data.insert("visibility".into(), Value::scalar("pub"));
+        } else {
+            template_data.insert("visibility".into(), Value::scalar(""));
+        }
+
         let ffi_func_def = func.rust_func_def(
             true,
             Some("*const c_void, func: *const c_void"),
@@ -582,7 +590,7 @@ impl RustGenerator {
             }
         }
 
-        template_data.insert("event_name".into(), Value::scalar(func.name.clone()));
+        template_data.insert("event_name".into(), Value::scalar(func.get_name_skip_event().to_owned()));
         template_data.insert("function_arguments".into(), Value::scalar(ffi_func_def));
         template_data.insert("function_params".into(), Value::scalar(func_args ));
         template_data.insert(
@@ -749,6 +757,18 @@ impl RustGenerator {
                 "has_new_method".into(),
                 Value::scalar(sdef.should_have_create_func()),
             );
+
+            let mut event_funcs = String::with_capacity(4096);
+
+            sdef.functions
+                .iter()
+                .filter(|f| f.func_type == FunctionType::Event)
+                .for_each(|f| {
+                    let res = self.generate_callback(&f, &sdef.name, &self.callback_template);
+                    event_funcs.push_str(&res);
+                });
+
+            template_data.insert("event_funcs".into(), Value::scalar(event_funcs));
 
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;

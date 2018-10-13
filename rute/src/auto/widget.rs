@@ -74,6 +74,46 @@ impl<'a> Widget<'a> {
             _marker: PhantomData,
         }
     }
+    pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &PaintEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &PaintEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_paint_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_paint_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_paint_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&PaintEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&PaintEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_paint_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_paint_trampoline as usize),
+            );
+        }
+
+        self
+    }
 }
 
 unsafe extern "C" fn widget_window_title_changed_trampoline_ud<T>(
@@ -97,6 +137,27 @@ unsafe extern "C" fn widget_window_title_changed_trampoline(
     let str_in_title_0 = CStr::from_ptr(title);
 
     f(str_in_title_0.to_str().unwrap());
+}
+
+unsafe extern "C" fn widget_paint_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &PaintEventType) + 'static) = transmute(func);
+    let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_paint_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&PaintEventType) + 'static) = transmute(func);
+    let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
+    f(&obj_event_0);
 }
 
 pub trait WidgetType<'a> {
@@ -164,8 +225,8 @@ pub trait WidgetType<'a> {
             ((*funcs).set_window_title_changed_event)(
                 obj_data,
                 user_data,
-                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
             );
         }
 
@@ -183,8 +244,8 @@ pub trait WidgetType<'a> {
             ((*funcs).set_window_title_changed_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute(widget_window_title_changed_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute(widget_window_title_changed_trampoline as usize),
             );
         }
 

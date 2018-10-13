@@ -13,9 +13,20 @@ fn main() {
 
     let button = PushButton::new();
 
+    /*
     button
         .set_text("Push me!")
         .set_pressed_event(|| println!("Button was pressed!"))
+        .show();
+    */
+
+    let widget = Widget::new();
+
+    widget
+        .set_paint_event(|event| {
+            let rect = event.rect().unwrap();
+            println!("size {} {}", rect.width(), rect.height());
+        })
         .show();
 
     // Start the application

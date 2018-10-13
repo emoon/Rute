@@ -1098,6 +1098,20 @@ impl Function {
 
         output
     }
+
+    ///
+    /// This is kinda of a special case function but is useful to have here as it's
+    /// being used in various parts of the code. It will return the name of the function (snake
+    /// cased) without the _event if it has that at the end
+    ///
+    pub fn get_name_skip_event(&self) -> &str {
+        if self.name.ends_with("event") {
+            &self.name[..self.name.len() - 6]
+        } else {
+            &self.name
+        }
+    }
+
 }
 
 #[cfg(test)]

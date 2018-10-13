@@ -285,11 +285,11 @@ impl CapiHeaderGen {
         use std::fmt::Write;
         if def {
             write!(dest,
-                "void (*set_{}{})(void* object, void* user_data, void* trampoline_func, void (*event)(",
+                "void (*set_{}{})(void* object, void* user_data, void* wrapped_func, void (*event)(",
                 name, post_name).unwrap()
         } else {
             write!(dest,
-                "void set_{}{}(void* object, void* user_data, void* trampoline_func, void (*event)(",
+                "void set_{}{}(void* object, void* user_data, void* wrapped_func, void (*event)(",
                 name, post_name).unwrap();
         };
 

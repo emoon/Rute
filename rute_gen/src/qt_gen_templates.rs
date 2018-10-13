@@ -136,7 +136,7 @@ private:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
-    QSlotWrapperSignal_{{signal_type_name}}* wrap = new QSlotWrapperSignal_{{signal_type_name}}(user_data, (Signal_{{signal_type_name}})trampoline_func, (void*)event);
+    QSlotWrapperSignal_{{signal_type_name}}* wrap = new QSlotWrapperSignal_{{signal_type_name}}(user_data, (Signal_{{signal_type_name}})event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL({{qt_signal_name}}({{func_def}})), wrap, SLOT(method({{func_def}})));
 }
@@ -165,9 +165,9 @@ pub static WRAP_EVENT_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static QT_SET_EVENT_TEMPLATE: &str = "static void set_{{type_name}}_{{event_type_snake}}(void* object, void* user_data, void* wrapped_func, void (*event)({{event_args}})) {
+pub static QT_SET_EVENT_TEMPLATE: &str = "static void set_{{type_name}}_{{event_type_snake}}(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)({{event_args}})) {
     WR{{event_type}}* qt_object = (WR{{event_type}}*)object;
-    qt_object->m_{{event_type_snake}} = event;
+    qt_object->m_{{event_type_snake}} = trampoline_func;
     qt_object->m_{{event_type_snake}}_user_data = user_data;
     qt_object->m_{{event_type_snake}}_wrapped_func = wrapped_func;
 }

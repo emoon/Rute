@@ -127,6 +127,8 @@ impl <'a>{{struct_name}}<'a> {
             _marker: PhantomData,
         }
     }
+
+    {{-event_funcs}}
 }
 ";
 
@@ -255,7 +257,7 @@ pub struct {{type_name}}Static<'a> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TEMPLATE: &str = "
-    fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    {{visibility}} fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
         F: Fn(&T, {{function_arg_types}}) + 'a,
         T: 'a,
@@ -269,15 +271,15 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
             ((*funcs).set_{{event_name}}_event)(
                 obj_data,
                 user_data,
-                transmute({{widget_snake_name}}_{{event_name}}_trampoline_ud::<T> as usize),
                 Box::into_raw(f) as *const _,
+                transmute({{widget_snake_name}}_{{event_name}}_trampoline_ud::<T> as usize),
             );
         }
 
         self
     }
 
-    fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
+    {{visibility}} fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
     where
         F: Fn({{function_arg_types}}) + 'a,
     {
@@ -288,8 +290,8 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
             ((*funcs).set_{{event_name}}_event)(
                 obj_data,
                 ::std::ptr::null(),
-                transmute({{widget_snake_name}}_{{event_name}}_trampoline as usize),
                 Box::into_raw(f) as *const _,
+                transmute({{widget_snake_name}}_{{event_name}}_trampoline as usize),
             );
         }
 

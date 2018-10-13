@@ -24,10 +24,10 @@ typedef struct RUPushButtonFuncs {
     void (*show_menu)(struct RUBase* self_c);
     void (*set_text)(struct RUBase* self_c, const char* text);
     const char* (*text)(struct RUBase* self_c);
-    void (*set_pressed_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c));
-    void (*set_released_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c));
-    void (*set_clicked_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, bool checked));
-    void (*set_toggled_event)(void* object, void* user_data, void* trampoline_func, void (*event)(void* self_c, bool checked));
+    void (*set_pressed_event)(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c));
+    void (*set_released_event)(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c));
+    void (*set_clicked_event)(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, bool checked));
+    void (*set_toggled_event)(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, bool checked));
 } RUPushButtonFuncs;
 
 typedef struct RUPushButtonAllFuncs {
