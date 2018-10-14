@@ -1,0 +1,50 @@
+chunk = _{ SOI ~ (cpp_func_def | doc_start | skip_line)+ ~ EOI }
+doc_start = { tag_start ~ (tags | name)* ~ tag_end }
+
+tags = { code_tag | class_tag | brief_tag |
+         ingroup_tag | inmodule_tag | image_tag | l_tag | sa_tag | e_tag | note_tag |
+         reimp_tag | property_tag | list_tag | li_tag | endlist_tag | snippet_tag }
+
+// Tags
+tag_start = { ("/*!") }
+tag_end = { ("*/") }
+code_tag = { ("\\code") }
+endlist_tag = { ("\\endlist") }
+class_tag = { ("\\class") ~ name }
+ingroup_tag = { ("\\ingroup") ~ name }
+inmodule_tag = { ("\\inmodule") ~ name }
+image_tag = { ("\\image") ~ name }
+list_tag = { ("\\list") ~ name }
+snippet_tag = { ("\\snippet") ~ whole_line }
+brief_tag = { ("\\brief") ~ whole_line }
+li_tag = { ("\\li") ~ namelist }
+sa_tag = { ("\\sa") ~ namelist }
+l_tag = { ("\\l") }
+reimp_tag = { ("\\reimp") }
+e_tag = { ("\\e") ~ name }
+note_tag = { ("\\note") ~ whole_line }
+property_tag = { ("\\property") ~ name }
+separator = { (",") }
+cpp_arg_list = { (!(")") ~ ANY)* }
+cpp_func_def = { cpp_type? ~ cpp_name ~ ("(") ~ cpp_arg_list? ~ (")") ~ cpp_type? ~ cpp_body }
+
+namelist = { (name)* }
+
+name = @{
+	(('a'..'z') | ('A'..'Z') | ("_") | ("\"") | (",") | (":") | ('0'..'9') | ("{") | ("}") | (" ") | ("(") | (")") | ("+") | ("#") | ("&") | ("'") | (";")) ~
+	(('a'..'z') | ('A'..'Z') | ("_") | (".") | ("-") | ("(") | (")") | ('0'..'9'))*
+}
+
+cpp_name = @{
+	(('a'..'z') | ('A'..'Z') | ("_")) ~ (('a'..'z') | ('A'..'Z') | ("::") | ("_") | ('0'..'9') | ("*") | ("&"))*
+}
+
+cpp_type = { cpp_name }
+
+cpp_body = _{ "{" ~ ( cpp_body | (!"}" ~ ANY) )* ~ "}" }
+
+whole_line = @{ (!NEWLINE ~ ANY)* }
+skip_line = @{ (!NEWLINE ~ ANY)+ }
+
+WHITESPACE = _{ "\t" | "\r" | "\n"  | " " }
+

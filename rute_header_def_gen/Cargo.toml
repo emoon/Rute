@@ -7,6 +7,8 @@ authors = ["Daniel Collin <daniel@collin.com>"]
 heck = "0.3"
 walkdir = "2"
 rayon = "1.0"
+pest = "2"
+pest_derive = "2"
 
 [dependencies.clang]
 features = ["clang_6_0"]
