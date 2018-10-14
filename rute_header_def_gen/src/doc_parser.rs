@@ -11,6 +11,31 @@ const _GRAMMAR: &str = include_str!("qdoc.pest");
 #[grammar = "qdoc.pest"]
 pub struct DocParser;
 
+enum Tag {
+    Class(String),
+    Brief(String),
+    InGroup(String),
+    ListStart(String),
+    ListEntry(String),
+    ListEnd(String),
+    Image(String),
+    Property(String),
+    SaTag(String),
+    /// Just text that doesn't belong to a tag
+    GeneralText(String),
+    UnTracked(String),
+}
+
+struct DocEntry {
+    /// Which function this is attached to
+    target_function: Option<String>,
+    tags: Vec<Tag>,
+}
+
+struct DocInfo {
+    entries: Vec<DocEntry>,
+}
+
 impl DocParser {
     ///
     /// Parse a file
@@ -39,7 +64,7 @@ impl DocParser {
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::doc_start => {
-                    println!("    {:?}", chunk.as_str());
+                    //println!("    {:?}", chunk.as_str());
                 }
 
                 Rule::skip_line => {

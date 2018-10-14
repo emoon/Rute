@@ -26,7 +26,8 @@ note_tag = { ("\\note") ~ whole_line }
 property_tag = { ("\\property") ~ name }
 separator = { (",") }
 cpp_arg_list = { (!(")") ~ ANY)* }
-cpp_func_def = { cpp_type? ~ cpp_name ~ ("(") ~ cpp_arg_list? ~ (")") ~ cpp_type? ~ cpp_body }
+skip_until_block = { (!("{") ~ ANY)* }
+cpp_func_def = { (cpp_type ~ cpp_name | cpp_name) ~ ("(") ~ cpp_arg_list? ~ (")") ~ skip_until_block? ~ cpp_body }
 
 namelist = { (name)* }
 
