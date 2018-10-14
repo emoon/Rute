@@ -40,7 +40,7 @@ Rute is currently in early development and isn't really useable except for some 
 * Currently very WIP. Has (known) memory leaks that needs to be fixed.
 * Added layers will impact performance. How much it will be in practice needs to be tested.
 
-## License
+## Source code License
 
 Licensed under either of
 
@@ -48,6 +48,12 @@ Licensed under either of
  * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
+
+## Documentation License
+
+The Qt documentation is licensed under the [GNU Free Documentation License version 1.3](https://www.gnu.org/licenses/fdl.html) and thus the documentation for Rute is under the same licence.
+
+## Qt Licence
 
 Remember if you are planning to release an application using Rute you will have use a Qt licence as well which you can read about [here](https://doc.qt.io/qt-5.6/licensing.html)
 
