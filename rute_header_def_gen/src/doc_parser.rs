@@ -11,7 +11,11 @@ const _GRAMMAR: &str = include_str!("qdoc.pest");
 #[grammar = "qdoc.pest"]
 pub struct DocParser;
 
-enum Tag {
+///
+/// Supported tags from QDoc
+///
+#[derive(Debug, PartialEq, Clone)]
+pub enum Tag {
     Class(String),
     Brief(String),
     InGroup(String),
@@ -26,14 +30,48 @@ enum Tag {
     UnTracked(String),
 }
 
-struct DocEntry {
+#[derive(Debug, Clone)]
+pub struct DocEntry {
     /// Which function this is attached to
     target_function: Option<String>,
     tags: Vec<Tag>,
 }
 
-struct DocInfo {
+#[derive(Debug)]
+pub struct DocInfo {
     entries: Vec<DocEntry>,
+}
+
+///
+///
+///
+fn get_doc(rule: Pair<Rule>) -> DocEntry {
+    let mut entry = DocEntry {
+        target_function: None,
+        tags: Vec::new(),
+    };
+
+    /*
+    for entry in rule.into_inner() {
+
+    }
+    */
+
+    entry
+}
+
+///
+///
+///
+fn get_cpp_name(rule: Pair<Rule>) -> String {
+    for entry in rule.into_inner() {
+        match entry.as_rule() {
+            Rule::cpp_name => return entry.as_str().to_owned(),
+            _ => (),
+        }
+    }
+
+    "".to_owned()
 }
 
 impl DocParser {
@@ -60,11 +98,13 @@ impl DocParser {
         let chunks = Self::parse(Rule::chunk, buffer)
             .unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
+        let mut docs = DocInfo { entries: Vec::new() };
+        let mut current_doc = None;
 
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::doc_start => {
-                    //println!("    {:?}", chunk.as_str());
+                    current_doc = Some(get_doc(chunk))
                 }
 
                 Rule::skip_line => {
@@ -72,12 +112,22 @@ impl DocParser {
                 }
 
                 Rule::cpp_func_def => {
-                    println!("    {:?}", chunk.as_str());
+                    if let Some(ref mut doc) = current_doc {
+                        doc.target_function = Some(get_cpp_name(chunk));
+                        docs.entries.push(doc.clone());
+                    }
+
+                    current_doc = None;
+
+                    //println!("    {:?}", chunk.as_str());
                 }
 
                 _ => (),
             }
         }
         //println!("{:?}", chunks);
+
+        println!("{:?}", docs);
     }
+
 }
