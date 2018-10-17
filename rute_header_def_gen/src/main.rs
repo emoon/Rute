@@ -7,16 +7,21 @@ extern crate walkdir;
 extern crate pest_derive;
 extern crate pest;
 
-mod header_gen;
 mod doc_parser;
+mod header_gen;
 
-use doc_parser::DocParser;
+use doc_parser::{DocEntry, DocInfo, DocParser};
 use header_gen::Generator;
+use std::collections::HashMap;
 
 fn main() {
-    /*
     // Get all the files to parse
     let output_directory = "output";
+
+    rayon::ThreadPoolBuilder::new()
+        .num_threads(1)
+        .build_global()
+        .unwrap();
 
     // TODO: Don't hardcode these
     let header_files_path = &[
@@ -33,10 +38,34 @@ fn main() {
         "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2",
     ];
 
-    Generator::generate(output_directory, header_files_path, compile_args);
-    */
+    // Parse source files for documentation
 
-    DocParser::parse_file("/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qpushbutton.cpp");
-    //DocParser::parse_file("/Users/danielcollin/temp/test.cpp");
+    let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets"];
+
+    let docs = DocParser::parse_files(&source_directory);
+
+    // Build some lookup info for faster lookup when generating the output data
+
+    let mut cpp_name_lookup: HashMap<&str, &DocEntry> = HashMap::new();
+    let mut base_filename_lookup: HashMap<&str, &DocInfo> = HashMap::new();
+
+    for doc in &docs {
+        for entry in &doc.entries {
+            if !entry.target_function.is_empty() {
+                cpp_name_lookup.insert(&entry.target_function, entry);
+            }
+        }
+
+        base_filename_lookup.insert(&doc.base_filename, &doc);
+    }
+
+    //println!("{:?}", cpp_name_lookup);
+
+    Generator::generate(
+        output_directory,
+        header_files_path,
+        compile_args,
+        &cpp_name_lookup,
+        &base_filename_lookup,
+    );
 }
-

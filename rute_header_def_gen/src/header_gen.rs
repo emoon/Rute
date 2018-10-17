@@ -2,14 +2,16 @@ use clang::*;
 use heck::SnakeCase;
 use rayon::prelude::*;
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fs::File;
-use std::io::{BufWriter, Write, SeekFrom, BufReader};
-use std::sync::RwLock;
-use std::io::{Seek, BufRead};
-use walkdir::WalkDir;
+use std::io::{BufRead, Seek};
+use std::io::{BufReader, BufWriter, SeekFrom, Write};
 use std::path::PathBuf;
+use std::sync::RwLock;
+use walkdir::WalkDir;
 
+use doc_parser::{DocEntry, DocInfo};
 use walkdir;
 
 #[derive(PartialEq, Clone, Copy, Debug)]
@@ -17,7 +19,7 @@ enum AccessLevel {
     Public,
     Signal,
     Protected,
-    Private
+    Private,
 }
 
 #[derive(PartialEq, Clone, Copy, Debug)]
@@ -143,7 +145,8 @@ fn get_access_level(entry: &Entity) -> AccessLevel {
     if let Some(location) = entry.get_location() {
         if let Some(filename) = location.get_file_location().file {
             if let Ok(mut file) = File::open(filename.get_path()) {
-                file.seek(SeekFrom::Start(location.get_file_location().offset as u64)).unwrap();
+                file.seek(SeekFrom::Start(location.get_file_location().offset as u64))
+                    .unwrap();
                 let mut line = String::with_capacity(128);
                 let mut reader = BufReader::new(file);
                 reader.read_line(&mut line).unwrap();
@@ -158,7 +161,6 @@ fn get_access_level(entry: &Entity) -> AccessLevel {
     level
 }
 
-
 ///
 ///
 ///
@@ -171,7 +173,9 @@ fn format_arg_type(arg: &ArgType, is_return: IsReturnType) -> String {
 
     if is_return == IsReturnType::Yes {
         res.push_str(&arg.name);
-        if arg.pointer || arg.reference { res.push('?') }
+        if arg.pointer || arg.reference {
+            res.push('?')
+        }
     } else {
         if arg.reference && arg.name != "String" {
             res.push('&');
@@ -355,7 +359,12 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
 ///
 /// Print a class. This code a a bit hacky but should do for this usage
 ///
-fn print_class(target_path: &str, entry: &Entity) {
+fn print_class(
+    target_path: &str,
+    entry: &Entity,
+    cpp_name_lookup: &HashMap<&str, &DocEntry>,
+    base_filename_lookup: &HashMap<&str, &DocInfo>,
+) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
@@ -403,8 +412,17 @@ fn print_class(target_path: &str, entry: &Entity) {
         return;
     }
 
-    let filename = format!("{}/{}.def", target_path, &name[1..].to_snake_case());
+    let typename = &name[1..];
+
+    let filename = format!("{}/{}.def", target_path, typename.to_snake_case());
     let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
+
+    // Check if we have some filedata to output
+
+    if let Some(filename_entry) = base_filename_lookup.get(typename) {
+        for entry in &filename_entry.entries {
+        }
+    }
 
     // print all enums for the class
 
@@ -494,7 +512,13 @@ impl Generator {
     ///
     /// Generates the new def files
     ///
-    pub fn generate(output_directory: &str, paths: &[&'static str], compile_args: &[&'static str]) {
+    pub fn generate(
+        output_directory: &str,
+        paths: &[&'static str],
+        compile_args: &[&'static str],
+        cpp_name_lookup: &HashMap<&str, &DocEntry>,
+        base_filename_lookup: &HashMap<&str, &DocInfo>,
+    ) {
         // Acquire an instance of `Clang`
         let clang = Clang::new().unwrap();
         let lock = RwLock::new(HashSet::new());
@@ -507,85 +531,85 @@ impl Generator {
 
         // Process all files in parallel using Rayon
         header_files.par_iter().for_each(|filename| {
-            println!("Processing filename {:?}", filename);
+                println!("Processing filename {:?}", filename);
 
-            // Create a new `Index`
-            let index = Index::new(&clang, false, false);
+                // Create a new `Index`
+                let index = Index::new(&clang, false, false);
 
-            // Parse a source file into a translation unit
-            let tu = index
-                .parser(&filename)
-                .arguments(&compile_args)
-                .parse()
-                .unwrap();
+                // Parse a source file into a translation unit
+                let tu = index
+                    .parser(&filename)
+                    .arguments(&compile_args)
+                    .parse()
+                    .unwrap();
 
-            // Get the structs in this translation unit
-            let structs = tu
-                .get_entity()
-                .get_children()
-                .into_iter()
-                .filter(|e| e.get_kind() == EntityKind::ClassDecl)
-                .collect::<Vec<_>>();
+                // Get the structs in this translation unit
+                let structs = tu
+                    .get_entity()
+                    .get_children()
+                    .into_iter()
+                    .filter(|e| e.get_kind() == EntityKind::ClassDecl)
+                    .collect::<Vec<_>>();
 
-            for struct_ in structs {
-                if let Some(name) = struct_.get_name() {
-                    let t = name.to_owned();
-                    {
-                        let data = lock.read().unwrap();
+                for struct_ in structs {
+                    if let Some(name) = struct_.get_name() {
+                        let t = name.to_owned();
+                        {
+                            let data = lock.read().unwrap();
 
-                        if data.contains(&t) || struct_.get_children().is_empty() {
-                            continue;
-                        }
-                    }
-
-                    {
-                        let mut w = lock.write().unwrap();
-                        w.insert(t);
-                    }
-
-                    print_class(output_directory, &struct_);
-                }
-            }
-
-            // This is somewhat of a hack to get the global Qt enums
-
-            if filename.file_name().unwrap().to_str().unwrap().contains("qnamespace") {
-                let mut enums = Vec::new();
-
-                for e in tu.get_entity().get_children() {
-                    match e.get_kind() {
-                        EntityKind::Namespace => {
-                            if let Some(name) = e.get_display_name() {
-                                if name != "Qt" {
-                                    continue;
-                                }
-
-                                for t in e.get_children() {
-                                    if t.get_kind() == EntityKind::EnumDecl {
-                                        enums.push(t);
-                                    }
-                                }
+                            if data.contains(&t) || struct_.get_children().is_empty() {
+                                continue;
                             }
                         }
 
-                        _ => (),
+                        {
+                            let mut w = lock.write().unwrap();
+                            w.insert(t);
+                        }
+
+                        print_class(output_directory, &struct_, cpp_name_lookup, base_filename_lookup);
                     }
                 }
 
-                // Create enums for the file. We don't need to lock the type here as we take all the enums
-                // that isn't in any class and write to output with the same filename
+                // This is somewhat of a hack to get the global Qt enums
 
-                if !enums.is_empty() {
-                    let base_name = filename.file_name().unwrap().to_str().unwrap();
-                    let base_name = &base_name[..base_name.len() - 2];
-                    let target_filename = format!("{}/{}.def", output_directory, &base_name);
-                    let mut dest = BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
+                if filename.file_name().unwrap().to_str().unwrap().contains("qnamespace") {
+                    let mut enums = Vec::new();
 
-                    for enum_def in enums {
-                        print_enums(&mut dest, &enum_def, &base_name, "Qt");
+                    for e in tu.get_entity().get_children() {
+                        match e.get_kind() {
+                            EntityKind::Namespace => {
+                                if let Some(name) = e.get_display_name() {
+                                    if name != "Qt" {
+                                        continue;
+                                    }
+
+                                    for t in e.get_children() {
+                                        if t.get_kind() == EntityKind::EnumDecl {
+                                            enums.push(t);
+                                        }
+                                    }
+                                }
+                            }
+
+                            _ => (),
+                        }
+                    }
+
+                    // Create enums for the file. We don't need to lock the type here as we take all the enums
+                    // that isn't in any class and write to output with the same filename
+
+                    if !enums.is_empty() {
+                        let base_name = filename.file_name().unwrap().to_str().unwrap();
+                        let base_name = &base_name[..base_name.len() - 2];
+                        let target_filename = format!("{}/{}.def", output_directory, &base_name);
+                        let mut dest = BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
+
+                        for enum_def in enums {
+                            print_enums(&mut dest, &enum_def, &base_name, "Qt");
+                        }
                     }
                 }
-            }
         });
     }
 }
@@ -617,17 +641,26 @@ mod tests {
 
     #[test]
     fn test_pointer() {
-        assert_eq!(get_complex_arg("QListWidgetItem *", IsReturnType::No), "&ListWidgetItemType");
+        assert_eq!(
+            get_complex_arg("QListWidgetItem *", IsReturnType::No),
+            "&ListWidgetItemType"
+        );
     }
 
     #[test]
     fn test_ref() {
-        assert_eq!(get_complex_arg("QListWidgetItem &", IsReturnType::No), "&ListWidgetItemType");
+        assert_eq!(
+            get_complex_arg("QListWidgetItem &", IsReturnType::No),
+            "&ListWidgetItemType"
+        );
     }
 
     #[test]
     fn test_const_string() {
-        assert_eq!(get_complex_arg("const QString &", IsReturnType::No), "String");
+        assert_eq!(
+            get_complex_arg("const QString &", IsReturnType::No),
+            "String"
+        );
     }
 
     #[test]
@@ -642,27 +675,41 @@ mod tests {
 
     #[test]
     fn test_vector_type() {
-        assert_eq!(get_complex_arg("QVector<QCanBusFrame>", IsReturnType::No), "[CanBusFrameType]");
+        assert_eq!(
+            get_complex_arg("QVector<QCanBusFrame>", IsReturnType::No),
+            "[CanBusFrameType]"
+        );
     }
 
     #[test]
     fn test_qt_global_enum() {
-        assert_eq!(get_complex_arg("Qt::WindowState", IsReturnType::No), "Rute::WindowState");
+        assert_eq!(
+            get_complex_arg("Qt::WindowState", IsReturnType::No),
+            "Rute::WindowState"
+        );
     }
 
     #[test]
     fn test_qt_local_enum() {
-        assert_eq!(get_complex_arg("QListWidget::State", IsReturnType::No), "ListWidget::State");
+        assert_eq!(
+            get_complex_arg("QListWidget::State", IsReturnType::No),
+            "ListWidget::State"
+        );
     }
 
     #[test]
     fn test_return_pointer() {
-        assert_eq!(get_complex_arg("QListWidget *", IsReturnType::Yes), "ListWidget?");
+        assert_eq!(
+            get_complex_arg("QListWidget *", IsReturnType::Yes),
+            "ListWidget?"
+        );
     }
 
     #[test]
     fn test_return_regular() {
-        assert_eq!(get_complex_arg("QListWidget", IsReturnType::Yes), "ListWidget");
+        assert_eq!(
+            get_complex_arg("QListWidget", IsReturnType::Yes),
+            "ListWidget"
+        );
     }
 }
-

@@ -1,13 +1,13 @@
 chunk = _{ SOI ~ (cpp_func_def | doc_start | skip_line)+ ~ EOI }
 doc_start = { tag_start ~ (tags | name)* ~ tag_end }
 
-tags = { abstract_tag | bad_code_tag | bold_tag | brief_tag | c_tag | caption_tag | class_tag |
-		code_tag | codeline_tag | compat_tag | contentspage_tag | div_tag | dots_tag | else_tag |
-		emphasis_tag | endif_tag | endlist_tag | enum_tag | example_tag | externalpage_tag |
+tags = { abstract_tag | bad_code_tag | brief_tag | bold_tag | caption_tag | class_tag |
+		code_tag | codeline_tag | compat_tag | contentspage_tag | c_tag | div_tag | dots_tag | else_tag |
+		endif_tag | endlist_tag | enum_tag | example_tag | externalpage_tag | emphasis_tag |
 		footnote_tag | function_tag | generatelist_tag | group_tag | header_tag | headerfile_tag |
-		i_tag | if_tag | image_tag | include_tag | indexpage_tag | ingroup_tag | inherits_tag |
+		image_tag | include_tag | indexpage_tag | ingroup_tag | inherits_tag |
 		inlineimage_tag | inmodule_tag | inqmlmodule_tag | instantiates_tag | internal_tag |
-		keyword_tag | l_tag | legalese_tag | li_tag | list_tag | macro_tag | meta_tag |
+		keyword_tag | if_tag | i_tag | legalese_tag | list_tag | li_tag | l_tag | macro_tag | meta_tag |
 		module_tag | namespace_tag | newcode_tag | nextpage_tag | noautolist_tag | nonreentrant_tag |
 		note_tag | o_tag | obsolete_tag | oldcode_tag | omit_tag | omitvalue_tag | overload_tag |
 		page_tag | parameter_tag | preliminary_tag | previouspage_tag | printline_tag | printto_tag |
@@ -22,8 +22,8 @@ tags = { abstract_tag | bad_code_tag | bold_tag | brief_tag | c_tag | caption_ta
 		underline_tag | value_tag | variable_tag | warning_tag }
 
 // Tags
-tag_start = { ("/*!") }
-tag_end = { ("*/") }
+tag_start = { ("/*!\n") }
+tag_end = { ("*/\n") }
 separator = { (",") }
 cpp_arg_list = { (!(")") ~ ANY)* }
 skip_until_block = { (!("{") ~ ANY)* }
@@ -33,10 +33,10 @@ cpp_func_def = { (cpp_type ~ cpp_name | cpp_name) ~ ("(") ~ cpp_arg_list? ~ (")"
 abstract_tag = { ("\\abstract") ~ name }
 bad_code_tag = { ("\\badcode") }
 bold_tag = { ("\\b" | ("\\bold")) ~ whole_line } // notice whole line is incorrect. Not sure how to handle it
-brief_tag = { ("\\brief") ~ whole_line }
-c_tag = { ("\\c") ~ name }
+brief_tag = { ("\\brief") ~ namelist }
+c_tag = { ("\\c") ~ namelist }
 caption_tag = { ("\\caption") ~ whole_line }
-class_tag = { ("\\class") ~ name }
+class_tag = { ("\\class") ~ namelist }
 code_tag = { ("\\code") }
 codeline_tag = { ("\\codeline") }
 compat_tag = { ("\\compat") }
@@ -58,7 +58,7 @@ header_tag = { ("\\header") }
 headerfile_tag = { ("\\headerfile") }
 i_tag = { ("\\i") }
 if_tag = { ("\\if") }
-image_tag = { ("\\image") ~ whole_line }
+image_tag = { ("\\image") ~ name }
 include_tag = { ("\\include") }
 indexpage_tag = { ("\\indexpage") }
 ingroup_tag = { ("\\ingroup") ~ name }
@@ -72,7 +72,7 @@ keyword_tag = { ("\\keyword") }
 l_tag = { ("\\l") }
 legalese_tag = { ("\\legalese") }
 li_tag = { ("\\li") ~ namelist }
-list_tag = { ("\\list") ~ name }
+list_tag = { ("\\list") }
 macro_tag = { ("\\macro") }
 meta_tag = { ("\\meta") }
 module_tag = { ("\\module") }
@@ -142,13 +142,14 @@ underline_tag = { ("\\underline") }
 value_tag = { ("\\value") }
 variable_tag = { ("\\variable") }
 warning_tag = { ("\\warning") }
+dummy = { ("\\dummy") } // dummy tag, not actually used
 
 // Namelist and various other tags
 
-namelist = { (name)* }
+namelist = { (!tags ~ name)* }
 
 name = @{
-	(('a'..'z') | ('A'..'Z') | ("_") | ("\"") | (",") | (":") | ('0'..'9') | ("{") | ("}") | (" ") | ("(") | (")") | ("+") | ("#") | ("&") | ("'") | (";")) ~
+	(('a'..'z') | ('A'..'Z') | ("_") | ("\"") | (",") | (":") | ('0'..'9') | ("{") | ("}") | (" ") | ("(") | (")") | ("+") | ("#") | ("&") | ("'") | (";") | ("\n") | ("\t") | ("*")) ~
 	(('a'..'z') | ('A'..'Z') | ("_") | (".") | ("-") | ("(") | (")") | ('0'..'9'))*
 }
 
@@ -161,7 +162,7 @@ cpp_type = { cpp_name }
 cpp_body = _{ "{" ~ ( cpp_body | (!"}" ~ ANY) )* ~ "}" }
 
 whole_line = @{ (!NEWLINE ~ ANY)* }
-skip_line = @{ (!NEWLINE ~ ANY)+ }
+skip_line = @{ (!(NEWLINE ~ "\n" ~ "/") ~ ANY)+ }
 
-WHITESPACE = _{ "\t" | "\r" | "\n"  | " " }
+//WHITESPACE = _{ }
 
