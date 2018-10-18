@@ -1,3 +1,197 @@
+///     \class QTextEdit
+///     \brief The QTextEdit class provides a widget that is used to edit and display
+///     both plain and rich text.
+/// 
+///     \ingroup richtext-processing
+///     \inmodule QtWidgets
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Introduction and Concepts
+/// 
+///     QTextEdit is an advanced WYSIWYG viewer/editor supporting rich
+///     text formatting using HTML-style tags. It is optimized to handle
+///     large documents and to respond quickly to user input.
+/// 
+///     QTextEdit works on paragraphs and characters. A paragraph is a
+///     formatted string which is word-wrapped to fit into the width of
+///     the widget. By default when reading plain text, one newline
+///     signifies a paragraph. A document consists of zero or more
+///     paragraphs. The words in the paragraph are aligned in accordance
+///     with the paragraph's alignment. Paragraphs are separated by hard
+///     line breaks. Each character within a paragraph has its own
+///     attributes, for example, font and color.
+/// 
+///     QTextEdit can display images, lists and tables. If the text is
+///     too large to view within the text edit's viewport, scroll bars will
+///     appear. The text edit can load both plain text and rich text files.
+///     Rich text is described using a subset of HTML 4 markup, refer to the
+///     \l {Supported HTML Subset} page for more information.
+/// 
+///     If you just need to display a small piece of rich text use QLabel.
+/// 
+///     The rich text support in Qt is designed to provide a fast, portable and
+///     efficient way to add reasonable online help facilities to
+///     applications, and to provide a basis for rich text editors. If
+///     you find the HTML support insufficient for your needs you may consider
+///     the use of Qt WebKit, which provides a full-featured web browser
+///     widget.
+/// 
+///     The shape of the mouse cursor on a QTextEdit is Qt::IBeamCursor by default.
+///     It can be changed through the viewport()'s cursor property.
+/// 
+///     \section1 Using QTextEdit as a Display Widget
+/// 
+///     QTextEdit can display a large HTML subset, including tables and
+///     images.
+/// 
+///     The text is set or replaced using setHtml() which deletes any
+///     existing text and replaces it with the text passed in the
+///     setHtml() call. If you call setHtml() with legacy HTML, and then
+///     call toHtml(), the text that is returned may have different markup,
+///     but will render the same. The entire text can be deleted with clear().
+/// 
+///     Text itself can be inserted using the QTextCursor class or using the
+///     convenience functions insertHtml(), insertPlainText(), append() or
+///     paste(). QTextCursor is also able to insert complex objects like tables
+///     or lists into the document, and it deals with creating selections
+///     and applying changes to selected text.
+/// 
+///     By default the text edit wraps words at whitespace to fit within
+///     the text edit widget. The setLineWrapMode() function is used to
+///     specify the kind of line wrap you want, or \l NoWrap if you don't
+///     want any wrapping. Call setLineWrapMode() to set a fixed pixel width
+///     \l FixedPixelWidth, or character column (e.g. 80 column) \l
+///     FixedColumnWidth with the pixels or columns specified with
+///     setLineWrapColumnOrWidth(). If you use word wrap to the widget's width
+///     \l WidgetWidth, you can specify whether to break on whitespace or
+///     anywhere with setWordWrapMode().
+/// 
+///     The find() function can be used to find and select a given string
+///     within the text.
+/// 
+///     If you want to limit the total number of paragraphs in a QTextEdit,
+///     as for example it is often useful in a log viewer, then you can use
+///     QTextDocument's maximumBlockCount property for that.
+/// 
+///     \section2 Read-only Key Bindings
+/// 
+///     When QTextEdit is used read-only the key bindings are limited to
+///     navigation, and text may only be selected with the mouse:
+///     \table
+///     \header \li Keypresses \li Action
+///     \row \li Up        \li Moves one line up.
+///     \row \li Down        \li Moves one line down.
+///     \row \li Left        \li Moves one character to the left.
+///     \row \li Right        \li Moves one character to the right.
+///     \row \li PageUp        \li Moves one (viewport) page up.
+///     \row \li PageDown        \li Moves one (viewport) page down.
+///     \row \li Home        \li Moves to the beginning of the text.
+///     \row \li End                \li Moves to the end of the text.
+///     \row \li Alt+Wheel
+///          \li Scrolls the page horizontally (the Wheel is the mouse wheel).
+///     \row \li Ctrl+Wheel        \li Zooms the text.
+///     \row \li Ctrl+A            \li Selects all text.
+///     \endtable
+/// 
+///     The text edit may be able to provide some meta-information. For
+///     example, the documentTitle() function will return the text from
+///     within HTML \c{<title>} tags.
+/// 
+///     \note Zooming into HTML documents only works if the font-size is not set to a fixed size.
+/// 
+///     \section1 Using QTextEdit as an Editor
+/// 
+///     All the information about using QTextEdit as a display widget also
+///     applies here.
+/// 
+///     The current char format's attributes are set with setFontItalic(),
+///     setFontWeight(), setFontUnderline(), setFontFamily(),
+///     setFontPointSize(), setTextColor() and setCurrentFont(). The current
+///     paragraph's alignment is set with setAlignment().
+/// 
+///     Selection of text is handled by the QTextCursor class, which provides
+///     functionality for creating selections, retrieving the text contents or
+///     deleting selections. You can retrieve the object that corresponds with
+///     the user-visible cursor using the textCursor() method. If you want to set
+///     a selection in QTextEdit just create one on a QTextCursor object and
+///     then make that cursor the visible cursor using setTextCursor(). The selection
+///     can be copied to the clipboard with copy(), or cut to the clipboard with
+///     cut(). The entire text can be selected using selectAll().
+/// 
+///     When the cursor is moved and the underlying formatting attributes change,
+///     the currentCharFormatChanged() signal is emitted to reflect the new attributes
+///     at the new cursor position.
+/// 
+///     The textChanged() signal is emitted whenever the text changes (as a result
+///     of setText() or through the editor itself).
+/// 
+///     QTextEdit holds a QTextDocument object which can be retrieved using the
+///     document() method. You can also set your own document object using setDocument().
+/// 
+///     QTextDocument provides an \l {QTextDocument::isModified()}{isModified()}
+///     function which will return true if the text has been modified since it was
+///     either loaded or since the last call to setModified with false as argument.
+///     In addition it provides methods for undo and redo.
+/// 
+///     \section2 Drag and Drop
+/// 
+///     QTextEdit also supports custom drag and drop behavior. By default,
+///     QTextEdit will insert plain text, HTML and rich text when the user drops
+///     data of these MIME types onto a document. Reimplement
+///     canInsertFromMimeData() and insertFromMimeData() to add support for
+///     additional MIME types.
+/// 
+///     For example, to allow the user to drag and drop an image onto a QTextEdit,
+///     you could the implement these functions in the following way:
+/// 
+///     \snippet textdocument-imagedrop/textedit.cpp 0
+/// 
+///     We add support for image MIME types by returning true. For all other
+///     MIME types, we use the default implementation.
+/// 
+///     \snippet textdocument-imagedrop/textedit.cpp 1
+/// 
+///     We unpack the image from the QVariant held by the MIME source and insert
+///     it into the document as a resource.
+/// 
+///     \section2 Editing Key Bindings
+/// 
+///     The list of key bindings which are implemented for editing:
+///     \table
+///     \header \li Keypresses \li Action
+///     \row \li Backspace \li Deletes the character to the left of the cursor.
+///     \row \li Delete \li Deletes the character to the right of the cursor.
+///     \row \li Ctrl+C \li Copy the selected text to the clipboard.
+///     \row \li Ctrl+Insert \li Copy the selected text to the clipboard.
+///     \row \li Ctrl+K \li Deletes to the end of the line.
+///     \row \li Ctrl+V \li Pastes the clipboard text into text edit.
+///     \row \li Shift+Insert \li Pastes the clipboard text into text edit.
+///     \row \li Ctrl+X \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Shift+Delete \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Ctrl+Z \li Undoes the last operation.
+///     \row \li Ctrl+Y \li Redoes the last operation.
+///     \row \li Left \li Moves the cursor one character to the left.
+///     \row \li Ctrl+Left \li Moves the cursor one word to the left.
+///     \row \li Right \li Moves the cursor one character to the right.
+///     \row \li Ctrl+Right \li Moves the cursor one word to the right.
+///     \row \li Up \li Moves the cursor one line up.
+///     \row \li Down \li Moves the cursor one line down.
+///     \row \li PageUp \li Moves the cursor one page up.
+///     \row \li PageDown \li Moves the cursor one page down.
+///     \row \li Home \li Moves the cursor to the beginning of the line.
+///     \row \li Ctrl+Home \li Moves the cursor to the beginning of the text.
+///     \row \li End \li Moves the cursor to the end of the line.
+///     \row \li Ctrl+End \li Moves the cursor to the end of the text.
+///     \row \li Alt+Wheel \li Scrolls the page horizontally (the Wheel is the mouse wheel).
+///     \endtable
+/// 
+///     To select (mark) text hold down the Shift key whilst pressing one
+///     of the movement keystrokes, for example, \e{Shift+Right}
+///     will select the character to the right, and \e{Shift+Ctrl+Right} will select the word to the right, etc.
+/// 
+///     \sa QTextDocument, QTextCursor, {Application Example},
+///         {Syntax Highlighter Example}, {Rich Text Processing}
 [org_name(QTextEdit)]
 enum LineWrapMode {
     NoWrap,
@@ -36,8 +230,8 @@ struct TextEdit : AbstractScrollArea {
     merge_current_char_format(modifier: &TextCharFormatType),
     set_current_char_format(format: &TextCharFormatType),
     current_char_format() -> TextCharFormat,
-    auto_formatting() -> AutoFormatting,
-    set_auto_formatting(features: AutoFormatting),
+    auto_formatting() -> TextEdit::AutoFormatting,
+    set_auto_formatting(features: TextEdit::AutoFormatting),
     tab_changes_focus() -> bool,
     set_tab_changes_focus(b: bool),
     set_document_title(title: String),

@@ -1,3 +1,71 @@
+///     \class QCalendarWidget
+///     \brief The QCalendarWidget class provides a monthly based
+///     calendar widget allowing the user to select a date.
+///     \since 4.2
+/// 
+///     \ingroup advanced
+///     \inmodule QtWidgets
+/// 
+///     \image fusion-calendarwidget.png
+/// 
+///     The widget is initialized with the current month and year, but
+///     QCalendarWidget provides several public slots to change the year
+///     and month that is shown.
+/// 
+///     By default, today's date is selected, and the user can select a
+///     date using both mouse and keyboard. The currently selected date
+///     can be retrieved using the selectedDate() function. It is
+///     possible to constrain the user selection to a given date range by
+///     setting the minimumDate and maximumDate properties.
+///     Alternatively, both properties can be set in one go using the
+///     setDateRange() convenience slot. Set the \l selectionMode
+///     property to NoSelection to prohibit the user from selecting at
+///     all. Note that a date also can be selected programmatically using
+///     the setSelectedDate() slot.
+/// 
+///     The currently displayed month and year can be retrieved using the
+///     monthShown() and yearShown() functions, respectively.
+/// 
+///     A newly created calendar widget uses abbreviated day names, and
+///     both Saturdays and Sundays are marked in red. The calendar grid is
+///     not visible. The week numbers are displayed, and the first column
+///     day is the first day of the week for the calendar's locale.
+/// 
+///     The notation of the days can be altered to a single letter
+///     abbreviations ("M" for "Monday") by setting the
+///     horizontalHeaderFormat property to
+///     QCalendarWidget::SingleLetterDayNames. Setting the same property
+///     to QCalendarWidget::LongDayNames makes the header display the
+///     complete day names. The week numbers can be removed by setting
+///     the verticalHeaderFormat property to
+///     QCalendarWidget::NoVerticalHeader.  The calendar grid can be
+///     turned on by setting the gridVisible property to true using the
+///     setGridVisible() function:
+/// 
+///     \table
+///     \row \li
+///         \image qcalendarwidget-grid.png
+///     \row \li
+///         \snippet code/src_gui_widgets_qcalendarwidget.cpp 0
+///     \endtable
+/// 
+///     Finally, the day in the first column can be altered using the
+///     setFirstDayOfWeek() function.
+/// 
+///     The QCalendarWidget class also provides three signals,
+///     selectionChanged(), activated() and currentPageChanged() making it
+///     possible to respond to user interaction.
+/// 
+///     The rendering of the headers, weekdays or single days can be
+///     largely customized by setting QTextCharFormat's for some special
+///     weekday, a special date or for the rendering of the headers.
+/// 
+///     Only a subset of the properties in QTextCharFormat are used by the
+///     calendar widget. Currently, the foreground, background and font
+///     properties are used to determine the rendering of individual cells
+///     in the widget.
+/// 
+///     \sa QDate, QDateEdit, QTextCharFormat
 [org_name(QCalendarWidget)]
 enum HorizontalHeaderFormat {
     NoHorizontalHeader,

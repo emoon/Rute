@@ -1,3 +1,35 @@
+///     \class QToolBar
+/// 
+///     \brief The QToolBar class provides a movable panel that contains a
+///     set of controls.
+/// 
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     Toolbar buttons are added by adding \e actions, using addAction()
+///     or insertAction(). Groups of buttons can be separated using
+///     addSeparator() or insertSeparator(). If a toolbar button is not
+///     appropriate, a widget can be inserted instead using addWidget() or
+///     insertWidget(). Examples of suitable widgets are QSpinBox,
+///     QDoubleSpinBox, and QComboBox. When a toolbar button is pressed, it
+///     emits the actionTriggered() signal.
+/// 
+///     A toolbar can be fixed in place in a particular area (e.g., at the
+///     top of the window), or it can be movable between toolbar areas;
+///     see setMovable(), isMovable(), allowedAreas() and isAreaAllowed().
+/// 
+///     When a toolbar is resized in such a way that it is too small to
+///     show all the items it contains, an extension button will appear as
+///     the last item in the toolbar. Pressing the extension button will
+///     pop up a menu containing the items that do not currently fit in
+///     the toolbar.
+/// 
+///     When a QToolBar is not a child of a QMainWindow, it loses the ability
+///     to populate the extension pop up with widgets added to the toolbar using
+///     addWidget(). Please use widget actions created by inheriting QWidgetAction
+///     and implementing QWidgetAction::createWidget() instead.
+/// 
+///     \sa QToolButton, QMenu, QAction, {Application Example}
 struct ToolBar : Widget {
     set_movable(movable: bool),
     is_movable() -> bool,

@@ -1,3 +1,37 @@
+///     \class QToolBox
+/// 
+///     \brief The QToolBox class provides a column of tabbed widget items.
+/// 
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     A toolbox is a widget that displays a column of tabs one above the
+///     other, with the current item displayed below the current tab.
+///     Every tab has an index position within the column of tabs. A tab's
+///     item is a QWidget.
+/// 
+///     Each item has an itemText(), an optional itemIcon(), an optional
+///     itemToolTip(), and a widget(). The item's attributes can be
+///     changed with setItemText(), setItemIcon(), and
+///     setItemToolTip(). Each item can be enabled or disabled
+///     individually with setItemEnabled().
+/// 
+///     Items are added using addItem(), or inserted at particular
+///     positions using insertItem(). The total number of items is given
+///     by count(). Items can be deleted with delete, or removed from the
+///     toolbox with removeItem(). Combining removeItem() and insertItem()
+///     allows you to move items to different positions.
+/// 
+///     The index of the current item widget is returned by currentIndex(),
+///     and set with setCurrentIndex(). The index of a particular item can
+///     be found using indexOf(), and the item at a given index is returned
+///     by item().
+/// 
+///     The currentChanged() signal is emitted when the current item is
+///     changed.
+/// 
+///     \sa QTabWidget
 struct ToolBox : Frame {
     add_item(widget: *WidgetType, text: String) -> i32,
     add_item(widget: *WidgetType, icon: &IconType, text: String) -> i32,

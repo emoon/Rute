@@ -1,3 +1,42 @@
+///     \class QLCDNumber
+/// 
+///     \brief The QLCDNumber widget displays a number with LCD-like digits.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image windows-lcdnumber.png
+/// 
+///     It can display a number in just about any size. It can display
+///     decimal, hexadecimal, octal or binary numbers. It is easy to
+///     connect to data sources using the display() slot, which is
+///     overloaded to take any of five argument types.
+/// 
+///     There are also slots to change the base with setMode() and the
+///     decimal point with setSmallDecimalPoint().
+/// 
+///     QLCDNumber emits the overflow() signal when it is asked to display
+///     something beyond its range. The range is set by setDigitCount(),
+///     but setSmallDecimalPoint() also influences it. If the display is
+///     set to hexadecimal, octal or binary, the integer equivalent of the
+///     value is displayed.
+/// 
+///     These digits and other symbols can be shown: 0/O, 1, 2, 3, 4, 5/S,
+///     6, 7, 8, 9/g, minus, decimal point, A, B, C, D, E, F, h, H, L, o,
+///     P, r, u, U, Y, colon, degree sign (which is specified as single
+///     quote in the string) and space. QLCDNumber substitutes spaces for
+///     illegal characters.
+/// 
+///     It is not possible to retrieve the contents of a QLCDNumber
+///     object, although you can retrieve the numeric value with value().
+///     If you really need the text, we recommend that you connect the
+///     signals that feed the display() slot to another slot as well and
+///     store the value there.
+/// 
+///     Incidentally, QLCDNumber is the very oldest part of Qt, tracing
+///     its roots back to a BASIC program on the \l{Sinclair Spectrum}{Sinclair Spectrum}.
+/// 
+///     \sa QLabel, QFrame, {Digital Clock Example}, {Tetrix Example}
 [org_name(QLCDNumber)]
 enum Mode {
     Hex,

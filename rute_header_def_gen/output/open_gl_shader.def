@@ -18,7 +18,7 @@ struct OpenGLShader : Object {
     is_compiled() -> bool,
     log() -> String,
     shader_id() -> i32,
-    [static] has_open_gl_shaders(type: ShaderType, context: *OpenGLContextType) -> bool,
+    [static] has_open_gl_shaders(type: OpenGLShader::ShaderType, context: *OpenGLContextType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,3 +1,95 @@
+///     \class QDialogButtonBox
+///     \since 4.2
+///     \brief The QDialogButtonBox class is a widget that presents buttons in a
+///     layout that is appropriate to the current widget style.
+/// 
+///     \ingroup dialog-classes
+///     \inmodule QtWidgets
+/// 
+///     Dialogs and message boxes typically present buttons in a layout that
+///     conforms to the interface guidelines for that platform. Invariably,
+///     different platforms have different layouts for their dialogs.
+///     QDialogButtonBox allows a developer to add buttons to it and will
+///     automatically use the appropriate layout for the user's desktop
+///     environment.
+/// 
+///     Most buttons for a dialog follow certain roles. Such roles include:
+/// 
+///     \list
+///     \li Accepting or rejecting the dialog.
+///     \li Asking for help.
+///     \li Performing actions on the dialog itself (such as resetting fields or
+///        applying changes).
+///     \endlist
+/// 
+///     There can also be alternate ways of dismissing the dialog which may cause
+///     destructive results.
+/// 
+///     Most dialogs have buttons that can almost be considered standard (e.g.
+///     \uicontrol OK and \uicontrol Cancel buttons). It is sometimes convenient to create these
+///     buttons in a standard way.
+/// 
+///     There are a couple ways of using QDialogButtonBox. One ways is to create
+///     the buttons (or button texts) yourself and add them to the button box,
+///     specifying their role.
+/// 
+///     \snippet dialogs/extension/finddialog.cpp 1
+/// 
+///     Alternatively, QDialogButtonBox provides several standard buttons (e.g. OK, Cancel, Save)
+///     that you can use. They exist as flags so you can OR them together in the constructor.
+/// 
+///     \snippet dialogs/tabdialog/tabdialog.cpp 2
+/// 
+///     You can mix and match normal buttons and standard buttons.
+/// 
+///     Currently the buttons are laid out in the following way if the button box is horizontal:
+///     \table
+///     \row \li \inlineimage buttonbox-gnomelayout-horizontal.png GnomeLayout Horizontal
+///          \li Button box laid out in horizontal GnomeLayout
+///     \row \li \inlineimage buttonbox-kdelayout-horizontal.png KdeLayout Horizontal
+///          \li Button box laid out in horizontal KdeLayout
+///     \row \li \inlineimage buttonbox-maclayout-horizontal.png MacLayout Horizontal
+///          \li Button box laid out in horizontal MacLayout
+///     \row \li \inlineimage buttonbox-winlayout-horizontal.png  WinLayout Horizontal
+///          \li Button box laid out in horizontal WinLayout
+///     \endtable
+/// 
+///     The buttons are laid out the following way if the button box is vertical:
+/// 
+///     \table
+///     \row \li GnomeLayout
+///          \li KdeLayout
+///          \li MacLayout
+///          \li WinLayout
+///     \row \li \inlineimage buttonbox-gnomelayout-vertical.png GnomeLayout Vertical
+///          \li \inlineimage buttonbox-kdelayout-vertical.png KdeLayout Vertical
+///          \li \inlineimage buttonbox-maclayout-vertical.png MacLayout Vertical
+///          \li \inlineimage buttonbox-winlayout-vertical.png WinLayout Vertical
+///     \endtable
+/// 
+///     Additionally, button boxes that contain only buttons with ActionRole or
+///     HelpRole can be considered modeless and have an alternate look on \macos:
+/// 
+///     \table
+///     \row \li modeless horizontal MacLayout
+///          \li \inlineimage buttonbox-mac-modeless-horizontal.png Screenshot of modeless horizontal MacLayout
+///     \row \li modeless vertical MacLayout
+///          \li \inlineimage buttonbox-mac-modeless-vertical.png Screenshot of modeless vertical MacLayout
+///     \endtable
+/// 
+///     When a button is clicked in the button box, the clicked() signal is emitted
+///     for the actual button is that is pressed. For convenience, if the button
+///     has an AcceptRole, RejectRole, or HelpRole, the accepted(), rejected(), or
+///     helpRequested() signals are emitted respectively.
+/// 
+///     If you want a specific button to be default you need to call
+///     QPushButton::setDefault() on it yourself. However, if there is no default
+///     button set and to preserve which button is the default button across
+///     platforms when using the QPushButton::autoDefault property, the first push
+///     button with the accept role is made the default button when the
+///     QDialogButtonBox is shown,
+/// 
+///     \sa QMessageBox, QPushButton, QDialog
 [org_name(QDialogButtonBox)]
 enum ButtonRole {
     InvalidRole,
@@ -57,8 +149,8 @@ struct DialogButtonBox : Widget {
     clear(),
     buttons() -> [AbstractButton?],
     button_role(button: *AbstractButtonType) -> DialogButtonBox::ButtonRole,
-    set_standard_buttons(buttons: StandardButtons),
-    standard_buttons() -> StandardButtons,
+    set_standard_buttons(buttons: DialogButtonBox::StandardButtons),
+    standard_buttons() -> DialogButtonBox::StandardButtons,
     standard_button(button: *AbstractButtonType) -> DialogButtonBox::StandardButton,
     button(which: DialogButtonBox::StandardButton) -> PushButton?,
     set_center_buttons(center: bool),

@@ -10,8 +10,8 @@ struct PlatformCursor : Object {
     [event] clear_override_cursor(),
     [event] pos() -> Point,
     [event] set_pos(pos: &PointType),
-    [static] capabilities() -> Capabilities,
-    [static] set_capabilities(c: Capabilities),
+    [static] capabilities() -> PlatformCursor::Capabilities,
+    [static] set_capabilities(c: PlatformCursor::Capabilities),
     [static] set_capability(c: PlatformCursor::Capability),
 }
 

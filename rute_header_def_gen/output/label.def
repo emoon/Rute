@@ -1,3 +1,78 @@
+///     \class QLabel
+///     \brief The QLabel widget provides a text or image display.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image windows-label.png
+/// 
+///     QLabel is used for displaying text or an image. No user
+///     interaction functionality is provided. The visual appearance of
+///     the label can be configured in various ways, and it can be used
+///     for specifying a focus mnemonic key for another widget.
+/// 
+///     A QLabel can contain any of the following content types:
+/// 
+///     \table
+///     \header \li Content \li Setting
+///     \row \li Plain text
+///          \li Pass a QString to setText().
+///     \row \li Rich text
+///          \li Pass a QString that contains rich text to setText().
+///     \row \li A pixmap
+///          \li Pass a QPixmap to setPixmap().
+///     \row \li A movie
+///          \li Pass a QMovie to setMovie().
+///     \row \li A number
+///          \li Pass an \e int or a \e double to setNum(), which converts
+///             the number to plain text.
+///     \row \li Nothing
+///          \li The same as an empty plain text. This is the default. Set
+///             by clear().
+///     \endtable
+/// 
+///     \warning When passing a QString to the constructor or calling setText(),
+///     make sure to sanitize your input, as QLabel tries to guess whether it
+///     displays the text as plain text or as rich text, a subset of HTML 4
+///     markup. You may want to call
+///     setTextFormat() explicitly, e.g. in case you expect the text to be in
+///     plain format but cannot control the text source (for instance when
+///     displaying data loaded from the Web).
+/// 
+///     When the content is changed using any of these functions, any
+///     previous content is cleared.
+/// 
+///     By default, labels display \l{alignment}{left-aligned, vertically-centered}
+///     text and images, where any tabs in the text to be displayed are
+///     \l{Qt::TextExpandTabs}{automatically expanded}. However, the look
+///     of a QLabel can be adjusted and fine-tuned in several ways.
+/// 
+///     The positioning of the content within the QLabel widget area can
+///     be tuned with setAlignment() and setIndent(). Text content can
+///     also wrap lines along word boundaries with setWordWrap(). For
+///     example, this code sets up a sunken panel with a two-line text in
+///     the bottom right corner (both lines being flush with the right
+///     side of the label):
+/// 
+///     \snippet code/src_gui_widgets_qlabel.cpp 0
+/// 
+///     The properties and functions QLabel inherits from QFrame can also
+///     be used to specify the widget frame to be used for any given label.
+/// 
+///     A QLabel is often used as a label for an interactive widget. For
+///     this use QLabel provides a useful mechanism for adding an
+///     mnemonic (see QKeySequence) that will set the keyboard focus to
+///     the other widget (called the QLabel's "buddy"). For example:
+/// 
+///     \snippet code/src_gui_widgets_qlabel.cpp 1
+/// 
+///     In this example, keyboard focus is transferred to the label's
+///     buddy (the QLineEdit) when the user presses Alt+P. If the buddy
+///     was a button (inheriting from QAbstractButton), triggering the
+///     mnemonic would emulate a button click.
+/// 
+///     \sa QLineEdit, QTextEdit, QPixmap, QMovie,
+///         {fowler}{GUI Design Handbook: Label}
 struct Label : Frame {
     text() -> String,
     pixmap() -> Pixmap?,

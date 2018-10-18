@@ -1,3 +1,20 @@
+///     \class QFocusFrame
+///     \brief The QFocusFrame widget provides a focus frame which can be
+///     outside of a widget's normal paintable area.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     Normally an application will not need to create its own
+///     QFocusFrame as QStyle will handle this detail for
+///     you. A style writer can optionally use a QFocusFrame to have a
+///     focus area outside of the widget's paintable geometry. In this way
+///     space need not be reserved for the widget to have focus but only
+///     set on a QWidget with QFocusFrame::setWidget. It is, however,
+///     legal to create your own QFocusFrame on a custom widget and set
+///     its geometry manually via QWidget::setGeometry however you will
+///     not get auto-placement when the focused widget changes size or
+///     placement.
 struct FocusFrame : Widget {
     set_widget(widget: *WidgetType),
     widget() -> Widget?,

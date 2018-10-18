@@ -13,7 +13,7 @@ enum ResultFlag {
 
 struct GestureRecognizer {
     [event] create(target: *ObjectType) -> Gesture?,
-    [event] recognize(state: *GestureType, watched: *ObjectType, event: *EventType) -> Result,
+    [event] recognize(state: *GestureType, watched: *ObjectType, event: *EventType) -> GestureRecognizer::Result,
     [event] reset(state: *GestureType),
     [static] register_recognizer(recognizer: *GestureRecognizerType) -> Rute::GestureType,
     [static] unregister_recognizer(type: Rute::GestureType),

@@ -18,15 +18,16 @@ struct File : FileDevice {
     [static] link(oldname: String, new_name: String) -> bool,
     copy(new_name: String) -> bool,
     [static] copy(file_name: String, new_name: String) -> bool,
-    [event] open(flags: OpenMode) -> bool,
-    open(fd: i32, io_flags: OpenMode, handle_flags: FileHandleFlags) -> bool,
+    [event] open(flags: IODevice::OpenMode) -> bool,
+    open(f: *i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
+    open(fd: i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
     [event] size() -> i64,
     [event] resize(sz: i64) -> bool,
     [static] resize(filename: String, sz: i64) -> bool,
-    [event] permissions() -> Permissions,
-    [static] permissions(filename: String) -> Permissions,
-    [event] set_permissions(permission_spec: Permissions) -> bool,
-    [static] set_permissions(filename: String, permission_spec: Permissions) -> bool,
+    [event] permissions() -> FileDevice::Permissions,
+    [static] permissions(filename: String) -> FileDevice::Permissions,
+    [event] set_permissions(permission_spec: FileDevice::Permissions) -> bool,
+    [static] set_permissions(filename: String, permission_spec: FileDevice::Permissions) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

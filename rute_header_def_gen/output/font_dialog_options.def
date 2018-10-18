@@ -17,8 +17,8 @@ struct FontDialogOptions {
     set_window_title(arg0: String),
     set_option(option: FontDialogOptions::FontDialogOption, on: bool),
     test_option(option: FontDialogOptions::FontDialogOption) -> bool,
-    set_options(options: FontDialogOptions),
-    options() -> FontDialogOptions,
+    set_options(options: FontDialogOptions::FontDialogOptions),
+    options() -> FontDialogOptions::FontDialogOptions,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

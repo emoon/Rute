@@ -21,7 +21,7 @@ struct GraphicsEffect : Object {
     update(),
     [signal] enabled_changed(enabled: bool),
     [event] draw(painter: *PainterType),
-    [event] source_changed(flags: ChangeFlags),
+    [event] source_changed(flags: GraphicsEffect::ChangeFlags),
     update_bounding_rect(),
     source_is_pixmap() -> bool,
     source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,

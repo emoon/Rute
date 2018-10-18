@@ -1,3 +1,103 @@
+///     \class QAbstractButton
+/// 
+///     \brief The QAbstractButton class is the abstract base class of
+///     button widgets, providing functionality common to buttons.
+/// 
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     This class implements an \e abstract button.
+///     Subclasses of this class handle user actions, and specify how the button
+///     is drawn.
+/// 
+///     QAbstractButton provides support for both push buttons and checkable
+///     (toggle) buttons. Checkable buttons are implemented in the QRadioButton
+///     and QCheckBox classes. Push buttons are implemented in the
+///     QPushButton and QToolButton classes; these also provide toggle
+///     behavior if required.
+/// 
+///     Any button can display a label containing text and an icon. setText()
+///     sets the text; setIcon() sets the icon. If a button is disabled, its label
+///     is changed to give the button a "disabled" appearance.
+/// 
+///     If the button is a text button with a string containing an
+///     ampersand ('&'), QAbstractButton automatically creates a shortcut
+///     key. For example:
+/// 
+///     \snippet code/src_gui_widgets_qabstractbutton.cpp 0
+/// 
+///     The \uicontrol Alt+C shortcut is assigned to the button, i.e., when the
+///     user presses \uicontrol Alt+C the button will call animateClick(). See
+///     the \l {QShortcut#mnemonic}{QShortcut} documentation for details. To
+///     display an actual ampersand, use '&&'.
+/// 
+///     You can also set a custom shortcut key using the setShortcut()
+///     function. This is useful mostly for buttons that do not have any
+///     text, and therefore can't have any automatic shortcut.
+/// 
+///     \snippet code/src_gui_widgets_qabstractbutton.cpp 1
+/// 
+///     All the buttons provided by Qt (QPushButton, QToolButton,
+///     QCheckBox, and QRadioButton) can display both \l text and \l{icon}{icons}.
+/// 
+///     A button can be made the default button in a dialog by means of
+///     QPushButton::setDefault() and QPushButton::setAutoDefault().
+/// 
+///     QAbstractButton provides most of the states used for buttons:
+/// 
+///     \list
+/// 
+///     \li isDown() indicates whether the button is \e pressed down.
+/// 
+///     \li isChecked() indicates whether the button is \e checked.  Only
+///     checkable buttons can be checked and unchecked (see below).
+/// 
+///     \li isEnabled() indicates whether the button can be pressed by the
+///     user. \note As opposed to other widgets, buttons derived from
+///     QAbstractButton accept mouse and context menu events
+///     when disabled.
+/// 
+///     \li setAutoRepeat() sets whether the button will auto-repeat if the
+///     user holds it down. \l autoRepeatDelay and \l autoRepeatInterval
+///     define how auto-repetition is done.
+/// 
+///     \li setCheckable() sets whether the button is a toggle button or not.
+/// 
+///     \endlist
+/// 
+///     The difference between isDown() and isChecked() is as follows.
+///     When the user clicks a toggle button to check it, the button is first
+///     \e pressed then released into the \e checked state. When the user
+///     clicks it again (to uncheck it), the button moves first to the
+///     \e pressed state, then to the \e unchecked state (isChecked() and
+///     isDown() are both false).
+/// 
+///     QAbstractButton provides four signals:
+/// 
+///     \list 1
+/// 
+///     \li pressed() is emitted when the left mouse button is pressed while
+///     the mouse cursor is inside the button.
+/// 
+///     \li released() is emitted when the left mouse button is released.
+/// 
+///     \li clicked() is emitted when the button is first pressed and then
+///     released, when the shortcut key is typed, or when click() or
+///     animateClick() is called.
+/// 
+///     \li toggled() is emitted when the state of a toggle button changes.
+/// 
+///     \endlist
+/// 
+///     To subclass QAbstractButton, you must reimplement at least
+///     paintEvent() to draw the button's outline and its text or pixmap. It
+///     is generally advisable to reimplement sizeHint() as well, and
+///     sometimes hitButton() (to determine whether a button press is within
+///     the button). For buttons with more than two states (like tri-state
+///     buttons), you will also have to reimplement checkStateSet() and
+///     nextCheckState().
+/// 
+///     \sa QButtonGroup
 struct AbstractButton : Widget {
     set_text(text: String),
     text() -> String,

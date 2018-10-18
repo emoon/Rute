@@ -1,3 +1,75 @@
+///     \class QTabBar
+///     \brief The QTabBar class provides a tab bar, e.g. for use in tabbed dialogs.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     QTabBar is straightforward to use; it draws the tabs using one of
+///     the predefined \l{QTabBar::Shape}{shapes}, and emits a
+///     signal when a tab is selected. It can be subclassed to tailor the
+///     look and feel. Qt also provides a ready-made \l{QTabWidget}.
+/// 
+///     Each tab has a tabText(), an optional tabIcon(), an optional
+///     tabToolTip(), optional tabWhatsThis() and optional tabData().
+///     The tabs's attributes can be changed with setTabText(), setTabIcon(),
+///     setTabToolTip(), setTabWhatsThis and setTabData(). Each tabs can be
+///     enabled or disabled individually with setTabEnabled().
+/// 
+///     Each tab can display text in a distinct color. The current text color
+///     for a tab can be found with the tabTextColor() function. Set the text
+///     color for a particular tab with setTabTextColor().
+/// 
+///     Tabs are added using addTab(), or inserted at particular positions
+///     using insertTab(). The total number of tabs is given by
+///     count(). Tabs can be removed from the tab bar with
+///     removeTab(). Combining removeTab() and insertTab() allows you to
+///     move tabs to different positions.
+/// 
+///     The \l shape property defines the tabs' appearance. The choice of
+///     shape is a matter of taste, although tab dialogs (for preferences
+///     and similar) invariably use \l RoundedNorth.
+///     Tab controls in windows other than dialogs almost
+///     always use either \l RoundedSouth or \l TriangularSouth. Many
+///     spreadsheets and other tab controls in which all the pages are
+///     essentially similar use \l TriangularSouth, whereas \l
+///     RoundedSouth is used mostly when the pages are different (e.g. a
+///     multi-page tool palette). The default in QTabBar is \l
+///     RoundedNorth.
+/// 
+///     The most important part of QTabBar's API is the currentChanged()
+///     signal.  This is emitted whenever the current tab changes (even at
+///     startup, when the current tab changes from 'none'). There is also
+///     a slot, setCurrentIndex(), which can be used to select a tab
+///     programmatically. The function currentIndex() returns the index of
+///     the current tab, \l count holds the number of tabs.
+/// 
+///     QTabBar creates automatic mnemonic keys in the manner of QAbstractButton;
+///     e.g. if a tab's label is "\&Graphics", Alt+G becomes a shortcut
+///     key for switching to that tab.
+/// 
+///     The following virtual functions may need to be reimplemented in
+///     order to tailor the look and feel or store extra data with each
+///     tab:
+/// 
+///     \list
+///     \li tabSizeHint() calcuates the size of a tab.
+///     \li tabInserted() notifies that a new tab was added.
+///     \li tabRemoved() notifies that a tab was removed.
+///     \li tabLayoutChange() notifies that the tabs have been re-laid out.
+///     \li paintEvent() paints all tabs.
+///     \endlist
+/// 
+///     For subclasses, you might also need the tabRect() functions which
+///     returns the visual geometry of a single tab.
+/// 
+///     \table 100%
+///     \row \li \inlineimage fusion-tabbar.png Screenshot of a Fusion style tab bar
+///          \li A tab bar shown in the \l{Qt Widget Gallery}{Fusion widget style}.
+///     \row \li \inlineimage fusion-tabbar-truncated.png Screenshot of a truncated Fusion tab bar
+///          \li A truncated tab bar shown in the Fusion widget style.
+///     \endtable
+/// 
+///     \sa QTabWidget
 [org_name(QTabBar)]
 enum Shape {
     RoundedNorth,

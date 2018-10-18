@@ -1,3 +1,141 @@
+///     \class QMainWindow
+///     \brief The QMainWindow class provides a main application
+///            window.
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Qt Main Window Framework
+/// 
+///     A main window provides a framework for building an
+///     application's user interface. Qt has QMainWindow and its \l{Main
+///     Window and Related Classes}{related classes} for main window
+///     management. QMainWindow has its own layout to which you can add
+///     \l{QToolBar}s, \l{QDockWidget}s, a
+///     QMenuBar, and a QStatusBar. The layout has a center area that can
+///     be occupied by any kind of widget. You can see an image of the
+///     layout below.
+/// 
+///     \image mainwindowlayout.png
+/// 
+///     \note Creating a main window without a central widget is not supported.
+///     You must have a central widget even if it is just a placeholder.
+/// 
+///     \section1 Creating Main Window Components
+/// 
+///     A central widget will typically be a standard Qt widget such
+///     as a QTextEdit or a QGraphicsView. Custom widgets can also be
+///     used for advanced applications. You set the central widget with \c
+///     setCentralWidget().
+/// 
+///     Main windows have either a single (SDI) or multiple (MDI)
+///     document interface. You create MDI applications in Qt by using a
+///     QMdiArea as the central widget.
+/// 
+///     We will now examine each of the other widgets that can be
+///     added to a main window. We give examples on how to create and add
+///     them.
+/// 
+///     \section2 Creating Menus
+/// 
+///     Qt implements menus in QMenu and QMainWindow keeps them in a
+///     QMenuBar. \l{QAction}{QAction}s are added to the menus, which
+///     display them as menu items.
+/// 
+///     You can add new menus to the main window's menu bar by calling
+///     \c menuBar(), which returns the QMenuBar for the window, and then
+///     add a menu with QMenuBar::addMenu().
+/// 
+///     QMainWindow comes with a default menu bar, but you can also
+///     set one yourself with \c setMenuBar(). If you wish to implement a
+///     custom menu bar (i.e., not use the QMenuBar widget), you can set it
+///     with \c setMenuWidget().
+/// 
+///     An example of how to create menus follows:
+/// 
+///     \code
+///     void MainWindow::createMenus()
+///     {
+///         fileMenu = menuBar()->addMenu(tr("&File"));
+///         fileMenu->addAction(newAct);
+///         fileMenu->addAction(openAct);
+///         fileMenu->addAction(saveAct);
+///     \endcode
+/// 
+///     The \c createPopupMenu() function creates popup menus when the
+///     main window receives context menu events.  The default
+///     implementation generates a menu with the checkable actions from
+///     the dock widgets and toolbars. You can reimplement \c
+///     createPopupMenu() for a custom menu.
+/// 
+///     \section2 Creating Toolbars
+/// 
+///     Toolbars are implemented in the QToolBar class.  You add a
+///     toolbar to a main window with \c addToolBar().
+/// 
+///     You control the initial position of toolbars by assigning them
+///     to a specific Qt::ToolBarArea. You can split an area by inserting
+///     a toolbar break - think of this as a line break in text editing -
+///     with \c addToolBarBreak() or \c insertToolBarBreak(). You can also
+///     restrict placement by the user with QToolBar::setAllowedAreas()
+///     and QToolBar::setMovable().
+/// 
+///     The size of toolbar icons can be retrieved with \c iconSize().
+///     The sizes are platform dependent; you can set a fixed size with \c
+///     setIconSize(). You can alter the appearance of all tool buttons in
+///     the toolbars with \c setToolButtonStyle().
+/// 
+///     An example of toolbar creation follows:
+/// 
+///     \code
+///     void MainWindow::createToolBars()
+///     {
+///         fileToolBar = addToolBar(tr("File"));
+///         fileToolBar->addAction(newAct);
+///     \endcode
+/// 
+///     \section2 Creating Dock Widgets
+/// 
+///     Dock widgets are implemented in the QDockWidget class. A dock
+///     widget is a window that can be docked into the main window.  You
+///     add dock widgets to a main window with \c addDockWidget().
+/// 
+///     There are four dock widget areas as given by the
+///     Qt::DockWidgetArea enum: left, right, top, and bottom. You can
+///     specify which dock widget area that should occupy the corners
+///     where the areas overlap with \c setCorner(). By default
+///     each area can only contain one row (vertical or horizontal) of
+///     dock widgets, but if you enable nesting with \c
+///     setDockNestingEnabled(), dock widgets can be added in either
+///     direction.
+/// 
+///     Two dock widgets may also be stacked on top of each other. A
+///     QTabBar is then used to select which of the widgets should be
+///     displayed.
+/// 
+///     We give an example of how to create and add dock widgets to a
+///     main window:
+/// 
+///     \snippet mainwindowsnippet.cpp 0
+/// 
+///     \section2 The Status Bar
+/// 
+///     You can set a status bar with \c setStatusBar(), but one is
+///     created the first time \c statusBar() (which returns the main
+///     window's status bar) is called. See QStatusBar for information on
+///     how to use it.
+/// 
+///     \section1 Storing State
+/// 
+///     QMainWindow can store the state of its layout with \c
+///     saveState(); it can later be retrieved with \c restoreState(). It
+///     is the position and size (relative to the size of the main window)
+///     of the toolbars and dock widgets that are stored.
+/// 
+///     \sa QMenuBar, QToolBar, QStatusBar, QDockWidget, {Application
+///     Example}, {Dock Widgets Example}, {MDI Example}, {SDI Example},
+///     {Menus Example}
 [org_name(QMainWindow)]
 enum DockOption {
     AnimatedDocks,
@@ -21,8 +159,8 @@ struct MainWindow : Widget {
     set_tab_shape(tab_shape: TabWidget::TabShape),
     tab_position(area: Rute::DockWidgetArea) -> TabWidget::TabPosition,
     set_tab_position(areas: Rute::DockWidgetAreas, tab_position: TabWidget::TabPosition),
-    set_dock_options(options: DockOptions),
-    dock_options() -> DockOptions,
+    set_dock_options(options: MainWindow::DockOptions),
+    dock_options() -> MainWindow::DockOptions,
     is_separator(pos: &PointType) -> bool,
     menu_bar() -> MenuBar?,
     set_menu_bar(menubar: *MenuBarType),

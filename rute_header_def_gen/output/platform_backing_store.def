@@ -13,7 +13,7 @@ struct PlatformBackingStore {
     [event] flush(window: *WindowType, region: &RegionType, offset: &PointType),
     [event] compose_and_flush(window: *WindowType, region: &RegionType, offset: &PointType, textures: *PlatformTextureListType, translucent_background: bool),
     [event] to_image() -> Image,
-    to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: *TextureFlags) -> i32,
+    to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: PlatformBackingStore::TextureFlags *) -> i32,
     [event] graphics_buffer() -> PlatformGraphicsBuffer?,
     [event] resize(size: &SizeType, static_contents: &RegionType),
     [event] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,

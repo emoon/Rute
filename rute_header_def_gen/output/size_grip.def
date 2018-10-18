@@ -1,3 +1,43 @@
+///     \class QSizeGrip
+/// 
+///     \brief The QSizeGrip class provides a resize handle for resizing top-level windows.
+/// 
+///     \ingroup mainwindow-classes
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     This widget works like the standard Windows resize handle. In the
+///     X11 version this resize handle generally works differently from
+///     the one provided by the system if the X11 window manager does not
+///     support necessary modern post-ICCCM specifications.
+/// 
+///     Put this widget anywhere in a widget tree and the user can use it
+///     to resize the top-level window or any widget with the Qt::SubWindow
+///     flag set. Generally, this should be in the lower right-hand corner.
+/// 
+///     Note that QStatusBar already uses this widget, so if you have a
+///     status bar (e.g., you are using QMainWindow), then you don't need
+///     to use this widget explicitly. The same goes for QDialog, for which
+///     you can just call \l {QDialog::setSizeGripEnabled()}
+///     {QDialog::setSizeGripEnabled()}.
+/// 
+///     On some platforms the size grip automatically hides itself when the
+///     window is shown full screen or maximised.
+/// 
+///     \table 50%
+///     \row \li \inlineimage fusion-statusbar-sizegrip.png Screenshot of a Fusion style size grip
+///     \li A size grip widget at the bottom-right corner of a main window, shown in the
+///     \l{Qt Widget Gallery}{Fusion widget style}.
+///     \endtable
+/// 
+///     The QSizeGrip class inherits QWidget and reimplements the \l
+///     {QWidget::mousePressEvent()}{mousePressEvent()} and \l
+///     {QWidget::mouseMoveEvent()}{mouseMoveEvent()} functions to feature
+///     the resize functionality, and the \l
+///     {QWidget::paintEvent()}{paintEvent()} function to render the
+///     size grip widget.
+/// 
+///     \sa QStatusBar, QWidget::windowState()
 struct SizeGrip : Widget {
     [event] size_hint() -> Size,
     [event] set_visible(arg0: bool),

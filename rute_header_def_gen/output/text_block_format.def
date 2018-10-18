@@ -29,8 +29,8 @@ struct TextBlockFormat : TextFormat {
     line_height_type() -> i32,
     set_non_breakable_lines(b: bool),
     non_breakable_lines() -> bool,
-    set_page_break_policy(flags: PageBreakFlags),
-    page_break_policy() -> PageBreakFlags,
+    set_page_break_policy(flags: TextFormat::PageBreakFlags),
+    page_break_policy() -> TextFormat::PageBreakFlags,
     set_tab_positions(tabs: onst QList<QTextOption::Tab> &),
     tab_positions() -> List<QTextOption::Tab>,
 }

@@ -1,3 +1,114 @@
+///     \class QMenuBar
+///     \brief The QMenuBar class provides a horizontal menu bar.
+/// 
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     A menu bar consists of a list of pull-down menu items. You add
+///     menu items with addMenu(). For example, asuming that \c menubar
+///     is a pointer to a QMenuBar and \c fileMenu is a pointer to a
+///     QMenu, the following statement inserts the menu into the menu bar:
+///     \snippet code/src_gui_widgets_qmenubar.cpp 0
+/// 
+///     The ampersand in the menu item's text sets Alt+F as a shortcut for
+///     this menu. (You can use "\&\&" to get a real ampersand in the menu
+///     bar.)
+/// 
+///     There is no need to lay out a menu bar. It automatically sets its
+///     own geometry to the top of the parent widget and changes it
+///     appropriately whenever the parent is resized.
+/// 
+///     \section1 Usage
+/// 
+///     In most main window style applications you would use the
+///     \l{QMainWindow::}{menuBar()} function provided in QMainWindow,
+///     adding \l{QMenu}s to the menu bar and adding \l{QAction}s to the
+///     pop-up menus.
+/// 
+///     Example (from the \l{mainwindows/menus}{Menus} example):
+/// 
+///     \snippet mainwindows/menus/mainwindow.cpp 9
+/// 
+///     Menu items may be removed with removeAction().
+/// 
+///     Widgets can be added to menus by using instances of the QWidgetAction
+///     class to hold them. These actions can then be inserted into menus
+///     in the usual way; see the QMenu documentation for more details.
+/// 
+///     \section1 Platform Dependent Look and Feel
+/// 
+///     Different platforms have different requirements for the appearance
+///     of menu bars and their behavior when the user interacts with them.
+///     For example, Windows systems are often configured so that the
+///     underlined character mnemonics that indicate keyboard shortcuts
+///     for items in the menu bar are only shown when the \uicontrol{Alt} key is
+///     pressed.
+/// 
+///     \section1 QMenuBar as a Global Menu Bar
+/// 
+///     On \macos and on certain Linux desktop environments such as
+///     Ubuntu Unity, QMenuBar is a wrapper for using the system-wide menu bar.
+///     If you have multiple menu bars in one dialog the outermost menu bar
+///     (normally inside a widget with widget flag Qt::Window) will
+///     be used for the system-wide menu bar.
+/// 
+///     Qt for \macos also provides a menu bar merging feature to make
+///     QMenuBar conform more closely to accepted \macos menu bar layout.
+///     The merging functionality is based on string matching the title of
+///     a QMenu entry. These strings are translated (using QObject::tr())
+///     in the "QMenuBar" context. If an entry is moved its slots will still
+///     fire as if it was in the original place. The table below outlines
+///     the strings looked for and where the entry is placed if matched:
+/// 
+///     \table
+///     \header \li String matches \li Placement \li Notes
+///     \row \li about.*
+///          \li Application Menu | About <application name>
+///          \li The application name is fetched from the \c {Info.plist} file
+///             (see note below). If this entry is not found no About item
+///             will appear in the Application Menu.
+///     \row \li config, options, setup, settings or preferences
+///          \li Application Menu | Preferences
+///          \li If this entry is not found the Settings item will be disabled
+///     \row \li quit or exit
+///          \li Application Menu | Quit <application name>
+///          \li If this entry is not found a default Quit item will be
+///             created to call QCoreApplication::quit()
+///     \endtable
+/// 
+///     You can override this behavior by using the QAction::menuRole()
+///     property.
+/// 
+///     If you want all windows in a Mac application to share one menu
+///     bar, you must create a menu bar that does not have a parent.
+///     Create a parent-less menu bar this way:
+/// 
+///     \snippet code/src_gui_widgets_qmenubar.cpp 1
+/// 
+///     \b{Note:} Do \e{not} call QMainWindow::menuBar() to create the
+///     shared menu bar, because that menu bar will have the QMainWindow
+///     as its parent. That menu bar would only be displayed for the
+///     parent QMainWindow.
+/// 
+///     \b{Note:} The text used for the application name in the \macos menu
+///     bar is obtained from the value set in the \c{Info.plist} file in
+///     the application's bundle. See \l{Qt for macOS - Deployment}
+///     for more information.
+/// 
+///     \b{Note:} On Linux, if the com.canonical.AppMenu.Registrar
+///     service is available on the D-Bus session bus, then Qt will
+///     communicate with it to install the application's menus into the
+///     global menu bar, as described.
+/// 
+///     \section1 Examples
+/// 
+///     The \l{mainwindows/menus}{Menus} example shows how to use QMenuBar
+///     and QMenu.  The other \l{Main Window Examples}{main window
+///     application examples} also provide menus using these classes.
+/// 
+///     \sa QMenu, QShortcut, QAction,
+///         {http://developer.apple.com/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGIntro/XHIGIntro.html}{Introduction to Apple Human Interface Guidelines},
+///         {fowler}{GUI Design Handbook: Menu Bar}, {Menus Example}
 struct MenuBar : Widget {
     add_action(text: String) -> Action?,
     add_action(text: String, receiver: *ObjectType, member: *char) -> Action?,

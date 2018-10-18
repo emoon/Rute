@@ -1,3 +1,39 @@
+///   \class QDateTimeEdit
+///   \brief The QDateTimeEdit class provides a widget for editing dates and times.
+/// 
+///   \ingroup basicwidgets
+///   \inmodule QtWidgets
+/// 
+///   \image windows-datetimeedit.png
+/// 
+///   QDateTimeEdit allows the user to edit dates by using the keyboard or
+///   the arrow keys to increase and decrease date and time values. The
+///   arrow keys can be used to move from section to section within the
+///   QDateTimeEdit box. Dates and times appear in accordance with the
+///   format set; see setDisplayFormat().
+/// 
+///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 0
+/// 
+///   Here we've created a new QDateTimeEdit object initialized with
+///   today's date, and restricted the valid date range to today plus or
+///   minus 365 days. We've set the order to month, day, year.
+/// 
+///   The minimum value for QDateTimeEdit is 14 September 1752. You can
+///   change this by calling setMinimumDate(), taking into account that
+///   the minimum value for QDate is 2 January 4713BC.
+/// 
+///   Other useful functions are setMaximumDate(), setMinimumTime()
+///   and setMaximumTime().
+/// 
+///   \section1 Using a Pop-up Calendar Widget
+/// 
+///   QDateTimeEdit can be configured to allow a QCalendarWidget to be used
+///   to select dates. This is enabled by setting the calendarPopup property.
+///   Additionally, you can supply a custom calendar widget for use as the
+///   calendar pop-up by calling the setCalendarWidget() function. The existing
+///   calendar widget can be retrieved with calendarWidget().
+/// 
+///   \sa QDateEdit, QTimeEdit, QDate, QTime
 [org_name(QDateTimeEdit)]
 enum Section {
     NoSection,
@@ -38,7 +74,7 @@ struct DateTimeEdit : AbstractSpinBox {
     set_maximum_time(max: &TimeType),
     clear_maximum_time(),
     set_time_range(min: &TimeType, max: &TimeType),
-    displayed_sections() -> Sections,
+    displayed_sections() -> DateTimeEdit::Sections,
     current_section() -> DateTimeEdit::Section,
     section_at(index: i32) -> DateTimeEdit::Section,
     set_current_section(section: DateTimeEdit::Section),
@@ -73,7 +109,7 @@ struct DateTimeEdit : AbstractSpinBox {
     [event] fixup(input: String),
     [event] date_time_from_text(text: String) -> DateTime,
     [event] text_from_date_time(dt: &DateTimeType) -> String,
-    [event] step_enabled() -> StepEnabled,
+    [event] step_enabled() -> AbstractSpinBox::StepEnabled,
     [event] mouse_press_event(event: *MouseEventType),
     [event] paint_event(event: *PaintEventType),
     init_style_option(option: *StyleOptionSpinBoxType),

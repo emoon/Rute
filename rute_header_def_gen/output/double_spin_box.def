@@ -1,3 +1,57 @@
+///     \class QDoubleSpinBox
+///     \brief The QDoubleSpinBox class provides a spin box widget that
+///     takes doubles.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     QDoubleSpinBox allows the user to choose a value by clicking the
+///     up and down buttons or by pressing Up or Down on the keyboard to
+///     increase or decrease the value currently displayed. The user can
+///     also type the value in manually. The spin box supports double
+///     values but can be extended to use different strings with
+///     validate(), textFromValue() and valueFromText().
+/// 
+///     Every time the value changes QDoubleSpinBox emits two
+///     valueChanged() signals, one taking providing a double and the other
+///     a QString. The QString overload provides the value with both
+///     prefix() and suffix(). The current value can be fetched with
+///     value() and set with setValue().
+/// 
+///     Note: QDoubleSpinBox will round numbers so they can be displayed
+///     with the current precision. In a QDoubleSpinBox with decimals set
+///     to 2, calling setValue(2.555) will cause value() to return 2.56.
+/// 
+///     Clicking the up and down buttons or using the keyboard accelerator's
+///     Up and Down arrows will increase or decrease the current value in
+///     steps of size singleStep(). If you want to change this behavior you
+///     can reimplement the virtual function stepBy(). The minimum and
+///     maximum value and the step size can be set using one of the
+///     constructors, and can be changed later with setMinimum(),
+///     setMaximum() and setSingleStep(). The spinbox has a default
+///     precision of 2 decimal places but this can be changed using
+///     setDecimals().
+/// 
+///     Most spin boxes are directional, but QDoubleSpinBox can also
+///     operate as a circular spin box, i.e. if the range is 0.0-99.9 and
+///     the current value is 99.9, clicking "up" will give 0 if wrapping()
+///     is set to true. Use setWrapping() if you want circular behavior.
+/// 
+///     The displayed value can be prepended and appended with arbitrary
+///     strings indicating, for example, currency or the unit of
+///     measurement. See setPrefix() and setSuffix(). The text in the spin
+///     box is retrieved with text() (which includes any prefix() and
+///     suffix()), or with cleanText() (which has no prefix(), no suffix()
+///     and no leading or trailing whitespace).
+/// 
+///     It is often desirable to give the user a special (often default)
+///     choice in addition to the range of numeric values. See
+///     setSpecialValueText() for how to do this with QDoubleSpinBox.
+/// 
+///     \note The displayed value of the QDoubleSpinBox is limited to 18 characters
+///     in addition to eventual prefix and suffix content. This limitation is used
+///     to keep the double spin box usable even with extremely large values.
+///     \sa QSpinBox, QDateTimeEdit, QSlider, {Spin Boxes Example}
 struct DoubleSpinBox : AbstractSpinBox {
     value() -> double,
     prefix() -> String,

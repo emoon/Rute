@@ -1,3 +1,15 @@
+///     \class QKeySequenceEdit
+///     \brief The QKeySequenceEdit widget allows to input a QKeySequence.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     \since 5.2
+/// 
+///     This widget lets the user choose a QKeySequence, which is usually used as
+///     a shortcut. The recording is initiated when the widget receives the focus
+///     and ends one second after the user releases the last key.
+/// 
+///     \sa QKeySequenceEdit::keySequence
 struct KeySequenceEdit : Widget {
     key_sequence() -> KeySequence,
     set_key_sequence(key_sequence: &KeySequenceType),

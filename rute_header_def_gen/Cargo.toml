@@ -11,4 +11,5 @@ pest = "2"
 pest_derive = "2"
 
 [dependencies.clang]
-features = ["clang_6_0"]
+version = "0.20"
+features = ["clang_4_0"]

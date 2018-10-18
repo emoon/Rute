@@ -1,3 +1,85 @@
+///     \class QLineEdit
+///     \brief The QLineEdit widget is a one-line text editor.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image windows-lineedit.png
+/// 
+///     A line edit allows the user to enter and edit a single line of
+///     plain text with a useful collection of editing functions,
+///     including undo and redo, cut and paste, and drag and drop (see
+///     \l setDragEnabled()).
+/// 
+///     By changing the echoMode() of a line edit, it can also be used as
+///     a "write-only" field, for inputs such as passwords.
+/// 
+///     The length of the text can be constrained to maxLength(). The text
+///     can be arbitrarily constrained using a validator() or an
+///     inputMask(), or both. When switching between a validator and an input mask
+///     on the same line edit, it is best to clear the validator or input mask to
+///     prevent undefined behavior.
+/// 
+///     A related class is QTextEdit which allows multi-line, rich text
+///     editing.
+/// 
+///     You can change the text with setText() or insert(). The text is
+///     retrieved with text(); the displayed text (which may be different,
+///     see \l{EchoMode}) is retrieved with displayText(). Text can be
+///     selected with setSelection() or selectAll(), and the selection can
+///     be cut(), copy()ied and paste()d. The text can be aligned with
+///     setAlignment().
+/// 
+///     When the text changes the textChanged() signal is emitted; when
+///     the text changes other than by calling setText() the textEdited()
+///     signal is emitted; when the cursor is moved the
+///     cursorPositionChanged() signal is emitted; and when the Return or
+///     Enter key is pressed the returnPressed() signal is emitted.
+/// 
+///     When editing is finished, either because the line edit lost focus
+///     or Return/Enter is pressed the editingFinished() signal is
+///     emitted.
+/// 
+///     Note that if there is a validator set on the line edit, the
+///     returnPressed()/editingFinished() signals will only be emitted if
+///     the validator returns QValidator::Acceptable.
+/// 
+///     By default, QLineEdits have a frame as specified by platform
+///     style guides; you can turn it off by calling
+///     setFrame(false).
+/// 
+///     The default key bindings are described below. The line edit also
+///     provides a context menu (usually invoked by a right mouse click)
+///     that presents some of these editing options.
+///     \target desc
+///     \table
+///     \header \li Keypress \li Action
+///     \row \li Left Arrow \li Moves the cursor one character to the left.
+///     \row \li Shift+Left Arrow \li Moves and selects text one character to the left.
+///     \row \li Right Arrow \li Moves the cursor one character to the right.
+///     \row \li Shift+Right Arrow \li Moves and selects text one character to the right.
+///     \row \li Home \li Moves the cursor to the beginning of the line.
+///     \row \li End \li Moves the cursor to the end of the line.
+///     \row \li Backspace \li Deletes the character to the left of the cursor.
+///     \row \li Ctrl+Backspace \li Deletes the word to the left of the cursor.
+///     \row \li Delete \li Deletes the character to the right of the cursor.
+///     \row \li Ctrl+Delete \li Deletes the word to the right of the cursor.
+///     \row \li Ctrl+A \li Select all.
+///     \row \li Ctrl+C \li Copies the selected text to the clipboard.
+///     \row \li Ctrl+Insert \li Copies the selected text to the clipboard.
+///     \row \li Ctrl+K \li Deletes to the end of the line.
+///     \row \li Ctrl+V \li Pastes the clipboard text into line edit.
+///     \row \li Shift+Insert \li Pastes the clipboard text into line edit.
+///     \row \li Ctrl+X \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Shift+Delete \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Ctrl+Z \li Undoes the last operation.
+///     \row \li Ctrl+Y \li Redoes the last undone operation.
+///     \endtable
+/// 
+///     Any other key sequence that represents a valid character, will
+///     cause the character to be inserted into the line edit.
+/// 
+///     \sa QTextEdit, QLabel, QComboBox, {fowler}{GUI Design Handbook: Field, Entry}, {Line Edits Example}
 [org_name(QLineEdit)]
 enum ActionPosition {
     LeadingPosition,

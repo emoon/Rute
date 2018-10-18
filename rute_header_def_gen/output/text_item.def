@@ -12,7 +12,7 @@ struct TextItem {
     descent() -> f32,
     ascent() -> f32,
     width() -> f32,
-    render_flags() -> RenderFlags,
+    render_flags() -> TextItem::RenderFlags,
     text() -> String,
     font() -> Font,
 }

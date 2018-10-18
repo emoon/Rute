@@ -15,6 +15,7 @@ enum FramebufferRestorePolicy {
 
 struct OpenGLFramebufferObject {
     add_color_attachment(size: &SizeType, internal_format: i32),
+    add_color_attachment(width: i32, height: i32, internal_format: i32),
     format() -> OpenGLFramebufferObjectFormat,
     is_valid() -> bool,
     is_bound() -> bool,
@@ -25,6 +26,7 @@ struct OpenGLFramebufferObject {
     texture() -> i32,
     textures() -> i32,
     take_texture() -> i32,
+    take_texture(color_attachment_index: i32) -> i32,
     size() -> Size,
     sizes() -> [Size],
     to_image() -> Image,
@@ -37,6 +39,9 @@ struct OpenGLFramebufferObject {
     [static] has_open_gl_framebuffer_objects() -> bool,
     [static] has_open_gl_framebuffer_blit() -> bool,
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32, restore_policy: OpenGLFramebufferObject::FramebufferRestorePolicy),
+    [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32),
+    [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32),
+    [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, source: *OpenGLFramebufferObjectType, buffers: i32, filter: i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

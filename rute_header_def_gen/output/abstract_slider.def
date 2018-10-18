@@ -1,3 +1,71 @@
+///     \class QAbstractSlider
+///     \brief The QAbstractSlider class provides an integer value within a range.
+/// 
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     The class is designed as a common super class for widgets like
+///     QScrollBar, QSlider and QDial.
+/// 
+///     Here are the main properties of the class:
+/// 
+///     \list 1
+/// 
+///     \li \l value: The bounded integer that QAbstractSlider maintains.
+/// 
+///     \li \l minimum: The lowest possible value.
+/// 
+///     \li \l maximum: The highest possible value.
+/// 
+///     \li \l singleStep: The smaller of two natural steps that an
+///     abstract sliders provides and typically corresponds to the user
+///     pressing an arrow key.
+/// 
+///     \li \l pageStep: The larger of two natural steps that an abstract
+///     slider provides and typically corresponds to the user pressing
+///     PageUp or PageDown.
+/// 
+///     \li \l tracking: Whether slider tracking is enabled.
+/// 
+///     \li \l sliderPosition: The current position of the slider. If \l
+///     tracking is enabled (the default), this is identical to \l value.
+/// 
+///     \endlist
+/// 
+///     Unity (1) may be viewed as a third step size. setValue() lets you
+///     set the current value to any integer in the allowed range, not
+///     just minimum() + \e n * singleStep() for integer values of \e n.
+///     Some widgets may allow the user to set any value at all; others
+///     may just provide multiples of singleStep() or pageStep().
+/// 
+///     QAbstractSlider emits a comprehensive set of signals:
+/// 
+///     \table
+///     \header \li Signal \li Emitted when
+///     \row \li \l valueChanged()
+///          \li the value has changed. The \l tracking
+///             determines whether this signal is emitted during user
+///             interaction.
+///     \row \li \l sliderPressed()
+///          \li the user starts to drag the slider.
+///     \row \li \l sliderMoved()
+///          \li the user drags the slider.
+///     \row \li \l sliderReleased()
+///          \li the user releases the slider.
+///     \row \li \l actionTriggered()
+///          \li a slider action was triggerd.
+///     \row \li \l rangeChanged()
+///          \li a the range has changed.
+///     \endtable
+/// 
+///     QAbstractSlider provides a virtual sliderChange() function that is
+///     well suited for updating the on-screen representation of
+///     sliders. By calling triggerAction(), subclasses trigger slider
+///     actions. Two helper functions QStyle::sliderPositionFromValue() and
+///     QStyle::sliderValueFromPosition() help subclasses and styles to map
+///     screen coordinates to logical range values.
+/// 
+///     \sa QAbstractSpinBox, QSlider, QDial, QScrollBar, {Sliders Example}
 [org_name(QAbstractSlider)]
 enum SliderAction {
     SliderNoAction,

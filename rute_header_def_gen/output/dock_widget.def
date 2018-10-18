@@ -1,3 +1,47 @@
+///     \class QDockWidget
+/// 
+///     \brief The QDockWidget class provides a widget that can be docked
+///     inside a QMainWindow or floated as a top-level window on the
+///     desktop.
+/// 
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     QDockWidget provides the concept of dock widgets, also know as
+///     tool palettes or utility windows.  Dock windows are secondary
+///     windows placed in the \e {dock widget area} around the
+///     \l{QMainWindow::centralWidget()}{central widget} in a
+///     QMainWindow.
+/// 
+///     \image mainwindow-docks.png
+/// 
+///     Dock windows can be moved inside their current area, moved into
+///     new areas and floated (e.g., undocked) by the end-user.  The
+///     QDockWidget API allows the programmer to restrict the dock widgets
+///     ability to move, float and close, as well as the areas in which
+///     they can be placed.
+/// 
+///     \section1 Appearance
+/// 
+///     A QDockWidget consists of a title bar and the content area.  The
+///     title bar displays the dock widgets
+///     \l{QWidget::windowTitle()}{window title},
+///     a \e float button and a \e close button.
+///     Depending on the state of the QDockWidget, the \e float and \e
+///     close buttons may be either disabled or not shown at all.
+/// 
+///     The visual appearance of the title bar and buttons is dependent
+///     on the \l{QStyle}{style} in use.
+/// 
+///     A QDockWidget acts as a wrapper for its child widget, set with setWidget().
+///     Custom size hints, minimum and maximum sizes and size policies should be
+///     implemented in the child widget. QDockWidget will respect them, adjusting
+///     its own constraints to include the frame and title. Size constraints
+///     should not be set on the QDockWidget itself, because they change depending
+///     on whether it is docked; a docked QDockWidget has no frame and a smaller title
+///     bar.
+/// 
+///     \sa QMainWindow, {Dock Widgets Example}
 [org_name(QDockWidget)]
 enum DockWidgetFeature {
     DockWidgetClosable,
@@ -13,8 +57,8 @@ enum DockWidgetFeature {
 struct DockWidget : Widget {
     widget() -> Widget?,
     set_widget(widget: *WidgetType),
-    set_features(features: DockWidgetFeatures),
-    features() -> DockWidgetFeatures,
+    set_features(features: DockWidget::DockWidgetFeatures),
+    features() -> DockWidget::DockWidgetFeatures,
     set_floating(floating: bool),
     is_floating() -> bool,
     set_allowed_areas(areas: Rute::DockWidgetAreas),

@@ -6,7 +6,7 @@ enum Capability {
 }
 
 struct ImageIOPlugin : Object {
-    [event] capabilities(device: *IODeviceType, format: &ByteArrayType) -> Capabilities,
+    [event] capabilities(device: *IODeviceType, format: &ByteArrayType) -> ImageIOPlugin::Capabilities,
     [event] create(device: *IODeviceType, format: &ByteArrayType) -> ImageIOHandler?,
 }
 

@@ -14,6 +14,12 @@ use walkdir::WalkDir;
 use doc_parser::{DocEntry, DocInfo};
 use walkdir;
 
+pub struct DocLookups<'a> {
+	pub cpp_name: HashMap<&'a str, &'a DocEntry>,
+	pub class_name: HashMap<&'a str, &'a DocEntry>,
+	pub property: HashMap<&'a str, &'a DocEntry>,
+}
+
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum AccessLevel {
     Public,
@@ -359,12 +365,7 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
 ///
 /// Print a class. This code a a bit hacky but should do for this usage
 ///
-fn print_class(
-    target_path: &str,
-    entry: &Entity,
-    cpp_name_lookup: &HashMap<&str, &DocEntry>,
-    base_filename_lookup: &HashMap<&str, &DocInfo>,
-) {
+fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
@@ -419,8 +420,9 @@ fn print_class(
 
     // Check if we have some filedata to output
 
-    if let Some(filename_entry) = base_filename_lookup.get(typename) {
-        for entry in &filename_entry.entries {
+    if let Some(class_doc) = doc_lookups.class_name.get(name.as_str()) {
+        for tag in &class_doc.tags {
+            writeln!(dest, "/// {}", tag);
         }
     }
 
@@ -516,8 +518,7 @@ impl Generator {
         output_directory: &str,
         paths: &[&'static str],
         compile_args: &[&'static str],
-        cpp_name_lookup: &HashMap<&str, &DocEntry>,
-        base_filename_lookup: &HashMap<&str, &DocInfo>,
+        doc_lookups: &DocLookups,
     ) {
         // Acquire an instance of `Clang`
         let clang = Clang::new().unwrap();
@@ -567,7 +568,7 @@ impl Generator {
                             w.insert(t);
                         }
 
-                        print_class(output_directory, &struct_, cpp_name_lookup, base_filename_lookup);
+                        print_class(output_directory, &struct_, doc_lookups);
                     }
                 }
 

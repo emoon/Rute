@@ -1,3 +1,50 @@
+///     \class QFrame
+///     \brief The QFrame class is the base class of widgets that can have a frame.
+/// 
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     QMenu uses this to "raise" the menu above the surrounding
+///     screen. QProgressBar has a "sunken" look. QLabel has a flat look.
+///     The frames of widgets like these can be changed.
+/// 
+///     \snippet code/src_gui_widgets_qframe.cpp 0
+/// 
+///     The QFrame class can also be used directly for creating simple
+///     placeholder frames without any contents.
+/// 
+///     The frame style is specified by a \l{QFrame::Shape}{frame shape} and
+///     a \l{QFrame::Shadow}{shadow style} that is used to visually separate
+///     the frame from surrounding widgets. These properties can be set
+///     together using the setFrameStyle() function and read with frameStyle().
+/// 
+///     The frame shapes are \l NoFrame, \l Box, \l Panel, \l StyledPanel,
+///     HLine and \l VLine; the shadow styles are \l Plain, \l Raised and
+///     \l Sunken.
+/// 
+///     A frame widget has three attributes that describe the thickness of the
+///     border: \l lineWidth, \l midLineWidth, and \l frameWidth.
+/// 
+///     \list
+///     \li The line width is the width of the frame border. It can be modified
+///        to customize the frame's appearance.
+/// 
+///     \li The mid-line width specifies the width of an extra line in the
+///        middle of the frame, which uses a third color to obtain a special
+///        3D effect. Notice that a mid-line is only drawn for \l Box, \l
+///        HLine and \l VLine frames that are raised or sunken.
+/// 
+///     \li The frame width is determined by the frame style, and the frameWidth()
+///        function is used to obtain the value defined for the style used.
+///     \endlist
+/// 
+///     The margin between the frame and the contents of the frame can be
+///     customized with the QWidget::setContentsMargins() function.
+/// 
+///     \target picture
+///     This table shows some of the combinations of styles and line widths:
+/// 
+///     \image frames.png Table of frame styles
 [org_name(QFrame)]
 enum Shape {
     NoFrame,

@@ -8,11 +8,11 @@ enum BlurHint {
 struct GraphicsBlurEffect : GraphicsEffect {
     [event] bounding_rect_for(rect: &RectFType) -> RectF,
     blur_radius() -> f32,
-    blur_hints() -> BlurHints,
+    blur_hints() -> GraphicsBlurEffect::BlurHints,
     set_blur_radius(blur_radius: f32),
-    set_blur_hints(hints: BlurHints),
+    set_blur_hints(hints: GraphicsBlurEffect::BlurHints),
     [signal] blur_radius_changed(blur_radius: f32),
-    [signal] blur_hints_changed(hints: BlurHints),
+    [signal] blur_hints_changed(hints: GraphicsBlurEffect::BlurHints),
     [event] draw(painter: *PainterType),
 }
 

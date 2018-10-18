@@ -14,8 +14,8 @@ enum Origin {
 }
 
 struct PlatformGraphicsBuffer : Object {
-    is_locked() -> AccessTypes,
-    lock(access: AccessTypes, rect: &RectType) -> bool,
+    is_locked() -> PlatformGraphicsBuffer::AccessTypes,
+    lock(access: PlatformGraphicsBuffer::AccessTypes, rect: &RectType) -> bool,
     unlock(),
     [event] bind_to_texture(rect: &RectType) -> bool,
     [event] data() -> uchar?,
@@ -25,8 +25,8 @@ struct PlatformGraphicsBuffer : Object {
     [event] origin() -> PlatformGraphicsBuffer::Origin,
     size() -> Size,
     format() -> PixelFormat,
-    [signal] unlocked(previous_access_types: AccessTypes),
-    [event] do_lock(access: AccessTypes, rect: &RectType) -> bool,
+    [signal] unlocked(previous_access_types: PlatformGraphicsBuffer::AccessTypes),
+    [event] do_lock(access: PlatformGraphicsBuffer::AccessTypes, rect: &RectType) -> bool,
     [event] do_unlock(),
 }
 

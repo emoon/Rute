@@ -1,3 +1,92 @@
+///     \class QAbstractScrollArea
+///     \brief The QAbstractScrollArea widget provides a scrolling area with
+///     on-demand scroll bars.
+/// 
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     QAbstractScrollArea is a low-level abstraction of a scrolling
+///     area. The area provides a central widget called the viewport, in
+///     which the contents of the area is to be scrolled (i.e, the
+///     visible parts of the contents are rendered in the viewport).
+/// 
+///     Next to the viewport is a vertical scroll bar, and below is a
+///     horizontal scroll bar. When all of the area contents fits in the
+///     viewport, each scroll bar can be either visible or hidden
+///     depending on the scroll bar's Qt::ScrollBarPolicy. When a scroll
+///     bar is hidden, the viewport expands in order to cover all
+///     available space. When a scroll bar becomes visible again, the
+///     viewport shrinks in order to make room for the scroll bar.
+/// 
+///     It is possible to reserve a margin area around the viewport, see
+///     setViewportMargins(). The feature is mostly used to place a
+///     QHeaderView widget above or beside the scrolling area. Subclasses
+///     of QAbstractScrollArea should implement margins.
+/// 
+///     When inheriting QAbstractScrollArea, you need to do the
+///     following:
+/// 
+///     \list
+///         \li Control the scroll bars by setting their
+///            range, value, page step, and tracking their
+///            movements.
+///         \li Draw the contents of the area in the viewport according
+///            to the values of the scroll bars.
+///         \li Handle events received by the viewport in
+///            viewportEvent() - notably resize events.
+///         \li Use \c{viewport->update()} to update the contents of the
+///           viewport instead of \l{QWidget::update()}{update()}
+///           as all painting operations take place on the viewport.
+///     \endlist
+/// 
+///     With a scroll bar policy of Qt::ScrollBarAsNeeded (the default),
+///     QAbstractScrollArea shows scroll bars when they provide a non-zero
+///     scrolling range, and hides them otherwise.
+/// 
+///     The scroll bars and viewport should be updated whenever the viewport
+///     receives a resize event or the size of the contents changes.
+///     The viewport also needs to be updated when the scroll bars
+///     values change. The initial values of the scroll bars are often
+///     set when the area receives new contents.
+/// 
+///     We give a simple example, in which we have implemented a scroll area
+///     that can scroll any QWidget. We make the widget a child of the
+///     viewport; this way, we do not have to calculate which part of
+///     the widget to draw but can simply move the widget with
+///     QWidget::move(). When the area contents or the viewport size
+///     changes, we do the following:
+/// 
+///     \snippet myscrollarea.cpp 1
+/// 
+///     When the scroll bars change value, we need to update the widget
+///     position, i.e., find the part of the widget that is to be drawn in
+///     the viewport:
+/// 
+///     \snippet myscrollarea.cpp 0
+/// 
+///     In order to track scroll bar movements, reimplement the virtual
+///     function scrollContentsBy(). In order to fine-tune scrolling
+///     behavior, connect to a scroll bar's
+///     QAbstractSlider::actionTriggered() signal and adjust the \l
+///     QAbstractSlider::sliderPosition as you wish.
+/// 
+///     For convenience, QAbstractScrollArea makes all viewport events
+///     available in the virtual viewportEvent() handler. QWidget's
+///     specialized handlers are remapped to viewport events in the cases
+///     where this makes sense. The remapped specialized handlers are:
+///     paintEvent(), mousePressEvent(), mouseReleaseEvent(),
+///     mouseDoubleClickEvent(), mouseMoveEvent(), wheelEvent(),
+///     dragEnterEvent(), dragMoveEvent(), dragLeaveEvent(), dropEvent(),
+///     contextMenuEvent(),  and resizeEvent().
+/// 
+///     QScrollArea, which inherits QAbstractScrollArea, provides smooth
+///     scrolling for any QWidget (i.e., the widget is scrolled pixel by
+///     pixel). You only need to subclass QAbstractScrollArea if you need
+///     more specialized behavior. This is, for instance, true if the
+///     entire contents of the area is not suitable for being drawn on a
+///     QWidget or if you do not want smooth scrolling.
+/// 
+///     \sa QScrollArea
 [org_name(QAbstractScrollArea)]
 enum SizeAdjustPolicy {
     AdjustIgnored,

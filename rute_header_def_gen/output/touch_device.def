@@ -21,11 +21,11 @@ struct TouchDevice {
     [static] devices() -> [TouchDevice?],
     name() -> String,
     type() -> TouchDevice::DeviceType,
-    capabilities() -> Capabilities,
+    capabilities() -> TouchDevice::Capabilities,
     maximum_touch_points() -> i32,
     set_name(name: String),
     set_type(dev_type: TouchDevice::DeviceType),
-    set_capabilities(caps: Capabilities),
+    set_capabilities(caps: TouchDevice::Capabilities),
     set_maximum_touch_points(max: i32),
 }
 

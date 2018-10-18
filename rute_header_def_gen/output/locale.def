@@ -914,14 +914,14 @@ struct Locale {
     to_upper(str: String) -> String,
     to_lower(str: String) -> String,
     currency_symbol(arg0: Locale::CurrencySymbolFormat) -> String,
-    formatted_data_size(bytes: i64, precision: i32, format: DataSizeFormats) -> String,
+    formatted_data_size(bytes: i64, precision: i32, format: Locale::DataSizeFormats) -> String,
     ui_languages() -> [String],
     [static] set_default(locale: &LocaleType),
     [static] c() -> Locale,
     [static] system() -> Locale,
     [static] matching_locales(language: Locale::Language, script: Locale::Script, country: Locale::Country) -> [Locale],
-    set_number_options(options: NumberOptions),
-    number_options() -> NumberOptions,
+    set_number_options(options: Locale::NumberOptions),
+    number_options() -> Locale::NumberOptions,
     create_separated_list(strl: &[String]) -> String,
 }
 

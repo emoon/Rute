@@ -1,3 +1,33 @@
+///     \class QFontComboBox
+///     \brief The QFontComboBox widget is a combobox that lets the user
+///     select a font family.
+/// 
+///     \since 4.2
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     The combobox is populated with an alphabetized list of font
+///     family names, such as Arial, Helvetica, and Times New Roman.
+///     Family names are displayed using the actual font when possible.
+///     For fonts such as Symbol, where the name is not representable in
+///     the font itself, a sample of the font is displayed next to the
+///     family name.
+/// 
+///     QFontComboBox is often used in toolbars, in conjunction with a
+///     QComboBox for controlling the font size and two \l{QToolButton}s
+///     for bold and italic.
+/// 
+///     When the user selects a new font, the currentFontChanged() signal
+///     is emitted in addition to currentIndexChanged().
+/// 
+///     Call setWritingSystem() to tell QFontComboBox to show only fonts
+///     that support a given writing system, and setFontFilters() to
+///     filter out certain types of fonts as e.g. non scalable fonts or
+///     monospaced fonts.
+/// 
+///     \image windowsvista-fontcombobox.png Screenshot of QFontComboBox on Windows Vista
+/// 
+///     \sa QComboBox, QFont, QFontInfo, QFontMetrics, QFontDatabase, {Character Map Example}
 [org_name(QFontComboBox)]
 enum FontFilter {
     AllFonts,
@@ -10,8 +40,8 @@ enum FontFilter {
 struct FontComboBox : ComboBox {
     set_writing_system(arg0: FontDatabase::WritingSystem),
     writing_system() -> FontDatabase::WritingSystem,
-    set_font_filters(filters: FontFilters),
-    font_filters() -> FontFilters,
+    set_font_filters(filters: FontComboBox::FontFilters),
+    font_filters() -> FontComboBox::FontFilters,
     current_font() -> Font,
     [event] size_hint() -> Size,
     set_current_font(f: &FontType),

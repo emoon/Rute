@@ -11,17 +11,20 @@ mod doc_parser;
 mod header_gen;
 
 use doc_parser::{DocEntry, DocInfo, DocParser};
-use header_gen::Generator;
+use header_gen::{Generator, DocLookups};
 use std::collections::HashMap;
+
 
 fn main() {
     // Get all the files to parse
     let output_directory = "output";
 
+	/*
     rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
+    */
 
     // TODO: Don't hardcode these
     let header_files_path = &[
@@ -41,23 +44,36 @@ fn main() {
     // Parse source files for documentation
 
     let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets"];
-
+    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qdialogbuttonbox.cpp"];
     let docs = DocParser::parse_files(&source_directory);
 
     // Build some lookup info for faster lookup when generating the output data
 
     let mut cpp_name_lookup: HashMap<&str, &DocEntry> = HashMap::new();
-    let mut base_filename_lookup: HashMap<&str, &DocInfo> = HashMap::new();
+    let mut class_lookup: HashMap<&str, &DocEntry> = HashMap::new();
+    let mut property_lookup: HashMap<&str, &DocEntry> = HashMap::new();
 
     for doc in &docs {
         for entry in &doc.entries {
             if !entry.target_function.is_empty() {
                 cpp_name_lookup.insert(&entry.target_function, entry);
             }
-        }
 
-        base_filename_lookup.insert(&doc.base_filename, &doc);
+            if !entry.class_name.is_empty() {
+                class_lookup.insert(&entry.class_name, entry);
+            }
+
+            if !entry.property.is_empty() {
+                property_lookup.insert(&entry.class_name, entry);
+            }
+        }
     }
+
+    let lookups = DocLookups {
+    	cpp_name: cpp_name_lookup,
+    	class_name: class_lookup,
+    	property: property_lookup,
+    };
 
     //println!("{:?}", cpp_name_lookup);
 
@@ -65,7 +81,6 @@ fn main() {
         output_directory,
         header_files_path,
         compile_args,
-        &cpp_name_lookup,
-        &base_filename_lookup,
+        &lookups,
     );
 }

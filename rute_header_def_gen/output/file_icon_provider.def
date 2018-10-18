@@ -19,8 +19,8 @@ struct FileIconProvider {
     [event] icon(type: FileIconProvider::IconType) -> Icon,
     [event] icon(info: &FileInfoType) -> Icon,
     [event] type(info: &FileInfoType) -> String,
-    set_options(options: Options),
-    options() -> Options,
+    set_options(options: FileIconProvider::Options),
+    options() -> FileIconProvider::Options,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

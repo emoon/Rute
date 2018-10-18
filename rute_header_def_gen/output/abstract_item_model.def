@@ -53,7 +53,7 @@ struct AbstractItemModel : Object {
     [event] match(start: &ModelIndexType, role: i32, value: &VariantType, hits: i32, flags: Rute::MatchFlags) -> [ModelIndex],
     [event] span(index: &ModelIndexType) -> Size,
     [event] role_names() -> Hash<int,,
-    check_index(index: &ModelIndexType, options: CheckIndexOptions) -> bool,
+    check_index(index: &ModelIndexType, options: AbstractItemModel::CheckIndexOptions) -> bool,
     [signal] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
     [signal] header_data_changed(orientation: Rute::Orientation, first: i32, last: i32),
     [signal] layout_changed(parents: [PersistentModelIndexType], hint: AbstractItemModel::LayoutChangeHint),

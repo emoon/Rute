@@ -1,3 +1,172 @@
+///     \class QPlainTextEdit
+///     \since 4.4
+///     \brief The QPlainTextEdit class provides a widget that is used to edit and display
+///     plain text.
+/// 
+///     \ingroup richtext-processing
+///     \inmodule QtWidgets
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Introduction and Concepts
+/// 
+///     QPlainTextEdit is an advanced viewer/editor supporting plain
+///     text. It is optimized to handle large documents and to respond
+///     quickly to user input.
+/// 
+///     QPlainText uses very much the same technology and concepts as
+///     QTextEdit, but is optimized for plain text handling.
+/// 
+///     QPlainTextEdit works on paragraphs and characters. A paragraph is
+///     a formatted string which is word-wrapped to fit into the width of
+///     the widget. By default when reading plain text, one newline
+///     signifies a paragraph. A document consists of zero or more
+///     paragraphs. Paragraphs are separated by hard line breaks. Each
+///     character within a paragraph has its own attributes, for example,
+///     font and color.
+/// 
+///     The shape of the mouse cursor on a QPlainTextEdit is
+///     Qt::IBeamCursor by default.  It can be changed through the
+///     viewport()'s cursor property.
+/// 
+///     \section1 Using QPlainTextEdit as a Display Widget
+/// 
+///     The text is set or replaced using setPlainText() which deletes the
+///     existing text and replaces it with the text passed to setPlainText().
+/// 
+///     Text can be inserted using the QTextCursor class or using the
+///     convenience functions insertPlainText(), appendPlainText() or
+///     paste().
+/// 
+///     By default, the text edit wraps words at whitespace to fit within
+///     the text edit widget. The setLineWrapMode() function is used to
+///     specify the kind of line wrap you want, \l WidgetWidth or \l
+///     NoWrap if you don't want any wrapping.  If you use word wrap to
+///     the widget's width \l WidgetWidth, you can specify whether to
+///     break on whitespace or anywhere with setWordWrapMode().
+/// 
+///     The find() function can be used to find and select a given string
+///     within the text.
+/// 
+///     If you want to limit the total number of paragraphs in a
+///     QPlainTextEdit, as it is for example useful in a log viewer, then
+///     you can use the maximumBlockCount property. The combination of
+///     setMaximumBlockCount() and appendPlainText() turns QPlainTextEdit
+///     into an efficient viewer for log text. The scrolling can be
+///     reduced with the centerOnScroll() property, making the log viewer
+///     even faster. Text can be formatted in a limited way, either using
+///     a syntax highlighter (see below), or by appending html-formatted
+///     text with appendHtml(). While QPlainTextEdit does not support
+///     complex rich text rendering with tables and floats, it does
+///     support limited paragraph-based formatting that you may need in a
+///     log viewer.
+/// 
+///     \section2 Read-only Key Bindings
+/// 
+///     When QPlainTextEdit is used read-only the key bindings are limited to
+///     navigation, and text may only be selected with the mouse:
+///     \table
+///     \header \li Keypresses \li Action
+///     \row \li Qt::UpArrow        \li Moves one line up.
+///     \row \li Qt::DownArrow        \li Moves one line down.
+///     \row \li Qt::LeftArrow        \li Moves one character to the left.
+///     \row \li Qt::RightArrow        \li Moves one character to the right.
+///     \row \li PageUp        \li Moves one (viewport) page up.
+///     \row \li PageDown        \li Moves one (viewport) page down.
+///     \row \li Home        \li Moves to the beginning of the text.
+///     \row \li End                \li Moves to the end of the text.
+///     \row \li Alt+Wheel
+///          \li Scrolls the page horizontally (the Wheel is the mouse wheel).
+///     \row \li Ctrl+Wheel        \li Zooms the text.
+///     \row \li Ctrl+A            \li Selects all text.
+///     \endtable
+/// 
+/// 
+///     \section1 Using QPlainTextEdit as an Editor
+/// 
+///     All the information about using QPlainTextEdit as a display widget also
+///     applies here.
+/// 
+///     Selection of text is handled by the QTextCursor class, which provides
+///     functionality for creating selections, retrieving the text contents or
+///     deleting selections. You can retrieve the object that corresponds with
+///     the user-visible cursor using the textCursor() method. If you want to set
+///     a selection in QPlainTextEdit just create one on a QTextCursor object and
+///     then make that cursor the visible cursor using setCursor(). The selection
+///     can be copied to the clipboard with copy(), or cut to the clipboard with
+///     cut(). The entire text can be selected using selectAll().
+/// 
+///     QPlainTextEdit holds a QTextDocument object which can be retrieved using the
+///     document() method. You can also set your own document object using setDocument().
+///     QTextDocument emits a textChanged() signal if the text changes and it also
+///     provides a isModified() function which will return true if the text has been
+///     modified since it was either loaded or since the last call to setModified
+///     with false as argument. In addition it provides methods for undo and redo.
+/// 
+///     \section2 Syntax Highlighting
+/// 
+///     Just like QTextEdit, QPlainTextEdit works together with
+///     QSyntaxHighlighter.
+/// 
+///     \section2 Editing Key Bindings
+/// 
+///     The list of key bindings which are implemented for editing:
+///     \table
+///     \header \li Keypresses \li Action
+///     \row \li Backspace \li Deletes the character to the left of the cursor.
+///     \row \li Delete \li Deletes the character to the right of the cursor.
+///     \row \li Ctrl+C \li Copy the selected text to the clipboard.
+///     \row \li Ctrl+Insert \li Copy the selected text to the clipboard.
+///     \row \li Ctrl+K \li Deletes to the end of the line.
+///     \row \li Ctrl+V \li Pastes the clipboard text into text edit.
+///     \row \li Shift+Insert \li Pastes the clipboard text into text edit.
+///     \row \li Ctrl+X \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Shift+Delete \li Deletes the selected text and copies it to the clipboard.
+///     \row \li Ctrl+Z \li Undoes the last operation.
+///     \row \li Ctrl+Y \li Redoes the last operation.
+///     \row \li LeftArrow \li Moves the cursor one character to the left.
+///     \row \li Ctrl+LeftArrow \li Moves the cursor one word to the left.
+///     \row \li RightArrow \li Moves the cursor one character to the right.
+///     \row \li Ctrl+RightArrow \li Moves the cursor one word to the right.
+///     \row \li UpArrow \li Moves the cursor one line up.
+///     \row \li Ctrl+UpArrow \li Moves the cursor one word up.
+///     \row \li DownArrow \li Moves the cursor one line down.
+///     \row \li Ctrl+Down Arrow \li Moves the cursor one word down.
+///     \row \li PageUp \li Moves the cursor one page up.
+///     \row \li PageDown \li Moves the cursor one page down.
+///     \row \li Home \li Moves the cursor to the beginning of the line.
+///     \row \li Ctrl+Home \li Moves the cursor to the beginning of the text.
+///     \row \li End \li Moves the cursor to the end of the line.
+///     \row \li Ctrl+End \li Moves the cursor to the end of the text.
+///     \row \li Alt+Wheel \li Scrolls the page horizontally (the Wheel is the mouse wheel).
+///     \row \li Ctrl+Wheel \li Zooms the text.
+///     \endtable
+/// 
+///     To select (mark) text hold down the Shift key whilst pressing one
+///     of the movement keystrokes, for example, \e{Shift+Right Arrow}
+///     will select the character to the right, and \e{Shift+Ctrl+Right
+///     Arrow} will select the word to the right, etc.
+/// 
+///    \section1 Differences to QTextEdit
+/// 
+///    QPlainTextEdit is a thin class, implemented by using most of the
+///    technology that is behind QTextEdit and QTextDocument. Its
+///    performance benefits over QTextEdit stem mostly from using a
+///    different and simplified text layout called
+///    QPlainTextDocumentLayout on the text document (see
+///    QTextDocument::setDocumentLayout()). The plain text document layout
+///    does not support tables nor embedded frames, and \e{replaces a
+///    pixel-exact height calculation with a line-by-line respectively
+///    paragraph-by-paragraph scrolling approach}. This makes it possible
+///    to handle significantly larger documents, and still resize the
+///    editor with line wrap enabled in real time. It also makes for a
+///    fast log viewer (see setMaximumBlockCount()).
+/// 
+/// 
+///     \sa QTextDocument, QTextCursor, {Application Example},
+///         {Code Editor Example}, {Syntax Highlighter Example},
+///         {Rich Text Processing}
+/// 
 [org_name(QPlainTextEdit)]
 enum LineWrapMode {
     NoWrap,

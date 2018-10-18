@@ -1,3 +1,61 @@
+///     \class QSlider
+///     \brief The QSlider widget provides a vertical or horizontal slider.
+/// 
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image windows-slider.png
+/// 
+///     The slider is the classic widget for controlling a bounded value.
+///     It lets the user move a slider handle along a horizontal or vertical
+///     groove and translates the handle's position into an integer value
+///     within the legal range.
+/// 
+///     QSlider has very few of its own functions; most of the functionality is in
+///     QAbstractSlider. The most useful functions are setValue() to set
+///     the slider directly to some value; triggerAction() to simulate
+///     the effects of clicking (useful for shortcut keys);
+///     setSingleStep(), setPageStep() to set the steps; and setMinimum()
+///     and setMaximum() to define the range of the scroll bar.
+/// 
+///     QSlider provides methods for controlling tickmarks.  You can use
+///     setTickPosition() to indicate where you want the tickmarks to be,
+///     setTickInterval() to indicate how many of them you want. the
+///     currently set tick position and interval can be queried using the
+///     tickPosition() and tickInterval() functions, respectively.
+/// 
+///     QSlider inherits a comprehensive set of signals:
+///     \table
+///     \header \li Signal \li Description
+///     \row \li \l valueChanged()
+///     \li Emitted when the slider's value has changed. The tracking()
+///        determines whether this signal is emitted during user
+///        interaction.
+///     \row \li \l sliderPressed()
+///     \li Emitted when the user starts to drag the slider.
+///     \row \li \l sliderMoved()
+///     \li Emitted when the user drags the slider.
+///     \row \li \l sliderReleased()
+///     \li Emitted when the user releases the slider.
+///     \endtable
+/// 
+///     QSlider only provides integer ranges. Note that although
+///     QSlider handles very large numbers, it becomes difficult for users
+///     to use a slider accurately for very large ranges.
+/// 
+///     A slider accepts focus on Tab and provides both a mouse wheel and a
+///     keyboard interface. The keyboard interface is the following:
+/// 
+///     \list
+///         \li Left/Right move a horizontal slider by one single step.
+///         \li Up/Down move a vertical slider by one single step.
+///         \li PageUp moves up one page.
+///         \li PageDown moves down one page.
+///         \li Home moves to the start (mininum).
+///         \li End moves to the end (maximum).
+///     \endlist
+/// 
+///     \sa QScrollBar, QSpinBox, QDial, {fowler}{GUI Design Handbook: Slider}, {Sliders Example}
 [org_name(QSlider)]
 enum TickPosition {
     NoTicks,

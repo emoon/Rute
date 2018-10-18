@@ -48,8 +48,8 @@ struct TextFrameFormat : TextFormat {
     set_height(height: f32),
     set_height(height: &TextLengthType),
     height() -> TextLength,
-    set_page_break_policy(flags: PageBreakFlags),
-    page_break_policy() -> PageBreakFlags,
+    set_page_break_policy(flags: TextFormat::PageBreakFlags),
+    page_break_policy() -> TextFormat::PageBreakFlags,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1,3 +1,34 @@
+///     \class QGroupBox
+///     \brief The QGroupBox widget provides a group box frame with a title.
+/// 
+///     \ingroup organizers
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     \image windows-groupbox.png
+/// 
+///     A group box provides a frame, a title on top, a keyboard shortcut, and
+///     displays various other widgets inside itself. The keyboard shortcut moves
+///     keyboard focus to one of the group box's child widgets.
+/// 
+///     QGroupBox also lets you set the \l title (normally set in the
+///     constructor) and the title's \l alignment. Group boxes can be
+///     \l checkable. Child widgets in checkable group boxes are enabled or
+///     disabled depending on whether or not the group box is \l checked.
+/// 
+///     You can minimize the space consumption of a group box by enabling
+///     the \l flat property. In most \l{QStyle}{styles}, enabling this
+///     property results in the removal of the left, right and bottom
+///     edges of the frame.
+/// 
+///     QGroupBox doesn't automatically lay out the child widgets (which
+///     are often \l{QCheckBox}es or \l{QRadioButton}s but can be any
+///     widgets). The following example shows how we can set up a
+///     QGroupBox with a layout:
+/// 
+///     \snippet widgets/groupbox/window.cpp 2
+/// 
+///     \sa QButtonGroup, {Group Box Example}
 struct GroupBox : Widget {
     title() -> String,
     set_title(title: String),

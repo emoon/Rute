@@ -13,7 +13,7 @@ enum OpenModeFlag {
 }
 
 struct IODevice : Object {
-    open_mode() -> OpenMode,
+    open_mode() -> IODevice::OpenMode,
     set_text_mode_enabled(enabled: bool),
     is_text_mode_enabled() -> bool,
     is_open() -> bool,
@@ -26,7 +26,7 @@ struct IODevice : Object {
     set_current_read_channel(channel: i32),
     current_write_channel() -> i32,
     set_current_write_channel(channel: i32),
-    [event] open(mode: OpenMode) -> bool,
+    [event] open(mode: IODevice::OpenMode) -> bool,
     [event] close(),
     [event] pos() -> i64,
     [event] size() -> i64,
@@ -65,7 +65,7 @@ struct IODevice : Object {
     [event] read_data(data: *char, maxlen: i64) -> i64,
     [event] read_line_data(data: *char, maxlen: i64) -> i64,
     [event] write_data(data: *char, len: i64) -> i64,
-    set_open_mode(open_mode: OpenMode),
+    set_open_mode(open_mode: IODevice::OpenMode),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

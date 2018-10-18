@@ -15,8 +15,8 @@ pub struct DocParser;
 pub struct DocEntry {
     /// Which function this is attached to
     pub target_function: String,
-    //pub class_name: String,
-    //pub property: String,
+    pub class_name: String,
+    pub property: String,
     pub tags: Vec<String>,
 }
 
@@ -34,6 +34,8 @@ impl DocEntry {
     fn new() -> DocEntry {
         DocEntry {
             target_function: String::new(),
+            class_name: String::new(),
+            property: String::new(),
             tags: Vec::new(),
         }
     }
@@ -75,6 +77,28 @@ fn add_process_path(dest: &mut Vec<PathBuf>, path: &str) {
 
         dest.push(entry.path().to_owned());
     }
+}
+
+///
+/// Get class/property setting
+///
+fn get_class_prop(search_str: &String, search_tag: &'static str) -> String {
+	if search_str.contains(search_tag) {
+		let temp = search_str.split(" ");
+		let mut return_next = false;
+
+		for t in temp {
+			if return_next {
+				return t.to_owned();
+			}
+
+			if t == search_tag {
+				return_next = true;
+			}
+		}
+	}
+
+	String::new()
 }
 
 impl DocParser {
@@ -157,6 +181,18 @@ impl DocParser {
                 _ => (),
             }
 
+            if parsing_state == ParsingState::Doc {
+				if let Some(ref mut doc) = current_doc {
+					if doc.class_name.is_empty() {
+						doc.class_name = get_class_prop(&current_line, "\\class");
+					}
+
+					if doc.property.is_empty() {
+						doc.property = get_class_prop(&current_line, "\\property");
+					}
+				}
+            }
+
             // Find CPP entry. This is fairly crude but should hopefully be find
             // If the line contains ::,(,) and we aren't in doc parsing mode we
             // will assume this is a function name
@@ -178,7 +214,9 @@ impl DocParser {
                     }
 
                     if let Some(ref mut doc) = current_doc {
-                        doc.target_function = current_line[start_pos..end_pos].to_owned();
+                    	if doc.target_function.is_empty() {
+                        	doc.target_function = current_line[start_pos..end_pos].to_owned();
+                    	}
                     }
                 }
             } else {
@@ -196,14 +234,11 @@ impl DocParser {
             docs.entries.push(doc.clone());
         }
 
-        /*
-        for entry in &docs.entries {
-            println!("cpp target function {:?}", entry.target_function);
-            for tag in &entry.tags {
-                println!("{:?}", tag);
-            }
-        }
-        */
+        //for entry in &docs.entries {
+            //for tag in &entry.tags {
+            //   println!("{:?}", tag);
+            //}
+        //}
 
         docs
     }

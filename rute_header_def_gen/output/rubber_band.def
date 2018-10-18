@@ -1,3 +1,32 @@
+///     \class QRubberBand
+///     \brief The QRubberBand class provides a rectangle or line that can
+///     indicate a selection or a boundary.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     A rubber band is often used to show a new bounding area (as in a
+///     QSplitter or a QDockWidget that is undocking). Historically this has
+///     been implemented using a QPainter and XOR, but this approach
+///     doesn't always work properly since rendering can happen in the
+///     window below the rubber band, but before the rubber band has been
+///     "erased".
+/// 
+///     You can create a QRubberBand whenever you need to render a rubber band
+///     around a given area (or to represent a single line), then call
+///     setGeometry(), move() or resize() to position and size it. A common
+///     pattern is to do this in conjunction with mouse events. For example:
+/// 
+///     \snippet code/src_gui_widgets_qrubberband.cpp 0
+/// 
+///     If you pass a parent to QRubberBand's constructor, the rubber band will
+///     display only inside its parent, but stays on top of other child widgets.
+///     If no parent is passed, QRubberBand will act as a top-level widget.
+/// 
+///     Call show() to make the rubber band visible; also when the
+///     rubber band is not a top-level. Hiding or destroying
+///     the widget will make the rubber band disappear. The rubber band
+///     can be a \l Rectangle or a \l Line (vertical or horizontal),
+///     depending on the shape() it was given when constructed.
 [org_name(QRubberBand)]
 enum Shape {
     Line,

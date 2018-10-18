@@ -1,3 +1,37 @@
+///     \class QAbstractSpinBox
+///     \brief The QAbstractSpinBox class provides a spinbox and a line edit to
+///     display values.
+/// 
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     The class is designed as a common super class for widgets like
+///     QSpinBox, QDoubleSpinBox and QDateTimeEdit
+/// 
+///     Here are the main properties of the class:
+/// 
+///     \list 1
+/// 
+///     \li \l text: The text that is displayed in the QAbstractSpinBox.
+/// 
+///     \li \l alignment: The alignment of the text in the QAbstractSpinBox.
+/// 
+///     \li \l wrapping: Whether the QAbstractSpinBox wraps from the
+///     minimum value to the maximum value and vica versa.
+/// 
+///     \endlist
+/// 
+///     QAbstractSpinBox provides a virtual stepBy() function that is
+///     called whenever the user triggers a step. This function takes an
+///     integer value to signify how many steps were taken. E.g. Pressing
+///     Qt::Key_Down will trigger a call to stepBy(-1).
+/// 
+///     QAbstractSpinBox also provide a virtual function stepEnabled() to
+///     determine whether stepping up/down is allowed at any point. This
+///     function returns a bitset of StepEnabled.
+/// 
+///     \sa QAbstractSlider, QSpinBox, QDoubleSpinBox, QDateTimeEdit,
+///         {Spin Boxes Example}
 [org_name(QAbstractSpinBox)]
 enum StepEnabledFlag {
     StepNone,
@@ -72,7 +106,7 @@ struct AbstractSpinBox : Widget {
     init_style_option(option: *StyleOptionSpinBoxType),
     line_edit() -> LineEdit?,
     set_line_edit(edit: *LineEditType),
-    [event] step_enabled() -> StepEnabled,
+    [event] step_enabled() -> AbstractSpinBox::StepEnabled,
     [signal] editing_finished(),
 }
 

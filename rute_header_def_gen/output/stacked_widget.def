@@ -1,3 +1,50 @@
+///     \class QStackedWidget
+///     \brief The QStackedWidget class provides a stack of widgets where
+///     only one widget is visible at a time.
+/// 
+///     \ingroup organizers
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     QStackedWidget can be used to create a user interface similar to
+///     the one provided by QTabWidget. It is a convenience layout widget
+///     built on top of the QStackedLayout class.
+/// 
+///     Like QStackedLayout, QStackedWidget can be constructed and
+///     populated with a number of child widgets ("pages"):
+/// 
+///     \snippet qstackedwidget/main.cpp 0
+///     \snippet qstackedwidget/main.cpp 2
+///     \snippet qstackedwidget/main.cpp 3
+/// 
+///     QStackedWidget provides no intrinsic means for the user to switch
+///     page. This is typically done through a QComboBox or a QListWidget
+///     that stores the titles of the QStackedWidget's pages. For
+///     example:
+/// 
+///     \snippet qstackedwidget/main.cpp 1
+/// 
+///     When populating a stacked widget, the widgets are added to an
+///     internal list. The indexOf() function returns the index of a
+///     widget in that list. The widgets can either be added to the end of
+///     the list using the addWidget() function, or inserted at a given
+///     index using the insertWidget() function. The removeWidget()
+///     function removes a widget from the stacked widget. The number of
+///     widgets contained in the stacked widget can
+///     be obtained using the count() function.
+/// 
+///     The widget() function returns the widget at a given index
+///     position. The index of the widget that is shown on screen is given
+///     by currentIndex() and can be changed using setCurrentIndex(). In a
+///     similar manner, the currently shown widget can be retrieved using
+///     the currentWidget() function, and altered using the
+///     setCurrentWidget() function.
+/// 
+///     Whenever the current widget in the stacked widget changes or a
+///     widget is removed from the stacked widget, the currentChanged()
+///     and widgetRemoved() signals are emitted respectively.
+/// 
+///     \sa QStackedLayout, QTabWidget
 struct StackedWidget : Frame {
     add_widget(w: *WidgetType) -> i32,
     insert_widget(index: i32, w: *WidgetType) -> i32,

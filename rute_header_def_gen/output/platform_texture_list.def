@@ -10,10 +10,10 @@ struct PlatformTextureList : Object {
     texture_id(index: i32) -> i32,
     clip_rect(index: i32) -> Rect,
     source(index: i32),
-    flags(index: i32) -> Flags,
+    flags(index: i32) -> PlatformTextureList::Flags,
     lock(on: bool),
     is_locked() -> bool,
-    append_texture(source: *void, texture_id: i32, geometry: &RectType, clip_rect: &RectType, flags: Flags),
+    append_texture(source: *void, texture_id: i32, geometry: &RectType, clip_rect: &RectType, flags: PlatformTextureList::Flags),
     clear(),
     [signal] locked(arg0: bool),
 }

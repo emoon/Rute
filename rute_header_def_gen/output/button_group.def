@@ -1,3 +1,44 @@
+///     \class QButtonGroup
+///     \brief The QButtonGroup class provides a container to organize groups of
+///     button widgets.
+/// 
+///     \ingroup organizers
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     QButtonGroup provides an abstract container into which button widgets can
+///     be placed. It does not provide a visual representation of this container
+///     (see QGroupBox for a container widget), but instead manages the states of
+///     each of the buttons in the group.
+/// 
+///     An \l {QButtonGroup::exclusive} {exclusive} button group switches
+///     off all checkable (toggle) buttons except the one that has been
+///     clicked. By default, a button group is exclusive. The buttons in a
+///     button group are usually checkable \l{QPushButton}s, \l{QCheckBox}es
+///     (normally for non-exclusive button groups), or \l{QRadioButton}s.
+///     If you create an exclusive button group, you should ensure that
+///     one of the buttons in the group is initially checked; otherwise,
+///     the group will initially be in a state where no buttons are
+///     checked.
+/// 
+///     A button can be added to the group with addButton() and removed
+///     with removeButton(). If the group is exclusive, the
+///     currently checked button is available with checkedButton(). If a
+///     button is clicked, the buttonClicked() signal is emitted; for a
+///     checkable button in an exclusive group this means that the button
+///     has been checked. The list of buttons in the group is returned by
+///     buttons().
+/// 
+///     In addition, QButtonGroup can map between integers and buttons.
+///     You can assign an integer id to a button with setId(), and
+///     retrieve it with id(). The id of the currently checked button is
+///     available with checkedId(), and there is an overloaded signal
+///     buttonClicked() which emits the id of the button. The id \c {-1}
+///     is reserved by QButtonGroup to mean "no such button". The purpose
+///     of the mapping mechanism is to simplify the representation of enum
+///     values in a user interface.
+/// 
+///     \sa QGroupBox, QPushButton, QCheckBox, QRadioButton
 struct ButtonGroup : Object {
     set_exclusive(arg0: bool),
     exclusive() -> bool,

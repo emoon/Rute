@@ -14,6 +14,7 @@ struct OpenGLTextureBlitter {
     set_red_blue_swizzle(swizzle: bool),
     set_opacity(opacity: f32),
     blit(texture: i32, target_transform: &Matrix4x4Type, source_origin: OpenGLTextureBlitter::Origin),
+    blit(texture: i32, target_transform: &Matrix4x4Type, source_transform: &Matrix3x3Type),
     [static] target_transform(target: &RectFType, viewport: &RectType) -> Matrix4x4,
     [static] source_transform(sub_texture: &RectFType, texture_size: &SizeType, origin: OpenGLTextureBlitter::Origin) -> Matrix3x3,
 }

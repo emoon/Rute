@@ -1,3 +1,26 @@
+///   \class QDateEdit
+///   \brief The QDateEdit class provides a widget for editing dates based on
+///   the QDateTimeEdit widget.
+/// 
+///   \ingroup basicwidgets
+///   \inmodule QtWidgets
+/// 
+///   \image windows-dateedit.png
+/// 
+///   Many of the properties and functions provided by QDateEdit are implemented in
+///   QDateTimeEdit. These are the relevant properties of this class:
+/// 
+///   \list
+///   \li \l{QDateTimeEdit::date}{date} holds the date displayed by the widget.
+///   \li \l{QDateTimeEdit::minimumDate}{minimumDate} defines the minimum (earliest)
+///      date that can be set by the user.
+///   \li \l{QDateTimeEdit::maximumDate}{maximumDate} defines the maximum (latest) date
+///      that can be set by the user.
+///   \li \l{QDateTimeEdit::displayFormat}{displayFormat} contains a string that is used
+///      to format the date displayed in the widget.
+///   \endlist
+/// 
+///   \sa QTimeEdit, QDateTimeEdit
 struct DateEdit : DateTimeEdit {
     [signal] user_date_changed(date: &DateType),
 }

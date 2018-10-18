@@ -1,3 +1,66 @@
+///     \class QTabWidget
+///     \brief The QTabWidget class provides a stack of tabbed widgets.
+/// 
+///     \ingroup organizers
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image windows-tabwidget.png
+/// 
+///     A tab widget provides a tab bar (see QTabBar) and a "page area"
+///     that is used to display pages related to each tab. By default, the
+///     tab bar is shown above the page area, but different configurations
+///     are available (see \l{TabPosition}). Each tab is associated with a
+///     different widget (called a page). Only the current page is shown in
+///     the page area; all the other pages are hidden. The user can show a
+///     different page by clicking on its tab or by pressing its
+///     Alt+\e{letter} shortcut if it has one.
+/// 
+///     The normal way to use QTabWidget is to do the following:
+///     \list 1
+///     \li Create a QTabWidget.
+///     \li Create a QWidget for each of the pages in the tab dialog, but
+///        do not specify parent widgets for them.
+///     \li Insert child widgets into the page widget, using layouts to
+///        position them as normal.
+///     \li Call addTab() or insertTab() to put the page widgets into the
+///        tab widget, giving each tab a suitable label with an optional
+///        keyboard shortcut.
+///     \endlist
+/// 
+///     The position of the tabs is defined by \l tabPosition, their shape
+///     by \l tabShape.
+/// 
+///     The signal currentChanged() is emitted when the user selects a
+///     page.
+/// 
+///     The current page index is available as currentIndex(), the current
+///     page widget with currentWidget().  You can retrieve a pointer to a
+///     page widget with a given index using widget(), and can find the
+///     index position of a widget with indexOf(). Use setCurrentWidget()
+///     or setCurrentIndex() to show a particular page.
+/// 
+///     You can change a tab's text and icon using setTabText() or
+///     setTabIcon(). A tab and its associated page can be removed with
+///     removeTab().
+/// 
+///     Each tab is either enabled or disabled at any given time (see
+///     setTabEnabled()). If a tab is enabled, the tab text is drawn
+///     normally and the user can select that tab. If it is disabled, the
+///     tab is drawn in a different way and the user cannot select that
+///     tab. Note that even if a tab is disabled, the page can still be
+///     visible, for example if all of the tabs happen to be disabled.
+/// 
+///     Tab widgets can be a very good way to split up a complex dialog.
+///     An alternative is to use a QStackedWidget for which you provide some
+///     means of navigating between pages, for example, a QToolBar or a
+///     QListWidget.
+/// 
+///     Most of the functionality in QTabWidget is provided by a QTabBar
+///     (at the top, providing the tabs) and a QStackedWidget (most of the
+///     area, organizing the individual pages).
+/// 
+///     \sa QTabBar, QStackedWidget, QToolBox, {Tab Dialog Example}
 [org_name(QTabWidget)]
 enum TabPosition {
     North,

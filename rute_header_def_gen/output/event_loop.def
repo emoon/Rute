@@ -10,9 +10,9 @@ enum ProcessEventsFlag {
 }
 
 struct EventLoop : Object {
-    process_events(flags: ProcessEventsFlags) -> bool,
-    process_events(flags: ProcessEventsFlags, maximum_time: i32),
-    exec(flags: ProcessEventsFlags) -> i32,
+    process_events(flags: EventLoop::ProcessEventsFlags) -> bool,
+    process_events(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
+    exec(flags: EventLoop::ProcessEventsFlags) -> i32,
     exit(return_code: i32),
     is_running() -> bool,
     wake_up(),

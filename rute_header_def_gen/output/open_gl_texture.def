@@ -357,6 +357,7 @@ struct OpenGLTexture {
     is_bound() -> bool,
     is_bound(unit: uint) -> bool,
     [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> i32,
+    [static] bound_texture_id(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
     set_format(format: OpenGLTexture::TextureFormat),
     format() -> OpenGLTexture::TextureFormat,
     set_size(width: i32, height: i32, depth: i32),

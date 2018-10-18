@@ -6,10 +6,10 @@ enum ChangeFlag {
 }
 
 struct PinchGesture : Gesture {
-    total_change_flags() -> ChangeFlags,
-    set_total_change_flags(value: ChangeFlags),
-    change_flags() -> ChangeFlags,
-    set_change_flags(value: ChangeFlags),
+    total_change_flags() -> PinchGesture::ChangeFlags,
+    set_total_change_flags(value: PinchGesture::ChangeFlags),
+    change_flags() -> PinchGesture::ChangeFlags,
+    set_change_flags(value: PinchGesture::ChangeFlags),
     start_center_point() -> PointF,
     last_center_point() -> PointF,
     center_point() -> PointF,

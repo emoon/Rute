@@ -1,3 +1,81 @@
+///     \class QMenu
+///     \brief The QMenu class provides a menu widget for use in menu
+///     bars, context menus, and other popup menus.
+/// 
+///     \ingroup mainwindow-classes
+///     \ingroup basicwidgets
+///     \inmodule QtWidgets
+/// 
+///     \image fusion-menu.png
+/// 
+///     A menu widget is a selection menu. It can be either a pull-down
+///     menu in a menu bar or a standalone context menu. Pull-down menus
+///     are shown by the menu bar when the user clicks on the respective
+///     item or presses the specified shortcut key. Use
+///     QMenuBar::addMenu() to insert a menu into a menu bar. Context
+///     menus are usually invoked by some special keyboard key or by
+///     right-clicking. They can be executed either asynchronously with
+///     popup() or synchronously with exec(). Menus can also be invoked in
+///     response to button presses; these are just like context menus
+///     except for how they are invoked.
+/// 
+///     \section1 Actions
+/// 
+///     A menu consists of a list of action items. Actions are added with
+///     the addAction(), addActions() and insertAction() functions. An action
+///     is represented vertically and rendered by QStyle. In addition, actions
+///     can have a text label, an optional icon drawn on the very left side,
+///     and shortcut key sequence such as "Ctrl+X".
+/// 
+///     The existing actions held by a menu can be found with actions().
+/// 
+///     There are four kinds of action items: separators, actions that
+///     show a submenu, widgets, and actions that perform an action.
+///     Separators are inserted with addSeparator(), submenus with addMenu(),
+///     and all other items are considered action items.
+/// 
+///     When inserting action items you usually specify a receiver and a
+///     slot. The receiver will be notifed whenever the item is
+///     \l{QAction::triggered()}{triggered()}. In addition, QMenu provides
+///     two signals, triggered() and hovered(), which signal the
+///     QAction that was triggered from the menu.
+/// 
+///     You clear a menu with clear() and remove individual action items
+///     with removeAction().
+/// 
+///     A QMenu can also provide a tear-off menu. A tear-off menu is a
+///     top-level window that contains a copy of the menu. This makes it
+///     possible for the user to "tear off" frequently used menus and
+///     position them in a convenient place on the screen. If you want
+///     this functionality for a particular menu, insert a tear-off handle
+///     with setTearOffEnabled(). When using tear-off menus, bear in mind
+///     that the concept isn't typically used on Microsoft Windows so
+///     some users may not be familiar with it. Consider using a QToolBar
+///     instead.
+/// 
+///     Widgets can be inserted into menus with the QWidgetAction class.
+///     Instances of this class are used to hold widgets, and are inserted
+///     into menus with the addAction() overload that takes a QAction.
+/// 
+///     Conversely, actions can be added to widgets with the addAction(),
+///     addActions() and insertAction() functions.
+/// 
+///     \warning To make QMenu visible on the screen, exec() or popup() should be
+///     used instead of show().
+/// 
+///     \section1 QMenu on \macos with Qt Build Against Cocoa
+/// 
+///     QMenu can be inserted only once in a menu/menubar. Subsequent insertions will
+///     have no effect or will result in a disabled menu item.
+/// 
+///     See the \l{mainwindows/menus}{Menus} example for an example of how
+///     to use QMenuBar and QMenu in your application.
+/// 
+///     \b{Important inherited functions:} addAction(), removeAction(), clear(),
+///     addSeparator(), and addMenu().
+/// 
+///     \sa QMenuBar, {fowler}{GUI Design Handbook: Menu, Drop-Down and Pop-Up},
+///         {Application Example}, {Menus Example}
 struct Menu : Widget {
     add_action(text: String) -> Action?,
     add_action(icon: &IconType, text: String) -> Action?,

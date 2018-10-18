@@ -29,8 +29,8 @@ enum MatchOption {
 
 
 struct RegularExpression {
-    pattern_options() -> PatternOptions,
-    set_pattern_options(options: PatternOptions),
+    pattern_options() -> RegularExpression::PatternOptions,
+    set_pattern_options(options: RegularExpression::PatternOptions),
     swap(other: &RegularExpressionType),
     pattern() -> String,
     set_pattern(pattern: String),
@@ -38,10 +38,10 @@ struct RegularExpression {
     pattern_error_offset() -> i32,
     capture_count() -> i32,
     named_capture_groups() -> [String],
-    match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatch,
-    match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatch,
-    global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIterator,
-    global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: MatchOptions) -> RegularExpressionMatchIterator,
+    match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
+    global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
     optimize(),
     [static] escape(str: String) -> String,
 }
