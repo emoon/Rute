@@ -64,32 +64,74 @@ enum ToolButtonPopupMode {
 }
 
 struct ToolButton : AbstractButton {
+    ///     \reimp
     [event] size_hint() -> Size,
     [event] minimum_size_hint() -> Size,
+    ///     \property QToolButton::arrowType
+    ///     \brief whether the button displays an arrow instead of a normal icon
+    /// 
+    ///     This displays an arrow as the icon for the QToolButton.
+    /// 
+    ///     By default, this property is set to Qt::NoArrow.
     tool_button_style() -> Rute::ToolButtonStyle,
     arrow_type() -> Rute::ArrowType,
     set_arrow_type(type: Rute::ArrowType),
+    ///     Associates the given \a menu with this tool button.
+    /// 
+    ///     The menu will be shown according to the button's \l popupMode.
+    /// 
+    ///     Ownership of the menu is not transferred to the tool button.
+    /// 
+    ///     \sa menu()
     set_menu(menu: *MenuType),
+    ///     Returns the associated menu, or 0 if no menu has been defined.
+    /// 
+    ///     \sa setMenu()
     menu() -> Menu?,
+    ///     \property QToolButton::popupMode
+    ///     \brief describes the way that popup menus are used with tool buttons
+    /// 
+    ///     By default, this property is set to \l DelayedPopup.
     set_popup_mode(mode: ToolButton::ToolButtonPopupMode),
     popup_mode() -> ToolButton::ToolButtonPopupMode,
     default_action() -> Action?,
+    ///     \property QToolButton::autoRaise
+    ///     \brief whether auto-raising is enabled or not.
+    /// 
+    ///     The default is disabled (i.e. false).
+    /// 
+    ///     This property is currently ignored on \macos when using QMacStyle.
     set_auto_raise(enable: bool),
     auto_raise() -> bool,
+    ///     Shows (pops up) the associated popup menu. If there is no such
+    ///     menu, this function does nothing. This function does not return
+    ///     until the popup menu has been closed by the user.
     show_menu(),
     set_tool_button_style(style: Rute::ToolButtonStyle),
     set_default_action(arg0: *ActionType),
     [event] event(e: *EventType) -> bool,
+    ///     \reimp
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(arg0: *MouseEventType),
+    ///     \fn void QToolButton::paintEvent(QPaintEvent *event)
+    /// 
+    ///     Paints the button in response to the paint \a event.
     [event] paint_event(arg0: *PaintEventType),
     [event] action_event(arg0: *ActionEventType),
     [event] enter_event(arg0: *EventType),
     [event] leave_event(arg0: *EventType),
     [event] timer_event(arg0: *TimerEventType),
+    ///     \reimp
     [event] change_event(arg0: *EventType),
+    ///     \reimp
     [event] hit_button(pos: &PointType) -> bool,
     [event] next_check_state(),
+    ///     Initialize \a option with the values from this QToolButton. This method
+    ///     is useful for subclasses when they need a QStyleOptionToolButton, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionToolButtonType),
 }
 

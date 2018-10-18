@@ -95,45 +95,306 @@ enum SizeAdjustPolicy {
 }
 
 struct AbstractScrollArea : Frame {
+    ///     \property QAbstractScrollArea::verticalScrollBarPolicy
+    ///     \brief the policy for the vertical scroll bar
+    /// 
+    ///     The default policy is Qt::ScrollBarAsNeeded.
+    /// 
+    ///     \sa horizontalScrollBarPolicy
     vertical_scroll_bar_policy() -> Rute::ScrollBarPolicy,
     set_vertical_scroll_bar_policy(arg0: Rute::ScrollBarPolicy),
     vertical_scroll_bar() -> ScrollBar?,
+    ///    \since 4.2
+    ///    Replaces the existing vertical scroll bar with \a scrollBar, and sets all
+    ///    the former scroll bar's slider properties on the new scroll bar. The former
+    ///    scroll bar is then deleted.
+    /// 
+    ///    QAbstractScrollArea already provides vertical and horizontal scroll bars by
+    ///    default. You can call this function to replace the default vertical
+    ///    scroll bar with your own custom scroll bar.
+    /// 
+    ///    \sa verticalScrollBar(), setHorizontalScrollBar()
     set_vertical_scroll_bar(scrollbar: *ScrollBarType),
+    ///     \property QAbstractScrollArea::horizontalScrollBarPolicy
+    ///     \brief the policy for the horizontal scroll bar
+    /// 
+    ///     The default policy is Qt::ScrollBarAsNeeded.
+    /// 
+    ///     \sa verticalScrollBarPolicy
     horizontal_scroll_bar_policy() -> Rute::ScrollBarPolicy,
     set_horizontal_scroll_bar_policy(arg0: Rute::ScrollBarPolicy),
     horizontal_scroll_bar() -> ScrollBar?,
+    ///     \since 4.2
+    /// 
+    ///     Replaces the existing horizontal scroll bar with \a scrollBar, and sets all
+    ///     the former scroll bar's slider properties on the new scroll bar. The former
+    ///     scroll bar is then deleted.
+    /// 
+    ///     QAbstractScrollArea already provides horizontal and vertical scroll bars by
+    ///     default. You can call this function to replace the default horizontal
+    ///     scroll bar with your own custom scroll bar.
+    /// 
+    ///     \sa horizontalScrollBar(), setVerticalScrollBar()
     set_horizontal_scroll_bar(scrollbar: *ScrollBarType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the widget in the corner between the two scroll bars.
+    /// 
+    ///     By default, no corner widget is present.
     corner_widget() -> Widget?,
+    ///     \since 4.2
+    /// 
+    ///     Sets the widget in the corner between the two scroll bars to be
+    ///     \a widget.
+    /// 
+    ///     You will probably also want to set at least one of the scroll bar
+    ///     modes to \c AlwaysOn.
+    /// 
+    ///     Passing 0 shows no widget in the corner.
+    /// 
+    ///     Any previous corner widget is hidden.
+    /// 
+    ///     You may call setCornerWidget() with the same widget at different
+    ///     times.
+    /// 
+    ///     All widgets set here will be deleted by the scroll area when it is
+    ///     destroyed unless you separately reparent the widget after setting
+    ///     some other corner widget (or 0).
+    /// 
+    ///     Any \e newly set widget should have no current parent.
+    /// 
+    ///     By default, no corner widget is present.
+    /// 
+    ///     \sa horizontalScrollBarPolicy, horizontalScrollBarPolicy
     set_corner_widget(widget: *WidgetType),
+    ///     \since 4.2
+    ///     Adds \a widget as a scroll bar widget in the location specified
+    ///     by \a alignment.
+    /// 
+    ///     Scroll bar widgets are shown next to the horizontal or vertical
+    ///     scroll bar, and can be placed on either side of it. If you want
+    ///     the scroll bar widgets to be always visible, set the
+    ///     scrollBarPolicy for the corresponding scroll bar to \c AlwaysOn.
+    /// 
+    ///     \a alignment must be one of Qt::Alignleft and Qt::AlignRight,
+    ///     which maps to the horizontal scroll bar, or Qt::AlignTop and
+    ///     Qt::AlignBottom, which maps to the vertical scroll bar.
+    /// 
+    ///     A scroll bar widget can be removed by either re-parenting the
+    ///     widget or deleting it. It's also possible to hide a widget with
+    ///     QWidget::hide()
+    /// 
+    ///     The scroll bar widget will be resized to fit the scroll bar
+    ///     geometry for the current style. The following describes the case
+    ///     for scroll bar widgets on the horizontal scroll bar:
+    /// 
+    ///     The height of the widget will be set to match the height of the
+    ///     scroll bar. To control the width of the widget, use
+    ///     QWidget::setMinimumWidth and QWidget::setMaximumWidth, or
+    ///     implement QWidget::sizeHint() and set a horizontal size policy.
+    ///     If you want a square widget, call
+    ///     QStyle::pixelMetric(QStyle::PM_ScrollBarExtent) and set the
+    ///     width to this value.
+    /// 
+    ///     \sa scrollBarWidgets()
     add_scroll_bar_widget(widget: *WidgetType, alignment: Rute::Alignment),
+    ///     \since 4.2
+    ///     Returns a list of the currently set scroll bar widgets. \a alignment
+    ///     can be any combination of the four location flags.
+    /// 
+    ///     \sa addScrollBarWidget()
     scroll_bar_widgets(alignment: Rute::Alignment) -> WidgetList,
+    ///     Returns the viewport widget.
+    /// 
+    ///     Use the QScrollArea::widget() function to retrieve the contents of
+    ///     the viewport widget.
+    /// 
+    ///     \sa QScrollArea::widget()
     viewport() -> Widget?,
+    ///   \since 4.2
+    ///   Sets the viewport to be the given \a widget.
+    ///   The QAbstractScrollArea will take ownership of the given \a widget.
+    /// 
+    ///   If \a widget is 0, QAbstractScrollArea will assign a new QWidget instance
+    ///   for the viewport.
+    /// 
+    ///   \sa viewport()
     set_viewport(widget: *WidgetType),
+    /// Returns the size of the viewport as if the scroll bars had no valid
+    /// scrolling range.
     maximum_viewport_size() -> Size,
+    ///     \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
+    ///     Returns the sizeHint property of the scroll area. The size is determined by using
+    ///     viewportSizeHint() plus some extra space for scroll bars, if needed.
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     This slot is called by QAbstractScrollArea after setViewport(\a
+    ///     viewport) has been called. Reimplement this function in a
+    ///     subclass of QAbstractScrollArea to initialize the new \a viewport
+    ///     before it is used.
+    /// 
+    ///     \sa setViewport()
     [event] setup_viewport(viewport: *WidgetType),
+    ///     \since 5.2
+    ///     \property QAbstractScrollArea::sizeAdjustPolicy
+    ///     This property holds the policy describing how the size of the scroll area changes when the
+    ///     size of the viewport changes.
+    /// 
+    ///     The default policy is QAbstractScrollArea::AdjustIgnored.
+    ///     Changing this property might actually resize the scrollarea.
     size_adjust_policy() -> AbstractScrollArea::SizeAdjustPolicy,
     set_size_adjust_policy(policy: AbstractScrollArea::SizeAdjustPolicy),
+    ///     \since 4.6
+    ///     Sets \a margins around the scrolling area. This is useful for
+    ///     applications such as spreadsheets with "locked" rows and columns.
+    ///     The marginal space is is left blank; put widgets in the unused
+    ///     area.
+    /// 
+    ///     By default all margins are zero.
+    ///     \sa viewportMargins()
     set_viewport_margins(left: i32, top: i32, right: i32, bottom: i32),
+    ///     \since 4.6
+    ///     Sets \a margins around the scrolling area. This is useful for
+    ///     applications such as spreadsheets with "locked" rows and columns.
+    ///     The marginal space is is left blank; put widgets in the unused
+    ///     area.
+    /// 
+    ///     By default all margins are zero.
+    ///     \sa viewportMargins()
     set_viewport_margins(margins: &MarginsType),
+    ///     \since 5.5
+    ///     Returns the margins around the scrolling area.
+    ///     By default all the margins are zero.
+    /// 
+    ///     \sa setViewportMargins()
     viewport_margins() -> Margins,
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    ///     \fn bool QAbstractScrollArea::event(QEvent *event)
+    /// 
+    ///     \reimp
+    /// 
+    ///     This is the main event handler for the QAbstractScrollArea widget (\e not
+    ///     the scrolling area viewport()). The specified \a event is a general event
+    ///     object that may need to be cast to the appropriate class depending on its
+    ///     type.
+    /// 
+    ///     \sa QEvent::type()
     [event] event(arg0: *EventType) -> bool,
+    ///   \fn bool QAbstractScrollArea::viewportEvent(QEvent *event)
+    /// 
+    ///   The main event handler for the scrolling area (the viewport() widget).
+    ///   It handles the \a event specified, and can be called by subclasses to
+    ///   provide reasonable default behavior.
+    /// 
+    ///   Returns \c true to indicate to the event system that the event has been
+    ///   handled, and needs no further processing; otherwise returns \c false to
+    ///   indicate that the event should be propagated further.
+    /// 
+    ///   You can reimplement this function in a subclass, but we recommend
+    ///   using one of the specialized event handlers instead.
+    /// 
+    ///   Specialized handlers for viewport events are: paintEvent(),
+    ///   mousePressEvent(), mouseReleaseEvent(), mouseDoubleClickEvent(),
+    ///   mouseMoveEvent(), wheelEvent(), dragEnterEvent(), dragMoveEvent(),
+    ///   dragLeaveEvent(), dropEvent(), contextMenuEvent(), and
+    ///   resizeEvent().
     [event] viewport_event(arg0: *EventType) -> bool,
     [event] resize_event(arg0: *ResizeEventType),
+    ///     \fn void QAbstractScrollArea::paintEvent(QPaintEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     paint events (passed in \a event), for the viewport() widget.
+    /// 
+    ///     \note If you open a painter, make sure to open it on the viewport().
+    /// 
+    ///     \sa QWidget::paintEvent()
     [event] paint_event(arg0: *PaintEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     mouse press events for the viewport() widget. The event is passed
+    ///     in \a e.
+    /// 
+    ///     \sa QWidget::mousePressEvent()
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     mouse release events for the viewport() widget. The event is
+    ///     passed in \a e.
+    /// 
+    ///     \sa QWidget::mouseReleaseEvent()
     [event] mouse_release_event(arg0: *MouseEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     mouse double click events for the viewport() widget. The event is
+    ///     passed in \a e.
+    /// 
+    ///     \sa QWidget::mouseDoubleClickEvent()
     [event] mouse_double_click_event(arg0: *MouseEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     mouse move events for the viewport() widget. The event is passed
+    ///     in \a e.
+    /// 
+    ///     \sa QWidget::mouseMoveEvent()
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     wheel events for the viewport() widget. The event is passed in \a
+    ///     e.
+    /// 
+    ///     \sa QWidget::wheelEvent()
     [event] wheel_event(arg0: *WheelEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     context menu events for the viewport() widget. The event is passed
+    ///     in \a e.
+    /// 
+    ///     \sa QWidget::contextMenuEvent()
     [event] context_menu_event(arg0: *ContextMenuEventType),
+    ///     \fn void QAbstractScrollArea::dragEnterEvent(QDragEnterEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     drag enter events (passed in \a event), for the viewport() widget.
+    /// 
+    ///     \sa QWidget::dragEnterEvent()
     [event] drag_enter_event(arg0: *DragEnterEventType),
+    ///     \fn void QAbstractScrollArea::dragMoveEvent(QDragMoveEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     drag move events (passed in \a event), for the viewport() widget.
+    /// 
+    ///     \sa QWidget::dragMoveEvent()
     [event] drag_move_event(arg0: *DragMoveEventType),
+    ///     \fn void QAbstractScrollArea::dragLeaveEvent(QDragLeaveEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     drag leave events (passed in \a event), for the viewport() widget.
+    /// 
+    ///     \sa QWidget::dragLeaveEvent()
     [event] drag_leave_event(arg0: *DragLeaveEventType),
+    ///     \fn void QAbstractScrollArea::dropEvent(QDropEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     drop events (passed in \a event), for the viewport() widget.
+    /// 
+    ///     \sa QWidget::dropEvent()
     [event] drop_event(arg0: *DropEventType),
+    ///     This function is called with key event \a e when key presses
+    ///     occur. It handles PageUp, PageDown, Up, Down, Left, and Right, and
+    ///     ignores all other key presses.
     [event] key_press_event(arg0: *KeyEventType),
+    ///     This virtual handler is called when the scroll bars are moved by
+    ///     \a dx, \a dy, and consequently the viewport's contents should be
+    ///     scrolled accordingly.
+    /// 
+    ///     The default implementation simply calls update() on the entire
+    ///     viewport(), subclasses can reimplement this handler for
+    ///     optimization purposes, or - like QScrollArea - to move a contents
+    ///     widget. The parameters \a dx and \a dy are there for convenience,
+    ///     so that the class knows how much should be scrolled (useful
+    ///     e.g. when doing pixel-shifts). You may just as well ignore these
+    ///     values and scroll directly to the position the scroll bars
+    ///     indicate.
+    /// 
+    ///     Calling this function in order to scroll programmatically is an
+    ///     error, use the scroll bars instead (e.g. by calling
+    ///     QScrollBar::setValue() directly).
     [event] scroll_contents_by(dx: i32, dy: i32),
     [event] viewport_size_hint() -> Size,
 }

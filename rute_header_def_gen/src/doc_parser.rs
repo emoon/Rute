@@ -206,9 +206,9 @@ impl DocParser {
                     let mut start_pos = 0;
 
                     // search backwards to find where the name starts
-                    for (index, c) in current_line[..start_pos].chars().rev().enumerate() {
+                    for (index, c) in current_line[..end_pos].chars().rev().enumerate() {
                         if c == '*' || c == ' ' || c == ' ' {
-                            start_pos = index;
+                            start_pos = end_pos - index;
                             break;
                         }
                     }
@@ -234,11 +234,17 @@ impl DocParser {
             docs.entries.push(doc.clone());
         }
 
-        //for entry in &docs.entries {
-            //for tag in &entry.tags {
-            //   println!("{:?}", tag);
-            //}
-        //}
+		/*
+        for entry in &docs.entries {
+        	println!("-----------------------------------------------------------------");
+			println!("target   {:?}", entry.target_function);
+			println!("class    {:?}", entry.class_name);
+			println!("property {:?}", entry.property);
+            for tag in &entry.tags {
+               println!("  {:?}", tag);
+            }
+        }
+        */
 
         docs
     }

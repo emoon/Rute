@@ -79,16 +79,80 @@
 /// 
 ///     \sa QAbstractScrollArea, QScrollBar, {Image Viewer Example}
 struct ScrollArea : AbstractScrollArea {
+    ///     Returns the scroll area's widget, or 0 if there is none.
+    /// 
+    ///     \sa setWidget()
     widget() -> Widget?,
+    ///     \fn void QScrollArea::setWidget(QWidget *widget)
+    /// 
+    ///     Sets the scroll area's \a widget.
+    /// 
+    ///     The \a widget becomes a child of the scroll area, and will be
+    ///     destroyed when the scroll area is deleted or when a new widget is
+    ///     set.
+    /// 
+    ///     The widget's \l{QWidget::setAutoFillBackground()}{autoFillBackground}
+    ///     property will be set to \c{true}.
+    /// 
+    ///     If the scroll area is visible when the \a widget is
+    ///     added, you must \l{QWidget::}{show()} it explicitly.
+    /// 
+    ///     Note that You must add the layout of \a widget before you call
+    ///     this function; if you add it later, the \a widget will not be
+    ///     visible - regardless of when you \l{QWidget::}{show()} the scroll
+    ///     area. In this case, you can also not \l{QWidget::}{show()} the \a
+    ///     widget later.
+    /// 
+    ///     \sa widget()
     set_widget(widget: *WidgetType),
     take_widget() -> Widget?,
+    ///     \property QScrollArea::widgetResizable
+    ///     \brief whether the scroll area should resize the view widget
+    /// 
+    ///     If this property is set to false (the default), the scroll area
+    ///     honors the size of its widget. Regardless of this property, you
+    ///     can programmatically resize the widget using widget()->resize(),
+    ///     and the scroll area will automatically adjust itself to the new
+    ///     size.
+    /// 
+    ///     If this property is set to true, the scroll area will
+    ///     automatically resize the widget in order to avoid scroll bars
+    ///     where they can be avoided, or to take advantage of extra space.
     widget_resizable() -> bool,
     set_widget_resizable(resizable: bool),
     [event] size_hint() -> Size,
     [event] focus_next_prev_child(next: bool) -> bool,
     alignment() -> Rute::Alignment,
+    ///     \property QScrollArea::alignment
+    ///     \brief the alignment of the scroll area's widget
+    ///     \since 4.2
+    /// 
+    ///     A valid alignment is a combination of the following flags:
+    ///     \list
+    ///     \li \c Qt::AlignLeft
+    ///     \li \c Qt::AlignHCenter
+    ///     \li \c Qt::AlignRight
+    ///     \li \c Qt::AlignTop
+    ///     \li \c Qt::AlignVCenter
+    ///     \li \c Qt::AlignBottom
+    ///     \endlist
+    ///     By default, the widget stays rooted to the top-left corner of the
+    ///     scroll area.
     set_alignment(arg0: Rute::Alignment),
+    ///     Scrolls the contents of the scroll area so that the point (\a x, \a y) is visible
+    ///     inside the region of the viewport with margins specified in pixels by \a xmargin and
+    ///     \a ymargin. If the specified point cannot be reached, the contents are scrolled to
+    ///     the nearest valid position. The default value for both margins is 50 pixels.
     ensure_visible(x: i32, y: i32, xmargin: i32, ymargin: i32),
+    ///     \since 4.2
+    /// 
+    ///     Scrolls the contents of the scroll area so that the \a childWidget
+    ///     of QScrollArea::widget() is visible inside the viewport with
+    ///     margins specified in pixels by \a xmargin and \a ymargin. If the
+    ///     specified point cannot be reached, the contents are scrolled to
+    ///     the nearest valid position. The default value for both margins is
+    ///     50 pixels.
+    /// 
     ensure_widget_visible(child_widget: *WidgetType, xmargin: i32, ymargin: i32),
     [event] event(arg0: *EventType) -> bool,
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,

@@ -41,18 +41,53 @@
 /// 
 ///     \sa QSplitter
 struct SplitterHandle : Widget {
+    ///     Sets the orientation of the splitter handle to \a orientation.
+    ///     This is usually propagated from the QSplitter.
+    /// 
+    ///     \sa QSplitter::setOrientation()
     set_orientation(o: Rute::Orientation),
+    ///    Returns the handle's orientation. This is usually propagated from the QSplitter.
+    /// 
+    ///    \sa QSplitter::orientation()
     orientation() -> Rute::Orientation,
+    ///     Returns \c true if widgets are resized dynamically (opaquely), otherwise
+    ///     returns \c false. This value is controlled by the QSplitter.
+    /// 
+    ///     \sa QSplitter::opaqueResize()
+    /// 
     opaque_resize() -> bool,
+    ///     Returns the splitter associated with this splitter handle.
+    /// 
+    ///     \sa QSplitter::handle()
     splitter() -> Splitter?,
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///    \reimp
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///    \reimp
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///    \reimp
     [event] mouse_release_event(arg0: *MouseEventType),
+    ///     \reimp
     [event] resize_event(arg0: *ResizeEventType),
+    ///     \reimp
     [event] event(arg0: *EventType) -> bool,
+    ///     Tells the splitter to move this handle to position \a pos, which is
+    ///     the distance from the left or top edge of the widget.
+    /// 
+    ///     Note that \a pos is also measured from the left (or top) for
+    ///     right-to-left languages. This function will map \a pos to the
+    ///     appropriate position before calling QSplitter::moveSplitter().
+    /// 
+    ///     \sa QSplitter::moveSplitter(), closestLegalPosition()
     move_splitter(p: i32),
+    ///    Returns the closest legal position to \a pos of the splitter
+    ///    handle. The positions are measured from the left or top edge of
+    ///    the splitter, even for right-to-left languages.
+    /// 
+    ///    \sa QSplitter::closestLegalPosition(), moveSplitter()
     closest_legal_position(p: i32) -> i32,
 }
 

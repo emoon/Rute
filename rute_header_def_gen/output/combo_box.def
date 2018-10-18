@@ -88,73 +88,331 @@ enum SizeAdjustPolicy {
 }
 
 struct ComboBox : Widget {
+    ///     \property QComboBox::maxVisibleItems
+    ///     \brief the maximum allowed size on screen of the combo box, measured in items
+    /// 
+    ///     By default, this property has a value of 10.
+    /// 
+    ///     \note This property is ignored for non-editable comboboxes in styles that returns
+    ///     true for QStyle::SH_ComboBox_Popup such as the Mac style or the Gtk+ Style.
     max_visible_items() -> i32,
     set_max_visible_items(max_items: i32),
+    ///     \property QComboBox::count
+    ///     \brief the number of items in the combobox
+    /// 
+    ///     By default, for an empty combo box, this property has a value of 0.
     count() -> i32,
+    ///     \property QComboBox::maxCount
+    ///     \brief the maximum number of items allowed in the combobox
+    /// 
+    ///     \note If you set the maximum number to be less then the current
+    ///     amount of items in the combobox, the extra items will be
+    ///     truncated. This also applies if you have set an external model on
+    ///     the combobox.
+    /// 
+    ///     By default, this property's value is derived from the highest
+    ///     signed integer available (typically 2147483647).
     set_max_count(max: i32),
     max_count() -> i32,
+    ///     \obsolete
+    /// 
+    ///     Use setCompleter() instead.
     auto_completion() -> bool,
+    ///     \obsolete
+    /// 
+    ///     Use setCompleter() instead.
     set_auto_completion(enable: bool),
+    ///     \obsolete
+    /// 
+    ///     Use setCompleter() and QCompleter::setCaseSensitivity() instead.
     auto_completion_case_sensitivity() -> Rute::CaseSensitivity,
+    ///     \obsolete
+    /// 
+    ///     Use setCompleter() and QCompleter::setCaseSensitivity() instead.
     set_auto_completion_case_sensitivity(sensitivity: Rute::CaseSensitivity),
+    ///     \property QComboBox::duplicatesEnabled
+    ///     \brief whether the user can enter duplicate items into the combobox
+    /// 
+    ///     Note that it is always possible to programmatically insert duplicate items into the
+    ///     combobox.
+    /// 
+    ///     By default, this property is \c false (duplicates are not allowed).
     duplicates_enabled() -> bool,
     set_duplicates_enabled(enable: bool),
     set_frame(arg0: bool),
+    ///     \property QComboBox::frame
+    ///     \brief whether the combo box draws itself with a frame
+    /// 
+    /// 
+    ///     If enabled (the default) the combo box draws itself inside a
+    ///     frame, otherwise the combo box draws itself without any frame.
     has_frame() -> bool,
     find_text(text: String, flags: Rute::MatchFlags) -> i32,
+    ///   Returns the index of the item containing the given \a data for the
+    ///   given \a role; otherwise returns -1.
+    /// 
+    ///   The \a flags specify how the items in the combobox are searched.
     find_data(data: &VariantType, role: i32, flags: Rute::MatchFlags) -> i32,
+    ///     \property QComboBox::insertPolicy
+    ///     \brief the policy used to determine where user-inserted items should
+    ///     appear in the combobox
+    /// 
+    ///     The default value is \l InsertAtBottom, indicating that new items will appear
+    ///     at the bottom of the list of items.
+    /// 
+    ///     \sa InsertPolicy
     insert_policy() -> ComboBox::InsertPolicy,
     set_insert_policy(policy: ComboBox::InsertPolicy),
+    ///     \property QComboBox::sizeAdjustPolicy
+    ///     \brief the policy describing how the size of the combobox changes
+    ///     when the content changes
+    /// 
+    ///     The default value is \l AdjustToContentsOnFirstShow.
+    /// 
+    ///     \sa SizeAdjustPolicy
     size_adjust_policy() -> ComboBox::SizeAdjustPolicy,
     set_size_adjust_policy(policy: ComboBox::SizeAdjustPolicy),
+    ///     \property QComboBox::minimumContentsLength
+    ///     \brief the minimum number of characters that should fit into the combobox.
+    /// 
+    ///     The default value is 0.
+    /// 
+    ///     If this property is set to a positive value, the
+    ///     minimumSizeHint() and sizeHint() take it into account.
+    /// 
+    ///     \sa sizeAdjustPolicy
     minimum_contents_length() -> i32,
     set_minimum_contents_length(characters: i32),
+    ///     \property QComboBox::iconSize
+    ///     \brief the size of the icons shown in the combobox.
+    /// 
+    ///     Unless explicitly set this returns the default value of the
+    ///     current style.  This size is the maximum size that icons can have;
+    ///     icons of smaller size are not scaled up.
     icon_size() -> Size,
     set_icon_size(size: &SizeType),
+    ///     \property QComboBox::editable
+    ///     \brief whether the combo box can be edited by the user
+    /// 
+    ///     By default, this property is \c false. The effect of editing depends
+    ///     on the insert policy.
+    /// 
+    ///     \note When disabling the \a editable state, the validator and
+    ///     completer are removed.
+    /// 
+    ///     \sa InsertPolicy
     is_editable() -> bool,
     set_editable(editable: bool),
+    ///     Sets the line \a edit to use instead of the current line edit widget.
+    /// 
+    ///     The combo box takes ownership of the line edit.
     set_line_edit(edit: *LineEditType),
+    ///     Returns the line edit used to edit items in the combobox, or 0 if there
+    ///     is no line edit.
+    /// 
+    ///     Only editable combo boxes have a line edit.
     line_edit() -> LineEdit?,
+    ///     \fn void QComboBox::setValidator(const QValidator *validator)
+    /// 
+    ///     Sets the \a validator to use instead of the current validator.
+    /// 
+    ///     \note The validator is removed when the \l editable property becomes \c false.
     set_validator(v: *ValidatorType),
+    ///     Returns the validator that is used to constrain text input for the
+    ///     combobox.
+    /// 
+    ///     \sa editable
     validator() -> Validator?,
+    ///     \fn void QComboBox::setCompleter(QCompleter *completer)
+    ///     \since 4.2
+    /// 
+    ///     Sets the \a completer to use instead of the current completer.
+    ///     If \a completer is 0, auto completion is disabled.
+    /// 
+    ///     By default, for an editable combo box, a QCompleter that
+    ///     performs case insensitive inline completion is automatically created.
+    /// 
+    ///     \note The completer is removed when the \l editable property becomes \c false.
     set_completer(c: *CompleterType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the completer that is used to auto complete text input for the
+    ///     combobox.
+    /// 
+    ///     \sa editable
     completer() -> Completer?,
+    ///     Returns the item delegate used by the popup list view.
+    /// 
+    ///     \sa setItemDelegate()
     item_delegate() -> AbstractItemDelegate?,
+    ///     Sets the item \a delegate for the popup list view.
+    ///     The combobox takes ownership of the delegate.
+    /// 
+    ///     \warning You should not share the same instance of a delegate between comboboxes,
+    ///     widget mappers or views. Doing so can cause incorrect or unintuitive editing behavior
+    ///     since each view connected to a given delegate may receive the
+    ///     \l{QAbstractItemDelegate::}{closeEditor()} signal, and attempt to access, modify or
+    ///     close an editor that has already been closed.
+    /// 
+    ///     \sa itemDelegate()
     set_item_delegate(delegate: *AbstractItemDelegateType),
+    ///     Returns the model used by the combobox.
     model() -> AbstractItemModel?,
+    ///     Sets the model to be \a model. \a model must not be 0.
+    ///     If you want to clear the contents of a model, call clear().
+    /// 
+    ///     \sa clear()
     set_model(model: *AbstractItemModelType),
+    ///     Returns the root model item index for the items in the combobox.
+    /// 
+    ///     \sa setRootModelIndex()
     root_model_index() -> ModelIndex,
+    ///     Sets the root model item \a index for the items in the combobox.
+    /// 
+    ///     \sa rootModelIndex()
     set_root_model_index(index: &ModelIndexType),
+    ///     \property QComboBox::modelColumn
+    ///     \brief the column in the model that is visible.
+    /// 
+    ///     If set prior to populating the combo box, the pop-up view will
+    ///     not be affected and will show the first column (using this property's
+    ///     default value).
+    /// 
+    ///     By default, this property has a value of 0.
     model_column() -> i32,
     set_model_column(visible_column: i32),
+    ///     \property QComboBox::currentIndex
+    ///     \brief the index of the current item in the combobox.
+    /// 
+    ///     The current index can change when inserting or removing items.
+    /// 
+    ///     By default, for an empty combo box or a combo box in which no current
+    ///     item is set, this property has a value of -1.
     current_index() -> i32,
+    ///     \property QComboBox::currentText
+    ///     \brief the current text
+    /// 
+    ///     If the combo box is editable, the current text is the value displayed
+    ///     by the line edit. Otherwise, it is the value of the current item or
+    ///     an empty string if the combo box is empty or no current item is set.
+    /// 
+    ///     The setter setCurrentText() simply calls setEditText() if the combo box is editable.
+    ///     Otherwise, if there is a matching text in the list, currentIndex is set to the
+    ///     corresponding index.
+    /// 
+    ///     \sa editable, setEditText()
     current_text() -> String,
+    ///     \property QComboBox::currentData
+    ///     \brief the data for the current item
+    ///     \since 5.2
+    /// 
+    ///     By default, for an empty combo box or a combo box in which no current
+    ///     item is set, this property contains an invalid QVariant.
     current_data(role: i32) -> Variant,
+    ///     Returns the text for the given \a index in the combobox.
     item_text(index: i32) -> String,
+    ///     Returns the icon for the given \a index in the combobox.
     item_icon(index: i32) -> Icon,
+    ///    Returns the data for the given \a role in the given \a index in the
+    ///    combobox, or QVariant::Invalid if there is no data for this role.
     item_data(index: i32, role: i32) -> Variant,
     add_item(text: String, user_data: &VariantType),
     add_item(icon: &IconType, text: String, user_data: &VariantType),
     add_items(texts: &[String]),
+    /// 
+    ///     Inserts the \a icon, \a text and \a userData (stored in the
+    ///     Qt::UserRole) into the combobox at the given \a index.
+    /// 
+    ///     If the index is equal to or higher than the total number of items,
+    ///     the new item is appended to the list of existing items. If the
+    ///     index is zero or negative, the new item is prepended to the list
+    ///     of existing items.
+    /// 
+    ///     \sa insertItems()
     insert_item(index: i32, text: String, user_data: &VariantType),
+    /// 
+    ///     Inserts the \a icon, \a text and \a userData (stored in the
+    ///     Qt::UserRole) into the combobox at the given \a index.
+    /// 
+    ///     If the index is equal to or higher than the total number of items,
+    ///     the new item is appended to the list of existing items. If the
+    ///     index is zero or negative, the new item is prepended to the list
+    ///     of existing items.
+    /// 
+    ///     \sa insertItems()
     insert_item(index: i32, icon: &IconType, text: String, user_data: &VariantType),
     insert_items(index: i32, texts: &[String]),
+    ///     \since 4.4
+    /// 
+    ///     Inserts a separator item into the combobox at the given \a index.
+    /// 
+    ///     If the index is equal to or higher than the total number of items, the new item
+    ///     is appended to the list of existing items. If the index is zero or negative, the
+    ///     new item is prepended to the list of existing items.
+    /// 
+    ///     \sa insertItem()
     insert_separator(index: i32),
+    ///     Removes the item at the given \a index from the combobox.
+    ///     This will update the current index if the index is removed.
+    /// 
+    ///     This function does nothing if \a index is out of range.
     remove_item(index: i32),
+    ///     Sets the \a text for the item on the given \a index in the combobox.
     set_item_text(index: i32, text: String),
+    ///     Sets the \a icon for the item on the given \a index in the combobox.
     set_item_icon(index: i32, icon: &IconType),
+    ///     Sets the data \a role for the item on the given \a index in the combobox
+    ///     to the specified \a value.
     set_item_data(index: i32, value: &VariantType, role: i32),
+    ///     Returns the list view used for the combobox popup.
     view() -> AbstractItemView?,
+    ///   Sets the view to be used in the combobox popup to the given \a
+    ///   itemView. The combobox takes ownership of the view.
+    /// 
+    ///   Note: If you want to use the convenience views (like QListWidget,
+    ///   QTableWidget or QTreeWidget), make sure to call setModel() on the
+    ///   combobox with the convenience widgets model before calling this
+    ///   function.
     set_view(item_view: *AbstractItemViewType),
+    ///     \reimp
+    /// 
+    ///     This implementation caches the size hint to avoid resizing when
+    ///     the contents change dynamically. To invalidate the cached value
+    ///     change the \l sizeAdjustPolicy.
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     Displays the list of items in the combobox. If the list is empty
+    ///     then the no items will be shown.
+    /// 
+    ///     If you reimplement this function to show a custom pop-up, make
+    ///     sure you call hidePopup() to reset the internal state.
+    /// 
+    ///     \sa hidePopup()
     [event] show_popup(),
+    ///     Hides the list of items in the combobox if it is currently visible
+    ///     and resets the internal state, so that if the custom pop-up was
+    ///     shown inside the reimplemented showPopup(), then you also need to
+    ///     reimplement the hidePopup() function to hide your custom pop-up
+    ///     and call the base class implementation to reset the internal state
+    ///     whenever your custom pop-up widget is hidden.
+    /// 
+    ///     \sa showPopup()
     [event] hide_popup(),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
+    ///     \reimp
     input_method_query(query: Rute::InputMethodQuery, argument: &VariantType) -> Variant,
+    ///     Clears the combobox, removing all items.
+    /// 
+    ///     Note: If you have set an external model on the combobox this model
+    ///     will still be cleared when calling this function.
     clear(),
+    ///     Clears the contents of the line edit used for editing in the combobox.
     clear_edit_text(),
+    ///     Sets the \a text in the combobox's text edit.
     set_edit_text(text: String),
     set_current_index(index: i32),
     set_current_text(text: String),
@@ -166,20 +424,38 @@ struct ComboBox : Widget {
     [signal] current_index_changed(index: i32),
     [signal] current_index_changed(arg0: String),
     [signal] current_text_changed(arg0: String),
+    ///     \reimp
     [event] focus_in_event(e: *FocusEventType),
+    ///     \reimp
     [event] focus_out_event(e: *FocusEventType),
     [event] change_event(e: *EventType),
+    ///     \reimp
     [event] resize_event(e: *ResizeEventType),
+    ///     \reimp
     [event] paint_event(e: *PaintEventType),
+    ///     \reimp
     [event] show_event(e: *ShowEventType),
+    ///     \reimp
     [event] hide_event(e: *HideEventType),
+    ///     \reimp
     [event] mouse_press_event(e: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(e: *MouseEventType),
+    ///     \reimp
     [event] key_press_event(e: *KeyEventType),
+    ///     \reimp
     [event] key_release_event(e: *KeyEventType),
+    ///     \reimp
     [event] wheel_event(e: *WheelEventType),
+    ///     \reimp
     [event] context_menu_event(e: *ContextMenuEventType),
+    ///     \reimp
     [event] input_method_event(arg0: *InputMethodEventType),
+    ///     Initialize \a option with the values from this QComboBox. This method
+    ///     is useful for subclasses when they need a QStyleOptionComboBox, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionComboBoxType),
 }
 

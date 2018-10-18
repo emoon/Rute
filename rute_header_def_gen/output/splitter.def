@@ -48,39 +48,243 @@
 /// 
 ///     \sa QSplitterHandle, QHBoxLayout, QVBoxLayout, QTabWidget
 struct Splitter : Frame {
+    ///     Adds the given \a widget to the splitter's layout after all the other
+    ///     items.
+    /// 
+    ///     If \a widget is already in the splitter, it will be moved to the new position.
+    /// 
+    ///     \note The splitter takes ownership of the widget.
+    /// 
+    ///     \sa insertWidget(), widget(), indexOf()
     add_widget(widget: *WidgetType),
+    ///     Inserts the \a widget specified into the splitter's layout at the
+    ///     given \a index.
+    /// 
+    ///     If \a widget is already in the splitter, it will be moved to the new position.
+    /// 
+    ///     If \a index is an invalid index, then the widget will be inserted at the end.
+    /// 
+    ///     \note The splitter takes ownership of the widget.
+    /// 
+    ///     \sa addWidget(), indexOf(), widget()
     insert_widget(index: i32, widget: *WidgetType),
+    ///     \since 5.9
+    /// 
+    ///     Replaces the widget in the splitter's layout at the given \a index by \a widget.
+    /// 
+    ///     Returns the widget that has just been replaced if \a index is valid and \a widget
+    ///     is not already a child of the splitter. Otherwise, it returns null and no replacement
+    ///     or addition is made.
+    /// 
+    ///     The geometry of the newly inserted widget will be the same as the widget it replaces.
+    ///     Its visible and collapsed states are also inherited.
+    /// 
+    ///     \note The splitter takes ownership of \a widget and sets the parent of the
+    ///     replaced widget to null.
+    /// 
+    ///     \note Because \a widget gets \l{QWidget::setParent()}{reparented} into the splitter,
+    ///     its \l{QWidget::}{geometry} may not be set right away, but only after \a widget will
+    ///     receive the appropriate events.
+    /// 
+    ///     \sa insertWidget(), indexOf()
     replace_widget(index: i32, widget: *WidgetType) -> Widget?,
+    ///     \property QSplitter::orientation
+    ///     \brief the orientation of the splitter
+    /// 
+    ///     By default, the orientation is horizontal (i.e., the widgets are
+    ///     laid out side by side). The possible orientations are
+    ///     Qt::Horizontal and Qt::Vertical.
+    /// 
+    ///     \sa QSplitterHandle::orientation()
     set_orientation(arg0: Rute::Orientation),
     orientation() -> Rute::Orientation,
+    ///     \property QSplitter::childrenCollapsible
+    ///     \brief whether child widgets can be resized down to size 0 by the user
+    /// 
+    ///     By default, children are collapsible. It is possible to enable
+    ///     and disable the collapsing of individual children using
+    ///     setCollapsible().
+    /// 
+    ///     \sa setCollapsible()
     set_children_collapsible(arg0: bool),
     children_collapsible() -> bool,
+    ///     Sets whether the child widget at \a index is collapsible to \a collapse.
+    /// 
+    ///     By default, children are collapsible, meaning that the user can
+    ///     resize them down to size 0, even if they have a non-zero
+    ///     minimumSize() or minimumSizeHint(). This behavior can be changed
+    ///     on a per-widget basis by calling this function, or globally for
+    ///     all the widgets in the splitter by setting the \l
+    ///     childrenCollapsible property.
+    /// 
+    ///     \sa childrenCollapsible
     set_collapsible(index: i32, arg0: bool),
+    ///     Returns \c true if the widget at \a index is collapsible, otherwise returns \c false.
     is_collapsible(index: i32) -> bool,
     set_opaque_resize(opaque: bool),
+    ///     \property QSplitter::opaqueResize
+    ///     \brief whether resizing is opaque
+    /// 
+    ///     The default resize behavior is style dependent (determined by the
+    ///     SH_Splitter_OpaqueResize style hint). However, you can override it
+    ///     by calling setOpaqueResize()
+    /// 
+    ///     \sa QStyle::StyleHint
     opaque_resize() -> bool,
+    ///     Updates the splitter's state. You should not need to call this
+    ///     function.
     refresh(),
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     Returns a list of the size parameters of all the widgets in this splitter.
+    /// 
+    ///     If the splitter's orientation is horizontal, the list contains the
+    ///     widgets width in pixels, from left to right; if the orientation is
+    ///     vertical, the list contains the widgets' heights in pixels,
+    ///     from top to bottom.
+    /// 
+    ///     Giving the values to another splitter's setSizes() function will
+    ///     produce a splitter with the same layout as this one.
+    /// 
+    ///     Note that invisible widgets have a size of 0.
+    /// 
+    ///     \sa setSizes()
     sizes() -> [i32],
+    ///     Sets the child widgets' respective sizes to the values given in the \a list.
+    /// 
+    ///     If the splitter is horizontal, the values set the width of each
+    ///     widget in pixels, from left to right. If the splitter is vertical, the
+    ///     height of each widget is set, from top to bottom.
+    /// 
+    ///     Extra values in the \a list are ignored. If \a list contains too few
+    ///     values, the result is undefined, but the program will still be well-behaved.
+    /// 
+    ///     The overall size of the splitter widget is not affected.
+    ///     Instead, any additional/missing space is distributed amongst the
+    ///     widgets according to the relative weight of the sizes.
+    /// 
+    ///     If you specify a size of 0, the widget will be invisible. The size policies
+    ///     of the widgets are preserved. That is, a value smaller than the minimal size
+    ///     hint of the respective widget will be replaced by the value of the hint.
+    /// 
+    ///     \sa sizes()
     set_sizes(list: [i32]),
+    ///     Saves the state of the splitter's layout.
+    /// 
+    ///     Typically this is used in conjunction with QSettings to remember the size
+    ///     for a future session. A version number is stored as part of the data.
+    ///     Here is an example:
+    /// 
+    ///     \snippet splitter/splitter.cpp 1
+    /// 
+    ///     \sa restoreState()
     save_state() -> ByteArray,
+    ///     Restores the splitter's layout to the \a state specified.
+    ///     Returns \c true if the state is restored; otherwise returns \c false.
+    /// 
+    ///     Typically this is used in conjunction with QSettings to restore the size
+    ///     from a past session. Here is an example:
+    /// 
+    ///     Restore the splitter's state:
+    /// 
+    ///     \snippet splitter/splitter.cpp 2
+    /// 
+    ///     A failure to restore the splitter's layout may result from either
+    ///     invalid or out-of-date data in the supplied byte array.
+    /// 
+    ///     \sa saveState()
     restore_state(state: &ByteArrayType) -> bool,
+    ///     \property QSplitter::handleWidth
+    ///     \brief the width of the splitter handles
+    /// 
+    ///     By default, this property contains a value that depends on the user's platform
+    ///     and style preferences.
+    /// 
+    ///     If you set handleWidth to 1 or 0, the actual grab area will grow to overlap a
+    ///     few pixels of its respective widgets.
     handle_width() -> i32,
     set_handle_width(arg0: i32),
+    ///     \fn int QSplitter::indexOf(QWidget *widget) const
+    /// 
+    ///     Returns the index in the splitter's layout of the specified \a widget,
+    ///     or -1 if \a widget is not found. This also works for handles.
+    /// 
+    ///     Handles are numbered from 0. There are as many handles as there
+    ///     are child widgets, but the handle at position 0 is always hidden.
+    /// 
+    /// 
+    ///     \sa count(), widget()
     index_of(w: *WidgetType) -> i32,
+    ///     Returns the widget at the given \a index in the splitter's layout,
+    ///     or \c nullptr if there is no such widget.
+    /// 
+    ///     \sa count(), handle(), indexOf(), insertWidget()
     widget(index: i32) -> Widget?,
+    ///     Returns the number of widgets contained in the splitter's layout.
+    /// 
+    ///     \sa widget(), handle()
     count() -> i32,
+    ///     Returns the valid range of the splitter at \a index in
+    ///     *\a{min} and *\a{max} if \a min and \a max are not 0.
     get_range(index: i32, arg0: *i32, arg1: *i32),
+    ///     Returns the handle to the left of (or above) the item in the
+    ///     splitter's layout at the given \a index, or \c nullptr if there is no such item.
+    ///     The handle at index 0 is always hidden.
+    /// 
+    ///     For right-to-left languages such as Arabic and Hebrew, the layout
+    ///     of horizontal splitters is reversed. The handle will be to the
+    ///     right of the widget at \a index.
+    /// 
+    ///     \sa count(), widget(), indexOf(), createHandle(), setHandleWidth()
     handle(index: i32) -> SplitterHandle?,
     [signal] splitter_moved(pos: i32, index: i32),
+    ///     Returns a new splitter handle as a child widget of this splitter.
+    ///     This function can be reimplemented in subclasses to provide support
+    ///     for custom handles.
+    /// 
+    ///     \sa handle(), indexOf()
     [event] create_handle() -> SplitterHandle?,
+    ///     \reimp
+    /// 
+    ///     Tells the splitter that the child widget described by \a c has been
+    ///     inserted or removed.
+    /// 
+    ///     This method is also used to handle the situation where a widget is created
+    ///     with the splitter as a parent but not explicitly added with insertWidget()
+    ///     or addWidget(). This is for compatibility and not the recommended way of
+    ///     putting widgets into a splitter in new code. Please use insertWidget() or
+    ///     addWidget() in new code.
+    /// 
+    ///     \sa addWidget(), insertWidget()
     [event] child_event(arg0: *ChildEventType),
+    ///     \reimp
     [event] event(arg0: *EventType) -> bool,
+    ///     \reimp
     [event] resize_event(arg0: *ResizeEventType),
+    ///     \reimp
     [event] change_event(arg0: *EventType),
+    ///     Moves the left or top edge of the splitter handle at \a index as
+    ///     close as possible to position \a pos, which is the distance from the
+    ///     left or top edge of the widget.
+    /// 
+    ///     For right-to-left languages such as Arabic and Hebrew, the layout
+    ///     of horizontal splitters is reversed. \a pos is then the distance
+    ///     from the right edge of the widget.
+    /// 
+    ///     \sa splitterMoved(), closestLegalPosition(), getRange()
     move_splitter(pos: i32, index: i32),
+    ///     Displays a rubber band at position \a pos. If \a pos is negative, the
+    ///     rubber band is removed.
     set_rubber_band(position: i32),
+    ///     Returns the closest legal position to \a pos of the widget at \a index.
+    /// 
+    ///     For right-to-left languages such as Arabic and Hebrew, the layout
+    ///     of horizontal splitters is reversed. Positions are then measured
+    ///     from the right edge of the widget.
+    /// 
+    ///     \sa getRange()
     closest_legal_position(arg0: i32, arg1: i32) -> i32,
 }
 

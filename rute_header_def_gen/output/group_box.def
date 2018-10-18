@@ -30,16 +30,88 @@
 /// 
 ///     \sa QButtonGroup, {Group Box Example}
 struct GroupBox : Widget {
+    ///     \property QGroupBox::title
+    ///     \brief the group box title text
+    /// 
+    ///     The group box title text will have a keyboard shortcut if the title
+    ///     contains an ampersand ('&') followed by a letter.
+    /// 
+    ///     \snippet code/src_gui_widgets_qgroupbox.cpp 0
+    /// 
+    ///     In the example above, \uicontrol Alt+U moves the keyboard focus to the
+    ///     group box. See the \l {QShortcut#mnemonic}{QShortcut}
+    ///     documentation for details (to display an actual ampersand, use
+    ///     '&&').
+    /// 
+    ///     There is no default title text.
+    /// 
+    ///     \sa alignment
     title() -> String,
     set_title(title: String),
+    ///     \property QGroupBox::alignment
+    ///     \brief the alignment of the group box title.
+    /// 
+    ///     Most styles place the title at the top of the frame. The horizontal
+    ///     alignment of the title can be specified using single values from
+    ///     the following list:
+    /// 
+    ///     \list
+    ///     \li Qt::AlignLeft aligns the title text with the left-hand side of the group box.
+    ///     \li Qt::AlignRight aligns the title text with the right-hand side of the group box.
+    ///     \li Qt::AlignHCenter aligns the title text with the horizontal center of the group box.
+    ///     \endlist
+    /// 
+    ///     The default alignment is Qt::AlignLeft.
+    /// 
+    ///     \sa Qt::Alignment
     alignment() -> Rute::Alignment,
     set_alignment(alignment: i32),
+    ///   \reimp
     [event] minimum_size_hint() -> Size,
+    ///     \property QGroupBox::flat
+    ///     \brief whether the group box is painted flat or has a frame
+    /// 
+    ///     A group box usually consists of a surrounding frame with a title
+    ///     at the top. If this property is enabled, only the top part of the frame is
+    ///     drawn in most styles; otherwise, the whole frame is drawn.
+    /// 
+    ///     By default, this property is disabled, i.e., group boxes are not flat unless
+    ///     explicitly specified.
+    /// 
+    ///     \b{Note:} In some styles, flat and non-flat group boxes have similar
+    ///     representations and may not be as distinguishable as they are in other
+    ///     styles.
+    /// 
+    ///     \sa title
     is_flat() -> bool,
     set_flat(flat: bool),
     is_checkable() -> bool,
+    ///     \property QGroupBox::checkable
+    ///     \brief whether the group box has a checkbox in its title
+    /// 
+    ///     If this property is \c true, the group box displays its title using
+    ///     a checkbox in place of an ordinary label. If the checkbox is checked,
+    ///     the group box's children are enabled; otherwise, they are disabled and
+    ///     inaccessible.
+    /// 
+    ///     By default, group boxes are not checkable.
+    /// 
+    ///     If this property is enabled for a group box, it will also be initially
+    ///     checked to ensure that its contents are enabled.
+    /// 
+    ///     \sa checked
     set_checkable(checkable: bool),
     is_checked() -> bool,
+    ///     \property QGroupBox::checked
+    ///     \brief whether the group box is checked
+    /// 
+    ///     If the group box is checkable, it is displayed with a check box.
+    ///     If the check box is checked, the group box's children are enabled;
+    ///     otherwise, the children are disabled and are inaccessible to the user.
+    /// 
+    ///     By default, checkable group boxes are also checked.
+    /// 
+    ///     \sa checkable
     set_checked(checked: bool),
     [signal] clicked(checked: bool),
     [signal] toggled(arg0: bool),
@@ -52,6 +124,11 @@ struct GroupBox : Widget {
     [event] mouse_press_event(event: *MouseEventType),
     [event] mouse_move_event(event: *MouseEventType),
     [event] mouse_release_event(event: *MouseEventType),
+    ///     Initialize \a option with the values from this QGroupBox. This method
+    ///     is useful for subclasses when they need a QStyleOptionGroupBox, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionGroupBoxType),
 }
 

@@ -52,19 +52,41 @@
 /// 
 ///     \sa QAbstractButton, QRadioButton, {fowler}{GUI Design Handbook: Check Box}
 struct CheckBox : AbstractButton {
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
     set_tristate(y: bool),
     is_tristate() -> bool,
+    ///     Returns the checkbox's check state. If you do not need tristate support,
+    ///     you can also use \l QAbstractButton::isChecked(), which returns a boolean.
+    /// 
+    ///     \sa setCheckState(), Qt::CheckState
     check_state() -> Rute::CheckState,
+    ///     Sets the checkbox's check state to \a state. If you do not need tristate
+    ///     support, you can also use \l QAbstractButton::setChecked(), which takes a
+    ///     boolean.
+    /// 
+    ///     \sa checkState(), Qt::CheckState
     set_check_state(state: Rute::CheckState),
     [signal] state_changed(arg0: i32),
+    ///     \reimp
     [event] event(e: *EventType) -> bool,
+    ///     \reimp
     [event] hit_button(pos: &PointType) -> bool,
+    ///     \reimp
     [event] check_state_set(),
+    ///     \reimp
     [event] next_check_state(),
+    ///     \reimp
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///     Initializes \a option with the values from this QCheckBox. This method is
+    ///     useful for subclasses that require a QStyleOptionButton, but do not want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionButtonType),
 }
 

@@ -70,24 +70,94 @@ enum StyleMask {
 }
 
 struct Frame : Widget {
+    ///     Returns the frame style.
+    /// 
+    ///     The default value is QFrame::Plain.
+    /// 
+    ///     \sa setFrameStyle(), frameShape(), frameShadow()
     frame_style() -> i32,
+    ///     Sets the frame style to \a style.
+    /// 
+    ///     The \a style is the bitwise OR between a frame shape and a frame
+    ///     shadow style. See the picture of the frames in the main class
+    ///     documentation.
+    /// 
+    ///     The frame shapes are given in \l{QFrame::Shape} and the shadow
+    ///     styles in \l{QFrame::Shadow}.
+    /// 
+    ///     If a mid-line width greater than 0 is specified, an additional
+    ///     line is drawn for \l Raised or \l Sunken \l Box, \l HLine, and \l
+    ///     VLine frames. The mid-color of the current color group is used for
+    ///     drawing middle lines.
+    /// 
+    ///     \sa frameStyle()
     set_frame_style(arg0: i32),
+    ///     \property QFrame::frameWidth
+    ///     \brief the width of the frame that is drawn.
+    /// 
+    ///     Note that the frame width depends on the \l{QFrame::setFrameStyle()}{frame style},
+    ///     not only the line width and the mid-line width. For example, the style specified
+    ///     by \l NoFrame always has a frame width of 0, whereas the style \l Panel has a
+    ///     frame width equivalent to the line width.
+    /// 
+    ///     \sa lineWidth(), midLineWidth(), frameStyle()
     frame_width() -> i32,
     [event] size_hint() -> Size,
+    ///     \property QFrame::frameShape
+    ///     \brief the frame shape value from the frame style
+    /// 
+    ///     \sa frameStyle(), frameShadow()
     frame_shape() -> Frame::Shape,
     set_frame_shape(arg0: Frame::Shape),
+    ///     \property QFrame::frameShadow
+    ///     \brief the frame shadow value from the frame style
+    /// 
+    ///     \sa frameStyle(), frameShape()
     frame_shadow() -> Frame::Shadow,
     set_frame_shadow(arg0: Frame::Shadow),
     line_width() -> i32,
+    ///     \property QFrame::lineWidth
+    ///     \brief the line width
+    /// 
+    ///     Note that the \e total line width for frames used as separators
+    ///     (\l HLine and \l VLine) is specified by \l frameWidth.
+    /// 
+    ///     The default value is 1.
+    /// 
+    ///     \sa midLineWidth, frameWidth
     set_line_width(arg0: i32),
     mid_line_width() -> i32,
+    ///     \property QFrame::midLineWidth
+    ///     \brief the width of the mid-line
+    /// 
+    ///     The default value is 0.
+    /// 
+    ///     \sa lineWidth, frameWidth
     set_mid_line_width(arg0: i32),
+    ///     \property QFrame::frameRect
+    ///     \brief the frame's rectangle
+    /// 
+    ///     The frame's rectangle is the rectangle the frame is drawn in. By
+    ///     default, this is the entire widget. Setting the rectangle does
+    ///     does \e not cause a widget update. The frame rectangle is
+    ///     automatically adjusted when the widget changes size.
+    /// 
+    ///     If you set the rectangle to a null rectangle (for example,
+    ///     QRect(0, 0, 0, 0)), then the resulting frame rectangle is
+    ///     equivalent to the \l{QWidget::rect()}{widget rectangle}.
     frame_rect() -> Rect,
     set_frame_rect(arg0: &RectType),
     [event] event(e: *EventType) -> bool,
     [event] paint_event(arg0: *PaintEventType),
     [event] change_event(arg0: *EventType),
     draw_frame(arg0: *PainterType),
+    ///     \since 5.5
+    /// 
+    ///     Initializes \a option with the values from this QFrame. This method is
+    ///     useful for subclasses when they need a QStyleOptionFrame but don't want to
+    ///     fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionFrameType),
 }
 

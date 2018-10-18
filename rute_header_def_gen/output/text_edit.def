@@ -208,28 +208,101 @@ enum AutoFormattingFlag {
 }
 
 struct TextEdit : AbstractScrollArea {
+    ///     \property QTextEdit::document
+    ///     \brief the underlying document of the text editor.
+    /// 
+    ///     \note The editor \e{does not take ownership of the document} unless it
+    ///     is the document's parent object. The parent object of the provided document
+    ///     remains the owner of the object. If the previously assigned document is a
+    ///     child of the editor then it will be deleted.
     set_document(document: *TextDocumentType),
     document() -> TextDocument?,
     set_placeholder_text(placeholder_text: String),
+    ///     \since 5.2
+    /// 
+    ///     \property QTextEdit::placeholderText
+    ///     \brief the editor placeholder text
+    /// 
+    ///     Setting this property makes the editor display a grayed-out
+    ///     placeholder text as long as the document() is empty.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa document()
     placeholder_text() -> String,
+    ///     Sets the visible \a cursor.
     set_text_cursor(cursor: &TextCursorType),
     text_cursor() -> TextCursor,
+    ///     \property QTextEdit::readOnly
+    ///     \brief whether the text edit is read-only
+    /// 
+    ///     In a read-only text edit the user can only navigate through the
+    ///     text and select text; modifying the text is not possible.
+    /// 
+    ///     This property's default is false.
     is_read_only() -> bool,
     set_read_only(ro: bool),
+    ///     \property QTextEdit::textInteractionFlags
+    ///     \since 4.2
+    /// 
+    ///     Specifies how the widget should interact with user input.
+    /// 
+    ///     The default value depends on whether the QTextEdit is read-only
+    ///     or editable, and whether it is a QTextBrowser or not.
     set_text_interaction_flags(flags: Rute::TextInteractionFlags),
     text_interaction_flags() -> Rute::TextInteractionFlags,
+    ///     Returns the point size of the font of the current format.
+    /// 
+    ///     \sa setFontFamily(), setCurrentFont(), setFontPointSize()
     font_point_size() -> f32,
+    ///     Returns the font family of the current format.
+    /// 
+    ///     \sa setFontFamily(), setCurrentFont(), setFontPointSize()
     font_family() -> String,
+    ///     Returns the font weight of the current format.
+    /// 
+    ///     \sa setFontWeight(), setCurrentFont(), setFontPointSize(), QFont::Weight
     font_weight() -> i32,
+    ///     Returns \c true if the font of the current format is underlined; otherwise returns
+    ///     false.
+    /// 
+    ///     \sa setFontUnderline()
     font_underline() -> bool,
+    ///     Returns \c true if the font of the current format is italic; otherwise returns
+    ///     false.
+    /// 
+    ///     \sa setFontItalic()
     font_italic() -> bool,
+    ///     Returns the text color of the current format.
+    /// 
+    ///     \sa setTextColor()
     text_color() -> Color,
+    ///     \since 4.4
+    /// 
+    ///     Returns the text background color of the current format.
+    /// 
+    ///     \sa setTextBackgroundColor()
     text_background_color() -> Color,
+    ///     Returns the font of the current format.
+    /// 
+    ///     \sa setCurrentFont(), setFontFamily(), setFontPointSize()
     current_font() -> Font,
+    ///     Returns the alignment of the current paragraph.
+    /// 
+    ///     \sa setAlignment()
     alignment() -> Rute::Alignment,
     merge_current_char_format(modifier: &TextCharFormatType),
     set_current_char_format(format: &TextCharFormatType),
     current_char_format() -> TextCharFormat,
+    ///     \property QTextEdit::autoFormatting
+    ///     \brief the enabled set of auto formatting features
+    /// 
+    ///     The value can be any combination of the values in the
+    ///     AutoFormattingFlag enum.  The default is AutoNone. Choose
+    ///     AutoAll to enable all automatic formatting.
+    /// 
+    ///     Currently, the only automatic formatting feature provided is
+    ///     AutoBulletList; future versions of Qt may offer more.
     auto_formatting() -> TextEdit::AutoFormatting,
     set_auto_formatting(features: TextEdit::AutoFormatting),
     tab_changes_focus() -> bool,
@@ -238,63 +311,320 @@ struct TextEdit : AbstractScrollArea {
     document_title() -> String,
     is_undo_redo_enabled() -> bool,
     set_undo_redo_enabled(enable: bool),
+    ///     \property QTextEdit::lineWrapMode
+    ///     \brief the line wrap mode
+    /// 
+    ///     The default mode is WidgetWidth which causes words to be
+    ///     wrapped at the right edge of the text edit. Wrapping occurs at
+    ///     whitespace, keeping whole words intact. If you want wrapping to
+    ///     occur within words use setWordWrapMode(). If you set a wrap mode of
+    ///     FixedPixelWidth or FixedColumnWidth you should also call
+    ///     setLineWrapColumnOrWidth() with the width you want.
+    /// 
+    ///     \sa lineWrapColumnOrWidth
     line_wrap_mode() -> TextEdit::LineWrapMode,
     set_line_wrap_mode(mode: TextEdit::LineWrapMode),
+    ///     \property QTextEdit::lineWrapColumnOrWidth
+    ///     \brief the position (in pixels or columns depending on the wrap mode) where text will be wrapped
+    /// 
+    ///     If the wrap mode is FixedPixelWidth, the value is the number of
+    ///     pixels from the left edge of the text edit at which text should be
+    ///     wrapped. If the wrap mode is FixedColumnWidth, the value is the
+    ///     column number (in character columns) from the left edge of the
+    ///     text edit at which text should be wrapped.
+    /// 
+    ///     By default, this property contains a value of 0.
+    /// 
+    ///     \sa lineWrapMode
     line_wrap_column_or_width() -> i32,
     set_line_wrap_column_or_width(w: i32),
+    ///     \property QTextEdit::wordWrapMode
+    ///     \brief the mode QTextEdit will use when wrapping text by words
+    /// 
+    ///     By default, this property is set to QTextOption::WrapAtWordBoundaryOrAnywhere.
+    /// 
+    ///     \sa QTextOption::WrapMode
     word_wrap_mode() -> TextOption::WrapMode,
     set_word_wrap_mode(policy: TextOption::WrapMode),
+    ///     \fn bool QTextEdit::find(const QRegExp &exp, QTextDocument::FindFlags options)
+    /// 
+    ///     \since 5.3
+    ///     \overload
+    /// 
+    ///     Finds the next occurrence, matching the regular expression, \a exp, using the given
+    ///     \a options. The QTextDocument::FindCaseSensitively option is ignored for this overload,
+    ///     use QRegExp::caseSensitivity instead.
+    /// 
+    ///     Returns \c true if a match was found and changes the cursor to select the match;
+    ///     otherwise returns \c false.
     find(exp: String, options: TextDocument::FindFlags) -> bool,
+    ///     \fn bool QTextEdit::find(const QRegExp &exp, QTextDocument::FindFlags options)
+    /// 
+    ///     \since 5.3
+    ///     \overload
+    /// 
+    ///     Finds the next occurrence, matching the regular expression, \a exp, using the given
+    ///     \a options. The QTextDocument::FindCaseSensitively option is ignored for this overload,
+    ///     use QRegExp::caseSensitivity instead.
+    /// 
+    ///     Returns \c true if a match was found and changes the cursor to select the match;
+    ///     otherwise returns \c false.
     find(exp: &RegExpType, options: TextDocument::FindFlags) -> bool,
     to_plain_text() -> String,
     to_html() -> String,
+    ///     Ensures that the cursor is visible by scrolling the text edit if
+    ///     necessary.
     ensure_cursor_visible(),
+    ///     Loads the resource specified by the given \a type and \a name.
+    /// 
+    ///     This function is an extension of QTextDocument::loadResource().
+    /// 
+    ///     \sa QTextDocument::loadResource()
     [event] load_resource(type: i32, name: &UrlType) -> Variant,
+    ///   \since 4.4
+    ///   This function creates the standard context menu which is shown
+    ///   when the user clicks on the text edit with the right mouse
+    ///   button. It is called from the default contextMenuEvent() handler
+    ///   and it takes the \a position in document coordinates where the mouse click was.
+    ///   This can enable actions that are sensitive to the position where the user clicked.
+    ///   The popup menu's ownership is transferred to the caller.
     create_standard_context_menu() -> Menu?,
+    ///   \since 4.4
+    ///   This function creates the standard context menu which is shown
+    ///   when the user clicks on the text edit with the right mouse
+    ///   button. It is called from the default contextMenuEvent() handler
+    ///   and it takes the \a position in document coordinates where the mouse click was.
+    ///   This can enable actions that are sensitive to the position where the user clicked.
+    ///   The popup menu's ownership is transferred to the caller.
     create_standard_context_menu(position: &PointType) -> Menu?,
+    ///   returns a QTextCursor at position \a pos (in viewport coordinates).
     cursor_for_position(pos: &PointType) -> TextCursor,
     cursor_rect(cursor: &TextCursorType) -> Rect,
     cursor_rect() -> Rect,
+    ///     Returns the reference of the anchor at position \a pos, or an
+    ///     empty string if no anchor exists at that point.
     anchor_at(pos: &PointType) -> String,
+    ///    \property QTextEdit::overwriteMode
+    ///    \since 4.1
+    ///    \brief whether text entered by the user will overwrite existing text
+    /// 
+    ///    As with many text editors, the text editor widget can be configured
+    ///    to insert or overwrite existing text with new text entered by the user.
+    /// 
+    ///    If this property is \c true, existing text is overwritten, character-for-character
+    ///    by new text; otherwise, text is inserted at the cursor position, displacing
+    ///    existing text.
+    /// 
+    ///    By default, this property is \c false (new text does not overwrite existing text).
     overwrite_mode() -> bool,
     set_overwrite_mode(overwrite: bool),
+    ///     \property QTextEdit::tabStopWidth
+    ///     \brief the tab stop width in pixels
+    ///     \since 4.1
+    ///     \deprecated in Qt 5.10. Use tabStopDistance instead.
+    /// 
+    ///     By default, this property contains a value of 80 pixels.
     tab_stop_width() -> i32,
     set_tab_stop_width(width: i32),
+    ///     \property QTextEdit::tabStopDistance
+    ///     \brief the tab stop distance in pixels
+    ///     \since 5.10
+    /// 
+    ///     By default, this property contains a value of 80 pixels.
     tab_stop_distance() -> f32,
     set_tab_stop_distance(distance: f32),
+    ///     \since 4.2
+    ///     \property QTextEdit::cursorWidth
+    /// 
+    ///     This property specifies the width of the cursor in pixels. The default value is 1.
     cursor_width() -> i32,
     set_cursor_width(width: i32),
+    ///     \property QTextEdit::acceptRichText
+    ///     \brief whether the text edit accepts rich text insertions by the user
+    ///     \since 4.1
+    /// 
+    ///     When this propery is set to false text edit will accept only
+    ///     plain text input from the user. For example through clipboard or drag and drop.
+    /// 
+    ///     This property's default is true.
     accept_rich_text() -> bool,
     set_accept_rich_text(accept: bool),
+    ///     \since 4.2
+    ///     Moves the cursor by performing the given \a operation.
+    /// 
+    ///     If \a mode is QTextCursor::KeepAnchor, the cursor selects the text it moves over.
+    ///     This is the same effect that the user achieves when they hold down the Shift key
+    ///     and move the cursor with the cursor keys.
+    /// 
+    ///     \sa QTextCursor::movePosition()
     move_cursor(operation: TextCursor::MoveOperation, mode: TextCursor::MoveMode),
+    ///     \since 4.2
+    ///     Returns whether text can be pasted from the clipboard into the textedit.
     can_paste() -> bool,
+    ///     \since 4.3
+    ///     Convenience function to print the text edit's document to the given \a printer. This
+    ///     is equivalent to calling the print method on the document directly except that this
+    ///     function also supports QPrinter::Selection as print range.
+    /// 
+    ///     \sa QTextDocument::print()
     print(printer: *PagedPaintDeviceType),
     [event] input_method_query(property: Rute::InputMethodQuery) -> Variant,
     input_method_query(query: Rute::InputMethodQuery, argument: VariantType) -> Variant,
+    ///     Sets the point size of the current format to \a s.
+    /// 
+    ///     Note that if \a s is zero or negative, the behavior of this
+    ///     function is not defined.
+    /// 
+    ///     \sa fontPointSize(), setCurrentFont(), setFontFamily()
     set_font_point_size(s: f32),
+    ///     Sets the font family of the current format to \a fontFamily.
+    /// 
+    ///     \sa fontFamily(), setCurrentFont()
     set_font_family(font_family: String),
+    ///     \fn void QTextEdit::setFontWeight(int weight)
+    /// 
+    ///     Sets the font weight of the current format to the given \a weight,
+    ///     where the value used is in the range defined by the QFont::Weight
+    ///     enum.
+    /// 
+    ///     \sa fontWeight(), setCurrentFont(), setFontFamily()
     set_font_weight(w: i32),
+    ///     If \a underline is true, sets the current format to underline;
+    ///     otherwise sets the current format to non-underline.
+    /// 
+    ///     \sa fontUnderline()
     set_font_underline(b: bool),
+    ///     If \a italic is true, sets the current format to italic;
+    ///     otherwise sets the current format to non-italic.
+    /// 
+    ///     \sa fontItalic()
     set_font_italic(b: bool),
+    ///     Sets the text color of the current format to \a c.
+    /// 
+    ///     \sa textColor()
     set_text_color(c: &ColorType),
+    ///     \since 4.4
+    /// 
+    ///     Sets the text background color of the current format to \a c.
+    /// 
+    ///     \sa textBackgroundColor()
     set_text_background_color(c: &ColorType),
+    ///     Sets the font of the current format to \a f.
+    /// 
+    ///     \sa currentFont(), setFontPointSize(), setFontFamily()
     set_current_font(f: &FontType),
+    ///     Sets the alignment of the current paragraph to \a a. Valid
+    ///     alignments are Qt::AlignLeft, Qt::AlignRight,
+    ///     Qt::AlignJustify and Qt::AlignCenter (which centers
+    ///     horizontally).
     set_alignment(a: Rute::Alignment),
+    ///     Changes the text of the text edit to the string \a text.
+    ///     Any previous text is removed.
+    /// 
+    ///     \a text is interpreted as plain text.
+    /// 
+    ///     Note that the undo/redo history is cleared by this function.
+    /// 
+    ///     \sa toPlainText()
     set_plain_text(text: String),
+    ///     \property QTextEdit::html
+    /// 
+    ///     This property provides an HTML interface to the text of the text edit.
+    /// 
+    ///     toHtml() returns the text of the text edit as html.
+    /// 
+    ///     setHtml() changes the text of the text edit.  Any previous text is
+    ///     removed and the undo/redo history is cleared. The input text is
+    ///     interpreted as rich text in html format.
+    /// 
+    ///     \note It is the responsibility of the caller to make sure that the
+    ///     text is correctly decoded when a QString containing HTML is created
+    ///     and passed to setHtml().
+    /// 
+    ///     By default, for a newly-created, empty document, this property contains
+    ///     text to describe an HTML 4.0 document with no body text.
+    /// 
+    ///     \sa {Supported HTML Subset}, plainText
     set_html(text: String),
+    ///     \since 4.2
+    /// 
+    ///     Sets the text edit's \a text. The text can be plain text or HTML
+    ///     and the text edit will try to guess the right format.
+    /// 
+    ///     Use setHtml() or setPlainText() directly to avoid text edit's guessing.
+    /// 
+    ///     \sa toPlainText(), toHtml()
     set_text(text: String),
+    ///     Copies the selected text to the clipboard and deletes it from
+    ///     the text edit.
+    /// 
+    ///     If there is no selected text nothing happens.
+    /// 
+    ///     \sa copy(), paste()
     cut(),
+    ///     Copies any selected text to the clipboard.
+    /// 
+    ///     \sa copyAvailable()
     copy(),
+    ///     Pastes the text from the clipboard into the text edit at the
+    ///     current cursor position.
+    /// 
+    ///     If there is no text in the clipboard nothing happens.
+    /// 
+    ///     To change the behavior of this function, i.e. to modify what
+    ///     QTextEdit can paste and how it is being pasted, reimplement the
+    ///     virtual canInsertFromMimeData() and insertFromMimeData()
+    ///     functions.
+    /// 
+    ///     \sa cut(), copy()
     paste(),
+    ///     \since 4.2
+    /// 
+    ///     Undoes the last operation.
+    /// 
+    ///     If there is no operation to undo, i.e. there is no undo step in
+    ///     the undo/redo history, nothing happens.
+    /// 
+    ///     \sa redo()
     undo(),
     redo(),
+    ///     Deletes all the text in the text edit.
+    /// 
+    ///     Note that the undo/redo history is cleared by this function.
+    /// 
+    ///     \sa cut(), setPlainText(), setHtml()
     clear(),
     select_all(),
     insert_plain_text(text: String),
     insert_html(text: String),
+    ///     Appends a new paragraph with \a text to the end of the text edit.
+    /// 
+    ///     \note The new paragraph appended will have the same character format and
+    ///     block format as the current paragraph, determined by the position of the cursor.
+    /// 
+    ///     \sa currentCharFormat(), QTextCursor::blockFormat()
     append(text: String),
+    ///     Scrolls the text edit so that the anchor with the given \a name is
+    ///     visible; does nothing if the \a name is empty, or is already
+    ///     visible, or isn't found.
     scroll_to_anchor(name: String),
+    ///     \fn QTextEdit::zoomIn(int range)
+    /// 
+    ///     Zooms in on the text by making the base font size \a range
+    ///     points larger and recalculating all font sizes to be the new size.
+    ///     This does not change the size of any images.
+    /// 
+    ///     \sa zoomOut()
     zoom_in(range: i32),
+    ///     \fn QTextEdit::zoomOut(int range)
+    /// 
+    ///     \overload
+    /// 
+    ///     Zooms out on the text by making the base font size \a range points
+    ///     smaller and recalculating all font sizes to be the new size. This
+    ///     does not change the size of any images.
+    /// 
+    ///     \sa zoomIn()
     zoom_out(range: i32),
     [signal] text_changed(),
     [signal] undo_available(b: bool),
@@ -303,6 +633,16 @@ struct TextEdit : AbstractScrollArea {
     [signal] copy_available(b: bool),
     [signal] selection_changed(),
     [signal] cursor_position_changed(),
+    ///     Selects all text.
+    /// 
+    ///     \sa copy(), cut(), textCursor()
+    ///  */
+    /// void QTextEdit::selectAll()
+    /// {
+    ///     Q_D(QTextEdit);
+    ///     d->control->selectAll();
+    /// }
+    /// 
     [event] event(e: *EventType) -> bool,
     [event] timer_event(e: *TimerEventType),
     [event] key_press_event(e: *KeyEventType),
@@ -314,6 +654,19 @@ struct TextEdit : AbstractScrollArea {
     [event] mouse_release_event(e: *MouseEventType),
     [event] mouse_double_click_event(e: *MouseEventType),
     [event] focus_next_prev_child(next: bool) -> bool,
+    ///   \fn void QTextEdit::contextMenuEvent(QContextMenuEvent *event)
+    /// 
+    ///   Shows the standard context menu created with createStandardContextMenu().
+    /// 
+    ///   If you do not want the text edit to have a context menu, you can set
+    ///   its \l contextMenuPolicy to Qt::NoContextMenu. If you want to
+    ///   customize the context menu, reimplement this function. If you want
+    ///   to extend the standard context menu, reimplement this function, call
+    ///   createStandardContextMenu() and extend the menu returned.
+    /// 
+    ///   Information about the event is passed in the \a event object.
+    /// 
+    ///   \snippet code/src_gui_widgets_qtextedit.cpp 0
     [event] context_menu_event(e: *ContextMenuEventType),
     [event] drag_enter_event(e: *DragEnterEventType),
     [event] drag_leave_event(e: *DragLeaveEventType),
@@ -324,12 +677,24 @@ struct TextEdit : AbstractScrollArea {
     [event] show_event(arg0: *ShowEventType),
     [event] change_event(e: *EventType),
     [event] wheel_event(e: *WheelEventType),
+    ///     This function returns a new MIME data object to represent the contents
+    ///     of the text edit's current selection. It is called when the selection needs
+    ///     to be encapsulated into a new QMimeData object; for example, when a drag
+    ///     and drop operation is started, or when data is copied to the clipboard.
+    /// 
+    ///     If you reimplement this function, note that the ownership of the returned
+    ///     QMimeData object is passed to the caller. The selection can be retrieved
+    ///     by using the textCursor() function.
     [event] create_mime_data_from_selection() -> MimeData?,
     [event] can_insert_from_mime_data(source: *MimeDataType) -> bool,
     [event] insert_from_mime_data(source: *MimeDataType),
     [event] input_method_event(arg0: *InputMethodEventType),
     [event] scroll_contents_by(dx: i32, dy: i32),
+    ///     \internal
+    /// 
+    ///      This provides a hook for subclasses to intercept cursor changes.
     [event] do_set_text_cursor(cursor: &TextCursorType),
+    ///     \internal
     zoom_in_f(range: f32),
 }
 

@@ -87,54 +87,279 @@ enum SelectionMode {
 }
 
 struct CalendarWidget : Widget {
+    ///    \reimp
     [event] size_hint() -> Size,
+    ///    \reimp
     [event] minimum_size_hint() -> Size,
+    ///     \property QCalendarWidget::selectedDate
+    ///     \brief the currently selected date.
+    /// 
+    ///     The selected date must be within the date range specified by the
+    ///     minimumDate and maximumDate properties. By default, the selected
+    ///     date is the current date.
+    /// 
+    ///     \sa setDateRange()
     selected_date() -> Date,
+    ///     Returns the year of the currently displayed month. Months are
+    ///     numbered from 1 to 12.
+    /// 
+    ///     \sa monthShown(), setCurrentPage()
     year_shown() -> i32,
+    ///     Returns the currently displayed month. Months are numbered from 1 to
+    ///     12.
+    /// 
+    ///     \sa yearShown(), setCurrentPage()
     month_shown() -> i32,
+    ///     \property QCalendarWidget::minimumDate
+    ///     \brief the minimum date of the currently specified date range.
+    /// 
+    ///     The user will not be able to select a date that is before the
+    ///     currently set minimum date.
+    /// 
+    ///     \table
+    ///     \row
+    ///     \li \image qcalendarwidget-minimum.png
+    ///     \row
+    ///     \li
+    ///     \snippet code/src_gui_widgets_qcalendarwidget.cpp 1
+    ///     \endtable
+    /// 
+    ///     By default, the minimum date is the earliest date that the QDate
+    ///     class can handle.
+    /// 
+    ///     When setting a minimum date, the maximumDate and selectedDate
+    ///     properties are adjusted if the selection range becomes invalid. If
+    ///     the provided date is not a valid QDate object, the
+    ///     setMinimumDate() function does nothing.
+    /// 
+    ///     \sa setDateRange()
     minimum_date() -> Date,
     set_minimum_date(date: &DateType),
+    ///     \property QCalendarWidget::maximumDate
+    ///     \brief the maximum date of the currently specified date range.
+    /// 
+    ///     The user will not be able to select a date which is after the
+    ///     currently set maximum date.
+    /// 
+    ///     \table
+    ///     \row
+    ///     \li \image qcalendarwidget-maximum.png
+    ///     \row
+    ///     \li
+    ///     \snippet code/src_gui_widgets_qcalendarwidget.cpp 2
+    ///     \endtable
+    /// 
+    ///     By default, the maximum date is the last day the QDate class can
+    ///     handle.
+    /// 
+    ///     When setting a maximum date, the minimumDate and selectedDate
+    ///     properties are adjusted if the selection range becomes invalid. If
+    ///     the provided date is not a valid QDate object, the
+    ///     setMaximumDate() function does nothing.
+    /// 
+    ///     \sa setDateRange()
     maximum_date() -> Date,
     set_maximum_date(date: &DateType),
     first_day_of_week() -> Rute::DayOfWeek,
+    ///     \property QCalendarWidget::firstDayOfWeek
+    ///     \brief a value identifying the day displayed in the first column.
+    /// 
+    ///     By default, the day displayed in the first column
+    ///     is the first day of the week for the calendar's locale.
     set_first_day_of_week(day_of_week: Rute::DayOfWeek),
+    ///     \property QCalendarWidget::navigationBarVisible
+    ///     \brief whether the navigation bar is shown or not
+    /// 
+    ///     \since 4.3
+    /// 
+    ///     When this property is \c true (the default), the next month,
+    ///     previous month, month selection, year selection controls are
+    ///     shown on top.
+    /// 
+    ///     When the property is set to false, these controls are hidden.
     is_navigation_bar_visible() -> bool,
+    ///     \property QCalendarWidget::gridVisible
+    ///     \brief whether the table grid is displayed.
+    /// 
+    ///     \table
+    ///     \row
+    ///         \li \inlineimage qcalendarwidget-grid.png
+    ///     \row
+    ///         \li
+    ///         \snippet code/src_gui_widgets_qcalendarwidget.cpp 5
+    ///     \endtable
+    /// 
+    ///     The default value is false.
     is_grid_visible() -> bool,
+    ///     \property QCalendarWidget::selectionMode
+    ///     \brief the type of selection the user can make in the calendar
+    /// 
+    ///     When this property is set to SingleSelection, the user can select a date
+    ///     within the minimum and maximum allowed dates, using either the mouse or
+    ///     the keyboard.
+    /// 
+    ///     When the property is set to NoSelection, the user will be unable to select
+    ///     dates, but they can still be selected programmatically. Note that the date
+    ///     that is selected when the property is set to NoSelection will still be
+    ///     the selected date of the calendar.
+    /// 
+    ///     The default value is SingleSelection.
     selection_mode() -> CalendarWidget::SelectionMode,
     set_selection_mode(mode: CalendarWidget::SelectionMode),
     horizontal_header_format() -> CalendarWidget::HorizontalHeaderFormat,
+    ///     \property QCalendarWidget::horizontalHeaderFormat
+    ///     \brief the format of the horizontal header.
+    /// 
+    ///     The default value is QCalendarWidget::ShortDayNames.
     set_horizontal_header_format(format: CalendarWidget::HorizontalHeaderFormat),
+    ///     \property QCalendarWidget::verticalHeaderFormat
+    ///     \brief the format of the vertical header.
+    /// 
+    ///     The default value is QCalendarWidget::ISOWeekNumber.
     vertical_header_format() -> CalendarWidget::VerticalHeaderFormat,
     set_vertical_header_format(format: CalendarWidget::VerticalHeaderFormat),
+    ///     Returns the text char format for rendering the header.
     header_text_format() -> TextCharFormat,
+    ///     Sets the text char format for rendering the header to \a format.
+    ///     If you also set a weekday text format, this format's foreground and
+    ///     background color will take precedence over the header's format.
+    ///     The other formatting information will still be decided by
+    ///     the header's format.
     set_header_text_format(format: &TextCharFormatType),
+    ///     Returns the text char format for rendering of day in the week \a dayOfWeek.
+    /// 
+    ///     \sa headerTextFormat()
     weekday_text_format(day_of_week: Rute::DayOfWeek) -> TextCharFormat,
+    ///     Sets the text char format for rendering of day in the week \a dayOfWeek to \a format.
+    ///     The format will take precedence over the header format in case of foreground
+    ///     and background color. Other text formatting information is taken from the headers format.
+    /// 
+    ///     \sa setHeaderTextFormat()
     set_weekday_text_format(day_of_week: Rute::DayOfWeek, format: &TextCharFormatType),
+    ///     Returns a QTextCharFormat for \a date. The char format can be be
+    ///     empty if the date is not renderd specially.
     date_text_format() -> Map<QDate,,
+    ///     Returns a QTextCharFormat for \a date. The char format can be be
+    ///     empty if the date is not renderd specially.
     date_text_format(date: &DateType) -> TextCharFormat,
+    ///     Sets the format used to render the given \a date to that specified by \a format.
+    /// 
+    ///     If \a date is null, all date formats are cleared.
     set_date_text_format(date: &DateType, format: &TextCharFormatType),
+    ///     \property QCalendarWidget::dateEditEnabled
+    ///     \brief whether the date edit popup is enabled
+    ///     \since 4.3
+    /// 
+    ///     If this property is enabled, pressing a non-modifier key will cause a
+    ///     date edit to popup if the calendar widget has focus, allowing the user
+    ///     to specify a date in the form specified by the current locale.
+    /// 
+    ///     By default, this property is enabled.
+    /// 
+    ///     The date edit is simpler in appearance than QDateEdit, but allows the
+    ///     user to navigate between fields using the left and right cursor keys,
+    ///     increment and decrement individual fields using the up and down cursor
+    ///     keys, and enter values directly using the number keys.
+    /// 
+    ///     \sa QCalendarWidget::dateEditAcceptDelay
     is_date_edit_enabled() -> bool,
     set_date_edit_enabled(enable: bool),
+    ///     \property QCalendarWidget::dateEditAcceptDelay
+    ///     \brief the time an inactive date edit is shown before its contents are accepted
+    ///     \since 4.3
+    /// 
+    ///     If the calendar widget's \l{dateEditEnabled}{date edit is enabled}, this
+    ///     property specifies the amount of time (in millseconds) that the date edit
+    ///     remains open after the most recent user input. Once this time has elapsed,
+    ///     the date specified in the date edit is accepted and the popup is closed.
+    /// 
+    ///     By default, the delay is defined to be 1500 milliseconds (1.5 seconds).
     date_edit_accept_delay() -> i32,
     set_date_edit_accept_delay(delay: i32),
+    ///   \reimp
     [event] event(event: *EventType) -> bool,
+    ///   \reimp
     [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
+    ///   \reimp
     [event] mouse_press_event(event: *MouseEventType),
+    ///   \reimp
     [event] resize_event(event: *ResizeEventType),
+    ///   \reimp
     [event] key_press_event(event: *KeyEventType),
+    ///     Paints the cell specified by the given \a date, using the given \a painter and \a rect.
     [event] paint_cell(painter: *PainterType, rect: &RectType, date: &DateType),
+    ///     \since 4.4
+    /// 
+    ///     Updates the cell specified by the given \a date unless updates
+    ///     are disabled or the cell is hidden.
+    /// 
+    ///     \sa updateCells(), yearShown(), monthShown()
     update_cell(date: &DateType),
+    ///     \since 4.4
+    /// 
+    ///     Updates all visible cells unless updates are disabled.
+    /// 
+    ///     \sa updateCell()
     update_cells(),
     set_selected_date(date: &DateType),
+    ///     Defines a date range by setting the minimumDate and maximumDate
+    ///     properties.
+    /// 
+    ///     The date range restricts the user selection, i.e. the user can
+    ///     only select dates within the specified date range. Note that
+    /// 
+    ///     \snippet code/src_gui_widgets_qcalendarwidget.cpp 3
+    /// 
+    ///     is analogous to
+    /// 
+    ///     \snippet code/src_gui_widgets_qcalendarwidget.cpp 4
+    /// 
+    ///     If either the \a min or \a max parameters are not valid QDate
+    ///     objects, this function does nothing.
+    /// 
+    ///     \sa setMinimumDate(), setMaximumDate()
     set_date_range(min: &DateType, max: &DateType),
+    ///     Displays the given \a month of the given \a year without changing
+    ///     the selected date. Use the setSelectedDate() function to alter the
+    ///     selected date.
+    /// 
+    ///     The currently displayed month and year can be retrieved using the
+    ///     monthShown() and yearShown() functions respectively.
+    /// 
+    ///     \sa yearShown(), monthShown(), showPreviousMonth(), showNextMonth(),
+    ///     showPreviousYear(), showNextYear()
     set_current_page(year: i32, month: i32),
     set_grid_visible(show: bool),
     set_navigation_bar_visible(visible: bool),
+    ///     Shows the next month relative to the currently displayed
+    ///     month. Note that the selected date is not changed.
+    /// 
+    ///     \sa showPreviousMonth(), setCurrentPage(), setSelectedDate()
     show_next_month(),
+    ///     Shows the previous month relative to the currently displayed
+    ///     month. Note that the selected date is not changed.
+    /// 
+    ///     \sa showNextMonth(), setCurrentPage(), setSelectedDate()
     show_previous_month(),
+    ///     Shows the currently displayed month in the \e next year relative
+    ///     to the currently displayed year. Note that the selected date is
+    ///     not changed.
+    /// 
+    ///     \sa showPreviousYear(), setCurrentPage(), setSelectedDate()
     show_next_year(),
+    ///     Shows the currently displayed month in the \e previous year
+    ///     relative to the currently displayed year. Note that the selected
+    ///     date is not changed.
+    /// 
+    ///     \sa showNextYear(), setCurrentPage(), setSelectedDate()
     show_previous_year(),
+    ///     Shows the month of the selected date.
+    /// 
+    ///     \sa selectedDate(), setCurrentPage()
     show_selected_date(),
+    ///     Shows the month of the today's date.
+    /// 
+    ///     \sa selectedDate(), setCurrentPage()
     show_today(),
     [signal] selection_changed(),
     [signal] clicked(date: &DateType),

@@ -42,12 +42,21 @@
 ///     \sa QPushButton, QToolButton, QCheckBox, {fowler}{GUI Design Handbook: Radio Button},
 ///         {Group Box Example}
 struct RadioButton : AbstractButton {
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
     [event] event(e: *EventType) -> bool,
+    ///     \reimp
     [event] hit_button(arg0: &PointType) -> bool,
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///     Initialize \a option with the values from this QRadioButton. This method is useful
+    ///     for subclasses when they need a QStyleOptionButton, but don't want to fill
+    ///     in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(button: *StyleOptionButtonType),
 }
 

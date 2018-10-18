@@ -44,7 +44,7 @@ fn main() {
     // Parse source files for documentation
 
     let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets"];
-    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qdialogbuttonbox.cpp"];
+    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qtextedit.cpp"];
     let docs = DocParser::parse_files(&source_directory);
 
     // Build some lookup info for faster lookup when generating the output data

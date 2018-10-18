@@ -88,25 +88,109 @@ enum SliderChange {
 
 struct AbstractSlider : Widget {
     orientation() -> Rute::Orientation,
+    ///     \property QAbstractSlider::minimum
+    ///     \brief the sliders's minimum value
+    /// 
+    ///     When setting this property, the \l maximum is adjusted if
+    ///     necessary to ensure that the range remains valid. Also the
+    ///     slider's current value is adjusted to be within the new range.
+    /// 
     set_minimum(arg0: i32),
     minimum() -> i32,
+    ///     \property QAbstractSlider::maximum
+    ///     \brief the slider's maximum value
+    /// 
+    ///     When setting this property, the \l minimum is adjusted if
+    ///     necessary to ensure that the range remains valid.  Also the
+    ///     slider's current value is adjusted to be within the new range.
+    /// 
+    /// 
     set_maximum(arg0: i32),
     maximum() -> i32,
+    ///     \property QAbstractSlider::singleStep
+    ///     \brief the single step.
+    /// 
+    ///     The smaller of two natural steps that an
+    ///     abstract sliders provides and typically corresponds to the user
+    ///     pressing an arrow key.
+    /// 
+    ///     If the property is modified during an auto repeating key event, behavior
+    ///     is undefined.
+    /// 
+    ///     \sa pageStep
     set_single_step(arg0: i32),
     single_step() -> i32,
+    ///     \property QAbstractSlider::pageStep
+    ///     \brief the page step.
+    /// 
+    ///     The larger of two natural steps that an abstract slider provides
+    ///     and typically corresponds to the user pressing PageUp or PageDown.
+    /// 
+    ///     \sa singleStep
     set_page_step(arg0: i32),
     page_step() -> i32,
+    ///     \property QAbstractSlider::tracking
+    ///     \brief whether slider tracking is enabled
+    /// 
+    ///     If tracking is enabled (the default), the slider emits the
+    ///     valueChanged() signal while the slider is being dragged. If
+    ///     tracking is disabled, the slider emits the valueChanged() signal
+    ///     only when the user releases the slider.
+    /// 
+    ///     \sa sliderDown
     set_tracking(enable: bool),
     has_tracking() -> bool,
+    ///     \property QAbstractSlider::sliderDown
+    ///     \brief whether the slider is pressed down.
+    /// 
+    ///     The property is set by subclasses in order to let the abstract
+    ///     slider know whether or not \l tracking has any effect.
+    /// 
+    ///     Changing the slider down property emits the sliderPressed() and
+    ///     sliderReleased() signals.
+    /// 
     set_slider_down(arg0: bool),
     is_slider_down() -> bool,
+    ///     \property QAbstractSlider::sliderPosition
+    ///     \brief the current slider position
+    /// 
+    ///     If \l tracking is enabled (the default), this is identical to \l value.
     set_slider_position(arg0: i32),
     slider_position() -> i32,
     set_inverted_appearance(arg0: bool),
+    ///     \property QAbstractSlider::invertedAppearance
+    ///     \brief whether or not a slider shows its values inverted.
+    /// 
+    ///     If this property is \c false (the default), the minimum and maximum will
+    ///     be shown in its classic position for the inherited widget. If the
+    ///     value is true, the minimum and maximum appear at their opposite location.
+    /// 
+    ///     Note: This property makes most sense for sliders and dials. For
+    ///     scroll bars, the visual effect of the scroll bar subcontrols depends on
+    ///     whether or not the styles understand inverted appearance; most styles
+    ///     ignore this property for scroll bars.
     inverted_appearance() -> bool,
+    ///     \property QAbstractSlider::value
+    ///     \brief the slider's current value
+    /// 
+    ///     The slider forces the value to be within the legal range: \l
+    ///     minimum <= \c value <= \l maximum.
+    /// 
+    ///     Changing the value also changes the \l sliderPosition.
     value() -> i32,
     set_value(arg0: i32),
+    ///     \property QAbstractSlider::orientation
+    ///     \brief the orientation of the slider
+    /// 
+    ///     The orientation must be \l Qt::Vertical (the default) or \l
+    ///     Qt::Horizontal.
     set_orientation(arg0: Rute::Orientation),
+    ///     Sets the slider's minimum to \a min and its maximum to \a max.
+    /// 
+    ///     If \a max is smaller than \a min, \a min becomes the only legal
+    ///     value.
+    /// 
+    ///     \sa minimum, maximum
     set_range(min: i32, max: i32),
     [signal] value_changed(value: i32),
     [signal] slider_pressed(),
@@ -114,13 +198,17 @@ struct AbstractSlider : Widget {
     [signal] slider_released(),
     [signal] range_changed(min: i32, max: i32),
     [signal] action_triggered(action: i32),
+    ///     \reimp
     [event] event(e: *EventType) -> bool,
     set_repeat_action(action: AbstractSlider::SliderAction, threshold_time: i32, repeat_time: i32),
     repeat_action() -> AbstractSlider::SliderAction,
     [event] slider_change(change: AbstractSlider::SliderChange),
+    ///     \reimp
     [event] key_press_event(ev: *KeyEventType),
     [event] timer_event(arg0: *TimerEventType),
+    ///     \reimp
     [event] wheel_event(e: *WheelEventType),
+    ///     \reimp
     [event] change_event(e: *EventType),
 }
 

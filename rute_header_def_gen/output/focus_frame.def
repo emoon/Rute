@@ -16,11 +16,26 @@
 ///     not get auto-placement when the focused widget changes size or
 ///     placement.
 struct FocusFrame : Widget {
+    ///   QFocusFrame will track changes to \a widget and resize itself automatically.
+    ///   If the monitored widget's parent changes, QFocusFrame will follow the widget
+    ///   and place itself around the widget automatically. If the monitored widget is deleted,
+    ///   QFocusFrame will set it to zero.
+    /// 
+    ///   \sa QFocusFrame::widget()
     set_widget(widget: *WidgetType),
+    ///   Returns the currently monitored widget for automatically resize and
+    ///   update.
+    /// 
+    ///    \sa QFocusFrame::setWidget()
     widget() -> Widget?,
     [event] event(e: *EventType) -> bool,
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
     [event] paint_event(arg0: *PaintEventType),
+    ///     Initialize \a option with the values from this QFocusFrame. This method is useful
+    ///     for subclasses when they need a QStyleOption, but don't want to fill
+    ///     in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionType),
 }
 

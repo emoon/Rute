@@ -96,59 +96,219 @@ enum SelectionBehavior {
 }
 
 struct TabBar : Widget {
+    ///     \property QTabBar::shape
+    ///     \brief the shape of the tabs in the tab bar
+    /// 
+    ///     Possible values for this property are described by the Shape enum.
     shape() -> TabBar::Shape,
     set_shape(shape: TabBar::Shape),
+    ///     \overload
+    /// 
+    ///     Adds a new tab with icon \a icon and text \a
+    ///     text. Returns the new tab's index.
     add_tab(text: String) -> i32,
+    ///     \overload
+    /// 
+    ///     Adds a new tab with icon \a icon and text \a
+    ///     text. Returns the new tab's index.
     add_tab(icon: &IconType, text: String) -> i32,
+    ///     Inserts a new tab with text \a text at position \a index. If \a
+    ///     index is out of range, the new tab is appened. Returns the new
+    ///     tab's index.
     insert_tab(index: i32, text: String) -> i32,
+    ///     Inserts a new tab with text \a text at position \a index. If \a
+    ///     index is out of range, the new tab is appened. Returns the new
+    ///     tab's index.
     insert_tab(index: i32, icon: &IconType, text: String) -> i32,
     remove_tab(index: i32),
     move_tab(from: i32, to: i32),
+    ///     Returns \c true if the tab at position \a index is enabled; otherwise
+    ///     returns \c false.
     is_tab_enabled(index: i32) -> bool,
+    ///     If \a enabled is true then the tab at position \a index is
+    ///     enabled; otherwise the item at position \a index is disabled.
     set_tab_enabled(index: i32, arg0: bool),
+    ///     Returns the text of the tab at position \a index, or an empty
+    ///     string if \a index is out of range.
     tab_text(index: i32) -> String,
+    ///     Sets the text of the tab at position \a index to \a text.
     set_tab_text(index: i32, text: String),
+    ///     Returns the text color of the tab with the given \a index, or a invalid
+    ///     color if \a index is out of range.
+    /// 
+    ///     \sa setTabTextColor()
     tab_text_color(index: i32) -> Color,
+    ///     Sets the color of the text in the tab with the given \a index to the specified \a color.
+    /// 
+    ///     If an invalid color is specified, the tab will use the QTabBar foreground role instead.
+    /// 
+    ///     \sa tabTextColor()
     set_tab_text_color(index: i32, color: &ColorType),
+    ///     Returns the icon of the tab at position \a index, or a null icon
+    ///     if \a index is out of range.
     tab_icon(index: i32) -> Icon,
+    ///     Sets the icon of the tab at position \a index to \a icon.
     set_tab_icon(index: i32, icon: &IconType),
+    ///     \property QTabBar::elideMode
+    ///     \brief how to elide text in the tab bar
+    ///     \since 4.2
+    /// 
+    ///     This property controls how items are elided when there is not
+    ///     enough space to show them for a given tab bar size.
+    /// 
+    ///     By default the value is style dependent.
+    /// 
+    ///     \sa QTabWidget::elideMode, usesScrollButtons, QStyle::SH_TabBar_ElideMode
     elide_mode() -> Rute::TextElideMode,
     set_elide_mode(arg0: Rute::TextElideMode),
+    ///     Sets the tool tip of the tab at position \a index to \a tip.
     set_tab_tool_tip(index: i32, tip: String),
+    ///     Returns the tool tip of the tab at position \a index, or an empty
+    ///     string if \a index is out of range.
     tab_tool_tip(index: i32) -> String,
+    ///     \since 4.1
+    /// 
+    ///     Sets the What's This help text of the tab at position \a index
+    ///     to \a text.
     set_tab_whats_this(index: i32, text: String),
+    ///     \since 4.1
+    /// 
+    ///     Returns the What's This help text of the tab at position \a index,
+    ///     or an empty string if \a index is out of range.
     tab_whats_this(index: i32) -> String,
+    ///     Sets the data of the tab at position \a index to \a data.
     set_tab_data(index: i32, data: &VariantType),
+    ///     Returns the data of the tab at position \a index, or a null
+    ///     variant if \a index is out of range.
     tab_data(index: i32) -> Variant,
+    ///     Returns the visual rectangle of the tab at position \a
+    ///     index, or a null rectangle if \a index is out of range.
     tab_rect(index: i32) -> Rect,
+    ///     \since 4.3
+    ///     Returns the index of the tab that covers \a position or -1 if no
+    ///     tab covers \a position;
     tab_at(pos: &PointType) -> i32,
+    ///     \property QTabBar::currentIndex
+    ///     \brief the index of the tab bar's visible tab
+    /// 
+    ///     The current index is -1 if there is no current tab.
     current_index() -> i32,
+    ///     \property QTabBar::count
+    ///     \brief the number of tabs in the tab bar
     count() -> i32,
     [event] size_hint() -> Size,
     [event] minimum_size_hint() -> Size,
+    ///     \property QTabBar::drawBase
+    ///     \brief defines whether or not tab bar should draw its base.
+    /// 
+    ///     If true then QTabBar draws a base in relation to the styles overlab.
+    ///     Otherwise only the tabs are drawn.
+    /// 
+    ///     \sa QStyle::pixelMetric(), QStyle::PM_TabBarBaseOverlap, QStyleOptionTabBarBase
     set_draw_base(draw_the_base: bool),
     draw_base() -> bool,
+    ///     \property QTabBar::iconSize
+    ///     \brief The size for icons in the tab bar
+    ///     \since 4.1
+    /// 
+    ///     The default value is style-dependent. \c iconSize is a maximum
+    ///     size; icons that are smaller are not scaled up.
+    /// 
+    ///     \sa QTabWidget::iconSize
     icon_size() -> Size,
     set_icon_size(size: &SizeType),
+    ///     \property QTabBar::usesScrollButtons
+    ///     \brief Whether or not a tab bar should use buttons to scroll tabs when it
+    ///     has many tabs.
+    ///     \since 4.2
+    /// 
+    ///     When there are too many tabs in a tab bar for its size, the tab bar can either choose
+    ///     to expand its size or to add buttons that allow you to scroll through the tabs.
+    /// 
+    ///     By default the value is style dependant.
+    /// 
+    ///     \sa elideMode, QTabWidget::usesScrollButtons, QStyle::SH_TabBar_PreferNoArrows
     uses_scroll_buttons() -> bool,
     set_uses_scroll_buttons(use_buttons: bool),
+    ///     \property QTabBar::tabsClosable
+    ///     \brief Whether or not a tab bar should place close buttons on each tab
+    ///     \since 4.5
+    /// 
+    ///     When tabsClosable is set to true a close button will appear on the tab on
+    ///     either the left or right hand side depending upon the style.  When the button
+    ///     is clicked the tab the signal tabCloseRequested will be emitted.
+    /// 
+    ///     By default the value is false.
+    /// 
+    ///     \sa setTabButton(), tabRemoved()
     tabs_closable() -> bool,
     set_tabs_closable(closable: bool),
     set_tab_button(index: i32, position: TabBar::ButtonPosition, widget: *WidgetType),
     tab_button(index: i32, position: TabBar::ButtonPosition) -> Widget?,
+    ///     \property QTabBar::selectionBehaviorOnRemove
+    ///     \brief What tab should be set as current when removeTab is called if
+    ///     the removed tab is also the current tab.
+    ///     \since 4.5
+    /// 
+    ///     By default the value is SelectRightTab.
+    /// 
+    ///     \sa removeTab()
     selection_behavior_on_remove() -> TabBar::SelectionBehavior,
     set_selection_behavior_on_remove(behavior: TabBar::SelectionBehavior),
+    ///     \property QTabBar::expanding
+    ///     \brief When expanding is true QTabBar will expand the tabs to use the empty space.
+    ///     \since 4.5
+    /// 
+    ///     By default the value is true.
+    /// 
+    ///     \sa QTabWidget::documentMode
     expanding() -> bool,
     set_expanding(enabled: bool),
+    ///     \property QTabBar::movable
+    ///     \brief This property holds whether the user can move the tabs
+    ///     within the tabbar area.
+    /// 
+    ///     \since 4.5
+    /// 
+    ///     By default, this property is \c false;
     is_movable() -> bool,
     set_movable(movable: bool),
+    ///     \property QTabBar::documentMode
+    ///     \brief Whether or not the tab bar is rendered in a mode suitable for the main window.
+    ///     \since 4.5
+    /// 
+    ///     This property is used as a hint for styles to draw the tabs in a different
+    ///     way then they would normally look in a tab widget.  On \macos this will
+    ///     look similar to the tabs in Safari or Sierra's Terminal.app.
+    /// 
+    ///     \sa QTabWidget::documentMode
     document_mode() -> bool,
     set_document_mode(set: bool),
+    ///     \property QTabBar::autoHide
+    ///     \brief If true, the tab bar is automatically hidden when it contains less
+    ///     than 2 tabs.
+    ///     \since 5.4
+    /// 
+    ///     By default, this property is false.
+    /// 
+    ///     \sa QWidget::visible
     auto_hide() -> bool,
     set_auto_hide(hide: bool),
+    ///     \property QTabBar::changeCurrentOnDrag
+    ///     \brief If true, then the current tab is automatically changed when dragging
+    ///     over the tabbar.
+    ///     \since 5.4
+    /// 
+    ///     \note You should also set acceptDrops property to true to make this feature
+    ///     work.
+    /// 
+    ///     By default, this property is false.
     change_current_on_drag() -> bool,
     set_change_current_on_drag(change: bool),
+    ///     Returns the accessibleName of the tab at position \a index, or an empty
+    ///     string if \a index is out of range.
     accessible_tab_name(index: i32) -> String,
+    ///     Sets the accessibleName of the tab at position \a index to \a name.
     set_accessible_tab_name(index: i32, name: String),
     set_current_index(index: i32),
     [signal] current_changed(index: i32),
@@ -156,7 +316,10 @@ struct TabBar : Widget {
     [signal] tab_moved(from: i32, to: i32),
     [signal] tab_bar_clicked(index: i32),
     [signal] tab_bar_double_clicked(index: i32),
+    ///     Returns the size hint for the tab at position \a index.
     [event] tab_size_hint(index: i32) -> Size,
+    ///     Returns the minimum tab size hint for the tab at position \a index.
+    ///     \since 5.0
     [event] minimum_tab_size_hint(index: i32) -> Size,
     [event] tab_inserted(index: i32),
     [event] tab_removed(index: i32),
@@ -166,13 +329,132 @@ struct TabBar : Widget {
     [event] show_event(arg0: *ShowEventType),
     [event] hide_event(arg0: *HideEventType),
     [event] paint_event(arg0: *PaintEventType),
+    ///     Moves the item at index position \a from to index position \a to.
+    ///     \since 4.5
+    /// 
+    ///     \sa tabMoved(), tabLayoutChange()
+    ///  */
+    /// void QTabBar::moveTab(int from, int to)
+    /// {
+    ///     Q_D(QTabBar);
+    ///     if (from == to
+    ///         || !d->validIndex(from)
+    ///         || !d->validIndex(to))
+    ///         return;
+    /// 
+    ///     bool vertical = verticalTabs(d->shape);
+    ///     int oldPressedPosition = 0;
+    ///     if (d->pressedIndex != -1) {
+    ///         // Record the position of the pressed tab before reordering the tabs.
+    ///         oldPressedPosition = vertical ? d->tabList[d->pressedIndex].rect.y()
+    ///                              : d->tabList[d->pressedIndex].rect.x();
+    ///     }
+    /// 
+    ///     // Update the locations of the tabs first
+    ///     int start = qMin(from, to);
+    ///     int end = qMax(from, to);
+    ///     int width = vertical ? d->tabList[from].rect.height() : d->tabList[from].rect.width();
+    ///     if (from < to)
+    ///         width *= -1;
+    ///     bool rtl = isRightToLeft();
+    ///     for (int i = start; i <= end; ++i) {
+    ///         if (i == from)
+    ///             continue;
+    ///         if (vertical)
+    ///             d->tabList[i].rect.moveTop(d->tabList[i].rect.y() + width);
+    ///         else
+    ///             d->tabList[i].rect.moveLeft(d->tabList[i].rect.x() + width);
+    ///         int direction = -1;
+    ///         if (rtl && !vertical)
+    ///             direction *= -1;
+    ///         if (d->tabList[i].dragOffset != 0)
+    ///             d->tabList[i].dragOffset += (direction * width);
+    ///     }
+    /// 
+    ///     if (vertical) {
+    ///         if (from < to)
+    ///             d->tabList[from].rect.moveTop(d->tabList[to].rect.bottom() + 1);
+    ///         else
+    ///             d->tabList[from].rect.moveTop(d->tabList[to].rect.top() - width);
+    ///     } else {
+    ///         if (from < to)
+    ///             d->tabList[from].rect.moveLeft(d->tabList[to].rect.right() + 1);
+    ///         else
+    ///             d->tabList[from].rect.moveLeft(d->tabList[to].rect.left() - width);
+    ///     }
+    /// 
+    ///     // Move the actual data structures
+    ///     d->tabList.move(from, to);
+    /// 
+    ///     // update lastTab locations
+    ///     for (int i = 0; i < d->tabList.count(); ++i)
+    ///         d->tabList[i].lastTab = d->calculateNewPosition(from, to, d->tabList[i].lastTab);
+    /// 
+    ///     // update external variables
+    ///     int previousIndex = d->currentIndex;
+    ///     d->currentIndex = d->calculateNewPosition(from, to, d->currentIndex);
+    /// 
+    ///     // If we are in the middle of a drag update the dragStartPosition
+    ///     if (d->pressedIndex != -1) {
+    ///         d->pressedIndex = d->calculateNewPosition(from, to, d->pressedIndex);
+    ///         int newPressedPosition = vertical ? d->tabList[d->pressedIndex].rect.top() : d->tabList[d->pressedIndex].rect.left();
+    ///         int diff = oldPressedPosition - newPressedPosition;
+    ///         if (isRightToLeft() && !vertical)
+    ///             diff *= -1;
+    ///         if (vertical)
+    ///             d->dragStartPosition.setY(d->dragStartPosition.y() - diff);
+    ///         else
+    ///             d->dragStartPosition.setX(d->dragStartPosition.x() - diff);
+    ///     }
+    /// 
+    ///     d->layoutWidgets(start);
+    ///     update();
+    ///     emit tabMoved(from, to);
+    ///     if (previousIndex != d->currentIndex)
+    ///         emit currentChanged(d->currentIndex);
+    ///     emit tabLayoutChange();
+    /// }
+    /// 
+    /// void QTabBarPrivate::slide(int from, int to)
+    /// {
+    ///     Q_Q(QTabBar);
+    ///     if (from == to
+    ///             || !validIndex(from)
+    ///             || !validIndex(to))
+    ///         return;
+    ///     bool vertical = verticalTabs(shape);
+    ///     int preLocation = vertical ? q->tabRect(from).y() : q->tabRect(from).x();
+    ///     q->setUpdatesEnabled(false);
+    ///     q->moveTab(from, to);
+    ///     q->setUpdatesEnabled(true);
+    ///     int postLocation = vertical ? q->tabRect(to).y() : q->tabRect(to).x();
+    ///     int length = postLocation - preLocation;
+    ///     tabList[to].dragOffset -= length;
+    ///     tabList[to].startAnimation(this, ANIMATION_DURATION);
+    /// }
+    /// 
+    /// void QTabBarPrivate::moveTab(int index, int offset)
+    /// {
+    ///     if (!validIndex(index))
+    ///         return;
+    ///     tabList[index].dragOffset = offset;
+    ///     layoutTab(index); // Make buttons follow tab
+    ///     q_func()->update();
+    /// }
+    /// 
     [event] mouse_press_event(arg0: *MouseEventType),
     [event] mouse_move_event(arg0: *MouseEventType),
     [event] mouse_release_event(arg0: *MouseEventType),
     [event] wheel_event(event: *WheelEventType),
     [event] key_press_event(arg0: *KeyEventType),
     [event] change_event(arg0: *EventType),
+    ///     \reimp
     [event] timer_event(event: *TimerEventType),
+    ///     Initialize \a option with the values from the tab at \a tabIndex. This method
+    ///     is useful for subclasses when they need a QStyleOptionTab,
+    ///     but don't want to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom(), QTabWidget::initStyleOption()
     init_style_option(option: *StyleOptionTabType, tab_index: i32),
 }
 

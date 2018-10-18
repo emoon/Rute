@@ -56,22 +56,74 @@
 /// 
 ///     \sa QScrollBar, QSpinBox, QSlider, {fowler}{GUI Design Handbook: Slider}, {Sliders Example}
 struct Dial : AbstractSlider {
+    ///     \property QDial::wrapping
+    ///     \brief whether wrapping is enabled
+    /// 
+    ///     If true, wrapping is enabled; otherwise some space is inserted at the bottom
+    ///     of the dial to separate the ends of the range of valid values.
+    /// 
+    ///     If enabled, the arrow can be oriented at any angle on the dial. If disabled,
+    ///     the arrow will be restricted to the upper part of the dial; if it is rotated
+    ///     into the space at the bottom of the dial, it will be clamped to the closest
+    ///     end of the valid range of values.
+    /// 
+    ///     By default this property is \c false.
     wrapping() -> bool,
+    ///     \property QDial::notchSize
+    ///     \brief the current notch size
+    /// 
+    ///     The notch size is in range control units, not pixels, and if
+    ///     possible it is a multiple of singleStep() that results in an
+    ///     on-screen notch size near notchTarget().
+    /// 
+    ///     By default, this property has a value of 1.
+    /// 
+    ///     \sa notchTarget(), singleStep()
     notch_size() -> i32,
     set_notch_target(target: double),
+    ///     \property QDial::notchTarget
+    ///     \brief the target number of pixels between notches
+    /// 
+    ///     The notch target is the number of pixels QDial attempts to put
+    ///     between each notch.
+    /// 
+    ///     The actual size may differ from the target size.
+    /// 
+    ///     The default notch target is 3.7 pixels.
     notch_target() -> f32,
+    ///     \property QDial::notchesVisible
+    ///     \brief whether the notches are shown
+    /// 
+    ///     If the property is \c true, a series of notches are drawn around the dial
+    ///     to indicate the range of values available; otherwise no notches are
+    ///     shown.
+    /// 
+    ///     By default, this property is disabled.
     notches_visible() -> bool,
+    ///   \reimp
     [event] size_hint() -> Size,
+    ///   \reimp
     [event] minimum_size_hint() -> Size,
     set_notches_visible(visible: bool),
     set_wrapping(on: bool),
+    ///   \reimp
     [event] event(e: *EventType) -> bool,
     [event] resize_event(re: *ResizeEventType),
+    ///   \reimp
     [event] paint_event(pe: *PaintEventType),
+    ///   \reimp
     [event] mouse_press_event(me: *MouseEventType),
+    ///   \reimp
     [event] mouse_release_event(me: *MouseEventType),
+    ///   \reimp
     [event] mouse_move_event(me: *MouseEventType),
+    ///     \reimp
     [event] slider_change(change: AbstractSlider::SliderChange),
+    ///     Initialize \a option with the values from this QDial. This method
+    ///     is useful for subclasses when they need a QStyleOptionSlider, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSliderType),
 }
 

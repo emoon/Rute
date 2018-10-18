@@ -45,16 +45,35 @@
 ///    used in the splash screen with pixmap().  Alternatively, you can
 ///    subclass QSplashScreen and reimplement drawContents().
 struct SplashScreen : Widget {
+    ///     Sets the pixmap that will be used as the splash screen's image to
+    ///     \a pixmap.
     set_pixmap(pixmap: &PixmapType),
+    ///     Returns the pixmap that is used in the splash screen. The image
+    ///     does not have any of the text drawn by showMessage() calls.
     pixmap() -> Pixmap,
+    ///     Makes the splash screen wait until the widget \a mainWin is displayed
+    ///     before calling close() on itself.
     finish(w: *WidgetType),
+    ///     This overrides QWidget::repaint(). It differs from the standard repaint
+    ///     function in that it also calls QApplication::processEvents() to ensure
+    ///     the updates are displayed, even when there is no event loop present.
     repaint(),
+    ///     \since 5.2
+    /// 
+    ///     Returns the message that is currently displayed on the splash screen.
+    /// 
+    ///     \sa showMessage(), clearMessage()
     message() -> String,
     show_message(message: String, alignment: i32, color: &ColorType),
     clear_message(),
     [signal] message_changed(message: String),
     [event] event(e: *EventType) -> bool,
+    ///     Draw the contents of the splash screen using painter \a painter.
+    ///     The default implementation draws the message passed by showMessage().
+    ///     Reimplement this function if you want to do your own drawing on
+    ///     the splash screen.
     [event] draw_contents(painter: *PainterType),
+    ///     \reimp
     [event] mouse_press_event(arg0: *MouseEventType),
 }
 

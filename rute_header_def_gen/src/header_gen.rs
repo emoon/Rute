@@ -274,7 +274,13 @@ fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
 ///
 /// Print a functio/method definition
 ///
-fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
+fn print_func<W: Write>(
+	dest: &mut W, 
+	entry: &Entity, 
+	class_name: &str, 
+	doc_lookups: &DocLookups, 
+	func_type: AccessLevel
+) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
@@ -290,6 +296,16 @@ fn print_func<W: Write>(dest: &mut W, entry: &Entity, func_type: AccessLevel) {
             return;
         }
     }
+
+    let full_name = format!("{}::{}", class_name, name);
+
+    if let Some(cpp_func_doc) = doc_lookups.cpp_name.get(full_name.as_str()) {
+    	for tag in &cpp_func_doc.tags {
+    		writeln!(dest, "    /// {}", tag);
+    	}
+    }
+
+    // check if we have any doc for this 
 
     if func_type == AccessLevel::Signal {
         write!(dest, "    [signal] ");
@@ -463,7 +479,7 @@ fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
     for field in entry.get_children() {
         match field.get_kind() {
             EntityKind::Method => {
-                print_func(&mut dest, &field, access_level);
+                print_func(&mut dest, &field, &name, doc_lookups, access_level);
             }
 
             EntityKind::AccessSpecifier => {

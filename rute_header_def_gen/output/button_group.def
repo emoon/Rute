@@ -41,14 +41,65 @@
 ///     \sa QGroupBox, QPushButton, QCheckBox, QRadioButton
 struct ButtonGroup : Object {
     set_exclusive(arg0: bool),
+    ///     \property QButtonGroup::exclusive
+    ///     \brief whether the button group is exclusive
+    /// 
+    ///     If this property is \c true, then only one button in the group can be checked
+    ///     at any given time. The user can click on any button to check it, and that
+    ///     button will replace the existing one as the checked button in the group.
+    /// 
+    ///     In an exclusive group, the user cannot uncheck the currently checked button
+    ///     by clicking on it; instead, another button in the group must be clicked
+    ///     to set the new checked button for that group.
+    /// 
+    ///     By default, this property is \c true.
     exclusive() -> bool,
+    ///     Adds the given \a button to the button group. If \a id is -1,
+    ///     an id will be assigned to the button.
+    ///     Automatically assigned ids are guaranteed to be negative,
+    ///     starting with -2. If you are assigning your own ids, use
+    ///     positive values to avoid conflicts.
+    /// 
+    ///     \sa removeButton(), buttons()
     add_button(arg0: *AbstractButtonType, id: i32),
+    ///     Removes the given \a button from the button group.
+    /// 
+    ///     \sa addButton(), buttons()
     remove_button(arg0: *AbstractButtonType),
+    ///     Returns the button group's list of buttons. This may be empty.
+    /// 
+    ///     \sa addButton(), removeButton()
     buttons() -> [AbstractButton?],
+    ///     Returns the button group's checked button, or 0 if no buttons are
+    ///     checked.
+    /// 
+    ///     \sa buttonClicked()
     checked_button() -> AbstractButton?,
+    ///     \since 4.1
+    /// 
+    ///     Returns the button with the specified \a id, or 0 if no such button
+    ///     exists.
     button(id: i32) -> AbstractButton?,
+    ///     \since 4.1
+    /// 
+    ///     Sets the \a id for the specified \a button. Note that \a id cannot
+    ///     be -1.
+    /// 
+    ///     \sa id()
     set_id(button: *AbstractButtonType, id: i32),
+    ///     \since 4.1
+    /// 
+    ///     Returns the id for the specified \a button, or -1 if no such button
+    ///     exists.
+    /// 
+    /// 
+    ///     \sa setId()
     id(button: *AbstractButtonType) -> i32,
+    ///     \since 4.1
+    /// 
+    ///     Returns the id of the checkedButton(), or -1 if no button is checked.
+    /// 
+    ///     \sa setId()
     checked_id() -> i32,
     [signal] button_clicked(arg0: *AbstractButtonType),
     [signal] button_clicked(arg0: i32),

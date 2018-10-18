@@ -53,59 +53,283 @@ enum CorrectionMode {
 }
 
 struct AbstractSpinBox : Widget {
+    ///     \property QAbstractSpinBox::buttonSymbols
+    /// 
+    ///     \brief the current button symbol mode
+    /// 
+    ///     The possible values can be either \c UpDownArrows or \c PlusMinus.
+    ///     The default is \c UpDownArrows.
+    /// 
+    ///     Note that some styles might render PlusMinus and UpDownArrows
+    ///     identically.
+    /// 
+    ///     \sa ButtonSymbols
     button_symbols() -> AbstractSpinBox::ButtonSymbols,
     set_button_symbols(bs: AbstractSpinBox::ButtonSymbols),
+    ///     \property QAbstractSpinBox::correctionMode
+    ///     \brief the mode to correct an \l{QValidator::}{Intermediate}
+    ///            value if editing finishes
+    ///     \since 4.2
+    /// 
+    ///     The default mode is QAbstractSpinBox::CorrectToPreviousValue.
+    /// 
+    ///     \sa acceptableInput, validate(), fixup()
     set_correction_mode(cm: AbstractSpinBox::CorrectionMode),
     correction_mode() -> AbstractSpinBox::CorrectionMode,
+    ///   \property QAbstractSpinBox::acceptableInput
+    ///   \brief whether the input satisfies the current validation
+    ///   \since 4.2
+    /// 
+    ///   \sa validate(), fixup(), correctionMode
     has_acceptable_input() -> bool,
+    ///     \property QAbstractSpinBox::text
+    /// 
+    ///     \brief the spin box's text, including any prefix and suffix
+    /// 
+    ///     There is no default text.
     text() -> String,
+    ///     \property QAbstractSpinBox::specialValueText
+    ///     \brief the special-value text
+    /// 
+    ///     If set, the spin box will display this text instead of a numeric
+    ///     value whenever the current value is equal to minimum(). Typical use
+    ///     is to indicate that this choice has a special (default) meaning.
+    /// 
+    ///     For example, if your spin box allows the user to choose a scale factor
+    ///     (or zoom level) for displaying an image, and your application is able
+    ///     to automatically choose one that will enable the image to fit completely
+    ///     within the display window, you can set up the spin box like this:
+    /// 
+    ///     \snippet widgets/spinboxes/window.cpp 3
+    /// 
+    ///     The user will then be able to choose a scale from 1% to 1000%
+    ///     or select "Auto" to leave it up to the application to choose. Your code
+    ///     must then interpret the spin box value of 0 as a request from the user
+    ///     to scale the image to fit inside the window.
+    /// 
+    ///     All values are displayed with the prefix and suffix (if set), \e
+    ///     except for the special value, which only shows the special value
+    ///     text. This special text is passed in the QSpinBox::valueChanged()
+    ///     signal that passes a QString.
+    /// 
+    ///     To turn off the special-value text display, call this function
+    ///     with an empty string. The default is no special-value text, i.e.
+    ///     the numeric value is shown as usual.
+    /// 
+    ///     If no special-value text is set, specialValueText() returns an
+    ///     empty string.
     special_value_text() -> String,
     set_special_value_text(txt: String),
+    ///     \property QAbstractSpinBox::wrapping
+    /// 
+    ///     \brief whether the spin box is circular.
+    /// 
+    ///     If wrapping is true stepping up from maximum() value will take you
+    ///     to the minimum() value and vica versa. Wrapping only make sense if
+    ///     you have minimum() and maximum() values set.
+    /// 
+    ///     \snippet code/src_gui_widgets_qabstractspinbox.cpp 0
+    /// 
+    ///     \sa QSpinBox::minimum(), QSpinBox::maximum()
     wrapping() -> bool,
     set_wrapping(w: bool),
     set_read_only(r: bool),
+    ///     \property QAbstractSpinBox::readOnly
+    ///     \brief whether the spin box is read only.
+    /// 
+    ///     In read-only mode, the user can still copy the text to the
+    ///     clipboard, or drag and drop the text;
+    ///     but cannot edit it.
+    /// 
+    ///     The QLineEdit in the QAbstractSpinBox does not show a cursor in
+    ///     read-only mode.
+    /// 
+    ///     \sa QLineEdit::readOnly
     is_read_only() -> bool,
     set_keyboard_tracking(kt: bool),
+    ///     \property QAbstractSpinBox::keyboardTracking
+    ///     \brief whether keyboard tracking is enabled for the spinbox.
+    ///     \since 4.3
+    /// 
+    ///     If keyboard tracking is enabled (the default), the spinbox
+    ///     emits the valueChanged() signal while the new value is being
+    ///     entered from the keyboard.
+    /// 
+    ///     E.g. when the user enters the value 600 by typing 6, 0, and 0,
+    ///     the spinbox emits 3 signals with the values 6, 60, and 600
+    ///     respectively.
+    /// 
+    ///     If keyboard tracking is disabled, the spinbox doesn't emit the
+    ///     valueChanged() signal while typing. It emits the signal later,
+    ///     when the return key is pressed, when keyboard focus is lost, or
+    ///     when other spinbox functionality is used, e.g. pressing an arrow
+    ///     key.
     keyboard_tracking() -> bool,
     set_alignment(flag: Rute::Alignment),
+    ///     \property QAbstractSpinBox::alignment
+    ///     \brief the alignment of the spin box
+    /// 
+    ///     Possible Values are Qt::AlignLeft, Qt::AlignRight, and Qt::AlignHCenter.
+    /// 
+    ///     By default, the alignment is Qt::AlignLeft
+    /// 
+    ///     Attempting to set the alignment to an illegal flag combination
+    ///     does nothing.
+    /// 
+    ///     \sa Qt::Alignment
     alignment() -> Rute::Alignment,
     set_frame(arg0: bool),
+    ///     \property QAbstractSpinBox::frame
+    ///     \brief whether the spin box draws itself with a frame
+    /// 
+    ///     If enabled (the default) the spin box draws itself inside a frame,
+    ///     otherwise the spin box draws itself without any frame.
     has_frame() -> bool,
+    ///     \property QAbstractSpinBox::accelerated
+    ///     \brief whether the spin box will accelerate the frequency of the steps when
+    ///     pressing the step Up/Down buttons.
+    ///     \since 4.2
+    /// 
+    ///     If enabled the spin box will increase/decrease the value faster
+    ///     the longer you hold the button down.
     set_accelerated(on: bool),
     is_accelerated() -> bool,
     set_group_separator_shown(shown: bool),
+    ///      \property QAbstractSpinBox::showGroupSeparator
+    ///      \since 5.3
+    /// 
+    /// 
+    ///      This property holds whether a thousands separator is enabled. By default this
+    ///      property is false.
     is_group_separator_shown() -> bool,
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     This function interprets the text of the spin box. If the value
+    ///     has changed since last interpretation it will emit signals.
     interpret_text(),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
+    ///    This virtual function is called by the QAbstractSpinBox to
+    ///    determine whether \a input is valid. The \a pos parameter indicates
+    ///    the position in the string. Reimplemented in the various
+    ///    subclasses.
     [event] validate(input: String, pos: &i32) -> Validator::State,
+    ///    This virtual function is called by the QAbstractSpinBox if the
+    ///    \a input is not validated to QValidator::Acceptable when Return is
+    ///    pressed or interpretText() is called. It will try to change the
+    ///    text so it is valid. Reimplemented in the various subclasses.
     [event] fixup(input: String),
+    ///     Virtual function that is called whenever the user triggers a step.
+    ///     The \a steps parameter indicates how many steps were taken.
+    ///     For example, pressing \c Qt::Key_Down will trigger a call to \c stepBy(-1),
+    ///     whereas pressing \c Qt::Key_PageUp will trigger a call to \c stepBy(10).
+    /// 
+    ///     If you subclass \c QAbstractSpinBox you must reimplement this
+    ///     function. Note that this function is called even if the resulting
+    ///     value will be outside the bounds of minimum and maximum. It's this
+    ///     function's job to handle these situations.
+    /// 
+    ///     \sa stepUp(), stepDown(), keyPressEvent()
     [event] step_by(steps: i32),
+    ///   Steps up by one linestep
+    ///   Calling this slot is analogous to calling stepBy(1);
+    ///   \sa stepBy(), stepDown()
     step_up(),
+    ///   Steps down by one linestep
+    ///   Calling this slot is analogous to calling stepBy(-1);
+    ///   \sa stepBy(), stepUp()
     step_down(),
+    ///     Selects all the text in the spinbox except the prefix and suffix.
     select_all(),
+    ///     Clears the lineedit of all text but prefix and suffix.
     [event] clear(),
+    ///     \reimp
     [event] resize_event(event: *ResizeEventType),
+    ///     \reimp
+    /// 
+    ///     This function handles keyboard input.
+    /// 
+    ///     The following keys are handled specifically:
+    ///     \table
+    ///     \row \li Enter/Return
+    ///          \li This will reinterpret the text and emit a signal even if the value has not changed
+    ///          since last time a signal was emitted.
+    ///     \row \li Up
+    ///          \li This will invoke stepBy(1)
+    ///     \row \li Down
+    ///          \li This will invoke stepBy(-1)
+    ///     \row \li Page up
+    ///          \li This will invoke stepBy(10)
+    ///     \row \li Page down
+    ///          \li This will invoke stepBy(-10)
+    ///     \endtable
+    /// 
+    ///     \sa stepBy()
     [event] key_press_event(event: *KeyEventType),
+    ///     \reimp
     [event] key_release_event(event: *KeyEventType),
+    ///     \reimp
     [event] wheel_event(event: *WheelEventType),
+    ///     \reimp
     [event] focus_in_event(event: *FocusEventType),
+    ///     \reimp
     [event] focus_out_event(event: *FocusEventType),
+    ///     \reimp
     [event] context_menu_event(event: *ContextMenuEventType),
+    ///     \reimp
     [event] change_event(event: *EventType),
+    ///     \reimp
     [event] close_event(event: *CloseEventType),
+    ///     \reimp
     [event] hide_event(event: *HideEventType),
+    ///     \reimp
     [event] mouse_press_event(event: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(event: *MouseEventType),
+    ///     \reimp
     [event] mouse_move_event(event: *MouseEventType),
+    ///     \reimp
     [event] timer_event(event: *TimerEventType),
+    ///     \reimp
     [event] paint_event(event: *PaintEventType),
+    ///     \reimp
     [event] show_event(event: *ShowEventType),
+    ///     Initialize \a option with the values from this QSpinBox. This method
+    ///     is useful for subclasses when they need a QStyleOptionSpinBox, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSpinBoxType),
+    ///     This function returns a pointer to the line edit of the spin box.
     line_edit() -> LineEdit?,
+    ///     \fn void QAbstractSpinBox::setLineEdit(QLineEdit *lineEdit)
+    /// 
+    ///     Sets the line edit of the spinbox to be \a lineEdit instead of the
+    ///     current line edit widget. \a lineEdit can not be 0.
+    /// 
+    ///     QAbstractSpinBox takes ownership of the new lineEdit
+    /// 
+    ///     If QLineEdit::validator() for the \a lineEdit returns 0, the internal
+    ///     validator of the spinbox will be set on the line edit.
     set_line_edit(edit: *LineEditType),
+    ///     Virtual function that determines whether stepping up and down is
+    ///     legal at any given time.
+    /// 
+    ///     The up arrow will be painted as disabled unless (stepEnabled() &
+    ///     StepUpEnabled) != 0.
+    /// 
+    ///     The default implementation will return (StepUpEnabled|
+    ///     StepDownEnabled) if wrapping is turned on. Else it will return
+    ///     StepDownEnabled if value is > minimum() or'ed with StepUpEnabled if
+    ///     value < maximum().
+    /// 
+    ///     If you subclass QAbstractSpinBox you will need to reimplement this function.
+    /// 
+    ///     \sa QSpinBox::minimum(), QSpinBox::maximum(), wrapping()
     [event] step_enabled() -> AbstractSpinBox::StepEnabled,
     [signal] editing_finished(),
 }

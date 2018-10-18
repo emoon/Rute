@@ -55,15 +55,96 @@ enum DockWidgetFeature {
 }
 
 struct DockWidget : Widget {
+    ///     Returns the widget for the dock widget. This function returns zero
+    ///     if the widget has not been set.
+    /// 
+    ///     \sa setWidget()
     widget() -> Widget?,
+    ///     Sets the widget for the dock widget to \a widget.
+    /// 
+    ///     If the dock widget is visible when \a widget is added, you must
+    ///     \l{QWidget::}{show()} it explicitly.
+    /// 
+    ///     Note that you must add the layout of the \a widget before you call
+    ///     this function; if not, the \a widget will not be visible.
+    /// 
+    ///     \sa widget()
     set_widget(widget: *WidgetType),
+    ///     \property QDockWidget::features
+    ///     \brief whether the dock widget is movable, closable, and floatable
+    /// 
+    ///     By default, this property is set to a combination of DockWidgetClosable,
+    ///     DockWidgetMovable and DockWidgetFloatable.
+    /// 
+    ///     \sa DockWidgetFeature
     set_features(features: DockWidget::DockWidgetFeatures),
     features() -> DockWidget::DockWidgetFeatures,
+    ///     \property QDockWidget::floating
+    ///     \brief whether the dock widget is floating
+    /// 
+    ///     A floating dock widget is presented to the user as an independent
+    ///     window "on top" of its parent QMainWindow, instead of being
+    ///     docked in the QMainWindow.
+    /// 
+    ///     By default, this property is \c true.
+    /// 
+    ///     When this property changes, the \c {topLevelChanged()} signal is emitted.
+    /// 
+    ///     \sa isWindow(), topLevelChanged()
     set_floating(floating: bool),
     is_floating() -> bool,
+    ///     \property QDockWidget::allowedAreas
+    ///     \brief areas where the dock widget may be placed
+    /// 
+    ///     The default is Qt::AllDockWidgetAreas.
+    /// 
+    ///     \sa Qt::DockWidgetArea
     set_allowed_areas(areas: Rute::DockWidgetAreas),
     allowed_areas() -> Rute::DockWidgetAreas,
+    ///     \since 4.3
+    /// 
+    ///     Sets an arbitrary \a widget as the dock widget's title bar. If \a widget
+    ///     is 0, any custom title bar widget previously set on the dock widget is
+    ///     removed, but not deleted, and the default title bar will be used
+    ///     instead.
+    /// 
+    ///     If a title bar widget is set, QDockWidget will not use native window
+    ///     decorations when it is floated.
+    /// 
+    ///     Here are some tips for implementing custom title bars:
+    /// 
+    ///     \list
+    ///     \li Mouse events that are not explicitly handled by the title bar widget
+    ///        must be ignored by calling QMouseEvent::ignore(). These events then
+    ///        propagate to the QDockWidget parent, which handles them in the usual
+    ///        manner, moving when the title bar is dragged, docking and undocking
+    ///        when it is double-clicked, etc.
+    /// 
+    ///     \li When DockWidgetVerticalTitleBar is set on QDockWidget, the title
+    ///        bar widget is repositioned accordingly. In resizeEvent(), the title
+    ///        bar should check what orientation it should assume:
+    ///        \snippet code/src_gui_widgets_qdockwidget.cpp 0
+    /// 
+    ///     \li The title bar widget must have a valid QWidget::sizeHint() and
+    ///        QWidget::minimumSizeHint(). These functions should take into account
+    ///        the current orientation of the title bar.
+    /// 
+    ///     \li It is not possible to remove a title bar from a dock widget. However,
+    ///        a similar effect can be achieved by setting a default constructed
+    ///        QWidget as the title bar widget.
+    ///     \endlist
+    /// 
+    ///     Using qobject_cast() as shown above, the title bar widget has full access
+    ///     to its parent QDockWidget. Hence it can perform such operations as docking
+    ///     and hiding in response to user actions.
+    /// 
+    ///     \sa titleBarWidget(), DockWidgetVerticalTitleBar
     set_title_bar_widget(widget: *WidgetType),
+    ///     \since 4.3
+    ///     Returns the custom title bar widget set on the QDockWidget, or 0 if no
+    ///     custom title bar has been set.
+    /// 
+    ///     \sa setTitleBarWidget()
     title_bar_widget() -> Widget?,
     is_area_allowed(area: Rute::DockWidgetArea) -> bool,
     toggle_view_action() -> Action?,
@@ -72,10 +153,19 @@ struct DockWidget : Widget {
     [signal] allowed_areas_changed(allowed_areas: Rute::DockWidgetAreas),
     [signal] visibility_changed(visible: bool),
     [signal] dock_location_changed(area: Rute::DockWidgetArea),
+    ///     \fn bool QDockWidget::isAreaAllowed(Qt::DockWidgetArea area) const
+    /// 
+    ///     Returns \c true if this dock widget can be placed in the given \a area;
+    ///     otherwise returns \c false.
     [event] change_event(event: *EventType),
     [event] close_event(event: *CloseEventType),
     [event] paint_event(event: *PaintEventType),
     [event] event(event: *EventType) -> bool,
+    ///     Initialize \a option with the values from this QDockWidget. This method
+    ///     is useful for subclasses when they need a QStyleOptionDockWidget, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionDockWidgetType),
 }
 

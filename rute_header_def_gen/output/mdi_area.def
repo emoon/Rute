@@ -76,48 +76,216 @@ enum ViewMode {
 }
 
 struct MdiArea : AbstractScrollArea {
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     Returns a pointer to the current subwindow, or 0 if there is
+    ///     no current subwindow.
+    /// 
+    ///     This function will return the same as activeSubWindow() if
+    ///     the QApplication containing QMdiArea is active.
+    /// 
+    ///     \sa activeSubWindow(), QApplication::activeWindow()
     current_sub_window() -> MdiSubWindow?,
+    ///     Returns a pointer to the current active subwindow. If no
+    ///     window is currently active, 0 is returned.
+    /// 
+    ///     Subwindows are treated as top-level windows with respect to
+    ///     window state, i.e., if a widget outside the MDI area is the active
+    ///     window, no subwindow will be active. Note that if a widget in the
+    ///     window in which the MDI area lives gains focus, the window will be
+    ///     activated.
+    /// 
+    ///     \sa setActiveSubWindow(), Qt::WindowState
     active_sub_window() -> MdiSubWindow?,
+    ///     Returns a list of all subwindows in the MDI area. If \a order is
+    ///     CreationOrder (the default), the windows are sorted in the order
+    ///     in which they were inserted into the workspace. If \a order is
+    ///     StackingOrder, the windows are listed in their stacking order,
+    ///     with the topmost window as the last item in the list. If \a order
+    ///     is ActivationHistoryOrder, the windows are listed according to
+    ///     their recent activation history.
+    /// 
+    ///     \sa WindowOrder
     sub_window_list(order: MdiArea::WindowOrder) -> [MdiSubWindow?],
+    ///     Adds \a widget as a new subwindow to the MDI area.  If \a
+    ///     windowFlags are non-zero, they will override the flags set on the
+    ///     widget.
+    /// 
+    ///     The \a widget can be either a QMdiSubWindow or another QWidget
+    ///     (in which case the MDI area will create a subwindow and set the \a
+    ///     widget as the internal widget).
+    /// 
+    ///     \note Once the subwindow has been added, its parent will be the
+    ///     \e{viewport widget} of the QMdiArea.
+    /// 
+    ///     \snippet mdiareasnippets.cpp 1
+    /// 
+    ///     When you create your own subwindow, you must set the
+    ///     Qt::WA_DeleteOnClose widget attribute if you want the window to be
+    ///     deleted when closed in the MDI area. If not, the window will be
+    ///     hidden and the MDI area will not activate the next subwindow.
+    /// 
+    ///     Returns the QMdiSubWindow that is added to the MDI area.
+    /// 
+    ///     \sa removeSubWindow()
     add_sub_window(widget: *WidgetType, flags: Rute::WindowFlags) -> MdiSubWindow?,
+    ///     Removes \a widget from the MDI area. The \a widget must be
+    ///     either a QMdiSubWindow or a widget that is the internal widget of
+    ///     a subwindow. Note \a widget is never actually deleted by QMdiArea.
+    ///     If a QMdiSubWindow is passed in its parent is set to 0 and it is
+    ///     removed, but if an internal widget is passed in the child widget
+    ///     is set to 0 but the QMdiSubWindow is not removed.
+    /// 
+    ///     \sa addSubWindow()
     remove_sub_window(widget: *WidgetType),
+    ///     \property QMdiArea::background
+    ///     \brief the background brush for the workspace
+    /// 
+    ///     This property sets the background brush for the workspace area
+    ///     itself. By default, it is a gray color, but can be any brush
+    ///     (e.g., colors, gradients or pixmaps).
     background() -> Brush,
     set_background(background: &BrushType),
+    ///     \property QMdiArea::activationOrder
+    ///     \brief the ordering criteria for subwindow lists
+    ///     \since 4.4
+    /// 
+    ///     This property specifies the ordering criteria for the list of
+    ///     subwindows returned by subWindowList(). By default, it is the window
+    ///     creation order.
+    /// 
+    ///     \sa subWindowList()
     activation_order() -> MdiArea::WindowOrder,
     set_activation_order(order: MdiArea::WindowOrder),
+    ///     If \a on is true, \a option is enabled on the MDI area; otherwise
+    ///     it is disabled. See AreaOption for the effect of each option.
+    /// 
+    ///     \sa AreaOption, testOption()
     set_option(option: MdiArea::AreaOption, on: bool),
+    ///     Returns \c true if \a option is enabled; otherwise returns \c false.
+    /// 
+    ///     \sa AreaOption, setOption()
     test_option(opton: MdiArea::AreaOption) -> bool,
     set_view_mode(mode: MdiArea::ViewMode),
+    ///     \property QMdiArea::viewMode
+    ///     \brief the way sub-windows are displayed in the QMdiArea.
+    ///     \since 4.4
+    /// 
+    ///     By default, the SubWindowView is used to display sub-windows.
+    /// 
+    ///     \sa ViewMode, setTabShape(), setTabPosition()
     view_mode() -> MdiArea::ViewMode,
+    ///     \property QMdiArea::documentMode
+    ///     \brief whether the tab bar is set to document mode in tabbed view mode.
+    ///     \since 4.5
+    /// 
+    ///     Document mode is disabled by default.
+    /// 
+    ///     \sa QTabBar::documentMode, setViewMode()
     document_mode() -> bool,
     set_document_mode(enabled: bool),
     set_tabs_closable(closable: bool),
+    ///     \property QMdiArea::tabsClosable
+    ///     \brief whether the tab bar should place close buttons on each tab in tabbed view mode.
+    ///     \since 4.8
+    /// 
+    ///     Tabs are not closable by default.
+    /// 
+    ///     \sa QTabBar::tabsClosable, setViewMode()
     tabs_closable() -> bool,
     set_tabs_movable(movable: bool),
+    ///     \property QMdiArea::tabsMovable
+    ///     \brief whether the user can move the tabs within the tabbar area in tabbed view mode.
+    ///     \since 4.8
+    /// 
+    ///     Tabs are not movable by default.
+    /// 
+    ///     \sa QTabBar::movable, setViewMode()
     tabs_movable() -> bool,
     set_tab_shape(shape: TabWidget::TabShape),
+    ///     \property QMdiArea::tabShape
+    ///     \brief the shape of the tabs in tabbed view mode.
+    ///     \since 4.4
+    /// 
+    ///     Possible values for this property are QTabWidget::Rounded
+    ///     (default) or QTabWidget::Triangular.
+    /// 
+    ///     \sa QTabWidget::TabShape, setViewMode()
     tab_shape() -> TabWidget::TabShape,
     set_tab_position(position: TabWidget::TabPosition),
+    ///     \property QMdiArea::tabPosition
+    ///     \brief the position of the tabs in tabbed view mode.
+    ///     \since 4.4
+    /// 
+    ///     Possible values for this property are described by the
+    ///     QTabWidget::TabPosition enum.
+    /// 
+    ///     \sa QTabWidget::TabPosition, setViewMode()
     tab_position() -> TabWidget::TabPosition,
     [signal] sub_window_activated(arg0: *MdiSubWindowType),
+    ///     Activates the subwindow \a window. If \a window is 0, any
+    ///     current active window is deactivated.
+    /// 
+    ///     \sa activeSubWindow()
     set_active_sub_window(window: *MdiSubWindowType),
+    ///     Arranges all child windows in a tile pattern.
+    /// 
+    ///     \sa cascadeSubWindows()
     tile_sub_windows(),
+    ///     Arranges all the child windows in a cascade pattern.
+    /// 
+    ///     \sa tileSubWindows()
     cascade_sub_windows(),
+    ///     Closes the active subwindow.
+    /// 
+    ///     \sa closeAllSubWindows()
     close_active_sub_window(),
+    ///     Closes all subwindows by sending a QCloseEvent to each window.
+    ///     You may receive subWindowActivated() signals from subwindows
+    ///     before they are closed (if the MDI area activates the subwindow
+    ///     when another is closing).
+    /// 
+    ///     Subwindows that ignore the close event will remain open.
+    /// 
+    ///     \sa closeActiveSubWindow()
     close_all_sub_windows(),
+    ///     Gives the keyboard focus to another window in the list of child
+    ///     windows.  The window activated will be the next one determined
+    ///     by the current \l{QMdiArea::WindowOrder} {activation order}.
+    /// 
+    ///     \sa activatePreviousSubWindow(), QMdiArea::WindowOrder
     activate_next_sub_window(),
+    ///     Gives the keyboard focus to another window in the list of child
+    ///     windows.  The window activated will be the previous one determined
+    ///     by the current \l{QMdiArea::WindowOrder} {activation order}.
+    /// 
+    ///     \sa activateNextSubWindow(), QMdiArea::WindowOrder
     activate_previous_sub_window(),
+    ///     This slot is called by QAbstractScrollArea after setViewport() has been
+    ///     called. Reimplement this function in a subclass of QMdiArea to
+    ///     initialize the new \a viewport before it is used.
+    /// 
+    ///     \sa setViewport()
     [event] setup_viewport(viewport: *WidgetType),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
+    ///     \reimp
     [event] paint_event(paint_event: *PaintEventType),
+    ///     \reimp
     [event] child_event(child_event: *ChildEventType),
+    ///     \reimp
     [event] resize_event(resize_event: *ResizeEventType),
+    ///     \reimp
     [event] timer_event(timer_event: *TimerEventType),
+    ///     \reimp
     [event] show_event(show_event: *ShowEventType),
+    ///     \reimp
     [event] viewport_event(event: *EventType) -> bool,
+    ///     \reimp
     [event] scroll_contents_by(dx: i32, dy: i32),
 }
 

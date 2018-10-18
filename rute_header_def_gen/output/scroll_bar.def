@@ -130,15 +130,26 @@
 ///     \sa QScrollArea, QSlider, QDial, QSpinBox, {fowler}{GUI Design Handbook: Scroll Bar}, {Sliders Example}
 struct ScrollBar : AbstractSlider {
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] wheel_event(arg0: *WheelEventType),
+    ///     \reimp
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(arg0: *MouseEventType),
+    ///     \reimp
     [event] mouse_move_event(arg0: *MouseEventType),
     [event] hide_event(arg0: *HideEventType),
     [event] slider_change(change: AbstractSlider::SliderChange),
     [event] context_menu_event(arg0: *ContextMenuEventType),
+    ///     Initialize \a option with the values from this QScrollBar. This method
+    ///     is useful for subclasses when they need a QStyleOptionSlider, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSliderType),
 }
 

@@ -45,40 +45,194 @@
 /// 
 ///     \sa QTextEdit, QTextDocument
 struct TextBrowser : TextEdit {
+    ///     \property QTextBrowser::source
+    ///     \brief the name of the displayed document.
+    /// 
+    ///     This is a an invalid url if no document is displayed or if the
+    ///     source is unknown.
+    /// 
+    ///     When setting this property QTextBrowser tries to find a document
+    ///     with the specified name in the paths of the searchPaths property
+    ///     and directory of the current source, unless the value is an absolute
+    ///     file path. It also checks for optional anchors and scrolls the document
+    ///     accordingly
+    /// 
+    ///     If the first tag in the document is \c{<qt type=detail>}, the
+    ///     document is displayed as a popup rather than as new document in
+    ///     the browser window itself. Otherwise, the document is displayed
+    ///     normally in the text browser with the text set to the contents of
+    ///     the named document with setHtml().
+    /// 
+    ///     By default, this property contains an empty URL.
     source() -> Url,
+    ///     \property QTextBrowser::searchPaths
+    ///     \brief the search paths used by the text browser to find supporting
+    ///     content
+    /// 
+    ///     QTextBrowser uses this list to locate images and documents.
+    /// 
+    ///     By default, this property contains an empty string list.
     search_paths() -> [String],
     set_search_paths(paths: &[String]),
+    ///     This function is called when the document is loaded and for
+    ///     each image in the document. The \a type indicates the type of resource
+    ///     to be loaded. An invalid QVariant is returned if the resource cannot be
+    ///     loaded.
+    /// 
+    ///     The default implementation ignores \a type and tries to locate
+    ///     the resources by interpreting \a name as a file name. If it is
+    ///     not an absolute path it tries to find the file in the paths of
+    ///     the \l searchPaths property and in the same directory as the
+    ///     current source. On success, the result is a QVariant that stores
+    ///     a QByteArray with the contents of the file.
+    /// 
+    ///     If you reimplement this function, you can return other QVariant
+    ///     types. The table below shows which variant types are supported
+    ///     depending on the resource type:
+    /// 
+    ///     \table
+    ///     \header \li ResourceType  \li QVariant::Type
+    ///     \row    \li QTextDocument::HtmlResource  \li QString or QByteArray
+    ///     \row    \li QTextDocument::ImageResource \li QImage, QPixmap or QByteArray
+    ///     \row    \li QTextDocument::StyleSheetResource \li QString or QByteArray
+    ///     \endtable
     [event] load_resource(type: i32, name: &UrlType) -> Variant,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if the text browser can go backward in the document history
+    ///     using backward().
+    /// 
+    ///     \sa backwardAvailable(), backward()
     is_backward_available() -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if the text browser can go forward in the document history
+    ///     using forward().
+    /// 
+    ///     \sa forwardAvailable(), forward()
     is_forward_available() -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Clears the history of visited documents and disables the forward and
+    ///     backward navigation.
+    /// 
+    ///     \sa backward(), forward()
     clear_history(),
+    ///     Returns the documentTitle() of the HistoryItem.
+    /// 
+    ///     \table
+    ///     \header \li Input            \li Return
+    ///     \row \li \a{i} < 0  \li \l backward() history
+    ///     \row \li \a{i} == 0 \li current, see QTextBrowser::source()
+    ///     \row \li \a{i} > 0  \li \l forward() history
+    ///     \endtable
+    /// 
+    ///     \snippet code/src_gui_widgets_qtextbrowser.cpp 0
+    /// 
+    ///     \since 4.4
     history_title(arg0: i32) -> String,
+    ///    Returns the url of the HistoryItem.
+    /// 
+    ///     \table
+    ///     \header \li Input            \li Return
+    ///     \row \li \a{i} < 0  \li \l backward() history
+    ///     \row \li\a{i} == 0 \li current, see QTextBrowser::source()
+    ///     \row \li \a{i} > 0  \li \l forward() history
+    ///     \endtable
+    /// 
+    ///     \since 4.4
     history_url(arg0: i32) -> Url,
+    ///     Returns the number of locations backward in the history.
+    /// 
+    ///     \since 4.4
     backward_history_count() -> i32,
+    ///     Returns the number of locations forward in the history.
+    /// 
+    ///     \since 4.4
     forward_history_count() -> i32,
+    ///     \property QTextBrowser::openExternalLinks
+    ///     \since 4.2
+    /// 
+    ///     Specifies whether QTextBrowser should automatically open links to external
+    ///     sources using QDesktopServices::openUrl() instead of emitting the
+    ///     anchorClicked signal. Links are considered external if their scheme is
+    ///     neither file or qrc.
+    /// 
+    ///     The default value is false.
     open_external_links() -> bool,
     set_open_external_links(open: bool),
+    ///    \property QTextBrowser::openLinks
+    ///    \since 4.3
+    /// 
+    ///    This property specifies whether QTextBrowser should automatically open links the user tries to
+    ///    activate by mouse or keyboard.
+    /// 
+    ///    Regardless of the value of this property the anchorClicked signal is always emitted.
+    /// 
+    ///    The default value is true.
     open_links() -> bool,
     set_open_links(open: bool),
     [event] set_source(name: &UrlType),
+    ///     Changes the document displayed to the previous document in the
+    ///     list of documents built by navigating links. Does nothing if there
+    ///     is no previous document.
+    /// 
+    ///     \sa forward(), backwardAvailable()
     [event] backward(),
+    ///     Changes the document displayed to the next document in the list of
+    ///     documents built by navigating links. Does nothing if there is no
+    ///     next document.
+    /// 
+    ///     \sa backward(), forwardAvailable()
     [event] forward(),
+    ///     Changes the document displayed to be the first document from
+    ///     the history.
     [event] home(),
+    ///     Reloads the current set source.
     [event] reload(),
     [signal] backward_available(arg0: bool),
     [signal] forward_available(arg0: bool),
     [signal] history_changed(),
     [signal] source_changed(arg0: &UrlType),
+    ///     \fn void QTextBrowser::sourceChanged(const QUrl &src)
+    /// 
+    ///     This signal is emitted when the source has changed, \a src
+    ///     being the new source.
+    /// 
+    ///     Source changes happen both programmatically when calling
+    ///     setSource(), forward(), backword() or home() or when the user
+    ///     clicks on links or presses the equivalent key sequences.
     [signal] highlighted(arg0: &UrlType),
+    ///     \fn void QTextBrowser::sourceChanged(const QUrl &src)
+    /// 
+    ///     This signal is emitted when the source has changed, \a src
+    ///     being the new source.
+    /// 
+    ///     Source changes happen both programmatically when calling
+    ///     setSource(), forward(), backword() or home() or when the user
+    ///     clicks on links or presses the equivalent key sequences.
     [signal] highlighted(arg0: String),
     [signal] anchor_clicked(arg0: &UrlType),
     [event] event(e: *EventType) -> bool,
+    ///     The event \a ev is used to provide the following keyboard shortcuts:
+    ///     \table
+    ///     \header \li Keypress            \li Action
+    ///     \row \li Alt+Left Arrow  \li \l backward()
+    ///     \row \li Alt+Right Arrow \li \l forward()
+    ///     \row \li Alt+Up Arrow    \li \l home()
+    ///     \endtable
     [event] key_press_event(ev: *KeyEventType),
+    ///     \reimp
     [event] mouse_move_event(ev: *MouseEventType),
+    ///     \reimp
     [event] mouse_press_event(ev: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(ev: *MouseEventType),
+    ///     \reimp
     [event] focus_out_event(ev: *FocusEventType),
+    ///     \reimp
     [event] focus_next_prev_child(next: bool) -> bool,
+    ///   \reimp
     [event] paint_event(e: *PaintEventType),
 }
 

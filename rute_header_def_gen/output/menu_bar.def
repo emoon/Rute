@@ -110,43 +110,164 @@
 ///         {http://developer.apple.com/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGIntro/XHIGIntro.html}{Introduction to Apple Human Interface Guidelines},
 ///         {fowler}{GUI Design Handbook: Menu Bar}, {Menus Example}
 struct MenuBar : Widget {
+    ///     \overload
+    /// 
+    ///     This convenience function creates a new action with the given \a
+    ///     text. The action's triggered() signal is connected to the \a
+    ///     receiver's \a member slot. The function adds the newly created
+    ///     action to the menu's list of actions and returns it.
+    /// 
+    ///     \sa QWidget::addAction(), QWidget::actions()
     add_action(text: String) -> Action?,
+    ///     \overload
+    /// 
+    ///     This convenience function creates a new action with the given \a
+    ///     text. The action's triggered() signal is connected to the \a
+    ///     receiver's \a member slot. The function adds the newly created
+    ///     action to the menu's list of actions and returns it.
+    /// 
+    ///     \sa QWidget::addAction(), QWidget::actions()
     add_action(text: String, receiver: *ObjectType, member: *char) -> Action?,
+    ///     Appends \a menu to the menu bar. Returns the menu's menuAction().
+    /// 
+    ///     \note The returned QAction object can be used to hide the corresponding
+    ///     menu.
+    /// 
+    ///     \sa QWidget::addAction(), QMenu::menuAction()
     add_menu(title: String) -> Menu?,
+    ///     Appends \a menu to the menu bar. Returns the menu's menuAction().
+    /// 
+    ///     \note The returned QAction object can be used to hide the corresponding
+    ///     menu.
+    /// 
+    ///     \sa QWidget::addAction(), QMenu::menuAction()
     add_menu(icon: &IconType, title: String) -> Menu?,
+    ///   Appends a separator to the menu.
     add_separator() -> Action?,
+    ///     This convenience function creates a new separator action, i.e. an
+    ///     action with QAction::isSeparator() returning true. The function inserts
+    ///     the newly created action into this menu bar's list of actions before
+    ///     action \a before and returns it.
+    /// 
+    ///     \sa QWidget::insertAction(), addSeparator()
     insert_separator(before: *ActionType) -> Action?,
+    ///   This convenience function inserts \a menu before action \a before
+    ///   and returns the menus menuAction().
+    /// 
+    ///   \sa QWidget::insertAction(), addMenu()
     insert_menu(before: *ActionType, menu: *MenuType) -> Action?,
+    ///     Removes all the actions from the menu bar.
+    /// 
+    ///     \note On \macos, menu items that have been merged to the system
+    ///     menu bar are not removed by this function. One way to handle this
+    ///     would be to remove the extra actions yourself. You can set the
+    ///     \l{QAction::MenuRole}{menu role} on the different menus, so that
+    ///     you know ahead of time which menu items get merged and which do
+    ///     not. Then decide what to recreate or remove yourself.
+    /// 
+    ///     \sa removeAction()
     clear(),
+    ///   Returns the QAction that is currently highlighted. A null pointer
+    ///   will be returned if no action is currently selected.
     active_action() -> Action?,
+    ///     \since 4.1
+    /// 
+    ///     Sets the currently highlighted action to \a act.
     set_active_action(action: *ActionType),
+    ///     \property QMenuBar::defaultUp
+    ///     \brief the popup orientation
+    /// 
+    ///     The default popup orientation. By default, menus pop "down" the
+    ///     screen. By setting the property to true, the menu will pop "up".
+    ///     You might call this for menus that are \e below the document to
+    ///     which they refer.
+    /// 
+    ///     If the menu would not fit on the screen, the other direction is
+    ///     used automatically.
     set_default_up(arg0: bool),
     is_default_up() -> bool,
+    ///   \reimp
     [event] size_hint() -> Size,
+    ///   \reimp
     [event] minimum_size_hint() -> Size,
+    ///   \reimp
     [event] height_for_width(arg0: i32) -> i32,
+    ///   Returns the QAction at \a pt. Returns 0 if there is no action at \a pt or if
+    /// the location has a separator.
+    /// 
+    ///     \sa addAction(), addSeparator()
     action_at(arg0: &PointType) -> Action?,
+    ///     \fn void QMenuBar::setCornerWidget(QWidget *widget, Qt::Corner corner)
+    /// 
+    ///     This sets the given \a widget to be shown directly on the left of the first
+    ///     menu item, or on the right of the last menu item, depending on \a corner.
+    /// 
+    ///     The menu bar takes ownership of \a widget, reparenting it into the menu bar.
+    ///     However, if the \a corner already contains a widget, this previous widget
+    ///     will no longer be managed and will still be a visible child of the menu bar.
+    /// 
+    ///    \note Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
+    ///     will result in a warning.
     set_corner_widget(w: *WidgetType, corner: Rute::Corner),
+    ///     Returns the widget on the left of the first or on the right of the last menu
+    ///     item, depending on \a corner.
+    /// 
+    ///    \note Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
+    ///     will result in a warning.
     corner_widget(corner: Rute::Corner) -> Widget?,
     is_native_menu_bar() -> bool,
+    ///     \property QMenuBar::nativeMenuBar
+    ///     \brief Whether or not a menubar will be used as a native menubar on platforms that support it
+    ///     \since 4.6
+    /// 
+    ///     This property specifies whether or not the menubar should be used as a native menubar on
+    ///     platforms that support it. The currently supported platforms are \macos, and
+    ///     Linux desktops which use the com.canonical.dbusmenu D-Bus interface (such as Ubuntu Unity).
+    ///     If this property is \c true, the menubar is used in the native menubar and is not in the window of
+    ///     its parent; if \c false the menubar remains in the window. On other platforms,
+    ///     setting this attribute has no effect, and reading this attribute will always return \c false.
+    /// 
+    ///     The default is to follow whether the Qt::AA_DontUseNativeMenuBar attribute
+    ///     is set for the application. Explicitly setting this property overrides
+    ///     the presence (or absence) of the attribute.
     set_native_menu_bar(native_menu_bar: bool),
+    ///     \internal
     platform_menu_bar() -> PlatformMenuBar?,
+    ///   \reimp
     [event] set_visible(visible: bool),
     [signal] hovered(action: *ActionType),
+    ///   \reimp
     [event] change_event(arg0: *EventType),
+    ///   \reimp
     [event] key_press_event(arg0: *KeyEventType),
+    ///   \reimp
     [event] mouse_release_event(arg0: *MouseEventType),
+    ///   \reimp
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///   \reimp
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///   \reimp
     [event] leave_event(arg0: *EventType),
+    ///   \reimp
     [event] paint_event(arg0: *PaintEventType),
+    ///   \reimp
     [event] resize_event(arg0: *ResizeEventType),
+    ///   \reimp
     [event] action_event(arg0: *ActionEventType),
+    ///   \reimp
     [event] focus_out_event(arg0: *FocusEventType),
+    ///   \reimp
     [event] focus_in_event(arg0: *FocusEventType),
     [event] timer_event(arg0: *TimerEventType),
+    ///   \reimp
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    ///   \reimp
     [event] event(arg0: *EventType) -> bool,
+    ///     Initialize \a option with the values from the menu bar and information from \a action. This method
+    ///     is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom(), QMenu::initStyleOption()
     init_style_option(option: *StyleOptionMenuItemType, action: *ActionType),
 }
 

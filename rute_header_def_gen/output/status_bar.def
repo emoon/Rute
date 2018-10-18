@@ -61,22 +61,123 @@
 ///     \sa QMainWindow, QStatusTipEvent, {fowler}{GUI Design Handbook:
 ///     Status Bar}, {Application Example}
 struct StatusBar : Widget {
+    ///     Adds the given \a widget to this status bar, reparenting the
+    ///     widget if it isn't already a child of this QStatusBar object. The
+    ///     \a stretch parameter is used to compute a suitable size for the
+    ///     given \a widget as the status bar grows and shrinks. The default
+    ///     stretch factor is 0, i.e giving the widget a minimum of space.
+    /// 
+    ///     The widget is located to the far left of the first permanent
+    ///     widget (see addPermanentWidget()) and may be obscured by temporary
+    ///     messages.
+    /// 
+    ///     \sa insertWidget(), removeWidget(), addPermanentWidget()
     add_widget(widget: *WidgetType, stretch: i32),
+    ///     \since 4.2
+    /// 
+    ///     Inserts the given \a widget at the given \a index to this status bar,
+    ///     reparenting the widget if it isn't already a child of this
+    ///     QStatusBar object. If \a index is out of range, the widget is appended
+    ///     (in which case it is the actual index of the widget that is returned).
+    /// 
+    ///     The \a stretch parameter is used to compute a suitable size for
+    ///     the given \a widget as the status bar grows and shrinks. The
+    ///     default stretch factor is 0, i.e giving the widget a minimum of
+    ///     space.
+    /// 
+    ///     The widget is located to the far left of the first permanent
+    ///     widget (see addPermanentWidget()) and may be obscured by temporary
+    ///     messages.
+    /// 
+    ///     \sa addWidget(), removeWidget(), addPermanentWidget()
     insert_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
+    ///     Adds the given \a widget permanently to this status bar,
+    ///     reparenting the widget if it isn't already a child of this
+    ///     QStatusBar object. The \a stretch parameter is used to compute a
+    ///     suitable size for the given \a widget as the status bar grows and
+    ///     shrinks. The default stretch factor is 0, i.e giving the widget a
+    ///     minimum of space.
+    /// 
+    ///     Permanently means that the widget may not be obscured by temporary
+    ///     messages. It is is located at the far right of the status bar.
+    /// 
+    ///     \sa insertPermanentWidget(), removeWidget(), addWidget()
     add_permanent_widget(widget: *WidgetType, stretch: i32),
+    ///     \since 4.2
+    /// 
+    ///     Inserts the given \a widget at the given \a index permanently to this status bar,
+    ///     reparenting the widget if it isn't already a child of this
+    ///     QStatusBar object. If \a index is out of range, the widget is appended
+    ///     (in which case it is the actual index of the widget that is returned).
+    /// 
+    ///     The \a stretch parameter is used to compute a
+    ///     suitable size for the given \a widget as the status bar grows and
+    ///     shrinks. The default stretch factor is 0, i.e giving the widget a
+    ///     minimum of space.
+    /// 
+    ///     Permanently means that the widget may not be obscured by temporary
+    ///     messages. It is is located at the far right of the status bar.
+    /// 
+    ///     \sa addPermanentWidget(), removeWidget(), addWidget()
     insert_permanent_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
+    ///     Removes the specified \a widget from the status bar.
+    /// 
+    ///     \note This function does not delete the widget but \e hides it.
+    ///     To add the widget again, you must call both the addWidget() and
+    ///     show() functions.
+    /// 
+    ///     \sa addWidget(), addPermanentWidget(), clearMessage()
     remove_widget(widget: *WidgetType),
     set_size_grip_enabled(arg0: bool),
+    ///     \property QStatusBar::sizeGripEnabled
+    /// 
+    ///     \brief whether the QSizeGrip in the bottom-right corner of the
+    ///     status bar is enabled
+    /// 
+    ///     The size grip is enabled by default.
     is_size_grip_enabled() -> bool,
+    ///     Returns the temporary message currently shown,
+    ///     or an empty string if there is no such message.
+    /// 
+    ///     \sa showMessage()
     current_message() -> String,
+    /// 
+    ///   Hides the normal status indications and displays the given \a
+    ///   message for the specified number of milli-seconds (\a{timeout}). If
+    ///   \a{timeout} is 0 (default), the \a {message} remains displayed until
+    ///   the clearMessage() slot is called or until the showMessage() slot is
+    ///   called again to change the message.
+    /// 
+    ///   Note that showMessage() is called to show temporary explanations of
+    ///   tool tip texts, so passing a \a{timeout} of 0 is not sufficient to
+    ///   display a \l{permanent message}{permanent message}.
+    /// 
+    ///     \sa messageChanged(), currentMessage(), clearMessage()
     show_message(text: String, timeout: i32),
+    ///     Removes any temporary message being shown.
+    /// 
+    ///     \sa currentMessage(), showMessage(), removeWidget()
     clear_message(),
     [signal] message_changed(text: String),
     [event] show_event(arg0: *ShowEventType),
+    ///     \reimp
+    ///     \fn void QStatusBar::paintEvent(QPaintEvent *event)
+    /// 
+    ///     Shows the temporary message, if appropriate, in response to the
+    ///     paint \a event.
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] resize_event(arg0: *ResizeEventType),
+    ///     Changes the status bar's appearance to account for item changes.
+    /// 
+    ///     Special subclasses may need this function, but geometry management
+    ///     will usually take care of any necessary rearrangements.
     reformat(),
+    ///     Ensures that the right widgets are visible.
+    /// 
+    ///     Used by the showMessage() and clearMessage() functions.
     hide_or_show(),
+    ///     \reimp
     [event] event(arg0: *EventType) -> bool,
 }
 

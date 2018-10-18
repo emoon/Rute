@@ -56,22 +56,133 @@ struct LCDNumber : Frame {
     small_decimal_point() -> bool,
     digit_count() -> i32,
     set_digit_count(n_digits: i32),
+    ///     Returns \c true if \a num is too big to be displayed in its entirety;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa display(), digitCount(), smallDecimalPoint()
     check_overflow(num: double) -> bool,
+    ///     Returns \c true if \a num is too big to be displayed in its entirety;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa display(), digitCount(), smallDecimalPoint()
     check_overflow(num: i32) -> bool,
+    ///     \property QLCDNumber::mode
+    ///     \brief the current display mode (number base)
+    /// 
+    ///     Corresponds to the current display mode, which is one of \c Bin,
+    ///     \c Oct, \c Dec (the default) and \c Hex. \c Dec mode can display
+    ///     floating point values, the other modes display the integer
+    ///     equivalent.
+    /// 
+    ///     \sa smallDecimalPoint(), setHexMode(), setDecMode(), setOctMode(), setBinMode()
     mode() -> LCDNumber::Mode,
     set_mode(arg0: LCDNumber::Mode),
     segment_style() -> LCDNumber::SegmentStyle,
+    ///     \property QLCDNumber::segmentStyle
+    ///     \brief the style of the LCDNumber
+    /// 
+    ///     \table
+    ///     \header \li Style \li Result
+    ///     \row \li \c Outline
+    ///          \li Produces raised segments filled with the background color
+    ///     \row \li \c Filled
+    ///             (this is the default).
+    ///          \li Produces raised segments filled with the foreground color.
+    ///     \row \li \c Flat
+    ///          \li Produces flat segments filled with the foreground color.
+    ///     \endtable
+    /// 
+    ///     \c Outline and \c Filled will additionally use
+    ///     QPalette::light() and QPalette::dark() for shadow effects.
     set_segment_style(arg0: LCDNumber::SegmentStyle),
+    ///     \property QLCDNumber::value
+    ///     \brief the displayed value
+    /// 
+    ///     This property corresponds to the current value displayed by the
+    ///     LCDNumber.
+    /// 
+    ///     If the displayed value is not a number, the property has a value
+    ///     of 0.
+    /// 
+    ///     By default, this property contains a value of 0.
     value() -> double,
+    ///     \property QLCDNumber::intValue
+    ///     \brief the displayed value rounded to the nearest integer
+    /// 
+    ///     This property corresponds to the nearest integer to the current
+    ///     value displayed by the LCDNumber. This is the value used for
+    ///     hexadecimal, octal and binary modes.
+    /// 
+    ///     If the displayed value is not a number, the property has a value
+    ///     of 0.
+    /// 
+    ///     By default, this property contains a value of 0.
     int_value() -> i32,
     [event] size_hint() -> Size,
+    ///     Displays the number represented by the string \a s.
+    /// 
+    ///     This version of the function disregards mode() and
+    ///     smallDecimalPoint().
+    /// 
+    ///     These digits and other symbols can be shown: 0/O, 1, 2, 3, 4, 5/S,
+    ///     6, 7, 8, 9/g, minus, decimal point, A, B, C, D, E, F, h, H, L, o,
+    ///     P, r, u, U, Y, colon, degree sign (which is specified as single
+    ///     quote in the string) and space. QLCDNumber substitutes spaces for
+    ///     illegal characters.
     display(str: String),
+    ///     Displays the number represented by the string \a s.
+    /// 
+    ///     This version of the function disregards mode() and
+    ///     smallDecimalPoint().
+    /// 
+    ///     These digits and other symbols can be shown: 0/O, 1, 2, 3, 4, 5/S,
+    ///     6, 7, 8, 9/g, minus, decimal point, A, B, C, D, E, F, h, H, L, o,
+    ///     P, r, u, U, Y, colon, degree sign (which is specified as single
+    ///     quote in the string) and space. QLCDNumber substitutes spaces for
+    ///     illegal characters.
     display(num: i32),
+    ///     Displays the number represented by the string \a s.
+    /// 
+    ///     This version of the function disregards mode() and
+    ///     smallDecimalPoint().
+    /// 
+    ///     These digits and other symbols can be shown: 0/O, 1, 2, 3, 4, 5/S,
+    ///     6, 7, 8, 9/g, minus, decimal point, A, B, C, D, E, F, h, H, L, o,
+    ///     P, r, u, U, Y, colon, degree sign (which is specified as single
+    ///     quote in the string) and space. QLCDNumber substitutes spaces for
+    ///     illegal characters.
     display(num: double),
+    ///     Calls setMode(Hex). Provided for convenience (e.g. for
+    ///     connecting buttons to it).
+    /// 
+    ///     \sa setMode(), setDecMode(), setOctMode(), setBinMode(), mode()
     set_hex_mode(),
+    ///     Calls setMode(Dec). Provided for convenience (e.g. for
+    ///     connecting buttons to it).
+    /// 
+    ///     \sa setMode(), setHexMode(), setOctMode(), setBinMode(), mode()
     set_dec_mode(),
+    ///     Calls setMode(Oct). Provided for convenience (e.g. for
+    ///     connecting buttons to it).
+    /// 
+    ///     \sa setMode(), setHexMode(), setDecMode(), setBinMode(), mode()
     set_oct_mode(),
+    ///     Calls setMode(Bin). Provided for convenience (e.g. for
+    ///     connecting buttons to it).
+    /// 
+    ///     \sa setMode(), setHexMode(), setDecMode(), setOctMode(), mode()
     set_bin_mode(),
+    ///     \property QLCDNumber::smallDecimalPoint
+    ///     \brief the style of the decimal point
+    /// 
+    ///     If true the decimal point is drawn between two digit positions.
+    ///     Otherwise it occupies a digit position of its own, i.e. is drawn
+    ///     in a digit position. The default is false.
+    /// 
+    ///     The inter-digit space is made slightly wider when the decimal
+    ///     point is drawn between the digits.
+    /// 
+    ///     \sa mode
     set_small_decimal_point(arg0: bool),
     [signal] overflow(),
     [event] event(e: *EventType) -> bool,

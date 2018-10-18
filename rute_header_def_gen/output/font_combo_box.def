@@ -38,14 +38,33 @@ enum FontFilter {
 }
 
 struct FontComboBox : ComboBox {
+    ///     \property QFontComboBox::writingSystem
+    ///     \brief the writing system that serves as a filter for the combobox
+    /// 
+    ///     If \a script is QFontDatabase::Any (the default), all fonts are
+    ///     listed.
+    /// 
+    ///     \sa fontFilters
     set_writing_system(arg0: FontDatabase::WritingSystem),
     writing_system() -> FontDatabase::WritingSystem,
+    ///     \property QFontComboBox::fontFilters
+    ///     \brief the filter for the combobox
+    /// 
+    ///     By default, all fonts are listed.
+    /// 
+    ///     \sa writingSystem
     set_font_filters(filters: FontComboBox::FontFilters),
     font_filters() -> FontComboBox::FontFilters,
+    ///     \property QFontComboBox::currentFont
+    ///     \brief the currently selected font
+    /// 
+    ///     \sa currentIndex, currentText
     current_font() -> Font,
+    ///     \reimp
     [event] size_hint() -> Size,
     set_current_font(f: &FontType),
     [signal] current_font_changed(f: &FontType),
+    ///     \reimp
     [event] event(e: *EventType) -> bool,
 }
 

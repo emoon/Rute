@@ -99,37 +99,178 @@
 /// 
 ///     \sa QButtonGroup
 struct AbstractButton : Widget {
+    /// \property QAbstractButton::text
+    /// \brief the text shown on the button
+    /// 
+    /// If the button has no text, the text() function will return an empty
+    /// string.
+    /// 
+    /// If the text contains an ampersand character ('&'), a shortcut is
+    /// automatically created for it. The character that follows the '&' will
+    /// be used as the shortcut key. Any previous shortcut will be
+    /// overwritten or cleared if no shortcut is defined by the text. See the
+    /// \l {QShortcut#mnemonic}{QShortcut} documentation for details. To
+    /// display an actual ampersand, use '&&'.
+    /// 
+    /// There is no default text.
     set_text(text: String),
     text() -> String,
+    ///   \property QAbstractButton::icon
+    ///   \brief the icon shown on the button
+    /// 
+    ///   The icon's default size is defined by the GUI style, but can be
+    ///   adjusted by setting the \l iconSize property.
     set_icon(icon: &IconType),
     icon() -> Icon,
+    ///     \property QAbstractButton::iconSize
+    ///     \brief the icon size used for this button.
+    /// 
+    ///     The default size is defined by the GUI style. This is a maximum
+    ///     size for the icons. Smaller icons will not be scaled up.
     icon_size() -> Size,
+    /// \property QAbstractButton::shortcut
+    /// \brief the mnemonic associated with the button
     set_shortcut(key: &KeySequenceType),
     shortcut() -> KeySequence,
+    /// \property QAbstractButton::checkable
+    /// \brief whether the button is checkable
+    /// 
+    /// By default, the button is not checkable.
+    /// 
+    /// \sa checked
     set_checkable(arg0: bool),
     is_checkable() -> bool,
     is_checked() -> bool,
+    ///   \property QAbstractButton::down
+    ///   \brief whether the button is pressed down
+    /// 
+    ///   If this property is \c true, the button is pressed down. The signals
+    ///   pressed() and clicked() are not emitted if you set this property
+    ///   to true. The default is false.
     set_down(arg0: bool),
     is_down() -> bool,
+    /// \property QAbstractButton::autoRepeat
+    /// \brief whether autoRepeat is enabled
+    /// 
+    /// If autoRepeat is enabled, then the pressed(), released(), and clicked() signals are emitted at
+    /// regular intervals when the button is down. autoRepeat is off by default.
+    /// The initial delay and the repetition interval are defined in milliseconds by \l
+    /// autoRepeatDelay and \l autoRepeatInterval.
+    /// 
+    /// Note: If a button is pressed down by a shortcut key, then auto-repeat is enabled and timed by the
+    /// system and not by this class. The pressed(), released(), and clicked() signals will be emitted
+    /// like in the normal case.
     set_auto_repeat(arg0: bool),
     auto_repeat() -> bool,
+    ///     \property QAbstractButton::autoRepeatDelay
+    ///     \brief the initial delay of auto-repetition
+    ///     \since 4.2
+    /// 
+    ///     If \l autoRepeat is enabled, then autoRepeatDelay defines the initial
+    ///     delay in milliseconds before auto-repetition kicks in.
+    /// 
+    ///     \sa autoRepeat, autoRepeatInterval
     set_auto_repeat_delay(arg0: i32),
     auto_repeat_delay() -> i32,
+    ///     \property QAbstractButton::autoRepeatInterval
+    ///     \brief the interval of auto-repetition
+    ///     \since 4.2
+    /// 
+    ///     If \l autoRepeat is enabled, then autoRepeatInterval defines the
+    ///     length of the auto-repetition interval in millisecons.
+    /// 
+    ///     \sa autoRepeat, autoRepeatDelay
     set_auto_repeat_interval(arg0: i32),
     auto_repeat_interval() -> i32,
+    /// \property QAbstractButton::autoExclusive
+    /// \brief whether auto-exclusivity is enabled
+    /// 
+    /// If auto-exclusivity is enabled, checkable buttons that belong to the
+    /// same parent widget behave as if they were part of the same
+    /// exclusive button group. In an exclusive button group, only one button
+    /// can be checked at any time; checking another button automatically
+    /// unchecks the previously checked one.
+    /// 
+    /// The property has no effect on buttons that belong to a button
+    /// group.
+    /// 
+    /// autoExclusive is off by default, except for radio buttons.
+    /// 
+    /// \sa QRadioButton
     set_auto_exclusive(arg0: bool),
     auto_exclusive() -> bool,
+    ///   Returns the group that this button belongs to.
+    /// 
+    ///   If the button is not a member of any QButtonGroup, this function
+    ///   returns 0.
+    /// 
+    ///   \sa QButtonGroup
     group() -> ButtonGroup?,
     set_icon_size(size: &SizeType),
+    /// Performs an animated click: the button is pressed immediately, and
+    /// released \a msec milliseconds later (the default is 100 ms).
+    /// 
+    /// Calling this function again before the button is released resets
+    /// the release timer.
+    /// 
+    /// All signals associated with a click are emitted as appropriate.
+    /// 
+    /// This function does nothing if the button is \l{setEnabled()}{disabled.}
+    /// 
+    /// \sa click()
     animate_click(msec: i32),
     click(),
+    /// Performs a click.
+    /// 
+    /// All the usual signals associated with a click are emitted as
+    /// appropriate. If the button is checkable, the state of the button is
+    /// toggled.
+    /// 
+    /// This function does nothing if the button is \l{setEnabled()}{disabled.}
+    /// 
+    /// \sa animateClick()
+    ///  */
+    /// void QAbstractButton::click()
+    /// {
+    ///     if (!isEnabled())
+    ///         return;
+    ///     Q_D(QAbstractButton);
+    ///     QPointer<QAbstractButton> guard(this);
+    ///     d->down = true;
+    ///     d->emitPressed();
+    ///     if (guard) {
+    ///         d->down = false;
+    ///         nextCheckState();
+    ///         if (guard)
+    ///             d->emitReleased();
+    ///         if (guard)
+    ///             d->emitClicked();
+    ///     }
+    /// }
+    /// 
+    /// 
+    ///     Toggles the state of a checkable button.
+    /// 
+    ///      \sa checked
     toggle(),
+    /// \property QAbstractButton::checked
+    /// \brief whether the button is checked
+    /// 
+    /// Only checkable buttons can be checked. By default, the button is unchecked.
+    /// 
+    /// \sa checkable
     set_checked(arg0: bool),
     [signal] pressed(),
     [signal] released(),
     [signal] clicked(checked: bool),
     [signal] toggled(checked: bool),
     [event] paint_event(e: *PaintEventType),
+    /// Returns \c true if \a pos is inside the clickable button rectangle;
+    /// otherwise returns \c false.
+    /// 
+    /// By default, the clickable area is the entire widget. Subclasses
+    /// may reimplement this function to provide support for clickable
+    /// areas of different shapes and sizes.
     [event] hit_button(pos: &PointType) -> bool,
     [event] check_state_set(),
     [event] next_check_state(),

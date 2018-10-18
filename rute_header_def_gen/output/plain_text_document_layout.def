@@ -6,6 +6,20 @@ struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
     [event] frame_bounding_rect(arg0: *TextFrameType) -> RectF,
     [event] block_bounding_rect(block: &TextBlockType) -> RectF,
     ensure_block_layout(block: &TextBlockType),
+    ///   Ensures that \a block has a valid layout
+    ///  */
+    /// void QPlainTextDocumentLayout::ensureBlockLayout(const QTextBlock &block) const
+    /// {
+    ///     if (!block.isValid())
+    ///         return;
+    ///     QTextLayout *tl = block.layout();
+    ///     if (!tl->lineCount())
+    ///         const_cast<QPlainTextDocumentLayout*>(this)->layoutBlock(block);
+    /// }
+    /// 
+    /// 
+    /// 
+    ///     This property specifies the width of the cursor in pixels. The default value is 1.
     set_cursor_width(width: i32),
     cursor_width() -> i32,
     request_update(),

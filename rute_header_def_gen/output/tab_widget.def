@@ -76,51 +76,266 @@ enum TabShape {
 }
 
 struct TabWidget : Widget {
+    ///     \fn int QTabWidget::addTab(QWidget *page, const QIcon &icon, const QString &label)
+    ///     \overload
+    /// 
+    ///     Adds a tab with the given \a page, \a icon, and \a label to the tab
+    ///     widget, and returns the index of the tab in the tab bar. Ownership
+    ///     of \a page is passed on to the QTabWidget.
+    /// 
+    ///     This function is the same as addTab(), but with an additional \a
+    ///     icon.
     add_tab(widget: *WidgetType, arg0: String) -> i32,
+    ///     \fn int QTabWidget::addTab(QWidget *page, const QIcon &icon, const QString &label)
+    ///     \overload
+    /// 
+    ///     Adds a tab with the given \a page, \a icon, and \a label to the tab
+    ///     widget, and returns the index of the tab in the tab bar. Ownership
+    ///     of \a page is passed on to the QTabWidget.
+    /// 
+    ///     This function is the same as addTab(), but with an additional \a
+    ///     icon.
     add_tab(widget: *WidgetType, icon: &IconType, label: String) -> i32,
+    ///     \fn int QTabWidget::insertTab(int index, QWidget *page, const QIcon& icon, const QString &label)
+    ///     \overload
+    /// 
+    ///     Inserts a tab with the given \a label, \a page, and \a icon into
+    ///     the tab widget at the specified \a index, and returns the index of the
+    ///     inserted tab in the tab bar. Ownership of \a page is passed on to the
+    ///     QTabWidget.
+    /// 
+    ///     This function is the same as insertTab(), but with an additional
+    ///     \a icon.
     insert_tab(index: i32, widget: *WidgetType, arg0: String) -> i32,
+    ///     \fn int QTabWidget::insertTab(int index, QWidget *page, const QIcon& icon, const QString &label)
+    ///     \overload
+    /// 
+    ///     Inserts a tab with the given \a label, \a page, and \a icon into
+    ///     the tab widget at the specified \a index, and returns the index of the
+    ///     inserted tab in the tab bar. Ownership of \a page is passed on to the
+    ///     QTabWidget.
+    /// 
+    ///     This function is the same as insertTab(), but with an additional
+    ///     \a icon.
     insert_tab(index: i32, widget: *WidgetType, icon: &IconType, label: String) -> i32,
+    ///    Removes the tab at position \a index from this stack of widgets.
+    ///    The page widget itself is not deleted.
+    /// 
+    ///    \sa addTab(), insertTab()
     remove_tab(index: i32),
+    ///     Returns \c true if the page at position \a index is enabled; otherwise returns \c false.
+    /// 
+    ///     \sa setTabEnabled(), QWidget::isEnabled()
     is_tab_enabled(index: i32) -> bool,
+    ///     If \a enable is true, the page at position \a index is enabled; otherwise the page at position \a index is
+    ///     disabled. The page's tab is redrawn appropriately.
+    /// 
+    ///     QTabWidget uses QWidget::setEnabled() internally, rather than
+    ///     keeping a separate flag.
+    /// 
+    ///     Note that even a disabled tab/page may be visible. If the page is
+    ///     visible already, QTabWidget will not hide it; if all the pages are
+    ///     disabled, QTabWidget will show one of them.
+    /// 
+    ///     \sa isTabEnabled(), QWidget::setEnabled()
     set_tab_enabled(index: i32, arg0: bool),
+    ///     Returns the label text for the tab on the page at position \a index.
     tab_text(index: i32) -> String,
+    ///     Defines a new \a label for the page at position \a index's tab.
+    /// 
+    ///     If the provided text contains an ampersand character ('&'), a
+    ///     shortcut is automatically created for it. The character that
+    ///     follows the '&' will be used as the shortcut key. Any previous
+    ///     shortcut will be overwritten, or cleared if no shortcut is defined
+    ///     by the text. See the \l {QShortcut#mnemonic}{QShortcut}
+    ///     documentation for details (to display an actual ampersand, use
+    ///     '&&').
+    /// 
     set_tab_text(index: i32, arg0: String),
+    ///     Returns the icon for the tab on the page at position \a index.
     tab_icon(index: i32) -> Icon,
+    ///     \overload
+    /// 
+    ///     Sets the \a icon for the tab at position \a index.
     set_tab_icon(index: i32, icon: &IconType),
+    ///     Sets the tab tool tip for the page at position \a index to \a tip.
+    /// 
+    ///     \sa tabToolTip()
     set_tab_tool_tip(index: i32, tip: String),
+    ///     Returns the tab tool tip for the page at position \a index or
+    ///     an empty string if no tool tip has been set.
+    /// 
+    ///     \sa setTabToolTip()
     tab_tool_tip(index: i32) -> String,
+    ///     \since 4.1
+    /// 
+    ///     Sets the What's This help text for the page at position \a index
+    ///     to \a text.
     set_tab_whats_this(index: i32, text: String),
+    ///     \since 4.1
+    /// 
+    ///     Returns the What's This help text for the page at position \a index,
+    ///     or an empty string if no help text has been set.
     tab_whats_this(index: i32) -> String,
+    ///     \property QTabWidget::currentIndex
+    ///     \brief the index position of the current tab page
+    /// 
+    ///     The current index is -1 if there is no current widget.
+    /// 
+    ///     By default, this property contains a value of -1 because there are initially
+    ///     no tabs in the widget.
     current_index() -> i32,
+    ///     Returns a pointer to the page currently being displayed by the tab
+    ///     dialog. The tab dialog does its best to make sure that this value
+    ///     is never 0 (but if you try hard enough, it can be).
+    /// 
+    ///     \sa currentIndex(), setCurrentWidget()
     current_widget() -> Widget?,
+    ///     Returns the tab page at index position \a index or 0 if the \a
+    ///     index is out of range.
     widget(index: i32) -> Widget?,
+    ///     Returns the index position of the page occupied by the widget \a
+    ///     w, or -1 if the widget cannot be found.
     index_of(widget: *WidgetType) -> i32,
+    ///     \property QTabWidget::count
+    ///     \brief the number of tabs in the tab bar
+    /// 
+    ///     By default, this property contains a value of 0.
     count() -> i32,
+    ///     \property QTabWidget::tabPosition
+    ///     \brief the position of the tabs in this tab widget
+    /// 
+    ///     Possible values for this property are described by the TabPosition
+    ///     enum.
+    /// 
+    ///     By default, this property is set to \l North.
+    /// 
+    ///     \sa TabPosition
     tab_position() -> TabWidget::TabPosition,
     set_tab_position(arg0: TabWidget::TabPosition),
+    ///     \property QTabWidget::tabsClosable
+    ///     \brief whether close buttons are automatically added to each tab.
+    /// 
+    ///     \since 4.5
+    /// 
+    ///     \sa QTabBar::tabsClosable()
     tabs_closable() -> bool,
     set_tabs_closable(closeable: bool),
+    ///     \property QTabWidget::movable
+    ///     \brief This property holds whether the user can move the tabs
+    ///     within the tabbar area.
+    /// 
+    ///     \since 4.5
+    /// 
+    ///     By default, this property is \c false;
     is_movable() -> bool,
     set_movable(movable: bool),
+    ///     \property QTabWidget::tabShape
+    ///     \brief the shape of the tabs in this tab widget
+    /// 
+    ///     Possible values for this property are QTabWidget::Rounded
+    ///     (default) or QTabWidget::Triangular.
+    /// 
+    ///     \sa TabShape
     tab_shape() -> TabWidget::TabShape,
     set_tab_shape(s: TabWidget::TabShape),
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
+    /// 
+    ///     Returns a suitable minimum size for the tab widget.
     [event] minimum_size_hint() -> Size,
+    ///     \reimp
     [event] height_for_width(width: i32) -> i32,
+    ///     \reimp
     [event] has_height_for_width() -> bool,
+    ///   \fn void QTabWidget::setCornerWidget(QWidget *widget, Qt::Corner corner)
+    /// 
+    ///   Sets the given \a widget to be shown in the specified \a corner of the
+    ///   tab widget. The geometry of the widget is determined based on the widget's
+    ///   sizeHint() and the style().
+    /// 
+    ///   Only the horizontal element of the \a corner will be used.
+    /// 
+    ///   Passing 0 shows no widget in the corner.
+    /// 
+    ///   Any previously set corner widget is hidden.
+    /// 
+    ///   All widgets set here will be deleted by the tab widget when it is
+    ///   destroyed unless you separately reparent the widget after setting
+    ///   some other corner widget (or 0).
+    /// 
+    ///   Note: Corner widgets are designed for \l North and \l South tab positions;
+    ///   other orientations are known to not work properly.
+    /// 
+    ///   \sa cornerWidget(), setTabPosition()
     set_corner_widget(w: *WidgetType, corner: Rute::Corner),
+    ///     Returns the widget shown in the \a corner of the tab widget or 0.
     corner_widget(corner: Rute::Corner) -> Widget?,
+    ///     \property QTabWidget::elideMode
+    ///     \brief how to elide text in the tab bar
+    ///     \since 4.2
+    /// 
+    ///     This property controls how items are elided when there is not
+    ///     enough space to show them for a given tab bar size.
+    /// 
+    ///     By default the value is style dependant.
+    /// 
+    ///     \sa QTabBar::elideMode, usesScrollButtons, QStyle::SH_TabBar_ElideMode
     elide_mode() -> Rute::TextElideMode,
     set_elide_mode(arg0: Rute::TextElideMode),
+    ///     \property QTabWidget::iconSize
+    ///     \brief The size for icons in the tab bar
+    ///     \since 4.2
+    /// 
+    ///     The default value is style-dependent. This is the maximum size
+    ///     that the icons will have. Icons are not scaled up if they are of
+    ///     smaller size.
+    /// 
+    ///     \sa QTabBar::iconSize
     icon_size() -> Size,
     set_icon_size(size: &SizeType),
+    ///     \property QTabWidget::usesScrollButtons
+    ///     \brief Whether or not a tab bar should use buttons to scroll tabs when it
+    ///     has many tabs.
+    ///     \since 4.2
+    /// 
+    ///     When there are too many tabs in a tab bar for its size, the tab bar can either choose
+    ///     to expand its size or to add buttons that allow you to scroll through the tabs.
+    /// 
+    ///     By default the value is style dependant.
+    /// 
+    ///     \sa elideMode, QTabBar::usesScrollButtons, QStyle::SH_TabBar_PreferNoArrows
     uses_scroll_buttons() -> bool,
     set_uses_scroll_buttons(use_buttons: bool),
+    ///     \property QTabWidget::documentMode
+    ///     \brief Whether or not the tab widget is rendered in a mode suitable for document
+    ///      pages. This is the same as document mode on \macos.
+    ///     \since 4.5
+    /// 
+    ///     When this property is set the tab widget frame is not rendered. This mode is useful
+    ///     for showing document-type pages where the page covers most of the tab widget
+    ///     area.
+    /// 
+    ///     \sa elideMode, QTabBar::documentMode, QTabBar::usesScrollButtons, QStyle::SH_TabBar_PreferNoArrows
     document_mode() -> bool,
     set_document_mode(set: bool),
+    ///     \property QTabWidget::tabBarAutoHide
+    ///     \brief If true, the tab bar is automatically hidden when it contains less
+    ///     than 2 tabs.
+    ///     \since 5.4
+    /// 
+    ///     By default, this property is false.
+    /// 
+    ///     \sa QWidget::visible
     tab_bar_auto_hide() -> bool,
     set_tab_bar_auto_hide(enabled: bool),
+    ///     Removes all the pages, but does not delete them. Calling this function
+    ///     is equivalent to calling removeTab() until the tab widget is empty.
     clear(),
+    ///     Returns the current QTabBar.
+    /// 
+    ///     \sa setTabBar()
     tab_bar() -> TabBar?,
     set_current_index(index: i32),
     set_current_widget(widget: *WidgetType),
@@ -131,12 +346,26 @@ struct TabWidget : Widget {
     [event] tab_inserted(index: i32),
     [event] tab_removed(index: i32),
     [event] show_event(arg0: *ShowEventType),
+    ///     \reimp
     [event] resize_event(arg0: *ResizeEventType),
     [event] key_press_event(arg0: *KeyEventType),
+    ///     \fn void QTabWidget::paintEvent(QPaintEvent *event)
+    /// 
+    ///     Paints the tab widget's tab bar in response to the paint \a event.
     [event] paint_event(arg0: *PaintEventType),
+    ///     Replaces the dialog's QTabBar heading with the tab bar \a tb. Note
+    ///     that this must be called \e before any tabs have been added, or
+    ///     the behavior is undefined.
+    /// 
+    ///     \sa tabBar()
     set_tab_bar(arg0: *TabBarType),
     [event] change_event(arg0: *EventType),
     [event] event(arg0: *EventType) -> bool,
+    ///     Initialize \a option with the values from this QTabWidget. This method is useful
+    ///     for subclasses when they need a QStyleOptionTabWidgetFrame, but don't want to fill
+    ///     in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom(), QTabBar::initStyleOption()
     init_style_option(option: *StyleOptionTabWidgetFrameType),
 }
 

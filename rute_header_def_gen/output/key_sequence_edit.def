@@ -11,14 +11,24 @@
 /// 
 ///     \sa QKeySequenceEdit::keySequence
 struct KeySequenceEdit : Widget {
+    ///     \property QKeySequenceEdit::keySequence
+    /// 
+    ///     \brief This property contains the currently chosen key sequence.
+    /// 
+    ///     The shortcut can be changed by the user or via setter function.
     key_sequence() -> KeySequence,
     set_key_sequence(key_sequence: &KeySequenceType),
+    ///     \brief Clears the current key sequence.
     clear(),
     [signal] editing_finished(),
     [signal] key_sequence_changed(key_sequence: &KeySequenceType),
+    ///     \reimp
     [event] event(arg0: *EventType) -> bool,
+    ///     \reimp
     [event] key_press_event(arg0: *KeyEventType),
+    ///     \reimp
     [event] key_release_event(arg0: *KeyEventType),
+    ///     \reimp
     [event] timer_event(arg0: *TimerEventType),
 }
 

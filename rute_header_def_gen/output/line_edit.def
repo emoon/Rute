@@ -95,71 +95,483 @@ enum EchoMode {
 }
 
 struct LineEdit : Widget {
+    ///     \property QLineEdit::text
+    ///     \brief the line edit's text
+    /// 
+    ///     Setting this property clears the selection, clears the undo/redo
+    ///     history, moves the cursor to the end of the line and resets the
+    ///     \l modified property to false. The text is not validated when
+    ///     inserted with setText().
+    /// 
+    ///     The text is truncated to maxLength() length.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa insert(), clear()
     text() -> String,
+    ///     \property QLineEdit::displayText
+    ///     \brief the displayed text
+    /// 
+    ///     If \l echoMode is \l Normal this returns the same as text(); if
+    ///     \l EchoMode is \l Password or \l PasswordEchoOnEdit it returns a string of
+    ///     platform-dependent password mask characters text().length() in size,
+    ///     e.g. "******"; if \l EchoMode is \l NoEcho returns an empty string, "".
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa setEchoMode(), text(), EchoMode
     display_text() -> String,
+    ///     \since 4.7
+    /// 
+    ///     \property QLineEdit::placeholderText
+    ///     \brief the line edit's placeholder text
+    /// 
+    ///     Setting this property makes the line edit display a grayed-out
+    ///     placeholder text as long as the line edit is empty.
+    /// 
+    ///     Normally, an empty line edit shows the placeholder text even
+    ///     when it has focus. However, if the content is horizontally
+    ///     centered, the placeholder text is not displayed under
+    ///     the cursor when the line edit has focus.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa text()
     placeholder_text() -> String,
     set_placeholder_text(arg0: String),
+    ///     \property QLineEdit::maxLength
+    ///     \brief the maximum permitted length of the text
+    /// 
+    ///     If the text is too long, it is truncated at the limit.
+    /// 
+    ///     If truncation occurs any selected text will be unselected, the
+    ///     cursor position is set to 0 and the first part of the string is
+    ///     shown.
+    /// 
+    ///     If the line edit has an input mask, the mask defines the maximum
+    ///     string length.
+    /// 
+    ///     By default, this property contains a value of 32767.
+    /// 
+    ///     \sa inputMask
     max_length() -> i32,
     set_max_length(arg0: i32),
     set_frame(arg0: bool),
+    ///     \property QLineEdit::frame
+    ///     \brief whether the line edit draws itself with a frame
+    /// 
+    ///     If enabled (the default) the line edit draws itself inside a
+    ///     frame, otherwise the line edit draws itself without any frame.
     has_frame() -> bool,
+    ///     \property QLineEdit::clearButtonEnabled
+    ///     \brief Whether the line edit displays a clear button when it is not empty.
+    /// 
+    ///     If enabled, the line edit displays a trailing \e clear button when it contains
+    ///     some text, otherwise the line edit does not show a clear button (the
+    ///     default).
+    /// 
+    ///     \sa addAction(), removeAction()
+    ///     \since 5.2
     set_clear_button_enabled(enable: bool),
     is_clear_button_enabled() -> bool,
+    ///     \property QLineEdit::echoMode
+    ///     \brief the line edit's echo mode
+    /// 
+    ///     The echo mode determines how the text entered in the line edit is
+    ///     displayed (or echoed) to the user.
+    /// 
+    ///     The most common setting is \l Normal, in which the text entered by the
+    ///     user is displayed verbatim, but QLineEdit also supports modes that allow
+    ///     the entered text to be suppressed or obscured: these include \l NoEcho,
+    ///     \l Password and \l PasswordEchoOnEdit.
+    /// 
+    ///     The widget's display and the ability to copy or drag the text is
+    ///     affected by this setting.
+    /// 
+    ///     By default, this property is set to \l Normal.
+    /// 
+    ///     \sa EchoMode, displayText()
     echo_mode() -> LineEdit::EchoMode,
     set_echo_mode(arg0: LineEdit::EchoMode),
+    ///     \property QLineEdit::readOnly
+    ///     \brief whether the line edit is read only.
+    /// 
+    ///     In read-only mode, the user can still copy the text to the
+    ///     clipboard, or drag and drop the text (if echoMode() is \l Normal),
+    ///     but cannot edit it.
+    /// 
+    ///     QLineEdit does not show a cursor in read-only mode.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa setEnabled()
     is_read_only() -> bool,
     set_read_only(arg0: bool),
+    ///     Sets this line edit to only accept input that the validator, \a v,
+    ///     will accept. This allows you to place any arbitrary constraints on
+    ///     the text which may be entered.
+    /// 
+    ///     If \a v == 0, setValidator() removes the current input validator.
+    ///     The initial setting is to have no input validator (i.e. any input
+    ///     is accepted up to maxLength()).
+    /// 
+    ///     \sa validator(), hasAcceptableInput(), QIntValidator, QDoubleValidator, QRegExpValidator
     set_validator(arg0: *ValidatorType),
+    ///     Returns a pointer to the current input validator, or 0 if no
+    ///     validator has been set.
+    /// 
+    ///     \sa setValidator()
     validator() -> Validator?,
+    ///     \since 4.2
+    /// 
+    ///     Sets this line edit to provide auto completions from the completer, \a c.
+    ///     The completion mode is set using QCompleter::setCompletionMode().
+    /// 
+    ///     To use a QCompleter with a QValidator or QLineEdit::inputMask, you need to
+    ///     ensure that the model provided to QCompleter contains valid entries. You can
+    ///     use the QSortFilterProxyModel to ensure that the QCompleter's model contains
+    ///     only valid entries.
+    /// 
+    ///     If \a c == 0, setCompleter() removes the current completer, effectively
+    ///     disabling auto completion.
+    /// 
+    ///     \sa QCompleter
     set_completer(completer: *CompleterType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the current QCompleter that provides completions.
     completer() -> Completer?,
+    ///     Returns a recommended size for the widget.
+    /// 
+    ///     The width returned, in pixels, is usually enough for about 15 to
+    ///     20 characters.
     [event] size_hint() -> Size,
+    ///     Returns a minimum size for the line edit.
+    /// 
+    ///     The width returned is enough for at least one character.
     [event] minimum_size_hint() -> Size,
+    ///     \property QLineEdit::cursorPosition
+    ///     \brief the current cursor position for this line edit
+    /// 
+    ///     Setting the cursor position causes a repaint when appropriate.
+    /// 
+    ///     By default, this property contains a value of 0.
     cursor_position() -> i32,
     set_cursor_position(arg0: i32),
+    ///     Returns the cursor position under the point \a pos.
     cursor_position_at(pos: &PointType) -> i32,
     set_alignment(flag: Rute::Alignment),
+    ///     \property QLineEdit::alignment
+    ///     \brief the alignment of the line edit
+    /// 
+    ///     Both horizontal and vertical alignment is allowed here, Qt::AlignJustify
+    ///     will map to Qt::AlignLeft.
+    /// 
+    ///     By default, this property contains a combination of Qt::AlignLeft and Qt::AlignVCenter.
+    /// 
+    ///     \sa Qt::Alignment
     alignment() -> Rute::Alignment,
+    ///     Moves the cursor forward \a steps characters. If \a mark is true
+    ///     each character moved over is added to the selection; if \a mark is
+    ///     false the selection is cleared.
+    /// 
+    ///     \sa cursorBackward()
     cursor_forward(mark: bool, steps: i32),
+    ///     Moves the cursor back \a steps characters. If \a mark is true each
+    ///     character moved over is added to the selection; if \a mark is
+    ///     false the selection is cleared.
+    /// 
+    ///     \sa cursorForward()
     cursor_backward(mark: bool, steps: i32),
+    ///     Moves the cursor one word forward. If \a mark is true, the word is
+    ///     also selected.
+    /// 
+    ///     \sa cursorWordBackward()
     cursor_word_forward(mark: bool),
+    ///     Moves the cursor one word backward. If \a mark is true, the word
+    ///     is also selected.
+    /// 
+    ///     \sa cursorWordForward()
     cursor_word_backward(mark: bool),
+    ///     If no text is selected, deletes the character to the left of the
+    ///     text cursor and moves the cursor one position to the left. If any
+    ///     text is selected, the cursor is moved to the beginning of the
+    ///     selected text and the selected text is deleted.
+    /// 
+    ///     \sa del()
     backspace(),
+    ///     If no text is selected, deletes the character to the right of the
+    ///     text cursor. If any text is selected, the cursor is moved to the
+    ///     beginning of the selected text and the selected text is deleted.
+    /// 
+    ///     \sa backspace()
     del(),
+    ///     Moves the text cursor to the beginning of the line unless it is
+    ///     already there. If \a mark is true, text is selected towards the
+    ///     first position; otherwise, any selected text is unselected if the
+    ///     cursor is moved.
+    /// 
+    ///     \sa end()
     home(mark: bool),
+    ///     Moves the text cursor to the end of the line unless it is already
+    ///     there. If \a mark is true, text is selected towards the last
+    ///     position; otherwise, any selected text is unselected if the cursor
+    ///     is moved.
+    /// 
+    ///     \sa home()
     end(mark: bool),
+    ///     \property QLineEdit::modified
+    ///     \brief whether the line edit's contents has been modified by the user
+    /// 
+    ///     The modified flag is never read by QLineEdit; it has a default value
+    ///     of false and is changed to true whenever the user changes the line
+    ///     edit's contents.
+    /// 
+    ///     This is useful for things that need to provide a default value but
+    ///     do not start out knowing what the default should be (perhaps it
+    ///     depends on other fields on the form). Start the line edit without
+    ///     the best default, and when the default is known, if modified()
+    ///     returns \c false (the user hasn't entered any text), insert the
+    ///     default value.
+    /// 
+    ///     Calling setText() resets the modified flag to false.
     is_modified() -> bool,
     set_modified(arg0: bool),
+    ///     Selects text from position \a start and for \a length characters.
+    ///     Negative lengths are allowed.
+    /// 
+    ///     \sa deselect(), selectAll(), selectedText()
     set_selection(arg0: i32, arg1: i32),
+    ///     \property QLineEdit::hasSelectedText
+    ///     \brief whether there is any text selected
+    /// 
+    ///     hasSelectedText() returns \c true if some or all of the text has been
+    ///     selected by the user; otherwise returns \c false.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa selectedText()
     has_selected_text() -> bool,
+    ///     \property QLineEdit::selectedText
+    ///     \brief the selected text
+    /// 
+    ///     If there is no selected text this property's value is
+    ///     an empty string.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa hasSelectedText()
     selected_text() -> String,
+    ///     Returns the index of the first selected character in the
+    ///     line edit or -1 if no text is selected.
+    /// 
+    ///     \sa selectedText()
+    ///     \sa selectionEnd()
+    ///     \sa selectionLength()
     selection_start() -> i32,
+    ///     Returns the index of the character directly after the selection
+    ///     in the line edit or -1 if no text is selected.
+    ///     \since 5.10
+    /// 
+    ///     \sa selectedText()
+    ///     \sa selectionStart()
+    ///     \sa selectionLength()
     selection_end() -> i32,
+    ///     Returns the length of the selection.
+    ///     \since 5.10
+    /// 
+    ///     \sa selectedText()
+    ///     \sa selectionStart()
+    ///     \sa selectionEnd()
     selection_length() -> i32,
+    ///     \property QLineEdit::undoAvailable
+    ///     \brief whether undo is available
+    /// 
+    ///     Undo becomes available once the user has modified the text in the line edit.
+    /// 
+    ///     By default, this property is \c false.
     is_undo_available() -> bool,
+    ///     \property QLineEdit::redoAvailable
+    ///     \brief whether redo is available
+    /// 
+    ///     Redo becomes available once the user has performed one or more undo operations
+    ///     on text in the line edit.
+    /// 
+    ///     By default, this property is \c false.
     is_redo_available() -> bool,
     set_drag_enabled(b: bool),
+    ///     \property QLineEdit::dragEnabled
+    ///     \brief whether the lineedit starts a drag if the user presses and
+    ///     moves the mouse on some selected text
+    /// 
+    ///     Dragging is disabled by default.
     drag_enabled() -> bool,
     set_cursor_move_style(style: Rute::CursorMoveStyle),
+    ///   \property QLineEdit::cursorMoveStyle
+    ///   \brief the movement style of cursor in this line edit
+    ///   \since 4.8
+    /// 
+    ///   When this property is set to Qt::VisualMoveStyle, the line edit will use visual
+    ///   movement style. Pressing the left arrow key will always cause the cursor to move
+    ///   left, regardless of the text's writing direction. The same behavior applies to
+    ///   right arrow key.
+    /// 
+    ///   When the property is Qt::LogicalMoveStyle (the default), within a LTR text block,
+    ///   increase cursor position when pressing left arrow key, decrease cursor position
+    ///   when pressing the right arrow key. If the text block is right to left, the opposite
+    ///   behavior applies.
     cursor_move_style() -> Rute::CursorMoveStyle,
+    ///     \property QLineEdit::inputMask
+    ///     \brief The validation input mask
+    /// 
+    ///     If no mask is set, inputMask() returns an empty string.
+    /// 
+    ///     Sets the QLineEdit's validation mask. Validators can be used
+    ///     instead of, or in conjunction with masks; see setValidator().
+    /// 
+    ///     Unset the mask and return to normal QLineEdit operation by passing
+    ///     an empty string ("").
+    /// 
+    ///     The table below shows the characters that can be used in an input mask.
+    ///     A space character, the default character for a blank, is needed for cases
+    ///     where a character is \e{permitted but not required}.
+    /// 
+    ///     \table
+    ///     \header \li Character \li Meaning
+    ///     \row \li \c A \li ASCII alphabetic character required. A-Z, a-z.
+    ///     \row \li \c a \li ASCII alphabetic character permitted but not required.
+    ///     \row \li \c N \li ASCII alphanumeric character required. A-Z, a-z, 0-9.
+    ///     \row \li \c n \li ASCII alphanumeric character permitted but not required.
+    ///     \row \li \c X \li Any character required.
+    ///     \row \li \c x \li Any character permitted but not required.
+    ///     \row \li \c 9 \li ASCII digit required. 0-9.
+    ///     \row \li \c 0 \li ASCII digit permitted but not required.
+    ///     \row \li \c D \li ASCII digit required. 1-9.
+    ///     \row \li \c d \li ASCII digit permitted but not required (1-9).
+    ///     \row \li \c # \li ASCII digit or plus/minus sign permitted but not required.
+    ///     \row \li \c H \li Hexadecimal character required. A-F, a-f, 0-9.
+    ///     \row \li \c h \li Hexadecimal character permitted but not required.
+    ///     \row \li \c B \li Binary character required. 0-1.
+    ///     \row \li \c b \li Binary character permitted but not required.
+    ///     \row \li \c > \li All following alphabetic characters are uppercased.
+    ///     \row \li \c < \li All following alphabetic characters are lowercased.
+    ///     \row \li \c ! \li Switch off case conversion.
+    ///     \row \li \c {[ ] { }} \li Reserved.
+    ///     \row \li \tt{\\} \li Use \tt{\\} to escape the special
+    ///                            characters listed above to use them as
+    ///                            separators.
+    ///     \endtable
+    /// 
+    ///     The mask consists of a string of mask characters and separators,
+    ///     optionally followed by a semicolon and the character used for
+    ///     blanks. The blank characters are always removed from the text
+    ///     after editing.
+    /// 
+    ///     Examples:
+    ///     \table
+    ///     \header \li Mask \li Notes
+    ///     \row \li \c 000.000.000.000;_ \li IP address; blanks are \c{_}.
+    ///     \row \li \c HH:HH:HH:HH:HH:HH;_ \li MAC address
+    ///     \row \li \c 0000-00-00 \li ISO Date; blanks are \c space
+    ///     \row \li \c >AAAAA-AAAAA-AAAAA-AAAAA-AAAAA;# \li License number;
+    ///     blanks are \c - and all (alphabetic) characters are converted to
+    ///     uppercase.
+    ///     \endtable
+    /// 
+    ///     To get range control (e.g., for an IP address) use masks together
+    ///     with \l{setValidator()}{validators}.
+    /// 
+    ///     \sa maxLength
     input_mask() -> String,
     set_input_mask(input_mask: String),
+    ///     \property QLineEdit::acceptableInput
+    ///     \brief whether the input satisfies the inputMask and the
+    ///     validator.
+    /// 
+    ///     By default, this property is \c true.
+    /// 
+    ///     \sa setInputMask(), setValidator()
     has_acceptable_input() -> bool,
+    ///     \since 4.6
+    ///     Sets the \a margins around the text inside the frame.
+    /// 
+    ///     See also textMargins().
     set_text_margins(left: i32, top: i32, right: i32, bottom: i32),
+    ///     \since 4.6
+    ///     Sets the \a margins around the text inside the frame.
+    /// 
+    ///     See also textMargins().
     set_text_margins(margins: &MarginsType),
+    ///     Returns the widget's text margins for \a left, \a top, \a right, and \a bottom.
+    ///     \since 4.5
+    /// 
+    ///     \sa setTextMargins()
     get_text_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
+    ///     \since 4.6
+    ///     Returns the widget's text margins.
+    /// 
+    ///     \sa setTextMargins()
     text_margins() -> Margins,
+    ///     \overload
+    /// 
+    ///     Creates a new action with the given \a icon at the \a position.
+    /// 
+    ///     \since 5.2
     add_action(action: *ActionType, position: LineEdit::ActionPosition),
+    ///     \overload
+    /// 
+    ///     Creates a new action with the given \a icon at the \a position.
+    /// 
+    ///     \since 5.2
     add_action(icon: &IconType, position: LineEdit::ActionPosition) -> Action?,
     set_text(arg0: String),
+    ///     Clears the contents of the line edit.
+    /// 
+    ///     \sa setText(), insert()
     clear(),
+    ///     Selects all the text (i.e. highlights it) and moves the cursor to
+    ///     the end. This is useful when a default value has been inserted
+    ///     because if the user types before clicking on the widget, the
+    ///     selected text will be deleted.
+    /// 
+    ///     \sa setSelection(), deselect()
     select_all(),
+    ///     Undoes the last operation if undo is \l{QLineEdit::undoAvailable}{available}. Deselects any current
+    ///     selection, and updates the selection start to the current cursor
+    ///     position.
     undo(),
+    ///     Redoes the last operation if redo is \l{QLineEdit::redoAvailable}{available}.
     redo(),
+    ///     Copies the selected text to the clipboard and deletes it, if there
+    ///     is any, and if echoMode() is \l Normal.
+    /// 
+    ///     If the current validator disallows deleting the selected text,
+    ///     cut() will copy without deleting.
+    /// 
+    ///     \sa copy(), paste(), setValidator()
     cut(),
+    ///     Copies the selected text to the clipboard, if there is any, and if
+    ///     echoMode() is \l Normal.
+    /// 
+    ///     \sa cut(), paste()
     copy(),
+    ///     Inserts the clipboard's text at the cursor position, deleting any
+    ///     selected text, providing the line edit is not \l{QLineEdit::readOnly}{read-only}.
+    /// 
+    ///     If the end result would not be acceptable to the current
+    ///     \l{setValidator()}{validator}, nothing happens.
+    /// 
+    ///     \sa copy(), cut()
     paste(),
+    ///     Deselects any selected text.
+    /// 
+    ///     \sa setSelection(), selectAll()
     deselect(),
+    ///     Deletes any selected text, inserts \a newText, and validates the
+    ///     result. If it is valid, it sets it as the new contents of the line
+    ///     edit.
+    /// 
+    ///     \sa setText(), clear()
     insert(arg0: String),
     create_standard_context_menu() -> Menu?,
     [signal] text_changed(arg0: String),
@@ -172,6 +584,14 @@ struct LineEdit : Widget {
     [event] mouse_move_event(arg0: *MouseEventType),
     [event] mouse_release_event(arg0: *MouseEventType),
     [event] mouse_double_click_event(arg0: *MouseEventType),
+    ///     Converts the given key press \a event into a line edit action.
+    /// 
+    ///     If Return or Enter is pressed and the current text is valid (or
+    ///     can be \l{QValidator::fixup()}{made valid} by the
+    ///     validator), the signal returnPressed() is emitted.
+    /// 
+    ///     The default key bindings are listed in the class's detailed
+    ///     description.
     [event] key_press_event(arg0: *KeyEventType),
     [event] focus_in_event(arg0: *FocusEventType),
     [event] focus_out_event(arg0: *FocusEventType),
@@ -181,12 +601,35 @@ struct LineEdit : Widget {
     [event] drag_leave_event(e: *DragLeaveEventType),
     [event] drop_event(arg0: *DropEventType),
     [event] change_event(arg0: *EventType),
+    ///     Shows the standard context menu created with
+    ///     createStandardContextMenu().
+    /// 
+    ///     If you do not want the line edit to have a context menu, you can set
+    ///     its \l contextMenuPolicy to Qt::NoContextMenu. If you want to
+    ///     customize the context menu, reimplement this function. If you want
+    ///     to extend the standard context menu, reimplement this function, call
+    ///     createStandardContextMenu() and extend the menu returned.
+    /// 
+    ///     \snippet code/src_gui_widgets_qlineedit.cpp 0
+    /// 
+    ///     The \a event parameter is used to obtain the position where
+    ///     the mouse cursor was when the event was generated.
+    /// 
+    ///     \sa setContextMenuPolicy()
     [event] context_menu_event(arg0: *ContextMenuEventType),
     [event] input_method_event(arg0: *InputMethodEventType),
+    ///     Initialize \a option with the values from this QLineEdit. This method
+    ///     is useful for subclasses when they need a QStyleOptionFrame, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionFrameType),
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
     input_method_query(property: Rute::InputMethodQuery, argument: VariantType) -> Variant,
     [event] event(arg0: *EventType) -> bool,
+    ///   \since 4.4
+    /// 
+    ///   Returns a rectangle that includes the lineedit cursor.
     cursor_rect() -> Rect,
 }
 

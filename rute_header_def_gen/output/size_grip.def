@@ -39,16 +39,36 @@
 /// 
 ///     \sa QStatusBar, QWidget::windowState()
 struct SizeGrip : Widget {
+    ///   \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] set_visible(arg0: bool),
+    ///     Paints the resize grip.
+    /// 
+    ///     Resize grips are usually rendered as small diagonal textured lines
+    ///     in the lower-right corner. The paint event is passed in the \a
+    ///     event parameter.
     [event] paint_event(arg0: *PaintEventType),
+    ///     \fn void QSizeGrip::mousePressEvent(QMouseEvent * event)
+    /// 
+    ///     Receives the mouse press events for the widget, and primes the
+    ///     resize operation. The mouse press event is passed in the \a event
+    ///     parameter.
     [event] mouse_press_event(arg0: *MouseEventType),
+    ///     \fn void QSizeGrip::mouseMoveEvent(QMouseEvent * event)
+    ///     Resizes the top-level widget containing this widget. The mouse
+    ///     move event is passed in the \a event parameter.
     [event] mouse_move_event(arg0: *MouseEventType),
+    ///   \reimp
     [event] mouse_release_event(mouse_event: *MouseEventType),
+    ///   \reimp
     [event] move_event(move_event: *MoveEventType),
+    ///   \reimp
     [event] show_event(show_event: *ShowEventType),
+    ///   \reimp
     [event] hide_event(hide_event: *HideEventType),
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    ///     \reimp
     [event] event(arg0: *EventType) -> bool,
 }
 

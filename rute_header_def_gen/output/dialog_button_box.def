@@ -141,25 +141,84 @@ enum ButtonLayout {
 
 struct DialogButtonBox : Widget {
     set_orientation(orientation: Rute::Orientation),
+    ///     \property QDialogButtonBox::orientation
+    ///     \brief the orientation of the button box
+    /// 
+    ///     By default, the orientation is horizontal (i.e. the buttons are laid out
+    ///     side by side). The possible orientations are Qt::Horizontal and
+    ///     Qt::Vertical.
     orientation() -> Rute::Orientation,
+    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
+    ///     a push button. If \a button is invalid, it is not added to the button box, and
+    ///     zero is returned.
+    /// 
+    ///     \sa removeButton(), clear()
     add_button(button: *AbstractButtonType, role: DialogButtonBox::ButtonRole),
+    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
+    ///     a push button. If \a button is invalid, it is not added to the button box, and
+    ///     zero is returned.
+    /// 
+    ///     \sa removeButton(), clear()
     add_button(text: String, role: DialogButtonBox::ButtonRole) -> PushButton?,
+    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
+    ///     a push button. If \a button is invalid, it is not added to the button box, and
+    ///     zero is returned.
+    /// 
+    ///     \sa removeButton(), clear()
     add_button(button: DialogButtonBox::StandardButton) -> PushButton?,
+    ///     Removes \a button from the button box without deleting it and sets its parent to zero.
+    /// 
+    ///     \sa clear(), buttons(), addButton()
     remove_button(button: *AbstractButtonType),
+    ///     Clears the button box, deleting all buttons within it.
+    /// 
+    ///     \sa removeButton(), addButton()
     clear(),
+    ///     Returns a list of all the buttons that have been added to the button box.
+    /// 
+    ///     \sa buttonRole(), addButton(), removeButton()
     buttons() -> [AbstractButton?],
+    ///     Returns the button role for the specified \a button. This function returns
+    ///     \l InvalidRole if \a button is 0 or has not been added to the button box.
+    /// 
+    ///     \sa buttons(), addButton()
     button_role(button: *AbstractButtonType) -> DialogButtonBox::ButtonRole,
+    ///     \property QDialogButtonBox::standardButtons
+    ///     \brief collection of standard buttons in the button box
+    /// 
+    ///     This property controls which standard buttons are used by the button box.
+    /// 
+    ///     \sa addButton()
     set_standard_buttons(buttons: DialogButtonBox::StandardButtons),
     standard_buttons() -> DialogButtonBox::StandardButtons,
+    ///     Returns the standard button enum value corresponding to the given \a button,
+    ///     or NoButton if the given \a button isn't a standard button.
+    /// 
+    ///     \sa button(), buttons(), standardButtons()
     standard_button(button: *AbstractButtonType) -> DialogButtonBox::StandardButton,
+    ///     Returns the QPushButton corresponding to the standard button \a which,
+    ///     or 0 if the standard button doesn't exist in this button box.
+    /// 
+    ///     \sa standardButton(), standardButtons(), buttons()
     button(which: DialogButtonBox::StandardButton) -> PushButton?,
+    ///     \property QDialogButtonBox::centerButtons
+    ///     \brief whether the buttons in the button box are centered
+    /// 
+    ///     By default, this property is \c false. This behavior is appopriate
+    ///     for most types of dialogs. A notable exception is message boxes
+    ///     on most platforms (e.g. Windows), where the button box is
+    ///     centered horizontally.
+    /// 
+    ///     \sa QMessageBox
     set_center_buttons(center: bool),
     center_buttons() -> bool,
     [signal] clicked(button: *AbstractButtonType),
     [signal] accepted(),
     [signal] help_requested(),
     [signal] rejected(),
+    ///     \reimp
     [event] change_event(event: *EventType),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
 }
 

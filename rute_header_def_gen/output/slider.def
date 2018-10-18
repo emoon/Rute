@@ -67,17 +67,46 @@ enum TickPosition {
 }
 
 struct Slider : AbstractSlider {
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     \property QSlider::tickPosition
+    ///     \brief the tickmark position for this slider
+    /// 
+    ///     The valid values are described by the QSlider::TickPosition enum.
+    /// 
+    ///     The default value is \l QSlider::NoTicks.
+    /// 
+    ///     \sa tickInterval
     set_tick_position(position: Slider::TickPosition),
     tick_position() -> Slider::TickPosition,
+    ///     \property QSlider::tickInterval
+    ///     \brief the interval between tickmarks
+    /// 
+    ///     This is a value interval, not a pixel interval. If it is 0, the
+    ///     slider will choose between singleStep and pageStep.
+    /// 
+    ///     The default value is 0.
+    /// 
+    ///     \sa tickPosition, singleStep, pageStep
     set_tick_interval(ti: i32),
     tick_interval() -> i32,
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] paint_event(ev: *PaintEventType),
+    ///     \reimp
     [event] mouse_press_event(ev: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(ev: *MouseEventType),
+    ///     \reimp
     [event] mouse_move_event(ev: *MouseEventType),
+    ///     Initialize \a option with the values from this QSlider. This method
+    ///     is useful for subclasses when they need a QStyleOptionSlider, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSliderType),
 }
 

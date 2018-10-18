@@ -97,22 +97,56 @@
 /// 
 ///     \sa QToolButton, QRadioButton, QCheckBox, {fowler}{GUI Design Handbook: Push Button}
 struct PushButton : AbstractButton {
+    ///     \reimp
     [event] size_hint() -> Size,
     [event] minimum_size_hint() -> Size,
     auto_default() -> bool,
     set_auto_default(arg0: bool),
     is_default() -> bool,
     set_default(arg0: bool),
+    ///     Associates the popup menu \a menu with this push button. This
+    ///     turns the button into a menu button, which in some styles will
+    ///     produce a small triangle to the right of the button's text.
+    /// 
+    ///     Ownership of the menu is \e not transferred to the push button.
+    /// 
+    ///     \image fusion-pushbutton-menu.png Screenshot of a Fusion style push button with popup menu.
+    ///     A push button with popup menus shown in the \l{Qt Widget Gallery}
+    ///     {Fusion widget style}.
+    /// 
+    ///     \sa menu()
     set_menu(menu: *MenuType),
+    ///     Returns the button's associated popup menu or 0 if no popup menu
+    ///     has been set.
+    /// 
+    ///     \sa setMenu()
     menu() -> Menu?,
     set_flat(arg0: bool),
     is_flat() -> bool,
+    ///     Shows (pops up) the associated popup menu. If there is no such
+    ///     menu, this function does nothing. This function does not return
+    ///     until the popup menu has been closed by the user.
     show_menu(),
     [event] event(e: *EventType) -> bool,
+    ///     \reimp
+    ///  */
+    /// QSize QPushButton::minimumSizeHint() const
+    /// {
+    ///     return sizeHint();
+    /// }
+    /// 
+    /// 
     [event] paint_event(arg0: *PaintEventType),
     [event] key_press_event(arg0: *KeyEventType),
+    ///     \reimp
     [event] focus_in_event(arg0: *FocusEventType),
+    ///     \reimp
     [event] focus_out_event(arg0: *FocusEventType),
+    ///     Initialize \a option with the values from this QPushButton. This method is useful
+    ///     for subclasses when they need a QStyleOptionButton, but don't want to fill
+    ///     in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionButtonType),
 }
 

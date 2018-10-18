@@ -34,17 +34,35 @@ enum Shape {
 }
 
 struct RubberBand : Widget {
+    ///   Returns the shape of this rubber band. The shape can only be set
+    ///   upon construction.
     shape() -> RubberBand::Shape,
     move(x: i32, y: i32),
     move(p: &PointType),
     resize(w: i32, h: i32),
     resize(s: &SizeType),
+    ///     \fn void QRubberBand::setGeometry(int x, int y, int width, int height)
+    ///     \overload
+    /// 
+    ///     Sets the geometry of the rubberband to the rectangle whose top-left corner lies at
+    ///     the point (\a x, \a y), and with dimensions specified by \a width and \a height.
+    ///     The geometry is specified in the parent widget's coordinate system.
     [event] event(e: *EventType) -> bool,
+    ///     \reimp
     [event] paint_event(arg0: *PaintEventType),
+    ///     \reimp
     [event] change_event(arg0: *EventType),
+    ///     \reimp
     [event] show_event(arg0: *ShowEventType),
+    ///     \reimp
     [event] resize_event(arg0: *ResizeEventType),
+    ///     \reimp
     [event] move_event(arg0: *MoveEventType),
+    ///     Initialize \a option with the values from this QRubberBand. This method
+    ///     is useful for subclasses when they need a QStyleOptionRubberBand, but don't want
+    ///     to fill in all the information themselves.
+    /// 
+    ///     \sa QStyleOption::initFrom()
     init_style_option(option: *StyleOptionRubberBandType),
 }
 
