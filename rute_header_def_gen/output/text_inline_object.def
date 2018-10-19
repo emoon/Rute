@@ -16,7 +16,6 @@
 ///     rectangle it occupies is given by rect(), and its direction by
 ///     textDirection(). Its position in the text layout is given by
 ///     textPosition(), and its format is given by format().
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextInlineObject {
     is_valid() -> bool,

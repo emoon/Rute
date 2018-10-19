@@ -18,7 +18,6 @@
 /// 
 ///     Most of the QJsonValue member functions also exist in QJsonValueRef.
 ///     However, they are not explicitly documented here.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct JsonValueRef {
     to_variant() -> Variant,

@@ -22,7 +22,6 @@
 ///     QDropEvent.
 /// 
 ///     \sa QDragEnterEvent, QDragLeaveEvent, QDropEvent
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DragMoveEvent : DropEvent {
     answer_rect() -> Rect,
     accept(),

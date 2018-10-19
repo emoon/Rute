@@ -13,7 +13,6 @@
 ///     QScrollPrepareEvent, e.g. in a case where the maximum content position is (0,0).
 /// 
 ///     \sa QScrollEvent, QScroller
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ScrollPrepareEvent : Event {
     ///     Returns the position of the touch or mouse event that started the scrolling.
     start_pos() -> PointF,

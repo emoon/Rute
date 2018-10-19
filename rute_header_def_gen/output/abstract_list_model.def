@@ -63,7 +63,6 @@
 /// 
 ///     \sa {Model Classes}, {Model Subclassing Reference}, QAbstractItemView,
 ///         QAbstractTableModel, {Item Views Puzzle Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractListModel : AbstractItemModel {
     ///     \fn QModelIndex QAbstractListModel::index(int row, int column, const QModelIndex &parent = QModelIndex()) const
     /// 

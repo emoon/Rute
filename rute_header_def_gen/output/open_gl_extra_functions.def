@@ -18,7 +18,6 @@
 ///     cross-OpenGL-OpenGLES development.
 ///  */
 /// 
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLExtraFunctions : OpenGLFunctions {
     gl_read_buffer(mode: i32),
     gl_draw_range_elements(mode: i32, start: i32, end: i32, count: i32, type: i32, indices: *void),

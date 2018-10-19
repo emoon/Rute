@@ -162,7 +162,6 @@
 ///     becomes invalid when the QApplication instance is destroyed.
 /// 
 ///     \sa QBitmap, QImage, QImageReader, QImageWriter
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct Pixmap : PaintDevice {
     swap(other: &PixmapType),
     ///     \fn bool QPixmap::isNull() const

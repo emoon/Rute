@@ -26,7 +26,6 @@
 /// 
 ///     \sa QLayoutItem, {Layout Management}, {Basic Layouts Example},
 ///         {Border Layout Example}, {Flow Layout Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QLayout)]
 enum SizeConstraint {
     SetDefaultConstraint,

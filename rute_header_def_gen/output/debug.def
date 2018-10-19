@@ -46,7 +46,6 @@
 ///     This is described in the \l{Debugging Techniques} and
 ///     \l{Creating Custom Qt Types#Making the Type Printable}{Creating Custom Qt Types}
 ///     documents.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDebug)]
 enum Latin1Content {
     ContainsBinary,

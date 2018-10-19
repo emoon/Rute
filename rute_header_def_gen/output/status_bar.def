@@ -60,7 +60,6 @@
 /// 
 ///     \sa QMainWindow, QStatusTipEvent, {fowler}{GUI Design Handbook:
 ///     Status Bar}, {Application Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StatusBar : Widget {
     ///     Adds the given \a widget to this status bar, reparenting the
     ///     widget if it isn't already a child of this QStatusBar object. The

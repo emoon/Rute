@@ -54,7 +54,6 @@
 ///    reshaping and relayouting in the inner loop of an application, a better choice is the QStaticText
 ///    class, since it optimizes the memory cost of the cache and also provides the possibility of paint
 ///    engine specific caches for an additional speed-up.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QRawFont)]
 enum AntialiasingType {
     PixelAntialiasing,

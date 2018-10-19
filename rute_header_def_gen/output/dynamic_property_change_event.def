@@ -8,7 +8,6 @@
 /// 
 ///     Dynamic property change events are sent to objects when properties are
 ///     dynamically added, changed or removed using QObject::setProperty().
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DynamicPropertyChangeEvent : Event {
     property_name() -> ByteArray,
 }

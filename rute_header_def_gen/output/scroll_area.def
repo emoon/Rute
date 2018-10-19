@@ -78,7 +78,6 @@
 ///     to combine QLabel and QScrollArea to display an image.
 /// 
 ///     \sa QAbstractScrollArea, QScrollBar, {Image Viewer Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ScrollArea : AbstractScrollArea {
     ///     Returns the scroll area's widget, or 0 if there is none.
     /// 

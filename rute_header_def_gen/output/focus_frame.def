@@ -15,7 +15,6 @@
 ///     its geometry manually via QWidget::setGeometry however you will
 ///     not get auto-placement when the focused widget changes size or
 ///     placement.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct FocusFrame : Widget {
     ///   QFocusFrame will track changes to \a widget and resize itself automatically.
     ///   If the monitored widget's parent changes, QFocusFrame will follow the widget

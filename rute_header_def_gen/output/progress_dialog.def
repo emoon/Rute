@@ -66,7 +66,6 @@
 /// 
 ///   \sa QDialog, QProgressBar, {fowler}{GUI Design Handbook: Progress Indicator},
 ///       {Find Files Example}, {Pixelator Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ProgressDialog : Dialog {
     ///   Sets the label to \a label. The progress dialog resizes to fit. The
     ///   label becomes owned by the progress dialog and will be deleted when

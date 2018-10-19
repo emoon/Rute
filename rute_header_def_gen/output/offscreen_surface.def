@@ -37,7 +37,6 @@
 ///     EGL_KHR_surfaceless_context) when available. In this case there will be no underlying
 ///     native surface. For the use cases of QOffscreenSurface (rendering to FBOs, texture
 ///     upload) this is not a problem.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OffscreenSurface : Object, Surface {
     ///     Returns the surface type of the offscreen surface.
     /// 

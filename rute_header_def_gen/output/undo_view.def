@@ -15,7 +15,6 @@
 ///     active stack of the group changes.
 /// 
 ///     \image qundoview.png
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct UndoView : ListView {
     ///     Returns the stack currently displayed by this view. If the view is looking at a
     ///     QUndoGroup, this the group's active stack.

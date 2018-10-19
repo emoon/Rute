@@ -17,7 +17,6 @@
 ///     whether the receiver accepted the event. If the event handler does
 ///     not accept the event then, if possible, whatever triggered the event will be
 ///     handled as a regular input event.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QContextMenuEvent)]
 enum Reason {
     Mouse,

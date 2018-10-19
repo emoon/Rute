@@ -15,7 +15,6 @@
 ///     platform, this may print useful debug information when it comes to OpenGL
 ///     initialization and the native visual or framebuffer configurations which
 ///     QSurfaceFormat gets mapped to.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QSurfaceFormat)]
 enum FormatOption {
     StereoBuffers,

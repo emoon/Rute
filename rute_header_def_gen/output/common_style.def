@@ -19,7 +19,6 @@
 ///     \endomit
 /// 
 ///     \sa QStyle, QProxyStyle
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct CommonStyle : Style {
     [event] draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
     [event] sub_element_rect(r: Style::SubElement, opt: *StyleOptionType, widget: *WidgetType) -> Rect,

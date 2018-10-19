@@ -37,7 +37,6 @@
 ///     rotations) at the same step is not recommended.
 /// 
 ///     \sa QTimeLine, {Graphics View Framework}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsItemAnimation : Object {
     ///   Returns the item on which the animation object operates.
     /// 

@@ -119,7 +119,6 @@
 ///     \endtable
 /// 
 ///     \sa QCoreApplication, QAbstractEventDispatcher, QEventLoop
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GuiApplication : CoreApplication {
     ///     \property QGuiApplication::applicationDisplayName
     ///     \brief the user-visible name of this application

@@ -16,7 +16,6 @@
 /// 
 ///     \sa QTimer, QObject::timerEvent(), QObject::startTimer(),
 ///     QObject::killTimer()
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TimerEvent : Event {
     timer_id() -> i32,
 }

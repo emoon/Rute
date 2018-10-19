@@ -52,7 +52,6 @@
 ///     \sa {Drag and Drop}, QClipboard, QMimeData, QMacPasteboardMime,
 ///         {Draggable Icons Example}, {Draggable Text Example}, {Drop Site Example},
 ///         {Fridge Magnets Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct Drag : Object {
     ///     Sets the data to be sent to the given MIME \a data. Ownership of the data is
     ///     transferred to the QDrag object.

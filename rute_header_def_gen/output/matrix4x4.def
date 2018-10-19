@@ -19,7 +19,6 @@
 ///     \endlist
 /// 
 ///     \sa QVector3D, QGenericMatrix
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMatrix4x4)]
 enum Matrix4x4FixMeEnums {
     Identity,

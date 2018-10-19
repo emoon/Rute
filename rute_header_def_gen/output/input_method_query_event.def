@@ -13,7 +13,6 @@
 /// 
 ///     The object should call setValue() on the event to fill in the requested
 ///     data before calling accept().
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct InputMethodQueryEvent : Event {
     queries() -> Rute::InputMethodQueries,
     set_value(query: Rute::InputMethodQuery, value: &VariantType),

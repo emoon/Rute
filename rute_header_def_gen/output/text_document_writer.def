@@ -23,7 +23,6 @@
 ///     the writer simply outputs the appropriate subset of objects for each format.
 ///     This typically includes the formatted text and images contained in a
 ///     document.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextDocumentWriter {
     set_format(format: &ByteArrayType),

@@ -75,7 +75,6 @@
 /// 
 ///     \sa QTableWidget, {View Classes}, QAbstractItemModel, QAbstractItemView,
 ///         {Chart Example}, {Pixelator Example}, {Table Model Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TableView : AbstractItemView {
     ///   \reimp
     [event] set_model(model: *AbstractItemModelType),

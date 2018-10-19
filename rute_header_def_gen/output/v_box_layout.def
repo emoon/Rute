@@ -26,7 +26,6 @@
 ///     \image qvboxlayout-with-5-children.png Horizontal box layout with five child widgets
 /// 
 ///     \sa QHBoxLayout, QGridLayout, QStackedLayout, {Layout Management}, {Basic Layouts Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct VBoxLayout : BoxLayout {
 }
 

@@ -47,7 +47,6 @@
 ///     which means it is fine to have many mutexes as part of other classes.
 /// 
 ///     \sa QMutexLocker, QReadWriteLock, QSemaphore, QWaitCondition
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMutex)]
 enum RecursionMode {
     NonRecursive,

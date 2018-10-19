@@ -7,7 +7,6 @@
 /// 
 ///     The platform plugins call the various functions to notify about events. The events are queued
 ///     until sendWindowSystemEvents() is called by the event dispatcher.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct WindowSystemInterface {
     [static] handle_shortcut_event(window: *WindowType, timestamp: ulong, k: i32, mods: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort) -> bool,

@@ -23,7 +23,6 @@
 ///     QTextObjectInterface class description for details.
 /// 
 ///     \sa QTextObjectInterface
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractTextDocumentLayout : Object {
     [event] draw(painter: *PainterType, context: onst QAbstractTextDocumentLayout::PaintContext &),
     [event] hit_test(point: &PointFType, accuracy: Rute::HitTestAccuracy) -> i32,

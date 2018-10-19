@@ -13,7 +13,6 @@
 ///     Usually this interface is implemented by classes that also implement \l QAccessibleInterface.
 /// 
 ///     \l{IAccessible2 Specification}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleValueInterface {
     [event] current_value() -> Variant,

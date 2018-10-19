@@ -63,7 +63,6 @@
 ///     field() and setField().
 /// 
 ///     \sa QWizard, {Class Wizard Example}, {License Wizard Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct WizardPage : Widget {
     ///     \property QWizardPage::title
     ///     \brief the title of the page

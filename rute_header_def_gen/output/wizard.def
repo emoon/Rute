@@ -295,7 +295,6 @@
 ///     \snippet dialogs/licensewizard/licensewizard.cpp 27
 /// 
 ///     \sa QWizardPage, {Class Wizard Example}, {License Wizard Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QWizard)]
 enum WizardButton {
     BackButton,

@@ -9,7 +9,6 @@
 /// 
 ///     It also contains some helper functions to check if a version supports profiles
 ///     or is a legacy version.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct OpenGLVersionProfile {
     ///     Returns a QPair<int,int> where the components represent the major and minor OpenGL

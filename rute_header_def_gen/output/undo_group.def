@@ -34,7 +34,6 @@
 ///     A QUndoGroup is also useful in conjunction with QUndoView. If a QUndoView is
 ///     set to watch a group using QUndoView::setGroup(), it will update itself to display
 ///     the active stack.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct UndoGroup : Object {
     ///     Adds \a stack to this group. The group does not take ownership of the stack. Another
     ///     way of adding a stack to a group is by specifying the group as the stack's parent

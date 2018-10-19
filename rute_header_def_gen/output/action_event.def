@@ -12,7 +12,6 @@
 ///     actions.
 /// 
 ///     \sa QAction, QWidget::addAction(), QWidget::removeAction(), QWidget::actions()
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ActionEvent : Event {
     action() -> Action?,
     before() -> Action?,

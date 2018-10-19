@@ -10,7 +10,6 @@
 ///     available touch devices via QWindowSystemInterface before generating any
 ///     touch events. Applications do not need to instantiate this class, they
 ///     should just access the global instances pointed to by QTouchEvent::device().
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTouchDevice)]
 enum DeviceType {
     TouchScreen,

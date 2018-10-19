@@ -52,7 +52,6 @@
 ///     in addition to eventual prefix and suffix content. This limitation is used
 ///     to keep the double spin box usable even with extremely large values.
 ///     \sa QSpinBox, QDateTimeEdit, QSlider, {Spin Boxes Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DoubleSpinBox : AbstractSpinBox {
     ///     \property QDoubleSpinBox::value
     ///     \brief the value of the spin box

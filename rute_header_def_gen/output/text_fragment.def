@@ -30,7 +30,6 @@
 ///     a particular position within the document, use the contains() function.
 /// 
 ///     \sa QTextDocument, {Rich Text Document Structure}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextFragment {
     is_valid() -> bool,

@@ -14,7 +14,6 @@
 /// 
 ///     \sa QGraphicsSceneMouseEvent, QGraphicsSceneContextMenuEvent,
 ///     QGraphicsSceneHoverEvent, QWheelEvent
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
     ///     Returns the position of the cursor in item coordinates when the
     ///     wheel event occurred.

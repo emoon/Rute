@@ -53,7 +53,6 @@
 ///     convenience class QOpenGLTimeMonitor that helps with using multiple query objects.
 /// 
 ///     \sa QOpenGLTimeMonitor
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLTimerQuery : Object {
     ///     Creates the underlying OpenGL timer query object. There must be a valid OpenGL context
     ///     that supports query objects current for this function to succeed.

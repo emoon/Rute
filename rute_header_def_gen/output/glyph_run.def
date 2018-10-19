@@ -32,7 +32,6 @@
 ///     moved to a different thread. If the QGlyphRun contains a reference to a QRawFont from a different
 ///     thread than the current, it will not be possible to draw the glyphs using a QPainter, as the
 ///     QRawFont is considered invalid and inaccessible in this case.
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGlyphRun)]
 enum GlyphRunFlag {
     Overline,

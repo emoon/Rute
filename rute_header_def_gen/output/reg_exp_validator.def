@@ -29,7 +29,6 @@
 ///     \snippet code/src_gui_util_qvalidator.cpp 4
 /// 
 ///     \sa QRegExp, QIntValidator, QDoubleValidator, {Settings Editor Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct RegExpValidator : Validator {
     ///     Returns \l Acceptable if \a input is matched by the regular
     ///     expression for this validator, \l Intermediate if it has matched

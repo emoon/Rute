@@ -444,7 +444,7 @@ fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
 
     // Always add the licence info 
 
-    writeln!(dest, "/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.");
+    //writeln!(dest, "/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.");
 
     // print all enums for the class
 

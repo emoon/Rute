@@ -33,7 +33,6 @@
 ///     external event loop with the Qt event loop.
 /// 
 ///     \sa QEventLoop, QCoreApplication, QThread
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractEventDispatcher : Object {
     [static] instance(thread: *ThreadType) -> AbstractEventDispatcher?,
     [event] process_events(flags: EventLoop::ProcessEventsFlags) -> bool,

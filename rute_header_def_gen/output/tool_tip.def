@@ -45,7 +45,6 @@
 ///     tips are not active windows.
 /// 
 ///     \sa QWidget::toolTip, QAction::toolTip, {Tool Tips Example}
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ToolTip {
     ///     \overload

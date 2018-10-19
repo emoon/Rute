@@ -9,7 +9,6 @@
 ///   QKeyEventTransition is part of \l{The State Machine Framework}.
 /// 
 ///   \sa QState::addTransition()
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct KeyEventTransition : EventTransition {
     ///   Returns the key that this key event transition checks for.
     key() -> i32,

@@ -45,7 +45,6 @@
 ///     and widgetRemoved() signals are emitted respectively.
 /// 
 ///     \sa QStackedLayout, QTabWidget
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StackedWidget : Frame {
     ///     Appends the given \a widget to the QStackedWidget and returns the
     ///     index position. Ownership of \a widget is passed on to the

@@ -87,7 +87,6 @@
 ///     Lists, tables and trees should implement QAccessibleTableInterface.
 /// 
 ///     \sa QAccessible, QAccessibleActionInterface, QAccessibleTextInterface, QAccessibleValueInterface, QAccessibleTableInterface
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleInterface {
     [event] is_valid() -> bool,

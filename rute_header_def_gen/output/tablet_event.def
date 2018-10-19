@@ -68,7 +68,6 @@
 ///     \c{wintab32.dll} to be installed. It is contained in older packages,
 ///     for example \c{pentablet_5.3.5-3.exe}.
 /// 
-/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTabletEvent)]
 enum TabletDevice {
     NoDevice,
