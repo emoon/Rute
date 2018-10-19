@@ -16,16 +16,23 @@ static void widget_show(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_fixed_height(struct RUBase* self_c, int width) {
+static void widget_hide(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFixedHeight(width);
+    qt_value->hide();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_fixed_width(struct RUBase* self_c, int width) {
+static void widget_set_fixed_width(struct RUBase* self_c, int w) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFixedWidth(width);
+    qt_value->setFixedWidth(w);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_height(struct RUBase* self_c, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFixedHeight(h);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,8 +105,9 @@ static void destroy_widget(struct RUBase* priv_data) {
 struct RUWidgetFuncs s_widget_funcs = {
     destroy_widget,
     widget_show,
-    widget_set_fixed_height,
+    widget_hide,
     widget_set_fixed_width,
+    widget_set_fixed_height,
     widget_resize,
     widget_set_parent,
     widget_update,

@@ -17,6 +17,9 @@
 ///     withhout using QOpenGLWidget. When using QOpenGLContext::currentContext(), it will ask
 ///     QPlatformOpenGLContext for the currentContext. Then a corresponding QOpenGLContext will be returned,
 ///     which maps to the QPlatformOpenGLContext.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PlatformOpenGLContext {
     [event] initialize(),

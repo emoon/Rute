@@ -461,6 +461,7 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == FunctionType::Signal || f.func_type == FunctionType::Event)
             .try_for_each(|func| {
+				f.write_all(func.doc_comments.as_bytes())?;
                 let res =
                     self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
                 f.write_all(res.as_bytes())
@@ -770,6 +771,7 @@ impl RustGenerator {
 
             template_data.insert("event_funcs".into(), Value::scalar(event_funcs));
 
+            dest.write_all(sdef.doc_comments.as_bytes())?;
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;
         }
@@ -825,6 +827,7 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == func_type)
             .for_each(|f| {
+            	dest.write_all(f.doc_comments.as_bytes()).unwrap();
                 let res = self.generate_function(&f, name, &sdef.name);
                 dest.write_all(res.as_bytes()).unwrap();
             });
@@ -835,6 +838,7 @@ impl RustGenerator {
                 .iter()
                 .filter(|f| f.func_type == FunctionType::Signal)
                 .try_for_each(|f| {
+            		dest.write_all(f.doc_comments.as_bytes()).unwrap();
                     let res = self.generate_callback(&f, name, &self.callback_template);
                     dest.write_all(res.as_bytes())
                 })?;

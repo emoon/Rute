@@ -41,6 +41,9 @@
 ///     the QWidget::addActions() function.
 /// 
 ///     \sa QAction
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ActionGroup : Object {
     ///     Creates and returns an action with \a text and an \a icon. The
     ///     newly created action is a child of this action group.

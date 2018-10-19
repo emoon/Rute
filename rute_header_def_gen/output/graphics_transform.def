@@ -44,6 +44,9 @@
 ///     QGraphicsItem::setRotation(), and QGraphicsItem::setScale().
 /// 
 ///     \sa QGraphicsItem::transform(), QGraphicsScale, QGraphicsRotation
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsTransform : Object {
     [event] apply_to(matrix: *Matrix4x4Type),
     ///     Notifies that this transform operation has changed its parameters in such a

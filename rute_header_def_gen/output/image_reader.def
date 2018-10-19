@@ -61,6 +61,9 @@
 /// 
 ///     \sa QImageWriter, QImageIOHandler, QImageIOPlugin, QMimeDatabase
 ///     \sa QImage::devicePixelRatio(), QPixmap::devicePixelRatio(), QIcon, QPainter::drawPixmap(), QPainter::drawImage(), Qt::AA_UseHighDpiPixmaps
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QImageReader)]
 enum ImageReaderError {
     UnknownError,

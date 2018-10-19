@@ -1,9 +1,9 @@
-chunk = _{ SOI ~ (structdef | enumdef)+ ~ EOI }
+chunk = _{ SOI ~ (structdef | enumdef | doc_comment)+ ~ EOI }
 
 structdef   =  { attributes? ~ traits? ~ ("struct") ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
 enumdef     =  { attributes? ~ org_name? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
-fieldlist   =  { field ~ (fieldsep ~ field)* ~ fieldsep* }
-field       =  { var | function | enum_type }
+fieldlist   =  { (doc_comment | field)*  }
+field       =  { (var | function | enum_type) ~ fieldsep? }
 fieldsep    = _{ (",") }
 
 rettype      = { name }
@@ -46,7 +46,11 @@ vtype = @{
 }
 
 COMMENT = _{
-	("//") ~ (!(("\r") | ("\n")) ~ ANY)* ~ (("\n") | ("\r\n") | ("\r") | EOI)
+	("//") ~ !("/") ~ (!(("\r") | ("\n")) ~ ANY)* ~ (("\n") | ("\r\n") | ("\r") | EOI)
+}
+
+doc_comment = @{
+	("///") ~ (!NEWLINE ~ ANY)*
 }
 
 WHITESPACE = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }

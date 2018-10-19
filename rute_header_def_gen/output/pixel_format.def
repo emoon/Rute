@@ -25,6 +25,9 @@
 ///     bitsPerPixel value has been deduced by the YUV Layout enum. Also, the color
 ///     channels should all be set to zero except the fifth color channel that
 ///     should store the bitsPerPixel value.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPixelFormat)]
 enum FieldWidth {
     ModelFieldWidth,

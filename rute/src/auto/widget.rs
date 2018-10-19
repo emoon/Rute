@@ -19,6 +19,65 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// The Widget is the atom of the user interface: it receives mouse, keyboard
+/// and other events from the window system, and paints a representation of
+/// itself on the screen. Every widget is rectangular, and they are sorted in a
+/// Z-order. A widget is clipped by its parent and by the widgets in front of
+/// it.
+///
+/// A widget that is not embedded in a parent widget is called a window.
+/// Usually, windows have a frame and a title bar, although it is also possible
+/// to create windows without such decoration using suitable
+/// {Qt::WindowFlags}{window flags}). In Qt, QMainWindow and the various
+/// subclasses of QDialog are the most common window types.
+///
+/// Every widget's constructor accepts one or two standard arguments:
+///
+/// QWidget has many member functions, but some of them have little direct
+/// functionality; for example, QWidget has a font property, but never uses
+/// this itself. There are many subclasses which provide real functionality,
+/// such as QLabel, QPushButton, QListWidget, and QTabWidget.
+///
+/// # Top-Level and Child Widgets
+///
+/// A widget without a parent widget is always an independent window (top-level
+/// widget). For these widgets, setWindowTitle() and setWindowIcon() set the
+/// title bar and icon respectively.
+///
+/// Non-window widgets are child widgets, displayed within their parent
+/// widgets. Most widgets in Qt are mainly useful as child widgets. For
+/// example, it is possible to display a button as a top-level window, but most
+/// people prefer to put their buttons inside other widgets, such as QDialog.
+///
+/// The diagram above shows a QGroupBox widget being used to hold various child
+/// widgets in a layout provided by QGridLayout. The QLabel child widgets have
+/// been outlined to indicate their full sizes.
+///
+/// If you want to use a QWidget to hold child widgets you will usually want to
+/// add a layout to the parent QWidget. See {Layout Management} for more
+/// information.
+///
+/// # Composite Widgets
+///
+/// When a widget is used as a container to group a number of child widgets, it
+/// is known as a composite widget. These can be created by constructing a
+/// widget with the required visual properties - a QFrame, for example - and
+/// adding child widgets to it, usually managed by a layout. The above diagram
+/// shows such a composite widget that was created using Qt Designer.
+///
+/// Composite widgets can also be created by subclassing a standard widget,
+/// such as QWidget or QFrame, and adding the necessary layout and child
+/// widgets in the constructor of the subclass. Many of the {Qt Widgets Examples}
+/// {examples provided with Qt} use this approach, and it is also covered in
+/// the Qt {Tutorials}.
+///
+/// # Custom Widgets and Painting
+///
+/// Since QWidget is a subclass of QPaintDevice, subclasses can be used to
+/// display custom content that is composed using a series of painting
+/// operations with an instance of the QPainter class. This approach contrasts
+///
+/// The documentation is an adobption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Widget<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -115,6 +174,7 @@ impl<'a> Widget<'a> {
         self
     }
 }
+/// Signal for when Window tile changes  
 
 unsafe extern "C" fn widget_window_title_changed_trampoline_ud<T>(
     self_c: *const c_void,
@@ -139,6 +199,47 @@ unsafe extern "C" fn widget_window_title_changed_trampoline(
     f(str_in_title_0.to_str().unwrap());
 }
 
+///     This event handler can be reimplemented in a subclass to receive paint
+///     events passed in \a event.
+///
+///     A paint event is a request to repaint all or part of a widget. It can
+///     happen for one of the following reasons:
+///
+///     * repaint() or update() was invoked,
+///     * the widget was obscured and has now been uncovered, or
+///     * many other reasons.
+///
+///     Many widgets can simply repaint their entire surface when asked to, but
+///     some slow widgets need to optimize by painting only the requested region:
+///     QPaintEvent::region(). This speed optimization does not change the result,
+///     as painting is clipped to that region during event processing. QListView
+///     and QTableView do this, for example.
+///
+///     Qt also tries to speed up painting by merging multiple paint events into
+///     one. When update() is called several times or the window system sends
+///     several paint events, Qt merges these events into one event with a larger
+///     region (see QRegion::united()). The repaint() function does not permit this
+///     optimization, so we suggest using update() whenever possible.
+///
+///     When the paint event occurs, the update region has normally been erased, so
+///     you are painting on the widget's background.
+///
+///     The background can be set using setBackgroundRole() and setPalette().
+///
+///     Since Qt 4.0, QWidget automatically double-buffers its painting, so there
+///     is no need to write double-buffering code in paintEvent() to avoid flicker.
+///
+///     Generally, you should refrain from calling update() or repaint()
+///     children inside a paintEvent() results in undefined behavior; the child may
+///     or may not get a paint event.
+///
+///     If you are using a custom paint engine without Qt's backingstore,
+///     Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
+///     never be called; the backingstore will be used instead.
+///
+///     event(), repaint(), update(), QPainter, QPixmap, QPaintEvent,
+///     {Analog Clock Example}
+
 unsafe extern "C" fn widget_paint_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
@@ -161,6 +262,14 @@ unsafe extern "C" fn widget_paint_trampoline(
 }
 
 pub trait WidgetType<'a> {
+    ///     Shows the widget and its child widgets.
+    ///
+    ///     This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
+    ///     depending on the platform's default behavior for the window flags.
+    ///
+    ///      raise(), showEvent(), hide(), setVisible(), showMinimized(), showMaximized(),
+    ///     showNormal(), isVisible(), windowFlags()
+
     fn show(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -168,22 +277,47 @@ pub trait WidgetType<'a> {
         }
         self
     }
+    ///     Hides the widget. This function is equivalent to
+    ///     setVisible(false).
+    ///
+    ///     you are working with QDialog or its subclasses and you invoke
+    ///     the show() function after this function, the dialog will be displayed in
+    ///     its original position.
+    ///
+    ///     hideEvent(), isHidden(), show(), setVisible(), isVisible(), close()
 
-    fn set_fixed_height(&self, width: i32) -> &Self {
+    fn hide(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_fixed_height)(obj_data, width);
+            ((*funcs).hide)(obj_data);
         }
         self
     }
+    ///     Sets both the minimum and maximum width of the widget to \a w
+    ///     without changing the heights. Provided for convenience.
+    ///
+    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
 
-    fn set_fixed_width(&self, width: i32) -> &Self {
+    fn set_fixed_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_fixed_width)(obj_data, width);
+            ((*funcs).set_fixed_width)(obj_data, w);
         }
         self
     }
+    ///     Sets both the minimum and maximum heights of the widget to h
+    ///     without changing the widths. Provided for convenience.
+    ///
+    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
+
+    fn set_fixed_height(&self, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_height)(obj_data, h);
+        }
+        self
+    }
+    /// Resize doc
 
     fn resize(&self, width: i32, height: i32) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -210,6 +344,7 @@ pub trait WidgetType<'a> {
         }
         self
     }
+    /// Signal for when Window tile changes  
 
     fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where

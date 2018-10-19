@@ -50,6 +50,8 @@ pub enum VariableType {
 ///
 #[derive(Debug, Clone)]
 pub struct Variable {
+    /// Documentation 
+    pub doc_comments: String,
     /// Name of the variable
     pub name: String,
     /// Type of the variable
@@ -78,6 +80,7 @@ impl Default for Variable {
     fn default() -> Self {
         Variable {
             name: String::new(),
+            doc_comments: String::new(),
             vtype: VariableType::None,
             type_name: String::new(),
             enum_sub_type: String::new(),
@@ -110,6 +113,8 @@ pub enum FunctionType {
 ///
 #[derive(Debug, Clone)]
 pub struct Function {
+	/// Documentation
+	pub doc_comments: String,
     /// Name of the function
     pub name: String,
     /// This is the C++ name of the function. Most of the time it will
@@ -131,6 +136,7 @@ pub struct Function {
 impl Default for Function {
     fn default() -> Self {
         Function {
+        	doc_comments: String::new(),
             name: String::new(),
             cpp_name: String::new(),
             function_args: Vec::new(),
@@ -146,6 +152,8 @@ impl Default for Function {
 ///
 #[derive(Debug, Default)]
 pub struct Struct {
+    /// Docummentanion
+    pub doc_comments: String,
     /// Name
     pub name: String,
     /// Name for the C++ class in the generation
@@ -246,6 +254,7 @@ impl ApiParser {
 
         let base_filename = Path::new(filename).file_name().unwrap().to_str().unwrap();
         let base_filename = &base_filename[..base_filename.len() - 4];
+        let mut struct_comments = String::new();
 
         api_def.filename = filename.to_owned();
         api_def.base_filename = base_filename.to_owned();
@@ -253,7 +262,8 @@ impl ApiParser {
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::structdef => {
-                    let sdef = Self::fill_struct(chunk);
+                    let sdef = Self::fill_struct(chunk, &struct_comments);
+                    struct_comments.clear();
 
                     // If we have some variables in the struct we push it to pod_struct
                     if !sdef.variables.is_empty() {
@@ -261,6 +271,11 @@ impl ApiParser {
                     } else {
                         api_def.class_structs.push(sdef);
                     }
+                }
+
+                Rule::doc_comment => {
+                	struct_comments.push_str(chunk.as_str());
+                	struct_comments.push_str("\n");
                 }
 
                 Rule::enumdef => {
@@ -293,8 +308,10 @@ impl ApiParser {
     ///
     /// Fill struct def
     ///
-    fn fill_struct(chunk: Pair<Rule>) -> Struct {
+    fn fill_struct(chunk: Pair<Rule>, doc_comments: &str) -> Struct {
         let mut sdef = Struct::default();
+
+        sdef.doc_comments = doc_comments.to_owned();
 
         for entry in chunk.into_inner() {
             match entry.as_rule() {
@@ -359,17 +376,33 @@ impl ApiParser {
     fn fill_field_list(rule: Pair<Rule>) -> (Vec<Variable>, Vec<Function>) {
         let mut var_entries = Vec::new();
         let mut func_entries = Vec::new();
+        let mut doc_comments = String::new();
 
         for entry in rule.into_inner() {
-            if entry.as_rule() == Rule::field {
-                let field = entry.clone().into_inner().next().unwrap();
+        	match entry.as_rule() {
+        		Rule::field => {
+					let field = entry.clone().into_inner().next().unwrap();
 
-                match field.as_rule() {
-                    Rule::var => var_entries.push(Self::get_variable(field)),
-                    Rule::function => func_entries.push(Self::get_function(field)),
-                    _ => (),
-                }
-            }
+					match field.as_rule() {
+						Rule::var => { 
+							var_entries.push(Self::get_variable(field, &doc_comments));
+							doc_comments.clear();
+						}
+						Rule::function => {
+							func_entries.push(Self::get_function(field, &doc_comments));
+							doc_comments.clear();
+						}
+						_ => (),
+					}
+				}
+
+				Rule::doc_comment => {
+					doc_comments.push_str(entry.as_str());
+					doc_comments.push_str("\n");
+				}
+
+				_ => (),
+        	}
         }
 
         (var_entries, func_entries)
@@ -394,8 +427,11 @@ impl ApiParser {
     ///
     /// Get data for function declaration
     ///
-    fn get_function(rule: Pair<Rule>) -> Function {
-        let mut function = Function::default();
+    fn get_function(rule: Pair<Rule>, doc_comments: &str) -> Function {
+        let mut function = Function {
+        	doc_comments: doc_comments.to_owned(),
+        	.. Function::default()
+        };
 
         for entry in rule.into_inner() {
             match entry.as_rule() {
@@ -404,7 +440,7 @@ impl ApiParser {
                 Rule::event => function.func_type = FunctionType::Event,
                 Rule::static_typ => function.func_type = FunctionType::Static,
                 Rule::varlist => function.function_args = Self::get_variable_list(entry),
-                Rule::retexp => function.return_val = Some(Self::get_variable(entry)),
+                Rule::retexp => function.return_val = Some(Self::get_variable(entry, "")),
                 Rule::org_name => {
                     function.cpp_name = entry
                         .into_inner()
@@ -452,7 +488,7 @@ impl ApiParser {
         });
 
         for entry in rule.into_inner() {
-            variables.push(Self::get_variable(entry));
+            variables.push(Self::get_variable(entry, ""));
         }
 
         variables
@@ -461,10 +497,12 @@ impl ApiParser {
     ///
     /// Get variable
     ///
-    fn get_variable(rule: Pair<Rule>) -> Variable {
+    fn get_variable(rule: Pair<Rule>, doc_comments: &str) -> Variable {
         let mut vtype = Rule::var;
         let mut var = Variable::default();
         let mut type_name = String::new();
+
+        var.doc_comments = doc_comments.to_owned();
 
         for entry in rule.into_inner() {
             match entry.as_rule() {
@@ -714,82 +752,6 @@ pub enum IsReturnType {
 /// Some helper functions for ApiDef
 ///
 impl ApiDef {
-    //
-    // Get a list of all the traits
-    //
-   	/*
-    pub fn get_all_traits<'a>(&'a self) -> Vec<&'a String> {
-        // Get all the traits name into a hashset so we can stort them afterwards
-        let traits = self
-            .class_structs
-            .iter()
-            .flat_map(|s| s.traits.iter())
-            .map(|t| t)
-            .collect::<HashSet<&'a String>>();
-
-        let mut sorted_traits = Vec::with_capacity(traits.len());
-        let mut sorted_list = traits.iter().collect::<Vec<&&'a String>>();
-
-        sorted_list.sort();
-        //sorted_list.collect()
-        //sorted_list.collect();
-
-        for entry in sorted_list {
-            sorted_traits.push(*entry);
-        }
-
-        sorted_traits
-    }
-    */
-
-    //
-    // Recursive get the structs
-    //
-	/*
-	fn recursive_get_inherit_structs<'a>(
-        sdef: &'a Struct,
-        api_def: &'a ApiDef,
-        include_self: RecurseIncludeSelf,
-        out_structs: &mut Vec<&'a Struct>,
-    ) {
-        sdef.inherit.as_ref().map(|name| {
-            api_def
-                .class_structs
-                .iter()
-                .find(|s| s.name == *name)
-                .map(|s| {
-                    Self::recursive_get_inherit_structs(
-                        s,
-                        api_def,
-                        RecurseIncludeSelf::Yes,
-                        out_structs,
-                    );
-                })
-        });
-
-        if include_self == RecurseIncludeSelf::Yes {
-            out_structs.push(sdef);
-        }
-    }
-    */
-
-    //
-    // Get a list of all the traits
-    //
-	/*
-	pub fn get_inherit_structs<'a>(
-        &'a self,
-        sdef: &'a Struct,
-        include_self: RecurseIncludeSelf,
-    ) -> Vec<&'a Struct> {
-        let mut out_structs = Vec::new();
-
-        Self::recursive_get_inherit_structs(sdef, self, include_self, &mut out_structs);
-
-        out_structs
-    }
-    */
-
     ///
     /// Get functions from all structs that matches the filter
     ///
@@ -1068,21 +1030,7 @@ impl Function {
         for (i, arg) in self.function_args.iter().enumerate() {
             if i == 0 {
                 match replace_first {
-                    //FirstArgName::Keep => (),
                     FirstArgName::Remove => continue,
-                    /*
-                               FirstArgName::Event(ref name) => {
-                               if arg_count > 0 {
-                               output.push_str(name);
-                               }
-
-                               if arg_count > 1 {
-                               output.push_str(", ");
-                               }
-
-                               continue;
-                               }
-                               */
                 }
             }
 

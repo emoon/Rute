@@ -12,6 +12,9 @@
 ///     We therefore do not need to provide a separate vertex class.
 /// 
 ///     \sa QVector2D, QVector4D, QQuaternion
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Vector3D {
     is_null() -> bool,

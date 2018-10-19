@@ -16,8 +16,9 @@ struct RUWidget;
 typedef struct RUWidgetFuncs {
     void (*destroy)(struct RUBase* self);
     void (*show)(struct RUBase* self_c);
-    void (*set_fixed_height)(struct RUBase* self_c, int width);
-    void (*set_fixed_width)(struct RUBase* self_c, int width);
+    void (*hide)(struct RUBase* self_c);
+    void (*set_fixed_width)(struct RUBase* self_c, int w);
+    void (*set_fixed_height)(struct RUBase* self_c, int h);
     void (*resize)(struct RUBase* self_c, int width, int height);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
     void (*update)(struct RUBase* self_c);

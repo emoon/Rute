@@ -131,6 +131,9 @@
 ///     \sa {Delegate Classes}, QItemDelegate, QAbstractItemDelegate, QStyle,
 ///         {Spin Box Delegate Example}, {Star Delegate Example}, {Color
 ///          Editor Factory Example}
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StyledItemDelegate : AbstractItemDelegate {
     [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     [event] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,

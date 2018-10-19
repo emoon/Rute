@@ -35,6 +35,9 @@
 /// 
 /// 
 ///     \sa QGraphicsLinearLayout, QGraphicsWidget
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsGridLayout : GraphicsLayout {
     add_item(item: *GraphicsLayoutItemType, row: i32, column: i32, row_span: i32, column_span: i32, alignment: Rute::Alignment),
     add_item(item: *GraphicsLayoutItemType, row: i32, column: i32, alignment: Rute::Alignment),

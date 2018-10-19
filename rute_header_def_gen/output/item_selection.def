@@ -37,6 +37,9 @@
 ///     smaller ranges based on a another selection range.
 /// 
 ///     \sa {Model/View Programming}, QItemSelectionModel
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ItemSelection {
     ///     Adds the items in the range that extends from the top-left model
