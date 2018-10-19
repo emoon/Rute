@@ -1,28 +1,188 @@
+///     \obsolete
+/// 
+///     \class QPictureIO
+/// 
+///     \brief The QPictureIO class contains parameters for loading and
+///     saving pictures.
+/// 
+///     \ingroup painting
+///     \ingroup io
+///     \inmodule QtGui
+/// 
+///     QPictureIO contains a QIODevice object that is used for picture data
+///     I/O. The programmer can install new picture file formats in addition
+///     to those that Qt provides.
+/// 
+///     You don't normally need to use this class; QPicture::load(),
+///     QPicture::save().
+/// 
+///     \sa QPicture, QPixmap, QFile
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PictureIO {
     picture() -> Picture?,
+    ///     Returns the picture's IO status. A non-zero value indicates an
+    ///     error, whereas 0 means that the IO operation was successful.
+    /// 
+    ///     \sa setStatus()
     status() -> i32,
+    ///     Returns the picture format string or 0 if no format has been
+    ///     explicitly set.
     format() -> char?,
+    ///     Returns the IO device currently set.
+    /// 
+    ///     \sa setIODevice()
     io_device() -> IODevice?,
+    ///     Returns the file name currently set.
+    /// 
+    ///     \sa setFileName()
     file_name() -> String,
+    ///     Returns the quality of the written picture, related to the
+    ///     compression ratio.
+    /// 
+    ///     \sa setQuality(), QPicture::save()
     quality() -> i32,
+    ///     Returns the picture description string.
+    /// 
+    ///     \sa setDescription()
     description() -> String,
+    ///     Returns the picture's parameters string.
+    /// 
+    ///     \sa setParameters()
     parameters() -> char?,
+    ///     Returns the gamma value at which the picture will be viewed.
+    /// 
+    ///     \sa setGamma()
     gamma() -> f32,
+    ///     Sets the picture to \a picture.
+    /// 
+    ///     \sa picture()
     set_picture(arg0: &PictureType),
+    ///     Sets the picture IO status to \a status. A non-zero value indicates
+    ///     an error, whereas 0 means that the IO operation was successful.
+    /// 
+    ///     \sa status()
     set_status(arg0: i32),
+    ///     Sets the picture format to \a format for the picture to be read or
+    ///     written.
+    /// 
+    ///     It is necessary to specify a format before writing an picture, but
+    ///     it is not necessary to specify a format before reading an picture.
+    /// 
+    ///     If no format has been set, Qt guesses the picture format before
+    ///     reading it. If a format is set the picture will only be read if it
+    ///     has that format.
+    /// 
+    ///     \sa read(), write(), format()
     set_format(arg0: *char),
+    ///     Sets the IO device to be used for reading or writing an picture.
+    /// 
+    ///     Setting the IO device allows pictures to be read/written to any
+    ///     block-oriented QIODevice.
+    /// 
+    ///     If \a ioDevice is not null, this IO device will override file name
+    ///     settings.
+    /// 
+    ///     \sa setFileName()
     set_io_device(arg0: *IODeviceType),
+    ///     Sets the name of the file to read or write an picture from to \a
+    ///     fileName.
+    /// 
+    ///     \sa setIODevice()
     set_file_name(arg0: String),
+    ///     Sets the quality of the written picture to \a q, related to the
+    ///     compression ratio.
+    /// 
+    ///     \a q must be in the range -1..100. Specify 0 to obtain small
+    ///     compressed files, 100 for large uncompressed files. (-1 signifies
+    ///     the default compression.)
+    /// 
+    ///     \sa quality(), QPicture::save()
     set_quality(arg0: i32),
+    ///     Sets the picture description string for picture handlers that support
+    ///     picture descriptions to \a description.
+    /// 
+    ///     Currently, no picture format supported by Qt uses the description
+    ///     string.
     set_description(arg0: String),
+    ///     Sets the picture's parameter string to \a parameters. This is for
+    ///     picture handlers that require special parameters.
+    /// 
+    ///     Although the current picture formats supported by Qt ignore the
+    ///     parameters string, it may be used in future extensions or by
+    ///     contributions (for example, JPEG).
+    /// 
+    ///     \sa parameters()
     set_parameters(arg0: *char),
+    ///     Sets the gamma value at which the picture will be viewed to \a
+    ///     gamma. If the picture format stores a gamma value for which the
+    ///     picture is intended to be used, then this setting will be used to
+    ///     modify the picture. Setting to 0.0 will disable gamma correction
+    ///     (i.e. any specification in the file will be ignored).
+    /// 
+    ///     The default value is 0.0.
+    /// 
+    ///     \sa gamma()
     set_gamma(arg0: f32),
+    ///     Reads an picture into memory and returns \c true if the picture was
+    ///     successfully read; otherwise returns \c false.
+    /// 
+    ///     Before reading an picture you must set an IO device or a file name.
+    ///     If both an IO device and a file name have been set, the IO device
+    ///     will be used.
+    /// 
+    ///     Setting the picture file format string is optional.
+    /// 
+    ///     Note that this function does \e not set the \l{format()}{format} used to read the picture. If you need that
+    ///     information, use the pictureFormat() static functions.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet picture/picture.cpp 4
+    /// 
+    ///     \sa setIODevice(), setFileName(), setFormat(), write(), QPixmap::load()
     read() -> bool,
+    ///     Writes an picture to an IO device and returns \c true if the picture was
+    ///     successfully written; otherwise returns \c false.
+    /// 
+    ///     Before writing an picture you must set an IO device or a file name.
+    ///     If both an IO device and a file name have been set, the IO device
+    ///     will be used.
+    /// 
+    ///     The picture will be written using the specified picture format.
+    /// 
+    ///     Example:
+    ///     \snippet picture/picture.cpp 5
+    /// 
+    ///     \sa setIODevice(), setFileName(), setFormat(), read(), QPixmap::save()
     write() -> bool,
+    ///     \overload
+    /// 
+    ///     Returns a string that specifies the picture format of the picture read
+    ///     from IO device \a d, or 0 if the device cannot be read or if the
+    ///     format is not recognized.
+    /// 
+    ///     Make sure that \a d is at the right position in the device (for
+    ///     example, at the beginning of the file).
+    /// 
+    ///     \sa QIODevice::pos()
     [static] picture_format(file_name: String) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Returns a string that specifies the picture format of the picture read
+    ///     from IO device \a d, or 0 if the device cannot be read or if the
+    ///     format is not recognized.
+    /// 
+    ///     Make sure that \a d is at the right position in the device (for
+    ///     example, at the beginning of the file).
+    /// 
+    ///     \sa QIODevice::pos()
     [static] picture_format(arg0: *IODeviceType) -> ByteArray,
+    ///     Returns a sorted list of picture formats that are supported for
+    ///     picture input.
     [static] input_formats() -> [ByteArray],
+    ///     Returns a sorted list of picture formats that are supported for
+    ///     picture output.
     [static] output_formats() -> [ByteArray],
     [static] define_io_handler(format: *char, header: *char, flags: *char, read_picture: picture_io_handler, write_picture: picture_io_handler),
 }

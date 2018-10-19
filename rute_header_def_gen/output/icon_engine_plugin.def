@@ -1,3 +1,28 @@
+///     \class QIconEnginePlugin
+///     \brief The QIconEnginePlugin class provides an abstract base for custom QIconEngine plugins.
+/// 
+///     \ingroup plugins
+///     \inmodule QtGui
+/// 
+///     The icon engine plugin is a simple plugin interface that makes it easy to
+///     create custom icon engines that can be loaded dynamically into applications
+///     through QIcon. QIcon uses the file or resource name's suffix to determine
+///     what icon engine to use.
+/// 
+///     Writing a icon engine plugin is achieved by subclassing this base class,
+///     reimplementing the pure virtual function create(), and
+///     exporting the class with the Q_PLUGIN_METADATA() macro.
+/// 
+///     The json metadata should contain a list of icon engine keys that this plugin supports.
+///     The keys correspond to the suffix of the file or resource name used when the plugin was
+///     created. Keys are case insensitive.
+/// 
+///     \code
+///     { "Keys": [ "myiconengine" ] }
+///     \endcode
+/// 
+///     \sa {How to Create Qt Plugins}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct IconEnginePlugin : Object {
     [event] create(filename: String) -> IconEngine?,
 }

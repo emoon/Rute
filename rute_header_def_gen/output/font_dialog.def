@@ -1,3 +1,26 @@
+///   \class QFontDialog
+///   \ingroup standard-dialogs
+///   \inmodule QtWidgets
+/// 
+///   \brief The QFontDialog class provides a dialog widget for selecting a font.
+/// 
+///     A font dialog is created through one of the static getFont()
+///     functions.
+/// 
+///   Examples:
+/// 
+///   \snippet code/src_gui_dialogs_qfontdialog.cpp 0
+/// 
+///     The dialog can also be used to set a widget's font directly:
+///   \snippet code/src_gui_dialogs_qfontdialog.cpp 1
+///   If the user clicks OK the font they chose will be used for myWidget,
+///   and if they click Cancel the original font is used.
+/// 
+///   \image fusion-fontdialog.png A font dialog in the Fusion widget style.
+/// 
+///   \sa QFont, QFontInfo, QFontMetrics, QColorDialog, QFileDialog,
+///       {Standard Dialogs Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QFontDialog)]
 enum FontDialogOption {
     NoButtons,
@@ -9,21 +32,110 @@ enum FontDialogOption {
 }
 
 struct FontDialog : Dialog {
+    ///     \since 4.5
+    /// 
+    ///     Sets the font highlighted in the QFontDialog to the given \a font.
+    /// 
+    ///     \sa selectedFont()
     set_current_font(font: &FontType),
+    ///     \since 4.5
+    /// 
+    ///     Returns the current font.
+    /// 
+    ///     \sa selectedFont()
     current_font() -> Font,
+    ///     Returns the font that the user selected by clicking the \uicontrol{OK}
+    ///     or equivalent button.
+    /// 
+    ///     \note This font is not always the same as the font held by the
+    ///     \l currentFont property since the user can choose different fonts
+    ///     before finally selecting the one to use.
     selected_font() -> Font,
+    ///     Sets the given \a option to be enabled if \a on is true;
+    ///     otherwise, clears the given \a option.
+    /// 
+    ///     \sa options, testOption()
     set_option(option: FontDialog::FontDialogOption, on: bool),
+    ///     Returns \c true if the given \a option is enabled; otherwise, returns
+    ///     false.
+    /// 
+    ///     \sa options, setOption()
     test_option(option: FontDialog::FontDialogOption) -> bool,
+    ///     \property QFontDialog::options
+    ///     \brief the various options that affect the look and feel of the dialog
+    ///     \since 4.5
+    /// 
+    ///     By default, all options are disabled.
+    /// 
+    ///     Options should be set before showing the dialog. Setting them while the
+    ///     dialog is visible is not guaranteed to have an immediate effect on the
+    ///     dialog (depending on the option and on the platform).
+    /// 
+    ///     \sa setOption(), testOption()
     set_options(options: FontDialog::FontDialogOptions),
     options() -> FontDialog::FontDialogOptions,
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     Opens the dialog and connects its fontSelected() signal to the slot specified
+    ///     by \a receiver and \a member.
+    /// 
+    ///     The signal will be disconnected from the slot when the dialog is closed.
     open(receiver: *ObjectType, member: *char),
+    ///     \reimp
     [event] set_visible(visible: bool),
+    ///     \overload
+    /// 
+    ///   Executes a modal font dialog and returns a font.
+    /// 
+    ///   If the user clicks \uicontrol OK, the selected font is returned. If the user
+    ///   clicks \uicontrol Cancel, the Qt default font is returned.
+    /// 
+    ///   The dialog is constructed with the given \a parent.
+    ///   If the \a ok parameter is not-null, the value it refers to is set
+    ///   to true if the user clicks \uicontrol OK, and false if the user clicks
+    ///   \uicontrol Cancel.
+    /// 
+    ///   Example:
+    ///   \snippet code/src_gui_dialogs_qfontdialog.cpp 4
+    /// 
+    ///   \warning Do not delete \a parent during the execution of the dialog.
+    ///            If you want to do this, you should create the dialog
+    ///            yourself using one of the QFontDialog constructors.
     [static] get_font(ok: *bool, parent: *WidgetType) -> Font,
+    ///     \overload
+    /// 
+    ///   Executes a modal font dialog and returns a font.
+    /// 
+    ///   If the user clicks \uicontrol OK, the selected font is returned. If the user
+    ///   clicks \uicontrol Cancel, the Qt default font is returned.
+    /// 
+    ///   The dialog is constructed with the given \a parent.
+    ///   If the \a ok parameter is not-null, the value it refers to is set
+    ///   to true if the user clicks \uicontrol OK, and false if the user clicks
+    ///   \uicontrol Cancel.
+    /// 
+    ///   Example:
+    ///   \snippet code/src_gui_dialogs_qfontdialog.cpp 4
+    /// 
+    ///   \warning Do not delete \a parent during the execution of the dialog.
+    ///            If you want to do this, you should create the dialog
+    ///            yourself using one of the QFontDialog constructors.
     [static] get_font(ok: *bool, initial: &FontType, parent: *WidgetType, title: String, options: FontDialog::FontDialogOptions) -> Font,
     [signal] current_font_changed(font: &FontType),
     [signal] font_selected(font: &FontType),
+    ///     \reimp
     [event] change_event(event: *EventType),
+    ///   Closes the dialog and sets its result code to \a result. If this dialog
+    ///   is shown with exec(), done() causes the local event loop to finish,
+    ///   and exec() to return \a result.
+    /// 
+    ///   \sa QDialog::done()
     [event] done(result: i32),
+    ///     \internal
+    ///     An event filter to make the Up, Down, PageUp and PageDown keys work
+    ///     correctly in the line edits. The source of the event is the object
+    ///     \a o and the event is \a e.
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
 }
 

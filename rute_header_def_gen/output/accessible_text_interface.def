@@ -1,3 +1,20 @@
+///     \class QAccessibleTextInterface
+///     \inmodule QtGui
+/// 
+///     \ingroup accessibility
+/// 
+///     \brief The QAccessibleTextInterface class implements support for text handling.
+/// 
+///     This interface corresponds to the IAccessibleText interface.
+///     It should be implemented for widgets that display more text than a plain label.
+///     Labels should be represented by only \l QAccessibleInterface
+///     and return their text as name (\l QAccessibleInterface::text() with \l QAccessible::Name as type).
+///     The QAccessibleTextInterface is typically for text that a screen reader
+///     might want to read line by line, and for widgets that support text selection and input.
+///     This interface is, for example, implemented for QLineEdit.
+/// 
+///     \l{IAccessible2 Specification}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleTextInterface {
     [event] selection(selection_index: i32, start_offset: *i32, end_offset: *i32),

@@ -1,3 +1,58 @@
+///     \class QTextObjectInterface
+///     \brief The QTextObjectInterface class allows drawing of
+///            custom text objects in \l{QTextDocument}s.
+///     \since 4.5
+///     \inmodule QtGui
+/// 
+///     A text object describes the structure of one or more elements in a
+///     text document; for instance, images imported from HTML are
+///     implemented using text objects. A text object knows how to lay out
+///     and draw its elements when a document is being rendered.
+/// 
+///     Qt allows custom text objects to be inserted into a document by
+///     registering a custom \l{QTextCharFormat::objectType()}{object
+///     type} with QTextCharFormat. A QTextObjectInterface must also be
+///     implemented for this type and be
+///     \l{QAbstractTextDocumentLayout::registerHandler()}{registered}
+///     with the QAbstractTextDocumentLayout of the document. When the
+///     object type is encountered while rendering a QTextDocument, the
+///     intrinsicSize() and drawObject() functions of the interface are
+///     called.
+/// 
+///     The following list explains the required steps of inserting a
+///     custom text object into a document:
+/// 
+///     \list
+///         \li Choose an \a objectType. The \a objectType is an integer with a
+///             value greater or equal to QTextFormat::UserObject.
+///          \li Create a QTextCharFormat object and set the object type to the
+///             chosen type using the setObjectType() function.
+///          \li Implement the QTextObjectInterface class.
+///          \li Call QAbstractTextDocumentLayout::registerHandler() with an instance of your
+///             QTextObjectInterface subclass to register your object type.
+///          \li Insert QChar::ObjectReplacementCharacter with the aforementioned
+///             QTextCharFormat of the chosen object type into the document.
+///             As mentioned, the functions of QTextObjectInterface
+///             \l{QTextObjectInterface::}{intrinsicSize()} and
+///             \l{QTextObjectInterface::}{drawObject()} will then be called with the
+///             QTextFormat as parameter whenever the replacement character is
+///             encountered.
+///     \endlist
+/// 
+///     A class implementing a text object needs to inherit both QObject
+///     and QTextObjectInterface. QObject must be the first class
+///     inherited. For instance:
+/// 
+///     \snippet qtextobject/textobjectinterface.h 0
+/// 
+///     The data of a text object is usually stored in the QTextCharFormat
+///     using QTextCharFormat::setProperty(), and then retrieved with
+///     QTextCharFormat::property().
+/// 
+///     \warning Copy and Paste operations ignore custom text objects.
+/// 
+///     \sa {Text Object Example}, QTextCharFormat, QTextLayout
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextObjectInterface {
     [event] draw_object(painter: *PainterType, rect: &RectFType, doc: *TextDocumentType, pos_in_document: i32, format: &TextFormatType),

@@ -1,3 +1,4 @@
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QFileDialogOptions)]
 enum ViewMode {
     Detail,
@@ -62,6 +63,13 @@ struct FileDialogOptions {
     accept_mode() -> FileDialogOptions::AcceptMode,
     set_sidebar_urls(urls: [UrlType]),
     sidebar_urls() -> [Url],
+    ///     \since 5.7
+    ///     \internal
+    ///     The bool property useDefaultNameFilters indicates that no name filters have been
+    ///     set or that they are equivalent to \gui{All Files (*)}. If it is true, the
+    ///     platform can choose to hide the filter combo box.
+    /// 
+    ///     \sa defaultNameFilterString().
     use_default_name_filters() -> bool,
     set_use_default_name_filters(d: bool),
     set_name_filters(filters: &[String]),

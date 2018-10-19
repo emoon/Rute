@@ -1,17 +1,87 @@
+///     \class QGraphicsSceneHoverEvent
+///     \brief The QGraphicsSceneHoverEvent class provides hover events
+///            in the graphics view framework.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     When a QGraphicsView receives a QHoverEvent event, it translates
+///     it into QGraphicsSceneHoverEvent. The event is then forwarded to
+///     the QGraphicsScene associated with the view.
+/// 
+///     \sa QGraphicsSceneMouseEvent, QGraphicsSceneContextMenuEvent,
+///         QGraphicsSceneWheelEvent, QHoverEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
+    ///     Returns the position of the mouse cursor in item coordinates at the moment
+    ///     the hover event was sent.
+    /// 
+    ///     \sa scenePos(), screenPos()
     pos() -> PointF,
+    ///     \fn void QGraphicsSceneHoverEvent::setPos(const QPointF &point)
+    ///     \internal
+    /// 
+    ///     Sets the position associated with the hover event to the given \a point in
+    ///     item coordinates.
     set_pos(pos: &PointFType),
+    ///     Returns the position of the mouse cursor in scene coordinates at the
+    ///     moment the hover event was sent.
+    /// 
+    ///     \sa pos(), screenPos()
     scene_pos() -> PointF,
+    ///     \fn void QGraphicsSceneHoverEvent::setScenePos(const QPointF &point)
+    ///     \internal
+    /// 
+    ///     Sets the position associated with the hover event to the given \a point in
+    ///     scene coordinates.
     set_scene_pos(pos: &PointFType),
+    ///     Returns the position of the mouse cursor in screen coordinates at the
+    ///     moment the hover event was sent.
+    /// 
+    ///     \sa pos(), scenePos()
     screen_pos() -> Point,
+    ///     \fn void QGraphicsSceneHoverEvent::setScreenPos(const QPoint &point)
+    ///     \internal
+    /// 
+    ///     Sets the position associated with the hover event to the given \a point in
+    ///     screen coordinates.
     set_screen_pos(pos: &PointType),
+    ///     \since 4.4
+    /// 
+    ///     Returns the last recorded mouse cursor position in item coordinates.
+    /// 
+    ///     \sa lastScenePos(), lastScreenPos(), pos()
     last_pos() -> PointF,
+    ///     \internal
     set_last_pos(pos: &PointFType),
+    ///     \since 4.4
+    /// 
+    ///     Returns the last recorded, the scene coordinates of the previous mouse or
+    ///     hover event received by the view, that created the event mouse cursor
+    ///     position in scene coordinates.
+    /// 
+    ///     \sa lastPos(), lastScreenPos(), scenePos()
     last_scene_pos() -> PointF,
+    ///     \internal
     set_last_scene_pos(pos: &PointFType),
+    ///     \since 4.4
+    /// 
+    ///     Returns the last recorded mouse cursor position in screen coordinates. The
+    ///     last recorded position is the position of the previous mouse or hover
+    ///     event received by the view that created the event.
+    /// 
+    ///     \sa lastPos(), lastScenePos(), screenPos()
     last_screen_pos() -> Point,
+    ///     \internal
     set_last_screen_pos(pos: &PointType),
+    ///     \since 4.4
+    /// 
+    ///     Returns the keyboard modifiers at the moment the hover event was sent.
     modifiers() -> Rute::KeyboardModifiers,
+    ///     \fn void QGraphicsSceneHoverEvent::setModifiers(Qt::KeyboardModifiers modifiers)
+    ///     \internal
+    /// 
+    ///     Sets the modifiers for the current hover event to \a modifiers.
     set_modifiers(modifiers: Rute::KeyboardModifiers),
 }
 

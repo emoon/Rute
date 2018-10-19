@@ -1,3 +1,47 @@
+///     \class QStyleOption
+///     \brief The QStyleOption class stores the parameters used by QStyle functions.
+/// 
+///     \ingroup appearance
+///     \inmodule QtWidgets
+/// 
+///     QStyleOption and its subclasses contain all the information that
+///     QStyle functions need to draw a graphical element.
+/// 
+///     For performance reasons, there are few member functions and the
+///     access to the member variables is direct (i.e., using the \c . or
+///     \c -> operator). This low-level feel makes the structures
+///     straightforward to use and emphasizes that these are simply
+///     parameters used by the style functions.
+/// 
+///     The caller of a QStyle function usually creates QStyleOption
+///     objects on the stack. This combined with Qt's extensive use of
+///     \l{implicit sharing} for types such as QString, QPalette, and
+///     QColor ensures that no memory allocation needlessly takes place.
+/// 
+///     The following code snippet shows how to use a specific
+///     QStyleOption subclass to paint a push button:
+/// 
+///     \snippet qstyleoption/main.cpp 0
+/// 
+///     In our example, the control is a QStyle::CE_PushButton, and
+///     according to the QStyle::drawControl() documentation the
+///     corresponding class is QStyleOptionButton.
+/// 
+///     When reimplementing QStyle functions that take a QStyleOption
+///     parameter, you often need to cast the QStyleOption to a subclass.
+///     For safety, you can use qstyleoption_cast() to ensure that the
+///     pointer type is correct. For example:
+/// 
+///     \snippet qstyleoption/main.cpp 4
+/// 
+///     The qstyleoption_cast() function will return 0 if the object to
+///     which \c option points is not of the correct type.
+/// 
+///     For an example demonstrating how style options can be used, see
+///     the \l {widgets/styles}{Styles} example.
+/// 
+///     \sa QStyle, QStylePainter
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleOption)]
 enum OptionType {
     SO_Default,
@@ -40,6 +84,9 @@ enum StyleOptionVersion {
 
 
 struct StyleOption {
+    ///     \obsolete
+    /// 
+    ///     Use initFrom(\a widget) instead.
     init(w: *WidgetType),
     init_from(w: *WidgetType),
 }

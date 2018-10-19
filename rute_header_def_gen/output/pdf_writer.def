@@ -1,14 +1,47 @@
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PdfWriter : Object, PagedPaintDevice {
+    ///     \since 5.10
+    /// 
+    ///     Sets the PDF version for this writer to \a version.
+    /// 
+    ///     If \a version is the same value as currently set then no change will be made.
     set_pdf_version(version: PagedPaintDevice::PdfVersion),
+    ///     \since 5.10
+    /// 
+    ///     Returns the PDF version for this writer. The default is \c PdfVersion_1_4.
     pdf_version() -> PagedPaintDevice::PdfVersion,
     title() -> String,
     set_title(title: String),
     creator() -> String,
     set_creator(creator: String),
+    ///   \reimp
     [event] new_page() -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Sets the PDF \a resolution in DPI.
+    /// 
+    ///     This setting affects the coordinate system as returned by, for
+    ///     example QPainter::viewport().
+    /// 
+    ///     \sa resolution()
     set_resolution(resolution: i32),
+    ///     \since 5.3
+    /// 
+    ///     Returns the resolution of the PDF in DPI.
+    /// 
+    ///     \sa setResolution()
     resolution() -> i32,
+    ///     \reimp
+    /// 
+    ///     \obsolete Use setPageSize(QPageSize(id)) instead
+    /// 
+    ///     \sa setPageSize()
     [event] set_page_size(size: PagedPaintDevice::PageSize),
+    ///     \reimp
+    /// 
+    ///     \obsolete Use setPageSize(QPageSize(size, QPageSize::Millimeter)) instead
+    /// 
+    ///     \sa setPageSize()
     [event] set_page_size_mm(size: &SizeFType),
     [event] set_margins(m: onst QPagedPaintDevice::Margins &),
     [event] paint_engine() -> PaintEngine?,

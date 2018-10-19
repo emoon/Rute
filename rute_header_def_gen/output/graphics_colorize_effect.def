@@ -1,7 +1,26 @@
+///     \class QGraphicsColorizeEffect
+///     \brief The QGraphicsColorizeEffect class provides a colorize effect.
+///     \since 4.6
+///     \inmodule QtWidgets
+/// 
+///     A colorize effect renders the source with a tint of its color(). The color
+///     can be modified using the setColor() function.
+/// 
+///     By default, the color is light blue (QColor(0, 0, 192)).
+/// 
+///     \image graphicseffect-colorize.png
+/// 
+///     \sa QGraphicsDropShadowEffect, QGraphicsBlurEffect, QGraphicsOpacityEffect
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsColorizeEffect : GraphicsEffect {
+    ///     \property QGraphicsColorizeEffect::color
+    ///     \brief the color of the effect.
+    /// 
+    ///     By default, the color is light blue (QColor(0, 0, 192)).
     color() -> Color,
     set_color(c: &ColorType),
     [signal] color_changed(color: &ColorType),
+    ///     \reimp
     [event] draw(painter: *PainterType),
 }
 

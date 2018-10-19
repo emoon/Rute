@@ -1,3 +1,13 @@
+///     \class QQuaternion
+///     \brief The QQuaternion class represents a quaternion consisting of a vector and scalar.
+///     \since 4.6
+///     \ingroup painting-3D
+///     \inmodule QtGui
+/// 
+///     Quaternions are used to represent rotations in 3D space, and
+///     consist of a 3D rotation axis specified by the x, y, and z
+///     coordinates, and a scalar representing the rotation angle.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Quaternion {
     is_null() -> bool,
@@ -14,26 +24,122 @@ struct Quaternion {
     set_z(z: f32),
     set_scalar(scalar: f32),
     [static] dot_product(q1: &QuaternionType, q2: &QuaternionType) -> f32,
+    ///     Returns the length of the quaternion.  This is also called the "norm".
+    /// 
+    ///     \sa lengthSquared(), normalized(), dotProduct()
     length() -> f32,
+    ///     Returns the squared length of the quaternion.
+    /// 
+    ///     \sa length(), dotProduct()
     length_squared() -> f32,
+    ///     Returns the normalized unit form of this quaternion.
+    /// 
+    ///     If this quaternion is null, then a null quaternion is returned.
+    ///     If the length of the quaternion is very close to 1, then the quaternion
+    ///     will be returned as-is.  Otherwise the normalized form of the
+    ///     quaternion of length 1 will be returned.
+    /// 
+    ///     \sa normalize(), length(), dotProduct()
     normalized() -> Quaternion,
+    ///     Normalizes the current quaternion in place.  Nothing happens if this
+    ///     is a null quaternion or the length of the quaternion is very close to 1.
+    /// 
+    ///     \sa length(), normalized()
     normalize(),
     inverted() -> Quaternion,
     conjugated() -> Quaternion,
     conjugate() -> Quaternion,
+    ///     Rotates \a vector with this quaternion to produce a new vector
+    ///     in 3D space.  The following code:
+    /// 
+    ///     \code
+    ///     QVector3D result = q.rotatedVector(vector);
+    ///     \endcode
+    /// 
+    ///     is equivalent to the following:
+    /// 
+    ///     \code
+    ///     QVector3D result = (q * QQuaternion(0, vector) * q.conjugated()).vector();
+    ///     \endcode
     rotated_vector(vector: &Vector3DType) -> Vector3D,
     to_vector4_d() -> Vector4D,
+    ///     \since 5.5
+    /// 
+    ///     Extracts a 3D axis (\a x, \a y, \a z) and a rotating angle \a angle (in degrees)
+    ///     that corresponds to this quaternion.
+    /// 
+    ///     \sa fromAxisAndAngle()
     get_axis_and_angle(axis: *Vector3DType, angle: *f32),
+    ///     Creates a normalized quaternion that corresponds to rotating through
+    ///     \a angle degrees about the specified 3D \a axis.
+    /// 
+    ///     \sa getAxisAndAngle()
     [static] from_axis_and_angle(axis: &Vector3DType, angle: f32) -> Quaternion,
+    ///     \since 5.5
+    /// 
+    ///     Extracts a 3D axis (\a x, \a y, \a z) and a rotating angle \a angle (in degrees)
+    ///     that corresponds to this quaternion.
+    /// 
+    ///     \sa fromAxisAndAngle()
     get_axis_and_angle(x: *f32, y: *f32, z: *f32, angle: *f32),
+    ///     Creates a normalized quaternion that corresponds to rotating through
+    ///     \a angle degrees about the specified 3D \a axis.
+    /// 
+    ///     \sa getAxisAndAngle()
     [static] from_axis_and_angle(x: f32, y: f32, z: f32, angle: f32) -> Quaternion,
     to_euler_angles() -> Vector3D,
+    ///     \since 5.5
+    /// 
+    ///     Creates a quaternion that corresponds to a rotation of
+    ///     \a roll degrees around the z axis, \a pitch degrees around the x axis,
+    ///     and \a yaw degrees around the y axis (in that order).
+    /// 
+    ///     \sa getEulerAngles()
     [static] from_euler_angles(euler_angles: &Vector3DType) -> Quaternion,
+    ///     \since 5.5
+    /// 
+    ///     Calculates \a roll, \a pitch, and \a yaw Euler angles (in degrees)
+    ///     that corresponds to this quaternion.
+    /// 
+    ///     \sa fromEulerAngles()
     get_euler_angles(pitch: *f32, yaw: *f32, roll: *f32),
+    ///     \since 5.5
+    /// 
+    ///     Creates a quaternion that corresponds to a rotation of
+    ///     \a roll degrees around the z axis, \a pitch degrees around the x axis,
+    ///     and \a yaw degrees around the y axis (in that order).
+    /// 
+    ///     \sa getEulerAngles()
     [static] from_euler_angles(pitch: f32, yaw: f32, roll: f32) -> Quaternion,
+    ///     \since 5.5
+    /// 
+    ///     Returns the 3 orthonormal axes (\a xAxis, \a yAxis, \a zAxis) defining the quaternion.
+    /// 
+    ///     \sa fromAxes(), toRotationMatrix()
     get_axes(x_axis: *Vector3DType, y_axis: *Vector3DType, z_axis: *Vector3DType),
+    ///     \since 5.5
+    /// 
+    ///     Constructs the quaternion using 3 axes (\a xAxis, \a yAxis, \a zAxis).
+    /// 
+    ///     \note The axes are assumed to be orthonormal.
+    /// 
+    ///     \sa getAxes(), fromRotationMatrix()
     [static] from_axes(x_axis: &Vector3DType, y_axis: &Vector3DType, z_axis: &Vector3DType) -> Quaternion,
+    ///     \since 5.5
+    /// 
+    ///     Constructs the quaternion using specified forward direction \a direction
+    ///     and upward direction \a up.
+    ///     If the upward direction was not specified or the forward and upward
+    ///     vectors are collinear, a new orthonormal upward direction will be generated.
+    /// 
+    ///     \sa fromAxes(), rotationTo()
     [static] from_direction(direction: &Vector3DType, up: &Vector3DType) -> Quaternion,
+    ///     \since 5.5
+    /// 
+    ///     Returns the shortest arc quaternion to rotate from the direction described by the vector \a from
+    ///     to the direction described by the vector \a to.
+    /// 
+    ///     \sa fromDirection()
     [static] rotation_to(from: &Vector3DType, to: &Vector3DType) -> Quaternion,
     [static] slerp(q1: &QuaternionType, q2: &QuaternionType, t: f32) -> Quaternion,
     [static] nlerp(q1: &QuaternionType, q2: &QuaternionType, t: f32) -> Quaternion,

@@ -1,3 +1,362 @@
+///     \class QString
+///     \inmodule QtCore
+///     \reentrant
+/// 
+///     \brief The QString class provides a Unicode character string.
+/// 
+///     \ingroup tools
+///     \ingroup shared
+///     \ingroup string-processing
+/// 
+///     QString stores a string of 16-bit \l{QChar}s, where each QChar
+///     corresponds to one UTF-16 code unit. (Unicode characters
+///     with code values above 65535 are stored using surrogate pairs,
+///     i.e., two consecutive \l{QChar}s.)
+/// 
+///     \l{Unicode} is an international standard that supports most of the
+///     writing systems in use today. It is a superset of US-ASCII (ANSI
+///     X3.4-1986) and Latin-1 (ISO 8859-1), and all the US-ASCII/Latin-1
+///     characters are available at the same code positions.
+/// 
+///     Behind the scenes, QString uses \l{implicit sharing}
+///     (copy-on-write) to reduce memory usage and to avoid the needless
+///     copying of data. This also helps reduce the inherent overhead of
+///     storing 16-bit characters instead of 8-bit characters.
+/// 
+///     In addition to QString, Qt also provides the QByteArray class to
+///     store raw bytes and traditional 8-bit '\\0'-terminated strings.
+///     For most purposes, QString is the class you want to use. It is
+///     used throughout the Qt API, and the Unicode support ensures that
+///     your applications will be easy to translate if you want to expand
+///     your application's market at some point. The two main cases where
+///     QByteArray is appropriate are when you need to store raw binary
+///     data, and when memory conservation is critical (like in embedded
+///     systems).
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Initializing a String
+/// 
+///     One way to initialize a QString is simply to pass a \c{const char
+///     *} to its constructor. For example, the following code creates a
+///     QString of size 5 containing the data "Hello":
+/// 
+///     \snippet qstring/main.cpp 0
+/// 
+///     QString converts the \c{const char *} data into Unicode using the
+///     fromUtf8() function.
+/// 
+///     In all of the QString functions that take \c{const char *}
+///     parameters, the \c{const char *} is interpreted as a classic
+///     C-style '\\0'-terminated string encoded in UTF-8. It is legal for
+///     the \c{const char *} parameter to be 0.
+/// 
+///     You can also provide string data as an array of \l{QChar}s:
+/// 
+///     \snippet qstring/main.cpp 1
+/// 
+///     QString makes a deep copy of the QChar data, so you can modify it
+///     later without experiencing side effects. (If for performance
+///     reasons you don't want to take a deep copy of the character data,
+///     use QString::fromRawData() instead.)
+/// 
+///     Another approach is to set the size of the string using resize()
+///     and to initialize the data character per character. QString uses
+///     0-based indexes, just like C++ arrays. To access the character at
+///     a particular index position, you can use \l operator[](). On
+///     non-const strings, \l operator[]() returns a reference to a
+///     character that can be used on the left side of an assignment. For
+///     example:
+/// 
+///     \snippet qstring/main.cpp 2
+/// 
+///     For read-only access, an alternative syntax is to use the at()
+///     function:
+/// 
+///     \snippet qstring/main.cpp 3
+/// 
+///     The at() function can be faster than \l operator[](), because it
+///     never causes a \l{deep copy} to occur. Alternatively, use the
+///     left(), right(), or mid() functions to extract several characters
+///     at a time.
+/// 
+///     A QString can embed '\\0' characters (QChar::Null). The size()
+///     function always returns the size of the whole string, including
+///     embedded '\\0' characters.
+/// 
+///     After a call to the resize() function, newly allocated characters
+///     have undefined values. To set all the characters in the string to
+///     a particular value, use the fill() function.
+/// 
+///     QString provides dozens of overloads designed to simplify string
+///     usage. For example, if you want to compare a QString with a string
+///     literal, you can write code like this and it will work as expected:
+/// 
+///     \snippet qstring/main.cpp 4
+/// 
+///     You can also pass string literals to functions that take QStrings
+///     as arguments, invoking the QString(const char *)
+///     constructor. Similarly, you can pass a QString to a function that
+///     takes a \c{const char *} argument using the \l qPrintable() macro
+///     which returns the given QString as a \c{const char *}. This is
+///     equivalent to calling <QString>.toLocal8Bit().constData().
+/// 
+///     \section1 Manipulating String Data
+/// 
+///     QString provides the following basic functions for modifying the
+///     character data: append(), prepend(), insert(), replace(), and
+///     remove(). For example:
+/// 
+///     \snippet qstring/main.cpp 5
+/// 
+///     If you are building a QString gradually and know in advance
+///     approximately how many characters the QString will contain, you
+///     can call reserve(), asking QString to preallocate a certain amount
+///     of memory. You can also call capacity() to find out how much
+///     memory QString actually allocated.
+/// 
+///     The replace() and remove() functions' first two arguments are the
+///     position from which to start erasing and the number of characters
+///     that should be erased.  If you want to replace all occurrences of
+///     a particular substring with another, use one of the two-parameter
+///     replace() overloads.
+/// 
+///     A frequent requirement is to remove whitespace characters from a
+///     string ('\\n', '\\t', ' ', etc.). If you want to remove whitespace
+///     from both ends of a QString, use the trimmed() function. If you
+///     want to remove whitespace from both ends and replace multiple
+///     consecutive whitespaces with a single space character within the
+///     string, use simplified().
+/// 
+///     If you want to find all occurrences of a particular character or
+///     substring in a QString, use the indexOf() or lastIndexOf()
+///     functions. The former searches forward starting from a given index
+///     position, the latter searches backward. Both return the index
+///     position of the character or substring if they find it; otherwise,
+///     they return -1.  For example, here's a typical loop that finds all
+///     occurrences of a particular substring:
+/// 
+///     \snippet qstring/main.cpp 6
+/// 
+///     QString provides many functions for converting numbers into
+///     strings and strings into numbers. See the arg() functions, the
+///     setNum() functions, the number() static functions, and the
+///     toInt(), toDouble(), and similar functions.
+/// 
+///     To get an upper- or lowercase version of a string use toUpper() or
+///     toLower().
+/// 
+///     Lists of strings are handled by the QStringList class. You can
+///     split a string into a list of strings using the split() function,
+///     and join a list of strings into a single string with an optional
+///     separator using QStringList::join(). You can obtain a list of
+///     strings from a string list that contain a particular substring or
+///     that match a particular QRegExp using the QStringList::filter()
+///     function.
+/// 
+///     \section1 Querying String Data
+/// 
+///     If you want to see if a QString starts or ends with a particular
+///     substring use startsWith() or endsWith(). If you simply want to
+///     check whether a QString contains a particular character or
+///     substring, use the contains() function. If you want to find out
+///     how many times a particular character or substring occurs in the
+///     string, use count().
+/// 
+///     QStrings can be compared using overloaded operators such as \l
+///     operator<(), \l operator<=(), \l operator==(), \l operator>=(),
+///     and so on.  Note that the comparison is based exclusively on the
+///     numeric Unicode values of the characters. It is very fast, but is
+///     not what a human would expect; the QString::localeAwareCompare()
+///     function is a better choice for sorting user-interface strings.
+/// 
+///     To obtain a pointer to the actual character data, call data() or
+///     constData(). These functions return a pointer to the beginning of
+///     the QChar data. The pointer is guaranteed to remain valid until a
+///     non-const function is called on the QString.
+/// 
+///     \section1 Converting Between 8-Bit Strings and Unicode Strings
+/// 
+///     QString provides the following three functions that return a
+///     \c{const char *} version of the string as QByteArray: toUtf8(),
+///     toLatin1(), and toLocal8Bit().
+/// 
+///     \list
+///     \li toLatin1() returns a Latin-1 (ISO 8859-1) encoded 8-bit string.
+///     \li toUtf8() returns a UTF-8 encoded 8-bit string. UTF-8 is a
+///        superset of US-ASCII (ANSI X3.4-1986) that supports the entire
+///        Unicode character set through multibyte sequences.
+///     \li toLocal8Bit() returns an 8-bit string using the system's local
+///        encoding.
+///     \endlist
+/// 
+///     To convert from one of these encodings, QString provides
+///     fromLatin1(), fromUtf8(), and fromLocal8Bit(). Other
+///     encodings are supported through the QTextCodec class.
+/// 
+///     As mentioned above, QString provides a lot of functions and
+///     operators that make it easy to interoperate with \c{const char *}
+///     strings. But this functionality is a double-edged sword: It makes
+///     QString more convenient to use if all strings are US-ASCII or
+///     Latin-1, but there is always the risk that an implicit conversion
+///     from or to \c{const char *} is done using the wrong 8-bit
+///     encoding. To minimize these risks, you can turn off these implicit
+///     conversions by defining the following two preprocessor symbols:
+/// 
+///     \list
+///     \li \c QT_NO_CAST_FROM_ASCII disables automatic conversions from
+///        C string literals and pointers to Unicode.
+///     \li \c QT_RESTRICTED_CAST_FROM_ASCII allows automatic conversions
+///        from C characters and character arrays, but disables automatic
+///        conversions from character pointers to Unicode.
+///     \li \c QT_NO_CAST_TO_ASCII disables automatic conversion from QString
+///        to C strings.
+///     \endlist
+/// 
+///     One way to define these preprocessor symbols globally for your
+///     application is to add the following entry to your \l {Creating Project Files}{qmake project file}:
+/// 
+///     \snippet code/src_corelib_tools_qstring.cpp 0
+/// 
+///     You then need to explicitly call fromUtf8(), fromLatin1(),
+///     or fromLocal8Bit() to construct a QString from an
+///     8-bit string, or use the lightweight QLatin1String class, for
+///     example:
+/// 
+///     \snippet code/src_corelib_tools_qstring.cpp 1
+/// 
+///     Similarly, you must call toLatin1(), toUtf8(), or
+///     toLocal8Bit() explicitly to convert the QString to an 8-bit
+///     string.  (Other encodings are supported through the QTextCodec
+///     class.)
+/// 
+///     \table 100 %
+///     \header
+///     \li Note for C Programmers
+/// 
+///     \row
+///     \li
+///     Due to C++'s type system and the fact that QString is
+///     \l{implicitly shared}, QStrings may be treated like \c{int}s or
+///     other basic types. For example:
+/// 
+///     \snippet qstring/main.cpp 7
+/// 
+///     The \c result variable, is a normal variable allocated on the
+///     stack. When \c return is called, and because we're returning by
+///     value, the copy constructor is called and a copy of the string is
+///     returned. No actual copying takes place thanks to the implicit
+///     sharing.
+/// 
+///     \endtable
+/// 
+///     \section1 Distinction Between Null and Empty Strings
+/// 
+///     For historical reasons, QString distinguishes between a null
+///     string and an empty string. A \e null string is a string that is
+///     initialized using QString's default constructor or by passing
+///     (const char *)0 to the constructor. An \e empty string is any
+///     string with size 0. A null string is always empty, but an empty
+///     string isn't necessarily null:
+/// 
+///     \snippet qstring/main.cpp 8
+/// 
+///     All functions except isNull() treat null strings the same as empty
+///     strings. For example, toUtf8().constData() returns a pointer to a
+///     '\\0' character for a null string (\e not a null pointer), and
+///     QString() compares equal to QString(""). We recommend that you
+///     always use the isEmpty() function and avoid isNull().
+/// 
+///     \section1 Argument Formats
+/// 
+///     In member functions where an argument \e format can be specified
+///     (e.g., arg(), number()), the argument \e format can be one of the
+///     following:
+/// 
+///     \table
+///     \header \li Format \li Meaning
+///     \row \li \c e \li format as [-]9.9e[+|-]999
+///     \row \li \c E \li format as [-]9.9E[+|-]999
+///     \row \li \c f \li format as [-]9.9
+///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+///     \endtable
+/// 
+///     A \e precision is also specified with the argument \e format. For
+///     the 'e', 'E', and 'f' formats, the \e precision represents the
+///     number of digits \e after the decimal point. For the 'g' and 'G'
+///     formats, the \e precision represents the maximum number of
+///     significant digits (trailing zeroes are omitted).
+/// 
+///     \section1 More Efficient String Construction
+/// 
+///     Many strings are known at compile time. But the trivial
+///     constructor QString("Hello"), will copy the contents of the string,
+///     treating the contents as Latin-1. To avoid this one can use the
+///     QStringLiteral macro to directly create the required data at compile
+///     time. Constructing a QString out of the literal does then not cause
+///     any overhead at runtime.
+/// 
+///     A slightly less efficient way is to use QLatin1String. This class wraps
+///     a C string literal, precalculates it length at compile time and can
+///     then be used for faster comparison with QStrings and conversion to
+///     QStrings than a regular C string literal.
+/// 
+///     Using the QString \c{'+'} operator, it is easy to construct a
+///     complex string from multiple substrings. You will often write code
+///     like this:
+/// 
+///     \snippet qstring/stringbuilder.cpp 0
+/// 
+///     There is nothing wrong with either of these string constructions,
+///     but there are a few hidden inefficiencies. Beginning with Qt 4.6,
+///     you can eliminate them.
+/// 
+///     First, multiple uses of the \c{'+'} operator usually means
+///     multiple memory allocations. When concatenating \e{n} substrings,
+///     where \e{n > 2}, there can be as many as \e{n - 1} calls to the
+///     memory allocator.
+/// 
+///     In 4.6, an internal template class \c{QStringBuilder} has been
+///     added along with a few helper functions. This class is marked
+///     internal and does not appear in the documentation, because you
+///     aren't meant to instantiate it in your code. Its use will be
+///     automatic, as described below. The class is found in
+///     \c {src/corelib/tools/qstringbuilder.cpp} if you want to have a
+///     look at it.
+/// 
+///     \c{QStringBuilder} uses expression templates and reimplements the
+///     \c{'%'} operator so that when you use \c{'%'} for string
+///     concatenation instead of \c{'+'}, multiple substring
+///     concatenations will be postponed until the final result is about
+///     to be assigned to a QString. At this point, the amount of memory
+///     required for the final result is known. The memory allocator is
+///     then called \e{once} to get the required space, and the substrings
+///     are copied into it one by one.
+/// 
+///     Additional efficiency is gained by inlining and reduced reference
+///     counting (the QString created from a \c{QStringBuilder} typically
+///     has a ref count of 1, whereas QString::append() needs an extra
+///     test).
+/// 
+///     There are two ways you can access this improved method of string
+///     construction. The straightforward way is to include
+///     \c{QStringBuilder} wherever you want to use it, and use the
+///     \c{'%'} operator instead of \c{'+'} when concatenating strings:
+/// 
+///     \snippet qstring/stringbuilder.cpp 5
+/// 
+///     A more global approach which is the most convenient but
+///     not entirely source compatible, is to this define in your
+///     .pro file:
+/// 
+///     \snippet qstring/stringbuilder.cpp 3
+/// 
+///     and the \c{'+'} will automatically be performed as the
+///     \c{QStringBuilder} \c{'%'} everywhere.
+/// 
+///     \sa fromRawData(), QChar, QLatin1String, QByteArray, QStringRef
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QString)]
 enum SectionFlag {
     SectionDefault,
@@ -23,14 +382,62 @@ enum NormalizationForm {
 
 
 struct String {
+    ///   \fn QString::~QString()
+    /// 
+    ///     Destroys the string.
     swap(other: String),
     size() -> i32,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count() -> i32,
     length() -> i32,
     is_empty() -> bool,
+    ///     \overload
+    ///     \since 5.7
+    /// 
+    ///     Unlike \l {QString::}{resize(int)}, this overload
+    ///     initializes the new characters to \a fillChar:
+    /// 
+    ///     \snippet qstring/main.cpp 46
     resize(size: i32),
+    ///     \overload
+    ///     \since 5.7
+    /// 
+    ///     Unlike \l {QString::}{resize(int)}, this overload
+    ///     initializes the new characters to \a fillChar:
+    /// 
+    ///     \snippet qstring/main.cpp 46
     resize(size: i32, fill_char: CharType),
+    ///     Sets every character in the string to character \a ch. If \a size
+    ///     is different from -1 (default), the string is resized to \a
+    ///     size beforehand.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 21
+    /// 
+    ///     \sa resize()
     fill(c: CharType, size: i32) -> String?,
+    ///     Removes \a n characters from the end of the string.
+    /// 
+    ///     If \a n is greater than or equal to size(), the result is an
+    ///     empty string; if \a n is negative, it is equivalent to passing zero.
+    /// 
+    ///     Example:
+    ///     \snippet qstring/main.cpp 15
+    /// 
+    ///     If you want to remove characters from the \e beginning of the
+    ///     string, use remove() instead.
+    /// 
+    ///     \sa truncate(), resize(), remove(), QStringRef::chop()
     chop(n: i32),
     capacity() -> i32,
     reserve(size: i32),
@@ -48,83 +455,1193 @@ struct String {
     front() -> i32,
     back() -> Char,
     back() -> i32,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: i64, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: qulonglong, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: long, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: ulong, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: i32, field_width: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: uint, field_width: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: short, field_width: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: ushort, field_width: i32, base: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: double, field_width: i32, fmt: char, prec: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: char, field_width: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: CharType, field_width: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: String, field_width: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: StringViewType, field_width: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a: Latin1StringType, field_width: i32, fill_char: CharType) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String, a5: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String, a8: String) -> String,
+    ///   \fn QString QString::arg(double a, int fieldWidth, char format, int precision, QChar fillChar) const
+    ///   \overload arg()
+    /// 
+    ///   Argument \a a is formatted according to the specified \a format and
+    ///   \a precision. See \l{Argument Formats} for details.
+    /// 
+    ///   \a fieldWidth specifies the minimum amount of space that \a a is
+    ///   padded to and filled with the character \a fillChar.  A positive
+    ///   value produces right-aligned text; a negative value produces
+    ///   left-aligned text.
+    /// 
+    ///   \snippet code/src_corelib_tools_qstring.cpp 2
+    /// 
+    ///   The '%' can be followed by an 'L', in which case the sequence is
+    ///   replaced with a localized representation of \a a. The conversion
+    ///   uses the default locale, set by QLocale::setDefault(). If no
+    ///   default locale was specified, the "C" locale is used.
+    /// 
+    ///   If \a fillChar is '0' (the number 0, ASCII 48), this function will
+    ///   use the locale's zero to pad. For negative numbers, the zero padding
+    ///   will probably appear before the minus sign.
+    /// 
+    ///   \sa QLocale::toString()
     arg(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String, a8: String, a9: String) -> String,
     vsprintf(format: *char, ap: va_list) -> String?,
     sprintf(format: *char) -> String?,
+    ///     \fn QString QString::vasprintf(const char *cformat, va_list ap)
+    ///     \since 5.5
+    /// 
+    ///     Equivalent method to asprintf(), but takes a va_list \a ap
+    ///     instead a list of variable arguments. See the asprintf()
+    ///     documentation for an explanation of \a cformat.
+    /// 
+    ///     This method does not call the va_end macro, the caller
+    ///     is responsible to call va_end on \a ap.
+    /// 
+    ///     \sa asprintf()
     [static] vasprintf(format: *char, ap: va_list) -> String,
+    ///     \since 5.5
+    /// 
+    ///     Safely builds a formatted string from the format string \a cformat
+    ///     and an arbitrary list of arguments.
+    /// 
+    ///     The format string supports the conversion specifiers, length modifiers,
+    ///     and flags provided by printf() in the standard C++ library. The \a cformat
+    ///     string and \c{%s} arguments must be UTF-8 encoded.
+    /// 
+    ///     \note The \c{%lc} escape sequence expects a unicode character of type
+    ///     \c char16_t, or \c ushort (as returned by QChar::unicode()).
+    ///     The \c{%ls} escape sequence expects a pointer to a zero-terminated array
+    ///     of unicode characters of type \c char16_t, or ushort (as returned by
+    ///     QString::utf16()). This is at odds with the printf() in the standard C++
+    ///     library, which defines \c {%lc} to print a wchar_t and \c{%ls} to print
+    ///     a \c{wchar_t*}, and might also produce compiler warnings on platforms
+    ///     where the size of \c {wchar_t} is not 16 bits.
+    /// 
+    ///     \warning We do not recommend using QString::asprintf() in new Qt
+    ///     code. Instead, consider using QTextStream or arg(), both of
+    ///     which support Unicode strings seamlessly and are type-safe.
+    ///     Here's an example that uses QTextStream:
+    /// 
+    ///     \snippet qstring/main.cpp 64
+    /// 
+    ///     For \l {QObject::tr()}{translations}, especially if the strings
+    ///     contains more than one escape sequence, you should consider using
+    ///     the arg() function instead. This allows the order of the
+    ///     replacements to be controlled by the translator.
+    /// 
+    ///     \sa arg()
     [static] asprintf(format: *char) -> String,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(c: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(s: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(s: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(s: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(c: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(s: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(s: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(s: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(s: String, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count(c: CharType, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count(s: String, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(arg0: &RegExpType, from: i32) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(arg0: &RegExpType, from: i32) -> i32,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(rx: &RegExpType) -> bool,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count(arg0: &RegExpType) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(arg0: &RegExpType, from: i32) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(arg0: &RegExpType, from: i32) -> i32,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(rx: &RegExpType) -> bool,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(re: &RegularExpressionType, from: i32) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the first match of the regular
+    ///     expression \a re in the string, searching forward from index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 99
     index_of(re: &RegularExpressionType, from: i32, rmatch: *RegularExpressionMatchType) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(re: &RegularExpressionType, from: i32) -> i32,
+    ///     \overload
+    ///     \since 5.5
+    /// 
+    ///     Returns the index position of the last match of the regular
+    ///     expression \a re in the string, which starts before the index
+    ///     position \a from. Returns -1 if \a re didn't match anywhere.
+    /// 
+    ///     If the match is successful and \a rmatch is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a rmatch.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 100
     last_index_of(re: &RegularExpressionType, from: i32, rmatch: *RegularExpressionMatchType) -> i32,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(re: &RegularExpressionType) -> bool,
+    ///     \overload contains()
+    ///     \since 5.1
+    /// 
+    ///     Returns \c true if the regular expression \a re matches somewhere in this
+    ///     string; otherwise returns \c false.
+    /// 
+    ///     If the match is successful and \a match is not a null pointer, it also
+    ///     writes the results of the match into the QRegularExpressionMatch object
+    ///     pointed to by \a match.
+    /// 
+    ///     \sa QRegularExpression::match()
     contains(re: &RegularExpressionType, match: *RegularExpressionMatchType) -> bool,
+    ///     \overload count()
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of times the regular expression \a re matches
+    ///     in the string.
+    /// 
+    ///     This function counts overlapping matches, so in the example
+    ///     below, there are four instances of "ana" or "ama":
+    /// 
+    ///     \snippet qstring/main.cpp 95
     count(re: &RegularExpressionType) -> i32,
+    ///     \overload section()
+    ///     \since 5.0
+    /// 
+    ///     This string is treated as a sequence of fields separated by the
+    ///     regular expression, \a re.
+    /// 
+    ///     \snippet qstring/main.cpp 89
+    /// 
+    ///     \warning Using this QRegularExpression version is much more expensive than
+    ///     the overloaded string and character versions.
+    /// 
+    ///     \sa split(), simplified()
     section(sep: CharType, start: i32, end: i32, flags: String::SectionFlags) -> String,
+    ///     \overload section()
+    ///     \since 5.0
+    /// 
+    ///     This string is treated as a sequence of fields separated by the
+    ///     regular expression, \a re.
+    /// 
+    ///     \snippet qstring/main.cpp 89
+    /// 
+    ///     \warning Using this QRegularExpression version is much more expensive than
+    ///     the overloaded string and character versions.
+    /// 
+    ///     \sa split(), simplified()
     section(in_sep: String, start: i32, end: i32, flags: String::SectionFlags) -> String,
+    ///     \overload section()
+    ///     \since 5.0
+    /// 
+    ///     This string is treated as a sequence of fields separated by the
+    ///     regular expression, \a re.
+    /// 
+    ///     \snippet qstring/main.cpp 89
+    /// 
+    ///     \warning Using this QRegularExpression version is much more expensive than
+    ///     the overloaded string and character versions.
+    /// 
+    ///     \sa split(), simplified()
     section(reg: &RegExpType, start: i32, end: i32, flags: String::SectionFlags) -> String,
+    ///     \overload section()
+    ///     \since 5.0
+    /// 
+    ///     This string is treated as a sequence of fields separated by the
+    ///     regular expression, \a re.
+    /// 
+    ///     \snippet qstring/main.cpp 89
+    /// 
+    ///     \warning Using this QRegularExpression version is much more expensive than
+    ///     the overloaded string and character versions.
+    /// 
+    ///     \sa split(), simplified()
     section(re: &RegularExpressionType, start: i32, end: i32, flags: String::SectionFlags) -> String,
+    ///     Returns a substring that contains the \a n leftmost characters
+    ///     of the string.
+    /// 
+    ///     The entire string is returned if \a n is greater than or equal
+    ///     to size(), or less than zero.
+    /// 
+    ///     \snippet qstring/main.cpp 31
+    /// 
+    ///     \sa right(), mid(), startsWith(), chopped(), chop(), truncate()
     left(n: i32) -> String,
+    ///     Returns a substring that contains the \a n rightmost characters
+    ///     of the string.
+    /// 
+    ///     The entire string is returned if \a n is greater than or equal
+    ///     to size(), or less than zero.
+    /// 
+    ///     \snippet qstring/main.cpp 48
+    /// 
+    ///     \sa left(), mid(), endsWith(), chopped(), chop(), truncate()
     right(n: i32) -> String,
+    ///     Returns a string that contains \a n characters of this string,
+    ///     starting at the specified \a position index.
+    /// 
+    ///     Returns a null string if the \a position index exceeds the
+    ///     length of the string. If there are less than \a n characters
+    ///     available in the string starting at the given \a position, or if
+    ///     \a n is -1 (default), the function returns all characters that
+    ///     are available from the specified \a position.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 34
+    /// 
+    ///     \sa left(), right(), chopped(), chop(), truncate()
     mid(position: i32, n: i32) -> String,
     chopped(n: i32) -> String,
+    ///     \since 4.4
+    /// 
+    ///     Returns a substring reference to the \a n leftmost characters
+    ///     of the string.
+    /// 
+    ///     If \a n is greater than or equal to size(), or less than zero,
+    ///     a reference to the entire string is returned.
+    /// 
+    ///     \snippet qstring/main.cpp leftRef
+    /// 
+    ///     \sa left(), rightRef(), midRef(), startsWith()
     left_ref(n: i32) -> StringRef,
+    ///     \since 4.4
+    /// 
+    ///     Returns a substring reference to the \a n rightmost characters
+    ///     of the string.
+    /// 
+    ///     If \a n is greater than or equal to size(), or less than zero,
+    ///     a reference to the entire string is returned.
+    /// 
+    ///     \snippet qstring/main.cpp rightRef
+    /// 
+    ///     \sa right(), leftRef(), midRef(), endsWith()
     right_ref(n: i32) -> StringRef,
+    ///     \since 4.4
+    /// 
+    ///     Returns a substring reference to \a n characters of this string,
+    ///     starting at the specified \a position.
+    /// 
+    ///     If the \a position exceeds the length of the string, a null
+    ///     reference is returned.
+    /// 
+    ///     If there are less than \a n characters available in the string,
+    ///     starting at the given \a position, or if \a n is -1 (default), the
+    ///     function returns all characters from the specified \a position
+    ///     onwards.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp midRef
+    /// 
+    ///     \sa mid(), leftRef(), rightRef()
     mid_ref(position: i32, n: i32) -> StringRef,
+    ///     \since 4.8
+    ///     \overload
+    ///     Returns \c true if the string starts with the string reference \a s;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If \a cs is Qt::CaseSensitive (default), the search is case
+    ///     sensitive; otherwise the search is case insensitive.
+    /// 
+    ///     \sa endsWith()
     starts_with(s: String, cs: Rute::CaseSensitivity) -> bool,
+    ///     \since 4.8
+    ///     \overload
+    ///     Returns \c true if the string starts with the string reference \a s;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If \a cs is Qt::CaseSensitive (default), the search is case
+    ///     sensitive; otherwise the search is case insensitive.
+    /// 
+    ///     \sa endsWith()
     starts_with(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \since 4.8
+    ///     \overload
+    ///     Returns \c true if the string starts with the string reference \a s;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If \a cs is Qt::CaseSensitive (default), the search is case
+    ///     sensitive; otherwise the search is case insensitive.
+    /// 
+    ///     \sa endsWith()
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \since 4.8
+    ///     \overload
+    ///     Returns \c true if the string starts with the string reference \a s;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If \a cs is Qt::CaseSensitive (default), the search is case
+    ///     sensitive; otherwise the search is case insensitive.
+    /// 
+    ///     \sa endsWith()
     starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \since 4.8
+    ///     \overload
+    ///     Returns \c true if the string starts with the string reference \a s;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If \a cs is Qt::CaseSensitive (default), the search is case
+    ///     sensitive; otherwise the search is case insensitive.
+    /// 
+    ///     \sa endsWith()
     starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload endsWith()
     ends_with(s: String, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload endsWith()
     ends_with(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload endsWith()
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload endsWith()
     ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    ///     \overload endsWith()
     ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    ///     Returns a string of size \a width that contains this string
+    ///     padded by the \a fill character.
+    /// 
+    ///     If \a truncate is \c false and the size() of the string is more than
+    ///     \a width, then the returned string is a copy of the string.
+    /// 
+    ///     \snippet qstring/main.cpp 32
+    /// 
+    ///     If \a truncate is \c true and the size() of the string is more than
+    ///     \a width, then any characters in a copy of the string after
+    ///     position \a width are removed, and the copy is returned.
+    /// 
+    ///     \snippet qstring/main.cpp 33
+    /// 
+    ///     \sa rightJustified()
     left_justified(width: i32, fill: CharType, trunc: bool) -> String,
+    ///     Returns a string of size() \a width that contains the \a fill
+    ///     character followed by the string. For example:
+    /// 
+    ///     \snippet qstring/main.cpp 49
+    /// 
+    ///     If \a truncate is \c false and the size() of the string is more than
+    ///     \a width, then the returned string is a copy of the string.
+    /// 
+    ///     If \a truncate is true and the size() of the string is more than
+    ///     \a width, then the resulting string is truncated at position \a
+    ///     width.
+    /// 
+    ///     \snippet qstring/main.cpp 50
+    /// 
+    ///     \sa leftJustified()
     right_justified(width: i32, fill: CharType, trunc: bool) -> String,
     to_lower() -> String,
     to_lower() -> String,
@@ -134,11 +1651,40 @@ struct String {
     to_case_folded() -> String,
     simplified() -> String,
     simplified() -> String,
+    ///     \since 5.0
+    /// 
+    ///     Converts a plain text string to an HTML string with
+    ///     HTML metacharacters \c{<}, \c{>}, \c{&}, and \c{"} replaced by HTML
+    ///     entities.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qstring.cpp 7
     to_html_escaped() -> String,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, c: CharType) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, uc: *CharType, len: i32) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, s: String) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, s: &StringRefType) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, s: Latin1StringType) -> String?,
     append(c: CharType) -> String?,
     append(uc: *CharType, len: i32) -> String?,
@@ -154,31 +1700,396 @@ struct String {
     remove(c: CharType, cs: Rute::CaseSensitivity) -> String?,
     remove(s: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
     remove(s: String, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(i: i32, len: i32, after: CharType) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(i: i32, len: i32, s: *CharType, slen: i32) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(i: i32, len: i32, after: String) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: CharType, after: CharType, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: *CharType, blen: i32, after: *CharType, alen: i32, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: Latin1StringType, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: Latin1StringType, after: String, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: String, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(before: String, after: String, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(c: CharType, after: String, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(c: CharType, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(rx: &RegExpType, after: String) -> String?,
     remove(rx: &RegExpType) -> String?,
+    ///   \overload replace()
+    /// 
+    ///   Replaces every occurrence of the regular expression \a rx in the
+    ///   string with \a after. Returns a reference to the string. For
+    ///   example:
+    /// 
+    ///   \snippet qstring/main.cpp 42
+    /// 
+    ///   For regular expressions containing \l{capturing parentheses},
+    ///   occurrences of \b{\\1}, \b{\\2}, ..., in \a after are replaced
+    ///   with \a{rx}.cap(1), cap(2), ...
+    /// 
+    ///   \snippet qstring/main.cpp 43
+    /// 
+    ///   \sa indexOf(), lastIndexOf(), remove(), QRegExp::cap()
     replace(re: &RegularExpressionType, after: String) -> String?,
     remove(re: &RegularExpressionType) -> String?,
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Splits the string into substrings wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, split() returns a
+    ///     single-element list containing this string.
+    /// 
+    ///     Here's an example where we extract the words in a sentence
+    ///     using one or more whitespace characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 90
+    /// 
+    ///     Here's a similar example, but this time we use any sequence of
+    ///     non-word characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 91
+    /// 
+    ///     Here's a third example where we use a zero-length assertion,
+    ///     \b{\\b} (word boundary), to split the string into an
+    ///     alternating sequence of non-word and word tokens:
+    /// 
+    ///     \snippet qstring/main.cpp 92
+    /// 
+    ///     \sa QStringList::join(), section()
     split(sep: String, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [String],
+    ///     \overload
+    ///     \since 5.4
+    /// 
+    ///     Splits the string into substring references wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, splitRef() returns a
+    ///     single-element vector containing this string reference.
+    /// 
+    ///     \note All references are valid as long this string is alive. Destroying this
+    ///     string will cause all references be dangling pointers.
+    /// 
+    ///     \sa split() QStringRef
     split_ref(sep: String, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Splits the string into substrings wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, split() returns a
+    ///     single-element list containing this string.
+    /// 
+    ///     Here's an example where we extract the words in a sentence
+    ///     using one or more whitespace characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 90
+    /// 
+    ///     Here's a similar example, but this time we use any sequence of
+    ///     non-word characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 91
+    /// 
+    ///     Here's a third example where we use a zero-length assertion,
+    ///     \b{\\b} (word boundary), to split the string into an
+    ///     alternating sequence of non-word and word tokens:
+    /// 
+    ///     \snippet qstring/main.cpp 92
+    /// 
+    ///     \sa QStringList::join(), section()
     split(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [String],
+    ///     \overload
+    ///     \since 5.4
+    /// 
+    ///     Splits the string into substring references wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, splitRef() returns a
+    ///     single-element vector containing this string reference.
+    /// 
+    ///     \note All references are valid as long this string is alive. Destroying this
+    ///     string will cause all references be dangling pointers.
+    /// 
+    ///     \sa split() QStringRef
     split_ref(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Splits the string into substrings wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, split() returns a
+    ///     single-element list containing this string.
+    /// 
+    ///     Here's an example where we extract the words in a sentence
+    ///     using one or more whitespace characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 90
+    /// 
+    ///     Here's a similar example, but this time we use any sequence of
+    ///     non-word characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 91
+    /// 
+    ///     Here's a third example where we use a zero-length assertion,
+    ///     \b{\\b} (word boundary), to split the string into an
+    ///     alternating sequence of non-word and word tokens:
+    /// 
+    ///     \snippet qstring/main.cpp 92
+    /// 
+    ///     \sa QStringList::join(), section()
     split(sep: &RegExpType, behavior: String::SplitBehavior) -> [String],
+    ///     \overload
+    ///     \since 5.4
+    /// 
+    ///     Splits the string into substring references wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, splitRef() returns a
+    ///     single-element vector containing this string reference.
+    /// 
+    ///     \note All references are valid as long this string is alive. Destroying this
+    ///     string will cause all references be dangling pointers.
+    /// 
+    ///     \sa split() QStringRef
     split_ref(sep: &RegExpType, behavior: String::SplitBehavior) -> [StringRef],
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Splits the string into substrings wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, split() returns a
+    ///     single-element list containing this string.
+    /// 
+    ///     Here's an example where we extract the words in a sentence
+    ///     using one or more whitespace characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 90
+    /// 
+    ///     Here's a similar example, but this time we use any sequence of
+    ///     non-word characters as the separator:
+    /// 
+    ///     \snippet qstring/main.cpp 91
+    /// 
+    ///     Here's a third example where we use a zero-length assertion,
+    ///     \b{\\b} (word boundary), to split the string into an
+    ///     alternating sequence of non-word and word tokens:
+    /// 
+    ///     \snippet qstring/main.cpp 92
+    /// 
+    ///     \sa QStringList::join(), section()
     split(sep: &RegularExpressionType, behavior: String::SplitBehavior) -> [String],
+    ///     \overload
+    ///     \since 5.4
+    /// 
+    ///     Splits the string into substring references wherever the regular expression
+    ///     \a re matches, and returns the list of those strings. If \a re
+    ///     does not match anywhere in the string, splitRef() returns a
+    ///     single-element vector containing this string reference.
+    /// 
+    ///     \note All references are valid as long this string is alive. Destroying this
+    ///     string will cause all references be dangling pointers.
+    /// 
+    ///     \sa split() QStringRef
     split_ref(sep: &RegularExpressionType, behavior: String::SplitBehavior) -> [StringRef],
+    ///     Returns the string in the given Unicode normalization \a mode,
+    ///     according to the given \a version of the Unicode standard.
     normalized(mode: String::NormalizationForm, version: Char::UnicodeVersion) -> String,
+    ///     \since 4.5
+    /// 
+    ///     Returns a copy of this string repeated the specified number of \a times.
+    /// 
+    ///     If \a times is less than 1, an empty string is returned.
+    /// 
+    ///     Example:
+    /// 
+    ///     \code
+    ///         QString str("ab");
+    ///         str.repeated(4);            // returns "abababab"
+    ///     \endcode
     repeated(times: i32) -> String,
+    ///     \fn const ushort *QString::utf16() const
+    /// 
+    ///     Returns the QString as a '\\0\'-terminated array of unsigned
+    ///     shorts. The result remains valid until the string is modified.
+    /// 
+    ///     The returned string is in host byte order.
+    /// 
+    ///     \sa unicode()
     utf16() -> ushort?,
     to_latin1() -> ByteArray,
     to_latin1() -> ByteArray,
@@ -186,43 +2097,447 @@ struct String {
     to_utf8() -> ByteArray,
     to_local8_bit() -> ByteArray,
     to_local8_bit() -> ByteArray,
+    ///     \since 4.2
+    /// 
+    ///     Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
+    /// 
+    ///     UCS-4 is a Unicode codec and therefore it is lossless. All characters from
+    ///     this string will be encoded in UCS-4. Any invalid sequence of code units in
+    ///     this string is replaced by the Unicode's replacement character
+    ///     (QChar::ReplacementCharacter, which corresponds to \c{U+FFFD}).
+    /// 
+    ///     The returned vector is not NUL terminated.
+    /// 
+    ///     \sa fromUtf8(), toUtf8(), toLatin1(), toLocal8Bit(), QTextCodec, fromUcs4(), toWCharArray()
     to_ucs4() -> [uint],
     [static] from_latin1(str: *char, size: i32) -> String,
+    ///     \fn QString QString::fromAscii(const QByteArray &str)
+    ///     \deprecated
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Returns a QString initialized with the string \a str.
     [static] from_utf8(str: *char, size: i32) -> String,
+    ///     \fn QString QString::fromLatin1(const QByteArray &str)
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Returns a QString initialized with the Latin-1 string \a str.
     [static] from_local8_bit(str: *char, size: i32) -> String,
     [static] from_latin1(str: &ByteArrayType) -> String,
+    ///     \fn QString QString::fromAscii(const QByteArray &str)
+    ///     \deprecated
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Returns a QString initialized with the string \a str.
     [static] from_utf8(str: &ByteArrayType) -> String,
+    ///     \fn QString QString::fromLatin1(const QByteArray &str)
+    ///     \overload
+    ///     \since 5.0
+    /// 
+    ///     Returns a QString initialized with the Latin-1 string \a str.
     [static] from_local8_bit(str: &ByteArrayType) -> String,
+    ///     Returns a QString initialized with the first \a size characters
+    ///     of the Unicode string \a unicode (ISO-10646-UTF-16 encoded).
+    /// 
+    ///     If \a size is -1 (default), \a unicode must be terminated
+    ///     with a 0.
+    /// 
+    ///     This function checks for a Byte Order Mark (BOM). If it is missing,
+    ///     host byte order is assumed.
+    /// 
+    ///     This function is slow compared to the other Unicode conversions.
+    ///     Use QString(const QChar *, int) or QString(const QChar *) if possible.
+    /// 
+    ///     QString makes a deep copy of the Unicode data.
+    /// 
+    ///     \sa utf16(), setUtf16(), fromStdU16String()
     [static] from_utf16(arg0: *ushort, size: i32) -> String,
+    ///     \since 4.2
+    /// 
+    ///     Returns a QString initialized with the first \a size characters
+    ///     of the Unicode string \a unicode (ISO-10646-UCS-4 encoded).
+    /// 
+    ///     If \a size is -1 (default), \a unicode must be terminated
+    ///     with a 0.
+    /// 
+    ///     \sa toUcs4(), fromUtf16(), utf16(), setUtf16(), fromWCharArray(), fromStdU32String()
     [static] from_ucs4(arg0: *uint, size: i32) -> String,
+    ///     Constructs a QString that uses the first \a size Unicode characters
+    ///     in the array \a unicode. The data in \a unicode is \e not
+    ///     copied. The caller must be able to guarantee that \a unicode will
+    ///     not be deleted or modified as long as the QString (or an
+    ///     unmodified copy of it) exists.
+    /// 
+    ///     Any attempts to modify the QString or copies of it will cause it
+    ///     to create a deep copy of the data, ensuring that the raw data
+    ///     isn't modified.
+    /// 
+    ///     Here's an example of how we can use a QRegularExpression on raw data in
+    ///     memory without requiring to copy the data into a QString:
+    /// 
+    ///     \snippet qstring/main.cpp 22
+    ///     \snippet qstring/main.cpp 23
+    /// 
+    ///     \warning A string created with fromRawData() is \e not
+    ///     '\\0'-terminated, unless the raw data contains a '\\0' character
+    ///     at position \a size. This means unicode() will \e not return a
+    ///     '\\0'-terminated string (although utf16() does, at the cost of
+    ///     copying the raw data).
+    /// 
+    ///     \sa fromUtf16(), setRawData()
     [static] from_raw_data(arg0: *CharType, size: i32) -> String,
+    ///     Returns a QString initialized with the first \a size characters
+    ///     of the Unicode string \a unicode (ISO-10646-UTF-16 encoded).
+    /// 
+    ///     If \a size is -1 (default), \a unicode must be terminated
+    ///     with a 0.
+    /// 
+    ///     This function checks for a Byte Order Mark (BOM). If it is missing,
+    ///     host byte order is assumed.
+    /// 
+    ///     This function is slow compared to the other Unicode conversions.
+    ///     Use QString(const QChar *, int) or QString(const QChar *) if possible.
+    /// 
+    ///     QString makes a deep copy of the Unicode data.
+    /// 
+    ///     \sa utf16(), setUtf16(), fromStdU16String()
     [static] from_utf16(str: *char16_t, size: i32) -> String,
+    ///     \since 4.2
+    /// 
+    ///     Returns a QString initialized with the first \a size characters
+    ///     of the Unicode string \a unicode (ISO-10646-UCS-4 encoded).
+    /// 
+    ///     If \a size is -1 (default), \a unicode must be terminated
+    ///     with a 0.
+    /// 
+    ///     \sa toUcs4(), fromUtf16(), utf16(), setUtf16(), fromWCharArray(), fromStdU32String()
     [static] from_ucs4(str: *char32_t, size: i32) -> String,
     to_w_char_array(array: *wchar_t) -> i32,
     [static] from_w_char_array(string: *wchar_t, size: i32) -> String,
     set_raw_data(unicode: *CharType, size: i32) -> String?,
+    ///     Resizes the string to \a size characters and copies \a unicode
+    ///     into the string.
+    /// 
+    ///     If \a unicode is 0, nothing is copied, but the string is still
+    ///     resized to \a size.
+    /// 
+    ///     \sa unicode(), setUtf16()
     set_unicode(unicode: *CharType, size: i32) -> String?,
     set_utf16(utf16: *ushort, size: i32) -> String?,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     compare(s: String, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     compare(other: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     [static] compare(s1: String, s2: String, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     [static] compare(s1: String, s2: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     [static] compare(s1: Latin1StringType, s2: String, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     compare(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
+    ///     \overload compare()
+    ///     \since 4.2
+    /// 
+    ///     Same as compare(*this, \a other, \a cs).
     [static] compare(s1: String, s2: &StringRefType, arg0: Rute::CaseSensitivity) -> i32,
+    ///    \relates QStringRef
+    /// 
+    ///     Returns \c true if string reference \a s1 is lexically less than
+    ///     string reference \a s2; otherwise returns \c false.
+    /// 
+    ///     The comparison is based exclusively on the numeric Unicode values
+    ///     of the characters and is very fast, but is not what a human would
+    ///     expect. Consider sorting user-interface strings using the
+    ///     QString::localeAwareCompare() function.
     locale_aware_compare(s: String) -> i32,
+    ///    \relates QStringRef
+    /// 
+    ///     Returns \c true if string reference \a s1 is lexically less than
+    ///     string reference \a s2; otherwise returns \c false.
+    /// 
+    ///     The comparison is based exclusively on the numeric Unicode values
+    ///     of the characters and is very fast, but is not what a human would
+    ///     expect. Consider sorting user-interface strings using the
+    ///     QString::localeAwareCompare() function.
     [static] locale_aware_compare(s1: String, s2: String) -> i32,
+    ///    \relates QStringRef
+    /// 
+    ///     Returns \c true if string reference \a s1 is lexically less than
+    ///     string reference \a s2; otherwise returns \c false.
+    /// 
+    ///     The comparison is based exclusively on the numeric Unicode values
+    ///     of the characters and is very fast, but is not what a human would
+    ///     expect. Consider sorting user-interface strings using the
+    ///     QString::localeAwareCompare() function.
     locale_aware_compare(s: &StringRefType) -> i32,
+    ///    \relates QStringRef
+    /// 
+    ///     Returns \c true if string reference \a s1 is lexically less than
+    ///     string reference \a s2; otherwise returns \c false.
+    /// 
+    ///     The comparison is based exclusively on the numeric Unicode values
+    ///     of the characters and is very fast, but is not what a human would
+    ///     expect. Consider sorting user-interface strings using the
+    ///     QString::localeAwareCompare() function.
     [static] locale_aware_compare(s1: String, s2: &StringRefType) -> i32,
+    ///     Returns the string converted to a \c short using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toShort()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 76
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toUShort(), toInt(), QLocale::toShort()
     to_short(ok: *bool, base: i32) -> short,
+    ///     Returns the string converted to an \c{unsigned short} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toUShort()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 80
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toShort(), QLocale::toUShort()
     to_u_short(ok: *bool, base: i32) -> ushort,
+    ///     Returns the string converted to an \c int using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toInt()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 72
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toUInt(), toDouble(), QLocale::toInt()
     to_int(ok: *bool, base: i32) -> i32,
+    ///     Returns the string converted to an \c{unsigned int} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toUInt()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 77
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toInt(), QLocale::toUInt()
     to_u_int(ok: *bool, base: i32) -> uint,
+    ///     \fn long QString::toLong(bool *ok, int base) const
+    /// 
+    ///     Returns the string converted to a \c long using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toLongLong()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 73
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toULong(), toInt(), QLocale::toInt()
     to_long(ok: *bool, base: i32) -> long,
+    ///     \fn ulong QString::toULong(bool *ok, int base) const
+    /// 
+    ///     Returns the string converted to an \c{unsigned long} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toULongLong()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 78
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), QLocale::toUInt()
     to_u_long(ok: *bool, base: i32) -> ulong,
+    ///     Returns the string converted to a \c{long long} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toLongLong()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 74
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toULongLong(), toInt(), QLocale::toLongLong()
     to_long_long(ok: *bool, base: i32) -> i64,
+    ///     Returns the string converted to an \c{unsigned long long} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     If \a base is 0, the C language convention is used: If the string
+    ///     begins with "0x", base 16 is used; if the string begins with "0",
+    ///     base 8 is used; otherwise, base 10 is used.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toULongLong()
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 79
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toLongLong(), QLocale::toULongLong()
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
+    ///     Returns the string converted to a \c float value.
+    /// 
+    ///     Returns 0.0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \warning The QString content may only contain valid numerical characters
+    ///     which includes the plus/minus sign, the character e used in scientific
+    ///     notation, and the decimal point. Including the unit or additional characters
+    ///     leads to a conversion error.
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toFloat()
+    /// 
+    ///     For historical reasons, this function does not handle
+    ///     thousands group separators. If you need to convert such numbers,
+    ///     use QLocale::toFloat().
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet qstring/main.cpp 71
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), toDouble(), toInt(), QLocale::toFloat(), trimmed()
     to_float(ok: *bool) -> f32,
+    ///     Returns the string converted to a \c double value.
+    /// 
+    ///     Returns 0.0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \snippet qstring/main.cpp 66
+    /// 
+    ///     \warning The QString content may only contain valid numerical characters
+    ///     which includes the plus/minus sign, the character e used in scientific
+    ///     notation, and the decimal point. Including the unit or additional characters
+    ///     leads to a conversion error.
+    /// 
+    ///     \snippet qstring/main.cpp 67
+    /// 
+    ///     The string conversion will always happen in the 'C' locale. For locale
+    ///     dependent conversion use QLocale::toDouble()
+    /// 
+    ///     \snippet qstring/main.cpp 68
+    /// 
+    ///     For historical reasons, this function does not handle
+    ///     thousands group separators. If you need to convert such numbers,
+    ///     use QLocale::toDouble().
+    /// 
+    ///     \snippet qstring/main.cpp 69
+    /// 
+    ///     This function ignores leading and trailing whitespace.
+    /// 
+    ///     \sa number(), QLocale::setDefault(), QLocale::toDouble(), trimmed()
     to_double(ok: *bool) -> double,
     set_num(arg0: short, base: i32) -> String?,
     set_num(arg0: ushort, base: i32) -> String?,
@@ -234,20 +2549,104 @@ struct String {
     set_num(arg0: qulonglong, base: i32) -> String?,
     set_num(arg0: f32, f: char, prec: i32) -> String?,
     set_num(arg0: double, f: char, prec: i32) -> String?,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: i32, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: uint, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: long, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: ulong, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: i64, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: qulonglong, base: i32) -> String,
+    ///     \fn QString QString::number(double n, char format, int precision)
+    /// 
+    ///     Returns a string equivalent of the number \a n, formatted
+    ///     according to the specified \a format and \a precision. See
+    ///     \l{Argument Formats} for details.
+    /// 
+    ///     Unlike QLocale::toString(), this function does not honor the
+    ///     user's locale settings.
+    /// 
+    ///     \sa setNum(), QLocale::toString()
     [static] number(arg0: double, f: char, prec: i32) -> String,
     prepend(s: *char) -> String?,
     prepend(s: &ByteArrayType) -> String?,
     append(s: *char) -> String?,
     append(s: &ByteArrayType) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, s: *char) -> String?,
+    ///     \fn QString& QString::insert(int position, QChar ch)
+    ///     \overload insert()
+    /// 
+    ///     Inserts \a ch at the given index \a position in the string.
     insert(i: i32, s: &ByteArrayType) -> String?,
+    ///     \typedef QString::value_type
+    /// 
+    ///     This typedef provides an STL-style value type for QString.
     begin() -> String::iterator,
+    ///     \typedef QString::value_type
+    /// 
+    ///     This typedef provides an STL-style value type for QString.
     begin() -> String::const_iterator,
     cbegin() -> String::const_iterator,
     const_begin() -> String::const_iterator,
@@ -266,6 +2665,16 @@ struct String {
     push_front(c: CharType),
     push_front(s: String),
     shrink_to_fit(),
+    ///     \fn int QString::size() const
+    /// 
+    ///     Returns the number of characters in this string.
+    /// 
+    ///     The last character in the string is at position size() - 1.
+    /// 
+    ///     Example:
+    ///     \snippet qstring/main.cpp 58
+    /// 
+    ///     \sa isEmpty(), resize()
     is_null() -> bool,
     is_simple_text() -> bool,
     is_right_to_left() -> bool,

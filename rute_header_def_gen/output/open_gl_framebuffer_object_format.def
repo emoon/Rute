@@ -1,14 +1,94 @@
+///     \class QOpenGLFramebufferObjectFormat
+///     \brief The QOpenGLFramebufferObjectFormat class specifies the format of an OpenGL
+///     framebuffer object.
+///     \inmodule QtGui
+/// 
+///     \since 5.0
+/// 
+///     \ingroup painting-3D
+/// 
+///     A framebuffer object has several characteristics:
+///     \list
+///     \li \l{setSamples()}{Number of samples per pixels.}
+///     \li \l{setAttachment()}{Depth and/or stencil attachments.}
+///     \li \l{setTextureTarget()}{Texture target.}
+///     \li \l{setInternalTextureFormat()}{Internal texture format.}
+///     \endlist
+/// 
+///     Note that the desired attachments or number of samples per pixels might not
+///     be supported by the hardware driver. Call QOpenGLFramebufferObject::format()
+///     after creating a QOpenGLFramebufferObject to find the exact format that was
+///     used to create the frame buffer object.
+/// 
+///     \sa QOpenGLFramebufferObject
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct OpenGLFramebufferObjectFormat {
+    ///     Sets the number of samples per pixel for a multisample framebuffer object
+    ///     to \a samples.  The default sample count of 0 represents a regular
+    ///     non-multisample framebuffer object.
+    /// 
+    ///     If the desired amount of samples per pixel is not supported by the hardware
+    ///     then the maximum number of samples per pixel will be used. Note that
+    ///     multisample framebuffer objects can not be bound as textures. Also, the
+    ///     \c{GL_EXT_framebuffer_multisample} extension is required to create a
+    ///     framebuffer with more than one sample per pixel.
+    /// 
+    ///     \sa samples()
     set_samples(samples: i32),
+    ///     Returns the number of samples per pixel if a framebuffer object
+    ///     is a multisample framebuffer object. Otherwise, returns 0.
+    ///     The default value is 0.
+    /// 
+    ///     \sa setSamples()
     samples() -> i32,
+    ///     Enables mipmapping if \a enabled is true; otherwise disables it.
+    /// 
+    ///     Mipmapping is disabled by default.
+    /// 
+    ///     If mipmapping is enabled, additional memory will be allocated for
+    ///     the mipmap levels. The mipmap levels can be updated by binding the
+    ///     texture and calling glGenerateMipmap(). Mipmapping cannot be enabled
+    ///     for multisampled framebuffer objects.
+    /// 
+    ///     \sa mipmap(), QOpenGLFramebufferObject::texture()
     set_mipmap(enabled: bool),
+    ///     Returns \c true if mipmapping is enabled.
+    /// 
+    ///     \sa setMipmap()
     mipmap() -> bool,
+    ///     Sets the attachment configuration of a framebuffer object to \a attachment.
+    /// 
+    ///     \sa attachment()
     set_attachment(attachment: OpenGLFramebufferObject::Attachment),
+    ///     Returns the configuration of the depth and stencil buffers attached to
+    ///     a framebuffer object.  The default is QOpenGLFramebufferObject::NoAttachment.
+    /// 
+    ///     \sa setAttachment()
     attachment() -> OpenGLFramebufferObject::Attachment,
+    ///     Sets the texture target of the texture attached to a framebuffer object to
+    ///     \a target. Ignored for multisample framebuffer objects.
+    /// 
+    ///     \sa textureTarget(), samples()
     set_texture_target(target: i32),
+    ///     Returns the texture target of the texture attached to a framebuffer object.
+    ///     Ignored for multisample framebuffer objects.  The default is
+    ///     \c GL_TEXTURE_2D.
+    /// 
+    ///     \sa setTextureTarget(), samples()
     texture_target() -> i32,
+    ///     Sets the internal format of a framebuffer object's texture or
+    ///     multisample framebuffer object's color buffer to
+    ///     \a internalTextureFormat.
+    /// 
+    ///     \sa internalTextureFormat()
     set_internal_texture_format(internal_texture_format: i32),
+    ///     Returns the internal format of a framebuffer object's texture or
+    ///     multisample framebuffer object's color buffer.  The default is
+    ///     \c GL_RGBA8 on desktop OpenGL systems, and \c GL_RGBA on
+    ///     OpenGL/ES systems.
+    /// 
+    ///     \sa setInternalTextureFormat()
     internal_texture_format() -> i32,
 }
 

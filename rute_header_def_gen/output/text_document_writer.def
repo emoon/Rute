@@ -1,3 +1,29 @@
+///     \since 4.5
+///     \class QTextDocumentWriter
+/// 
+///     \brief The QTextDocumentWriter class provides a format-independent interface for writing a QTextDocument to files or other devices.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup io
+/// 
+///     To write a document, construct a QTextDocumentWriter object with either a
+///     file name or a device object, and specify the document format to be
+///     written. You can construct a writer and set the format using setFormat()
+///     later.
+/// 
+///     Call write() to write the document to the device. If the document is
+///     successfully written, this function returns \c true. However, if an error
+///     occurs when writing the document, it will return false.
+/// 
+///     Call supportedDocumentFormats() for a list of formats that
+///     QTextDocumentWriter can write.
+/// 
+///     Since the capabilities of the supported output formats vary considerably,
+///     the writer simply outputs the appropriate subset of objects for each format.
+///     This typically includes the formatted text and images contained in a
+///     document.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextDocumentWriter {
     set_format(format: &ByteArrayType),
@@ -6,10 +32,30 @@ struct TextDocumentWriter {
     device() -> IODevice?,
     set_file_name(file_name: String),
     file_name() -> String,
+    ///     Writes the document fragment specified by \a fragment to the assigned device
+    ///     or file and returns \c true if successful; otherwise returns \c false.
     write(document: *TextDocumentType) -> bool,
+    ///     Writes the document fragment specified by \a fragment to the assigned device
+    ///     or file and returns \c true if successful; otherwise returns \c false.
     write(fragment: &TextDocumentFragmentType) -> bool,
+    ///     Sets the codec for this stream to \a codec. The codec is used for
+    ///     encoding any data that is written. By default, QTextDocumentWriter
+    ///     uses UTF-8.
     set_codec(codec: *TextCodecType),
+    ///     Returns the codec that is currently assigned to the writer.
     codec() -> TextCodec?,
+    ///     Returns the list of document formats supported by QTextDocumentWriter.
+    /// 
+    ///     By default, Qt can write the following formats:
+    /// 
+    ///     \table
+    ///     \header \li Format    \li Description
+    ///     \row    \li plaintext \li Plain text
+    ///     \row    \li HTML      \li HyperText Markup Language
+    ///     \row    \li ODF       \li OpenDocument Format
+    ///     \endtable
+    /// 
+    ///     \sa setFormat()
     [static] supported_document_formats() -> [ByteArray],
 }
 

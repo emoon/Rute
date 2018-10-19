@@ -1,3 +1,76 @@
+///     \class QDataWidgetMapper
+///     \brief The QDataWidgetMapper class provides mapping between a section
+///     of a data model to widgets.
+///     \since 4.2
+///     \ingroup model-view
+///     \ingroup advanced
+///     \inmodule QtWidgets
+/// 
+///     QDataWidgetMapper can be used to create data-aware widgets by mapping
+///     them to sections of an item model. A section is a column of a model
+///     if the orientation is horizontal (the default), otherwise a row.
+/// 
+///     Every time the current index changes, each widget is updated with data
+///     from the model via the property specified when its mapping was made.
+///     If the user edits the contents of a widget, the changes are read using
+///     the same property and written back to the model.
+///     By default, each widget's \l{Q_PROPERTY()}{user property} is used to
+///     transfer data between the model and the widget. Since Qt 4.3, an
+///     additional addMapping() function enables a named property to be used
+///     instead of the default user property.
+/// 
+///     It is possible to set an item delegate to support custom widgets. By default,
+///     a QItemDelegate is used to synchronize the model with the widgets.
+/// 
+///     Let us assume that we have an item model named \c{model} with the following contents:
+/// 
+///     \table
+///     \row \li 1 \li Qt Norway       \li Oslo
+///     \row \li 2 \li Qt Australia    \li Brisbane
+///     \row \li 3 \li Qt USA          \li Palo Alto
+///     \row \li 4 \li Qt China        \li Beijing
+///     \row \li 5 \li Qt Germany      \li Berlin
+///     \endtable
+/// 
+///     The following code will map the columns of the model to widgets called \c mySpinBox,
+///     \c myLineEdit and \c{myCountryChooser}:
+/// 
+///     \snippet code/src_gui_itemviews_qdatawidgetmapper.cpp 0
+/// 
+///     After the call to toFirst(), \c mySpinBox displays the value \c{1}, \c myLineEdit
+///     displays \c{Qt Norway} and \c myCountryChooser displays \c{Oslo}. The
+///     navigational functions toFirst(), toNext(), toPrevious(), toLast() and setCurrentIndex()
+///     can be used to navigate in the model and update the widgets with contents from
+///     the model.
+/// 
+///     The setRootIndex() function enables a particular item in a model to be
+///     specified as the root index - children of this item will be mapped to
+///     the relevant widgets in the user interface.
+/// 
+///     QDataWidgetMapper supports two submit policies, \c AutoSubmit and \c{ManualSubmit}.
+///     \c AutoSubmit will update the model as soon as the current widget loses focus,
+///     \c ManualSubmit will not update the model unless submit() is called. \c ManualSubmit
+///     is useful when displaying a dialog that lets the user cancel all modifications.
+///     Also, other views that display the model won't update until the user finishes
+///     all their modifications and submits.
+/// 
+///     Note that QDataWidgetMapper keeps track of external modifications. If the contents
+///     of the model are updated in another module of the application, the widgets are
+///     updated as well.
+/// 
+///     \sa QAbstractItemModel, QAbstractItemDelegate
+///  */
+/// 
+/// 
+///     This enum describes the possible submit policies a QDataWidgetMapper
+///     supports.
+/// 
+///     \value AutoSubmit    Whenever a widget loses focus, the widget's current
+///                          value is set to the item model.
+///     \value ManualSubmit  The model is not updated until submit() is called.
+///  */
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDataWidgetMapper)]
 enum SubmitPolicy {
     AutoSubmit,
@@ -10,15 +83,72 @@ struct DataWidgetMapper : Object {
     set_item_delegate(delegate: *AbstractItemDelegateType),
     item_delegate() -> AbstractItemDelegate?,
     set_root_index(index: &ModelIndexType),
+    ///     Returns the current root index.
+    /// 
+    ///     \sa setRootIndex()
     root_index() -> ModelIndex,
+    ///     \property QDataWidgetMapper::orientation
+    ///     \brief the orientation of the model
+    /// 
+    ///     If the orientation is Qt::Horizontal (the default), a widget is
+    ///     mapped to a column of a data model. The widget will be populated
+    ///     with the model's data from its mapped column and the row that
+    ///     currentIndex() points at.
+    /// 
+    ///     Use Qt::Horizontal for tabular data that looks like this:
+    /// 
+    ///     \table
+    ///     \row \li 1 \li Qt Norway       \li Oslo
+    ///     \row \li 2 \li Qt Australia    \li Brisbane
+    ///     \row \li 3 \li Qt USA          \li Silicon Valley
+    ///     \row \li 4 \li Qt China        \li Beijing
+    ///     \row \li 5 \li Qt Germany      \li Berlin
+    ///     \endtable
+    /// 
+    ///     If the orientation is set to Qt::Vertical, a widget is mapped to
+    ///     a row. Calling setCurrentIndex() will change the current column.
+    ///     The widget will be populates with the model's data from its
+    ///     mapped row and the column that currentIndex() points at.
+    /// 
+    ///     Use Qt::Vertical for tabular data that looks like this:
+    /// 
+    ///     \table
+    ///     \row \li 1 \li 2 \li 3 \li 4 \li 5
+    ///     \row \li Qt Norway \li Qt Australia \li Qt USA \li Qt China \li Qt Germany
+    ///     \row \li Oslo \li Brisbane \li Silicon Valley \li Beijing \li Berlin
+    ///     \endtable
+    /// 
+    ///     Changing the orientation clears all existing mappings.
     set_orientation(a_orientation: Rute::Orientation),
     orientation() -> Rute::Orientation,
+    ///     \property QDataWidgetMapper::submitPolicy
+    ///     \brief the current submit policy
+    /// 
+    ///     Changing the current submit policy will revert all widgets
+    ///     to the current data from the model.
     set_submit_policy(policy: DataWidgetMapper::SubmitPolicy),
     submit_policy() -> DataWidgetMapper::SubmitPolicy,
+    ///   \since 4.3
+    /// 
+    ///   Essentially the same as addMapping(), but adds the possibility to specify
+    ///   the property to use specifying \a propertyName.
+    /// 
+    ///   \sa addMapping()
     add_mapping(widget: *WidgetType, section: i32),
+    ///   \since 4.3
+    /// 
+    ///   Essentially the same as addMapping(), but adds the possibility to specify
+    ///   the property to use specifying \a propertyName.
+    /// 
+    ///   \sa addMapping()
     add_mapping(widget: *WidgetType, section: i32, property_name: &ByteArrayType),
     remove_mapping(widget: *WidgetType),
     mapped_section(widget: *WidgetType) -> i32,
+    ///   \since 4.3
+    ///   Returns the name of the property that is used when mapping
+    ///   data to the given \a widget.
+    /// 
+    ///   \sa mappedSection(), addMapping(), removeMapping()
     mapped_property_name(widget: *WidgetType) -> ByteArray,
     mapped_widget_at(section: i32) -> Widget?,
     clear_mapping(),
@@ -29,7 +159,32 @@ struct DataWidgetMapper : Object {
     to_last(),
     to_next(),
     to_previous(),
+    ///     \property QDataWidgetMapper::currentIndex
+    ///     \brief the current row or column
+    /// 
+    ///     The widgets are populated with with data from the row at \a index
+    ///     if the orientation is horizontal (the default), otherwise with
+    ///     data from the column at \a index.
+    /// 
+    ///     \sa setCurrentModelIndex(), toFirst(), toNext(), toPrevious(), toLast()
     [event] set_current_index(index: i32),
+    ///     Sets the current index to the row of the \a index if the
+    ///     orientation is horizontal (the default), otherwise to the
+    ///     column of the \a index.
+    /// 
+    ///     Calls setCurrentIndex() internally. This convenience slot can be
+    ///     connected to the signal \l
+    ///     {QItemSelectionModel::}{currentRowChanged()} or \l
+    ///     {QItemSelectionModel::}{currentColumnChanged()} of another view's
+    ///     \l {QItemSelectionModel}{selection model}.
+    /// 
+    ///     The following example illustrates how to update all widgets
+    ///     with new data whenever the selection of a QTableView named
+    ///     \c myTableView changes:
+    /// 
+    ///     \snippet code/src_gui_itemviews_qdatawidgetmapper.cpp 2
+    /// 
+    ///     \sa currentIndex()
     set_current_model_index(index: &ModelIndexType),
     [signal] current_index_changed(index: i32),
 }

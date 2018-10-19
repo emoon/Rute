@@ -1,3 +1,22 @@
+///     \class QTimerEvent
+///     \inmodule QtCore
+///     \brief The QTimerEvent class contains parameters that describe a
+///     timer event.
+/// 
+///     \ingroup events
+/// 
+///     Timer events are sent at regular intervals to objects that have
+///     started one or more timers. Each timer has a unique identifier. A
+///     timer is started with QObject::startTimer().
+/// 
+///     The QTimer class provides a high-level programming interface that
+///     uses signals instead of events. It also provides single-shot timers.
+/// 
+///     The event handler QObject::timerEvent() receives timer events.
+/// 
+///     \sa QTimer, QObject::timerEvent(), QObject::startTimer(),
+///     QObject::killTimer()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TimerEvent : Event {
     timer_id() -> i32,
 }

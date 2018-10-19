@@ -1,3 +1,35 @@
+///     \class QItemEditorCreatorBase
+///     \brief The QItemEditorCreatorBase class provides an abstract base class that
+///     must be subclassed when implementing new item editor creators.
+///     \since 4.2
+///     \ingroup model-view
+///     \inmodule QtWidgets
+/// 
+///     QItemEditorCreatorBase objects are specialized widget factories that
+///     provide editor widgets for one particular QVariant data type. They
+///     are used by QItemEditorFactory to create editors for
+///     \l{QItemDelegate}s. Creator bases must be registered with
+///     QItemEditorFactory::registerEditor().
+/// 
+///     An editor should provide a user property for the data it edits.
+///     QItemDelagates can then access the property using Qt's
+///     \l{Meta-Object System}{meta-object system} to set and retrieve the
+///     editing data. A property is set as the user property with the USER
+///     keyword:
+/// 
+///     \snippet code/src_gui_itemviews_qitemeditorfactory.cpp 0
+/// 
+///     If the editor does not provide a user property, it must return the
+///     name of the property from valuePropertyName(); delegates will then
+///     use the name to access the property. If a user property exists,
+///     item delegates will not call valuePropertyName().
+/// 
+///     QStandardItemEditorCreator is a convenience template class that can be used
+///     to register widgets without the need to subclass QItemEditorCreatorBase.
+/// 
+///     \sa QStandardItemEditorCreator, QItemEditorFactory,
+///     {Model/View Programming}, {Color Editor Factory Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ItemEditorCreatorBase {
     [event] create_widget(parent: *WidgetType) -> Widget?,

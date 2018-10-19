@@ -1,5 +1,41 @@
+///     \class QProxyStyle
+/// 
+///     \brief The QProxyStyle class is a convenience class that simplifies
+///     dynamically overriding QStyle elements.
+/// 
+///     \since 4.6
+/// 
+///     \inmodule QtWidgets
+/// 
+///     A QProxyStyle wraps a QStyle (usually the default system style) for the
+///     purpose of dynamically overriding painting or other specific style behavior.
+/// 
+///     The following example shows how to override the shortcut underline
+///     behavior on any platform:
+/// 
+///     \snippet code/src_gui_qproxystyle.cpp 1
+/// 
+///     Warning: The \l {QCommonStyle} {common styles} provided by Qt will
+///     respect this hint, because they call QStyle::proxy(), but there is
+///     no guarantee that QStyle::proxy() will be called for user defined
+///     or system controlled styles. It would not work on a Mac, for
+///     example, where menus are handled by the operating system.
+/// 
+///     \sa QStyle
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ProxyStyle : CommonStyle {
+    ///     Returns the proxy base style object. If no base style
+    ///     is set on the proxy style, QProxyStyle will create
+    ///     an instance of the application style instead.
+    /// 
+    ///     \sa setBaseStyle(), QStyle
     base_style() -> Style?,
+    ///     Sets the base style that should be proxied.
+    /// 
+    ///     Ownership of \a style is transferred to QProxyStyle.
+    /// 
+    ///     If style is zero, a desktop-dependant style will be
+    ///     assigned automatically.
     set_base_style(style: *StyleType),
     [event] draw_primitive(element: Style::PrimitiveElement, option: *StyleOptionType, painter: *PainterType, widget: *WidgetType),
     [event] draw_item_text(painter: *PainterType, rect: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),

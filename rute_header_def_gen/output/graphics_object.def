@@ -1,6 +1,43 @@
+///     \class QGraphicsObject
+///     \brief The QGraphicsObject class provides a base class for all graphics items that
+///     require signals, slots and properties.
+///     \since 4.6
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     The class extends a QGraphicsItem with QObject's signal/slot and property mechanisms.
+///     It maps many of QGraphicsItem's basic setters and getters to properties and adds notification
+///     signals for many of them.
+/// 
+///     \section1 Parents and Children
+/// 
+///     Each graphics object can be constructed with a parent item. This ensures that the
+///     item will be destroyed when its parent item is destroyed. Although QGraphicsObject
+///     inherits from both QObject and QGraphicsItem, you should use the functions provided
+///     by QGraphicsItem, \e not QObject, to manage the relationships between parent and
+///     child items.
+/// 
+///     The relationships between items can be explored using the parentItem() and childItems()
+///     functions. In the hierarchy of items in a scene, the parentObject() and parentWidget()
+///     functions are the equivalent of the QWidget::parent() and QWidget::parentWidget()
+///     functions for QWidget subclasses.
+/// 
+///     \sa QGraphicsWidget
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsObject : Object, GraphicsItem {
+    ///     Subscribes the graphics object to the given \a gesture with specific \a flags.
+    /// 
+    ///     \sa ungrabGesture(), QGestureEvent
     grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
+    ///     Unsubscribes the graphics object from the given \a gesture.
+    /// 
+    ///     \sa grabGesture(), QGestureEvent
     ungrab_gesture(type: Rute::GestureType),
+    ///     Updates the item's micro focus. This is slot for convenience.
+    /// 
+    ///     \since 4.7
+    /// 
+    ///     \sa QInputMethod
     update_micro_focus(),
     [signal] parent_changed(),
     [signal] opacity_changed(),
@@ -14,6 +51,7 @@ struct GraphicsObject : Object, GraphicsItem {
     [signal] children_changed(),
     [signal] width_changed(),
     [signal] height_changed(),
+    ///   \reimp
     [event] event(ev: *EventType) -> bool,
 }
 

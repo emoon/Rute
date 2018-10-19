@@ -1,6 +1,39 @@
+///     \class QStyleFactory
+///     \brief The QStyleFactory class creates QStyle objects.
+/// 
+///     \ingroup appearance
+///     \inmodule QtWidgets
+/// 
+///     The QStyle class is an abstract base class that encapsulates the
+///     look and feel of a GUI. QStyleFactory creates a QStyle object
+///     using the create() function and a key identifying the style. The
+///     styles are either built-in or dynamically loaded from a style
+///     plugin (see QStylePlugin).
+/// 
+///     The valid keys can be retrieved using the keys()
+///     function. Typically they include "windows" and "fusion".
+///     Depending on the platform, "windowsvista"
+///     and "macintosh" may be available.
+///     Note that keys are case insensitive.
+/// 
+///     \sa QStyle
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StyleFactory {
+    ///     Returns the list of valid keys, i.e. the keys this factory can
+    ///     create styles for.
+    /// 
+    ///     \sa create()
     [static] keys() -> [String],
+    ///     Creates and returns a QStyle object that matches the given \a key, or
+    ///     returns 0 if no matching style is found.
+    /// 
+    ///     Both built-in styles and styles from style plugins are queried for a
+    ///     matching style.
+    /// 
+    ///     \note The keys used are case insensitive.
+    /// 
+    ///     \sa keys()
     [static] create(arg0: String) -> Style?,
 }
 

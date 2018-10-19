@@ -43,7 +43,7 @@ fn main() {
 
     // Parse source files for documentation
 
-    let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets"];
+    let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src"];
     //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qtextedit.cpp"];
     let docs = DocParser::parse_files(&source_directory);
 

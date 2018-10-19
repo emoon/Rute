@@ -1,3 +1,93 @@
+///     \class QPlatformNativeInterface
+///     \since 5.0
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+/// 
+///     \brief The QPlatformNativeInterface class provides an abstraction for retrieving native
+///     resource handles.
+///  */
+/// 
+/// void *QPlatformNativeInterface::nativeResourceForIntegration(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// void *QPlatformNativeInterface::nativeResourceForScreen(const QByteArray &resource, QScreen *screen)
+/// {
+///     Q_UNUSED(resource);
+///     Q_UNUSED(screen);
+///     return 0;
+/// }
+/// 
+/// void *QPlatformNativeInterface::nativeResourceForWindow(const QByteArray &resource, QWindow *window)
+/// {
+///     Q_UNUSED(resource);
+///     Q_UNUSED(window);
+///     return 0;
+/// }
+/// 
+/// void *QPlatformNativeInterface::nativeResourceForContext(const QByteArray &resource, QOpenGLContext *context)
+/// {
+///     Q_UNUSED(resource);
+///     Q_UNUSED(context);
+///     return 0;
+/// }
+/// 
+/// void * QPlatformNativeInterface::nativeResourceForBackingStore(const QByteArray &resource, QBackingStore *backingStore)
+/// {
+///     Q_UNUSED(resource);
+///     Q_UNUSED(backingStore);
+///     return 0;
+/// }
+/// 
+/// #ifndef QT_NO_CURSOR
+/// void *QPlatformNativeInterface::nativeResourceForCursor(const QByteArray &resource, const QCursor &cursor)
+/// {
+///     Q_UNUSED(resource);
+///     Q_UNUSED(cursor);
+///     return nullptr;
+/// }
+/// #endif // !QT_NO_CURSOR
+/// 
+/// QPlatformNativeInterface::NativeResourceForIntegrationFunction QPlatformNativeInterface::nativeResourceFunctionForIntegration(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// QPlatformNativeInterface::NativeResourceForContextFunction QPlatformNativeInterface::nativeResourceFunctionForContext(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// QPlatformNativeInterface::NativeResourceForScreenFunction QPlatformNativeInterface::nativeResourceFunctionForScreen(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// QPlatformNativeInterface::NativeResourceForWindowFunction QPlatformNativeInterface::nativeResourceFunctionForWindow(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// QPlatformNativeInterface::NativeResourceForBackingStoreFunction QPlatformNativeInterface::nativeResourceFunctionForBackingStore(const QByteArray &resource)
+/// {
+///     Q_UNUSED(resource);
+///     return 0;
+/// }
+/// 
+/// QFunctionPointer QPlatformNativeInterface::platformFunction(const QByteArray &function) const
+/// {
+///     Q_UNUSED(function);
+///     return nullptr;
+/// }
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PlatformNativeInterface : Object {
     [event] native_resource_for_integration(resource: &ByteArrayType),
     [event] native_resource_for_context(resource: &ByteArrayType, context: *OpenGLContextType),
@@ -11,9 +101,13 @@ struct PlatformNativeInterface : Object {
     [event] native_resource_function_for_window(resource: &ByteArrayType) -> PlatformNativeInterface::NativeResourceForWindowFunction,
     [event] native_resource_function_for_backing_store(resource: &ByteArrayType) -> PlatformNativeInterface::NativeResourceForBackingStoreFunction,
     [event] platform_function(function: &ByteArrayType) -> FunctionPointer,
+    ///     Contains generic window properties that the platform may utilize.
     [event] window_properties(window: *PlatformWindowType) -> VariantMap,
+    ///     Returns a window property with \a name. If the value does not exist, defaultValue is returned.
     [event] window_property(window: *PlatformWindowType, name: String) -> Variant,
+    ///     Returns a window property with \a name. If the value does not exist, defaultValue is returned.
     [event] window_property(window: *PlatformWindowType, name: String, default_value: &VariantType) -> Variant,
+    ///     Sets a window property with \a name to \a value.
     [event] set_window_property(window: *PlatformWindowType, name: String, value: &VariantType),
     [signal] window_property_changed(window: *PlatformWindowType, property_name: String),
 }

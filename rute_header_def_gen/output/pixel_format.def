@@ -1,3 +1,31 @@
+///     \class QPixelFormat
+///     \inmodule QtGui
+///     \since 5.4
+///     \brief QPixelFormat is a class for describing different pixel
+///     layouts in graphics buffers.
+/// 
+///     In Qt there is a often a need to represent the layout of the pixels in a
+///     graphics buffer. Internally QPixelFormat stores everything in a 64 bit
+///     datastructure. This gives performance but also some limitations.
+/// 
+///     QPixelFormat can describe 5 color channels and 1 alpha channel, each can use
+///     6 bits to describe the size of the color channel.
+/// 
+///     The position of the alpha channel is described with a separate enum. This is
+///     to make it possible to describe QImage formats like ARGB32, and also
+///     describe typical OpenGL formats like RBGA8888.
+/// 
+///     How pixels are suppose to be read is determined by the TypeInterpretation
+///     enum.  It describes if color values are suppose to be read byte per byte,
+///     or if a pixel is suppose to be read as a complete int and then masked.
+///     \sa TypeInterpretation
+/// 
+///     There is no support for describing YUV's macro pixels. Instead a list of YUV
+///     formats has been made. When a QPixelFormat is describing a YUV format, the
+///     bitsPerPixel value has been deduced by the YUV Layout enum. Also, the color
+///     channels should all be set to zero except the fifth color channel that
+///     should store the bitsPerPixel value.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPixelFormat)]
 enum FieldWidth {
     ModelFieldWidth,

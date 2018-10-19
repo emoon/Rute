@@ -1,3 +1,50 @@
+///     \class QMouseEvent
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QMouseEvent class contains parameters that describe a mouse event.
+/// 
+///     Mouse events occur when a mouse button is pressed or released
+///     inside a widget, or when the mouse cursor is moved.
+/// 
+///     Mouse move events will occur only when a mouse button is pressed
+///     down, unless mouse tracking has been enabled with
+///     QWidget::setMouseTracking().
+/// 
+///     Qt automatically grabs the mouse when a mouse button is pressed
+///     inside a widget; the widget will continue to receive mouse events
+///     until the last mouse button is released.
+/// 
+///     A mouse event contains a special accept flag that indicates
+///     whether the receiver wants the event. You should call ignore() if
+///     the mouse event is not handled by your widget. A mouse event is
+///     propagated up the parent widget chain until a widget accepts it
+///     with accept(), or an event filter consumes it.
+/// 
+///     \note If a mouse event is propagated to a \l{QWidget}{widget} for
+///     which Qt::WA_NoMousePropagation has been set, that mouse event
+///     will not be propagated further up the parent widget chain.
+/// 
+///     The state of the keyboard modifier keys can be found by calling the
+///     \l{QInputEvent::modifiers()}{modifiers()} function, inherited from
+///     QInputEvent.
+/// 
+///     The functions pos(), x(), and y() give the cursor position
+///     relative to the widget that receives the mouse event. If you
+///     move the widget as a result of the mouse event, use the global
+///     position returned by globalPos() to avoid a shaking motion.
+/// 
+///     The QWidget::setEnabled() function can be used to enable or
+///     disable mouse and keyboard events for a widget.
+/// 
+///     Reimplement the QWidget event handlers, QWidget::mousePressEvent(),
+///     QWidget::mouseReleaseEvent(), QWidget::mouseDoubleClickEvent(),
+///     and QWidget::mouseMoveEvent() to receive mouse events in your own
+///     widgets.
+/// 
+///     \sa QWidget::setMouseTracking(), QWidget::grabMouse(),
+///     QCursor::pos()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct MouseEvent : InputEvent {
     pos() -> Point,
     global_pos() -> Point,

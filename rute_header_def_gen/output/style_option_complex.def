@@ -1,3 +1,21 @@
+///     \class QStyleOptionComplex
+///     \brief The QStyleOptionComplex class is used to hold parameters that are
+///     common to all complex controls.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     This class is not used on its own. Instead it is used to derive
+///     other complex control options, for example QStyleOptionSlider and
+///     QStyleOptionSpinBox.
+/// 
+///     For performance reasons, the access to the member variables is
+///     direct (i.e., using the \c . or \c -> operator).
+/// 
+///     For an example demonstrating how style options can be used, see
+///     the \l {widgets/styles}{Styles} example.
+/// 
+///     \sa QStyleOption
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleOptionComplex)]
 enum StyleOptionType {
     Type,

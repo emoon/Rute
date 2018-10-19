@@ -1,8 +1,15 @@
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct BasicMutex {
     lock(),
     unlock(),
+    ///     \since 5.7
+    /// 
+    ///     Returns \c true if the mutex is recursive.
     is_recursive() -> bool,
+    ///     \since 5.7
+    /// 
+    ///     Returns \c true if the mutex is recursive.
     is_recursive() -> bool,
 }
 

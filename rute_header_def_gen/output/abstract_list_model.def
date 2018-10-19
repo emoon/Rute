@@ -1,5 +1,77 @@
+///     \class QAbstractListModel
+///     \inmodule QtCore
+///     \brief The QAbstractListModel class provides an abstract model that can be
+///     subclassed to create one-dimensional list models.
+/// 
+///     \ingroup model-view
+/// 
+///     QAbstractListModel provides a standard interface for models that represent
+///     their data as a simple non-hierarchical sequence of items. It is not used
+///     directly, but must be subclassed.
+/// 
+///     Since the model provides a more specialized interface than
+///     QAbstractItemModel, it is not suitable for use with tree views; you will
+///     need to subclass QAbstractItemModel if you want to provide a model for
+///     that purpose. If you need to use a number of list models to manage data,
+///     it may be more appropriate to subclass QAbstractTableModel instead.
+/// 
+///     Simple models can be created by subclassing this class and implementing
+///     the minimum number of required functions. For example, we could implement
+///     a simple read-only QStringList-based model that provides a list of strings
+///     to a QListView widget. In such a case, we only need to implement the
+///     rowCount() function to return the number of items in the list, and the
+///     data() function to retrieve items from the list.
+/// 
+///     Since the model represents a one-dimensional structure, the rowCount()
+///     function returns the total number of items in the model. The columnCount()
+///     function is implemented for interoperability with all kinds of views, but
+///     by default informs views that the model contains only one column.
+/// 
+///     \section1 Subclassing
+/// 
+///     When subclassing QAbstractListModel, you must provide implementations
+///     of the rowCount() and data() functions. Well behaved models also provide
+///     a headerData() implementation.
+/// 
+///     If your model is used within QML and requires roles other than the
+///     default ones provided by the roleNames() function, you must override it.
+/// 
+///     For editable list models, you must also provide an implementation of
+///     setData(), and implement the flags() function so that it returns a value
+///     containing \l{Qt::ItemFlags}{Qt::ItemIsEditable}.
+/// 
+///     Note that QAbstractListModel provides a default implementation of
+///     columnCount() that informs views that there is only a single column
+///     of items in this model.
+/// 
+///     Models that provide interfaces to resizable list-like data structures
+///     can provide implementations of insertRows() and removeRows(). When
+///     implementing these functions, it is important to call the appropriate
+///     functions so that all connected views are aware of any changes:
+/// 
+///     \list
+///     \li An insertRows() implementation must call beginInsertRows()
+///        \e before inserting new rows into the data structure, and it must
+///        call endInsertRows() \e{immediately afterwards}.
+///     \li A removeRows() implementation must call beginRemoveRows()
+///        \e before the rows are removed from the data structure, and it must
+///        call endRemoveRows() \e{immediately afterwards}.
+///     \endlist
+/// 
+///     \note Some general guidelines for subclassing models are available in the
+///     \l{Model Subclassing Reference}.
+/// 
+///     \sa {Model Classes}, {Model Subclassing Reference}, QAbstractItemView,
+///         QAbstractTableModel, {Item Views Puzzle Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractListModel : AbstractItemModel {
+    ///     \fn QModelIndex QAbstractListModel::index(int row, int column, const QModelIndex &parent = QModelIndex()) const
+    /// 
+    ///     Returns the index of the data in \a row and \a column with \a parent.
+    /// 
+    ///     \sa parent()
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
+    ///     \reimp
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,

@@ -1,16 +1,80 @@
+///     \class QBackingStore
+///     \since 5.0
+///     \inmodule QtGui
+/// 
+///     \brief The QBackingStore class provides a drawing area for QWindow.
+/// 
+///     QBackingStore enables the use of QPainter to paint on a QWindow with type
+///     RasterSurface. The other way of rendering to a QWindow is through the use
+///     of OpenGL with QOpenGLContext.
+/// 
+///     A QBackingStore contains a buffered representation of the window contents,
+///     and thus supports partial updates by using QPainter to only update a sub
+///     region of the window contents.
+/// 
+///     QBackingStore might be used by an application that wants to use QPainter
+///     without OpenGL acceleration and without the extra overhead of using the
+///     QWidget or QGraphicsView UI stacks. For an example of how to use
+///     QBackingStore see the \l{Raster Window Example}.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct BackingStore {
+    ///     Returns a pointer to the top-level window associated with this
+    ///     surface.
     window() -> Window?,
+    ///     Returns the paint device for this surface.
+    /// 
+    ///     \warning The device is only valid between calls to beginPaint() and
+    ///     endPaint(). You should not cache the returned value.
     paint_device() -> PaintDevice?,
+    ///     Flushes the given \a region from the specified \a window onto the
+    ///     screen.
+    /// 
+    ///     The \a window must either be the top level window represented by
+    ///     this backingstore, or a non-transient child of that window. Passing
+    ///     \c nullptr falls back to using the backingstore's top level window.
+    /// 
+    ///     If the \a window is a child window, the \a region should be in child window
+    ///     coordinates, and the \a offset should be the child window's offset in relation
+    ///     to the backingstore's top level window.
+    /// 
+    ///     You should call this function after ending painting with endPaint().
+    /// 
+    ///     \sa QWindow::transientParent()
     flush(region: &RegionType, window: *WindowType, offset: &PointType),
+    ///     Sets the size of the window surface to \a size.
+    /// 
+    ///     \sa size()
     resize(size: &SizeType),
+    ///     Returns the current size of the window surface.
     size() -> Size,
+    ///     Scrolls the given \a area \a dx pixels to the right and \a dy
+    ///     downward; both \a dx and \a dy may be negative.
+    /// 
+    ///     Returns \c true if the area was scrolled successfully; false otherwise.
     scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
+    ///     Begins painting on the backing store surface in the given \a region.
+    /// 
+    ///     You should call this function before using the paintDevice() to
+    ///     paint.
+    /// 
+    ///     \sa endPaint(), paintDevice()
     begin_paint(arg0: &RegionType),
+    ///     Ends painting.
+    /// 
+    ///     You should call this function after painting with the paintDevice()
+    ///     has ended.
+    /// 
+    ///     \sa beginPaint(), paintDevice()
     end_paint(),
+    ///     Set \a region as the static contents of this window.
     set_static_contents(region: &RegionType),
+    ///     Returns a QRegion representing the area of the window that
+    ///     has static contents.
     static_contents() -> Region,
+    ///     Returns a boolean indicating if this window has static contents or not.
     has_static_contents() -> bool,
+    ///     Returns a pointer to the QPlatformBackingStore implementation
     handle() -> PlatformBackingStore?,
 }
 

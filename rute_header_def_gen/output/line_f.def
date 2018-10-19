@@ -1,3 +1,54 @@
+///     \class QLineF
+///     \inmodule QtCore
+///     \ingroup painting
+/// 
+///     \brief The QLineF class provides a two-dimensional vector using
+///     floating point precision.
+/// 
+///     A QLineF describes a finite length line (or line segment) on a
+///     two-dimensional surface. QLineF defines the start and end points
+///     of the line using floating point accuracy for coordinates.  Use
+///     the toLine() function to retrieve an integer based copy of this
+///     line.
+/// 
+///     \table
+///     \row
+///         \li \inlineimage qline-point.png
+///         \li \inlineimage qline-coordinates.png
+///     \endtable
+/// 
+///     The positions of the line's start and end points can be retrieved
+///     using the p1(), x1(), y1(), p2(), x2(), and y2() functions. The
+///     dx() and dy() functions return the horizontal and vertical
+///     components of the line, respectively.
+/// 
+///     The line's length can be retrieved using the length() function,
+///     and altered using the setLength() function.  Similarly, angle()
+///     and setAngle() are respectively used for retrieving and altering
+///     the angle of the line. Use the isNull()
+///     function to determine whether the QLineF represents a valid line
+///     or a null line.
+/// 
+///     The intersect() function determines the IntersectType for this
+///     line and a given line, while the angleTo() function returns the
+///     angle between the lines. In addition, the unitVector() function
+///     returns a line that has the same starting point as this line, but
+///     with a length of only 1, while the normalVector() function returns
+///     a line that is perpendicular to this line with the same starting
+///     point and length.
+/// 
+///     Finally, the line can be translated a given offset using the
+///     translate() function, and can be traversed using the pointAt()
+///     function.
+/// 
+///     \section1 Constraints
+/// 
+///     QLine is limited to the minimum and maximum values for the
+///     \c int type. Operations on a QLine that could potentially result
+///     in values outside this range will result in undefined behavior.
+/// 
+///     \sa QLine, QPolygonF, QRectF
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QLineF)]
 enum IntersectType {
     NoIntersection,
@@ -7,6 +58,14 @@ enum IntersectType {
 
 
 struct LineF {
+    ///     \since 4.4
+    /// 
+    ///     Returns a QLineF with the given \a length and \a angle.
+    /// 
+    ///     The first point of the line will be on the origin.
+    /// 
+    ///     Positive values for the angles mean counter-clockwise while negative values
+    ///     mean the clockwise direction. Zero degrees is at the 3 o'clock position.
     [static] from_polar(length: f32, angle: f32) -> LineF,
     is_null() -> bool,
     p1() -> PointF,
@@ -17,14 +76,94 @@ struct LineF {
     y2() -> f32,
     dx() -> f32,
     dy() -> f32,
+    ///     Returns the length of the line.
+    /// 
+    ///     \sa setLength()
     length() -> f32,
     set_length(len: f32),
+    ///   \fn qreal QLineF::angle(const QLineF &line) const
+    /// 
+    ///   \obsolete
+    /// 
+    ///   Returns the angle (in degrees) between this line and the given \a
+    ///   line, taking the direction of the lines into account. If the lines
+    ///   do not intersect within their range, it is the intersection point of
+    ///   the extended lines that serves as origin (see
+    ///   QLineF::UnboundedIntersection).
+    /// 
+    ///   \table
+    ///   \row
+    ///   \li \inlineimage qlinef-angle-identicaldirection.png
+    ///   \li \inlineimage qlinef-angle-oppositedirection.png
+    ///   \endtable
+    /// 
+    ///   When the lines are parallel, this function returns 0 if they have
+    ///   the same direction; otherwise it returns 180.
+    /// 
+    ///   \sa intersect()
     angle() -> f32,
+    ///     \since 4.4
+    /// 
+    ///     Sets the angle of the line to the given \a angle (in degrees).
+    ///     This will change the position of the second point of the line such that
+    ///     the line has the given angle.
+    /// 
+    ///     Positive values for the angles mean counter-clockwise while negative values
+    ///     mean the clockwise direction. Zero degrees is at the 3 o'clock position.
+    /// 
+    ///     \sa angle()
     set_angle(angle: f32),
+    ///   \fn qreal QLineF::angleTo(const QLineF &line) const
+    /// 
+    ///   \since 4.4
+    /// 
+    ///   Returns the angle (in degrees) from this line to the given \a
+    ///   line, taking the direction of the lines into account. If the lines
+    ///   do not intersect within their range, it is the intersection point of
+    ///   the extended lines that serves as origin (see
+    ///   QLineF::UnboundedIntersection).
+    /// 
+    ///   The returned value represents the number of degrees you need to add
+    ///   to this line to make it have the same angle as the given \a line,
+    ///   going counter-clockwise.
+    /// 
+    ///   \sa intersect()
     angle_to(l: &LineFType) -> f32,
+    ///     Returns the unit vector for this line, i.e a line starting at the
+    ///     same point as \e this line with a length of 1.0.
+    /// 
+    ///     \sa normalVector()
     unit_vector() -> LineF,
     normal_vector() -> LineF,
+    ///     \fn QLineF::IntersectType QLineF::intersect(const QLineF &line, QPointF *intersectionPoint) const
+    /// 
+    ///     Returns a value indicating whether or not \e this line intersects
+    ///     with the given \a line.
+    /// 
+    ///     The actual intersection point is extracted to \a intersectionPoint
+    ///     (if the pointer is valid). If the lines are parallel, the
+    ///     intersection point is undefined.
     intersect(l: &LineFType, intersection_point: *PointFType) -> LineF::IntersectType,
+    ///   \fn qreal QLineF::angle(const QLineF &line) const
+    /// 
+    ///   \obsolete
+    /// 
+    ///   Returns the angle (in degrees) between this line and the given \a
+    ///   line, taking the direction of the lines into account. If the lines
+    ///   do not intersect within their range, it is the intersection point of
+    ///   the extended lines that serves as origin (see
+    ///   QLineF::UnboundedIntersection).
+    /// 
+    ///   \table
+    ///   \row
+    ///   \li \inlineimage qlinef-angle-identicaldirection.png
+    ///   \li \inlineimage qlinef-angle-oppositedirection.png
+    ///   \endtable
+    /// 
+    ///   When the lines are parallel, this function returns 0 if they have
+    ///   the same direction; otherwise it returns 180.
+    /// 
+    ///   \sa intersect()
     angle(l: &LineFType) -> f32,
     point_at(t: f32) -> PointF,
     center() -> PointF,

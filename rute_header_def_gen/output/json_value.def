@@ -1,3 +1,51 @@
+///     \class QJsonValue
+///     \inmodule QtCore
+///     \ingroup json
+///     \ingroup shared
+///     \reentrant
+///     \since 5.0
+/// 
+///     \brief The QJsonValue class encapsulates a value in JSON.
+/// 
+///     A value in JSON can be one of 6 basic types:
+/// 
+///     JSON is a format to store structured data. It has 6 basic data types:
+/// 
+///     \list
+///     \li bool QJsonValue::Bool
+///     \li double QJsonValue::Double
+///     \li string QJsonValue::String
+///     \li array QJsonValue::Array
+///     \li object QJsonValue::Object
+///     \li null QJsonValue::Null
+///     \endlist
+/// 
+///     A value can represent any of the above data types. In addition, QJsonValue has one special
+///     flag to represent undefined values. This can be queried with isUndefined().
+/// 
+///     The type of the value can be queried with type() or accessors like isBool(), isString(), and so on.
+///     Likewise, the value can be converted to the type stored in it using the toBool(), toString() and so on.
+/// 
+///     Values are strictly typed internally and contrary to QVariant will not attempt to do any implicit type
+///     conversions. This implies that converting to a type that is not stored in the value will return a default
+///     constructed return value.
+/// 
+///     \section1 QJsonValueRef
+/// 
+///     QJsonValueRef is a helper class for QJsonArray and QJsonObject.
+///     When you get an object of type QJsonValueRef, you can
+///     use it as if it were a reference to a QJsonValue. If you assign to it,
+///     the assignment will apply to the element in the QJsonArray or QJsonObject
+///     from which you got the reference.
+/// 
+///     The following methods return QJsonValueRef:
+///     \list
+///     \li \l {QJsonArray}::operator[](int i)
+///     \li \l {QJsonObject}::operator[](const QString & key) const
+///     \endlist
+/// 
+///     \sa {JSON Support in Qt}, {JSON Save Game Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QJsonValue)]
 enum Type {
     Null,
@@ -26,7 +74,17 @@ struct JsonValue {
     to_double(default_value: double) -> double,
     to_array() -> JsonArray,
     to_array(default_value: &JsonArrayType) -> JsonArray,
+    ///     \overload
+    /// 
+    ///     Converts the value to an object and returns it.
+    /// 
+    ///     If type() is not Object, the \l {QJsonObject::}{QJsonObject()} will be returned.
     to_object() -> JsonObject,
+    ///     \overload
+    /// 
+    ///     Converts the value to an object and returns it.
+    /// 
+    ///     If type() is not Object, the \l {QJsonObject::}{QJsonObject()} will be returned.
     to_object(default_value: &JsonObjectType) -> JsonObject,
 }
 

@@ -1,8 +1,153 @@
+///     \class QRectF
+///     \inmodule QtCore
+///     \ingroup painting
+///     \reentrant
+/// 
+///     \brief The QRectF class defines a rectangle in the plane using floating
+///     point precision.
+/// 
+///     A rectangle is normally expressed as a top-left corner and a
+///     size.  The size (width and height) of a QRectF is always equivalent
+///     to the mathematical rectangle that forms the basis for its
+///     rendering.
+/// 
+///     A QRectF can be constructed with a set of left, top, width and
+///     height coordinates, or from a QPointF and a QSizeF.  The following
+///     code creates two identical rectangles.
+/// 
+///     \snippet code/src_corelib_tools_qrect.cpp 1
+/// 
+///     There is also a third constructor creating a QRectF from a QRect,
+///     and a corresponding toRect() function that returns a QRect object
+///     based on the values of this rectangle (note that the coordinates
+///     in the returned rectangle are rounded to the nearest integer).
+/// 
+///     The QRectF class provides a collection of functions that return
+///     the various rectangle coordinates, and enable manipulation of
+///     these. QRectF also provides functions to move the rectangle
+///     relative to the various coordinates. In addition there is a
+///     moveTo() function that moves the rectangle, leaving its top left
+///     corner at the given coordinates. Alternatively, the translate()
+///     function moves the rectangle the given offset relative to the
+///     current position, and the translated() function returns a
+///     translated copy of this rectangle.
+/// 
+///     The size() function returns the rectange's dimensions as a
+///     QSizeF. The dimensions can also be retrieved separately using the
+///     width() and height() functions. To manipulate the dimensions use
+///     the setSize(), setWidth() or setHeight() functions. Alternatively,
+///     the size can be changed by applying either of the functions
+///     setting the rectangle coordinates, for example, setBottom() or
+///     setRight().
+/// 
+///     The contains() function tells whether a given point is inside the
+///     rectangle or not, and the intersects() function returns \c true if
+///     this rectangle intersects with a given rectangle (otherwise
+///     false). The QRectF class also provides the intersected() function
+///     which returns the intersection rectangle, and the united() function
+///     which returns the rectangle that encloses the given rectangle and
+///     this:
+/// 
+///     \table
+///     \row
+///     \li \inlineimage qrect-intersect.png
+///     \li \inlineimage qrect-unite.png
+///     \row
+///     \li intersected()
+///     \li united()
+///     \endtable
+/// 
+///     The isEmpty() function returns \c true if the rectangle's width or
+///     height is less than, or equal to, 0. Note that an empty rectangle
+///     is not valid: The isValid() function returns \c true if both width
+///     and height is larger than 0. A null rectangle (isNull() == true)
+///     on the other hand, has both width and height set to 0.
+/// 
+///     Note that due to the way QRect and QRectF are defined, an
+///     empty QRectF is defined in essentially the same way as QRect.
+/// 
+///     Finally, QRectF objects can be streamed as well as compared.
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Rendering
+/// 
+///     When using an \l {QPainter::Antialiasing}{anti-aliased} painter,
+///     the boundary line of a QRectF will be rendered symmetrically on both
+///     sides of the mathematical rectangle's boundary line. But when
+///     using an aliased painter (the default) other rules apply.
+/// 
+///     Then, when rendering with a one pixel wide pen the QRectF's boundary
+///     line will be rendered to the right and below the mathematical
+///     rectangle's boundary line.
+/// 
+///     When rendering with a two pixels wide pen the boundary line will
+///     be split in the middle by the mathematical rectangle. This will be
+///     the case whenever the pen is set to an even number of pixels,
+///     while rendering with a pen with an odd number of pixels, the spare
+///     pixel will be rendered to the right and below the mathematical
+///     rectangle as in the one pixel case.
+/// 
+///     \table
+///     \row
+///         \li \inlineimage qrect-diagram-zero.png
+///         \li \inlineimage qrectf-diagram-one.png
+///     \row
+///         \li Logical representation
+///         \li One pixel wide pen
+///     \row
+///         \li \inlineimage qrectf-diagram-two.png
+///         \li \inlineimage qrectf-diagram-three.png
+///     \row
+///         \li Two pixel wide pen
+///         \li Three pixel wide pen
+///     \endtable
+/// 
+///     \section1 Coordinates
+/// 
+///     The QRectF class provides a collection of functions that return
+///     the various rectangle coordinates, and enable manipulation of
+///     these. QRectF also provides functions to move the rectangle
+///     relative to the various coordinates.
+/// 
+///     For example: the bottom(), setBottom() and moveBottom() functions:
+///     bottom() returns the y-coordinate of the rectangle's bottom edge,
+///     setBottom() sets the bottom edge of the rectangle to the given y
+///     coordinate (it may change the height, but will never change the
+///     rectangle's top edge) and moveBottom() moves the entire rectangle
+///     vertically, leaving the rectangle's bottom edge at the given y
+///     coordinate and its size unchanged.
+/// 
+///     \image qrectf-coordinates.png
+/// 
+///     It is also possible to add offsets to this rectangle's coordinates
+///     using the adjust() function, as well as retrieve a new rectangle
+///     based on adjustments of the original one using the adjusted()
+///     function. If either of the width and height is negative, use the
+///     normalized() function to retrieve a rectangle where the corners
+///     are swapped.
+/// 
+///     In addition, QRectF provides the getCoords() function which extracts
+///     the position of the rectangle's top-left and bottom-right corner,
+///     and the getRect() function which extracts the rectangle's top-left
+///     corner, width and height. Use the setCoords() and setRect()
+///     function to manipulate the rectangle's coordinates and dimensions
+///     in one go.
+/// 
+///     \sa QRect, QRegion
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct RectF {
     is_null() -> bool,
     is_empty() -> bool,
     is_valid() -> bool,
+    ///     Returns a normalized rectangle; i.e., a rectangle that has a
+    ///     non-negative width and height.
+    /// 
+    ///     If width() < 0 the function swaps the left and right corners, and
+    ///     it swaps the top and bottom corners if height() < 0.
+    /// 
+    ///     \sa isValid(), isEmpty()
     normalized() -> RectF,
     left() -> f32,
     top() -> f32,
@@ -40,6 +185,12 @@ struct RectF {
     get_rect(x: *f32, y: *f32, w: *f32, h: *f32),
     set_coords(x1: f32, y1: f32, x2: f32, y2: f32),
     get_coords(x1: *f32, y1: *f32, x2: *f32, y2: *f32),
+    ///     \fn QRectF QRectF::adjusted(qreal dx1, qreal dy1, qreal dx2, qreal dy2) const
+    /// 
+    ///     Returns a new rectangle with \a dx1, \a dy1, \a dx2 and \a dy2
+    ///     added respectively to the existing coordinates of this rectangle.
+    /// 
+    ///     \sa adjust()
     adjust(x1: f32, y1: f32, x2: f32, y2: f32),
     adjusted(x1: f32, y1: f32, x2: f32, y2: f32) -> RectF,
     size() -> SizeF,
@@ -48,15 +199,48 @@ struct RectF {
     set_width(w: f32),
     set_height(h: f32),
     set_size(s: &SizeFType),
+    ///     \fn bool QRectF::contains(const QRectF &rectangle) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle;
+    ///     otherwise returns \c false.
     contains(r: &RectFType) -> bool,
+    ///     \fn bool QRectF::contains(const QRectF &rectangle) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle;
+    ///     otherwise returns \c false.
     contains(p: &PointFType) -> bool,
+    ///     \fn bool QRectF::contains(const QRectF &rectangle) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle;
+    ///     otherwise returns \c false.
     contains(x: f32, y: f32) -> bool,
     united(other: &RectFType) -> RectF,
     intersected(other: &RectFType) -> RectF,
+    ///     \fn bool QRectF::intersects(const QRectF &rectangle) const
+    /// 
+    ///     Returns \c true if this rectangle intersects with the given \a
+    ///     rectangle (i.e. there is a non-empty area of overlap between
+    ///     them), otherwise returns \c false.
+    /// 
+    ///     The intersection rectangle can be retrieved using the intersected()
+    ///     function.
+    /// 
+    ///     \sa contains()
     intersects(r: &RectFType) -> bool,
     margins_added(margins: &MarginsFType) -> RectF,
     margins_removed(margins: &MarginsFType) -> RectF,
     to_rect() -> Rect,
+    ///     \fn QRect QRectF::toAlignedRect() const
+    ///     \since 4.3
+    /// 
+    ///     Returns a QRect based on the values of this rectangle that is the
+    ///     smallest possible integer rectangle that completely contains this
+    ///     rectangle.
+    /// 
+    ///     \sa toRect()
     to_aligned_rect() -> Rect,
 }
 

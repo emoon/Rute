@@ -1,3 +1,36 @@
+///     \class QDropEvent
+///     \ingroup events
+///     \ingroup draganddrop
+///     \inmodule QtGui
+/// 
+///     \brief The QDropEvent class provides an event which is sent when a
+///     drag and drop action is completed.
+/// 
+///     When a widget \l{QWidget::setAcceptDrops()}{accepts drop events}, it will
+///     receive this event if it has accepted the most recent QDragEnterEvent or
+///     QDragMoveEvent sent to it.
+/// 
+///     The drop event contains a proposed action, available from proposedAction(), for
+///     the widget to either accept or ignore. If the action can be handled by the
+///     widget, you should call the acceptProposedAction() function. Since the
+///     proposed action can be a combination of \l Qt::DropAction values, it may be
+///     useful to either select one of these values as a default action or ask
+///     the user to select their preferred action.
+/// 
+///     If the proposed drop action is not suitable, perhaps because your custom
+///     widget does not support that action, you can replace it with any of the
+///     \l{possibleActions()}{possible drop actions} by calling setDropAction()
+///     with your preferred action. If you set a value that is not present in the
+///     bitwise OR combination of values returned by possibleActions(), the default
+///     copy action will be used. Once a replacement drop action has been set, call
+///     accept() instead of acceptProposedAction() to complete the drop operation.
+/// 
+///     The mimeData() function provides the data dropped on the widget in a QMimeData
+///     object. This contains information about the MIME type of the data in addition to
+///     the data itself.
+/// 
+///     \sa QMimeData, QDrag, {Drag and Drop}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DropEvent : Event {
     pos() -> Point,
     pos_f() -> PointF?,
@@ -8,6 +41,15 @@ struct DropEvent : Event {
     accept_proposed_action(),
     drop_action() -> Rute::DropAction,
     set_drop_action(action: Rute::DropAction),
+    ///     If the source of the drag operation is a widget in this
+    ///     application, this function returns that source; otherwise it
+    ///     returns 0. The source of the operation is the first parameter to
+    ///     the QDrag object used instantiate the drag.
+    /// 
+    ///     This is useful if your widget needs special behavior when dragging
+    ///     to itself.
+    /// 
+    ///     \sa QDrag::QDrag()
     source() -> Object?,
     mime_data() -> MimeData?,
 }

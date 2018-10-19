@@ -1,17 +1,68 @@
+///     \class QGraphicsSceneWheelEvent
+///     \brief The QGraphicsSceneWheelEvent class provides wheel events
+///            in the graphics view framework.
+///     \brief The QGraphicsSceneWheelEvent class provides wheel events in the
+///     graphics view framework.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     \l{QWheelEvent}{QWheelEvent}s received by a QGraphicsView are translated
+///     into QGraphicsSceneWheelEvents; it translates the QWheelEvent::globalPos()
+///     into item, scene, and screen coordinates (pos(), scenePos(), and
+///     screenPos()).
+/// 
+///     \sa QGraphicsSceneMouseEvent, QGraphicsSceneContextMenuEvent,
+///     QGraphicsSceneHoverEvent, QWheelEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
+    ///     Returns the position of the cursor in item coordinates when the
+    ///     wheel event occurred.
+    /// 
+    ///     \sa scenePos(), screenPos()
     pos() -> PointF,
+    ///     \internal
     set_pos(pos: &PointFType),
+    ///     Returns the position of the cursor in scene coordinates when the wheel
+    ///     event occurred.
+    /// 
+    ///     \sa pos(), screenPos()
     scene_pos() -> PointF,
+    ///     \internal
     set_scene_pos(pos: &PointFType),
+    ///     Returns the position of the cursor in screen coordinates when the wheel
+    ///     event occurred.
+    /// 
+    ///     \sa pos(), scenePos()
     screen_pos() -> Point,
+    ///     \internal
     set_screen_pos(pos: &PointType),
+    ///     Returns the mouse buttons that were pressed when the wheel event occurred.
+    /// 
+    ///     \sa modifiers()
     buttons() -> Rute::MouseButtons,
+    ///     \internal
     set_buttons(buttons: Rute::MouseButtons),
+    ///     Returns the keyboard modifiers that were active when the wheel event
+    ///     occurred.
+    /// 
+    ///     \sa buttons()
     modifiers() -> Rute::KeyboardModifiers,
+    ///     \internal
     set_modifiers(modifiers: Rute::KeyboardModifiers),
+    ///     Returns the distance that the wheel is rotated, in eighths (1/8s)
+    ///     of a degree. A positive value indicates that the wheel was
+    ///     rotated forwards away from the user; a negative value indicates
+    ///     that the wheel was rotated backwards toward the user.
+    /// 
+    ///     Most mouse types work in steps of 15 degrees, in which case the delta
+    ///     value is a multiple of 120 (== 15 * 8).
     delta() -> i32,
+    ///     \internal
     set_delta(delta: i32),
+    ///     Returns the wheel orientation.
     orientation() -> Rute::Orientation,
+    ///     \internal
     set_orientation(orientation: Rute::Orientation),
 }
 

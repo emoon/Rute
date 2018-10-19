@@ -1,3 +1,23 @@
+///     \class QStyleOptionHeader
+///     \brief The QStyleOptionHeader class is used to describe the
+///     parameters for drawing a header.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     QStyleOptionHeader contains all the information that QStyle
+///     functions need to draw the item views' header pane, header sort
+///     arrow, and header label.
+/// 
+///     For performance reasons, the access to the member variables is
+///     direct (i.e., using the \c . or \c -> operator). This low-level feel
+///     makes the structures straightforward to use and emphasizes that
+///     these are simply parameters used by the style functions.
+/// 
+///     For an example demonstrating how style options can be used, see
+///     the \l {widgets/styles}{Styles} example.
+/// 
+///     \sa QStyleOption
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleOptionHeader)]
 enum StyleOptionType {
     Type,

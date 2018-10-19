@@ -1,11 +1,37 @@
+///   \class QMouseEventTransition
+/// 
+///   \brief The QMouseEventTransition class provides a transition for mouse events.
+/// 
+///   \since 4.6
+///   \ingroup statemachine
+///   \inmodule QtWidgets
+/// 
+///   QMouseEventTransition is part of \l{The State Machine Framework}.
+/// 
+///   \sa QState::addTransition()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct MouseEventTransition : EventTransition {
+    ///   Returns the button that this mouse event transition checks for.
     button() -> Rute::MouseButton,
+    ///   Sets the \a button that this mouse event transition will check for.
     set_button(button: Rute::MouseButton),
+    ///   Returns the keyboard modifier mask that this mouse event transition checks
+    ///   for.
     modifier_mask() -> Rute::KeyboardModifiers,
+    ///   Sets the keyboard modifier mask that this mouse event transition will
+    ///   check for to \a modifierMask.
     set_modifier_mask(modifiers: Rute::KeyboardModifiers),
+    ///   Returns the hit test path for this mouse event transition.
     hit_test_path() -> PainterPath,
+    ///   Sets the hit test path for this mouse event transition to \a path.
+    ///   If a valid path has been set, the transition will only trigger if the mouse
+    ///   event position (QMouseEvent::pos()) is inside the path.
+    /// 
+    ///   \sa QPainterPath::contains()
     set_hit_test_path(path: &PainterPathType),
+    ///   \reimp
     [event] on_transition(event: *EventType),
+    ///   \reimp
     [event] event_test(event: *EventType) -> bool,
 }
 

@@ -1,3 +1,28 @@
+///     \class QInputDialog
+///     \brief The QInputDialog class provides a simple convenience dialog to get a
+///     single value from the user.
+///     \ingroup standard-dialogs
+///     \inmodule QtWidgets
+/// 
+///     The input value can be a string, a number or an item from a list. A label
+///     must be set to tell the user what they should enter.
+/// 
+///     Five static convenience functions are provided: getText(), getMultiLineText(),
+///     getInt(), getDouble(), and getItem(). All the functions can be used in a similar way,
+///     for example:
+/// 
+///     \snippet dialogs/standarddialogs/dialog.cpp 3
+/// 
+///     The \c ok variable is set to true if the user clicks \uicontrol OK; otherwise, it
+///     is set to false.
+/// 
+///     \image inputdialogs.png Input Dialogs
+/// 
+///     The \l{dialogs/standarddialogs}{Standard Dialogs} example shows how to use
+///     QInputDialog as well as other built-in Qt dialogs.
+/// 
+///     \sa QMessageBox, {Standard Dialogs Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QInputDialog)]
 enum InputDialogOption {
     NoButtons,
@@ -13,47 +38,183 @@ enum InputMode {
 }
 
 struct InputDialog : Dialog {
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::inputMode
+    /// 
+    ///     \brief the mode used for input
+    /// 
+    ///     This property helps determine which widget is used for entering input into
+    ///     the dialog.
     set_input_mode(mode: InputDialog::InputMode),
     input_mode() -> InputDialog::InputMode,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::labelText
+    /// 
+    ///     \brief the label's text which describes what needs to be input
     set_label_text(text: String),
     label_text() -> String,
+    ///     Sets the given \a option to be enabled if \a on is true;
+    ///     otherwise, clears the given \a option.
+    /// 
+    ///     \sa options, testOption()
     set_option(option: InputDialog::InputDialogOption, on: bool),
+    ///     Returns \c true if the given \a option is enabled; otherwise, returns
+    ///     false.
+    /// 
+    ///     \sa options, setOption()
     test_option(option: InputDialog::InputDialogOption) -> bool,
+    ///     \property QInputDialog::options
+    ///     \brief the various options that affect the look and feel of the dialog
+    ///     \since 4.5
+    /// 
+    ///     By default, all options are disabled.
+    /// 
+    ///     \sa setOption(), testOption()
     set_options(options: InputDialog::InputDialogOptions),
     options() -> InputDialog::InputDialogOptions,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::textValue
+    /// 
+    ///     \brief the text value for the input dialog
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     TextInput mode.
     set_text_value(text: String),
     text_value() -> String,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::textEchoMode
+    /// 
+    ///     \brief the echo mode for the text value
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     TextInput mode.
     set_text_echo_mode(mode: LineEdit::EchoMode),
     text_echo_mode() -> LineEdit::EchoMode,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::comboBoxEditable
+    /// 
+    ///     \brief whether or not the combo box used in the input dialog is editable
     set_combo_box_editable(editable: bool),
     is_combo_box_editable() -> bool,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::comboBoxItems
+    /// 
+    ///     \brief the items used in the combo box for the input dialog
     set_combo_box_items(items: &[String]),
     combo_box_items() -> [String],
+    ///     \property QInputDialog::intValue
+    ///     \since 4.5
+    ///     \brief the current integer value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     IntInput mode.
     set_int_value(value: i32),
     int_value() -> i32,
+    ///     \property QInputDialog::intMinimum
+    ///     \since 4.5
+    ///     \brief the minimum integer value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     IntInput mode.
     set_int_minimum(min: i32),
     int_minimum() -> i32,
+    ///     \property QInputDialog::intMaximum
+    ///     \since 4.5
+    ///     \brief the maximum integer value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     IntInput mode.
     set_int_maximum(max: i32),
     int_maximum() -> i32,
+    ///     Sets the range of integer values accepted by the dialog when used in
+    ///     IntInput mode, with minimum and maximum values specified by \a min and
+    ///     \a max respectively.
     set_int_range(min: i32, max: i32),
+    ///     \property QInputDialog::intStep
+    ///     \since 4.5
+    ///     \brief the step by which the integer value is increased and decreased
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     IntInput mode.
     set_int_step(step: i32),
     int_step() -> i32,
+    ///     \property QInputDialog::doubleValue
+    ///     \since 4.5
+    ///     \brief the current double precision floating point value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     DoubleInput mode.
     set_double_value(value: double),
     double_value() -> double,
+    ///     \property QInputDialog::doubleMinimum
+    ///     \since 4.5
+    ///     \brief the minimum double precision floating point value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     DoubleInput mode.
     set_double_minimum(min: double),
     double_minimum() -> double,
+    ///     \property QInputDialog::doubleMaximum
+    ///     \since 4.5
+    ///     \brief the maximum double precision floating point value accepted as input
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     DoubleInput mode.
     set_double_maximum(max: double),
     double_maximum() -> double,
+    ///     Sets the range of double precision floating point values accepted by the
+    ///     dialog when used in DoubleInput mode, with minimum and maximum values
+    ///     specified by \a min and \a max respectively.
     set_double_range(min: double, max: double),
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::doubleDecimals
+    /// 
+    ///     \brief sets the precision of the double spinbox in decimals
+    /// 
+    ///     \sa QDoubleSpinBox::setDecimals()
     set_double_decimals(decimals: i32),
     double_decimals() -> i32,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::okButtonText
+    /// 
+    ///     \brief the text for the button used to accept the entry in the dialog
     set_ok_button_text(text: String),
     ok_button_text() -> String,
+    ///     \since 4.5
+    /// 
+    ///     \property QInputDialog::cancelButtonText
+    ///     \brief the text for the button used to cancel the dialog
     set_cancel_button_text(text: String),
     cancel_button_text() -> String,
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     This function connects one of its signals to the slot specified by \a receiver
+    ///     and \a member. The specific signal depends on the arguments that are specified
+    ///     in \a member. These are:
+    /// 
+    ///     \list
+    ///       \li textValueSelected() if \a member has a QString for its first argument.
+    ///       \li intValueSelected() if \a member has an int for its first argument.
+    ///       \li doubleValueSelected() if \a member has a double for its first argument.
+    ///       \li accepted() if \a member has NO arguments.
+    ///     \endlist
+    /// 
+    ///     The signal will be disconnected from the slot when the dialog is closed.
     open(receiver: *ObjectType, member: *char),
+    ///     \reimp
     [event] minimum_size_hint() -> Size,
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] set_visible(visible: bool),
     [static] get_text(parent: *WidgetType, title: String, label: String, echo: LineEdit::EchoMode, text: String, ok: *bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     [static] get_multi_line_text(parent: *WidgetType, title: String, label: String, text: String, ok: *bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
@@ -61,6 +222,12 @@ struct InputDialog : Dialog {
     [static] get_int(parent: *WidgetType, title: String, label: String, value: i32, min_value: i32, max_value: i32, step: i32, ok: *bool, flags: Rute::WindowFlags) -> i32,
     [static] get_double(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags) -> double,
     [static] get_double(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags, step: double) -> double,
+    ///     \property QInputDialog::doubleStep
+    ///     \since 5.10
+    ///     \brief the step by which the double value is increased and decreased
+    /// 
+    ///     This property is only relevant when the input dialog is used in
+    ///     DoubleInput mode.
     set_double_step(step: double),
     double_step() -> double,
     [signal] text_value_changed(text: String),
@@ -69,6 +236,11 @@ struct InputDialog : Dialog {
     [signal] int_value_selected(value: i32),
     [signal] double_value_changed(value: double),
     [signal] double_value_selected(value: double),
+    ///   Closes the dialog and sets its result code to \a result. If this dialog
+    ///   is shown with exec(), done() causes the local event loop to finish,
+    ///   and exec() to return \a result.
+    /// 
+    ///   \sa QDialog::done()
     [event] done(result: i32),
 }
 

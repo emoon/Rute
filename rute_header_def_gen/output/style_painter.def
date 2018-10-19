@@ -1,3 +1,34 @@
+///     \class QStylePainter
+/// 
+///     \brief The QStylePainter class is a convenience class for drawing QStyle
+///     elements inside a widget.
+/// 
+///     \ingroup appearance
+///     \ingroup painting
+///     \inmodule QtWidgets
+/// 
+///     QStylePainter extends QPainter with a set of high-level \c
+///     draw...() functions implemented on top of QStyle's API. The
+///     advantage of using QStylePainter is that the parameter lists get
+///     considerably shorter. Whereas a QStyle object must be able to
+///     draw on any widget using any painter (because the application
+///     normally has one QStyle object shared by all widget), a
+///     QStylePainter is initialized with a widget, eliminating the need
+///     to specify the QWidget, the QPainter, and the QStyle for every
+///     function call.
+/// 
+///     Example using QStyle directly:
+/// 
+///     \snippet styles/styles.cpp 1
+/// 
+///     Example using QStylePainter:
+/// 
+///     \snippet styles/styles.cpp 0
+///     \snippet styles/styles.cpp 4
+///     \snippet styles/styles.cpp 6
+/// 
+///     \sa QStyle, QStyleOption
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StylePainter : Painter {
     begin(w: *WidgetType) -> bool,
     begin(pd: *PaintDeviceType, w: *WidgetType) -> bool,

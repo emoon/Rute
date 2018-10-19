@@ -1,16 +1,87 @@
+///   \class QPersistentModelIndex
+///   \inmodule QtCore
+///   \ingroup shared
+/// 
+///   \brief The QPersistentModelIndex class is used to locate data in a data model.
+/// 
+///   \ingroup model-view
+/// 
+///   A QPersistentModelIndex is a model index that can be stored by an
+///   application, and later used to access information in a model.
+///   Unlike the QModelIndex class, it is safe to store a
+///   QPersistentModelIndex since the model will ensure that references
+///   to items will continue to be valid as long as they can be accessed
+///   by the model.
+/// 
+///   It is good practice to check that persistent model indexes are valid
+///   before using them.
+/// 
+///   \sa {Model/View Programming}, QModelIndex, QAbstractItemModel
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PersistentModelIndex {
     swap(other: &PersistentModelIndexType),
+    ///     \fn int QPersistentModelIndex::row() const
+    /// 
+    ///     Returns the row this persistent model index refers to.
     row() -> i32,
+    ///     \fn int QPersistentModelIndex::column() const
+    /// 
+    ///     Returns the column this persistent model index refers to.
     column() -> i32,
+    ///     \fn void *QPersistentModelIndex::internalPointer() const
+    /// 
+    ///     \internal
+    /// 
+    ///     Returns a \c{void} \c{*} pointer used by the model to associate the index with
+    ///     the internal data structure.
     internal_pointer(),
+    ///     \fn quintptr QPersistentModelIndex::internalId() const
+    /// 
+    ///     \internal
+    /// 
+    ///     Returns a \c{quintptr} used by the model to associate the index with
+    ///     the internal data structure.
     internal_id() -> quintptr,
+    ///     Returns the parent QModelIndex for this persistent index, or an invalid
+    ///     QModelIndex if it has no parent.
+    /// 
+    ///     \sa sibling(), model()
     parent() -> ModelIndex,
+    ///     Returns the sibling at \a row and \a column or an invalid QModelIndex if
+    ///     there is no sibling at this position.
+    /// 
+    ///     \sa parent()
     sibling(row: i32, column: i32) -> ModelIndex,
+    ///     \obsolete
+    /// 
+    ///     Use QAbstractItemModel::index() instead.
+    /// 
+    ///     Returns the child of the model index that is stored in the given \a row
+    ///     and \a column.
+    /// 
+    ///     \sa parent(), sibling()
     child(row: i32, column: i32) -> ModelIndex,
+    ///     Returns the data for the given \a role for the item referred to by the
+    ///     index.
+    /// 
+    ///     \sa Qt::ItemDataRole, QAbstractItemModel::setData()
     data(role: i32) -> Variant,
+    ///     \since 4.2
+    /// 
+    ///     Returns the flags for the item referred to by the index.
     flags() -> Rute::ItemFlags,
+    ///     Returns the model that the index belongs to.
     model() -> AbstractItemModel?,
+    ///     \fn bool QPersistentModelIndex::isValid() const
+    /// 
+    ///     Returns \c{true} if this persistent model index is valid; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     A valid index belongs to a model, and has non-negative row and column
+    ///     numbers.
+    /// 
+    ///     \sa model(), row(), column()
     is_valid() -> bool,
 }
 

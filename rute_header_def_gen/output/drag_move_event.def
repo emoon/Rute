@@ -1,3 +1,28 @@
+///     \class QDragMoveEvent
+///     \brief The QDragMoveEvent class provides an event which is sent while a drag and drop action is in progress.
+/// 
+///     \ingroup events
+///     \ingroup draganddrop
+///     \inmodule QtGui
+/// 
+///     A widget will receive drag move events repeatedly while the drag
+///     is within its boundaries, if it accepts
+///     \l{QWidget::setAcceptDrops()}{drop events} and \l
+///     {QWidget::dragEnterEvent()}{enter events}. The widget should
+///     examine the event to see what kind of \l{mimeData()}{data} it
+///     provides, and call the accept() function to accept the drop if appropriate.
+/// 
+///     The rectangle supplied by the answerRect() function can be used to restrict
+///     drops to certain parts of the widget. For example, we can check whether the
+///     rectangle intersects with the geometry of a certain child widget and only
+///     call \l{QDropEvent::acceptProposedAction()}{acceptProposedAction()} if that
+///     is the case.
+/// 
+///     Note that this class inherits most of its functionality from
+///     QDropEvent.
+/// 
+///     \sa QDragEnterEvent, QDragLeaveEvent, QDropEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DragMoveEvent : DropEvent {
     answer_rect() -> Rect,
     accept(),

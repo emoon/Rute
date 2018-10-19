@@ -1,21 +1,73 @@
+///     \class QGraphicsRectItem
+///     \brief The QGraphicsRectItem class provides a rectangle item that you
+///     can add to a QGraphicsScene.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     To set the item's rectangle, pass a QRectF to QGraphicsRectItem's
+///     constructor, or call the setRect() function. The rect() function
+///     returns the current rectangle.
+/// 
+///     \image graphicsview-rectitem.png
+/// 
+///     QGraphicsRectItem uses the rectangle and the pen width to provide
+///     a reasonable implementation of boundingRect(), shape(), and
+///     contains(). The paint() function draws the rectangle using the
+///     item's associated pen and brush, which you can set by calling the
+///     setPen() and setBrush() functions.
+/// 
+///     \note The rendering of invalid rectangles, such as those with negative
+///     widths or heights, is undefined. If you cannot be sure that you are
+///     using valid rectangles (for example, if you are creating
+///     rectangles using data from an unreliable source) then you should
+///     use QRectF::normalized() to create normalized rectangles, and use
+///     those instead.
+/// 
+///     \sa QGraphicsPathItem, QGraphicsEllipseItem, QGraphicsPolygonItem,
+///     QGraphicsTextItem, QGraphicsLineItem, QGraphicsPixmapItem, {Graphics
+///     View Framework}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsRectItem)]
 enum GraphicsRectItemFixMeEnums {
     Type,
 }
 
 struct GraphicsRectItem : AbstractGraphicsShapeItem {
+    ///     Returns the item's rectangle.
+    /// 
+    ///     \sa setRect()
     rect() -> RectF,
+    ///     \fn void QGraphicsRectItem::setRect(const QRectF &rectangle)
+    /// 
+    ///     Sets the item's rectangle to be the given \a rectangle.
+    /// 
+    ///     \sa rect()
     set_rect(rect: &RectFType),
+    ///     \fn void QGraphicsRectItem::setRect(const QRectF &rectangle)
+    /// 
+    ///     Sets the item's rectangle to be the given \a rectangle.
+    /// 
+    ///     \sa rect()
     set_rect(x: f32, y: f32, w: f32, h: f32),
+    ///     \reimp
     [event] bounding_rect() -> RectF,
+    ///     \reimp
     [event] shape() -> PainterPath,
+    ///     \reimp
     [event] contains(point: &PointFType) -> bool,
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
+    ///     \reimp
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
+    ///     \reimp
     [event] opaque_area() -> PainterPath,
+    ///     \reimp
     [event] type() -> i32,
+    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
+    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
+    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

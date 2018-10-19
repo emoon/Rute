@@ -1,3 +1,34 @@
+///     \class QItemSelectionRange
+///     \inmodule QtCore
+/// 
+///     \brief The QItemSelectionRange class manages information about a
+///     range of selected items in a model.
+/// 
+///     \ingroup model-view
+/// 
+///     A QItemSelectionRange contains information about a range of
+///     selected items in a model. A range of items is a contiguous array
+///     of model items, extending to cover a number of adjacent rows and
+///     columns with a common parent item; this can be visualized as a
+///     two-dimensional block of cells in a table. A selection range has a
+///     top(), left() a bottom(), right() and a parent().
+/// 
+///     The QItemSelectionRange class is one of the \l{Model/View Classes}
+///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// 
+///     The model items contained in the selection range can be obtained
+///     using the indexes() function. Use QItemSelectionModel::selectedIndexes()
+///     to get a list of all selected items for a view.
+/// 
+///     You can determine whether a given model item lies within a
+///     particular range by using the contains() function. Ranges can also
+///     be compared using the overloaded operators for equality and
+///     inequality, and the intersects() function allows you to determine
+///     whether two ranges overlap.
+/// 
+///     \sa {Model/View Programming}, QAbstractItemModel, QItemSelection,
+///         QItemSelectionModel
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ItemSelectionRange {
     swap(other: &ItemSelectionRangeType),
@@ -13,10 +44,23 @@ struct ItemSelectionRange {
     model() -> AbstractItemModel?,
     contains(index: &ModelIndexType) -> bool,
     contains(row: i32, column: i32, parent_index: &ModelIndexType) -> bool,
+    ///     \fn bool QItemSelectionRange::intersects(const QItemSelectionRange &other) const
+    /// 
+    ///     Returns \c true if this selection range intersects (overlaps with) the \a other
+    ///     range given; otherwise returns \c false.
+    /// 
     intersects(other: &ItemSelectionRangeType) -> bool,
+    ///     \fn QItemSelectionRange QItemSelectionRange::intersected(const QItemSelectionRange &other) const
+    ///     \since 4.2
+    /// 
+    ///     Returns a new selection range containing only the items that are found in
+    ///     both the selection range and the \a other selection range.
     intersected(other: &ItemSelectionRangeType) -> ItemSelectionRange,
     is_valid() -> bool,
+    ///     Returns \c true if the selection range contains no selectable item
+    ///     \since 4.7
     is_empty() -> bool,
+    ///     Returns the list of model index items stored in the selection.
     indexes() -> [ModelIndex],
 }
 

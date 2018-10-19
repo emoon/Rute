@@ -1,3 +1,86 @@
+///     \class QBoxLayout
+/// 
+///     \brief The QBoxLayout class lines up child widgets horizontally or
+///     vertically.
+/// 
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     QBoxLayout takes the space it gets (from its parent layout or from
+///     the parentWidget()), divides it up into a row of boxes, and makes
+///     each managed widget fill one box.
+/// 
+///     \image qhboxlayout-with-5-children.png Horizontal box layout with five child widgets
+/// 
+///     If the QBoxLayout's orientation is Qt::Horizontal the boxes are
+///     placed in a row, with suitable sizes. Each widget (or other box)
+///     will get at least its minimum size and at most its maximum size.
+///     Any excess space is shared according to the stretch factors (more
+///     about that below).
+/// 
+///     \image qvboxlayout-with-5-children.png Vertical box layout with five child widgets
+/// 
+///     If the QBoxLayout's orientation is Qt::Vertical, the boxes are
+///     placed in a column, again with suitable sizes.
+/// 
+///     The easiest way to create a QBoxLayout is to use one of the
+///     convenience classes, e.g. QHBoxLayout (for Qt::Horizontal boxes)
+///     or QVBoxLayout (for Qt::Vertical boxes). You can also use the
+///     QBoxLayout constructor directly, specifying its direction as
+///     LeftToRight, RightToLeft, TopToBottom, or BottomToTop.
+/// 
+///     If the QBoxLayout is not the top-level layout (i.e. it is not
+///     managing all of the widget's area and children), you must add it
+///     to its parent layout before you can do anything with it. The
+///     normal way to add a layout is by calling
+///     parentLayout-\>addLayout().
+/// 
+///     Once you have done this, you can add boxes to the QBoxLayout using
+///     one of four functions:
+/// 
+///     \list
+///     \li addWidget() to add a widget to the QBoxLayout and set the
+///     widget's stretch factor. (The stretch factor is along the row of
+///     boxes.)
+/// 
+///     \li addSpacing() to create an empty box; this is one of the
+///     functions you use to create nice and spacious dialogs. See below
+///     for ways to set margins.
+/// 
+///     \li addStretch() to create an empty, stretchable box.
+/// 
+///     \li addLayout() to add a box containing another QLayout to the row
+///     and set that layout's stretch factor.
+///     \endlist
+/// 
+///     Use insertWidget(), insertSpacing(), insertStretch() or
+///     insertLayout() to insert a box at a specified position in the
+///     layout.
+/// 
+///     QBoxLayout also includes two margin widths:
+/// 
+///     \list
+///     \li setContentsMargins() sets the width of the outer border on
+///        each side of the widget. This is the width of the reserved space
+///        along each of the QBoxLayout's four sides.
+///     \li setSpacing() sets the width between neighboring boxes. (You
+///        can use addSpacing() to get more space at a particular spot.)
+///     \endlist
+/// 
+///     The margin default is provided by the style. The default margin
+///     most Qt styles specify is 9 for child widgets and 11 for windows.
+///     The spacing defaults to the same as the margin width for a
+///     top-level layout, or to the same as the parent layout.
+/// 
+///     To remove a widget from a layout, call removeWidget(). Calling
+///     QWidget::hide() on a widget also effectively removes the widget
+///     from the layout until QWidget::show() is called.
+/// 
+///     You will almost always want to use QVBoxLayout and QHBoxLayout
+///     rather than QBoxLayout because of their convenient constructors.
+/// 
+///     \sa QGridLayout, QStackedLayout, {Layout Management}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QBoxLayout)]
 enum Direction {
     LeftToRight,
@@ -9,30 +92,106 @@ enum Direction {
 }
 
 struct BoxLayout : Layout {
+    ///     \fn QBoxLayout::Direction QBoxLayout::direction() const
+    /// 
+    ///     Returns the direction of the box. addWidget() and addSpacing()
+    ///     work in this direction; the stretch stretches in this direction.
+    /// 
+    ///     \sa QBoxLayout::Direction, addWidget(), addSpacing()
     direction() -> BoxLayout::Direction,
+    ///     Sets the direction of this layout to \a direction.
     set_direction(arg0: BoxLayout::Direction),
+    ///     Adds a non-stretchable space (a QSpacerItem) with size \a size
+    ///     to the end of this box layout. QBoxLayout provides default margin
+    ///     and spacing. This function adds additional space.
+    /// 
+    ///     \sa insertSpacing(), addItem(), QSpacerItem
     add_spacing(size: i32),
+    ///     \since 4.4
+    /// 
+    ///     Adds \a spacerItem to the end of this box layout.
+    /// 
+    ///     \sa addSpacing(), addStretch()
     add_spacer_item(spacer_item: *SpacerItemType),
+    ///     Adds \a widget to the end of this box layout, with a stretch
+    ///     factor of \a stretch and alignment \a alignment.
+    /// 
+    ///     The stretch factor applies only in the \l{direction()}{direction}
+    ///     of the QBoxLayout, and is relative to the other boxes and widgets
+    ///     in this QBoxLayout. Widgets and boxes with higher stretch factors
+    ///     grow more.
+    /// 
+    ///     If the stretch factor is 0 and nothing else in the QBoxLayout has
+    ///     a stretch factor greater than zero, the space is distributed
+    ///     according to the QWidget:sizePolicy() of each widget that's
+    ///     involved.
+    /// 
+    ///     The alignment is specified by \a alignment. The default
+    ///     alignment is 0, which means that the widget fills the entire cell.
+    /// 
+    ///     \sa insertWidget(), addItem(), addLayout(), addStretch(),
+    ///         addSpacing(), addStrut()
     add_widget(arg0: *WidgetType, stretch: i32, alignment: Rute::Alignment),
+    ///     Adds \a layout to the end of the box, with serial stretch factor
+    ///     \a stretch.
+    /// 
+    ///     \sa insertLayout(), addItem(), addWidget()
     add_layout(layout: *LayoutType, stretch: i32),
+    ///     \reimp
     [event] add_item(arg0: *LayoutItemType),
+    ///     Inserts a non-stretchable space (a QSpacerItem) at position \a index, with
+    ///     size \a size. If \a index is negative the space is added at the end.
+    /// 
+    ///     The box layout has default margin and spacing. This function adds
+    ///     additional space.
+    /// 
+    ///     \sa addSpacing(), insertItem(), QSpacerItem
     insert_spacing(index: i32, size: i32),
+    ///     \since 4.4
+    /// 
+    ///     Inserts \a spacerItem at position \a index, with zero minimum
+    ///     size and stretch factor. If \a index is negative the
+    ///     space is added at the end.
+    /// 
+    ///     \sa addSpacerItem(), insertStretch(), insertSpacing()
     insert_spacer_item(index: i32, spacer_item: *SpacerItemType),
     insert_widget(index: i32, widget: *WidgetType, stretch: i32, alignment: Rute::Alignment),
+    ///     Inserts \a layout at position \a index, with stretch factor \a
+    ///     stretch. If \a index is negative, the layout is added at the end.
+    /// 
+    ///     \a layout becomes a child of the box layout.
+    /// 
+    ///     \sa addLayout(), insertItem()
     insert_layout(index: i32, layout: *LayoutType, stretch: i32),
+    ///     Inserts \a item into this box layout at position \a index. If \a
+    ///     index is negative, the item is added at the end.
+    /// 
+    ///     \sa addItem(), insertWidget(), insertLayout(), insertStretch(),
+    ///         insertSpacing()
     insert_item(index: i32, arg0: *LayoutItemType),
     spacing() -> i32,
     set_spacing(spacing: i32),
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \reimp
     [event] minimum_size() -> Size,
+    ///     \reimp
     [event] maximum_size() -> Size,
+    ///     \reimp
     [event] has_height_for_width() -> bool,
+    ///     \reimp
     [event] height_for_width(arg0: i32) -> i32,
+    ///     \reimp
     [event] minimum_height_for_width(arg0: i32) -> i32,
+    ///     \reimp
     [event] expanding_directions() -> Rute::Orientations,
+    ///     Resets cached information.
     [event] invalidate(),
+    ///     \reimp
     [event] item_at(arg0: i32) -> LayoutItem?,
+    ///     \reimp
     [event] take_at(arg0: i32) -> LayoutItem?,
+    ///     \reimp
     [event] count() -> i32,
 }
 

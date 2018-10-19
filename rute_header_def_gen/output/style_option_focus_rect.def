@@ -1,3 +1,19 @@
+///     \class QStyleOptionFocusRect
+///     \brief The QStyleOptionFocusRect class is used to describe the
+///     parameters for drawing a focus rectangle with QStyle.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     For performance reasons, the access to the member variables is
+///     direct (i.e., using the \c . or \c -> operator). This low-level feel
+///     makes the structures straightforward to use and emphasizes that
+///     these are simply parameters used by the style functions.
+/// 
+///     For an example demonstrating how style options can be used, see
+///     the \l {widgets/styles}{Styles} example.
+/// 
+///     \sa QStyleOption
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleOptionFocusRect)]
 enum StyleOptionType {
     Type,

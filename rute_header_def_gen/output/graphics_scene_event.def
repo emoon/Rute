@@ -1,5 +1,52 @@
+///     \class QGraphicsSceneEvent
+///     \brief The QGraphicsSceneEvent class provides a base class for all
+///     graphics view related events.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     When a QGraphicsView receives Qt mouse, keyboard, and drag and
+///     drop events (QMouseEvent, QKeyEvent, QDragEvent, etc.), it
+///     translates them into instances of QGraphicsSceneEvent subclasses
+///     and forwards them to the QGraphicsScene it displays. The scene
+///     then forwards the events to the relevant items.
+/// 
+///     For example, when a QGraphicsView receives a QMouseEvent of type
+///     MousePress as a response to a user click, the view sends a
+///     QGraphicsSceneMouseEvent of type GraphicsSceneMousePress to the
+///     underlying QGraphicsScene through its
+///     \l{QGraphicsScene::}{mousePressEvent()} function. The default
+///     QGraphicsScene::mousePressEvent() implementation determines which
+///     item was clicked and forwards the event to
+///     QGraphicsItem::mousePressEvent().
+/// 
+///     \omit ### Beskrive widget() \endomit
+/// 
+///     Subclasses such as QGraphicsSceneMouseEvent and
+///     QGraphicsSceneContextMenuEvent provide the coordinates from the
+///     original QEvent in screen, scene, and item coordinates (see
+///     \l{QGraphicsSceneMouseEvent::}{screenPos()},
+///     \l{QGraphicsSceneMouseEvent::}{scenePos()}, and
+///     \l{QGraphicsSceneMouseEvent::}{pos()}). The item coordinates are
+///     set by the QGraphicsScene before it forwards the event to the
+///     event to a QGraphicsItem. The mouse events also add the
+///     possibility to retrieve the coordinates from the last event
+///     received by the view (see
+///     \l{QGraphicsSceneMouseEvent::}{lastScreenPos()},
+///     \l{QGraphicsSceneMouseEvent::}{lastScenePos()}, and
+///     \l{QGraphicsSceneMouseEvent::}{lastPos()}).
+/// 
+///     \sa QEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneEvent : Event {
+    ///     Returns the widget where the event originated, or 0 if the event
+    ///     originates from another application.
     widget() -> Widget?,
+    ///     \internal
+    /// 
+    ///     Sets the \a widget related to this event.
+    /// 
+    ///     \sa widget()
     set_widget(widget: *WidgetType),
 }
 

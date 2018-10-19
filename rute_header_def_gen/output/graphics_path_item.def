@@ -1,20 +1,59 @@
+///     \class QGraphicsPathItem
+///     \brief The QGraphicsPathItem class provides a path item that you
+///     can add to a QGraphicsScene.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     To set the item's path, pass a QPainterPath to QGraphicsPathItem's
+///     constructor, or call the setPath() function. The path() function
+///     returns the current path.
+/// 
+///     \image graphicsview-pathitem.png
+/// 
+///     QGraphicsPathItem uses the path to provide a reasonable
+///     implementation of boundingRect(), shape(), and contains(). The
+///     paint() function draws the path using the item's associated pen
+///     and brush, which you can set by calling the setPen() and
+///     setBrush() functions.
+/// 
+///     \sa QGraphicsRectItem, QGraphicsEllipseItem, QGraphicsPolygonItem,
+///     QGraphicsTextItem, QGraphicsLineItem, QGraphicsPixmapItem, {Graphics
+///     View Framework}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsPathItem)]
 enum GraphicsPathItemFixMeEnums {
     Type,
 }
 
 struct GraphicsPathItem : AbstractGraphicsShapeItem {
+    ///     Returns the item's path as a QPainterPath. If no item has been set, an
+    ///     empty QPainterPath is returned.
+    /// 
+    ///     \sa setPath()
     path() -> PainterPath,
+    ///     Sets the item's path to be the given \a path.
+    /// 
+    ///     \sa path()
     set_path(path: &PainterPathType),
+    ///     \reimp
     [event] bounding_rect() -> RectF,
+    ///     \reimp
     [event] shape() -> PainterPath,
+    ///     \reimp
     [event] contains(point: &PointFType) -> bool,
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
+    ///     \reimp
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
+    ///     \reimp
     [event] opaque_area() -> PainterPath,
+    ///     \reimp
     [event] type() -> i32,
+    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
+    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
+    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

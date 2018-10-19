@@ -1,7 +1,48 @@
+///     \class QPaintDeviceWindow
+///     \inmodule QtGui
+///     \since 5.4
+///     \brief Convenience subclass of QWindow that is also a QPaintDevice.
+/// 
+///     QPaintDeviceWindow is like a regular QWindow, with the added functionality
+///     of being a paint device too. Whenever the content needs to be updated,
+///     the virtual paintEvent() function is called. Subclasses, that reimplement
+///     this function, can then simply open a QPainter on the window.
+/// 
+///     \note This class cannot directly be used in applications. It rather serves
+///     as a base for subclasses like QOpenGLWindow.
+/// 
+///     \sa QOpenGLWindow
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PaintDeviceWindow : Window, PaintDevice {
+    ///     Marks the \a region of the window as dirty and schedules a repaint.
+    /// 
+    ///     \note Subsequent calls to this function before the next paint
+    ///     event will get ignored, but \a region is added to the region to update.
+    /// 
+    ///     \note For non-exposed windows the update is deferred until the
+    ///     window becomes exposed again.
     update(rect: &RectType),
+    ///     Marks the \a region of the window as dirty and schedules a repaint.
+    /// 
+    ///     \note Subsequent calls to this function before the next paint
+    ///     event will get ignored, but \a region is added to the region to update.
+    /// 
+    ///     \note For non-exposed windows the update is deferred until the
+    ///     window becomes exposed again.
     update(region: &RegionType),
+    ///     Marks the \a region of the window as dirty and schedules a repaint.
+    /// 
+    ///     \note Subsequent calls to this function before the next paint
+    ///     event will get ignored, but \a region is added to the region to update.
+    /// 
+    ///     \note For non-exposed windows the update is deferred until the
+    ///     window becomes exposed again.
     update(),
+    ///     Handles paint events passed in the \a event parameter.
+    /// 
+    ///     The default implementation does nothing. Reimplement this function to
+    ///     perform painting. If necessary, the dirty area is retrievable from
+    ///     the \a event.
     [event] paint_event(event: *PaintEventType),
     [event] expose_event(arg0: *ExposeEventType),
     [event] event(event: *EventType) -> bool,

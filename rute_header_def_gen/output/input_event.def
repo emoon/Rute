@@ -1,7 +1,25 @@
+///     \class QInputEvent
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QInputEvent class is the base class for events that
+///     describe user input.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct InputEvent : Event {
     modifiers() -> Rute::KeyboardModifiers,
+    ///     \fn Qt::KeyboardModifiers QInputEvent::modifiers() const
+    /// 
+    ///     Returns the keyboard modifier flags that existed immediately
+    ///     before the event occurred.
+    /// 
+    ///     \sa QGuiApplication::keyboardModifiers()
     set_modifiers(amodifiers: Rute::KeyboardModifiers),
     timestamp() -> ulong,
+    ///     \fn ulong QInputEvent::timestamp() const
+    /// 
+    ///     Returns the window system's timestamp for this event.
+    ///     It will normally be in milliseconds since some arbitrary point
+    ///     in time, such as the time when the system was started.
     set_timestamp(atimestamp: ulong),
 }
 

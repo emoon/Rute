@@ -1,3 +1,19 @@
+///     \class QExposeEvent
+///     \since 5.0
+///     \brief The QExposeEvent class contains event parameters for expose events.
+///     \inmodule QtGui
+/// 
+///     \ingroup events
+/// 
+///     Expose events are sent to windows when an area of the window is invalidated
+///     or window exposure in the windowing system changes.
+/// 
+///     A Window with a client area that is completely covered by another window, or
+///     is otherwise not visible may be considered obscured by Qt and may in such
+///     cases not receive expose events.
+/// 
+///     The event handler QWindow::exposeEvent() receives expose events.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ExposeEvent : Event {
     region() -> Region?,
 }

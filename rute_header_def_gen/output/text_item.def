@@ -1,3 +1,13 @@
+///     \class QTextItem
+///     \inmodule QtGui
+/// 
+///     \brief The QTextItem class provides all the information required to draw
+///     text in a custom paint engine.
+/// 
+///     When you reimplement your own paint engine, you must reimplement
+///     QPaintEngine::drawTextItem(), a function that takes a QTextItem as
+///     one of its arguments.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextItem)]
 enum RenderFlag {
     RightToLeft,
@@ -9,11 +19,29 @@ enum RenderFlag {
 
 
 struct TextItem {
+    ///     \fn qreal QTextItem::descent() const
+    /// 
+    ///     Corresponds to the \l{QFontMetrics::descent()}{descent} of the piece of text that is drawn.
     descent() -> f32,
+    ///     \fn qreal QTextItem::ascent() const
+    /// 
+    ///     Corresponds to the \l{QFontMetrics::ascent()}{ascent} of the piece of text that is drawn.
     ascent() -> f32,
+    ///     \fn qreal QTextItem::width() const
+    /// 
+    ///     Specifies the total width of the text to be drawn.
     width() -> f32,
+    ///     \fn QTextItem::RenderFlags QTextItem::renderFlags() const
+    /// 
+    ///     Returns the render flags used.
     render_flags() -> TextItem::RenderFlags,
+    ///     \fn QString QTextItem::text() const
+    /// 
+    ///     Returns the text that should be drawn.
     text() -> String,
+    ///     \fn QFont QTextItem::font() const
+    /// 
+    ///     Returns the font that should be used to draw the text.
     font() -> Font,
 }
 

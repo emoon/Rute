@@ -1,3 +1,177 @@
+///     \class QByteArray
+///     \inmodule QtCore
+///     \brief The QByteArray class provides an array of bytes.
+/// 
+///     \ingroup tools
+///     \ingroup shared
+///     \ingroup string-processing
+/// 
+///     \reentrant
+/// 
+///     QByteArray can be used to store both raw bytes (including '\\0's)
+///     and traditional 8-bit '\\0'-terminated strings. Using QByteArray
+///     is much more convenient than using \c{const char *}. Behind the
+///     scenes, it always ensures that the data is followed by a '\\0'
+///     terminator, and uses \l{implicit sharing} (copy-on-write) to
+///     reduce memory usage and avoid needless copying of data.
+/// 
+///     In addition to QByteArray, Qt also provides the QString class to
+///     store string data. For most purposes, QString is the class you
+///     want to use. It stores 16-bit Unicode characters, making it easy
+///     to store non-ASCII/non-Latin-1 characters in your application.
+///     Furthermore, QString is used throughout in the Qt API. The two
+///     main cases where QByteArray is appropriate are when you need to
+///     store raw binary data, and when memory conservation is critical
+///     (e.g., with Qt for Embedded Linux).
+/// 
+///     One way to initialize a QByteArray is simply to pass a \c{const
+///     char *} to its constructor. For example, the following code
+///     creates a byte array of size 5 containing the data "Hello":
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 0
+/// 
+///     Although the size() is 5, the byte array also maintains an extra
+///     '\\0' character at the end so that if a function is used that
+///     asks for a pointer to the underlying data (e.g. a call to
+///     data()), the data pointed to is guaranteed to be
+///     '\\0'-terminated.
+/// 
+///     QByteArray makes a deep copy of the \c{const char *} data, so you
+///     can modify it later without experiencing side effects. (If for
+///     performance reasons you don't want to take a deep copy of the
+///     character data, use QByteArray::fromRawData() instead.)
+/// 
+///     Another approach is to set the size of the array using resize()
+///     and to initialize the data byte per byte. QByteArray uses 0-based
+///     indexes, just like C++ arrays. To access the byte at a particular
+///     index position, you can use operator[](). On non-const byte
+///     arrays, operator[]() returns a reference to a byte that can be
+///     used on the left side of an assignment. For example:
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 1
+/// 
+///     For read-only access, an alternative syntax is to use at():
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 2
+/// 
+///     at() can be faster than operator[](), because it never causes a
+///     \l{deep copy} to occur.
+/// 
+///     To extract many bytes at a time, use left(), right(), or mid().
+/// 
+///     A QByteArray can embed '\\0' bytes. The size() function always
+///     returns the size of the whole array, including embedded '\\0'
+///     bytes, but excluding the terminating '\\0' added by QByteArray.
+///     For example:
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 48
+/// 
+///     If you want to obtain the length of the data up to and
+///     excluding the first '\\0' character, call qstrlen() on the byte
+///     array.
+/// 
+///     After a call to resize(), newly allocated bytes have undefined
+///     values. To set all the bytes to a particular value, call fill().
+/// 
+///     To obtain a pointer to the actual character data, call data() or
+///     constData(). These functions return a pointer to the beginning of the data.
+///     The pointer is guaranteed to remain valid until a non-const function is
+///     called on the QByteArray. It is also guaranteed that the data ends with a
+///     '\\0' byte unless the QByteArray was created from a \l{fromRawData()}{raw
+///     data}. This '\\0' byte is automatically provided by QByteArray and is not
+///     counted in size().
+/// 
+///     QByteArray provides the following basic functions for modifying
+///     the byte data: append(), prepend(), insert(), replace(), and
+///     remove(). For example:
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 3
+/// 
+///     The replace() and remove() functions' first two arguments are the
+///     position from which to start erasing and the number of bytes that
+///     should be erased.
+/// 
+///     When you append() data to a non-empty array, the array will be
+///     reallocated and the new data copied to it. You can avoid this
+///     behavior by calling reserve(), which preallocates a certain amount
+///     of memory. You can also call capacity() to find out how much
+///     memory QByteArray actually allocated. Data appended to an empty
+///     array is not copied.
+/// 
+///     A frequent requirement is to remove whitespace characters from a
+///     byte array ('\\n', '\\t', ' ', etc.). If you want to remove
+///     whitespace from both ends of a QByteArray, use trimmed(). If you
+///     want to remove whitespace from both ends and replace multiple
+///     consecutive whitespaces with a single space character within the
+///     byte array, use simplified().
+/// 
+///     If you want to find all occurrences of a particular character or
+///     substring in a QByteArray, use indexOf() or lastIndexOf(). The
+///     former searches forward starting from a given index position, the
+///     latter searches backward. Both return the index position of the
+///     character or substring if they find it; otherwise, they return -1.
+///     For example, here's a typical loop that finds all occurrences of a
+///     particular substring:
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 4
+/// 
+///     If you simply want to check whether a QByteArray contains a
+///     particular character or substring, use contains(). If you want to
+///     find out how many times a particular character or substring
+///     occurs in the byte array, use count(). If you want to replace all
+///     occurrences of a particular value with another, use one of the
+///     two-parameter replace() overloads.
+/// 
+///     \l{QByteArray}s can be compared using overloaded operators such as
+///     operator<(), operator<=(), operator==(), operator>=(), and so on.
+///     The comparison is based exclusively on the numeric values
+///     of the characters and is very fast, but is not what a human would
+///     expect. QString::localeAwareCompare() is a better choice for
+///     sorting user-interface strings.
+/// 
+///     For historical reasons, QByteArray distinguishes between a null
+///     byte array and an empty byte array. A \e null byte array is a
+///     byte array that is initialized using QByteArray's default
+///     constructor or by passing (const char *)0 to the constructor. An
+///     \e empty byte array is any byte array with size 0. A null byte
+///     array is always empty, but an empty byte array isn't necessarily
+///     null:
+/// 
+///     \snippet code/src_corelib_tools_qbytearray.cpp 5
+/// 
+///     All functions except isNull() treat null byte arrays the same as
+///     empty byte arrays. For example, data() returns a pointer to a
+///     '\\0' character for a null byte array (\e not a null pointer),
+///     and QByteArray() compares equal to QByteArray(""). We recommend
+///     that you always use isEmpty() and avoid isNull().
+/// 
+///     \section1 Notes on Locale
+/// 
+///     \section2 Number-String Conversions
+/// 
+///     Functions that perform conversions between numeric data types and
+///     strings are performed in the C locale, irrespective of the user's
+///     locale settings. Use QString to perform locale-aware conversions
+///     between numbers and strings.
+/// 
+///     \section2 8-bit Character Comparisons
+/// 
+///     In QByteArray, the notion of uppercase and lowercase and of which
+///     character is greater than or less than another character is
+///     locale dependent. This affects functions that support a case
+///     insensitive option or that compare or lowercase or uppercase
+///     their arguments. Case insensitive operations and comparisons will
+///     be accurate if both strings contain only ASCII characters. (If \c
+///     $LC_CTYPE is set, most Unix systems do "the right thing".)
+///     Functions that this affects include contains(), indexOf(),
+///     lastIndexOf(), operator<(), operator<=(), operator>(),
+///     operator>=(), toLower() and toUpper().
+/// 
+///     This issue does not apply to \l{QString}s since they represent
+///     characters using Unicode.
+/// 
+///     \sa QString, QBitArray
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QByteArray)]
 enum Base64Option {
     Base64Encoding,
@@ -8,15 +182,44 @@ enum Base64Option {
 
 
 struct ByteArray {
+    ///     \fn QByteArray &QByteArray::operator=(QByteArray &&other)
+    /// 
+    ///     Move-assigns \a other to this QByteArray instance.
+    /// 
+    ///     \since 5.2
     swap(other: &ByteArrayType),
     size() -> i32,
     is_empty() -> bool,
+    ///     Sets the size of the byte array to \a size bytes.
+    /// 
+    ///     If \a size is greater than the current size, the byte array is
+    ///     extended to make it \a size bytes with the extra bytes added to
+    ///     the end. The new bytes are uninitialized.
+    /// 
+    ///     If \a size is less than the current size, bytes are removed from
+    ///     the end.
+    /// 
+    ///     \sa size(), truncate()
     resize(size: i32),
     fill(c: char, size: i32) -> ByteArray?,
     capacity() -> i32,
     reserve(size: i32),
     squeeze(),
+    ///   \macro QT_NO_CAST_FROM_BYTEARRAY
+    ///   \relates QByteArray
+    /// 
+    ///   Disables automatic conversions from QByteArray to
+    ///   const char * or const void *.
+    /// 
+    ///   \sa QT_NO_CAST_TO_ASCII, QT_NO_CAST_FROM_ASCII
     data() -> char?,
+    ///   \macro QT_NO_CAST_FROM_BYTEARRAY
+    ///   \relates QByteArray
+    /// 
+    ///   Disables automatic conversions from QByteArray to
+    ///   const char * or const void *.
+    /// 
+    ///   \sa QT_NO_CAST_TO_ASCII, QT_NO_CAST_FROM_ASCII
     data() -> char?,
     const_data() -> char?,
     detach(),
@@ -28,28 +231,228 @@ struct ByteArray {
     front() -> ByteRef,
     back() -> char,
     back() -> ByteRef,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the first occurrence of the
+    ///     character \a ch in the byte array, searching forward from index
+    ///     position \a from. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 22
+    /// 
+    ///     \sa lastIndexOf(), contains()
     index_of(c: char, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the first occurrence of the
+    ///     character \a ch in the byte array, searching forward from index
+    ///     position \a from. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 22
+    /// 
+    ///     \sa lastIndexOf(), contains()
     index_of(c: *char, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the first occurrence of the
+    ///     character \a ch in the byte array, searching forward from index
+    ///     position \a from. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 22
+    /// 
+    ///     \sa lastIndexOf(), contains()
     index_of(a: &ByteArrayType, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the last occurrence of character \a
+    ///     ch in the byte array, searching backward from index position \a
+    ///     from. If \a from is -1 (the default), the search starts at the
+    ///     last (size() - 1) byte. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 24
+    /// 
+    ///     \sa indexOf(), contains()
     last_index_of(c: char, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the last occurrence of character \a
+    ///     ch in the byte array, searching backward from index position \a
+    ///     from. If \a from is -1 (the default), the search starts at the
+    ///     last (size() - 1) byte. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 24
+    /// 
+    ///     \sa indexOf(), contains()
     last_index_of(c: *char, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the last occurrence of character \a
+    ///     ch in the byte array, searching backward from index position \a
+    ///     from. If \a from is -1 (the default), the search starts at the
+    ///     last (size() - 1) byte. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 24
+    /// 
+    ///     \sa indexOf(), contains()
     last_index_of(a: &ByteArrayType, from: i32) -> i32,
+    ///     \fn QByteRef QByteArray::back()
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the last character in the byte array.
+    ///     Same as \c{operator[](size() - 1)}.
+    /// 
+    ///     This function is provided for STL compatibility.
+    /// 
+    ///     \warning Calling this function on an empty byte array constitutes
+    ///     undefined behavior.
+    /// 
+    ///     \sa front(), at(), operator[]()
     contains(c: char) -> bool,
+    ///     \fn QByteRef QByteArray::back()
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the last character in the byte array.
+    ///     Same as \c{operator[](size() - 1)}.
+    /// 
+    ///     This function is provided for STL compatibility.
+    /// 
+    ///     \warning Calling this function on an empty byte array constitutes
+    ///     undefined behavior.
+    /// 
+    ///     \sa front(), at(), operator[]()
     contains(a: *char) -> bool,
+    ///     \fn QByteRef QByteArray::back()
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the last character in the byte array.
+    ///     Same as \c{operator[](size() - 1)}.
+    /// 
+    ///     This function is provided for STL compatibility.
+    /// 
+    ///     \warning Calling this function on an empty byte array constitutes
+    ///     undefined behavior.
+    /// 
+    ///     \sa front(), at(), operator[]()
     contains(a: &ByteArrayType) -> bool,
+    ///     \overload
+    /// 
+    ///     Returns the number of occurrences of character \a ch in the byte
+    ///     array.
+    /// 
+    ///     \sa contains(), indexOf()
     count(c: char) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the number of occurrences of character \a ch in the byte
+    ///     array.
+    /// 
+    ///     \sa contains(), indexOf()
     count(a: *char) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the number of occurrences of character \a ch in the byte
+    ///     array.
+    /// 
+    ///     \sa contains(), indexOf()
     count(a: &ByteArrayType) -> i32,
+    ///     Returns a byte array that contains the leftmost \a len bytes of
+    ///     this byte array.
+    /// 
+    ///     The entire byte array is returned if \a len is greater than
+    ///     size().
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 27
+    /// 
+    ///     \sa startsWith(), right(), mid(), chopped(), chop(), truncate()
     left(len: i32) -> ByteArray,
+    ///     Returns a byte array that contains the rightmost \a len bytes of
+    ///     this byte array.
+    /// 
+    ///     The entire byte array is returned if \a len is greater than
+    ///     size().
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 28
+    /// 
+    ///     \sa endsWith(), left(), mid(), chopped(), chop(), truncate()
     right(len: i32) -> ByteArray,
+    ///     Returns a byte array containing \a len bytes from this byte array,
+    ///     starting at position \a pos.
+    /// 
+    ///     If \a len is -1 (the default), or \a pos + \a len >= size(),
+    ///     returns a byte array containing all bytes starting at position \a
+    ///     pos until the end of the byte array.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 29
+    /// 
+    ///     \sa left(), right(), chopped(), chop(), truncate()
     mid(index: i32, len: i32) -> ByteArray,
     chopped(len: i32) -> ByteArray,
+    ///     Returns \c true if this byte array starts with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 25
+    /// 
+    ///     \sa endsWith(), left()
     starts_with(a: &ByteArrayType) -> bool,
+    ///     Returns \c true if this byte array starts with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 25
+    /// 
+    ///     \sa endsWith(), left()
     starts_with(c: char) -> bool,
+    ///     Returns \c true if this byte array starts with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 25
+    /// 
+    ///     \sa endsWith(), left()
     starts_with(c: *char) -> bool,
+    ///     Returns \c true if this byte array ends with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 26
+    /// 
+    ///     \sa startsWith(), right()
     ends_with(a: &ByteArrayType) -> bool,
+    ///     Returns \c true if this byte array ends with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 26
+    /// 
+    ///     \sa startsWith(), right()
     ends_with(c: char) -> bool,
+    ///     Returns \c true if this byte array ends with byte array \a ba;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 26
+    /// 
+    ///     \sa startsWith(), right()
     ends_with(c: *char) -> bool,
+    /// 
+    ///     Removes \a n bytes from the end of the byte array.
+    /// 
+    ///     If \a n is greater than size(), the result is an empty byte
+    ///     array.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 11
+    /// 
+    ///     \sa truncate(), resize(), left()
     chop(n: i32),
     to_lower() -> ByteArray,
     to_lower() -> ByteArray,
@@ -57,17 +460,62 @@ struct ByteArray {
     to_upper() -> ByteArray,
     simplified() -> ByteArray,
     simplified() -> ByteArray,
+    ///     Returns a byte array of size \a width that contains this byte
+    ///     array padded by the \a fill character.
+    /// 
+    ///     If \a truncate is false and the size() of the byte array is more
+    ///     than \a width, then the returned byte array is a copy of this byte
+    ///     array.
+    /// 
+    ///     If \a truncate is true and the size() of the byte array is more
+    ///     than \a width, then any bytes in a copy of the byte array
+    ///     after position \a width are removed, and the copy is returned.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 34
+    /// 
+    ///     \sa rightJustified()
     left_justified(width: i32, fill: char, truncate: bool) -> ByteArray,
+    ///     Returns a byte array of size \a width that contains the \a fill
+    ///     character followed by this byte array.
+    /// 
+    ///     If \a truncate is false and the size of the byte array is more
+    ///     than \a width, then the returned byte array is a copy of this byte
+    ///     array.
+    /// 
+    ///     If \a truncate is true and the size of the byte array is more
+    ///     than \a width, then the resulting byte array is truncated at
+    ///     position \a width.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 35
+    /// 
+    ///     \sa leftJustified()
     right_justified(width: i32, fill: char, truncate: bool) -> ByteArray,
     prepend(c: char) -> ByteArray?,
     prepend(count: i32, c: char) -> ByteArray?,
     prepend(s: *char) -> ByteArray?,
     prepend(s: *char, len: i32) -> ByteArray?,
     prepend(a: &ByteArrayType) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(c: char) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(count: i32, c: char) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(s: *char) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(s: *char, len: i32) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(a: &ByteArrayType) -> ByteArray?,
     insert(i: i32, c: char) -> ByteArray?,
     insert(i: i32, count: i32, c: char) -> ByteArray?,
@@ -86,28 +534,265 @@ struct ByteArray {
     replace(before: &ByteArrayType, after: *char) -> ByteArray?,
     replace(before: *char, after: &ByteArrayType) -> ByteArray?,
     replace(before: char, after: char) -> ByteArray?,
+    ///     Splits the byte array into subarrays wherever \a sep occurs, and
+    ///     returns the list of those arrays. If \a sep does not match
+    ///     anywhere in the byte array, split() returns a single-element list
+    ///     containing this byte array.
     split(sep: char) -> [ByteArray],
+    ///     \since 4.5
+    /// 
+    ///     Returns a copy of this byte array repeated the specified number of \a times.
+    /// 
+    ///     If \a times is less than 1, an empty byte array is returned.
+    /// 
+    ///     Example:
+    /// 
+    ///     \code
+    ///         QByteArray ba("ab");
+    ///         ba.repeated(4);             // returns "abababab"
+    ///     \endcode
     repeated(times: i32) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Appends the character \a ch to this byte array.
     append(s: String) -> ByteArray?,
     insert(i: i32, s: String) -> ByteArray?,
     replace(before: String, after: *char) -> ByteArray?,
     replace(c: char, after: String) -> ByteArray?,
     replace(before: String, after: &ByteArrayType) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the first occurrence of the
+    ///     character \a ch in the byte array, searching forward from index
+    ///     position \a from. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 22
+    /// 
+    ///     \sa lastIndexOf(), contains()
     index_of(s: String, from: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     Returns the index position of the last occurrence of character \a
+    ///     ch in the byte array, searching backward from index position \a
+    ///     from. If \a from is -1 (the default), the search starts at the
+    ///     last (size() - 1) byte. Returns -1 if \a ch could not be found.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 24
+    /// 
+    ///     \sa indexOf(), contains()
     last_index_of(s: String, from: i32) -> i32,
+    ///     Returns the byte array converted to a \c short using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_short(ok: *bool, base: i32) -> short,
+    ///     Returns the byte array converted to an \c {unsigned short} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_u_short(ok: *bool, base: i32) -> ushort,
+    ///     Returns the byte array converted to an \c int using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 36
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_int(ok: *bool, base: i32) -> i32,
+    ///     Returns the byte array converted to an \c {unsigned int} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_u_int(ok: *bool, base: i32) -> uint,
+    ///     \since 4.1
+    /// 
+    ///     Returns the byte array converted to a \c long int using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 37
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_long(ok: *bool, base: i32) -> long,
+    ///     \since 4.1
+    /// 
+    ///     Returns the byte array converted to an \c {unsigned long int} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_u_long(ok: *bool, base: i32) -> ulong,
+    ///     Returns the byte array converted to a \c {long long} using base \a
+    ///     base, which is 10 by default and must be between 2 and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_long_long(ok: *bool, base: i32) -> i64,
+    ///     Returns the byte array converted to an \c {unsigned long long}
+    ///     using base \a base, which is 10 by default and must be between 2
+    ///     and 36, or 0.
+    /// 
+    ///     If \a base is 0, the base is determined automatically using the
+    ///     following rules: If the byte array begins with "0x", it is assumed to
+    ///     be hexadecimal; if it begins with "0", it is assumed to be octal;
+    ///     otherwise it is assumed to be decimal.
+    /// 
+    ///     Returns 0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
+    ///     Returns the byte array converted to a \c float value.
+    /// 
+    ///     Returns 0.0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_float(ok: *bool) -> f32,
+    ///     Returns the byte array converted to a \c double value.
+    /// 
+    ///     Returns 0.0 if the conversion fails.
+    /// 
+    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
+    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 38
+    /// 
+    ///     \note The conversion of the number is performed in the default C locale,
+    ///     irrespective of the user's locale.
+    /// 
+    ///     \sa number()
     to_double(ok: *bool) -> double,
+    ///     \since 5.2
+    ///     \overload
+    /// 
+    ///     Returns a copy of the byte array, encoded using the options \a options.
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 39bis
+    /// 
+    ///     The algorithm used to encode Base64-encoded data is defined in \l{RFC 4648}.
+    /// 
+    ///     \sa fromBase64()
     to_base64(options: ByteArray::Base64Options) -> ByteArray,
+    ///     \since 5.2
+    ///     \overload
+    /// 
+    ///     Returns a copy of the byte array, encoded using the options \a options.
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 39bis
+    /// 
+    ///     The algorithm used to encode Base64-encoded data is defined in \l{RFC 4648}.
+    /// 
+    ///     \sa fromBase64()
     to_base64() -> ByteArray,
+    ///     Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
+    ///     the letters a-f.
+    /// 
+    ///     \sa fromHex()
     to_hex() -> ByteArray,
+    ///     Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
+    ///     the letters a-f.
+    /// 
+    ///     \sa fromHex()
     to_hex(separator: char) -> ByteArray,
     to_percent_encoding(exclude: &ByteArrayType, include: &ByteArrayType, percent: char) -> ByteArray,
     set_num(arg0: short, base: i32) -> ByteArray?,
@@ -119,17 +804,276 @@ struct ByteArray {
     set_num(arg0: f32, f: char, prec: i32) -> ByteArray?,
     set_num(arg0: double, f: char, prec: i32) -> ByteArray?,
     set_raw_data(a: *char, n: uint) -> ByteArray?,
+    ///     \overload
+    /// 
+    ///     Returns a byte array that contains the printed value of \a n,
+    ///     formatted in format \a f with precision \a prec.
+    /// 
+    ///     Argument \a n is formatted according to the \a f format specified,
+    ///     which is \c g by default, and can be any of the following:
+    /// 
+    ///     \table
+    ///     \header \li Format \li Meaning
+    ///     \row \li \c e \li format as [-]9.9e[+|-]999
+    ///     \row \li \c E \li format as [-]9.9E[+|-]999
+    ///     \row \li \c f \li format as [-]9.9
+    ///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+    ///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+    ///     \endtable
+    /// 
+    ///     With 'e', 'E', and 'f', \a prec is the number of digits after the
+    ///     decimal point. With 'g' and 'G', \a prec is the maximum number of
+    ///     significant digits (trailing zeroes are omitted).
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 42
+    /// 
+    ///     \note The format of the number is not localized; the default C locale
+    ///     is used irrespective of the user's locale.
+    /// 
+    ///     \sa toDouble()
     [static] number(arg0: i32, base: i32) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Returns a byte array that contains the printed value of \a n,
+    ///     formatted in format \a f with precision \a prec.
+    /// 
+    ///     Argument \a n is formatted according to the \a f format specified,
+    ///     which is \c g by default, and can be any of the following:
+    /// 
+    ///     \table
+    ///     \header \li Format \li Meaning
+    ///     \row \li \c e \li format as [-]9.9e[+|-]999
+    ///     \row \li \c E \li format as [-]9.9E[+|-]999
+    ///     \row \li \c f \li format as [-]9.9
+    ///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+    ///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+    ///     \endtable
+    /// 
+    ///     With 'e', 'E', and 'f', \a prec is the number of digits after the
+    ///     decimal point. With 'g' and 'G', \a prec is the maximum number of
+    ///     significant digits (trailing zeroes are omitted).
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 42
+    /// 
+    ///     \note The format of the number is not localized; the default C locale
+    ///     is used irrespective of the user's locale.
+    /// 
+    ///     \sa toDouble()
     [static] number(arg0: uint, base: i32) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Returns a byte array that contains the printed value of \a n,
+    ///     formatted in format \a f with precision \a prec.
+    /// 
+    ///     Argument \a n is formatted according to the \a f format specified,
+    ///     which is \c g by default, and can be any of the following:
+    /// 
+    ///     \table
+    ///     \header \li Format \li Meaning
+    ///     \row \li \c e \li format as [-]9.9e[+|-]999
+    ///     \row \li \c E \li format as [-]9.9E[+|-]999
+    ///     \row \li \c f \li format as [-]9.9
+    ///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+    ///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+    ///     \endtable
+    /// 
+    ///     With 'e', 'E', and 'f', \a prec is the number of digits after the
+    ///     decimal point. With 'g' and 'G', \a prec is the maximum number of
+    ///     significant digits (trailing zeroes are omitted).
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 42
+    /// 
+    ///     \note The format of the number is not localized; the default C locale
+    ///     is used irrespective of the user's locale.
+    /// 
+    ///     \sa toDouble()
     [static] number(arg0: i64, base: i32) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Returns a byte array that contains the printed value of \a n,
+    ///     formatted in format \a f with precision \a prec.
+    /// 
+    ///     Argument \a n is formatted according to the \a f format specified,
+    ///     which is \c g by default, and can be any of the following:
+    /// 
+    ///     \table
+    ///     \header \li Format \li Meaning
+    ///     \row \li \c e \li format as [-]9.9e[+|-]999
+    ///     \row \li \c E \li format as [-]9.9E[+|-]999
+    ///     \row \li \c f \li format as [-]9.9
+    ///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+    ///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+    ///     \endtable
+    /// 
+    ///     With 'e', 'E', and 'f', \a prec is the number of digits after the
+    ///     decimal point. With 'g' and 'G', \a prec is the maximum number of
+    ///     significant digits (trailing zeroes are omitted).
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 42
+    /// 
+    ///     \note The format of the number is not localized; the default C locale
+    ///     is used irrespective of the user's locale.
+    /// 
+    ///     \sa toDouble()
     [static] number(arg0: qulonglong, base: i32) -> ByteArray,
+    ///     \overload
+    /// 
+    ///     Returns a byte array that contains the printed value of \a n,
+    ///     formatted in format \a f with precision \a prec.
+    /// 
+    ///     Argument \a n is formatted according to the \a f format specified,
+    ///     which is \c g by default, and can be any of the following:
+    /// 
+    ///     \table
+    ///     \header \li Format \li Meaning
+    ///     \row \li \c e \li format as [-]9.9e[+|-]999
+    ///     \row \li \c E \li format as [-]9.9E[+|-]999
+    ///     \row \li \c f \li format as [-]9.9
+    ///     \row \li \c g \li use \c e or \c f format, whichever is the most concise
+    ///     \row \li \c G \li use \c E or \c f format, whichever is the most concise
+    ///     \endtable
+    /// 
+    ///     With 'e', 'E', and 'f', \a prec is the number of digits after the
+    ///     decimal point. With 'g' and 'G', \a prec is the maximum number of
+    ///     significant digits (trailing zeroes are omitted).
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 42
+    /// 
+    ///     \note The format of the number is not localized; the default C locale
+    ///     is used irrespective of the user's locale.
+    /// 
+    ///     \sa toDouble()
     [static] number(arg0: double, f: char, prec: i32) -> ByteArray,
+    ///     Constructs a QByteArray that uses the first \a size bytes of the
+    ///     \a data array. The bytes are \e not copied. The QByteArray will
+    ///     contain the \a data pointer. The caller guarantees that \a data
+    ///     will not be deleted or modified as long as this QByteArray and any
+    ///     copies of it exist that have not been modified. In other words,
+    ///     because QByteArray is an \l{implicitly shared} class and the
+    ///     instance returned by this function contains the \a data pointer,
+    ///     the caller must not delete \a data or modify it directly as long
+    ///     as the returned QByteArray and any copies exist. However,
+    ///     QByteArray does not take ownership of \a data, so the QByteArray
+    ///     destructor will never delete the raw \a data, even when the
+    ///     last QByteArray referring to \a data is destroyed.
+    /// 
+    ///     A subsequent attempt to modify the contents of the returned
+    ///     QByteArray or any copy made from it will cause it to create a deep
+    ///     copy of the \a data array before doing the modification. This
+    ///     ensures that the raw \a data array itself will never be modified
+    ///     by QByteArray.
+    /// 
+    ///     Here is an example of how to read data using a QDataStream on raw
+    ///     data in memory without copying the raw data into a QByteArray:
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 43
+    /// 
+    ///     \warning A byte array created with fromRawData() is \e not
+    ///     null-terminated, unless the raw data contains a 0 character at
+    ///     position \a size. While that does not matter for QDataStream or
+    ///     functions like indexOf(), passing the byte array to a function
+    ///     accepting a \c{const char *} expected to be '\\0'-terminated will
+    ///     fail.
+    /// 
+    ///     \sa setRawData(), data(), constData()
     [static] from_raw_data(arg0: *char, size: i32) -> ByteArray,
+    ///     \since 5.2
+    ///     \overload
+    /// 
+    ///     Returns a decoded copy of the Base64 array \a base64, using the alphabet
+    ///     defined by \a options. Input is not checked for validity; invalid
+    ///     characters in the input are skipped, enabling the decoding process to
+    ///     continue with subsequent characters.
+    /// 
+    ///     For example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 44bis
+    /// 
+    ///     The algorithm used to decode Base64-encoded data is defined in \l{RFC 4648}.
+    /// 
+    ///     \sa toBase64()
     [static] from_base64(base64: &ByteArrayType, options: ByteArray::Base64Options) -> ByteArray,
+    ///     \since 5.2
+    ///     \overload
+    /// 
+    ///     Returns a decoded copy of the Base64 array \a base64, using the alphabet
+    ///     defined by \a options. Input is not checked for validity; invalid
+    ///     characters in the input are skipped, enabling the decoding process to
+    ///     continue with subsequent characters.
+    /// 
+    ///     For example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 44bis
+    /// 
+    ///     The algorithm used to decode Base64-encoded data is defined in \l{RFC 4648}.
+    /// 
+    ///     \sa toBase64()
     [static] from_base64(base64: &ByteArrayType) -> ByteArray,
+    ///     Returns a decoded copy of the hex encoded array \a hexEncoded. Input is not checked
+    ///     for validity; invalid characters in the input are skipped, enabling the
+    ///     decoding process to continue with subsequent characters.
+    /// 
+    ///     For example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qbytearray.cpp 45
+    /// 
+    ///     \sa toHex()
     [static] from_hex(hex_encoded: &ByteArrayType) -> ByteArray,
+    ///     \since 4.4
+    /// 
+    ///     Returns a decoded copy of the URI/URL-style percent-encoded \a input.
+    ///     The \a percent parameter allows you to replace the '%' character for
+    ///     another (for instance, '_' or '=').
+    /// 
+    ///     For example:
+    ///     \code
+    ///         QByteArray text = QByteArray::fromPercentEncoding("Qt%20is%20great%33");
+    ///         text.data();            // returns "Qt is great!"
+    ///     \endcode
+    /// 
+    ///     \note Given invalid input (such as a string containing the sequence "%G5",
+    ///     which is not a valid hexadecimal number) the output will be invalid as
+    ///     well. As an example: the sequence "%G5" could be decoded to 'W'.
+    /// 
+    ///     \sa toPercentEncoding(), QUrl::fromPercentEncoding()
     [static] from_percent_encoding(pct_encoded: &ByteArrayType, percent: char) -> ByteArray,
+    ///     \enum QByteArray::Base64Option
+    ///     \since 5.2
+    /// 
+    ///     This enum contains the options available for encoding and decoding Base64.
+    ///     Base64 is defined by \l{RFC 4648}, with the following options:
+    /// 
+    ///     \value Base64Encoding     (default) The regular Base64 alphabet, called simply "base64"
+    ///     \value Base64UrlEncoding  An alternate alphabet, called "base64url", which replaces two
+    ///                               characters in the alphabet to be more friendly to URLs.
+    ///     \value KeepTrailingEquals (default) Keeps the trailing padding equal signs at the end
+    ///                               of the encoded data, so the data is always a size multiple of
+    ///                               four.
+    ///     \value OmitTrailingEquals Omits adding the padding equal signs at the end of the encoded
+    ///                               data.
+    /// 
+    ///     QByteArray::fromBase64() ignores the KeepTrailingEquals and
+    ///     OmitTrailingEquals options and will not flag errors in case they are
+    ///     missing or if there are too many of them.
     begin() -> ByteArray::iterator,
+    ///     \enum QByteArray::Base64Option
+    ///     \since 5.2
+    /// 
+    ///     This enum contains the options available for encoding and decoding Base64.
+    ///     Base64 is defined by \l{RFC 4648}, with the following options:
+    /// 
+    ///     \value Base64Encoding     (default) The regular Base64 alphabet, called simply "base64"
+    ///     \value Base64UrlEncoding  An alternate alphabet, called "base64url", which replaces two
+    ///                               characters in the alphabet to be more friendly to URLs.
+    ///     \value KeepTrailingEquals (default) Keeps the trailing padding equal signs at the end
+    ///                               of the encoded data, so the data is always a size multiple of
+    ///                               four.
+    ///     \value OmitTrailingEquals Omits adding the padding equal signs at the end of the encoded
+    ///                               data.
+    /// 
+    ///     QByteArray::fromBase64() ignores the KeepTrailingEquals and
+    ///     OmitTrailingEquals options and will not flag errors in case they are
+    ///     missing or if there are too many of them.
     begin() -> ByteArray::const_iterator,
     cbegin() -> ByteArray::const_iterator,
     const_begin() -> ByteArray::const_iterator,
@@ -150,6 +1094,12 @@ struct ByteArray {
     push_front(c: *char),
     push_front(a: &ByteArrayType),
     shrink_to_fit(),
+    ///     \overload
+    /// 
+    ///     Returns the number of occurrences of character \a ch in the byte
+    ///     array.
+    /// 
+    ///     \sa contains(), indexOf()
     count() -> i32,
     length() -> i32,
     is_null() -> bool,

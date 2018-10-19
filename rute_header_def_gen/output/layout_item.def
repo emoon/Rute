@@ -1,3 +1,33 @@
+///     \class QLayoutItem
+///     \brief The QLayoutItem class provides an abstract item that a
+///     QLayout manipulates.
+/// 
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     This is used by custom layouts.
+/// 
+///     Pure virtual functions are provided to return information about
+///     the layout, including, sizeHint(), minimumSize(), maximumSize()
+///     and expanding().
+/// 
+///     The layout's geometry can be set and retrieved with setGeometry()
+///     and geometry(), and its alignment with setAlignment() and
+///     alignment().
+/// 
+///     isEmpty() returns whether the layout item is empty. If the
+///     concrete item is a QWidget, it can be retrieved using widget().
+///     Similarly for layout() and spacerItem().
+/// 
+///     Some layouts have width and height interdependencies. These can
+///     be expressed using hasHeightForWidth(), heightForWidth(), and
+///     minimumHeightForWidth(). For more explanation see the \e{Qt
+///     Quarterly} article
+///     \l{http://doc.qt.io/archives/qq/qq04-height-for-width.html}{Trading
+///     Height for Width}.
+/// 
+///     \sa QLayout
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct LayoutItem {
     [event] size_hint() -> Size,
@@ -5,14 +35,64 @@ struct LayoutItem {
     [event] maximum_size() -> Size,
     [event] expanding_directions() -> Rute::Orientations,
     [event] is_empty() -> bool,
+    ///     Returns \c true if this layout's preferred height depends on its
+    ///     width; otherwise returns \c false. The default implementation returns
+    ///     false.
+    /// 
+    ///     Reimplement this function in layout managers that support height
+    ///     for width.
+    /// 
+    ///     \sa heightForWidth(), QWidget::heightForWidth()
     [event] has_height_for_width() -> bool,
+    ///     Returns the preferred height for this layout item, given the
+    ///     width, which is not used in this default implementation.
+    /// 
+    ///     The default implementation returns -1, indicating that the
+    ///     preferred height is independent of the width of the item. Using
+    ///     the function hasHeightForWidth() will typically be much faster
+    ///     than calling this function and testing for -1.
+    /// 
+    ///     Reimplement this function in layout managers that support height
+    ///     for width. A typical implementation will look like this:
+    ///     \snippet code/src_gui_kernel_qlayoutitem.cpp 0
+    /// 
+    ///     Caching is strongly recommended; without it layout will take
+    ///     exponential time.
+    /// 
+    ///     \sa hasHeightForWidth()
     [event] height_for_width(arg0: i32) -> i32,
+    ///     Returns the minimum height this widget needs for the given width,
+    ///     \a w. The default implementation simply returns heightForWidth(\a
+    ///     w).
     [event] minimum_height_for_width(arg0: i32) -> i32,
+    ///     Invalidates any cached information in this layout item.
     [event] invalidate(),
+    ///     If this item manages a QWidget, returns that widget. Otherwise,
+    ///     \c nullptr is returned.
+    /// 
+    ///     \note While the functions layout() and spacerItem() perform casts, this
+    ///     function returns another object: QLayout and QSpacerItem inherit QLayoutItem,
+    ///     while QWidget does not.
+    /// 
+    ///     \sa layout(), spacerItem()
     [event] widget() -> Widget?,
+    ///     If this item is a QLayout, it is returned as a QLayout; otherwise
+    ///     0 is returned. This function provides type-safe casting.
+    /// 
+    ///     \sa spacerItem(), widget()
     [event] layout() -> Layout?,
+    ///     If this item is a QSpacerItem, it is returned as a QSpacerItem;
+    ///     otherwise 0 is returned. This function provides type-safe casting.
+    /// 
+    ///     \sa layout(), widget()
     [event] spacer_item() -> SpacerItem?,
     alignment() -> Rute::Alignment,
+    ///     Sets the alignment of this item to \a alignment.
+    /// 
+    ///     \b{Note:} Item alignment is only supported by QLayoutItem subclasses
+    ///     where it would have a visual effect. Except for QSpacerItem, which provides
+    ///     blank space for layouts, all public Qt classes that inherit QLayoutItem
+    ///     support item alignment.
     set_alignment(a: Rute::Alignment),
 }
 

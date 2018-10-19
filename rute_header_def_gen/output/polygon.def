@@ -1,19 +1,143 @@
+///     \class QPolygon
+///     \brief The QPolygon class provides a vector of points using
+///     integer precision.
+///     \inmodule QtGui
+/// 
+///     \reentrant
+/// 
+///     \ingroup painting
+///     \ingroup shared
+/// 
+///     A QPolygon object is a QVector<QPoint>.  The easiest way to add
+///     points to a QPolygon is to use QVector's streaming operator, as
+///     illustrated below:
+/// 
+///     \snippet polygon/polygon.cpp 0
+/// 
+///     In addition to the functions provided by QVector, QPolygon
+///     provides some point-specific functions.
+/// 
+///     Each point in a polygon can be retrieved by passing its index to
+///     the point() function. To populate the polygon, QPolygon provides
+///     the setPoint() function to set the point at a given index, the
+///     setPoints() function to set all the points in the polygon
+///     (resizing it to the given number of points), and the putPoints()
+///     function which copies a number of given points into the polygon
+///     from a specified index (resizing the polygon if necessary).
+/// 
+///     QPolygon provides the boundingRect() and translate() functions for
+///     geometry functions. Use the QMatrix::map() function for more
+///     general transformations of QPolygons.
+/// 
+///     The QPolygon class is \l {Implicit Data Sharing}{implicitly
+///     shared}.
+/// 
+///     \sa QVector, QPolygonF, QLine
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Polygon {
     swap(other: &PolygonType),
+    ///     Returns the bounding rectangle of the polygon, or QRect(0, 0, 0,
+    ///     0) if the polygon is empty.
+    /// 
+    ///     \sa QVector::isEmpty()
     bounding_rect() -> Rect,
+    ///     Extracts the coordinates of the point at the given \a index to
+    ///     *\a{x} and *\a{y} (if they are valid pointers).
+    /// 
+    ///     \sa setPoint()
     point(i: i32, x: *i32, y: *i32),
+    ///     Extracts the coordinates of the point at the given \a index to
+    ///     *\a{x} and *\a{y} (if they are valid pointers).
+    /// 
+    ///     \sa setPoint()
     point(i: i32) -> Point,
     set_point(index: i32, x: i32, y: i32),
     set_point(index: i32, p: &PointType),
+    ///     \overload
+    /// 
+    ///     Resizes the polygon to \a nPoints and populates it with the points
+    ///     specified by the variable argument list.  The points are given as a
+    ///     sequence of integers, starting with \a firstx then \a firsty, and
+    ///     so on.
+    /// 
+    ///     The example code creates a polygon with two points (10, 20) and
+    ///     (30, 40):
+    /// 
+    ///     \snippet polygon/polygon.cpp 3
     set_points(n_points: i32, points: *i32),
+    ///     \overload
+    /// 
+    ///     Resizes the polygon to \a nPoints and populates it with the points
+    ///     specified by the variable argument list.  The points are given as a
+    ///     sequence of integers, starting with \a firstx then \a firsty, and
+    ///     so on.
+    /// 
+    ///     The example code creates a polygon with two points (10, 20) and
+    ///     (30, 40):
+    /// 
+    ///     \snippet polygon/polygon.cpp 3
     set_points(n_points: i32, firstx: i32, firsty: i32),
+    ///     \fn void QPolygon::putPoints(int index, int nPoints, const QPolygon &fromPolygon, int fromIndex)
+    ///     \overload
+    /// 
+    ///     Copies \a nPoints points from the given \a fromIndex ( 0 by
+    ///     default) in \a fromPolygon into this polygon, starting at the
+    ///     specified \a index. For example:
+    /// 
+    ///     \snippet polygon/polygon.cpp 6
     put_points(index: i32, n_points: i32, points: *i32),
+    ///     \fn void QPolygon::putPoints(int index, int nPoints, const QPolygon &fromPolygon, int fromIndex)
+    ///     \overload
+    /// 
+    ///     Copies \a nPoints points from the given \a fromIndex ( 0 by
+    ///     default) in \a fromPolygon into this polygon, starting at the
+    ///     specified \a index. For example:
+    /// 
+    ///     \snippet polygon/polygon.cpp 6
     put_points(index: i32, n_points: i32, firstx: i32, firsty: i32),
+    ///     \fn void QPolygon::putPoints(int index, int nPoints, const QPolygon &fromPolygon, int fromIndex)
+    ///     \overload
+    /// 
+    ///     Copies \a nPoints points from the given \a fromIndex ( 0 by
+    ///     default) in \a fromPolygon into this polygon, starting at the
+    ///     specified \a index. For example:
+    /// 
+    ///     \snippet polygon/polygon.cpp 6
     put_points(index: i32, n_points: i32, from: &PolygonType, from_index: i32),
+    ///     \since 4.3
+    /// 
+    ///     \fn bool QPolygon::containsPoint(const QPoint &point, Qt::FillRule fillRule) const
+    ///     Returns \c true if the given \a point is inside the polygon according to
+    ///     the specified \a fillRule; otherwise returns \c false.
     contains_point(pt: &PointType, fill_rule: Rute::FillRule) -> bool,
+    ///     \since 4.3
+    /// 
+    ///     Returns a polygon which is the union of this polygon and \a r.
+    /// 
+    ///     Set operations on polygons, will treat the polygons as areas, and
+    ///     implicitly close the polygon.
+    /// 
+    ///     \sa intersected(), subtracted()
     united(r: &PolygonType) -> Polygon,
+    ///     \since 4.3
+    /// 
+    ///     Returns a polygon which is the intersection of this polygon and \a r.
+    /// 
+    ///     Set operations on polygons will treat the polygons as
+    ///     areas. Non-closed polygons will be treated as implicitly closed.
+    /// 
+    ///     \sa intersects()
     intersected(r: &PolygonType) -> Polygon,
+    ///     \since 5.10
+    /// 
+    ///     Returns \c true if the current polygon intersects at any point the given polygon \a p.
+    ///     Also returns \c true if the current polygon contains or is contained by any part of \a p.
+    /// 
+    ///     Set operations on polygons will treat the polygons as
+    ///     areas. Non-closed polygons will be treated as implicitly closed.
+    /// 
+    ///     \sa intersected()
     intersects(r: &PolygonType) -> bool,
 }
 

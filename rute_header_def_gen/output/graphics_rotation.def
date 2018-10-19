@@ -1,11 +1,107 @@
+///     \class QGraphicsRotation
+///     \brief The QGraphicsRotation class provides a rotation transformation around
+///     a given axis.
+///     \since 4.6
+///     \inmodule QtWidgets
+/// 
+///     You can provide the desired axis by assigning a QVector3D to the axis property
+///     or by passing a member if Qt::Axis to the setAxis convenience function.
+///     By default the axis is (0, 0, 1) i.e., rotation around the Z axis.
+/// 
+///     The angle property, which is provided by QGraphicsRotation, now
+///     describes the number of degrees to rotate around this axis.
+/// 
+///     QGraphicsRotation provides certain parameters to help control how the
+///     rotation should be applied.
+/// 
+///     The origin is the point that the item is rotated around (i.e., it stays
+///     fixed relative to the parent as the rest of the item is rotated). By
+///     default the origin is QPointF(0, 0).
+/// 
+///     The angle property provides the number of degrees to rotate the item
+///     clockwise around the origin. This value also be negative, indicating a
+///     counter-clockwise rotation. For animation purposes it may also be useful to
+///     provide rotation angles exceeding (-360, 360) degrees, for instance to
+///     animate how an item rotates several times.
+/// 
+///     Note: the final rotation is the combined effect of a rotation in
+///     3D space followed by a projection back to 2D.  If several rotations
+///     are performed in succession, they will not behave as expected unless
+///     they were all around the Z axis.
+/// 
+///     \sa QGraphicsTransform, QGraphicsItem::setRotation(), QTransform::rotate()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsRotation : GraphicsTransform {
+    ///     \property QGraphicsRotation::origin
+    ///     \brief the origin of the rotation in 3D space.
+    /// 
+    ///     All rotations will be done relative to this point (i.e., this point
+    ///     will stay fixed, relative to the parent, when the item is rotated).
+    /// 
+    ///     \sa angle
     origin() -> Vector3D,
     set_origin(point: &Vector3DType),
+    ///     \property QGraphicsRotation::angle
+    ///     \brief the angle for clockwise rotation, in degrees.
+    /// 
+    ///     The angle can be any real number; the default value is 0.0. A value of 180
+    ///     will rotate 180 degrees, clockwise. If you provide a negative number, the
+    ///     item will be rotated counter-clockwise. Normally the rotation angle will be
+    ///     in the range (-360, 360), but you can also provide numbers outside of this
+    ///     range (e.g., a angle of 370 degrees gives the same result as 10 degrees).
+    ///     Setting the angle to NaN results in no rotation.
+    /// 
+    ///     \sa origin
     angle() -> f32,
     set_angle(arg0: f32),
+    ///     \property QGraphicsRotation::axis
+    ///     \brief a rotation axis, specified by a vector in 3D space.
+    /// 
+    ///     This can be any axis in 3D space. By default the axis is (0, 0, 1),
+    ///     which is aligned with the Z axis. If you provide another axis,
+    ///     QGraphicsRotation will provide a transformation that rotates
+    ///     around this axis. For example, if you would like to rotate an item
+    ///     around its X axis, you could pass (1, 0, 0) as the axis.
+    /// 
+    ///     \sa QTransform, QGraphicsRotation::angle
     axis() -> Vector3D,
+    ///     \fn void QGraphicsRotation::setAxis(Qt::Axis axis)
+    /// 
+    ///     Convenience function to set the axis to \a axis.
+    /// 
+    ///     Note: the Qt::YAxis rotation for QTransform is inverted from the
+    ///     correct mathematical rotation in 3D space.  The QGraphicsRotation
+    ///     class implements a correct mathematical rotation.  The following
+    ///     two sequences of code will perform the same transformation:
+    /// 
+    ///     \code
+    ///     QTransform t;
+    ///     t.rotate(45, Qt::YAxis);
+    /// 
+    ///     QGraphicsRotation r;
+    ///     r.setAxis(Qt::YAxis);
+    ///     r.setAngle(-45);
+    ///     \endcode
     set_axis(axis: &Vector3DType),
+    ///     \fn void QGraphicsRotation::setAxis(Qt::Axis axis)
+    /// 
+    ///     Convenience function to set the axis to \a axis.
+    /// 
+    ///     Note: the Qt::YAxis rotation for QTransform is inverted from the
+    ///     correct mathematical rotation in 3D space.  The QGraphicsRotation
+    ///     class implements a correct mathematical rotation.  The following
+    ///     two sequences of code will perform the same transformation:
+    /// 
+    ///     \code
+    ///     QTransform t;
+    ///     t.rotate(45, Qt::YAxis);
+    /// 
+    ///     QGraphicsRotation r;
+    ///     r.setAxis(Qt::YAxis);
+    ///     r.setAngle(-45);
+    ///     \endcode
     set_axis(axis: Rute::Axis),
+    ///     \reimp
     [event] apply_to(matrix: *Matrix4x4Type),
     [signal] origin_changed(),
     [signal] angle_changed(),

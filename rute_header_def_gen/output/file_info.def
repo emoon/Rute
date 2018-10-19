@@ -1,55 +1,523 @@
+///     \class QFileInfo
+///     \inmodule QtCore
+///     \reentrant
+///     \brief The QFileInfo class provides system-independent file information.
+/// 
+///     \ingroup io
+///     \ingroup shared
+/// 
+///     QFileInfo provides information about a file's name and position
+///     (path) in the file system, its access rights and whether it is a
+///     directory or symbolic link, etc. The file's size and last
+///     modified/read times are also available. QFileInfo can also be
+///     used to obtain information about a Qt \l{resource
+///     system}{resource}.
+/// 
+///     A QFileInfo can point to a file with either a relative or an
+///     absolute file path. Absolute file paths begin with the directory
+///     separator "/" (or with a drive specification on Windows). Relative
+///     file names begin with a directory name or a file name and specify
+///     a path relative to the current working directory. An example of an
+///     absolute path is the string "/tmp/quartz". A relative path might
+///     look like "src/fatlib". You can use the function isRelative() to
+///     check whether a QFileInfo is using a relative or an absolute file
+///     path. You can call the function makeAbsolute() to convert a
+///     relative QFileInfo's path to an absolute path.
+/// 
+///     The file that the QFileInfo works on is set in the constructor or
+///     later with setFile(). Use exists() to see if the file exists and
+///     size() to get its size.
+/// 
+///     The file's type is obtained with isFile(), isDir() and
+///     isSymLink(). The symLinkTarget() function provides the name of the file
+///     the symlink points to.
+/// 
+///     On Unix (including \macos and iOS), the symlink has the same size() has
+///     the file it points to, because Unix handles symlinks
+///     transparently; similarly, opening a symlink using QFile
+///     effectively opens the link's target. For example:
+/// 
+///     \snippet code/src_corelib_io_qfileinfo.cpp 0
+/// 
+///     On Windows, symlinks (shortcuts) are \c .lnk files. The reported
+///     size() is that of the symlink (not the link's target), and
+///     opening a symlink using QFile opens the \c .lnk file. For
+///     example:
+/// 
+///     \snippet code/src_corelib_io_qfileinfo.cpp 1
+/// 
+///     Elements of the file's name can be extracted with path() and
+///     fileName(). The fileName()'s parts can be extracted with
+///     baseName(), suffix() or completeSuffix(). QFileInfo objects to
+///     directories created by Qt classes will not have a trailing file
+///     separator. If you wish to use trailing separators in your own file
+///     info objects, just append one to the file name given to the constructors
+///     or setFile().
+/// 
+///     The file's dates are returned by created(), lastModified(), lastRead() and
+///     fileTime(). Information about the file's access permissions is
+///     obtained with isReadable(), isWritable() and isExecutable(). The
+///     file's ownership is available from owner(), ownerId(), group() and
+///     groupId(). You can examine a file's permissions and ownership in a
+///     single statement using the permission() function.
+/// 
+///     \target NTFS permissions
+///     \note On NTFS file systems, ownership and permissions checking is
+///     disabled by default for performance reasons. To enable it,
+///     include the following line:
+/// 
+///     \snippet ntfsp.cpp 0
+/// 
+///     Permission checking is then turned on and off by incrementing and
+///     decrementing \c qt_ntfs_permission_lookup by 1.
+/// 
+///     \snippet ntfsp.cpp 1
+/// 
+///     \section1 Performance Issues
+/// 
+///     Some of QFileInfo's functions query the file system, but for
+///     performance reasons, some functions only operate on the
+///     file name itself. For example: To return the absolute path of
+///     a relative file name, absolutePath() has to query the file system.
+///     The path() function, however, can work on the file name directly,
+///     and so it is faster.
+/// 
+///     \note To speed up performance, QFileInfo caches information about
+///     the file.
+/// 
+///     Because files can be changed by other users or programs, or
+///     even by other parts of the same program, there is a function that
+///     refreshes the file information: refresh(). If you want to switch
+///     off a QFileInfo's caching and force it to access the file system
+///     every time you request information from it call setCaching(false).
+/// 
+///     \sa QDir, QFile
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct FileInfo {
     swap(other: &FileInfoType),
+    ///     \overload
+    /// 
+    ///     Sets the file that the QFileInfo provides information about to \a
+    ///     file in directory \a dir.
+    /// 
+    ///     If \a file includes a relative path, the QFileInfo will also
+    ///     have a relative path.
+    /// 
+    ///     \sa isRelative()
     set_file(file: String),
+    ///     \overload
+    /// 
+    ///     Sets the file that the QFileInfo provides information about to \a
+    ///     file in directory \a dir.
+    /// 
+    ///     If \a file includes a relative path, the QFileInfo will also
+    ///     have a relative path.
+    /// 
+    ///     \sa isRelative()
     set_file(file: &FileType),
+    ///     \overload
+    /// 
+    ///     Sets the file that the QFileInfo provides information about to \a
+    ///     file in directory \a dir.
+    /// 
+    ///     If \a file includes a relative path, the QFileInfo will also
+    ///     have a relative path.
+    /// 
+    ///     \sa isRelative()
     set_file(dir: &DirType, file: String),
+    ///     \since 5.2
+    /// 
+    ///     Returns \c true if the \a file exists; otherwise returns \c false.
+    /// 
+    ///     \note If \a file is a symlink that points to a non-existing
+    ///     file, false is returned.
+    /// 
+    ///     \note Using this function is faster than using
+    ///     \c QFileInfo(file).exists() for file system access.
     exists() -> bool,
+    ///     \since 5.2
+    /// 
+    ///     Returns \c true if the \a file exists; otherwise returns \c false.
+    /// 
+    ///     \note If \a file is a symlink that points to a non-existing
+    ///     file, false is returned.
+    /// 
+    ///     \note Using this function is faster than using
+    ///     \c QFileInfo(file).exists() for file system access.
     [static] exists(file: String) -> bool,
+    ///     Refreshes the information about the file, i.e. reads in information
+    ///     from the file system the next time a cached property is fetched.
     refresh(),
+    ///     Returns the file name, including the path (which may be absolute
+    ///     or relative).
+    /// 
+    ///     \sa absoluteFilePath(), canonicalFilePath(), isRelative()
     file_path() -> String,
+    ///     Returns an absolute path including the file name.
+    /// 
+    ///     The absolute path name consists of the full path and the file
+    ///     name. On Unix this will always begin with the root, '/',
+    ///     directory. On Windows this will always begin 'D:/' where D is a
+    ///     drive letter, except for network shares that are not mapped to a
+    ///     drive letter, in which case the path will begin '//sharename/'.
+    ///     QFileInfo will uppercase drive letters. Note that QDir does not do
+    ///     this. The code snippet below shows this.
+    /// 
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp newstuff
+    /// 
+    ///     This function returns the same as filePath(), unless isRelative()
+    ///     is true. In contrast to canonicalFilePath(), symbolic links or
+    ///     redundant "." or ".." elements are not necessarily removed.
+    /// 
+    ///     \warning If filePath() is empty the behavior of this function
+    ///             is undefined.
+    /// 
+    ///     \sa filePath(), canonicalFilePath(), isRelative()
     absolute_file_path() -> String,
+    ///     Returns the canonical path including the file name, i.e. an absolute
+    ///     path without symbolic links or redundant "." or ".." elements.
+    /// 
+    ///     If the file does not exist, canonicalFilePath() returns an empty
+    ///     string.
+    /// 
+    ///     \sa filePath(), absoluteFilePath(), dir()
     canonical_file_path() -> String,
+    ///     Returns the name of the file, excluding the path.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 3
+    /// 
+    ///     Note that, if this QFileInfo object is given a path ending in a
+    ///     slash, the name of the file is considered empty.
+    /// 
+    ///     \sa isRelative(), filePath(), baseName(), suffix()
     file_name() -> String,
+    ///     Returns the base name of the file without the path.
+    /// 
+    ///     The base name consists of all characters in the file up to (but
+    ///     not including) the \e first '.' character.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 5
+    /// 
+    /// 
+    ///     The base name of a file is computed equally on all platforms, independent
+    ///     of file naming conventions (e.g., ".bashrc" on Unix has an empty base
+    ///     name, and the suffix is "bashrc").
+    /// 
+    ///     \sa fileName(), suffix(), completeSuffix(), completeBaseName()
     base_name() -> String,
+    ///     Returns the complete base name of the file without the path.
+    /// 
+    ///     The complete base name consists of all characters in the file up
+    ///     to (but not including) the \e last '.' character.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 6
+    /// 
+    ///     \sa fileName(), suffix(), completeSuffix(), baseName()
     complete_base_name() -> String,
+    ///     Returns the suffix (extension) of the file.
+    /// 
+    ///     The suffix consists of all characters in the file after (but not
+    ///     including) the last '.'.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 8
+    /// 
+    ///     The suffix of a file is computed equally on all platforms, independent of
+    ///     file naming conventions (e.g., ".bashrc" on Unix has an empty base name,
+    ///     and the suffix is "bashrc").
+    /// 
+    ///     \sa fileName(), completeSuffix(), baseName(), completeBaseName()
     suffix() -> String,
+    ///     \since 4.3
+    ///     Returns the name of the bundle.
+    /// 
+    ///     On \macos and iOS this returns the proper localized name for a bundle if the
+    ///     path isBundle(). On all other platforms an empty QString is returned.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 4
+    /// 
+    ///     \sa isBundle(), filePath(), baseName(), suffix()
     bundle_name() -> String,
+    ///     Returns the complete suffix (extension) of the file.
+    /// 
+    ///     The complete suffix consists of all characters in the file after
+    ///     (but not including) the first '.'.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 7
+    /// 
+    ///     \sa fileName(), suffix(), baseName(), completeBaseName()
     complete_suffix() -> String,
+    ///     Returns the file's path. This doesn't include the file name.
+    /// 
+    ///     Note that, if this QFileInfo object is given a path ending in a
+    ///     slash, the name of the file is considered empty and this function
+    ///     will return the entire path.
+    /// 
+    ///     \sa filePath(), absolutePath(), canonicalPath(), dir(), fileName(), isRelative()
     path() -> String,
+    ///     Returns a file's path absolute path. This doesn't include the
+    ///     file name.
+    /// 
+    ///     On Unix the absolute path will always begin with the root, '/',
+    ///     directory. On Windows this will always begin 'D:/' where D is a
+    ///     drive letter, except for network shares that are not mapped to a
+    ///     drive letter, in which case the path will begin '//sharename/'.
+    /// 
+    ///     In contrast to canonicalPath() symbolic links or redundant "." or
+    ///     ".." elements are not necessarily removed.
+    /// 
+    ///     \warning If filePath() is empty the behavior of this function
+    ///              is undefined.
+    /// 
+    ///     \sa absoluteFilePath(), path(), canonicalPath(), fileName(), isRelative()
     absolute_path() -> String,
+    ///     Returns the file's path canonical path (excluding the file name),
+    ///     i.e. an absolute path without symbolic links or redundant "." or ".." elements.
+    /// 
+    ///     If the file does not exist, canonicalPath() returns an empty string.
+    /// 
+    ///     \sa path(), absolutePath()
     canonical_path() -> String,
+    ///     Returns the path of the object's parent directory as a QDir object.
+    /// 
+    ///     \b{Note:} The QDir returned always corresponds to the object's
+    ///     parent directory, even if the QFileInfo represents a directory.
+    /// 
+    ///     For each of the following, dir() returns the QDir
+    ///     \c{"~/examples/191697"}.
+    /// 
+    ///     \snippet fileinfo/main.cpp 0
+    /// 
+    ///     For each of the following, dir() returns the QDir
+    ///     \c{"."}.
+    /// 
+    ///     \snippet fileinfo/main.cpp 1
+    /// 
+    ///     \sa absolutePath(), filePath(), fileName(), isRelative(), absoluteDir()
     dir() -> Dir,
+    ///     Returns the file's absolute path as a QDir object.
+    /// 
+    ///     \sa dir(), filePath(), fileName(), isRelative()
     absolute_dir() -> Dir,
+    ///     Returns \c true if the user can read the file; otherwise returns \c false.
+    /// 
+    ///     \note If the \l{NTFS permissions} check has not been enabled, the result
+    ///     on Windows will merely reflect whether the file exists.
+    /// 
+    ///     \sa isWritable(), isExecutable(), permission()
     is_readable() -> bool,
+    ///     Returns \c true if the user can write to the file; otherwise returns \c false.
+    /// 
+    ///     \note If the \l{NTFS permissions} check has not been enabled, the result on
+    ///     Windows will merely reflect whether the file is marked as Read Only.
+    /// 
+    ///     \sa isReadable(), isExecutable(), permission()
     is_writable() -> bool,
+    ///     Returns \c true if the file is executable; otherwise returns \c false.
+    /// 
+    ///     \sa isReadable(), isWritable(), permission()
     is_executable() -> bool,
+    ///     Returns \c true if this is a `hidden' file; otherwise returns \c false.
+    /// 
+    ///     \b{Note:} This function returns \c true for the special entries
+    ///     "." and ".." on Unix, even though QDir::entryList threats them as shown.
     is_hidden() -> bool,
+    ///     \since 5.0
+    ///     Returns \c true if the file path can be used directly with native APIs.
+    ///     Returns \c false if the file is otherwise supported by a virtual file system
+    ///     inside Qt, such as \l{the Qt Resource System}.
+    /// 
+    ///     \b{Note:} Native paths may still require conversion of path separators
+    ///     and character encoding, depending on platform and input requirements of the
+    ///     native API.
+    /// 
+    ///     \sa QDir::toNativeSeparators(), QFile::encodeName(), filePath(),
+    ///     absoluteFilePath(), canonicalFilePath()
     is_native_path() -> bool,
+    ///     Returns \c true if the file path name is relative, otherwise returns
+    ///     false if the path is absolute (e.g. under Unix a path is absolute
+    ///     if it begins with a "/").
+    /// 
+    ///     \sa isAbsolute()
     is_relative() -> bool,
     is_absolute() -> bool,
+    ///     Converts the file's path to an absolute path if it is not already in that form.
+    ///     Returns \c true to indicate that the path was converted; otherwise returns \c false
+    ///     to indicate that the path was already absolute.
+    /// 
+    ///     \sa filePath(), isRelative()
     make_absolute() -> bool,
+    ///     Returns \c true if this object points to a file or to a symbolic
+    ///     link to a file. Returns \c false if the
+    ///     object points to something which isn't a file, such as a directory.
+    /// 
+    ///     \sa isDir(), isSymLink(), isBundle()
     is_file() -> bool,
+    ///     Returns \c true if this object points to a directory or to a symbolic
+    ///     link to a directory; otherwise returns \c false.
+    /// 
+    ///     \sa isFile(), isSymLink(), isBundle()
     is_dir() -> bool,
+    ///     Returns \c true if this object points to a symbolic link;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Symbolic links exist on Unix (including \macos and iOS) and Windows
+    ///     and are typically created by the \c{ln -s} or \c{mklink} commands,
+    ///     respectively. Opening a symbolic link effectively opens
+    ///     the \l{symLinkTarget()}{link's target}.
+    /// 
+    ///     In addition, true will be returned for shortcuts (\c *.lnk files) on
+    ///     Windows. Opening those will open the \c .lnk file itself.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 9
+    /// 
+    ///     \note If the symlink points to a non existing file, exists() returns
+    ///      false.
+    /// 
+    ///     \sa isFile(), isDir(), symLinkTarget()
     is_sym_link() -> bool,
+    ///     Returns \c true if the object points to a directory or to a symbolic
+    ///     link to a directory, and that directory is the root directory; otherwise
+    ///     returns \c false.
     is_root() -> bool,
+    ///     \since 4.3
+    ///     Returns \c true if this object points to a bundle or to a symbolic
+    ///     link to a bundle on \macos and iOS; otherwise returns \c false.
+    /// 
+    ///     \sa isDir(), isSymLink(), isFile()
     is_bundle() -> bool,
+    ///     \obsolete
+    /// 
+    ///     Use symLinkTarget() instead.
     read_link() -> String,
     sym_link_target() -> String,
+    ///     Returns the owner of the file. On systems where files
+    ///     do not have owners, or if an error occurs, an empty string is
+    ///     returned.
+    /// 
+    ///     This function can be time consuming under Unix (in the order of
+    ///     milliseconds). On Windows, it will return an empty string unless
+    ///     the \l{NTFS permissions} check has been enabled.
+    /// 
+    ///     \sa ownerId(), group(), groupId()
     owner() -> String,
+    ///     Returns the id of the owner of the file.
+    /// 
+    ///     On Windows and on systems where files do not have owners this
+    ///     function returns ((uint) -2).
+    /// 
+    ///     \sa owner(), group(), groupId()
     owner_id() -> uint,
+    ///     Returns the group of the file. On Windows, on systems where files
+    ///     do not have groups, or if an error occurs, an empty string is
+    ///     returned.
+    /// 
+    ///     This function can be time consuming under Unix (in the order of
+    ///     milliseconds).
+    /// 
+    ///     \sa groupId(), owner(), ownerId()
     group() -> String,
+    ///     Returns the id of the group the file belongs to.
+    /// 
+    ///     On Windows and on systems where files do not have groups this
+    ///     function always returns (uint) -2.
+    /// 
+    ///     \sa group(), owner(), ownerId()
     group_id() -> uint,
+    ///     Tests for file permissions. The \a permissions argument can be
+    ///     several flags of type QFile::Permissions OR-ed together to check
+    ///     for permission combinations.
+    /// 
+    ///     On systems where files do not have permissions this function
+    ///     always returns \c true.
+    /// 
+    ///     \note The result might be inaccurate on Windows if the
+    ///     \l{NTFS permissions} check has not been enabled.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfileinfo.cpp 10
+    /// 
+    ///     \sa isReadable(), isWritable(), isExecutable()
     permission(permissions: File::Permissions) -> bool,
+    ///     Returns the complete OR-ed together combination of
+    ///     QFile::Permissions for the file.
+    /// 
+    ///     \note The result might be inaccurate on Windows if the
+    ///     \l{NTFS permissions} check has not been enabled.
     permissions() -> File::Permissions,
+    ///     Returns the file size in bytes. If the file does not exist or cannot be
+    ///     fetched, 0 is returned.
+    /// 
+    ///     \sa exists()
     size() -> i64,
+    ///     \deprecated
+    /// 
+    ///     Returns the date and time when the file was created, the time its metadata
+    ///     was last changed or the time of last modification, whichever one of the
+    ///     three is available (in that order).
+    /// 
+    ///     This function is deprecated. Instead, use the birthTime() function to get
+    ///     the time the file was created, metadataChangeTime() to get the time its
+    ///     metadata was last changed, or lastModified() to get the time it was last modified.
+    /// 
+    ///     \sa birthTime(), metadataChangeTime(), lastModified(), lastRead()
     created() -> DateTime,
+    ///     \since 5.10
+    ///     Returns the date and time when the file was created / born.
+    /// 
+    ///     If the file birth time is not available, this function returns an invalid
+    ///     QDateTime.
+    /// 
+    ///     \sa lastModified(), lastRead(), metadataChangeTime()
     birth_time() -> DateTime,
+    ///     \since 5.10
+    ///     Returns the date and time when the file metadata was changed. A metadata
+    ///     change occurs when the file is created, but it also occurs whenever the
+    ///     user writes or sets inode information (for example, changing the file
+    ///     permissions).
+    /// 
+    ///     \sa lastModified(), lastRead()
     metadata_change_time() -> DateTime,
+    ///     Returns the date and local time when the file was last modified.
+    /// 
+    ///     \sa birthTime(), lastRead(), metadataChangeTime(), fileTime()
     last_modified() -> DateTime,
+    ///     Returns the date and local time when the file was last read (accessed).
+    /// 
+    ///     On platforms where this information is not available, returns the
+    ///     same as lastModified().
+    /// 
+    ///     \sa birthTime(), lastModified(), metadataChangeTime(), fileTime()
     last_read() -> DateTime,
+    ///     \since 5.10
+    /// 
+    ///     Returns the file time specified by \a time. If the time cannot be
+    ///     determined, an invalid date time is returned.
+    /// 
+    ///     \sa QFile::FileTime, QDateTime::isValid()
     file_time(time: File::FileTime) -> DateTime,
+    ///     Returns \c true if caching is enabled; otherwise returns \c false.
+    /// 
+    ///     \sa setCaching(), refresh()
     caching() -> bool,
+    ///     If \a enable is true, enables caching of file information. If \a
+    ///     enable is false caching is disabled.
+    /// 
+    ///     When caching is enabled, QFileInfo reads the file information from
+    ///     the file system the first time it's needed, but generally not
+    ///     later.
+    /// 
+    ///     Caching is enabled by default.
+    /// 
+    ///     \sa refresh(), caching()
     set_caching(on: bool),
 }
 

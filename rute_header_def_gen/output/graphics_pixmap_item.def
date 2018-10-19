@@ -1,3 +1,34 @@
+///     \class QGraphicsPixmapItem
+///     \brief The QGraphicsPixmapItem class provides a pixmap item that you can add to
+///     a QGraphicsScene.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     To set the item's pixmap, pass a QPixmap to QGraphicsPixmapItem's
+///     constructor, or call the setPixmap() function. The pixmap()
+///     function returns the current pixmap.
+/// 
+///     QGraphicsPixmapItem uses pixmap's optional alpha mask to provide a
+///     reasonable implementation of boundingRect(), shape(), and contains().
+/// 
+///     \image graphicsview-pixmapitem.png
+/// 
+///     The pixmap is drawn at the item's (0, 0) coordinate, as returned by
+///     offset(). You can change the drawing offset by calling setOffset().
+/// 
+///     You can set the pixmap's transformation mode by calling
+///     setTransformationMode(). By default, Qt::FastTransformation is used, which
+///     provides fast, non-smooth scaling. Qt::SmoothTransformation enables
+///     QPainter::SmoothPixmapTransform on the painter, and the quality depends on
+///     the platform and viewport. The result is usually not as good as calling
+///     QPixmap::scale() directly. Call transformationMode() to get the current
+///     transformation mode for the item.
+/// 
+///     \sa QGraphicsPathItem, QGraphicsRectItem, QGraphicsEllipseItem,
+///     QGraphicsTextItem, QGraphicsPolygonItem, QGraphicsLineItem,
+///     {Graphics View Framework}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsPixmapItem)]
 enum ShapeMode {
     MaskShape,
@@ -11,23 +42,68 @@ enum GraphicsPixmapItemFixMeEnums {
 }
 
 struct GraphicsPixmapItem : GraphicsItem {
+    ///     Returns the item's pixmap, or an invalid QPixmap if no pixmap has been
+    ///     set.
+    /// 
+    ///     \sa setPixmap()
     pixmap() -> Pixmap,
+    ///     Sets the item's pixmap to \a pixmap.
+    /// 
+    ///     \sa pixmap()
     set_pixmap(pixmap: &PixmapType),
+    ///     Sets the pixmap item's transformation mode to \a mode, and toggles an
+    ///     update of the item. The default mode is Qt::FastTransformation, which
+    ///     provides quick transformation with no smoothing.
+    /// 
+    ///     Qt::SmoothTransformation enables QPainter::SmoothPixmapTransform on the
+    ///     painter, and the quality depends on the platform and viewport. The result
+    ///     is usually not as good as calling QPixmap::scale() directly.
+    /// 
+    ///     \sa transformationMode()
     set_transformation_mode(mode: Rute::TransformationMode),
+    ///     Returns the pixmap item's \e offset, which defines the point of the
+    ///     top-left corner of the pixmap, in local coordinates.
+    /// 
+    ///     \sa setOffset()
     offset() -> PointF,
+    ///     Sets the pixmap item's offset to \a offset. QGraphicsPixmapItem will draw
+    ///     its pixmap using \a offset for its top-left corner.
+    /// 
+    ///     \sa offset()
     set_offset(offset: &PointFType),
+    ///     Sets the pixmap item's offset to \a offset. QGraphicsPixmapItem will draw
+    ///     its pixmap using \a offset for its top-left corner.
+    /// 
+    ///     \sa offset()
     set_offset(x: f32, y: f32),
+    ///     \reimp
     [event] bounding_rect() -> RectF,
+    ///     \reimp
     [event] shape() -> PainterPath,
+    ///     \reimp
     [event] contains(point: &PointFType) -> bool,
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
+    ///     \reimp
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
+    ///     \reimp
     [event] opaque_area() -> PainterPath,
+    ///     \reimp
     [event] type() -> i32,
+    ///     Returns the item's shape mode. The shape mode describes how
+    ///     QGraphicsPixmapItem calculates its shape. The default mode is MaskShape.
+    /// 
+    ///     \sa setShapeMode(), ShapeMode
     shape_mode() -> GraphicsPixmapItem::ShapeMode,
+    ///     Sets the item's shape mode to \a mode. The shape mode describes how
+    ///     QGraphicsPixmapItem calculates its shape. The default mode is MaskShape.
+    /// 
+    ///     \sa shapeMode(), ShapeMode
     set_shape_mode(mode: GraphicsPixmapItem::ShapeMode),
+    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
+    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
+    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

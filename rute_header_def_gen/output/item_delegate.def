@@ -1,12 +1,164 @@
+///     \class QItemDelegate
+/// 
+///     \brief The QItemDelegate class provides display and editing facilities for
+///     data items from a model.
+/// 
+///     \ingroup model-view
+///     \inmodule QtWidgets
+/// 
+///     QItemDelegate can be used to provide custom display features and editor
+///     widgets for item views based on QAbstractItemView subclasses. Using a
+///     delegate for this purpose allows the display and editing mechanisms to be
+///     customized and developed independently from the model and view.
+/// 
+///     The QItemDelegate class is one of the \l{Model/View Classes} and
+///     is part of Qt's \l{Model/View Programming}{model/view framework}.
+///     Note that QStyledItemDelegate has taken over the job of drawing
+///     Qt's item views. We recommend the use of QStyledItemDelegate when
+///     creating new delegates.
+/// 
+///     When displaying items from a custom model in a standard view, it is
+///     often sufficient to simply ensure that the model returns appropriate
+///     data for each of the \l{Qt::ItemDataRole}{roles} that determine the
+///     appearance of items in views. The default delegate used by Qt's
+///     standard views uses this role information to display items in most
+///     of the common forms expected by users. However, it is sometimes
+///     necessary to have even more control over the appearance of items than
+///     the default delegate can provide.
+/// 
+///     This class provides default implementations of the functions for
+///     painting item data in a view and editing data from item models.
+///     Default implementations of the paint() and sizeHint() virtual
+///     functions, defined in QAbstractItemDelegate, are provided to
+///     ensure that the delegate implements the correct basic behavior
+///     expected by views. You can reimplement these functions in
+///     subclasses to customize the appearance of items.
+/// 
+///     When editing data in an item view, QItemDelegate provides an
+///     editor widget, which is a widget that is placed on top of the view
+///     while editing takes place. Editors are created with a
+///     QItemEditorFactory; a default static instance provided by
+///     QItemEditorFactory is installed on all item delegates. You can set
+///     a custom factory using setItemEditorFactory() or set a new default
+///     factory with QItemEditorFactory::setDefaultFactory(). It is the
+///     data stored in the item model with the Qt::EditRole that is edited.
+/// 
+///     Only the standard editing functions for widget-based delegates are
+///     reimplemented here:
+/// 
+///     \list
+///         \li createEditor() returns the widget used to change data from the model
+///            and can be reimplemented to customize editing behavior.
+///         \li setEditorData() provides the widget with data to manipulate.
+///         \li updateEditorGeometry() ensures that the editor is displayed correctly
+///            with respect to the item view.
+///         \li setModelData() returns updated data to the model.
+///     \endlist
+/// 
+///     The closeEditor() signal indicates that the user has completed editing the data,
+///     and that the editor widget can be destroyed.
+/// 
+///     \section1 Standard Roles and Data Types
+/// 
+///     The default delegate used by the standard views supplied with Qt
+///     associates each standard role (defined by Qt::ItemDataRole) with certain
+///     data types. Models that return data in these types can influence the
+///     appearance of the delegate as described in the following table.
+/// 
+///     \table
+///     \header \li Role \li Accepted Types
+///     \omit
+///     \row    \li \l Qt::AccessibleDescriptionRole \li QString
+///     \row    \li \l Qt::AccessibleTextRole \li QString
+///     \endomit
+///     \row    \li \l Qt::BackgroundRole \li QBrush
+///     \row    \li \l Qt::BackgroundColorRole \li QColor (obsolete; use Qt::BackgroundRole instead)
+///     \row    \li \l Qt::CheckStateRole \li Qt::CheckState
+///     \row    \li \l Qt::DecorationRole \li QIcon, QPixmap and QColor
+///     \row    \li \l Qt::DisplayRole \li QString and types with a string representation
+///     \row    \li \l Qt::EditRole \li See QItemEditorFactory for details
+///     \row    \li \l Qt::FontRole \li QFont
+///     \row    \li \l Qt::SizeHintRole \li QSize
+///     \omit
+///     \row    \li \l Qt::StatusTipRole \li
+///     \endomit
+///     \row    \li \l Qt::TextAlignmentRole \li Qt::Alignment
+///     \row    \li \l Qt::ForegroundRole \li QBrush
+///     \row    \li \l Qt::TextColorRole \li QColor (obsolete; use Qt::ForegroundRole instead)
+///     \omit
+///     \row    \li \l Qt::ToolTipRole
+///     \row    \li \l Qt::WhatsThisRole
+///     \endomit
+///     \endtable
+/// 
+///     If the default delegate does not allow the level of customization that
+///     you need, either for display purposes or for editing data, it is possible to
+///     subclass QItemDelegate to implement the desired behavior.
+/// 
+///     \section1 Subclassing
+/// 
+///     When subclassing QItemDelegate to create a delegate that displays items
+///     using a custom renderer, it is important to ensure that the delegate can
+///     render items suitably for all the required states; e.g. selected,
+///     disabled, checked. The documentation for the paint() function contains
+///     some hints to show how this can be achieved.
+/// 
+///     You can provide custom editors by using a QItemEditorFactory. The
+///     \l{Color Editor Factory Example} shows how a custom editor can be
+///     made available to delegates with the default item editor
+///     factory. This way, there is no need to subclass QItemDelegate.  An
+///     alternative is to reimplement createEditor(), setEditorData(),
+///     setModelData(), and updateEditorGeometry(). This process is
+///     described in the \l{Spin Box Delegate Example}.
+/// 
+///     \section1 QStyledItemDelegate vs. QItemDelegate
+/// 
+///     Since Qt 4.4, there are two delegate classes: QItemDelegate and
+///     QStyledItemDelegate. However, the default delegate is QStyledItemDelegate.
+///     These two classes are independent alternatives to painting and providing
+///     editors for items in views. The difference between them is that
+///     QStyledItemDelegate uses the current style to paint its items. We therefore
+///     recommend using QStyledItemDelegate as the base class when implementing
+///     custom delegates or when working with Qt style sheets. The code required
+///     for either class should be equal unless the custom delegate needs to use
+///     the style for drawing.
+/// 
+///     \sa {Delegate Classes}, QStyledItemDelegate, QAbstractItemDelegate,
+///         {Spin Box Delegate Example}, {Settings Editor Example},
+///         {Icons Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ItemDelegate : AbstractItemDelegate {
+    ///   \property QItemDelegate::clipping
+    ///   \brief if the delegate should clip the paint events
+    ///   \since 4.2
+    /// 
+    ///   This property will set the paint clip to the size of the item.
+    ///   The default value is on. It is useful for cases such
+    ///   as when images are larger than the size of the item.
     has_clipping() -> bool,
     set_clipping(clip: bool),
     [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     [event] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
     [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
+    ///     Sets the data to be displayed and edited by the \a editor from the
+    ///     data model item specified by the model \a index.
+    /// 
+    ///     The default implementation stores the data in the \a editor
+    ///     widget's \l {Qt's Property System} {user property}.
+    /// 
+    ///     \sa QMetaProperty::isUser()
     [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
     [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
+    ///   Returns the editor factory used by the item delegate.
+    ///   If no editor factory is set, the function will return null.
+    /// 
+    ///   \sa setItemEditorFactory()
     item_editor_factory() -> ItemEditorFactory?,
+    ///   Sets the editor factory to be used by the item delegate to be the \a factory
+    ///   specified. If no editor factory is set, the item delegate will use the
+    ///   default editor factory.
+    /// 
+    ///   \sa itemEditorFactory()
     set_item_editor_factory(factory: *ItemEditorFactoryType),
     [event] draw_display(painter: *PainterType, option: &StyleOptionViewItemType, rect: &RectType, text: String),
     [event] draw_decoration(painter: *PainterType, option: &StyleOptionViewItemType, rect: &RectType, pixmap: &PixmapType),
@@ -15,10 +167,44 @@ struct ItemDelegate : AbstractItemDelegate {
     draw_background(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     do_layout(option: &StyleOptionViewItemType, check_rect: *RectType, icon_rect: *RectType, text_rect: *RectType, hint: bool),
     rect(option: &StyleOptionViewItemType, index: &ModelIndexType, role: i32) -> Rect,
+    ///     \fn bool QItemDelegate::eventFilter(QObject *editor, QEvent *event)
+    /// 
+    ///     Returns \c true if the given \a editor is a valid QWidget and the
+    ///     given \a event is handled; otherwise returns \c false. The following
+    ///     key press events are handled by default:
+    /// 
+    ///     \list
+    ///         \li \uicontrol Tab
+    ///         \li \uicontrol Backtab
+    ///         \li \uicontrol Enter
+    ///         \li \uicontrol Return
+    ///         \li \uicontrol Esc
+    ///     \endlist
+    /// 
+    ///     In the case of \uicontrol Tab, \uicontrol Backtab, \uicontrol Enter and \uicontrol Return
+    ///     key press events, the \a editor's data is committed to the model
+    ///     and the editor is closed. If the \a event is a \uicontrol Tab key press
+    ///     the view will open an editor on the next item in the
+    ///     view. Likewise, if the \a event is a \uicontrol Backtab key press the
+    ///     view will open an editor on the \e previous item in the view.
+    /// 
+    ///     If the event is a \uicontrol Esc key press event, the \a editor is
+    ///     closed \e without committing its data.
+    /// 
+    ///     \sa commitData(), closeEditor()
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
     [event] editor_event(event: *EventType, model: *AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
     set_options(index: &ModelIndexType, option: &StyleOptionViewItemType) -> StyleOptionViewItem,
+    ///     \internal
+    /// 
+    ///     Returns the pixmap used to decorate the root of the item view.
+    ///     The style \a option controls the appearance of the root; the \a variant
+    ///     refers to the data associated with an item.
     decoration(option: &StyleOptionViewItemType, variant: &VariantType) -> Pixmap,
+    ///   \internal
+    ///   Returns the selected version of the given \a pixmap using the given \a palette.
+    ///   The \a enabled argument decides whether the normal or disabled highlight color of
+    ///   the palette is used.
     selected(pixmap: &PixmapType, palette: &PaletteType, enabled: bool) -> Pixmap?,
     do_check(option: &StyleOptionViewItemType, bounding: &RectType, variant: &VariantType) -> Rect,
     text_rectangle(painter: *PainterType, rect: &RectType, font: &FontType, text: String) -> Rect,

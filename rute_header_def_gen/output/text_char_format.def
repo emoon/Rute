@@ -1,3 +1,31 @@
+///     \class QTextCharFormat
+///     \reentrant
+/// 
+///     \brief The QTextCharFormat class provides formatting information for
+///     characters in a QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     The character format of text in a document specifies the visual properties
+///     of the text, as well as information about its role in a hypertext document.
+/// 
+///     The font used can be set by supplying a font to the setFont() function, and
+///     each aspect of its appearance can be adjusted to give the desired effect.
+///     setFontFamily() and setFontPointSize() define the font's family (e.g. Times)
+///     and printed size; setFontWeight() and setFontItalic() provide control over
+///     the style of the font. setFontUnderline(), setFontOverline(),
+///     setFontStrikeOut(), and setFontFixedPitch() provide additional effects for
+///     text.
+/// 
+///     The color is set with setForeground(). If the text is intended to be used
+///     as an anchor (for hyperlinks), this can be enabled with setAnchor(). The
+///     setAnchorHref() and setAnchorNames() functions are used to specify the
+///     information about the hyperlink's destination and the anchor's name.
+/// 
+///     \sa QTextFormat, QTextBlockFormat, QTextTableFormat, QTextListFormat
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextCharFormat)]
 enum VerticalAlignment {
     AlignNormal,
@@ -29,8 +57,31 @@ enum FontPropertiesInheritanceBehavior {
 
 struct TextCharFormat : TextFormat {
     is_valid() -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Sets the text format's \a font.
+    /// 
+    ///     If \a behavior is QTextCharFormat::FontPropertiesAll, the font property that
+    ///     has not been explicitly set is treated like as it were set with default value;
+    ///     If \a behavior is QTextCharFormat::FontPropertiesSpecifiedOnly, the font property that
+    ///     has not been explicitly set is ignored and the respective property value
+    ///     remains unchanged.
+    /// 
+    ///     \sa font()
     set_font(font: &FontType, behavior: TextCharFormat::FontPropertiesInheritanceBehavior),
+    ///     \since 5.3
+    /// 
+    ///     Sets the text format's \a font.
+    /// 
+    ///     If \a behavior is QTextCharFormat::FontPropertiesAll, the font property that
+    ///     has not been explicitly set is treated like as it were set with default value;
+    ///     If \a behavior is QTextCharFormat::FontPropertiesSpecifiedOnly, the font property that
+    ///     has not been explicitly set is ignored and the respective property value
+    ///     remains unchanged.
+    /// 
+    ///     \sa font()
     set_font(font: &FontType),
+    ///     Returns the font for this character format.
     font() -> Font,
     set_font_family(family: String),
     font_family() -> String,
@@ -49,6 +100,12 @@ struct TextCharFormat : TextFormat {
     set_font_word_spacing(spacing: f32),
     font_word_spacing() -> f32,
     set_font_underline(underline: bool),
+    ///     \fn bool QTextCharFormat::fontUnderline() const
+    /// 
+    ///     Returns \c true if the text format's font is underlined; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa font()
     font_underline() -> bool,
     set_font_overline(overline: bool),
     font_overline() -> bool,
@@ -62,6 +119,10 @@ struct TextCharFormat : TextFormat {
     font_hinting_preference() -> Font::HintingPreference,
     set_font_kerning(enable: bool),
     font_kerning() -> bool,
+    ///     \fn void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
+    ///     \since 4.2
+    /// 
+    ///     Sets the style of underlining the text to \a style.
     set_underline_style(style: TextCharFormat::UnderlineStyle),
     underline_style() -> TextCharFormat::UnderlineStyle,
     set_vertical_alignment(alignment: TextCharFormat::VerticalAlignment),
@@ -75,8 +136,22 @@ struct TextCharFormat : TextFormat {
     set_anchor_href(value: String),
     anchor_href() -> String,
     set_anchor_name(name: String),
+    ///     \fn QString QTextCharFormat::anchorName() const
+    ///     \obsolete
+    /// 
+    ///     This function is deprecated. Use anchorNames() instead.
+    /// 
+    ///     Returns the anchor name associated with this text format, or an empty
+    ///     string if none has been set. If the anchor name is set, text with this
+    ///     format can be the destination of a hypertext link.
     anchor_name() -> String,
     set_anchor_names(names: &[String]),
+    ///     \fn QStringList QTextCharFormat::anchorNames() const
+    ///     \since 4.3
+    /// 
+    ///     Returns the anchor names associated with this text format, or an empty
+    ///     string list if none has been set. If the anchor names are set, text with this
+    ///     format can be the destination of a hypertext link.
     anchor_names() -> [String],
     set_table_cell_row_span(table_cell_row_span: i32),
     table_cell_row_span() -> i32,

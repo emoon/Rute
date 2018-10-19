@@ -1,3 +1,35 @@
+///   \class QAbstractTransition
+///   \inmodule QtCore
+/// 
+///   \brief The QAbstractTransition class is the base class of transitions between QAbstractState objects.
+/// 
+///   \since 4.6
+///   \ingroup statemachine
+/// 
+///   The QAbstractTransition class is the abstract base class of transitions
+///   between states (QAbstractState objects) of a
+///   QStateMachine. QAbstractTransition is part of \l{The State Machine
+///   Framework}.
+/// 
+///   The sourceState() function returns the source of the transition. The
+///   targetStates() function returns the targets of the transition. The machine()
+///   function returns the state machine that the transition is part of.
+/// 
+///   The triggered() signal is emitted when the transition has been triggered.
+/// 
+///   Transitions can cause animations to be played. Use the addAnimation()
+///   function to add an animation to the transition.
+/// 
+///   \section1 Subclassing
+/// 
+///   The eventTest() function is called by the state machine to determine whether
+///   an event should trigger the transition. In your reimplementation you
+///   typically check the event type and cast the event object to the proper type,
+///   and check that one or more properties of the event meet your criteria.
+/// 
+///   The onTransition() function is called when the transition is triggered;
+///   reimplement this function to perform custom processing for the transition.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QAbstractTransition)]
 enum TransitionType {
     ExternalTransition,
@@ -5,20 +37,43 @@ enum TransitionType {
 }
 
 struct AbstractTransition : Object {
+    ///   Returns the source state of this transition, or 0 if this transition has no
+    ///   source state.
     source_state() -> State?,
+    ///   Returns the target state of this transition, or 0 if the transition has no
+    ///   target.
     target_state() -> AbstractState?,
+    ///   Sets the \a target state of this transition.
     set_target_state(target: *AbstractStateType),
+    ///   Returns the target states of this transition, or an empty list if this
+    ///   transition has no target states.
     target_states() -> [AbstractState?],
+    ///   Sets the target states of this transition to be the given \a targets.
     set_target_states(targets: [*AbstractStateType]),
+    ///   Sets the type of the transition to \a type.
     set_transition_type(type: AbstractTransition::TransitionType),
+    ///   Returns the state machine that this transition is part of, or 0 if the
+    ///   transition is not part of a state machine.
     machine() -> StateMachine?,
+    ///   Adds the given \a animation to this transition.
+    ///   The transition does not take ownership of the animation.
+    /// 
+    ///   \sa removeAnimation(), animations()
     add_animation(animation: *AbstractAnimationType),
+    ///   Removes the given \a animation from this transition.
+    /// 
+    ///   \sa addAnimation()
     remove_animation(animation: *AbstractAnimationType),
+    ///   Returns the list of animations associated with this transition, or an empty
+    ///   list if it has no animations.
+    /// 
+    ///   \sa addAnimation()
     animations() -> [AbstractAnimation?],
     [signal] target_state_changed(arg0: AbstractTransition::QPrivateSignal),
     [signal] target_states_changed(arg0: AbstractTransition::QPrivateSignal),
     [event] event_test(event: *EventType) -> bool,
     [event] on_transition(event: *EventType),
+    ///   \reimp
     [event] event(e: *EventType) -> bool,
 }
 

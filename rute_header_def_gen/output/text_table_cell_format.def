@@ -1,3 +1,23 @@
+///     \class QTextTableCellFormat
+///     \reentrant
+///     \since 4.4
+/// 
+///     \brief The QTextTableCellFormat class provides formatting information for
+///     table cells in a QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     The table cell format of a table cell in a document specifies the visual
+///     properties of the table cell.
+/// 
+///     The padding properties of a table cell are controlled by setLeftPadding(),
+///     setRightPadding(), setTopPadding(), and setBottomPadding(). All the paddings
+///     can be set at once using setPadding().
+/// 
+///     \sa QTextFormat, QTextBlockFormat, QTextTableFormat, QTextCharFormat
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextTableCellFormat : TextCharFormat {
     is_valid() -> bool,
     set_top_padding(padding: f32),

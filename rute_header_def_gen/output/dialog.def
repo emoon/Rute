@@ -1,3 +1,140 @@
+///     \class QDialog
+///     \brief The QDialog class is the base class of dialog windows.
+/// 
+///     \ingroup dialog-classes
+///     \ingroup abstractwidgets
+///     \inmodule QtWidgets
+/// 
+///     A dialog window is a top-level window mostly used for short-term
+///     tasks and brief communications with the user. QDialogs may be
+///     modal or modeless. QDialogs can
+///     provide a \l{#return}{return value}, and they can have \l{#default}{default buttons}. QDialogs can also have a QSizeGrip in their
+///     lower-right corner, using setSizeGripEnabled().
+/// 
+///     Note that QDialog (and any other widget that has type \c Qt::Dialog) uses
+///     the parent widget slightly differently from other classes in Qt. A dialog is
+///     always a top-level widget, but if it has a parent, its default location is
+///     centered on top of the parent's top-level widget (if it is not top-level
+///     itself). It will also share the parent's taskbar entry.
+/// 
+///     Use the overload of the QWidget::setParent() function to change
+///     the ownership of a QDialog widget. This function allows you to
+///     explicitly set the window flags of the reparented widget; using
+///     the overloaded function will clear the window flags specifying the
+///     window-system properties for the widget (in particular it will
+///     reset the Qt::Dialog flag).
+/// 
+///     \section1 Modal Dialogs
+/// 
+///     A \b{modal} dialog is a dialog that blocks input to other
+///     visible windows in the same application. Dialogs that are used to
+///     request a file name from the user or that are used to set
+///     application preferences are usually modal. Dialogs can be
+///     \l{Qt::ApplicationModal}{application modal} (the default) or
+///     \l{Qt::WindowModal}{window modal}.
+/// 
+///     When an application modal dialog is opened, the user must finish
+///     interacting with the dialog and close it before they can access
+///     any other window in the application. Window modal dialogs only
+///     block access to the window associated with the dialog, allowing
+///     the user to continue to use other windows in an application.
+/// 
+///     The most common way to display a modal dialog is to call its
+///     exec() function. When the user closes the dialog, exec() will
+///     provide a useful \l{#return}{return value}. Typically,
+///     to get the dialog to close and return the appropriate value, we
+///     connect a default button, e.g. \uicontrol OK, to the accept() slot and a
+///     \uicontrol Cancel button to the reject() slot.
+///     Alternatively you can call the done() slot with \c Accepted or
+///     \c Rejected.
+/// 
+///     An alternative is to call setModal(true) or setWindowModality(),
+///     then show(). Unlike exec(), show() returns control to the caller
+///     immediately. Calling setModal(true) is especially useful for
+///     progress dialogs, where the user must have the ability to interact
+///     with the dialog, e.g.  to cancel a long running operation. If you
+///     use show() and setModal(true) together to perform a long operation,
+///     you must call QApplication::processEvents() periodically during
+///     processing to enable the user to interact with the dialog. (See
+///     QProgressDialog.)
+/// 
+///     \section1 Modeless Dialogs
+/// 
+///     A \b{modeless} dialog is a dialog that operates
+///     independently of other windows in the same application. Find and
+///     replace dialogs in word-processors are often modeless to allow the
+///     user to interact with both the application's main window and with
+///     the dialog.
+/// 
+///     Modeless dialogs are displayed using show(), which returns control
+///     to the caller immediately.
+/// 
+///     If you invoke the \l{QWidget::show()}{show()} function after hiding
+///     a dialog, the dialog will be displayed in its original position. This is
+///     because the window manager decides the position for windows that
+///     have not been explicitly placed by the programmer. To preserve the
+///     position of a dialog that has been moved by the user, save its position
+///     in your \l{QWidget::closeEvent()}{closeEvent()}  handler and then
+///     move the dialog to that position, before showing it again.
+/// 
+///     \target default
+///     \section1 Default Button
+/// 
+///     A dialog's \e default button is the button that's pressed when the
+///     user presses Enter (Return). This button is used to signify that
+///     the user accepts the dialog's settings and wants to close the
+///     dialog. Use QPushButton::setDefault(), QPushButton::isDefault()
+///     and QPushButton::autoDefault() to set and control the dialog's
+///     default button.
+/// 
+///     \target escapekey
+///     \section1 Escape Key
+/// 
+///     If the user presses the Esc key in a dialog, QDialog::reject()
+///     will be called. This will cause the window to close: The \l{QCloseEvent}{close event} cannot be \l{QEvent::ignore()}{ignored}.
+/// 
+///     \section1 Extensibility
+/// 
+///     Extensibility is the ability to show the dialog in two ways: a
+///     partial dialog that shows the most commonly used options, and a
+///     full dialog that shows all the options. Typically an extensible
+///     dialog will initially appear as a partial dialog, but with a
+///     \uicontrol More toggle button. If the user presses the \uicontrol More button down,
+///     the dialog is expanded. The \l{Extension Example} shows how to achieve
+///     extensible dialogs using Qt.
+/// 
+///     \target return
+///     \section1 Return Value (Modal Dialogs)
+/// 
+///     Modal dialogs are often used in situations where a return value is
+///     required, e.g. to indicate whether the user pressed \uicontrol OK or
+///     \uicontrol Cancel. A dialog can be closed by calling the accept() or the
+///     reject() slots, and exec() will return \c Accepted or \c Rejected
+///     as appropriate. The exec() call returns the result of the dialog.
+///     The result is also available from result() if the dialog has not
+///     been destroyed.
+/// 
+///     In order to modify your dialog's close behavior, you can reimplement
+///     the functions accept(), reject() or done(). The
+///     \l{QWidget::closeEvent()}{closeEvent()} function should only be
+///     reimplemented to preserve the dialog's position or to override the
+///     standard close or reject behavior.
+/// 
+///     \target examples
+///     \section1 Code Examples
+/// 
+///     A modal dialog:
+/// 
+///     \snippet dialogs/dialogs.cpp 1
+/// 
+///     A modeless dialog:
+/// 
+///     \snippet dialogs/dialogs.cpp 0
+/// 
+///     \sa QDialogButtonBox, QTabWidget, QWidget, QProgressDialog,
+///         {fowler}{GUI Design Handbook: Dialogs, Standard}, {Extension Example},
+///         {Standard Dialogs Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDialog)]
 enum DialogCode {
     Rejected,
@@ -5,26 +142,138 @@ enum DialogCode {
 }
 
 struct Dialog : Widget {
+    ///   In general returns the modal dialog's result code, \c Accepted or
+    ///   \c Rejected.
+    /// 
+    ///   \note When called on a QMessageBox instance, the returned value is a
+    ///   value of the \l QMessageBox::StandardButton enum.
+    /// 
+    ///   Do not call this function if the dialog was constructed with the
+    ///   Qt::WA_DeleteOnClose attribute.
     result() -> i32,
     [event] set_visible(visible: bool),
+    ///     \obsolete
+    /// 
+    ///     If \a orientation is Qt::Horizontal, the extension will be displayed
+    ///     to the right of the dialog's main area. If \a orientation is
+    ///     Qt::Vertical, the extension will be displayed below the dialog's main
+    ///     area.
+    /// 
+    ///     Instead of using this functionality, we recommend that you simply call
+    ///     show() or hide() on the part of the dialog that you want to use as an
+    ///     extension. See the \l{Extension Example} for details.
+    /// 
+    ///     \sa setExtension()
     set_orientation(orientation: Rute::Orientation),
+    ///     \obsolete
+    /// 
+    ///     Returns the dialog's extension orientation.
+    /// 
+    ///     Instead of using this functionality, we recommend that you simply call
+    ///     show() or hide() on the part of the dialog that you want to use as an
+    ///     extension. See the \l{Extension Example} for details.
+    /// 
+    ///     \sa extension()
     orientation() -> Rute::Orientation,
+    ///     \obsolete
+    /// 
+    ///     Sets the widget, \a extension, to be the dialog's extension,
+    ///     deleting any previous extension. The dialog takes ownership of the
+    ///     extension. Note that if 0 is passed any existing extension will be
+    ///     deleted. This function must only be called while the dialog is hidden.
+    /// 
+    ///     Instead of using this functionality, we recommend that you simply call
+    ///     show() or hide() on the part of the dialog that you want to use as an
+    ///     extension. See the \l{Extension Example} for details.
+    /// 
+    ///     \sa showExtension(), setOrientation()
     set_extension(extension: *WidgetType),
+    ///     \obsolete
+    /// 
+    ///     Returns the dialog's extension or 0 if no extension has been
+    ///     defined.
+    /// 
+    ///     Instead of using this functionality, we recommend that you simply call
+    ///     show() or hide() on the part of the dialog that you want to use as an
+    ///     extension. See the \l{Extension Example} for details.
+    /// 
+    ///     \sa showExtension(), setOrientation()
     extension() -> Widget?,
     [event] size_hint() -> Size,
     [event] minimum_size_hint() -> Size,
     set_size_grip_enabled(arg0: bool),
     is_size_grip_enabled() -> bool,
+    ///     \property QDialog::modal
+    ///     \brief whether show() should pop up the dialog as modal or modeless
+    /// 
+    ///     By default, this property is \c false and show() pops up the dialog
+    ///     as modeless. Setting this property to true is equivalent to setting
+    ///     QWidget::windowModality to Qt::ApplicationModal.
+    /// 
+    ///     exec() ignores the value of this property and always pops up the
+    ///     dialog as modal.
+    /// 
+    ///     \sa QWidget::windowModality, show(), exec()
     set_modal(modal: bool),
+    ///   \fn void QDialog::setResult(int i)
+    /// 
+    ///   Sets the modal dialog's result code to \a i.
+    /// 
+    ///   \note We recommend that you use one of the values defined by
+    ///   QDialog::DialogCode.
     set_result(r: i32),
     [signal] finished(result: i32),
     [signal] accepted(),
     [signal] rejected(),
+    ///     \since 4.5
+    /// 
+    ///     Shows the dialog as a \l{QDialog#Modal Dialogs}{window modal dialog},
+    ///     returning immediately.
+    /// 
+    ///     \sa exec(), show(), result(), setWindowModality()
     [event] open(),
+    ///     Shows the dialog as a \l{QDialog#Modal Dialogs}{modal dialog},
+    ///     blocking until the user closes it. The function returns a \l
+    ///     DialogCode result.
+    /// 
+    ///     If the dialog is \l{Qt::ApplicationModal}{application modal}, users cannot
+    ///     interact with any other window in the same application until they close
+    ///     the dialog. If the dialog is \l{Qt::ApplicationModal}{window modal}, only
+    ///     interaction with the parent window is blocked while the dialog is open.
+    ///     By default, the dialog is application modal.
+    /// 
+    ///     \sa open(), show(), result(), setWindowModality()
     [event] exec() -> i32,
+    ///   Closes the dialog and sets its result code to \a r. If this dialog
+    ///   is shown with exec(), done() causes the local event loop to finish,
+    ///   and exec() to return \a r.
+    /// 
+    ///   As with QWidget::close(), done() deletes the dialog if the
+    ///   Qt::WA_DeleteOnClose flag is set. If the dialog is the application's
+    ///   main widget, the application terminates. If the dialog is the
+    ///   last window closed, the QApplication::lastWindowClosed() signal is
+    ///   emitted.
+    /// 
+    ///   \sa accept(), reject(), QApplication::activeWindow(), QCoreApplication::quit()
     [event] done(arg0: i32),
+    ///   Hides the modal dialog and sets the result code to \c Accepted.
+    /// 
+    ///   \sa reject(), done()
     [event] accept(),
+    ///   Hides the modal dialog and sets the result code to \c Rejected.
+    /// 
+    ///   \sa accept(), done()
     [event] reject(),
+    ///     \obsolete
+    /// 
+    ///     If \a showIt is true, the dialog's extension is shown; otherwise the
+    ///     extension is hidden.
+    /// 
+    ///     Instead of using this functionality, we recommend that you simply call
+    ///     show() or hide() on the part of the dialog that you want to use as an
+    ///     extension. See the \l{Extension Example} for details.
+    /// 
+    ///     \sa show(), setExtension(), setOrientation()
     show_extension(arg0: bool),
     [event] key_press_event(arg0: *KeyEventType),
     [event] close_event(arg0: *CloseEventType),

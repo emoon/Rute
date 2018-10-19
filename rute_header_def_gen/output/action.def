@@ -1,3 +1,55 @@
+///     \class QAction
+///     \brief The QAction class provides an abstract user interface
+///     action that can be inserted into widgets.
+/// 
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     \omit
+///         * parent and widget are different
+///         * parent does not define context
+///     \endomit
+/// 
+///     In applications many common commands can be invoked via menus,
+///     toolbar buttons, and keyboard shortcuts. Since the user expects
+///     each command to be performed in the same way, regardless of the
+///     user interface used, it is useful to represent each command as
+///     an \e action.
+/// 
+///     Actions can be added to menus and toolbars, and will
+///     automatically keep them in sync. For example, in a word processor,
+///     if the user presses a Bold toolbar button, the Bold menu item
+///     will automatically be checked.
+/// 
+///     Actions can be created as independent objects, but they may
+///     also be created during the construction of menus; the QMenu class
+///     contains convenience functions for creating actions suitable for
+///     use as menu items.
+/// 
+///     A QAction may contain an icon, menu text, a shortcut, status text,
+///     "What's This?" text, and a tooltip. Most of these can be set in
+///     the constructor. They can also be set independently with
+///     setIcon(), setText(), setIconText(), setShortcut(),
+///     setStatusTip(), setWhatsThis(), and setToolTip(). For menu items,
+///     it is possible to set an individual font with setFont().
+/// 
+///     Actions are added to widgets using QWidget::addAction() or
+///     QGraphicsWidget::addAction(). Note that an action must be added to a
+///     widget before it can be used; this is also true when the shortcut should
+///     be global (i.e., Qt::ApplicationShortcut as Qt::ShortcutContext).
+/// 
+///     Once a QAction has been created it should be added to the relevant
+///     menu and toolbar, then connected to the slot which will perform
+///     the action. For example:
+/// 
+///     \snippet mainwindows/application/mainwindow.cpp 19
+/// 
+///     We recommend that actions are created as children of the window
+///     they are used in. In most cases actions will be children of
+///     the application's main window.
+/// 
+///     \sa QMenu, QToolBar, {Application Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QAction)]
 enum MenuRole {
     NoRole,
@@ -23,61 +75,344 @@ enum ActionEvent {
 }
 
 struct Action : Object {
+    ///   Sets this action group to \a group. The action will be automatically
+    ///   added to the group's list of actions.
+    /// 
+    ///   Actions within the group will be mutually exclusive.
+    /// 
+    ///   \sa QActionGroup, QAction::actionGroup()
     set_action_group(group: *ActionGroupType),
+    ///   Returns the action group for this action. If no action group manages
+    ///   this action then 0 will be returned.
+    /// 
+    ///   \sa QActionGroup, QAction::setActionGroup()
     action_group() -> ActionGroup?,
+    ///     \property QAction::icon
+    ///     \brief the action's icon
+    /// 
+    ///     In toolbars, the icon is used as the tool button icon; in menus,
+    ///     it is displayed to the left of the menu text. There is no default
+    ///     icon.
+    /// 
+    ///     If a null icon (QIcon::isNull()) is passed into this function,
+    ///     the icon of the action is cleared.
     set_icon(icon: &IconType),
     icon() -> Icon,
+    ///     \property QAction::text
+    ///     \brief the action's descriptive text
+    /// 
+    ///     If the action is added to a menu, the menu option will consist of
+    ///     the icon (if there is one), the text, and the shortcut (if there
+    ///     is one). If the text is not explicitly set in the constructor, or
+    ///     by using setText(), the action's description icon text will be
+    ///     used as text. There is no default text.
+    /// 
+    ///     \sa iconText
     set_text(text: String),
     text() -> String,
+    ///     \property QAction::iconText
+    ///     \brief the action's descriptive icon text
+    /// 
+    ///     If QToolBar::toolButtonStyle is set to a value that permits text to
+    ///     be displayed, the text defined held in this property appears as a
+    ///     label in the relevant tool button.
+    /// 
+    ///     It also serves as the default text in menus and tooltips if the action
+    ///     has not been defined with setText() or setToolTip(), and will
+    ///     also be used in toolbar buttons if no icon has been defined using setIcon().
+    /// 
+    ///     If the icon text is not explicitly set, the action's normal text will be
+    ///     used for the icon text.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa setToolTip(), setStatusTip()
     set_icon_text(text: String),
     icon_text() -> String,
+    ///     \property QAction::toolTip
+    ///     \brief the action's tooltip
+    /// 
+    ///     This text is used for the tooltip. If no tooltip is specified,
+    ///     the action's text is used.
+    /// 
+    ///     By default, this property contains the action's text.
+    /// 
+    ///     \sa setStatusTip(), setShortcut()
     set_tool_tip(tip: String),
     tool_tip() -> String,
+    ///     \property QAction::statusTip
+    ///     \brief the action's status tip
+    /// 
+    ///     The status tip is displayed on all status bars provided by the
+    ///     action's top-level parent widget.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa setToolTip(), showStatusText()
     set_status_tip(status_tip: String),
     status_tip() -> String,
+    ///     \property QAction::whatsThis
+    ///     \brief the action's "What's This?" help text
+    /// 
+    ///     The "What's This?" text is used to provide a brief description of
+    ///     the action. The text may contain rich text. There is no default
+    ///     "What's This?" text.
+    /// 
+    ///     \sa QWhatsThis
     set_whats_this(what: String),
     whats_this() -> String,
+    ///     \property QAction::priority
+    ///     \since 4.6
+    /// 
+    ///     \brief the actions's priority in the user interface.
+    /// 
+    ///     This property can be set to indicate how the action should be prioritized
+    ///     in the user interface.
+    /// 
+    ///     For instance, when toolbars have the Qt::ToolButtonTextBesideIcon
+    ///     mode set, then actions with LowPriority will not show the text
+    ///     labels.
     set_priority(priority: Action::Priority),
     priority() -> Action::Priority,
+    ///   Returns the menu contained by this action. Actions that contain
+    ///   menus can be used to create menu items with submenus, or inserted
+    ///   into toolbars to create buttons with popup menus.
+    /// 
+    ///   \sa QMenu::addAction()
     menu() -> Menu?,
+    ///     Sets the menu contained by this action to the specified \a menu.
     set_menu(menu: *MenuType),
+    ///   If \a b is true then this action will be considered a separator.
+    /// 
+    ///   How a separator is represented depends on the widget it is inserted
+    ///   into. Under most circumstances the text, submenu, and icon will be
+    ///   ignored for separator actions.
+    /// 
+    ///   \sa QAction::isSeparator()
     set_separator(b: bool),
+    ///   Returns \c true if this action is a separator action; otherwise it
+    ///   returns \c false.
+    /// 
+    ///   \sa QAction::setSeparator()
     is_separator() -> bool,
+    ///     \property QAction::shortcut
+    ///     \brief the action's primary shortcut key
+    /// 
+    ///     Valid keycodes for this property can be found in \l Qt::Key and
+    ///     \l Qt::Modifier. There is no default shortcut key.
     set_shortcut(shortcut: &KeySequenceType),
+    ///     Returns the primary shortcut.
+    /// 
+    ///     \sa setShortcuts()
     shortcut() -> KeySequence,
+    ///     \since 4.2
+    /// 
+    ///     Sets a platform dependent list of shortcuts based on the \a key.
+    ///     The result of calling this function will depend on the currently running platform.
+    ///     Note that more than one shortcut can assigned by this action.
+    ///     If only the primary shortcut is required, use setShortcut instead.
+    /// 
+    ///     \sa QKeySequence::keyBindings()
     set_shortcuts(shortcuts: [KeySequenceType]),
+    ///     \since 4.2
+    /// 
+    ///     Sets a platform dependent list of shortcuts based on the \a key.
+    ///     The result of calling this function will depend on the currently running platform.
+    ///     Note that more than one shortcut can assigned by this action.
+    ///     If only the primary shortcut is required, use setShortcut instead.
+    /// 
+    ///     \sa QKeySequence::keyBindings()
     set_shortcuts(arg0: KeySequence::StandardKey),
+    ///     \since 4.2
+    /// 
+    ///     Returns the list of shortcuts, with the primary shortcut as
+    ///     the first element of the list.
+    /// 
+    ///     \sa setShortcuts()
     shortcuts() -> [KeySequence],
+    ///     \property QAction::shortcutContext
+    ///     \brief the context for the action's shortcut
+    /// 
+    ///     Valid values for this property can be found in \l Qt::ShortcutContext.
+    ///     The default value is Qt::WindowShortcut.
     set_shortcut_context(context: Rute::ShortcutContext),
     shortcut_context() -> Rute::ShortcutContext,
+    ///     \property QAction::autoRepeat
+    ///     \brief whether the action can auto repeat
+    ///     \since 4.2
+    /// 
+    ///     If true, the action will auto repeat when the keyboard shortcut
+    ///     combination is held down, provided that keyboard auto repeat is
+    ///     enabled on the system.
+    ///     The default value is true.
     set_auto_repeat(arg0: bool),
     auto_repeat() -> bool,
+    ///     \property QAction::font
+    ///     \brief the action's font
+    /// 
+    ///     The font property is used to render the text set on the
+    ///     QAction. The font will can be considered a hint as it will not be
+    ///     consulted in all cases based upon application and style.
+    /// 
+    ///     By default, this property contains the application's default font.
+    /// 
+    ///     \sa QAction::setText(), QStyle
     set_font(font: &FontType),
     font() -> Font,
+    ///     \property QAction::checkable
+    ///     \brief whether the action is a checkable action
+    /// 
+    ///     A checkable action is one which has an on/off state. For example,
+    ///     in a word processor, a Bold toolbar button may be either on or
+    ///     off. An action which is not a toggle action is a command action;
+    ///     a command action is simply executed, e.g. file save.
+    ///     By default, this property is \c false.
+    /// 
+    ///     In some situations, the state of one toggle action should depend
+    ///     on the state of others. For example, "Left Align", "Center" and
+    ///     "Right Align" toggle actions are mutually exclusive. To achieve
+    ///     exclusive toggling, add the relevant toggle actions to a
+    ///     QActionGroup with the QActionGroup::exclusive property set to
+    ///     true.
+    /// 
+    ///     \sa QAction::setChecked()
     set_checkable(arg0: bool),
     is_checkable() -> bool,
+    ///   Returns the user data as set in QAction::setData.
+    /// 
+    ///   \sa setData()
     data() -> Variant,
+    ///   \fn void QAction::setData(const QVariant &userData)
+    /// 
+    ///   Sets the action's internal data to the given \a userData.
+    /// 
+    ///   \sa data()
     set_data(var: &VariantType),
     is_checked() -> bool,
     is_enabled() -> bool,
     is_visible() -> bool,
+    ///   Sends the relevant signals for ActionEvent \a event.
+    /// 
+    ///   Action based widgets use this API to cause the QAction
+    ///   to emit signals as well as emitting their own.
     activate(event: Action::ActionEvent),
+    ///   Updates the relevant status bar for the \a widget specified by sending a
+    ///   QStatusTipEvent to its parent widget. Returns \c true if an event was sent;
+    ///   otherwise returns \c false.
+    /// 
+    ///   If a null widget is specified, the event is sent to the action's parent.
+    /// 
+    ///   \sa statusTip
     show_status_text(widget: *WidgetType) -> bool,
+    ///     \property QAction::menuRole
+    ///     \brief the action's menu role
+    ///     \since 4.2
+    /// 
+    ///     This indicates what role the action serves in the application menu on
+    ///     \macos. By default all actions have the TextHeuristicRole, which means that
+    ///     the action is added based on its text (see QMenuBar for more information).
+    /// 
+    ///     The menu role can only be changed before the actions are put into the menu
+    ///     bar in \macos (usually just before the first application window is
+    ///     shown).
     set_menu_role(menu_role: Action::MenuRole),
     menu_role() -> Action::MenuRole,
+    ///     \property QAction::iconVisibleInMenu
+    ///     \brief Whether or not an action should show an icon in a menu
+    ///     \since 4.4
+    /// 
+    ///     In some applications, it may make sense to have actions with icons in the
+    ///     toolbar, but not in menus. If true, the icon (if valid) is shown in the menu, when it
+    ///     is false, it is not shown.
+    /// 
+    ///     The default is to follow whether the Qt::AA_DontShowIconsInMenus attribute
+    ///     is set for the application. Explicitly settings this property overrides
+    ///     the presence (or abscence) of the attribute.
+    /// 
+    ///     For example:
+    ///     \snippet code/src_gui_kernel_qaction.cpp 0
+    /// 
+    ///     \sa QAction::icon, QCoreApplication::setAttribute()
     set_icon_visible_in_menu(visible: bool),
     is_icon_visible_in_menu() -> bool,
+    ///     \property QAction::shortcutVisibleInContextMenu
+    ///     \brief Whether or not an action should show a shortcut in a context menu
+    ///     \since 5.10
+    /// 
+    ///     In some applications, it may make sense to have actions with shortcuts in
+    ///     context menus. If true, the shortcut (if valid) is shown when the action is
+    ///     shown via a context menu, when it is false, it is not shown.
+    /// 
+    ///     The default is to follow whether the Qt::AA_DontShowShortcutsInContextMenus attribute
+    ///     is set for the application, falling back to the widget style hint.
+    ///     Explicitly setting this property overrides the presence (or abscence) of the attribute.
+    /// 
+    ///     \sa QAction::shortcut, QCoreApplication::setAttribute()
     set_shortcut_visible_in_context_menu(show: bool),
     is_shortcut_visible_in_context_menu() -> bool,
+    ///     Returns the parent widget.
     parent_widget() -> Widget?,
+    ///   \since 4.2
+    ///   Returns a list of widgets this action has been added to.
+    /// 
+    ///   \sa QWidget::addAction(), associatedGraphicsWidgets()
     associated_widgets() -> [Widget?],
+    ///   \since 4.5
+    ///   Returns a list of widgets this action has been added to.
+    /// 
+    ///   \sa QWidget::addAction(), associatedWidgets()
     associated_graphics_widgets() -> [GraphicsWidget?],
+    ///   \reimp
     [event] event(arg0: *EventType) -> bool,
     hover(),
+    ///     \property QAction::checked
+    ///     \brief whether the action is checked.
+    /// 
+    ///     Only checkable actions can be checked.  By default, this is false
+    ///     (the action is unchecked).
+    /// 
+    ///     \note The notifier signal for this property is toggled(). As toggling
+    ///     a QAction changes its state, it will also emit a changed() signal.
+    /// 
+    ///     \sa checkable, toggled()
     set_checked(arg0: bool),
+    ///     \fn void QAction::toggle()
+    /// 
+    ///     This is a convenience function for the \l checked property.
+    ///     Connect to it to change the checked state to its opposite state.
     toggle(),
+    ///     \property QAction::enabled
+    ///     \brief whether the action is enabled
+    /// 
+    ///     Disabled actions cannot be chosen by the user. They do not
+    ///     disappear from menus or toolbars, but they are displayed in a way
+    ///     which indicates that they are unavailable. For example, they might
+    ///     be displayed using only shades of gray.
+    /// 
+    ///     \uicontrol{What's This?} help on disabled actions is still available, provided
+    ///     that the QAction::whatsThis property is set.
+    /// 
+    ///     An action will be disabled when all widgets to which it is added
+    ///     (with QWidget::addAction()) are disabled or not visible. When an
+    ///     action is disabled, it is not possible to trigger it through its
+    ///     shortcut.
+    /// 
+    ///     By default, this property is \c true (actions are enabled).
+    /// 
+    ///     \sa text
     set_enabled(arg0: bool),
     set_disabled(b: bool),
+    ///     \property QAction::visible
+    ///     \brief whether the action can be seen (e.g. in menus and toolbars)
+    /// 
+    ///     If \e visible is true the action can be seen (e.g. in menus and
+    ///     toolbars) and chosen by the user; if \e visible is false the
+    ///     action cannot be seen or chosen by the user.
+    /// 
+    ///     Actions which are not visible are \e not grayed out; they do not
+    ///     appear at all.
+    /// 
+    ///     By default, this property is \c true (actions are visible).
     set_visible(arg0: bool),
     [signal] changed(),
     [signal] hovered(),

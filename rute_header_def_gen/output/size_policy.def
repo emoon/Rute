@@ -1,3 +1,51 @@
+///     \class QSizePolicy
+///     \brief The QSizePolicy class is a layout attribute describing horizontal
+///     and vertical resizing policy.
+/// 
+///     \ingroup geomanagement
+///     \inmodule QtWidgets
+/// 
+///     The size policy of a widget is an expression of its willingness to
+///     be resized in various ways, and affects how the widget is treated
+///     by the \l{Layout Management}{layout engine}. Each widget returns a
+///     QSizePolicy that describes the horizontal and vertical resizing
+///     policy it prefers when being laid out. You can change this for
+///     a specific widget by changing its QWidget::sizePolicy property.
+/// 
+///     QSizePolicy contains two independent QSizePolicy::Policy values
+///     and two stretch factors; one describes the widgets's horizontal
+///     size policy, and the other describes its vertical size policy. It
+///     also contains a flag to indicate whether the height and width of
+///     its preferred size are related.
+/// 
+///     The horizontal and vertical policies can be set in the
+///     constructor, and altered using the setHorizontalPolicy() and
+///     setVerticalPolicy() functions. The stretch factors can be set
+///     using the setHorizontalStretch() and setVerticalStretch()
+///     functions. The flag indicating whether the widget's
+///     \l{QWidget::sizeHint()}{sizeHint()} is width-dependent (such as a
+///     menu bar or a word-wrapping label) can be set using the
+///     setHeightForWidth() function.
+/// 
+///     The current size policies and stretch factors be retrieved using
+///     the horizontalPolicy(), verticalPolicy(), horizontalStretch() and
+///     verticalStretch() functions. Alternatively, use the transpose()
+///     function to swap the horizontal and vertical policies and
+///     stretches. The hasHeightForWidth() function returns the current
+///     status of the flag indicating the size hint dependencies.
+/// 
+///     Use the expandingDirections() function to determine whether the
+///     associated widget can make use of more space than its
+///     \l{QWidget::sizeHint()}{sizeHint()} function indicates, as well as
+///     find out in which directions it can expand.
+/// 
+///     Finally, the QSizePolicy class provides operators comparing this
+///     size policy to a given policy, as well as a QVariant operator
+///     storing this QSizePolicy as a QVariant object.
+/// 
+///     \sa QSize, QWidget::sizeHint(), QWidget::sizePolicy,
+///     QLayoutItem::sizeHint()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QSizePolicy)]
 enum PolicyFlag {
     GrowFlag,

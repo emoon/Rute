@@ -1,3 +1,48 @@
+///     \class QOpenGLFramebufferObject
+///     \brief The QOpenGLFramebufferObject class encapsulates an OpenGL framebuffer object.
+///     \since 5.0
+///     \inmodule QtGui
+/// 
+///     \ingroup painting-3D
+/// 
+///     The QOpenGLFramebufferObject class encapsulates an OpenGL framebuffer
+///     object, defined by the \c{GL_EXT_framebuffer_object} extension. It provides
+///     a rendering surface that can be painted on with a QPainter with the help of
+///     QOpenGLPaintDevice, or rendered to using native OpenGL calls. This surface
+///     can be bound and used as a regular texture in your own OpenGL drawing code.
+///     By default, the QOpenGLFramebufferObject class generates a 2D OpenGL
+///     texture (using the \c{GL_TEXTURE_2D} target), which is used as the internal
+///     rendering target.
+/// 
+///     \b{It is important to have a current OpenGL context when creating a
+///     QOpenGLFramebufferObject, otherwise initialization will fail.}
+/// 
+///     Create the QOpenGLFrameBufferObject instance with the CombinedDepthStencil
+///     attachment if you want QPainter to render correctly. Note that you need to
+///     create a QOpenGLFramebufferObject with more than one sample per pixel for
+///     primitives to be antialiased when drawing using a QPainter. To create a
+///     multisample framebuffer object you should use one of the constructors that
+///     take a QOpenGLFramebufferObjectFormat parameter, and set the
+///     QOpenGLFramebufferObjectFormat::samples() property to a non-zero value.
+/// 
+///     For multisample framebuffer objects a color render buffer is created,
+///     otherwise a texture with the specified texture target is created.
+///     The color render buffer or texture will have the specified internal
+///     format, and will be bound to the \c GL_COLOR_ATTACHMENT0
+///     attachment in the framebuffer object.
+/// 
+///     Multiple render targets are also supported, in case the OpenGL
+///     implementation supports this. Here there will be multiple textures (or, in
+///     case of multisampling, renderbuffers) present and each of them will get
+///     attached to \c GL_COLOR_ATTACHMENT0, \c 1, \c 2, ...
+/// 
+///     If you want to use a framebuffer object with multisampling enabled
+///     as a texture, you first need to copy from it to a regular framebuffer
+///     object using QOpenGLContext::blitFramebuffer().
+/// 
+///     It is possible to draw into a QOpenGLFramebufferObject using QPainter and
+///     QOpenGLPaintDevice in a separate thread.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QOpenGLFramebufferObject)]
 enum Attachment {
     NoAttachment,
@@ -16,27 +61,131 @@ enum FramebufferRestorePolicy {
 struct OpenGLFramebufferObject {
     add_color_attachment(size: &SizeType, internal_format: i32),
     add_color_attachment(width: i32, height: i32, internal_format: i32),
+    ///     Returns the format of this framebuffer object.
     format() -> OpenGLFramebufferObjectFormat,
+    ///     \fn bool QOpenGLFramebufferObject::isValid() const
+    /// 
+    ///     Returns \c true if the framebuffer object is valid.
+    /// 
+    ///     The framebuffer can become invalid if the initialization process
+    ///     fails, the user attaches an invalid buffer to the framebuffer
+    ///     object, or a non-power of two width/height is specified as the
+    ///     texture size if the texture target is \c{GL_TEXTURE_2D}.
+    ///     The non-power of two limitation does not apply if the OpenGL version
+    ///     is 2.0 or higher, or if the GL_ARB_texture_non_power_of_two extension
+    ///     is present.
+    /// 
+    ///     The framebuffer can also become invalid if the QOpenGLContext that
+    ///     the framebuffer was created within is destroyed and there are
+    ///     no other shared contexts that can take over ownership of the
+    ///     framebuffer.
     is_valid() -> bool,
+    ///     Returns \c true if the framebuffer object is currently bound to the current context,
+    ///     otherwise false is returned.
     is_bound() -> bool,
+    ///     \fn bool QOpenGLFramebufferObject::bind()
+    /// 
+    ///     Switches rendering from the default, windowing system provided
+    ///     framebuffer to this framebuffer object.
+    ///     Returns \c true upon success, false otherwise.
+    /// 
+    ///     \note If takeTexture() was called, a new texture is created and associated
+    ///     with the framebuffer object. This is potentially expensive and changes the
+    ///     context state (the currently bound texture).
+    /// 
+    ///     \sa release()
     bind() -> bool,
+    ///     \fn bool QOpenGLFramebufferObject::release()
+    /// 
+    ///     Switches rendering back to the default, windowing system provided
+    ///     framebuffer.
+    ///     Returns \c true upon success, false otherwise.
+    /// 
+    ///     \sa bind()
     release() -> bool,
     width() -> i32,
     height() -> i32,
+    ///     \fn GLuint QOpenGLFramebufferObject::texture() const
+    /// 
+    ///     Returns the texture id for the texture attached as the default
+    ///     rendering target in this framebuffer object. This texture id can
+    ///     be bound as a normal texture in your own OpenGL code.
+    /// 
+    ///     If a multisample framebuffer object is used then the value returned
+    ///     from this function will be invalid.
+    /// 
+    ///     When multiple textures are attached, the return value is the ID of
+    ///     the first one.
+    /// 
+    ///     \sa takeTexture(), textures()
     texture() -> i32,
+    ///     Returns the texture id for all attached textures.
+    /// 
+    ///     If a multisample framebuffer object is used, then an empty vector is returned.
+    /// 
+    ///     \since 5.6
+    /// 
+    ///     \sa takeTexture(), texture()
     textures() -> i32,
     take_texture() -> i32,
     take_texture(color_attachment_index: i32) -> i32,
+    ///     \return the size of the color and depth/stencil attachments attached to
+    ///     this framebuffer object.
     size() -> Size,
+    ///     \return the sizes of all color attachments attached to this framebuffer
+    ///     object.
+    /// 
+    ///     \since 5.6
     sizes() -> [Size],
+    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
+    ///     \overload
+    /// 
+    ///     Returns the contents of this framebuffer object as a QImage. This method flips
+    ///     the image from OpenGL coordinates to raster coordinates.
     to_image() -> Image,
+    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
+    ///     \overload
+    /// 
+    ///     Returns the contents of this framebuffer object as a QImage. This method flips
+    ///     the image from OpenGL coordinates to raster coordinates.
     to_image(flipped: bool) -> Image,
+    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
+    ///     \overload
+    /// 
+    ///     Returns the contents of this framebuffer object as a QImage. This method flips
+    ///     the image from OpenGL coordinates to raster coordinates.
     to_image(flipped: bool, color_attachment_index: i32) -> Image,
+    ///     Returns the status of the depth and stencil buffers attached to
+    ///     this framebuffer object.
     attachment() -> OpenGLFramebufferObject::Attachment,
     set_attachment(attachment: OpenGLFramebufferObject::Attachment),
+    ///     \fn GLuint QOpenGLFramebufferObject::handle() const
+    /// 
+    ///     Returns the OpenGL framebuffer object handle for this framebuffer
+    ///     object (returned by the \c{glGenFrameBuffersEXT()} function). This
+    ///     handle can be used to attach new images or buffers to the
+    ///     framebuffer. The user is responsible for cleaning up and
+    ///     destroying these objects.
     handle() -> i32,
+    ///     \fn bool QOpenGLFramebufferObject::bindDefault()
+    /// 
+    ///     Switches rendering back to the default, windowing system provided
+    ///     framebuffer.
+    ///     Returns \c true upon success, false otherwise.
+    /// 
+    ///     \sa bind(), release()
     [static] bind_default() -> bool,
+    ///     \fn bool QOpenGLFramebufferObject::hasOpenGLFramebufferObjects()
+    /// 
+    ///     Returns \c true if the OpenGL \c{GL_EXT_framebuffer_object} extension
+    ///     is present on this system; otherwise returns \c false.
     [static] has_open_gl_framebuffer_objects() -> bool,
+    ///     \fn bool QOpenGLFramebufferObject::hasOpenGLFramebufferBlit()
+    /// 
+    ///     Returns \c true if the OpenGL \c{GL_EXT_framebuffer_blit} extension
+    ///     is present on this system; otherwise returns \c false.
+    /// 
+    ///     \sa blitFramebuffer()
     [static] has_open_gl_framebuffer_blit() -> bool,
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32, restore_policy: OpenGLFramebufferObject::FramebufferRestorePolicy),
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32),

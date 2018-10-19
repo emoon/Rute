@@ -1,3 +1,12 @@
+///     \class QStandardPaths
+///     \inmodule QtCore
+///     \brief The QStandardPaths class provides methods for accessing standard paths.
+///     \since 5.0
+/// 
+///     This class contains functions to query standard locations on the local
+///     filesystem, for common tasks such as user-specific directories or system-wide
+///     configuration directories.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStandardPaths)]
 enum StandardLocation {
     DesktopLocation,
@@ -35,10 +44,38 @@ struct StandardPaths {
     [static] standard_locations(type: StandardPaths::StandardLocation) -> [String],
     [static] locate(type: StandardPaths::StandardLocation, file_name: String, options: StandardPaths::LocateOptions) -> String,
     [static] locate_all(type: StandardPaths::StandardLocation, file_name: String, options: StandardPaths::LocateOptions) -> [String],
+    ///     \fn QString QStandardPaths::displayName(StandardLocation type)
+    /// 
+    ///     Returns a localized display name for the given location \a type or
+    ///     an empty QString if no relevant location can be found.
     [static] display_name(type: StandardPaths::StandardLocation) -> String,
     [static] find_executable(executable_name: String, paths: &[String]) -> String,
+    ///   \fn void QStandardPaths::setTestModeEnabled(bool testMode)
+    /// 
+    ///   If \a testMode is true, this enables a special "test mode" in
+    ///   QStandardPaths, which changes writable locations
+    ///   to point to test directories, in order to prevent auto tests from reading from
+    ///   or writing to the current user's configuration.
+    /// 
+    ///   This affects the locations into which test programs might write files:
+    ///   GenericDataLocation, DataLocation, ConfigLocation, GenericConfigLocation,
+    ///   AppConfigLocation, GenericCacheLocation, CacheLocation.
+    ///   Other locations are not affected.
+    /// 
+    ///   On Unix, \c XDG_DATA_HOME is set to \e ~/.qttest/share, \c XDG_CONFIG_HOME is
+    ///   set to \e ~/.qttest/config, and \c XDG_CACHE_HOME is set to \e ~/.qttest/cache.
+    /// 
+    ///   On \macos, data goes to \e ~/.qttest/Application Support, cache goes to
+    ///   \e ~/.qttest/Cache, and config goes to \e ~/.qttest/Preferences.
+    /// 
+    ///   On Windows, everything goes to a "qttest" directory under Application Data.
     [static] enable_test_mode(test_mode: bool),
     [static] set_test_mode_enabled(test_mode: bool),
+    ///   \fn void QStandardPaths::isTestModeEnabled()
+    /// 
+    ///   \internal
+    /// 
+    ///   Returns \c true if test mode is enabled in QStandardPaths; otherwise returns \c false.
     [static] is_test_mode_enabled() -> bool,
 }
 

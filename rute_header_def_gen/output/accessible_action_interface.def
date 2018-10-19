@@ -1,3 +1,40 @@
+///     \class QAccessibleActionInterface
+///     \ingroup accessibility
+/// 
+///     \brief The QAccessibleActionInterface class implements support for
+///     invocable actions in the interface.
+/// 
+///     Accessible objects should implement the action interface if they support user interaction.
+///     Usually this interface is implemented by classes that also implement \l QAccessibleInterface.
+/// 
+///     The supported actions should use the predefined actions offered in this class unless they do not
+///     fit a predefined action. In that case a custom action can be added.
+/// 
+///     When subclassing QAccessibleActionInterface you need to provide a list of actionNames which
+///     is the primary means to discover the available actions. Action names are never localized.
+///     In order to present actions to the user there are two functions that need to return localized versions
+///     of the name and give a description of the action. For the predefined action names use
+///     \l QAccessibleActionInterface::localizedActionName() and \l QAccessibleActionInterface::localizedActionDescription()
+///     to return their localized counterparts.
+/// 
+///     In general you should use one of the predefined action names, unless describing an action that does not fit these:
+///     \table
+///     \header \li Action name         \li Description
+///     \row    \li \l toggleAction()   \li toggles the item (checkbox, radio button, switch, ...)
+///     \row    \li \l decreaseAction() \li decrease the value of the accessible (e.g. spinbox)
+///     \row    \li \l increaseAction() \li increase the value of the accessible (e.g. spinbox)
+///     \row    \li \l pressAction()    \li press or click or activate the accessible (should correspont to clicking the object with the mouse)
+///     \row    \li \l setFocusAction() \li set the focus to this accessible
+///     \row    \li \l showMenuAction() \li show a context menu, corresponds to right-clicks
+///     \endtable
+/// 
+///     In order to invoke the action, \l doAction() is called with an action name.
+/// 
+///     Most widgets will simply implement \l pressAction(). This is what happens when the widget is activated by
+///     being clicked, space pressed or similar.
+/// 
+///     \l{IAccessible2 Specification}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleActionInterface {
     [event] action_names() -> [String],

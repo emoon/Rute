@@ -1,29 +1,162 @@
+///     \class QGraphicsItemAnimation
+///     \brief The QGraphicsItemAnimation class provides simple animation
+///     support for QGraphicsItem.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+///     \deprecated
+/// 
+///     The QGraphicsItemAnimation class animates a QGraphicsItem. You can
+///     schedule changes to the item's transformation matrix at
+///     specified steps. The QGraphicsItemAnimation class has a
+///     current step value. When this value changes the transformations
+///     scheduled at that step are performed. The current step of the
+///     animation is set with the \c setStep() function.
+/// 
+///     QGraphicsItemAnimation will do a simple linear interpolation
+///     between the nearest adjacent scheduled changes to calculate the
+///     matrix. For instance, if you set the position of an item at values
+///     0.0 and 1.0, the animation will show the item moving in a straight
+///     line between these positions. The same is true for scaling and
+///     rotation.
+/// 
+///     It is usual to use the class with a QTimeLine. The timeline's
+///     \l{QTimeLine::}{valueChanged()} signal is then connected to the
+///     \c setStep() slot. For example, you can set up an item for rotation
+///     by calling \c setRotationAt() for different step values.
+///     The animations timeline is set with the setTimeLine() function.
+/// 
+///     An example animation with a timeline follows:
+/// 
+///     \snippet timeline/main.cpp 0
+/// 
+///     Note that steps lie between 0.0 and 1.0. It may be necessary to use
+///     \l{QTimeLine::}{setUpdateInterval()}. The default update interval
+///     is 40 ms. A scheduled transformation cannot be removed when set,
+///     so scheduling several transformations of the same kind (e.g.,
+///     rotations) at the same step is not recommended.
+/// 
+///     \sa QTimeLine, {Graphics View Framework}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsItemAnimation : Object {
+    ///   Returns the item on which the animation object operates.
+    /// 
+    ///   \sa setItem()
     item() -> GraphicsItem?,
+    ///   Sets the specified \a item to be used in the animation.
+    /// 
+    ///   \sa item()
     set_item(item: *GraphicsItemType),
+    ///   Returns the timeline object used to control the rate at which the animation
+    ///   occurs.
+    /// 
+    ///   \sa setTimeLine()
     time_line() -> TimeLine?,
+    ///   Sets the timeline object used to control the rate of animation to the \a timeLine
+    ///   specified.
+    /// 
+    ///   \sa timeLine()
     set_time_line(time_line: *TimeLineType),
+    ///   Returns the position of the item at the given \a step value.
+    /// 
+    ///   \sa setPosAt()
     pos_at(step: f32) -> PointF,
+    ///   Returns all explicitly inserted positions.
+    /// 
+    ///   \sa posAt(), setPosAt()
     pos_list() -> [Pair<qreal,],
+    ///   \fn void QGraphicsItemAnimation::setPosAt(qreal step, const QPointF &point)
+    /// 
+    ///   Sets the position of the item at the given \a step value to the \a point specified.
+    /// 
+    ///   \sa posAt()
     set_pos_at(step: f32, pos: &PointFType),
+    ///   Returns the angle at which the item is rotated at the specified \a step value.
+    /// 
+    ///   \sa setRotationAt()
     rotation_at(step: f32) -> f32,
+    ///   Returns all explicitly inserted rotations.
+    /// 
+    ///   \sa rotationAt(), setRotationAt()
     rotation_list() -> [Pair<qreal,],
+    ///   Sets the rotation of the item at the given \a step value to the \a angle specified.
+    /// 
+    ///   \sa rotationAt()
     set_rotation_at(step: f32, angle: f32),
+    ///   Returns the horizontal translation of the item at the specified \a step value.
+    /// 
+    ///   \sa setTranslationAt()
     x_translation_at(step: f32) -> f32,
+    ///   Returns the vertical translation of the item at the specified \a step value.
+    /// 
+    ///   \sa setTranslationAt()
     y_translation_at(step: f32) -> f32,
+    ///   Sets the translation of the item at the given \a step value using the horizontal
+    ///   and vertical coordinates specified by \a dx and \a dy.
+    /// 
+    ///   \sa xTranslationAt(), yTranslationAt()
     set_translation_at(step: f32, dx: f32, dy: f32),
+    ///   Returns the vertical scale for the item at the specified \a step value.
+    /// 
+    ///   \sa setScaleAt()
     vertical_scale_at(step: f32) -> f32,
+    ///   Returns the horizontal scale for the item at the specified \a step value.
+    /// 
+    ///   \sa setScaleAt()
     horizontal_scale_at(step: f32) -> f32,
+    ///   Returns all explicitly inserted scales.
+    /// 
+    ///   \sa verticalScaleAt(), horizontalScaleAt(), setScaleAt()
     scale_list() -> [Pair<qreal,],
+    ///   Sets the scale of the item at the given \a step value using the horizontal and
+    ///   vertical scale factors specified by \a sx and \a sy.
+    /// 
+    ///   \sa verticalScaleAt(), horizontalScaleAt()
     set_scale_at(step: f32, sx: f32, sy: f32),
+    ///   Returns the vertical shear for the item at the specified \a step value.
+    /// 
+    ///   \sa setShearAt()
     vertical_shear_at(step: f32) -> f32,
+    ///   Returns the horizontal shear for the item at the specified \a step value.
+    /// 
+    ///   \sa setShearAt()
     horizontal_shear_at(step: f32) -> f32,
+    ///   Returns all explicitly inserted shears.
+    /// 
+    ///   \sa verticalShearAt(), horizontalShearAt(), setShearAt()
     shear_list() -> [Pair<qreal,],
+    ///   Sets the shear of the item at the given \a step value using the horizontal and
+    ///   vertical shear factors specified by \a sh and \a sv.
+    /// 
+    ///   \sa verticalShearAt(), horizontalShearAt()
     set_shear_at(step: f32, sh: f32, sv: f32),
+    ///   Clears the scheduled transformations used for the animation, but
+    ///   retains the item and timeline.
     clear(),
+    ///   \fn void QGraphicsItemAnimation::setStep(qreal step)
+    /// 
+    ///   Sets the current \a step value for the animation, causing the
+    ///   transformations scheduled at this step to be performed.
     set_step(x: f32),
+    ///     Resets the item to its starting position and transformation.
+    /// 
+    ///     \obsolete
+    /// 
+    ///     You can call setStep(0) instead.
     reset(),
+    ///   \fn void QGraphicsItemAnimation::beforeAnimationStep(qreal step)
+    /// 
+    ///   This method is meant to be overridden by subclassed that needs to
+    ///   execute additional code before a new step takes place. The
+    ///   animation \a step is provided for use in cases where the action
+    ///   depends on its value.
     [event] before_animation_step(step: f32),
+    ///   \fn void QGraphicsItemAnimation::afterAnimationStep(qreal step)
+    /// 
+    ///   This method is meant to be overridden in subclasses that need to
+    ///   execute additional code after a new step has taken place. The
+    ///   animation \a step is provided for use in cases where the action
+    ///   depends on its value.
     [event] after_animation_step(step: f32),
 }
 

@@ -1,7 +1,29 @@
+///     \class QTapAndHoldGesture
+///     \since 4.6
+///     \brief The QTapAndHoldGesture class describes a tap-and-hold (aka LongTap)
+///     gesture made by the user.
+///     \ingroup gestures
+///     \inmodule QtWidgets
+/// 
+///     For an overview of gesture handling in Qt and information on using gestures
+///     in your applications, see the \l{Gestures in Widgets and Graphics View} document.
+/// 
+///     \sa QPanGesture, QPinchGesture
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TapAndHoldGesture : Gesture {
     position() -> PointF,
     set_position(pos: &PointFType),
+    ///     Set the timeout, in milliseconds, before the gesture triggers.
+    /// 
+    ///     The recognizer will detect a touch down and if \a msecs
+    ///     later the touch is still down, it will trigger the QTapAndHoldGesture.
+    ///     The default value is 700 milliseconds.
     [static] set_timeout(msecs: i32),
+    ///     Gets the timeout, in milliseconds, before the gesture triggers.
+    /// 
+    ///     The recognizer will detect a touch down and if timeout()
+    ///     later the touch is still down, it will trigger the QTapAndHoldGesture.
+    ///     The default value is 700 milliseconds.
     [static] timeout() -> i32,
 }
 

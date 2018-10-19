@@ -1,3 +1,23 @@
+///     \class QFocusEvent
+///     \brief The QFocusEvent class contains event parameters for widget focus
+///     events.
+///     \inmodule QtGui
+/// 
+///     \ingroup events
+/// 
+///     Focus events are sent to widgets when the keyboard input focus
+///     changes. Focus events occur due to mouse actions, key presses
+///     (such as \uicontrol{Tab} or \uicontrol{Backtab}), the window system, popup
+///     menus, keyboard shortcuts, or other application-specific reasons.
+///     The reason for a particular focus event is returned by reason()
+///     in the appropriate event handler.
+/// 
+///     The event handlers QWidget::focusInEvent(),
+///     QWidget::focusOutEvent(), QGraphicsItem::focusInEvent and
+///     QGraphicsItem::focusOutEvent() receive focus events.
+/// 
+///     \sa QWidget::setFocus(), QWidget::setFocusPolicy(), {Keyboard Focus in Widgets}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct FocusEvent : Event {
     got_focus() -> bool,
     lost_focus() -> bool,

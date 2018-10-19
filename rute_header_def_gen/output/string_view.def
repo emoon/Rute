@@ -1,3 +1,76 @@
+///     \class QStringView
+///     \inmodule QtCore
+///     \since 5.10
+///     \brief The QStringView class provides a unified view on UTF-16 strings with a read-only subset of the QString API.
+///     \reentrant
+///     \ingroup tools
+///     \ingroup string-processing
+/// 
+///     A QStringView references a contiguous portion of a UTF-16 string it does
+///     not own. It acts as an interface type to all kinds of UTF-16 string,
+///     without the need to construct a QString first.
+/// 
+///     The UTF-16 string may be represented as an array (or an array-compatible
+///     data-structure such as QString,
+///     std::basic_string, etc.) of QChar, \c ushort, \c char16_t (on compilers that
+///     support C++11 Unicode strings) or (on platforms, such as Windows,
+///     where it is a 16-bit type) \c wchar_t.
+/// 
+///     QStringView is designed as an interface type; its main use-case is
+///     as a function parameter type. When QStringViews are used as automatic
+///     variables or data members, care must be taken to ensure that the referenced
+///     string data (for example, owned by a QString) outlives the QStringView on all code paths,
+///     lest the string view ends up referencing deleted data.
+/// 
+///     When used as an interface type, QStringView allows a single function to accept
+///     a wide variety of UTF-16 string data sources. One function accepting QStringView
+///     thus replaces three function overloads (taking QString, QStringRef, and
+///     \c{(const QChar*, int)}), while at the same time enabling even more string data
+///     sources to be passed to the function, such as \c{u"Hello World"}, a \c char16_t
+///     string literal.
+/// 
+///     QStringViews should be passed by value, not by reference-to-const:
+///     \code
+///     void myfun1(QStringView sv);        // preferred
+///     void myfun2(const QStringView &sv); // compiles and works, but slower
+///     \endcode
+/// 
+///     If you want to give your users maximum freedom in what strings they can pass
+///     to your function, accompany the QStringView overload with overloads for
+/// 
+///     \list
+///         \li \e QChar: this overload can delegate to the QStringView version:
+///             \code
+///             void fun(QChar ch) { fun(QStringView(&ch, 1)); }
+///             \endcode
+///             even though, for technical reasons, QStringView cannot provide a
+///             QChar constructor by itself.
+///         \li \e QString: if you store an unmodified copy of the string and thus would
+///             like to take advantage of QString's implicit sharing.
+///         \li QLatin1String: if you can implement the function without converting the
+///             QLatin1String to UTF-16 first; users expect a function overloaded on
+///             QLatin1String to perform strictly less memory allocations than the
+///             semantically equivalent call of the QStringView version, involving
+///             construction of a QString from the QLatin1String.
+///     \endlist
+/// 
+///     QStringView can also be used as the return value of a function. If you call a
+///     function returning QStringView, take extra care to not keep the QStringView
+///     around longer than the function promises to keep the referenced string data alive.
+///     If in doubt, obtain a strong reference to the data by calling toString() to convert
+///     the QStringView into a QString.
+/// 
+///     QStringView is a \e{Literal Type}, but since it stores data as \c{char16_t}, iteration
+///     is not \c constexpr (casts from \c{const char16_t*} to \c{const QChar*}, which is not
+///     allowed in \c constexpr functions). You can use an indexed loop and/or utf16() in
+///     \c constexpr contexts instead.
+/// 
+///     \note We strongly discourage the use of QList<QStringView>,
+///     because QList is a very inefficient container for QStringViews (it would heap-allocate
+///     every element). Use QVector (or std::vector) to hold QStringViews instead.
+/// 
+///     \sa QString, QStringRef
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StringView {
     size() -> i32,
@@ -26,6 +99,14 @@ struct StringView {
     begin() -> StringView::const_iterator,
     end() -> StringView::const_iterator,
     cbegin() -> StringView::const_iterator,
+    ///     \fn QStringView::const_iterator QStringView::end() const
+    /// 
+    ///     Returns a const \l{STL-style iterators}{STL-style iterator} pointing to the imaginary
+    ///     character after the last character in the list.
+    /// 
+    ///     This function is provided for STL compatibility.
+    /// 
+    ///     \sa begin(), cend(), rend()
     cend() -> StringView::const_iterator,
     rbegin() -> StringView::const_reverse_iterator,
     rend() -> StringView::const_reverse_iterator,

@@ -1,3 +1,23 @@
+///   \class QTreeWidgetItemIterator
+///   \ingroup model-view
+///   \inmodule QtWidgets
+/// 
+///   \brief The QTreeWidgetItemIterator class provides a way to iterate over the
+///   items in a QTreeWidget instance.
+/// 
+///   The iterator will walk the items in a pre-order traversal order, thus visiting the
+///   parent node \e before it continues to the child nodes.
+/// 
+///   For example, the following code examples each item in a tree, checking the
+///   text in the first column against a user-specified search string:
+/// 
+///   \snippet qtreewidgetitemiterator-using/mainwindow.cpp 0
+/// 
+///   It is also possible to filter out certain types of node by passing certain
+///   \l{IteratorFlag}{flags} to the constructor of QTreeWidgetItemIterator.
+/// 
+///   \sa QTreeWidget, {Model/View Programming}, QTreeWidgetItem
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTreeWidgetItemIterator)]
 enum IteratorFlag {
     All,

@@ -1,16 +1,111 @@
+///     \class QActionGroup
+///     \brief The QActionGroup class groups actions together.
+/// 
+///     \ingroup mainwindow-classes
+///     \inmodule QtWidgets
+/// 
+///     In some situations it is useful to group QAction objects together.
+///     For example, if you have a \uicontrol{Left Align} action, a \uicontrol{Right
+///     Align} action, a \uicontrol{Justify} action, and a \uicontrol{Center} action,
+///     only one of these actions should be active at any one time. One
+///     simple way of achieving this is to group the actions together in
+///     an action group.
+/// 
+///     Here's a example (from the \l{mainwindows/menus}{Menus} example):
+/// 
+///     \snippet mainwindows/menus/mainwindow.cpp 6
+/// 
+///     Here we create a new action group. Since the action group is
+///     exclusive by default, only one of the actions in the group is
+///     checked at any one time.
+/// 
+///     \image qactiongroup-align.png Alignment options in a QMenu
+/// 
+///     A QActionGroup emits an triggered() signal when one of its
+///     actions is chosen. Each action in an action group emits its
+///     triggered() signal as usual.
+/// 
+///     As stated above, an action group is \l exclusive by default; it
+///     ensures that only one checkable action is active at any one time.
+///     If you want to group checkable actions without making them
+///     exclusive, you can turn of exclusiveness by calling
+///     setExclusive(false).
+/// 
+///     Actions can be added to an action group using addAction(), but it
+///     is usually more convenient to specify a group when creating
+///     actions; this ensures that actions are automatically created with
+///     a parent. Actions can be visually separated from each other by
+///     adding a separator action to the group; create an action and use
+///     QAction's \l {QAction::}{setSeparator()} function to make it
+///     considered a separator. Action groups are added to widgets with
+///     the QWidget::addActions() function.
+/// 
+///     \sa QAction
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ActionGroup : Object {
+    ///     Creates and returns an action with \a text and an \a icon. The
+    ///     newly created action is a child of this action group.
+    /// 
+    ///     Normally an action is added to a group by creating it with the
+    ///     group as its parent, so this function is not usually used.
+    /// 
+    ///     \sa QAction::setActionGroup()
     add_action(a: *ActionType) -> Action?,
+    ///     Creates and returns an action with \a text and an \a icon. The
+    ///     newly created action is a child of this action group.
+    /// 
+    ///     Normally an action is added to a group by creating it with the
+    ///     group as its parent, so this function is not usually used.
+    /// 
+    ///     \sa QAction::setActionGroup()
     add_action(text: String) -> Action?,
+    ///     Creates and returns an action with \a text and an \a icon. The
+    ///     newly created action is a child of this action group.
+    /// 
+    ///     Normally an action is added to a group by creating it with the
+    ///     group as its parent, so this function is not usually used.
+    /// 
+    ///     \sa QAction::setActionGroup()
     add_action(icon: &IconType, text: String) -> Action?,
+    ///   Removes the \a action from this group. The action will have no
+    ///   parent as a result.
+    /// 
+    ///   \sa QAction::setActionGroup()
     remove_action(a: *ActionType),
+    ///     Returns the list of this groups's actions. This may be empty.
     actions() -> [Action?],
+    ///   Returns the currently checked action in the group, or 0 if none
+    ///   are checked.
     checked_action() -> Action?,
     is_exclusive() -> bool,
     is_enabled() -> bool,
     is_visible() -> bool,
+    ///     \property QActionGroup::enabled
+    ///     \brief whether the action group is enabled
+    /// 
+    ///     Each action in the group will be enabled or disabled unless it
+    ///     has been explicitly disabled.
+    /// 
+    ///     \sa QAction::setEnabled()
     set_enabled(arg0: bool),
     set_disabled(b: bool),
+    ///     \property QActionGroup::visible
+    ///     \brief whether the action group is visible
+    /// 
+    ///     Each action in the action group will match the visible state of
+    ///     this group unless it has been explicitly hidden.
+    /// 
+    ///     \sa QAction::setEnabled()
     set_visible(arg0: bool),
+    ///     \property QActionGroup::exclusive
+    ///     \brief whether the action group does exclusive checking
+    /// 
+    ///     If exclusive is true, only one checkable action in the action group
+    ///     can ever be active at any time. If the user chooses another
+    ///     checkable action in the group, the one they chose becomes active and
+    ///     the one that was active becomes inactive.
+    /// 
+    ///     \sa QAction::checkable
     set_exclusive(arg0: bool),
     [signal] hovered(arg0: *ActionType),
 }

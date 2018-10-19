@@ -1,3 +1,21 @@
+///     \class QFileDevice
+///     \inmodule QtCore
+///     \since 5.0
+/// 
+///     \brief The QFileDevice class provides an interface for reading from and writing to open files.
+/// 
+///     \ingroup io
+/// 
+///     \reentrant
+/// 
+///     QFileDevice is the base class for I/O devices that can read and write text and binary files
+///     and \l{The Qt Resource System}{resources}. QFile offers the main functionality,
+///     QFileDevice serves as a base class for sharing functionality with other file devices such
+///     as QTemporaryFile, by providing all the operations that can be done on files that have
+///     been opened by QFile or QTemporaryFile.
+/// 
+///     \sa QFile, QTemporaryFile
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QFileDevice)]
 enum FileError {
     NoError,
@@ -54,26 +72,121 @@ enum MemoryMapFlags {
 }
 
 struct FileDevice : IODevice {
+    ///     Returns the file error status.
+    /// 
+    ///     The I/O device status returns an error code. For example, if open()
+    ///     returns \c false, or a read/write operation returns -1, this function can
+    ///     be called to find out the reason why the operation failed.
+    /// 
+    ///     \sa unsetError()
     error() -> FileDevice::FileError,
+    ///     Sets the file's error to QFileDevice::NoError.
+    /// 
+    ///     \sa error()
     unset_error(),
+    ///   Calls QFileDevice::flush() and closes the file. Errors from flush are ignored.
+    /// 
+    ///   \sa QIODevice::close()
     [event] close(),
+    ///     Returns \c true if the file can only be manipulated sequentially;
+    ///     otherwise returns \c false.
+    /// 
+    ///     Most files support random-access, but some special files may not.
+    /// 
+    ///     \sa QIODevice::isSequential()
     [event] is_sequential() -> bool,
+    ///   Returns the file handle of the file.
+    /// 
+    ///   This is a small positive integer, suitable for use with C library
+    ///   functions such as \c fdopen() and \c fcntl(). On systems that use file
+    ///   descriptors for sockets (i.e. Unix systems, but not Windows) the handle
+    ///   can be used with QSocketNotifier as well.
+    /// 
+    ///   If the file is not open, or there is an error, handle() returns -1.
+    /// 
+    ///   \sa QSocketNotifier
     handle() -> i32,
+    ///     Returns the name of the file.
+    ///     The default implementation in QFileDevice returns a null string.
     [event] file_name() -> String,
+    ///   \reimp
     [event] pos() -> i64,
+    ///     \fn bool QFileDevice::seek(qint64 pos)
+    /// 
+    ///     For random-access devices, this function sets the current position
+    ///     to \a pos, returning true on success, or false if an error occurred.
+    ///     For sequential devices, the default behavior is to do nothing and
+    ///     return false.
+    /// 
+    ///     Seeking beyond the end of a file:
+    ///     If the position is beyond the end of a file, then seek() will not
+    ///     immediately extend the file. If a write is performed at this position,
+    ///     then the file will be extended. The content of the file between the
+    ///     previous end of file and the newly written data is UNDEFINED and
+    ///     varies between platforms and file systems.
     [event] seek(offset: i64) -> bool,
+    ///   Returns \c true if the end of the file has been reached; otherwise returns
+    ///   false.
+    /// 
+    ///   For regular empty files on Unix (e.g. those in \c /proc), this function
+    ///   returns \c true, since the file system reports that the size of such a file is
+    ///   0. Therefore, you should not depend on atEnd() when reading data from such a
+    ///   file, but rather call read() until no more data can be read.
     [event] at_end() -> bool,
+    ///     Flushes any buffered data to the file. Returns \c true if successful;
+    ///     otherwise returns \c false.
     flush() -> bool,
+    ///   Returns the size of the file.
+    /// 
+    ///   For regular empty files on Unix (e.g. those in \c /proc), this function
+    ///   returns 0; the contents of such a file are generated on demand in response
+    ///   to you calling read().
     [event] size() -> i64,
+    ///     Sets the file size (in bytes) \a sz. Returns \c true if the
+    ///     resize succeeds; false otherwise. If \a sz is larger than the file
+    ///     currently is, the new bytes will be set to 0; if \a sz is smaller, the
+    ///     file is simply truncated.
+    /// 
+    ///     \warning This function can fail if the file doesn't exist.
+    /// 
+    ///     \sa size()
     [event] resize(sz: i64) -> bool,
+    ///     Returns the complete OR-ed together combination of
+    ///     QFile::Permission for the file.
+    /// 
+    ///     \sa setPermissions()
     [event] permissions() -> FileDevice::Permissions,
+    ///     Sets the permissions for the file to the \a permissions specified.
+    ///     Returns \c true if successful, or \c false if the permissions cannot be
+    ///     modified.
+    /// 
+    ///     \warning This function does not manipulate ACLs, which may limit its
+    ///     effectiveness.
+    /// 
+    ///     \sa permissions()
     [event] set_permissions(permission_spec: FileDevice::Permissions) -> bool,
     map(offset: i64, size: i64, flags: FileDevice::MemoryMapFlags) -> uchar?,
     unmap(address: *uchar) -> bool,
+    ///     \since 5.10
+    ///     Returns the file time specified by \a time.
+    ///     If the time cannot be determined return QDateTime() (an invalid
+    ///     date time).
+    /// 
+    ///     \sa setFileTime(), FileTime, QDateTime::isValid()
     file_time(time: FileDevice::FileTime) -> DateTime,
+    ///     \since 5.10
+    ///     Sets the file time specified by \a fileTime to \a newDate, returning true
+    ///     if successful; otherwise returns false.
+    /// 
+    ///     \note The file must be open to use this function.
+    /// 
+    ///     \sa fileTime(), FileTime
     set_file_time(new_date: &DateTimeType, file_time: FileDevice::FileTime) -> bool,
+    ///   \reimp
     [event] read_data(data: *char, maxlen: i64) -> i64,
+    ///   \reimp
     [event] write_data(data: *char, len: i64) -> i64,
+    ///   \reimp
     [event] read_line_data(data: *char, maxlen: i64) -> i64,
 }
 

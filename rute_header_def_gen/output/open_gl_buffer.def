@@ -1,3 +1,27 @@
+///     \class QOpenGLBuffer
+///     \brief The QOpenGLBuffer class provides functions for creating and managing OpenGL buffer objects.
+///     \since 5.0
+///     \ingroup painting-3D
+///     \inmodule QtGui
+/// 
+///     Buffer objects are created in the OpenGL server so that the
+///     client application can avoid uploading vertices, indices,
+///     texture image data, etc every time they are needed.
+/// 
+///     QOpenGLBuffer objects can be copied around as a reference to the
+///     underlying OpenGL buffer object:
+/// 
+///     \code
+///     QOpenGLBuffer buffer1(QOpenGLBuffer::IndexBuffer);
+///     buffer1.create();
+/// 
+///     QOpenGLBuffer buffer2 = buffer1;
+///     \endcode
+/// 
+///     QOpenGLBuffer performs a shallow copy when objects are copied in this
+///     manner, but does not implement copy-on-write semantics.  The original
+///     object will be affected whenever the copy is modified.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QOpenGLBuffer)]
 enum Type {
     VertexBuffer,
@@ -38,22 +62,144 @@ enum RangeAccessFlag {
 
 
 struct OpenGLBuffer {
+    ///     Returns the type of buffer represented by this object.
     type() -> OpenGLBuffer::Type,
+    ///     Returns the usage pattern for this buffer object.
+    ///     The default value is StaticDraw.
+    /// 
+    ///     \sa setUsagePattern()
     usage_pattern() -> OpenGLBuffer::UsagePattern,
+    ///     Sets the usage pattern for this buffer object to \a value.
+    ///     This function must be called before allocate() or write().
+    /// 
+    ///     \sa usagePattern(), allocate(), write()
     set_usage_pattern(value: OpenGLBuffer::UsagePattern),
+    ///     Creates the buffer object in the OpenGL server.  Returns \c true if
+    ///     the object was created; false otherwise.
+    /// 
+    ///     This function must be called with a current QOpenGLContext.
+    ///     The buffer will be bound to and can only be used in
+    ///     that context (or any other context that is shared with it).
+    /// 
+    ///     This function will return false if the OpenGL implementation
+    ///     does not support buffers, or there is no current QOpenGLContext.
+    /// 
+    ///     \sa isCreated(), allocate(), write(), destroy()
     create() -> bool,
+    ///     Returns \c true if this buffer has been created; false otherwise.
+    /// 
+    ///     \sa create(), destroy()
     is_created() -> bool,
+    ///     Binds the buffer associated with this object to the current
+    ///     OpenGL context.  Returns \c false if binding was not possible, usually because
+    ///     type() is not supported on this OpenGL implementation.
+    /// 
+    ///     The buffer must be bound to the same QOpenGLContext current when create()
+    ///     was called, or to another QOpenGLContext that is sharing with it.
+    ///     Otherwise, false will be returned from this function.
+    /// 
+    ///     \sa release(), create()
     bind() -> bool,
+    ///     Releases the buffer associated with \a type in the current
+    ///     QOpenGLContext.
+    /// 
+    ///     This function is a direct call to \c{glBindBuffer(type, 0)}
+    ///     for use when the caller does not know which QOpenGLBuffer has
+    ///     been bound to the context but wants to make sure that it
+    ///     is released.
+    /// 
+    ///     \code
+    ///     QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
+    ///     \endcode
     release(),
+    ///     Releases the buffer associated with \a type in the current
+    ///     QOpenGLContext.
+    /// 
+    ///     This function is a direct call to \c{glBindBuffer(type, 0)}
+    ///     for use when the caller does not know which QOpenGLBuffer has
+    ///     been bound to the context but wants to make sure that it
+    ///     is released.
+    /// 
+    ///     \code
+    ///     QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
+    ///     \endcode
     [static] release(type: OpenGLBuffer::Type),
+    ///     Returns the OpenGL identifier associated with this buffer; zero if
+    ///     the buffer has not been created.
+    /// 
+    ///     \sa isCreated()
     buffer_id() -> i32,
+    ///     Returns the size of the data in this buffer, for reading operations.
+    ///     Returns -1 if fetching the buffer size is not supported, or the
+    ///     buffer has not been created.
+    /// 
+    ///     It is assumed that this buffer has been bound to the current context.
+    /// 
+    ///     \sa isCreated(), bind()
     size() -> i32,
+    ///     Reads the \a count bytes in this buffer starting at \a offset
+    ///     into \a data.  Returns \c true on success; false if reading from
+    ///     the buffer is not supported.  Buffer reading is not supported
+    ///     under OpenGL/ES.
+    /// 
+    ///     It is assumed that this buffer has been bound to the current context.
+    /// 
+    ///     \sa write(), bind()
     read(offset: i32, data: *void, count: i32) -> bool,
+    ///     Replaces the \a count bytes of this buffer starting at \a offset
+    ///     with the contents of \a data.  Any other bytes in the buffer
+    ///     will be left unmodified.
+    /// 
+    ///     It is assumed that create() has been called on this buffer and that
+    ///     it has been bound to the current context.
+    /// 
+    ///     \sa create(), read(), allocate()
     write(offset: i32, data: *void, count: i32),
+    ///     Allocates \a count bytes of space to the buffer, initialized to
+    ///     the contents of \a data.  Any previous contents will be removed.
+    /// 
+    ///     It is assumed that create() has been called on this buffer and that
+    ///     it has been bound to the current context.
+    /// 
+    ///     \sa create(), read(), write()
     allocate(data: *void, count: i32),
+    ///     Allocates \a count bytes of space to the buffer, initialized to
+    ///     the contents of \a data.  Any previous contents will be removed.
+    /// 
+    ///     It is assumed that create() has been called on this buffer and that
+    ///     it has been bound to the current context.
+    /// 
+    ///     \sa create(), read(), write()
     allocate(count: i32),
+    ///     Maps the contents of this buffer into the application's memory
+    ///     space and returns a pointer to it.  Returns null if memory
+    ///     mapping is not possible.  The \a access parameter indicates the
+    ///     type of access to be performed.
+    /// 
+    ///     It is assumed that create() has been called on this buffer and that
+    ///     it has been bound to the current context.
+    /// 
+    ///     \note This function is only supported under OpenGL ES 2.0 or
+    ///     earlier if the \c GL_OES_mapbuffer extension is present.
+    /// 
+    ///     \note On OpenGL ES 3.0 and newer, or, in case if desktop OpenGL,
+    ///     if \c GL_ARB_map_buffer_range is supported, this function uses
+    ///     \c glMapBufferRange instead of \c glMapBuffer.
+    /// 
+    ///     \sa unmap(), create(), bind(), mapRange()
     map(access: OpenGLBuffer::Access),
     map_range(offset: i32, count: i32, access: OpenGLBuffer::RangeAccessFlags),
+    ///     Unmaps the buffer after it was mapped into the application's
+    ///     memory space with a previous call to map().  Returns \c true if
+    ///     the unmap succeeded; false otherwise.
+    /// 
+    ///     It is assumed that this buffer has been bound to the current context,
+    ///     and that it was previously mapped with map().
+    /// 
+    ///     \note This function is only supported under OpenGL ES 2.0 and
+    ///     earlier if the \c{GL_OES_mapbuffer} extension is present.
+    /// 
+    ///     \sa map()
     unmap() -> bool,
 }
 

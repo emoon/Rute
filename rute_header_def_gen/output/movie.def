@@ -1,3 +1,58 @@
+///     \class QMovie
+/// 
+///     \inmodule QtGui
+/// 
+///     \brief The QMovie class is a convenience class for playing movies
+///     with QImageReader.
+/// 
+///     This class is used to show simple animations without sound. If you want
+///     to display video and media content, use the \l{Qt Multimedia}
+///     multimedia framework instead.
+/// 
+///     First, create a QMovie object by passing either the name of a file or a
+///     pointer to a QIODevice containing an animated image format to QMovie's
+///     constructor. You can call isValid() to check if the image data is valid,
+///     before starting the movie. To start the movie, call start(). QMovie will
+///     enter \l Running state, and emit started() and stateChanged(). To get the
+///     current state of the movie, call state().
+/// 
+///     To display the movie in your application, you can pass your QMovie object
+///     to QLabel::setMovie(). Example:
+/// 
+///     \snippet code/src_gui_image_qmovie.cpp 0
+/// 
+///     Whenever a new frame is available in the movie, QMovie will emit
+///     updated(). If the size of the frame changes, resized() is emitted. You can
+///     call currentImage() or currentPixmap() to get a copy of the current
+///     frame. When the movie is done, QMovie emits finished(). If any error
+///     occurs during playback (i.e, the image file is corrupt), QMovie will emit
+///     error().
+/// 
+///     You can control the speed of the movie playback by calling setSpeed(),
+///     which takes the percentage of the original speed as an argument. Pause the
+///     movie by calling setPaused(true). QMovie will then enter \l Paused state
+///     and emit stateChanged(). If you call setPaused(false), QMovie will reenter
+///     \l Running state and start the movie again. To stop the movie, call
+///     stop().
+/// 
+///     Certain animation formats allow you to set the background color. You can
+///     call setBackgroundColor() to set the color, or backgroundColor() to
+///     retrieve the current background color.
+/// 
+///     currentFrameNumber() returns the sequence number of the current frame. The
+///     first frame in the animation has the sequence number 0. frameCount()
+///     returns the total number of frames in the animation, if the image format
+///     supports this. You can call loopCount() to get the number of times the
+///     movie should loop before finishing. nextFrameDelay() returns the number of
+///     milliseconds the current frame should be displayed.
+/// 
+///     QMovie can be instructed to cache frames of an animation by calling
+///     setCacheMode().
+/// 
+///     Call supportedFormats() for a list of formats that QMovie supports.
+/// 
+///     \sa QLabel, QImageReader, {Movie Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMovie)]
 enum MovieState {
     NotRunning,
@@ -12,42 +67,239 @@ enum CacheMode {
 }
 
 struct Movie : Object {
+    ///     \since 4.1
+    /// 
+    ///     Returns the list of image formats supported by QMovie.
+    /// 
+    ///     \sa QImageReader::supportedImageFormats()
     [static] supported_formats() -> [ByteArray],
+    ///     Sets the current device to \a device. QMovie will read image data from
+    ///     this device when the movie is running.
+    /// 
+    ///     \sa device(), setFormat()
     set_device(device: *IODeviceType),
+    ///     Returns the device QMovie reads image data from. If no device has
+    ///     currently been assigned, 0 is returned.
+    /// 
+    ///     \sa setDevice(), fileName()
     device() -> IODevice?,
+    ///     Sets the name of the file that QMovie reads image data from, to \a
+    ///     fileName.
+    /// 
+    ///     \sa fileName(), setDevice(), setFormat()
     set_file_name(file_name: String),
+    ///     Returns the name of the file that QMovie reads image data from. If no file
+    ///     name has been assigned, or if the assigned device is not a file, an empty
+    ///     QString is returned.
+    /// 
+    ///     \sa setFileName(), device()
     file_name() -> String,
+    ///     Sets the format that QMovie will use when decoding image data, to \a
+    ///     format. By default, QMovie will attempt to guess the format of the image
+    ///     data.
+    /// 
+    ///     You can call supportedFormats() for the full list of formats
+    ///     QMovie supports.
+    /// 
+    ///     \sa QImageReader::supportedImageFormats()
     set_format(format: &ByteArrayType),
+    ///     Returns the format that QMovie uses when decoding image data. If no format
+    ///     has been assigned, an empty QByteArray() is returned.
+    /// 
+    ///     \sa setFormat()
     format() -> ByteArray,
+    ///     For image formats that support it, this function sets the background color
+    ///     to \a color.
+    /// 
+    ///     \sa backgroundColor()
     set_background_color(color: &ColorType),
+    ///     Returns the background color of the movie. If no background color has been
+    ///     assigned, an invalid QColor is returned.
+    /// 
+    ///     \sa setBackgroundColor()
     background_color() -> Color,
+    ///     Returns the current state of QMovie.
+    /// 
+    ///     \sa MovieState, stateChanged()
     state() -> Movie::MovieState,
+    ///     Returns the rect of the last frame. If no frame has yet been updated, an
+    ///     invalid QRect is returned.
+    /// 
+    ///     \sa currentImage(), currentPixmap()
     frame_rect() -> Rect,
+    ///     Returns the current frame as a QImage.
+    /// 
+    ///     \sa currentPixmap(), updated()
     current_image() -> Image,
+    ///     Returns the current frame as a QPixmap.
+    /// 
+    ///     \sa currentImage(), updated()
     current_pixmap() -> Pixmap,
+    ///     Returns \c true if the movie is valid (e.g., the image data is readable and
+    ///     the image format is supported); otherwise returns \c false.
+    /// 
+    ///     For information about why the movie is not valid, see lastError().
     is_valid() -> bool,
+    ///     Returns the most recent error that occurred while attempting to read image data.
+    /// 
+    ///     \sa lastErrorString()
     last_error() -> ImageReader::ImageReaderError,
+    ///     Jumps to frame number \a frameNumber. Returns \c true on success; otherwise
+    ///     returns \c false.
     jump_to_frame(frame_number: i32) -> bool,
+    ///     Returns the number of times the movie will loop before it finishes.
+    ///     If the movie will only play once (no looping), loopCount returns 0.
+    ///     If the movie loops forever, loopCount returns -1.
+    /// 
+    ///     Note that, if the image data comes from a sequential device (e.g. a
+    ///     socket), QMovie can only loop the movie if the cacheMode is set to
+    ///     QMovie::CacheAll.
     loop_count() -> i32,
+    ///     Returns the number of frames in the movie.
+    /// 
+    ///     Certain animation formats do not support this feature, in which
+    ///     case 0 is returned.
     frame_count() -> i32,
+    ///     Returns the number of milliseconds QMovie will wait before updating the
+    ///     next frame in the animation.
     next_frame_delay() -> i32,
+    ///     Returns the sequence number of the current frame. The number of the first
+    ///     frame in the movie is 0.
     current_frame_number() -> i32,
     speed() -> i32,
+    ///     \since 4.1
+    /// 
+    ///     Returns the scaled size of frames.
+    /// 
+    ///     \sa QImageReader::scaledSize()
     scaled_size() -> Size,
+    ///     \since 4.1
+    /// 
+    ///     Sets the scaled frame size to \a size.
+    /// 
+    ///     \sa QImageReader::setScaledSize()
     set_scaled_size(size: &SizeType),
+    ///     \property QMovie::cacheMode
+    ///     \brief the movie's cache mode
+    /// 
+    ///     Caching frames can be useful when the underlying animation format handler
+    ///     that QMovie relies on to decode the animation data does not support
+    ///     jumping to particular frames in the animation, or even "rewinding" the
+    ///     animation to the beginning (for looping). Furthermore, if the image data
+    ///     comes from a sequential device, it is not possible for the underlying
+    ///     animation handler to seek back to frames whose data has already been read
+    ///     (making looping altogether impossible).
+    /// 
+    ///     To aid in such situations, a QMovie object can be instructed to cache the
+    ///     frames, at the added memory cost of keeping the frames in memory for the
+    ///     lifetime of the object.
+    /// 
+    ///     By default, this property is set to \l CacheNone.
+    /// 
+    ///     \sa QMovie::CacheMode
     cache_mode() -> Movie::CacheMode,
     set_cache_mode(mode: Movie::CacheMode),
+    ///     \class QMovie
+    /// 
+    ///     \inmodule QtGui
+    /// 
+    ///     \brief The QMovie class is a convenience class for playing movies
+    ///     with QImageReader.
+    /// 
+    ///     This class is used to show simple animations without sound. If you want
+    ///     to display video and media content, use the \l{Qt Multimedia}
+    ///     multimedia framework instead.
+    /// 
+    ///     First, create a QMovie object by passing either the name of a file or a
+    ///     pointer to a QIODevice containing an animated image format to QMovie's
+    ///     constructor. You can call isValid() to check if the image data is valid,
+    ///     before starting the movie. To start the movie, call start(). QMovie will
+    ///     enter \l Running state, and emit started() and stateChanged(). To get the
+    ///     current state of the movie, call state().
+    /// 
+    ///     To display the movie in your application, you can pass your QMovie object
+    ///     to QLabel::setMovie(). Example:
+    /// 
+    ///     \snippet code/src_gui_image_qmovie.cpp 0
+    /// 
+    ///     Whenever a new frame is available in the movie, QMovie will emit
+    ///     updated(). If the size of the frame changes, resized() is emitted. You can
+    ///     call currentImage() or currentPixmap() to get a copy of the current
+    ///     frame. When the movie is done, QMovie emits finished(). If any error
+    ///     occurs during playback (i.e, the image file is corrupt), QMovie will emit
+    ///     error().
+    /// 
+    ///     You can control the speed of the movie playback by calling setSpeed(),
+    ///     which takes the percentage of the original speed as an argument. Pause the
+    ///     movie by calling setPaused(true). QMovie will then enter \l Paused state
+    ///     and emit stateChanged(). If you call setPaused(false), QMovie will reenter
+    ///     \l Running state and start the movie again. To stop the movie, call
+    ///     stop().
+    /// 
+    ///     Certain animation formats allow you to set the background color. You can
+    ///     call setBackgroundColor() to set the color, or backgroundColor() to
+    ///     retrieve the current background color.
+    /// 
+    ///     currentFrameNumber() returns the sequence number of the current frame. The
+    ///     first frame in the animation has the sequence number 0. frameCount()
+    ///     returns the total number of frames in the animation, if the image format
+    ///     supports this. You can call loopCount() to get the number of times the
+    ///     movie should loop before finishing. nextFrameDelay() returns the number of
+    ///     milliseconds the current frame should be displayed.
+    /// 
+    ///     QMovie can be instructed to cache frames of an animation by calling
+    ///     setCacheMode().
+    /// 
+    ///     Call supportedFormats() for a list of formats that QMovie supports.
+    /// 
+    ///     \sa QLabel, QImageReader, {Movie Example}
     [signal] started(),
     [signal] resized(size: &SizeType),
     [signal] updated(rect: &RectType),
     [signal] state_changed(state: Movie::MovieState),
+    ///     \fn void QMovie::stateChanged(QMovie::MovieState state)
+    /// 
+    ///     This signal is emitted every time the state of the movie changes. The new
+    ///     state is specified by \a state.
+    /// 
+    ///     \sa QMovie::state()
     [signal] error(error: ImageReader::ImageReaderError),
     [signal] finished(),
     [signal] frame_changed(frame_number: i32),
+    ///     Starts the movie. QMovie will enter \l Running state, and start emitting
+    ///     updated() and resized() as the movie progresses.
+    /// 
+    ///     If QMovie is in the \l Paused state, this function is equivalent
+    ///     to calling setPaused(false). If QMovie is already in the \l
+    ///     Running state, this function does nothing.
+    /// 
+    ///     \sa stop(), setPaused()
     start(),
+    ///     Jumps to the next frame. Returns \c true on success; otherwise returns \c false.
     jump_to_next_frame() -> bool,
+    ///     If \a paused is true, QMovie will enter \l Paused state and emit
+    ///     stateChanged(Paused); otherwise it will enter \l Running state and emit
+    ///     stateChanged(Running).
+    /// 
+    ///     \sa state()
     set_paused(paused: bool),
+    ///     Stops the movie. QMovie enters \l NotRunning state, and stops emitting
+    ///     updated() and resized(). If start() is called again, the movie will
+    ///     restart from the beginning.
+    /// 
+    ///     If QMovie is already in the \l NotRunning state, this function
+    ///     does nothing.
+    /// 
+    ///     \sa start(), setPaused()
     stop(),
+    ///     \property QMovie::speed
+    ///     \brief the movie's speed
+    /// 
+    ///     The speed is measured in percentage of the original movie speed.
+    ///     The default speed is 100%.
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_image_qmovie.cpp 1
     set_speed(percent_speed: i32),
 }
 

@@ -1,3 +1,27 @@
+///     \class QPlatformIntegration
+///     \since 4.8
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+///     \brief The QPlatformIntegration class is the entry for WindowSystem specific functionality.
+/// 
+///     QPlatformIntegration is the single entry point for windowsystem specific functionality when
+///     using the QPA platform. It has factory functions for creating platform specific pixmaps and
+///     windows. The class also controls the font subsystem.
+/// 
+///     QPlatformIntegration is a singleton class which gets instantiated in the QGuiApplication
+///     constructor. The QPlatformIntegration instance do not have ownership of objects it creates in
+///     functions where the name starts with create. However, functions which don't have a name
+///     starting with create acts as accessors to member variables.
+/// 
+///     It is not trivial to create or build a platform plugin outside of the Qt source tree. Therefore
+///     the recommended approach for making new platform plugin is to copy an existing plugin inside
+///     the QTSRCTREE/src/plugins/platform and develop the plugin inside the source tree.
+/// 
+///     The minimal platform integration is the smallest platform integration it is possible to make,
+///     which makes it an ideal starting point for new plugins. For a slightly more advanced plugin,
+///     consider reviewing the directfb plugin, or the testlite plugin.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPlatformIntegration)]
 enum Capability {
     ThreadedPixmaps,
@@ -49,36 +73,146 @@ enum StyleHint {
 
 
 struct PlatformIntegration {
+    /// 
+    ///     \fn QAbstractEventDispatcher *QPlatformIntegration::createEventDispatcher() const = 0
+    /// 
+    ///     Factory function for the GUI event dispatcher. The platform plugin should create
+    ///     and return a QAbstractEventDispatcher subclass when this function is called.
+    /// 
+    ///     If the platform plugin for some reason creates the event dispatcher outside of
+    ///     this function (for example in the constructor), it needs to handle the case
+    ///     where this function is never called, ensuring that the event dispatcher is
+    ///     still deleted at some point (typically in the destructor).
+    /// 
+    ///     Note that the platform plugin should never explicitly set the event dispatcher
+    ///     itself, using QCoreApplication::setEventDispatcher(), but let QCoreApplication
+    ///     decide when and which event dispatcher to create.
+    /// 
+    ///     \since 5.2
     [event] has_capability(cap: PlatformIntegration::Capability) -> bool,
     create_platform_pixmap(type: i32) -> i32?,
     [event] create_platform_window(window: *WindowType) -> PlatformWindow?,
     [event] create_foreign_window(arg0: *WindowType, arg1: WId) -> PlatformWindow?,
     [event] create_platform_backing_store(window: *WindowType) -> PlatformBackingStore?,
+    ///     Factory function for QPlatformOpenGLContext. The \a context parameter is a pointer to
+    ///     the context for which a platform-specific context backend needs to be
+    ///     created. Configuration settings like the format, share context and screen have to be
+    ///     taken from this QOpenGLContext and the resulting platform context is expected to be
+    ///     backed by a native context that fulfills these criteria.
+    /// 
+    ///     If the context has native handles set, no new native context is expected to be created.
+    ///     Instead, the provided handles have to be used. In this case the ownership of the handle
+    ///     must not be taken and the platform implementation is not allowed to destroy the native
+    ///     context. Configuration parameters like the format are also to be ignored. Instead, the
+    ///     platform implementation is responsible for querying the configuriation from the provided
+    ///     native context.
+    /// 
+    ///     Returns a pointer to a QPlatformOpenGLContext instance or \c NULL if the context could
+    ///     not be created.
+    /// 
+    ///     \sa QOpenGLContext
     [event] create_platform_open_gl_context(context: *OpenGLContextType) -> PlatformOpenGLContext?,
+    ///    Factory function for QPlatformSharedGraphicsCache. This function will return 0 if the platform
+    ///    integration does not support any shared graphics cache mechanism for the given \a cacheId.
     [event] create_platform_shared_graphics_cache(cache_id: *char) -> PlatformSharedGraphicsCache?,
+    ///    Factory function for QPaintEngine. This function will return 0 if the platform
+    ///    integration does not support creating any paint engine the given \a paintDevice.
     create_image_paint_engine(paint_device: *PaintDeviceType) -> i32?,
     [event] create_event_dispatcher() -> AbstractEventDispatcher?,
+    ///   Performs initialization steps that depend on having an event dispatcher
+    ///   available. Called after the event dispatcher has been created.
+    /// 
+    ///   Tasks that require an event dispatcher, for example creating socket notifiers, cannot be
+    ///   performed in the constructor. Instead, they should be performed here. The default
+    ///   implementation does nothing.
     [event] initialize(),
+    ///     Accessor for the platform integration's fontdatabase.
+    /// 
+    ///     Default implementation returns a default QPlatformFontDatabase.
+    /// 
+    ///     \sa QPlatformFontDatabase
     [event] font_database() -> PlatformFontDatabase?,
+    ///     Accessor for the platform integration's clipboard.
+    /// 
+    ///     Default implementation returns a default QPlatformClipboard.
+    /// 
+    ///     \sa QPlatformClipboard
+    /// 
     [event] clipboard() -> PlatformClipboard?,
+    ///     Accessor for the platform integration's drag object.
+    /// 
+    ///     Default implementation returns 0, implying no drag and drop support.
+    /// 
     [event] drag() -> PlatformDrag?,
+    ///   Returns the platforms input context.
+    /// 
+    ///   The default implementation returns 0, implying no input method support.
     [event] input_context() -> PlatformInputContext?,
+    ///   Returns the platforms accessibility.
+    /// 
+    ///   The default implementation returns QPlatformAccessibility which
+    ///   delegates handling of accessibility to accessiblebridge plugins.
     [event] accessibility() -> PlatformAccessibility?,
     [event] native_interface() -> PlatformNativeInterface?,
     [event] services() -> PlatformServices?,
     [event] style_hint(hint: PlatformIntegration::StyleHint) -> Variant,
     [event] default_window_state(arg0: Rute::WindowFlags) -> Rute::WindowState,
     [event] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
+    ///   Should be used to obtain a list of possible shortcuts for the given key
+    ///   event. Shortcuts should be encoded as int(Qt::Key + Qt::KeyboardModifiers).
+    /// 
+    ///   One example for more than one possibility is the key combination of Shift+5.
+    ///   That one might trigger a shortcut which is set as "Shift+5" as well as one
+    ///   using %. These combinations depend on the currently set keyboard layout.
+    /// 
+    ///   \note This function should be called only from key event handlers.
     [event] possible_keys(arg0: *KeyEventType) -> [i32],
     [event] theme_names() -> [String],
     [event] create_platform_theme(name: String) -> PlatformTheme?,
+    ///    Factory function for QOffscreenSurface. An offscreen surface will typically be implemented with a
+    ///    pixel buffer (pbuffer). If the platform doesn't support offscreen surfaces, an invisible window
+    ///    will be used by QOffscreenSurface instead.
     [event] create_platform_offscreen_surface(surface: *OffscreenSurfaceType) -> PlatformOffscreenSurface?,
+    ///    \since 5.2
+    /// 
+    ///    Factory function for QPlatformSessionManager. The default QPlatformSessionManager provides the same
+    ///    functionality as the QSessionManager.
     [event] create_platform_session_manager(id: String, key: String) -> PlatformSessionManager?,
+    ///    \since 5.2
+    /// 
+    ///    Function to sync the platform integrations state with the window system.
+    /// 
+    ///    This is often implemented as a roundtrip from the platformintegration to the window system.
+    /// 
+    ///    This function should not call QWindowSystemInterface::flushWindowSystemEvents() or
+    ///    QCoreApplication::processEvents()
     [event] sync(),
     [event] open_gl_module_type() -> OpenGLContext::OpenGLModuleType,
+    ///     \since 5.5
+    /// 
+    ///     Platform integration function for setting the application icon.
+    /// 
+    ///     \sa QGuiApplication::setWindowIcon()
     [event] set_application_icon(icon: &IconType),
+    ///   Just removes the screen, call destroyScreen instead.
+    /// 
+    ///   \sa destroyScreen()
     remove_screen(screen: *ScreenType),
+    ///    \since 5.7
+    /// 
+    ///     Should sound a bell, using the default volume and sound.
+    /// 
+    ///     \sa QApplication::beep()
     [event] beep(),
+    ///   Should be called by the implementation whenever a new screen is added.
+    /// 
+    ///   The first screen added will be the primary screen, used for default-created
+    ///   windows, GL contexts, and other resources unless otherwise specified.
+    /// 
+    ///   This adds the screen to QGuiApplication::screens(), and emits the
+    ///   QGuiApplication::screenAdded() signal.
+    /// 
+    ///   The screen should be deleted by calling QPlatformIntegration::destroyScreen().
     screen_added(screen: *i32, is_primary: bool),
     set_primary_screen(new_primary: *i32),
 }

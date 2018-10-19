@@ -1,7 +1,48 @@
+///     \class QGraphicsSceneHelpEvent
+///     \brief The QGraphicsSceneHelpEvent class provides events when a
+///            tooltip is requested.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     When a QGraphicsView receives a QEvent of type
+///     QEvent::ToolTip, it creates a QGraphicsSceneHelpEvent, which is
+///     forwarded to the scene. You can set a tooltip on a QGraphicsItem
+///     with \l{QGraphicsItem::}{setToolTip()}; by default QGraphicsScene
+///     displays the tooltip of the QGraphicsItem with the highest
+///     z-value (i.e, the top-most item) under the mouse position.
+/// 
+///     QGraphicsView does not forward events when
+///     \l{QWhatsThis}{"What's This"} and \l{QStatusTipEvent}{status tip}
+///     help is requested. If you need this, you can reimplement
+///     QGraphicsView::viewportEvent() and forward QStatusTipEvent
+///     events and \l{QEvent}{QEvents} of type QEvent::WhatsThis to the
+///     scene.
+/// 
+///     \sa QEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneHelpEvent : GraphicsSceneEvent {
+    ///     Returns the position of the mouse cursor in scene coordinates at the
+    ///     moment the help event was sent.
+    /// 
+    ///     \sa screenPos()
     scene_pos() -> PointF,
+    ///     \fn void QGraphicsSceneHelpEvent::setScenePos(const QPointF &point)
+    ///     \internal
+    /// 
+    ///     Sets the position associated with the context menu to the given \a point
+    ///     in scene coordinates.
     set_scene_pos(pos: &PointFType),
+    ///     Returns the position of the mouse cursor in screen coordinates at the
+    ///     moment the help event was sent.
+    /// 
+    ///   \sa scenePos()
     screen_pos() -> Point,
+    ///     \fn void QGraphicsSceneHelpEvent::setScreenPos(const QPoint &point)
+    ///     \internal
+    /// 
+    ///     Sets the position associated with the context menu to the given \a point
+    ///     in screen coordinates.
     set_screen_pos(pos: &PointType),
 }
 

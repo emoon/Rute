@@ -1,12 +1,81 @@
+///     \class QPolygonF
+///     \brief The QPolygonF class provides a vector of points using
+///     floating point precision.
+///     \inmodule QtGui
+/// 
+///     \reentrant
+///     \ingroup painting
+///     \ingroup shared
+/// 
+///     A QPolygonF is a QVector<QPointF>. The easiest way to add points
+///     to a QPolygonF is to use its streaming operator, as illustrated
+///     below:
+/// 
+///     \snippet polygon/polygon.cpp 1
+/// 
+///     In addition to the functions provided by QVector, QPolygonF
+///     provides the boundingRect() and translate() functions for geometry
+///     operations. Use the QMatrix::map() function for more general
+///     transformations of QPolygonFs.
+/// 
+///     QPolygonF also provides the isClosed() function to determine
+///     whether a polygon's start and end points are the same, and the
+///     toPolygon() function returning an integer precision copy of this
+///     polygon.
+/// 
+///     The QPolygonF class is \l {Implicit Data Sharing}{implicitly
+///     shared}.
+/// 
+///     \sa QVector, QPolygon, QLineF
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PolygonF {
     swap(other: &PolygonFType),
+    ///     Creates and returns a QPolygon by converting each QPointF to a
+    ///     QPoint.
+    /// 
+    ///     \sa QPointF::toPoint()
     to_polygon() -> Polygon,
     is_closed() -> bool,
+    ///     Returns the bounding rectangle of the polygon, or QRectF(0,0,0,0)
+    ///     if the polygon is empty.
+    /// 
+    ///     \sa QVector::isEmpty()
     bounding_rect() -> RectF,
+    ///     \since 4.3
+    /// 
+    ///     \fn bool QPolygonF::containsPoint(const QPointF &point, Qt::FillRule fillRule) const
+    /// 
+    ///     Returns \c true if the given \a point is inside the polygon according to
+    ///     the specified \a fillRule; otherwise returns \c false.
     contains_point(pt: &PointFType, fill_rule: Rute::FillRule) -> bool,
+    ///     \since 4.3
+    /// 
+    ///     Returns a polygon which is the union of this polygon and \a r.
+    /// 
+    ///     Set operations on polygons will treat the polygons as
+    ///     areas. Non-closed polygons will be treated as implicitly closed.
+    /// 
+    ///     \sa intersected(), subtracted()
     united(r: &PolygonFType) -> PolygonF,
+    ///     \since 4.3
+    /// 
+    ///     Returns a polygon which is the intersection of this polygon and \a r.
+    /// 
+    ///     Set operations on polygons will treat the polygons as
+    ///     areas. Non-closed polygons will be treated as implicitly closed.
+    /// 
+    ///     \sa intersects()
     intersected(r: &PolygonFType) -> PolygonF,
+    ///     \since 5.10
+    /// 
+    ///     Returns \c true if the current polygon intersects at any point the given polygon \a p.
+    ///     Also returns \c true if the current polygon contains or is contained by any part of \a p.
+    /// 
+    ///     Set operations on polygons will treat the polygons as
+    ///     areas. Non-closed polygons will be treated as implicitly closed.
+    /// 
+    ///     \sa intersected()
     intersects(r: &PolygonFType) -> bool,
 }
 

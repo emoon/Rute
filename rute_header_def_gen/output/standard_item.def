@@ -1,3 +1,68 @@
+///     \class QStandardItem
+///     \brief The QStandardItem class provides an item for use with the
+///     QStandardItemModel class.
+///     \since 4.2
+///     \ingroup model-view
+///     \inmodule QtGui
+/// 
+///     Items usually contain text, icons, or checkboxes.
+/// 
+///     Each item can have its own background brush which is set with the
+///     setBackground() function. The current background brush can be found with
+///     background().  The text label for each item can be rendered with its own
+///     font and brush. These are specified with the setFont() and setForeground()
+///     functions, and read with font() and foreground().
+/// 
+///     By default, items are enabled, editable, selectable, checkable, and can be
+///     used both as the source of a drag and drop operation and as a drop target.
+///     Each item's flags can be changed by calling setFlags(). Checkable items
+///     can be checked and unchecked with the setCheckState() function. The
+///     corresponding checkState() function indicates whether the item is
+///     currently checked.
+/// 
+///     You can store application-specific data in an item by calling setData().
+/// 
+///     Each item can have a two-dimensional table of child items. This makes it
+///     possible to build hierarchies of items. The typical hierarchy is the tree,
+///     in which case the child table is a table with a single column (a list).
+/// 
+///     The dimensions of the child table can be set with setRowCount() and
+///     setColumnCount(). Items can be positioned in the child table with
+///     setChild(). Get a pointer to a child item with child(). New rows and
+///     columns of children can also be inserted with insertRow() and
+///     insertColumn(), or appended with appendRow() and appendColumn(). When
+///     using the append and insert functions, the dimensions of the child table
+///     will grow as needed.
+/// 
+///     An existing row of children can be removed with removeRow() or takeRow();
+///     correspondingly, a column can be removed with removeColumn() or
+///     takeColumn().
+/// 
+///     An item's children can be sorted by calling sortChildren().
+/// 
+///     \section1 Subclassing
+/// 
+///     When subclassing QStandardItem to provide custom items, it is possible to
+///     define new types for them so that they can be distinguished from the base
+///     class. The type() function should be reimplemented to return a new type
+///     value equal to or greater than \l UserType.
+/// 
+///     Reimplement data() and setData() if you want to perform custom handling of
+///     data queries and/or control how an item's data is represented.
+/// 
+///     Reimplement clone() if you want QStandardItemModel to be able to create
+///     instances of your custom item class on demand (see
+///     QStandardItemModel::setItemPrototype()).
+/// 
+///     Reimplement read() and write() if you want to control how items are
+///     represented in their serialized form.
+/// 
+///     Reimplement \l{operator<()} if you want to control the semantics of item
+///     comparison. \l{operator<()} determines the sorted order when sorting items
+///     with sortChildren() or with QStandardItemModel::sort().
+/// 
+///     \sa QStandardItemModel, {Item View Convenience Classes}, {Model/View Programming}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStandardItem)]
 enum ItemType {
     Type,
@@ -6,7 +71,23 @@ enum ItemType {
 
 
 struct StandardItem {
+    ///     Returns the item's data for the given \a role, or an invalid
+    ///     QVariant if there is no data for the role.
+    /// 
+    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole
+    ///     as referring to the same data.
     [event] data(role: i32) -> Variant,
+    ///     Sets the item's data for the given \a role to the specified \a value.
+    /// 
+    ///     If you subclass QStandardItem and reimplement this function, your
+    ///     reimplementation should call emitDataChanged() if you do not call
+    ///     the base implementation of setData(). This will ensure that e.g.
+    ///     views using the model are notified of the changes.
+    /// 
+    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole
+    ///     as referring to the same data.
+    /// 
+    ///     \sa Qt::ItemDataRole, data(), setFlags()
     [event] set_data(value: &VariantType, role: i32),
     text() -> String,
     set_text(text: String),
@@ -34,61 +115,302 @@ struct StandardItem {
     set_accessible_text(accessible_text: String),
     accessible_description() -> String,
     set_accessible_description(accessible_description: String),
+    ///   Returns the item flags for the item.
+    /// 
+    ///   The item flags determine how the user can interact with the item.
+    /// 
+    ///   By default, items are enabled, editable, selectable, checkable, and can be
+    ///   used both as the source of a drag and drop operation and as a drop target.
+    /// 
+    ///   \sa setFlags()
     flags() -> Rute::ItemFlags,
+    ///   Sets the item flags for the item to \a flags.
+    /// 
+    ///   The item flags determine how the user can interact with the item.
+    ///   This is often used to disable an item.
+    /// 
+    ///   \sa flags(), setData()
     set_flags(flags: Rute::ItemFlags),
     is_enabled() -> bool,
+    ///   Sets whether the item is enabled. If \a enabled is true, the item is enabled,
+    ///   meaning that the user can interact with the item; if \a enabled is false, the
+    ///   user cannot interact with the item.
+    /// 
+    ///   This flag takes precedence over the other item flags; e.g. if an item is not
+    ///   enabled, it cannot be selected by the user, even if the Qt::ItemIsSelectable
+    ///   flag has been set.
+    /// 
+    ///   \sa isEnabled(), Qt::ItemIsEnabled, setFlags()
     set_enabled(enabled: bool),
     is_editable() -> bool,
+    ///   Sets whether the item is editable. If \a editable is true, the item can be
+    ///   edited by the user; otherwise, the user cannot edit the item.
+    /// 
+    ///   How the user can edit items in a view is determined by the view's edit
+    ///   triggers; see QAbstractItemView::editTriggers.
+    /// 
+    ///   \sa isEditable(), setFlags()
     set_editable(editable: bool),
     is_selectable() -> bool,
+    ///   Sets whether the item is selectable. If \a selectable is true, the item
+    ///   can be selected by the user; otherwise, the user cannot select the item.
+    /// 
+    ///   You can control the selection behavior and mode by manipulating their
+    ///   view properties; see QAbstractItemView::selectionMode and
+    ///   QAbstractItemView::selectionBehavior.
+    /// 
+    ///   \sa isSelectable(), setFlags()
     set_selectable(selectable: bool),
     is_checkable() -> bool,
+    ///   Sets whether the item is user-checkable. If \a checkable is true, the
+    ///   item can be checked by the user; otherwise, the user cannot check
+    ///   the item.
+    /// 
+    ///   The item delegate will render a checkable item with a check box next to the
+    ///   item's text.
+    /// 
+    ///   \sa isCheckable(), setCheckState(), setUserTristate(), setAutoTristate()
     set_checkable(checkable: bool),
     is_auto_tristate() -> bool,
+    ///   Determines that the item is tristate and controlled by QTreeWidget if \a tristate
+    ///   is \c true.
+    ///   This enables automatic management of the state of parent items in QTreeWidget
+    ///   (checked if all children are checked, unchecked if all children are unchecked,
+    ///   or partially checked if only some children are checked).
+    /// 
+    ///   \since 5.6
+    ///   \sa isAutoTristate(), setCheckable(), setCheckState()
     set_auto_tristate(tristate: bool),
     is_user_tristate() -> bool,
+    ///   Sets whether the item is tristate and controlled by the user.
+    ///   If \a tristate is true, the user can cycle through three separate states;
+    ///   otherwise, the item is checkable with two states.
+    ///   (Note that this also requires that the item is checkable; see isCheckable().)
+    /// 
+    ///   \since 5.6
+    ///   \sa isUserTristate(), setCheckable(), setCheckState()
     set_user_tristate(tristate: bool),
     is_tristate() -> bool,
+    ///   \fn bool QStandardItem::isUserTristate() const
+    ///   \since 5.6
+    /// 
+    ///   Returns whether the item is tristate; that is, if it's checkable with three
+    ///   separate states and the user can cycle through all three states.
+    /// 
+    ///   The default value is false.
+    /// 
+    ///   \sa setUserTristate(), isCheckable(), checkState()
     set_tristate(tristate: bool),
     is_drag_enabled() -> bool,
+    ///   Sets whether the item is drag enabled. If \a dragEnabled is true, the item
+    ///   can be dragged by the user; otherwise, the user cannot drag the item.
+    /// 
+    ///   Note that you also need to ensure that item dragging is enabled in the view;
+    ///   see QAbstractItemView::dragEnabled.
+    /// 
+    ///   \sa isDragEnabled(), setDropEnabled(), setFlags()
     set_drag_enabled(drag_enabled: bool),
     is_drop_enabled() -> bool,
+    ///   Sets whether the item is drop enabled. If \a dropEnabled is true, the item
+    ///   can be used as a drop target; otherwise, it cannot.
+    /// 
+    ///   Note that you also need to ensure that drops are enabled in the view; see
+    ///   QWidget::acceptDrops(); and that the model supports the desired drop actions;
+    ///   see QAbstractItemModel::supportedDropActions().
+    /// 
+    ///   \sa isDropEnabled(), setDragEnabled(), setFlags()
     set_drop_enabled(drop_enabled: bool),
+    ///   Returns the item's parent item, or 0 if the item has no parent.
+    ///   \note For toplevel items parent() returns 0. To receive toplevel
+    ///   item's parent use QStandardItemModel::invisibleRootItem() instead.
+    /// 
+    ///   \sa child(), QStandardItemModel::invisibleRootItem()
     parent() -> StandardItem?,
+    ///   Returns the row where the item is located in its parent's child table, or
+    ///   -1 if the item has no parent.
+    /// 
+    ///   \sa column(), parent()
     row() -> i32,
+    ///   Returns the column where the item is located in its parent's child table,
+    ///   or -1 if the item has no parent.
+    /// 
+    ///   \sa row(), parent()
     column() -> i32,
+    ///   Returns the QModelIndex associated with this item.
+    /// 
+    ///   When you need to invoke item functionality in a QModelIndex-based API (e.g.
+    ///   QAbstractItemView), you can call this function to obtain an index that
+    ///   corresponds to the item's location in the model.
+    /// 
+    ///   If the item is not associated with a model, an invalid QModelIndex is
+    ///   returned.
+    /// 
+    ///   \sa model(), QStandardItemModel::itemFromIndex()
     index() -> ModelIndex,
+    ///   Returns the QStandardItemModel that this item belongs to.
+    /// 
+    ///   If the item is not a child of another item that belongs to the model, this
+    ///   function returns 0.
+    /// 
+    ///   \sa index()
     model() -> StandardItemModel?,
+    ///     Returns the number of child item rows that the item has.
+    /// 
+    ///     \sa setRowCount(), columnCount()
     row_count() -> i32,
+    ///     Sets the number of child item rows to \a rows. If this is less than
+    ///     rowCount(), the data in the unwanted rows is discarded.
+    /// 
+    ///     \sa rowCount(), setColumnCount()
     set_row_count(rows: i32),
+    ///     Returns the number of child item columns that the item has.
+    /// 
+    ///     \sa setColumnCount(), rowCount()
     column_count() -> i32,
+    ///     Sets the number of child item columns to \a columns. If this is less than
+    ///     columnCount(), the data in the unwanted columns is discarded.
+    /// 
+    ///     \sa columnCount(), setRowCount()
     set_column_count(columns: i32),
+    ///     Returns \c true if this item has any children; otherwise returns \c false.
+    /// 
+    ///     \sa rowCount(), columnCount(), child()
     has_children() -> bool,
+    ///     Returns the child item at (\a row, \a column) if one has been set; otherwise
+    ///     returns 0.
+    /// 
+    ///     \sa setChild(), takeChild(), parent()
     child(row: i32, column: i32) -> StandardItem?,
+    ///     Sets the child item at (\a row, \a column) to \a item. This item (the parent
+    ///     item) takes ownership of \a item. If necessary, the row count and column
+    ///     count are increased to fit the item.
+    /// 
+    ///     \note Passing a null pointer as \a item removes the item.
+    /// 
+    ///     \sa child()
     set_child(row: i32, column: i32, item: *StandardItemType),
+    ///     Sets the child item at (\a row, \a column) to \a item. This item (the parent
+    ///     item) takes ownership of \a item. If necessary, the row count and column
+    ///     count are increased to fit the item.
+    /// 
+    ///     \note Passing a null pointer as \a item removes the item.
+    /// 
+    ///     \sa child()
     set_child(row: i32, item: *StandardItemType),
+    ///     Inserts a row at \a row containing \a items. If necessary, the column
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa insertRows(), insertColumn()
     insert_row(row: i32, items: [*StandardItemType]),
+    ///     Inserts a column at \a column containing \a items. If necessary,
+    ///     the row count is increased to the size of \a items.
+    /// 
+    ///     \sa insertColumns(), insertRow()
     insert_column(column: i32, items: [*StandardItemType]),
+    ///     Inserts \a count rows of child items at row \a row.
+    /// 
+    ///     \sa insertRow(), insertColumns()
     insert_rows(row: i32, items: [*StandardItemType]),
+    ///     Inserts \a count rows of child items at row \a row.
+    /// 
+    ///     \sa insertRow(), insertColumns()
     insert_rows(row: i32, count: i32),
+    ///     Inserts \a count columns of child items at column \a column.
+    /// 
+    ///     \sa insertColumn(), insertRows()
     insert_columns(column: i32, count: i32),
+    ///     Removes the given \a row. The items that were in the row are deleted.
+    /// 
+    ///     \sa takeRow(), removeRows(), removeColumn()
     remove_row(row: i32),
+    ///     Removes the given \a column. The items that were in the
+    ///     column are deleted.
+    /// 
+    ///     \sa takeColumn(), removeColumns(), removeRow()
     remove_column(column: i32),
+    ///     Removes \a count rows at row \a row. The items that were in those rows are
+    ///     deleted.
+    /// 
+    ///     \sa removeRow(), removeColumn()
     remove_rows(row: i32, count: i32),
+    ///     Removes \a count columns at column \a column. The items that were in those
+    ///     columns are deleted.
+    /// 
+    ///     \sa removeColumn(), removeRows()
     remove_columns(column: i32, count: i32),
     append_row(items: [*StandardItemType]),
     append_rows(items: [*StandardItemType]),
     append_column(items: [*StandardItemType]),
+    ///     Inserts a row at \a row containing \a items. If necessary, the column
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa insertRows(), insertColumn()
     insert_row(row: i32, item: *StandardItemType),
     append_row(item: *StandardItemType),
+    ///     Removes the child item at (\a row, \a column) without deleting it, and returns
+    ///     a pointer to the item. If there was no child at the given location, then
+    ///     this function returns 0.
+    /// 
+    ///     Note that this function, unlike takeRow() and takeColumn(), does not affect
+    ///     the dimensions of the child table.
+    /// 
+    ///     \sa child(), takeRow(), takeColumn()
     take_child(row: i32, column: i32) -> StandardItem?,
+    ///     Removes \a row without deleting the row items, and returns a list of
+    ///     pointers to the removed items. For items in the row that have not been
+    ///     set, the corresponding pointers in the list will be 0.
+    /// 
+    ///     \sa removeRow(), insertRow(), takeColumn()
     take_row(row: i32) -> [StandardItem?],
+    ///     Removes \a column without deleting the column items, and returns a list of
+    ///     pointers to the removed items. For items in the column that have not been
+    ///     set, the corresponding pointers in the list will be 0.
+    /// 
+    ///     \sa removeColumn(), insertColumn(), takeRow()
     take_column(column: i32) -> [StandardItem?],
+    ///     Sorts the children of the item using the given \a order, by the values in
+    ///     the given \a column.
+    /// 
+    ///     \note This function is recursive, therefore it sorts the children of the
+    ///     item, its grandchildren, etc.
+    /// 
+    ///     \sa {operator<()}
     sort_children(column: i32, order: Rute::SortOrder),
+    ///     Returns a copy of this item. The item's children are not copied.
+    /// 
+    ///     When subclassing QStandardItem, you can reimplement this function
+    ///     to provide QStandardItemModel with a factory that it can use to
+    ///     create new items on demand.
+    /// 
+    ///     \sa QStandardItemModel::setItemPrototype(), operator=()
     [event] clone() -> StandardItem?,
+    ///     Returns the type of this item. The type is used to distinguish custom
+    ///     items from the base class. When subclassing QStandardItem, you should
+    ///     reimplement this function and return a new value greater than or equal
+    ///     to \l UserType.
+    /// 
+    ///     \sa QStandardItem::Type
     [event] type() -> i32,
+    ///     Reads the item from stream \a in. Only the data and flags of the item are
+    ///     read, not the child items.
+    /// 
+    ///     \sa write()
     [event] read(in: &DataStreamType),
+    ///     Writes the item to stream \a out. Only the data and flags of the item
+    ///     are written, not the child items.
+    /// 
+    ///     \sa read()
     [event] write(out: &DataStreamType),
+    ///   \since 4.4
+    /// 
+    ///   Causes the model associated with this item to emit a
+    ///   \l{QAbstractItemModel::dataChanged()}{dataChanged}() signal for this
+    ///   item.
+    /// 
+    ///   You normally only need to call this function if you have subclassed
+    ///   QStandardItem and reimplemented data() and/or setData().
+    /// 
+    ///   \sa setData()
     emit_data_changed(),
 }
 

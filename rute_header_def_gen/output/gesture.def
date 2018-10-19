@@ -1,3 +1,4 @@
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGesture)]
 enum GestureCancelPolicy {
     CancelNone,
@@ -5,12 +6,24 @@ enum GestureCancelPolicy {
 }
 
 struct Gesture : Object {
+    ///     \property QGesture::hasHotSpot
+    ///     \brief whether the gesture has a hot-spot
     gesture_type() -> Rute::GestureType,
     state() -> Rute::GestureState,
     hot_spot() -> PointF,
     set_hot_spot(value: &PointFType),
     has_hot_spot() -> bool,
     unset_hot_spot(),
+    ///     \enum QGesture::GestureCancelPolicy
+    /// 
+    ///     This enum describes how accepting a gesture can cancel other gestures
+    ///     automatically.
+    /// 
+    ///     \value CancelNone On accepting this gesture no other gestures will be affected.
+    /// 
+    ///     \value CancelAllInContext On accepting this gesture all gestures that are
+    ///     active in the context (respecting the Qt::GestureFlag that were specified
+    ///     when subscribed to the gesture) will be cancelled.
     set_gesture_cancel_policy(policy: Gesture::GestureCancelPolicy),
     gesture_cancel_policy() -> Gesture::GestureCancelPolicy,
 }

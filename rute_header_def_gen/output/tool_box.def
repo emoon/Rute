@@ -32,6 +32,7 @@
 ///     changed.
 /// 
 ///     \sa QTabWidget
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ToolBox : Frame {
     add_item(widget: *WidgetType, text: String) -> i32,
     add_item(widget: *WidgetType, icon: &IconType, text: String) -> i32,

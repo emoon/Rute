@@ -1,36 +1,442 @@
+///     \class QFontMetrics
+///     \reentrant
+///     \inmodule QtGui
+/// 
+///     \brief The QFontMetrics class provides font metrics information.
+/// 
+///     \ingroup painting
+///     \ingroup shared
+/// 
+///     QFontMetrics functions calculate the size of characters and
+///     strings for a given font. There are three ways you can create a
+///     QFontMetrics object:
+/// 
+///     \list 1
+///     \li Calling the QFontMetrics constructor with a QFont creates a
+///     font metrics object for a screen-compatible font, i.e. the font
+///     cannot be a printer font. If the font is changed
+///     later, the font metrics object is \e not updated.
+/// 
+///     (Note: If you use a printer font the values returned may be
+///     inaccurate. Printer fonts are not always accessible so the nearest
+///     screen font is used if a printer font is supplied.)
+/// 
+///     \li QWidget::fontMetrics() returns the font metrics for a widget's
+///     font. This is equivalent to QFontMetrics(widget->font()). If the
+///     widget's font is changed later, the font metrics object is \e not
+///     updated.
+/// 
+///     \li QPainter::fontMetrics() returns the font metrics for a
+///     painter's current font. If the painter's font is changed later, the
+///     font metrics object is \e not updated.
+///     \endlist
+/// 
+///     Once created, the object provides functions to access the
+///     individual metrics of the font, its characters, and for strings
+///     rendered in the font.
+/// 
+///     There are several functions that operate on the font: ascent(),
+///     descent(), height(), leading() and lineSpacing() return the basic
+///     size properties of the font. The underlinePos(), overlinePos(),
+///     strikeOutPos() and lineWidth() functions, return the properties of
+///     the line that underlines, overlines or strikes out the
+///     characters. These functions are all fast.
+/// 
+///     There are also some functions that operate on the set of glyphs in
+///     the font: minLeftBearing(), minRightBearing() and maxWidth().
+///     These are by necessity slow, and we recommend avoiding them if
+///     possible.
+/// 
+///     For each character, you can get its width(), leftBearing() and
+///     rightBearing() and find out whether it is in the font using
+///     inFont(). You can also treat the character as a string, and use
+///     the string functions on it.
+/// 
+///     The string functions include width(), to return the width of a
+///     string in pixels (or points, for a printer), boundingRect(), to
+///     return a rectangle large enough to contain the rendered string,
+///     and size(), to return the size of that rectangle.
+/// 
+///     Example:
+///     \snippet code/src_gui_text_qfontmetrics.cpp 0
+/// 
+///     \sa QFont, QFontInfo, QFontDatabase, {Character Map Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct FontMetrics {
     swap(other: &FontMetricsType),
+    ///     Returns the ascent of the font.
+    /// 
+    ///     The ascent of a font is the distance from the baseline to the
+    ///     highest position characters extend to. In practice, some font
+    ///     designers break this rule, e.g. when they put more than one accent
+    ///     on top of a character, or to accommodate an unusual character in
+    ///     an exotic language, so it is possible (though rare) that this
+    ///     value will be too small.
+    /// 
+    ///     \sa descent()
     ascent() -> i32,
+    ///     Returns the cap height of the font.
+    /// 
+    ///     \since 5.8
+    /// 
+    ///     The cap height of a font is the height of a capital letter above
+    ///     the baseline. It specifically is the height of capital letters
+    ///     that are flat - such as H or I - as opposed to round letters such
+    ///     as O, or pointed letters like A, both of which may display overshoot.
+    /// 
+    ///     \sa ascent()
     cap_height() -> i32,
+    ///     Returns the descent of the font.
+    /// 
+    ///     The descent is the distance from the base line to the lowest point
+    ///     characters extend to. In practice, some font designers break this rule,
+    ///     e.g. to accommodate an unusual character in an exotic language, so
+    ///     it is possible (though rare) that this value will be too small.
+    /// 
+    ///     \sa ascent()
     descent() -> i32,
+    ///     Returns the height of the font.
+    /// 
+    ///     This is always equal to ascent()+descent().
+    /// 
+    ///     \sa leading(), lineSpacing()
     height() -> i32,
+    ///     Returns the leading of the font.
+    /// 
+    ///     This is the natural inter-line spacing.
+    /// 
+    ///     \sa height(), lineSpacing()
     leading() -> i32,
+    ///     Returns the distance from one base line to the next.
+    /// 
+    ///     This value is always equal to leading()+height().
+    /// 
+    ///     \sa height(), leading()
     line_spacing() -> i32,
+    ///     Returns the minimum left bearing of the font.
+    /// 
+    ///     This is the smallest leftBearing(char) of all characters in the
+    ///     font.
+    /// 
+    ///     Note that this function can be very slow if the font is large.
+    /// 
+    ///     \sa minRightBearing(), leftBearing()
     min_left_bearing() -> i32,
+    ///     Returns the minimum right bearing of the font.
+    /// 
+    ///     This is the smallest rightBearing(char) of all characters in the
+    ///     font.
+    /// 
+    ///     Note that this function can be very slow if the font is large.
+    /// 
+    ///     \sa minLeftBearing(), rightBearing()
     min_right_bearing() -> i32,
+    ///     Returns the width of the widest character in the font.
     max_width() -> i32,
+    ///     Returns the 'x' height of the font. This is often but not always
+    ///     the same as the height of the character 'x'.
     x_height() -> i32,
+    ///     \since 4.2
+    /// 
+    ///     Returns the average width of glyphs in the font.
     average_char_width() -> i32,
+    ///     Returns \c true if character \a ch is a valid character in the font;
+    ///     otherwise returns \c false.
     in_font(arg0: CharType) -> bool,
+    ///    Returns \c true if the character \a ucs4 encoded in UCS-4/UTF-32 is a valid
+    ///    character in the font; otherwise returns \c false.
     in_font_ucs4(ucs4: uint) -> bool,
+    ///     Returns the left bearing of character \a ch in the font.
+    /// 
+    ///     The left bearing is the right-ward distance of the left-most pixel
+    ///     of the character from the logical origin of the character. This
+    ///     value is negative if the pixels of the character extend to the
+    ///     left of the logical origin.
+    /// 
+    ///     See width() for a graphical description of this metric.
+    /// 
+    ///     \sa rightBearing(), minLeftBearing(), width()
     left_bearing(arg0: CharType) -> i32,
+    ///     Returns the right bearing of character \a ch in the font.
+    /// 
+    ///     The right bearing is the left-ward distance of the right-most
+    ///     pixel of the character from the logical origin of a subsequent
+    ///     character. This value is negative if the pixels of the character
+    ///     extend to the right of the width() of the character.
+    /// 
+    ///     See width() for a graphical description of this metric.
+    /// 
+    ///     \sa leftBearing(), minRightBearing(), width()
     right_bearing(arg0: CharType) -> i32,
+    ///     \overload
+    /// 
+    ///     \image bearings.png Bearings
+    /// 
+    ///     Returns the logical width of character \a ch in pixels. This is a
+    ///     distance appropriate for drawing a subsequent character after \a
+    ///     ch.
+    /// 
+    ///     Some of the metrics are described in the image to the right. The
+    ///     central dark rectangles cover the logical width() of each
+    ///     character. The outer pale rectangles cover the leftBearing() and
+    ///     rightBearing() of each character. Notice that the bearings of "f"
+    ///     in this particular font are both negative, while the bearings of
+    ///     "o" are both positive.
+    /// 
+    ///     \deprecated in Qt 5.11. Use horizontalAdvance() instead.
+    /// 
+    ///     \warning This function will produce incorrect results for Arabic
+    ///     characters or non-spacing marks in the middle of a string, as the
+    ///     glyph shaping and positioning of marks that happens when
+    ///     processing strings cannot be taken into account. When implementing
+    ///     an interactive text control, use QTextLayout instead.
+    /// 
+    ///     \sa boundingRect()
     width(arg0: String, len: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     \image bearings.png Bearings
+    /// 
+    ///     Returns the logical width of character \a ch in pixels. This is a
+    ///     distance appropriate for drawing a subsequent character after \a
+    ///     ch.
+    /// 
+    ///     Some of the metrics are described in the image to the right. The
+    ///     central dark rectangles cover the logical width() of each
+    ///     character. The outer pale rectangles cover the leftBearing() and
+    ///     rightBearing() of each character. Notice that the bearings of "f"
+    ///     in this particular font are both negative, while the bearings of
+    ///     "o" are both positive.
+    /// 
+    ///     \deprecated in Qt 5.11. Use horizontalAdvance() instead.
+    /// 
+    ///     \warning This function will produce incorrect results for Arabic
+    ///     characters or non-spacing marks in the middle of a string, as the
+    ///     glyph shaping and positioning of marks that happens when
+    ///     processing strings cannot be taken into account. When implementing
+    ///     an interactive text control, use QTextLayout instead.
+    /// 
+    ///     \sa boundingRect()
     width(arg0: String, len: i32, flags: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     \image bearings.png Bearings
+    /// 
+    ///     Returns the logical width of character \a ch in pixels. This is a
+    ///     distance appropriate for drawing a subsequent character after \a
+    ///     ch.
+    /// 
+    ///     Some of the metrics are described in the image to the right. The
+    ///     central dark rectangles cover the logical width() of each
+    ///     character. The outer pale rectangles cover the leftBearing() and
+    ///     rightBearing() of each character. Notice that the bearings of "f"
+    ///     in this particular font are both negative, while the bearings of
+    ///     "o" are both positive.
+    /// 
+    ///     \deprecated in Qt 5.11. Use horizontalAdvance() instead.
+    /// 
+    ///     \warning This function will produce incorrect results for Arabic
+    ///     characters or non-spacing marks in the middle of a string, as the
+    ///     glyph shaping and positioning of marks that happens when
+    ///     processing strings cannot be taken into account. When implementing
+    ///     an interactive text control, use QTextLayout instead.
+    /// 
+    ///     \sa boundingRect()
     width(arg0: CharType) -> i32,
+    ///     \overload
+    /// 
+    ///     \image bearings.png Bearings
+    /// 
+    ///     Returns the horizontal advance of character \a ch in pixels. This is a
+    ///     distance appropriate for drawing a subsequent character after \a
+    ///     ch.
+    /// 
+    ///     Some of the metrics are described in the image. The
+    ///     central dark rectangles cover the logical horizontalAdvance() of each
+    ///     character. The outer pale rectangles cover the leftBearing() and
+    ///     rightBearing() of each character. Notice that the bearings of "f"
+    ///     in this particular font are both negative, while the bearings of
+    ///     "o" are both positive.
+    /// 
+    ///     \warning This function will produce incorrect results for Arabic
+    ///     characters or non-spacing marks in the middle of a string, as the
+    ///     glyph shaping and positioning of marks that happens when
+    ///     processing strings cannot be taken into account. When implementing
+    ///     an interactive text control, use QTextLayout instead.
+    /// 
+    ///     \since 5.11
+    /// 
+    ///     \sa boundingRect()
     horizontal_advance(arg0: String, len: i32) -> i32,
+    ///     \overload
+    /// 
+    ///     \image bearings.png Bearings
+    /// 
+    ///     Returns the horizontal advance of character \a ch in pixels. This is a
+    ///     distance appropriate for drawing a subsequent character after \a
+    ///     ch.
+    /// 
+    ///     Some of the metrics are described in the image. The
+    ///     central dark rectangles cover the logical horizontalAdvance() of each
+    ///     character. The outer pale rectangles cover the leftBearing() and
+    ///     rightBearing() of each character. Notice that the bearings of "f"
+    ///     in this particular font are both negative, while the bearings of
+    ///     "o" are both positive.
+    /// 
+    ///     \warning This function will produce incorrect results for Arabic
+    ///     characters or non-spacing marks in the middle of a string, as the
+    ///     glyph shaping and positioning of marks that happens when
+    ///     processing strings cannot be taken into account. When implementing
+    ///     an interactive text control, use QTextLayout instead.
+    /// 
+    ///     \since 5.11
+    /// 
+    ///     \sa boundingRect()
     horizontal_advance(arg0: CharType) -> i32,
     char_width(str: String, pos: i32) -> i32,
+    ///     Returns the rectangle that is covered by ink if character \a ch
+    ///     were to be drawn at the origin of the coordinate system.
+    /// 
+    ///     Note that the bounding rectangle may extend to the left of (0, 0)
+    ///     (e.g., for italicized fonts), and that the text output may cover \e
+    ///     all pixels in the bounding rectangle. For a space character the rectangle
+    ///     will usually be empty.
+    /// 
+    ///     Note that the rectangle usually extends both above and below the
+    ///     base line.
+    /// 
+    ///     \warning The width of the returned rectangle is not the advance width
+    ///     of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
+    /// 
+    ///     \sa width()
     bounding_rect(arg0: CharType) -> Rect,
+    ///     Returns the rectangle that is covered by ink if character \a ch
+    ///     were to be drawn at the origin of the coordinate system.
+    /// 
+    ///     Note that the bounding rectangle may extend to the left of (0, 0)
+    ///     (e.g., for italicized fonts), and that the text output may cover \e
+    ///     all pixels in the bounding rectangle. For a space character the rectangle
+    ///     will usually be empty.
+    /// 
+    ///     Note that the rectangle usually extends both above and below the
+    ///     base line.
+    /// 
+    ///     \warning The width of the returned rectangle is not the advance width
+    ///     of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
+    /// 
+    ///     \sa width()
     bounding_rect(text: String) -> Rect,
+    ///     Returns the rectangle that is covered by ink if character \a ch
+    ///     were to be drawn at the origin of the coordinate system.
+    /// 
+    ///     Note that the bounding rectangle may extend to the left of (0, 0)
+    ///     (e.g., for italicized fonts), and that the text output may cover \e
+    ///     all pixels in the bounding rectangle. For a space character the rectangle
+    ///     will usually be empty.
+    /// 
+    ///     Note that the rectangle usually extends both above and below the
+    ///     base line.
+    /// 
+    ///     \warning The width of the returned rectangle is not the advance width
+    ///     of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
+    /// 
+    ///     \sa width()
     bounding_rect(r: &RectType, flags: i32, text: String, tabstops: i32, tabarray: *i32) -> Rect,
+    ///     Returns the rectangle that is covered by ink if character \a ch
+    ///     were to be drawn at the origin of the coordinate system.
+    /// 
+    ///     Note that the bounding rectangle may extend to the left of (0, 0)
+    ///     (e.g., for italicized fonts), and that the text output may cover \e
+    ///     all pixels in the bounding rectangle. For a space character the rectangle
+    ///     will usually be empty.
+    /// 
+    ///     Note that the rectangle usually extends both above and below the
+    ///     base line.
+    /// 
+    ///     \warning The width of the returned rectangle is not the advance width
+    ///     of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
+    /// 
+    ///     \sa width()
     bounding_rect(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, tabstops: i32, tabarray: *i32) -> Rect,
+    ///     Returns the size in pixels of \a text.
+    /// 
+    ///     The \a flags argument is the bitwise OR of the following flags:
+    ///     \list
+    ///     \li Qt::TextSingleLine ignores newline characters.
+    ///     \li Qt::TextExpandTabs expands tabs (see below)
+    ///     \li Qt::TextShowMnemonic interprets "&x" as \underline{x}; i.e., underlined.
+    ///     \li Qt::TextWordWrap breaks the text to fit the rectangle.
+    ///     \endlist
+    /// 
+    ///     If Qt::TextExpandTabs is set in \a flags, then: if \a tabArray is
+    ///     non-null, it specifies a 0-terminated sequence of pixel-positions
+    ///     for tabs; otherwise if \a tabStops is non-zero, it is used as the
+    ///     tab spacing (in pixels).
+    /// 
+    ///     Newline characters are processed as linebreaks.
+    /// 
+    ///     Despite the different actual character heights, the heights of the
+    ///     bounding rectangles of "Yes" and "yes" are the same.
+    /// 
+    ///     \sa boundingRect()
     size(flags: i32, str: String, tabstops: i32, tabarray: *i32) -> Size,
+    ///   \since 4.3
+    /// 
+    ///     Returns a tight bounding rectangle around the characters in the
+    ///     string specified by \a text. The bounding rectangle always covers
+    ///     at least the set of pixels the text would cover if drawn at (0,
+    ///     0).
+    /// 
+    ///     Note that the bounding rectangle may extend to the left of (0, 0),
+    ///     e.g. for italicized fonts, and that the width of the returned
+    ///     rectangle might be different than what the width() method returns.
+    /// 
+    ///     If you want to know the advance width of the string (to lay out
+    ///     a set of strings next to each other), use horizontalAdvance() instead.
+    /// 
+    ///     Newline characters are processed as normal characters, \e not as
+    ///     linebreaks.
+    /// 
+    ///     \warning Calling this method is very slow on Windows.
+    /// 
+    ///     \sa width(), height(), boundingRect()
     tight_bounding_rect(text: String) -> Rect,
+    ///     \since 4.2
+    /// 
+    ///     If the string \a text is wider than \a width, returns an elided
+    ///     version of the string (i.e., a string with "..." in it).
+    ///     Otherwise, returns the original string.
+    /// 
+    ///     The \a mode parameter specifies whether the text is elided on the
+    ///     left (e.g., "...tech"), in the middle (e.g., "Tr...ch"), or on
+    ///     the right (e.g., "Trol...").
+    /// 
+    ///     The \a width is specified in pixels, not characters.
+    /// 
+    ///     The \a flags argument is optional and currently only supports
+    ///     Qt::TextShowMnemonic as value.
+    /// 
+    ///     The elide mark follows the \l{Qt::LayoutDirection}{layoutdirection}.
+    ///     For example, it will be on the right side of the text for right-to-left
+    ///     layouts if the \a mode is \c{Qt::ElideLeft}, and on the left side of the
+    ///     text if the \a mode is \c{Qt::ElideRight}.
+    /// 
     elided_text(text: String, mode: Rute::TextElideMode, width: i32, flags: i32) -> String,
+    ///     Returns the distance from the base line to where an underscore
+    ///     should be drawn.
+    /// 
+    ///     \sa overlinePos(), strikeOutPos(), lineWidth()
     underline_pos() -> i32,
+    ///     Returns the distance from the base line to where an overline
+    ///     should be drawn.
+    /// 
+    ///     \sa underlinePos(), strikeOutPos(), lineWidth()
     overline_pos() -> i32,
+    ///     Returns the width of the underline and strikeout lines, adjusted
+    ///     for the point size of the font.
+    /// 
+    ///     \sa underlinePos(), overlinePos(), strikeOutPos()
     line_width() -> i32,
 }
 

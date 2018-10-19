@@ -1,3 +1,20 @@
+///     \class QDebugStateSaver
+///     \inmodule QtCore
+///     \brief Convenience class for custom QDebug operators.
+/// 
+///     Saves the settings used by QDebug, and restores them upon destruction,
+///     then calls \l {QDebug::maybeSpace()}{maybeSpace()}, to separate arguments with a space if
+///     \l {QDebug::autoInsertSpaces()}{autoInsertSpaces()} was true at the time of constructing the QDebugStateSaver.
+/// 
+///     The automatic insertion of spaces between writes is one of the settings
+///     that QDebugStateSaver stores for the duration of the current block.
+/// 
+///     The settings of the internal QTextStream are also saved and restored,
+///     so that using << hex in a QDebug operator doesn't affect other QDebug
+///     operators.
+/// 
+///     \since 5.1
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct DebugStateSaver {
 }

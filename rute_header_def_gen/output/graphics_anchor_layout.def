@@ -1,17 +1,124 @@
+///     \class QGraphicsAnchorLayout
+///     \brief The QGraphicsAnchorLayout class provides a layout where one can anchor widgets
+///     together in Graphics View.
+///     \since 4.6
+///     \ingroup appearance
+///     \ingroup geomanagement
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     The anchor layout allows developers to specify how widgets should be placed relative to
+///     each other, and to the layout itself. The specification is made by adding anchors to the
+///     layout by calling addAnchor(), addAnchors() or addCornerAnchors().
+/// 
+///     Existing anchors in the layout can be accessed with the anchor() function.
+///     Items that are anchored are automatically added to the layout, and if items
+///     are removed, all their anchors will be automatically removed.
+/// 
+///     \div {class="float-left"}
+///     \inlineimage simpleanchorlayout-example.png Using an anchor layout to align simple colored widgets.
+///     \enddiv
+/// 
+///     Anchors are always set up between edges of an item, where the "center" is also considered to
+///     be an edge. Consider the following example:
+/// 
+///     \snippet graphicsview/simpleanchorlayout/main.cpp adding anchors
+/// 
+///     Here, the right edge of item \c a is anchored to the left edge of item \c b and the bottom
+///     edge of item \c a is anchored to the top edge of item \c b, with the result that
+///     item \c b will be placed diagonally to the right and below item \c b.
+/// 
+///     The addCornerAnchors() function provides a simpler way of anchoring the corners
+///     of two widgets than the two individual calls to addAnchor() shown in the code
+///     above. Here, we see how a widget can be anchored to the top-left corner of the enclosing
+///     layout:
+/// 
+///     \snippet graphicsview/simpleanchorlayout/main.cpp adding a corner anchor
+/// 
+///     In cases where anchors are used to match the widths or heights of widgets, it is
+///     convenient to use the addAnchors() function. As with the other functions for specifying
+///     anchors, it can also be used to anchor a widget to a layout.
+/// 
+///     \section1 Size Hints and Size Policies in an Anchor Layout
+/// 
+///     QGraphicsAnchorLayout respects each item's size hints and size policies.
+///     Note that there are some properties of QSizePolicy that are \l{Known issues}{not respected}.
+/// 
+///     \section1 Spacing within an Anchor Layout
+/// 
+///     The layout may distribute some space between the items. If the spacing has not been
+///     explicitly specified, the actual amount of space will usually be 0.
+/// 
+///     However, if the first edge is the \e opposite of the second edge (e.g., the right edge
+///     of the first widget is anchored to the left edge of the second widget), the size of the
+///     anchor will be queried from the style through a pixel metric:
+///     \l{QStyle::}{PM_LayoutHorizontalSpacing} for horizontal anchors and
+///     \l{QStyle::}{PM_LayoutVerticalSpacing} for vertical anchors.
+/// 
+///     If the spacing is negative, the items will overlap to some extent.
+/// 
+/// 
+///     \section1 Known Issues
+///     There are some features that QGraphicsAnchorLayout currently does not support.
+///     This might change in the future, so avoid using these features if you want to
+///     avoid any future regressions in behaviour:
+///     \list
+/// 
+///     \li Stretch factors are not respected.
+/// 
+///     \li QSizePolicy::ExpandFlag is not respected.
+/// 
+///     \li Height for width is not respected.
+/// 
+///     \endlist
+/// 
+///     \sa QGraphicsLinearLayout, QGraphicsGridLayout, QGraphicsLayout
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsAnchorLayout : GraphicsLayout {
     add_anchor(first_item: *GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: *GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> GraphicsAnchor?,
     anchor(first_item: *GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: *GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> GraphicsAnchor?,
     add_corner_anchors(first_item: *GraphicsLayoutItemType, first_corner: Rute::Corner, second_item: *GraphicsLayoutItemType, second_corner: Rute::Corner),
     add_anchors(first_item: *GraphicsLayoutItemType, second_item: *GraphicsLayoutItemType, orientations: Rute::Orientations),
+    ///     Sets the default horizontal spacing for the anchor layout to \a spacing.
+    /// 
+    ///     \sa horizontalSpacing(), setVerticalSpacing(), setSpacing()
     set_horizontal_spacing(spacing: f32),
+    ///     Sets the default vertical spacing for the anchor layout to \a spacing.
+    /// 
+    ///     \sa verticalSpacing(), setHorizontalSpacing(), setSpacing()
     set_vertical_spacing(spacing: f32),
+    ///     Sets the default horizontal and the default vertical spacing for the anchor layout to \a spacing.
+    /// 
+    ///     If an item is anchored with no spacing associated with the anchor, it will use the default
+    ///     spacing.
+    /// 
+    ///     QGraphicsAnchorLayout does not support negative spacings. Setting a negative value will unset the
+    ///     previous spacing and make the layout use the spacing provided by the current widget style.
+    /// 
+    ///     \sa setHorizontalSpacing(), setVerticalSpacing()
     set_spacing(spacing: f32),
+    ///     Returns the default horizontal spacing for the anchor layout.
+    /// 
+    ///     \sa verticalSpacing(), setHorizontalSpacing()
     horizontal_spacing() -> f32,
+    ///     Returns the default vertical spacing for the anchor layout.
+    /// 
+    ///     \sa horizontalSpacing(), setVerticalSpacing()
     vertical_spacing() -> f32,
+    ///     Removes the layout item at \a index without destroying it. Ownership of
+    ///     the item is transferred to the caller.
+    /// 
+    ///     Removing an item will also remove any of the anchors associated with it.
+    /// 
+    ///     \sa itemAt(), count()
     [event] remove_at(index: i32),
+    ///     \reimp
     [event] count() -> i32,
+    ///     \reimp
     [event] item_at(index: i32) -> GraphicsLayoutItem?,
+    ///     \reimp
     [event] invalidate(),
+    ///     \reimp
     [event] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
 }
 

@@ -1,3 +1,12 @@
+///     \class QPlatformBackingStore
+///     \since 5.0
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+/// 
+///     \brief The QPlatformBackingStore class provides the drawing area for top-level
+///     windows.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPlatformBackingStore)]
 enum TextureFlag {
     TextureSwizzle,
@@ -7,17 +16,33 @@ enum TextureFlag {
 
 
 struct PlatformBackingStore {
+    ///     Returns a pointer to the top-level window associated with this
+    ///     surface.
     window() -> Window?,
+    ///     Returns a pointer to the backing store associated with this
+    ///     surface.
     backing_store() -> BackingStore?,
     [event] paint_device() -> PaintDevice?,
     [event] flush(window: *WindowType, region: &RegionType, offset: &PointType),
     [event] compose_and_flush(window: *WindowType, region: &RegionType, offset: &PointType, textures: *PlatformTextureListType, translucent_background: bool),
     [event] to_image() -> Image,
     to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: PlatformBackingStore::TextureFlags *) -> i32,
+    ///     Accessor for a backingstores graphics buffer abstraction
     [event] graphics_buffer() -> PlatformGraphicsBuffer?,
     [event] resize(size: &SizeType, static_contents: &RegionType),
+    ///     Scrolls the given \a area \a dx pixels to the right and \a dy
+    ///     downward; both \a dx and \a dy may be negative.
+    /// 
+    ///     Returns \c true if the area was scrolled successfully; false otherwise.
     [event] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
+    ///     This function is called before painting onto the surface begins,
+    ///     with the \a region in which the painting will occur.
+    /// 
+    ///     \sa endPaint(), paintDevice()
     [event] begin_paint(arg0: &RegionType),
+    ///     This function is called after painting onto the surface has ended.
+    /// 
+    ///     \sa beginPaint(), paintDevice()
     [event] end_paint(),
 }
 

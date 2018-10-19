@@ -1,3 +1,17 @@
+///     \class QHelpEvent
+///     \brief The QHelpEvent class provides an event that is used to request helpful information
+///     about a particular point in a widget.
+/// 
+///     \ingroup events
+///     \ingroup helpsystem
+///     \inmodule QtGui
+/// 
+///     This event can be intercepted in applications to provide tooltips
+///     or "What's This?" help for custom widgets. The type() can be
+///     either QEvent::ToolTip or QEvent::WhatsThis.
+/// 
+///     \sa QToolTip, QWhatsThis, QStatusTipEvent, QWhatsThisClickedEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct HelpEvent : Event {
     x() -> i32,
     y() -> i32,

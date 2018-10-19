@@ -1,4 +1,17 @@
+///     \class QWindowStateChangeEvent
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QWindowStateChangeEvent class provides the window state before a
+///     window state change.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct WindowStateChangeEvent : Event {
+    ///     \class QWindowStateChangeEvent
+    ///     \ingroup events
+    ///     \inmodule QtGui
+    /// 
+    ///     \brief The QWindowStateChangeEvent class provides the window state before a
+    ///     window state change.
     old_state() -> Rute::WindowStates,
     is_override() -> bool,
 }

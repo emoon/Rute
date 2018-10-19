@@ -1,3 +1,43 @@
+///     \class QTextBlockFormat
+///     \reentrant
+/// 
+///     \brief The QTextBlockFormat class provides formatting information for
+///     blocks of text in a QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     A document is composed of a list of blocks, represented by QTextBlock
+///     objects. Each block can contain an item of some kind, such as a
+///     paragraph of text, a table, a list, or an image. Every block has an
+///     associated QTextBlockFormat that specifies its characteristics.
+/// 
+///     To cater for left-to-right and right-to-left languages you can set
+///     a block's direction with setDirection(). Paragraph alignment is
+///     set with setAlignment(). Margins are controlled by setTopMargin(),
+///     setBottomMargin(), setLeftMargin(), setRightMargin(). Overall
+///     indentation is set with setIndent(), the indentation of the first
+///     line with setTextIndent().
+/// 
+///     Line spacing is set with setLineHeight() and retrieved via lineHeight()
+///     and lineHeightType(). The types of line spacing available are in the
+///     LineHeightTypes enum.
+/// 
+///     Line breaking can be enabled and disabled with setNonBreakableLines().
+/// 
+///     The brush used to paint the paragraph's background
+///     is set with \l{QTextFormat::setBackground()}{setBackground()}, and other
+///     aspects of the text's appearance can be customized by using the
+///     \l{QTextFormat::setProperty()}{setProperty()} function with the
+///     \c OutlinePen, \c ForegroundBrush, and \c BackgroundBrush
+///     \l{QTextFormat::Property} values.
+/// 
+///     If a text block is part of a list, it can also have a list format that
+///     is accessible with the listFormat() function.
+/// 
+///     \sa QTextBlock, QTextCharFormat
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextBlockFormat)]
 enum LineHeightTypes {
     SingleHeight,
@@ -31,7 +71,16 @@ struct TextBlockFormat : TextFormat {
     non_breakable_lines() -> bool,
     set_page_break_policy(flags: TextFormat::PageBreakFlags),
     page_break_policy() -> TextFormat::PageBreakFlags,
+    ///     \since 4.4
+    ///     Sets the tab positions for the text block to those specified by
+    ///     \a tabs.
+    /// 
+    ///     \sa tabPositions()
     set_tab_positions(tabs: onst QList<QTextOption::Tab> &),
+    ///     \since 4.4
+    ///     Returns a list of tab positions defined for the text block.
+    /// 
+    ///     \sa setTabPositions()
     tab_positions() -> List<QTextOption::Tab>,
 }
 

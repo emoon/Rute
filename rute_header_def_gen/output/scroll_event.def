@@ -1,3 +1,18 @@
+///     \class QScrollEvent
+///     \since 4.8
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QScrollEvent class is sent when scrolling.
+/// 
+///     The scroll event is sent to indicate that the receiver should be scrolled.
+///     Usually the receiver should be something visual like QWidget or QGraphicsObject.
+/// 
+///     Some care should be taken that no conflicting QScrollEvents are sent from two
+///     sources. Using QScroller::scrollTo is save however.
+/// 
+///     \sa QScrollPrepareEvent, QScroller
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QScrollEvent)]
 enum ScrollState {
     ScrollStarted,
@@ -6,8 +21,19 @@ enum ScrollState {
 }
 
 struct ScrollEvent : Event {
+    ///     Returns the new scroll position.
     content_pos() -> PointF,
+    ///     Returns the new overshoot distance.
+    ///     See QScroller for an explanation of the term overshoot.
+    /// 
+    ///     \sa QScroller
     overshoot_distance() -> PointF,
+    ///     Returns the current scroll state as a combination of ScrollStateFlag values.
+    ///     ScrollStarted (or ScrollFinished) will be set, if this scroll event is the first (or last) event in a scrolling activity.
+    ///     Please note that both values can be set at the same time, if the activity consists of a single QScrollEvent.
+    ///     All other scroll events in between will have their state set to ScrollUpdated.
+    /// 
+    ///     A widget could for example revert selections when scrolling is started and stopped.
     scroll_state() -> ScrollEvent::ScrollState,
 }
 

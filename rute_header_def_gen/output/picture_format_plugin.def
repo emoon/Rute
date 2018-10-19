@@ -1,5 +1,42 @@
+///     \obsolete
+/// 
+///     \class QPictureFormatPlugin
+///     \brief The QPictureFormatPlugin class provides an abstract base
+///     for custom picture format plugins.
+/// 
+///     \ingroup plugins
+///     \inmodule QtGui
+/// 
+///     The picture format plugin is a simple plugin interface that makes
+///     it easy to create custom picture formats that can be used
+///     transparently by applications.
+/// 
+///     Writing an picture format plugin is achieved by subclassing this
+///     base class, reimplementing the pure virtual functions
+///     loadPicture(), savePicture(), and installIOHandler(), and
+///     exporting the class with the Q_PLUGIN_METADATA() macro.
+/// 
+///     The json file containing the metadata should contain one entry
+///     with the list of picture formats supported by the plugin:
+/// 
+///     \code
+///     { "Keys": [ "mypictureformat" ] }
+///     \endcode
+/// 
+///     \sa {How to Create Qt Plugins}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PictureFormatPlugin : Object {
+    ///     Loads the picture stored in the file called \a fileName, with the
+    ///     given \a format, into *\a picture. Returns \c true on success;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa savePicture()
     [event] load_picture(format: String, filename: String, pic: *PictureType) -> bool,
+    ///     Saves the given \a picture into the file called \a fileName,
+    ///     using the specified \a format. Returns \c true on success; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa loadPicture()
     [event] save_picture(format: String, filename: String, pic: &PictureType) -> bool,
     [event] install_io_handler(format: String) -> bool,
 }

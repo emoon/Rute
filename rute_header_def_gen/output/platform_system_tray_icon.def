@@ -1,3 +1,10 @@
+///     \class QPlatformSystemTrayIcon
+///     \inmodule QtGui
+///     \brief The QPlatformSystemTrayIcon class abstracts the system tray icon and interaction.
+/// 
+///     \internal
+///     \sa QSystemTrayIcon
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPlatformSystemTrayIcon)]
 enum ActivationReason {
     Unknown,

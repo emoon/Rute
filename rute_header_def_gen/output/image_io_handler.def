@@ -1,3 +1,36 @@
+///     \class QImageIOHandler
+///     \brief The QImageIOHandler class defines the common image I/O
+///     interface for all image formats in Qt.
+///     \reentrant
+///     \inmodule QtGui
+/// 
+///     Qt uses QImageIOHandler for reading and writing images through
+///     QImageReader and QImageWriter. You can also derive from this class
+///     to write your own image format handler using Qt's plugin mechanism.
+/// 
+///     Call setDevice() to assign a device to the handler, and
+///     setFormat() to assign a format to it. One QImageIOHandler may
+///     support more than one image format. canRead() returns \c true if an
+///     image can be read from the device, and read() and write() return
+///     true if reading or writing an image was completed successfully.
+/// 
+///     QImageIOHandler also has support for animations formats, through
+///     the functions loopCount(), imageCount(), nextImageDelay() and
+///     currentImageNumber().
+/// 
+///     In order to determine what options an image handler supports, Qt
+///     will call supportsOption() and setOption(). Make sure to
+///     reimplement these functions if you can provide support for any of
+///     the options in the ImageOption enum.
+/// 
+///     To write your own image handler, you must at least reimplement
+///     canRead() and read(). Then create a QImageIOPlugin that
+///     can create the handler. Finally, install your plugin, and
+///     QImageReader and QImageWriter will then automatically load the
+///     plugin, and start using it.
+/// 
+///     \sa QImageIOPlugin, QImageReader, QImageWriter
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QImageIOHandler)]
 enum ImageOption {
     Size,
@@ -36,24 +69,109 @@ enum Transformation {
 
 
 struct ImageIOHandler {
+    ///     Sets the device of the QImageIOHandler to \a device. The image
+    ///     handler will use this device when reading and writing images.
+    /// 
+    ///     The device can only be set once and must be set before calling
+    ///     canRead(), read(), write(), etc. If you need to read multiple
+    ///     files, construct multiple instances of the appropriate
+    ///     QImageIOHandler subclass.
+    /// 
+    ///     \sa device()
     set_device(device: *IODeviceType),
+    ///     Returns the device currently assigned to the QImageIOHandler. If
+    ///     not device has been assigned, 0 is returned.
     device() -> IODevice?,
+    ///     Sets the format of the QImageIOHandler to \a format. The format is
+    ///     most useful for handlers that support multiple image formats.
+    /// 
+    ///     This function is declared const so that it can be called from canRead().
+    /// 
+    ///     \sa format()
     set_format(format: &ByteArrayType),
+    ///     Sets the format of the QImageIOHandler to \a format. The format is
+    ///     most useful for handlers that support multiple image formats.
+    /// 
+    ///     This function is declared const so that it can be called from canRead().
+    /// 
+    ///     \sa format()
     set_format(format: &ByteArrayType),
+    ///     Returns the format that is currently assigned to
+    ///     QImageIOHandler. If no format has been assigned, an empty string
+    ///     is returned.
+    /// 
+    ///     \sa setFormat()
     format() -> ByteArray,
+    ///     \obsolete
+    /// 
+    ///     Use format() instead.
     [event] name() -> ByteArray,
     [event] can_read() -> bool,
     [event] read(image: *ImageType) -> bool,
+    ///     Writes the image \a image to the assigned device. Returns \c true on
+    ///     success; otherwise returns \c false.
+    /// 
+    ///     The default implementation does nothing, and simply returns \c false.
     [event] write(image: &ImageType) -> bool,
+    ///     Returns the value assigned to \a option as a QVariant. The type of
+    ///     the value depends on the option. For example, option(Size) returns
+    ///     a QSize variant.
+    /// 
+    ///     \sa setOption(), supportsOption()
     [event] option(option: ImageIOHandler::ImageOption) -> Variant,
+    ///     Sets the option \a option with the value \a value.
+    /// 
+    ///     \sa option(), ImageOption
     [event] set_option(option: ImageIOHandler::ImageOption, value: &VariantType),
+    ///     Returns \c true if the QImageIOHandler supports the option \a option;
+    ///     otherwise returns \c false. For example, if the QImageIOHandler
+    ///     supports the \l Size option, supportsOption(Size) must return
+    ///     true.
+    /// 
+    ///     \sa setOption(), option()
     [event] supports_option(option: ImageIOHandler::ImageOption) -> bool,
+    ///    For image formats that support animation, this function jumps to the
+    ///    next image.
+    /// 
+    ///    The default implementation does nothing, and returns \c false.
     [event] jump_to_next_image() -> bool,
+    ///    For image formats that support animation, this function jumps to the image
+    ///    whose sequence number is \a imageNumber. The next call to read() will
+    ///    attempt to read this image.
+    /// 
+    ///    The default implementation does nothing, and returns \c false.
     [event] jump_to_image(image_number: i32) -> bool,
+    ///     For image formats that support animation, this function returns
+    ///     the number of times the animation should loop. If the image format
+    ///     does not support animation, 0 is returned.
     [event] loop_count() -> i32,
+    ///     For image formats that support animation, this function returns
+    ///     the number of images in the animation. If the image format does
+    ///     not support animation, or if it is unable to determine the number
+    ///     of images, 0 is returned.
+    /// 
+    ///     The default implementation returns 1 if canRead() returns \c true;
+    ///     otherwise 0 is returned.
     [event] image_count() -> i32,
+    ///     For image formats that support animation, this function returns
+    ///     the number of milliseconds to wait until reading the next
+    ///     image. If the image format does not support animation, 0 is
+    ///     returned.
     [event] next_image_delay() -> i32,
+    ///     For image formats that support animation, this function returns
+    ///     the sequence number of the current image in the animation. If
+    ///     this function is called before any image is read(), -1 is
+    ///     returned. The number of the first image in the sequence is 0.
+    /// 
+    ///     If the image format does not support animation, 0 is returned.
+    /// 
+    ///     \sa read()
     [event] current_image_number() -> i32,
+    ///     Returns the rect of the current image. If no rect is defined for the
+    ///     image, and empty QRect() is returned.
+    /// 
+    ///     This function is useful for animations, where only parts of the frame
+    ///     may be updated at a time.
     [event] current_image_rect() -> Rect,
 }
 

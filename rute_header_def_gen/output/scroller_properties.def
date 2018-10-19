@@ -1,3 +1,19 @@
+///     \class QScrollerProperties
+///     \brief The QScrollerProperties class stores the settings for a QScroller.
+///     \since 4.8
+/// 
+///     \inmodule QtWidgets
+/// 
+///     The QScrollerProperties class stores the parameters used by QScroller.
+/// 
+///     The default settings are platform dependent so that Qt emulates the
+///     platform behaviour for kinetic scrolling.
+/// 
+///     As a convention the QScrollerProperties are in physical units (meter,
+///     seconds) and are converted by QScroller using the current DPI.
+/// 
+///     \sa QScroller
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QScrollerProperties)]
 enum OvershootPolicy {
     OvershootWhenScrollable,
@@ -40,7 +56,21 @@ enum ScrollMetric {
 
 
 struct ScrollerProperties {
+    ///      Sets the scroller properties for all new QScrollerProperties objects to \a sp.
+    /// 
+    ///      Use this function to override the platform default properties returned by the default
+    ///      constructor. If you only want to change the scroller properties of a single scroller, use
+    ///      QScroller::setScrollerProperties()
+    /// 
+    ///      \note Calling this function will not change the content of already existing
+    ///      QScrollerProperties objects.
+    /// 
+    ///      \sa unsetDefaultScrollerProperties()
     [static] set_default_scroller_properties(sp: &ScrollerPropertiesType),
+    ///      Sets the scroller properties returned by the default constructor back to the platform default
+    ///      properties.
+    /// 
+    ///      \sa setDefaultScrollerProperties()
     [static] unset_default_scroller_properties(),
 }
 

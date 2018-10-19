@@ -1,8 +1,74 @@
+///     \class QIntValidator
+///     \brief The QIntValidator class provides a validator that ensures
+///     a string contains a valid integer within a specified range.
+///     \inmodule QtGui
+/// 
+///     Example of use:
+/// 
+///     \snippet code/src_gui_util_qvalidator.cpp 0
+/// 
+///     Below we present some examples of validators. In practice they would
+///     normally be associated with a widget as in the example above.
+/// 
+///     \snippet code/src_gui_util_qvalidator.cpp 1
+/// 
+///     Notice that the value \c 999 returns Intermediate. Values
+///     consisting of a number of digits equal to or less than the max
+///     value are considered intermediate. This is intended because the
+///     digit that prevents a number from being in range is not necessarily the
+///     last digit typed. This also means that an intermediate number can
+///     have leading zeros.
+/// 
+///     The minimum and maximum values are set in one call with setRange(),
+///     or individually with setBottom() and setTop().
+/// 
+///     QIntValidator uses its locale() to interpret the number. For example,
+///     in Arabic locales, QIntValidator will accept Arabic digits.
+/// 
+///     \note The QLocale::NumberOptions set on the locale() also affect the
+///     way the number is interpreted. For example, since QLocale::RejectGroupSeparator
+///     is not set by default, the validator will accept group separators. It is thus
+///     recommended to use QLocale::toInt() to obtain the numeric value.
+/// 
+///     \sa QDoubleValidator, QRegExpValidator, QLocale::toInt(), {Line Edits Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct IntValidator : Validator {
+    ///     \fn QValidator::State QIntValidator::validate(QString &input, int &pos) const
+    /// 
+    ///     Returns \l Acceptable if the \a input is an integer within the
+    ///     valid range, \l Intermediate if the \a input is a prefix of an integer in the
+    ///     valid range, and \l Invalid otherwise.
+    /// 
+    ///     If the valid range consists of just positive integers (e.g., 32 to 100)
+    ///     and \a input is a negative integer, then Invalid is returned. (On the other
+    ///     hand, if the range consists of negative integers (e.g., -100 to -32) and
+    ///     \a input is a positive integer, then Intermediate is returned, because
+    ///     the user might be just about to type the minus (especially for right-to-left
+    ///     languages).
+    /// 
+    ///     \snippet code/src_gui_util_qvalidator.cpp 2
+    /// 
+    ///     By default, the \a pos parameter is not used by this validator.
     [event] validate(arg0: String, arg1: &i32) -> Validator::State,
     [event] fixup(input: String),
+    ///     \property QIntValidator::bottom
+    ///     \brief the validator's lowest acceptable value
+    /// 
+    ///     By default, this property's value is derived from the lowest signed
+    ///     integer available (typically -2147483647).
+    /// 
+    ///     \sa setRange()
     set_bottom(arg0: i32),
+    ///     \property QIntValidator::top
+    ///     \brief the validator's highest acceptable value
+    /// 
+    ///     By default, this property's value is derived from the highest signed
+    ///     integer available (typically 2147483647).
+    /// 
+    ///     \sa setRange()
     set_top(arg0: i32),
+    ///     Sets the range of the validator to only accept integers between \a
+    ///     bottom and \a top inclusive.
     [event] set_range(bottom: i32, top: i32),
     bottom() -> i32,
     top() -> i32,

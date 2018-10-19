@@ -1,3 +1,54 @@
+///     \class QListWidgetItem
+///     \brief The QListWidgetItem class provides an item for use with the
+///     QListWidget item view class.
+/// 
+///     \ingroup model-view
+///     \inmodule QtWidgets
+/// 
+///     A QListWidgetItem represents a single item in a QListWidget. Each item can
+///     hold several pieces of information, and will display them appropriately.
+/// 
+///     The item view convenience classes use a classic item-based interface rather
+///     than a pure model/view approach. For a more flexible list view widget,
+///     consider using the QListView class with a standard model.
+/// 
+///     List items can be inserted automatically into a list, when they are
+///     constructed, by specifying the list widget:
+/// 
+///     \snippet qlistwidget-using/mainwindow.cpp 2
+/// 
+///     Alternatively, list items can also be created without a parent widget, and
+///     later inserted into a list using QListWidget::insertItem().
+/// 
+///     List items are typically used to display text() and an icon(). These are
+///     set with the setText() and setIcon() functions. The appearance of the text
+///     can be customized with setFont(), setForeground(), and setBackground().
+///     Text in list items can be aligned using the setTextAlignment() function.
+///     Tooltips, status tips and "What's This?" help can be added to list items
+///     with setToolTip(), setStatusTip(), and setWhatsThis().
+/// 
+///     By default, items are enabled, selectable, checkable, and can be the source
+///     of drag and drop operations.
+/// 
+///     Each item's flags can be changed by calling setFlags() with the appropriate
+///     value (see Qt::ItemFlags). Checkable items can be checked, unchecked and
+///     partially checked with the setCheckState() function. The corresponding
+///     checkState() function indicates the item's current check state.
+/// 
+///     The isHidden() function can be used to determine whether the item is
+///     hidden. To hide an item, use setHidden().
+/// 
+/// 
+///     \section1 Subclassing
+/// 
+///     When subclassing QListWidgetItem to provide custom items, it is possible to
+///     define new types for them enabling them to be distinguished from standard
+///     items. For subclasses that require this feature, ensure that you call the
+///     base class constructor with a new type value equal to or greater than
+///     \l UserType, within \e your constructor.
+/// 
+///     \sa QListWidget, {Model/View Programming}, QTreeWidgetItem, QTableWidgetItem
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QListWidgetItem)]
 enum ItemType {
     Type,
@@ -6,6 +57,7 @@ enum ItemType {
 
 
 struct ListWidgetItem {
+    ///     Creates an exact copy of the item.
     [event] clone() -> ListWidgetItem?,
     list_widget() -> ListWidget?,
     set_selected(select: bool),
@@ -13,6 +65,11 @@ struct ListWidgetItem {
     set_hidden(hide: bool),
     is_hidden() -> bool,
     flags() -> Rute::ItemFlags,
+    ///     \fn void QListWidgetItem::setFlags(Qt::ItemFlags flags)
+    /// 
+    ///     Sets the item flags for the list item to \a flags.
+    /// 
+    ///     \sa Qt::ItemFlags
     set_flags(flags: Rute::ItemFlags),
     text() -> String,
     set_text(text: String),
@@ -40,9 +97,26 @@ struct ListWidgetItem {
     set_check_state(state: Rute::CheckState),
     size_hint() -> Size,
     set_size_hint(size: &SizeType),
+    ///     Returns the item's data for a given \a role. Reimplement this function if
+    ///     you need extra roles or special behavior for certain roles.
+    /// 
+    ///     \sa Qt::ItemDataRole, setData()
     [event] data(role: i32) -> Variant,
+    ///     Sets the data for a given \a role to the given \a value. Reimplement this
+    ///     function if you need extra roles or special behavior for certain roles.
+    /// 
+    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole as
+    ///     referring to the same data.
+    /// 
+    ///     \sa Qt::ItemDataRole, data()
     [event] set_data(role: i32, value: &VariantType),
+    ///     Reads the item from stream \a in.
+    /// 
+    ///     \sa write()
     [event] read(in: &DataStreamType),
+    ///     Writes the item to stream \a out.
+    /// 
+    ///     \sa read()
     [event] write(out: &DataStreamType),
     type() -> i32,
 }

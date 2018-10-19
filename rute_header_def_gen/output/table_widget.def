@@ -1,57 +1,289 @@
+///     \class QTableWidget
+///     \brief The QTableWidget class provides an item-based table view with a default model.
+/// 
+///     \ingroup model-view
+///     \inmodule QtWidgets
+/// 
+///     \image windows-tableview.png
+/// 
+///     Table widgets provide standard table display facilities for applications.
+///     The items in a QTableWidget are provided by QTableWidgetItem.
+/// 
+///     If you want a table that uses your own data model you should
+///     use QTableView rather than this class.
+/// 
+///     Table widgets can be constructed with the required numbers of rows and
+///     columns:
+/// 
+///     \snippet qtablewidget-using/mainwindow.cpp 0
+/// 
+///     Alternatively, tables can be constructed without a given size and resized
+///     later:
+/// 
+///     \snippet qtablewidget-resizing/mainwindow.cpp 0
+///     \snippet qtablewidget-resizing/mainwindow.cpp 1
+/// 
+///     Items are created outside the table (with no parent widget) and inserted
+///     into the table with setItem():
+/// 
+///     \snippet qtablewidget-resizing/mainwindow.cpp 2
+/// 
+///     If you want to enable sorting in your table widget, do so after you
+///     have populated it with items, otherwise sorting may interfere with
+///     the insertion order (see setItem() for details).
+/// 
+///     Tables can be given both horizontal and vertical headers. The simplest way
+///     to create the headers is to supply a list of strings to the
+///     setHorizontalHeaderLabels() and setVerticalHeaderLabels() functions. These
+///     will provide simple textual headers for the table's columns and rows.
+///     More sophisticated headers can be created from existing table items
+///     that are usually constructed outside the table. For example, we can
+///     construct a table item with an icon and aligned text, and use it as the
+///     header for a particular column:
+/// 
+///     \snippet qtablewidget-using/mainwindow.cpp 2
+/// 
+///     The number of rows in the table can be found with rowCount(), and the
+///     number of columns with columnCount(). The table can be cleared with the
+///     clear() function.
+/// 
+///     \sa QTableWidgetItem, QTableView, {Model/View Programming}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TableWidget : TableView {
+    ///     Sets the number of rows in this table's model to \a rows. If
+    ///     this is less than rowCount(), the data in the unwanted rows
+    ///     is discarded.
+    /// 
+    ///     \sa setColumnCount()
     set_row_count(rows: i32),
+    ///   Returns the number of rows.
     row_count() -> i32,
+    ///     Sets the number of columns in this table's model to \a columns. If
+    ///     this is less than columnCount(), the data in the unwanted columns
+    ///     is discarded.
+    /// 
+    ///     \sa setRowCount()
     set_column_count(columns: i32),
+    ///   Returns the number of columns.
     column_count() -> i32,
+    ///   Returns the row for the \a item.
     row(item: *TableWidgetItemType) -> i32,
+    ///   Returns the column for the \a item.
     column(item: *TableWidgetItemType) -> i32,
+    ///     Returns the item for the given \a row and \a column if one has been set; otherwise
+    ///     returns 0.
+    /// 
+    ///     \sa setItem()
     item(row: i32, column: i32) -> TableWidgetItem?,
+    ///     Sets the item for the given \a row and \a column to \a item.
+    /// 
+    ///     The table takes ownership of the item.
+    /// 
+    ///     Note that if sorting is enabled (see
+    ///     \l{QTableView::sortingEnabled} {sortingEnabled}) and \a column is
+    ///     the current sort column, the \a row will be moved to the sorted
+    ///     position determined by \a item.
+    /// 
+    ///     If you want to set several items of a particular row (say, by
+    ///     calling setItem() in a loop), you may want to turn off sorting
+    ///     before doing so, and turn it back on afterwards; this will allow
+    ///     you to use the same \a row argument for all items in the same row
+    ///     (i.e. setItem() will not move the row).
+    /// 
+    ///     \sa item(), takeItem()
     set_item(row: i32, column: i32, item: *TableWidgetItemType),
+    ///     Removes the item at \a row and \a column from the table without deleting it.
     take_item(row: i32, column: i32) -> TableWidgetItem?,
+    ///   Returns the vertical header item for row \a row.
     vertical_header_item(row: i32) -> TableWidgetItem?,
+    ///   Sets the vertical header item for row \a row to \a item.
     set_vertical_header_item(row: i32, item: *TableWidgetItemType),
+    ///   \since 4.1
+    ///     Removes the vertical header item at \a row from the header without deleting it.
     take_vertical_header_item(row: i32) -> TableWidgetItem?,
+    ///     Returns the horizontal header item for column, \a column, if one has been
+    ///     set; otherwise returns 0.
     horizontal_header_item(column: i32) -> TableWidgetItem?,
+    ///   Sets the horizontal header item for column \a column to \a item.
+    ///   If necessary, the column count is increased to fit the item.
+    ///   The previous header item (if there was one) is deleted.
     set_horizontal_header_item(column: i32, item: *TableWidgetItemType),
+    ///   \since 4.1
+    ///     Removes the horizontal header item at \a column from the header without deleting it.
     take_horizontal_header_item(column: i32) -> TableWidgetItem?,
+    ///   Sets the vertical header labels using \a labels.
     set_vertical_header_labels(labels: &[String]),
+    ///   Sets the horizontal header labels using \a labels.
     set_horizontal_header_labels(labels: &[String]),
+    ///     Returns the row of the current item.
+    /// 
+    ///     \sa currentColumn(), setCurrentCell()
     current_row() -> i32,
+    ///     Returns the column of the current item.
+    /// 
+    ///     \sa currentRow(), setCurrentCell()
     current_column() -> i32,
+    ///     Returns the current item.
+    /// 
+    ///     \sa setCurrentItem()
     current_item() -> TableWidgetItem?,
+    ///   \since 4.4
+    /// 
+    ///   Sets the current item to be \a item, using the given \a command.
+    /// 
+    ///   \sa currentItem(), setCurrentCell()
     set_current_item(item: *TableWidgetItemType),
+    ///   \since 4.4
+    /// 
+    ///   Sets the current item to be \a item, using the given \a command.
+    /// 
+    ///   \sa currentItem(), setCurrentCell()
     set_current_item(item: *TableWidgetItemType, command: ItemSelectionModel::SelectionFlags),
+    ///   \since 4.4
+    /// 
+    ///   Sets the current cell to be the cell at position (\a row, \a
+    ///   column), using the given \a command.
+    /// 
+    ///   \sa setCurrentItem(), currentRow(), currentColumn()
     set_current_cell(row: i32, column: i32),
+    ///   \since 4.4
+    /// 
+    ///   Sets the current cell to be the cell at position (\a row, \a
+    ///   column), using the given \a command.
+    /// 
+    ///   \sa setCurrentItem(), currentRow(), currentColumn()
     set_current_cell(row: i32, column: i32, command: ItemSelectionModel::SelectionFlags),
+    ///   Sorts all the rows in the table widget based on \a column and \a order.
     sort_items(column: i32, order: Rute::SortOrder),
+    ///     \internal
     set_sorting_enabled(enable: bool),
+    ///     \internal
     is_sorting_enabled() -> bool,
+    ///   Starts editing the \a item if it is editable.
     edit_item(item: *TableWidgetItemType),
+    ///   Opens an editor for the give \a item. The editor remains open after editing.
+    /// 
+    ///   \sa closePersistentEditor(), isPersistentEditorOpen()
     open_persistent_editor(item: *TableWidgetItemType),
+    ///   Closes the persistent editor for \a item.
+    /// 
+    ///   \sa openPersistentEditor(), isPersistentEditorOpen()
     close_persistent_editor(item: *TableWidgetItemType),
+    ///     \since 5.10
+    /// 
+    ///     Returns whether a persistent editor is open for item \a item.
+    /// 
+    ///     \sa openPersistentEditor(), closePersistentEditor()
     is_persistent_editor_open(item: *TableWidgetItemType) -> bool,
+    ///     \since 4.1
+    /// 
+    ///     Returns the widget displayed in the cell in the given \a row and \a column.
+    /// 
+    ///     \note The table takes ownership of the widget.
+    /// 
+    ///     \sa setCellWidget()
     cell_widget(row: i32, column: i32) -> Widget?,
+    ///     \since 4.1
+    /// 
+    ///     Sets the given \a widget to be displayed in the cell in the given \a row
+    ///     and \a column, passing the ownership of the widget to the table.
+    /// 
+    ///     If cell widget A is replaced with cell widget B, cell widget A will be
+    ///     deleted. For example, in the code snippet below, the QLineEdit object will
+    ///     be deleted.
+    /// 
+    ///     \snippet code/src_gui_itemviews_qtablewidget.cpp 0
+    /// 
+    ///     \sa cellWidget()
     set_cell_widget(row: i32, column: i32, widget: *WidgetType),
     remove_cell_widget(row: i32, column: i32),
+    ///   Returns \c true if the \a item is selected, otherwise returns \c false.
+    /// 
+    ///   \obsolete
+    /// 
+    ///   This function is deprecated. Use \l{QTableWidgetItem::isSelected()} instead.
     is_item_selected(item: *TableWidgetItemType) -> bool,
+    ///   Selects or deselects \a item depending on \a select.
+    /// 
+    ///   \obsolete
+    /// 
+    ///   This function is deprecated. Use \l{QTableWidgetItem::setSelected()} instead.
     set_item_selected(item: *TableWidgetItemType, select: bool),
+    ///   Selects or deselects the \a range depending on \a select.
     set_range_selected(range: &TableWidgetSelectionRangeType, select: bool),
+    ///   Returns a list of all selected ranges.
+    /// 
+    ///   \sa QTableWidgetSelectionRange
     selected_ranges() -> [TableWidgetSelectionRange],
+    ///   Returns a list of all selected items.
+    /// 
+    ///   This function returns a list of pointers to the contents of the
+    ///   selected cells. Use the selectedIndexes() function to retrieve the
+    ///   complete selection \e including empty cells.
+    /// 
+    ///   \sa selectedIndexes()
     selected_items() -> [TableWidgetItem?],
+    ///   Finds items that matches the \a text using the given \a flags.
     find_items(text: String, flags: Rute::MatchFlags) -> [TableWidgetItem?],
+    ///   Returns the visual row of the given \a logicalRow.
     visual_row(logical_row: i32) -> i32,
+    ///   Returns the visual column of the given \a logicalColumn.
     visual_column(logical_column: i32) -> i32,
+    ///   \fn QTableWidgetItem *QTableWidget::itemAt(const QPoint &point) const
+    /// 
+    ///   Returns a pointer to the item at the given \a point, or returns 0 if
+    ///   \a point is not covered by an item in the table widget.
+    /// 
+    ///   \sa item()
     item_at(p: &PointType) -> TableWidgetItem?,
+    ///   \fn QTableWidgetItem *QTableWidget::itemAt(const QPoint &point) const
+    /// 
+    ///   Returns a pointer to the item at the given \a point, or returns 0 if
+    ///   \a point is not covered by an item in the table widget.
+    /// 
+    ///   \sa item()
     item_at(x: i32, y: i32) -> TableWidgetItem?,
+    ///   Returns the rectangle on the viewport occupied by the item at \a item.
     visual_item_rect(item: *TableWidgetItemType) -> Rect,
+    ///     Returns the item prototype used by the table.
+    /// 
+    ///     \sa setItemPrototype()
     item_prototype() -> TableWidgetItem?,
+    ///     Sets the item prototype for the table to the specified \a item.
+    /// 
+    ///     The table widget will use the item prototype clone function when it needs
+    ///     to create a new table item.  For example when the user is editing
+    ///     in an empty cell.  This is useful when you have a QTableWidgetItem
+    ///     subclass and want to make sure that QTableWidget creates instances of
+    ///     your subclass.
+    /// 
+    ///     The table takes ownership of the prototype.
+    /// 
+    ///     \sa itemPrototype()
     set_item_prototype(item: *TableWidgetItemType),
+    ///     Scrolls the view if necessary to ensure that the \a item is visible.
+    ///     The \a hint parameter specifies more precisely where the
+    ///     \a item should be located after the operation.
     scroll_to_item(item: *TableWidgetItemType, hint: AbstractItemView::ScrollHint),
+    ///   Inserts an empty row into the table at \a row.
     insert_row(row: i32),
+    ///   Inserts an empty column into the table at \a column.
     insert_column(column: i32),
+    ///   Removes the row \a row and all its items from the table.
     remove_row(row: i32),
+    ///   Removes the column \a column and all its items from the table.
     remove_column(column: i32),
+    ///    Removes all items in the view.
+    ///    This will also remove all selections and headers.
+    ///    If you don't want to remove the headers, use
+    ///    QTableWidget::clearContents().
+    ///    The table dimensions stay the same.
     clear(),
+    ///     \since 4.2
+    /// 
+    ///     Removes all items not in the headers from the view.
+    ///     This will also remove all selections.
+    ///     The table dimensions stay the same.
     clear_contents(),
     [signal] item_pressed(item: *TableWidgetItemType),
     [signal] item_clicked(item: *TableWidgetItemType),
@@ -69,13 +301,43 @@ struct TableWidget : TableView {
     [signal] cell_changed(row: i32, column: i32),
     [signal] current_cell_changed(current_row: i32, current_column: i32, previous_row: i32, previous_column: i32),
     [event] event(e: *EventType) -> bool,
+    ///     Returns a list of MIME types that can be used to describe a list of
+    ///     tablewidget items.
+    /// 
+    ///     \sa mimeData()
     [event] mime_types() -> [String],
+    ///     Returns an object that contains a serialized description of the specified
+    ///     \a items. The format used to describe the items is obtained from the
+    ///     mimeTypes() function.
+    /// 
+    ///     If the list of items is empty, 0 is returned rather than a serialized
+    ///     empty list.
     [event] mime_data(items: [*TableWidgetItemType]) -> MimeData?,
+    ///     Handles the \a data supplied by a drag and drop operation that ended with
+    ///     the given \a action in the given \a row and \a column.
+    ///     Returns \c true if the data and action can be handled by the model;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa supportedDropActions()
     [event] drop_mime_data(row: i32, column: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
+    ///   Returns the drop actions supported by this view.
+    /// 
+    ///   \sa Qt::DropActions
     [event] supported_drop_actions() -> Rute::DropActions,
+    ///   Returns a list of pointers to the items contained in the \a data object.
+    ///   If the object was not created by a QTreeWidget in the same process, the list
+    ///   is empty.
+    /// 
     items(data: *MimeDataType) -> [TableWidgetItem?],
+    ///   \internal
+    ///   \obsolete
+    ///   \overload
     index_from_item(item: *TableWidgetItemType) -> ModelIndex,
+    ///   \internal
+    ///   \obsolete
+    ///   \overload
     index_from_item(item: *TableWidgetItemType) -> ModelIndex,
+    ///   Returns a pointer to the QTableWidgetItem associated with the given \a index.
     item_from_index(index: &ModelIndexType) -> TableWidgetItem?,
     [event] drop_event(event: *DropEventType),
 }

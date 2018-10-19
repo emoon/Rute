@@ -1,3 +1,11 @@
+///     \class QAccessibleTextCursorEvent
+///     \ingroup accessibility
+///     \inmodule QtGui
+/// 
+///     \brief The QAccessibleTextCursorEvent class notifies of cursor movements.
+/// 
+///     This class is used with \l QAccessible::updateAccessibility().
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessibleTextCursorEvent : AccessibleEvent {
     set_cursor_position(position: i32),
     cursor_position() -> i32,

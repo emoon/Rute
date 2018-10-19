@@ -1,6 +1,22 @@
+///     \class QGenericPluginFactory
+///     \ingroup plugins
+///     \inmodule QtGui
+/// 
+///     \brief The QGenericPluginFactory class creates plugin drivers.
+/// 
+///     \sa QGenericPlugin
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct GenericPluginFactory {
+    ///     Returns the list of valid keys, i.e. the available mouse drivers.
+    /// 
+    ///     \sa create()
     [static] keys() -> [String],
+    ///     Creates the driver specified by \a key, using the given \a specification.
+    /// 
+    ///     Note that the keys are case-insensitive.
+    /// 
+    ///     \sa keys()
     [static] create(arg0: String, arg1: String) -> Object?,
 }
 

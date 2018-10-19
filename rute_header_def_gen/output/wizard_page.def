@@ -1,25 +1,277 @@
+///     \class QWizardPage
+///     \since 4.3
+///     \brief The QWizardPage class is the base class for wizard pages.
+/// 
+///     \inmodule QtWidgets
+/// 
+///     QWizard represents a wizard. Each page is a QWizardPage. When
+///     you create your own wizards, you can use QWizardPage directly,
+///     or you can subclass it for more control.
+/// 
+///     A page has the following attributes, which are rendered by
+///     QWizard: a \l title, a \l subTitle, and a \l{setPixmap()}{set of
+///     pixmaps}. See \l{Elements of a Wizard Page} for details. Once a
+///     page is added to the wizard (using QWizard::addPage() or
+///     QWizard::setPage()), wizard() returns a pointer to the
+///     associated QWizard object.
+/// 
+///     Page provides five virtual functions that can be reimplemented to
+///     provide custom behavior:
+/// 
+///     \list
+///     \li initializePage() is called to initialize the page's contents
+///        when the user clicks the wizard's \uicontrol Next button. If you
+///        want to derive the page's default from what the user entered
+///        on previous pages, this is the function to reimplement.
+///     \li cleanupPage() is called to reset the page's contents when the
+///        user clicks the wizard's \uicontrol Back button.
+///     \li validatePage() validates the page when the user clicks \uicontrol
+///        Next or \uicontrol Finish. It is often used to show an error message
+///        if the user has entered incomplete or invalid information.
+///     \li nextId() returns the ID of the next page. It is useful when
+///        \l{creating non-linear wizards}, which allow different
+///        traversal paths based on the information provided by the user.
+///     \li isComplete() is called to determine whether the \uicontrol Next
+///        and/or \uicontrol Finish button should be enabled or disabled. If
+///        you reimplement isComplete(), also make sure that
+///        completeChanged() is emitted whenever the complete state
+///        changes.
+///     \endlist
+/// 
+///     Normally, the \uicontrol Next button and the \uicontrol Finish button of a
+///     wizard are mutually exclusive. If isFinalPage() returns \c true, \uicontrol
+///     Finish is available; otherwise, \uicontrol Next is available. By
+///     default, isFinalPage() is true only when nextId() returns -1. If
+///     you want to show \uicontrol Next and \uicontrol Final simultaneously for a
+///     page (letting the user perform an "early finish"), call
+///     setFinalPage(true) on that page. For wizards that support early
+///     finishes, you might also want to set the
+///     \l{QWizard::}{HaveNextButtonOnLastPage} and
+///     \l{QWizard::}{HaveFinishButtonOnEarlyPages} options on the
+///     wizard.
+/// 
+///     In many wizards, the contents of a page may affect the default
+///     values of the fields of a later page. To make it easy to
+///     communicate between pages, QWizard supports a \l{Registering and
+///     Using Fields}{"field" mechanism} that allows you to register a
+///     field (e.g., a QLineEdit) on a page and to access its value from
+///     any page. Fields are global to the entire wizard and make it easy
+///     for any single page to access information stored by another page,
+///     without having to put all the logic in QWizard or having the
+///     pages know explicitly about each other. Fields are registered
+///     using registerField() and can be accessed at any time using
+///     field() and setField().
+/// 
+///     \sa QWizard, {Class Wizard Example}, {License Wizard Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct WizardPage : Widget {
+    ///     \property QWizardPage::title
+    ///     \brief the title of the page
+    /// 
+    ///     The title is shown by the QWizard, above the actual page. All
+    ///     pages should have a title.
+    /// 
+    ///     The title may be plain text or HTML, depending on the value of the
+    ///     \l{QWizard::titleFormat} property.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa subTitle, {Elements of a Wizard Page}
     set_title(title: String),
     title() -> String,
+    ///     \property QWizardPage::subTitle
+    ///     \brief the subtitle of the page
+    /// 
+    ///     The subtitle is shown by the QWizard, between the title and the
+    ///     actual page. Subtitles are optional. In
+    ///     \l{QWizard::ClassicStyle}{ClassicStyle} and
+    ///     \l{QWizard::ModernStyle}{ModernStyle}, using subtitles is
+    ///     necessary to make the header appear. In
+    ///     \l{QWizard::MacStyle}{MacStyle}, the subtitle is shown as a text
+    ///     label just above the actual page.
+    /// 
+    ///     The subtitle may be plain text or HTML, depending on the value of
+    ///     the \l{QWizard::subTitleFormat} property.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa title, QWizard::IgnoreSubTitles, {Elements of a Wizard Page}
     set_sub_title(sub_title: String),
     sub_title() -> String,
+    ///     Sets the pixmap for role \a which to \a pixmap.
+    /// 
+    ///     The pixmaps are used by QWizard when displaying a page. Which
+    ///     pixmaps are actually used depend on the \l{Wizard Look and
+    ///     Feel}{wizard style}.
+    /// 
+    ///     Pixmaps can also be set for the entire wizard using
+    ///     QWizard::setPixmap(), in which case they apply for all pages that
+    ///     don't specify a pixmap.
+    /// 
+    ///     \sa QWizard::setPixmap(), {Elements of a Wizard Page}
     set_pixmap(which: Wizard::WizardPixmap, pixmap: &PixmapType),
+    ///     Returns the pixmap set for role \a which.
+    /// 
+    ///     Pixmaps can also be set for the entire wizard using
+    ///     QWizard::setPixmap(), in which case they apply for all pages that
+    ///     don't specify a pixmap.
+    /// 
+    ///     \sa QWizard::pixmap(), {Elements of a Wizard Page}
     pixmap(which: Wizard::WizardPixmap) -> Pixmap,
+    ///     Explicitly sets this page to be final if \a finalPage is true.
+    /// 
+    ///     After calling setFinalPage(true), isFinalPage() returns \c true and the \uicontrol
+    ///     Finish button is visible (and enabled if isComplete() returns
+    ///     true).
+    /// 
+    ///     After calling setFinalPage(false), isFinalPage() returns \c true if
+    ///     nextId() returns -1; otherwise, it returns \c false.
+    /// 
+    ///     \sa isComplete(), QWizard::HaveFinishButtonOnEarlyPages
     set_final_page(final_page: bool),
+    ///     This function is called by QWizard to determine whether the \uicontrol
+    ///     Finish button should be shown for this page or not.
+    /// 
+    ///     By default, it returns \c true if there is no next page
+    ///     (i.e., nextId() returns -1); otherwise, it returns \c false.
+    /// 
+    ///     By explicitly calling setFinalPage(true), you can let the user perform an
+    ///     "early finish".
+    /// 
+    ///     \sa isComplete(), QWizard::HaveFinishButtonOnEarlyPages
     is_final_page() -> bool,
+    ///     Sets this page to be a commit page if \a commitPage is true; otherwise,
+    ///     sets it to be a normal page.
+    /// 
+    ///     A commit page is a page that represents an action which cannot be undone
+    ///     by clicking \uicontrol Back or \uicontrol Cancel.
+    /// 
+    ///     A \uicontrol Commit button replaces the \uicontrol Next button on a commit page. Clicking this
+    ///     button simply calls QWizard::next() just like clicking \uicontrol Next does.
+    /// 
+    ///     A page entered directly from a commit page has its \uicontrol Back button disabled.
+    /// 
+    ///     \sa isCommitPage()
     set_commit_page(commit_page: bool),
+    ///     Returns \c true if this page is a commit page; otherwise returns \c false.
+    /// 
+    ///     \sa setCommitPage()
     is_commit_page() -> bool,
+    ///     Sets the text on button \a which to be \a text on this page.
+    /// 
+    ///     By default, the text on buttons depends on the QWizard::wizardStyle,
+    ///     but may be redefined for the wizard as a whole using QWizard::setButtonText().
+    /// 
+    ///     \sa buttonText(), QWizard::setButtonText(), QWizard::buttonText()
     set_button_text(which: Wizard::WizardButton, text: String),
+    ///     Returns the text on button \a which on this page.
+    /// 
+    ///     If a text has ben set using setButtonText(), this text is returned.
+    ///     Otherwise, if a text has been set using QWizard::setButtonText(),
+    ///     this text is returned.
+    /// 
+    ///     By default, the text on buttons depends on the QWizard::wizardStyle.
+    ///     For example, on \macos, the \uicontrol Next button is called \uicontrol
+    ///     Continue.
+    /// 
+    ///     \sa setButtonText(), QWizard::buttonText(), QWizard::setButtonText()
     button_text(which: Wizard::WizardButton) -> String,
+    ///     This virtual function is called by QWizard::initializePage() to
+    ///     prepare the page just before it is shown either as a result of QWizard::restart()
+    ///     being called, or as a result of the user clicking \uicontrol Next.
+    ///     (However, if the \l QWizard::IndependentPages option is set, this function is only
+    ///     called the first time the page is shown.)
+    /// 
+    ///     By reimplementing this function, you can ensure that the page's
+    ///     fields are properly initialized based on fields from previous
+    ///     pages. For example:
+    /// 
+    ///     \snippet dialogs/classwizard/classwizard.cpp 17
+    /// 
+    ///     The default implementation does nothing.
+    /// 
+    ///     \sa QWizard::initializePage(), cleanupPage(), QWizard::IndependentPages
     [event] initialize_page(),
+    ///     This virtual function is called by QWizard::cleanupPage() when
+    ///     the user leaves the page by clicking \uicontrol Back (unless the \l QWizard::IndependentPages
+    ///     option is set).
+    /// 
+    ///     The default implementation resets the page's fields to their
+    ///     original values (the values they had before initializePage() was
+    ///     called).
+    /// 
+    ///     \sa QWizard::cleanupPage(), initializePage(), QWizard::IndependentPages
     [event] cleanup_page(),
+    ///     This virtual function is called by QWizard::validateCurrentPage()
+    ///     when the user clicks \uicontrol Next or \uicontrol Finish to perform some
+    ///     last-minute validation. If it returns \c true, the next page is shown
+    ///     (or the wizard finishes); otherwise, the current page stays up.
+    /// 
+    ///     The default implementation returns \c true.
+    /// 
+    ///     When possible, it is usually better style to disable the \uicontrol
+    ///     Next or \uicontrol Finish button (by specifying \l{mandatory fields} or
+    ///     reimplementing isComplete()) than to reimplement validatePage().
+    /// 
+    ///     \sa QWizard::validateCurrentPage(), isComplete()
     [event] validate_page() -> bool,
+    ///     This virtual function is called by QWizard to determine whether
+    ///     the \uicontrol Next or \uicontrol Finish button should be enabled or
+    ///     disabled.
+    /// 
+    ///     The default implementation returns \c true if all \l{mandatory
+    ///     fields} are filled; otherwise, it returns \c false.
+    /// 
+    ///     If you reimplement this function, make sure to emit completeChanged(),
+    ///     from the rest of your implementation, whenever the value of isComplete()
+    ///     changes. This ensures that QWizard updates the enabled or disabled state of
+    ///     its buttons. An example of the reimplementation is
+    ///     available \l{http://doc.qt.io/archives/qq/qq22-qwizard.html#validatebeforeitstoolate}
+    ///     {here}.
+    /// 
+    ///     \sa completeChanged(), isFinalPage()
     [event] is_complete() -> bool,
+    ///     This virtual function is called by QWizard::nextId() to find
+    ///     out which page to show when the user clicks the \uicontrol Next button.
+    /// 
+    ///     The return value is the ID of the next page, or -1 if no page follows.
+    /// 
+    ///     By default, this function returns the lowest ID greater than the ID
+    ///     of the current page, or -1 if there is no such ID.
+    /// 
+    ///     By reimplementing this function, you can specify a dynamic page
+    ///     order. For example:
+    /// 
+    ///     \snippet dialogs/licensewizard/licensewizard.cpp 18
+    /// 
+    ///     \sa QWizard::nextId()
     [event] next_id() -> i32,
     [signal] complete_changed(),
+    ///     Sets the value of the field called \a name to \a value.
+    /// 
+    ///     This function can be used to set fields on any page of the wizard.
+    ///     It is equivalent to calling
+    ///     wizard()->\l{QWizard::setField()}{setField(\a name, \a value)}.
+    /// 
+    ///     \sa QWizard::setField(), field(), registerField()
     set_field(name: String, value: &VariantType),
+    ///     Returns the value of the field called \a name.
+    /// 
+    ///     This function can be used to access fields on any page of the
+    ///     wizard. It is equivalent to calling
+    ///     wizard()->\l{QWizard::field()}{field(\a name)}.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet dialogs/classwizard/classwizard.cpp 17
+    /// 
+    ///     \sa QWizard::field(), setField(), registerField()
     field(name: String) -> Variant,
     register_field(name: String, widget: *WidgetType, property: *char, changed_signal: *char),
+    ///     Returns the wizard associated with this page, or 0 if this page
+    ///     hasn't been inserted into a QWizard yet.
+    /// 
+    ///     \sa QWizard::addPage(), QWizard::setPage()
     wizard() -> Wizard?,
 }
 

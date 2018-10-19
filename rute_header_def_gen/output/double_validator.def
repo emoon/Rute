@@ -1,3 +1,29 @@
+///     \class QDoubleValidator
+/// 
+///     \brief The QDoubleValidator class provides range checking of
+///     floating-point numbers.
+///     \inmodule QtGui
+/// 
+///     QDoubleValidator provides an upper bound, a lower bound, and a
+///     limit on the number of digits after the decimal point. It does not
+///     provide a fixup() function.
+/// 
+///     You can set the acceptable range in one call with setRange(), or
+///     with setBottom() and setTop(). Set the number of decimal places
+///     with setDecimals(). The validate() function returns the validation
+///     state.
+/// 
+///     QDoubleValidator uses its locale() to interpret the number. For example,
+///     in the German locale, "1,234" will be accepted as the fractional number
+///     1.234. In Arabic locales, QDoubleValidator will accept Arabic digits.
+/// 
+///     \note The QLocale::NumberOptions set on the locale() also affect the
+///     way the number is interpreted. For example, since QLocale::RejectGroupSeparator
+///     is not set by default, the validator will accept group separators. It is thus
+///     recommended to use QLocale::toDouble() to obtain the numeric value.
+/// 
+///     \sa QIntValidator, QRegExpValidator, QLocale::toDouble(), {Line Edits Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDoubleValidator)]
 enum Notation {
     StandardNotation,
@@ -5,11 +31,58 @@ enum Notation {
 }
 
 struct DoubleValidator : Validator {
+    ///     \fn QValidator::State QDoubleValidator::validate(QString &input, int &pos) const
+    /// 
+    ///     Returns \l Acceptable if the string \a input contains a double
+    ///     that is within the valid range and is in the correct format.
+    /// 
+    ///     Returns \l Intermediate if \a input contains a double that is
+    ///     outside the range or is in the wrong format; e.g. with too many
+    ///     digits after the decimal point or is empty.
+    /// 
+    ///     Returns \l Invalid if the \a input is not a double.
+    /// 
+    ///     Note: If the valid range consists of just positive doubles (e.g. 0.0 to 100.0)
+    ///     and \a input is a negative double then \l Invalid is returned. If notation()
+    ///     is set to StandardNotation, and the input contains more digits before the
+    ///     decimal point than a double in the valid range may have, \l Invalid is returned.
+    ///     If notation() is ScientificNotation, and the input is not in the valid range,
+    ///     \l Intermediate is returned. The value may yet become valid by changing the exponent.
+    /// 
+    ///     By default, the \a pos parameter is not used by this validator.
     [event] validate(arg0: String, arg1: &i32) -> Validator::State,
+    ///     Sets the validator to accept doubles from \a minimum to \a maximum
+    ///     inclusive, with at most \a decimals digits after the decimal
+    ///     point.
     [event] set_range(bottom: double, top: double, decimals: i32),
+    ///     \property QDoubleValidator::bottom
+    ///     \brief the validator's minimum acceptable value
+    /// 
+    ///     By default, this property contains a value of -infinity.
+    /// 
+    ///     \sa setRange()
     set_bottom(arg0: double),
+    ///     \property QDoubleValidator::top
+    ///     \brief the validator's maximum acceptable value
+    /// 
+    ///     By default, this property contains a value of infinity.
+    /// 
+    ///     \sa setRange()
     set_top(arg0: double),
+    ///     \property QDoubleValidator::decimals
+    ///     \brief the validator's maximum number of digits after the decimal point
+    /// 
+    ///     By default, this property contains a value of 1000.
+    /// 
+    ///     \sa setRange()
     set_decimals(arg0: i32),
+    ///     \property QDoubleValidator::notation
+    ///     \since 4.3
+    ///     \brief the notation of how a string can describe a number
+    /// 
+    ///     By default, this property is set to ScientificNotation.
+    /// 
+    ///     \sa Notation
     set_notation(arg0: DoubleValidator::Notation),
     bottom() -> double,
     top() -> double,

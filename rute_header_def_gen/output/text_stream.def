@@ -1,3 +1,128 @@
+///     \class QTextStream
+///     \inmodule QtCore
+/// 
+///     \brief The QTextStream class provides a convenient interface for
+///     reading and writing text.
+/// 
+///     \ingroup io
+///     \ingroup string-processing
+///     \reentrant
+/// 
+///     QTextStream can operate on a QIODevice, a QByteArray or a
+///     QString. Using QTextStream's streaming operators, you can
+///     conveniently read and write words, lines and numbers. For
+///     generating text, QTextStream supports formatting options for field
+///     padding and alignment, and formatting of numbers. Example:
+/// 
+///     \snippet code/src_corelib_io_qtextstream.cpp 0
+/// 
+///     It's also common to use QTextStream to read console input and write
+///     console output. QTextStream is locale aware, and will automatically decode
+///     standard input using the correct codec. Example:
+/// 
+///     \snippet code/src_corelib_io_qtextstream.cpp 1
+/// 
+///     Besides using QTextStream's constructors, you can also set the
+///     device or string QTextStream operates on by calling setDevice() or
+///     setString(). You can seek to a position by calling seek(), and
+///     atEnd() will return true when there is no data left to be read. If
+///     you call flush(), QTextStream will empty all data from its write
+///     buffer into the device and call flush() on the device.
+/// 
+///     Internally, QTextStream uses a Unicode based buffer, and
+///     QTextCodec is used by QTextStream to automatically support
+///     different character sets. By default, QTextCodec::codecForLocale()
+///     is used for reading and writing, but you can also set the codec by
+///     calling setCodec(). Automatic Unicode detection is also
+///     supported. When this feature is enabled (the default behavior),
+///     QTextStream will detect the UTF-16 or the UTF-32 BOM (Byte Order Mark) and
+///     switch to the appropriate UTF codec when reading. QTextStream
+///     does not write a BOM by default, but you can enable this by calling
+///     setGenerateByteOrderMark(true). When QTextStream operates on a QString
+///     directly, the codec is disabled.
+/// 
+///     There are three general ways to use QTextStream when reading text
+///     files:
+/// 
+///     \list
+/// 
+///     \li Chunk by chunk, by calling readLine() or readAll().
+/// 
+///     \li Word by word. QTextStream supports streaming into \l {QString}s,
+///     \l {QByteArray}s and char* buffers. Words are delimited by space, and
+///     leading white space is automatically skipped.
+/// 
+///     \li Character by character, by streaming into QChar or char types.
+///     This method is often used for convenient input handling when
+///     parsing files, independent of character encoding and end-of-line
+///     semantics. To skip white space, call skipWhiteSpace().
+/// 
+///     \endlist
+/// 
+///     Since the text stream uses a buffer, you should not read from
+///     the stream using the implementation of a superclass. For instance,
+///     if you have a QFile and read from it directly using
+///     QFile::readLine() instead of using the stream, the text stream's
+///     internal position will be out of sync with the file's position.
+/// 
+///     By default, when reading numbers from a stream of text,
+///     QTextStream will automatically detect the number's base
+///     representation. For example, if the number starts with "0x", it is
+///     assumed to be in hexadecimal form. If it starts with the digits
+///     1-9, it is assumed to be in decimal form, and so on. You can set
+///     the integer base, thereby disabling the automatic detection, by
+///     calling setIntegerBase(). Example:
+/// 
+///     \snippet code/src_corelib_io_qtextstream.cpp 2
+/// 
+///     QTextStream supports many formatting options for generating text.
+///     You can set the field width and pad character by calling
+///     setFieldWidth() and setPadChar(). Use setFieldAlignment() to set
+///     the alignment within each field. For real numbers, call
+///     setRealNumberNotation() and setRealNumberPrecision() to set the
+///     notation (SmartNotation, ScientificNotation, FixedNotation) and precision in
+///     digits of the generated number. Some extra number formatting
+///     options are also available through setNumberFlags().
+/// 
+///     \target QTextStream manipulators
+/// 
+///     Like \c <iostream> in the standard C++ library, QTextStream also
+///     defines several global manipulator functions:
+/// 
+///     \table
+///     \header \li Manipulator        \li Description
+///     \row    \li \c bin             \li Same as setIntegerBase(2).
+///     \row    \li \c oct             \li Same as setIntegerBase(8).
+///     \row    \li \c dec             \li Same as setIntegerBase(10).
+///     \row    \li \c hex             \li Same as setIntegerBase(16).
+///     \row    \li \c showbase        \li Same as setNumberFlags(numberFlags() | ShowBase).
+///     \row    \li \c forcesign       \li Same as setNumberFlags(numberFlags() | ForceSign).
+///     \row    \li \c forcepoint      \li Same as setNumberFlags(numberFlags() | ForcePoint).
+///     \row    \li \c noshowbase      \li Same as setNumberFlags(numberFlags() & ~ShowBase).
+///     \row    \li \c noforcesign     \li Same as setNumberFlags(numberFlags() & ~ForceSign).
+///     \row    \li \c noforcepoint    \li Same as setNumberFlags(numberFlags() & ~ForcePoint).
+///     \row    \li \c uppercasebase   \li Same as setNumberFlags(numberFlags() | UppercaseBase).
+///     \row    \li \c uppercasedigits \li Same as setNumberFlags(numberFlags() | UppercaseDigits).
+///     \row    \li \c lowercasebase   \li Same as setNumberFlags(numberFlags() & ~UppercaseBase).
+///     \row    \li \c lowercasedigits \li Same as setNumberFlags(numberFlags() & ~UppercaseDigits).
+///     \row    \li \c fixed           \li Same as setRealNumberNotation(FixedNotation).
+///     \row    \li \c scientific      \li Same as setRealNumberNotation(ScientificNotation).
+///     \row    \li \c left            \li Same as setFieldAlignment(AlignLeft).
+///     \row    \li \c right           \li Same as setFieldAlignment(AlignRight).
+///     \row    \li \c center          \li Same as setFieldAlignment(AlignCenter).
+///     \row    \li \c endl            \li Same as operator<<('\\n') and flush().
+///     \row    \li \c flush           \li Same as flush().
+///     \row    \li \c reset           \li Same as reset().
+///     \row    \li \c ws              \li Same as skipWhiteSpace().
+///     \row    \li \c bom             \li Same as setGenerateByteOrderMark(true).
+///     \endtable
+/// 
+///     In addition, Qt provides three global manipulators that take a
+///     parameter: qSetFieldWidth(), qSetPadChar(), and
+///     qSetRealNumberPrecision().
+/// 
+///     \sa QDataStream, QIODevice, QFile, QBuffer, QTcpSocket, {Text Codecs Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextStream)]
 enum RealNumberNotation {
     SmartNotation,
@@ -32,43 +157,296 @@ enum NumberFlag {
 
 
 struct TextStream {
+    ///     Sets the codec for this stream to the QTextCodec for the encoding
+    ///     specified by \a codecName. Common values for \c codecName include
+    ///     "ISO 8859-1", "UTF-8", and "UTF-16". If the encoding isn't
+    ///     recognized, nothing happens.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_io_qtextstream.cpp 10
+    /// 
+    ///     \sa QTextCodec::codecForName(), setLocale()
     set_codec(codec: *TextCodecType),
+    ///     Sets the codec for this stream to the QTextCodec for the encoding
+    ///     specified by \a codecName. Common values for \c codecName include
+    ///     "ISO 8859-1", "UTF-8", and "UTF-16". If the encoding isn't
+    ///     recognized, nothing happens.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_io_qtextstream.cpp 10
+    /// 
+    ///     \sa QTextCodec::codecForName(), setLocale()
     set_codec(codec_name: *char),
+    ///     Returns the codec that is current assigned to the stream.
+    /// 
+    ///     \sa setCodec(), setAutoDetectUnicode(), locale()
     codec() -> TextCodec?,
+    ///     If \a enabled is true, QTextStream will attempt to detect Unicode
+    ///     encoding by peeking into the stream data to see if it can find the
+    ///     UTF-16 or UTF-32 BOM (Byte Order Mark). If this mark is found, QTextStream
+    ///     will replace the current codec with the UTF codec.
+    /// 
+    ///     This function can be used together with setCodec(). It is common
+    ///     to set the codec to UTF-8, and then enable UTF-16 detection.
+    /// 
+    ///     \sa autoDetectUnicode(), setCodec()
     set_auto_detect_unicode(enabled: bool),
+    ///     Returns \c true if automatic Unicode detection is enabled, otherwise
+    ///     returns \c false. Automatic Unicode detection is enabled by default.
+    /// 
+    ///     \sa setAutoDetectUnicode(), setCodec()
     auto_detect_unicode() -> bool,
+    ///     If \a generate is true and a UTF codec is used, QTextStream will insert
+    ///     the BOM (Byte Order Mark) before any data has been written to the
+    ///     device. If \a generate is false, no BOM will be inserted. This function
+    ///     must be called before any data is written. Otherwise, it does nothing.
+    /// 
+    ///     \sa generateByteOrderMark(), bom()
     set_generate_byte_order_mark(generate: bool),
+    ///     Returns \c true if QTextStream is set to generate the UTF BOM (Byte Order
+    ///     Mark) when using a UTF codec; otherwise returns \c false. UTF BOM generation is
+    ///     set to false by default.
+    /// 
+    ///     \sa setGenerateByteOrderMark()
     generate_byte_order_mark() -> bool,
+    ///     \since 4.5
+    /// 
+    ///     Sets the locale for this stream to \a locale. The specified locale is
+    ///     used for conversions between numbers and their string representations.
+    /// 
+    ///     The default locale is C and it is a special case - the thousands
+    ///     group separator is not used for backward compatibility reasons.
+    /// 
+    ///     \sa locale()
     set_locale(locale: &LocaleType),
+    ///     \since 4.5
+    /// 
+    ///     Returns the locale for this stream. The default locale is C.
+    /// 
+    ///     \sa setLocale()
     locale() -> Locale,
+    ///     Sets the current device to \a device. If a device has already been
+    ///     assigned, QTextStream will call flush() before the old device is
+    ///     replaced.
+    /// 
+    ///     \note This function resets locale to the default locale ('C')
+    ///     and codec to the default codec, QTextCodec::codecForLocale().
+    /// 
+    ///     \sa device(), setString()
     set_device(device: *IODeviceType),
+    ///     Returns the current device associated with the QTextStream,
+    ///     or 0 if no device has been assigned.
+    /// 
+    ///     \sa setDevice(), string()
     device() -> IODevice?,
+    ///     Returns the status of the text stream.
+    /// 
+    ///     \sa QTextStream::Status, setStatus(), resetStatus()
     status() -> TextStream::Status,
+    ///     \since 4.1
+    /// 
+    ///     Sets the status of the text stream to the \a status given.
+    /// 
+    ///     Subsequent calls to setStatus() are ignored until resetStatus()
+    ///     is called.
+    /// 
+    ///     \sa Status, status(), resetStatus()
     set_status(status: TextStream::Status),
+    ///     \since 4.1
+    /// 
+    ///     Resets the status of the text stream.
+    /// 
+    ///     \sa QTextStream::Status, status(), setStatus()
     reset_status(),
+    ///     Returns \c true if there is no more data to be read from the
+    ///     QTextStream; otherwise returns \c false. This is similar to, but not
+    ///     the same as calling QIODevice::atEnd(), as QTextStream also takes
+    ///     into account its internal Unicode buffer.
     at_end() -> bool,
+    ///     Resets QTextStream's formatting options, bringing it back to its
+    ///     original constructed state. The device, string and any buffered
+    ///     data is left untouched.
     reset(),
+    ///     Flushes any buffered data waiting to be written to the device.
+    /// 
+    ///     If QTextStream operates on a string, this function does nothing.
     flush(),
+    ///     Seeks to the position \a pos in the device. Returns \c true on
+    ///     success; otherwise returns \c false.
     seek(pos: i64) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Returns the device position corresponding to the current position of the
+    ///     stream, or -1 if an error occurs (e.g., if there is no device or string,
+    ///     or if there's a device error).
+    /// 
+    ///     Because QTextStream is buffered, this function may have to
+    ///     seek the device to reconstruct a valid device position. This
+    ///     operation can be expensive, so you may want to avoid calling this
+    ///     function in a tight loop.
+    /// 
+    ///     \sa seek()
     pos() -> i64,
+    ///     Reads and discards whitespace from the stream until either a
+    ///     non-space character is detected, or until atEnd() returns
+    ///     true. This function is useful when reading a stream character by
+    ///     character.
+    /// 
+    ///     Whitespace characters are all characters for which
+    ///     QChar::isSpace() returns \c true.
+    /// 
+    ///     \sa operator>>()
     skip_white_space(),
+    ///     Reads one line of text from the stream, and returns it as a
+    ///     QString. The maximum allowed line length is set to \a maxlen. If
+    ///     the stream contains lines longer than this, then the lines will be
+    ///     split after \a maxlen characters and returned in parts.
+    /// 
+    ///     If \a maxlen is 0, the lines can be of any length.
+    /// 
+    ///     The returned line has no trailing end-of-line characters ("\\n"
+    ///     or "\\r\\n"), so calling QString::trimmed() can be unnecessary.
+    /// 
+    ///     If the stream has read to the end of the file, \l {QTextStream::readLine()}{readLine()}
+    ///     will return a null QString. For strings, or for devices that support it,
+    ///     you can explicitly test for the end of the stream using atEnd().
+    /// 
+    ///     \sa readAll(), QIODevice::readLine()
     read_line(maxlen: i64) -> String,
+    ///     \since 5.5
+    /// 
+    ///     Reads one line of text from the stream into \a line.
+    ///     If \a line is 0, the read line is not stored.
+    /// 
+    ///     The maximum allowed line length is set to \a maxlen. If
+    ///     the stream contains lines longer than this, then the lines will be
+    ///     split after \a maxlen characters and returned in parts.
+    /// 
+    ///     If \a maxlen is 0, the lines can be of any length.
+    /// 
+    ///     The resulting line has no trailing end-of-line characters ("\\n"
+    ///     or "\\r\\n"), so calling QString::trimmed() can be unnecessary.
+    /// 
+    ///     If \a line has sufficient capacity for the data that is about to be
+    ///     read, this function may not need to allocate new memory. Because of
+    ///     this, it can be faster than readLine().
+    /// 
+    ///     Returns \c false if the stream has read to the end of the file or
+    ///     an error has occurred; otherwise returns \c true. The contents in
+    ///     \a line before the call are discarded in any case.
+    /// 
+    ///     \sa readAll(), QIODevice::readLine()
     read_line_into(line: String, maxlen: i64) -> bool,
+    ///     Reads the entire content of the stream, and returns it as a
+    ///     QString. Avoid this function when working on large files, as it
+    ///     will consume a significant amount of memory.
+    /// 
+    ///     Calling \l {QTextStream::readLine()}{readLine()} is better if you do not know how much data is
+    ///     available.
+    /// 
+    ///     \sa readLine()
     read_all() -> String,
+    ///     \since 4.1
+    /// 
+    ///     Reads at most \a maxlen characters from the stream, and returns the data
+    ///     read as a QString.
+    /// 
+    ///     \sa readAll(), readLine(), QIODevice::read()
     read(maxlen: i64) -> String,
+    ///     Sets the field alignment to \a mode. When used together with
+    ///     setFieldWidth(), this function allows you to generate formatted
+    ///     output with text aligned to the left, to the right or center
+    ///     aligned.
+    /// 
+    ///     \sa fieldAlignment(), setFieldWidth()
     set_field_alignment(alignment: TextStream::FieldAlignment),
+    ///     Returns the current field alignment.
+    /// 
+    ///     \sa setFieldAlignment(), fieldWidth()
     field_alignment() -> TextStream::FieldAlignment,
+    ///     Sets the pad character to \a ch. The default value is the ASCII
+    ///     space character (' '), or QChar(0x20). This character is used to
+    ///     fill in the space in fields when generating text.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_io_qtextstream.cpp 5
+    /// 
+    ///     The string \c s contains:
+    /// 
+    ///     \snippet code/src_corelib_io_qtextstream.cpp 6
+    /// 
+    ///     \sa padChar(), setFieldWidth()
     set_pad_char(ch: CharType),
+    ///     Returns the current pad character.
+    /// 
+    ///     \sa setPadChar(), setFieldWidth()
     pad_char() -> Char,
+    ///     Sets the current field width to \a width. If \a width is 0 (the
+    ///     default), the field width is equal to the length of the generated
+    ///     text.
+    /// 
+    ///     \note The field width applies to every element appended to this
+    ///     stream after this function has been called (e.g., it also pads
+    ///     endl). This behavior is different from similar classes in the STL,
+    ///     where the field width only applies to the next element.
+    /// 
+    ///     \sa fieldWidth(), setPadChar()
     set_field_width(width: i32),
+    ///     Returns the current field width.
+    /// 
+    ///     \sa setFieldWidth()
     field_width() -> i32,
+    ///     Sets the current number flags to \a flags. \a flags is a set of
+    ///     flags from the NumberFlag enum, and describes options for
+    ///     formatting generated code (e.g., whether or not to always write
+    ///     the base or sign of a number).
+    /// 
+    ///     \sa numberFlags(), setIntegerBase(), setRealNumberNotation()
     set_number_flags(flags: TextStream::NumberFlags),
+    ///     Returns the current number flags.
+    /// 
+    ///     \sa setNumberFlags(), integerBase(), realNumberNotation()
     number_flags() -> TextStream::NumberFlags,
+    ///     Sets the base of integers to \a base, both for reading and for
+    ///     generating numbers. \a base can be either 2 (binary), 8 (octal),
+    ///     10 (decimal) or 16 (hexadecimal). If \a base is 0, QTextStream
+    ///     will attempt to detect the base by inspecting the data on the
+    ///     stream. When generating numbers, QTextStream assumes base is 10
+    ///     unless the base has been set explicitly.
+    /// 
+    ///     \sa integerBase(), QString::number(), setNumberFlags()
     set_integer_base(base: i32),
+    ///     Returns the current base of integers. 0 means that the base is
+    ///     detected when reading, or 10 (decimal) when generating numbers.
+    /// 
+    ///     \sa setIntegerBase(), QString::number(), numberFlags()
     integer_base() -> i32,
+    ///     Sets the real number notation to \a notation (SmartNotation,
+    ///     FixedNotation, ScientificNotation). When reading and generating
+    ///     numbers, QTextStream uses this value to detect the formatting of
+    ///     real numbers.
+    /// 
+    ///     \sa realNumberNotation(), setRealNumberPrecision(), setNumberFlags(), setIntegerBase()
     set_real_number_notation(notation: TextStream::RealNumberNotation),
+    ///     Returns the current real number notation.
+    /// 
+    ///     \sa setRealNumberNotation(), realNumberPrecision(), numberFlags(), integerBase()
     real_number_notation() -> TextStream::RealNumberNotation,
+    ///     Sets the precision of real numbers to \a precision. This value
+    ///     describes the number of fraction digits QTextStream should
+    ///     write when generating real numbers.
+    /// 
+    ///     The precision cannot be a negative value. The default value is 6.
+    /// 
+    ///     \sa realNumberPrecision(), setRealNumberNotation()
     set_real_number_precision(precision: i32),
+    ///     Returns the current real number precision, or the number of fraction
+    ///     digits QTextStream will write when generating real numbers.
+    /// 
+    ///     \sa setRealNumberNotation(), realNumberNotation(), numberFlags(), integerBase()
     real_number_precision() -> i32,
 }
 

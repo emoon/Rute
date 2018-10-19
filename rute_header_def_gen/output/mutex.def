@@ -1,3 +1,53 @@
+///     \class QMutex
+///     \inmodule QtCore
+///     \brief The QMutex class provides access serialization between threads.
+/// 
+///     \threadsafe
+/// 
+///     \ingroup thread
+/// 
+///     The purpose of a QMutex is to protect an object, data structure or
+///     section of code so that only one thread can access it at a time
+///     (this is similar to the Java \c synchronized keyword). It is
+///     usually best to use a mutex with a QMutexLocker since this makes
+///     it easy to ensure that locking and unlocking are performed
+///     consistently.
+/// 
+///     For example, say there is a method that prints a message to the
+///     user on two lines:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 0
+/// 
+///     If these two methods are called in succession, the following happens:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 1
+/// 
+///     If these two methods are called simultaneously from two threads then the
+///     following sequence could result:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 2
+/// 
+///     If we add a mutex, we should get the result we want:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 3
+/// 
+///     Then only one thread can modify \c number at any given time and
+///     the result is correct. This is a trivial example, of course, but
+///     applies to any other case where things need to happen in a
+///     particular sequence.
+/// 
+///     When you call lock() in a thread, other threads that try to call
+///     lock() in the same place will block until the thread that got the
+///     lock calls unlock(). A non-blocking alternative to lock() is
+///     tryLock().
+/// 
+///     QMutex is optimized to be fast in the non-contended case. A non-recursive
+///     QMutex will not allocate memory if there is no contention on that mutex.
+///     It is constructed and destroyed with almost no overhead,
+///     which means it is fine to have many mutexes as part of other classes.
+/// 
+///     \sa QMutexLocker, QReadWriteLock, QSemaphore, QWaitCondition
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMutex)]
 enum RecursionMode {
     NonRecursive,

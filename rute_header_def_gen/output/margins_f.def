@@ -1,3 +1,17 @@
+///     \class QMarginsF
+///     \inmodule QtCore
+///     \ingroup painting
+///     \since 5.3
+/// 
+///     \brief The QMarginsF class defines the four margins of a rectangle.
+/// 
+///     QMarginsF defines a set of four margins; left, top, right and bottom,
+///     that describe the size of the borders surrounding a rectangle.
+/// 
+///     The isNull() function returns \c true only if all margins are set to zero.
+/// 
+///     QMarginsF objects can be streamed as well as compared.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct MarginsF {
     is_null() -> bool,

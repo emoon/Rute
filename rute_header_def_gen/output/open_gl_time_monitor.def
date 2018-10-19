@@ -1,13 +1,112 @@
+///     \class QOpenGLTimeMonitor
+///     \brief The QOpenGLTimeMonitor class wraps a sequence of OpenGL timer query objects.
+///     \inmodule QtGui
+///     \since 5.1
+///     \ingroup painting-3D
+/// 
+///     The QOpenGLTimeMonitor class is a convenience wrapper around a collection of OpenGL
+///     timer query objects used to measure intervals of time on the GPU to the level of
+///     granularity required by your rendering application.
+/// 
+///     The OpenGL timer queries objects are queried in sequence to record the GPU
+///     timestamps at positions of interest in your rendering code. Once the results for
+///     all issues timer queries become available, the results can be fetched and
+///     QOpenGLTimerMonitor will calculate the recorded time intervals for you.
+/// 
+///     The typical use case of this class is to either profile your application's rendering
+///     algorithms or to adjust those algorithms in real-time for dynamic performance/quality
+///     balancing.
+/// 
+///     Prior to using QOpenGLTimeMonitor in your rendering function you should set the
+///     required number of sample points that you wish to record by calling setSamples(). Note
+///     that measuring N sample points will produce N-1 time intervals. Once you have set the
+///     number of sample points, call the create() function with a valid current OpenGL context
+///     to create the necessary query timer objects. These steps are usually performed just
+///     once in an initialization function.
+/// 
+///     Use the recordSample() function to delimit blocks of code containing OpenGL commands
+///     that you wish to time. You can check availability of the resulting time
+///     samples and time intervals with isResultAvailable(). The calculated time intervals and
+///     the raw timestamp samples can be retrieved with the blocking waitForIntervals() and
+///     waitForSamples() functions respectively.
+/// 
+///     After retrieving the results and before starting a new round of taking samples
+///     (for example, in the next frame) be sure to call the reset() function which will clear
+///     the cached results and reset the timer index back to the first timer object.
+/// 
+///     \sa QOpenGLTimerQuery
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLTimeMonitor : Object {
+    ///     Sets the number of sample points to \a sampleCount. After setting the number
+    ///     of samples with this function, you must call create() to instantiate the underlying
+    ///     OpenGL timer query objects.
+    /// 
+    ///     The new \a sampleCount must be at least 2.
+    /// 
+    ///     \sa sampleCount(), create(), recordSample()
     set_sample_count(sample_count: i32),
+    ///     Returns the number of sample points that have been requested with
+    ///     setSampleCount(). If create was successfully called following setSampleCount(),
+    ///     then the value returned will be the actual number of sample points
+    ///     that can be used.
+    /// 
+    ///     The default value for sample count is 2, leading to the measurement of a
+    ///     single interval.
+    /// 
+    ///     \sa setSampleCount()
     sample_count() -> i32,
+    ///     Instantiate sampleCount() OpenGL timer query objects that will be used
+    ///     to track the amount of time taken to execute OpenGL commands between
+    ///     successive calls to recordSample().
+    /// 
+    ///     Returns \c true if the OpenGL timer query objects could be created.
+    /// 
+    ///     \sa destroy(), setSampleCount(), recordSample()
     create() -> bool,
+    ///     Returns \c true if the underlying OpenGL query objects have been created. If this
+    ///     returns \c true and the associated OpenGL context is current, then you are able to record
+    ///     time samples with this object.
     is_created() -> bool,
+    ///     Returns a QVector containing the object Ids of the OpenGL timer query objects.
     object_ids() -> i32,
+    ///     Issues an OpenGL timer query at this point in the OpenGL command queue. Calling this
+    ///     function in a sequence in your application's rendering function, will build up
+    ///     details of the GPU time taken to execute the OpenGL commands between successive
+    ///     calls to this function.
+    /// 
+    ///     \sa setSampleCount(), isResultAvailable(), waitForSamples(), waitForIntervals()
     record_sample() -> i32,
+    ///     Returns \c true if the OpenGL timer query results are available.
+    /// 
+    ///     \sa waitForSamples(), waitForIntervals()
     is_result_available() -> bool,
+    ///     Returns a QVector containing the GPU timestamps taken with recordSample().
+    /// 
+    ///     This function will block until OpenGL indicates the results are available. It
+    ///     is recommended to check the availability of the result prior to calling this
+    ///     function with isResultAvailable().
+    /// 
+    ///     \note This function only works on systems that have OpenGL >=3.3 or the
+    ///           ARB_timer_query extension. See QOpenGLTimerQuery for more details.
+    /// 
+    ///     \sa waitForIntervals(), isResultAvailable()
     wait_for_samples() -> [GLuint64],
+    ///     Returns a QVector containing the time intervals delimited by the calls to
+    ///     recordSample(). The resulting vector will contain one fewer element as
+    ///     this represents the intervening intervals rather than the actual timestamp
+    ///     samples.
+    /// 
+    ///     This function will block until OpenGL indicates the results are available. It
+    ///     is recommended to check the availability of the result prior to calling this
+    ///     function with isResultAvailable().
+    /// 
+    ///     \sa waitForSamples(), isResultAvailable()
     wait_for_intervals() -> [GLuint64],
+    ///     Resets the time monitor ready for use in another frame of rendering. Call
+    ///     this once you have obtained the previous results and before calling
+    ///     recordSample() for the first time on the next frame.
+    /// 
+    ///     \sa recordSample()
     reset(),
 }
 

@@ -1,3 +1,95 @@
+///     \class QRegion
+///     \brief The QRegion class specifies a clip region for a painter.
+/// 
+///     \inmodule QtGui
+///     \ingroup painting
+///     \ingroup shared
+/// 
+///     QRegion is used with QPainter::setClipRegion() to limit the paint
+///     area to what needs to be painted. There is also a QWidget::repaint()
+///     function that takes a QRegion parameter. QRegion is the best tool for
+///     minimizing the amount of screen area to be updated by a repaint.
+/// 
+///     This class is not suitable for constructing shapes for rendering, especially
+///     as outlines. Use QPainterPath to create paths and shapes for use with
+///     QPainter.
+/// 
+///     QRegion is an \l{implicitly shared} class.
+/// 
+///     \section1 Creating and Using Regions
+/// 
+///     A region can be created from a rectangle, an ellipse, a polygon or
+///     a bitmap. Complex regions may be created by combining simple
+///     regions using united(), intersected(), subtracted(), or xored() (exclusive
+///     or). You can move a region using translate().
+/// 
+///     You can test whether a region isEmpty() or if it
+///     contains() a QPoint or QRect. The bounding rectangle can be found
+///     with boundingRect().
+/// 
+///     Iteration over the region (with begin(), end(), or C++11
+///     ranged-for loops) gives a decomposition of the region into
+///     rectangles.
+/// 
+///     Example of using complex regions:
+///     \snippet code/src_gui_painting_qregion.cpp 0
+/// 
+///     \section1 Additional License Information
+/// 
+///     On Embedded Linux and X11 platforms, parts of this class rely on
+///     code obtained under the following licenses:
+/// 
+///     \legalese
+///     Copyright (c) 1987  X Consortium
+/// 
+///     Permission is hereby granted, free of charge, to any person obtaining a copy
+///     of this software and associated documentation files (the "Software"), to deal
+///     in the Software without restriction, including without limitation the rights
+///     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+///     copies of the Software, and to permit persons to whom the Software is
+///     furnished to do so, subject to the following conditions:
+/// 
+///     The above copyright notice and this permission notice shall be included in
+///     all copies or substantial portions of the Software.
+/// 
+///     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+///     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+///     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+///     X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+///     AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+///     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/// 
+///     Except as contained in this notice, the name of the X Consortium shall not be
+///     used in advertising or otherwise to promote the sale, use or other dealings
+///     in this Software without prior written authorization from the X Consortium.
+///     \endlegalese
+/// 
+///     \br
+/// 
+///     \legalese
+///     Copyright 1987 by Digital Equipment Corporation, Maynard, Massachusetts.
+/// 
+///                             All Rights Reserved
+/// 
+///     Permission to use, copy, modify, and distribute this software and its
+///     documentation for any purpose and without fee is hereby granted,
+///     provided that the above copyright notice appear in all copies and that
+///     both that copyright notice and this permission notice appear in
+///     supporting documentation, and that the name of Digital not be
+///     used in advertising or publicity pertaining to distribution of the
+///     software without specific, written prior permission.
+/// 
+///     DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+///     ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+///     DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+///     ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+///     WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+///     ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+///     SOFTWARE.
+///     \endlegalese
+/// 
+///     \sa QPainter::setClipRegion(), QPainter::setClipRect(), QPainterPath
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QRegion)]
 enum RegionType {
     Rectangle,
@@ -24,7 +116,15 @@ struct Region {
     intersected(r: &RegionType) -> Region,
     intersected(r: &RectType) -> Region,
     xored(r: &RegionType) -> Region,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if this region intersects with \a region, otherwise
+    ///     returns \c false.
     intersects(r: &RegionType) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if this region intersects with \a region, otherwise
+    ///     returns \c false.
     intersects(r: &RectType) -> bool,
     bounding_rect() -> Rect,
     rects() -> [Rect],

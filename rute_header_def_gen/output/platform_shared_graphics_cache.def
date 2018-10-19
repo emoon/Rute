@@ -1,3 +1,30 @@
+///     \class QPlatformSharedGraphicsCache
+///     \since 5.0
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+///     \brief The QPlatformSharedGraphicsCache is an abstraction of a cross-process graphics cache.
+/// 
+///     If supported, it is possible to retrieve a QPlatformSharedGraphicsCache object from the
+///     platform integration. This is typically used to store graphical items which should be shared
+///     between several processes.
+/// 
+///     Items are requested from the cache by calling requestItems(). If the cache contains the
+///     requested items in the requested cache, the itemsAvailable() signal is emitted with the ID of
+///     the graphical buffer and each item's coordinates inside the buffer. Before requesting items
+///     from a cache, the user must call ensureCacheInitialized() to set the correct parameters for
+///     the cache.
+/// 
+///     If the cache does not yet contain the requested items, it will emit a similar itemsMissing()
+///     signal. The client can then call updateItems() with rasterizations of the items and they will be
+///     entered into the shared cache. As the items are rendered into the cache, itemsAvailable() signals
+///     will be emitted for each of the items which have previously been requested and which have not
+///     yet been reported as ready.
+/// 
+///     Using beginRequestBatch() and endRequestBatch(), it's possible to batch glyph requests, which
+///     could improve performance in cases where you have a sequence of requests pending, and you
+///     do not need the results during this sequence.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPlatformSharedGraphicsCache)]
 enum PixelFormat {
     Alpha8,

@@ -1,30 +1,277 @@
+///     \class QRegularExpressionMatch
+///     \inmodule QtCore
+///     \reentrant
+/// 
+///     \brief The QRegularExpressionMatch class provides the results of a matching
+///     a QRegularExpression against a string.
+/// 
+///     \since 5.0
+/// 
+///     \ingroup tools
+///     \ingroup shared
+/// 
+///     \keyword regular expression match
+/// 
+///     A QRegularExpressionMatch object can be obtained by calling the
+///     QRegularExpression::match() function, or as a single result of a global
+///     match from a QRegularExpressionMatchIterator.
+/// 
+///     The success or the failure of a match attempt can be inspected by calling
+///     the hasMatch() function. QRegularExpressionMatch also reports a successful
+///     partial match through the hasPartialMatch() function.
+/// 
+///     In addition, QRegularExpressionMatch returns the substrings captured by the
+///     capturing groups in the pattern string. The implicit capturing group with
+///     index 0 captures the result of the whole match. The captured() function
+///     returns each substring captured, either by the capturing group's index or
+///     by its name:
+/// 
+///     \snippet code/src_corelib_tools_qregularexpression.cpp 29
+/// 
+///     For each captured substring it is possible to query its starting and ending
+///     offsets in the subject string by calling the capturedStart() and the
+///     capturedEnd() function, respectively. The length of each captured
+///     substring is available using the capturedLength() function.
+/// 
+///     The convenience function capturedTexts() will return \e{all} the captured
+///     substrings at once (including the substring matched by the entire pattern)
+///     in the order they have been captured by captring groups; that is,
+///     \c{captured(i) == capturedTexts().at(i)}.
+/// 
+///     You can retrieve the QRegularExpression object the subject string was
+///     matched against by calling the regularExpression() function; the
+///     match type and the match options are available as well by calling
+///     the matchType() and the matchOptions() respectively.
+/// 
+///     Please refer to the QRegularExpression documentation for more information
+///     about the Qt regular expression classes.
+/// 
+///     \sa QRegularExpression
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct RegularExpressionMatch {
     swap(other: &RegularExpressionMatchType),
+    ///     Returns the QRegularExpression object whose match() function returned this
+    ///     object.
+    /// 
+    ///     \sa QRegularExpression::match(), matchType(), matchOptions()
     regular_expression() -> RegularExpression,
+    ///     Returns the match type that was used to get this QRegularExpressionMatch
+    ///     object, that is, the match type that was passed to
+    ///     QRegularExpression::match() or QRegularExpression::globalMatch().
+    /// 
+    ///     \sa QRegularExpression::match(), regularExpression(), matchOptions()
     match_type() -> RegularExpression::MatchType,
+    ///     Returns the match options that were used to get this
+    ///     QRegularExpressionMatch object, that is, the match options that were passed
+    ///     to QRegularExpression::match() or QRegularExpression::globalMatch().
+    /// 
+    ///     \sa QRegularExpression::match(), regularExpression(), matchType()
     match_options() -> RegularExpression::MatchOptions,
+    ///     Returns \c true if the regular expression matched against the subject string,
+    ///     or false otherwise.
+    /// 
+    ///     \sa QRegularExpression::match(), hasPartialMatch()
     has_match() -> bool,
+    ///     Returns \c true if the regular expression partially matched against the
+    ///     subject string, or false otherwise.
+    /// 
+    ///     \note Only a match that explicitly used the one of the partial match types
+    ///     can yield a partial match. Still, if such a match succeeds totally, this
+    ///     function will return false, while hasMatch() will return true.
+    /// 
+    ///     \sa QRegularExpression::match(), QRegularExpression::MatchType, hasMatch()
     has_partial_match() -> bool,
+    ///     Returns \c true if the match object was obtained as a result from the
+    ///     QRegularExpression::match() function invoked on a valid QRegularExpression
+    ///     object; returns \c false if the QRegularExpression was invalid.
+    /// 
+    ///     \sa QRegularExpression::match(), QRegularExpression::isValid()
     is_valid() -> bool,
+    ///     Returns the index of the last capturing group that captured something,
+    ///     including the implicit capturing group 0. This can be used to extract all
+    ///     the substrings that were captured:
+    /// 
+    ///     \snippet code/src_corelib_tools_qregularexpression.cpp 28
+    /// 
+    ///     Note that some of the capturing groups with an index less than
+    ///     lastCapturedIndex() could have not matched, and therefore captured nothing.
+    /// 
+    ///     If the regular expression did not match, this function returns -1.
+    /// 
+    ///     \sa captured(), capturedStart(), capturedEnd(), capturedLength()
     last_captured_index() -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the substring captured by the capturing group named \a name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QString.
+    /// 
+    ///     \sa capturedRef(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QString::isNull()
     captured(nth: i32) -> String,
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the string captured by the capturing group named \a
+    ///     name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QStringRef.
+    /// 
+    ///     \sa captured(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QStringRef::isNull()
     captured_ref(nth: i32) -> StringRef,
+    ///     \since 5.10
+    /// 
+    ///     Returns a view of the string captured by the capturing group named \a
+    ///     name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QStringView.
+    /// 
+    ///     \sa captured(), capturedRef(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QStringRef::isNull()
     captured_view(nth: i32) -> StringView,
+    ///     \since 5.10
+    /// 
+    ///     Returns the substring captured by the capturing group named \a name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QString.
+    /// 
+    ///     \sa capturedRef(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QString::isNull()
     captured(name: String) -> String,
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the string captured by the capturing group named \a
+    ///     name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QStringRef.
+    /// 
+    ///     \sa captured(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QStringRef::isNull()
     captured_ref(name: String) -> StringRef,
+    ///     \since 5.10
+    /// 
+    ///     Returns the substring captured by the capturing group named \a name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QString.
+    /// 
+    ///     \sa capturedRef(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QString::isNull()
     captured(name: StringViewType) -> String,
+    ///     \since 5.10
+    /// 
+    ///     Returns a reference to the string captured by the capturing group named \a
+    ///     name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QStringRef.
+    /// 
+    ///     \sa captured(), capturedView(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QStringRef::isNull()
     captured_ref(name: StringViewType) -> StringRef,
+    ///     \since 5.10
+    /// 
+    ///     Returns a view of the string captured by the capturing group named \a
+    ///     name.
+    /// 
+    ///     If the named capturing group \a name did not capture a string, or if
+    ///     there is no capturing group named \a name, returns a null QStringView.
+    /// 
+    ///     \sa captured(), capturedRef(), capturedStart(), capturedEnd(), capturedLength(),
+    ///     QStringRef::isNull()
     captured_view(name: StringViewType) -> StringView,
+    ///     Returns a list of all strings captured by capturing groups, in the order
+    ///     the groups themselves appear in the pattern string.
     captured_texts() -> [String],
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string corresponding to the starting
+    ///     position of the substring captured by the capturing group named \a name.
+    ///     If the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedEnd(), capturedLength(), captured()
     captured_start(nth: i32) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the length of the substring captured by the capturing group named
+    ///     \a name.
+    /// 
+    ///     \note This function returns 0 if the capturing group named \a name did not
+    ///     capture a string or doesn't exist.
+    /// 
+    ///     \sa capturedStart(), capturedEnd(), captured()
     captured_length(nth: i32) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string immediately after the ending
+    ///     position of the substring captured by the capturing group named \a name. If
+    ///     the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedStart(), capturedLength(), captured()
     captured_end(nth: i32) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string corresponding to the starting
+    ///     position of the substring captured by the capturing group named \a name.
+    ///     If the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedEnd(), capturedLength(), captured()
     captured_start(name: String) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the length of the substring captured by the capturing group named
+    ///     \a name.
+    /// 
+    ///     \note This function returns 0 if the capturing group named \a name did not
+    ///     capture a string or doesn't exist.
+    /// 
+    ///     \sa capturedStart(), capturedEnd(), captured()
     captured_length(name: String) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string immediately after the ending
+    ///     position of the substring captured by the capturing group named \a name. If
+    ///     the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedStart(), capturedLength(), captured()
     captured_end(name: String) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string corresponding to the starting
+    ///     position of the substring captured by the capturing group named \a name.
+    ///     If the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedEnd(), capturedLength(), captured()
     captured_start(name: StringViewType) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the length of the substring captured by the capturing group named
+    ///     \a name.
+    /// 
+    ///     \note This function returns 0 if the capturing group named \a name did not
+    ///     capture a string or doesn't exist.
+    /// 
+    ///     \sa capturedStart(), capturedEnd(), captured()
     captured_length(name: StringViewType) -> i32,
+    ///     \since 5.10
+    /// 
+    ///     Returns the offset inside the subject string immediately after the ending
+    ///     position of the substring captured by the capturing group named \a name. If
+    ///     the capturing group named \a name did not capture a string or doesn't
+    ///     exist, returns -1.
+    /// 
+    ///     \sa capturedStart(), capturedLength(), captured()
     captured_end(name: StringViewType) -> i32,
 }
 

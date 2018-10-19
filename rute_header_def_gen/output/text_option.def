@@ -1,3 +1,19 @@
+///     \class QTextOption
+///     \reentrant
+/// 
+///     \brief The QTextOption class provides a description of general rich text
+///     properties.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+/// 
+///     QTextOption is used to encapsulate common rich text properties in a single
+///     object. It contains information about text alignment, layout direction,
+///     word wrapping, and other standard properties associated with text rendering
+///     and layout.
+/// 
+///     \sa QTextEdit, QTextDocument, QTextCursor
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextOption)]
 enum TabType {
     LeftTab,
@@ -39,8 +55,20 @@ struct TextOption {
     tab_stop() -> f32,
     set_tab_stop_distance(tab_stop_distance: f32),
     tab_stop_distance() -> f32,
+    ///     Sets the tab positions for the text layout to those specified by
+    ///     \a tabStops.
+    /// 
+    ///     \sa tabArray(), setTabStopDistance(), setTabs()
     set_tab_array(tab_stops: [f32]),
+    ///     Returns a list of tab positions defined for the text layout.
+    /// 
+    ///     \sa setTabArray(), tabStop()
     tab_array() -> [f32],
+    ///     \since 4.4
+    ///     Sets the tab positions for the text layout to those specified by
+    ///     \a tabStops.
+    /// 
+    ///     \sa tabStop()
     set_tabs(tab_stops: onst QList<QTextOption::Tab> &),
     tabs() -> List<QTextOption::Tab>,
 }

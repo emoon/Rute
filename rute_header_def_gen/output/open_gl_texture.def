@@ -1,3 +1,40 @@
+///     \class QOpenGLTexture
+///     \inmodule QtGui
+///     \since 5.2
+///     \wrapper
+///     \brief The QOpenGLTexture class encapsulates an OpenGL texture object.
+/// 
+///     QOpenGLTexture makes it easy to work with OpenGL textures and the myriad features
+///     and targets that they offer depending upon the capabilities of your OpenGL implementation.
+/// 
+///     The typical usage pattern for QOpenGLTexture is
+///     \list
+///         \li Instantiate the object specifying the texture target type
+///         \li Set properties that affect the storage requirements e.g. storage format, dimensions
+///         \li Allocate the server-side storage
+///         \li Optionally upload pixel data
+///         \li Optionally set any additional properties e.g. filtering and border options
+///         \li Render with texture or render to texture
+///     \endlist
+/// 
+///     In the common case of simply using a QImage as the source of texture pixel data
+///     most of the above steps are performed automatically.
+/// 
+///     \code
+///     // Prepare texture
+///     QOpenGLTexture *texture = new QOpenGLTexture(QImage(fileName).mirrored());
+///     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+///     texture->setMagnificationFilter(QOpenGLTexture::Linear);
+///     ...
+///     // Render with texture
+///     texture->bind();
+///     glDrawArrays(...);
+///     \endcode
+/// 
+///     Note that the QImage is mirrored vertically to account for the fact that
+///     OpenGL and QImage use opposite directions for the y axis. Another option
+///     would be to transform your texture coordinates.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QOpenGLTexture)]
 enum Target {
     Target1D,
@@ -346,102 +383,625 @@ enum Filter {
 
 struct OpenGLTexture {
     qt_check_for_qgadget_macro(),
+    ///     Returns the binding target of this texture.
+    /// 
+    ///     \since 5.4
     target() -> OpenGLTexture::Target,
+    ///     Creates the underlying OpenGL texture object. This requires a current valid
+    ///     OpenGL context. If the texture object already exists, this function does
+    ///     nothing.
+    /// 
+    ///     Once the texture object is created you can obtain the object
+    ///     name from the textureId() function. This may be useful if you wish to make
+    ///     some raw OpenGL calls related to this texture.
+    /// 
+    ///     Normally it should not be necessary to call this function directly as all
+    ///     functions that set properties of the texture object implicitly call create()
+    ///     on your behalf.
+    /// 
+    ///     Returns \c true if the creation succeeded, otherwise returns \c false.
+    /// 
+    ///     \sa destroy(), isCreated(), textureId()
     create() -> bool,
+    ///     Returns \c true if the underlying OpenGL texture object has been created.
+    /// 
+    ///     \sa create(), destroy(), textureId()
     is_created() -> bool,
+    ///     Returns the name of the underlying OpenGL texture object or 0 if it has
+    ///     not yet been created.
+    /// 
+    ///     \sa create(), destroy(), isCreated()
     texture_id() -> i32,
+    ///     Binds this texture to texture unit \a unit ready for
+    ///     rendering. Note that you do not need to bind QOpenGLTexture objects
+    ///     in order to modify them as the implementation makes use of the
+    ///     EXT_direct_state_access extension where available and simulates it
+    ///     where it is not.
+    /// 
+    ///     If parameter \a reset is \c true then this function will restore
+    ///     the active unit to the texture unit that was active upon entry.
+    /// 
+    ///     \sa release()
     bind(),
+    ///     Binds this texture to texture unit \a unit ready for
+    ///     rendering. Note that you do not need to bind QOpenGLTexture objects
+    ///     in order to modify them as the implementation makes use of the
+    ///     EXT_direct_state_access extension where available and simulates it
+    ///     where it is not.
+    /// 
+    ///     If parameter \a reset is \c true then this function will restore
+    ///     the active unit to the texture unit that was active upon entry.
+    /// 
+    ///     \sa release()
     bind(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    ///     Unbinds this texture from texture unit \a unit.
+    /// 
+    ///     If parameter \a reset is \c true then this function
+    ///     will restore the active unit to the texture unit that was active
+    ///     upon entry.
     release(),
+    ///     Unbinds this texture from texture unit \a unit.
+    /// 
+    ///     If parameter \a reset is \c true then this function
+    ///     will restore the active unit to the texture unit that was active
+    ///     upon entry.
     release(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    ///     Returns \c true if this texture is bound to the corresponding target
+    ///     of texture unit \a unit.
+    /// 
+    ///     \sa bind(), release()
     is_bound() -> bool,
+    ///     Returns \c true if this texture is bound to the corresponding target
+    ///     of texture unit \a unit.
+    /// 
+    ///     \sa bind(), release()
     is_bound(unit: uint) -> bool,
+    ///     Returns the textureId of the texture that is bound to the \a target
+    ///     of the texture unit \a unit.
     [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> i32,
+    ///     Returns the textureId of the texture that is bound to the \a target
+    ///     of the texture unit \a unit.
     [static] bound_texture_id(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
+    ///     Sets the format of this texture object to \a format. This function
+    ///     must be called before texture storage is allocated.
+    /// 
+    ///     Note that all formats may not be supported. The exact set of supported
+    ///     formats is dependent upon your OpenGL implementation and version.
+    /// 
+    ///     \sa format(), allocateStorage()
     set_format(format: OpenGLTexture::TextureFormat),
+    ///     Returns the format of this texture object.
+    /// 
+    ///     \sa setFormat()
     format() -> OpenGLTexture::TextureFormat,
+    ///     Sets the dimensions of this texture object to \a width,
+    ///     \a height, and \a depth. The default for each dimension is 1.
+    ///     The maximum allowable texture size is dependent upon your OpenGL
+    ///     implementation. Allocating storage for a texture less than the
+    ///     maximum size can still fail if your system is low on resources.
+    /// 
+    ///     If a non-power-of-two \a width, \a height or \a depth is provided and your
+    ///     OpenGL implementation doesn't have support for repeating non-power-of-two
+    ///     textures, then the wrap mode is automatically set to ClampToEdge.
+    /// 
+    ///     \sa width(), height(), depth()
     set_size(width: i32, height: i32, depth: i32),
+    ///     Returns the width of a 1D, 2D or 3D texture.
+    /// 
+    ///     \sa height(), depth(), setSize()
     width() -> i32,
+    ///     Returns the height of a 2D or 3D texture.
+    /// 
+    ///     \sa width(), depth(), setSize()
     height() -> i32,
+    ///     Returns the depth of a 3D texture.
+    /// 
+    ///     \sa width(), height(), setSize()
     depth() -> i32,
+    ///     For texture targets that support mipmaps, this function
+    ///     sets the requested number of mipmap \a levels to allocate storage
+    ///     for. This function should be called before storage is allocated
+    ///     for the texture.
+    /// 
+    ///     If the texture target does not support mipmaps this function
+    ///     has no effect.
+    /// 
+    ///     \sa mipLevels(), maximumMipLevels(), isStorageAllocated()
     set_mip_levels(levels: i32),
+    ///     Returns the number of mipmap levels for this texture. If storage
+    ///     has not yet been allocated for this texture it returns the
+    ///     requested number of mipmap levels.
+    /// 
+    ///     \sa setMipLevels(), maximumMipLevels(), isStorageAllocated()
     mip_levels() -> i32,
+    ///     Returns the maximum number of mipmap levels that this texture
+    ///     can have given the current dimensions.
+    /// 
+    ///     \sa setMipLevels(), mipLevels(), setSize()
     maximum_mip_levels() -> i32,
+    ///     Sets the number of array \a layers to allocate storage for. This
+    ///     function should be called before storage is allocated for the texture.
+    /// 
+    ///     For targets that do not support array layers this function has
+    ///     no effect.
+    /// 
+    ///     \sa layers(), isStorageAllocated()
     set_layers(layers: i32),
+    ///     Returns the number of array layers for this texture. If
+    ///     storage has not yet been allocated for this texture then
+    ///     this function returns the requested number of array layers.
+    /// 
+    ///     For texture targets that do not support array layers this
+    ///     will return 1.
+    /// 
+    ///     \sa setLayers(), isStorageAllocated()
     layers() -> i32,
+    ///     Returns the number of faces for this texture. For cubemap
+    ///     and cubemap array type targets this will be 6.
+    /// 
+    ///     For non-cubemap type targets this will return 1.
     faces() -> i32,
+    ///     Sets the number of \a samples to allocate storage for when rendering to
+    ///     a multisample capable texture target. This function should
+    ///     be called before storage is allocated for the texture.
+    /// 
+    ///     For targets that do not support multisampling this function has
+    ///     no effect.
+    /// 
+    ///     \sa samples(), isStorageAllocated()
     set_samples(samples: i32),
+    ///     Returns the number of multisample sample points for this texture.
+    ///     If storage has not yet been allocated for this texture then
+    ///     this function returns the requested number of samples.
+    /// 
+    ///     For texture targets that do not support multisampling this
+    ///     will return 0.
+    /// 
+    ///     \sa setSamples(), isStorageAllocated()
     samples() -> i32,
+    ///     Sets whether the sample positions and number of samples used with
+    ///     a multisample capable texture target to \a fixed. If set to \c true
+    ///     the sample positions and number of samples used are the same for
+    ///     all texels in the image and will not depend upon the image size or
+    ///     internal format. This function should be called before storage is allocated
+    ///     for the texture.
+    /// 
+    ///     For targets that do not support multisampling this function has
+    ///     no effect.
+    /// 
+    ///     The default value is \c true.
+    /// 
+    ///     \sa isFixedSamplePositions(), isStorageAllocated()
     set_fixed_sample_positions(fixed: bool),
+    ///     Returns whether this texture uses a fixed pattern of multisample
+    ///     samples. If storage has not yet been allocated for this texture then
+    ///     this function returns the requested fixed sample position setting.
+    /// 
+    ///     For texture targets that do not support multisampling this
+    ///     will return \c true.
+    /// 
+    ///     \sa setFixedSamplePositions(), isStorageAllocated()
     is_fixed_sample_positions() -> bool,
+    ///     \since 5.5
+    /// 
+    ///     Allocates server-side storage for this texture object taking
+    ///     into account, the format, dimensions, mipmap levels, array
+    ///     layers and cubemap faces.
+    /// 
+    ///     Once storage has been allocated it is no longer possible to change
+    ///     these properties.
+    /// 
+    ///     If supported QOpenGLTexture makes use of immutable texture
+    ///     storage. However, if immutable texture storage is not available,
+    ///     then the specified \a pixelFormat and \a pixelType will be used
+    ///     to allocate mutable storage; note that in certain OpenGL implementations
+    ///     (notably, OpenGL ES 2) they must perfectly match the format
+    ///     and the type passed to any subsequent setData() call.
+    /// 
+    ///     Once storage has been allocated for the texture then pixel data
+    ///     can be uploaded via one of the setData() overloads.
+    /// 
+    ///     \sa isStorageAllocated(), setData()
     allocate_storage(),
+    ///     \since 5.5
+    /// 
+    ///     Allocates server-side storage for this texture object taking
+    ///     into account, the format, dimensions, mipmap levels, array
+    ///     layers and cubemap faces.
+    /// 
+    ///     Once storage has been allocated it is no longer possible to change
+    ///     these properties.
+    /// 
+    ///     If supported QOpenGLTexture makes use of immutable texture
+    ///     storage. However, if immutable texture storage is not available,
+    ///     then the specified \a pixelFormat and \a pixelType will be used
+    ///     to allocate mutable storage; note that in certain OpenGL implementations
+    ///     (notably, OpenGL ES 2) they must perfectly match the format
+    ///     and the type passed to any subsequent setData() call.
+    /// 
+    ///     Once storage has been allocated for the texture then pixel data
+    ///     can be uploaded via one of the setData() overloads.
+    /// 
+    ///     \sa isStorageAllocated(), setData()
     allocate_storage(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
+    ///     Returns \c true if server-side storage for this texture as been
+    ///     allocated.
+    /// 
+    ///     The texture format, dimensions, mipmap levels and array layers
+    ///     cannot be altered once storage ihas been allocated.
+    /// 
+    ///     \sa allocateStorage(), setSize(), setMipLevels(), setLayers(), setFormat()
     is_storage_allocated() -> bool,
     create_texture_view(target: OpenGLTexture::Target, view_format: OpenGLTexture::TextureFormat, minimum_mipmap_level: i32, maximum_mipmap_level: i32, minimum_layer: i32, maximum_layer: i32) -> OpenGLTexture?,
+    ///     Returns \c true if this texture object is actually a view onto another
+    ///     texture object.
+    /// 
+    ///     \sa createTextureView()
     is_texture_view() -> bool,
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     \since 5.9
+    ///     \overload
+    /// 
+    ///     Parameter \a layerCount is the number of layers in a texture array
+    ///     that are being uploaded/populated by this call.
     set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    ///     This overload of setData() will allocate storage for you.
+    ///     The pixel data is contained in \a image. Mipmaps are generated by default.
+    ///     Set \a genMipMaps to \l DontGenerateMipMaps to turn off mipmap generation.
+    /// 
+    ///     \overload
     set_data(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
+    ///     Returns \c true if your OpenGL implementation and version supports the texture
+    ///     feature \a feature.
     [static] has_feature(feature: OpenGLTexture::Feature) -> bool,
+    ///     Sets the base mipmap level used for all texture lookups with this texture to \a baseLevel.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa mipBaseLevel(), setMipMaxLevel(), setMipLevelRange()
     set_mip_base_level(base_level: i32),
+    ///     Returns the mipmap base level used for all texture lookups with this texture.
+    ///     The default is 0.
+    /// 
+    ///     \sa setMipBaseLevel(), mipMaxLevel(), mipLevelRange()
     mip_base_level() -> i32,
+    ///     Sets the maximum mipmap level used for all texture lookups with this texture to \a maxLevel.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa mipMaxLevel(), setMipBaseLevel(), setMipLevelRange()
     set_mip_max_level(max_level: i32),
+    ///     Returns the mipmap maximum level used for all texture lookups with this texture.
+    /// 
+    ///     \sa setMipMaxLevel(), mipBaseLevel(), mipLevelRange()
     mip_max_level() -> i32,
+    ///     Sets the range of mipmap levels that can be used for texture lookups with this texture
+    ///     to range from \a baseLevel to \a maxLevel.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa setMipBaseLevel(), setMipMaxLevel(), mipLevelRange()
     set_mip_level_range(base_level: i32, max_level: i32),
+    ///     Returns the range of mipmap levels that can be used for texture lookups with this texture.
+    /// 
+    ///     \sa mipBaseLevel(), mipMaxLevel()
     mip_level_range() -> Pair<int,,
+    ///     If \a enabled is \c true, enables automatic mipmap generation for this texture object
+    ///     to occur whenever the level 0 mipmap data is set via setData().
+    /// 
+    ///     The automatic mipmap generation is enabled by default.
+    /// 
+    ///     \note Mipmap generation is not supported for compressed textures with OpenGL ES 2.0.
+    /// 
+    ///     \sa isAutoMipMapGenerationEnabled(), generateMipMaps()
     set_auto_mip_map_generation_enabled(enabled: bool),
+    ///     Returns whether auto mipmap generation is enabled for this texture object.
+    /// 
+    ///     \sa setAutoMipMapGenerationEnabled(), generateMipMaps()
     is_auto_mip_map_generation_enabled() -> bool,
+    ///     Generates mipmaps for this texture object from mipmap level \a baseLevel. If you are
+    ///     using a texture target and filtering option that requires mipmaps and you
+    ///     have disabled automatic mipmap generation then you need to call this function
+    ///     or the overload to create the mipmap chain.
+    /// 
+    ///     The generation of mipmaps to above \a baseLevel is achieved by setting the mipmap
+    ///     base level to \a baseLevel and then generating the mipmap chain. If \a resetBaseLevel
+    ///     is \c true, then the baseLevel of the texture will be reset to its previous value.
+    /// 
+    ///     \sa setAutoMipMapGenerationEnabled(), setMipLevels(), mipLevels()
     generate_mip_maps(),
+    ///     Generates mipmaps for this texture object from mipmap level \a baseLevel. If you are
+    ///     using a texture target and filtering option that requires mipmaps and you
+    ///     have disabled automatic mipmap generation then you need to call this function
+    ///     or the overload to create the mipmap chain.
+    /// 
+    ///     The generation of mipmaps to above \a baseLevel is achieved by setting the mipmap
+    ///     base level to \a baseLevel and then generating the mipmap chain. If \a resetBaseLevel
+    ///     is \c true, then the baseLevel of the texture will be reset to its previous value.
+    /// 
+    ///     \sa setAutoMipMapGenerationEnabled(), setMipLevels(), mipLevels()
     generate_mip_maps(base_level: i32, reset_base_level: bool),
+    ///     GLSL shaders are able to reorder the components of the vec4 returned by texture
+    ///     functions. It is also desirable to be able to control this reordering from CPU
+    ///     side code. This is made possible by swizzle masks since OpenGL 3.3.
+    /// 
+    ///     Each component of the texture can be mapped to one of the SwizzleValue options.
+    /// 
+    ///     This function maps \a component to the output \a value.
+    /// 
+    ///     \note This function has no effect on Mac and Qt built for OpenGL ES 2.
+    ///     \sa swizzleMask()
     set_swizzle_mask(component: OpenGLTexture::SwizzleComponent, value: OpenGLTexture::SwizzleValue),
+    ///     GLSL shaders are able to reorder the components of the vec4 returned by texture
+    ///     functions. It is also desirable to be able to control this reordering from CPU
+    ///     side code. This is made possible by swizzle masks since OpenGL 3.3.
+    /// 
+    ///     Each component of the texture can be mapped to one of the SwizzleValue options.
+    /// 
+    ///     This function maps \a component to the output \a value.
+    /// 
+    ///     \note This function has no effect on Mac and Qt built for OpenGL ES 2.
+    ///     \sa swizzleMask()
     set_swizzle_mask(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
+    ///     Returns the swizzle mask for texture \a component.
     swizzle_mask(component: OpenGLTexture::SwizzleComponent) -> OpenGLTexture::SwizzleValue,
+    ///     If using a texture that has a combined depth/stencil format this function sets
+    ///     which component of the texture is accessed to \a mode.
+    /// 
+    ///     When the parameter is set to DepthMode, then accessing it from the
+    ///     shader will access the depth component as a single float, as normal. But when
+    ///     the parameter is set to StencilMode, the shader will access the stencil component.
+    /// 
+    ///     \note This function has no effect on Mac and Qt built for OpenGL ES 2.
+    ///     \since 5.4
+    ///     \sa depthStencilMode()
     set_depth_stencil_mode(mode: OpenGLTexture::DepthStencilMode),
+    ///     Returns the depth stencil mode for textures using a combined depth/stencil format.
+    /// 
+    ///     \since 5.4
+    ///     \sa setDepthStencilMode()
     depth_stencil_mode() -> OpenGLTexture::DepthStencilMode,
+    ///     \enum QOpenGLTexture::ComparisonFunction
+    ///     \since 5.5
+    ///     This enum specifies which comparison operator is used when texture comparison
+    ///     is enabled on this texture.
+    /// 
+    ///     \value CompareLessEqual Equivalent to GL_LEQUAL.
+    ///     \value CompareGreaterEqual Equivalent to GL_GEQUAL.
+    ///     \value CompareLess Equivalent to GL_LESS.
+    ///     \value CompareGreater Equivalent to GL_GREATER.
+    ///     \value CompareEqual Equivalent to GL_EQUAL.
+    ///     \value CommpareNotEqual Equivalent to GL_NOTEQUAL.
+    ///     \value CompareAlways Equivalent to GL_ALWAYS.
+    ///     \value CompareNever Equivalent to GL_NEVER.
+    /// 
     set_comparison_function(function: OpenGLTexture::ComparisonFunction),
+    ///     \since 5.5
+    /// 
+    ///     Returns the texture comparison operator set on this texture. By default, a
+    ///     texture has a CompareLessEqual comparison function.
+    /// 
+    ///     \sa setComparisonFunction()
     comparison_function() -> OpenGLTexture::ComparisonFunction,
+    ///     \since 5.5
+    /// 
+    ///     Sets the texture comparison mode on this texture to \a mode. The texture
+    ///     comparison mode is used by shadow samplers when sampling a depth texture.
+    /// 
+    ///     \sa comparisonMode()
     set_comparison_mode(mode: OpenGLTexture::ComparisonMode),
+    ///     \since 5.5
+    /// 
+    ///     Returns the texture comparison mode set on this texture. By default, a
+    ///     texture has a CompareNone comparison mode (i.e. comparisons are disabled).
+    /// 
+    ///     \sa setComparisonMode()
     comparison_mode() -> OpenGLTexture::ComparisonMode,
+    ///     Sets the filter used for minification to \a filter.
+    /// 
+    ///     \sa minificationFilter(), setMagnificationFilter(), setMinMagFilters()
     set_minification_filter(filter: OpenGLTexture::Filter),
+    ///     Returns the minification filter.
+    /// 
+    ///     \sa setMinificationFilter()
     minification_filter() -> OpenGLTexture::Filter,
+    ///     Sets the magnification filter to \a filter.
+    /// 
+    ///     \sa magnificationFilter(), setMinificationFilter(), setMinMagFilters()
     set_magnification_filter(filter: OpenGLTexture::Filter),
+    ///     Returns the magnification filter.
+    /// 
+    ///     \sa setMagnificationFilter()
     magnification_filter() -> OpenGLTexture::Filter,
     set_min_mag_filters(minification_filter: OpenGLTexture::Filter, magnification_filter: OpenGLTexture::Filter),
+    ///     Returns the current minification and magnification filters.
+    /// 
+    ///     \sa setMinMagFilters()
     min_mag_filters() -> Pair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>,
+    ///     Holds the texture dimension \a direction.
+    ///     \overload
     set_wrap_mode(mode: OpenGLTexture::WrapMode),
+    ///     Holds the texture dimension \a direction.
+    ///     \overload
     set_wrap_mode(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
+    ///     Returns the wrap mode for the texture dimension \a direction.
+    /// 
+    ///     \sa setWrapMode()
     wrap_mode(direction: OpenGLTexture::CoordinateDirection) -> OpenGLTexture::WrapMode,
+    ///     Sets the color red to \a {r}, green to \a {g}, blue to \a {b}, and the alpha
+    ///     value to \a {a}.
+    ///     \overload
     set_border_color(color: ColorType),
+    ///     Sets the color red to \a {r}, green to \a {g}, blue to \a {b}, and the alpha
+    ///     value to \a {a}.
+    ///     \overload
     set_border_color(r: f32, g: f32, b: f32, a: f32),
+    ///     Sets the color red to \a {r}, green to \a {g}, blue to \a {b}, and the alpha
+    ///     value to \a {a}.
+    ///     \overload
     set_border_color(r: i32, g: i32, b: i32, a: i32),
+    ///     Sets the color red to \a {r}, green to \a {g}, blue to \a {b}, and the alpha
+    ///     value to \a {a}.
+    ///     \overload
     set_border_color(r: uint, g: uint, b: uint, a: uint),
+    ///     Writes the texture border color into the first four elements
+    ///     of the array pointed to by \a border.
+    /// 
+    ///     \overload
     border_color() -> Color,
+    ///     Writes the texture border color into the first four elements
+    ///     of the array pointed to by \a border.
+    /// 
+    ///     \overload
     border_color(border: *f32),
+    ///     Writes the texture border color into the first four elements
+    ///     of the array pointed to by \a border.
+    /// 
+    ///     \overload
     border_color(border: *i32),
+    ///     Writes the texture border color into the first four elements
+    ///     of the array pointed to by \a border.
+    /// 
+    ///     \overload
     border_color(border: *unsigned),
+    ///     Sets the minimum level of detail to \a value. This limits the selection of highest
+    ///     resolution mipmap (lowest mipmap level). The default value is -1000.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa minimumLevelOfDetail(), setMaximumLevelOfDetail(), setLevelOfDetailRange()
     set_minimum_level_of_detail(value: f32),
+    ///     Returns the minimum level of detail parameter.
+    /// 
+    ///     \sa setMinimumLevelOfDetail(), maximumLevelOfDetail(), levelOfDetailRange()
     minimum_level_of_detail() -> f32,
+    ///     Sets the maximum level of detail to \a value. This limits the selection of lowest
+    ///     resolution mipmap (highest mipmap level). The default value is 1000.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa maximumLevelOfDetail(), setMinimumLevelOfDetail(), setLevelOfDetailRange()
     set_maximum_level_of_detail(value: f32),
+    ///     Returns the maximum level of detail parameter.
+    /// 
+    ///     \sa setMaximumLevelOfDetail(), minimumLevelOfDetail(), levelOfDetailRange()
     maximum_level_of_detail() -> f32,
+    ///     Sets the minimum level of detail parameters to \a min and the maximum level
+    ///     to \a max.
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa levelOfDetailRange(), setMinimumLevelOfDetail(), setMaximumLevelOfDetail()
     set_level_of_detail_range(min: f32, max: f32),
+    ///     Returns the minimum and maximum level of detail parameters.
+    /// 
+    ///     \sa setLevelOfDetailRange(), minimumLevelOfDetail(), maximumLevelOfDetail()
     level_of_detail_range() -> Pair<float,,
+    ///     Sets the level of detail bias to \a bias.
+    ///     Level of detail bias affects the point at which mipmapping levels change.
+    ///     Increasing values for level of detail bias makes the overall images blurrier
+    ///     or smoother. Decreasing values make the overall images sharper.
+    /// 
+    ///     \note This function has no effect on Qt built for OpenGL ES 2.
+    ///     \sa levelofDetailBias()
     set_levelof_detail_bias(bias: f32),
+    ///     Returns the level of detail bias parameter.
+    /// 
+    ///     \sa setLevelofDetailBias()
     levelof_detail_bias() -> f32,
 }
 

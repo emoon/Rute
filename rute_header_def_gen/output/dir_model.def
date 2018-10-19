@@ -1,3 +1,35 @@
+///     \class QDirModel
+///     \obsolete
+///     \brief The QDirModel class provides a data model for the local filesystem.
+/// 
+///     \ingroup model-view
+///     \inmodule QtWidgets
+/// 
+///     The usage of QDirModel is not recommended anymore. The
+///     QFileSystemModel class is a more performant alternative.
+/// 
+///     This class provides access to the local filesystem, providing functions
+///     for renaming and removing files and directories, and for creating new
+///     directories. In the simplest case, it can be used with a suitable display
+///     widget as part of a browser or filer.
+/// 
+///     QDirModel keeps a cache with file information. The cache needs to be
+///     updated with refresh().
+/// 
+///     QDirModel can be accessed using the standard interface provided by
+///     QAbstractItemModel, but it also provides some convenience functions
+///     that are specific to a directory model. The fileInfo() and isDir()
+///     functions provide information about the underlying files and directories
+///     related to items in the model.
+/// 
+///     Directories can be created and removed using mkdir(), rmdir(), and the
+///     model will be automatically updated to take the changes into account.
+/// 
+///     \note QDirModel requires an instance of \l QApplication.
+/// 
+///     \sa nameFilters(), setFilter(), filter(), QListView, QTreeView, QFileSystemModel,
+///     {Dir View Example}, {Model Classes}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDirModel)]
 enum Roles {
     FileIconRole,
@@ -6,43 +38,162 @@ enum Roles {
 }
 
 struct DirModel : AbstractItemModel {
+    ///     \overload
+    /// 
+    ///     Returns the model item index for the given \a path.
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
+    ///   Return the parent of the given \a child model item.
     [event] parent(child: &ModelIndexType) -> ModelIndex,
+    ///   Returns the number of rows in the \a parent model item.
+    /// 
     [event] row_count(parent: &ModelIndexType) -> i32,
+    ///   Returns the number of columns in the \a parent model item.
+    /// 
     [event] column_count(parent: &ModelIndexType) -> i32,
+    ///   Returns the data for the model item \a index with the given \a role.
     [event] data(index: &ModelIndexType, role: i32) -> Variant,
+    ///   Sets the data for the model item \a index with the given \a role to
+    ///   the data referenced by the \a value. Returns \c true if successful;
+    ///   otherwise returns \c false.
+    /// 
+    ///   \sa Qt::ItemDataRole
     [event] set_data(index: &ModelIndexType, value: &VariantType, role: i32) -> bool,
+    ///   Returns the data stored under the given \a role for the specified \a section
+    ///   of the header with the given \a orientation.
     [event] header_data(section: i32, orientation: Rute::Orientation, role: i32) -> Variant,
+    ///   Returns \c true if the \a parent model item has children; otherwise
+    ///   returns \c false.
     [event] has_children(index: &ModelIndexType) -> bool,
+    ///   Returns the item flags for the given \a index in the model.
+    /// 
+    ///   \sa Qt::ItemFlags
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
+    ///   Sort the model items in the \a column using the \a order given.
+    ///   The order is a value defined in \l Qt::SortOrder.
     [event] sort(column: i32, order: Rute::SortOrder),
+    ///     Returns a list of MIME types that can be used to describe a list of items
+    ///     in the model.
     [event] mime_types() -> [String],
+    ///     Returns an object that contains a serialized description of the specified
+    ///     \a indexes. The format used to describe the items corresponding to the
+    ///     indexes is obtained from the mimeTypes() function.
+    /// 
+    ///     If the list of indexes is empty, 0 is returned rather than a serialized
+    ///     empty list.
     [event] mime_data(indexes: &[ModelIndex]) -> MimeData?,
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    ///   Returns the drop actions supported by this model.
+    /// 
+    ///   \sa Qt::DropActions
     [event] supported_drop_actions() -> Rute::DropActions,
+    ///   Sets the \a provider of file icons for the directory model.
+    /// 
     set_icon_provider(provider: *FileIconProviderType),
+    ///   Returns the file icon provider for this directory model.
     icon_provider() -> FileIconProvider?,
+    ///   Sets the name \a filters for the directory model.
     set_name_filters(filters: &[String]),
+    ///   Returns a list of filters applied to the names in the model.
     name_filters() -> [String],
+    ///   Sets the directory model's filter to that specified by \a filters.
+    /// 
+    ///   Note that the filter you set should always include the QDir::AllDirs enum value,
+    ///   otherwise QDirModel won't be able to read the directory structure.
+    /// 
+    ///   \sa QDir::Filters
     set_filter(filters: Dir::Filters),
+    ///   Returns the filter specification for the directory model.
+    /// 
+    ///   \sa QDir::Filters
     filter() -> Dir::Filters,
+    ///   Sets the directory model's sorting order to that specified by \a sort.
+    /// 
+    ///   \sa QDir::SortFlags
     set_sorting(sort: Dir::SortFlags),
+    ///   Returns the sorting method used for the directory model.
+    /// 
+    ///   \sa QDir::SortFlags
     sorting() -> Dir::SortFlags,
+    ///     \property QDirModel::resolveSymlinks
+    ///     \brief Whether the directory model should resolve symbolic links
+    /// 
+    ///     This is only relevant on operating systems that support symbolic
+    ///     links.
     set_resolve_symlinks(enable: bool),
     resolve_symlinks() -> bool,
+    ///   \property QDirModel::readOnly
+    ///   \brief Whether the directory model allows writing to the file system
+    /// 
+    ///   If this property is set to false, the directory model will allow renaming, copying
+    ///   and deleting of files and directories.
+    /// 
+    ///   This property is \c true by default
     set_read_only(enable: bool),
     is_read_only() -> bool,
+    ///   \property QDirModel::lazyChildCount
+    ///   \brief Whether the directory model optimizes the hasChildren function
+    ///   to only check if the item is a directory.
+    /// 
+    ///   If this property is set to false, the directory model will make sure that a directory
+    ///   actually containes any files before reporting that it has children.
+    ///   Otherwise the directory model will report that an item has children if the item
+    ///   is a directory.
+    /// 
+    ///   This property is \c false by default
     set_lazy_child_count(enable: bool),
     lazy_child_count() -> bool,
+    ///     \overload
+    /// 
+    ///     Returns the model item index for the given \a path.
     index(path: String, column: i32) -> ModelIndex,
+    ///   Returns \c true if the model item \a index represents a directory;
+    ///   otherwise returns \c false.
     is_dir(index: &ModelIndexType) -> bool,
+    ///   Create a directory with the \a name in the \a parent model item.
     mkdir(parent: &ModelIndexType, name: String) -> ModelIndex,
+    ///   Removes the directory corresponding to the model item \a index in the
+    ///   directory model and \b{deletes the corresponding directory from the
+    ///   file system}, returning true if successful. If the directory cannot be
+    ///   removed, false is returned.
+    /// 
+    ///   \warning This function deletes directories from the file system; it does
+    ///   \b{not} move them to a location where they can be recovered.
+    /// 
+    ///   \sa remove()
     rmdir(index: &ModelIndexType) -> bool,
+    ///   Removes the model item \a index from the directory model and \b{deletes the
+    ///   corresponding file from the file system}, returning true if successful. If the
+    ///   item cannot be removed, false is returned.
+    /// 
+    ///   \warning This function deletes files from the file system; it does \b{not}
+    ///   move them to a location where they can be recovered.
+    /// 
+    ///   \sa rmdir()
     remove(index: &ModelIndexType) -> bool,
+    ///   Returns the path of the item stored in the model under the
+    ///   \a index given.
+    /// 
     file_path(index: &ModelIndexType) -> String,
+    ///   Returns the name of the item stored in the model under the
+    ///   \a index given.
+    /// 
     file_name(index: &ModelIndexType) -> String,
+    ///   Returns the icons for the item stored in the model under the given
+    ///   \a index.
     file_icon(index: &ModelIndexType) -> Icon,
+    ///   Returns the file information for the specified model \a index.
+    /// 
+    ///   \b{Note:} If the model index represents a symbolic link in the
+    ///   underlying filing system, the file information returned will contain
+    ///   information about the symbolic link itself, regardless of whether
+    ///   resolveSymlinks is enabled or not.
+    /// 
+    ///   \sa QFileInfo::symLinkTarget()
     file_info(index: &ModelIndexType) -> FileInfo,
+    ///   QDirModel caches file information. This function updates the
+    ///   cache. The \a parent parameter is the directory from which the
+    ///   model is updated; the default value will update the model from
+    ///   root directory of the file system (the entire model).
     refresh(parent: &ModelIndexType),
 }
 

@@ -1,3 +1,14 @@
+///     \class QAccessibleStateChangeEvent
+///     \ingroup accessibility
+///     \inmodule QtGui
+/// 
+///     \brief The QAccessibleStateChangeEvent notfies the accessibility framework
+///     that the state of an object has changed.
+/// 
+///     This class is used with \l QAccessible::updateAccessibility().
+/// 
+///     \sa QAccessibleInterface::state()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessibleStateChangeEvent : AccessibleEvent {
     changed_states() -> Accessible::State,
 }

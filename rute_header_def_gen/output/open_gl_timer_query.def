@@ -1,12 +1,116 @@
+///     \class QOpenGLTimerQuery
+///     \brief The QOpenGLTimerQuery class wraps an OpenGL timer query object.
+///     \inmodule QtGui
+///     \since 5.1
+///     \ingroup painting-3D
+/// 
+///     OpenGL timer query objects are OpenGL managed resources to measure the
+///     execution times of sequences of OpenGL commands on the GPU.
+/// 
+///     OpenGL offers various levels of support for timer queries, depending on
+///     the version of OpenGL you have and the presence of the ARB_timer_query or
+///     EXT_timer_query extensions. The support can be summarized as:
+/// 
+///     \list
+///         \li OpenGL >=3.3 offers full support for all timer query functionality.
+///         \li OpenGL 3.2 with the ARB_timer_query extension offers full support
+///             for all timer query functionality.
+///         \li OpenGL <=3.2 with the EXT_timer_query extension offers limited support
+///             in that the timestamp of the GPU cannot be queried. Places where this
+///             impacts functions provided by Qt classes will be highlighted in the
+///             function documentation.
+///         \li OpenGL ES 2 (and OpenGL ES 3) do not provide any support for OpenGL
+///             timer queries.
+///     \endlist
+/// 
+///     OpenGL represents time with a granularity of 1 nanosecond (1e-9 seconds). As a
+///     consequence of this, 32-bit integers would only give a total possible duration
+///     of approximately 4 seconds, which would not be difficult to exceed in poorly
+///     performing or lengthy operations. OpenGL therefore uses 64 bit integer types
+///     to represent times. A GLuint64 variable has enough width to contain a duration
+///     of hundreds of years, which is plenty for real-time rendering needs.
+/// 
+///     As with the other Qt OpenGL classes, QOpenGLTimerQuery has a create()
+///     function to create the underlying OpenGL object. This is to allow the developer to
+///     ensure that there is a valid current OpenGL context at the time.
+/// 
+///     Once created, timer queries can be issued in one of several ways. The simplest
+///     method is to delimit a block of commands with calls to begin() and end(). This
+///     instructs OpenGL to measure the time taken from completing all commands issued
+///     prior to begin() until the completion of all commands issued prior to end().
+/// 
+///     At the end of a frame we can retrieve the results by calling waitForResult().
+///     As this function's name implies, it blocks CPU execution until OpenGL notifies
+///     that the timer query result is available. To avoid blocking, you can check
+///     if the query result is available by calling isResultAvailable(). Note that
+///     modern GPUs are deeply pipelined and query results may not become available for
+///     between 1-5 frames after they were issued.
+/// 
+///     Note that OpenGL does not permit nesting or interleaving of multiple timer queries
+///     using begin() and end(). Using multiple timer queries and recordTimestamp() avoids
+///     this limitation. When using recordTimestamp() the result can be obtained at
+///     some later time using isResultAvailable() and waitForResult(). Qt provides the
+///     convenience class QOpenGLTimeMonitor that helps with using multiple query objects.
+/// 
+///     \sa QOpenGLTimeMonitor
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLTimerQuery : Object {
+    ///     Creates the underlying OpenGL timer query object. There must be a valid OpenGL context
+    ///     that supports query objects current for this function to succeed.
+    /// 
+    ///     Returns \c true if the OpenGL timer query object was successfully created.
     create() -> bool,
+    ///     Returns \c true if the underlying OpenGL query object has been created. If this
+    ///     returns \c true and the associated OpenGL context is current, then you are able to issue
+    ///     queries with this object.
     is_created() -> bool,
+    ///     Returns the id of the underlying OpenGL query object.
     object_id() -> i32,
+    ///     Marks the start point in the OpenGL command queue for a sequence of commands to
+    ///     be timed by this query object.
+    /// 
+    ///     This is useful for simple use-cases. Usually it is better to use recordTimestamp().
+    /// 
+    ///     \sa end(), isResultAvailable(), waitForResult(), recordTimestamp()
     begin(),
+    ///     Marks the end point in the OpenGL command queue for a sequence of commands to
+    ///     be timed by this query object.
+    /// 
+    ///     This is useful for simple use-cases. Usually it is better to use recordTimestamp().
+    /// 
+    ///     \sa begin(), isResultAvailable(), waitForResult(), recordTimestamp()
     end(),
+    ///     Returns the current timestamp of the GPU when all previously issued OpenGL
+    ///     commands have been received but not necessarily executed by the GPU.
+    /// 
+    ///     This function blocks until the result is returned.
+    /// 
+    ///     \sa recordTimestamp()
     wait_for_timestamp() -> GLuint64,
+    ///     Places a marker in the OpenGL command queue for the GPU to record the timestamp
+    ///     when this marker is reached by the GPU. This function is non-blocking and the
+    ///     result will become available at some later time.
+    /// 
+    ///     The availability of the result can be checked with isResultAvailable(). The result
+    ///     can be fetched with waitForResult() which will block if the result is not yet
+    ///     available.
+    /// 
+    ///     \sa waitForResult(), isResultAvailable(), begin(), end()
     record_timestamp(),
+    ///     Returns \c true if the OpenGL timer query result is available.
+    /// 
+    ///     This function is non-blocking and ideally should be used to check for the
+    ///     availability of the query result before calling waitForResult().
+    /// 
+    ///     \sa waitForResult()
     is_result_available() -> bool,
+    ///     Returns the result of the OpenGL timer query.
+    /// 
+    ///     This function will block until the result is made available by OpenGL. It is
+    ///     recommended to call isResultAvailable() to ensure that the result is available
+    ///     to avoid unnecessary blocking and stalling.
+    /// 
+    ///     \sa isResultAvailable()
     wait_for_result() -> GLuint64,
 }
 

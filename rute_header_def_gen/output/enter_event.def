@@ -1,3 +1,13 @@
+///     \class QEnterEvent
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QEnterEvent class contains parameters that describe an enter event.
+/// 
+///     Enter events occur when the mouse cursor enters a window or a widget.
+/// 
+///     \since 5.0
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct EnterEvent : Event {
     pos() -> Point,
     global_pos() -> Point,

@@ -1,3 +1,78 @@
+///     \class QPlatformDrag
+///     \since 5.0
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+/// 
+///     \brief The QPlatformDrag class provides an abstraction for drag.
+///  */
+/// QPlatformDrag::QPlatformDrag() : d_ptr(new QPlatformDragPrivate)
+/// {
+/// }
+/// 
+/// QPlatformDrag::~QPlatformDrag()
+/// {
+///     delete d_ptr;
+/// }
+/// 
+/// QDrag *QPlatformDrag::currentDrag() const
+/// {
+///     return QDragManager::self()->object();
+/// }
+/// 
+/// Qt::DropAction QPlatformDrag::defaultAction(Qt::DropActions possibleActions,
+///                                            Qt::KeyboardModifiers modifiers) const
+/// {
+/// #ifdef QDND_DEBUG
+///     qDebug() << "QDragManager::defaultAction(Qt::DropActions possibleActions)\nkeyboard modifiers : " << modifiers;
+/// #endif
+/// 
+///     Qt::DropAction default_action = Qt::IgnoreAction;
+/// 
+///     if (currentDrag()) {
+///         default_action = currentDrag()->defaultAction();
+///     }
+/// 
+/// 
+///     if (default_action == Qt::IgnoreAction) {
+///         //This means that the drag was initiated by QDrag::start and we need to
+///         //preserve the old behavior
+///         default_action = Qt::CopyAction;
+///     }
+/// 
+///     if (modifiers & Qt::ControlModifier && modifiers & Qt::ShiftModifier)
+///         default_action = Qt::LinkAction;
+///     else if (modifiers & Qt::ControlModifier)
+///         default_action = Qt::CopyAction;
+///     else if (modifiers & Qt::ShiftModifier)
+///         default_action = Qt::MoveAction;
+///     else if (modifiers & Qt::AltModifier)
+///         default_action = Qt::LinkAction;
+/// 
+/// #ifdef QDND_DEBUG
+///     qDebug() << "possible actions : " << possibleActions;
+/// #endif
+/// 
+///     // Check if the action determined is allowed
+///     if (!(possibleActions & default_action)) {
+///         if (possibleActions & Qt::CopyAction)
+///             default_action = Qt::CopyAction;
+///         else if (possibleActions & Qt::MoveAction)
+///             default_action = Qt::MoveAction;
+///         else if (possibleActions & Qt::LinkAction)
+///             default_action = Qt::LinkAction;
+///         else
+///             default_action = Qt::IgnoreAction;
+///     }
+/// 
+/// #ifdef QDND_DEBUG
+///     qDebug() << "default action : " << default_action;
+/// #endif
+/// 
+///     return default_action;
+/// }
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PlatformDrag {
     current_drag() -> Drag?,

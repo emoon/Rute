@@ -1,3 +1,36 @@
+///     \class QPointF
+///     \inmodule QtCore
+///     \ingroup painting
+///     \reentrant
+/// 
+///     \brief The QPointF class defines a point in the plane using
+///     floating point precision.
+/// 
+///     A point is specified by a x coordinate and an y coordinate which
+///     can be accessed using the x() and y() functions. The coordinates
+///     of the point are specified using floating point numbers for
+///     accuracy. The isNull() function returns \c true if both x and y are
+///     set to 0.0. The coordinates can be set (or altered) using the setX()
+///     and setY() functions, or alternatively the rx() and ry() functions which
+///     return references to the coordinates (allowing direct
+///     manipulation).
+/// 
+///     Given a point \e p, the following statements are all equivalent:
+/// 
+///     \snippet code/src_corelib_tools_qpoint.cpp 9
+/// 
+///     A QPointF object can also be used as a vector: Addition and
+///     subtraction are defined as for vectors (each component is added
+///     separately). A QPointF object can also be divided or multiplied by
+///     an \c int or a \c qreal.
+/// 
+///     In addition, the QPointF class provides a constructor converting a
+///     QPoint object into a QPointF object, and a corresponding toPoint()
+///     function which returns a QPoint copy of \e this point. Finally,
+///     QPointF objects can be streamed as well as compared.
+/// 
+///     \sa QPoint, QPolygonF
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PointF {
     manhattan_length() -> f32,

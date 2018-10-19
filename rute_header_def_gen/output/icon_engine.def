@@ -1,3 +1,26 @@
+///   \class QIconEngine
+/// 
+///   \brief The QIconEngine class provides an abstract base class for QIcon renderers.
+/// 
+///   \ingroup painting
+///   \inmodule QtGui
+/// 
+///   An icon engine provides the rendering functions for a QIcon. Each icon has a
+///   corresponding icon engine that is responsible for drawing the icon with a
+///   requested size, mode and state.
+/// 
+///   The icon is rendered by the paint() function, and the icon can additionally be
+///   obtained as a pixmap with the pixmap() function (the default implementation
+///   simply uses paint() to achieve this). The addPixmap() function can be used to
+///   add new pixmaps to the icon engine, and is used by QIcon to add specialized
+///   custom pixmaps.
+/// 
+///   The paint(), pixmap(), and addPixmap() functions are all virtual, and can
+///   therefore be reimplemented in subclasses of QIconEngine.
+/// 
+///   \sa QIconEnginePlugin
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QIconEngine)]
 enum IconEngineHook {
     AvailableSizesHook,
@@ -9,7 +32,14 @@ enum IconEngineHook {
 
 struct IconEngine {
     [event] paint(painter: *PainterType, rect: &RectType, mode: Icon::Mode, state: Icon::State),
+    ///   \fn virtual void QIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) = 0;
+    /// 
+    ///   Uses the given \a painter to paint the icon with the required \a mode and
+    ///   \a state into the rectangle \a rect.
     [event] actual_size(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
+    ///   Returns the icon as a pixmap with the required \a size, \a mode,
+    ///   and \a state. The default implementation creates a new pixmap and
+    ///   calls paint() to fill it.
     [event] pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
     [event] add_pixmap(pixmap: &PixmapType, mode: Icon::Mode, state: Icon::State),
     [event] add_file(file_name: String, size: &SizeType, mode: Icon::Mode, state: Icon::State),
@@ -20,7 +50,27 @@ struct IconEngine {
     [event] available_sizes(mode: Icon::Mode, state: Icon::State) -> [Size],
     [event] icon_name() -> String,
     is_null() -> bool,
+    ///     \since 5.9
+    /// 
+    ///     Returns a pixmap for the given \a size, \a mode, \a state and \a scale.
+    /// 
+    ///     The \a scale argument is typically equal to the \l {Glossary Of High DPI
+    ///     Terms}{device pixel ratio} of the display.
+    /// 
+    ///     \include qiconengine-virtualhookhelper.qdocinc
+    /// 
+    ///     \note Some engines may cast \a scale to an integer.
+    /// 
+    ///     \sa ScaledPixmapArgument
     scaled_pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State, scale: f32) -> Pixmap,
+    ///     \since 4.5
+    /// 
+    ///     Additional method to allow extending QIconEngine without
+    ///     adding new virtual methods (and without breaking binary compatibility).
+    ///     The actual action and format of \a data depends on \a id argument
+    ///     which is in fact a constant from IconEngineHook enum.
+    /// 
+    ///     \sa IconEngineHook
     [event] virtual_hook(id: i32, data: *void),
 }
 

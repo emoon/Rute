@@ -1,3 +1,46 @@
+///     \class QModelIndex
+///     \inmodule QtCore
+/// 
+///     \brief The QModelIndex class is used to locate data in a data model.
+/// 
+///     \ingroup model-view
+/// 
+/// 
+///     This class is used as an index into item models derived from
+///     QAbstractItemModel. The index is used by item views, delegates, and
+///     selection models to locate an item in the model.
+/// 
+///     New QModelIndex objects are created by the model using the
+///     QAbstractItemModel::createIndex() function. An \e invalid model index can
+///     be constructed with the QModelIndex constructor. Invalid indexes are often
+///     used as parent indexes when referring to top-level items in a model.
+/// 
+///     Model indexes refer to items in models, and contain all the information
+///     required to specify their locations in those models. Each index is located
+///     in a given row and column, and may have a parent index; use row(),
+///     column(), and parent() to obtain this information. Each top-level item in a
+///     model is represented by a model index that does not have a parent index -
+///     in this case, parent() will return an invalid model index, equivalent to an
+///     index constructed with the zero argument form of the QModelIndex()
+///     constructor.
+/// 
+///     To obtain a model index that refers to an existing item in a model, call
+///     QAbstractItemModel::index() with the required row and column values, and
+///     the model index of the parent. When referring to top-level items in a
+///     model, supply QModelIndex() as the parent index.
+/// 
+///     The model() function returns the model that the index references as a
+///     QAbstractItemModel. The child() function is used to examine items held
+///     under the index in the model. The sibling() function allows you to traverse
+///     items in the model on the same level as the index.
+/// 
+///     \note Model indexes should be used immediately and then discarded. You
+///     should not rely on indexes to remain valid after calling model functions
+///     that change the structure of the model or delete items. If you need to
+///     keep a model index over time use a QPersistentModelIndex.
+/// 
+///     \sa {Model/View Programming}, QPersistentModelIndex, QAbstractItemModel
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ModelIndex {
     row() -> i32,

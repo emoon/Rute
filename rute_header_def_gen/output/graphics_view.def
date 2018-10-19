@@ -1,3 +1,86 @@
+///     \class QGraphicsView
+///     \brief The QGraphicsView class provides a widget for displaying the
+///     contents of a QGraphicsScene.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     QGraphicsView visualizes the contents of a QGraphicsScene in a scrollable
+///     viewport. To create a scene with geometrical items, see QGraphicsScene's
+///     documentation. QGraphicsView is part of the \l{Graphics View Framework}.
+/// 
+///     To visualize a scene, you start by constructing a QGraphicsView object,
+///     passing the address of the scene you want to visualize to QGraphicsView's
+///     constructor. Alternatively, you can call setScene() to set the scene at a
+///     later point. After you call show(), the view will by default scroll to the
+///     center of the scene and display any items that are visible at this
+///     point. For example:
+/// 
+///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 0
+/// 
+///     You can explicitly scroll to any position on the scene by using the
+///     scroll bars, or by calling centerOn(). By passing a point to centerOn(),
+///     QGraphicsView will scroll its viewport to ensure that the point is
+///     centered in the view. An overload is provided for scrolling to a
+///     QGraphicsItem, in which case QGraphicsView will see to that the center of
+///     the item is centered in the view. If all you want is to ensure that a
+///     certain area is visible, (but not necessarily centered,) you can call
+///     ensureVisible() instead.
+/// 
+///     QGraphicsView can be used to visualize a whole scene, or only parts of it.
+///     The visualized area is by default detected automatically when the view is
+///     displayed for the first time (by calling
+///     QGraphicsScene::itemsBoundingRect()). To set the visualized area rectangle
+///     yourself, you can call setSceneRect(). This will adjust the scroll bars'
+///     ranges appropriately. Note that although the scene supports a virtually
+///     unlimited size, the range of the scroll bars will never exceed the range of
+///     an integer (INT_MIN, INT_MAX).
+/// 
+///     QGraphicsView visualizes the scene by calling render(). By default, the
+///     items are drawn onto the viewport by using a regular QPainter, and using
+///     default render hints. To change the default render hints that
+///     QGraphicsView passes to QPainter when painting items, you can call
+///     setRenderHints().
+/// 
+///     By default, QGraphicsView provides a regular QWidget for the viewport
+///     widget. You can access this widget by calling viewport(), or you can
+///     replace it by calling setViewport(). To render using OpenGL, simply call
+///     setViewport(new QGLWidget). QGraphicsView takes ownership of the viewport
+///     widget.
+/// 
+///     QGraphicsView supports affine transformations, using QTransform. You can
+///     either pass a matrix to setTransform(), or you can call one of the
+///     convenience functions rotate(), scale(), translate() or shear(). The most
+///     two common transformations are scaling, which is used to implement
+///     zooming, and rotation. QGraphicsView keeps the center of the view fixed
+///     during a transformation. Because of the scene alignment (setAligment()),
+///     translating the view will have no visual impact.
+/// 
+///     You can interact with the items on the scene by using the mouse and
+///     keyboard. QGraphicsView translates the mouse and key events into \e scene
+///     events, (events that inherit QGraphicsSceneEvent,), and forward them to
+///     the visualized scene. In the end, it's the individual item that handles
+///     the events and reacts to them. For example, if you click on a selectable
+///     item, the item will typically let the scene know that it has been
+///     selected, and it will also redraw itself to display a selection
+///     rectangle. Similiary, if you click and drag the mouse to move a movable
+///     item, it's the item that handles the mouse moves and moves itself.  Item
+///     interaction is enabled by default, and you can toggle it by calling
+///     setInteractive().
+/// 
+///     You can also provide your own custom scene interaction, by creating a
+///     subclass of QGraphicsView, and reimplementing the mouse and key event
+///     handlers. To simplify how you programmatically interact with items in the
+///     view, QGraphicsView provides the mapping functions mapToScene() and
+///     mapFromScene(), and the item accessors items() and itemAt(). These
+///     functions allow you to map points, rectangles, polygons and paths between
+///     view coordinates and scene coordinates, and to find items on the scene
+///     using view coordinates.
+/// 
+///     \image graphicsview-view.png
+/// 
+///     \sa QGraphicsScene, QGraphicsItem, QGraphicsSceneEvent
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsView)]
 enum ViewportAnchor {
     NoAnchor,
@@ -36,106 +119,628 @@ enum OptimizationFlag {
 }
 
 struct GraphicsView : AbstractScrollArea {
+    ///     \reimp
     [event] size_hint() -> Size,
+    ///     \property QGraphicsView::renderHints
+    ///     \brief the default render hints for the view
+    /// 
+    ///     These hints are
+    ///     used to initialize QPainter before each visible item is drawn. QPainter
+    ///     uses render hints to toggle rendering features such as antialiasing and
+    ///     smooth pixmap transformation.
+    /// 
+    ///     QPainter::TextAntialiasing is enabled by default.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 1
     render_hints() -> Painter::RenderHints,
+    ///     If \a enabled is true, the render hint \a hint is enabled; otherwise it
+    ///     is disabled.
+    /// 
+    ///     \sa renderHints
     set_render_hint(hint: Painter::RenderHint, enabled: bool),
     set_render_hints(hints: Painter::RenderHints),
+    ///     \property QGraphicsView::alignment
+    ///     \brief the alignment of the scene in the view when the whole
+    ///     scene is visible.
+    /// 
+    ///     If the whole scene is visible in the view, (i.e., there are no visible
+    ///     scroll bars,) the view's alignment will decide where the scene will be
+    ///     rendered in the view. For example, if the alignment is Qt::AlignCenter,
+    ///     which is default, the scene will be centered in the view, and if the
+    ///     alignment is (Qt::AlignLeft | Qt::AlignTop), the scene will be rendered in
+    ///     the top-left corner of the view.
     alignment() -> Rute::Alignment,
     set_alignment(alignment: Rute::Alignment),
     set_transformation_anchor(anchor: GraphicsView::ViewportAnchor),
+    ///     \property QGraphicsView::resizeAnchor
+    ///     \brief how the view should position the scene when the view is resized.
+    /// 
+    ///     QGraphicsView uses this property to decide how to position the scene in
+    ///     the viewport when the viewport widget's size changes. The default
+    ///     behavior, NoAnchor, leaves the scene's position unchanged during a resize;
+    ///     the top-left corner of the view will appear to be anchored while resizing.
+    /// 
+    ///     Note that the effect of this property is noticeable when only a part of the
+    ///     scene is visible (i.e., when there are scroll bars). Otherwise, if the
+    ///     whole scene fits in the view, QGraphicsScene uses the view \l alignment to
+    ///     position the scene in the view.
+    /// 
+    ///     \sa alignment, transformationAnchor
     resize_anchor() -> GraphicsView::ViewportAnchor,
     set_resize_anchor(anchor: GraphicsView::ViewportAnchor),
+    ///     \property QGraphicsView::viewportUpdateMode
+    ///     \brief how the viewport should update its contents.
+    /// 
+    ///     \since 4.3
+    /// 
+    ///     QGraphicsView uses this property to decide how to update areas of the
+    ///     scene that have been reexposed or changed. Usually you do not need to
+    ///     modify this property, but there are some cases where doing so can improve
+    ///     rendering performance. See the ViewportUpdateMode documentation for
+    ///     specific details.
+    /// 
+    ///     The default value is MinimalViewportUpdate, where QGraphicsView will
+    ///     update as small an area of the viewport as possible when the contents
+    ///     change.
+    /// 
+    ///     \sa ViewportUpdateMode, cacheMode
     viewport_update_mode() -> GraphicsView::ViewportUpdateMode,
     set_viewport_update_mode(mode: GraphicsView::ViewportUpdateMode),
+    ///     \property QGraphicsView::optimizationFlags
+    ///     \brief flags that can be used to tune QGraphicsView's performance.
+    /// 
+    ///     \since 4.3
+    /// 
+    ///     QGraphicsView uses clipping, extra bounding rect adjustments, and certain
+    ///     other aids to improve rendering quality and performance for the common
+    ///     case graphics scene. However, depending on the target platform, the scene,
+    ///     and the viewport in use, some of these operations can degrade performance.
+    /// 
+    ///     The effect varies from flag to flag; see the OptimizationFlags
+    ///     documentation for details.
+    /// 
+    ///     By default, no optimization flags are enabled.
+    /// 
+    ///     \sa setOptimizationFlag()
     optimization_flags() -> GraphicsView::OptimizationFlags,
+    ///     Enables \a flag if \a enabled is true; otherwise disables \a flag.
+    /// 
+    ///     \sa optimizationFlags
     set_optimization_flag(flag: GraphicsView::OptimizationFlag, enabled: bool),
     set_optimization_flags(flags: GraphicsView::OptimizationFlags),
+    ///     \property QGraphicsView::dragMode
+    ///     \brief the behavior for dragging the mouse over the scene while
+    ///     the left mouse button is pressed.
+    /// 
+    ///     This property defines what should happen when the user clicks on the scene
+    ///     background and drags the mouse (e.g., scrolling the viewport contents
+    ///     using a pointing hand cursor, or selecting multiple items with a rubber
+    ///     band). The default value, NoDrag, does nothing.
+    /// 
+    ///     This behavior only affects mouse clicks that are not handled by any item.
+    ///     You can define a custom behavior by creating a subclass of QGraphicsView
+    ///     and reimplementing mouseMoveEvent().
     drag_mode() -> GraphicsView::DragMode,
     set_drag_mode(mode: GraphicsView::DragMode),
+    ///     \property QGraphicsView::rubberBandSelectionMode
+    ///     \brief the behavior for selecting items with a rubber band selection rectangle.
+    ///     \since 4.3
+    /// 
+    ///     This property defines how items are selected when using the RubberBandDrag
+    ///     drag mode.
+    /// 
+    ///     The default value is Qt::IntersectsItemShape; all items whose shape
+    ///     intersects with or is contained by the rubber band are selected.
+    /// 
+    ///     \sa dragMode, items(), rubberBandRect()
     rubber_band_selection_mode() -> Rute::ItemSelectionMode,
     set_rubber_band_selection_mode(mode: Rute::ItemSelectionMode),
+    ///    \since 5.1
+    ///    This functions returns the current rubber band area (in viewport coordinates) if the user
+    ///    is currently doing an itemselection with rubber band. When the user is not using the
+    ///    rubber band this functions returns (a null) QRectF().
+    /// 
+    ///    Notice that part of this QRect can be outise the visual viewport. It can e.g
+    ///    contain negative values.
+    /// 
+    ///    \sa rubberBandSelectionMode, rubberBandChanged()
     rubber_band_rect() -> Rect,
+    ///     \property QGraphicsView::cacheMode
+    ///     \brief which parts of the view are cached
+    /// 
+    ///     QGraphicsView can cache pre-rendered content in a QPixmap, which is then
+    ///     drawn onto the viewport. The purpose of such caching is to speed up the
+    ///     total rendering time for areas that are slow to render.  Texture, gradient
+    ///     and alpha blended backgrounds, for example, can be notibly slow to render;
+    ///     especially with a transformed view. The CacheBackground flag enables
+    ///     caching of the view's background. For example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 2
+    /// 
+    ///     The cache is invalidated every time the view is transformed. However, when
+    ///     scrolling, only partial invalidation is required.
+    /// 
+    ///     By default, nothing is cached.
+    /// 
+    ///     \sa resetCachedContent(), QPixmapCache
     cache_mode() -> GraphicsView::CacheMode,
     set_cache_mode(mode: GraphicsView::CacheMode),
+    ///     Resets any cached content. Calling this function will clear
+    ///     QGraphicsView's cache. If the current cache mode is \l CacheNone, this
+    ///     function does nothing.
+    /// 
+    ///     This function is called automatically for you when the backgroundBrush or
+    ///     QGraphicsScene::backgroundBrush properties change; you only need to call
+    ///     this function if you have reimplemented QGraphicsScene::drawBackground()
+    ///     or QGraphicsView::drawBackground() to draw a custom background, and need
+    ///     to trigger a full redraw.
+    /// 
+    ///     \sa cacheMode()
     reset_cached_content(),
+    ///     \property QGraphicsView::interactive
+    ///     \brief whether the view allows scene interaction.
+    /// 
+    ///     If enabled, this view is set to allow scene interaction. Otherwise, this
+    ///     view will not allow interaction, and any mouse or key events are ignored
+    ///     (i.e., it will act as a read-only view).
+    /// 
+    ///     By default, this property is \c true.
     is_interactive() -> bool,
     set_interactive(allowed: bool),
+    ///     Returns a pointer to the scene that is currently visualized in the
+    ///     view. If no scene is currently visualized, 0 is returned.
+    /// 
+    ///     \sa setScene()
     scene() -> GraphicsScene?,
+    ///     Sets the current scene to \a scene. If \a scene is already being
+    ///     viewed, this function does nothing.
+    /// 
+    ///     When a scene is set on a view, the QGraphicsScene::changed() signal
+    ///     is automatically connected to this view's updateScene() slot, and the
+    ///     view's scroll bars are adjusted to fit the size of the scene.
+    /// 
+    ///     The view does not take ownership of \a scene.
     set_scene(scene: *GraphicsSceneType),
+    ///     \property QGraphicsView::sceneRect
+    ///     \brief the area of the scene visualized by this view.
+    /// 
+    ///     The scene rectangle defines the extent of the scene, and in the view's case,
+    ///     this means the area of the scene that you can navigate using the scroll
+    ///     bars.
+    /// 
+    ///     If unset, or if a null QRectF is set, this property has the same value as
+    ///     QGraphicsScene::sceneRect, and it changes with
+    ///     QGraphicsScene::sceneRect. Otherwise, the view's scene rect is unaffected
+    ///     by the scene.
+    /// 
+    ///     Note that, although the scene supports a virtually unlimited size, the
+    ///     range of the scroll bars will never exceed the range of an integer
+    ///     (INT_MIN, INT_MAX). When the scene is larger than the scroll bars' values,
+    ///     you can choose to use translate() to navigate the scene instead.
+    /// 
+    ///     By default, this property contains a rectangle at the origin with zero
+    ///     width and height.
+    /// 
+    ///     \sa QGraphicsScene::sceneRect
     scene_rect() -> RectF,
     set_scene_rect(rect: &RectFType),
     set_scene_rect(x: f32, y: f32, w: f32, h: f32),
+    ///     Returns a matrix that maps scene coordinates to viewport coordinates.
+    /// 
+    ///     \sa mapToScene(), mapFromScene()
     viewport_transform() -> Transform,
+    ///     \since 4.6
+    /// 
+    ///     Returns \c true if the view is transformed (i.e., a non-identity transform
+    ///     has been assigned, or the scrollbars are adjusted).
+    /// 
+    ///     \sa setTransform(), horizontalScrollBar(), verticalScrollBar()
     is_transformed() -> bool,
+    ///     Sets the view's current transformation matrix to \a matrix.
+    /// 
+    ///     If \a combine is true, then \a matrix is combined with the current matrix;
+    ///     otherwise, \a matrix \e replaces the current matrix. \a combine is false
+    ///     by default.
+    /// 
+    ///     The transformation matrix tranforms the scene into view coordinates. Using
+    ///     the default transformation, provided by the identity matrix, one pixel in
+    ///     the view represents one unit in the scene (e.g., a 10x10 rectangular item
+    ///     is drawn using 10x10 pixels in the view). If a 2x2 scaling matrix is
+    ///     applied, the scene will be drawn in 1:2 (e.g., a 10x10 rectangular item is
+    ///     then drawn using 20x20 pixels in the view).
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 7
+    /// 
+    ///     To simplify interation with items using a transformed view, QGraphicsView
+    ///     provides mapTo... and mapFrom... functions that can translate between
+    ///     scene and view coordinates. For example, you can call mapToScene() to map
+    ///     a view coordiate to a floating point scene coordinate, or mapFromScene()
+    ///     to map from floating point scene coordinates to view coordinates.
+    /// 
+    ///     \sa transform(), rotate(), scale(), shear(), translate()
     set_transform(matrix: &TransformType, combine: bool),
+    ///     Resets the view transformation to the identity matrix.
+    /// 
+    ///     \sa transform(), setTransform()
     reset_transform(),
+    ///     Rotates the current view transformation \a angle degrees clockwise.
+    /// 
+    ///     \sa setTransform(), transform(), scale(), shear(), translate()
     rotate(angle: f32),
+    ///     Scales the current view transformation by (\a sx, \a sy).
+    /// 
+    ///     \sa setTransform(), transform(), rotate(), shear(), translate()
     scale(sx: f32, sy: f32),
+    ///     Shears the current view transformation by (\a sh, \a sv).
+    /// 
+    ///     \sa setTransform(), transform(), rotate(), scale(), translate()
     shear(sh: f32, sv: f32),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport to ensure that \a item
+    ///     is centered in the view.
+    /// 
+    ///     \sa ensureVisible()
     center_on(pos: &PointFType),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport to ensure that \a item
+    ///     is centered in the view.
+    /// 
+    ///     \sa ensureVisible()
     center_on(x: f32, y: f32),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport to ensure that \a item
+    ///     is centered in the view.
+    /// 
+    ///     \sa ensureVisible()
     center_on(item: *GraphicsItemType),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport so that the center of item \a item is
+    ///     visible, with margins specified in pixels by \a xmargin and \a ymargin. If
+    ///     the specified point cannot be reached, the contents are scrolled to the
+    ///     nearest valid position. The default value for both margins is 50 pixels.
+    /// 
+    ///     \sa centerOn()
     ensure_visible(rect: &RectFType, xmargin: i32, ymargin: i32),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport so that the center of item \a item is
+    ///     visible, with margins specified in pixels by \a xmargin and \a ymargin. If
+    ///     the specified point cannot be reached, the contents are scrolled to the
+    ///     nearest valid position. The default value for both margins is 50 pixels.
+    /// 
+    ///     \sa centerOn()
     ensure_visible(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
+    ///     \overload
+    /// 
+    ///     Scrolls the contents of the viewport so that the center of item \a item is
+    ///     visible, with margins specified in pixels by \a xmargin and \a ymargin. If
+    ///     the specified point cannot be reached, the contents are scrolled to the
+    ///     nearest valid position. The default value for both margins is 50 pixels.
+    /// 
+    ///     \sa centerOn()
     ensure_visible(item: *GraphicsItemType, xmargin: i32, ymargin: i32),
+    ///     \overload
+    /// 
+    ///     Ensures that \a item fits tightly inside the view, scaling the view
+    ///     according to \a aspectRatioMode.
+    /// 
+    ///     \sa ensureVisible(), centerOn()
     fit_in_view(rect: &RectFType, aspect_radio_mode: Rute::AspectRatioMode),
+    ///     \overload
+    /// 
+    ///     Ensures that \a item fits tightly inside the view, scaling the view
+    ///     according to \a aspectRatioMode.
+    /// 
+    ///     \sa ensureVisible(), centerOn()
     fit_in_view(x: f32, y: f32, w: f32, h: f32, aspect_radio_mode: Rute::AspectRatioMode),
+    ///     \overload
+    /// 
+    ///     Ensures that \a item fits tightly inside the view, scaling the view
+    ///     according to \a aspectRatioMode.
+    /// 
+    ///     \sa ensureVisible(), centerOn()
     fit_in_view(item: *GraphicsItemType, aspect_radio_mode: Rute::AspectRatioMode),
     render(painter: *PainterType, target: &RectFType, source: &RectType, aspect_ratio_mode: Rute::AspectRatioMode),
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items() -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(pos: &PointType) -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(x: i32, y: i32) -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(rect: &RectType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(x: i32, y: i32, w: i32, h: i32, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(polygon: &PolygonType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    ///     \overload
+    /// 
+    ///     Returns a list of all the items that, depending on \a mode, are either
+    ///     contained by or intersect with \a path. \a path is in viewport
+    ///     coordinates.
+    /// 
+    ///     The default value for \a mode is Qt::IntersectsItemShape; all items whose
+    ///     exact shape intersects with or is contained by \a path are returned.
+    /// 
+    ///     \sa itemAt(), items(), mapToScene(), {QGraphicsItem#Sorting}{Sorting}
     items(path: &PainterPathType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    ///     Returns the item at position \a pos, which is in viewport coordinates.
+    ///     If there are several items at this position, this function returns
+    ///     the topmost item.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 6
+    /// 
+    ///     \sa items(), {QGraphicsItem#Sorting}{Sorting}
     item_at(pos: &PointType) -> GraphicsItem?,
+    ///     Returns the item at position \a pos, which is in viewport coordinates.
+    ///     If there are several items at this position, this function returns
+    ///     the topmost item.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsview.cpp 6
+    /// 
+    ///     \sa items(), {QGraphicsItem#Sorting}{Sorting}
     item_at(x: i32, y: i32) -> GraphicsItem?,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(point: &PointType) -> PointF,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(rect: &RectType) -> PolygonF,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(polygon: &PolygonType) -> PolygonF,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(path: &PainterPathType) -> PainterPath,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(point: &PointFType) -> Point,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(rect: &RectFType) -> Polygon,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(polygon: &PolygonFType) -> Polygon,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(path: &PainterPathType) -> PainterPath,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(x: i32, y: i32) -> PointF,
+    ///     Returns the viewport painter path \a path mapped to a scene coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapFromScene()
     map_to_scene(x: i32, y: i32, w: i32, h: i32) -> PolygonF,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(x: f32, y: f32) -> Point,
+    ///     Returns the scene coordinate painter path \a path to a viewport coordinate
+    ///     painter path.
+    /// 
+    ///     \sa mapToScene()
     map_from_scene(x: f32, y: f32, w: f32, h: f32) -> Polygon,
+    ///     \reimp
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
+    ///     \property QGraphicsView::backgroundBrush
+    ///     \brief the background brush of the scene.
+    /// 
+    ///     This property sets the background brush for the scene in this view. It is
+    ///     used to override the scene's own background, and defines the behavior of
+    ///     drawBackground(). To provide custom background drawing for this view, you
+    ///     can reimplement drawBackground() instead.
+    /// 
+    ///     By default, this property contains a brush with the Qt::NoBrush pattern.
+    /// 
+    ///     \sa QGraphicsScene::backgroundBrush, foregroundBrush
     background_brush() -> Brush,
     set_background_brush(brush: &BrushType),
+    ///     \property QGraphicsView::foregroundBrush
+    ///     \brief the foreground brush of the scene.
+    /// 
+    ///     This property sets the foreground brush for the scene in this view. It is
+    ///     used to override the scene's own foreground, and defines the behavior of
+    ///     drawForeground(). To provide custom foreground drawing for this view, you
+    ///     can reimplement drawForeground() instead.
+    /// 
+    ///     By default, this property contains a brush with the Qt::NoBrush pattern.
+    /// 
+    ///     \sa QGraphicsScene::foregroundBrush, backgroundBrush
     foreground_brush() -> Brush,
     set_foreground_brush(brush: &BrushType),
+    ///     Schedules an update of the scene rectangles \a rects.
+    /// 
+    ///     \sa QGraphicsScene::changed()
     update_scene(rects: [RectFType]),
+    ///     Invalidates and schedules a redraw of \a layers inside \a rect. \a rect is
+    ///     in scene coordinates. Any cached content for \a layers inside \a rect is
+    ///     unconditionally invalidated and redrawn.
+    /// 
+    ///     You can call this function to notify QGraphicsView of changes to the
+    ///     background or the foreground of the scene. It is commonly used for scenes
+    ///     with tile-based backgrounds to notify changes when QGraphicsView has
+    ///     enabled background caching.
+    /// 
+    ///     Note that QGraphicsView currently supports background caching only (see
+    ///     QGraphicsView::CacheBackground). This function is equivalent to calling update() if any
+    ///     layer but QGraphicsScene::BackgroundLayer is passed.
+    /// 
+    ///     \sa QGraphicsScene::invalidate(), update()
     invalidate_scene(rect: &RectFType, layers: GraphicsScene::SceneLayers),
+    ///     Notifies QGraphicsView that the scene's scene rect has changed.  \a rect
+    ///     is the new scene rect. If the view already has an explicitly set scene
+    ///     rect, this function does nothing.
+    /// 
+    ///     \sa sceneRect, QGraphicsScene::sceneRectChanged()
     update_scene_rect(rect: &RectFType),
     [signal] rubber_band_changed(viewport_rect: RectType, from_scene_point: PointFType, to_scene_point: PointFType),
+    ///     This slot is called by QAbstractScrollArea after setViewport() has been
+    ///     called. Reimplement this function in a subclass of QGraphicsView to
+    ///     initialize the new viewport \a widget before it is used.
+    /// 
+    ///     \sa setViewport()
     [event] setup_viewport(widget: *WidgetType),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
     [event] viewport_event(event: *EventType) -> bool,
+    ///     \reimp
     [event] context_menu_event(event: *ContextMenuEventType),
+    ///     \reimp
     [event] drag_enter_event(event: *DragEnterEventType),
+    ///     \reimp
     [event] drag_leave_event(event: *DragLeaveEventType),
+    ///     \reimp
     [event] drag_move_event(event: *DragMoveEventType),
+    ///     \reimp
     [event] drop_event(event: *DropEventType),
+    ///     \reimp
     [event] focus_in_event(event: *FocusEventType),
+    ///     \reimp
     [event] focus_next_prev_child(next: bool) -> bool,
+    ///     \reimp
     [event] focus_out_event(event: *FocusEventType),
+    ///     \reimp
     [event] key_press_event(event: *KeyEventType),
+    ///     \reimp
     [event] key_release_event(event: *KeyEventType),
+    ///     \reimp
     [event] mouse_double_click_event(event: *MouseEventType),
+    ///     \reimp
     [event] mouse_press_event(event: *MouseEventType),
+    ///     \reimp
     [event] mouse_move_event(event: *MouseEventType),
+    ///     \reimp
     [event] mouse_release_event(event: *MouseEventType),
+    ///     \reimp
     [event] wheel_event(event: *WheelEventType),
+    ///     \reimp
     [event] paint_event(event: *PaintEventType),
+    ///     \reimp
     [event] resize_event(event: *ResizeEventType),
+    ///     \reimp
     [event] scroll_contents_by(dx: i32, dy: i32),
+    ///     \reimp
     [event] show_event(event: *ShowEventType),
+    ///     \reimp
     [event] input_method_event(event: *InputMethodEventType),
+    ///     Draws the background of the scene using \a painter, before any items and
+    ///     the foreground are drawn. Reimplement this function to provide a custom
+    ///     background for this view.
+    /// 
+    ///     If all you want is to define a color, texture or gradient for the
+    ///     background, you can call setBackgroundBrush() instead.
+    /// 
+    ///     All painting is done in \e scene coordinates. \a rect is the exposed
+    ///     rectangle.
+    /// 
+    ///     The default implementation fills \a rect using the view's backgroundBrush.
+    ///     If no such brush is defined (the default), the scene's drawBackground()
+    ///     function is called instead.
+    /// 
+    ///     \sa drawForeground(), QGraphicsScene::drawBackground()
     [event] draw_background(painter: *PainterType, rect: &RectFType),
+    ///     Draws the foreground of the scene using \a painter, after the background
+    ///     and all items are drawn. Reimplement this function to provide a custom
+    ///     foreground for this view.
+    /// 
+    ///     If all you want is to define a color, texture or gradient for the
+    ///     foreground, you can call setForegroundBrush() instead.
+    /// 
+    ///     All painting is done in \e scene coordinates. \a rect is the exposed
+    ///     rectangle.
+    /// 
+    ///     The default implementation fills \a rect using the view's foregroundBrush.
+    ///     If no such brush is defined (the default), the scene's drawForeground()
+    ///     function is called instead.
+    /// 
+    ///     \sa drawBackground(), QGraphicsScene::drawForeground()
     [event] draw_foreground(painter: *PainterType, rect: &RectFType),
     [event] draw_items(painter: *PainterType, num_items: i32, items: *GraphicsItemType, options: StyleOptionGraphicsItemType),
 }

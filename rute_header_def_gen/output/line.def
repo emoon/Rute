@@ -1,3 +1,32 @@
+///     \class QLine
+///     \inmodule QtCore
+///     \ingroup painting
+/// 
+///     \brief The QLine class provides a two-dimensional vector using
+///     integer precision.
+/// 
+///     A QLine describes a finite length line (or a line segment) on a
+///     two-dimensional surface. The start and end points of the line are
+///     specified using integer point accuracy for coordinates. Use the
+///     QLineF constructor to retrieve a floating point copy.
+/// 
+///     \table
+///     \row
+///         \li \inlineimage qline-point.png
+///         \li \inlineimage qline-coordinates.png
+///     \endtable
+/// 
+///     The positions of the line's start and end points can be retrieved
+///     using the p1(), x1(), y1(), p2(), x2(), and y2() functions. The
+///     dx() and dy() functions return the horizontal and vertical
+///     components of the line. Use isNull() to determine whether the
+///     QLine represents a valid line or a null line.
+/// 
+///     Finally, the line can be translated a given offset using the
+///     translate() function.
+/// 
+///     \sa QLineF, QPolygon, QRect
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Line {
     is_null() -> bool,

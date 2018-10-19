@@ -1,3 +1,36 @@
+///     \class QTextFrameFormat
+///     \reentrant
+/// 
+///     \brief The QTextFrameFormat class provides formatting information for
+///     frames in a QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     A text frame groups together one or more blocks of text, providing a layer
+///     of structure larger than the paragraph. The format of a frame specifies
+///     how it is rendered and positioned on the screen. It does not directly
+///     specify the behavior of the text formatting within, but provides
+///     constraints on the layout of its children.
+/// 
+///     The frame format defines the width() and height() of the frame on the
+///     screen. Each frame can have a border() that surrounds its contents with
+///     a rectangular box. The border is surrounded by a margin() around the frame,
+///     and the contents of the frame are kept separate from the border by the
+///     frame's padding(). This scheme is similar to the box model used by Cascading
+///     Style Sheets for HTML pages.
+/// 
+///     \image qtextframe-style.png
+/// 
+///     The position() of a frame is set using setPosition() and determines how it
+///     is located relative to the surrounding text.
+/// 
+///     The validity of a QTextFrameFormat object can be determined with the
+///     isValid() function.
+/// 
+///     \sa QTextFrame, QTextBlockFormat
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextFrameFormat)]
 enum Position {
     InFlow,
@@ -30,15 +63,37 @@ struct TextFrameFormat : TextFormat {
     border_brush() -> Brush,
     set_border_style(style: TextFrameFormat::BorderStyle),
     border_style() -> TextFrameFormat::BorderStyle,
+    ///     \fn void QTextFrameFormat::setMargin(qreal margin)
+    /// 
+    ///     Sets the frame's \a margin in pixels.
+    ///     This method also sets the left, right, top and bottom margins
+    ///     of the frame to the same value. The individual margins override
+    ///     the general margin.
     set_margin(margin: f32),
     margin() -> f32,
     set_top_margin(margin: f32),
+    ///     \fn qreal QTextFrameFormat::topMargin() const
+    ///     \since 4.3
+    /// 
+    ///     Returns the width of the frame's top margin in pixels.
     top_margin() -> f32,
     set_bottom_margin(margin: f32),
+    ///     \fn qreal QTextFrameFormat::bottomMargin() const
+    ///     \since 4.3
+    /// 
+    ///     Returns the width of the frame's bottom margin in pixels.
     bottom_margin() -> f32,
     set_left_margin(margin: f32),
+    ///     \fn qreal QTextFrameFormat::leftMargin() const
+    ///     \since 4.3
+    /// 
+    ///     Returns the width of the frame's left margin in pixels.
     left_margin() -> f32,
     set_right_margin(margin: f32),
+    ///     \fn qreal QTextFrameFormat::rightMargin() const
+    ///     \since 4.3
+    /// 
+    ///     Returns the width of the frame's right margin in pixels.
     right_margin() -> f32,
     set_padding(padding: f32),
     padding() -> f32,

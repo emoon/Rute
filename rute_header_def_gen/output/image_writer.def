@@ -1,3 +1,38 @@
+///     \class QImageWriter
+///     \brief The QImageWriter class provides a format independent interface
+///     for writing images to files or other devices.
+/// 
+///     \inmodule QtGui
+///     \reentrant
+///     \ingroup painting
+///     \ingroup io
+/// 
+///     QImageWriter supports setting format specific options, such as the
+///     gamma level, compression level and quality, prior to storing the
+///     image. If you do not need such options, you can use QImage::save()
+///     or QPixmap::save() instead.
+/// 
+///     To store an image, you start by constructing a QImageWriter
+///     object.  Pass either a file name or a device pointer, and the
+///     image format to QImageWriter's constructor. You can then set
+///     several options, such as the gamma level (by calling setGamma())
+///     and quality (by calling setQuality()). canWrite() returns \c true if
+///     QImageWriter can write the image (i.e., the image format is
+///     supported and the device is open for writing). Call write() to
+///     write the image to the device.
+/// 
+///     If any error occurs when writing the image, write() will return
+///     false. You can then call error() to find the type of error that
+///     occurred, or errorString() to get a human readable description of
+///     what went wrong.
+/// 
+///     Call supportedImageFormats() for a list of formats that
+///     QImageWriter can write. QImageWriter supports all built-in image
+///     formats, in addition to any image format plugins that support
+///     writing.
+/// 
+///     \sa QImageReader, QImageIOHandler, QImageIOPlugin
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QImageWriter)]
 enum ImageWriterError {
     UnknownError,
@@ -8,34 +43,258 @@ enum ImageWriterError {
 
 
 struct ImageWriter {
+    ///     Sets the format QImageWriter will use when writing images, to \a
+    ///     format. \a format is a case insensitive text string. Example:
+    /// 
+    ///     \snippet code/src_gui_image_qimagewriter.cpp 0
+    /// 
+    ///     You can call supportedImageFormats() for the full list of formats
+    ///     QImageWriter supports.
+    /// 
+    ///     \sa format()
     set_format(format: &ByteArrayType),
+    ///     Returns the format QImageWriter uses for writing images.
+    /// 
+    ///     \sa setFormat()
     format() -> ByteArray,
+    ///     Sets QImageWriter's device to \a device. If a device has already
+    ///     been set, the old device is removed from QImageWriter and is
+    ///     otherwise left unchanged.
+    /// 
+    ///     If the device is not already open, QImageWriter will attempt to
+    ///     open the device in \l QIODevice::WriteOnly mode by calling
+    ///     open(). Note that this does not work for certain devices, such as
+    ///     QProcess, QTcpSocket and QUdpSocket, where more logic is required
+    ///     to open the device.
+    /// 
+    ///     \sa device(), setFileName()
     set_device(device: *IODeviceType),
+    ///     Returns the device currently assigned to QImageWriter, or 0 if no
+    ///     device has been assigned.
     device() -> IODevice?,
+    ///     Sets the file name of QImageWriter to \a fileName. Internally,
+    ///     QImageWriter will create a QFile and open it in \l
+    ///     QIODevice::WriteOnly mode, and use this file when writing images.
+    /// 
+    ///     \sa fileName(), setDevice()
     set_file_name(file_name: String),
+    ///     If the currently assigned device is a QFile, or if setFileName()
+    ///     has been called, this function returns the name of the file
+    ///     QImageWriter writes to. Otherwise (i.e., if no device has been
+    ///     assigned or the device is not a QFile), an empty QString is
+    ///     returned.
+    /// 
+    ///     \sa setFileName(), setDevice()
     file_name() -> String,
+    ///     Sets the quality setting of the image format to \a quality.
+    /// 
+    ///     Some image formats, in particular lossy ones, entail a tradeoff between a)
+    ///     visual quality of the resulting image, and b) encoding execution time and
+    ///     compression level. This function sets the level of that tradeoff for image
+    ///     formats that support it. For other formats, this value is ignored.
+    /// 
+    ///     The value range of \a quality depends on the image format. For example,
+    ///     the "jpeg" format supports a quality range from 0 (low visual quality, high
+    ///     compression) to 100 (high visual quality, low compression).
+    /// 
+    ///     \sa quality()
     set_quality(quality: i32),
+    ///     Returns the quality setting of the image format.
+    /// 
+    ///     \sa setQuality()
     quality() -> i32,
+    ///     This is an image format specific function that set the compression
+    ///     of an image. For image formats that do not support setting the
+    ///     compression, this value is ignored.
+    /// 
+    ///     The value range of \a compression depends on the image format. For
+    ///     example, the "tiff" format supports two values, 0(no compression) and
+    ///     1(LZW-compression).
+    /// 
+    ///     \sa compression()
     set_compression(compression: i32),
+    ///     Returns the compression of the image.
+    /// 
+    ///     \sa setCompression()
     compression() -> i32,
+    ///     This is an image format specific function that sets the gamma
+    ///     level of the image to \a gamma. For image formats that do not
+    ///     support setting the gamma level, this value is ignored.
+    /// 
+    ///     The value range of \a gamma depends on the image format. For
+    ///     example, the "png" format supports a gamma range from 0.0 to 1.0.
+    /// 
+    ///     \sa quality()
     set_gamma(gamma: f32),
+    ///     Returns the gamma level of the image.
+    /// 
+    ///     \sa setGamma()
     gamma() -> f32,
+    ///     \since 5.4
+    /// 
+    ///     This is an image format specific function that sets the
+    ///     subtype of the image to \a type. Subtype can be used by
+    ///     a handler to determine which format it should use while
+    ///     saving the image.
+    /// 
+    ///     For example, saving an image in DDS format with A8R8G8R8 subtype:
+    /// 
+    ///     \snippet code/src_gui_image_qimagewriter.cpp 3
     set_sub_type(type: &ByteArrayType),
+    ///     \since 5.4
+    /// 
+    ///     Returns the subtype of the image.
+    /// 
+    ///     \sa setSubType()
     sub_type() -> ByteArray,
+    ///     \since 5.4
+    /// 
+    ///     Returns the list of subtypes supported by an image.
     supported_sub_types() -> [ByteArray],
+    ///     \since 5.5
+    /// 
+    ///     This is an image format-specific function which sets the \a optimize flags when
+    ///     writing images. For image formats that do not support setting an \a optimize flag,
+    ///     this value is ignored.
+    /// 
+    ///     The default is false.
+    /// 
+    ///     \sa optimizedWrite()
     set_optimized_write(optimize: bool),
+    ///     \since 5.5
+    /// 
+    ///     Returns whether optimization has been turned on for writing the image.
+    /// 
+    ///     \sa setOptimizedWrite()
     optimized_write() -> bool,
+    ///     \since 5.5
+    /// 
+    ///     This is an image format-specific function which turns on \a progressive scanning
+    ///     when writing images. For image formats that do not support setting a \a progressive
+    ///     scan flag, this value is ignored.
+    /// 
+    ///     The default is false.
+    /// 
+    ///     \sa progressiveScanWrite()
     set_progressive_scan_write(progressive: bool),
+    ///     \since 5.5
+    /// 
+    ///     Returns whether the image should be written as a progressive image.
+    /// 
+    ///     \sa setProgressiveScanWrite()
     progressive_scan_write() -> bool,
+    ///     \since 5.5
+    /// 
+    ///     Sets the image transformations metadata including orientation to \a transform.
+    /// 
+    ///     If transformation metadata is not supported by the image format,
+    ///     the transform is applied before writing.
+    /// 
+    ///     \sa transformation(), write()
     set_transformation(orientation: ImageIOHandler::Transformations),
+    ///     \obsolete
+    /// 
+    ///     Use setText() instead.
+    /// 
+    ///     This is an image format specific function that sets the
+    ///     description of the image to \a description. For image formats that
+    ///     do not support setting the description, this value is ignored.
+    /// 
+    ///     The contents of \a description depends on the image format.
+    /// 
+    ///     \sa description()
     set_description(description: String),
+    ///     \obsolete
+    /// 
+    ///     Use QImageReader::text() instead.
+    /// 
+    ///     Returns the description of the image.
+    /// 
+    ///     \sa setDescription()
     description() -> String,
+    ///     \since 4.1
+    /// 
+    ///     Sets the image text associated with the key \a key to
+    ///     \a text. This is useful for storing copyright information
+    ///     or other information about the image. Example:
+    /// 
+    ///     \snippet code/src_gui_image_qimagewriter.cpp 1
+    /// 
+    ///     If you want to store a single block of data
+    ///     (e.g., a comment), you can pass an empty key, or use
+    ///     a generic key like "Description".
+    /// 
+    ///     The key and text will be embedded into the
+    ///     image data after calling write().
+    /// 
+    ///     Support for this option is implemented through
+    ///     QImageIOHandler::Description.
+    /// 
+    ///     \sa QImage::setText(), QImageReader::text()
     set_text(key: String, text: String),
+    ///     Returns \c true if QImageWriter can write the image; i.e., the image
+    ///     format is supported and the assigned device is open for reading.
+    /// 
+    ///     \sa write(), setDevice(), setFormat()
     can_write() -> bool,
+    ///     Writes the image \a image to the assigned device or file
+    ///     name. Returns \c true on success; otherwise returns \c false. If the
+    ///     operation fails, you can call error() to find the type of error
+    ///     that occurred, or errorString() to get a human readable
+    ///     description of the error.
+    /// 
+    ///     \sa canWrite(), error(), errorString()
     write(image: &ImageType) -> bool,
+    ///     Returns the type of error that last occurred.
+    /// 
+    ///     \sa ImageWriterError, errorString()
     error() -> ImageWriter::ImageWriterError,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if the writer supports \a option; otherwise returns
+    ///     false.
+    /// 
+    ///     Different image formats support different options. Call this function to
+    ///     determine whether a certain option is supported by the current format. For
+    ///     example, the PNG format allows you to embed text into the image's metadata
+    ///     (see text()).
+    /// 
+    ///     \snippet code/src_gui_image_qimagewriter.cpp 2
+    /// 
+    ///     Options can be tested after the writer has been associated with a format.
+    /// 
+    ///     \sa QImageReader::supportsOption(), setFormat()
     supports_option(option: ImageIOHandler::ImageOption) -> bool,
+    ///     Returns the list of image formats supported by QImageWriter.
+    /// 
+    ///     By default, Qt can write the following formats:
+    /// 
+    ///     \table
+    ///     \header \li Format \li MIME type                    \li Description
+    ///     \row    \li BMP    \li image/bmp                    \li Windows Bitmap
+    ///     \row    \li JPG    \li image/jpeg                   \li Joint Photographic Experts Group
+    ///     \row    \li PNG    \li image/png                    \li Portable Network Graphics
+    ///     \row    \li PBM    \li image/x-portable-bitmap      \li Portable Bitmap
+    ///     \row    \li PGM    \li image/x-portable-graymap     \li Portable Graymap
+    ///     \row    \li PPM    \li image/x-portable-pixmap      \li Portable Pixmap
+    ///     \row    \li XBM    \li image/x-xbitmap              \li X11 Bitmap
+    ///     \row    \li XPM    \li image/x-xpixmap              \li X11 Pixmap
+    ///     \endtable
+    /// 
+    ///     Reading and writing SVG files is supported through the \l{Qt SVG} module.
+    ///     The \l{Qt Image Formats} module provides support for additional image formats.
+    /// 
+    ///     Note that the QApplication instance must be created before this function is
+    ///     called.
+    /// 
+    ///     \sa setFormat(), QImageReader::supportedImageFormats(), QImageIOPlugin
     [static] supported_image_formats() -> [ByteArray],
+    ///     Returns the list of MIME types supported by QImageWriter.
+    /// 
+    ///     Note that the QApplication instance must be created before this function is
+    ///     called.
+    /// 
+    ///     \sa supportedImageFormats(), QImageReader::supportedMimeTypes()
     [static] supported_mime_types() -> [ByteArray],
 }
 

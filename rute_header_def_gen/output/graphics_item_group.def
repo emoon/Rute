@@ -1,15 +1,89 @@
+///     \class QGraphicsItemGroup
+///     \brief The QGraphicsItemGroup class provides a container that treats
+///     a group of items as a single item.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     A QGraphicsItemGroup is a special type of compound item that
+///     treats itself and all its children as one item (i.e., all events
+///     and geometries for all children are merged together). It's common
+///     to use item groups in presentation tools, when the user wants to
+///     group several smaller items into one big item in order to simplify
+///     moving and copying of items.
+/// 
+///     If all you want is to store items inside other items, you can use
+///     any QGraphicsItem directly by passing a suitable parent to
+///     setParentItem().
+/// 
+///     The boundingRect() function of QGraphicsItemGroup returns the
+///     bounding rectangle of all items in the item group.
+///     QGraphicsItemGroup ignores the ItemIgnoresTransformations flag on
+///     its children (i.e., with respect to the geometry of the group
+///     item, the children are treated as if they were transformable).
+/// 
+///     There are two ways to construct an item group. The easiest and
+///     most common approach is to pass a list of items (e.g., all
+///     selected items) to QGraphicsScene::createItemGroup(), which
+///     returns a new QGraphicsItemGroup item. The other approach is to
+///     manually construct a QGraphicsItemGroup item, add it to the scene
+///     calling QGraphicsScene::addItem(), and then add items to the group
+///     manually, one at a time by calling addToGroup(). To dismantle
+///     ("ungroup") an item group, you can either call
+///     QGraphicsScene::destroyItemGroup(), or you can manually remove all
+///     items from the group by calling removeFromGroup().
+/// 
+///     \snippet code/src_gui_graphicsview_qgraphicsitem.cpp 17
+/// 
+///     The operation of adding and removing items preserves the items'
+///     scene-relative position and transformation, as opposed to calling
+///     setParentItem(), where only the child item's parent-relative
+///     position and transformation are kept.
+/// 
+///     The addtoGroup() function reparents the target item to this item
+///     group, keeping the item's position and transformation intact
+///     relative to the scene. Visually, this means that items added via
+///     addToGroup() will remain completely unchanged as a result of this
+///     operation, regardless of the item or the group's current position
+///     or transformation; although the item's position and matrix are
+///     likely to change.
+/// 
+///     The removeFromGroup() function has similar semantics to
+///     setParentItem(); it reparents the item to the parent item of the
+///     item group. As with addToGroup(), the item's scene-relative
+///     position and transformation remain intact.
+/// 
+///     \sa QGraphicsItem, {Graphics View Framework}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsItemGroup)]
 enum GraphicsItemGroupFixMeEnums {
     Type,
 }
 
 struct GraphicsItemGroup : GraphicsItem {
+    ///     Adds the given \a item and item's child items to this item group.
+    ///     The item and child items will be reparented to this group, but its
+    ///     position and transformation relative to the scene will stay intact.
+    /// 
+    ///     \sa removeFromGroup(), QGraphicsScene::createItemGroup()
     add_to_group(item: *GraphicsItemType),
+    ///     Removes the specified \a item from this group. The item will be
+    ///     reparented to this group's parent item, or to 0 if this group has
+    ///     no parent.  Its position and transformation relative to the scene
+    ///     will stay intact.
+    /// 
+    ///     \sa addToGroup(), QGraphicsScene::destroyItemGroup()
     remove_from_group(item: *GraphicsItemType),
+    ///     \reimp
+    /// 
+    ///     Returns the bounding rect of this group item, and all its children.
     [event] bounding_rect() -> RectF,
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
+    ///     \reimp
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
+    ///     \reimp
     [event] opaque_area() -> PainterPath,
+    ///     \reimp
     [event] type() -> i32,
 }
 

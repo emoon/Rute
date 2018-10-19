@@ -1,58 +1,386 @@
+///     \class QStandardItemModel
+///     \brief The QStandardItemModel class provides a generic model for storing custom data.
+///     \ingroup model-view
+///     \inmodule QtGui
+/// 
+///     QStandardItemModel can be used as a repository for standard Qt
+///     data types. It is one of the \l {Model/View Classes} and is part
+///     of Qt's \l {Model/View Programming}{model/view} framework.
+/// 
+///     QStandardItemModel provides a classic item-based approach to working with
+///     the model.  The items in a QStandardItemModel are provided by
+///     QStandardItem.
+/// 
+///     QStandardItemModel implements the QAbstractItemModel interface, which
+///     means that the model can be used to provide data in any view that supports
+///     that interface (such as QListView, QTableView and QTreeView, and your own
+///     custom views). For performance and flexibility, you may want to subclass
+///     QAbstractItemModel to provide support for different kinds of data
+///     repositories. For example, the QDirModel provides a model interface to the
+///     underlying file system.
+/// 
+///     When you want a list or tree, you typically create an empty
+///     QStandardItemModel and use appendRow() to add items to the model, and
+///     item() to access an item.  If your model represents a table, you typically
+///     pass the dimensions of the table to the QStandardItemModel constructor and
+///     use setItem() to position items into the table. You can also use setRowCount()
+///     and setColumnCount() to alter the dimensions of the model. To insert items,
+///     use insertRow() or insertColumn(), and to remove items, use removeRow() or
+///     removeColumn().
+/// 
+///     You can set the header labels of your model with setHorizontalHeaderLabels()
+///     and setVerticalHeaderLabels().
+/// 
+///     You can search for items in the model with findItems(), and sort the model by
+///     calling sort().
+/// 
+///     Call clear() to remove all items from the model.
+/// 
+///     An example usage of QStandardItemModel to create a table:
+/// 
+///     \snippet code/src_gui_itemviews_qstandarditemmodel.cpp 0
+/// 
+///     An example usage of QStandardItemModel to create a tree:
+/// 
+///     \snippet code/src_gui_itemviews_qstandarditemmodel.cpp 1
+/// 
+///     After setting the model on a view, you typically want to react to user
+///     actions, such as an item being clicked. Since a QAbstractItemView provides
+///     QModelIndex-based signals and functions, you need a way to obtain the
+///     QStandardItem that corresponds to a given QModelIndex, and vice
+///     versa. itemFromIndex() and indexFromItem() provide this mapping. Typical
+///     usage of itemFromIndex() includes obtaining the item at the current index
+///     in a view, and obtaining the item that corresponds to an index carried by
+///     a QAbstractItemView signal, such as QAbstractItemView::clicked(). First
+///     you connect the view's signal to a slot in your class:
+/// 
+///     \snippet code/src_gui_itemviews_qstandarditemmodel.cpp 2
+/// 
+///     When you receive the signal, you call itemFromIndex() on the given model
+///     index to get a pointer to the item:
+/// 
+///     \snippet code/src_gui_itemviews_qstandarditemmodel.cpp 3
+/// 
+///     Conversely, you must obtain the QModelIndex of an item when you want to
+///     invoke a model/view function that takes an index as argument. You can
+///     obtain the index either by using the model's indexFromItem() function, or,
+///     equivalently, by calling QStandardItem::index():
+/// 
+///     \snippet code/src_gui_itemviews_qstandarditemmodel.cpp 4
+/// 
+///     You are, of course, not required to use the item-based approach; you could
+///     instead rely entirely on the QAbstractItemModel interface when working with
+///     the model, or use a combination of the two as appropriate.
+/// 
+///     \sa QStandardItem, {Model/View Programming}, QAbstractItemModel,
+///     {itemviews/simpletreemodel}{Simple Tree Model example},
+///     {Item View Convenience Classes}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StandardItemModel : AbstractItemModel {
+    ///     Sets the item role names to \a roleNames.
     set_item_role_names(role_names: &Hash<int,Type),
+    ///   \reimp
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
+    ///   \reimp
     [event] parent(child: &ModelIndexType) -> ModelIndex,
+    ///   \reimp
     [event] row_count(parent: &ModelIndexType) -> i32,
+    ///   \reimp
     [event] column_count(parent: &ModelIndexType) -> i32,
+    ///   \reimp
     [event] has_children(parent: &ModelIndexType) -> bool,
+    ///   \reimp
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
+    ///   \reimp
     [event] data(index: &ModelIndexType, role: i32) -> Variant,
+    ///   \reimp
     [event] set_data(index: &ModelIndexType, value: &VariantType, role: i32) -> bool,
+    ///   \reimp
     [event] header_data(section: i32, orientation: Rute::Orientation, role: i32) -> Variant,
+    ///   \reimp
     [event] set_header_data(section: i32, orientation: Rute::Orientation, value: &VariantType, role: i32) -> bool,
+    ///   \reimp
     [event] insert_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///   \reimp
     [event] insert_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///   \reimp
     [event] remove_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///   \reimp
     [event] remove_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///   \reimp
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
     [event] supported_drop_actions() -> Rute::DropActions,
+    ///   \reimp
     [event] item_data(index: &ModelIndexType) -> Map<int,,
+    ///   \reimp
     [event] set_item_data(index: &ModelIndexType, roles: &Map<int,Type) -> bool,
+    ///     Removes all items (including header items) from the model and sets the
+    ///     number of rows and columns to zero.
+    /// 
+    ///     \sa removeColumns(), removeRows()
     clear(),
+    ///   \reimp
     [event] sort(column: i32, order: Rute::SortOrder),
+    ///     \since 4.2
+    /// 
+    ///     Returns a pointer to the QStandardItem associated with the given \a index.
+    /// 
+    ///     Calling this function is typically the initial step when processing
+    ///     QModelIndex-based signals from a view, such as
+    ///     QAbstractItemView::activated(). In your slot, you call itemFromIndex(),
+    ///     with the QModelIndex carried by the signal as argument, to obtain a
+    ///     pointer to the corresponding QStandardItem.
+    /// 
+    ///     Note that this function will lazily create an item for the index (using
+    ///     itemPrototype()), and set it in the parent item's child table, if no item
+    ///     already exists at that index.
+    /// 
+    ///     If \a index is an invalid index, this function returns 0.
+    /// 
+    ///     \sa indexFromItem()
     item_from_index(index: &ModelIndexType) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Returns the QModelIndex associated with the given \a item.
+    /// 
+    ///     Use this function when you want to perform an operation that requires the
+    ///     QModelIndex of the item, such as
+    ///     QAbstractItemView::scrollTo(). QStandardItem::index() is provided as
+    ///     convenience; it is equivalent to calling this function.
+    /// 
+    ///     \sa itemFromIndex(), QStandardItem::index()
     index_from_item(item: *StandardItemType) -> ModelIndex,
+    ///     \since 4.2
+    /// 
+    ///     Returns the item for the given \a row and \a column if one has been set;
+    ///     otherwise returns 0.
+    /// 
+    ///     \sa setItem(), takeItem(), itemFromIndex()
     item(row: i32, column: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Sets the item for the given \a row and \a column to \a item. The model
+    ///     takes ownership of the item. If necessary, the row count and column count
+    ///     are increased to fit the item. The previous item at the given location (if
+    ///     there was one) is deleted.
+    /// 
+    ///     \sa item()
     set_item(row: i32, column: i32, item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Sets the item for the given \a row and \a column to \a item. The model
+    ///     takes ownership of the item. If necessary, the row count and column count
+    ///     are increased to fit the item. The previous item at the given location (if
+    ///     there was one) is deleted.
+    /// 
+    ///     \sa item()
     set_item(row: i32, item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the model's invisible root item.
+    /// 
+    ///     The invisible root item provides access to the model's top-level items
+    ///     through the QStandardItem API, making it possible to write functions that
+    ///     can treat top-level items and their children in a uniform way; for
+    ///     example, recursive functions involving a tree model.
+    /// 
+    ///     \note Calling \l{QAbstractItemModel::index()}{index()} on the QStandardItem object
+    ///     retrieved from this function is not valid.
     invisible_root_item() -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Returns the horizontal header item for \a column if one has been set;
+    ///     otherwise returns 0.
+    /// 
+    ///     \sa setHorizontalHeaderItem(), verticalHeaderItem()
     horizontal_header_item(column: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Sets the horizontal header item for \a column to \a item.  The model takes
+    ///     ownership of the item. If necessary, the column count is increased to fit
+    ///     the item. The previous header item (if there was one) is deleted.
+    /// 
+    ///     \sa horizontalHeaderItem(), setHorizontalHeaderLabels(),
+    ///     setVerticalHeaderItem()
     set_horizontal_header_item(column: i32, item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the vertical header item for row \a row if one has been set;
+    ///     otherwise returns 0.
+    /// 
+    ///     \sa setVerticalHeaderItem(), horizontalHeaderItem()
     vertical_header_item(row: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Sets the vertical header item for \a row to \a item.  The model takes
+    ///     ownership of the item. If necessary, the row count is increased to fit the
+    ///     item. The previous header item (if there was one) is deleted.
+    /// 
+    ///     \sa verticalHeaderItem(), setVerticalHeaderLabels(),
+    ///     setHorizontalHeaderItem()
     set_vertical_header_item(row: i32, item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Sets the horizontal header labels using \a labels. If necessary, the
+    ///     column count is increased to the size of \a labels.
+    /// 
+    ///     \sa setHorizontalHeaderItem()
     set_horizontal_header_labels(labels: &[String]),
+    ///     \since 4.2
+    /// 
+    ///     Sets the vertical header labels using \a labels. If necessary, the row
+    ///     count is increased to the size of \a labels.
+    /// 
+    ///     \sa setVerticalHeaderItem()
     set_vertical_header_labels(labels: &[String]),
+    ///     \since 4.2
+    /// 
+    ///     Sets the number of rows in this model to \a rows. If
+    ///     this is less than rowCount(), the data in the unwanted rows
+    ///     is discarded.
+    /// 
+    ///     \sa setColumnCount()
     set_row_count(rows: i32),
+    ///     \since 4.2
+    /// 
+    ///     Sets the number of columns in this model to \a columns. If
+    ///     this is less than columnCount(), the data in the unwanted columns
+    ///     is discarded.
+    /// 
+    ///     \sa setRowCount()
     set_column_count(columns: i32),
+    ///     \since 4.2
+    /// 
+    ///     Appends a row containing \a items. If necessary, the column count is
+    ///     increased to the size of \a items.
+    /// 
+    ///     \sa insertRow(), appendColumn()
     append_row(items: [*StandardItemType]),
+    ///     \since 4.2
+    /// 
+    ///     Appends a column containing \a items. If necessary, the row count is
+    ///     increased to the size of \a items.
+    /// 
+    ///     \sa insertColumn(), appendRow()
     append_column(items: [*StandardItemType]),
+    ///     \since 4.2
+    /// 
+    ///     Appends a row containing \a items. If necessary, the column count is
+    ///     increased to the size of \a items.
+    /// 
+    ///     \sa insertRow(), appendColumn()
     append_row(item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Inserts a row at \a row containing \a items. If necessary, the column
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa takeRow(), appendRow(), insertColumn()
     insert_row(row: i32, items: [*StandardItemType]),
+    ///     \since 4.2
+    /// 
+    ///     Inserts a column at \a column containing \a items. If necessary, the row
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa takeColumn(), appendColumn(), insertRow()
     insert_column(column: i32, items: [*StandardItemType]),
+    ///     \since 4.2
+    /// 
+    ///     Inserts a row at \a row containing \a items. If necessary, the column
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa takeRow(), appendRow(), insertColumn()
     insert_row(row: i32, item: *StandardItemType),
+    ///     \since 4.2
+    /// 
+    ///     Inserts a row at \a row containing \a items. If necessary, the column
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa takeRow(), appendRow(), insertColumn()
     insert_row(row: i32, parent: &ModelIndexType) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Inserts a column at \a column containing \a items. If necessary, the row
+    ///     count is increased to the size of \a items.
+    /// 
+    ///     \sa takeColumn(), appendColumn(), insertRow()
     insert_column(column: i32, parent: &ModelIndexType) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Removes the item at (\a row, \a column) without deleting it. The model
+    ///     releases ownership of the item.
+    /// 
+    ///     \sa item(), takeRow(), takeColumn()
     take_item(row: i32, column: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Removes the given \a row without deleting the row items, and returns a
+    ///     list of pointers to the removed items. The model releases ownership of the
+    ///     items. For items in the row that have not been set, the corresponding
+    ///     pointers in the list will be 0.
+    /// 
+    ///     \sa takeColumn()
     take_row(row: i32) -> [StandardItem?],
+    ///     \since 4.2
+    /// 
+    ///     Removes the given \a column without deleting the column items, and returns
+    ///     a list of pointers to the removed items. The model releases ownership of
+    ///     the items. For items in the column that have not been set, the
+    ///     corresponding pointers in the list will be 0.
+    /// 
+    ///     \sa takeRow()
     take_column(column: i32) -> [StandardItem?],
+    ///     \since 4.2
+    /// 
+    ///     Removes the horizontal header item at \a column from the header without
+    ///     deleting it, and returns a pointer to the item. The model releases
+    ///     ownership of the item.
+    /// 
+    ///     \sa horizontalHeaderItem(), takeVerticalHeaderItem()
     take_horizontal_header_item(column: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Removes the vertical header item at \a row from the header without
+    ///     deleting it, and returns a pointer to the item. The model releases
+    ///     ownership of the item.
+    /// 
+    ///     \sa verticalHeaderItem(), takeHorizontalHeaderItem()
     take_vertical_header_item(row: i32) -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Returns the item prototype used by the model. The model uses the item
+    ///     prototype as an item factory when it needs to construct new items on
+    ///     demand (for instance, when a view or item delegate calls setData()).
+    /// 
+    ///     \sa setItemPrototype()
     item_prototype() -> StandardItem?,
+    ///     \since 4.2
+    /// 
+    ///     Sets the item prototype for the model to the specified \a item. The model
+    ///     takes ownership of the prototype.
+    /// 
+    ///     The item prototype acts as a QStandardItem factory, by relying on the
+    ///     QStandardItem::clone() function.  To provide your own prototype, subclass
+    ///     QStandardItem, reimplement QStandardItem::clone() and set the prototype to
+    ///     be an instance of your custom class. Whenever QStandardItemModel needs to
+    ///     create an item on demand (for instance, when a view or item delegate calls
+    ///     setData())), the new items will be instances of your custom class.
+    /// 
+    ///     \sa itemPrototype(), QStandardItem::clone()
     set_item_prototype(item: *StandardItemType),
     find_items(text: String, flags: Rute::MatchFlags, column: i32) -> [StandardItem?],
+    ///     \since 4.2
+    ///     \property QStandardItemModel::sortRole
+    ///     \brief the item role that is used to query the model's data when sorting items
+    /// 
+    ///     The default value is Qt::DisplayRole.
+    /// 
+    ///     \sa sort(), QStandardItem::sortChildren()
     sort_role() -> i32,
     set_sort_role(role: i32),
+    ///   \reimp
     [event] mime_types() -> [String],
+    ///   \reimp
     [event] mime_data(indexes: &[ModelIndex]) -> MimeData?,
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [signal] item_changed(item: *StandardItemType),

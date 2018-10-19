@@ -1,3 +1,21 @@
+///     \class QTextLine
+///     \reentrant
+/// 
+///     \brief The QTextLine class represents a line of text inside a QTextLayout.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+/// 
+///     A text line is usually created by QTextLayout::createLine().
+/// 
+///     After being created, the line can be filled using the setLineWidth()
+///     or setNumColumns() functions. A line has a number of attributes including the
+///     rectangle it occupies, rect(), its coordinates, x() and y(), its
+///     textLength(), width() and naturalTextWidth(), and its ascent() and descent()
+///     relative to the text. The position of the cursor in terms of the
+///     line is available from cursorToX() and its inverse from
+///     xToCursor(). A line can be moved with setPosition().
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextLine)]
 enum Edge {
     Leading,
@@ -13,31 +31,153 @@ enum CursorPosition {
 
 struct TextLine {
     is_valid() -> bool,
+    ///     Returns the line's bounding rectangle.
+    /// 
+    ///     \sa x(), y(), textLength(), width()
     rect() -> RectF,
+    ///     Returns the line's x position.
+    /// 
+    ///     \sa rect(), y(), textLength(), width()
     x() -> f32,
+    ///     Returns the line's y position.
+    /// 
+    ///     \sa x(), rect(), textLength(), width()
     y() -> f32,
+    ///     Returns the line's width as specified by the layout() function.
+    /// 
+    ///     \sa naturalTextWidth(), x(), y(), textLength(), rect()
     width() -> f32,
+    ///     Returns the line's ascent.
+    /// 
+    ///     \sa descent(), height()
     ascent() -> f32,
+    ///     Returns the line's descent.
+    /// 
+    ///     \sa ascent(), height()
     descent() -> f32,
+    ///     Returns the line's height. This is equal to ascent() + descent()
+    ///     if leading is not included. If leading is included, this equals to
+    ///     ascent() + descent() + leading().
+    /// 
+    ///     \sa ascent(), descent(), leading(), setLeadingIncluded()
     height() -> f32,
+    ///     \since 4.6
+    /// 
+    ///     Returns the line's leading.
+    /// 
+    ///     \sa ascent(), descent(), height()
     leading() -> f32,
+    ///     \since 4.6
+    /// 
+    ///     Includes positive leading into the line's height if \a included is true;
+    ///     otherwise does not include leading.
+    /// 
+    ///     By default, leading is not included.
+    /// 
+    ///     Note that negative leading is ignored, it must be handled
+    ///     in the code using the text lines by letting the lines overlap.
+    /// 
+    ///     \sa leadingIncluded()
+    /// 
     set_leading_included(included: bool),
+    ///     \since 4.6
+    /// 
+    ///     Returns \c true if positive leading is included into the line's height;
+    ///     otherwise returns \c false.
+    /// 
+    ///     By default, leading is not included.
+    /// 
+    ///     \sa setLeadingIncluded()
     leading_included() -> bool,
+    ///     Returns the width of the line that is occupied by text. This is
+    ///     always \<= to width(), and is the minimum width that could be used
+    ///     by layout() without changing the line break position.
     natural_text_width() -> f32,
+    ///     \since 4.7
+    ///     Returns the horizontal advance of the text. The advance of the text
+    ///     is the distance from its position to the next position at which
+    ///     text would naturally be drawn.
+    /// 
+    ///     By adding the advance to the position of the text line and using this
+    ///     as the position of a second text line, you will be able to position
+    ///     the two lines side-by-side without gaps in-between.
     horizontal_advance() -> f32,
+    ///     Returns the rectangle covered by the line.
     natural_text_rect() -> RectF,
+    ///     Converts the cursor position \a cursorPos to the corresponding x position
+    ///     inside the line, taking account of the \a edge.
+    /// 
+    ///     If \a cursorPos is not a valid cursor position, the nearest valid
+    ///     cursor position will be used instead, and \a cursorPos will be modified to
+    ///     point to this valid cursor position.
+    /// 
+    ///     \sa xToCursor()
     cursor_to_x(cursor_pos: *i32, edge: TextLine::Edge) -> f32,
+    ///     Converts the cursor position \a cursorPos to the corresponding x position
+    ///     inside the line, taking account of the \a edge.
+    /// 
+    ///     If \a cursorPos is not a valid cursor position, the nearest valid
+    ///     cursor position will be used instead, and \a cursorPos will be modified to
+    ///     point to this valid cursor position.
+    /// 
+    ///     \sa xToCursor()
     cursor_to_x(cursor_pos: i32, edge: TextLine::Edge) -> f32,
+    ///     \fn int QTextLine::xToCursor(qreal x, CursorPosition cpos) const
+    /// 
+    ///     Converts the x-coordinate \a x, to the nearest matching cursor
+    ///     position, depending on the cursor position type, \a cpos.
+    ///     Note that result cursor position includes possible preedit area text.
+    /// 
+    ///     \sa cursorToX()
     x_to_cursor(x: f32, arg0: TextLine::CursorPosition) -> i32,
+    ///     Lays out the line with the given \a width. The line is filled from
+    ///     its starting position with as many characters as will fit into
+    ///     the line. In case the text cannot be split at the end of the line,
+    ///     it will be filled with additional characters to the next whitespace
+    ///     or end of the text.
     set_line_width(width: f32),
+    ///     Lays out the line. The line is filled from its starting position
+    ///     with as many characters as are specified by \a numColumns. In case
+    ///     the text cannot be split until \a numColumns characters, the line
+    ///     will be filled with as many characters to the next whitespace or
+    ///     end of the text. The provided \a alignmentWidth is used as reference
+    ///     width for alignment.
     set_num_columns(columns: i32),
+    ///     Lays out the line. The line is filled from its starting position
+    ///     with as many characters as are specified by \a numColumns. In case
+    ///     the text cannot be split until \a numColumns characters, the line
+    ///     will be filled with as many characters to the next whitespace or
+    ///     end of the text. The provided \a alignmentWidth is used as reference
+    ///     width for alignment.
     set_num_columns(columns: i32, alignment_width: f32),
+    ///     Moves the line to position \a pos.
     set_position(pos: &PointFType),
+    ///     Returns the line's position relative to the text layout's position.
     position() -> PointF,
+    ///     Returns the start of the line from the beginning of the string
+    ///     passed to the QTextLayout.
     text_start() -> i32,
+    ///     Returns the length of the text in the line.
+    /// 
+    ///     \sa naturalTextWidth()
     text_length() -> i32,
     line_number() -> i32,
+    ///     \fn void QTextLine::draw(QPainter *painter, const QPointF &position, const QTextLayout::FormatRange *selection) const
+    /// 
+    ///     Draws a line on the given \a painter at the specified \a position.
+    ///     The \a selection is reserved for internal use.
     draw(p: *PainterType, point: &PointFType, selection: onst QTextLayout::FormatRange *),
+    ///     Returns the glyph indexes and positions for all glyphs in this QTextLine for characters
+    ///     in the range defined by \a from and \a length. The \a from index is relative to the beginning
+    ///     of the text in the containing QTextLayout, and the range must be within the range of QTextLine
+    ///     as given by functions textStart() and textLength().
+    /// 
+    ///     If \a from is negative, it will default to textStart(), and if \a length is negative it will
+    ///     default to the return value of textLength().
+    /// 
+    ///     \since 5.0
+    /// 
+    ///     \sa QTextLayout::glyphRuns()
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
 }
 

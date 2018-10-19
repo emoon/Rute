@@ -1,3 +1,21 @@
+///     \class QEventLoopLocker
+///     \inmodule QtCore
+///     \brief The QEventLoopLocker class provides a means to quit an event loop when it is no longer needed.
+///     \since 5.0
+/// 
+///     The QEventLoopLocker operates on particular objects - either a QCoreApplication
+///     instance, a QEventLoop instance or a QThread instance.
+/// 
+///     This makes it possible to, for example, run a batch of jobs with an event loop
+///     and exit that event loop after the last job is finished. That is accomplished
+///     by keeping a QEventLoopLocker with each job instance.
+/// 
+///     The variant which operates on QCoreApplication makes it possible to finish
+///     asynchronously running jobs after the last gui window has been closed. This
+///     can be useful for example for running a job which uploads data to a network.
+/// 
+///     \sa QEventLoop, QCoreApplication
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct EventLoopLocker {
 }

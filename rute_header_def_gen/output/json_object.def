@@ -1,3 +1,26 @@
+///     \class QJsonObject
+///     \inmodule QtCore
+///     \ingroup json
+///     \ingroup shared
+///     \reentrant
+///     \since 5.0
+/// 
+///     \brief The QJsonObject class encapsulates a JSON object.
+/// 
+///     A JSON object is a list of key value pairs, where the keys are unique strings
+///     and the values are represented by a QJsonValue.
+/// 
+///     A QJsonObject can be converted to and from a QVariantMap. You can query the
+///     number of (key, value) pairs with size(), insert(), and remove() entries from it
+///     and iterate over its content using the standard C++ iterator pattern.
+/// 
+///     QJsonObject is an implicitly shared class, and shares the data with the document
+///     it has been created from as long as it is not being modified.
+/// 
+///     You can convert the object to and from text based JSON through QJsonDocument.
+/// 
+///     \sa {JSON Support in Qt}, {JSON Save Game Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct JsonObject {
     swap(other: &JsonObjectType),
@@ -10,24 +33,54 @@ struct JsonObject {
     count() -> i32,
     length() -> i32,
     is_empty() -> bool,
+    ///     \overload
+    ///     \since 5.7
     value(key: String) -> JsonValue,
+    ///     \overload
+    ///     \since 5.7
     value(key: Latin1StringType) -> JsonValue,
     remove(key: String),
     take(key: String) -> JsonValue,
+    ///     \overload
+    ///     \since 5.7
     contains(key: String) -> bool,
+    ///     \overload
+    ///     \since 5.7
     contains(key: Latin1StringType) -> bool,
+    ///     \fn bool QJsonObject::empty() const
+    /// 
+    ///     This function is provided for STL compatibility. It is equivalent
+    ///     to isEmpty(), returning \c true if the object is empty; otherwise
+    ///     returning \c false.
     begin() -> JsonObject::iterator,
+    ///     \fn bool QJsonObject::empty() const
+    /// 
+    ///     This function is provided for STL compatibility. It is equivalent
+    ///     to isEmpty(), returning \c true if the object is empty; otherwise
+    ///     returning \c false.
     begin() -> JsonObject::const_iterator,
     const_begin() -> JsonObject::const_iterator,
     end() -> JsonObject::iterator,
     end() -> JsonObject::const_iterator,
     const_end() -> JsonObject::const_iterator,
     erase(it: JsonObject::iterator) -> JsonObject::iterator,
+    ///     \overload
+    ///     \since 5.7
     find(key: String) -> JsonObject::iterator,
+    ///     \overload
+    ///     \since 5.7
     find(key: Latin1StringType) -> JsonObject::iterator,
+    ///     \overload
+    ///     \since 5.7
     find(key: String) -> JsonObject::const_iterator,
+    ///     \overload
+    ///     \since 5.7
     find(key: Latin1StringType) -> JsonObject::const_iterator,
+    ///     \overload
+    ///     \since 5.7
     const_find(key: String) -> JsonObject::const_iterator,
+    ///     \overload
+    ///     \since 5.7
     const_find(key: Latin1StringType) -> JsonObject::const_iterator,
     insert(key: String, value: &JsonValueType) -> JsonObject::iterator,
     empty() -> bool,

@@ -1,3 +1,112 @@
+///     \class QStringList
+///     \inmodule QtCore
+///     \brief The QStringList class provides a list of strings.
+/// 
+///     \ingroup tools
+///     \ingroup shared
+///     \ingroup string-processing
+/// 
+///     \reentrant
+/// 
+///     QStringList inherits from QList<QString>. Like QList, QStringList is
+///     \l{implicitly shared}. It provides fast index-based access as well as fast
+///     insertions and removals. Passing string lists as value parameters is both
+///     fast and safe.
+/// 
+///     All of QList's functionality also applies to QStringList. For example, you
+///     can use isEmpty() to test whether the list is empty, and you can call
+///     functions like append(), prepend(), insert(), replace(), removeAll(),
+///     removeAt(), removeFirst(), removeLast(), and removeOne() to modify a
+///     QStringList. In addition, QStringList provides a few convenience
+///     functions that make handling lists of strings easier:
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Initializing
+/// 
+///     The default constructor creates an empty list. You can use the
+///     initializer-list constructor to create a list with elements:
+/// 
+///     \snippet qstringlist/main.cpp 0a
+/// 
+///     \section1 Adding Strings
+/// 
+///     Strings can be added to a list using the \l
+///     {QList::insert()}{insert()} \l
+///     {QList::append()}{append()}, \l
+///     {QList::operator+=()}{operator+=()} and \l
+///     {operator<<()} functions.
+/// 
+///     \l{operator<<()} can be used to
+///     conveniently add multiple elements to a list:
+/// 
+///     \snippet qstringlist/main.cpp 0b
+/// 
+///     \section1 Iterating Over the Strings
+/// 
+///     To iterate over a list, you can either use index positions or
+///     QList's Java-style and STL-style iterator types:
+/// 
+///     Indexing:
+/// 
+///     \snippet qstringlist/main.cpp 1
+/// 
+///     Java-style iterator:
+/// 
+///     \snippet qstringlist/main.cpp 2
+/// 
+///     STL-style iterator:
+/// 
+///     \snippet qstringlist/main.cpp 3
+/// 
+///     The QStringListIterator class is simply a type definition for
+///     QListIterator<QString>. QStringList also provide the
+///     QMutableStringListIterator class which is a type definition for
+///     QMutableListIterator<QString>.
+/// 
+///     \section1 Manipulating the Strings
+/// 
+///     QStringList provides several functions allowing you to manipulate
+///     the contents of a list. You can concatenate all the strings in a
+///     string list into a single string (with an optional separator)
+///     using the join() function. For example:
+/// 
+///     \snippet qstringlist/main.cpp 4
+/// 
+///     The argument to join can be a single character or a string.
+/// 
+///     To break up a string into a string list, use the QString::split()
+///     function:
+/// 
+///     \snippet qstringlist/main.cpp 6
+/// 
+///     The argument to split can be a single character, a string, a
+///     QRegularExpression or a (deprecated) QRegExp.
+/// 
+///     In addition, the \l {QStringList::operator+()}{operator+()}
+///     function allows you to concatenate two string lists into one. To
+///     sort a string list, use the sort() function.
+/// 
+///     QString list also provides the filter() function which lets you
+///     to extract a new list which contains only those strings which
+///     contain a particular substring (or match a particular regular
+///     expression):
+/// 
+///     \snippet qstringlist/main.cpp 7
+/// 
+///     The contains() function tells you whether the list contains a
+///     given string, while the indexOf() function returns the index of
+///     the first occurrence of the given string. The lastIndexOf()
+///     function on the other hand, returns the index of the last
+///     occurrence of the string.
+/// 
+///     Finally, the replaceInStrings() function calls QString::replace()
+///     on each string in the string list in turn. For example:
+/// 
+///     \snippet qstringlist/main.cpp 8
+/// 
+///     \sa QString
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StringList {
     contains(str: String, cs: Rute::CaseSensitivity) -> bool,

@@ -1,3 +1,25 @@
+///     \class QMatrix4x4
+///     \brief The QMatrix4x4 class represents a 4x4 transformation matrix in 3D space.
+///     \since 4.6
+///     \ingroup painting-3D
+///     \inmodule QtGui
+/// 
+///     The QMatrix4x4 class in general is treated as a row-major matrix, in that the
+///     constructors and operator() functions take data in row-major format, as is
+///     familiar in C-style usage.
+/// 
+///     Internally the data is stored as column-major format, so as to be optimal for
+///     passing to OpenGL functions, which expect column-major data.
+/// 
+///     When using these functions be aware that they return data in \b{column-major}
+///     format:
+///     \list
+///     \li data()
+///     \li constData()
+///     \endlist
+/// 
+///     \sa QVector3D, QGenericMatrix
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMatrix4x4)]
 enum Matrix4x4FixMeEnums {
     Identity,
@@ -19,38 +41,202 @@ struct Matrix4x4 {
     is_identity() -> bool,
     set_to_identity(),
     fill(value: f32),
+    ///     Returns the determinant of this matrix.
     determinant() -> double,
+    ///     Returns the inverse of this matrix.  Returns the identity if
+    ///     this matrix cannot be inverted; i.e. determinant() is zero.
+    ///     If \a invertible is not null, then true will be written to
+    ///     that location if the matrix can be inverted; false otherwise.
+    /// 
+    ///     If the matrix is recognized as the identity or an orthonormal
+    ///     matrix, then this function will quickly invert the matrix
+    ///     using optimized routines.
+    /// 
+    ///     \sa determinant(), normalMatrix()
     inverted(invertible: *bool) -> Matrix4x4,
+    ///     \overload
+    /// 
+    ///     Multiplies this matrix by another that scales coordinates by the
+    ///     given \a factor.
+    /// 
+    ///     \sa translate(), rotate()
     scale(vector: &Vector3DType),
+    ///     Multiples this matrix by another that rotates coordinates according
+    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
+    ///     been normalized.
+    /// 
+    ///     \sa scale(), translate(), QQuaternion
     rotate(angle: f32, vector: &Vector3DType),
+    ///     \overload
+    /// 
+    ///     Multiplies this matrix by another that scales coordinates by the
+    ///     given \a factor.
+    /// 
+    ///     \sa translate(), rotate()
     scale(x: f32, y: f32),
+    ///     \overload
+    /// 
+    ///     Multiplies this matrix by another that scales coordinates by the
+    ///     given \a factor.
+    /// 
+    ///     \sa translate(), rotate()
     scale(x: f32, y: f32, z: f32),
+    ///     \overload
+    /// 
+    ///     Multiplies this matrix by another that scales coordinates by the
+    ///     given \a factor.
+    /// 
+    ///     \sa translate(), rotate()
     scale(factor: f32),
+    ///     Multiples this matrix by another that rotates coordinates according
+    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
+    ///     been normalized.
+    /// 
+    ///     \sa scale(), translate(), QQuaternion
     rotate(angle: f32, x: f32, y: f32, z: f32),
+    ///     Multiples this matrix by another that rotates coordinates according
+    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
+    ///     been normalized.
+    /// 
+    ///     \sa scale(), translate(), QQuaternion
     rotate(quaternion: &QuaternionType),
+    ///     Multiplies this matrix by another that applies an orthographic
+    ///     projection for a window with lower-left corner (\a left, \a bottom),
+    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
+    ///     and \a farPlane clipping planes.
+    /// 
+    ///     \sa frustum(), perspective()
     ortho(rect: &RectType),
+    ///     Multiplies this matrix by another that applies an orthographic
+    ///     projection for a window with lower-left corner (\a left, \a bottom),
+    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
+    ///     and \a farPlane clipping planes.
+    /// 
+    ///     \sa frustum(), perspective()
     ortho(rect: &RectFType),
+    ///     Multiplies this matrix by another that applies an orthographic
+    ///     projection for a window with lower-left corner (\a left, \a bottom),
+    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
+    ///     and \a farPlane clipping planes.
+    /// 
+    ///     \sa frustum(), perspective()
     ortho(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
+    ///     Multiplies this matrix by another that applies a perspective
+    ///     frustum projection for a window with lower-left corner (\a left, \a bottom),
+    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
+    ///     and \a farPlane clipping planes.
+    /// 
+    ///     \sa ortho(), perspective()
     frustum(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
+    ///     Multiplies this matrix by another that applies a perspective
+    ///     projection. The vertical field of view will be \a verticalAngle degrees
+    ///     within a window with a given \a aspectRatio that determines the horizontal
+    ///     field of view.
+    ///     The projection will have the specified \a nearPlane and \a farPlane clipping
+    ///     planes which are the distances from the viewer to the corresponding planes.
+    /// 
+    ///     \sa ortho(), frustum()
     perspective(vertical_angle: f32, aspect_ratio: f32, near_plane: f32, far_plane: f32),
+    ///     Multiplies this matrix by a viewing matrix derived from an eye
+    ///     point. The \a center value indicates the center of the view that
+    ///     the \a eye is looking at.  The \a up value indicates which direction
+    ///     should be considered up with respect to the \a eye.
+    /// 
+    ///     \note The \a up vector must not be parallel to the line of sight
+    ///     from \a eye to \a center.
     look_at(eye: &Vector3DType, center: &Vector3DType, up: &Vector3DType),
     viewport(rect: &RectFType),
     viewport(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
+    ///     \deprecated
+    /// 
+    ///     Flips between right-handed and left-handed coordinate systems
+    ///     by multiplying the y and z co-ordinates by -1.  This is normally
+    ///     used to create a left-handed orthographic view without scaling
+    ///     the viewport as ortho() does.
+    /// 
+    ///     \sa ortho()
     flip_coordinates(),
+    ///     Retrieves the 16 items in this matrix and copies them to \a values
+    ///     in row-major order.
     copy_data_to(values: *f32),
+    ///     Returns the conventional Qt 2D affine transformation matrix that
+    ///     corresponds to this matrix.  It is assumed that this matrix
+    ///     only contains 2D affine transformation elements.
+    /// 
+    ///     \sa toTransform()
     to_affine() -> Matrix,
+    ///     Returns the conventional Qt 2D transformation matrix that
+    ///     corresponds to this matrix.
+    /// 
+    ///     If \a distanceToPlane is non-zero, it indicates a projection
+    ///     factor to use to adjust for the z co-ordinate.  The value of
+    ///     1024 corresponds to the projection factor used
+    ///     by QTransform::rotate() for the x and y axes.
+    /// 
+    ///     If \a distanceToPlane is zero, then the returned QTransform
+    ///     is formed by simply dropping the third row and third column
+    ///     of the QMatrix4x4.  This is suitable for implementing
+    ///     orthographic projections where the z co-ordinate should
+    ///     be dropped rather than projected.
+    /// 
+    ///     \sa toAffine()
     to_transform() -> Transform,
+    ///     Returns the conventional Qt 2D transformation matrix that
+    ///     corresponds to this matrix.
+    /// 
+    ///     If \a distanceToPlane is non-zero, it indicates a projection
+    ///     factor to use to adjust for the z co-ordinate.  The value of
+    ///     1024 corresponds to the projection factor used
+    ///     by QTransform::rotate() for the x and y axes.
+    /// 
+    ///     If \a distanceToPlane is zero, then the returned QTransform
+    ///     is formed by simply dropping the third row and third column
+    ///     of the QMatrix4x4.  This is suitable for implementing
+    ///     orthographic projections where the z co-ordinate should
+    ///     be dropped rather than projected.
+    /// 
+    ///     \sa toAffine()
     to_transform(distance_to_plane: f32) -> Transform,
     map(point: &PointType) -> Point,
     map(point: &PointFType) -> PointF,
     map(point: &Vector3DType) -> Vector3D,
     map_vector(vector: &Vector3DType) -> Vector3D,
     map(point: &Vector4DType) -> Vector4D,
+    ///     Maps \a rect by multiplying this matrix by the corners
+    ///     of \a rect and then forming a new rectangle from the results.
+    ///     The returned rectangle will be an ordinary 2D rectangle
+    ///     with sides parallel to the horizontal and vertical axes.
+    /// 
+    ///     \sa map()
     map_rect(rect: &RectType) -> Rect,
+    ///     Maps \a rect by multiplying this matrix by the corners
+    ///     of \a rect and then forming a new rectangle from the results.
+    ///     The returned rectangle will be an ordinary 2D rectangle
+    ///     with sides parallel to the horizontal and vertical axes.
+    /// 
+    ///     \sa map()
     map_rect(rect: &RectFType) -> RectF,
     data() -> f32?,
     data() -> f32?,
     const_data() -> f32?,
+    ///     Optimize the usage of this matrix from its current elements.
+    /// 
+    ///     Some operations such as translate(), scale(), and rotate() can be
+    ///     performed more efficiently if the matrix being modified is already
+    ///     known to be the identity, a previous translate(), a previous
+    ///     scale(), etc.
+    /// 
+    ///     Normally the QMatrix4x4 class keeps track of this special type internally
+    ///     as operations are performed.  However, if the matrix is modified
+    ///     directly with {QLoggingCategory::operator()}{operator()()} or data(), then QMatrix4x4 will lose track of
+    ///     the special type and will revert to the safest but least efficient
+    ///     operations thereafter.
+    /// 
+    ///     By calling optimize() after directly modifying the matrix,
+    ///     the programmer can force QMatrix4x4 to recover the special type if
+    ///     the elements appear to conform to one of the known optimized types.
+    /// 
+    ///     \sa {QLoggingCategory::operator()}{operator()()}, data(), translate()
     optimize(),
 }
 

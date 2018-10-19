@@ -1,3 +1,66 @@
+///     \class QGraphicsEffect
+///     \brief The QGraphicsEffect class is the base class for all graphics
+///            effects.
+///     \since 4.6
+///     \ingroup multimedia
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     Effects alter the appearance of elements by hooking into the rendering
+///     pipeline and operating between the source (e.g., a QGraphicsPixmapItem)
+///     and the destination device (e.g., QGraphicsView's viewport). Effects can be
+///     disabled by calling setEnabled(false). If effects are disabled, the source
+///     is rendered directly.
+/// 
+///     To add a visual effect to a QGraphicsItem, for example, you can use one of
+///     the standard effects, or alternately, create your own effect by creating a
+///     subclass of QGraphicsEffect. The effect can then be installed on the item
+///     using QGraphicsItem::setGraphicsEffect().
+/// 
+///     Qt provides the following standard effects:
+/// 
+///     \list
+///     \li QGraphicsBlurEffect - blurs the item by a given radius
+///     \li QGraphicsDropShadowEffect - renders a dropshadow behind the item
+///     \li QGraphicsColorizeEffect - renders the item in shades of any given color
+///     \li QGraphicsOpacityEffect - renders the item with an opacity
+///     \endlist
+/// 
+///     \table
+///     \row
+///     \li{2,1} \image graphicseffect-plain.png
+///     \row
+///     \li \image graphicseffect-blur.png
+///     \li \image graphicseffect-colorize.png
+///     \row
+///     \li \image graphicseffect-opacity.png
+///     \li \image graphicseffect-drop-shadow.png
+///     \endtable
+/// 
+///     \image graphicseffect-widget.png
+/// 
+///     For more information on how to use each effect, refer to the specific
+///     effect's documentation.
+/// 
+///     To create your own custom effect, create a subclass of QGraphicsEffect (or
+///     any other existing effects) and reimplement the virtual function draw().
+///     This function is called whenever the effect needs to redraw. The draw()
+///     function takes the painter with which to draw as an argument. For more
+///     information, refer to the documenation for draw(). In the draw() function
+///     you can call sourcePixmap() to get a pixmap of the graphics effect source
+///     which you can then process.
+/// 
+///     If your effect changes, use update() to request for a redraw. If your
+///     custom effect changes the bounding rectangle of the source, e.g., a radial
+///     glow effect may need to apply an extra margin, you can reimplement the
+///     virtual boundingRectFor() function, and call updateBoundingRect()
+///     to notify the framework whenever this rectangle changes. The virtual
+///     sourceChanged() function is called to notify the effects that
+///     the source has changed in some way - e.g., if the source is a
+///     QGraphicsRectItem and its rectangle parameters have changed.
+/// 
+///     \sa QGraphicsItem::setGraphicsEffect(), QWidget::setGraphicsEffect()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsEffect)]
 enum ChangeFlag {
     SourceAttached,
@@ -14,19 +77,102 @@ enum PixmapPadMode {
 }
 
 struct GraphicsEffect : Object {
+    ///     Returns the effective bounding rectangle for this effect, given the
+    ///     provided \a rect in the device coordinates. When writing
+    ///     you own custom effect, you must call updateBoundingRect() whenever any
+    ///     parameters are changed that may cause this this function to return a
+    ///     different value.
+    /// 
+    ///     \sa sourceBoundingRect()
     [event] bounding_rect_for(source_rect: &RectFType) -> RectF,
+    ///     Returns the effective bounding rectangle for this effect, i.e., the
+    ///     bounding rectangle of the source in device coordinates, adjusted by
+    ///     any margins applied by the effect itself.
+    /// 
+    ///     \sa boundingRectFor(), updateBoundingRect()
     bounding_rect() -> RectF,
+    ///     \property QGraphicsEffect::enabled
+    ///     \brief whether the effect is enabled or not.
+    /// 
+    ///     If an effect is disabled, the source will be rendered with as normal, with
+    ///     no interference from the effect. If the effect is enabled, the source will
+    ///     be rendered with the effect applied.
+    /// 
+    ///     This property is enabled by default.
+    /// 
+    ///     Using this property, you can disable certain effects on slow platforms, in
+    ///     order to ensure that the user interface is responsive.
     is_enabled() -> bool,
     set_enabled(enable: bool),
+    ///     Schedules a redraw of the effect. Call this function whenever the effect
+    ///     needs to be redrawn. This function does not trigger a redraw of the source.
+    /// 
+    ///     \sa updateBoundingRect()
     update(),
     [signal] enabled_changed(enabled: bool),
     [event] draw(painter: *PainterType),
+    ///     This virtual function is called by QGraphicsEffect to notify the effect
+    ///     that the source has changed. If the effect applies any cache, then this
+    ///     cache must be purged in order to reflect the new appearance of the source.
+    /// 
+    ///     The \a flags describes what has changed.
     [event] source_changed(flags: GraphicsEffect::ChangeFlags),
+    ///     This function notifies the effect framework when the effect's bounding
+    ///     rectangle has changed. As a custom effect author, you must call this
+    ///     function whenever you change any parameters that will cause the virtual
+    ///     boundingRectFor() function to return a different value.
+    /// 
+    ///     This function will call update() if this is necessary.
+    /// 
+    ///     \sa boundingRectFor(), boundingRect(), sourceBoundingRect()
     update_bounding_rect(),
+    ///     Returns \c true if the source effectively is a pixmap, e.g., a
+    ///     QGraphicsPixmapItem.
+    /// 
+    ///     This function is useful for optimization purposes. For instance, there's no
+    ///     point in drawing the source in device coordinates to avoid pixmap scaling
+    ///     if this function returns \c true - the source pixmap will be scaled anyways.
     source_is_pixmap() -> bool,
+    ///     Returns the bounding rectangle of the source mapped to the given \a system.
+    /// 
+    ///     Calling this function with Qt::DeviceCoordinates outside of
+    ///     QGraphicsEffect::draw() will give undefined results, as there is no device
+    ///     context available.
+    /// 
+    ///     \sa draw()
     source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,
+    ///     Draws the source directly using the given \a painter.
+    /// 
+    ///     This function should only be called from QGraphicsEffect::draw().
+    /// 
+    ///     For example:
+    /// 
+    ///     \snippet code/src_gui_effects_qgraphicseffect.cpp 0
+    /// 
+    ///     \sa QGraphicsEffect::draw()
     draw_source(painter: *PainterType),
+    ///     Returns a pixmap with the source painted into it.
+    /// 
+    ///     The \a system specifies which coordinate system to be used for the source.
+    ///     The optional \a offset parameter returns the offset where the pixmap should
+    ///     be painted at using the current painter. For control on how the pixmap is
+    ///     padded use the \a mode parameter.
+    /// 
+    ///     The returned pixmap is clipped to the current painter's device rectangle when
+    ///     \a system is Qt::DeviceCoordinates.
+    /// 
+    ///     Calling this function with Qt::DeviceCoordinates outside of
+    ///     QGraphicsEffect::draw() will give undefined results, as there is no device
+    ///     context available.
+    /// 
+    ///     \sa draw(), boundingRect()
     source_pixmap(system: Rute::CoordinateSystem, offset: *PointType, mode: GraphicsEffect::PixmapPadMode) -> Pixmap,
+    ///     \internal
+    /// 
+    ///     Returns a pointer to the source, which provides extra context information
+    ///     that can be useful for the effect.
+    /// 
+    ///     \sa draw()
     source() -> GraphicsEffectSource?,
 }
 

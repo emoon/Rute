@@ -1,3 +1,164 @@
+///     \class QRect
+///     \inmodule QtCore
+///     \ingroup painting
+///     \reentrant
+/// 
+///     \brief The QRect class defines a rectangle in the plane using
+///     integer precision.
+/// 
+///     A rectangle is normally expressed as a top-left corner and a
+///     size.  The size (width and height) of a QRect is always equivalent
+///     to the mathematical rectangle that forms the basis for its
+///     rendering.
+/// 
+///     A QRect can be constructed with a set of left, top, width and
+///     height integers, or from a QPoint and a QSize.  The following code
+///     creates two identical rectangles.
+/// 
+///     \snippet code/src_corelib_tools_qrect.cpp 0
+/// 
+///     There is a third constructor that creates a QRect using the
+///     top-left and bottom-right coordinates, but we recommend that you
+///     avoid using it. The rationale is that for historical reasons the
+///     values returned by the bottom() and right() functions deviate from
+///     the true bottom-right corner of the rectangle.
+/// 
+///     The QRect class provides a collection of functions that return the
+///     various rectangle coordinates, and enable manipulation of
+///     these. QRect also provides functions to move the rectangle relative
+///     to the various coordinates. In addition there is a moveTo()
+///     function that moves the rectangle, leaving its top left corner at
+///     the given coordinates. Alternatively, the translate() function
+///     moves the rectangle the given offset relative to the current
+///     position, and the translated() function returns a translated copy
+///     of this rectangle.
+/// 
+///     The size() function returns the rectange's dimensions as a
+///     QSize. The dimensions can also be retrieved separately using the
+///     width() and height() functions. To manipulate the dimensions use
+///     the setSize(), setWidth() or setHeight() functions. Alternatively,
+///     the size can be changed by applying either of the functions
+///     setting the rectangle coordinates, for example, setBottom() or
+///     setRight().
+/// 
+///     The contains() function tells whether a given point is inside the
+///     rectangle or not, and the intersects() function returns \c true if
+///     this rectangle intersects with a given rectangle. The QRect class
+///     also provides the intersected() function which returns the
+///     intersection rectangle, and the united() function which returns the
+///     rectangle that encloses the given rectangle and this:
+/// 
+///     \table
+///     \row
+///     \li \inlineimage qrect-intersect.png
+///     \li \inlineimage qrect-unite.png
+///     \row
+///     \li intersected()
+///     \li united()
+///     \endtable
+/// 
+///     The isEmpty() function returns \c true if left() > right() or top() >
+///     bottom(). Note that an empty rectangle is not valid: The isValid()
+///     function returns \c true if left() <= right() \e and top() <=
+///     bottom(). A null rectangle (isNull() == true) on the other hand,
+///     has both width and height set to 0.
+/// 
+///     Note that due to the way QRect and QRectF are defined, an
+///     empty QRect is defined in essentially the same way as QRectF.
+/// 
+///     Finally, QRect objects can be streamed as well as compared.
+/// 
+///     \tableofcontents
+/// 
+///     \section1 Rendering
+/// 
+///     When using an \l {QPainter::Antialiasing}{anti-aliased} painter,
+///     the boundary line of a QRect will be rendered symmetrically on
+///     both sides of the mathematical rectangle's boundary line. But when
+///     using an aliased painter (the default) other rules apply.
+/// 
+///     Then, when rendering with a one pixel wide pen the QRect's boundary
+///     line will be rendered to the right and below the mathematical
+///     rectangle's boundary line.
+/// 
+///     When rendering with a two pixels wide pen the boundary line will
+///     be split in the middle by the mathematical rectangle. This will be
+///     the case whenever the pen is set to an even number of pixels,
+///     while rendering with a pen with an odd number of pixels, the spare
+///     pixel will be rendered to the right and below the mathematical
+///     rectangle as in the one pixel case.
+/// 
+///     \table
+///     \row
+///         \li \inlineimage qrect-diagram-zero.png
+///         \li \inlineimage qrect-diagram-one.png
+///     \row
+///         \li Logical representation
+///         \li One pixel wide pen
+///     \row
+///         \li \inlineimage qrect-diagram-two.png
+///         \li \inlineimage qrect-diagram-three.png
+///     \row
+///         \li Two pixel wide pen
+///         \li Three pixel wide pen
+///     \endtable
+/// 
+///     \section1 Coordinates
+/// 
+///     The QRect class provides a collection of functions that return the
+///     various rectangle coordinates, and enable manipulation of
+///     these. QRect also provides functions to move the rectangle relative
+///     to the various coordinates.
+/// 
+///     For example the left(), setLeft() and moveLeft() functions as an
+///     example: left() returns the x-coordinate of the rectangle's left
+///     edge, setLeft() sets the left edge of the rectangle to the given x
+///     coordinate (it may change the width, but will never change the
+///     rectangle's right edge) and moveLeft() moves the entire rectangle
+///     horizontally, leaving the rectangle's left edge at the given x
+///     coordinate and its size unchanged.
+/// 
+///     \image qrect-coordinates.png
+/// 
+///     Note that for historical reasons the values returned by the
+///     bottom() and right() functions deviate from the true bottom-right
+///     corner of the rectangle: The right() function returns \e { left()
+///     + width() - 1} and the bottom() function returns \e {top() +
+///     height() - 1}. The same is the case for the point returned by the
+///     bottomRight() convenience function. In addition, the x and y
+///     coordinate of the topRight() and bottomLeft() functions,
+///     respectively, contain the same deviation from the true right and
+///     bottom edges.
+/// 
+///     We recommend that you use x() + width() and y() + height() to find
+///     the true bottom-right corner, and avoid right() and
+///     bottom(). Another solution is to use QRectF: The QRectF class
+///     defines a rectangle in the plane using floating point accuracy for
+///     coordinates, and the QRectF::right() and QRectF::bottom()
+///     functions \e do return the right and bottom coordinates.
+/// 
+///     It is also possible to add offsets to this rectangle's coordinates
+///     using the adjust() function, as well as retrieve a new rectangle
+///     based on adjustments of the original one using the adjusted()
+///     function. If either of the width and height is negative, use the
+///     normalized() function to retrieve a rectangle where the corners
+///     are swapped.
+/// 
+///     In addition, QRect provides the getCoords() function which extracts
+///     the position of the rectangle's top-left and bottom-right corner,
+///     and the getRect() function which extracts the rectangle's top-left
+///     corner, width and height. Use the setCoords() and setRect()
+///     function to manipulate the rectangle's coordinates and dimensions
+///     in one go.
+/// 
+///     \section1 Constraints
+/// 
+///     QRect is limited to the minimum and maximum values for the \c int type.
+///     Operations on a QRect that could potentially result in values outside this
+///     range will result in undefined behavior.
+/// 
+///     \sa QRectF, QRegion
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Rect {
     is_null() -> bool,
@@ -7,6 +168,13 @@ struct Rect {
     top() -> i32,
     right() -> i32,
     bottom() -> i32,
+    ///     Returns a normalized rectangle; i.e., a rectangle that has a
+    ///     non-negative width and height.
+    /// 
+    ///     If width() < 0 the function swaps the left and right corners, and
+    ///     it swaps the top and bottom corners if height() < 0.
+    /// 
+    ///     \sa isValid(), isEmpty()
     normalized() -> Rect,
     x() -> i32,
     y() -> i32,
@@ -41,6 +209,13 @@ struct Rect {
     set_coords(x1: i32, y1: i32, x2: i32, y2: i32),
     get_coords(x1: *i32, y1: *i32, x2: *i32, y2: *i32),
     adjust(x1: i32, y1: i32, x2: i32, y2: i32),
+    ///     \fn void QRect::setCoords(int x1, int y1, int x2, int y2)
+    /// 
+    ///     Sets the coordinates of the rectangle's top-left corner to (\a x1,
+    ///     \a y1), and the coordinates of its bottom-right corner to (\a x2,
+    ///     \a y2).
+    /// 
+    ///     \sa getCoords(), setRect()
     adjusted(x1: i32, y1: i32, x2: i32, y2: i32) -> Rect,
     size() -> Size,
     width() -> i32,
@@ -48,12 +223,50 @@ struct Rect {
     set_width(w: i32),
     set_height(h: i32),
     set_size(s: &SizeType),
+    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle.
+    ///     otherwise returns \c false. If \a proper is true, this function only
+    ///     returns \c true if the \a rectangle is entirely inside this
+    ///     rectangle (not on the edge).
     contains(r: &RectType, proper: bool) -> bool,
+    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle.
+    ///     otherwise returns \c false. If \a proper is true, this function only
+    ///     returns \c true if the \a rectangle is entirely inside this
+    ///     rectangle (not on the edge).
     contains(p: &PointType, proper: bool) -> bool,
+    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle.
+    ///     otherwise returns \c false. If \a proper is true, this function only
+    ///     returns \c true if the \a rectangle is entirely inside this
+    ///     rectangle (not on the edge).
     contains(x: i32, y: i32) -> bool,
+    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
+    ///     \overload
+    /// 
+    ///     Returns \c true if the given \a rectangle is inside this rectangle.
+    ///     otherwise returns \c false. If \a proper is true, this function only
+    ///     returns \c true if the \a rectangle is entirely inside this
+    ///     rectangle (not on the edge).
     contains(x: i32, y: i32, proper: bool) -> bool,
     united(other: &RectType) -> Rect,
     intersected(other: &RectType) -> Rect,
+    ///     \fn bool QRect::intersects(const QRect &rectangle) const
+    /// 
+    ///     Returns \c true if this rectangle intersects with the given \a
+    ///     rectangle (i.e., there is at least one pixel that is within both
+    ///     rectangles), otherwise returns \c false.
+    /// 
+    ///     The intersection rectangle can be retrieved using the intersected()
+    ///     function.
+    /// 
+    ///     \sa contains()
     intersects(r: &RectType) -> bool,
     margins_added(margins: &MarginsType) -> Rect,
     margins_removed(margins: &MarginsType) -> Rect,

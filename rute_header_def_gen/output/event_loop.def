@@ -1,3 +1,13 @@
+///     \class QEventLoop
+///     \inmodule QtCore
+///     \brief The QEventLoop class provides a means of entering and leaving an event loop.
+/// 
+///     At any time, you can create a QEventLoop object and call exec()
+///     on it to start a local event loop. From within the event loop,
+///     calling exit() will force exec() to return.
+/// 
+///     \sa QAbstractEventDispatcher
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QEventLoop)]
 enum ProcessEventsFlag {
     AllEvents,
@@ -10,13 +20,84 @@ enum ProcessEventsFlag {
 }
 
 struct EventLoop : Object {
+    ///     Process pending events that match \a flags for a maximum of \a
+    ///     maxTime milliseconds, or until there are no more events to
+    ///     process, whichever is shorter.
+    ///     This function is especially useful if you have a long running
+    ///     operation and want to show its progress without allowing user
+    ///     input, i.e. by using the \l ExcludeUserInputEvents flag.
+    /// 
+    ///     \b{Notes:}
+    ///     \list
+    ///     \li This function does not process events continuously; it
+    ///        returns after all available events are processed.
+    ///     \li Specifying the \l WaitForMoreEvents flag makes no sense
+    ///        and will be ignored.
+    ///     \endlist
     process_events(flags: EventLoop::ProcessEventsFlags) -> bool,
+    ///     Process pending events that match \a flags for a maximum of \a
+    ///     maxTime milliseconds, or until there are no more events to
+    ///     process, whichever is shorter.
+    ///     This function is especially useful if you have a long running
+    ///     operation and want to show its progress without allowing user
+    ///     input, i.e. by using the \l ExcludeUserInputEvents flag.
+    /// 
+    ///     \b{Notes:}
+    ///     \list
+    ///     \li This function does not process events continuously; it
+    ///        returns after all available events are processed.
+    ///     \li Specifying the \l WaitForMoreEvents flag makes no sense
+    ///        and will be ignored.
+    ///     \endlist
     process_events(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
+    ///     Enters the main event loop and waits until exit() is called.
+    ///     Returns the value that was passed to exit().
+    /// 
+    ///     If \a flags are specified, only events of the types allowed by
+    ///     the \a flags will be processed.
+    /// 
+    ///     It is necessary to call this function to start event handling. The
+    ///     main event loop receives events from the window system and
+    ///     dispatches these to the application widgets.
+    /// 
+    ///     Generally speaking, no user interaction can take place before
+    ///     calling exec(). As a special case, modal widgets like QMessageBox
+    ///     can be used before calling exec(), because modal widgets
+    ///     use their own local event loop.
+    /// 
+    ///     To make your application perform idle processing (i.e. executing a
+    ///     special function whenever there are no pending events), use a
+    ///     QTimer with 0 timeout. More sophisticated idle processing schemes
+    ///     can be achieved using processEvents().
+    /// 
+    ///     \sa QCoreApplication::quit(), exit(), processEvents()
     exec(flags: EventLoop::ProcessEventsFlags) -> i32,
+    ///     Tells the event loop to exit with a return code.
+    /// 
+    ///     After this function has been called, the event loop returns from
+    ///     the call to exec(). The exec() function returns \a returnCode.
+    /// 
+    ///     By convention, a \a returnCode of 0 means success, and any non-zero
+    ///     value indicates an error.
+    /// 
+    ///     Note that unlike the C library function of the same name, this
+    ///     function \e does return to the caller -- it is event processing that
+    ///     stops.
+    /// 
+    ///     \sa QCoreApplication::quit(), quit(), exec()
     exit(return_code: i32),
     is_running() -> bool,
+    ///     Wakes up the event loop.
+    /// 
+    ///     \sa QAbstractEventDispatcher::wakeUp()
     wake_up(),
+    ///     \reimp
     [event] event(event: *EventType) -> bool,
+    ///     Tells the event loop to exit normally.
+    /// 
+    ///     Same as exit(0).
+    /// 
+    ///     \sa QCoreApplication::quit(), exit()
     quit(),
 }
 

@@ -1,3 +1,45 @@
+///     \class QTextFormat
+///     \reentrant
+/// 
+///     \brief The QTextFormat class provides formatting information for a
+///     QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     A QTextFormat is a generic class used for describing the format of
+///     parts of a QTextDocument. The derived classes QTextCharFormat,
+///     QTextBlockFormat, QTextListFormat, and QTextTableFormat are usually
+///     more useful, and describe the formatting that is applied to
+///     specific parts of the document.
+/// 
+///     A format has a \c FormatType which specifies the kinds of text item it
+///     can format; e.g. a block of text, a list, a table, etc. A format
+///     also has various properties (some specific to particular format
+///     types), as described by the Property enum. Every property has a
+///     corresponding Property.
+/// 
+///     The format type is given by type(), and the format can be tested
+///     with isCharFormat(), isBlockFormat(), isListFormat(),
+///     isTableFormat(), isFrameFormat(), and isImageFormat(). If the
+///     type is determined, it can be retrieved with toCharFormat(),
+///     toBlockFormat(), toListFormat(), toTableFormat(), toFrameFormat(),
+///     and toImageFormat().
+/// 
+///     A format's properties can be set with the setProperty() functions,
+///     and retrieved with boolProperty(), intProperty(), doubleProperty(),
+///     and stringProperty() as appropriate. All the property IDs used in
+///     the format can be retrieved with allPropertyIds(). One format can
+///     be merged into another using merge().
+/// 
+///     A format's object index can be set with setObjectIndex(), and
+///     retrieved with objectIndex(). These methods can be used to
+///     associate the format with a QTextObject. It is used to represent
+///     lists, frames, and tables inside the document.
+/// 
+///     \sa {Rich Text Processing}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextFormat)]
 enum FormatType {
     InvalidFormat,
@@ -115,26 +157,102 @@ enum PageBreakFlag {
 struct TextFormat {
     qt_check_for_qgadget_macro(),
     swap(other: &TextFormatType),
+    ///     Merges the \a other format with this format; where there are
+    ///     conflicts the \a other format takes precedence.
     merge(other: &TextFormatType),
     is_valid() -> bool,
     is_empty() -> bool,
+    ///     Returns the type of this format.
+    /// 
+    ///     \sa FormatType
     type() -> i32,
+    ///     Returns the index of the format object, or -1 if the format object is invalid.
+    /// 
+    ///     \sa setObjectIndex()
     object_index() -> i32,
+    ///     \fn void QTextFormat::setObjectIndex(int index)
+    /// 
+    ///     Sets the format object's object \a index.
+    /// 
+    ///     \sa objectIndex()
     set_object_index(object: i32),
+    ///     Returns the property specified by the given \a propertyId.
+    /// 
+    ///     \sa Property
     property(property_id: i32) -> Variant,
+    ///     Sets the value of the property given by \a propertyId to \a value.
+    /// 
+    ///     \sa lengthVectorProperty(), Property
     set_property(property_id: i32, value: &VariantType),
+    ///     Clears the value of the property given by \a propertyId
+    /// 
+    ///     \sa Property
     clear_property(property_id: i32),
+    ///     Returns \c true if the text format has a property with the given \a
+    ///     propertyId; otherwise returns \c false.
+    /// 
+    ///     \sa properties(), Property
     has_property(property_id: i32) -> bool,
+    ///     Returns the value of the property specified by \a propertyId. If the
+    ///     property isn't of QTextFormat::Bool type, false is returned instead.
+    /// 
+    ///     \sa setProperty(), intProperty(), doubleProperty(), stringProperty(), colorProperty(),
+    ///         lengthProperty(), lengthVectorProperty(), Property
     bool_property(property_id: i32) -> bool,
+    ///     Returns the value of the property specified by \a propertyId. If the
+    ///     property is not of QTextFormat::Integer type, 0 is returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), doubleProperty(), stringProperty(), colorProperty(),
+    ///         lengthProperty(), lengthVectorProperty(), Property
     int_property(property_id: i32) -> i32,
+    ///     Returns the value of the property specified by \a propertyId. If the
+    ///     property isn't of QVariant::Double or QMetaType::Float type, 0 is
+    ///     returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), stringProperty(), colorProperty(),
+    ///         lengthProperty(), lengthVectorProperty(), Property
     double_property(property_id: i32) -> f32,
+    ///     Returns the value of the property given by \a propertyId; if the
+    ///     property isn't of QVariant::Color type, an invalid color is
+    ///     returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), doubleProperty(),
+    ///         stringProperty(), lengthProperty(), lengthVectorProperty(), Property
     color_property(property_id: i32) -> Color,
+    ///     Returns the value of the property given by \a propertyId; if the
+    ///     property isn't of QVariant::Pen type, Qt::NoPen is
+    ///     returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), doubleProperty(), stringProperty(),
+    ///         lengthProperty(), lengthVectorProperty(), Property
     pen_property(property_id: i32) -> Pen,
+    ///     Returns the value of the property given by \a propertyId; if the
+    ///     property isn't of QVariant::Brush type, Qt::NoBrush is
+    ///     returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), doubleProperty(), stringProperty(),
+    ///         lengthProperty(), lengthVectorProperty(), Property
     brush_property(property_id: i32) -> Brush,
+    ///     Returns the value of the property given by \a propertyId.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), doubleProperty(), stringProperty(),
+    ///         colorProperty(), lengthVectorProperty(), Property
     length_property(property_id: i32) -> TextLength,
+    ///     Returns the value of the property given by \a propertyId. If the
+    ///     property isn't of QTextFormat::LengthVector type, an empty length
+    ///     vector is returned instead.
+    /// 
+    ///     \sa setProperty(), boolProperty(), intProperty(), doubleProperty(), stringProperty(),
+    ///         colorProperty(), lengthProperty(), Property
     length_vector_property(property_id: i32) -> [TextLength],
+    ///     Sets the value of the property given by \a propertyId to \a value.
+    /// 
+    ///     \sa lengthVectorProperty(), Property
     set_property(property_id: i32, lengths: [TextLengthType]),
+    ///     Returns a map with all properties of this text format.
     properties() -> Map<int,,
+    ///     \since 4.3
+    ///     Returns the number of properties stored in the format.
     property_count() -> i32,
     set_object_type(type: i32),
     object_type() -> i32,
@@ -145,12 +263,21 @@ struct TextFormat {
     is_image_format() -> bool,
     is_table_format() -> bool,
     is_table_cell_format() -> bool,
+    ///     Returns this format as a block format.
     to_block_format() -> TextBlockFormat,
+    ///     Returns this format as a character format.
     to_char_format() -> TextCharFormat,
+    ///     Returns this format as a list format.
     to_list_format() -> TextListFormat,
+    ///     Returns this format as a table format.
     to_table_format() -> TextTableFormat,
+    ///     Returns this format as a frame format.
     to_frame_format() -> TextFrameFormat,
+    ///     Returns this format as an image format.
     to_image_format() -> TextImageFormat,
+    ///     \since 4.4
+    /// 
+    ///     Returns this format as a table cell format.
     to_table_cell_format() -> TextTableCellFormat,
     set_layout_direction(direction: Rute::LayoutDirection),
     layout_direction() -> Rute::LayoutDirection,

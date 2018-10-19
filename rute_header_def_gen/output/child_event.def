@@ -1,3 +1,21 @@
+///     \class QChildEvent
+///     \inmodule QtCore
+///     \brief The QChildEvent class contains event parameters for child object
+///     events.
+/// 
+///     \ingroup events
+/// 
+///     Child events are sent immediately to objects when children are
+///     added or removed.
+/// 
+///     In both cases you can only rely on the child being a QObject (or,
+///     if QObject::isWidgetType() returns \c true, a QWidget). This is
+///     because in the QEvent::ChildAdded case the child is not yet fully
+///     constructed; in the QEvent::ChildRemoved case it might have
+///     already been destructed.
+/// 
+///     The handler for these events is QObject::childEvent().
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ChildEvent : Event {
     child() -> Object?,
     added() -> bool,

@@ -1,3 +1,152 @@
+///     \class QAbstractItemModel
+///     \inmodule QtCore
+/// 
+///     \brief The QAbstractItemModel class provides the abstract interface for
+///     item model classes.
+/// 
+///     \ingroup model-view
+/// 
+/// 
+///     The QAbstractItemModel class defines the standard interface that item
+///     models must use to be able to interoperate with other components in the
+///     model/view architecture. It is not supposed to be instantiated directly.
+///     Instead, you should subclass it to create new models.
+/// 
+///     The QAbstractItemModel class is one of the \l{Model/View Classes}
+///     and is part of Qt's \l{Model/View Programming}{model/view framework}. It
+///     can be used as the underlying data model for the item view elements in
+///     QML or the item view classes in the Qt Widgets module.
+/// 
+///     If you need a model to use with an item view such as QML's List View
+///     element or the C++ widgets QListView or QTableView, you should consider
+///     subclassing QAbstractListModel or QAbstractTableModel instead of this class.
+/// 
+///     The underlying data model is exposed to views and delegates as a hierarchy
+///     of tables. If you do not make use of the hierarchy, then the model is a
+///     simple table of rows and columns. Each item has a unique index specified by
+///     a QModelIndex.
+/// 
+///     \image modelindex-no-parent.png
+/// 
+///     Every item of data that can be accessed via a model has an associated model
+///     index. You can obtain this model index using the index() function. Each
+///     index may have a sibling() index; child items have a parent() index.
+/// 
+///     Each item has a number of data elements associated with it and they can be
+///     retrieved by specifying a role (see \l Qt::ItemDataRole) to the model's
+///     data() function. Data for all available roles can be obtained at the same
+///     time using the itemData() function.
+/// 
+///     Data for each role is set using a particular \l Qt::ItemDataRole. Data for
+///     individual roles are set individually with setData(), or they can be set
+///     for all roles with setItemData().
+/// 
+///     Items can be queried with flags() (see \l Qt::ItemFlag) to see if they can
+///     be selected, dragged, or manipulated in other ways.
+/// 
+///     If an item has child objects, hasChildren() returns \c{true} for the
+///     corresponding index.
+/// 
+///     The model has a rowCount() and a columnCount() for each level of the
+///     hierarchy. Rows and columns can be inserted and removed with insertRows(),
+///     insertColumns(), removeRows(), and removeColumns().
+/// 
+///     The model emits signals to indicate changes. For example, dataChanged() is
+///     emitted whenever items of data made available by the model are changed.
+///     Changes to the headers supplied by the model cause headerDataChanged() to
+///     be emitted. If the structure of the underlying data changes, the model can
+///     emit layoutChanged() to indicate to any attached views that they should
+///     redisplay any items shown, taking the new structure into account.
+/// 
+///     The items available through the model can be searched for particular data
+///     using the match() function.
+/// 
+///     To sort the model, you can use sort().
+/// 
+/// 
+///     \section1 Subclassing
+/// 
+///     \note Some general guidelines for subclassing models are available in the
+///     \l{Model Subclassing Reference}.
+/// 
+///     When subclassing QAbstractItemModel, at the very least you must implement
+///     index(), parent(), rowCount(), columnCount(), and data(). These functions
+///     are used in all read-only models, and form the basis of editable models.
+/// 
+///     You can also reimplement hasChildren() to provide special behavior for
+///     models where the implementation of rowCount() is expensive. This makes it
+///     possible for models to restrict the amount of data requested by views, and
+///     can be used as a way to implement lazy population of model data.
+/// 
+///     To enable editing in your model, you must also implement setData(), and
+///     reimplement flags() to ensure that \c ItemIsEditable is returned.  You can
+///     also reimplement headerData() and setHeaderData() to control the way the
+///     headers for your model are presented.
+/// 
+///     The dataChanged() and headerDataChanged() signals must be emitted
+///     explicitly when reimplementing the setData() and setHeaderData() functions,
+///     respectively.
+/// 
+///     Custom models need to create model indexes for other components to use. To
+///     do this, call createIndex() with suitable row and column numbers for the
+///     item, and an identifier for it, either as a pointer or as an integer value.
+///     The combination of these values must be unique for each item. Custom models
+///     typically use these unique identifiers in other reimplemented functions to
+///     retrieve item data and access information about the item's parents and
+///     children. See the \l{Simple Tree Model Example} for more information about
+///     unique identifiers.
+/// 
+///     It is not necessary to support every role defined in Qt::ItemDataRole.
+///     Depending on the type of data contained within a model, it may only be
+///     useful to implement the data() function to return valid information for
+///     some of the more common roles. Most models provide at least a textual
+///     representation of item data for the Qt::DisplayRole, and well-behaved
+///     models should also provide valid information for the Qt::ToolTipRole and
+///     Qt::WhatsThisRole. Supporting these roles enables models to be used with
+///     standard Qt views. However, for some models that handle highly-specialized
+///     data, it may be appropriate to provide data only for user-defined roles.
+/// 
+///     Models that provide interfaces to resizable data structures can provide
+///     implementations of insertRows(), removeRows(), insertColumns(),and
+///     removeColumns(). When implementing these functions, it is important to
+///     notify any connected views about changes to the model's dimensions both
+///     \e before and \e after they occur:
+/// 
+///     \list
+///         \li An insertRows() implementation must call beginInsertRows() \e before
+///            inserting new rows into the data structure, and endInsertRows()
+///            \e{immediately afterwards}.
+///         \li An insertColumns() implementation must call beginInsertColumns()
+///            \e before inserting new columns into the data structure, and
+///            endInsertColumns() \e{immediately afterwards}.
+///         \li A removeRows() implementation must call beginRemoveRows() \e before
+///            the rows are removed from the data structure, and endRemoveRows()
+///            \e{immediately afterwards}.
+///         \li A removeColumns() implementation must call beginRemoveColumns()
+///            \e before the columns are removed from the data structure, and
+///            endRemoveColumns() \e{immediately afterwards}.
+///     \endlist
+/// 
+///     The \e private signals that these functions emit give attached components
+///     the chance to take action before any data becomes unavailable. The
+///     encapsulation of the insert and remove operations with these begin and end
+///     functions also enables the model to manage \l{QPersistentModelIndex}
+///     {persistent model indexes} correctly. \b{If you want selections to be
+///     handled properly, you must ensure that you call these functions.} If you
+///     insert or remove an item with children, you do not need to call these
+///     functions for the child items. In other words, the parent item will take
+///     care of its child items.
+/// 
+///     To create models that populate incrementally, you can reimplement
+///     fetchMore() and canFetchMore(). If the reimplementation of fetchMore() adds
+///     rows to the model, \l{QAbstractItemModel::}{beginInsertRows()} and
+///     \l{QAbstractItemModel::}{endInsertRows()} must be called.
+/// 
+///     \sa {Model Classes}, {Model Subclassing Reference}, QModelIndex,
+///         QAbstractItemView, {Using drag and drop with item views},
+///         {Simple DOM Model Example}, {Simple Tree Model Example},
+///         {Editable Tree Model Example}, {Fetch More Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QAbstractItemModel)]
 enum LayoutChangeHint {
     NoLayoutChangeHint,
@@ -14,30 +163,233 @@ enum CheckIndexOption {
 }
 
 struct AbstractItemModel : Object {
+    ///     Returns \c{true} if the model returns a valid QModelIndex for \a row and
+    ///     \a column with \a parent, otherwise returns \c{false}.
     has_index(row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
     [event] parent(child: &ModelIndexType) -> ModelIndex,
+    ///     \fn QModelIndex QAbstractItemModel::sibling(int row, int column, const QModelIndex &index) const
+    /// 
+    ///     Returns the sibling at \a row and \a column for the item at \a index, or an
+    ///     invalid QModelIndex if there is no sibling at that location.
+    /// 
+    ///     sibling() is just a convenience function that finds the item's parent, and
+    ///     uses it to retrieve the index of the child item in the specified \a row and
+    ///     \a column.
+    /// 
+    ///     This method can optionally be overridden for implementation-specific optimization.
+    /// 
+    ///     \sa index(), QModelIndex::row(), QModelIndex::column()
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
     [event] row_count(parent: &ModelIndexType) -> i32,
     [event] column_count(parent: &ModelIndexType) -> i32,
+    ///     Returns \c{true} if \a parent has any children; otherwise returns \c{false}.
+    /// 
+    ///     Use rowCount() on the parent to find out the number of children.
+    /// 
+    ///     Note that it is undefined behavior to report that a particular index hasChildren
+    ///     with this method if the same index has the flag Qt::ItemNeverHasChildren set.
+    /// 
+    ///     \sa parent(), index()
     [event] has_children(parent: &ModelIndexType) -> bool,
     [event] data(index: &ModelIndexType, role: i32) -> Variant,
+    ///     Sets the \a role data for the item at \a index to \a value.
+    /// 
+    ///     Returns \c{true} if successful; otherwise returns \c{false}.
+    /// 
+    ///     The dataChanged() signal should be emitted if the data was successfully
+    ///     set.
+    /// 
+    ///     The base class implementation returns \c{false}. This function and data() must
+    ///     be reimplemented for editable models.
+    /// 
+    ///     \sa Qt::ItemDataRole, data(), itemData()
     [event] set_data(index: &ModelIndexType, value: &VariantType, role: i32) -> bool,
+    ///     Returns the data for the given \a role and \a section in the header with
+    ///     the specified \a orientation.
+    /// 
+    ///     For horizontal headers, the section number corresponds to the column
+    ///     number. Similarly, for vertical headers, the section number corresponds to
+    ///     the row number.
+    /// 
+    ///     \sa Qt::ItemDataRole, setHeaderData(), QHeaderView
     [event] header_data(section: i32, orientation: Rute::Orientation, role: i32) -> Variant,
     [event] set_header_data(section: i32, orientation: Rute::Orientation, value: &VariantType, role: i32) -> bool,
+    ///     Returns a map with values for all predefined roles in the model for the
+    ///     item at the given \a index.
+    /// 
+    ///     Reimplement this function if you want to extend the default behavior of
+    ///     this function to include custom roles in the map.
+    /// 
+    ///     \sa Qt::ItemDataRole, data()
     [event] item_data(index: &ModelIndexType) -> Map<int,,
+    ///     Sets the role data for the item at \a index to the associated value in
+    ///     \a roles, for every Qt::ItemDataRole.
+    /// 
+    ///     Returns \c{true} if successful; otherwise returns \c{false}.
+    /// 
+    ///     Roles that are not in \a roles will not be modified.
+    /// 
+    ///     \sa setData(), data(), itemData()
     [event] set_item_data(index: &ModelIndexType, roles: &Map<int,Type) -> bool,
+    ///     Returns the list of allowed MIME types. By default, the built-in
+    ///     models and views use an internal MIME type:
+    ///     \c{application/x-qabstractitemmodeldatalist}.
+    /// 
+    ///     When implementing drag and drop support in a custom model, if you
+    ///     will return data in formats other than the default internal MIME
+    ///     type, reimplement this function to return your list of MIME types.
+    /// 
+    ///     If you reimplement this function in your custom model, you must
+    ///     also reimplement the member functions that call it: mimeData() and
+    ///     dropMimeData().
+    /// 
+    ///     \sa mimeData(), dropMimeData()
     [event] mime_types() -> [String],
+    ///     Returns an object that contains serialized items of data corresponding to
+    ///     the list of \a indexes specified. The format used to describe the encoded
+    ///     data is obtained from the mimeTypes() function. This default implementation
+    ///     uses the default MIME type returned by the default implementation of
+    ///     mimeTypes(). If you reimplement mimeTypes() in your custom model to return
+    ///     more MIME types, reimplement this function to make use of them.
+    /// 
+    ///     If the list of \a indexes is empty, or there are no supported MIME types, 0
+    ///     is returned rather than a serialized empty list.
+    /// 
+    ///     \sa mimeTypes(), dropMimeData()
     [event] mime_data(indexes: &[ModelIndex]) -> MimeData?,
     [event] can_drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Returns the drop actions supported by this model.
+    /// 
+    ///     The default implementation returns Qt::CopyAction. Reimplement this
+    ///     function if you wish to support additional actions. You must also
+    ///     reimplement the dropMimeData() function to handle the additional
+    ///     operations.
+    /// 
+    ///     \sa dropMimeData(), Qt::DropActions, {Using drag and drop with item
+    ///     views}
     [event] supported_drop_actions() -> Rute::DropActions,
+    ///     Returns the actions supported by the data in this model.
+    /// 
+    ///     The default implementation returns supportedDropActions(). Reimplement
+    ///     this function if you wish to support additional actions.
+    /// 
+    ///     supportedDragActions() is used by QAbstractItemView::startDrag() as the
+    ///     default values when a drag occurs.
+    /// 
+    ///     \sa Qt::DropActions, {Using drag and drop with item views}
     [event] supported_drag_actions() -> Rute::DropActions,
+    ///     \note The base class implementation of this function does nothing and
+    ///     returns \c{false}.
+    /// 
+    ///     On models that support this, inserts \a count rows into the model before
+    ///     the given \a row. Items in the new row will be children of the item
+    ///     represented by the \a parent model index.
+    /// 
+    ///     If \a row is 0, the rows are prepended to any existing rows in the parent.
+    /// 
+    ///     If \a row is rowCount(), the rows are appended to any existing rows in the
+    ///     parent.
+    /// 
+    ///     If \a parent has no children, a single column with \a count rows is
+    ///     inserted.
+    /// 
+    ///     Returns \c{true} if the rows were successfully inserted; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support insertions. Alternatively, you can provide your own API for
+    ///     altering the data. In either case, you will need to call
+    ///     beginInsertRows() and endInsertRows() to notify other components that the
+    ///     model has changed.
+    /// 
+    ///     \sa insertColumns(), removeRows(), beginInsertRows(), endInsertRows()
     [event] insert_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///     On models that support this, inserts \a count new columns into the model
+    ///     before the given \a column. The items in each new column will be children
+    ///     of the item represented by the \a parent model index.
+    /// 
+    ///     If \a column is 0, the columns are prepended to any existing columns.
+    /// 
+    ///     If \a column is columnCount(), the columns are appended to any existing
+    ///     columns.
+    /// 
+    ///     If \a parent has no children, a single row with \a count columns is
+    ///     inserted.
+    /// 
+    ///     Returns \c{true} if the columns were successfully inserted; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     The base class implementation does nothing and returns \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support insertions. Alternatively, you can provide your own API for
+    ///     altering the data.
+    /// 
+    ///     \sa insertRows(), removeColumns(), beginInsertColumns(), endInsertColumns()
     [event] insert_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///     On models that support this, removes \a count rows starting with the given
+    ///     \a row under parent \a parent from the model.
+    /// 
+    ///     Returns \c{true} if the rows were successfully removed; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     The base class implementation does nothing and returns \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support removing. Alternatively, you can provide your own API for
+    ///     altering the data.
+    /// 
+    ///     \sa removeRow(), removeColumns(), insertColumns(), beginRemoveRows(),
+    ///         endRemoveRows()
     [event] remove_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///     On models that support this, removes \a count columns starting with the
+    ///     given \a column under parent \a parent from the model.
+    /// 
+    ///     Returns \c{true} if the columns were successfully removed; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     The base class implementation does nothing and returns \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support removing. Alternatively, you can provide your own API for
+    ///     altering the data.
+    /// 
+    ///     \sa removeColumn(), removeRows(), insertColumns(), beginRemoveColumns(),
+    ///         endRemoveColumns()
     [event] remove_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
+    ///     On models that support this, moves \a count rows starting with the given
+    ///     \a sourceRow under parent \a sourceParent to row \a destinationChild under
+    ///     parent \a destinationParent.
+    /// 
+    ///     Returns \c{true} if the rows were successfully moved; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     The base class implementation does nothing and returns \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support moving. Alternatively, you can provide your own API for
+    ///     altering the data.
+    /// 
+    ///     \sa beginMoveRows(), endMoveRows()
     [event] move_rows(source_parent: &ModelIndexType, source_row: i32, count: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
+    ///     On models that support this, moves \a count columns starting with the given
+    ///     \a sourceColumn under parent \a sourceParent to column \a destinationChild under
+    ///     parent \a destinationParent.
+    /// 
+    ///     Returns \c{true} if the columns were successfully moved; otherwise returns
+    ///     \c{false}.
+    /// 
+    ///     The base class implementation does nothing and returns \c{false}.
+    /// 
+    ///     If you implement your own model, you can reimplement this function if you
+    ///     want to support moving. Alternatively, you can provide your own API for
+    ///     altering the data.
+    /// 
+    ///     \sa beginMoveColumns(), endMoveColumns()
     [event] move_columns(source_parent: &ModelIndexType, source_column: i32, count: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     insert_row(row: i32, parent: &ModelIndexType) -> bool,
     insert_column(column: i32, parent: &ModelIndexType) -> bool,
@@ -45,14 +397,130 @@ struct AbstractItemModel : Object {
     remove_column(column: i32, parent: &ModelIndexType) -> bool,
     move_row(source_parent: &ModelIndexType, source_row: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     move_column(source_parent: &ModelIndexType, source_column: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
+    ///     Fetches any available data for the items with the parent specified by the
+    ///     \a parent index.
+    /// 
+    ///     Reimplement this if you are populating your model incrementally.
+    /// 
+    ///     The default implementation does nothing.
+    /// 
+    ///     \sa canFetchMore()
     [event] fetch_more(parent: &ModelIndexType),
+    ///     Returns \c{true} if there is more data available for \a parent; otherwise
+    ///     returns \c{false}.
+    /// 
+    ///     The default implementation always returns \c{false}.
+    /// 
+    ///     If canFetchMore() returns \c true, the fetchMore() function should
+    ///     be called. This is the behavior of QAbstractItemView, for example.
+    /// 
+    ///     \sa fetchMore()
     [event] can_fetch_more(parent: &ModelIndexType) -> bool,
+    ///     Returns the item flags for the given \a index.
+    /// 
+    ///     The base class implementation returns a combination of flags that enables
+    ///     the item (\c ItemIsEnabled) and allows it to be selected
+    ///     (\c ItemIsSelectable).
+    /// 
+    ///     \sa Qt::ItemFlags
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
+    ///     Sorts the model by \a column in the given \a order.
+    /// 
+    ///     The base class implementation does nothing.
     [event] sort(column: i32, order: Rute::SortOrder),
+    ///     Returns a model index for the buddy of the item represented by \a index.
+    ///     When the user wants to edit an item, the view will call this function to
+    ///     check whether another item in the model should be edited instead. Then, the
+    ///     view will construct a delegate using the model index returned by the buddy
+    ///     item.
+    /// 
+    ///     The default implementation of this function has each item as its own buddy.
     [event] buddy(index: &ModelIndexType) -> ModelIndex,
     [event] match(start: &ModelIndexType, role: i32, value: &VariantType, hits: i32, flags: Rute::MatchFlags) -> [ModelIndex],
+    ///     Returns the row and column span of the item represented by \a index.
+    /// 
+    ///     \note Currently, span is not used.
     [event] span(index: &ModelIndexType) -> Size,
+    ///     \since 4.6
+    /// 
+    ///     Returns the model's role names.
+    /// 
+    ///     The default role names set by Qt are:
+    /// 
+    ///     \table
+    ///     \header
+    ///     \li Qt Role
+    ///     \li QML Role Name
+    ///     \row
+    ///     \li Qt::DisplayRole
+    ///     \li display
+    ///     \row
+    ///     \li Qt::DecorationRole
+    ///     \li decoration
+    ///     \row
+    ///     \li Qt::EditRole
+    ///     \li edit
+    ///     \row
+    ///     \li Qt::ToolTipRole
+    ///     \li toolTip
+    ///     \row
+    ///     \li Qt::StatusTipRole
+    ///     \li statusTip
+    ///     \row
+    ///     \li Qt::WhatsThisRole
+    ///     \li whatsThis
+    ///     \endtable
     [event] role_names() -> Hash<int,,
+    ///     \since 5.11
+    /// 
+    ///     This function checks whether \a index is a legal model index for
+    ///     this model. A legal model index is either an invalid model index, or a
+    ///     valid model index for which all the following holds:
+    /// 
+    ///     \list
+    /// 
+    ///     \li the index' model is \c{this};
+    ///     \li the index' row is greater or equal than zero;
+    ///     \li the index' row is less than the row count for the index' parent;
+    ///     \li the index' column is greater or equal than zero;
+    ///     \li the index' column is less than the column count for the index' parent.
+    /// 
+    ///     \endlist
+    /// 
+    ///     The \a options argument may change some of these checks. If \a options
+    ///     contains \c{IndexIsValid}, then \a index must be a valid
+    ///     index; this is useful when reimplementing functions such as \l{data()} or
+    ///     \l{setData()}, which expect valid indexes.
+    /// 
+    ///     If \a options contains \c{DoNotUseParent}, then the
+    ///     checks that would call \l{parent()} are omitted; this allows calling this
+    ///     function from a \l{parent()} reimplementation (otherwise, this would result
+    ///     in endless recursion and a crash).
+    /// 
+    ///     If \a options does not contain \c{DoNotUseParent}, and it
+    ///     contains \c{ParentIsInvalid}, then an additional check is
+    ///     performed: the parent index is checked for not being valid. This is useful
+    ///     when implementing flat models such as lists or tables, where no model index
+    ///     should have a valid parent index.
+    /// 
+    ///     This function returns true if all the checks succeeded, and false otherwise.
+    ///     This allows to use the function in \l{Q_ASSERT} and similar other debugging
+    ///     mechanisms. If some check failed, a warning message will be printed in the
+    ///     \c{qt.core.qabstractitemmodel.checkindex} logging category, containing
+    ///     some information that may be useful for debugging the failure.
+    /// 
+    ///     \note This function is a debugging helper for implementing your own item
+    ///     models. When developing complex models, as well as when building
+    ///     complicated model hierarchies (e.g. using proxy models), it is useful to
+    ///     call this function in order to catch bugs relative to illegal model indices
+    ///     (as defined above) accidentally passed to some QAbstractItemModel API.
+    /// 
+    ///     \warning Note that it's undefined behavior to pass illegal indices to item
+    ///     models, so applications must refrain from doing so, and not rely on any
+    ///     "defensive" programming that item models could employ to handle illegal
+    ///     indexes gracefully.
+    /// 
+    ///     \sa QModelIndex
     check_index(index: &ModelIndexType, options: AbstractItemModel::CheckIndexOptions) -> bool,
     [signal] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
     [signal] header_data_changed(orientation: Rute::Orientation, first: i32, last: i32),
@@ -72,29 +540,390 @@ struct AbstractItemModel : Object {
     [signal] rows_moved(parent: &ModelIndexType, start: i32, end: i32, destination: &ModelIndexType, row: i32, arg0: AbstractItemModel::QPrivateSignal),
     [signal] columns_about_to_be_moved(source_parent: &ModelIndexType, source_start: i32, source_end: i32, destination_parent: &ModelIndexType, destination_column: i32, arg0: AbstractItemModel::QPrivateSignal),
     [signal] columns_moved(parent: &ModelIndexType, start: i32, end: i32, destination: &ModelIndexType, column: i32, arg0: AbstractItemModel::QPrivateSignal),
+    ///     Lets the model know that it should submit cached information to permanent
+    ///     storage. This function is typically used for row editing.
+    /// 
+    ///     Returns \c{true} if there is no error; otherwise returns \c{false}.
+    /// 
+    ///     \sa revert()
     [event] submit() -> bool,
+    ///     Lets the model know that it should discard cached information. This
+    ///     function is typically used for row editing.
+    /// 
+    ///     \sa submit()
     [event] revert(),
+    ///     \since 4.8
+    /// 
+    ///     This slot is called just after the internal data of a model is cleared
+    ///     while it is being reset.
+    /// 
+    ///     This slot is provided the convenience of subclasses of concrete proxy
+    ///     models, such as subclasses of QSortFilterProxyModel which maintain extra
+    ///     data.
+    /// 
+    ///     \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 12
+    /// 
+    ///     \note Due to a mistake, this slot is missing in Qt 5.0.
+    /// 
+    ///     \sa modelAboutToBeReset(), modelReset()
     reset_internal_data(),
     create_index(row: i32, column: i32, data: *void) -> ModelIndex,
     create_index(row: i32, column: i32, id: quintptr) -> ModelIndex,
+    ///   \internal
     encode_data(indexes: &[ModelIndex], stream: &DataStreamType),
     decode_data(row: i32, column: i32, parent: &ModelIndexType, stream: &DataStreamType) -> bool,
+    ///     Begins a row insertion operation.
+    /// 
+    ///     When reimplementing insertRows() in a subclass, you must call this function
+    ///     \e before inserting data into the model's underlying data store.
+    /// 
+    ///     The \a parent index corresponds to the parent into which the new rows are
+    ///     inserted; \a first and \a last are the row numbers that the new rows will
+    ///     have after they have been inserted.
+    /// 
+    ///     \table 80%
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-insert-rows.png Inserting rows
+    ///         \li  Specify the first and last row numbers for the span of rows you
+    ///             want to insert into an item in a model.
+    /// 
+    ///             For example, as shown in the diagram, we insert three rows before
+    ///             row 2, so \a first is 2 and \a last is 4:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 0
+    /// 
+    ///             This inserts the three new rows as rows 2, 3, and 4.
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-append-rows.png Appending rows
+    ///         \li  To append rows, insert them after the last row.
+    /// 
+    ///             For example, as shown in the diagram, we append two rows to a
+    ///             collection of 4 existing rows (ending in row 3), so \a first is 4
+    ///             and \a last is 5:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 1
+    /// 
+    ///             This appends the two new rows as rows 4 and 5.
+    ///     \endtable
+    /// 
+    ///     \note This function emits the rowsAboutToBeInserted() signal which
+    ///     connected views (or proxies) must handle before the data is inserted.
+    ///     Otherwise, the views may end up in an invalid state.
+    ///     \sa endInsertRows()
     begin_insert_rows(parent: &ModelIndexType, first: i32, last: i32),
+    ///     Ends a row insertion operation.
+    /// 
+    ///     When reimplementing insertRows() in a subclass, you must call this function
+    ///     \e after inserting data into the model's underlying data store.
+    /// 
+    ///     \sa beginInsertRows()
     end_insert_rows(),
+    ///     Begins a row removal operation.
+    /// 
+    ///     When reimplementing removeRows() in a subclass, you must call this
+    ///     function \e before removing data from the model's underlying data store.
+    /// 
+    ///     The \a parent index corresponds to the parent from which the new rows are
+    ///     removed; \a first and \a last are the row numbers of the rows to be
+    ///     removed.
+    /// 
+    ///     \table 80%
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-remove-rows.png Removing rows
+    ///         \li  Specify the first and last row numbers for the span of rows you
+    ///             want to remove from an item in a model.
+    /// 
+    ///             For example, as shown in the diagram, we remove the two rows from
+    ///             row 2 to row 3, so \a first is 2 and \a last is 3:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 2
+    ///     \endtable
+    /// 
+    ///     \note This function emits the rowsAboutToBeRemoved() signal which connected
+    ///     views (or proxies) must handle before the data is removed. Otherwise, the
+    ///     views may end up in an invalid state.
+    /// 
+    ///     \sa endRemoveRows()
     begin_remove_rows(parent: &ModelIndexType, first: i32, last: i32),
+    ///     Ends a row removal operation.
+    /// 
+    ///     When reimplementing removeRows() in a subclass, you must call this function
+    ///     \e after removing data from the model's underlying data store.
+    /// 
+    ///     \sa beginRemoveRows()
     end_remove_rows(),
+    ///     \since 4.6
+    /// 
+    ///     Begins a row move operation.
+    /// 
+    ///     When reimplementing a subclass, this method simplifies moving
+    ///     entities in your model. This method is responsible for moving
+    ///     persistent indexes in the model, which you would otherwise be
+    ///     required to do yourself. Using beginMoveRows and endMoveRows
+    ///     is an alternative to emitting layoutAboutToBeChanged and
+    ///     layoutChanged directly along with changePersistentIndex.
+    /// 
+    ///     The \a sourceParent index corresponds to the parent from which the
+    ///     rows are moved; \a sourceFirst and \a sourceLast are the first and last
+    ///     row numbers of the rows to be moved. The \a destinationParent index
+    ///     corresponds to the parent into which those rows are moved. The \a
+    ///     destinationChild is the row to which the rows will be moved.  That
+    ///     is, the index at row \a sourceFirst in \a sourceParent will become
+    ///     row \a destinationChild in \a destinationParent, followed by all other
+    ///     rows up to \a sourceLast.
+    /// 
+    ///     However, when moving rows down in the same parent (\a sourceParent
+    ///     and \a destinationParent are equal), the rows will be placed before the
+    ///     \a destinationChild index. That is, if you wish to move rows 0 and 1 so
+    ///     they will become rows 1 and 2, \a destinationChild should be 3. In this
+    ///     case, the new index for the source row \c i (which is between
+    ///     \a sourceFirst and \a sourceLast) is equal to
+    ///     \c {(destinationChild-sourceLast-1+i)}.
+    /// 
+    ///     Note that if \a sourceParent and \a destinationParent are the same,
+    ///     you must ensure that the \a destinationChild is not within the range
+    ///     of \a sourceFirst and \a sourceLast + 1.  You must also ensure that you
+    ///     do not attempt to move a row to one of its own children or ancestors.
+    ///     This method returns \c{false} if either condition is true, in which case you
+    ///     should abort your move operation.
+    /// 
+    ///     \table 80%
+    ///     \row
+    ///         \li  \inlineimage modelview-move-rows-1.png Moving rows to another parent
+    ///         \li  Specify the first and last row numbers for the span of rows in
+    ///             the source parent you want to move in the model. Also specify
+    ///             the row in the destination parent to move the span to.
+    /// 
+    ///             For example, as shown in the diagram, we move three rows from
+    ///             row 2 to 4 in the source, so \a sourceFirst is 2 and \a sourceLast is 4.
+    ///             We move those items to above row 2 in the destination, so \a destinationChild is 2.
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 6
+    /// 
+    ///             This moves the three rows rows 2, 3, and 4 in the source to become 2, 3 and 4 in
+    ///             the destination. Other affected siblings are displaced accordingly.
+    ///     \row
+    ///         \li  \inlineimage modelview-move-rows-2.png Moving rows to append to another parent
+    ///         \li  To append rows to another parent, move them to after the last row.
+    /// 
+    ///             For example, as shown in the diagram, we move three rows to a
+    ///             collection of 6 existing rows (ending in row 5), so \a destinationChild is 6:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 7
+    /// 
+    ///             This moves the target rows to the end of the target parent as 6, 7 and 8.
+    ///     \row
+    ///         \li  \inlineimage modelview-move-rows-3.png Moving rows in the same parent up
+    ///         \li  To move rows within the same parent, specify the row to move them to.
+    /// 
+    ///             For example, as shown in the diagram, we move one item from row 2 to row 0,
+    ///             so \a sourceFirst and \a sourceLast are 2 and \a destinationChild is 0.
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 8
+    /// 
+    ///             Note that other rows may be displaced accordingly. Note also that when moving
+    ///             items within the same parent you should not attempt invalid or no-op moves. In
+    ///             the above example, item 2 is at row 2 before the move, so it can not be moved
+    ///             to row 2 (where it is already) or row 3 (no-op as row 3 means above row 3, where
+    ///             it is already)
+    /// 
+    ///     \row
+    ///         \li  \inlineimage modelview-move-rows-4.png Moving rows in the same parent down
+    ///         \li  To move rows within the same parent, specify the row to move them to.
+    /// 
+    ///             For example, as shown in the diagram, we move one item from row 2 to row 4,
+    ///             so \a sourceFirst and \a sourceLast are 2 and \a destinationChild is 4.
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 9
+    /// 
+    ///             Note that other rows may be displaced accordingly.
+    ///     \endtable
+    /// 
+    ///     \sa endMoveRows()
     begin_move_rows(source_parent: &ModelIndexType, source_first: i32, source_last: i32, destination_parent: &ModelIndexType, destination_row: i32) -> bool,
+    ///     Ends a row move operation.
+    /// 
+    ///     When implementing a subclass, you must call this
+    ///     function \e after moving data within the model's underlying data
+    ///     store.
+    /// 
+    ///     \sa beginMoveRows()
+    /// 
+    ///     \since 4.6
     end_move_rows(),
+    ///     Begins a column insertion operation.
+    /// 
+    ///     When reimplementing insertColumns() in a subclass, you must call this
+    ///     function \e before inserting data into the model's underlying data store.
+    /// 
+    ///     The \a parent index corresponds to the parent into which the new columns
+    ///     are inserted; \a first and \a last are the column numbers of the new
+    ///     columns will have after they have been inserted.
+    /// 
+    ///     \table 80%
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-insert-columns.png Inserting columns
+    ///         \li  Specify the first and last column numbers for the span of columns
+    ///             you want to insert into an item in a model.
+    /// 
+    ///             For example, as shown in the diagram, we insert three columns
+    ///             before column 4, so \a first is 4 and \a last is 6:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 3
+    /// 
+    ///             This inserts the three new columns as columns 4, 5, and 6.
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-append-columns.png Appending columns
+    ///         \li  To append columns, insert them after the last column.
+    /// 
+    ///             For example, as shown in the diagram, we append three columns to a
+    ///             collection of six existing columns (ending in column 5), so
+    ///             \a first is 6 and \a last is 8:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 4
+    /// 
+    ///             This appends the two new columns as columns 6, 7, and 8.
+    ///     \endtable
+    /// 
+    ///     \note This function emits the columnsAboutToBeInserted() signal which
+    ///     connected views (or proxies) must handle before the data is inserted.
+    ///     Otherwise, the views may end up in an invalid state.
+    /// 
+    ///     \sa endInsertColumns()
     begin_insert_columns(parent: &ModelIndexType, first: i32, last: i32),
+    ///     Ends a column insertion operation.
+    /// 
+    ///     When reimplementing insertColumns() in a subclass, you must call this
+    ///     function \e after inserting data into the model's underlying data
+    ///     store.
+    /// 
+    ///     \sa beginInsertColumns()
     end_insert_columns(),
+    ///     Begins a column removal operation.
+    /// 
+    ///     When reimplementing removeColumns() in a subclass, you must call this
+    ///     function \e before removing data from the model's underlying data store.
+    /// 
+    ///     The \a parent index corresponds to the parent from which the new columns
+    ///     are removed; \a first and \a last are the column numbers of the first and
+    ///     last columns to be removed.
+    /// 
+    ///     \table 80%
+    ///     \row
+    ///         \li  \inlineimage modelview-begin-remove-columns.png Removing columns
+    ///         \li  Specify the first and last column numbers for the span of columns
+    ///             you want to remove from an item in a model.
+    /// 
+    ///             For example, as shown in the diagram, we remove the three columns
+    ///             from column 4 to column 6, so \a first is 4 and \a last is 6:
+    /// 
+    ///             \snippet code/src_corelib_kernel_qabstractitemmodel.cpp 5
+    ///     \endtable
+    /// 
+    ///     \note This function emits the columnsAboutToBeRemoved() signal which
+    ///     connected views (or proxies) must handle before the data is removed.
+    ///     Otherwise, the views may end up in an invalid state.
+    /// 
+    ///     \sa endRemoveColumns()
     begin_remove_columns(parent: &ModelIndexType, first: i32, last: i32),
+    ///     Ends a column removal operation.
+    /// 
+    ///     When reimplementing removeColumns() in a subclass, you must call this
+    ///     function \e after removing data from the model's underlying data store.
+    /// 
+    ///     \sa beginRemoveColumns()
     end_remove_columns(),
+    ///     Begins a column move operation.
+    /// 
+    ///     When reimplementing a subclass, this method simplifies moving
+    ///     entities in your model. This method is responsible for moving
+    ///     persistent indexes in the model, which you would otherwise be
+    ///     required to do yourself. Using beginMoveColumns and endMoveColumns
+    ///     is an alternative to emitting layoutAboutToBeChanged and
+    ///     layoutChanged directly along with changePersistentIndex.
+    /// 
+    ///     The \a sourceParent index corresponds to the parent from which the
+    ///     columns are moved; \a sourceFirst and \a sourceLast are the first and last
+    ///     column numbers of the columns to be moved. The \a destinationParent index
+    ///     corresponds to the parent into which those columns are moved. The \a
+    ///     destinationChild is the column to which the columns will be moved.  That
+    ///     is, the index at column \a sourceFirst in \a sourceParent will become
+    ///     column \a destinationChild in \a destinationParent, followed by all other
+    ///     columns up to \a sourceLast.
+    /// 
+    ///     However, when moving columns down in the same parent (\a sourceParent
+    ///     and \a destinationParent are equal), the columns will be placed before the
+    ///     \a destinationChild index. That is, if you wish to move columns 0 and 1 so
+    ///     they will become columns 1 and 2, \a destinationChild should be 3. In this
+    ///     case, the new index for the source column \c i (which is between
+    ///     \a sourceFirst and \a sourceLast) is equal to
+    ///     \c {(destinationChild-sourceLast-1+i)}.
+    /// 
+    ///     Note that if \a sourceParent and \a destinationParent are the same,
+    ///     you must ensure that the \a destinationChild is not within the range
+    ///     of \a sourceFirst and \a sourceLast + 1.  You must also ensure that you
+    ///     do not attempt to move a column to one of its own children or ancestors.
+    ///     This method returns \c{false} if either condition is true, in which case you
+    ///     should abort your move operation.
+    /// 
+    ///     \sa endMoveColumns()
+    /// 
+    ///     \since 4.6
     begin_move_columns(source_parent: &ModelIndexType, source_first: i32, source_last: i32, destination_parent: &ModelIndexType, destination_column: i32) -> bool,
+    ///     Ends a column move operation.
+    /// 
+    ///     When implementing a subclass, you must call this
+    ///     function \e after moving data within the model's underlying data
+    ///     store.
+    /// 
+    ///     \sa beginMoveColumns()
+    /// 
+    ///     \since 4.6
     end_move_columns(),
+    ///     Begins a model reset operation.
+    /// 
+    ///     A reset operation resets the model to its current state in any attached views.
+    /// 
+    ///     \note Any views attached to this model will be reset as well.
+    /// 
+    ///     When a model is reset it means that any previous data reported from the
+    ///     model is now invalid and has to be queried for again. This also means that
+    ///     the current item and any selected items will become invalid.
+    /// 
+    ///     When a model radically changes its data it can sometimes be easier to just
+    ///     call this function rather than emit dataChanged() to inform other
+    ///     components when the underlying data source, or its structure, has changed.
+    /// 
+    ///     You must call this function before resetting any internal data structures in your model
+    ///     or proxy model.
+    /// 
+    ///     This function emits the signal modelAboutToBeReset().
+    /// 
+    ///     \sa modelAboutToBeReset(), modelReset(), endResetModel()
+    ///     \since 4.6
     begin_reset_model(),
+    ///     Completes a model reset operation.
+    /// 
+    ///     You must call this function after resetting any internal data structure in your model
+    ///     or proxy model.
+    /// 
+    ///     This function emits the signal modelReset().
+    /// 
+    ///     \sa beginResetModel()
+    ///     \since 4.6
     end_reset_model(),
+    ///     Changes the QPersistentModelIndex that is equal to the given \a from model
+    ///     index to the given \a to model index.
+    /// 
+    ///     If no persistent model index equal to the given \a from model index was
+    ///     found, nothing is changed.
+    /// 
+    ///     \sa persistentIndexList(), changePersistentIndexList()
     change_persistent_index(from: &ModelIndexType, to: &ModelIndexType),
     change_persistent_index_list(from: &[ModelIndex], to: &[ModelIndex]),
+    ///     \since 4.2
+    /// 
+    ///     Returns the list of indexes stored as persistent indexes in the model.
     persistent_index_list() -> [ModelIndex],
 }
 

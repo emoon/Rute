@@ -1,3 +1,101 @@
+///     \class QTextCursor
+///     \reentrant
+///     \inmodule QtGui
+/// 
+///     \brief The QTextCursor class offers an API to access and modify QTextDocuments.
+/// 
+///     \ingroup richtext-processing
+///     \ingroup shared
+/// 
+///     Text cursors are objects that are used to access and modify the
+///     contents and underlying structure of text documents via a
+///     programming interface that mimics the behavior of a cursor in a
+///     text editor. QTextCursor contains information about both the
+///     cursor's position within a QTextDocument and any selection that it
+///     has made.
+/// 
+///     QTextCursor is modeled on the way a text cursor behaves in a text
+///     editor, providing a programmatic means of performing standard
+///     actions through the user interface. A document can be thought of
+///     as a single string of characters. The cursor's current position()
+///     then is always either \e between two consecutive characters in the
+///     string, or else \e before the very first character or \e after the
+///     very last character in the string.  Documents can also contain
+///     tables, lists, images, and other objects in addition to text but,
+///     from the developer's point of view, the document can be treated as
+///     one long string.  Some portions of that string can be considered
+///     to lie within particular blocks (e.g. paragraphs), or within a
+///     table's cell, or a list's item, or other structural elements. When
+///     we refer to "current character" we mean the character immediately
+///     \e before the cursor position() in the document. Similarly, the
+///     "current block" is the block that contains the cursor position().
+/// 
+///     A QTextCursor also has an anchor() position. The text that is
+///     between the anchor() and the position() is the selection. If
+///     anchor() == position() there is no selection.
+/// 
+///     The cursor position can be changed programmatically using
+///     setPosition() and movePosition(); the latter can also be used to
+///     select text. For selections see selectionStart(), selectionEnd(),
+///     hasSelection(), clearSelection(), and removeSelectedText().
+/// 
+///     If the position() is at the start of a block, atBlockStart()
+///     returns \c true; and if it is at the end of a block, atBlockEnd() returns
+///     true. The format of the current character is returned by
+///     charFormat(), and the format of the current block is returned by
+///     blockFormat().
+/// 
+///     Formatting can be applied to the current text document using the
+///     setCharFormat(), mergeCharFormat(), setBlockFormat() and
+///     mergeBlockFormat() functions. The 'set' functions will replace the
+///     cursor's current character or block format, while the 'merge'
+///     functions add the given format properties to the cursor's current
+///     format. If the cursor has a selection, the given format is applied
+///     to the current selection. Note that when only a part of a block is
+///     selected, the block format is applied to the entire block. The text
+///     at the current character position can be turned into a list using
+///     createList().
+/// 
+///     Deletions can be achieved using deleteChar(),
+///     deletePreviousChar(), and removeSelectedText().
+/// 
+///     Text strings can be inserted into the document with the insertText()
+///     function, blocks (representing new paragraphs) can be inserted with
+///     insertBlock().
+/// 
+///     Existing fragments of text can be inserted with insertFragment() but,
+///     if you want to insert pieces of text in various formats, it is usually
+///     still easier to use insertText() and supply a character format.
+/// 
+///     Various types of higher-level structure can also be inserted into the
+///     document with the cursor:
+/// 
+///     \list
+///     \li Lists are ordered sequences of block elements that are decorated with
+///        bullet points or symbols. These are inserted in a specified format
+///        with insertList().
+///     \li Tables are inserted with the insertTable() function, and can be
+///        given an optional format. These contain an array of cells that can
+///        be traversed using the cursor.
+///     \li Inline images are inserted with insertImage(). The image to be
+///        used can be specified in an image format, or by name.
+///     \li Frames are inserted by calling insertFrame() with a specified format.
+///     \endlist
+/// 
+///     Actions can be grouped (i.e. treated as a single action for
+///     undo/redo) using beginEditBlock() and endEditBlock().
+/// 
+///     Cursor movements are limited to valid cursor positions. In Latin
+///     writing this is between any two consecutive characters in the
+///     text, before the first character, or after the last character. In
+///     some other writing systems cursor movements are limited to
+///     "clusters" (e.g. a syllable in Devanagari, or a base letter plus
+///     diacritics).  Functions such as movePosition() and deleteChar()
+///     limit cursor movement to these valid positions.
+/// 
+///     \sa {Rich Text Processing}
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextCursor)]
 enum MoveMode {
     MoveAnchor,
@@ -45,12 +143,58 @@ enum SelectionType {
 struct TextCursor {
     swap(other: &TextCursorType),
     is_null() -> bool,
+    ///     Moves the cursor to the absolute position in the document specified by
+    ///     \a pos using a \c MoveMode specified by \a m. The cursor is positioned
+    ///     between characters.
+    /// 
+    ///     \sa position(), movePosition(), anchor()
     set_position(pos: i32, mode: TextCursor::MoveMode),
+    ///     Returns the absolute position of the cursor within the document.
+    ///     The cursor is positioned between characters.
+    /// 
+    ///     \sa setPosition(), movePosition(), anchor(), positionInBlock()
     position() -> i32,
+    ///     \since 4.7
+    ///     Returns the relative position of the cursor within the block.
+    ///     The cursor is positioned between characters.
+    /// 
+    ///     This is equivalent to \c{ position() - block().position()}.
+    /// 
+    ///     \sa position()
     position_in_block() -> i32,
+    ///     Returns the anchor position; this is the same as position() unless
+    ///     there is a selection in which case position() marks one end of the
+    ///     selection and anchor() marks the other end. Just like the cursor
+    ///     position, the anchor position is between characters.
+    /// 
+    ///     \sa position(), setPosition(), movePosition(), selectionStart(), selectionEnd()
     anchor() -> i32,
+    ///     \fn void QTextCursor::insertText(const QString &text, const QTextCharFormat &format)
+    ///     \overload
+    /// 
+    ///     Inserts \a text at the current position with the given \a format.
     insert_text(text: String),
+    ///     \fn void QTextCursor::insertText(const QString &text, const QTextCharFormat &format)
+    ///     \overload
+    /// 
+    ///     Inserts \a text at the current position with the given \a format.
     insert_text(text: String, format: &TextCharFormatType),
+    ///     \fn bool QTextCursor::movePosition(MoveOperation operation, MoveMode mode, int n)
+    /// 
+    ///     Moves the cursor by performing the given \a operation \a n times, using the specified
+    ///     \a mode, and returns \c true if all operations were completed successfully; otherwise
+    ///     returns \c false.
+    /// 
+    ///     For example, if this function is repeatedly used to seek to the end of the next
+    ///     word, it will eventually fail when the end of the document is reached.
+    /// 
+    ///     By default, the move operation is performed once (\a n = 1).
+    /// 
+    ///     If \a mode is \c KeepAnchor, the cursor selects the text it moves
+    ///     over. This is the same effect that the user achieves when they
+    ///     hold down the Shift key and move the cursor with the cursor keys.
+    /// 
+    ///     \sa setVisualNavigation()
     move_position(op: TextCursor::MoveOperation, arg0: TextCursor::MoveMode, n: i32) -> bool,
     visual_navigation() -> bool,
     set_visual_navigation(b: bool),
@@ -58,57 +202,266 @@ struct TextCursor {
     vertical_movement_x() -> i32,
     set_keep_position_on_insert(b: bool),
     keep_position_on_insert() -> bool,
+    ///     If there is no selected text, deletes the character \e at the
+    ///     current cursor position; otherwise deletes the selected text.
+    /// 
+    ///     \sa deletePreviousChar(), hasSelection(), clearSelection()
     delete_char(),
+    ///     If there is no selected text, deletes the character \e before the
+    ///     current cursor position; otherwise deletes the selected text.
+    /// 
+    ///     \sa deleteChar(), hasSelection(), clearSelection()
     delete_previous_char(),
+    ///     Selects text in the document according to the given \a selection.
     select(selection: TextCursor::SelectionType),
+    ///     Returns \c true if the cursor contains a selection; otherwise returns \c false.
     has_selection() -> bool,
+    ///     Returns \c true if the cursor contains a selection that is not simply a
+    ///     range from selectionStart() to selectionEnd(); otherwise returns \c false.
+    /// 
+    ///     Complex selections are ones that span at least two cells in a table;
+    ///     their extent is specified by selectedTableCells().
     has_complex_selection() -> bool,
+    ///     If there is a selection, its content is deleted; otherwise does
+    ///     nothing.
+    /// 
+    ///     \sa hasSelection()
     remove_selected_text(),
+    ///     Clears the current selection by setting the anchor to the cursor position.
+    /// 
+    ///     Note that it does \b{not} delete the text of the selection.
+    /// 
+    ///     \sa removeSelectedText(), hasSelection()
     clear_selection(),
+    ///     Returns the start of the selection or position() if the
+    ///     cursor doesn't have a selection.
+    /// 
+    ///     \sa selectionEnd(), position(), anchor()
     selection_start() -> i32,
+    ///     Returns the end of the selection or position() if the cursor
+    ///     doesn't have a selection.
+    /// 
+    ///     \sa selectionStart(), position(), anchor()
     selection_end() -> i32,
+    ///     Returns the current selection's text (which may be empty). This
+    ///     only returns the text, with no rich text formatting information.
+    ///     If you want a document fragment (i.e. formatted rich text) use
+    ///     selection() instead.
+    /// 
+    ///     \note If the selection obtained from an editor spans a line break,
+    ///     the text will contain a Unicode U+2029 paragraph separator character
+    ///     instead of a newline \c{\n} character. Use QString::replace() to
+    ///     replace these characters with newlines.
     selected_text() -> String,
+    ///     Returns the current selection (which may be empty) with all its
+    ///     formatting information. If you just want the selected text (i.e.
+    ///     plain text) use selectedText() instead.
+    /// 
+    ///     \note Unlike QTextDocumentFragment::toPlainText(),
+    ///     selectedText() may include special unicode characters such as
+    ///     QChar::ParagraphSeparator.
+    /// 
+    ///     \sa QTextDocumentFragment::toPlainText()
     selection() -> TextDocumentFragment,
+    ///     If the selection spans over table cells, \a firstRow is populated
+    ///     with the number of the first row in the selection, \a firstColumn
+    ///     with the number of the first column in the selection, and \a
+    ///     numRows and \a numColumns with the number of rows and columns in
+    ///     the selection. If the selection does not span any table cells the
+    ///     results are harmless but undefined.
     selected_table_cells(first_row: *i32, num_rows: *i32, first_column: *i32, num_columns: *i32),
+    ///     Returns the block that contains the cursor.
     block() -> TextBlock,
     char_format() -> TextCharFormat,
+    ///     Sets the cursor's current character format to the given \a
+    ///     format. If the cursor has a selection, the given \a format is
+    ///     applied to the current selection.
+    /// 
+    ///     \sa hasSelection(), mergeCharFormat()
     set_char_format(format: &TextCharFormatType),
+    ///     Merges the cursor's current character format with the properties
+    ///     described by format \a modifier. If the cursor has a selection,
+    ///     this function applies all the properties set in \a modifier to all
+    ///     the character formats that are part of the selection.
+    /// 
+    ///     \sa hasSelection(), setCharFormat()
     merge_char_format(modifier: &TextCharFormatType),
     block_format() -> TextBlockFormat,
+    ///     Sets the block format of the current block (or all blocks that
+    ///     are contained in the selection) to \a format.
+    /// 
+    ///     \sa blockFormat(), mergeBlockFormat()
     set_block_format(format: &TextBlockFormatType),
+    ///     Modifies the block format of the current block (or all blocks that
+    ///     are contained in the selection) with the block format specified by
+    ///     \a modifier.
+    /// 
+    ///     \sa setBlockFormat(), blockFormat()
     merge_block_format(modifier: &TextBlockFormatType),
     block_char_format() -> TextCharFormat,
+    ///     Sets the block char format of the current block (or all blocks that
+    ///     are contained in the selection) to \a format.
+    /// 
+    ///     \sa blockCharFormat()
     set_block_char_format(format: &TextCharFormatType),
+    ///     Modifies the block char format of the current block (or all blocks that
+    ///     are contained in the selection) with the block format specified by
+    ///     \a modifier.
+    /// 
+    ///     \sa setBlockCharFormat()
     merge_block_char_format(modifier: &TextCharFormatType),
+    ///     Returns \c true if the cursor is at the start of a block; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa atBlockEnd(), atStart()
     at_block_start() -> bool,
+    ///     Returns \c true if the cursor is at the end of a block; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa atBlockStart(), atEnd()
     at_block_end() -> bool,
+    ///     Returns \c true if the cursor is at the start of the document;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa atBlockStart(), atEnd()
     at_start() -> bool,
+    ///     \since 4.6
+    /// 
+    ///     Returns \c true if the cursor is at the end of the document;
+    ///     otherwise returns \c false.
+    /// 
+    ///     \sa atStart(), atBlockEnd()
     at_end() -> bool,
+    ///     \fn void QTextCursor::insertBlock(const QTextBlockFormat &format, const QTextCharFormat &charFormat)
+    ///     \overload
+    /// 
+    ///     Inserts a new empty block at the cursor position() with block
+    ///     format \a format and \a charFormat as block char format.
+    /// 
+    ///     \sa setBlockFormat()
     insert_block(),
+    ///     \fn void QTextCursor::insertBlock(const QTextBlockFormat &format, const QTextCharFormat &charFormat)
+    ///     \overload
+    /// 
+    ///     Inserts a new empty block at the cursor position() with block
+    ///     format \a format and \a charFormat as block char format.
+    /// 
+    ///     \sa setBlockFormat()
     insert_block(format: &TextBlockFormatType),
+    ///     \fn void QTextCursor::insertBlock(const QTextBlockFormat &format, const QTextCharFormat &charFormat)
+    ///     \overload
+    /// 
+    ///     Inserts a new empty block at the cursor position() with block
+    ///     format \a format and \a charFormat as block char format.
+    /// 
+    ///     \sa setBlockFormat()
     insert_block(format: &TextBlockFormatType, char_format: &TextCharFormatType),
     insert_list(format: &TextListFormatType) -> TextList?,
     insert_list(style: TextListFormat::Style) -> TextList?,
     create_list(format: &TextListFormatType) -> TextList?,
     create_list(style: TextListFormat::Style) -> TextList?,
     current_list() -> TextList?,
+    ///     \fn QTextTable *QTextCursor::insertTable(int rows, int columns, const QTextTableFormat &format)
+    /// 
+    ///     Creates a new table with the given number of \a rows and \a columns
+    ///     in the specified \a format, inserts it at the current cursor position()
+    ///     in the document, and returns the table object. The cursor is moved to
+    ///     the beginning of the first cell.
+    /// 
+    ///     There must be at least one row and one column in the table.
+    /// 
+    ///     \sa currentTable()
     insert_table(rows: i32, cols: i32, format: &TextTableFormatType) -> TextTable?,
+    ///     \fn QTextTable *QTextCursor::insertTable(int rows, int columns, const QTextTableFormat &format)
+    /// 
+    ///     Creates a new table with the given number of \a rows and \a columns
+    ///     in the specified \a format, inserts it at the current cursor position()
+    ///     in the document, and returns the table object. The cursor is moved to
+    ///     the beginning of the first cell.
+    /// 
+    ///     There must be at least one row and one column in the table.
+    /// 
+    ///     \sa currentTable()
     insert_table(rows: i32, cols: i32) -> TextTable?,
+    ///     Returns a pointer to the current table if the cursor position()
+    ///     is inside a block that is part of a table; otherwise returns 0.
+    /// 
+    ///     \sa insertTable()
     current_table() -> TextTable?,
+    ///     Inserts a frame with the given \a format at the current cursor position(),
+    ///     moves the cursor position() inside the frame, and returns the frame.
+    /// 
+    ///     If the cursor holds a selection, the whole selection is moved inside the
+    ///     frame.
+    /// 
+    ///     \sa hasSelection()
     insert_frame(format: &TextFrameFormatType) -> TextFrame?,
+    ///     Returns a pointer to the current frame. Returns 0 if the cursor is invalid.
+    /// 
+    ///     \sa insertFrame()
     current_frame() -> TextFrame?,
+    ///     Inserts the text \a fragment at the current position().
     insert_fragment(fragment: &TextDocumentFragmentType),
+    ///     \since 4.2
+    ///     Inserts the text \a html at the current position(). The text is interpreted as
+    ///     HTML.
+    /// 
+    ///     \note When using this function with a style sheet, the style sheet will
+    ///     only apply to the current block in the document. In order to apply a style
+    ///     sheet throughout a document, use QTextDocument::setDefaultStyleSheet()
+    ///     instead.
     insert_html(html: String),
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     Convenience function for inserting the given \a image with an optional
+    ///     \a name at the current position().
     insert_image(format: &TextImageFormatType, alignment: TextFrameFormat::Position),
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     Convenience function for inserting the given \a image with an optional
+    ///     \a name at the current position().
     insert_image(format: &TextImageFormatType),
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     Convenience function for inserting the given \a image with an optional
+    ///     \a name at the current position().
     insert_image(name: String),
+    ///     \since 4.5
+    ///     \overload
+    /// 
+    ///     Convenience function for inserting the given \a image with an optional
+    ///     \a name at the current position().
     insert_image(image: &ImageType, name: String),
     begin_edit_block(),
     join_previous_edit_block(),
     end_edit_block(),
+    ///     Returns \c true if this cursor and \a other are copies of each other, i.e.
+    ///     one of them was created as a copy of the other and neither has moved since.
+    ///     This is much stricter than equality.
+    /// 
+    ///     \sa operator=(), operator==()
     is_copy_of(other: &TextCursorType) -> bool,
+    ///     \since 4.2
+    ///     Returns the number of the block the cursor is in, or 0 if the cursor is invalid.
+    /// 
+    ///     Note that this function only makes sense in documents without complex objects such
+    ///     as tables or frames.
     block_number() -> i32,
+    ///     \since 4.2
+    ///     Returns the position of the cursor within its containing line.
+    /// 
+    ///     Note that this is the column number relative to a wrapped line,
+    ///     not relative to the block (i.e. the paragraph).
+    /// 
+    ///     You probably want to call positionInBlock() instead.
+    /// 
+    ///     \sa positionInBlock()
     column_number() -> i32,
+    ///     \since 4.5
+    ///     Returns the document this cursor is associated with.
     document() -> TextDocument?,
 }
 

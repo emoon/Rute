@@ -1,3 +1,116 @@
+///     \class QGraphicsScene
+///     \brief The QGraphicsScene class provides a surface for managing a large
+///     number of 2D graphical items.
+///     \since 4.2
+///     \ingroup graphicsview-api
+///     \inmodule QtWidgets
+/// 
+///     The class serves as a container for QGraphicsItems. It is used together
+///     with QGraphicsView for visualizing graphical items, such as lines,
+///     rectangles, text, or even custom items, on a 2D surface. QGraphicsScene is
+///     part of the \l{Graphics View Framework}.
+/// 
+///     QGraphicsScene also provides functionality that lets you efficiently
+///     determine both the location of items, and for determining what items are
+///     visible within an arbitrary area on the scene. With the QGraphicsView
+///     widget, you can either visualize the whole scene, or zoom in and view only
+///     parts of the scene.
+/// 
+///     Example:
+/// 
+///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 0
+/// 
+///     Note that QGraphicsScene has no visual appearance of its own; it only
+///     manages the items. You need to create a QGraphicsView widget to visualize
+///     the scene.
+/// 
+///     To add items to a scene, you start off by constructing a QGraphicsScene
+///     object. Then, you have two options: either add your existing QGraphicsItem
+///     objects by calling addItem(), or you can call one of the convenience
+///     functions addEllipse(), addLine(), addPath(), addPixmap(), addPolygon(),
+///     addRect(), or addText(), which all return a pointer to the newly added item.
+///     The dimensions of the items added with these functions are relative to the
+///     item's coordinate system, and the items position is initialized to (0,
+///     0) in the scene.
+/// 
+///     You can then visualize the scene using QGraphicsView. When the scene
+///     changes, (e.g., when an item moves or is transformed) QGraphicsScene
+///     emits the changed() signal. To remove an item, call removeItem().
+/// 
+///     QGraphicsScene uses an indexing algorithm to manage the location of items
+///     efficiently. By default, a BSP (Binary Space Partitioning) tree is used; an
+///     algorithm suitable for large scenes where most items remain static (i.e.,
+///     do not move around). You can choose to disable this index by calling
+///     setItemIndexMethod(). For more information about the available indexing
+///     algorithms, see the itemIndexMethod property.
+/// 
+///     The scene's bounding rect is set by calling setSceneRect(). Items can be
+///     placed at any position on the scene, and the size of the scene is by
+///     default unlimited. The scene rect is used only for internal bookkeeping,
+///     maintaining the scene's item index. If the scene rect is unset,
+///     QGraphicsScene will use the bounding area of all items, as returned by
+///     itemsBoundingRect(), as the scene rect. However, itemsBoundingRect() is a
+///     relatively time consuming function, as it operates by collecting
+///     positional information for every item on the scene. Because of this, you
+///     should always set the scene rect when operating on large scenes.
+/// 
+///     One of QGraphicsScene's greatest strengths is its ability to efficiently
+///     determine the location of items. Even with millions of items on the scene,
+///     the items() functions can determine the location of an item within a few
+///     milliseconds. There are several overloads to items(): one that finds items
+///     at a certain position, one that finds items inside or intersecting with a
+///     polygon or a rectangle, and more. The list of returned items is sorted by
+///     stacking order, with the topmost item being the first item in the list.
+///     For convenience, there is also an itemAt() function that returns the
+///     topmost item at a given position.
+/// 
+///     QGraphicsScene maintains selection information for the scene. To select
+///     items, call setSelectionArea(), and to clear the current selection, call
+///     clearSelection(). Call selectedItems() to get the list of all selected
+///     items.
+/// 
+///     \section1 Event Handling and Propagation
+/// 
+///     Another responsibility that QGraphicsScene has, is to propagate events
+///     from QGraphicsView. To send an event to a scene, you construct an event
+///     that inherits QEvent, and then send it using, for example,
+///     QApplication::sendEvent(). event() is responsible for dispatching
+///     the event to the individual items. Some common events are handled by
+///     convenience event handlers. For example, key press events are handled by
+///     keyPressEvent(), and mouse press events are handled by mousePressEvent().
+/// 
+///     Key events are delivered to the \e {focus item}. To set the focus item,
+///     you can either call setFocusItem(), passing an item that accepts focus, or
+///     the item itself can call QGraphicsItem::setFocus().  Call focusItem() to
+///     get the current focus item. For compatibility with widgets, the scene also
+///     maintains its own focus information. By default, the scene does not have
+///     focus, and all key events are discarded. If setFocus() is called, or if an
+///     item on the scene gains focus, the scene automatically gains focus. If the
+///     scene has focus, hasFocus() will return true, and key events will be
+///     forwarded to the focus item, if any. If the scene loses focus, (i.e.,
+///     someone calls clearFocus()) while an item has focus, the scene will
+///     maintain its item focus information, and once the scene regains focus, it
+///     will make sure the last focus item regains focus.
+/// 
+///     For mouse-over effects, QGraphicsScene dispatches \e {hover
+///     events}. If an item accepts hover events (see
+///     QGraphicsItem::acceptHoverEvents()), it will receive a \l
+///     {QEvent::}{GraphicsSceneHoverEnter} event when the mouse enters
+///     its area. As the mouse continues moving inside the item's area,
+///     QGraphicsScene will send it \l {QEvent::}{GraphicsSceneHoverMove}
+///     events. When the mouse leaves the item's area, the item will
+///     receive a \l {QEvent::}{GraphicsSceneHoverLeave} event.
+/// 
+///     All mouse events are delivered to the current \e {mouse grabber}
+///     item. An item becomes the scene's mouse grabber if it accepts
+///     mouse events (see QGraphicsItem::acceptedMouseButtons()) and it
+///     receives a mouse press. It stays the mouse grabber until it
+///     receives a mouse release when no other mouse buttons are
+///     pressed. You can call mouseGrabberItem() to determine what item is
+///     currently grabbing the mouse.
+/// 
+///     \sa QGraphicsItem, QGraphicsView
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsScene)]
 enum ItemIndexMethod {
     BspTreeIndex,
@@ -13,104 +126,970 @@ enum SceneLayer {
 }
 
 struct GraphicsScene : Object {
+    ///     \property QGraphicsScene::sceneRect
+    ///     \brief the scene rectangle; the bounding rectangle of the scene
+    /// 
+    ///     The scene rectangle defines the extent of the scene. It is
+    ///     primarily used by QGraphicsView to determine the view's default
+    ///     scrollable area, and by QGraphicsScene to manage item indexing.
+    /// 
+    ///     If unset, or if set to a null QRectF, sceneRect() will return the largest
+    ///     bounding rect of all items on the scene since the scene was created (i.e.,
+    ///     a rectangle that grows when items are added to or moved in the scene, but
+    ///     never shrinks).
+    /// 
+    ///     \sa width(), height(), QGraphicsView::sceneRect
     scene_rect() -> RectF,
     width() -> f32,
     height() -> f32,
     set_scene_rect(rect: &RectFType),
     set_scene_rect(x: f32, y: f32, w: f32, h: f32),
     render(painter: *PainterType, target: &RectFType, source: &RectFType, aspect_ratio_mode: Rute::AspectRatioMode),
+    ///     \property QGraphicsScene::itemIndexMethod
+    ///     \brief the item indexing method.
+    /// 
+    ///     QGraphicsScene applies an indexing algorithm to the scene, to speed up
+    ///     item discovery functions like items() and itemAt(). Indexing is most
+    ///     efficient for static scenes (i.e., where items don't move around). For
+    ///     dynamic scenes, or scenes with many animated items, the index bookkeeping
+    ///     can outweight the fast lookup speeds.
+    /// 
+    ///     For the common case, the default index method BspTreeIndex works fine.  If
+    ///     your scene uses many animations and you are experiencing slowness, you can
+    ///     disable indexing by calling \c setItemIndexMethod(NoIndex).
+    /// 
+    ///     \sa bspTreeDepth
     item_index_method() -> GraphicsScene::ItemIndexMethod,
     set_item_index_method(method: GraphicsScene::ItemIndexMethod),
+    ///     \property QGraphicsScene::sortCacheEnabled
+    ///     \brief whether sort caching is enabled
+    ///     \since 4.5
+    ///     \obsolete
+    /// 
+    ///     Since Qt 4.6, this property has no effect.
     is_sort_cache_enabled() -> bool,
     set_sort_cache_enabled(enabled: bool),
+    ///     \property QGraphicsScene::bspTreeDepth
+    ///     \brief the depth of QGraphicsScene's BSP index tree
+    ///     \since 4.3
+    /// 
+    ///     This property has no effect when NoIndex is used.
+    /// 
+    ///     This value determines the depth of QGraphicsScene's BSP tree. The depth
+    ///     directly affects QGraphicsScene's performance and memory usage; the latter
+    ///     growing exponentially with the depth of the tree. With an optimal tree
+    ///     depth, QGraphicsScene can instantly determine the locality of items, even
+    ///     for scenes with thousands or millions of items. This also greatly improves
+    ///     rendering performance.
+    /// 
+    ///     By default, the value is 0, in which case Qt will guess a reasonable
+    ///     default depth based on the size, location and number of items in the
+    ///     scene. If these parameters change frequently, however, you may experience
+    ///     slowdowns as QGraphicsScene retunes the depth internally. You can avoid
+    ///     potential slowdowns by fixating the tree depth through setting this
+    ///     property.
+    /// 
+    ///     The depth of the tree and the size of the scene rectangle decide the
+    ///     granularity of the scene's partitioning. The size of each scene segment is
+    ///     determined by the following algorithm:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 2
+    /// 
+    ///     The BSP tree has an optimal size when each segment contains between 0 and
+    ///     10 items.
+    /// 
+    ///     \sa itemIndexMethod
     bsp_tree_depth() -> i32,
     set_bsp_tree_depth(depth: i32),
+    ///     Calculates and returns the bounding rect of all items on the scene. This
+    ///     function works by iterating over all items, and because of this, it can
+    ///     be slow for large scenes.
+    /// 
+    ///     \sa sceneRect()
     items_bounding_rect() -> RectF,
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(order: Rute::SortOrder) -> [GraphicsItem?],
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(pos: &PointFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(rect: &RectFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(polygon: &PolygonFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(path: &PainterPathType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     colliding_items(item: *GraphicsItemType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    ///     \since 4.6
+    /// 
+    ///     Returns the topmost visible item at the specified \a position, or 0
+    ///     if there are no items at this position.
+    /// 
+    ///     \a deviceTransform is the transformation that applies to the view, and needs to
+    ///     be provided if the scene contains items that ignore transformations.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa items(), collidingItems(), {QGraphicsItem#Sorting}{Sorting}
     item_at(pos: &PointFType, device_transform: &TransformType) -> GraphicsItem?,
+    ///     Returns an ordered list of all items on the scene. \a order decides the
+    ///     stacking order.
+    /// 
+    ///     \sa addItem(), removeItem(), {QGraphicsItem#Sorting}{Sorting}
     items(x: f32, y: f32, w: f32, h: f32, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    ///     \since 4.6
+    /// 
+    ///     Returns the topmost visible item at the specified \a position, or 0
+    ///     if there are no items at this position.
+    /// 
+    ///     \a deviceTransform is the transformation that applies to the view, and needs to
+    ///     be provided if the scene contains items that ignore transformations.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa items(), collidingItems(), {QGraphicsItem#Sorting}{Sorting}
     item_at(x: f32, y: f32, device_transform: &TransformType) -> GraphicsItem?,
+    ///     Returns a list of all currently selected items. The items are
+    ///     returned in no particular order.
+    /// 
+    ///     \sa setSelectionArea()
     selected_items() -> [GraphicsItem?],
+    ///     Returns the selection area that was previously set with
+    ///     setSelectionArea(), or an empty QPainterPath if no selection area has been
+    ///     set.
+    /// 
+    ///     \sa setSelectionArea()
     selection_area() -> PainterPath,
+    ///     \since 4.6
+    /// 
+    ///     Sets the selection area to \a path. All items within this area are
+    ///     immediately selected, and all items outside are unselected. You can get
+    ///     the list of all selected items by calling selectedItems().
+    /// 
+    ///     \a deviceTransform is the transformation that applies to the view, and needs to
+    ///     be provided if the scene contains items that ignore transformations.
+    /// 
+    ///     For an item to be selected, it must be marked as \e selectable
+    ///     (QGraphicsItem::ItemIsSelectable).
+    /// 
+    ///     \sa clearSelection(), selectionArea()
     set_selection_area(path: &PainterPathType, device_transform: &TransformType),
+    ///     \since 4.6
+    /// 
+    ///     Sets the selection area to \a path. All items within this area are
+    ///     immediately selected, and all items outside are unselected. You can get
+    ///     the list of all selected items by calling selectedItems().
+    /// 
+    ///     \a deviceTransform is the transformation that applies to the view, and needs to
+    ///     be provided if the scene contains items that ignore transformations.
+    /// 
+    ///     For an item to be selected, it must be marked as \e selectable
+    ///     (QGraphicsItem::ItemIsSelectable).
+    /// 
+    ///     \sa clearSelection(), selectionArea()
     set_selection_area(path: &PainterPathType, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
+    ///     \since 4.6
+    /// 
+    ///     Sets the selection area to \a path. All items within this area are
+    ///     immediately selected, and all items outside are unselected. You can get
+    ///     the list of all selected items by calling selectedItems().
+    /// 
+    ///     \a deviceTransform is the transformation that applies to the view, and needs to
+    ///     be provided if the scene contains items that ignore transformations.
+    /// 
+    ///     For an item to be selected, it must be marked as \e selectable
+    ///     (QGraphicsItem::ItemIsSelectable).
+    /// 
+    ///     \sa clearSelection(), selectionArea()
     set_selection_area(path: &PainterPathType, selection_operation: Rute::ItemSelectionOperation, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
+    ///     Groups all items in \a items into a new QGraphicsItemGroup, and returns a
+    ///     pointer to the group. The group is created with the common ancestor of \a
+    ///     items as its parent, and with position (0, 0). The items are all
+    ///     reparented to the group, and their positions and transformations are
+    ///     mapped to the group. If \a items is empty, this function will return an
+    ///     empty top-level QGraphicsItemGroup.
+    /// 
+    ///     QGraphicsScene has ownership of the group item; you do not need to delete
+    ///     it. To dismantle (ungroup) a group, call destroyItemGroup().
+    /// 
+    ///     \sa destroyItemGroup(), QGraphicsItemGroup::addToGroup()
     create_item_group(items: [*GraphicsItemType]) -> GraphicsItemGroup?,
+    ///     Adds or moves the \a item and all its childen to this scene.
+    ///     This scene takes ownership of the \a item.
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns
+    ///     true), QGraphicsScene will emit changed() once control goes back
+    ///     to the event loop.
+    /// 
+    ///     If the item is already in a different scene, it will first be
+    ///     removed from its old scene, and then added to this scene as a
+    ///     top-level.
+    /// 
+    ///     QGraphicsScene will send ItemSceneChange notifications to \a item
+    ///     while it is added to the scene. If item does not currently belong
+    ///     to a scene, only one notification is sent. If it does belong to
+    ///     scene already (i.e., it is moved to this scene), QGraphicsScene
+    ///     will send an addition notification as the item is removed from its
+    ///     previous scene.
+    /// 
+    ///     If the item is a panel, the scene is active, and there is no
+    ///     active panel in the scene, then the item will be activated.
+    /// 
+    ///     \sa removeItem(), addEllipse(), addLine(), addPath(), addPixmap(),
+    ///     addRect(), addText(), addWidget(), {QGraphicsItem#Sorting}{Sorting}
     add_item(item: *GraphicsItemType),
+    ///     Creates and adds an ellipse item to the scene, and returns the item
+    ///     pointer. The geometry of the ellipse is defined by \a rect, and its pen
+    ///     and brush are initialized to \a pen and \a brush.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addLine(), addPath(), addPixmap(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_ellipse(rect: &RectFType, pen: &PenType, brush: &BrushType) -> GraphicsEllipseItem?,
+    ///     Creates and adds a line item to the scene, and returns the item
+    ///     pointer. The geometry of the line is defined by \a line, and its pen
+    ///     is initialized to \a pen.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addPath(), addPixmap(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_line(line: &LineFType, pen: &PenType) -> GraphicsLineItem?,
+    ///     Creates and adds a path item to the scene, and returns the item
+    ///     pointer. The geometry of the path is defined by \a path, and its pen and
+    ///     brush are initialized to \a pen and \a brush.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_path(path: &PainterPathType, pen: &PenType, brush: &BrushType) -> GraphicsPathItem?,
+    ///     Creates and adds a pixmap item to the scene, and returns the item
+    ///     pointer. The pixmap is defined by \a pixmap.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPath(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_pixmap(pixmap: &PixmapType) -> GraphicsPixmapItem?,
     add_polygon(polygon: &PolygonFType, pen: &PenType, brush: &BrushType) -> GraphicsPolygonItem?,
+    ///     Creates and adds a rectangle item to the scene, and returns the item
+    ///     pointer. The geometry of the rectangle is defined by \a rect, and its pen
+    ///     and brush are initialized to \a pen and \a brush.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0). For example, if a QRect(50, 50, 100,
+    ///     100) is added, its top-left corner will be at (50, 50) relative to the
+    ///     origin in the items coordinate system.
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addPixmap(), addText(),
+    ///     addItem(), addWidget()
     add_rect(rect: &RectFType, pen: &PenType, brush: &BrushType) -> GraphicsRectItem?,
+    ///     Creates and adds a text item to the scene, and returns the item
+    ///     pointer. The text string is initialized to \a text, and its font
+    ///     is initialized to \a font.
+    /// 
+    ///     The item's position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addPixmap(), addRect(),
+    ///     addItem(), addWidget()
     add_text(text: String, font: &FontType) -> GraphicsTextItem?,
+    ///     Creates and adds a QGraphicsSimpleTextItem to the scene, and returns the
+    ///     item pointer. The text string is initialized to \a text, and its font is
+    ///     initialized to \a font.
+    /// 
+    ///     The item's position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addPixmap(), addRect(),
+    ///     addItem(), addWidget()
     add_simple_text(text: String, font: &FontType) -> GraphicsSimpleTextItem?,
+    ///     Creates a new QGraphicsProxyWidget for \a widget, adds it to the scene,
+    ///     and returns a pointer to the proxy. \a wFlags set the default window flags
+    ///     for the embedding proxy widget.
+    /// 
+    ///     The item's position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     Note that widgets with the Qt::WA_PaintOnScreen widget attribute
+    ///     set and widgets that wrap an external application or controller
+    ///     are not supported. Examples are QGLWidget and QAxWidget.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addPixmap(), addRect(),
+    ///     addText(), addSimpleText(), addItem()
     add_widget(widget: *WidgetType, w_flags: Rute::WindowFlags) -> GraphicsProxyWidget?,
+    ///     Creates and adds an ellipse item to the scene, and returns the item
+    ///     pointer. The geometry of the ellipse is defined by \a rect, and its pen
+    ///     and brush are initialized to \a pen and \a brush.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addLine(), addPath(), addPixmap(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_ellipse(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsEllipseItem?,
+    ///     Creates and adds a line item to the scene, and returns the item
+    ///     pointer. The geometry of the line is defined by \a line, and its pen
+    ///     is initialized to \a pen.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0).
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addPath(), addPixmap(), addRect(), addText(), addItem(),
+    ///     addWidget()
     add_line(x1: f32, y1: f32, x2: f32, y2: f32, pen: &PenType) -> GraphicsLineItem?,
+    ///     Creates and adds a rectangle item to the scene, and returns the item
+    ///     pointer. The geometry of the rectangle is defined by \a rect, and its pen
+    ///     and brush are initialized to \a pen and \a brush.
+    /// 
+    ///     Note that the item's geometry is provided in item coordinates, and its
+    ///     position is initialized to (0, 0). For example, if a QRect(50, 50, 100,
+    ///     100) is added, its top-left corner will be at (50, 50) relative to the
+    ///     origin in the items coordinate system.
+    /// 
+    ///     If the item is visible (i.e., QGraphicsItem::isVisible() returns \c true),
+    ///     QGraphicsScene will emit changed() once control goes back to the event
+    ///     loop.
+    /// 
+    ///     \sa addEllipse(), addLine(), addPixmap(), addPixmap(), addText(),
+    ///     addItem(), addWidget()
     add_rect(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsRectItem?,
+    ///     Removes the item \a item and all its children from the scene.  The
+    ///     ownership of \a item is passed on to the caller (i.e.,
+    ///     QGraphicsScene will no longer delete \a item when destroyed).
+    /// 
+    ///     \sa addItem()
     remove_item(item: *GraphicsItemType),
+    ///     When the scene is active, this functions returns the scene's current focus
+    ///     item, or 0 if no item currently has focus. When the scene is inactive, this
+    ///     functions returns the item that will gain input focus when the scene becomes
+    ///     active.
+    /// 
+    ///     The focus item receives keyboard input when the scene receives a
+    ///     key event.
+    /// 
+    ///     \sa setFocusItem(), QGraphicsItem::hasFocus(), isActive()
     focus_item() -> GraphicsItem?,
+    ///     Sets the scene's focus item to \a item, with the focus reason \a
+    ///     focusReason, after removing focus from any previous item that may have had
+    ///     focus.
+    /// 
+    ///     If \a item is 0, or if it either does not accept focus (i.e., it does not
+    ///     have the QGraphicsItem::ItemIsFocusable flag enabled), or is not visible
+    ///     or not enabled, this function only removes focus from any previous
+    ///     focusitem.
+    /// 
+    ///     If item is not 0, and the scene does not currently have focus (i.e.,
+    ///     hasFocus() returns \c false), this function will call setFocus()
+    ///     automatically.
+    /// 
+    ///     \sa focusItem(), hasFocus(), setFocus()
     set_focus_item(item: *GraphicsItemType, focus_reason: Rute::FocusReason),
+    ///     Returns \c true if the scene has focus; otherwise returns \c false. If the scene
+    ///     has focus, it will will forward key events from QKeyEvent to any item that
+    ///     has focus.
+    /// 
+    ///     \sa setFocus(), setFocusItem()
     has_focus() -> bool,
+    ///     Sets focus on the scene by sending a QFocusEvent to the scene, passing \a
+    ///     focusReason as the reason. If the scene regains focus after having
+    ///     previously lost it while an item had focus, the last focus item will
+    ///     receive focus with \a focusReason as the reason.
+    /// 
+    ///     If the scene already has focus, this function does nothing.
+    /// 
+    ///     \sa hasFocus(), clearFocus(), setFocusItem()
     set_focus(focus_reason: Rute::FocusReason),
+    ///     Clears focus from the scene. If any item has focus when this function is
+    ///     called, it will lose focus, and regain focus again once the scene regains
+    ///     focus.
+    /// 
+    ///     A scene that does not have focus ignores key events.
+    /// 
+    ///     \sa hasFocus(), setFocus(), setFocusItem()
     clear_focus(),
+    ///     \property QGraphicsScene::stickyFocus
+    ///     \brief whether clicking into the scene background will clear focus
+    /// 
+    ///     \since 4.6
+    /// 
+    ///     In a QGraphicsScene with stickyFocus set to true, focus will remain
+    ///     unchanged when the user clicks into the scene background or on an item
+    ///     that does not accept focus. Otherwise, focus will be cleared.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     Focus changes in response to a mouse press. You can reimplement
+    ///     mousePressEvent() in a subclass of QGraphicsScene to toggle this property
+    ///     based on where the user has clicked.
+    /// 
+    ///     \sa clearFocus(), setFocusItem()
     set_sticky_focus(enabled: bool),
     sticky_focus() -> bool,
+    ///     Returns the current mouse grabber item, or 0 if no item is currently
+    ///     grabbing the mouse. The mouse grabber item is the item that receives all
+    ///     mouse events sent to the scene.
+    /// 
+    ///     An item becomes a mouse grabber when it receives and accepts a
+    ///     mouse press event, and it stays the mouse grabber until either of
+    ///     the following events occur:
+    /// 
+    ///     \list
+    ///     \li If the item receives a mouse release event when there are no other
+    ///     buttons pressed, it loses the mouse grab.
+    ///     \li If the item becomes invisible (i.e., someone calls \c {item->setVisible(false)}),
+    ///     or if it becomes disabled (i.e., someone calls \c {item->setEnabled(false)}),
+    ///     it loses the mouse grab.
+    ///     \li If the item is removed from the scene, it loses the mouse grab.
+    ///     \endlist
+    /// 
+    ///     If the item loses its mouse grab, the scene will ignore all mouse events
+    ///     until a new item grabs the mouse (i.e., until a new item receives a mouse
+    ///     press event).
     mouse_grabber_item() -> GraphicsItem?,
+    ///     \property QGraphicsScene::backgroundBrush
+    ///     \brief the background brush of the scene.
+    /// 
+    ///     Set this property to changes the scene's background to a different color,
+    ///     gradient or texture. The default background brush is Qt::NoBrush. The
+    ///     background is drawn before (behind) the items.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 3
+    /// 
+    ///     QGraphicsScene::render() calls drawBackground() to draw the scene
+    ///     background. For more detailed control over how the background is drawn,
+    ///     you can reimplement drawBackground() in a subclass of QGraphicsScene.
     background_brush() -> Brush,
     set_background_brush(brush: &BrushType),
+    ///     \property QGraphicsScene::foregroundBrush
+    ///     \brief the foreground brush of the scene.
+    /// 
+    ///     Change this property to set the scene's foreground to a different
+    ///     color, gradient or texture.
+    /// 
+    ///     The foreground is drawn after (on top of) the items. The default
+    ///     foreground brush is Qt::NoBrush ( i.e. the foreground is not
+    ///     drawn).
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 4
+    /// 
+    ///     QGraphicsScene::render() calls drawForeground() to draw the scene
+    ///     foreground. For more detailed control over how the foreground is
+    ///     drawn, you can reimplement the drawForeground() function in a
+    ///     QGraphicsScene subclass.
     foreground_brush() -> Brush,
     set_foreground_brush(brush: &BrushType),
+    ///     This method is used by input methods to query a set of properties of
+    ///     the scene to be able to support complex input method operations as support
+    ///     for surrounding text and reconversions.
+    /// 
+    ///     The \a query parameter specifies which property is queried.
+    /// 
+    ///     \sa QWidget::inputMethodQuery()
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
+    ///     Returns a list of all the views that display this scene.
+    /// 
+    ///     \sa QGraphicsView::scene()
     views() -> [GraphicsView?],
+    ///     \fn void QGraphicsScene::update(const QRectF &rect)
+    ///     Schedules a redraw of the area \a rect on the scene.
+    /// 
+    ///     \sa sceneRect(), changed()
     update(x: f32, y: f32, w: f32, h: f32),
+    ///     Invalidates and schedules a redraw of the \a layers in \a rect on the
+    ///     scene. Any cached content in \a layers is unconditionally invalidated and
+    ///     redrawn.
+    /// 
+    ///     You can use this function overload to notify QGraphicsScene of changes to
+    ///     the background or the foreground of the scene. This function is commonly
+    ///     used for scenes with tile-based backgrounds to notify changes when
+    ///     QGraphicsView has enabled
+    ///     \l{QGraphicsView::CacheBackground}{CacheBackground}.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 5
+    /// 
+    ///     Note that QGraphicsView currently supports background caching only (see
+    ///     QGraphicsView::CacheBackground). This function is equivalent to calling
+    ///     update() if any layer but BackgroundLayer is passed.
+    /// 
+    ///     \sa QGraphicsView::resetCachedContent()
     invalidate(x: f32, y: f32, w: f32, h: f32, layers: GraphicsScene::SceneLayers),
+    ///     \since 4.4
+    /// 
+    ///     Returns the scene's style, or the same as QApplication::style() if the
+    ///     scene has not been explicitly assigned a style.
+    /// 
+    ///     \sa setStyle()
     style() -> Style?,
+    ///     \since 4.4
+    /// 
+    ///     Sets or replaces the style of the scene to \a style, and reparents the
+    ///     style to this scene. Any previously assigned style is deleted. The scene's
+    ///     style defaults to QApplication::style(), and serves as the default for all
+    ///     QGraphicsWidget items in the scene.
+    /// 
+    ///     Changing the style, either directly by calling this function, or
+    ///     indirectly by calling QApplication::setStyle(), will automatically update
+    ///     the style for all widgets in the scene that do not have a style explicitly
+    ///     assigned to them.
+    /// 
+    ///     If \a style is 0, QGraphicsScene will revert to QApplication::style().
+    /// 
+    ///     \sa style()
     set_style(style: *StyleType),
+    ///     \property QGraphicsScene::font
+    ///     \since 4.4
+    ///     \brief the scene's default font
+    /// 
+    ///     This property provides the scene's font. The scene font defaults to,
+    ///     and resolves all its entries from, QApplication::font.
+    /// 
+    ///     If the scene's font changes, either directly through setFont() or
+    ///     indirectly when the application font changes, QGraphicsScene first
+    ///     sends itself a \l{QEvent::FontChange}{FontChange} event, and it then
+    ///     sends \l{QEvent::FontChange}{FontChange} events to all top-level
+    ///     widget items in the scene. These items respond by resolving their own
+    ///     fonts to the scene, and they then notify their children, who again
+    ///     notify their children, and so on, until all widget items have updated
+    ///     their fonts.
+    /// 
+    ///     Changing the scene font, (directly or indirectly through
+    ///     QApplication::setFont(),) automatically schedules a redraw the entire
+    ///     scene.
+    /// 
+    ///     \sa QWidget::font, QApplication::setFont(), palette, style()
     font() -> Font,
     set_font(font: &FontType),
+    ///     \property QGraphicsScene::palette
+    ///     \since 4.4
+    ///     \brief the scene's default palette
+    /// 
+    ///     This property provides the scene's palette. The scene palette defaults to,
+    ///     and resolves all its entries from, QApplication::palette.
+    /// 
+    ///     If the scene's palette changes, either directly through setPalette() or
+    ///     indirectly when the application palette changes, QGraphicsScene first
+    ///     sends itself a \l{QEvent::PaletteChange}{PaletteChange} event, and it then
+    ///     sends \l{QEvent::PaletteChange}{PaletteChange} events to all top-level
+    ///     widget items in the scene. These items respond by resolving their own
+    ///     palettes to the scene, and they then notify their children, who again
+    ///     notify their children, and so on, until all widget items have updated
+    ///     their palettes.
+    /// 
+    ///     Changing the scene palette, (directly or indirectly through
+    ///     QApplication::setPalette(),) automatically schedules a redraw the entire
+    ///     scene.
+    /// 
+    ///     \sa QWidget::palette, QApplication::setPalette(), font, style()
     palette() -> Palette,
     set_palette(palette: &PaletteType),
+    ///     \since 4.6
+    /// 
+    ///     Returns \c true if the scene is active (e.g., it's viewed by
+    ///     at least one QGraphicsView that is active); otherwise returns \c false.
+    /// 
+    ///     \sa QGraphicsItem::isActive(), QWidget::isActiveWindow()
     is_active() -> bool,
+    ///     \since 4.6
+    ///     Returns the current active panel, or 0 if no panel is currently active.
+    /// 
+    ///     \sa QGraphicsScene::setActivePanel()
     active_panel() -> GraphicsItem?,
+    ///     \since 4.6
+    ///     Activates \a item, which must be an item in this scene. You
+    ///     can also pass 0 for \a item, in which case QGraphicsScene will
+    ///     deactivate any currently active panel.
+    /// 
+    ///     If the scene is currently inactive, \a item remains inactive until the
+    ///     scene becomes active (or, ir \a item is 0, no item will be activated).
+    /// 
+    ///     \sa activePanel(), isActive(), QGraphicsItem::isActive()
     set_active_panel(item: *GraphicsItemType),
+    ///     \since 4.4
+    /// 
+    ///     Returns the current active window, or 0 if no window is currently
+    ///     active.
+    /// 
+    ///     \sa QGraphicsScene::setActiveWindow()
     active_window() -> GraphicsWidget?,
+    ///     \since 4.4
+    ///     Activates \a widget, which must be a widget in this scene. You can also
+    ///     pass 0 for \a widget, in which case QGraphicsScene will deactivate any
+    ///     currently active window.
+    /// 
+    ///     \sa activeWindow(), QGraphicsWidget::isActiveWindow()
     set_active_window(widget: *GraphicsWidgetType),
+    ///     \since 4.6
+    /// 
+    ///     Sends event \a event to item \a item through possible event filters.
+    /// 
+    ///     The event is sent only if the item is enabled.
+    /// 
+    ///     Returns \c false if the event was filtered or if the item is disabled.
+    ///     Otherwise returns the value that was returned from the event handler.
+    /// 
+    ///     \sa QGraphicsItem::sceneEvent(), QGraphicsItem::sceneEventFilter()
     send_event(item: *GraphicsItemType, event: *EventType) -> bool,
+    ///     \property QGraphicsScene::minimumRenderSize
+    ///     \since 5.4
+    ///     \brief the minimal view-transformed size an item must have to be drawn
+    /// 
+    ///     When the scene is rendered, any item whose width or height, transformed
+    ///     to the target view, is smaller that minimumRenderSize(), will not be
+    ///     rendered. If an item is not rendered and it clips its children items
+    ///     they will also not be rendered. Set this value to speed up rendering
+    ///     of scenes with many objects rendered on a zoomed out view.
+    /// 
+    ///     The default value is 0. If unset, or if set to 0 or a negative value,
+    ///     all items will always be rendered.
+    /// 
+    ///     For example, setting this property can be especially useful if a scene
+    ///     is rendered by multiple views, one of which serves as an overview which
+    ///     always displays all items. In scenes with many items, such a view will
+    ///     use a high scaling factor so that all items can be shown. Due to the
+    ///     scaling, smaller items will only make an insignificant contribution to
+    ///     the final rendered scene. To avoid drawing these items and reduce the
+    ///     time necessary to render the scene, you can call setMinimumRenderSize()
+    ///     with a non-negative value.
+    /// 
+    ///     \note Items that are not drawn as a result of being too small, are still
+    ///     returned by methods such as items() and itemAt(), and participate in
+    ///     collision detection and interactions. It is recommended that you set
+    ///     minimumRenderSize() to a value less than or equal to 1 in order to
+    ///     avoid large unrendered items that are interactive.
+    /// 
+    ///     \sa QStyleOptionGraphicsItem::levelOfDetailFromTransform()
     minimum_render_size() -> f32,
     set_minimum_render_size(min_size: f32),
+    ///     \fn void QGraphicsScene::update(const QRectF &rect)
+    ///     Schedules a redraw of the area \a rect on the scene.
+    /// 
+    ///     \sa sceneRect(), changed()
     update(rect: &RectFType),
+    ///     Invalidates and schedules a redraw of the \a layers in \a rect on the
+    ///     scene. Any cached content in \a layers is unconditionally invalidated and
+    ///     redrawn.
+    /// 
+    ///     You can use this function overload to notify QGraphicsScene of changes to
+    ///     the background or the foreground of the scene. This function is commonly
+    ///     used for scenes with tile-based backgrounds to notify changes when
+    ///     QGraphicsView has enabled
+    ///     \l{QGraphicsView::CacheBackground}{CacheBackground}.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_gui_graphicsview_qgraphicsscene.cpp 5
+    /// 
+    ///     Note that QGraphicsView currently supports background caching only (see
+    ///     QGraphicsView::CacheBackground). This function is equivalent to calling
+    ///     update() if any layer but BackgroundLayer is passed.
+    /// 
+    ///     \sa QGraphicsView::resetCachedContent()
     invalidate(rect: &RectFType, layers: GraphicsScene::SceneLayers),
+    ///     This slot \e advances the scene by one step, by calling
+    ///     QGraphicsItem::advance() for all items on the scene. This is done in two
+    ///     phases: in the first phase, all items are notified that the scene is about
+    ///     to change, and in the second phase all items are notified that they can
+    ///     move. In the first phase, QGraphicsItem::advance() is called passing a
+    ///     value of 0 as an argument, and 1 is passed in the second phase.
+    /// 
+    ///     Note that you can also use the \l{The Animation Framework}{Animation
+    ///     Framework} for animations.
+    /// 
+    ///     \sa QGraphicsItem::advance(), QTimeLine
     advance(),
+    ///    Clears the current selection.
+    /// 
+    ///    \sa setSelectionArea(), selectedItems()
     clear_selection(),
+    ///     \since 4.4
+    /// 
+    ///     Removes and deletes all items from the scene, but otherwise leaves the
+    ///     state of the scene unchanged.
+    /// 
+    ///     \sa addItem()
     clear(),
+    ///     Processes the event \a event, and dispatches it to the respective
+    ///     event handlers.
+    /// 
+    ///     In addition to calling the convenience event handlers, this
+    ///     function is responsible for converting mouse move events to hover
+    ///     events for when there is no mouse grabber item. Hover events are
+    ///     delivered directly to items; there is no convenience function for
+    ///     them.
+    /// 
+    ///     Unlike QWidget, QGraphicsScene does not have the convenience functions
+    ///     \l{QWidget::}{enterEvent()} and \l{QWidget::}{leaveEvent()}. Use this
+    ///     function to obtain those events instead.
+    /// 
+    ///     \sa contextMenuEvent(), keyPressEvent(), keyReleaseEvent(),
+    ///     mousePressEvent(), mouseMoveEvent(), mouseReleaseEvent(),
+    ///     mouseDoubleClickEvent(), focusInEvent(), focusOutEvent()
     [event] event(event: *EventType) -> bool,
+    ///     \reimp
+    /// 
+    ///     QGraphicsScene filters QApplication's events to detect palette and font
+    ///     changes.
     [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
+    ///     This event handler, for event \a contextMenuEvent, can be reimplemented in
+    ///     a subclass to receive context menu events. The default implementation
+    ///     forwards the event to the topmost visible item that accepts context menu events at
+    ///     the position of the event. If no items accept context menu events at this
+    ///     position, the event is ignored.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::contextMenuEvent()
     [event] context_menu_event(event: *GraphicsSceneContextMenuEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a subclass
+    ///     to receive drag enter events for the scene.
+    /// 
+    ///     The default implementation accepts the event and prepares the scene to
+    ///     accept drag move events.
+    /// 
+    ///     \sa QGraphicsItem::dragEnterEvent(), dragMoveEvent(), dragLeaveEvent(),
+    ///     dropEvent()
     [event] drag_enter_event(event: *GraphicsSceneDragDropEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a subclass
+    ///     to receive drag move events for the scene.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::dragMoveEvent(), dragEnterEvent(), dragLeaveEvent(),
+    ///     dropEvent()
     [event] drag_move_event(event: *GraphicsSceneDragDropEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a subclass
+    ///     to receive drag leave events for the scene.
+    /// 
+    ///     \sa QGraphicsItem::dragLeaveEvent(), dragEnterEvent(), dragMoveEvent(),
+    ///     dropEvent()
     [event] drag_leave_event(event: *GraphicsSceneDragDropEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a subclass
+    ///     to receive drop events for the scene.
+    /// 
+    ///     \sa QGraphicsItem::dropEvent(), dragEnterEvent(), dragMoveEvent(),
+    ///     dragLeaveEvent()
     [event] drop_event(event: *GraphicsSceneDragDropEventType),
+    ///     This event handler, for event \a focusEvent, can be reimplemented in a
+    ///     subclass to receive focus in events.
+    /// 
+    ///     The default implementation sets focus on the scene, and then on the last
+    ///     focus item.
+    /// 
+    ///     \sa QGraphicsItem::focusOutEvent()
     [event] focus_in_event(event: *FocusEventType),
+    ///     This event handler, for event \a focusEvent, can be reimplemented in a
+    ///     subclass to receive focus out events.
+    /// 
+    ///     The default implementation removes focus from any focus item, then removes
+    ///     focus from the scene.
+    /// 
+    ///     \sa QGraphicsItem::focusInEvent()
     [event] focus_out_event(event: *FocusEventType),
+    ///     This event handler, for event \a helpEvent, can be
+    ///     reimplemented in a subclass to receive help events. The events
+    ///     are of type QEvent::ToolTip, which are created when a tooltip is
+    ///     requested.
+    /// 
+    ///     The default implementation shows the tooltip of the topmost
+    ///     visible item, i.e., the item with the highest z-value, at the mouse
+    ///     cursor position. If no item has a tooltip set, this function
+    ///     does nothing.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::toolTip(), QGraphicsSceneHelpEvent
     [event] help_event(event: *GraphicsSceneHelpEventType),
+    ///     This event handler, for event \a keyEvent, can be reimplemented in a
+    ///     subclass to receive keypress events. The default implementation forwards
+    ///     the event to current focus item.
+    /// 
+    ///     \sa QGraphicsItem::keyPressEvent(), focusItem()
     [event] key_press_event(event: *KeyEventType),
+    ///     This event handler, for event \a keyEvent, can be reimplemented in a
+    ///     subclass to receive key release events. The default implementation
+    ///     forwards the event to current focus item.
+    /// 
+    ///     \sa QGraphicsItem::keyReleaseEvent(), focusItem()
     [event] key_release_event(event: *KeyEventType),
+    ///     This event handler, for event \a mouseEvent, can be reimplemented
+    ///     in a subclass to receive mouse press events for the scene.
+    /// 
+    ///     The default implementation depends on the state of the scene. If
+    ///     there is a mouse grabber item, then the event is sent to the mouse
+    ///     grabber. Otherwise, it is forwarded to the topmost visible item that
+    ///     accepts mouse events at the scene position from the event, and
+    ///     that item promptly becomes the mouse grabber item.
+    /// 
+    ///     If there is no item at the given position on the scene, the
+    ///     selection area is reset, any focus item loses its input focus, and
+    ///     the event is then ignored.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::mousePressEvent(),
+    ///     QGraphicsItem::setAcceptedMouseButtons()
     [event] mouse_press_event(event: *GraphicsSceneMouseEventType),
+    ///     This event handler, for event \a mouseEvent, can be reimplemented
+    ///     in a subclass to receive mouse move events for the scene.
+    /// 
+    ///     The default implementation depends on the mouse grabber state. If there is
+    ///     a mouse grabber item, the event is sent to the mouse grabber.  If there
+    ///     are any items that accept hover events at the current position, the event
+    ///     is translated into a hover event and accepted; otherwise it's ignored.
+    /// 
+    ///     \sa QGraphicsItem::mousePressEvent(), QGraphicsItem::mouseReleaseEvent(),
+    ///     QGraphicsItem::mouseDoubleClickEvent(), QGraphicsItem::setAcceptedMouseButtons()
     [event] mouse_move_event(event: *GraphicsSceneMouseEventType),
+    ///     This event handler, for event \a mouseEvent, can be reimplemented
+    ///     in a subclass to receive mouse release events for the scene.
+    /// 
+    ///     The default implementation depends on the mouse grabber state.  If
+    ///     there is no mouse grabber, the event is ignored.  Otherwise, if
+    ///     there is a mouse grabber item, the event is sent to the mouse
+    ///     grabber. If this mouse release represents the last pressed button
+    ///     on the mouse, the mouse grabber item then loses the mouse grab.
+    /// 
+    ///     \sa QGraphicsItem::mousePressEvent(), QGraphicsItem::mouseMoveEvent(),
+    ///     QGraphicsItem::mouseDoubleClickEvent(), QGraphicsItem::setAcceptedMouseButtons()
     [event] mouse_release_event(event: *GraphicsSceneMouseEventType),
+    ///     This event handler, for event \a mouseEvent, can be reimplemented
+    ///     in a subclass to receive mouse doubleclick events for the scene.
+    /// 
+    ///     If someone doubleclicks on the scene, the scene will first receive
+    ///     a mouse press event, followed by a release event (i.e., a click),
+    ///     then a doubleclick event, and finally a release event. If the
+    ///     doubleclick event is delivered to a different item than the one
+    ///     that received the first press and release, it will be delivered as
+    ///     a press event. However, tripleclick events are not delivered as
+    ///     doubleclick events in this case.
+    /// 
+    ///     The default implementation is similar to mousePressEvent().
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::mousePressEvent(), QGraphicsItem::mouseMoveEvent(),
+    ///     QGraphicsItem::mouseReleaseEvent(), QGraphicsItem::setAcceptedMouseButtons()
     [event] mouse_double_click_event(event: *GraphicsSceneMouseEventType),
+    ///     This event handler, for event \a wheelEvent, can be reimplemented in a
+    ///     subclass to receive mouse wheel events for the scene.
+    /// 
+    ///     By default, the event is delivered to the topmost visible item under the
+    ///     cursor. If ignored, the event propagates to the item beneath, and again
+    ///     until the event is accepted, or it reaches the scene. If no items accept
+    ///     the event, it is ignored.
+    /// 
+    ///     Note: See items() for a definition of which items are considered visible by this function.
+    /// 
+    ///     \sa QGraphicsItem::wheelEvent()
     [event] wheel_event(event: *GraphicsSceneWheelEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive input method events for the scene.
+    /// 
+    ///     The default implementation forwards the event to the focusItem().
+    ///     If no item currently has focus or the current focus item does not
+    ///     accept input methods, this function does nothing.
+    /// 
+    ///     \sa QGraphicsItem::inputMethodEvent()
     [event] input_method_event(event: *InputMethodEventType),
+    ///     Draws the background of the scene using \a painter, before any items and
+    ///     the foreground are drawn. Reimplement this function to provide a custom
+    ///     background for the scene.
+    /// 
+    ///     All painting is done in \e scene coordinates. The \a rect
+    ///     parameter is the exposed rectangle.
+    /// 
+    ///     If all you want is to define a color, texture, or gradient for the
+    ///     background, you can call setBackgroundBrush() instead.
+    /// 
+    ///     \sa drawForeground(), drawItems()
     [event] draw_background(painter: *PainterType, rect: &RectFType),
+    ///     Draws the foreground of the scene using \a painter, after the background
+    ///     and all items have been drawn. Reimplement this function to provide a
+    ///     custom foreground for the scene.
+    /// 
+    ///     All painting is done in \e scene coordinates. The \a rect
+    ///     parameter is the exposed rectangle.
+    /// 
+    ///     If all you want is to define a color, texture or gradient for the
+    ///     foreground, you can call setForegroundBrush() instead.
+    /// 
+    ///     \sa drawBackground(), drawItems()
     [event] draw_foreground(painter: *PainterType, rect: &RectFType),
     [event] draw_items(painter: *PainterType, num_items: i32, items: *GraphicsItemType, options: StyleOptionGraphicsItemType, widget: *WidgetType),
+    ///     \since 4.4
+    /// 
+    ///     Finds a new widget to give the keyboard focus to, as appropriate for Tab
+    ///     and Shift+Tab, and returns \c true if it can find a new widget, or false if
+    ///     it cannot. If \a next is true, this function searches forward; if \a next
+    ///     is false, it searches backward.
+    /// 
+    ///     You can reimplement this function in a subclass of QGraphicsScene to
+    ///     provide fine-grained control over how tab focus passes inside your
+    ///     scene. The default implementation is based on the tab focus chain defined
+    ///     by QGraphicsWidget::setTabOrder().
     focus_next_prev_child(next: bool) -> bool,
     [signal] changed(region: [RectFType]),
     [signal] scene_rect_changed(rect: &RectFType),

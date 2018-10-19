@@ -1,3 +1,9 @@
+///     \class QStyleHintReturnVariant
+///     \brief The QStyleHintReturnVariant class provides style hints that return a QVariant.
+///     \since 4.3
+///     \ingroup appearance
+///     \inmodule QtWidgets
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleHintReturnVariant)]
 enum StyleOptionType {
     Type,

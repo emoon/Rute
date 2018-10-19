@@ -1,3 +1,20 @@
+///     \class QGraphicsBlurEffect
+///     \brief The QGraphicsBlurEffect class provides a blur effect.
+///     \since 4.6
+///     \inmodule QtWidgets
+/// 
+///     A blur effect blurs the source. This effect is useful for reducing details,
+///     such as when the source loses focus and you want to draw attention to other
+///     elements. The level of detail can be modified using the setBlurRadius()
+///     function. Use setBlurHints() to choose the blur hints.
+/// 
+///     By default, the blur radius is 5 pixels. The blur radius is specified in
+///     device coordinates.
+/// 
+///     \image graphicseffect-blur.png
+/// 
+///     \sa QGraphicsDropShadowEffect, QGraphicsColorizeEffect, QGraphicsOpacityEffect
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QGraphicsBlurEffect)]
 enum BlurHint {
     PerformanceHint,
@@ -6,13 +23,33 @@ enum BlurHint {
 }
 
 struct GraphicsBlurEffect : GraphicsEffect {
+    ///     \reimp
     [event] bounding_rect_for(rect: &RectFType) -> RectF,
+    ///     \property QGraphicsBlurEffect::blurRadius
+    ///     \brief the blur radius of the effect.
+    /// 
+    ///     Using a smaller radius results in a sharper appearance, whereas a bigger
+    ///     radius results in a more blurred appearance.
+    /// 
+    ///     By default, the blur radius is 5 pixels.
+    /// 
+    ///     The radius is given in device coordinates, meaning it is
+    ///     unaffected by scale.
     blur_radius() -> f32,
+    ///     \property QGraphicsBlurEffect::blurHints
+    ///     \brief the blur hint of the effect.
+    /// 
+    ///     Use the PerformanceHint hint to say that you want a faster blur,
+    ///     the QualityHint hint to say that you prefer a higher quality blur,
+    ///     or the AnimationHint when you want to animate the blur radius.
+    /// 
+    ///     By default, the blur hint is PerformanceHint.
     blur_hints() -> GraphicsBlurEffect::BlurHints,
     set_blur_radius(blur_radius: f32),
     set_blur_hints(hints: GraphicsBlurEffect::BlurHints),
     [signal] blur_radius_changed(blur_radius: f32),
     [signal] blur_hints_changed(hints: GraphicsBlurEffect::BlurHints),
+    ///     \reimp
     [event] draw(painter: *PainterType),
 }
 

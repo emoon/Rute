@@ -1,3 +1,19 @@
+///     \class QStyleHintReturn
+///     \brief The QStyleHintReturn class provides style hints that return more
+///     than basic data types.
+/// 
+///     \ingroup appearance
+///     \inmodule QtWidgets
+/// 
+///     QStyleHintReturn and its subclasses are used to pass information
+///     from a style back to the querying widget. This is most useful
+///     when the return value from QStyle::styleHint() does not provide enough
+///     detail; for example, when a mask is to be returned.
+/// 
+///     \omit
+///     ### --Sam
+///     \endomit
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QStyleHintReturn)]
 enum HintReturnType {
     SH_Default,

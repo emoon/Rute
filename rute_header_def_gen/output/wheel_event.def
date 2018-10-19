@@ -1,3 +1,34 @@
+///     \class QWheelEvent
+///     \brief The QWheelEvent class contains parameters that describe a wheel event.
+///     \inmodule QtGui
+/// 
+///     \ingroup events
+/// 
+///     Wheel events are sent to the widget under the mouse cursor, but
+///     if that widget does not handle the event they are sent to the
+///     focus widget. Wheel events are generated for both mouse wheels
+///     and trackpad scroll gestures. There are two ways to read the
+///     wheel event delta: angleDelta() returns the delta in wheel
+///     degrees. This value is always provided. pixelDelta() returns
+///     the delta in screen pixels and is available on platforms that
+///     have high-resolution trackpads, such as \macos. If that is the
+///     case, source() will return Qt::MouseEventSynthesizedBySystem.
+/// 
+///     The functions pos() and globalPos() return the mouse cursor's
+///     location at the time of the event.
+/// 
+///     A wheel event contains a special accept flag that indicates
+///     whether the receiver wants the event. You should call ignore() if
+///     you do not handle the wheel event; this ensures that it will be
+///     sent to the parent widget.
+/// 
+///     The QWidget::setEnabled() function can be used to enable or
+///     disable mouse and keyboard events for a widget.
+/// 
+///     The event handler QWidget::wheelEvent() receives wheel events.
+/// 
+///     \sa QMouseEvent, QWidget::grabMouse()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QWheelEvent)]
 enum WheelEventFixMeEnums {
     DefaultDeltasPerStep,

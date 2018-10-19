@@ -47,6 +47,7 @@
 ///     instead (see example above).
 /// 
 ///     \sa QSplitterHandle, QHBoxLayout, QVBoxLayout, QTabWidget
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct Splitter : Frame {
     ///     Adds the given \a widget to the splitter's layout after all the other
     ///     items.

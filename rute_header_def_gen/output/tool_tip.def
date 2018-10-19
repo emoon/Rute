@@ -1,14 +1,87 @@
+///     \class QToolTip
+/// 
+///     \brief The QToolTip class provides tool tips (balloon help) for any
+///     widget.
+/// 
+///     \ingroup helpsystem
+///     \inmodule QtWidgets
+/// 
+///     The tip is a short piece of text reminding the user of the
+///     widget's function. It is drawn immediately below the given
+///     position in a distinctive black-on-yellow color combination. The
+///     tip can be any \l{QTextEdit}{rich text} formatted string.
+/// 
+///     Rich text displayed in a tool tip is implicitly word-wrapped unless
+///     specified differently with \c{<p style='white-space:pre'>}.
+/// 
+///     The simplest and most common way to set a widget's tool tip is by
+///     calling its QWidget::setToolTip() function.
+/// 
+///     It is also possible to show different tool tips for different
+///     regions of a widget, by using a QHelpEvent of type
+///     QEvent::ToolTip. Intercept the help event in your widget's \l
+///     {QWidget::}{event()} function and call QToolTip::showText() with
+///     the text you want to display. The \l{widgets/tooltips}{Tooltips}
+///     example illustrates this technique.
+/// 
+///     If you are calling QToolTip::hideText(), or QToolTip::showText()
+///     with an empty string, as a result of a \l{QEvent::}{ToolTip}-event you
+///     should also call \l{QEvent::}{ignore()} on the event, to signal
+///     that you don't want to start any tooltip specific modes.
+/// 
+///     Note that, if you want to show tooltips in an item view, the
+///     model/view architecture provides functionality to set an item's
+///     tool tip; e.g., the QTableWidgetItem::setToolTip() function.
+///     However, if you want to provide custom tool tips in an item view,
+///     you must intercept the help event in the
+///     QAbstractItemView::viewportEvent() function and handle it yourself.
+/// 
+///     The default tool tip color and font can be customized with
+///     setPalette() and setFont(). When a tooltip is currently on
+///     display, isVisible() returns \c true and text() the currently visible
+///     text.
+/// 
+///     \note Tool tips use the inactive color group of QPalette, because tool
+///     tips are not active windows.
+/// 
+///     \sa QWidget::toolTip, QAction::toolTip, {Tool Tips Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ToolTip {
+    ///     \overload
+    /// 
+    ///     This is analogous to calling QToolTip::showText(\a pos, \a text, \a w, QRect())
     [static] show_text(pos: &PointType, text: String, w: *WidgetType),
+    ///     \overload
+    /// 
+    ///     This is analogous to calling QToolTip::showText(\a pos, \a text, \a w, QRect())
     [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType),
+    ///     \overload
+    /// 
+    ///     This is analogous to calling QToolTip::showText(\a pos, \a text, \a w, QRect())
     [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType, msec_show_time: i32),
     [static] hide_text(),
     [static] is_visible() -> bool,
     [static] text() -> String,
+    ///     Returns the palette used to render tooltips.
+    /// 
+    ///     \note Tool tips use the inactive color group of QPalette, because tool
+    ///     tips are not active windows.
     [static] palette() -> Palette,
+    ///     \since 4.2
+    /// 
+    ///     Sets the \a palette used to render tooltips.
+    /// 
+    ///     \note Tool tips use the inactive color group of QPalette, because tool
+    ///     tips are not active windows.
     [static] set_palette(arg0: &PaletteType),
+    ///     \since 4.2
+    /// 
+    ///     Returns the font used to render tooltips.
     [static] font() -> Font,
+    ///     \since 4.2
+    /// 
+    ///     Sets the \a font used to render tooltips.
     [static] set_font(arg0: &FontType),
 }
 

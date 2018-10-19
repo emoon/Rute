@@ -1,11 +1,76 @@
+///     \class QTextList
+///     \reentrant
+/// 
+///     \brief The QTextList class provides a decorated list of items in a QTextDocument.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+/// 
+///     A list contains a sequence of text blocks, each of which is marked with a
+///     bullet point or other symbol. Multiple levels of lists can be used, and
+///     the automatic numbering feature provides support for ordered numeric and
+///     alphabetical lists.
+/// 
+///     Lists are created by using a text cursor to insert an empty list at the
+///     current position or by moving existing text into a new list.
+///     The \l{QTextCursor::insertList()} function inserts an empty block into the
+///     document at the cursor position, and makes it the first item in a list.
+/// 
+///     \snippet textdocument-lists/mainwindow.cpp 0
+/// 
+///     The \l{QTextCursor::createList()} function takes the contents of the
+///     cursor's current block and turns it into the first item of a new list.
+/// 
+///     The cursor's current list is found with \l{QTextCursor::currentList()}.
+/// 
+///     The number of items in a list is given by count(). Each item can be
+///     obtained by its index in the list with the item() function. Similarly,
+///     the index of a given item can be found with itemNumber(). The text of
+///     each item can be found with the itemText() function.
+/// 
+///     Note that the items in the list may not be adjacent elements in the
+///     document. For example, the top-level items in a multi-level list will
+///     be separated by the items in lower levels of the list.
+/// 
+///     List items can be deleted by index with the removeItem() function.
+///     remove() deletes the specified item in the list.
+/// 
+///     The list's format is set with setFormat() and read with format().
+///     The format describes the decoration of the list itself, and not the
+///     individual items.
+/// 
+///     \sa QTextBlock, QTextListFormat, QTextCursor
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextList : TextBlockGroup {
+    ///     Returns the number of items in the list.
     count() -> i32,
     is_empty() -> bool,
+    ///     Returns the \a{i}-th text block in the list.
+    /// 
+    ///     \sa count(), itemText()
     item(i: i32) -> TextBlock,
+    ///     \fn int QTextList::itemNumber(const QTextBlock &block) const
+    /// 
+    ///     Returns the index of the list item that corresponds to the given \a block.
+    ///     Returns -1 if the block was not present in the list.
     item_number(arg0: &TextBlockType) -> i32,
+    ///     \fn QString QTextList::itemText(const QTextBlock &block) const
+    /// 
+    ///     Returns the text of the list item that corresponds to the given \a block.
     item_text(arg0: &TextBlockType) -> String,
+    ///     Removes the item at item position \a i from the list. When the last item in the
+    ///     list is removed, the list is automatically deleted by the QTextDocument that owns
+    ///     it.
+    /// 
+    ///     \sa add(), remove()
     remove_item(i: i32),
+    ///     Removes the given \a block from the list.
+    /// 
+    ///     \sa add(), removeItem()
     remove(arg0: &TextBlockType),
+    ///     Makes the given \a block part of the list.
+    /// 
+    ///     \sa remove(), removeItem()
     add(block: &TextBlockType),
     set_format(format: &TextListFormatType),
     format() -> TextListFormat,

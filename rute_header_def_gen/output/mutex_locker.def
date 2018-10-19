@@ -1,3 +1,54 @@
+///     \class QMutexLocker
+///     \inmodule QtCore
+///     \brief The QMutexLocker class is a convenience class that simplifies
+///     locking and unlocking mutexes.
+/// 
+///     \threadsafe
+/// 
+///     \ingroup thread
+/// 
+///     Locking and unlocking a QMutex in complex functions and
+///     statements or in exception handling code is error-prone and
+///     difficult to debug. QMutexLocker can be used in such situations
+///     to ensure that the state of the mutex is always well-defined.
+/// 
+///     QMutexLocker should be created within a function where a
+///     QMutex needs to be locked. The mutex is locked when QMutexLocker
+///     is created. You can unlock and relock the mutex with \c unlock()
+///     and \c relock(). If locked, the mutex will be unlocked when the
+///     QMutexLocker is destroyed.
+/// 
+///     For example, this complex function locks a QMutex upon entering
+///     the function and unlocks the mutex at all the exit points:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 4
+/// 
+///     This example function will get more complicated as it is
+///     developed, which increases the likelihood that errors will occur.
+/// 
+///     Using QMutexLocker greatly simplifies the code, and makes it more
+///     readable:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 5
+/// 
+///     Now, the mutex will always be unlocked when the QMutexLocker
+///     object is destroyed (when the function returns since \c locker is
+///     an auto variable).
+/// 
+///     The same principle applies to code that throws and catches
+///     exceptions. An exception that is not caught in the function that
+///     has locked the mutex has no way of unlocking the mutex before the
+///     exception is passed up the stack to the calling function.
+/// 
+///     QMutexLocker also provides a \c mutex() member function that returns
+///     the mutex on which the QMutexLocker is operating. This is useful
+///     for code that needs access to the mutex, such as
+///     QWaitCondition::wait(). For example:
+/// 
+///     \snippet code/src_corelib_thread_qmutex.cpp 6
+/// 
+///     \sa QReadLocker, QWriteLocker, QMutex
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct MutexLocker {
     unlock(),

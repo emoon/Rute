@@ -1,32 +1,359 @@
+///     \class QFile
+///     \inmodule QtCore
+///     \brief The QFile class provides an interface for reading from and writing to files.
+/// 
+///     \ingroup io
+/// 
+///     \reentrant
+/// 
+///     QFile is an I/O device for reading and writing text and binary
+///     files and \l{The Qt Resource System}{resources}. A QFile may be
+///     used by itself or, more conveniently, with a QTextStream or
+///     QDataStream.
+/// 
+///     The file name is usually passed in the constructor, but it can be
+///     set at any time using setFileName(). QFile expects the file
+///     separator to be '/' regardless of operating system. The use of
+///     other separators (e.g., '\\') is not supported.
+/// 
+///     You can check for a file's existence using exists(), and remove a
+///     file using remove(). (More advanced file system related operations
+///     are provided by QFileInfo and QDir.)
+/// 
+///     The file is opened with open(), closed with close(), and flushed
+///     with flush(). Data is usually read and written using QDataStream
+///     or QTextStream, but you can also call the QIODevice-inherited
+///     functions read(), readLine(), readAll(), write(). QFile also
+///     inherits getChar(), putChar(), and ungetChar(), which work one
+///     character at a time.
+/// 
+///     The size of the file is returned by size(). You can get the
+///     current file position using pos(), or move to a new file position
+///     using seek(). If you've reached the end of the file, atEnd()
+///     returns \c true.
+/// 
+///     \section1 Reading Files Directly
+/// 
+///     The following example reads a text file line by line:
+/// 
+///     \snippet file/file.cpp 0
+/// 
+///     The QIODevice::Text flag passed to open() tells Qt to convert
+///     Windows-style line terminators ("\\r\\n") into C++-style
+///     terminators ("\\n"). By default, QFile assumes binary, i.e. it
+///     doesn't perform any conversion on the bytes stored in the file.
+/// 
+///     \section1 Using Streams to Read Files
+/// 
+///     The next example uses QTextStream to read a text file
+///     line by line:
+/// 
+///     \snippet file/file.cpp 1
+/// 
+///     QTextStream takes care of converting the 8-bit data stored on
+///     disk into a 16-bit Unicode QString. By default, it assumes that
+///     the user system's local 8-bit encoding is used (e.g., UTF-8
+///     on most unix based operating systems; see QTextCodec::codecForLocale() for
+///     details). This can be changed using \l QTextStream::setCodec().
+/// 
+///     To write text, we can use operator<<(), which is overloaded to
+///     take a QTextStream on the left and various data types (including
+///     QString) on the right:
+/// 
+///     \snippet file/file.cpp 2
+/// 
+///     QDataStream is similar, in that you can use operator<<() to write
+///     data and operator>>() to read it back. See the class
+///     documentation for details.
+/// 
+///     When you use QFile, QFileInfo, and QDir to access the file system
+///     with Qt, you can use Unicode file names. On Unix, these file
+///     names are converted to an 8-bit encoding. If you want to use
+///     standard C++ APIs (\c <cstdio> or \c <iostream>) or
+///     platform-specific APIs to access files instead of QFile, you can
+///     use the encodeName() and decodeName() functions to convert
+///     between Unicode file names and 8-bit file names.
+/// 
+///     On Unix, there are some special system files (e.g. in \c /proc) for which
+///     size() will always return 0, yet you may still be able to read more data
+///     from such a file; the data is generated in direct response to you calling
+///     read(). In this case, however, you cannot use atEnd() to determine if
+///     there is more data to read (since atEnd() will return true for a file that
+///     claims to have size 0). Instead, you should either call readAll(), or call
+///     read() or readLine() repeatedly until no more data can be read. The next
+///     example uses QTextStream to read \c /proc/modules line by line:
+/// 
+///     \snippet file/file.cpp 3
+/// 
+///     \section1 Signals
+/// 
+///     Unlike other QIODevice implementations, such as QTcpSocket, QFile does not
+///     emit the aboutToClose(), bytesWritten(), or readyRead() signals. This
+///     implementation detail means that QFile is not suitable for reading and
+///     writing certain types of files, such as device files on Unix platforms.
+/// 
+///     \section1 Platform Specific Issues
+/// 
+///     File permissions are handled differently on Unix-like systems and
+///     Windows.  In a non \l{QIODevice::isWritable()}{writable}
+///     directory on Unix-like systems, files cannot be created. This is not always
+///     the case on Windows, where, for instance, the 'My Documents'
+///     directory usually is not writable, but it is still possible to
+///     create files in it.
+/// 
+///     Qt's understanding of file permissions is limited, which affects especially
+///     the \l QFile::setPermissions() function. On Windows, Qt will set only the
+///     legacy read-only flag, and that only when none of the Write* flags are
+///     passed. Qt does not manipulate access control lists (ACLs), which makes this
+///     function mostly useless for NTFS volumes. It may still be of use for USB
+///     sticks that use VFAT file systems. POSIX ACLs are not manipulated, either.
+/// 
+///     \sa QTextStream, QDataStream, QFileInfo, QDir, {The Qt Resource System}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct File : FileDevice {
+    ///     Returns the name set by setFileName() or to the QFile
+    ///     constructors.
+    /// 
+    ///     \sa setFileName(), QFileInfo::fileName()
     [event] file_name() -> String,
+    ///     Sets the \a name of the file. The name can have no path, a
+    ///     relative path, or an absolute path.
+    /// 
+    ///     Do not call this function if the file has already been opened.
+    /// 
+    ///     If the file name has no path or a relative path, the path used
+    ///     will be the application's current directory path
+    ///     \e{at the time of the open()} call.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_corelib_io_qfile.cpp 0
+    /// 
+    ///     Note that the directory separator "/" works for all operating
+    ///     systems supported by Qt.
+    /// 
+    ///     \sa fileName(), QFileInfo, QDir
     set_file_name(name: String),
     [static] encode_name(file_name: String) -> ByteArray,
     [static] decode_name(local_file_name: &ByteArrayType) -> String,
     [static] decode_name(local_file_name: *char) -> String,
+    ///     Returns \c true if the file specified by \a fileName exists; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \note If \a fileName is a symlink that points to a non-existing
+    ///     file, false is returned.
     exists() -> bool,
+    ///     Returns \c true if the file specified by \a fileName exists; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \note If \a fileName is a symlink that points to a non-existing
+    ///     file, false is returned.
     [static] exists(file_name: String) -> bool,
+    ///     \obsolete
+    /// 
+    ///     Use symLinkTarget() instead.
     read_link() -> String,
+    ///     \obsolete
+    /// 
+    ///     Use symLinkTarget() instead.
     [static] read_link(file_name: String) -> String,
     sym_link_target() -> String,
     [static] sym_link_target(file_name: String) -> String,
+    ///     \overload
+    /// 
+    ///     Removes the file specified by the \a fileName given.
+    /// 
+    ///     Returns \c true if successful; otherwise returns \c false.
+    /// 
+    ///     \sa remove()
     remove() -> bool,
+    ///     \overload
+    /// 
+    ///     Removes the file specified by the \a fileName given.
+    /// 
+    ///     Returns \c true if successful; otherwise returns \c false.
+    /// 
+    ///     \sa remove()
     [static] remove(file_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Renames the file \a oldName to \a newName. Returns \c true if
+    ///     successful; otherwise returns \c false.
+    /// 
+    ///     If a file with the name \a newName already exists, rename() returns \c false
+    ///     (i.e., QFile will not overwrite it).
+    /// 
+    ///     \sa rename()
     rename(new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Renames the file \a oldName to \a newName. Returns \c true if
+    ///     successful; otherwise returns \c false.
+    /// 
+    ///     If a file with the name \a newName already exists, rename() returns \c false
+    ///     (i.e., QFile will not overwrite it).
+    /// 
+    ///     \sa rename()
     [static] rename(old_name: String, new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Creates a link named \a linkName that points to the file \a fileName. What a link is
+    ///     depends on the underlying filesystem (be it a shortcut on Windows
+    ///     or a symbolic link on Unix). Returns \c true if successful; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa link()
     link(new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Creates a link named \a linkName that points to the file \a fileName. What a link is
+    ///     depends on the underlying filesystem (be it a shortcut on Windows
+    ///     or a symbolic link on Unix). Returns \c true if successful; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa link()
     [static] link(oldname: String, new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Copies the file \a fileName to \a newName. Returns \c true if successful;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If a file with the name \a newName already exists, copy() returns \c false
+    ///     (i.e., QFile will not overwrite it).
+    /// 
+    ///     \sa rename()
     copy(new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Copies the file \a fileName to \a newName. Returns \c true if successful;
+    ///     otherwise returns \c false.
+    /// 
+    ///     If a file with the name \a newName already exists, copy() returns \c false
+    ///     (i.e., QFile will not overwrite it).
+    /// 
+    ///     \sa rename()
     [static] copy(file_name: String, new_name: String) -> bool,
+    ///     \overload
+    /// 
+    ///     Opens the existing file descriptor \a fd in the given \a mode.
+    ///     \a handleFlags may be used to specify additional options.
+    ///     Returns \c true if successful; otherwise returns \c false.
+    /// 
+    ///     When a QFile is opened using this function, behaviour of close() is
+    ///     controlled by the AutoCloseHandle flag.
+    ///     If AutoCloseHandle is specified, and this function succeeds,
+    ///     then calling close() closes the adopted handle.
+    ///     Otherwise, close() does not actually close the file, but only flushes it.
+    /// 
+    ///     The QFile that is opened using this function is automatically set
+    ///     to be in raw mode; this means that the file input/output functions
+    ///     are slow. If you run into performance issues, you should try to
+    ///     use one of the other open functions.
+    /// 
+    ///     \warning If \a fd is not a regular file, e.g, it is 0 (\c stdin),
+    ///     1 (\c stdout), or 2 (\c stderr), you may not be able to seek(). In
+    ///     those cases, size() returns \c 0.  See QIODevice::isSequential()
+    ///     for more information.
+    /// 
+    ///     \warning Since this function opens the file without specifying the file name,
+    ///              you cannot use this QFile with a QFileInfo.
+    /// 
+    ///     \sa close()
     [event] open(flags: IODevice::OpenMode) -> bool,
+    ///     \overload
+    /// 
+    ///     Opens the existing file descriptor \a fd in the given \a mode.
+    ///     \a handleFlags may be used to specify additional options.
+    ///     Returns \c true if successful; otherwise returns \c false.
+    /// 
+    ///     When a QFile is opened using this function, behaviour of close() is
+    ///     controlled by the AutoCloseHandle flag.
+    ///     If AutoCloseHandle is specified, and this function succeeds,
+    ///     then calling close() closes the adopted handle.
+    ///     Otherwise, close() does not actually close the file, but only flushes it.
+    /// 
+    ///     The QFile that is opened using this function is automatically set
+    ///     to be in raw mode; this means that the file input/output functions
+    ///     are slow. If you run into performance issues, you should try to
+    ///     use one of the other open functions.
+    /// 
+    ///     \warning If \a fd is not a regular file, e.g, it is 0 (\c stdin),
+    ///     1 (\c stdout), or 2 (\c stderr), you may not be able to seek(). In
+    ///     those cases, size() returns \c 0.  See QIODevice::isSequential()
+    ///     for more information.
+    /// 
+    ///     \warning Since this function opens the file without specifying the file name,
+    ///              you cannot use this QFile with a QFileInfo.
+    /// 
+    ///     \sa close()
     open(f: *i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
+    ///     \overload
+    /// 
+    ///     Opens the existing file descriptor \a fd in the given \a mode.
+    ///     \a handleFlags may be used to specify additional options.
+    ///     Returns \c true if successful; otherwise returns \c false.
+    /// 
+    ///     When a QFile is opened using this function, behaviour of close() is
+    ///     controlled by the AutoCloseHandle flag.
+    ///     If AutoCloseHandle is specified, and this function succeeds,
+    ///     then calling close() closes the adopted handle.
+    ///     Otherwise, close() does not actually close the file, but only flushes it.
+    /// 
+    ///     The QFile that is opened using this function is automatically set
+    ///     to be in raw mode; this means that the file input/output functions
+    ///     are slow. If you run into performance issues, you should try to
+    ///     use one of the other open functions.
+    /// 
+    ///     \warning If \a fd is not a regular file, e.g, it is 0 (\c stdin),
+    ///     1 (\c stdout), or 2 (\c stderr), you may not be able to seek(). In
+    ///     those cases, size() returns \c 0.  See QIODevice::isSequential()
+    ///     for more information.
+    /// 
+    ///     \warning Since this function opens the file without specifying the file name,
+    ///              you cannot use this QFile with a QFileInfo.
+    /// 
+    ///     \sa close()
     open(fd: i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
+    ///   \reimp
     [event] size() -> i64,
+    ///     \overload
+    /// 
+    ///     Sets \a fileName to size (in bytes) \a sz. Returns \c true if
+    ///     the resize succeeds; false otherwise. If \a sz is larger than \a
+    ///     fileName currently is the new bytes will be set to 0, if \a sz is
+    ///     smaller the file is simply truncated.
+    /// 
+    ///     \warning This function can fail if the file doesn't exist.
+    /// 
+    ///     \sa resize()
     [event] resize(sz: i64) -> bool,
+    ///     \overload
+    /// 
+    ///     Sets \a fileName to size (in bytes) \a sz. Returns \c true if
+    ///     the resize succeeds; false otherwise. If \a sz is larger than \a
+    ///     fileName currently is the new bytes will be set to 0, if \a sz is
+    ///     smaller the file is simply truncated.
+    /// 
+    ///     \warning This function can fail if the file doesn't exist.
+    /// 
+    ///     \sa resize()
     [static] resize(filename: String, sz: i64) -> bool,
+    ///     \overload
+    /// 
+    ///     Returns the complete OR-ed together combination of
+    ///     QFile::Permission for \a fileName.
     [event] permissions() -> FileDevice::Permissions,
+    ///     \overload
+    /// 
+    ///     Returns the complete OR-ed together combination of
+    ///     QFile::Permission for \a fileName.
     [static] permissions(filename: String) -> FileDevice::Permissions,
+    ///     \overload
+    /// 
+    ///     Sets the permissions for \a fileName file to \a permissions.
     [event] set_permissions(permission_spec: FileDevice::Permissions) -> bool,
+    ///     \overload
+    /// 
+    ///     Sets the permissions for \a fileName file to \a permissions.
     [static] set_permissions(filename: String, permission_spec: FileDevice::Permissions) -> bool,
 }
 

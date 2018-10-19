@@ -1,10 +1,41 @@
+///     \class QScrollPrepareEvent
+///     \since 4.8
+///     \ingroup events
+///     \inmodule QtGui
+/// 
+///     \brief The QScrollPrepareEvent class is sent in preparation of scrolling.
+/// 
+///     The scroll prepare event is sent before scrolling (usually by QScroller) is started.
+///     The object receiving this event should set viewportSize, maxContentPos and contentPos.
+///     It also should accept this event to indicate that scrolling should be started.
+/// 
+///     It is not guaranteed that a QScrollEvent will be sent after an acceepted
+///     QScrollPrepareEvent, e.g. in a case where the maximum content position is (0,0).
+/// 
+///     \sa QScrollEvent, QScroller
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ScrollPrepareEvent : Event {
+    ///     Returns the position of the touch or mouse event that started the scrolling.
     start_pos() -> PointF,
+    ///     Returns size of the area that is to be scrolled as set by setViewportSize
+    /// 
+    ///     \sa setViewportSize()
     viewport_size() -> SizeF,
+    ///     Returns the range of coordinates for the content as set by setContentPosRange().
     content_pos_range() -> RectF,
+    ///     Returns the current position of the content as set by setContentPos.
     content_pos() -> PointF,
+    ///     Sets the size of the area that is to be scrolled to \a size.
+    /// 
+    ///     \sa viewportSize()
     set_viewport_size(size: &SizeFType),
+    ///     Sets the range of content coordinates to \a rect.
+    /// 
+    ///     \sa contentPosRange()
     set_content_pos_range(rect: &RectFType),
+    ///     Sets the current content position to \a pos.
+    /// 
+    ///     \sa contentPos()
     set_content_pos(pos: &PointFType),
 }
 

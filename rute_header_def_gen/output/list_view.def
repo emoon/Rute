@@ -1,3 +1,60 @@
+///     \class QListView
+/// 
+///     \brief The QListView class provides a list or icon view onto a model.
+/// 
+///     \ingroup model-view
+///     \ingroup advanced
+///     \inmodule QtWidgets
+/// 
+///     \image windows-listview.png
+/// 
+///     A QListView presents items stored in a model, either as a simple
+///     non-hierarchical list, or as a collection of icons. This class is used
+///     to provide lists and icon views that were previously provided by the
+///     \c QListBox and \c QIconView classes, but using the more flexible
+///     approach provided by Qt's model/view architecture.
+/// 
+///     The QListView class is one of the \l{Model/View Classes}
+///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// 
+///     This view does not display horizontal or vertical headers; to display
+///     a list of items with a horizontal header, use QTreeView instead.
+/// 
+///     QListView implements the interfaces defined by the
+///     QAbstractItemView class to allow it to display data provided by
+///     models derived from the QAbstractItemModel class.
+/// 
+///     Items in a list view can be displayed using one of two view modes:
+///     In \l ListMode, the items are displayed in the form of a simple list;
+///     in \l IconMode, the list view takes the form of an \e{icon view} in
+///     which the items are displayed with icons like files in a file manager.
+///     By default, the list view is in \l ListMode. To change the view mode,
+///     use the setViewMode() function, and to determine the current view mode,
+///     use viewMode().
+/// 
+///     Items in these views are laid out in the direction specified by the
+///     flow() of the list view. The items may be fixed in place, or allowed
+///     to move, depending on the view's movement() state.
+/// 
+///     If the items in the model cannot be completely laid out in the
+///     direction of flow, they can be wrapped at the boundary of the view
+///     widget; this depends on isWrapping(). This property is useful when the
+///     items are being represented by an icon view.
+/// 
+///     The resizeMode() and layoutMode() govern how and when the items are
+///     laid out. Items are spaced according to their spacing(), and can exist
+///     within a notional grid of size specified by gridSize(). The items can
+///     be rendered as large or small icons depending on their iconSize().
+/// 
+///     \section1 Improving Performance
+/// 
+///     It is possible to give the view hints about the data it is handling in order
+///     to improve its performance when displaying large numbers of items. One approach
+///     that can be taken for views that are intended to display items with equal sizes
+///     is to set the \l uniformItemSizes property to true.
+/// 
+///     \sa {View Classes}, {Item Views Puzzle Example}, QTreeView, QTableView, QListWidget
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QListView)]
 enum Movement {
     Static,
@@ -30,71 +87,285 @@ enum ViewMode {
 }
 
 struct ListView : AbstractItemView {
+    ///     \property QListView::movement
+    ///     \brief whether the items can be moved freely, are snapped to a
+    ///     grid, or cannot be moved at all.
+    /// 
+    ///     This property determines how the user can move the items in the
+    ///     view. \l Static means that the items can't be moved the user. \l
+    ///     Free means that the user can drag and drop the items to any
+    ///     position in the view. \l Snap means that the user can drag and
+    ///     drop the items, but only to the positions in a notional grid
+    ///     signified by the gridSize property.
+    /// 
+    ///     Setting this property when the view is visible will cause the
+    ///     items to be laid out again.
+    /// 
+    ///     By default, this property is set to \l Static.
+    /// 
+    ///     \sa gridSize, resizeMode, viewMode
     set_movement(movement: ListView::Movement),
     movement() -> ListView::Movement,
+    ///     \property QListView::flow
+    ///     \brief which direction the items layout should flow.
+    /// 
+    ///     If this property is \l LeftToRight, the items will be laid out left
+    ///     to right. If the \l isWrapping property is \c true, the layout will wrap
+    ///     when it reaches the right side of the visible area. If this
+    ///     property is \l TopToBottom, the items will be laid out from the top
+    ///     of the visible area, wrapping when it reaches the bottom.
+    /// 
+    ///     Setting this property when the view is visible will cause the
+    ///     items to be laid out again.
+    /// 
+    ///     By default, this property is set to \l TopToBottom.
+    /// 
+    ///     \sa viewMode
     set_flow(flow: ListView::Flow),
     flow() -> ListView::Flow,
+    ///     \property QListView::isWrapping
+    ///     \brief whether the items layout should wrap.
+    /// 
+    ///     This property holds whether the layout should wrap when there is
+    ///     no more space in the visible area. The point at which the layout wraps
+    ///     depends on the \l flow property.
+    /// 
+    ///     Setting this property when the view is visible will cause the
+    ///     items to be laid out again.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa viewMode
     set_wrapping(enable: bool),
     is_wrapping() -> bool,
+    ///     \property QListView::resizeMode
+    ///     \brief whether the items are laid out again when the view is resized.
+    /// 
+    ///     If this property is \l Adjust, the items will be laid out again
+    ///     when the view is resized. If the value is \l Fixed, the items will
+    ///     not be laid out when the view is resized.
+    /// 
+    ///     By default, this property is set to \l Fixed.
+    /// 
+    ///     \sa movement, gridSize, viewMode
     set_resize_mode(mode: ListView::ResizeMode),
     resize_mode() -> ListView::ResizeMode,
+    ///     \property QListView::layoutMode
+    ///     \brief determines whether the layout of items should happen immediately or be delayed.
+    /// 
+    ///     This property holds the layout mode for the items. When the mode
+    ///     is \l SinglePass (the default), the items are laid out all in one go.
+    ///     When the mode is \l Batched, the items are laid out in batches of \l batchSize
+    ///     items, while processing events. This makes it possible to
+    ///     instantly view and interact with the visible items while the rest
+    ///     are being laid out.
+    /// 
+    ///     \sa viewMode
     set_layout_mode(mode: ListView::LayoutMode),
     layout_mode() -> ListView::LayoutMode,
+    ///     \property QListView::spacing
+    ///     \brief the space around the items in the layout
+    /// 
+    ///     This property is the size of the empty space that is padded around
+    ///     an item in the layout.
+    /// 
+    ///     Setting this property when the view is visible will cause the
+    ///     items to be laid out again.
+    /// 
+    ///     By default, this property contains a value of 0.
+    /// 
+    ///     \sa viewMode
     set_spacing(space: i32),
     spacing() -> i32,
+    ///     \property QListView::batchSize
+    ///     \brief the number of items laid out in each batch if \l layoutMode is
+    ///     set to \l Batched
+    /// 
+    ///     The default value is 100.
+    /// 
+    ///     \since 4.2
     set_batch_size(batch_size: i32),
     batch_size() -> i32,
+    ///     \property QListView::gridSize
+    ///     \brief the size of the layout grid
+    /// 
+    ///     This property is the size of the grid in which the items are laid
+    ///     out. The default is an empty size which means that there is no
+    ///     grid and the layout is not done in a grid. Setting this property
+    ///     to a non-empty size switches on the grid layout. (When a grid
+    ///     layout is in force the \l spacing property is ignored.)
+    /// 
+    ///     Setting this property when the view is visible will cause the
+    ///     items to be laid out again.
+    /// 
+    ///     \sa viewMode
     set_grid_size(size: &SizeType),
     grid_size() -> Size,
+    ///     \property QListView::viewMode
+    ///     \brief the view mode of the QListView.
+    /// 
+    ///     This property will change the other unset properties to conform
+    ///     with the set view mode. QListView-specific properties that have already been set
+    ///     will not be changed, unless clearPropertyFlags() has been called.
+    /// 
+    ///     Setting the view mode will enable or disable drag and drop based on the
+    ///     selected movement. For ListMode, the default movement is \l Static
+    ///     (drag and drop disabled); for IconMode, the default movement is
+    ///     \l Free (drag and drop enabled).
+    /// 
+    ///     \sa isWrapping, spacing, gridSize, flow, movement, resizeMode
     set_view_mode(mode: ListView::ViewMode),
     view_mode() -> ListView::ViewMode,
+    ///     Clears the QListView-specific property flags. See \l{viewMode}.
+    /// 
+    ///     Properties inherited from QAbstractItemView are not covered by the
+    ///     property flags. Specifically, \l{QAbstractItemView::dragEnabled}
+    ///     {dragEnabled} and \l{QAbstractItemView::acceptDrops}
+    ///     {acceptsDrops} are computed by QListView when calling
+    ///     setMovement() or setViewMode().
     clear_property_flags(),
+    ///     Returns \c true if the \a row is hidden; otherwise returns \c false.
     is_row_hidden(row: i32) -> bool,
+    ///     If \a hide is true, the given \a row will be hidden; otherwise
+    ///     the \a row will be shown.
     set_row_hidden(row: i32, hide: bool),
+    ///     \property QListView::modelColumn
+    ///     \brief the column in the model that is visible
+    /// 
+    ///     By default, this property contains 0, indicating that the first
+    ///     column in the model will be shown.
     set_model_column(column: i32),
     model_column() -> i32,
+    ///     \property QListView::uniformItemSizes
+    ///     \brief whether all items in the listview have the same size
+    ///     \since 4.1
+    /// 
+    ///     This property should only be set to true if it is guaranteed that all items
+    ///     in the view have the same size. This enables the view to do some
+    ///     optimizations for performance purposes.
+    /// 
+    ///     By default, this property is \c false.
     set_uniform_item_sizes(enable: bool),
     uniform_item_sizes() -> bool,
+    ///     \property QListView::wordWrap
+    ///     \brief the item text word-wrapping policy
+    ///     \since 4.2
+    /// 
+    ///     If this property is \c true then the item text is wrapped where
+    ///     necessary at word-breaks; otherwise it is not wrapped at all.
+    ///     This property is \c false by default.
+    /// 
+    ///     Please note that even if wrapping is enabled, the cell will not be
+    ///     expanded to make room for the text. It will print ellipsis for
+    ///     text that cannot be shown, according to the view's
+    ///     \l{QAbstractItemView::}{textElideMode}.
     set_word_wrap(on: bool),
     word_wrap() -> bool,
+    ///     \property QListView::selectionRectVisible
+    ///     \brief if the selection rectangle should be visible
+    ///     \since 4.3
+    /// 
+    ///     If this property is \c true then the selection rectangle is visible;
+    ///     otherwise it will be hidden.
+    /// 
+    ///     \note The selection rectangle will only be visible if the selection mode
+    ///     is in a mode where more than one item can be selected; i.e., it will not
+    ///     draw a selection rectangle if the selection mode is
+    ///     QAbstractItemView::SingleSelection.
+    /// 
+    ///     By default, this property is \c false.
     set_selection_rect_visible(show: bool),
     is_selection_rect_visible() -> bool,
+    ///   \reimp
     [event] visual_rect(index: &ModelIndexType) -> Rect,
+    ///   \reimp
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
+    ///   \reimp
     [event] index_at(p: &PointType) -> ModelIndex,
+    ///     \internal
+    /// 
+    ///     Layout the items according to the flow and wrapping properties.
     [event] do_items_layout(),
+    ///   \internal
     [event] reset(),
+    ///   \internal
     [event] set_root_index(index: &ModelIndexType),
     [signal] indexes_moved(indexes: &[ModelIndex]),
+    ///     \reimp
     [event] event(e: *EventType) -> bool,
+    ///     \internal
+    /// 
+    ///     Scroll the view contents by \a dx and \a dy.
     [event] scroll_contents_by(dx: i32, dy: i32),
+    ///     \internal
+    /// 
+    ///     Resize the internal contents to \a width and \a height and set the
+    ///     scroll bar ranges accordingly.
     resize_contents(width: i32, height: i32),
+    ///     \internal
     contents_size() -> Size,
+    ///   \reimp
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
+    ///   \reimp
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
+    ///   \reimp
     [event] rows_about_to_be_removed(parent: &ModelIndexType, start: i32, end: i32),
+    ///   \reimp
     [event] mouse_move_event(e: *MouseEventType),
+    ///   \reimp
     [event] mouse_release_event(e: *MouseEventType),
+    ///   \reimp
     [event] wheel_event(e: *WheelEventType),
+    ///   \reimp
     [event] timer_event(e: *TimerEventType),
+    ///   \reimp
     [event] resize_event(e: *ResizeEventType),
+    ///   \reimp
     [event] drag_move_event(e: *DragMoveEventType),
+    ///   \reimp
     [event] drag_leave_event(e: *DragLeaveEventType),
+    ///   \reimp
     [event] drop_event(e: *DropEventType),
+    ///   \reimp
     [event] start_drag(supported_actions: Rute::DropActions),
+    ///   \reimp
     [event] view_options() -> StyleOptionViewItem,
+    ///   \reimp
     [event] paint_event(e: *PaintEventType),
+    ///   \reimp
     [event] horizontal_offset() -> i32,
+    ///   \reimp
     [event] vertical_offset() -> i32,
+    ///   \reimp
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
+    ///     Returns the rectangle of the item at position \a index in the
+    ///     model. The rectangle is in contents coordinates.
+    /// 
+    ///     \sa visualRect()
     rect_for_index(index: &ModelIndexType) -> Rect,
+    ///     \since 4.1
+    /// 
+    ///     Sets the contents position of the item at \a index in the model to the given
+    ///     \a position.
+    ///     If the list view's movement mode is Static or its view mode is ListView,
+    ///     this function will have no effect.
     set_position_for_index(position: &PointType, index: &ModelIndexType),
+    ///   \reimp
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
+    ///   \reimp
+    /// 
+    ///   Since 4.7, the returned region only contains rectangles intersecting
+    ///   (or included in) the viewport.
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
+    ///   \reimp
     [event] selected_indexes() -> [ModelIndex],
+    ///   \reimp
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
     [event] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
+    ///   \reimp
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
+    ///     \since 5.2
+    ///     \reimp
     [event] viewport_size_hint() -> Size,
 }
 

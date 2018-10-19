@@ -27,6 +27,7 @@
 ///     the widget will make the rubber band disappear. The rubber band
 ///     can be a \l Rectangle or a \l Line (vertical or horizontal),
 ///     depending on the shape() it was given when constructed.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QRubberBand)]
 enum Shape {
     Line,

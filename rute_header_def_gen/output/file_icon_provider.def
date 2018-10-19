@@ -1,3 +1,9 @@
+///   \class QFileIconProvider
+/// 
+///   \inmodule QtWidgets
+/// 
+///   \brief The QFileIconProvider class provides file icons for the QDirModel and the QFileSystemModel classes.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QFileIconProvider)]
 enum IconType {
     Computer,
@@ -16,10 +22,20 @@ enum Option {
 
 
 struct FileIconProvider {
+    ///   Returns an icon for the file described by \a info.
     [event] icon(type: FileIconProvider::IconType) -> Icon,
+    ///   Returns an icon for the file described by \a info.
     [event] icon(info: &FileInfoType) -> Icon,
+    ///   Returns the type of the file described by \a info.
     [event] type(info: &FileInfoType) -> String,
+    ///     \since 5.2
+    ///     Sets \a options that affect the icon provider.
+    ///     \sa options()
     set_options(options: FileIconProvider::Options),
+    ///     \since 5.2
+    ///     Returns all the options that affect the icon provider.
+    ///     By default, all options are disabled.
+    ///     \sa setOptions()
     options() -> FileIconProvider::Options,
 }
 

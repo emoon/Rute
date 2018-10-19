@@ -1,3 +1,18 @@
+///     \class QMetaMethod
+///     \inmodule QtCore
+/// 
+///     \brief The QMetaMethod class provides meta-data about a member
+///     function.
+/// 
+///     \ingroup objectmodel
+/// 
+///     A QMetaMethod has a methodType(), a methodSignature(), a list of
+///     parameterTypes() and parameterNames(), a return typeName(), a
+///     tag(), and an access() specifier. You can use invoke() to invoke
+///     the method on an arbitrary QObject.
+/// 
+///     \sa QMetaObject, QMetaEnum, QMetaProperty, {Qt's Property System}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QMetaMethod)]
 enum Access {
     Private,
@@ -22,18 +37,119 @@ enum Attributes {
 
 
 struct MetaMethod {
+    ///     \since 5.0
+    /// 
+    ///     Returns the signature of this method (e.g.,
+    ///     \c{setValue(double)}).
+    /// 
+    ///     \sa parameterTypes(), parameterNames()
     method_signature() -> ByteArray,
+    ///     \since 5.0
+    /// 
+    ///     Returns the name of this method.
+    /// 
+    ///     \sa methodSignature(), parameterCount()
     name() -> ByteArray,
+    ///     Returns the return type name of this method.
+    /// 
+    ///     \sa returnType(), QMetaType::type()
     type_name() -> char?,
+    ///     \since 5.0
+    /// 
+    ///     Returns the return type of this method.
+    /// 
+    ///     The return value is one of the types that are registered
+    ///     with QMetaType, or QMetaType::UnknownType if the type is not registered.
+    /// 
+    ///     \sa parameterType(), QMetaType, typeName()
     return_type() -> i32,
+    ///     \since 5.0
+    /// 
+    ///     Returns the number of parameters of this method.
+    /// 
+    ///     \sa parameterType(), parameterNames()
     parameter_count() -> i32,
+    ///     \since 5.0
+    /// 
+    ///     Returns the type of the parameter at the given \a index.
+    /// 
+    ///     The return value is one of the types that are registered
+    ///     with QMetaType, or QMetaType::UnknownType if the type is not registered.
+    /// 
+    ///     \sa parameterCount(), returnType(), QMetaType
     parameter_type(index: i32) -> i32,
+    ///     \since 5.0
+    ///     \internal
+    /// 
+    ///     Gets the parameter \a types of this method. The storage
+    ///     for \a types must be able to hold parameterCount() items.
+    /// 
+    ///     \sa parameterCount(), returnType(), parameterType()
     get_parameter_types(types: *i32),
+    ///     Returns a list of parameter types.
+    /// 
+    ///     \sa parameterNames(), methodSignature()
     parameter_types() -> [ByteArray],
+    ///     Returns a list of parameter names.
+    /// 
+    ///     \sa parameterTypes(), methodSignature()
     parameter_names() -> [ByteArray],
+    ///     Returns the tag associated with this method.
+    /// 
+    ///     Tags are special macros recognized by \c moc that make it
+    ///     possible to add extra information about a method.
+    /// 
+    ///     Tag information can be added in the following
+    ///     way in the function declaration:
+    /// 
+    ///     \code
+    ///         // In the class MainWindow declaration
+    ///         #ifndef Q_MOC_RUN
+    ///         // define the tag text as empty, so the compiler doesn't see it
+    ///         #  define MY_CUSTOM_TAG
+    ///         #endif
+    ///         ...
+    ///         private slots:
+    ///             MY_CUSTOM_TAG void testFunc();
+    ///     \endcode
+    /// 
+    ///     and the information can be accessed by using:
+    /// 
+    ///     \code
+    ///         MainWindow win;
+    ///         win.show();
+    /// 
+    ///         int functionIndex = win.metaObject()->indexOfSlot("testFunc()");
+    ///         QMetaMethod mm = win.metaObject()->method(functionIndex);
+    ///         qDebug() << mm.tag(); // prints MY_CUSTOM_TAG
+    ///     \endcode
+    /// 
+    ///     For the moment, \c moc will extract and record all tags, but it will not
+    ///     handle any of them specially. You can use the tags to annotate your methods
+    ///     differently, and treat them according to the specific needs of your
+    ///     application.
+    /// 
+    ///     \note Since Qt 5.0, \c moc expands preprocessor macros, so it is necessary
+    ///     to surround the definition with \c #ifndef \c Q_MOC_RUN, as shown in the
+    ///     example above. This was not required in Qt 4. The code as shown above works
+    ///     with Qt 4 too.
     tag() -> char?,
+    ///     Returns the access specification of this method (private,
+    ///     protected, or public).
+    /// 
+    ///     \note Signals are always public, but you should regard that as an
+    ///     implementation detail. It is almost always a bad idea to emit a signal from
+    ///     outside its class.
+    /// 
+    ///     \sa methodType()
     access() -> MetaMethod::Access,
+    ///     Returns the type of this method (signal, slot, or method).
+    /// 
+    ///     \sa access()
     method_type() -> MetaMethod::MethodType,
+    ///   \since 4.6
+    /// 
+    ///   Returns this method's index.
     method_index() -> i32,
     revision() -> i32,
     enclosing_meta_object() -> MetaObject?,
@@ -41,7 +157,47 @@ struct MetaMethod {
     invoke(object: *ObjectType, return_value: GenericReturnArgumentType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     invoke(object: *ObjectType, connection_type: Rute::ConnectionType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     invoke(object: *ObjectType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    ///     \since 5.5
+    /// 
+    ///     Invokes this method on a Q_GADGET. Returns \c true if the member could be invoked.
+    ///     Returns \c false if there is no such member or the parameters did not match.
+    /// 
+    ///     The pointer \a gadget must point to an instance of the gadget class.
+    /// 
+    ///     The invocation is always synchronous.
+    /// 
+    ///     The return value of this method call is placed in \a
+    ///     returnValue. You can pass up to ten arguments (\a val0, \a val1,
+    ///     \a val2, \a val3, \a val4, \a val5, \a val6, \a val7, \a val8,
+    ///     and \a val9) to this method call.
+    /// 
+    ///     \warning this method will not test the validity of the arguments: \a gadget
+    ///     must be an instance of the class of the QMetaObject of which this QMetaMethod
+    ///     has been constructed with.  The arguments must have the same type as the ones
+    ///     expected by the method, else, the behavior is undefined.
+    /// 
+    ///     \sa Q_ARG(), Q_RETURN_ARG(), qRegisterMetaType(), QMetaObject::invokeMethod()
     invoke_on_gadget(gadget: *void, return_value: GenericReturnArgumentType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    ///     \since 5.5
+    /// 
+    ///     Invokes this method on a Q_GADGET. Returns \c true if the member could be invoked.
+    ///     Returns \c false if there is no such member or the parameters did not match.
+    /// 
+    ///     The pointer \a gadget must point to an instance of the gadget class.
+    /// 
+    ///     The invocation is always synchronous.
+    /// 
+    ///     The return value of this method call is placed in \a
+    ///     returnValue. You can pass up to ten arguments (\a val0, \a val1,
+    ///     \a val2, \a val3, \a val4, \a val5, \a val6, \a val7, \a val8,
+    ///     and \a val9) to this method call.
+    /// 
+    ///     \warning this method will not test the validity of the arguments: \a gadget
+    ///     must be an instance of the class of the QMetaObject of which this QMetaMethod
+    ///     has been constructed with.  The arguments must have the same type as the ones
+    ///     expected by the method, else, the behavior is undefined.
+    /// 
+    ///     \sa Q_ARG(), Q_RETURN_ARG(), qRegisterMetaType(), QMetaObject::invokeMethod()
     invoke_on_gadget(gadget: *void, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     is_valid() -> bool,
 }

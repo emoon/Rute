@@ -1,3 +1,68 @@
+///   \class QOpenGLWindow
+///   \inmodule QtGui
+///   \since 5.4
+///   \brief The QOpenGLWindow class is a convenience subclass of QWindow to perform OpenGL painting.
+/// 
+///   QOpenGLWindow is an enhanced QWindow that allows easily creating windows that
+///   perform OpenGL rendering using an API that is compatible with QOpenGLWidget
+///   and is similar to the legacy QGLWidget. Unlike QOpenGLWidget, QOpenGLWindow
+///   has no dependency on the widgets module and offers better performance.
+/// 
+///   A typical application will subclass QOpenGLWindow and reimplement the following
+///   virtual functions:
+/// 
+///   \list
+/// 
+///   \li initializeGL() to perform OpenGL resource initialization
+/// 
+///   \li resizeGL() to set up the transformation matrices and other window size dependent resources
+/// 
+///   \li paintGL() to issue OpenGL commands or draw using QPainter
+/// 
+///   \endlist
+/// 
+///   To schedule a repaint, call the update() function. Note that this will not
+///   immediately result in a call to paintGL(). Calling update() multiple times in
+///   a row will not change the behavior in any way.
+/// 
+///   This is a slot so it can be connected to a \l QTimer::timeout() signal to
+///   perform animation. Note however that in the modern OpenGL world it is a much
+///   better choice to rely on synchronization to the vertical refresh rate of the
+///   display. See \l{QSurfaceFormat::setSwapInterval()}{setSwapInterval()} on a
+///   description of the swap interval. With a swap interval of \c 1, which is the
+///   case on most systems by default, the
+///   \l{QOpenGLContext::swapBuffers()}{swapBuffers()} call, that is executed
+///   internally by QOpenGLWindow after each repaint, will block and wait for
+///   vsync. This means that whenever the swap is done, an update can be scheduled
+///   again by calling update(), without relying on timers.
+/// 
+///   To request a specific configuration for the context, use setFormat()
+///   like for any other QWindow. This allows, among others, requesting a
+///   given OpenGL version and profile, or enabling depth and stencil
+///   buffers.
+/// 
+///   Unlike QWindow, QOpenGLWindow allows opening a painter on itself and perform
+///   QPainter-based drawing.
+/// 
+///   QOpenGLWindow supports multiple update behaviors. The default,
+///   \c NoPartialUpdate is equivalent to a regular, OpenGL-based QWindow or the
+///   legacy QGLWidget. In contrast, \c PartialUpdateBlit and \c PartialUpdateBlend are
+///   more in line with QOpenGLWidget's way of working, where there is always an
+///   extra, dedicated framebuffer object present. These modes allow, by
+///   sacrificing some performance, redrawing only a smaller area on each paint and
+///   having the rest of the content preserved from of the previous frame. This is
+///   useful for applications than render incrementally using QPainter, because
+///   this way they do not have to redraw the entire window content on each
+///   paintGL() call.
+/// 
+///   Similarly to QOpenGLWidget, QOpenGLWindow supports the Qt::AA_ShareOpenGLContexts
+///   attribute. When enabled, the OpenGL contexts of all QOpenGLWindow instances will share
+///   with each other. This allows accessing each other's shareable OpenGL resources.
+/// 
+///   For more information on graphics in Qt, see \l {Graphics}.
+///  */
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QOpenGLWindow)]
 enum UpdateBehavior {
     NoPartialUpdate,
@@ -6,11 +71,16 @@ enum UpdateBehavior {
 }
 
 struct OpenGLWindow : PaintDeviceWindow {
+    ///   \return the update behavior for this QOpenGLWindow.
     update_behavior() -> OpenGLWindow::UpdateBehavior,
+    ///   \return \c true if the window's OpenGL resources, like the context, have
+    ///   been successfully initialized. Note that the return value is always \c false
+    ///   until the window becomes exposed (shown).
     is_valid() -> bool,
     make_current(),
     done_current(),
     context() -> OpenGLContext?,
+    ///   \return The QOpenGLContext requested to be shared with this window's QOpenGLContext.
     share_context() -> OpenGLContext?,
     default_framebuffer_object() -> i32,
     grab_framebuffer() -> Image,

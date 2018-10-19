@@ -1,3 +1,49 @@
+///     \class QTextLayout
+///     \reentrant
+/// 
+///     \brief The QTextLayout class is used to lay out and render text.
+///     \inmodule QtGui
+/// 
+///     \ingroup richtext-processing
+/// 
+///     It offers many features expected from a modern text layout
+///     engine, including Unicode compliant rendering, line breaking and
+///     handling of cursor positioning. It can also produce and render
+///     device independent layout, something that is important for WYSIWYG
+///     applications.
+/// 
+///     The class has a rather low level API and unless you intend to
+///     implement your own text rendering for some specialized widget, you
+///     probably won't need to use it directly.
+/// 
+///     QTextLayout can be used with both plain and rich text.
+/// 
+///     QTextLayout can be used to create a sequence of QTextLine
+///     instances with given widths and can position them independently
+///     on the screen. Once the layout is done, these lines can be drawn
+///     on a paint device.
+/// 
+///     The text to be laid out can be provided in the constructor or set with
+///     setText().
+/// 
+///     The layout can be seen as a sequence of QTextLine objects; use createLine()
+///     to create a QTextLine instance, and lineAt() or lineForTextPosition() to retrieve
+///     created lines.
+/// 
+///     Here is a code snippet that demonstrates the layout phase:
+///     \snippet code/src_gui_text_qtextlayout.cpp 0
+/// 
+///     The text can then be rendered by calling the layout's draw() function:
+///     \snippet code/src_gui_text_qtextlayout.cpp 1
+/// 
+///     For a given position in the text you can find a valid cursor position with
+///     isValidCursorPosition(), nextCursorPosition(), and previousCursorPosition().
+/// 
+///     The QTextLayout itself can be positioned with setPosition(); it has a
+///     boundingRect(), and a minimumWidth() and a maximumWidth().
+/// 
+///     \sa QStaticText
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTextLayout)]
 enum CursorMode {
     SkipCharacters,
@@ -6,48 +52,237 @@ enum CursorMode {
 
 
 struct TextLayout {
+    ///     Sets the layout's font to the given \a font. The layout is
+    ///     invalidated and must be laid out again.
+    /// 
+    ///     \sa font()
     set_font(f: &FontType),
+    ///     Returns the current font that is used for the layout, or a default
+    ///     font if none is set.
+    /// 
+    ///     \sa setFont()
     font() -> Font,
+    ///     \internal
+    ///     Sets a raw font, to be used with QTextLayout::glyphRuns.
+    ///     Note that this only supports the needs of WebKit.
+    ///     Use of this function with e.g. QTextLayout::draw will result
+    ///     in undefined behaviour.
     set_raw_font(raw_font: &RawFontType),
+    ///     Sets the layout's text to the given \a string. The layout is
+    ///     invalidated and must be laid out again.
+    /// 
+    ///     Notice that when using this QTextLayout as part of a QTextDocument this
+    ///     method will have no effect.
+    /// 
+    ///     \sa text()
     set_text(string: String),
+    ///     Returns the layout's text.
+    /// 
+    ///     \sa setText()
     text() -> String,
+    ///     Sets the text option structure that controls the layout process to the
+    ///     given \a option.
+    /// 
+    ///     \sa textOption()
     set_text_option(option: &TextOptionType),
     text_option() -> TextOption?,
+    ///     Sets the \a position and \a text of the area in the layout that is
+    ///     processed before editing occurs. The layout is
+    ///     invalidated and must be laid out again.
+    /// 
+    ///     \sa preeditAreaPosition(), preeditAreaText()
     set_preedit_area(position: i32, text: String),
+    ///     Returns the position of the area in the text layout that will be
+    ///     processed before editing occurs.
+    /// 
+    ///     \sa preeditAreaText()
     preedit_area_position() -> i32,
+    ///     Returns the text that is inserted in the layout before editing occurs.
+    /// 
+    ///     \sa preeditAreaPosition()
     preedit_area_text() -> String,
+    ///     \obsolete Use setFormats() instead.
     set_additional_formats(overrides: onst QList<QTextLayout::FormatRange> &),
+    ///     \obsolete Use formats() instead.
+    /// 
+    ///     \sa setAdditionalFormats(), clearAdditionalFormats()
     additional_formats() -> List<QTextLayout::FormatRange>,
+    ///     \obsolete Use clearFormats() instead.
     clear_additional_formats(),
+    ///     \since 5.6
+    /// 
+    ///     Sets the additional formats supported by the text layout to \a formats.
+    ///     The formats are applied with preedit area text in place.
+    /// 
+    ///     \sa formats(), clearFormats()
     set_formats(overrides: onst QVector<QTextLayout::FormatRange> &),
+    ///     \since 5.6
+    /// 
+    ///     Returns the list of additional formats supported by the text layout.
+    /// 
+    ///     \sa setFormats(), clearFormats()
     formats() -> Vector<QTextLayout::FormatRange>,
+    ///     \since 5.6
+    /// 
+    ///     Clears the list of additional formats supported by the text layout.
+    /// 
+    ///     \sa formats(), setFormats()
     clear_formats(),
+    ///     Enables caching of the complete layout information if \a enable is
+    ///     true; otherwise disables layout caching. Usually
+    ///     QTextLayout throws most of the layouting information away after a
+    ///     call to endLayout() to reduce memory consumption. If you however
+    ///     want to draw the laid out text directly afterwards enabling caching
+    ///     might speed up drawing significantly.
+    /// 
+    ///     \sa cacheEnabled()
     set_cache_enabled(enable: bool),
+    ///     Returns \c true if the complete layout information is cached; otherwise
+    ///     returns \c false.
+    /// 
+    ///     \sa setCacheEnabled()
     cache_enabled() -> bool,
+    ///     Sets the visual cursor movement style to the given \a style. If the
+    ///     QTextLayout is backed by a document, you can ignore this and use the option
+    ///     in QTextDocument, this option is for widgets like QLineEdit or custom
+    ///     widgets without a QTextDocument. Default value is Qt::LogicalMoveStyle.
+    /// 
+    ///     \sa cursorMoveStyle()
     set_cursor_move_style(style: Rute::CursorMoveStyle),
+    ///     The cursor movement style of this QTextLayout. The default is
+    ///     Qt::LogicalMoveStyle.
+    /// 
+    ///     \sa setCursorMoveStyle()
     cursor_move_style() -> Rute::CursorMoveStyle,
+    ///     Begins the layout process.
+    /// 
+    ///     \warning This will invalidate the layout, so all existing QTextLine objects
+    ///     that refer to the previous contents should now be discarded.
+    /// 
+    ///     \sa endLayout()
     begin_layout(),
+    ///     Ends the layout process.
+    /// 
+    ///     \sa beginLayout()
     end_layout(),
+    ///     \since 4.4
+    /// 
+    ///     Clears the line information in the layout. After having called
+    ///     this function, lineCount() returns 0.
+    /// 
+    ///     \warning This will invalidate the layout, so all existing QTextLine objects
+    ///     that refer to the previous contents should now be discarded.
     clear_layout(),
+    ///     Returns a new text line to be laid out if there is text to be
+    ///     inserted into the layout; otherwise returns an invalid text line.
+    /// 
+    ///     The text layout creates a new line object that starts after the
+    ///     last line in the layout, or at the beginning if the layout is empty.
+    ///     The layout maintains an internal cursor, and each line is filled
+    ///     with text from the cursor position onwards when the
+    ///     QTextLine::setLineWidth() function is called.
+    /// 
+    ///     Once QTextLine::setLineWidth() is called, a new line can be created and
+    ///     filled with text. Repeating this process will lay out the whole block
+    ///     of text contained in the QTextLayout. If there is no text left to be
+    ///     inserted into the layout, the QTextLine returned will not be valid
+    ///     (isValid() will return false).
     create_line() -> TextLine,
+    ///     Returns the number of lines in this text layout.
+    /// 
+    ///     \sa lineAt()
     line_count() -> i32,
+    ///     Returns the \a{i}-th line of text in this text layout.
+    /// 
+    ///     \sa lineCount(), lineForTextPosition()
     line_at(i: i32) -> TextLine,
+    ///     Returns the line that contains the cursor position specified by \a pos.
+    /// 
+    ///     \sa isValidCursorPosition(), lineAt()
     line_for_text_position(pos: i32) -> TextLine,
     is_valid_cursor_position(pos: i32) -> bool,
+    ///     Returns the next valid cursor position after \a oldPos that
+    ///     respects the given cursor \a mode.
+    ///     Returns value of \a oldPos, if \a oldPos is not a valid cursor position.
+    /// 
+    ///     \sa isValidCursorPosition(), previousCursorPosition()
     next_cursor_position(old_pos: i32, mode: TextLayout::CursorMode) -> i32,
+    ///     Returns the first valid cursor position before \a oldPos that
+    ///     respects the given cursor \a mode.
+    ///     Returns value of \a oldPos, if \a oldPos is not a valid cursor position.
+    /// 
+    ///     \sa isValidCursorPosition(), nextCursorPosition()
     previous_cursor_position(old_pos: i32, mode: TextLayout::CursorMode) -> i32,
+    ///     Returns the cursor position to the left of \a oldPos, next to it.
+    ///     It's dependent on the visual position of characters, after bi-directional
+    ///     reordering.
+    /// 
+    ///     \sa rightCursorPosition(), previousCursorPosition()
     left_cursor_position(old_pos: i32) -> i32,
+    ///     Returns the cursor position to the right of \a oldPos, next to it.
+    ///     It's dependent on the visual position of characters, after bi-directional
+    ///     reordering.
+    /// 
+    ///     \sa leftCursorPosition(), nextCursorPosition()
     right_cursor_position(old_pos: i32) -> i32,
+    ///     Draws the whole layout on the painter \a p at the position specified by \a pos.
+    ///     The rendered layout includes the given \a selections and is clipped within
+    ///     the rectangle specified by \a clip.
     draw(p: *PainterType, pos: &PointFType, selections: onst QVector<QTextLayout::FormatRange> &, clip: &RectFType),
+    ///     \fn void QTextLayout::drawCursor(QPainter *painter, const QPointF &position, int cursorPosition, int width) const
+    /// 
+    ///     Draws a text cursor with the current pen and the specified \a width at the given \a position using the
+    ///     \a painter specified.
+    ///     The corresponding position within the text is specified by \a cursorPosition.
     draw_cursor(p: *PainterType, pos: &PointFType, cursor_position: i32),
+    ///     \fn void QTextLayout::drawCursor(QPainter *painter, const QPointF &position, int cursorPosition, int width) const
+    /// 
+    ///     Draws a text cursor with the current pen and the specified \a width at the given \a position using the
+    ///     \a painter specified.
+    ///     The corresponding position within the text is specified by \a cursorPosition.
     draw_cursor(p: *PainterType, pos: &PointFType, cursor_position: i32, width: i32),
+    ///     \since 4.2
+    /// 
+    ///     The global position of the layout. This is independent of the
+    ///     bounding rectangle and of the layout process.
+    /// 
+    ///     \sa setPosition()
     position() -> PointF,
+    ///     Moves the text layout to point \a p.
+    /// 
+    ///     \sa position()
     set_position(p: &PointFType),
+    ///     The smallest rectangle that contains all the lines in the layout.
     bounding_rect() -> RectF,
+    ///     The minimum width the layout needs. This is the width of the
+    ///     layout's smallest non-breakable substring.
+    /// 
+    ///     \warning This function only returns a valid value after the layout
+    ///     has been done.
+    /// 
+    ///     \sa maximumWidth()
     minimum_width() -> f32,
+    ///     The maximum width the layout could expand to; this is essentially
+    ///     the width of the entire text.
+    /// 
+    ///     \warning This function only returns a valid value after the layout
+    ///     has been done.
+    /// 
+    ///     \sa minimumWidth()
     maximum_width() -> f32,
+    ///     Returns the glyph indexes and positions for all glyphs corresponding to the \a length characters
+    ///     starting at the position \a from in this QTextLayout. This is an expensive function, and should
+    ///     not be called in a time sensitive context.
+    /// 
+    ///     If \a from is less than zero, then the glyph run will begin at the first character in the
+    ///     layout. If \a length is less than zero, it will span the entire string from the start position.
+    /// 
+    ///     \since 4.8
+    /// 
+    ///     \sa draw(), QPainter::drawGlyphRun()
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
     engine() -> TextEngine?,
+    ///     \internal
     set_flags(flags: i32),
 }
 

@@ -1,31 +1,158 @@
+///     \class QMessageLogger
+///     \inmodule QtCore
+///     \brief The QMessageLogger class generates log messages.
+///     \since 5.0
+/// 
+///     QMessageLogger is used to generate messages for the Qt logging framework. Usually one uses
+///     it through qDebug(), qInfo(), qWarning(), qCritical, or qFatal() functions,
+///     which are actually macros: For example qDebug() expands to
+///     QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).debug()
+///     for debug builds, and QMessageLogger(0, 0, 0).debug() for release builds.
+/// 
+///     One example of direct use is to forward errors that stem from a scripting language, e.g. QML:
+/// 
+///     \snippet code/qlogging/qlogging.cpp 1
+/// 
+///     \sa QMessageLogContext, qDebug(), qInfo(), qWarning(), qCritical(), qFatal()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct MessageLogger {
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug(msg: *char),
+    ///     \internal
+    /// 
+    ///     Returns a QNoDebug object, which is used to ignore debugging output.
+    /// 
+    ///     \sa QNoDebug, qDebug()
     no_debug(arg0: *char),
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info(msg: *char),
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning(msg: *char),
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical(msg: *char),
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug(cat: &LoggingCategoryType, msg: *char),
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug(cat_func: MessageLogger::CategoryFunction, msg: *char),
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info(cat: &LoggingCategoryType, msg: *char),
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info(cat_func: MessageLogger::CategoryFunction, msg: *char),
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning(cat: &LoggingCategoryType, msg: *char),
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning(cat_func: MessageLogger::CategoryFunction, msg: *char),
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical(cat: &LoggingCategoryType, msg: *char),
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical(cat_func: MessageLogger::CategoryFunction, msg: *char),
+    ///     Logs a fatal message specified with format \a msg. Additional
+    ///     parameters, specified by \a msg, may be used.
+    /// 
+    ///     \sa qFatal()
     fatal(msg: *char),
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug() -> Debug,
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug(cat: &LoggingCategoryType) -> Debug,
+    ///     Logs a debug message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCDebug(), QDebug
     debug(cat_func: MessageLogger::CategoryFunction) -> Debug,
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info() -> Debug,
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info(cat: &LoggingCategoryType) -> Debug,
+    ///     Logs an informational message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.5
+    ///     \sa qCInfo(), QDebug
     info(cat_func: MessageLogger::CategoryFunction) -> Debug,
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning() -> Debug,
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning(cat: &LoggingCategoryType) -> Debug,
+    ///     Logs a warning message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCWarning(), QDebug
     warning(cat_func: MessageLogger::CategoryFunction) -> Debug,
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical() -> Debug,
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical(cat: &LoggingCategoryType) -> Debug,
+    ///     Logs a critical message into category returned by \a catFunc using a QDebug stream.
+    /// 
+    ///     \since 5.3
+    ///     \sa qCCritical(), QDebug
     critical(cat_func: MessageLogger::CategoryFunction) -> Debug,
+    ///     \internal
+    /// 
+    ///     Returns a QNoDebug object, which is used to ignore debugging output.
+    /// 
+    ///     \sa QNoDebug, qDebug()
     no_debug() -> NoDebug,
 }
 

@@ -1,3 +1,13 @@
+///     \class QWindowSystemInterface
+///     \since 5.0
+///     \internal
+///     \preliminary
+///     \ingroup qpa
+///     \brief The QWindowSystemInterface provides an event queue for the QPA platform.
+/// 
+///     The platform plugins call the various functions to notify about events. The events are queued
+///     until sendWindowSystemEvents() is called by the event dispatcher.
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct WindowSystemInterface {
     [static] handle_shortcut_event(window: *WindowType, timestamp: ulong, k: i32, mods: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort) -> bool,
@@ -11,9 +21,18 @@ struct WindowSystemInterface {
     [static] unregister_touch_device(device: *TouchDeviceType),
     [static] is_touch_device_registered(device: *TouchDeviceType) -> bool,
     [static] handle_close_event(window: *WindowType, accepted: *bool),
+    ///     This method can be used to ensure leave and enter events are both in queue when moving from
+    ///     one QWindow to another. This allows QWindow subclasses to check for a queued enter event
+    ///     when handling the leave event (\c QWindowSystemInterfacePrivate::peekWindowSystemEvent) to
+    ///     determine where mouse went and act accordingly. E.g. QWidgetWindow needs to know if mouse
+    ///     cursor moves between windows in same window hierarchy.
     [static] handle_enter_leave_event(enter: *WindowType, leave: *WindowType, local: &PointFType, global: &PointFType),
     [static] handle_drag(window: *WindowType, drop_data: *MimeDataType, p: &PointType, supported_actions: Rute::DropActions) -> PlatformDragQtResponse,
     [static] handle_drop(window: *WindowType, drop_data: *MimeDataType, p: &PointType, supported_actions: Rute::DropActions) -> PlatformDropQtResponse,
+    ///     \fn static QWindowSystemInterface::handleNativeEvent(QWindow *window, const QByteArray &eventType, void *message, long *result)
+    ///     \brief Passes a native event identified by \a eventType to the \a window.
+    /// 
+    ///     \note This function can only be called from the GUI thread.
     [static] handle_native_event(window: *WindowType, event_type: &ByteArrayType, message: *void, result: *long) -> bool,
     [static] handle_screen_orientation_change(screen: *ScreenType, new_orientation: Rute::ScreenOrientation),
     [static] handle_screen_logical_dots_per_inch_change(screen: *ScreenType, new_dpi_x: f32, new_dpi_y: f32),
@@ -37,6 +56,8 @@ struct WindowSystemInterface {
     [static] handle_enter_whats_this_event(),
     [static] send_window_system_events(flags: EventLoop::ProcessEventsFlags) -> bool,
     [static] set_synchronous_window_system_events(enable: bool),
+    ///     Make Qt Gui process all events on the event queue immediately. Return the
+    ///     accepted state for the last event on the queue.
     [static] flush_window_system_events(flags: EventLoop::ProcessEventsFlags) -> bool,
     [static] deferred_flush_window_system_events(flags: EventLoop::ProcessEventsFlags),
     [static] window_system_events_queued() -> i32,

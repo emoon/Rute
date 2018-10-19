@@ -1,3 +1,16 @@
+///     \class QPagedPaintDevice
+///     \inmodule QtGui
+/// 
+///     \brief The QPagedPaintDevice class is a represents a paintdevice that supports
+///     multiple pages.
+/// 
+///     \ingroup painting
+/// 
+///     Paged paint devices are used to generate output for printing or for formats like PDF.
+///     QPdfWriter and QPrinter inherit from it.
+///   */
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPagedPaintDevice)]
 enum PageSize {
     A4,
@@ -137,20 +150,126 @@ enum PdfVersion {
 
 struct PagedPaintDevice : PaintDevice {
     [event] new_page() -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Sets the page layout to \a newPageLayout.
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new page layout to a new page.
+    ///     You should not call any painting methods between a call to setPageLayout()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     Returns true if the page layout was successfully set to \a newPageLayout.
+    /// 
+    ///     \sa pageLayout()
     set_page_layout(page_layout: &PageLayoutType) -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Sets the page size to \a pageSize.
+    /// 
+    ///     To get the current QPageSize use pageLayout().pageSize().
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new page size to a new page.
+    ///     You should not call any painting methods between a call to setPageSize()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     Returns true if the page size was successfully set to \a pageSize.
+    /// 
+    ///     \sa pageLayout()
     set_page_size(page_size: &PageSizeType) -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Sets the page \a orientation.
+    /// 
+    ///     The page orientation is used to define the orientation of the
+    ///     page size when obtaining the page rect.
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new orientation to a new page.
+    ///     You should not call any painting methods between a call to setPageOrientation()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     To get the current QPageLayout::Orientation use pageLayout().pageOrientation().
+    /// 
+    ///     Returns true if the page orientation was successfully set to \a orientation.
+    /// 
+    ///     \sa pageLayout()
     set_page_orientation(orientation: PageLayout::Orientation) -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Set the page \a margins defined in the given \a units.
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new margins to a new page.
+    ///     You should not call any painting methods between a call to setPageMargins()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     To get the current page margins use pageLayout().pageMargins().
+    /// 
+    ///     Returns true if the page margins were successfully set to \a margins.
+    /// 
+    ///     \sa pageLayout()
     set_page_margins(margins: &MarginsFType) -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Set the page \a margins defined in the given \a units.
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new margins to a new page.
+    ///     You should not call any painting methods between a call to setPageMargins()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     To get the current page margins use pageLayout().pageMargins().
+    /// 
+    ///     Returns true if the page margins were successfully set to \a margins.
+    /// 
+    ///     \sa pageLayout()
     set_page_margins(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
+    ///     \since 5.3
+    /// 
+    ///     Returns the current page layout.  Use this method to access the current
+    ///     QPageSize, QPageLayout::Orientation, QMarginsF, fullRect() and paintRect().
+    /// 
+    ///     Note that you cannot use the setters on the returned object, you must either
+    ///     call the individual QPagedPaintDevice setters or use setPageLayout().
+    /// 
+    ///     \sa setPageLayout(), setPageSize(), setPageOrientation(), setPageMargins()
     page_layout() -> PageLayout,
+    ///     \since 5.3
+    /// 
+    ///     Sets the page size to \a pageSize.
+    /// 
+    ///     To get the current QPageSize use pageLayout().pageSize().
+    /// 
+    ///     You should call this before calling QPainter::begin(), or immediately
+    ///     before calling newPage() to apply the new page size to a new page.
+    ///     You should not call any painting methods between a call to setPageSize()
+    ///     and newPage() as the wrong paint metrics may be used.
+    /// 
+    ///     Returns true if the page size was successfully set to \a pageSize.
+    /// 
+    ///     \sa pageLayout()
     [event] set_page_size(size: PagedPaintDevice::PageSize),
     page_size() -> PagedPaintDevice::PageSize,
+    ///     Sets the page size to \a size. \a size is specified in millimeters.
+    /// 
+    ///     If the size matches a standard QPagedPaintDevice::PageSize then that page
+    ///     size will be used, otherwise QPagedPaintDevice::Custom will be set.
     [event] set_page_size_mm(size: &SizeFType),
     page_size_mm() -> SizeF,
     [event] set_margins(margins: onst QPagedPaintDevice::Margins &),
     margins() -> PagedPaintDevice::Margins,
+    ///     \internal
+    ///     Returns the QPagedPaintDevicePrivate.
     dd() -> PagedPaintDevicePrivate?,
+    ///     \internal
+    /// 
+    ///     Returns the internal device page layout.
     device_page_layout() -> PageLayout,
+    ///     \internal
+    /// 
+    ///     Returns the internal device page layout.
     device_page_layout() -> PageLayout?,
 }
 

@@ -1,16 +1,100 @@
+///     \class QOpenGLPaintDevice
+///     \brief The QOpenGLPaintDevice class enables painting to an OpenGL context using QPainter.
+///     \since 5.0
+///     \inmodule QtGui
+/// 
+///     \ingroup painting-3D
+/// 
+///     The QOpenGLPaintDevice uses the \b current QOpenGL context to render
+///     QPainter draw commands. The context is captured upon construction. It
+///     requires support for OpenGL (ES) 2.0 or higher.
+/// 
+///     \section1 Performance
+/// 
+///     The QOpenGLPaintDevice is almost always hardware accelerated and
+///     has the potential of being much faster than software
+///     rasterization. However, it is more sensitive to state changes, and
+///     therefore requires the drawing commands to be carefully ordered to
+///     achieve optimal performance.
+/// 
+///     \section1 Antialiasing and Quality
+/// 
+///     Antialiasing in the OpenGL paint engine is done using
+///     multisampling. Most hardware require significantly more memory to
+///     do multisampling and the resulting quality is not on par with the
+///     quality of the software paint engine. The OpenGL paint engine's
+///     strength lies in its performance, not its visual rendering
+///     quality.
+/// 
+///     \section1 State Changes
+/// 
+///     When painting to a QOpenGLPaintDevice using QPainter, the state of
+///     the current OpenGL context will be altered by the paint engine to
+///     reflect its needs.  Applications should not rely upon the OpenGL
+///     state being reset to its original conditions, particularly the
+///     current shader program, OpenGL viewport, texture units, and
+///     drawing modes.
+/// 
+///     \section1 Mixing QPainter and OpenGL
+/// 
+///     When intermixing QPainter and OpenGL, it is important to notify
+///     QPainter that the OpenGL state may have been cluttered so it can
+///     restore its internal state. This is achieved by calling \l
+///     QPainter::beginNativePainting() before starting the OpenGL
+///     rendering and calling \l QPainter::endNativePainting() after
+///     finishing.
+/// 
+///     \sa {OpenGL Window Example}
+/// 
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLPaintDevice : PaintDevice {
     [event] dev_type() -> i32,
+    ///     \reimp
     [event] paint_engine() -> PaintEngine?,
+    ///     Returns the OpenGL context associated with the paint device.
     context() -> OpenGLContext?,
+    ///     Returns the pixel size of the paint device.
+    /// 
+    ///     \sa setSize()
     size() -> Size,
+    ///     Sets the pixel size of the paint device to \a size.
+    /// 
+    ///     \sa size()
     set_size(size: &SizeType),
+    ///     Sets the device pixel ratio for the paint device to \a devicePixelRatio.
     set_device_pixel_ratio(device_pixel_ratio: f32),
+    ///     Returns the number of pixels per meter horizontally.
+    /// 
+    ///     \sa setDotsPerMeterX()
     dots_per_meter_x() -> f32,
+    ///     Returns the number of pixels per meter vertically.
+    /// 
+    ///     \sa setDotsPerMeterY()
     dots_per_meter_y() -> f32,
+    ///     Sets the number of pixels per meter horizontally to \a dpmx.
+    /// 
+    ///     \sa dotsPerMeterX()
     set_dots_per_meter_x(arg0: f32),
+    ///     Sets the number of pixels per meter vertically to \a dpmy.
+    /// 
+    ///     \sa dotsPerMeterY()
     set_dots_per_meter_y(arg0: f32),
+    ///     Sets whether painting should be flipped around the Y-axis or not to \a flipped.
+    /// 
+    ///     \sa paintFlipped()
     set_paint_flipped(flipped: bool),
+    ///     Returns \c true if painting is flipped around the Y-axis.
+    /// 
+    ///     \sa setPaintFlipped()
     paint_flipped() -> bool,
+    ///     This virtual method is provided as a callback to allow re-binding a target
+    ///     frame buffer object or context when different QOpenGLPaintDevice instances
+    ///     are issuing draw calls alternately.
+    /// 
+    ///     \l{QPainter::beginNativePainting()}{beginNativePainting()} will also trigger
+    ///     this method.
+    /// 
+    ///     The default implementation does nothing.
     [event] ensure_active_target(),
 }
 

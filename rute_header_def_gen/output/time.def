@@ -1,3 +1,46 @@
+///     \class QTime
+///     \inmodule QtCore
+///     \reentrant
+/// 
+///     \brief The QTime class provides clock time functions.
+/// 
+/// 
+///     A QTime object contains a clock time, i.e. the number of hours,
+///     minutes, seconds, and milliseconds since midnight. It can read the
+///     current time from the system clock and measure a span of elapsed
+///     time. It provides functions for comparing times and for
+///     manipulating a time by adding a number of milliseconds.
+/// 
+///     QTime uses the 24-hour clock format; it has no concept of AM/PM.
+///     Unlike QDateTime, QTime knows nothing about time zones or
+///     daylight-saving time (DST).
+/// 
+///     A QTime object is typically created either by giving the number
+///     of hours, minutes, seconds, and milliseconds explicitly, or by
+///     using the static function currentTime(), which creates a QTime
+///     object that contains the system's local time. Note that the
+///     accuracy depends on the accuracy of the underlying operating
+///     system; not all systems provide 1-millisecond accuracy.
+/// 
+///     The hour(), minute(), second(), and msec() functions provide
+///     access to the number of hours, minutes, seconds, and milliseconds
+///     of the time. The same information is provided in textual format by
+///     the toString() function.
+/// 
+///     QTime provides a full set of operators to compare two QTime
+///     objects. QTime A is considered smaller than QTime B if A is
+///     earlier than B.
+/// 
+///     The addSecs() and addMSecs() functions provide the time a given
+///     number of seconds or milliseconds later than a given time.
+///     Correspondingly, the number of seconds or milliseconds
+///     between two times can be found using secsTo() or msecsTo().
+/// 
+///     QTime can be used to measure a span of elapsed time using the
+///     start(), restart(), and elapsed() functions.
+/// 
+///     \sa QDate, QDateTime
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QTime)]
 enum TimeFlag {
     NullTime,
@@ -6,22 +49,153 @@ enum TimeFlag {
 
 struct Time {
     is_null() -> bool,
+    ///     \overload
+    /// 
+    ///     Returns \c true if the specified time is valid; otherwise returns
+    ///     false.
+    /// 
+    ///     The time is valid if \a h is in the range 0 to 23, \a m and
+    ///     \a s are in the range 0 to 59, and \a ms is in the range 0 to 999.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qdatetime.cpp 9
     is_valid() -> bool,
+    ///     Returns the hour part (0 to 23) of the time.
+    /// 
+    ///     Returns -1 if the time is invalid.
+    /// 
+    ///     \sa minute(), second(), msec()
     hour() -> i32,
+    ///     Returns the minute part (0 to 59) of the time.
+    /// 
+    ///     Returns -1 if the time is invalid.
+    /// 
+    ///     \sa hour(), second(), msec()
     minute() -> i32,
+    ///     Returns the second part (0 to 59) of the time.
+    /// 
+    ///     Returns -1 if the time is invalid.
+    /// 
+    ///     \sa hour(), minute(), msec()
     second() -> i32,
+    ///     Returns the millisecond part (0 to 999) of the time.
+    /// 
+    ///     Returns -1 if the time is invalid.
+    /// 
+    ///     \sa hour(), minute(), second()
     msec() -> i32,
+    ///     Sets the time to hour \a h, minute \a m, seconds \a s and
+    ///     milliseconds \a ms.
+    /// 
+    ///     \a h must be in the range 0 to 23, \a m and \a s must be in the
+    ///     range 0 to 59, and \a ms must be in the range 0 to 999.
+    ///     Returns \c true if the set time is valid; otherwise returns \c false.
+    /// 
+    ///     \sa isValid()
     set_hms(h: i32, m: i32, s: i32, ms: i32) -> bool,
+    ///     Returns a QTime object containing a time \a s seconds later
+    ///     than the time of this object (or earlier if \a s is negative).
+    /// 
+    ///     Note that the time will wrap if it passes midnight.
+    /// 
+    ///     Returns a null time if this time is invalid.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qdatetime.cpp 5
+    /// 
+    ///     \sa addMSecs(), secsTo(), QDateTime::addSecs()
     add_secs(secs: i32) -> Time,
+    ///     Returns the number of seconds from this time to \a t.
+    ///     If \a t is earlier than this time, the number of seconds returned
+    ///     is negative.
+    /// 
+    ///     Because QTime measures time within a day and there are 86400
+    ///     seconds in a day, the result is always between -86400 and 86400.
+    /// 
+    ///     secsTo() does not take into account any milliseconds.
+    /// 
+    ///     Returns 0 if either time is invalid.
+    /// 
+    ///     \sa addSecs(), QDateTime::secsTo()
     secs_to(arg0: &TimeType) -> i32,
+    ///     Returns a QTime object containing a time \a ms milliseconds later
+    ///     than the time of this object (or earlier if \a ms is negative).
+    /// 
+    ///     Note that the time will wrap if it passes midnight. See addSecs()
+    ///     for an example.
+    /// 
+    ///     Returns a null time if this time is invalid.
+    /// 
+    ///     \sa addSecs(), msecsTo(), QDateTime::addMSecs()
     add_m_secs(ms: i32) -> Time,
+    ///     Returns the number of milliseconds from this time to \a t.
+    ///     If \a t is earlier than this time, the number of milliseconds returned
+    ///     is negative.
+    /// 
+    ///     Because QTime measures time within a day and there are 86400
+    ///     seconds in a day, the result is always between -86400000 and
+    ///     86400000 ms.
+    /// 
+    ///     Returns 0 if either time is invalid.
+    /// 
+    ///     \sa secsTo(), addMSecs(), QDateTime::msecsTo()
     msecs_to(arg0: &TimeType) -> i32,
     [static] from_m_secs_since_start_of_day(msecs: i32) -> Time,
     msecs_since_start_of_day() -> i32,
     [static] current_time() -> Time,
+    ///     \overload
+    /// 
+    ///     Returns \c true if the specified time is valid; otherwise returns
+    ///     false.
+    /// 
+    ///     The time is valid if \a h is in the range 0 to 23, \a m and
+    ///     \a s are in the range 0 to 59, and \a ms is in the range 0 to 999.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet code/src_corelib_tools_qdatetime.cpp 9
     [static] is_valid(h: i32, m: i32, s: i32, ms: i32) -> bool,
+    ///     Sets this time to the current time. This is practical for timing:
+    /// 
+    ///     \snippet code/src_corelib_tools_qdatetime.cpp 10
+    /// 
+    ///     \sa restart(), elapsed(), currentTime()
     start(),
+    ///     Sets this time to the current time and returns the number of
+    ///     milliseconds that have elapsed since the last time start() or
+    ///     restart() was called.
+    /// 
+    ///     This function is guaranteed to be atomic and is thus very handy
+    ///     for repeated measurements. Call start() to start the first
+    ///     measurement, and restart() for each later measurement.
+    /// 
+    ///     Note that the counter wraps to zero 24 hours after the last call
+    ///     to start() or restart().
+    /// 
+    ///     \warning If the system's clock setting has been changed since the
+    ///     last time start() or restart() was called, the result is
+    ///     undefined. This can happen when daylight-saving time is turned on
+    ///     or off.
+    /// 
+    ///     \sa start(), elapsed(), currentTime()
     restart() -> i32,
+    ///     Returns the number of milliseconds that have elapsed since the
+    ///     last time start() or restart() was called.
+    /// 
+    ///     Note that the counter wraps to zero 24 hours after the last call
+    ///     to start() or restart.
+    /// 
+    ///     Note that the accuracy depends on the accuracy of the underlying
+    ///     operating system; not all systems provide 1-millisecond accuracy.
+    /// 
+    ///     \warning If the system's clock setting has been changed since the
+    ///     last time start() or restart() was called, the result is
+    ///     undefined. This can happen when daylight-saving time is turned on
+    ///     or off.
+    /// 
+    ///     \sa start(), restart()
     elapsed() -> i32,
 }
 

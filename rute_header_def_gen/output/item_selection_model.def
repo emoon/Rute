@@ -1,3 +1,40 @@
+///     \class QItemSelectionModel
+///     \inmodule QtCore
+/// 
+///     \brief The QItemSelectionModel class keeps track of a view's selected items.
+/// 
+///     \ingroup model-view
+/// 
+///     A QItemSelectionModel keeps track of the selected items in a view, or
+///     in several views onto the same model. It also keeps track of the
+///     currently selected item in a view.
+/// 
+///     The QItemSelectionModel class is one of the \l{Model/View Classes}
+///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// 
+///     The selected items are stored using ranges. Whenever you want to
+///     modify the selected items use select() and provide either a
+///     QItemSelection, or a QModelIndex and a QItemSelectionModel::SelectionFlag.
+/// 
+///     The QItemSelectionModel takes a two layer approach to selection
+///     management, dealing with both selected items that have been committed
+///     and items that are part of the current selection. The current
+///     selected items are part of the current interactive selection (for
+///     example with rubber-band selection or keyboard-shift selections).
+/// 
+///     To update the currently selected items, use the bitwise OR of
+///     QItemSelectionModel::Current and any of the other SelectionFlags.
+///     If you omit the QItemSelectionModel::Current command, a new current
+///     selection will be created, and the previous one added to the whole
+///     selection. All functions operate on both layers; for example,
+///     \l {QTableWidget::selectedItems()}{selecteditems()} will return items from both layers.
+/// 
+///     \note Since 5.5, \l{QItemSelectionModel::model()}{model},
+///     \l{QItemSelectionModel::hasSelection()}{hasSelection}, and
+///     \l{QItemSelectionModel::currentIndex()}{currentIndex} are meta-object properties.
+/// 
+///     \sa {Model/View Programming}, QAbstractItemModel, {Chart Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QItemSelectionModel)]
 enum SelectionFlag {
     NoUpdate,
@@ -14,25 +51,86 @@ enum SelectionFlag {
 }
 
 struct ItemSelectionModel : Object {
+    ///     Returns the model item index for the current item, or an invalid index
+    ///     if there is no current item.
     current_index() -> ModelIndex,
+    ///     Returns \c true if the given model item \a index is selected.
     is_selected(index: &ModelIndexType) -> bool,
+    ///     Returns \c true if all items are selected in the \a row with the given
+    ///     \a parent.
+    /// 
+    ///     Note that this function is usually faster than calling isSelected()
+    ///     on all items in the same row and that unselectable items are
+    ///     ignored.
     is_row_selected(row: i32, parent: &ModelIndexType) -> bool,
+    ///     Returns \c true if all items are selected in the \a column with the given
+    ///     \a parent.
+    /// 
+    ///     Note that this function is usually faster than calling isSelected()
+    ///     on all items in the same column and that unselectable items are
+    ///     ignored.
     is_column_selected(column: i32, parent: &ModelIndexType) -> bool,
+    ///     Returns \c true if there are any items selected in the \a row with the given
+    ///     \a parent.
     row_intersects_selection(row: i32, parent: &ModelIndexType) -> bool,
+    ///     Returns \c true if there are any items selected in the \a column with the given
+    ///     \a parent.
     column_intersects_selection(column: i32, parent: &ModelIndexType) -> bool,
+    ///     \since 4.2
+    /// 
+    ///     Returns \c true if the selection model contains any selection ranges;
+    ///     otherwise returns \c false.
     has_selection() -> bool,
+    ///     Returns a list of all selected model item indexes. The list contains no
+    ///     duplicates, and is not sorted.
     selected_indexes() -> [ModelIndex],
+    ///     \since 4.2
+    ///     Returns the indexes in the given \a column for the rows where all columns are selected.
+    /// 
+    ///     \sa selectedIndexes(), selectedColumns()
     selected_rows(column: i32) -> [ModelIndex],
+    ///     \since 4.2
+    ///     Returns the indexes in the given \a row for columns where all rows are selected.
+    /// 
+    ///     \sa selectedIndexes(), selectedRows()
     selected_columns(row: i32) -> [ModelIndex],
+    ///     Returns the selection ranges stored in the selection model.
     selection() -> ItemSelection,
+    ///     Returns the item model operated on by the selection model.
     model() -> AbstractItemModel?,
+    ///     Returns the item model operated on by the selection model.
     model() -> AbstractItemModel?,
+    ///     \since 5.5
+    /// 
+    ///     Sets the model to \a model. The modelChanged() signal will be emitted.
+    /// 
+    ///     \sa model(), modelChanged()
     set_model(model: *AbstractItemModelType),
+    ///     Sets the model item \a index to be the current item, and emits
+    ///     currentChanged(). The current item is used for keyboard navigation and
+    ///     focus indication; it is independent of any selected items, although a
+    ///     selected item can also be the current item.
+    /// 
+    ///     Depending on the specified \a command, the \a index can also become part
+    ///     of the current selection.
+    ///     \sa select()
     [event] set_current_index(index: &ModelIndexType, command: ItemSelectionModel::SelectionFlags),
+    ///     Selects the item \a selection using the specified \a command, and emits
+    ///     selectionChanged().
+    /// 
+    ///     \sa QItemSelectionModel::SelectionFlag
     [event] select(index: &ModelIndexType, command: ItemSelectionModel::SelectionFlags),
+    ///     Selects the item \a selection using the specified \a command, and emits
+    ///     selectionChanged().
+    /// 
+    ///     \sa QItemSelectionModel::SelectionFlag
     [event] select(selection: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
+    ///     Clears the selection model. Emits selectionChanged() and currentChanged().
     [event] clear(),
+    ///     Clears the selection model. Does not emit any signals.
     [event] reset(),
+    ///     \since 4.2
+    ///     Clears the selection in the selection model. Emits selectionChanged().
     clear_selection(),
     [event] clear_current_index(),
     [signal] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),

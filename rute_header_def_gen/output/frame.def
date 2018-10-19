@@ -45,6 +45,7 @@
 ///     This table shows some of the combinations of styles and line widths:
 /// 
 ///     \image frames.png Table of frame styles
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QFrame)]
 enum Shape {
     NoFrame,

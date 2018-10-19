@@ -1,19 +1,160 @@
+///     \class QDrag
+///     \inmodule QtGui
+///     \ingroup draganddrop
+///     \brief The QDrag class provides support for MIME-based drag and drop data
+///     transfer.
+/// 
+///     Drag and drop is an intuitive way for users to copy or move data around in an
+///     application, and is used in many desktop environments as a mechanism for copying
+///     data between applications. Drag and drop support in Qt is centered around the
+///     QDrag class that handles most of the details of a drag and drop operation.
+/// 
+///     The data to be transferred by the drag and drop operation is contained in a
+///     QMimeData object. This is specified with the setMimeData() function in the
+///     following way:
+/// 
+///     \snippet dragging/mainwindow.cpp 1
+/// 
+///     Note that setMimeData() assigns ownership of the QMimeData object to the
+///     QDrag object. The QDrag must be constructed on the heap with a parent QObject
+///     to ensure that Qt can clean up after the drag and drop operation has been
+///     completed.
+/// 
+///     A pixmap can be used to represent the data while the drag is in
+///     progress, and will move with the cursor to the drop target. This
+///     pixmap typically shows an icon that represents the MIME type of
+///     the data being transferred, but any pixmap can be set with
+///     setPixmap(). The cursor's hot spot can be given a position
+///     relative to the top-left corner of the pixmap with the
+///     setHotSpot() function. The following code positions the pixmap so
+///     that the cursor's hot spot points to the center of its bottom
+///     edge:
+/// 
+///     \snippet separations/finalwidget.cpp 2
+/// 
+///     \note On X11, the pixmap may not be able to keep up with the mouse
+///     movements if the hot spot causes the pixmap to be displayed
+///     directly under the cursor.
+/// 
+///     The source and target widgets can be found with source() and target().
+///     These functions are often used to determine whether drag and drop operations
+///     started and finished at the same widget, so that special behavior can be
+///     implemented.
+/// 
+///     QDrag only deals with the drag and drop operation itself. It is up to the
+///     developer to decide when a drag operation begins, and how a QDrag object should
+///     be constructed and used. For a given widget, it is often necessary to
+///     reimplement \l{QWidget::mousePressEvent()}{mousePressEvent()} to determine
+///     whether the user has pressed a mouse button, and reimplement
+///     \l{QWidget::mouseMoveEvent()}{mouseMoveEvent()} to check whether a QDrag is
+///     required.
+/// 
+///     \sa {Drag and Drop}, QClipboard, QMimeData, QMacPasteboardMime,
+///         {Draggable Icons Example}, {Draggable Text Example}, {Drop Site Example},
+///         {Fridge Magnets Example}
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct Drag : Object {
+    ///     Sets the data to be sent to the given MIME \a data. Ownership of the data is
+    ///     transferred to the QDrag object.
     set_mime_data(data: *MimeDataType),
+    ///     Returns the MIME data that is encapsulated by the drag object.
     mime_data() -> MimeData?,
+    ///     Sets \a pixmap as the pixmap used to represent the data in a drag
+    ///     and drop operation. You can only set a pixmap before the drag is
+    ///     started.
     set_pixmap(arg0: &PixmapType),
+    ///     Returns the pixmap used to represent the data in a drag and drop operation.
     pixmap() -> Pixmap,
+    ///     Sets the position of the hot spot relative to the top-left corner of the
+    ///     pixmap used to the point specified by \a hotspot.
+    /// 
+    ///     \b{Note:} on X11, the pixmap may not be able to keep up with the mouse
+    ///     movements if the hot spot causes the pixmap to be displayed
+    ///     directly under the cursor.
     set_hot_spot(hotspot: &PointType),
+    ///     Returns the position of the hot spot relative to the top-left corner of the
+    ///     cursor.
     hot_spot() -> Point,
+    ///     Returns the source of the drag object. This is the widget where the drag
+    ///     and drop operation originated.
     source() -> Object?,
+    ///     Returns the target of the drag and drop operation. This is the widget where
+    ///     the drag object was dropped.
     target() -> Object?,
+    ///     \obsolete
+    /// 
+    ///     \b{Note:} It is recommended to use exec() instead of this function.
+    /// 
+    ///     Starts the drag and drop operation and returns a value indicating the requested
+    ///     drop action when it is completed. The drop actions that the user can choose
+    ///     from are specified in \a request. Qt::CopyAction is always allowed.
+    /// 
+    ///     \b{Note:} Although the drag and drop operation can take some time, this function
+    ///     does not block the event loop. Other events are still delivered to the application
+    ///     while the operation is performed.
+    /// 
+    ///     \sa exec()
     start(supported_actions: Rute::DropActions) -> Rute::DropAction,
+    ///     \since 4.3
+    /// 
+    ///     Starts the drag and drop operation and returns a value indicating the requested
+    ///     drop action when it is completed. The drop actions that the user can choose
+    ///     from are specified in \a supportedActions.
+    /// 
+    ///     The \a defaultDropAction determines which action will be proposed when the user performs a
+    ///     drag without using modifier keys.
+    /// 
+    ///     \b{Note:} On Linux and \macos, the drag and drop operation
+    ///     can take some time, but this function does not block the event
+    ///     loop. Other events are still delivered to the application while
+    ///     the operation is performed. On Windows, the Qt event loop is
+    ///     blocked during the operation. However, QDrag::exec() on
+    ///     Windows causes processEvents() to be called frequently to keep the GUI responsive.
+    ///     If any loops or operations are called while a drag operation is active, it will block the drag operation.
     exec(supported_actions: Rute::DropActions) -> Rute::DropAction,
+    ///     \since 4.3
+    /// 
+    ///     Starts the drag and drop operation and returns a value indicating the requested
+    ///     drop action when it is completed. The drop actions that the user can choose
+    ///     from are specified in \a supportedActions.
+    /// 
+    ///     The \a defaultDropAction determines which action will be proposed when the user performs a
+    ///     drag without using modifier keys.
+    /// 
+    ///     \b{Note:} On Linux and \macos, the drag and drop operation
+    ///     can take some time, but this function does not block the event
+    ///     loop. Other events are still delivered to the application while
+    ///     the operation is performed. On Windows, the Qt event loop is
+    ///     blocked during the operation. However, QDrag::exec() on
+    ///     Windows causes processEvents() to be called frequently to keep the GUI responsive.
+    ///     If any loops or operations are called while a drag operation is active, it will block the drag operation.
     exec(supported_actions: Rute::DropActions, default_action: Rute::DropAction) -> Rute::DropAction,
+    ///     Sets the drag \a cursor for the \a action. This allows you
+    ///     to override the default native cursors. To revert to using the
+    ///     native cursor for \a action pass in a null QPixmap as \a cursor.
+    /// 
+    ///     Note: setting the drag cursor for IgnoreAction may not work on
+    ///     all platforms. X11 and macOS has been tested to work. Windows
+    ///     does not support it.
     set_drag_cursor(cursor: &PixmapType, action: Rute::DropAction),
+    ///     Returns the drag cursor for the \a action.
+    /// 
+    ///     \since 5.0
     drag_cursor(action: Rute::DropAction) -> Pixmap,
+    ///     Returns the set of possible drop actions for this drag operation.
+    /// 
+    ///     \sa exec(), defaultAction()
     supported_actions() -> Rute::DropActions,
+    ///     Returns the default proposed drop action for this drag operation.
+    /// 
+    ///     \sa exec(), supportedActions()
     default_action() -> Rute::DropAction,
+    ///     Cancels a drag operation initiated by Qt.
+    /// 
+    ///     \note This is currently implemented on Windows and X11.
+    /// 
+    ///     \since 5.7
+    ///     \sa exec()
     [static] cancel(),
     [signal] action_changed(action: Rute::DropAction),
     [signal] target_changed(new_target: *ObjectType),

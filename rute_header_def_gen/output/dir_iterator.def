@@ -1,3 +1,37 @@
+///     \since 4.3
+///     \class QDirIterator
+///     \inmodule QtCore
+///     \brief The QDirIterator class provides an iterator for directory entrylists.
+/// 
+///     You can use QDirIterator to navigate entries of a directory one at a time.
+///     It is similar to QDir::entryList() and QDir::entryInfoList(), but because
+///     it lists entries one at a time instead of all at once, it scales better
+///     and is more suitable for large directories. It also supports listing
+///     directory contents recursively, and following symbolic links. Unlike
+///     QDir::entryList(), QDirIterator does not support sorting.
+/// 
+///     The QDirIterator constructor takes a QDir or a directory as
+///     argument. After construction, the iterator is located before the first
+///     directory entry. Here's how to iterate over all the entries sequentially:
+/// 
+///     \snippet code/src_corelib_io_qdiriterator.cpp 0
+/// 
+///     Here's how to find and read all files filtered by name, recursively:
+/// 
+///     \snippet code/src_corelib_io_qdiriterator.cpp 1
+/// 
+///     The next() function returns the path to the next directory entry and
+///     advances the iterator. You can also call filePath() to get the current
+///     file path without advancing the iterator.  The fileName() function returns
+///     only the name of the file, similar to how QDir::entryList() works. You can
+///     also call fileInfo() to get a QFileInfo for the current entry.
+/// 
+///     Unlike Qt's container iterators, QDirIterator is uni-directional (i.e.,
+///     you cannot iterate directories in reverse order) and does not allow random
+///     access.
+/// 
+///     \sa QDir, QDir::entryList()
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QDirIterator)]
 enum IteratorFlag {
     NoIteratorFlags,
@@ -7,11 +41,38 @@ enum IteratorFlag {
 
 
 struct DirIterator {
+    ///     Advances the iterator to the next entry, and returns the file path of this
+    ///     new entry. If hasNext() returns \c false, this function does nothing, and
+    ///     returns an empty QString.
+    /// 
+    ///     You can call fileName() or filePath() to get the current entry file name
+    ///     or path, or fileInfo() to get a QFileInfo for the current entry.
+    /// 
+    ///     \sa hasNext(), fileName(), filePath(), fileInfo()
     next() -> String,
+    ///     Returns \c true if there is at least one more entry in the directory;
+    ///     otherwise, false is returned.
+    /// 
+    ///     \sa next(), fileName(), filePath(), fileInfo()
     has_next() -> bool,
+    ///     Returns the file name for the current directory entry, without the path
+    ///     prepended.
+    /// 
+    ///     This function is convenient when iterating a single directory. When using
+    ///     the QDirIterator::Subdirectories flag, you can use filePath() to get the
+    ///     full path.
+    /// 
+    ///     \sa filePath(), fileInfo()
     file_name() -> String,
+    ///     Returns the full file path for the current directory entry.
+    /// 
+    ///     \sa fileInfo(), fileName()
     file_path() -> String,
+    ///     Returns a QFileInfo for the current directory entry.
+    /// 
+    ///     \sa filePath(), fileName()
     file_info() -> FileInfo,
+    ///     Returns the base directory of the iterator.
     path() -> String,
 }
 

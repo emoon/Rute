@@ -1,3 +1,28 @@
+///     \class QPinchGesture
+///     \since 4.6
+///     \brief The QPinchGesture class describes a pinch gesture made by the user.
+///     \ingroup touch
+///     \ingroup gestures
+///     \inmodule QtWidgets
+/// 
+///     A pinch gesture is a form of touch user input in which the user typically
+///     touches two points on the input device with a thumb and finger, before moving
+///     them closer together or further apart to change the scale factor, zoom, or level
+///     of detail of the user interface.
+/// 
+///     For an overview of gesture handling in Qt and information on using gestures
+///     in your applications, see the \l{Gestures in Widgets and Graphics View} document.
+/// 
+///     \image pinchgesture.png
+/// 
+///     Instead of repeatedly applying the same pinching gesture, the user may
+///     continue to touch the input device in one place, and apply a second touch
+///     to a new point, continuing the gesture. When this occurs, gesture events
+///     will continue to be delivered to the target object, containing an instance
+///     of QPinchGesture in the Qt::GestureUpdated state.
+/// 
+///     \sa QPanGesture, QSwipeGesture
+/// The documentation provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPinchGesture)]
 enum ChangeFlag {
     ScaleFactorChanged,
