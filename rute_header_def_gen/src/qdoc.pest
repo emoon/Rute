@@ -22,8 +22,8 @@ tags = { abstract_tag | bad_code_tag | brief_tag | bold_tag | caption_tag | clas
 		underline_tag | value_tag | variable_tag | warning_tag }
 
 // Tags
-tag_start = { ("/*!\n") }
-tag_end = { ("*/\n") }
+tag_start = { ("/*!") }
+tag_end = { ("*/") }
 separator = { (",") }
 cpp_arg_list = { (!(")") ~ ANY)* }
 skip_until_block = { (!("{") ~ ANY)* }
@@ -32,7 +32,7 @@ cpp_func_def = { (cpp_type ~ cpp_name | cpp_name) ~ ("(") ~ cpp_arg_list? ~ (")"
 // QDoc tags
 abstract_tag = { ("\\abstract") ~ name }
 bad_code_tag = { ("\\badcode") }
-bold_tag = { ("\\b" | ("\\bold")) ~ whole_line } // notice whole line is incorrect. Not sure how to handle it
+bold_tag = { ("\\bold" | ("\\b")) ~ block_string }
 brief_tag = { ("\\brief") ~ namelist }
 c_tag = { ("\\c") ~ namelist }
 caption_tag = { ("\\caption") ~ whole_line }
@@ -69,7 +69,7 @@ inqmlmodule_tag = { ("\\inqmlmodule") }
 instantiates_tag = { ("\\instantiates") }
 internal_tag = { ("\\internal") }
 keyword_tag = { ("\\keyword") }
-l_tag = { ("\\l") }
+l_tag = { ("\\l") ~ name? ~ link? ~ link? }
 legalese_tag = { ("\\legalese") }
 li_tag = { ("\\li") ~ namelist }
 list_tag = { ("\\list") }
@@ -95,7 +95,7 @@ previouspage_tag = { ("\\previouspage") }
 printline_tag = { ("\\printline") }
 printto_tag = { ("\\printto") }
 printuntil_tag = { ("\\printuntil") }
-property_tag = { ("\\property") ~ name }
+property_tag = { ("\\property") ~ cpp_name }
 qml_tag = { ("\\qml") }
 qmlabstract_tag = { ("\\qmlabstract") }
 qmlattachedproperty_tag = { ("\\qmlattachedproperty") }
@@ -146,10 +146,15 @@ dummy = { ("\\dummy") } // dummy tag, not actually used
 
 // Namelist and various other tags
 
-namelist = { (!tags ~ name)* }
+block_string = { ("{") ~ (name)* ~ ("}") }
+namelist = { (!(tags ~ tag_end) ~ name)* }
+
+any_name = @{ (ANY)+ }
+
+link = { ("{") ~ name ~ ("}") }
 
 name = @{
-	(('a'..'z') | ('A'..'Z') | ("_") | ("\"") | (",") | (":") | ('0'..'9') | ("{") | ("}") | (" ") | ("(") | (")") | ("+") | ("#") | ("&") | ("'") | (";") | ("\n") | ("\t") | ("*")) ~
+	(('a'..'z') | ('A'..'Z') | ("_") | ("\"") | (",") | (":") | ('0'..'9') | ("(") | (")") | ("+") | ("#") | ("&") | ("'") | (";") | (".")) ~
 	(('a'..'z') | ('A'..'Z') | ("_") | (".") | ("-") | ("(") | (")") | ('0'..'9'))*
 }
 
@@ -162,7 +167,6 @@ cpp_type = { cpp_name }
 cpp_body = _{ "{" ~ ( cpp_body | (!"}" ~ ANY) )* ~ "}" }
 
 whole_line = @{ (!NEWLINE ~ ANY)* }
-skip_line = @{ (!(NEWLINE ~ "\n" ~ "/") ~ ANY)+ }
+skip_line = @{ (!NEWLINE ~ ANY)+ }
 
-//WHITESPACE = _{ }
-
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }

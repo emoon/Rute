@@ -1,4 +1,4 @@
-extern crate clang;
+//extern crate clang;
 extern crate heck;
 extern crate rayon;
 extern crate walkdir;
@@ -8,10 +8,10 @@ extern crate pest_derive;
 extern crate pest;
 
 mod doc_parser;
-mod header_gen;
+//mod header_gen;
 
 use doc_parser::{DocEntry, DocInfo, DocParser};
-use header_gen::{Generator, DocLookups};
+//use header_gen::{Generator, DocLookups};
 use std::collections::HashMap;
 
 
@@ -26,6 +26,7 @@ fn main() {
         .unwrap();
     */
 
+	/*
     // TODO: Don't hardcode these
     let header_files_path = &[
         "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
@@ -40,15 +41,17 @@ fn main() {
         "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
         "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2",
     ];
+    */
 
     // Parse source files for documentation
 
-    let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src"];
+    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src"];
     //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qtextedit.cpp"];
-    let docs = DocParser::parse_files(&source_directory);
+    let source_directory = ["/Users/danielcollin/temp/test.cpp"];
+    DocParser::parse_file(&source_directory[0]);
 
     // Build some lookup info for faster lookup when generating the output data
-
+	/*
     let mut cpp_name_lookup: HashMap<&str, &DocEntry> = HashMap::new();
     let mut class_lookup: HashMap<&str, &DocEntry> = HashMap::new();
     let mut property_lookup: HashMap<&str, &DocEntry> = HashMap::new();
@@ -83,4 +86,5 @@ fn main() {
         compile_args,
         &lookups,
     );
+    */
 }

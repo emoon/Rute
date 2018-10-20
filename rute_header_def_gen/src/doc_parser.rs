@@ -3,249 +3,281 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use pest::iterators::Pair;
-use std::io::{BufRead, BufReader};
-use walkdir;
-use walkdir::WalkDir;
-use std::path::PathBuf;
-use rayon::prelude::*;
+use pest;
+use std::fmt;
+use std::fmt::Write;
 
+#[cfg(debug_assertions)]
+const _GRAMMAR: &str = include_str!("qdoc.pest");
+
+#[derive(Parser)]
+#[grammar = "qdoc.pest"]
 pub struct DocParser;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct DocEntry {
     /// Which function this is attached to
     pub target_function: String,
     pub class_name: String,
     pub property: String,
-    pub tags: Vec<String>,
+    pub tags: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct DocInfo {
     pub entries: Vec<DocEntry>,
     pub filename: String,
-    pub base_filename: String,
 }
 
-///
-///
-///
-impl DocEntry {
-    fn new() -> DocEntry {
-        DocEntry {
-            target_function: String::new(),
-            class_name: String::new(),
-            property: String::new(),
-            tags: Vec::new(),
-        }
-    }
-}
-
-#[derive(PartialEq)]
-enum ParsingState {
-    Doc,
-    Global,
-    SkipBlock,
-}
-
-fn is_header_file(entry: &walkdir::DirEntry) -> bool {
-    entry
-        .file_name()
-        .to_str()
-        .map(|s| s.ends_with(".cpp"))
-        .unwrap_or(false)
-}
-
-fn is_private_file(entry: &walkdir::DirEntry) -> bool {
-    entry.path().to_str().unwrap().contains("private")
-}
-
-///
-/// Function for adding files/paths to process
-///
-fn add_process_path(dest: &mut Vec<PathBuf>, path: &str) {
-    for entry in WalkDir::new(path) {
-        let entry = entry.unwrap();
-
-        if !is_header_file(&entry) {
-            continue;
-        }
-
-        if is_private_file(&entry) {
-            continue;
-        }
-
-        dest.push(entry.path().to_owned());
-    }
-}
-
-///
-/// Get class/property setting
-///
-fn get_class_prop(search_str: &String, search_tag: &'static str) -> String {
-	if search_str.contains(search_tag) {
-		let temp = search_str.split(" ");
-		let mut return_next = false;
-
-		for t in temp {
-			if return_next {
-				return t.to_owned();
-			}
-
-			if t == search_tag {
-				return_next = true;
-			}
-		}
+fn get_string(rule: Pair<Rule>) -> String {
+	let mut dest = rule.as_str().to_owned(); 
+	if !dest.starts_with(',') &&
+	   !dest.starts_with('\'') &&
+	   !dest.starts_with('&') 
+	{
+		dest.push(' ');
 	}
 
-	String::new()
+	dest
+}
+
+///
+///
+fn build_strings(rule: Pair<Rule>) -> String {
+	let mut temp = String::new();
+
+    for entry in rule.into_inner() {
+        match entry.as_rule() {
+            Rule::name => {
+				temp.push_str(&get_string(entry));
+            }
+            _ => (),
+        }
+    }
+
+	temp
+}
+
+fn get_block_string(rule: Pair<Rule>) -> String {
+    for entry in rule.into_inner() {
+        match entry.as_rule() {
+            Rule::block_string => return build_strings(entry), 
+            _ => (),
+        }
+    }
+
+    String::new()
+}
+
+fn get_name_list(rule: Pair<Rule>, doc_entry: &mut DocEntry) -> String {
+    for entry in rule.into_inner() {
+        match entry.as_rule() {
+            Rule::namelist => return build_strings(entry), 
+            Rule::tags => process_tags(entry, doc_entry),
+            _ => (),
+        }
+    }
+
+    String::new()
+}
+
+
+///
+///
+///
+fn process_tags(rule: Pair<Rule>, doc_entry: &mut DocEntry) {
+    for entry in rule.into_inner() {
+		match entry.as_rule() {
+			// Rule::abstract_tag => (), 
+			// Rule::bad_code_tag => (), 
+			Rule::bold_tag => {
+				doc_entry.tags.push_str(&format!(" **{}** ", get_block_string(entry)));
+			}
+
+			Rule::brief_tag => {
+				//println!("{:#?}", entry);
+				let tag = get_name_list(entry, doc_entry);
+				doc_entry.tags.push_str(&format!("{}\n", tag)); 
+			}
+
+			// Rule::c_tag => (), 
+			// Rule::caption_tag => (), 
+			// Rule::class_tag => (), 
+			// Rule::code_tag => (), 
+			// Rule::codeline_tag => (), 
+			// Rule::compat_tag => (), 
+			// Rule::contentspage_tag => (), 
+			// Rule::div_tag => (), 
+			// Rule::dots_tag => (), 
+			// Rule::else_tag => (), 
+			// Rule::emphasis_tag => (), 
+			// Rule::endif_tag => (), 
+			// Rule::endlist_tag => (), 
+			// Rule::enum_tag => (), 
+			// Rule::example_tag => (), 
+			// Rule::externalpage_tag => (), 
+			// Rule::footnote_tag => (), 
+			// Rule::function_tag => (), 
+			// Rule::generatelist_tag => (), 
+			// Rule::group_tag => (), 
+			// Rule::header_tag => (), 
+			// Rule::headerfile_tag => (), 
+			// Rule::i_tag => (), 
+			// Rule::if_tag => (), 
+			// Rule::image_tag => (), 
+			// Rule::include_tag => (), 
+			// Rule::indexpage_tag => (), 
+			// Rule::ingroup_tag => (), 
+			// Rule::inherits_tag => (), 
+			// Rule::inlineimage_tag => (), 
+			// Rule::inmodule_tag => (), 
+			// Rule::inqmlmodule_tag => (), 
+			// Rule::instantiates_tag => (), 
+			// Rule::internal_tag => (), 
+			// Rule::keyword_tag => (), 
+			// Rule::l_tag => (), 
+			// Rule::legalese_tag => (), 
+			// Rule::li_tag => (), 
+			// Rule::list_tag => (), 
+			// Rule::macro_tag => (), 
+			// Rule::meta_tag => (), 
+			// Rule::module_tag => (), 
+			// Rule::namespace_tag => (), 
+			// Rule::newcode_tag => (), 
+			// Rule::nextpage_tag => (), 
+			// Rule::noautolist_tag => (), 
+			// Rule::nonreentrant_tag => (), 
+			// Rule::note_tag => (), 
+			// Rule::o_tag => (), 
+			// Rule::obsolete_tag => (), 
+			// Rule::oldcode_tag => (), 
+			// Rule::omit_tag => (), 
+			// Rule::omitvalue_tag => (), 
+			// Rule::overload_tag => (), 
+			// Rule::page_tag => (), 
+			// Rule::parameter_tag => (), 
+			// Rule::preliminary_tag => (), 
+			// Rule::previouspage_tag => (), 
+			// Rule::printline_tag => (), 
+			// Rule::printto_tag => (), 
+			// Rule::printuntil_tag => (), 
+			Rule::property_tag => doc_entry.property = get_cpp_name(entry), 
+			// Rule::quotation_tag => (), 
+			// Rule::quotefile_tag => (), 
+			// Rule::quotefromfile_tag => (), 
+			// Rule::raw_tag => (), 
+			// Rule::reentrant_tag => (), 
+			// Rule::reimp_tag => (), 
+			// Rule::relates_tag => (), 
+			// Rule::row_tag => (), 
+			// Rule::sa_tag => (), 
+			// Rule::section1_tag => (), 
+			// Rule::section2_tag => (), 
+			// Rule::section3_tag => (), 
+			// Rule::section4_tag => (), 
+			// Rule::since_tag => (), 
+			// Rule::skipline_tag => (), 
+			// Rule::skipto_tag => (), 
+			// Rule::skipuntil_tag => (), 
+			// Rule::snippet_tag => (), 
+			// Rule::span_tag => (), 
+			// Rule::startpage_tag => (), 
+			// Rule::sub_tag => (), 
+			// Rule::subtitle_tag => (), 
+			Rule::tags => process_tags(entry, doc_entry), 
+			//Rule::sup_tag => (), 
+			// Rule::table_tag => (), 
+			// Rule::tableofcontents_tag => (), 
+			// Rule::target_tag => (), 
+			// Rule::threadsafe_tag => (), 
+			// Rule::title_tag => (), 
+			// Rule::tt_tag => (), 
+			// Rule::typedef_tag => (), 
+			// Rule::uicontrol_tag => (), 
+			// Rule::underline_tag => (), 
+			// Rule::value_tag => (), 
+			// Rule::variable_tag => (), 
+			// Rule::warning_tag => (), 
+			Rule::name => doc_entry.tags.push_str(&get_string(entry)),
+			_ => println!("tag {:?} not tracked!", entry.as_rule()),
+		}
+	}
+}
+
+///
+///
+///
+fn get_doc(rule: Pair<Rule>) -> DocEntry {
+    let mut doc_entry = DocEntry::default();
+
+    process_tags(rule, &mut doc_entry);
+
+    //println!("---------------------------------------------------------------------------");
+
+    println!("{:#?}", doc_entry);
+
+    doc_entry
+}
+
+fn get_cpp_name(rule: Pair<Rule>) -> String {
+    for entry in rule.into_inner() {
+        match entry.as_rule() {
+            Rule::cpp_name => return entry.as_str().to_owned(),
+            _ => (),
+        }
+    }
+
+    "".to_owned()
 }
 
 impl DocParser {
-    pub fn parse_files(paths: &[&str]) -> Vec<DocInfo> {
-        let mut files: Vec<PathBuf> = Vec::new();
-
-        for path in paths {
-            add_process_path(&mut files, path);
-        }
-
-        // Process all files in parallel using Rayon
-        let docs: Vec<DocInfo> = files.par_iter().map(|filename| {
-            println!("Doc parsing {:?}", filename);
-            Self::parse_file(filename)
-        }).collect();
-
-        docs
-    }
-
     ///
     /// Parse a file
     ///
-    pub fn parse_file<P: AsRef<Path>>(path: P) -> DocInfo {
+    pub fn parse_file<P: AsRef<Path>>(path: P) {
         let mut buffer = String::new();
 
         let pathname = path.as_ref().to_str().unwrap();
-        let buffer = BufReader::new(File::open(pathname).unwrap());
 
-        let base_filename = Path::new(pathname).file_name().unwrap().to_str().unwrap();
-        let base_filename = &base_filename[..base_filename.len() - 4];
+        let mut f = File::open(pathname)
+            .unwrap_or_else(|e| panic!("ApiParser: Unable to open {}: {}", pathname, e));
+        f.read_to_string(&mut buffer)
+            .unwrap_or_else(|e| panic!("ApiParser: Unable to read from {}: {}", pathname, e));
 
+        Self::parse_string(&buffer, &pathname);
+    }
 
-        let mut docs = DocInfo {
-            entries: Vec::new(),
-            filename: pathname.to_owned(),
-            base_filename: base_filename.to_owned(),
-        };
+    ///
+    /// Parse a string
+    ///
+    pub fn parse_string(buffer: &str, filename: &str) {
+        let chunks = Self::parse(Rule::chunk, buffer)
+            .unwrap_or_else(|e| panic!("APiParser: {} {}", filename, e));
 
-        let mut current_doc: Option<DocEntry> = None;
-        let mut parsing_state = ParsingState::Global;
-        let mut block_indent_count = 0;
+        let mut docs = DocInfo::default();
+        //let mut current_doc = None;
 
-        for line in buffer.lines() {
-            let current_line = line.unwrap();
+        //println!("{:#?}", chunks);
 
-            match current_line.as_str() {
-                // start of doc
-                "/*!" => {
-                    if let Some(ref mut doc) = current_doc {
-                        docs.entries.push(doc.clone());
-                    }
-
-                    current_doc = Some(DocEntry::new());
-                    parsing_state = ParsingState::Doc;
+        for chunk in chunks {
+            match chunk.as_rule() {
+                Rule::doc_start => {
+                    let current_doc = Some(get_doc(chunk));
                 }
 
-                // end of doc
-                "*/" => {
-                    parsing_state = ParsingState::Global;
+                Rule::skip_line => {
+                    println!("skip_line {}", chunk.as_str());
                 }
 
-                // Skip CPP blocks
-                "{" => {
-                    if parsing_state == ParsingState::Global {
-                        parsing_state = ParsingState::SkipBlock;
-                    }
-
-                    block_indent_count += 1;
-                }
-
-                // Skip CPP blocks
-                "}" => {
-                    block_indent_count -= 1;
-
-                    if parsing_state == ParsingState::SkipBlock && block_indent_count == 0 {
-                        parsing_state = ParsingState::Global;
-                    }
+                Rule::cpp_func_def => {
+					//println!("cpp_name {}", get_cpp_name(chunk));
                 }
 
                 _ => (),
             }
-
-            if parsing_state == ParsingState::Doc {
-				if let Some(ref mut doc) = current_doc {
-					if doc.class_name.is_empty() {
-						doc.class_name = get_class_prop(&current_line, "\\class");
-					}
-
-					if doc.property.is_empty() {
-						doc.property = get_class_prop(&current_line, "\\property");
-					}
-				}
-            }
-
-            // Find CPP entry. This is fairly crude but should hopefully be find
-            // If the line contains ::,(,) and we aren't in doc parsing mode we
-            // will assume this is a function name
-
-            if parsing_state == ParsingState::Global {
-                if current_line.contains("::") &&
-                   current_line.contains("(") &&
-                   current_line.contains(")")
-                {
-                    let end_pos = current_line.find("(").unwrap();
-                    let mut start_pos = 0;
-
-                    // search backwards to find where the name starts
-                    for (index, c) in current_line[..end_pos].chars().rev().enumerate() {
-                        if c == '*' || c == ' ' || c == ' ' {
-                            start_pos = end_pos - index;
-                            break;
-                        }
-                    }
-
-                    if let Some(ref mut doc) = current_doc {
-                    	if doc.target_function.is_empty() {
-                        	doc.target_function = current_line[start_pos..end_pos].to_owned();
-                    	}
-                    }
-                }
-            } else {
-                if !current_line.starts_with("/*!") && !current_line.starts_with("!*/") {
-                    if let Some(ref mut doc) = current_doc {
-                        if parsing_state == ParsingState::Doc {
-                            doc.tags.push(current_line.clone());
-                        }
-                    }
-                }
-            }
         }
 
-        if let Some(ref mut doc) = current_doc {
-            docs.entries.push(doc.clone());
-        }
-
-		/*
-        for entry in &docs.entries {
-        	println!("-----------------------------------------------------------------");
-			println!("target   {:?}", entry.target_function);
-			println!("class    {:?}", entry.class_name);
-			println!("property {:?}", entry.property);
-            for tag in &entry.tags {
-               println!("  {:?}", tag);
-            }
-        }
-        */
-
-        docs
+        //println!("{:?}", docs);
     }
+
 }
