@@ -326,7 +326,7 @@ struct Image : PaintDevice {
     /// copied.
     /// 
     /// **See also:** QImage()
-    copy(rect: &RectType) -> Image,
+    copy_by_rect(rect: &RectType) -> Image,
     /// 
     /// **Overloads**
     /// The returned image is copied from the position ( *x,* *y)* in
@@ -355,22 +355,6 @@ struct Image : PaintDevice {
     /// 
     /// **See also:** {QImage#Image Formats}{Image Formats}
     format() -> Image::Format,
-    /// 
-    /// Returns a copy of the image in the given *format.*
-    /// 
-    /// The specified image conversion *flags* control how the image data
-    /// is handled during the conversion process.
-    /// 
-    /// **See also:** {Image Formats}
-    /// 
-    /// **Overloads**
-    /// Returns a copy of the image converted to the given *format,*
-    /// using the specified *colorTable.*
-    /// 
-    /// Conversion from RGB formats to indexed formats is a slow operation
-    /// and will use a straightforward nearest color approach, with no
-    /// dithering.
-    convert_to_format(f: Image::Format, flags: Rute::ImageConversionFlags) -> Image,
     /// 
     /// Returns a copy of the image in the given *format.*
     /// 
@@ -586,26 +570,6 @@ struct Image : PaintDevice {
     /// shared pixel data, because the returned data is const.
     bits() -> u8?,
     /// 
-    /// Returns a pointer to the first pixel data. This is equivalent to
-    /// scanLine(0).
-    /// 
-    /// Note that QImage uses [implicit data
-    /// sharing](Implicit%20Data%20Sharing)
-    /// . This function performs a deep copy of the shared pixel
-    /// data, thus ensuring that this QImage is the only one using the
-    /// current return value.
-    /// 
-    /// **See also:** scanLine()
-    /// sizeInBytes()
-    /// constBits()
-    /// 
-    /// **Overloads**
-    /// Note that QImage uses [implicit data
-    /// sharing](Implicit%20Data%20Sharing)
-    /// , but this function does *not* perform a deep copy of the
-    /// shared pixel data, because the returned data is const.
-    bits() -> u8?,
-    /// 
     /// Returns a pointer to the first pixel data.
     /// 
     /// Note that QImage uses [implicit data
@@ -637,25 +601,6 @@ struct Image : PaintDevice {
     /// {QImage#Image Information}{Image
     /// Information}
     size_in_bytes() -> i32,
-    /// 
-    /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
-    /// 
-    /// The scanline data is aligned on a 32-bit boundary.
-    /// 
-    /// **Warning**: If you are accessing 32-bpp image data, cast the returned
-    /// pointer to `QRgb*` (QRgb has a 32-bit size) and use it to
-    /// read/write the pixel value. You cannot use the `u8*` pointer
-    /// directly, because the pixel format depends on the byte order on
-    /// the underlying platform. Use qRed(), qGreen(), qBlue(), and
-    /// qAlpha() to access the pixels.
-    /// 
-    /// **See also:** bytesPerLine()
-    /// bits()
-    /// {QImage#Pixel Manipulation}{Pixel
-    /// Manipulation}, constScanLine()
-    /// 
-    /// **Overloads**
-    scan_line(arg0: i32) -> u8?,
     /// 
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
     /// 
@@ -716,7 +661,7 @@ struct Image : PaintDevice {
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
-    valid(pt: &PointType) -> bool,
+    valid_by_point(pt: &PointType) -> bool,
     /// 
     /// Returns the pixel index at the given *position.*
     /// 
@@ -742,7 +687,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
-    pixel_index(pt: &PointType) -> i32,
+    pixel_index_by_point(pt: &PointType) -> i32,
     /// 
     /// Returns the pixel index at the given *position.*
     /// 
@@ -844,7 +789,7 @@ struct Image : PaintDevice {
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
     /// 
     /// Returns the QImage::Format as a QPixelFormat
-    pixel(pt: &PointType) -> u32,
+    pixel_by_point(pt: &PointType) -> u32,
     /// 
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
     /// 
@@ -918,7 +863,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    set_pixel(pt: &PointType, index_or_rgb: uint),
+    set_pixel_by_point(pt: &PointType, index_or_rgb: uint),
     /// 
     /// Returns the color of the pixel at the given *position* as a QColor.
     /// 
@@ -956,7 +901,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
-    pixel_color(pt: &PointType) -> Color,
+    pixel_color_by_point(pt: &PointType) -> Color,
     /// 
     /// Sets the color at the given *position* to *color.*
     /// 
@@ -992,7 +937,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    set_pixel_color(pt: &PointType, c: &ColorType),
+    set_pixel_color_by_point(pt: &PointType, c: &ColorType),
     /// 
     /// Returns the device pixel ratio for the image. This is the
     /// ratio between *device pixels* and *device independent pixels* .
@@ -1059,7 +1004,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
-    fill(pixel: uint),
+    fill(pixel: u32),
     /// 
     /// Fills the entire image with the given *pixelValue.*
     /// 
@@ -1092,7 +1037,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
-    fill(color: &ColorType),
+    fill_by_type(color: &ColorType),
     /// 
     /// Fills the entire image with the given *pixelValue.*
     /// 
@@ -1125,11 +1070,12 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
-    fill(color: Rute::GlobalColor),
-    /// 
+    [org_name(fill)]
+    fill_by_color(color: Rute::GlobalColor),
+    ///
     /// Returns `true` if the image has a format that respects the alpha
     /// channel, otherwise returns `false.`
-    /// 
+    ///
     /// **See also:** {QImage#Image Information}{Image Information}
     has_alpha_channel() -> bool,
     /// 
@@ -1319,7 +1265,7 @@ struct Image : PaintDevice {
     /// If the given *height* is 0 or negative, a null image is returned.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    scaled(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Image,
+    scaled_by_size(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Image,
     /// 
     /// Returns a scaled copy of the image. The returned image is scaled
     /// to the given *width* using the specified transformation *mode.*
@@ -1349,24 +1295,7 @@ struct Image : PaintDevice {
     /// Note that the original image is not changed.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    mirrored(horizontally: bool, vertically: bool) -> Image,
-    /// 
-    /// Returns a mirror of the image, mirrored in the horizontal and/or
-    /// the vertical direction depending on whether *horizontal* and *vertical* are set to true or false.
-    /// 
-    /// Note that the original image is not changed.
-    /// 
-    /// **See also:** {QImage#Image Transformations}{Image Transformations}
     mirrored(horizontally: bool, vertically: bool) -> Image?,
-    /// 
-    /// Returns a QImage in which the values of the red and blue
-    /// components of all pixels have been swapped, effectively converting
-    /// an RGB image to an BGR image.
-    /// 
-    /// The original QImage is not changed.
-    /// 
-    /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    rgb_swapped() -> Image,
     /// 
     /// Returns a QImage in which the values of the red and blue
     /// components of all pixels have been swapped, effectively converting
@@ -1428,7 +1357,8 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    load(device: *IODeviceType, format: *char) -> bool,
+    [org_name(load)]
+    load_by_io_device(device: *IODeviceType, format: *char) -> bool,
     /// 
     /// Loads an image from the file with the given *fileName.* Returns `true` if
     /// the image was successfully loaded; otherwise invalidates the image
@@ -1464,19 +1394,19 @@ struct Image : PaintDevice {
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
     load(file_name: String, format: *char) -> bool,
-    /// 
-    /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
-    /// invalidates the image and returns `false.`
-    /// 
-    /// The loader attempts to read the image using the specified *format,* e.g.,
-    /// PNG or JPG. If *format* is not specified (which is the default), the
-    /// loader probes the file for a header to guess the file format.
-    /// 
-    /// **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
-    /// 
-    /// **Overloads**
-    /// Loads an image from the given QByteArray *data.*
-    load_from_data(buf: *u8, len: i32, format: *char) -> bool,
+    // 
+    // Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
+    // invalidates the image and returns `false.`
+    // 
+    // The loader attempts to read the image using the specified *format,* e.g.,
+    // PNG or JPG. If *format* is not specified (which is the default), the
+    // loader probes the file for a header to guess the file format.
+    // 
+    // **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    // 
+    // **Overloads**
+    // Loads an image from the given QByteArray *data.*
+    //load_from_data(buf: *u8, len: i32, format: *char) -> bool,
     /// 
     /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
     /// invalidates the image and returns `false.`
@@ -1513,65 +1443,65 @@ struct Image : PaintDevice {
     /// QByteArray:
     /// 
     save(file_name: String, format: *char, quality: i32) -> bool,
-    /// 
-    /// Saves the image to the file with the given *fileName,* using the
-    /// given image file *format* and *quality* factor. If *format* is
-    /// 0, QImage will attempt to guess the format by looking at *fileName's*
-    /// suffix.
-    /// 
-    /// The *quality* factor must be in the range 0 to 100 or -1. Specify
-    /// 0 to obtain small compressed files, 100 for large uncompressed
-    /// files, and -1 (the default) to use the default settings.
-    /// 
-    /// Returns `true` if the image was successfully saved; otherwise
-    /// returns `false.`
-    /// 
-    /// **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing
-    /// Image Files}
-    /// 
-    /// **Overloads**
-    /// This function writes a QImage to the given *device.*
-    /// 
-    /// This can, for example, be used to save an image directly into a
-    /// QByteArray:
-    /// 
-    save(device: *IODeviceType, format: *char, quality: i32) -> bool,
-    /// 
-    /// Constructs a QImage from the first *size* bytes of the given
-    /// binary *data.* The loader attempts to read the image using the
-    /// specified *format.* If *format* is not specified (which is the default),
-    /// the loader probes the data for a header to guess the file format.
-    /// 
-    /// If *format* is specified, it must be one of the values returned by
-    /// QImageReader::supportedImageFormats().
-    /// 
-    /// If the loading of the image fails, the image returned will be a null image.
-    /// 
-    /// **See also:** load()
-    /// save()
-    /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
-    /// 
-    /// **Overloads**
-    /// Loads an image from the given QByteArray *data.*
-    [static] from_data(data: *u8, size: i32, format: *char) -> Image,
-    /// 
-    /// Constructs a QImage from the first *size* bytes of the given
-    /// binary *data.* The loader attempts to read the image using the
-    /// specified *format.* If *format* is not specified (which is the default),
-    /// the loader probes the data for a header to guess the file format.
-    /// 
-    /// If *format* is specified, it must be one of the values returned by
-    /// QImageReader::supportedImageFormats().
-    /// 
-    /// If the loading of the image fails, the image returned will be a null image.
-    /// 
-    /// **See also:** load()
-    /// save()
-    /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
-    /// 
-    /// **Overloads**
-    /// Loads an image from the given QByteArray *data.*
-    [static] from_data(data: &ByteArrayType, format: *char) -> Image,
+    // 
+    // Saves the image to the file with the given *fileName,* using the
+    // given image file *format* and *quality* factor. If *format* is
+    // 0, QImage will attempt to guess the format by looking at *fileName's*
+    // suffix.
+    // 
+    // The *quality* factor must be in the range 0 to 100 or -1. Specify
+    // 0 to obtain small compressed files, 100 for large uncompressed
+    // files, and -1 (the default) to use the default settings.
+    // 
+    // Returns `true` if the image was successfully saved; otherwise
+    // returns `false.`
+    // 
+    // **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing
+    // Image Files}
+    // 
+    // **Overloads**
+    // This function writes a QImage to the given *device.*
+    // 
+    // This can, for example, be used to save an image directly into a
+    // QByteArray:
+    // 
+    //save(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    // 
+    // Constructs a QImage from the first *size* bytes of the given
+    // binary *data.* The loader attempts to read the image using the
+    // specified *format.* If *format* is not specified (which is the default),
+    // the loader probes the data for a header to guess the file format.
+    // 
+    // If *format* is specified, it must be one of the values returned by
+    // QImageReader::supportedImageFormats().
+    // 
+    // If the loading of the image fails, the image returned will be a null image.
+    // 
+    // **See also:** load()
+    // save()
+    // {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    // 
+    // **Overloads**
+    // Loads an image from the given QByteArray *data.*
+    //[static] from_data(data: *u8, size: i32, format: *char) -> Image,
+    // 
+    // Constructs a QImage from the first *size* bytes of the given
+    // binary *data.* The loader attempts to read the image using the
+    // specified *format.* If *format* is not specified (which is the default),
+    // the loader probes the data for a header to guess the file format.
+    // 
+    // If *format* is specified, it must be one of the values returned by
+    // QImageReader::supportedImageFormats().
+    // 
+    // If the loading of the image fails, the image returned will be a null image.
+    // 
+    // **See also:** load()
+    // save()
+    // {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    // 
+    // **Overloads**
+    // Loads an image from the given QByteArray *data.*
+    //[static] from_data(data: &ByteArrayType, format: *char) -> Image,
     /// 
     /// Returns a number that identifies the contents of this QImage
     /// object. Distinct QImage objects can only have the same key if they

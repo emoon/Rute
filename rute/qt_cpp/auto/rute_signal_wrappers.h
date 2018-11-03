@@ -11,6 +11,9 @@
 #include <QBackingStore>
 #include "backing_store_ffi.h"
 
+#include <QBitmap>
+#include "bitmap_ffi.h"
+
 #include <QBrush>
 #include "brush_ffi.h"
 
@@ -56,6 +59,9 @@
 #include <QPixelFormat>
 #include "pixel_format_ffi.h"
 
+#include <QPixmap>
+#include "pixmap_ffi.h"
+
 #include <QPoint>
 #include "point_ffi.h"
 
@@ -84,6 +90,23 @@ public:
     WRBackingStore(const QBackingStore& clone) : QBackingStore(clone) { }
     WRBackingStore() : QBackingStore() { }
     virtual ~WRBackingStore() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRBitmap : public QBitmap {
+    //Q_OBJECT
+public:
+    WRBitmap(const QBitmap& clone) : QBitmap(clone) { }
+    WRBitmap() : QBitmap() { }
+    virtual ~WRBitmap() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
@@ -761,6 +784,57 @@ public:
          }
     }
     
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPixmap : public QPixmap {
+    //Q_OBJECT
+public:
+    WRPixmap(const QPixmap& clone) : QPixmap(clone) { }
+    WRPixmap() : QPixmap() { }
+    virtual ~WRPixmap() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    int devType() {
+        if (m_dev_type) {
+            
+            
+    auto ret_value =         m_dev_type(m_dev_type_user_data, m_dev_type_wrapped_func);
+    return ret_value;
+        } else {
+            return QPixmap::devType();
+        }
+    }
+
+    void (*m_dev_type)(void*, void* self_c) = nullptr;
+    void* m_dev_type_user_data = nullptr;
+    void* m_dev_type_wrapped_func = nullptr;
+struct RUPaintEngine paintEngine() {
+        if (m_paint_engine) {
+            
+            
+    auto ret_value =         m_paint_engine(m_paint_engine_user_data, m_paint_engine_wrapped_func);
+    WRPaintEngine* new_val = new WRPaintEngine();
+    *new_val = ret_value;
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
+    return ctl;
+        } else {
+            return QPixmap::paintEngine();
+        }
+    }
+
+    void (*m_paint_engine)(void*, void* self_c) = nullptr;
+    void* m_paint_engine_user_data = nullptr;
+    void* m_paint_engine_wrapped_func = nullptr;
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };

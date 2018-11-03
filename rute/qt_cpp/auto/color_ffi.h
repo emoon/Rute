@@ -18,10 +18,8 @@ typedef struct RUColorFuncs {
     void (*destroy)(struct RUBase* self);
     bool (*is_valid)(struct RUBase* self_c);
     const char* (*name)(struct RUBase* self_c);
-    const char* (*name)(struct RUBase* self_c, int format);
+    const char* (*name_by_format)(struct RUBase* self_c, int format);
     void (*set_named_color)(struct RUBase* self_c, const char* name);
-    void (*set_named_color)(struct RUBase* self_c, struct RUStringViewType name);
-    void (*set_named_color)(struct RUBase* self_c, struct RULatin1StringType name);
     struct RUArray (*color_names)(struct RUBase* self_c);
     int (*spec)(struct RUBase* self_c);
     int (*alpha)(struct RUBase* self_c);
@@ -98,8 +96,6 @@ typedef struct RUColorFuncs {
     struct RUColor (*dark)(struct RUBase* self_c, int f);
     struct RUColor (*darker)(struct RUBase* self_c, int f);
     bool (*is_valid_color)(struct RUBase* self_c, const char* name);
-    bool (*is_valid_color)(struct RUBase* self_c, struct RUStringViewType arg0);
-    bool (*is_valid_color)(struct RUBase* self_c, struct RULatin1StringType arg0);
 } RUColorFuncs;
 
 typedef struct RUColorAllFuncs {

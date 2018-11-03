@@ -326,7 +326,8 @@ struct Image : PaintDevice {
     /// copied.
     /// 
     /// **See also:** QImage()
-    copy(rect: &RectType) -> Image,
+    [org_name(copy)]
+    copy_by_rect(rect: &RectType) -> Image,
     /// 
     /// **Overloads**
     /// The returned image is copied from the position ( *x,* *y)* in
@@ -349,6 +350,7 @@ struct Image : PaintDevice {
     /// copied.
     /// 
     /// **See also:** QImage()
+    [org_name(copy)]
     copy(x: i32, y: i32, w: i32, h: i32) -> Image,
     /// 
     /// Returns the format of the image.

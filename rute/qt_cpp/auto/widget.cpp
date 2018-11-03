@@ -780,7 +780,7 @@ static void widget_render(struct RUBase* self_c, struct RUBase* painter, struct 
 static struct RUPixmap widget_grab(struct RUBase* self_c, struct RUBase* rectangle) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->grab(*((QRect*)rectangle));
-    * new_val = new ();
+    WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;

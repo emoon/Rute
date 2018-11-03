@@ -8,6 +8,7 @@
 
 #include "application_ffi.h"
 #include "backing_store_ffi.h"
+#include "bitmap_ffi.h"
 #include "brush_ffi.h"
 #include "color_ffi.h"
 #include "event_ffi.h"
@@ -23,6 +24,7 @@
 #include "paint_event_ffi.h"
 #include "painter_ffi.h"
 #include "pixel_format_ffi.h"
+#include "pixmap_ffi.h"
 #include "point_ffi.h"
 #include "push_button_ffi.h"
 #include "rect_ffi.h"
@@ -40,6 +42,10 @@ typedef struct RuteFFI {
     struct RUBackingStore (*create_backing_store)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
+    struct RUBitmap (*create_bitmap)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUBitmap (*get_bitmap)(struct RUBase* priv_data);
     struct RUBrush (*create_brush)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
@@ -82,6 +88,10 @@ typedef struct RuteFFI {
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUPixelFormat (*get_pixel_format)(struct RUBase* priv_data);
+    struct RUPixmap (*create_pixmap)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPixmap (*get_pixmap)(struct RUBase* priv_data);
     struct RUPoint (*create_point)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);

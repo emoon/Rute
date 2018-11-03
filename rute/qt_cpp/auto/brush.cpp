@@ -41,7 +41,7 @@ static void brush_set_transform(struct RUBase* self_c, struct RUBase* arg0) {
 static struct RUPixmap brush_texture(struct RUBase* self_c) {
     WRBrush* qt_value = (WRBrush*)self_c;
     auto ret_value = qt_value->texture();
-    * new_val = new ();
+    WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;

@@ -317,12 +317,12 @@ pub trait ColorType<'a> {
     ///
     /// **See also:** setNamedColor()
     /// NameFormat
-    fn name(&self, format: NameFormat) -> String {
+    fn name_by_format(&self, format: NameFormat) -> String {
         let enum_format_1 = format as i32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).name)(obj_data, enum_format_1);
+            let ret_val = ((*funcs).name_by_format)(obj_data, enum_format_1);
             let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
             ret_val
         }
@@ -355,68 +355,6 @@ pub trait ColorType<'a> {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_named_color)(obj_data, str_in_name_1.as_ptr());
-        }
-        self
-    }
-    ///
-    /// Sets the RGB value of this QColor to *name,* which may be in one
-    /// of these formats:
-    ///
-    /// * #RGB (each of R, G, and B is a single hex digit)
-    /// * #RRGGBB
-    /// * #AARRGGBB (Since 5.2)
-    /// * #RRRGGGBBB
-    /// * #RRRRGGGGBBBB
-    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
-    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
-    /// * `transparent` - representing the absence of a color.
-    ///
-    /// The color is invalid if *name* cannot be parsed.
-    ///
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
-    ///
-    /// **Overloads**
-    ///
-    /// **Overloads**
-    fn set_named_color<S: StringViewType<'a>>(&self, name: &S) -> &Self {
-        let (obj_name_1, _funcs) = name.get_string_view_obj_funcs();
-
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).set_named_color)(obj_data, obj_name_1);
-        }
-        self
-    }
-    ///
-    /// Sets the RGB value of this QColor to *name,* which may be in one
-    /// of these formats:
-    ///
-    /// * #RGB (each of R, G, and B is a single hex digit)
-    /// * #RRGGBB
-    /// * #AARRGGBB (Since 5.2)
-    /// * #RRRGGGBBB
-    /// * #RRRRGGGGBBBB
-    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
-    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
-    /// * `transparent` - representing the absence of a color.
-    ///
-    /// The color is invalid if *name* cannot be parsed.
-    ///
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
-    ///
-    /// **Overloads**
-    ///
-    /// **Overloads**
-    fn set_named_color<L: Latin1StringType<'a>>(&self, name: &L) -> &Self {
-        let (obj_name_1, _funcs) = name.get_latin1_string_obj_funcs();
-
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).set_named_color)(obj_data, obj_name_1);
         }
         self
     }
@@ -2076,52 +2014,6 @@ pub trait ColorStaticType {
         };
         unsafe {
             let ret_val = ((*funcs).is_valid_color)(obj_data, str_in_name_1.as_ptr());
-            ret_val
-        }
-    }
-    ///
-    /// Returns `true` if the *name* is a valid color name and can
-    /// be used to construct a valid QColor object, otherwise returns
-    /// false.
-    ///
-    /// It uses the same algorithm used in setNamedColor().
-    ///
-    /// **See also:** setNamedColor()
-    ///
-    fn is_valid_color<'a, S: StringViewType<'a>>(arg0: &S) -> bool {
-        let (obj_arg0_1, _funcs) = arg0.get_string_view_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_color)(::std::ptr::null()).all_funcs).color_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).is_valid_color)(obj_data, obj_arg0_1);
-            ret_val
-        }
-    }
-    ///
-    /// Returns `true` if the *name* is a valid color name and can
-    /// be used to construct a valid QColor object, otherwise returns
-    /// false.
-    ///
-    /// It uses the same algorithm used in setNamedColor().
-    ///
-    /// **See also:** setNamedColor()
-    ///
-    fn is_valid_color<'a, L: Latin1StringType<'a>>(arg0: &L) -> bool {
-        let (obj_arg0_1, _funcs) = arg0.get_latin1_string_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_color)(::std::ptr::null()).all_funcs).color_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).is_valid_color)(obj_data, obj_arg0_1);
             ret_val
         }
     }

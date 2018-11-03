@@ -25,7 +25,7 @@ static const char* color_name(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* color_name(struct RUBase* self_c, int format) {
+static const char* color_name_by_format(struct RUBase* self_c, int format) {
     WRColor* qt_value = (WRColor*)self_c;
     auto ret_value = qt_value->name((Color::NameFormat)s_name_format_lookup[format]);
     return q_string_to_const_char(ret_value);
@@ -36,20 +36,6 @@ static const char* color_name(struct RUBase* self_c, int format) {
 static void color_set_named_color(struct RUBase* self_c, const char* name) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setNamedColor(QString::fromUtf8(name));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void color_set_named_color(struct RUBase* self_c, struct RUStringViewType name) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->setNamedColor(*((QStringView*)name));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void color_set_named_color(struct RUBase* self_c, struct RULatin1StringType name) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->setNamedColor(*((QLatin1String*)name));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -747,22 +733,6 @@ static bool color_is_valid_color(struct RUBase* self_c, const char* name) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool color_is_valid_color(struct RUBase* self_c, struct RUStringViewType arg0) {
-    WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->isValidColor(*((QStringView*)arg0));
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool color_is_valid_color(struct RUBase* self_c, struct RULatin1StringType arg0) {
-    WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->isValidColor(*((QLatin1String*)arg0));
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUColor create_color(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -796,9 +766,7 @@ struct RUColorFuncs s_color_funcs = {
     destroy_color,
     color_is_valid,
     color_name,
-    color_name,
-    color_set_named_color,
-    color_set_named_color,
+    color_name_by_format,
     color_set_named_color,
     color_color_names,
     color_spec,
@@ -875,8 +843,6 @@ struct RUColorFuncs s_color_funcs = {
     color_lighter,
     color_dark,
     color_darker,
-    color_is_valid_color,
-    color_is_valid_color,
     color_is_valid_color,
 };
 

@@ -1,5 +1,6 @@
 use auto::application_ffi::*;
 use auto::backing_store_ffi::*;
+use auto::bitmap_ffi::*;
 use auto::brush_ffi::*;
 use auto::color_ffi::*;
 use auto::event_ffi::*;
@@ -15,6 +16,7 @@ use auto::paint_engine_state_ffi::*;
 use auto::paint_event_ffi::*;
 use auto::painter_ffi::*;
 use auto::pixel_format_ffi::*;
+use auto::pixmap_ffi::*;
 use auto::point_ffi::*;
 use auto::push_button_ffi::*;
 use auto::rect_ffi::*;
@@ -34,6 +36,12 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUBackingStore,
+    pub create_bitmap: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUBitmap,
+    pub get_bitmap: extern "C" fn(priv_data: *const RUBase) -> RUBitmap,
     pub create_brush: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -100,6 +108,12 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUPixelFormat,
     pub get_pixel_format: extern "C" fn(priv_data: *const RUBase) -> RUPixelFormat,
+    pub create_pixmap: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPixmap,
+    pub get_pixmap: extern "C" fn(priv_data: *const RUBase) -> RUPixmap,
     pub create_point: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

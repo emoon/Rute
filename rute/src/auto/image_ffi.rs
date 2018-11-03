@@ -27,10 +27,9 @@ pub struct RUImageFuncs {
 
     pub detach: extern "C" fn(self_c: *const RUBase),
     pub is_detached: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub copy: extern "C" fn(self_c: *const RUBase, rect: *const RUBase) -> RUImage,
+    pub copy_by_rect: extern "C" fn(self_c: *const RUBase, rect: *const RUBase) -> RUImage,
     pub copy: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, w: i32, h: i32) -> RUImage,
     pub format: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub convert_to_format: extern "C" fn(self_c: *const RUBase, f: i32, flags: i32) -> RUImage,
     pub convert_to_format: extern "C" fn(self_c: *const RUBase, f: i32, flags: i32) -> RUImage,
     pub reinterpret_as_format: extern "C" fn(self_c: *const RUBase, f: i32) -> bool,
     pub width: extern "C" fn(self_c: *const RUBase) -> i32,
@@ -46,31 +45,31 @@ pub struct RUImageFuncs {
     pub all_gray: extern "C" fn(self_c: *const RUBase) -> bool,
     pub is_grayscale: extern "C" fn(self_c: *const RUBase) -> bool,
     pub bits: extern "C" fn(self_c: *const RUBase) -> u8,
-    pub bits: extern "C" fn(self_c: *const RUBase) -> u8,
     pub const_bits: extern "C" fn(self_c: *const RUBase) -> u8,
     pub byte_count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub size_in_bytes: extern "C" fn(self_c: *const RUBase) -> i32,
     pub scan_line: extern "C" fn(self_c: *const RUBase, arg0: i32) -> u8,
-    pub scan_line: extern "C" fn(self_c: *const RUBase, arg0: i32) -> u8,
     pub const_scan_line: extern "C" fn(self_c: *const RUBase, arg0: i32) -> u8,
     pub bytes_per_line: extern "C" fn(self_c: *const RUBase) -> i32,
     pub valid: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> bool,
-    pub valid: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> bool,
+    pub valid_by_point: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> bool,
     pub pixel_index: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> i32,
-    pub pixel_index: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> i32,
+    pub pixel_index_by_point: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> i32,
     pub pixel: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> u32,
-    pub pixel: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> u32,
+    pub pixel_by_point: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> u32,
     pub set_pixel: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, index_or_rgb: RUuint),
-    pub set_pixel: extern "C" fn(self_c: *const RUBase, pt: *const RUBase, index_or_rgb: RUuint),
+    pub set_pixel_by_point:
+        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, index_or_rgb: RUuint),
     pub pixel_color: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUColor,
-    pub pixel_color: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> RUColor,
+    pub pixel_color_by_point: extern "C" fn(self_c: *const RUBase, pt: *const RUBase) -> RUColor,
     pub set_pixel_color: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, c: *const RUBase),
-    pub set_pixel_color: extern "C" fn(self_c: *const RUBase, pt: *const RUBase, c: *const RUBase),
+    pub set_pixel_color_by_point:
+        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, c: *const RUBase),
     pub device_pixel_ratio: extern "C" fn(self_c: *const RUBase) -> f32,
     pub set_device_pixel_ratio: extern "C" fn(self_c: *const RUBase, scale_factor: f32),
-    pub fill: extern "C" fn(self_c: *const RUBase, pixel: RUuint),
-    pub fill: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
-    pub fill: extern "C" fn(self_c: *const RUBase, color: i32),
+    pub fill: extern "C" fn(self_c: *const RUBase, pixel: u32),
+    pub fill_by_type: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
+    pub fill_by_color: extern "C" fn(self_c: *const RUBase, color: i32),
     pub has_alpha_channel: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_alpha_channel: extern "C" fn(self_c: *const RUBase, alpha_channel: *const RUBase),
     pub alpha_channel: extern "C" fn(self_c: *const RUBase) -> RUImage,
@@ -80,27 +79,22 @@ pub struct RUImageFuncs {
         extern "C" fn(self_c: *const RUBase, color: RURgbType, mode: i32) -> RUImage,
     pub scaled: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, aspect_mode: i32, mode: i32)
         -> RUImage,
-    pub scaled: extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
-        -> RUImage,
+    pub scaled_by_size:
+        extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
+            -> RUImage,
     pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: i32) -> RUImage,
     pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: i32) -> RUImage,
     pub mirrored:
         extern "C" fn(self_c: *const RUBase, horizontally: bool, vertically: bool) -> RUImage,
-    pub mirrored:
-        extern "C" fn(self_c: *const RUBase, horizontally: bool, vertically: bool) -> RUImage,
-    pub rgb_swapped: extern "C" fn(self_c: *const RUBase) -> RUImage,
     pub rgb_swapped: extern "C" fn(self_c: *const RUBase) -> RUImage,
     pub invert_pixels: extern "C" fn(self_c: *const RUBase, arg0: i32),
-    pub load:
+    pub load_by_io_device:
         extern "C" fn(self_c: *const RUBase, device: *const RUBase, format: *const RUBase) -> bool,
     pub load: extern "C" fn(
         self_c: *const RUBase,
         file_name: *const ::std::os::raw::c_char,
         format: *const RUBase,
     ) -> bool,
-    pub load_from_data:
-        extern "C" fn(self_c: *const RUBase, buf: *const RUBase, len: i32, format: *const RUBase)
-            -> bool,
     pub load_from_data:
         extern "C" fn(self_c: *const RUBase, data: *const RUBase, aformat: *const RUBase) -> bool,
     pub save: extern "C" fn(
@@ -109,17 +103,6 @@ pub struct RUImageFuncs {
         format: *const RUBase,
         quality: i32,
     ) -> bool,
-    pub save: extern "C" fn(
-        self_c: *const RUBase,
-        device: *const RUBase,
-        format: *const RUBase,
-        quality: i32,
-    ) -> bool,
-    pub from_data:
-        extern "C" fn(self_c: *const RUBase, data: *const RUBase, size: i32, format: *const RUBase)
-            -> RUImage,
-    pub from_data:
-        extern "C" fn(self_c: *const RUBase, data: *const RUBase, format: *const RUBase) -> RUImage,
     pub cache_key: extern "C" fn(self_c: *const RUBase) -> i64,
     pub set_paint_engine: extern "C" fn(
         object: *const RUBase,

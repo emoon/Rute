@@ -185,22 +185,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QColor)]
-enum Spec {
-    Invalid,
-    Rgb,
-    Hsv,
-    Cmyk,
-    Hsl,
-}
-
-[org_name(QColor)]
-enum NameFormat {
-    HexRgb,
-    HexArgb,
-}
-
-
 struct Color {
     /// 
     /// Returns `true` if the color is valid; otherwise returns `false.`
@@ -238,7 +222,8 @@ struct Color {
     /// 
     /// **See also:** setNamedColor()
     /// NameFormat
-    name(format: Color::NameFormat) -> String,
+    [org_name(name)]
+    name_by_format(format: Color::NameFormat) -> String,
     /// 
     /// Sets the RGB value of this QColor to *name,* which may be in one
     /// of these formats:
@@ -262,52 +247,29 @@ struct Color {
     /// 
     /// **Overloads**
     set_named_color(name: String),
-    /// 
-    /// Sets the RGB value of this QColor to *name,* which may be in one
-    /// of these formats:
-    /// 
-    /// * #RGB (each of R, G, and B is a single hex digit)
-    /// * #RRGGBB
-    /// * #AARRGGBB (Since 5.2)
-    /// * #RRRGGGBBB
-    /// * #RRRRGGGGBBBB
-    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
-    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
-    /// * `transparent` - representing the absence of a color.
-    /// 
-    /// The color is invalid if *name* cannot be parsed.
-    /// 
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_named_color(name: StringViewType),
-    /// 
-    /// Sets the RGB value of this QColor to *name,* which may be in one
-    /// of these formats:
-    /// 
-    /// * #RGB (each of R, G, and B is a single hex digit)
-    /// * #RRGGBB
-    /// * #AARRGGBB (Since 5.2)
-    /// * #RRRGGGBBB
-    /// * #RRRRGGGGBBBB
-    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
-    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
-    /// * `transparent` - representing the absence of a color.
-    /// 
-    /// The color is invalid if *name* cannot be parsed.
-    /// 
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_named_color(name: Latin1StringType),
+    // 
+    // Sets the RGB value of this QColor to *name,* which may be in one
+    // of these formats:
+    // 
+    // * #RGB (each of R, G, and B is a single hex digit)
+    // * #RRGGBB
+    // * #AARRGGBB (Since 5.2)
+    // * #RRRGGGBBB
+    // * #RRRRGGGGBBBB
+    // * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
+    // provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
+    // * `transparent` - representing the absence of a color.
+    // 
+    // The color is invalid if *name* cannot be parsed.
+    // 
+    // **See also:** QColor()
+    // name()
+    // isValid()
+    // 
+    // **Overloads**
+    // 
+    // **Overloads**
+    //set_named_color(name: Latin1StringType),
     /// 
     /// Returns a QStringList containing the color names Qt knows about.
     /// 
@@ -1311,26 +1273,23 @@ struct Color {
     /// 
     /// **Overloads**
     [static] is_valid_color(name: String) -> bool,
-    /// 
-    /// Returns `true` if the *name* is a valid color name and can
-    /// be used to construct a valid QColor object, otherwise returns
-    /// false.
-    /// 
-    /// It uses the same algorithm used in setNamedColor().
-    /// 
-    /// **See also:** setNamedColor()
-    /// 
-    [static] is_valid_color(arg0: StringViewType) -> bool,
-    /// 
-    /// Returns `true` if the *name* is a valid color name and can
-    /// be used to construct a valid QColor object, otherwise returns
-    /// false.
-    /// 
-    /// It uses the same algorithm used in setNamedColor().
-    /// 
-    /// **See also:** setNamedColor()
-    /// 
-    [static] is_valid_color(arg0: Latin1StringType) -> bool,
 }
+
+[org_name(QColor)]
+enum Spec {
+    Invalid,
+    Rgb,
+    Hsv,
+    Cmyk,
+    Hsl,
+}
+
+[org_name(QColor)]
+enum NameFormat {
+    HexRgb,
+    HexArgb,
+}
+
+
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -9,10 +9,9 @@ pub struct RUColorFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub is_valid: extern "C" fn(self_c: *const RUBase) -> bool,
     pub name: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
-    pub name: extern "C" fn(self_c: *const RUBase, format: i32) -> *const ::std::os::raw::c_char,
+    pub name_by_format:
+        extern "C" fn(self_c: *const RUBase, format: i32) -> *const ::std::os::raw::c_char,
     pub set_named_color: extern "C" fn(self_c: *const RUBase, name: *const ::std::os::raw::c_char),
-    pub set_named_color: extern "C" fn(self_c: *const RUBase, name: RUStringViewType),
-    pub set_named_color: extern "C" fn(self_c: *const RUBase, name: RULatin1StringType),
     pub color_names: extern "C" fn(self_c: *const RUBase) -> RUArray,
     pub spec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub alpha: extern "C" fn(self_c: *const RUBase) -> i32,
@@ -137,8 +136,6 @@ pub struct RUColorFuncs {
     pub darker: extern "C" fn(self_c: *const RUBase, f: i32) -> RUColor,
     pub is_valid_color:
         extern "C" fn(self_c: *const RUBase, name: *const ::std::os::raw::c_char) -> bool,
-    pub is_valid_color: extern "C" fn(self_c: *const RUBase, arg0: RUStringViewType) -> bool,
-    pub is_valid_color: extern "C" fn(self_c: *const RUBase, arg0: RULatin1StringType) -> bool,
 }
 
 #[repr(C)]
