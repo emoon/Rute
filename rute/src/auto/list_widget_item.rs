@@ -93,7 +93,6 @@ pub trait ListWidgetItemType<'a> {
             Some(ret_val)
         }
     }
-
     fn set_selected(&self, select: bool) -> &Self {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -101,7 +100,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn is_selected(&self) -> bool {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -109,7 +107,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_hidden(&self, hide: bool) -> &Self {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -117,7 +114,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn is_hidden(&self) -> bool {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -125,7 +121,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn text(&self) -> String {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -134,7 +129,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_text(&self, text: &str) -> &Self {
         let str_in_text_1 = CString::new(text).unwrap();
 
@@ -144,7 +138,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn status_tip(&self) -> String {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -153,7 +146,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_status_tip(&self, status_tip: &str) -> &Self {
         let str_in_status_tip_1 = CString::new(status_tip).unwrap();
 
@@ -163,7 +155,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn tool_tip(&self) -> String {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -172,7 +163,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_tool_tip(&self, tool_tip: &str) -> &Self {
         let str_in_tool_tip_1 = CString::new(tool_tip).unwrap();
 
@@ -182,7 +172,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn whats_this(&self) -> String {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -191,7 +180,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_whats_this(&self, whats_this: &str) -> &Self {
         let str_in_whats_this_1 = CString::new(whats_this).unwrap();
 
@@ -201,7 +189,6 @@ pub trait ListWidgetItemType<'a> {
         }
         self
     }
-
     fn text_alignment(&self) -> i32 {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {
@@ -209,7 +196,6 @@ pub trait ListWidgetItemType<'a> {
             ret_val
         }
     }
-
     fn set_text_alignment(&self, alignment: i32) -> &Self {
         let (obj_data, funcs) = self.get_list_widget_item_obj_funcs();
         unsafe {

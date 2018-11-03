@@ -120,7 +120,6 @@ pub trait ApplicationType<'a> {
         }
         self
     }
-
     fn set_auto_sip_enabled(&self, enabled: bool) -> &Self {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
@@ -128,7 +127,6 @@ pub trait ApplicationType<'a> {
         }
         self
     }
-
     fn auto_sip_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
@@ -244,7 +242,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_color_spec<'a>(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -257,7 +254,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_color_spec)(obj_data, arg0);
         }
     }
-
     fn get_font<'a>() -> Font<'a> {
         let (obj_data, funcs) = unsafe {
             (
@@ -278,7 +274,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn active_popup_widget<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -302,7 +297,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn active_modal_widget<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -326,7 +320,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn focus_widget<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -350,7 +343,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn active_window<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -374,7 +366,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn set_active_window<'a, W: WidgetType<'a>>(actor: &W) {
         let (obj_actor_1, _funcs) = actor.get_widget_obj_funcs();
 
@@ -389,7 +380,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_active_window)(obj_data, obj_actor_1);
         }
     }
-
     fn widget_at<'a>(x: i32, y: i32) -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -413,7 +403,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn top_level_at<'a>(x: i32, y: i32) -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -437,7 +426,6 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-
     fn beep<'a>() {
         let (obj_data, funcs) = unsafe {
             (
@@ -450,7 +438,6 @@ pub trait ApplicationStaticType {
             ((*funcs).beep)(obj_data);
         }
     }
-
     fn set_cursor_flash_time<'a>(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -463,7 +450,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_cursor_flash_time)(obj_data, arg0);
         }
     }
-
     fn cursor_flash_time<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -477,7 +463,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_double_click_interval<'a>(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -490,7 +475,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_double_click_interval)(obj_data, arg0);
         }
     }
-
     fn double_click_interval<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -504,7 +488,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_keyboard_input_interval<'a>(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -517,7 +500,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_keyboard_input_interval)(obj_data, arg0);
         }
     }
-
     fn keyboard_input_interval<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -531,7 +513,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_wheel_scroll_lines<'a>(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -544,7 +525,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_wheel_scroll_lines)(obj_data, arg0);
         }
     }
-
     fn wheel_scroll_lines<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -558,7 +538,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_start_drag_time<'a>(ms: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -571,7 +550,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_start_drag_time)(obj_data, ms);
         }
     }
-
     fn start_drag_time<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -585,7 +563,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn set_start_drag_distance<'a>(l: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -598,7 +575,6 @@ pub trait ApplicationStaticType {
             ((*funcs).set_start_drag_distance)(obj_data, l);
         }
     }
-
     fn start_drag_distance<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -612,7 +588,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn exec<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -626,7 +601,6 @@ pub trait ApplicationStaticType {
             ret_val
         }
     }
-
     fn close_all_windows<'a>() {
         let (obj_data, funcs) = unsafe {
             (
@@ -639,7 +613,6 @@ pub trait ApplicationStaticType {
             ((*funcs).close_all_windows)(obj_data);
         }
     }
-
     fn about_qt<'a>() {
         let (obj_data, funcs) = unsafe {
             (

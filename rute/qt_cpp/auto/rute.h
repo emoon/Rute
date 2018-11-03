@@ -7,11 +7,23 @@
 #include "../rute_base.h"
 
 #include "application_ffi.h"
+#include "backing_store_ffi.h"
+#include "brush_ffi.h"
+#include "color_ffi.h"
 #include "event_ffi.h"
 #include "font_ffi.h"
+#include "gradient_ffi.h"
+#include "image_ffi.h"
 #include "list_widget_ffi.h"
 #include "list_widget_item_ffi.h"
+#include "margins_ffi.h"
+#include "paint_device_ffi.h"
+#include "paint_engine_ffi.h"
+#include "paint_engine_state_ffi.h"
 #include "paint_event_ffi.h"
+#include "painter_ffi.h"
+#include "pixel_format_ffi.h"
+#include "point_ffi.h"
 #include "push_button_ffi.h"
 #include "rect_ffi.h"
 #include "screen_ffi.h"
@@ -25,13 +37,55 @@ extern "C" {
 typedef struct RuteFFI {
     struct RUApplication (*create_application)(struct RUBase* priv_data);
     struct RUApplication (*get_application)(struct RUBase* priv_data);
+    struct RUBackingStore (*create_backing_store)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUBrush (*create_brush)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUColor (*create_color)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUColor (*get_color)(struct RUBase* priv_data);
     struct RUFont (*create_font)(struct RUBase* priv_data);
+    struct RUGradient (*create_gradient)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUImage (*create_image)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUImage (*get_image)(struct RUBase* priv_data);
     struct RUListWidget (*create_list_widget)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUListWidgetItem (*create_list_widget_item)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
+    struct RUMargins (*create_margins)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPaintDevice (*create_paint_device)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPaintDevice (*get_paint_device)(struct RUBase* priv_data);
+    struct RUPaintEngine (*create_paint_engine)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPaintEngineState (*create_paint_engine_state)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPainter (*create_painter)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPainter (*get_painter)(struct RUBase* priv_data);
+    struct RUPixelFormat (*create_pixel_format)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPixelFormat (*get_pixel_format)(struct RUBase* priv_data);
+    struct RUPoint (*create_point)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPoint (*get_point)(struct RUBase* priv_data);
     struct RUPushButton (*create_push_button)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
@@ -44,6 +98,7 @@ typedef struct RuteFFI {
     struct RUWidget (*create_widget)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
+    struct RUWidget (*get_widget)(struct RUBase* priv_data);
 } RuteFFI;
 
 extern RuteFFI* rute_static_ffi_get();

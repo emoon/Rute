@@ -27,8 +27,7 @@ fn main() {
         .set_paint_event(|event| {
             let rect = event.rect().unwrap();
             println!("size {} {}", rect.width(), rect.height());
-        })
-        .show();
+        }).show();
 
     // Start the application
     Application::exec();

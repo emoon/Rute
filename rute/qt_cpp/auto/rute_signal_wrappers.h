@@ -8,11 +8,26 @@
 #include <QApplication>
 #include "application_ffi.h"
 
+#include <QBackingStore>
+#include "backing_store_ffi.h"
+
+#include <QBrush>
+#include "brush_ffi.h"
+
+#include <QColor>
+#include "color_ffi.h"
+
 #include <QEvent>
 #include "event_ffi.h"
 
 #include <QFont>
 #include "font_ffi.h"
+
+#include <QGradient>
+#include "gradient_ffi.h"
+
+#include <QImage>
+#include "image_ffi.h"
 
 #include <QListWidget>
 #include "list_widget_ffi.h"
@@ -20,8 +35,29 @@
 #include <QListWidgetItem>
 #include "list_widget_item_ffi.h"
 
+#include <QMargins>
+#include "margins_ffi.h"
+
+#include <QPaintDevice>
+#include "paint_device_ffi.h"
+
+#include <QPaintEngine>
+#include "paint_engine_ffi.h"
+
+#include <QPaintEngineState>
+#include "paint_engine_state_ffi.h"
+
 #include <QPaintEvent>
 #include "paint_event_ffi.h"
+
+#include <QPainter>
+#include "painter_ffi.h"
+
+#include <QPixelFormat>
+#include "pixel_format_ffi.h"
+
+#include <QPoint>
+#include "point_ffi.h"
 
 #include <QPushButton>
 #include "push_button_ffi.h"
@@ -39,6 +75,125 @@
 #include <QWidget>
 #include "widget_ffi.h"
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRBackingStore : public QBackingStore {
+    //Q_OBJECT
+public:
+    WRBackingStore(const QBackingStore& clone) : QBackingStore(clone) { }
+    WRBackingStore() : QBackingStore() { }
+    virtual ~WRBackingStore() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRBrush : public QBrush {
+    //Q_OBJECT
+public:
+    WRBrush(const QBrush& clone) : QBrush(clone) { }
+    WRBrush() : QBrush() { }
+    virtual ~WRBrush() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRColor : public QColor {
+    //Q_OBJECT
+public:
+    WRColor(const QColor& clone) : QColor(clone) { }
+    WRColor() : QColor() { }
+    virtual ~WRColor() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRGradient : public QGradient {
+    //Q_OBJECT
+public:
+    WRGradient(const QGradient& clone) : QGradient(clone) { }
+    WRGradient() : QGradient() { }
+    virtual ~WRGradient() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRImage : public QImage {
+    //Q_OBJECT
+public:
+    WRImage(const QImage& clone) : QImage(clone) { }
+    WRImage() : QImage() { }
+    virtual ~WRImage() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    int devType() {
+        if (m_dev_type) {
+            
+            
+    auto ret_value =         m_dev_type(m_dev_type_user_data, m_dev_type_wrapped_func);
+    return ret_value;
+        } else {
+            return QImage::devType();
+        }
+    }
+
+    void (*m_dev_type)(void*, void* self_c) = nullptr;
+    void* m_dev_type_user_data = nullptr;
+    void* m_dev_type_wrapped_func = nullptr;
+struct RUPaintEngine paintEngine() {
+        if (m_paint_engine) {
+            
+            
+    auto ret_value =         m_paint_engine(m_paint_engine_user_data, m_paint_engine_wrapped_func);
+    WRPaintEngine* new_val = new WRPaintEngine();
+    *new_val = ret_value;
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
+    return ctl;
+        } else {
+            return QImage::paintEngine();
+        }
+    }
+
+    void (*m_paint_engine)(void*, void* self_c) = nullptr;
+    void* m_paint_engine_user_data = nullptr;
+    void* m_paint_engine_wrapped_func = nullptr;
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +219,560 @@ public:
     WRListWidgetItem(const QListWidgetItem& clone) : QListWidgetItem(clone) { }
     WRListWidgetItem() : QListWidgetItem() { }
     virtual ~WRListWidgetItem() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRMargins : public QMargins {
+    //Q_OBJECT
+public:
+    WRMargins(const QMargins& clone) : QMargins(clone) { }
+    WRMargins() : QMargins() { }
+    virtual ~WRMargins() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPaintDevice : public QPaintDevice {
+    //Q_OBJECT
+public:
+    WRPaintDevice(const QPaintDevice& clone) : QPaintDevice(clone) { }
+    WRPaintDevice() : QPaintDevice() { }
+    virtual ~WRPaintDevice() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    int devType() {
+        if (m_dev_type) {
+            
+            
+    auto ret_value =         m_dev_type(m_dev_type_user_data, m_dev_type_wrapped_func);
+    return ret_value;
+        } else {
+            return QPaintDevice::devType();
+        }
+    }
+
+    void (*m_dev_type)(void*, void* self_c) = nullptr;
+    void* m_dev_type_user_data = nullptr;
+    void* m_dev_type_wrapped_func = nullptr;
+struct RUPaintEngine paintEngine() {
+        if (m_paint_engine) {
+            
+            
+    auto ret_value =         m_paint_engine(m_paint_engine_user_data, m_paint_engine_wrapped_func);
+    WRPaintEngine* new_val = new WRPaintEngine();
+    *new_val = ret_value;
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
+    return ctl;
+        } else {
+            return QPaintDevice::paintEngine();
+        }
+    }
+
+    void (*m_paint_engine)(void*, void* self_c) = nullptr;
+    void* m_paint_engine_user_data = nullptr;
+    void* m_paint_engine_wrapped_func = nullptr;
+void initPainter(QPainter* painter) {
+        if (m_init_painter) {
+            RUPainter obj_in_painter_1;
+            obj_in_painter_1.qt_data = (struct RUBase*)painter;
+            obj_in_painter_1.host_data = nullptr;
+            obj_in_painter_1.all_funcs = &s_painter_all_funcs;
+            
+            m_init_painter(m_init_painter_user_data, m_init_painter_wrapped_func, (struct RUBase*)&obj_in_painter_1);
+        } else {
+            QPaintDevice::initPainter(painter);
+        }
+    }
+
+    void (*m_init_painter)(void*, void* self_c, struct RUBase* painter) = nullptr;
+    void* m_init_painter_user_data = nullptr;
+    void* m_init_painter_wrapped_func = nullptr;
+struct RUPaintDevice redirected(QPoint* offset) {
+        if (m_redirected) {
+            RUPoint obj_in_offset_1;
+            obj_in_offset_1.qt_data = (struct RUBase*)offset;
+            obj_in_offset_1.host_data = nullptr;
+            obj_in_offset_1.all_funcs = &s_point_all_funcs;
+            
+    auto ret_value =         m_redirected(m_redirected_user_data, m_redirected_wrapped_func, (struct RUBase*)&obj_in_offset_1);
+    WRPaintDevice* new_val = new WRPaintDevice();
+    *new_val = ret_value;
+    struct RUPaintDevice ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_paint_device_all_funcs;
+    return ctl;
+        } else {
+            return QPaintDevice::redirected(offset);
+        }
+    }
+
+    void (*m_redirected)(void*, void* self_c, struct RUBase* offset) = nullptr;
+    void* m_redirected_user_data = nullptr;
+    void* m_redirected_wrapped_func = nullptr;
+struct RUPainter sharedPainter() {
+        if (m_shared_painter) {
+            
+            
+    auto ret_value =         m_shared_painter(m_shared_painter_user_data, m_shared_painter_wrapped_func);
+    WRPainter* new_val = new WRPainter();
+    *new_val = ret_value;
+    struct RUPainter ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_painter_all_funcs;
+    return ctl;
+        } else {
+            return QPaintDevice::sharedPainter();
+        }
+    }
+
+    void (*m_shared_painter)(void*, void* self_c) = nullptr;
+    void* m_shared_painter_user_data = nullptr;
+    void* m_shared_painter_wrapped_func = nullptr;
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPaintEngine : public QPaintEngine {
+    //Q_OBJECT
+public:
+    WRPaintEngine(const QPaintEngine& clone) : QPaintEngine(clone) { }
+    WRPaintEngine() : QPaintEngine() { }
+    virtual ~WRPaintEngine() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    bool begin(QPaintDevice* pdev) {
+        if (m_begin) {
+            RUPaintDevice obj_in_pdev_1;
+            obj_in_pdev_1.qt_data = (struct RUBase*)pdev;
+            obj_in_pdev_1.host_data = nullptr;
+            obj_in_pdev_1.all_funcs = &s_paint_device_all_funcs;
+            
+    auto ret_value =         m_begin(m_begin_user_data, m_begin_wrapped_func, (struct RUBase*)&obj_in_pdev_1);
+    return ret_value;
+        } else {
+            return QPaintEngine::begin(pdev);
+        }
+    }
+
+    void (*m_begin)(void*, void* self_c, struct RUBase* pdev) = nullptr;
+    void* m_begin_user_data = nullptr;
+    void* m_begin_wrapped_func = nullptr;
+bool end() {
+        if (m_end) {
+            
+            
+    auto ret_value =         m_end(m_end_user_data, m_end_wrapped_func);
+    return ret_value;
+        } else {
+            return QPaintEngine::end();
+        }
+    }
+
+    void (*m_end)(void*, void* self_c) = nullptr;
+    void* m_end_user_data = nullptr;
+    void* m_end_wrapped_func = nullptr;
+void updateState(*(QPaintEngineState)* state) {
+        if (m_update_state) {
+            RUPaintEngineState obj_in_state_1;
+            obj_in_state_1.qt_data = (struct RUBase*)state;
+            obj_in_state_1.host_data = nullptr;
+            obj_in_state_1.all_funcs = &s_paint_engine_state_all_funcs;
+            
+            m_update_state(m_update_state_user_data, m_update_state_wrapped_func, (struct RUBase*)&obj_in_state_1);
+        } else {
+            QPaintEngine::updateState(state);
+        }
+    }
+
+    void (*m_update_state)(void*, void* self_c, struct RUBase* state) = nullptr;
+    void* m_update_state_user_data = nullptr;
+    void* m_update_state_wrapped_func = nullptr;
+void drawRects(QRect* rects, int rect_count) {
+        if (m_draw_rects) {
+            RURect obj_in_rects_1;
+            obj_in_rects_1.qt_data = (struct RUBase*)rects;
+            obj_in_rects_1.host_data = nullptr;
+            obj_in_rects_1.all_funcs = &s_rect_all_funcs;
+            
+            m_draw_rects(m_draw_rects_user_data, m_draw_rects_wrapped_func, (struct RUBase*)&obj_in_rects_1, rect_count);
+        } else {
+            QPaintEngine::drawRects(rects rect_count);
+        }
+    }
+
+    void (*m_draw_rects)(void*, void* self_c, struct RUBase* rects, int rect_count) = nullptr;
+    void* m_draw_rects_user_data = nullptr;
+    void* m_draw_rects_wrapped_func = nullptr;
+void drawRects(QRectF* rects, int rect_count) {
+        if (m_draw_rects) {
+            RURectF obj_in_rects_1;
+            obj_in_rects_1.qt_data = (struct RUBase*)rects;
+            obj_in_rects_1.host_data = nullptr;
+            obj_in_rects_1.all_funcs = &s_rect_f_all_funcs;
+            
+            m_draw_rects(m_draw_rects_user_data, m_draw_rects_wrapped_func, (struct RUBase*)&obj_in_rects_1, rect_count);
+        } else {
+            QPaintEngine::drawRects(rects rect_count);
+        }
+    }
+
+    void (*m_draw_rects)(void*, void* self_c, struct RUBase* rects, int rect_count) = nullptr;
+    void* m_draw_rects_user_data = nullptr;
+    void* m_draw_rects_wrapped_func = nullptr;
+void drawLines(QLine* lines, int line_count) {
+        if (m_draw_lines) {
+            RULine obj_in_lines_1;
+            obj_in_lines_1.qt_data = (struct RUBase*)lines;
+            obj_in_lines_1.host_data = nullptr;
+            obj_in_lines_1.all_funcs = &s_line_all_funcs;
+            
+            m_draw_lines(m_draw_lines_user_data, m_draw_lines_wrapped_func, (struct RUBase*)&obj_in_lines_1, line_count);
+        } else {
+            QPaintEngine::drawLines(lines line_count);
+        }
+    }
+
+    void (*m_draw_lines)(void*, void* self_c, struct RUBase* lines, int line_count) = nullptr;
+    void* m_draw_lines_user_data = nullptr;
+    void* m_draw_lines_wrapped_func = nullptr;
+void drawLines(QLineF* lines, int line_count) {
+        if (m_draw_lines) {
+            RULineF obj_in_lines_1;
+            obj_in_lines_1.qt_data = (struct RUBase*)lines;
+            obj_in_lines_1.host_data = nullptr;
+            obj_in_lines_1.all_funcs = &s_line_f_all_funcs;
+            
+            m_draw_lines(m_draw_lines_user_data, m_draw_lines_wrapped_func, (struct RUBase*)&obj_in_lines_1, line_count);
+        } else {
+            QPaintEngine::drawLines(lines line_count);
+        }
+    }
+
+    void (*m_draw_lines)(void*, void* self_c, struct RUBase* lines, int line_count) = nullptr;
+    void* m_draw_lines_user_data = nullptr;
+    void* m_draw_lines_wrapped_func = nullptr;
+void drawEllipse(*(QRectF)* r) {
+        if (m_draw_ellipse) {
+            RURectF obj_in_r_1;
+            obj_in_r_1.qt_data = (struct RUBase*)r;
+            obj_in_r_1.host_data = nullptr;
+            obj_in_r_1.all_funcs = &s_rect_f_all_funcs;
+            
+            m_draw_ellipse(m_draw_ellipse_user_data, m_draw_ellipse_wrapped_func, (struct RUBase*)&obj_in_r_1);
+        } else {
+            QPaintEngine::drawEllipse(r);
+        }
+    }
+
+    void (*m_draw_ellipse)(void*, void* self_c, struct RUBase* r) = nullptr;
+    void* m_draw_ellipse_user_data = nullptr;
+    void* m_draw_ellipse_wrapped_func = nullptr;
+void drawEllipse(*(QRect)* r) {
+        if (m_draw_ellipse) {
+            RURect obj_in_r_1;
+            obj_in_r_1.qt_data = (struct RUBase*)r;
+            obj_in_r_1.host_data = nullptr;
+            obj_in_r_1.all_funcs = &s_rect_all_funcs;
+            
+            m_draw_ellipse(m_draw_ellipse_user_data, m_draw_ellipse_wrapped_func, (struct RUBase*)&obj_in_r_1);
+        } else {
+            QPaintEngine::drawEllipse(r);
+        }
+    }
+
+    void (*m_draw_ellipse)(void*, void* self_c, struct RUBase* r) = nullptr;
+    void* m_draw_ellipse_user_data = nullptr;
+    void* m_draw_ellipse_wrapped_func = nullptr;
+void drawPath(*(QPainterPath)* path) {
+        if (m_draw_path) {
+            RUPainterPath obj_in_path_1;
+            obj_in_path_1.qt_data = (struct RUBase*)path;
+            obj_in_path_1.host_data = nullptr;
+            obj_in_path_1.all_funcs = &s_painter_path_all_funcs;
+            
+            m_draw_path(m_draw_path_user_data, m_draw_path_wrapped_func, (struct RUBase*)&obj_in_path_1);
+        } else {
+            QPaintEngine::drawPath(path);
+        }
+    }
+
+    void (*m_draw_path)(void*, void* self_c, struct RUBase* path) = nullptr;
+    void* m_draw_path_user_data = nullptr;
+    void* m_draw_path_wrapped_func = nullptr;
+void drawPoints(QPointF* points, int point_count) {
+        if (m_draw_points) {
+            RUPointF obj_in_points_1;
+            obj_in_points_1.qt_data = (struct RUBase*)points;
+            obj_in_points_1.host_data = nullptr;
+            obj_in_points_1.all_funcs = &s_point_f_all_funcs;
+            
+            m_draw_points(m_draw_points_user_data, m_draw_points_wrapped_func, (struct RUBase*)&obj_in_points_1, point_count);
+        } else {
+            QPaintEngine::drawPoints(points point_count);
+        }
+    }
+
+    void (*m_draw_points)(void*, void* self_c, struct RUBase* points, int point_count) = nullptr;
+    void* m_draw_points_user_data = nullptr;
+    void* m_draw_points_wrapped_func = nullptr;
+void drawPoints(QPoint* points, int point_count) {
+        if (m_draw_points) {
+            RUPoint obj_in_points_1;
+            obj_in_points_1.qt_data = (struct RUBase*)points;
+            obj_in_points_1.host_data = nullptr;
+            obj_in_points_1.all_funcs = &s_point_all_funcs;
+            
+            m_draw_points(m_draw_points_user_data, m_draw_points_wrapped_func, (struct RUBase*)&obj_in_points_1, point_count);
+        } else {
+            QPaintEngine::drawPoints(points point_count);
+        }
+    }
+
+    void (*m_draw_points)(void*, void* self_c, struct RUBase* points, int point_count) = nullptr;
+    void* m_draw_points_user_data = nullptr;
+    void* m_draw_points_wrapped_func = nullptr;
+void drawPolygon(QPointF* points, int point_count, int mode) {
+        if (m_draw_polygon) {
+            RUPointF obj_in_points_1;
+            obj_in_points_1.qt_data = (struct RUBase*)points;
+            obj_in_points_1.host_data = nullptr;
+            obj_in_points_1.all_funcs = &s_point_f_all_funcs;
+            
+            m_draw_polygon(m_draw_polygon_user_data, m_draw_polygon_wrapped_func, (struct RUBase*)&obj_in_points_1, point_count, );
+        } else {
+            QPaintEngine::drawPolygon(points point_count, mode);
+        }
+    }
+
+    void (*m_draw_polygon)(void*, void* self_c, struct RUBase* points, int point_count, int mode) = nullptr;
+    void* m_draw_polygon_user_data = nullptr;
+    void* m_draw_polygon_wrapped_func = nullptr;
+void drawPolygon(QPoint* points, int point_count, int mode) {
+        if (m_draw_polygon) {
+            RUPoint obj_in_points_1;
+            obj_in_points_1.qt_data = (struct RUBase*)points;
+            obj_in_points_1.host_data = nullptr;
+            obj_in_points_1.all_funcs = &s_point_all_funcs;
+            
+            m_draw_polygon(m_draw_polygon_user_data, m_draw_polygon_wrapped_func, (struct RUBase*)&obj_in_points_1, point_count, );
+        } else {
+            QPaintEngine::drawPolygon(points point_count, mode);
+        }
+    }
+
+    void (*m_draw_polygon)(void*, void* self_c, struct RUBase* points, int point_count, int mode) = nullptr;
+    void* m_draw_polygon_user_data = nullptr;
+    void* m_draw_polygon_wrapped_func = nullptr;
+void drawPixmap(*(QRectF)* r, *(QPixmap)* pm, *(QRectF)* sr) {
+        if (m_draw_pixmap) {
+            RURectF obj_in_r_1;
+            obj_in_r_1.qt_data = (struct RUBase*)r;
+            obj_in_r_1.host_data = nullptr;
+            obj_in_r_1.all_funcs = &s_rect_f_all_funcs;RUPixmap obj_in_pm_2;
+            obj_in_pm_2.qt_data = (struct RUBase*)pm;
+            obj_in_pm_2.host_data = nullptr;
+            obj_in_pm_2.all_funcs = &s_pixmap_all_funcs;RURectF obj_in_sr_3;
+            obj_in_sr_3.qt_data = (struct RUBase*)sr;
+            obj_in_sr_3.host_data = nullptr;
+            obj_in_sr_3.all_funcs = &s_rect_f_all_funcs;
+            
+            m_draw_pixmap(m_draw_pixmap_user_data, m_draw_pixmap_wrapped_func, (struct RUBase*)&obj_in_r_1, (struct RUBase*)&obj_in_pm_2, (struct RUBase*)&obj_in_sr_3);
+        } else {
+            QPaintEngine::drawPixmap(r pm, sr);
+        }
+    }
+
+    void (*m_draw_pixmap)(void*, void* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr) = nullptr;
+    void* m_draw_pixmap_user_data = nullptr;
+    void* m_draw_pixmap_wrapped_func = nullptr;
+void drawTextItem(*(QPointF)* p, *(QTextItem)* text_item) {
+        if (m_draw_text_item) {
+            RUPointF obj_in_p_1;
+            obj_in_p_1.qt_data = (struct RUBase*)p;
+            obj_in_p_1.host_data = nullptr;
+            obj_in_p_1.all_funcs = &s_point_f_all_funcs;RUTextItem obj_in_text_item_2;
+            obj_in_text_item_2.qt_data = (struct RUBase*)text_item;
+            obj_in_text_item_2.host_data = nullptr;
+            obj_in_text_item_2.all_funcs = &s_text_item_all_funcs;
+            
+            m_draw_text_item(m_draw_text_item_user_data, m_draw_text_item_wrapped_func, (struct RUBase*)&obj_in_p_1, (struct RUBase*)&obj_in_text_item_2);
+        } else {
+            QPaintEngine::drawTextItem(p text_item);
+        }
+    }
+
+    void (*m_draw_text_item)(void*, void* self_c, struct RUBase* p, struct RUBase* text_item) = nullptr;
+    void* m_draw_text_item_user_data = nullptr;
+    void* m_draw_text_item_wrapped_func = nullptr;
+void drawTiledPixmap(*(QRectF)* r, *(QPixmap)* pixmap, *(QPointF)* s) {
+        if (m_draw_tiled_pixmap) {
+            RURectF obj_in_r_1;
+            obj_in_r_1.qt_data = (struct RUBase*)r;
+            obj_in_r_1.host_data = nullptr;
+            obj_in_r_1.all_funcs = &s_rect_f_all_funcs;RUPixmap obj_in_pixmap_2;
+            obj_in_pixmap_2.qt_data = (struct RUBase*)pixmap;
+            obj_in_pixmap_2.host_data = nullptr;
+            obj_in_pixmap_2.all_funcs = &s_pixmap_all_funcs;RUPointF obj_in_s_3;
+            obj_in_s_3.qt_data = (struct RUBase*)s;
+            obj_in_s_3.host_data = nullptr;
+            obj_in_s_3.all_funcs = &s_point_f_all_funcs;
+            
+            m_draw_tiled_pixmap(m_draw_tiled_pixmap_user_data, m_draw_tiled_pixmap_wrapped_func, (struct RUBase*)&obj_in_r_1, (struct RUBase*)&obj_in_pixmap_2, (struct RUBase*)&obj_in_s_3);
+        } else {
+            QPaintEngine::drawTiledPixmap(r pixmap, s);
+        }
+    }
+
+    void (*m_draw_tiled_pixmap)(void*, void* self_c, struct RUBase* r, struct RUBase* pixmap, struct RUBase* s) = nullptr;
+    void* m_draw_tiled_pixmap_user_data = nullptr;
+    void* m_draw_tiled_pixmap_wrapped_func = nullptr;
+void drawImage(*(QRectF)* r, *(QImage)* pm, *(QRectF)* sr, int flags) {
+        if (m_draw_image) {
+            RURectF obj_in_r_1;
+            obj_in_r_1.qt_data = (struct RUBase*)r;
+            obj_in_r_1.host_data = nullptr;
+            obj_in_r_1.all_funcs = &s_rect_f_all_funcs;RUImage obj_in_pm_2;
+            obj_in_pm_2.qt_data = (struct RUBase*)pm;
+            obj_in_pm_2.host_data = nullptr;
+            obj_in_pm_2.all_funcs = &s_image_all_funcs;RURectF obj_in_sr_3;
+            obj_in_sr_3.qt_data = (struct RUBase*)sr;
+            obj_in_sr_3.host_data = nullptr;
+            obj_in_sr_3.all_funcs = &s_rect_f_all_funcs;
+            
+            m_draw_image(m_draw_image_user_data, m_draw_image_wrapped_func, (struct RUBase*)&obj_in_r_1, (struct RUBase*)&obj_in_pm_2, (struct RUBase*)&obj_in_sr_3, );
+        } else {
+            QPaintEngine::drawImage(r pm, sr, flags);
+        }
+    }
+
+    void (*m_draw_image)(void*, void* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr, int flags) = nullptr;
+    void* m_draw_image_user_data = nullptr;
+    void* m_draw_image_wrapped_func = nullptr;
+struct RUPoint coordinateOffset() {
+        if (m_coordinate_offset) {
+            
+            
+    auto ret_value =         m_coordinate_offset(m_coordinate_offset_user_data, m_coordinate_offset_wrapped_func);
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+        } else {
+            return QPaintEngine::coordinateOffset();
+        }
+    }
+
+    void (*m_coordinate_offset)(void*, void* self_c) = nullptr;
+    void* m_coordinate_offset_user_data = nullptr;
+    void* m_coordinate_offset_wrapped_func = nullptr;
+int type() {
+        if (m_type) {
+            
+            
+    auto ret_value =         m_type(m_type_user_data, m_type_wrapped_func);
+    return s_type_lookup[(int)ret_value];
+        } else {
+            return QPaintEngine::type();
+        }
+    }
+
+    void (*m_type)(void*, void* self_c) = nullptr;
+    void* m_type_user_data = nullptr;
+    void* m_type_wrapped_func = nullptr;
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPaintEngineState : public QPaintEngineState {
+    //Q_OBJECT
+public:
+    WRPaintEngineState(const QPaintEngineState& clone) : QPaintEngineState(clone) { }
+    WRPaintEngineState() : QPaintEngineState() { }
+    virtual ~WRPaintEngineState() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPainter : public QPainter {
+    //Q_OBJECT
+public:
+    WRPainter(const QPainter& clone) : QPainter(clone) { }
+    WRPainter() : QPainter() { }
+    virtual ~WRPainter() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPixelFormat : public QPixelFormat {
+    //Q_OBJECT
+public:
+    WRPixelFormat(const QPixelFormat& clone) : QPixelFormat(clone) { }
+    WRPixelFormat() : QPixelFormat() { }
+    virtual ~WRPixelFormat() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRPoint : public QPoint {
+    //Q_OBJECT
+public:
+    WRPoint(const QPoint& clone) : QPoint(clone) { }
+    WRPoint() : QPoint() { }
+    virtual ~WRPoint() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
@@ -134,8 +843,281 @@ public:
              m_delete_callback(m_private_data);
          }
     }
-    
-    void paintEvent(QPaintEvent* event) {
+    void setVisible(bool visible) {
+        if (m_set_visible) {
+            
+            
+            m_set_visible(m_set_visible_user_data, m_set_visible_wrapped_func, visible);
+        } else {
+            QWidget::setVisible(visible);
+        }
+    }
+
+    void (*m_set_visible)(void*, void* self_c, bool visible) = nullptr;
+    void* m_set_visible_user_data = nullptr;
+    void* m_set_visible_wrapped_func = nullptr;
+struct RUSize sizeHint() {
+        if (m_size_hint) {
+            
+            
+    auto ret_value =         m_size_hint(m_size_hint_user_data, m_size_hint_wrapped_func);
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+        } else {
+            return QWidget::sizeHint();
+        }
+    }
+
+    void (*m_size_hint)(void*, void* self_c) = nullptr;
+    void* m_size_hint_user_data = nullptr;
+    void* m_size_hint_wrapped_func = nullptr;
+struct RUSize minimumSizeHint() {
+        if (m_minimum_size_hint) {
+            
+            
+    auto ret_value =         m_minimum_size_hint(m_minimum_size_hint_user_data, m_minimum_size_hint_wrapped_func);
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+        } else {
+            return QWidget::minimumSizeHint();
+        }
+    }
+
+    void (*m_minimum_size_hint)(void*, void* self_c) = nullptr;
+    void* m_minimum_size_hint_user_data = nullptr;
+    void* m_minimum_size_hint_wrapped_func = nullptr;
+int heightForWidth(int arg0) {
+        if (m_height_for_width) {
+            
+            
+    auto ret_value =         m_height_for_width(m_height_for_width_user_data, m_height_for_width_wrapped_func, arg0);
+    return ret_value;
+        } else {
+            return QWidget::heightForWidth(arg0);
+        }
+    }
+
+    void (*m_height_for_width)(void*, void* self_c, int arg0) = nullptr;
+    void* m_height_for_width_user_data = nullptr;
+    void* m_height_for_width_wrapped_func = nullptr;
+bool hasHeightForWidth() {
+        if (m_has_height_for_width) {
+            
+            
+    auto ret_value =         m_has_height_for_width(m_has_height_for_width_user_data, m_has_height_for_width_wrapped_func);
+    return ret_value;
+        } else {
+            return QWidget::hasHeightForWidth();
+        }
+    }
+
+    void (*m_has_height_for_width)(void*, void* self_c) = nullptr;
+    void* m_has_height_for_width_user_data = nullptr;
+    void* m_has_height_for_width_wrapped_func = nullptr;
+bool event(QEvent* event) {
+        if (m_event) {
+            RUEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_event_all_funcs;
+            
+    auto ret_value =         m_event(m_event_user_data, m_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+    return ret_value;
+        } else {
+            return QWidget::event(event);
+        }
+    }
+
+    void (*m_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_event_user_data = nullptr;
+    void* m_event_wrapped_func = nullptr;
+void mousePressEvent(QMouseEvent* event) {
+        if (m_mouse_press_event) {
+            RUMouseEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_mouse_event_all_funcs;
+            
+            m_mouse_press_event(m_mouse_press_event_user_data, m_mouse_press_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::mousePressEvent(event);
+        }
+    }
+
+    void (*m_mouse_press_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_mouse_press_event_user_data = nullptr;
+    void* m_mouse_press_event_wrapped_func = nullptr;
+void mouseReleaseEvent(QMouseEvent* event) {
+        if (m_mouse_release_event) {
+            RUMouseEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_mouse_event_all_funcs;
+            
+            m_mouse_release_event(m_mouse_release_event_user_data, m_mouse_release_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::mouseReleaseEvent(event);
+        }
+    }
+
+    void (*m_mouse_release_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_mouse_release_event_user_data = nullptr;
+    void* m_mouse_release_event_wrapped_func = nullptr;
+void mouseDoubleClickEvent(QMouseEvent* event) {
+        if (m_mouse_double_click_event) {
+            RUMouseEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_mouse_event_all_funcs;
+            
+            m_mouse_double_click_event(m_mouse_double_click_event_user_data, m_mouse_double_click_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::mouseDoubleClickEvent(event);
+        }
+    }
+
+    void (*m_mouse_double_click_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_mouse_double_click_event_user_data = nullptr;
+    void* m_mouse_double_click_event_wrapped_func = nullptr;
+void mouseMoveEvent(QMouseEvent* event) {
+        if (m_mouse_move_event) {
+            RUMouseEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_mouse_event_all_funcs;
+            
+            m_mouse_move_event(m_mouse_move_event_user_data, m_mouse_move_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::mouseMoveEvent(event);
+        }
+    }
+
+    void (*m_mouse_move_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_mouse_move_event_user_data = nullptr;
+    void* m_mouse_move_event_wrapped_func = nullptr;
+void wheelEvent(QWheelEvent* event) {
+        if (m_wheel_event) {
+            RUWheelEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_wheel_event_all_funcs;
+            
+            m_wheel_event(m_wheel_event_user_data, m_wheel_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::wheelEvent(event);
+        }
+    }
+
+    void (*m_wheel_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_wheel_event_user_data = nullptr;
+    void* m_wheel_event_wrapped_func = nullptr;
+void keyPressEvent(QKeyEvent* event) {
+        if (m_key_press_event) {
+            RUKeyEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_key_event_all_funcs;
+            
+            m_key_press_event(m_key_press_event_user_data, m_key_press_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::keyPressEvent(event);
+        }
+    }
+
+    void (*m_key_press_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_key_press_event_user_data = nullptr;
+    void* m_key_press_event_wrapped_func = nullptr;
+void keyReleaseEvent(QKeyEvent* event) {
+        if (m_key_release_event) {
+            RUKeyEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_key_event_all_funcs;
+            
+            m_key_release_event(m_key_release_event_user_data, m_key_release_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::keyReleaseEvent(event);
+        }
+    }
+
+    void (*m_key_release_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_key_release_event_user_data = nullptr;
+    void* m_key_release_event_wrapped_func = nullptr;
+void focusInEvent(QFocusEvent* event) {
+        if (m_focus_in_event) {
+            RUFocusEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_focus_event_all_funcs;
+            
+            m_focus_in_event(m_focus_in_event_user_data, m_focus_in_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::focusInEvent(event);
+        }
+    }
+
+    void (*m_focus_in_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_focus_in_event_user_data = nullptr;
+    void* m_focus_in_event_wrapped_func = nullptr;
+void focusOutEvent(QFocusEvent* event) {
+        if (m_focus_out_event) {
+            RUFocusEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_focus_event_all_funcs;
+            
+            m_focus_out_event(m_focus_out_event_user_data, m_focus_out_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::focusOutEvent(event);
+        }
+    }
+
+    void (*m_focus_out_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_focus_out_event_user_data = nullptr;
+    void* m_focus_out_event_wrapped_func = nullptr;
+void enterEvent(QEvent* event) {
+        if (m_enter_event) {
+            RUEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_event_all_funcs;
+            
+            m_enter_event(m_enter_event_user_data, m_enter_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::enterEvent(event);
+        }
+    }
+
+    void (*m_enter_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_enter_event_user_data = nullptr;
+    void* m_enter_event_wrapped_func = nullptr;
+void leaveEvent(QEvent* event) {
+        if (m_leave_event) {
+            RUEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_event_all_funcs;
+            
+            m_leave_event(m_leave_event_user_data, m_leave_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::leaveEvent(event);
+        }
+    }
+
+    void (*m_leave_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_leave_event_user_data = nullptr;
+    void* m_leave_event_wrapped_func = nullptr;
+void paintEvent(QPaintEvent* event) {
         if (m_paint_event) {
             RUPaintEvent obj_in_event_1;
             obj_in_event_1.qt_data = (struct RUBase*)event;
@@ -151,9 +1133,370 @@ public:
     void (*m_paint_event)(void*, void* self_c, struct RUBase* event) = nullptr;
     void* m_paint_event_user_data = nullptr;
     void* m_paint_event_wrapped_func = nullptr;
+void moveEvent(QMoveEvent* event) {
+        if (m_move_event) {
+            RUMoveEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_move_event_all_funcs;
+            
+            m_move_event(m_move_event_user_data, m_move_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::moveEvent(event);
+        }
+    }
+
+    void (*m_move_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_move_event_user_data = nullptr;
+    void* m_move_event_wrapped_func = nullptr;
+void resizeEvent(QResizeEvent* event) {
+        if (m_resize_event) {
+            RUResizeEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_resize_event_all_funcs;
+            
+            m_resize_event(m_resize_event_user_data, m_resize_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::resizeEvent(event);
+        }
+    }
+
+    void (*m_resize_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_resize_event_user_data = nullptr;
+    void* m_resize_event_wrapped_func = nullptr;
+void closeEvent(QCloseEvent* event) {
+        if (m_close_event) {
+            RUCloseEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_close_event_all_funcs;
+            
+            m_close_event(m_close_event_user_data, m_close_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::closeEvent(event);
+        }
+    }
+
+    void (*m_close_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_close_event_user_data = nullptr;
+    void* m_close_event_wrapped_func = nullptr;
+void contextMenuEvent(QContextMenuEvent* event) {
+        if (m_context_menu_event) {
+            RUContextMenuEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_context_menu_event_all_funcs;
+            
+            m_context_menu_event(m_context_menu_event_user_data, m_context_menu_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::contextMenuEvent(event);
+        }
+    }
+
+    void (*m_context_menu_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_context_menu_event_user_data = nullptr;
+    void* m_context_menu_event_wrapped_func = nullptr;
+void tabletEvent(QTabletEvent* event) {
+        if (m_tablet_event) {
+            RUTabletEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_tablet_event_all_funcs;
+            
+            m_tablet_event(m_tablet_event_user_data, m_tablet_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::tabletEvent(event);
+        }
+    }
+
+    void (*m_tablet_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_tablet_event_user_data = nullptr;
+    void* m_tablet_event_wrapped_func = nullptr;
+void actionEvent(QActionEvent* event) {
+        if (m_action_event) {
+            RUActionEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_action_event_all_funcs;
+            
+            m_action_event(m_action_event_user_data, m_action_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::actionEvent(event);
+        }
+    }
+
+    void (*m_action_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_action_event_user_data = nullptr;
+    void* m_action_event_wrapped_func = nullptr;
+void dragEnterEvent(QDragEnterEvent* event) {
+        if (m_drag_enter_event) {
+            RUDragEnterEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_drag_enter_event_all_funcs;
+            
+            m_drag_enter_event(m_drag_enter_event_user_data, m_drag_enter_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::dragEnterEvent(event);
+        }
+    }
+
+    void (*m_drag_enter_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_drag_enter_event_user_data = nullptr;
+    void* m_drag_enter_event_wrapped_func = nullptr;
+void dragMoveEvent(QDragMoveEvent* event) {
+        if (m_drag_move_event) {
+            RUDragMoveEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_drag_move_event_all_funcs;
+            
+            m_drag_move_event(m_drag_move_event_user_data, m_drag_move_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::dragMoveEvent(event);
+        }
+    }
+
+    void (*m_drag_move_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_drag_move_event_user_data = nullptr;
+    void* m_drag_move_event_wrapped_func = nullptr;
+void dragLeaveEvent(QDragLeaveEvent* event) {
+        if (m_drag_leave_event) {
+            RUDragLeaveEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_drag_leave_event_all_funcs;
+            
+            m_drag_leave_event(m_drag_leave_event_user_data, m_drag_leave_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::dragLeaveEvent(event);
+        }
+    }
+
+    void (*m_drag_leave_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_drag_leave_event_user_data = nullptr;
+    void* m_drag_leave_event_wrapped_func = nullptr;
+void dropEvent(QDropEvent* event) {
+        if (m_drop_event) {
+            RUDropEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_drop_event_all_funcs;
+            
+            m_drop_event(m_drop_event_user_data, m_drop_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::dropEvent(event);
+        }
+    }
+
+    void (*m_drop_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_drop_event_user_data = nullptr;
+    void* m_drop_event_wrapped_func = nullptr;
+void showEvent(QShowEvent* event) {
+        if (m_show_event) {
+            RUShowEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_show_event_all_funcs;
+            
+            m_show_event(m_show_event_user_data, m_show_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::showEvent(event);
+        }
+    }
+
+    void (*m_show_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_show_event_user_data = nullptr;
+    void* m_show_event_wrapped_func = nullptr;
+void hideEvent(QHideEvent* event) {
+        if (m_hide_event) {
+            RUHideEvent obj_in_event_1;
+            obj_in_event_1.qt_data = (struct RUBase*)event;
+            obj_in_event_1.host_data = nullptr;
+            obj_in_event_1.all_funcs = &s_hide_event_all_funcs;
+            
+            m_hide_event(m_hide_event_user_data, m_hide_event_wrapped_func, (struct RUBase*)&obj_in_event_1);
+        } else {
+            QWidget::hideEvent(event);
+        }
+    }
+
+    void (*m_hide_event)(void*, void* self_c, struct RUBase* event) = nullptr;
+    void* m_hide_event_user_data = nullptr;
+    void* m_hide_event_wrapped_func = nullptr;
+void changeEvent(QEvent* arg0) {
+        if (m_change_event) {
+            RUEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_event_all_funcs;
+            
+            m_change_event(m_change_event_user_data, m_change_event_wrapped_func, (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QWidget::changeEvent(arg0);
+        }
+    }
+
+    void (*m_change_event)(void*, void* self_c, struct RUBase* arg0) = nullptr;
+    void* m_change_event_user_data = nullptr;
+    void* m_change_event_wrapped_func = nullptr;
+void initPainter(QPainter* painter) {
+        if (m_init_painter) {
+            RUPainter obj_in_painter_1;
+            obj_in_painter_1.qt_data = (struct RUBase*)painter;
+            obj_in_painter_1.host_data = nullptr;
+            obj_in_painter_1.all_funcs = &s_painter_all_funcs;
+            
+            m_init_painter(m_init_painter_user_data, m_init_painter_wrapped_func, (struct RUBase*)&obj_in_painter_1);
+        } else {
+            QWidget::initPainter(painter);
+        }
+    }
+
+    void (*m_init_painter)(void*, void* self_c, struct RUBase* painter) = nullptr;
+    void* m_init_painter_user_data = nullptr;
+    void* m_init_painter_wrapped_func = nullptr;
+struct RUPaintDevice redirected(QPoint* offset) {
+        if (m_redirected) {
+            RUPoint obj_in_offset_1;
+            obj_in_offset_1.qt_data = (struct RUBase*)offset;
+            obj_in_offset_1.host_data = nullptr;
+            obj_in_offset_1.all_funcs = &s_point_all_funcs;
+            
+    auto ret_value =         m_redirected(m_redirected_user_data, m_redirected_wrapped_func, (struct RUBase*)&obj_in_offset_1);
+    WRPaintDevice* new_val = new WRPaintDevice();
+    *new_val = ret_value;
+    struct RUPaintDevice ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_paint_device_all_funcs;
+    return ctl;
+        } else {
+            return QWidget::redirected(offset);
+        }
+    }
+
+    void (*m_redirected)(void*, void* self_c, struct RUBase* offset) = nullptr;
+    void* m_redirected_user_data = nullptr;
+    void* m_redirected_wrapped_func = nullptr;
+struct RUPainter sharedPainter() {
+        if (m_shared_painter) {
+            
+            
+    auto ret_value =         m_shared_painter(m_shared_painter_user_data, m_shared_painter_wrapped_func);
+    WRPainter* new_val = new WRPainter();
+    *new_val = ret_value;
+    struct RUPainter ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_painter_all_funcs;
+    return ctl;
+        } else {
+            return QWidget::sharedPainter();
+        }
+    }
+
+    void (*m_shared_painter)(void*, void* self_c) = nullptr;
+    void* m_shared_painter_user_data = nullptr;
+    void* m_shared_painter_wrapped_func = nullptr;
+void inputMethodEvent(QInputMethodEvent* arg0) {
+        if (m_input_method_event) {
+            RUInputMethodEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_input_method_event_all_funcs;
+            
+            m_input_method_event(m_input_method_event_user_data, m_input_method_event_wrapped_func, (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QWidget::inputMethodEvent(arg0);
+        }
+    }
+
+    void (*m_input_method_event)(void*, void* self_c, struct RUBase* arg0) = nullptr;
+    void* m_input_method_event_user_data = nullptr;
+    void* m_input_method_event_wrapped_func = nullptr;
+struct RUVariant inputMethodQuery(int arg0) {
+        if (m_input_method_query) {
+            
+            
+    auto ret_value =         m_input_method_query(m_input_method_query_user_data, m_input_method_query_wrapped_func, );
+    * new_val = new ();
+    *new_val = ret_value;
+    struct RUVariant ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_variant_all_funcs;
+    return ctl;
+        } else {
+            return QWidget::inputMethodQuery(arg0);
+        }
+    }
+
+    void (*m_input_method_query)(void*, void* self_c, int arg0) = nullptr;
+    void* m_input_method_query_user_data = nullptr;
+    void* m_input_method_query_wrapped_func = nullptr;
+bool focusNextPrevChild(bool next) {
+        if (m_focus_next_prev_child) {
+            
+            
+    auto ret_value =         m_focus_next_prev_child(m_focus_next_prev_child_user_data, m_focus_next_prev_child_wrapped_func, next);
+    return ret_value;
+        } else {
+            return QWidget::focusNextPrevChild(next);
+        }
+    }
+
+    void (*m_focus_next_prev_child)(void*, void* self_c, bool next) = nullptr;
+    void* m_focus_next_prev_child_user_data = nullptr;
+    void* m_focus_next_prev_child_wrapped_func = nullptr;
 
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_self_IconType_void)(void* self_c, void* trampoline_func, struct RUBase* icon);
+
+class QSlotWrapperSignal_self_IconType_void : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_IconType_void(void* data, Signal_self_IconType_void trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method( struct RUBase* icon) {
+        m_trampoline_func(m_data, m_wrapped_func, icon);
+    }
+private:
+    Signal_self_IconType_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef void (*Signal_self_PointType_void)(void* self_c, void* trampoline_func, struct RUBase* pos);
+
+class QSlotWrapperSignal_self_PointType_void : public QObject {
+    Q_OBJECT
+public:
+    QSlotWrapperSignal_self_PointType_void(void* data, Signal_self_PointType_void trampoline_func, void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method( struct RUBase* pos) {
+        m_trampoline_func(m_data, m_wrapped_func, pos);
+    }
+private:
+    Signal_self_PointType_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

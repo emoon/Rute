@@ -1,10 +1,20 @@
+#include <QColor>
+#include <QGradient>
+#include <QImage>
 #include <QListWidgetItem>
+#include <QPaintDevice>
+#include <QPaintEngine>
+#include <QPainter>
+#include <QPixelFormat>
 #include <Qt>
 #include <map>
 
 struct KeyVal { int val, key; };
 
 std::map<int, int> s_alignment_flag_lookup;
+std::map<int, int> s_alpha_position_lookup;
+std::map<int, int> s_alpha_premultiplied_lookup;
+std::map<int, int> s_alpha_usage_lookup;
 std::map<int, int> s_anchor_point_lookup;
 std::map<int, int> s_application_attribute_lookup;
 std::map<int, int> s_application_state_lookup;
@@ -13,28 +23,36 @@ std::map<int, int> s_aspect_ratio_mode_lookup;
 std::map<int, int> s_axis_lookup;
 std::map<int, int> s_bg_mode_lookup;
 std::map<int, int> s_brush_style_lookup;
+std::map<int, int> s_byte_order_lookup;
 std::map<int, int> s_case_sensitivity_lookup;
 std::map<int, int> s_check_state_lookup;
 std::map<int, int> s_checksum_type_lookup;
 std::map<int, int> s_clip_operation_lookup;
+std::map<int, int> s_color_model_lookup;
+std::map<int, int> s_composition_mode_lookup;
 std::map<int, int> s_connection_type_lookup;
 std::map<int, int> s_context_menu_policy_lookup;
+std::map<int, int> s_coordinate_mode_lookup;
 std::map<int, int> s_coordinate_system_lookup;
 std::map<int, int> s_corner_lookup;
 std::map<int, int> s_cursor_move_style_lookup;
 std::map<int, int> s_cursor_shape_lookup;
 std::map<int, int> s_date_format_lookup;
 std::map<int, int> s_day_of_week_lookup;
+std::map<int, int> s_dirty_flag_lookup;
 std::map<int, int> s_dock_widget_area_lookup;
 std::map<int, int> s_dock_widget_area_sizes_lookup;
 std::map<int, int> s_drop_action_lookup;
 std::map<int, int> s_edge_lookup;
 std::map<int, int> s_enter_key_type_lookup;
 std::map<int, int> s_event_priority_lookup;
+std::map<int, int> s_field_lookup;
+std::map<int, int> s_field_width_lookup;
 std::map<int, int> s_fill_rule_lookup;
 std::map<int, int> s_find_child_option_lookup;
 std::map<int, int> s_focus_policy_lookup;
 std::map<int, int> s_focus_reason_lookup;
+std::map<int, int> s_format_lookup;
 std::map<int, int> s_gesture_flag_lookup;
 std::map<int, int> s_gesture_state_lookup;
 std::map<int, int> s_gesture_type_lookup;
@@ -44,6 +62,8 @@ std::map<int, int> s_image_conversion_flag_lookup;
 std::map<int, int> s_initialization_lookup;
 std::map<int, int> s_input_method_hint_lookup;
 std::map<int, int> s_input_method_query_lookup;
+std::map<int, int> s_interpolation_mode_lookup;
+std::map<int, int> s_invert_mode_lookup;
 std::map<int, int> s_item_data_role_lookup;
 std::map<int, int> s_item_flag_lookup;
 std::map<int, int> s_item_selection_mode_lookup;
@@ -58,12 +78,18 @@ std::map<int, int> s_modifier_lookup;
 std::map<int, int> s_mouse_button_lookup;
 std::map<int, int> s_mouse_event_flag_lookup;
 std::map<int, int> s_mouse_event_source_lookup;
+std::map<int, int> s_name_format_lookup;
 std::map<int, int> s_native_gesture_type_lookup;
 std::map<int, int> s_navigation_mode_lookup;
 std::map<int, int> s_orientation_lookup;
+std::map<int, int> s_paint_device_metric_lookup;
+std::map<int, int> s_paint_engine_feature_lookup;
 std::map<int, int> s_pen_cap_style_lookup;
 std::map<int, int> s_pen_join_style_lookup;
 std::map<int, int> s_pen_style_lookup;
+std::map<int, int> s_pixmap_fragment_hint_lookup;
+std::map<int, int> s_polygon_draw_mode_lookup;
+std::map<int, int> s_render_hint_lookup;
 std::map<int, int> s_screen_orientation_lookup;
 std::map<int, int> s_scroll_bar_policy_lookup;
 std::map<int, int> s_scroll_phase_lookup;
@@ -71,6 +97,8 @@ std::map<int, int> s_shortcut_context_lookup;
 std::map<int, int> s_size_hint_lookup;
 std::map<int, int> s_size_mode_lookup;
 std::map<int, int> s_sort_order_lookup;
+std::map<int, int> s_spec_lookup;
+std::map<int, int> s_spread_lookup;
 std::map<int, int> s_tab_focus_behavior_lookup;
 std::map<int, int> s_text_elide_mode_lookup;
 std::map<int, int> s_text_flag_lookup;
@@ -84,6 +112,8 @@ std::map<int, int> s_tool_bar_area_sizes_lookup;
 std::map<int, int> s_tool_button_style_lookup;
 std::map<int, int> s_touch_point_state_lookup;
 std::map<int, int> s_transformation_mode_lookup;
+std::map<int, int> s_type_lookup;
+std::map<int, int> s_type_interpretation_lookup;
 std::map<int, int> s_ui_effect_lookup;
 std::map<int, int> s_white_space_mode_lookup;
 std::map<int, int> s_widget_attribute_lookup;
@@ -91,6 +121,7 @@ std::map<int, int> s_window_frame_section_lookup;
 std::map<int, int> s_window_modality_lookup;
 std::map<int, int> s_window_state_lookup;
 std::map<int, int> s_window_type_lookup;
+std::map<int, int> s_yuv_layout_lookup;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,6 +146,33 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 14; ++i) {
         s_alignment_flag_lookup[alignment_flag_vals[i].key] = alignment_flag_vals[i].val;
+    }
+
+    static KeyVal alpha_position_vals[] =
+    {{  (int)QPixelFormat::AtBeginning, 0 },
+    {  (int)QPixelFormat::AtEnd, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_alpha_position_lookup[alpha_position_vals[i].key] = alpha_position_vals[i].val;
+    }
+
+    static KeyVal alpha_premultiplied_vals[] =
+    {{  (int)QPixelFormat::NotPremultiplied, 0 },
+    {  (int)QPixelFormat::Premultiplied, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_alpha_premultiplied_lookup[alpha_premultiplied_vals[i].key] = alpha_premultiplied_vals[i].val;
+    }
+
+    static KeyVal alpha_usage_vals[] =
+    {{  (int)QPixelFormat::UsesAlpha, 0 },
+    {  (int)QPixelFormat::IgnoresAlpha, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_alpha_usage_lookup[alpha_usage_vals[i].key] = alpha_usage_vals[i].val;
     }
 
     static KeyVal anchor_point_vals[] =
@@ -247,6 +305,16 @@ extern void create_enum_mappings() {
         s_brush_style_lookup[brush_style_vals[i].key] = brush_style_vals[i].val;
     }
 
+    static KeyVal byte_order_vals[] =
+    {{  (int)QPixelFormat::LittleEndian, 0 },
+    {  (int)QPixelFormat::BigEndian, 1 },
+    {  (int)QPixelFormat::CurrentSystemEndian, 2 },
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        s_byte_order_lookup[byte_order_vals[i].key] = byte_order_vals[i].val;
+    }
+
     static KeyVal case_sensitivity_vals[] =
     {{  (int)Qt::CaseInsensitive, 0 },
     {  (int)Qt::CaseSensitive, 1 },
@@ -285,6 +353,67 @@ extern void create_enum_mappings() {
         s_clip_operation_lookup[clip_operation_vals[i].key] = clip_operation_vals[i].val;
     }
 
+    static KeyVal color_model_vals[] =
+    {{  (int)QPixelFormat::RGB, 0 },
+    {  (int)QPixelFormat::BGR, 1 },
+    {  (int)QPixelFormat::Indexed, 2 },
+    {  (int)QPixelFormat::Grayscale, 3 },
+    {  (int)QPixelFormat::CMYK, 4 },
+    {  (int)QPixelFormat::HSL, 5 },
+    {  (int)QPixelFormat::HSV, 6 },
+    {  (int)QPixelFormat::YUV, 7 },
+    {  (int)QPixelFormat::Alpha, 8 },
+    };
+
+    for (int i = 0; i < 9; ++i) {
+        s_color_model_lookup[color_model_vals[i].key] = color_model_vals[i].val;
+    }
+
+    static KeyVal composition_mode_vals[] =
+    {{  (int)QPainter::CompositionMode_SourceOver, 0 },
+    {  (int)QPainter::CompositionMode_DestinationOver, 1 },
+    {  (int)QPainter::CompositionMode_Clear, 2 },
+    {  (int)QPainter::CompositionMode_Source, 3 },
+    {  (int)QPainter::CompositionMode_Destination, 4 },
+    {  (int)QPainter::CompositionMode_SourceIn, 5 },
+    {  (int)QPainter::CompositionMode_DestinationIn, 6 },
+    {  (int)QPainter::CompositionMode_SourceOut, 7 },
+    {  (int)QPainter::CompositionMode_DestinationOut, 8 },
+    {  (int)QPainter::CompositionMode_SourceAtop, 9 },
+    {  (int)QPainter::CompositionMode_DestinationAtop, 10 },
+    {  (int)QPainter::CompositionMode_Xor, 11 },
+    {  (int)QPainter::CompositionMode_Plus, 12 },
+    {  (int)QPainter::CompositionMode_Multiply, 13 },
+    {  (int)QPainter::CompositionMode_Screen, 14 },
+    {  (int)QPainter::CompositionMode_Overlay, 15 },
+    {  (int)QPainter::CompositionMode_Darken, 16 },
+    {  (int)QPainter::CompositionMode_Lighten, 17 },
+    {  (int)QPainter::CompositionMode_ColorDodge, 18 },
+    {  (int)QPainter::CompositionMode_ColorBurn, 19 },
+    {  (int)QPainter::CompositionMode_HardLight, 20 },
+    {  (int)QPainter::CompositionMode_SoftLight, 21 },
+    {  (int)QPainter::CompositionMode_Difference, 22 },
+    {  (int)QPainter::CompositionMode_Exclusion, 23 },
+    {  (int)QPainter::RasterOp_SourceOrDestination, 24 },
+    {  (int)QPainter::RasterOp_SourceAndDestination, 25 },
+    {  (int)QPainter::RasterOp_SourceXorDestination, 26 },
+    {  (int)QPainter::RasterOp_NotSourceAndNotDestination, 27 },
+    {  (int)QPainter::RasterOp_NotSourceOrNotDestination, 28 },
+    {  (int)QPainter::RasterOp_NotSourceXorDestination, 29 },
+    {  (int)QPainter::RasterOp_NotSource, 30 },
+    {  (int)QPainter::RasterOp_NotSourceAndDestination, 31 },
+    {  (int)QPainter::RasterOp_SourceAndNotDestination, 32 },
+    {  (int)QPainter::RasterOp_NotSourceOrDestination, 33 },
+    {  (int)QPainter::RasterOp_SourceOrNotDestination, 34 },
+    {  (int)QPainter::RasterOp_ClearDestination, 35 },
+    {  (int)QPainter::RasterOp_SetDestination, 36 },
+    {  (int)QPainter::RasterOp_NotDestination, 37 },
+    };
+
+    for (int i = 0; i < 38; ++i) {
+        s_composition_mode_lookup[composition_mode_vals[i].key] = composition_mode_vals[i].val;
+    }
+
     static KeyVal connection_type_vals[] =
     {{  (int)Qt::AutoConnection, 0 },
     {  (int)Qt::DirectConnection, 1 },
@@ -307,6 +436,16 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 5; ++i) {
         s_context_menu_policy_lookup[context_menu_policy_vals[i].key] = context_menu_policy_vals[i].val;
+    }
+
+    static KeyVal coordinate_mode_vals[] =
+    {{  (int)QGradient::LogicalMode, 0 },
+    {  (int)QGradient::StretchToDeviceMode, 1 },
+    {  (int)QGradient::ObjectBoundingMode, 2 },
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        s_coordinate_mode_lookup[coordinate_mode_vals[i].key] = coordinate_mode_vals[i].val;
     }
 
     static KeyVal coordinate_system_vals[] =
@@ -402,6 +541,27 @@ extern void create_enum_mappings() {
         s_day_of_week_lookup[day_of_week_vals[i].key] = day_of_week_vals[i].val;
     }
 
+    static KeyVal dirty_flag_vals[] =
+    {{  (int)QPaintEngine::DirtyPen, 0 },
+    {  (int)QPaintEngine::DirtyBrush, 1 },
+    {  (int)QPaintEngine::DirtyBrushOrigin, 2 },
+    {  (int)QPaintEngine::DirtyFont, 3 },
+    {  (int)QPaintEngine::DirtyBackground, 4 },
+    {  (int)QPaintEngine::DirtyBackgroundMode, 5 },
+    {  (int)QPaintEngine::DirtyTransform, 6 },
+    {  (int)QPaintEngine::DirtyClipRegion, 7 },
+    {  (int)QPaintEngine::DirtyClipPath, 8 },
+    {  (int)QPaintEngine::DirtyHints, 9 },
+    {  (int)QPaintEngine::DirtyCompositionMode, 10 },
+    {  (int)QPaintEngine::DirtyClipEnabled, 11 },
+    {  (int)QPaintEngine::DirtyOpacity, 12 },
+    {  (int)QPaintEngine::AllDirty, 13 },
+    };
+
+    for (int i = 0; i < 14; ++i) {
+        s_dirty_flag_lookup[dirty_flag_vals[i].key] = dirty_flag_vals[i].val;
+    }
+
     static KeyVal dock_widget_area_vals[] =
     {{  (int)Qt::LeftDockWidgetArea, 0 },
     {  (int)Qt::RightDockWidgetArea, 1 },
@@ -473,6 +633,50 @@ extern void create_enum_mappings() {
         s_event_priority_lookup[event_priority_vals[i].key] = event_priority_vals[i].val;
     }
 
+    static KeyVal field_vals[] =
+    {{  (int)QPixelFormat::ModelField, 0 },
+    {  (int)QPixelFormat::FirstField, 1 },
+    {  (int)QPixelFormat::SecondField, 2 },
+    {  (int)QPixelFormat::ThirdField, 3 },
+    {  (int)QPixelFormat::FourthField, 4 },
+    {  (int)QPixelFormat::FifthField, 5 },
+    {  (int)QPixelFormat::AlphaField, 6 },
+    {  (int)QPixelFormat::AlphaUsageField, 7 },
+    {  (int)QPixelFormat::AlphaPositionField, 8 },
+    {  (int)QPixelFormat::PremulField, 9 },
+    {  (int)QPixelFormat::TypeInterpretationField, 10 },
+    {  (int)QPixelFormat::ByteOrderField, 11 },
+    {  (int)QPixelFormat::SubEnumField, 12 },
+    {  (int)QPixelFormat::UnusedField, 13 },
+    {  (int)QPixelFormat::TotalFieldWidthByOffsets, 14 },
+    };
+
+    for (int i = 0; i < 15; ++i) {
+        s_field_lookup[field_vals[i].key] = field_vals[i].val;
+    }
+
+    static KeyVal field_width_vals[] =
+    {{  (int)QPixelFormat::ModelFieldWidth, 0 },
+    {  (int)QPixelFormat::FirstFieldWidth, 1 },
+    {  (int)QPixelFormat::SecondFieldWidth, 2 },
+    {  (int)QPixelFormat::ThirdFieldWidth, 3 },
+    {  (int)QPixelFormat::FourthFieldWidth, 4 },
+    {  (int)QPixelFormat::FifthFieldWidth, 5 },
+    {  (int)QPixelFormat::AlphaFieldWidth, 6 },
+    {  (int)QPixelFormat::AlphaUsageFieldWidth, 7 },
+    {  (int)QPixelFormat::AlphaPositionFieldWidth, 8 },
+    {  (int)QPixelFormat::PremulFieldWidth, 9 },
+    {  (int)QPixelFormat::TypeInterpretationFieldWidth, 10 },
+    {  (int)QPixelFormat::ByteOrderFieldWidth, 11 },
+    {  (int)QPixelFormat::SubEnumFieldWidth, 12 },
+    {  (int)QPixelFormat::UnusedFieldWidth, 13 },
+    {  (int)QPixelFormat::TotalFieldWidthByWidths, 14 },
+    };
+
+    for (int i = 0; i < 15; ++i) {
+        s_field_width_lookup[field_width_vals[i].key] = field_width_vals[i].val;
+    }
+
     static KeyVal fill_rule_vals[] =
     {{  (int)Qt::OddEvenFill, 0 },
     {  (int)Qt::WindingFill, 1 },
@@ -517,6 +721,39 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 9; ++i) {
         s_focus_reason_lookup[focus_reason_vals[i].key] = focus_reason_vals[i].val;
+    }
+
+    static KeyVal format_vals[] =
+    {{  (int)QImage::Format_Invalid, 0 },
+    {  (int)QImage::Format_Mono, 1 },
+    {  (int)QImage::Format_MonoLSB, 2 },
+    {  (int)QImage::Format_Indexed8, 3 },
+    {  (int)QImage::Format_RGB32, 4 },
+    {  (int)QImage::Format_ARGB32, 5 },
+    {  (int)QImage::Format_ARGB32_Premultiplied, 6 },
+    {  (int)QImage::Format_RGB16, 7 },
+    {  (int)QImage::Format_ARGB8565_Premultiplied, 8 },
+    {  (int)QImage::Format_RGB666, 9 },
+    {  (int)QImage::Format_ARGB6666_Premultiplied, 10 },
+    {  (int)QImage::Format_RGB555, 11 },
+    {  (int)QImage::Format_ARGB8555_Premultiplied, 12 },
+    {  (int)QImage::Format_RGB888, 13 },
+    {  (int)QImage::Format_RGB444, 14 },
+    {  (int)QImage::Format_ARGB4444_Premultiplied, 15 },
+    {  (int)QImage::Format_RGBX8888, 16 },
+    {  (int)QImage::Format_RGBA8888, 17 },
+    {  (int)QImage::Format_RGBA8888_Premultiplied, 18 },
+    {  (int)QImage::Format_BGR30, 19 },
+    {  (int)QImage::Format_A2BGR30_Premultiplied, 20 },
+    {  (int)QImage::Format_RGB30, 21 },
+    {  (int)QImage::Format_A2RGB30_Premultiplied, 22 },
+    {  (int)QImage::Format_Alpha8, 23 },
+    {  (int)QImage::Format_Grayscale8, 24 },
+    {  (int)QImage::NImageFormats, 25 },
+    };
+
+    for (int i = 0; i < 26; ++i) {
+        s_format_lookup[format_vals[i].key] = format_vals[i].val;
     }
 
     static KeyVal gesture_flag_vals[] =
@@ -678,6 +915,24 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 20; ++i) {
         s_input_method_query_lookup[input_method_query_vals[i].key] = input_method_query_vals[i].val;
+    }
+
+    static KeyVal interpolation_mode_vals[] =
+    {{  (int)QGradient::ColorInterpolation, 0 },
+    {  (int)QGradient::ComponentInterpolation, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_interpolation_mode_lookup[interpolation_mode_vals[i].key] = interpolation_mode_vals[i].val;
+    }
+
+    static KeyVal invert_mode_vals[] =
+    {{  (int)QImage::InvertRgb, 0 },
+    {  (int)QImage::InvertRgba, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_invert_mode_lookup[invert_mode_vals[i].key] = invert_mode_vals[i].val;
     }
 
     static KeyVal item_data_role_vals[] =
@@ -1331,6 +1586,15 @@ extern void create_enum_mappings() {
         s_mouse_event_source_lookup[mouse_event_source_vals[i].key] = mouse_event_source_vals[i].val;
     }
 
+    static KeyVal name_format_vals[] =
+    {{  (int)QColor::HexRgb, 0 },
+    {  (int)QColor::HexArgb, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_name_format_lookup[name_format_vals[i].key] = name_format_vals[i].val;
+    }
+
     static KeyVal native_gesture_type_vals[] =
     {{  (int)Qt::BeginNativeGesture, 0 },
     {  (int)Qt::EndNativeGesture, 1 },
@@ -1364,6 +1628,52 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 2; ++i) {
         s_orientation_lookup[orientation_vals[i].key] = orientation_vals[i].val;
+    }
+
+    static KeyVal paint_device_metric_vals[] =
+    {{  (int)QPaintDevice::PdmWidth, 0 },
+    {  (int)QPaintDevice::PdmHeight, 1 },
+    {  (int)QPaintDevice::PdmWidthMM, 2 },
+    {  (int)QPaintDevice::PdmHeightMM, 3 },
+    {  (int)QPaintDevice::PdmNumColors, 4 },
+    {  (int)QPaintDevice::PdmDepth, 5 },
+    {  (int)QPaintDevice::PdmDpiX, 6 },
+    {  (int)QPaintDevice::PdmDpiY, 7 },
+    {  (int)QPaintDevice::PdmPhysicalDpiX, 8 },
+    {  (int)QPaintDevice::PdmPhysicalDpiY, 9 },
+    {  (int)QPaintDevice::PdmDevicePixelRatio, 10 },
+    {  (int)QPaintDevice::PdmDevicePixelRatioScaled, 11 },
+    };
+
+    for (int i = 0; i < 12; ++i) {
+        s_paint_device_metric_lookup[paint_device_metric_vals[i].key] = paint_device_metric_vals[i].val;
+    }
+
+    static KeyVal paint_engine_feature_vals[] =
+    {{  (int)QPaintEngine::PrimitiveTransform, 0 },
+    {  (int)QPaintEngine::PatternTransform, 1 },
+    {  (int)QPaintEngine::PixmapTransform, 2 },
+    {  (int)QPaintEngine::PatternBrush, 3 },
+    {  (int)QPaintEngine::LinearGradientFill, 4 },
+    {  (int)QPaintEngine::RadialGradientFill, 5 },
+    {  (int)QPaintEngine::ConicalGradientFill, 6 },
+    {  (int)QPaintEngine::AlphaBlend, 7 },
+    {  (int)QPaintEngine::PorterDuff, 8 },
+    {  (int)QPaintEngine::PainterPaths, 9 },
+    {  (int)QPaintEngine::Antialiasing, 10 },
+    {  (int)QPaintEngine::BrushStroke, 11 },
+    {  (int)QPaintEngine::ConstantOpacity, 12 },
+    {  (int)QPaintEngine::MaskedBrush, 13 },
+    {  (int)QPaintEngine::PerspectiveTransform, 14 },
+    {  (int)QPaintEngine::BlendModes, 15 },
+    {  (int)QPaintEngine::ObjectBoundingModeGradients, 16 },
+    {  (int)QPaintEngine::RasterOpModes, 17 },
+    {  (int)QPaintEngine::PaintOutsidePaintEvent, 18 },
+    {  (int)QPaintEngine::AllFeatures, 19 },
+    };
+
+    for (int i = 0; i < 20; ++i) {
+        s_paint_engine_feature_lookup[paint_engine_feature_vals[i].key] = paint_engine_feature_vals[i].val;
     }
 
     static KeyVal pen_cap_style_vals[] =
@@ -1402,6 +1712,38 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 8; ++i) {
         s_pen_style_lookup[pen_style_vals[i].key] = pen_style_vals[i].val;
+    }
+
+    static KeyVal pixmap_fragment_hint_vals[] =
+    {{  (int)QPainter::OpaqueHint, 0 },
+    };
+
+    for (int i = 0; i < 1; ++i) {
+        s_pixmap_fragment_hint_lookup[pixmap_fragment_hint_vals[i].key] = pixmap_fragment_hint_vals[i].val;
+    }
+
+    static KeyVal polygon_draw_mode_vals[] =
+    {{  (int)QPaintEngine::OddEvenMode, 0 },
+    {  (int)QPaintEngine::WindingMode, 1 },
+    {  (int)QPaintEngine::ConvexMode, 2 },
+    {  (int)QPaintEngine::PolylineMode, 3 },
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        s_polygon_draw_mode_lookup[polygon_draw_mode_vals[i].key] = polygon_draw_mode_vals[i].val;
+    }
+
+    static KeyVal render_hint_vals[] =
+    {{  (int)QPainter::Antialiasing, 0 },
+    {  (int)QPainter::TextAntialiasing, 1 },
+    {  (int)QPainter::SmoothPixmapTransform, 2 },
+    {  (int)QPainter::HighQualityAntialiasing, 3 },
+    {  (int)QPainter::NonCosmeticDefaultPen, 4 },
+    {  (int)QPainter::Qt4CompatiblePainting, 5 },
+    };
+
+    for (int i = 0; i < 6; ++i) {
+        s_render_hint_lookup[render_hint_vals[i].key] = render_hint_vals[i].val;
     }
 
     static KeyVal screen_orientation_vals[] =
@@ -1476,6 +1818,28 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 2; ++i) {
         s_sort_order_lookup[sort_order_vals[i].key] = sort_order_vals[i].val;
+    }
+
+    static KeyVal spec_vals[] =
+    {{  (int)QColor::Invalid, 0 },
+    {  (int)QColor::Rgb, 1 },
+    {  (int)QColor::Hsv, 2 },
+    {  (int)QColor::Cmyk, 3 },
+    {  (int)QColor::Hsl, 4 },
+    };
+
+    for (int i = 0; i < 5; ++i) {
+        s_spec_lookup[spec_vals[i].key] = spec_vals[i].val;
+    }
+
+    static KeyVal spread_vals[] =
+    {{  (int)QGradient::PadSpread, 0 },
+    {  (int)QGradient::ReflectSpread, 1 },
+    {  (int)QGradient::RepeatSpread, 2 },
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        s_spread_lookup[spread_vals[i].key] = spread_vals[i].val;
     }
 
     static KeyVal tab_focus_behavior_vals[] =
@@ -1629,6 +1993,44 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 2; ++i) {
         s_transformation_mode_lookup[transformation_mode_vals[i].key] = transformation_mode_vals[i].val;
+    }
+
+    static KeyVal type_vals[] =
+    {{  (int)QPaintEngine::X11, 0 },
+    {  (int)QPaintEngine::Windows, 1 },
+    {  (int)QPaintEngine::QuickDraw, 2 },
+    {  (int)QPaintEngine::CoreGraphics, 3 },
+    {  (int)QPaintEngine::MacPrinter, 4 },
+    {  (int)QPaintEngine::QWindowSystem, 5 },
+    {  (int)QPaintEngine::PostScript, 6 },
+    {  (int)QPaintEngine::OpenGL, 7 },
+    {  (int)QPaintEngine::Picture, 8 },
+    {  (int)QPaintEngine::SVG, 9 },
+    {  (int)QPaintEngine::Raster, 10 },
+    {  (int)QPaintEngine::Direct3D, 11 },
+    {  (int)QPaintEngine::Pdf, 12 },
+    {  (int)QPaintEngine::OpenVG, 13 },
+    {  (int)QPaintEngine::OpenGL2, 14 },
+    {  (int)QPaintEngine::PaintBuffer, 15 },
+    {  (int)QPaintEngine::Blitter, 16 },
+    {  (int)QPaintEngine::Direct2D, 17 },
+    {  (int)QPaintEngine::User, 18 },
+    {  (int)QPaintEngine::MaxUser, 19 },
+    };
+
+    for (int i = 0; i < 20; ++i) {
+        s_type_lookup[type_vals[i].key] = type_vals[i].val;
+    }
+
+    static KeyVal type_interpretation_vals[] =
+    {{  (int)QPixelFormat::UnsignedInteger, 0 },
+    {  (int)QPixelFormat::UnsignedShort, 1 },
+    {  (int)QPixelFormat::UnsignedByte, 2 },
+    {  (int)QPixelFormat::FloatingPoint, 3 },
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        s_type_interpretation_lookup[type_interpretation_vals[i].key] = type_interpretation_vals[i].val;
     }
 
     static KeyVal ui_effect_vals[] =
@@ -1858,5 +2260,28 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 38; ++i) {
         s_window_type_lookup[window_type_vals[i].key] = window_type_vals[i].val;
+    }
+
+    static KeyVal yuv_layout_vals[] =
+    {{  (int)QPixelFormat::YUV444, 0 },
+    {  (int)QPixelFormat::YUV422, 1 },
+    {  (int)QPixelFormat::YUV411, 2 },
+    {  (int)QPixelFormat::YUV420P, 3 },
+    {  (int)QPixelFormat::YUV420SP, 4 },
+    {  (int)QPixelFormat::YV12, 5 },
+    {  (int)QPixelFormat::UYVY, 6 },
+    {  (int)QPixelFormat::YUYV, 7 },
+    {  (int)QPixelFormat::NV12, 8 },
+    {  (int)QPixelFormat::NV21, 9 },
+    {  (int)QPixelFormat::IMC1, 10 },
+    {  (int)QPixelFormat::IMC2, 11 },
+    {  (int)QPixelFormat::IMC3, 12 },
+    {  (int)QPixelFormat::IMC4, 13 },
+    {  (int)QPixelFormat::Y8, 14 },
+    {  (int)QPixelFormat::Y16, 15 },
+    };
+
+    for (int i = 0; i < 16; ++i) {
+        s_yuv_layout_lookup[yuv_layout_vals[i].key] = yuv_layout_vals[i].val;
     }
 }

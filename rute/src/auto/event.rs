@@ -63,7 +63,6 @@ pub trait EventType<'a> {
             ret_val
         }
     }
-
     fn set_accepted(&self, accepted: bool) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
@@ -71,7 +70,6 @@ pub trait EventType<'a> {
         }
         self
     }
-
     fn is_accepted(&self) -> bool {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
@@ -79,7 +77,6 @@ pub trait EventType<'a> {
             ret_val
         }
     }
-
     fn accept(&self) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
@@ -87,7 +84,6 @@ pub trait EventType<'a> {
         }
         self
     }
-
     fn ignore(&self) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {

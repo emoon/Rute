@@ -83,7 +83,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -91,7 +90,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -99,7 +97,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn left(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -107,7 +104,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn top(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -115,7 +111,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn right(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -123,7 +118,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn bottom(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -131,7 +125,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -139,7 +132,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -147,7 +139,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn set_left(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -155,7 +146,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_top(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -163,7 +153,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_right(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -171,7 +160,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_bottom(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -179,7 +167,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_x(&self, x: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -187,7 +174,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_y(&self, y: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -195,7 +181,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn move_left(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -203,7 +188,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn move_top(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -211,7 +195,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn move_right(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -219,7 +202,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn move_bottom(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -227,7 +209,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn move_to(&self, x: i32, t: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -235,7 +216,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -243,7 +223,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -251,7 +230,6 @@ pub trait RectType<'a> {
             ret_val
         }
     }
-
     fn set_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
@@ -259,7 +237,6 @@ pub trait RectType<'a> {
         }
         self
     }
-
     fn set_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {

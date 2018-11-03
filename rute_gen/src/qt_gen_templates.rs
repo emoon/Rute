@@ -144,8 +144,7 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-pub static WRAP_EVENT_TEMPLATE: &str = "
-    {{c_return_type}} {{qt_event_name}}({{qt_event_args}}) {
+pub static WRAP_EVENT_TEMPLATE: &str = "{{c_return_type}} {{qt_event_name}}({{qt_event_args}}) {
         if (m_{{event_type_snake}}) {
             {{body_init}}
             {{body_setup}}
@@ -201,8 +200,7 @@ pub static QT_TRAIT_TYPE_TEMPLATE: &str = "RU{{type_name}} {{var_name}};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition for a Qt wrapping function
-pub static QT_FUNC_DEF_TEMPLATE: &str =
-"{% if c_return_type != 'void' %}
+pub static QT_FUNC_DEF_TEMPLATE: &str ="{% if c_return_type != 'void' %}
     auto ret_value = {{qt_instance_call}}{{qt_func_name}}({{-extra_args}}{{qt_func_args}});
 
 {%- if array_return %}

@@ -79,40 +79,10 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGradient)]
-enum Type {
-    LinearGradient,
-    RadialGradient,
-    ConicalGradient,
-    NoGradient,
-}
-
-[org_name(QGradient)]
-enum Spread {
-    PadSpread,
-    ReflectSpread,
-    RepeatSpread,
-}
-
-[org_name(QGradient)]
-enum CoordinateMode {
-    LogicalMode,
-    StretchToDeviceMode,
-    ObjectBoundingMode,
-}
-
-[org_name(QGradient)]
-enum InterpolationMode {
-    ColorInterpolation,
-    ComponentInterpolation,
-}
-
-
 struct Gradient {
-    qt_check_for_qgadget_macro(),
-    /// 
     /// Returns the type of gradient.
-    type() -> Gradient::Type,
+    [org_name(type)]
+    get_type() -> Gradient::Type,
     /// 
     /// Specifies the spread *method* that should be used for this
     /// gradient.
@@ -161,5 +131,35 @@ struct Gradient {
     interpolation_mode() -> Gradient::InterpolationMode,
     set_interpolation_mode(mode: Gradient::InterpolationMode),
 }
+
+[org_name(QGradient)]
+enum Type {
+    LinearGradient,
+    RadialGradient,
+    ConicalGradient,
+    NoGradient,
+}
+
+[org_name(QGradient)]
+enum Spread {
+    PadSpread,
+    ReflectSpread,
+    RepeatSpread,
+}
+
+[org_name(QGradient)]
+enum CoordinateMode {
+    LogicalMode,
+    StretchToDeviceMode,
+    ObjectBoundingMode,
+}
+
+[org_name(QGradient)]
+enum InterpolationMode {
+    ColorInterpolation,
+    ComponentInterpolation,
+}
+
+
 
 // vim: syntax=rust expandtab ts=4 sw=4

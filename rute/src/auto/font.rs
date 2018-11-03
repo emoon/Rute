@@ -72,7 +72,6 @@ pub trait FontType<'a> {
         }
         self
     }
-
     fn pixel_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {

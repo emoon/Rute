@@ -50,7 +50,7 @@ COMMENT = _{
 }
 
 doc_comment = @{
-	("///") ~ (!NEWLINE ~ ANY)*
+	((" ")*) ~ ("///") ~ (!NEWLINE ~ ANY)*
 }
 
 WHITESPACE = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }

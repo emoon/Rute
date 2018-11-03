@@ -1,5 +1,6 @@
 use clang::*;
 use heck::SnakeCase;
+use qdoc_parser::{QDocEntry, QDocFile, QDocItem};
 use rayon::prelude::*;
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -10,7 +11,6 @@ use std::io::{BufReader, BufWriter, SeekFrom, Write};
 use std::path::PathBuf;
 use std::sync::RwLock;
 use walkdir::WalkDir;
-use qdoc_parser::{QDocEntry, QDocFile, QDocItem};
 
 use walkdir;
 
@@ -285,11 +285,11 @@ fn print_doc_comments<W: Write>(dest: &mut W, text: &str, indent: usize) {
 /// Print a functio/method definition
 ///
 fn print_func<W: Write>(
-	dest: &mut W, 
-	entry: &Entity, 
-	class_name: &str, 
-	docs: &HashMap<String, QDocFile>, 
-	func_type: AccessLevel
+    dest: &mut W,
+    entry: &Entity,
+    class_name: &str,
+    docs: &HashMap<String, QDocFile>,
+    func_type: AccessLevel,
 ) {
     let name = match entry.get_name() {
         Some(name) => name,
@@ -314,27 +314,27 @@ fn print_func<W: Write>(
     // we do very infrequent (generating the base line from Qt)
     // having this taking a bit longer than needed isn't the end of the world.
 
-	for (_, f) in docs {
-		for entry in &f.0 {
-			match entry.data {
-				QDocItem::Function(ref name) => {
-					if name.contains(&full_name) {
-						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
-					}
-				}
+    for (_, f) in docs {
+        for entry in &f.0 {
+            match entry.data {
+                QDocItem::Function(ref name) => {
+                    if name.contains(&full_name) {
+                        print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+                    }
+                }
 
-				QDocItem::Property(ref name) => {
-					if name.contains(&full_name) {
-						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
-					}
-				}
+                QDocItem::Property(ref name) => {
+                    if name.contains(&full_name) {
+                        print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+                    }
+                }
 
-				_ => (),
-			}
-		}
-	}
+                _ => (),
+            }
+        }
+    }
 
-    // check if we have any doc for this 
+    // check if we have any doc for this
 
     if func_type == AccessLevel::Signal {
         write!(dest, "    [signal] ");
@@ -463,26 +463,26 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     let filename = format!("{}/{}.def", target_path, typename.to_snake_case());
     let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
 
-	//println!("type name {}", typename);
+    //println!("type name {}", typename);
 
     // Check if we have some filedata to output
-	
-	for (_, f) in docs {
-		for entry in &f.0 {
-			match entry.data {
-				QDocItem::Class(ref class_name) => {
-					if &name == class_name {
-						println!("found class name");
-						print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
-					}
-				}
 
-				_ => (),
-			}
-		}
-	}
+    for (_, f) in docs {
+        for entry in &f.0 {
+            match entry.data {
+                QDocItem::Class(ref class_name) => {
+                    if &name == class_name {
+                        println!("found class name");
+                        print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
+                    }
+                }
 
-	/*
+                _ => (),
+            }
+        }
+    }
+
+    /*
     if let Some(class_doc) = doc_lookups.class_name.get(name.as_str()) {
         for tag in &class_doc.tags {
             writeln!(dest, "/// {}", tag);
@@ -490,9 +490,9 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     }
     */
 
-    // Always add the licence info 
-	writeln!(dest, "/// # Licence");
-	writeln!(dest, "///");
+    // Always add the licence info
+    writeln!(dest, "/// # Licence");
+    writeln!(dest, "///");
     writeln!(dest, "/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.");
 
     // print all enums for the class

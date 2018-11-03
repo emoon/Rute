@@ -19,7 +19,8 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
-/// The Widget is the atom of the user interface: it receives mouse, keyboard
+///
+/// The widget is the atom of the user interface: it receives mouse, keyboard
 /// and other events from the window system, and paints a representation of
 /// itself on the screen. Every widget is rectangular, and they are sorted in a
 /// Z-order. A widget is clipped by its parent and by the widgets in front of
@@ -28,10 +29,14 @@ use auto::*;
 /// A widget that is not embedded in a parent widget is called a window.
 /// Usually, windows have a frame and a title bar, although it is also possible
 /// to create windows without such decoration using suitable
-/// {Qt::WindowFlags}{window flags}). In Qt, QMainWindow and the various
+/// [window flags](Qt::WindowFlags)
+/// ). In Qt, QMainWindow and the various
 /// subclasses of QDialog are the most common window types.
 ///
 /// Every widget's constructor accepts one or two standard arguments:
+///
+/// * `QWidget *parent = 0` is the parent of the new widget. If it is 0 (the default), the new widget will be a window. If not, it will be a child of *parent,* and be constrained by *parent's* geometry (unless you specify Qt::Window as window flag).
+/// * `Qt::WindowFlags f = 0` (where available) sets the window flags; the default is suitable for almost all widgets, but to get, for example, a window without a window system frame, you must use special flags.
 ///
 /// QWidget has many member functions, but some of them have little direct
 /// functionality; for example, QWidget has a font property, but never uses
@@ -49,12 +54,15 @@ use auto::*;
 /// example, it is possible to display a button as a top-level window, but most
 /// people prefer to put their buttons inside other widgets, such as QDialog.
 ///
+/// ![A parent widget containing various child widgets.](parent-child-widgets.png)
+///
 /// The diagram above shows a QGroupBox widget being used to hold various child
 /// widgets in a layout provided by QGridLayout. The QLabel child widgets have
 /// been outlined to indicate their full sizes.
 ///
 /// If you want to use a QWidget to hold child widgets you will usually want to
-/// add a layout to the parent QWidget. See {Layout Management} for more
+/// add a layout to the parent QWidget. See [Layout Management](Layout%20Management)
+/// for more
 /// information.
 ///
 /// # Composite Widgets
@@ -67,17 +75,271 @@ use auto::*;
 ///
 /// Composite widgets can also be created by subclassing a standard widget,
 /// such as QWidget or QFrame, and adding the necessary layout and child
-/// widgets in the constructor of the subclass. Many of the {Qt Widgets Examples}
-/// {examples provided with Qt} use this approach, and it is also covered in
-/// the Qt {Tutorials}.
+/// widgets in the constructor of the subclass. Many of the [examples provided with Qt](Qt%20Widgets%20Examples)
+/// use this approach, and it is also covered in
+/// the Qt [Tutorials](Tutorials)
+///
 ///
 /// # Custom Widgets and Painting
 ///
 /// Since QWidget is a subclass of QPaintDevice, subclasses can be used to
 /// display custom content that is composed using a series of painting
 /// operations with an instance of the QPainter class. This approach contrasts
+/// with the canvas-style approach used by the [Graphics View Framework](Graphics%20View)
+/// where items are added to a scene by the
+/// application and are rendered by the framework itself.
 ///
-/// The documentation is an adobption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+/// Each widget performs all painting operations from within its paintEvent()
+/// function. This is called whenever the widget needs to be redrawn, either
+/// as a result of some external change or when requested by the application.
+///
+/// The [Analog Clock example](widgets/analogclock)
+/// shows how a simple widget
+/// can handle paint events.
+///
+/// # Size Hints and Size Policies
+///
+/// When implementing a new widget, it is almost always useful to reimplement
+/// sizeHint() to provide a reasonable default size for the widget and to set
+/// the correct size policy with setSizePolicy().
+///
+/// By default, composite widgets which do not provide a size hint will be
+/// sized according to the space requirements of their child widgets.
+///
+/// The size policy lets you supply good default behavior for the layout
+/// management system, so that other widgets can contain and manage yours
+/// easily. The default size policy indicates that the size hint represents
+/// the preferred size of the widget, and this is often good enough for many
+/// widgets.
+///
+/// **Note**: The size of top-level widgets are constrained to 2/3 of the desktop's
+/// height and width. You can resize() the widget manually if these bounds are
+/// inadequate.
+///
+/// # Events
+///
+/// Widgets respond to events that are typically caused by user actions. Qt
+/// delivers events to widgets by calling specific event handler functions with
+/// instances of QEvent subclasses containing information about each event.
+///
+/// If your widget only contains child widgets, you probably do not need to
+/// implement any event handlers. If you want to detect a mouse click in a
+/// child widget call the child's underMouse() function inside the widget's
+/// mousePressEvent().
+///
+/// The [Scribble example](widgets/scribble)
+/// implements a wider set of
+/// events to handle mouse movement, button presses, and window resizing.
+///
+/// You will need to supply the behavior and content for your own widgets, but
+/// here is a brief overview of the events that are relevant to QWidget,
+/// starting with the most common ones:
+///
+/// * paintEvent() is called whenever the widget needs to be repainted. Every widget displaying custom content must implement it. Painting using a QPainter can only take place in a paintEvent() or a function called by a paintEvent().
+/// * resizeEvent() is called when the widget has been resized.
+/// * mousePressEvent() is called when a mouse button is pressed while the mouse cursor is inside the widget, or when the widget has grabbed the mouse using grabMouse(). Pressing the mouse without releasing it is effectively the same as calling grabMouse().
+/// * mouseReleaseEvent() is called when a mouse button is released. A widget receives mouse release events when it has received the corresponding mouse press event. This means that if the user presses the mouse inside *your* widget, then drags the mouse somewhere else before releasing the mouse button, *your* widget receives the release event. There is one exception: if a popup menu appears while the mouse button is held down, this popup immediately steals the mouse events.
+/// * mouseDoubleClickEvent() is called when the user double-clicks in the widget. If the user double-clicks, the widget receives a mouse press event, a mouse release event, (a mouse click event,) a second mouse press, this event and finally a second mouse release event. (Some mouse move events may also be received if the mouse is not held steady during this operation.) It is *not possible* to distinguish a click from a double-click until the second click arrives. (This is one reason why most GUI books recommend that double-clicks be an extension of single-clicks, rather than trigger a different action.)
+///
+/// Widgets that accept keyboard input need to reimplement a few more event
+/// handlers:
+///
+/// * keyPressEvent() is called whenever a key is pressed, and again when a key has been held down long enough for it to auto-repeat. The **Tab** and **Shift+Tab** keys are only passed to the widget if they are not used by the focus-change mechanisms. To force those keys to be processed by your widget, you must reimplement QWidget::event().
+/// * focusInEvent() is called when the widget gains keyboard focus (assuming you have called setFocusPolicy()). Well-behaved widgets indicate that they own the keyboard focus in a clear but discreet way.
+/// * focusOutEvent() is called when the widget loses keyboard focus.
+///
+/// You may be required to also reimplement some of the less common event
+/// handlers:
+///
+/// * mouseMoveEvent() is called whenever the mouse moves while a mouse button is held down. This can be useful during drag and drop operations. If you call [setMouseTracking](setMouseTracking())
+/// (true), you get mouse move events even when no buttons are held down. (See also the [Drag and Drop](Drag%20and%20Drop)
+/// guide.)
+/// * keyReleaseEvent() is called whenever a key is released and while it is held down (if the key is auto-repeating). In that case, the widget will receive a pair of key release and key press event for every repeat. The **Tab** and **Shift+Tab** keys are only passed to the widget if they are not used by the focus-change mechanisms. To force those keys to be processed by your widget, you must reimplement QWidget::event().
+/// * wheelEvent() is called whenever the user turns the mouse wheel while the widget has the focus.
+/// * enterEvent() is called when the mouse enters the widget's screen space. (This excludes screen space owned by any of the widget's children.)
+/// * leaveEvent() is called when the mouse leaves the widget's screen space. If the mouse enters a child widget it will not cause a leaveEvent().
+/// * moveEvent() is called when the widget has been moved relative to its parent.
+/// * closeEvent() is called when the user closes the widget (or when close() is called).
+///
+/// There are also some rather obscure events described in the documentation
+/// for QEvent::Type. To handle these events, you need to reimplement event()
+/// directly.
+///
+/// The default implementation of event() handles **Tab** and **Shift+Tab**
+/// (to move the keyboard focus), and passes on most of the other events to
+/// one of the more specialized handlers above.
+///
+/// Events and the mechanism used to deliver them are covered in
+/// [The Event System](The%20Event%20System)
+///
+///
+/// # Groups of Functions and Properties
+///
+/// * Context
+/// * Functions and Properties
+/// * Window functions
+/// * show(), hide(), raise(), lower(), close().
+/// * Top-level windows
+/// * [windowModified,](windowModified,)
+/// [windowTitle,](windowTitle,)
+/// [windowIcon,](windowIcon,)
+/// [isActiveWindow,](isActiveWindow,)
+/// activateWindow(), [minimized,](minimized,)
+/// showMinimized(), [maximized,](maximized,)
+/// showMaximized(), [fullScreen,](fullScreen,)
+/// showFullScreen(), showNormal().
+/// * Window contents
+/// * update(), repaint(), scroll().
+/// * Geometry
+/// * [pos,](pos,)
+/// x(), y(), [rect,](rect,)
+/// [size,](size,)
+/// width(), height(), move(), resize(), [sizePolicy,](sizePolicy,)
+/// sizeHint(), minimumSizeHint(), updateGeometry(), layout(), [frameGeometry,](frameGeometry,)
+/// [geometry,](geometry,)
+/// [childrenRect,](childrenRect,)
+/// [childrenRegion,](childrenRegion,)
+/// adjustSize(), mapFromGlobal(), mapToGlobal(), mapFromParent(), mapToParent(), [maximumSize,](maximumSize,)
+/// [minimumSize,](minimumSize,)
+/// [sizeIncrement,](sizeIncrement,)
+/// [baseSize,](baseSize,)
+/// setFixedSize()
+/// * Mode
+/// * [visible,](visible,)
+/// isVisibleTo(), [enabled,](enabled,)
+/// isEnabledTo(), [modal,](modal,)
+/// isWindow(), [mouseTracking,](mouseTracking,)
+/// [updatesEnabled,](updatesEnabled,)
+/// visibleRegion().
+/// * Look and feel
+/// * style(), setStyle(), [styleSheet,](styleSheet,)
+/// [cursor,](cursor,)
+/// [font,](font,)
+/// [palette,](palette,)
+/// backgroundRole(), setBackgroundRole(), fontInfo(), fontMetrics().
+/// * Keyboard focus functions
+/// * [focus,](focus,)
+/// [focusPolicy,](focusPolicy,)
+/// setFocus(), clearFocus(), setTabOrder(), setFocusProxy(), focusNextChild(), focusPreviousChild().
+/// * Mouse and keyboard grabbing
+/// * grabMouse(), releaseMouse(), grabKeyboard(), releaseKeyboard(), mouseGrabber(), keyboardGrabber().
+/// * Event handlers
+/// * event(), mousePressEvent(), mouseReleaseEvent(), mouseDoubleClickEvent(), mouseMoveEvent(), keyPressEvent(), keyReleaseEvent(), focusInEvent(), focusOutEvent(), wheelEvent(), enterEvent(), leaveEvent(), paintEvent(), moveEvent(), resizeEvent(), closeEvent(), dragEnterEvent(), dragMoveEvent(), dragLeaveEvent(), dropEvent(), childEvent(), showEvent(), hideEvent(), customEvent(). changeEvent(),
+/// * System functions
+/// * parentWidget(), window(), setParent(), winId(), find(), metric().
+/// * Context menu
+/// * contextMenuPolicy, contextMenuEvent(), customContextMenuRequested(), actions()
+/// * Interactive help
+/// * setToolTip(), setWhatsThis()
+///
+/// # Widget Style Sheets
+///
+/// In addition to the standard widget styles for each platform, widgets can
+/// also be styled according to rules specified in a [style sheet](styleSheet)
+/// . This feature enables you to customize the appearance of
+/// specific widgets to provide visual cues to users about their purpose. For
+/// example, a button could be styled in a particular way to indicate that it
+/// performs a destructive action.
+///
+/// The use of widget style sheets is described in more detail in the
+/// [Qt Style Sheets](Qt%20Style%20Sheets)
+/// document.
+///
+/// # Transparency and Double Buffering
+///
+/// Since Qt 4.0, QWidget automatically double-buffers its painting, so there
+/// is no need to write double-buffering code in paintEvent() to avoid
+/// flicker.
+///
+/// Since Qt 4.1, the Qt::WA_ContentsPropagated widget attribute has been
+/// deprecated. Instead, the contents of parent widgets are propagated by
+/// default to each of their children as long as Qt::WA_PaintOnScreen is not
+/// set. Custom widgets can be written to take advantage of this feature by
+/// updating irregular regions (to create non-rectangular child widgets), or
+/// painting with colors that have less than full alpha component. The
+/// following diagram shows how attributes and properties of a custom widget
+/// can be fine-tuned to achieve different effects.
+///
+/// ![propagation-custom.png](propagation-custom.png)
+///
+/// In the above diagram, a semi-transparent rectangular child widget with an
+/// area removed is constructed and added to a parent widget (a QLabel showing
+/// a pixmap). Then, different properties and widget attributes are set to
+/// achieve different effects:
+///
+/// * The left widget has no additional properties or widget attributes set. This default state suits most custom widgets using transparency, are irregularly-shaped, or do not paint over their entire area with an opaque brush.
+/// * The center widget has the [autoFillBackground](autoFillBackground)
+/// property set. This property is used with custom widgets that rely on the widget to supply a default background, and do not paint over their entire area with an opaque brush.
+/// * The right widget has the Qt::WA_OpaquePaintEvent widget attribute set. This indicates that the widget will paint over its entire area with opaque colors. The widget's area will initially be *uninitialized* , represented in the diagram with a red diagonal grid pattern that shines through the overpainted area. The Qt::WA_OpaquePaintArea attribute is useful for widgets that need to paint their own specialized contents quickly and do not need a default filled background.
+///
+/// To rapidly update custom widgets with simple background colors, such as
+/// real-time plotting or graphing widgets, it is better to define a suitable
+/// background color (using setBackgroundRole() with the
+/// QPalette::Window role), set the [autoFillBackground](autoFillBackground)
+/// property, and only
+/// implement the necessary drawing functionality in the widget's paintEvent().
+///
+/// To rapidly update custom widgets that constantly paint over their entire
+/// areas with opaque content, e.g., video streaming widgets, it is better to
+/// set the widget's Qt::WA_OpaquePaintEvent, avoiding any unnecessary overhead
+/// associated with repainting the widget's background.
+///
+/// If a widget has both the Qt::WA_OpaquePaintEvent widget attribute *and*
+/// the [autoFillBackground](autoFillBackground)
+/// property set, the Qt::WA_OpaquePaintEvent
+/// attribute takes precedence. Depending on your requirements, you should
+/// choose either one of them.
+///
+/// Since Qt 4.1, the contents of parent widgets are also propagated to
+/// standard Qt widgets. This can lead to some unexpected results if the
+/// parent widget is decorated in a non-standard way, as shown in the diagram
+/// below.
+///
+/// ![propagation-standard.png](propagation-standard.png)
+///
+/// The scope for customizing the painting behavior of standard Qt widgets,
+/// without resorting to subclassing, is slightly less than that possible for
+/// custom widgets. Usually, the desired appearance of a standard widget can be
+/// achieved by setting its [autoFillBackground](autoFillBackground)
+/// property.
+///
+/// # Creating Translucent Windows
+///
+/// Since Qt 4.5, it has been possible to create windows with translucent regions
+/// on window systems that support compositing.
+///
+/// To enable this feature in a top-level widget, set its Qt::WA_TranslucentBackground
+/// attribute with setAttribute() and ensure that its background is painted with
+/// non-opaque colors in the regions you want to be partially transparent.
+///
+/// Platform notes:
+///
+/// * X11: This feature relies on the use of an X server that supports ARGB visuals and a compositing window manager.
+/// * Windows: The widget needs to have the Qt::FramelessWindowHint window flag set for the translucency to work.
+///
+/// # Native Widgets vs Alien Widgets
+///
+/// Introduced in Qt 4.4, alien widgets are widgets unknown to the windowing
+/// system. They do not have a native window handle associated with them. This
+/// feature significantly speeds up widget painting, resizing, and removes flicker.
+///
+/// Should you require the old behavior with native windows, you can choose
+/// one of the following options:
+///
+/// * Use the `QT_USE_NATIVE_WINDOWS=1` in your environment.
+/// * Set the Qt::AA_NativeWindows attribute on your application. All widgets will be native widgets.
+/// * Set the Qt::WA_NativeWindow attribute on widgets: The widget itself and all of its ancestors will become native (unless Qt::WA_DontCreateNativeAncestors is set).
+/// * Call QWidget::winId to enforce a native window (this implies 3).
+/// * Set the Qt::WA_PaintOnScreen attribute to enforce a native window (this implies 3).
+///
+/// **See also:** QEvent
+/// QPainter
+/// QGridLayout
+/// QBoxLayout
+///
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Widget<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -133,6 +395,703 @@ impl<'a> Widget<'a> {
             _marker: PhantomData,
         }
     }
+    pub fn set_set_visible_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, bool) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_set_visible_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_set_visible_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_set_visible_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(bool) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_set_visible_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_set_visible_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_size_hint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_size_hint_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_size_hint_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_size_hint_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_size_hint_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_size_hint_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_minimum_size_hint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_minimum_size_hint_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_minimum_size_hint_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_minimum_size_hint_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_minimum_size_hint_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_minimum_size_hint_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_height_for_width_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_height_for_width_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_height_for_width_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_height_for_width_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_has_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_has_height_for_width_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_has_height_for_width_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_has_height_for_width_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_has_height_for_width_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_has_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_event_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_event_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_event_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_event_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_event_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_event_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_double_click_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_double_click_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &WheelEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &WheelEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_wheel_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_wheel_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&WheelEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&WheelEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_wheel_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&KeyEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&KeyEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_in_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_in_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&FocusEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_in_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_out_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_out_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&FocusEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_out_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_enter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_enter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_enter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_enter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_enter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_leave_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_leave_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_leave_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_leave_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_leave_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
     pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
         F: Fn(&T, &PaintEventType) + 'a,
@@ -173,8 +1132,940 @@ impl<'a> Widget<'a> {
 
         self
     }
+
+    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MoveEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MoveEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MoveEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MoveEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ResizeEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ResizeEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_resize_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_resize_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ResizeEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ResizeEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_resize_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &CloseEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &CloseEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_close_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_close_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_close_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&CloseEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&CloseEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_close_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_close_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ContextMenuEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ContextMenuEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_context_menu_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_context_menu_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_context_menu_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ContextMenuEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ContextMenuEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_context_menu_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_context_menu_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &TabletEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &TabletEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_tablet_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_tablet_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&TabletEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&TabletEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_tablet_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_action_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ActionEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ActionEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_action_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_action_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_action_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ActionEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ActionEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_action_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_action_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragEnterEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragEnterEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_enter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_enter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_enter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragEnterEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragEnterEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_enter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_enter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragMoveEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragMoveEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragMoveEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragMoveEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragLeaveEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragLeaveEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_leave_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_leave_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_leave_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragLeaveEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragLeaveEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_leave_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_leave_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DropEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DropEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drop_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drop_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drop_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DropEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DropEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drop_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drop_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ShowEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ShowEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_show_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_show_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ShowEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ShowEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_show_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &HideEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &HideEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_hide_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_hide_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&HideEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&HideEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_hide_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_change_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_change_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_change_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_change_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_change_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_init_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &PainterType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &PainterType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_init_painter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_init_painter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_init_painter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&PainterType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&PainterType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_init_painter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_init_painter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_redirected_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &PointType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &PointType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_redirected_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_redirected_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_redirected_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&PointType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&PointType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_redirected_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_redirected_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_shared_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_shared_painter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_shared_painter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_shared_painter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_shared_painter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_shared_painter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_input_method_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &InputMethodEventType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &InputMethodEventType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_input_method_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_input_method_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_input_method_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&InputMethodEventType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&InputMethodEventType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_input_method_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_input_method_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_input_method_query_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, InputMethodQuery) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, InputMethodQuery) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_input_method_query_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_input_method_query_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_input_method_query_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(InputMethodQuery) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(InputMethodQuery) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_input_method_query_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_input_method_query_trampoline as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_next_prev_child_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, bool) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_next_prev_child_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_next_prev_child_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_next_prev_child_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(bool) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_next_prev_child_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_next_prev_child_trampoline as usize),
+            );
+        }
+
+        self
+    }
 }
-/// Signal for when Window tile changes  
+
+pub struct WidgetStatic<'a> {
+    pub all_funcs: *const RUWidgetAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+
+unsafe extern "C" fn widget_set_visible_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    visible: bool,
+) {
+    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, visible);
+}
+
+unsafe extern "C" fn widget_set_visible_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    visible: bool,
+) {
+    let f: &&(Fn(bool) + 'static) = transmute(func);
+
+    f(visible);
+}
+
+///
+/// If the value of this property is an invalid size, no size is
+/// recommended.
+///
+/// The default implementation of sizeHint() returns an invalid size
+/// if there is no layout for this widget, and returns the layout's
+/// preferred size otherwise.
+///
+/// **See also:** QSize::isValid()
+/// minimumSizeHint()
+/// sizePolicy()
+/// setMinimumSize()
+/// updateGeometry()
+
+unsafe extern "C" fn widget_size_hint_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUSize {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+unsafe extern "C" fn widget_size_hint_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUSize {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
+///
+/// If the value of this property is an invalid size, no minimum size
+/// is recommended.
+///
+/// The default implementation of minimumSizeHint() returns an invalid
+/// size if there is no layout for this widget, and returns the
+/// layout's minimum size otherwise. Most built-in widgets reimplement
+/// minimumSizeHint().
+///
+/// [QLayout](QLayout)
+/// will never resize a widget to a size smaller than the
+/// minimum size hint unless minimumSize() is set or the size policy is
+/// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
+/// size hint will be ignored.
+///
+/// **See also:** QSize::isValid()
+/// resize()
+/// setMinimumSize()
+/// sizePolicy()
+
+unsafe extern "C" fn widget_minimum_size_hint_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUSize {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+unsafe extern "C" fn widget_minimum_size_hint_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUSize {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
+///
+/// Returns the preferred height for this widget, given the width *w.*
+///
+/// If this widget has a layout, the default implementation returns
+/// the layout's preferred height. if there is no layout, the default
+/// implementation returns -1 indicating that the preferred height
+/// does not depend on the width.
+
+unsafe extern "C" fn widget_height_for_width_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg0);
+}
+
+unsafe extern "C" fn widget_height_for_width_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg0);
+}
+
+///
+/// Returns `true` if the widget's preferred height depends on its width; otherwise returns `false.`
+
+unsafe extern "C" fn widget_has_height_for_width_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> bool {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+unsafe extern "C" fn widget_has_height_for_width_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> bool {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
+///
+/// This signal is emitted when the window's title has changed, with the
+/// new *title* as an argument.
+///
 
 unsafe extern "C" fn widget_window_title_changed_trampoline_ud<T>(
     self_c: *const c_void,
@@ -199,46 +2090,646 @@ unsafe extern "C" fn widget_window_title_changed_trampoline(
     f(str_in_title_0.to_str().unwrap());
 }
 
-///     This event handler can be reimplemented in a subclass to receive paint
-///     events passed in \a event.
 ///
-///     A paint event is a request to repaint all or part of a widget. It can
-///     happen for one of the following reasons:
+/// This signal is emitted when the window's icon has changed, with the
+/// new *icon* as an argument.
 ///
-///     * repaint() or update() was invoked,
-///     * the widget was obscured and has now been uncovered, or
-///     * many other reasons.
+
+unsafe extern "C" fn widget_window_icon_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    icon: *const RUBase,
+) {
+    let f: &&(Fn(&T, &IconType) + 'static) = transmute(func);
+    let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
+    let data = self_c as *const T;
+    f(&*data, &obj_icon_0);
+}
+
+unsafe extern "C" fn widget_window_icon_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    icon: *const RUBase,
+) {
+    let f: &&(Fn(&IconType) + 'static) = transmute(func);
+    let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
+    f(&obj_icon_0);
+}
+
 ///
-///     Many widgets can simply repaint their entire surface when asked to, but
-///     some slow widgets need to optimize by painting only the requested region:
-///     QPaintEvent::region(). This speed optimization does not change the result,
-///     as painting is clipped to that region during event processing. QListView
-///     and QTableView do this, for example.
+/// This signal is emitted when the window's icon text has changed, with the
+/// new *iconText* as an argument.
 ///
-///     Qt also tries to speed up painting by merging multiple paint events into
-///     one. When update() is called several times or the window system sends
-///     several paint events, Qt merges these events into one event with a larger
-///     region (see QRegion::united()). The repaint() function does not permit this
-///     optimization, so we suggest using update() whenever possible.
+/// This signal is deprecated.
+
+unsafe extern "C" fn widget_window_icon_text_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    icon_text: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&T, &str) + 'static) = transmute(func);
+    let str_in_icon_text_0 = CStr::from_ptr(icon_text);
+
+    let data = self_c as *const T;
+    f(&*data, str_in_icon_text_0.to_str().unwrap());
+}
+
+unsafe extern "C" fn widget_window_icon_text_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    icon_text: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&str) + 'static) = transmute(func);
+    let str_in_icon_text_0 = CStr::from_ptr(icon_text);
+
+    f(str_in_icon_text_0.to_str().unwrap());
+}
+
 ///
-///     When the paint event occurs, the update region has normally been erased, so
-///     you are painting on the widget's background.
+/// This signal is emitted when the widget's [contextMenuPolicy](contextMenuPolicy)
+/// is
+/// Qt::CustomContextMenu, and the user has requested a context menu on
+/// the widget. The position *pos* is the position of the context menu
+/// event that the widget receives. Normally this is in widget
+/// coordinates. The exception to this rule is QAbstractScrollArea and
+/// its subclasses that map the context menu event to coordinates of the
+/// [viewport()](QAbstractScrollArea::viewport())
 ///
-///     The background can be set using setBackgroundRole() and setPalette().
 ///
-///     Since Qt 4.0, QWidget automatically double-buffers its painting, so there
-///     is no need to write double-buffering code in paintEvent() to avoid flicker.
+/// **See also:** mapToGlobal()
+/// QMenu
+/// contextMenuPolicy
+
+unsafe extern "C" fn widget_custom_context_menu_requested_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    pos: *const RUBase,
+) {
+    let f: &&(Fn(&T, &PointType) + 'static) = transmute(func);
+    let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
+    let data = self_c as *const T;
+    f(&*data, &obj_pos_0);
+}
+
+unsafe extern "C" fn widget_custom_context_menu_requested_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    pos: *const RUBase,
+) {
+    let f: &&(Fn(&PointType) + 'static) = transmute(func);
+    let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
+    f(&obj_pos_0);
+}
+
 ///
-///     Generally, you should refrain from calling update() or repaint()
-///     children inside a paintEvent() results in undefined behavior; the child may
-///     or may not get a paint event.
+/// This is the main event handler; it handles event *event.* You can
+/// reimplement this function in a subclass, but we recommend using
+/// one of the specialized event handlers instead.
 ///
-///     If you are using a custom paint engine without Qt's backingstore,
-///     Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
-///     never be called; the backingstore will be used instead.
+/// Key press and release events are treated differently from other
+/// events. event() checks for Tab and Shift+Tab and tries to move the
+/// focus appropriately. If there is no widget to move the focus to
+/// (or the key press is not Tab or Shift+Tab), event() calls
+/// keyPressEvent().
 ///
-///     event(), repaint(), update(), QPainter, QPixmap, QPaintEvent,
-///     {Analog Clock Example}
+/// Mouse and tablet event handling is also slightly special: only
+/// when the widget is [enabled,](enabled,)
+/// event() will call the specialized
+/// handlers such as mousePressEvent(); otherwise it will discard the
+/// event.
+///
+/// This function returns `true` if the event was recognized, otherwise
+/// it returns `false.` If the recognized event was accepted (see [QEvent::accepted),](QEvent::accepted),)
+/// any further processing such as event
+/// propagation to the parent widget stops.
+///
+/// **See also:** closeEvent()
+/// focusInEvent()
+/// focusOutEvent()
+/// enterEvent()
+/// keyPressEvent()
+/// keyReleaseEvent()
+/// leaveEvent()
+/// mouseDoubleClickEvent()
+/// mouseMoveEvent()
+/// mousePressEvent()
+/// mouseReleaseEvent()
+/// moveEvent()
+/// paintEvent()
+/// resizeEvent()
+/// QObject::event()
+/// QObject::timerEvent()
+
+unsafe extern "C" fn widget_event_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) -> bool {
+    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_event_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) -> bool {
+    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive mouse press events for the widget.
+///
+/// If you create new widgets in the mousePressEvent() the
+/// mouseReleaseEvent() may not end up where you expect, depending on
+/// the underlying window system (or X11 window manager), the widgets'
+/// location and maybe more.
+///
+/// The default implementation implements the closing of popup widgets
+/// when you click outside the window. For other widget types it does
+/// nothing.
+///
+/// **See also:** mouseReleaseEvent()
+/// mouseDoubleClickEvent()
+/// mouseMoveEvent()
+/// event()
+/// QMouseEvent
+/// {Scribble Example}
+
+unsafe extern "C" fn widget_mouse_press_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_mouse_press_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive mouse release events for the widget.
+///
+/// **See also:** mousePressEvent()
+/// mouseDoubleClickEvent()
+/// mouseMoveEvent()
+/// event()
+/// QMouseEvent
+/// {Scribble Example}
+
+unsafe extern "C" fn widget_mouse_release_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_mouse_release_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive mouse double click events for the widget.
+///
+/// The default implementation calls mousePressEvent().
+///
+/// **Note**: The widget will also receive mouse press and mouse release
+/// events in addition to the double click event. It is up to the
+/// developer to ensure that the application interprets these events
+/// correctly.
+///
+/// **See also:** mousePressEvent()
+/// mouseReleaseEvent()
+/// mouseMoveEvent()
+/// event()
+/// QMouseEvent
+
+unsafe extern "C" fn widget_mouse_double_click_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_mouse_double_click_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive mouse move events for the widget.
+///
+/// If mouse tracking is switched off, mouse move events only occur if
+/// a mouse button is pressed while the mouse is being moved. If mouse
+/// tracking is switched on, mouse move events occur even if no mouse
+/// button is pressed.
+///
+/// QMouseEvent::pos() reports the position of the mouse cursor,
+/// relative to this widget. For press and release events, the
+/// position is usually the same as the position of the last mouse
+/// move event, but it might be different if the user's hand shakes.
+/// This is a feature of the underlying window system, not Qt.
+///
+/// If you want to show a tooltip immediately, while the mouse is
+/// moving (e.g., to get the mouse coordinates with QMouseEvent::pos()
+/// and show them as a tooltip), you must first enable mouse tracking
+/// as described above. Then, to ensure that the tooltip is updated
+/// immediately, you must call QToolTip::showText() instead of
+/// setToolTip() in your implementation of mouseMoveEvent().
+///
+/// **See also:** setMouseTracking()
+/// mousePressEvent()
+/// mouseReleaseEvent()
+/// mouseDoubleClickEvent()
+/// event()
+/// QMouseEvent
+/// {Scribble Example}
+
+unsafe extern "C" fn widget_mouse_move_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_mouse_move_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive wheel events for the widget.
+///
+/// If you reimplement this handler, it is very important that you
+/// [ignore()](QEvent)
+/// the event if you do not handle
+/// it, so that the widget's parent can interpret it.
+///
+/// The default implementation ignores the event.
+///
+/// **See also:** QEvent::ignore()
+/// QEvent::accept()
+/// event()
+/// QWheelEvent
+
+unsafe extern "C" fn widget_wheel_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &WheelEventType) + 'static) = transmute(func);
+    let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_wheel_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&WheelEventType) + 'static) = transmute(func);
+    let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive key press events for the widget.
+///
+/// A widget must call setFocusPolicy() to accept focus initially and
+/// have focus in order to receive a key press event.
+///
+/// If you reimplement this handler, it is very important that you
+/// call the base class implementation if you do not act upon the key.
+///
+/// The default implementation closes popup widgets if the user
+/// presses the key sequence for QKeySequence::Cancel (typically the
+/// Escape key). Otherwise the event is ignored, so that the widget's
+/// parent can interpret it.
+///
+/// Note that QKeyEvent starts with isAccepted() == true, so you do not
+/// need to call QKeyEvent::accept() - just do not call the base class
+/// implementation if you act upon the key.
+///
+/// **See also:** keyReleaseEvent()
+/// setFocusPolicy()
+/// focusInEvent()
+/// focusOutEvent()
+/// event()
+/// QKeyEvent
+/// {Tetrix Example}
+
+unsafe extern "C" fn widget_key_press_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &KeyEventType) + 'static) = transmute(func);
+    let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_key_press_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&KeyEventType) + 'static) = transmute(func);
+    let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive key release events for the widget.
+///
+/// A widget must [accept focus](setFocusPolicy())
+///
+/// initially and [have focus](hasFocus())
+/// in order to
+/// receive a key release event.
+///
+/// If you reimplement this handler, it is very important that you
+/// call the base class implementation if you do not act upon the key.
+///
+/// The default implementation ignores the event, so that the widget's
+/// parent can interpret it.
+///
+/// Note that QKeyEvent starts with isAccepted() == true, so you do not
+/// need to call QKeyEvent::accept() - just do not call the base class
+/// implementation if you act upon the key.
+///
+/// **See also:** keyPressEvent()
+/// QEvent::ignore()
+/// setFocusPolicy()
+/// focusInEvent()
+/// focusOutEvent()
+/// event()
+/// QKeyEvent
+
+unsafe extern "C" fn widget_key_release_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &KeyEventType) + 'static) = transmute(func);
+    let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_key_release_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&KeyEventType) + 'static) = transmute(func);
+    let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// keyboard focus events (focus received) for the widget. The event
+/// is passed in the *event* parameter
+///
+/// A widget normally must setFocusPolicy() to something other than
+/// Qt::NoFocus in order to receive focus events. (Note that the
+/// application programmer can call setFocus() on any widget, even
+/// those that do not normally accept focus.)
+///
+/// The default implementation updates the widget (except for windows
+/// that do not specify a focusPolicy()).
+///
+/// **See also:** focusOutEvent()
+/// setFocusPolicy()
+/// keyPressEvent()
+/// keyReleaseEvent()
+/// event()
+/// QFocusEvent
+
+unsafe extern "C" fn widget_focus_in_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &FocusEventType) + 'static) = transmute(func);
+    let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_focus_in_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&FocusEventType) + 'static) = transmute(func);
+    let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// keyboard focus events (focus lost) for the widget. The events is
+/// passed in the *event* parameter.
+///
+/// A widget normally must setFocusPolicy() to something other than
+/// Qt::NoFocus in order to receive focus events. (Note that the
+/// application programmer can call setFocus() on any widget, even
+/// those that do not normally accept focus.)
+///
+/// The default implementation updates the widget (except for windows
+/// that do not specify a focusPolicy()).
+///
+/// **See also:** focusInEvent()
+/// setFocusPolicy()
+/// keyPressEvent()
+/// keyReleaseEvent()
+/// event()
+/// QFocusEvent
+
+unsafe extern "C" fn widget_focus_out_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &FocusEventType) + 'static) = transmute(func);
+    let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_focus_out_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&FocusEventType) + 'static) = transmute(func);
+    let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget enter events which are passed in the *event* parameter.
+///
+/// An event is sent to the widget when the mouse cursor enters the
+/// widget.
+///
+/// **See also:** leaveEvent()
+/// mouseMoveEvent()
+/// event()
+
+unsafe extern "C" fn widget_enter_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_enter_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget leave events which are passed in the *event* parameter.
+///
+/// A leave event is sent to the widget when the mouse cursor leaves
+/// the widget.
+///
+/// **See also:** enterEvent()
+/// mouseMoveEvent()
+/// event()
+
+unsafe extern "C" fn widget_leave_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_leave_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive paint
+/// events passed in *event.*
+///
+/// A paint event is a request to repaint all or part of a widget. It can
+/// happen for one of the following reasons:
+///
+/// * repaint() or update() was invoked,
+/// * the widget was obscured and has now been uncovered, or
+/// * many other reasons.
+///
+/// Many widgets can simply repaint their entire surface when asked to, but
+/// some slow widgets need to optimize by painting only the requested region:
+/// QPaintEvent::region(). This speed optimization does not change the result,
+/// as painting is clipped to that region during event processing. QListView
+/// and QTableView do this, for example.
+///
+/// Qt also tries to speed up painting by merging multiple paint events into
+/// one. When update() is called several times or the window system sends
+/// several paint events, Qt merges these events into one event with a larger
+/// region (see QRegion::united()). The repaint() function does not permit this
+/// optimization, so we suggest using update() whenever possible.
+///
+/// When the paint event occurs, the update region has normally been erased, so
+/// you are painting on the widget's background.
+///
+/// The background can be set using setBackgroundRole() and setPalette().
+///
+/// Since Qt 4.0, QWidget automatically double-buffers its painting, so there
+/// is no need to write double-buffering code in paintEvent() to avoid flicker.
+///
+/// **Note**: Generally, you should refrain from calling update() or repaint()
+/// **inside** a paintEvent(). For example, calling update() or repaint() on
+/// children inside a paintEvent() results in undefined behavior; the child may
+/// or may not get a paint event.
+///
+/// **Warning**: If you are using a custom paint engine without Qt's backingstore,
+/// Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
+/// never be called; the backingstore will be used instead.
+///
+/// **See also:** event()
+/// repaint()
+/// update()
+/// QPainter
+/// QPixmap
+/// QPaintEvent
+/// {Analog Clock Example}
 
 unsafe extern "C" fn widget_paint_trampoline_ud<T>(
     self_c: *const c_void,
@@ -261,43 +2752,1595 @@ unsafe extern "C" fn widget_paint_trampoline(
     f(&obj_event_0);
 }
 
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget move events which are passed in the *event* parameter.
+/// When the widget receives this event, it is already at the new
+/// position.
+///
+/// The old position is accessible through QMoveEvent::oldPos().
+///
+/// **See also:** resizeEvent()
+/// event()
+/// move()
+/// QMoveEvent
+
+unsafe extern "C" fn widget_move_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MoveEventType) + 'static) = transmute(func);
+    let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_move_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&MoveEventType) + 'static) = transmute(func);
+    let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget resize events which are passed in the *event* parameter.
+/// When resizeEvent() is called, the widget already has its new
+/// geometry. The old size is accessible through
+/// QResizeEvent::oldSize().
+///
+/// The widget will be erased and receive a paint event immediately
+/// after processing the resize event. No drawing need be (or should
+/// be) done inside this handler.
+///
+/// **See also:** moveEvent()
+/// event()
+/// resize()
+/// QResizeEvent
+/// paintEvent()
+/// {Scribble Example}
+
+unsafe extern "C" fn widget_resize_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ResizeEventType) + 'static) = transmute(func);
+    let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_resize_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&ResizeEventType) + 'static) = transmute(func);
+    let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called with the given *event* when Qt receives a window
+/// close request for a top-level widget from the window system.
+///
+/// By default, the event is accepted and the widget is closed. You can reimplement
+/// this function to change the way the widget responds to window close requests.
+/// For example, you can prevent the window from closing by calling [ignore()](QEvent::)
+///
+/// on all events.
+///
+/// Main window applications typically use reimplementations of this function to check
+/// whether the user's work has been saved and ask for permission before closing.
+/// For example, the [Application Example](Application%20Example)
+/// uses a helper function to determine whether
+/// or not to close the window:
+///
+/// **See also:** event()
+/// hide()
+/// close()
+/// QCloseEvent
+/// {Application Example}
+
+unsafe extern "C" fn widget_close_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &CloseEventType) + 'static) = transmute(func);
+    let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_close_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&CloseEventType) + 'static) = transmute(func);
+    let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive widget context menu events.
+///
+/// The handler is called when the widget's [contextMenuPolicy](contextMenuPolicy)
+/// is
+/// Qt::DefaultContextMenu.
+///
+/// The default implementation ignores the context event.
+/// See the [QContextMenuEvent](QContextMenuEvent)
+/// documentation for more details.
+///
+/// **See also:** event()
+/// QContextMenuEvent
+/// customContextMenuRequested()
+
+unsafe extern "C" fn widget_context_menu_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ContextMenuEventType) + 'static) = transmute(func);
+    let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_context_menu_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&ContextMenuEventType) + 'static) = transmute(func);
+    let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive tablet events for the widget.
+///
+/// If you reimplement this handler, it is very important that you
+/// [ignore()](QEvent)
+/// the event if you do not handle
+/// it, so that the widget's parent can interpret it.
+///
+/// The default implementation ignores the event.
+///
+/// If tablet tracking is switched off, tablet move events only occur if the
+/// stylus is in contact with the tablet, or at least one stylus button is
+/// pressed, while the stylus is being moved. If tablet tracking is switched on,
+/// tablet move events occur even while the stylus is hovering in proximity of
+/// the tablet, with no buttons pressed.
+///
+/// **See also:** QEvent::ignore()
+/// QEvent::accept()
+/// event()
+/// setTabletTracking()
+/// QTabletEvent
+
+unsafe extern "C" fn widget_tablet_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &TabletEventType) + 'static) = transmute(func);
+    let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_tablet_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&TabletEventType) + 'static) = transmute(func);
+    let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called with the given *event* whenever the
+/// widget's actions are changed.
+///
+/// **See also:** addAction()
+/// insertAction()
+/// removeAction()
+/// actions()
+/// QActionEvent
+
+unsafe extern "C" fn widget_action_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ActionEventType) + 'static) = transmute(func);
+    let obj_event_0 = ActionEvent::new_from_temporary(*(event as *const RUActionEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_action_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&ActionEventType) + 'static) = transmute(func);
+    let obj_event_0 = ActionEvent::new_from_temporary(*(event as *const RUActionEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called when a drag is in progress and the
+/// mouse enters this widget. The event is passed in the *event* parameter.
+///
+/// If the event is ignored, the widget won't receive any [drag
+/// move events](dragMoveEvent())
+///
+///
+/// See the [Drag-and-drop documentation](dnd.html)
+/// for an
+/// overview of how to provide drag-and-drop in your application.
+///
+/// **See also:** QDrag
+/// QDragEnterEvent
+
+unsafe extern "C" fn widget_drag_enter_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &DragEnterEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_drag_enter_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&DragEnterEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called if a drag is in progress, and when
+/// any of the following conditions occur: the cursor enters this widget,
+/// the cursor moves within this widget, or a modifier key is pressed on
+/// the keyboard while this widget has the focus. The event is passed
+/// in the *event* parameter.
+///
+/// See the [Drag-and-drop documentation](dnd.html)
+/// for an
+/// overview of how to provide drag-and-drop in your application.
+///
+/// **See also:** QDrag
+/// QDragMoveEvent
+
+unsafe extern "C" fn widget_drag_move_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &DragMoveEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_drag_move_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&DragMoveEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called when a drag is in progress and the
+/// mouse leaves this widget. The event is passed in the *event*
+/// parameter.
+///
+/// See the [Drag-and-drop documentation](dnd.html)
+/// for an
+/// overview of how to provide drag-and-drop in your application.
+///
+/// **See also:** QDrag
+/// QDragLeaveEvent
+
+unsafe extern "C" fn widget_drag_leave_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &DragLeaveEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_drag_leave_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&DragLeaveEventType) + 'static) = transmute(func);
+    let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler is called when the drag is dropped on this
+/// widget. The event is passed in the *event* parameter.
+///
+/// See the [Drag-and-drop documentation](dnd.html)
+/// for an
+/// overview of how to provide drag-and-drop in your application.
+///
+/// **See also:** QDrag
+/// QDropEvent
+
+unsafe extern "C" fn widget_drop_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &DropEventType) + 'static) = transmute(func);
+    let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_drop_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&DropEventType) + 'static) = transmute(func);
+    let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget show events which are passed in the *event* parameter.
+///
+/// Non-spontaneous show events are sent to widgets immediately
+/// before they are shown. The spontaneous show events of windows are
+/// delivered afterwards.
+///
+/// Note: A widget receives spontaneous show and hide events when its
+/// mapping status is changed by the window system, e.g. a spontaneous
+/// hide event when the user minimizes the window, and a spontaneous
+/// show event when the window is restored again. After receiving a
+/// spontaneous hide event, a widget is still considered visible in
+/// the sense of isVisible().
+///
+/// **See also:** visible
+/// event()
+/// QShowEvent
+
+unsafe extern "C" fn widget_show_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ShowEventType) + 'static) = transmute(func);
+    let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_show_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&ShowEventType) + 'static) = transmute(func);
+    let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented in a subclass to receive
+/// widget hide events. The event is passed in the *event* parameter.
+///
+/// Hide events are sent to widgets immediately after they have been
+/// hidden.
+///
+/// Note: A widget receives spontaneous show and hide events when its
+/// mapping status is changed by the window system, e.g. a spontaneous
+/// hide event when the user minimizes the window, and a spontaneous
+/// show event when the window is restored again. After receiving a
+/// spontaneous hide event, a widget is still considered visible in
+/// the sense of isVisible().
+///
+/// **See also:** visible
+/// event()
+/// QHideEvent
+
+unsafe extern "C" fn widget_hide_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &HideEventType) + 'static) = transmute(func);
+    let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+unsafe extern "C" fn widget_hide_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&HideEventType) + 'static) = transmute(func);
+    let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
+    f(&obj_event_0);
+}
+
+///
+/// This event handler can be reimplemented to handle state changes.
+///
+/// The state being changed in this event can be retrieved through the *event*
+/// supplied.
+///
+/// Change events include: QEvent::ToolBarChange,
+/// QEvent::ActivationChange, QEvent::EnabledChange, QEvent::FontChange,
+/// QEvent::StyleChange, QEvent::PaletteChange,
+/// QEvent::WindowTitleChange, QEvent::IconTextChange,
+/// QEvent::ModifiedChange, QEvent::MouseTrackingChange,
+/// QEvent::ParentChange, QEvent::WindowStateChange,
+/// QEvent::LanguageChange, QEvent::LocaleChange,
+/// QEvent::LayoutDirectionChange, QEvent::ReadOnlyChange.
+///
+
+unsafe extern "C" fn widget_change_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+unsafe extern "C" fn widget_change_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
+    f(&obj_arg0_0);
+}
+
+///
+/// Initializes the *painter* pen, background and font to the same as
+/// the given widget's. This function is called automatically when the
+/// painter is opened on a QWidget.
+
+unsafe extern "C" fn widget_init_painter_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    painter: *const RUBase,
+) {
+    let f: &&(Fn(&T, &PainterType) + 'static) = transmute(func);
+    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
+    let data = self_c as *const T;
+    f(&*data, &obj_painter_0);
+}
+
+unsafe extern "C" fn widget_init_painter_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    painter: *const RUBase,
+) {
+    let f: &&(Fn(&PainterType) + 'static) = transmute(func);
+    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
+    f(&obj_painter_0);
+}
+
+unsafe extern "C" fn widget_redirected_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    offset: *const RUBase,
+) -> RUPaintDevice {
+    let f: &&(Fn(&T, &PointType) + 'static) = transmute(func);
+    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
+    let data = self_c as *const T;
+    f(&*data, &obj_offset_0);
+}
+
+unsafe extern "C" fn widget_redirected_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    offset: *const RUBase,
+) -> RUPaintDevice {
+    let f: &&(Fn(&PointType) + 'static) = transmute(func);
+    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
+    f(&obj_offset_0);
+}
+
+unsafe extern "C" fn widget_shared_painter_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUPainter {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+unsafe extern "C" fn widget_shared_painter_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> RUPainter {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
+///
+/// This event handler, for event *event,* can be reimplemented in a
+/// subclass to receive Input Method composition events. This handler
+/// is called when the state of the input method changes.
+///
+/// Note that when creating custom text editing widgets, the
+/// Qt::WA_InputMethodEnabled window attribute must be set explicitly
+/// (using the setAttribute() function) in order to receive input
+/// method events.
+///
+/// The default implementation calls event->ignore(), which rejects the
+/// Input Method event. See the [QInputMethodEvent](QInputMethodEvent)
+/// documentation for more
+/// details.
+///
+/// **See also:** event()
+/// QInputMethodEvent
+
+unsafe extern "C" fn widget_input_method_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &InputMethodEventType) + 'static) = transmute(func);
+    let obj_arg0_0 = InputMethodEvent::new_from_temporary(*(arg0 as *const RUInputMethodEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+unsafe extern "C" fn widget_input_method_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&InputMethodEventType) + 'static) = transmute(func);
+    let obj_arg0_0 = InputMethodEvent::new_from_temporary(*(arg0 as *const RUInputMethodEvent));
+    f(&obj_arg0_0);
+}
+
+///
+/// This method is only relevant for input widgets. It is used by the
+/// input method to query a set of properties of the widget to be
+/// able to support complex input method operations as support for
+/// surrounding text and reconversions.
+///
+/// *query* specifies which property is queried.
+///
+/// **See also:** inputMethodEvent()
+/// QInputMethodEvent
+/// QInputMethodQueryEvent
+/// inputMethodHints
+
+unsafe extern "C" fn widget_input_method_query_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> RUVariant {
+    let f: &&(Fn(&T, InputMethodQuery) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+unsafe extern "C" fn widget_input_method_query_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> RUVariant {
+    let f: &&(Fn(InputMethodQuery) + 'static) = transmute(func);
+
+    f();
+}
+
+///
+/// Finds a new widget to give the keyboard focus to, as appropriate
+/// for Tab and Shift+Tab, and returns `true` if it can find a new
+/// widget, or false if it can't.
+///
+/// If *next* is true, this function searches forward, if *next*
+/// is false, it searches backward.
+///
+/// Sometimes, you will want to reimplement this function. For
+/// example, a web browser might reimplement it to move its forward or backward, and call
+/// focusNextPrevChild() only when it reaches the last or
+/// first link on the .
+///
+/// Child widgets call focusNextPrevChild() on their parent widgets,
+/// but only the window that contains the child widgets decides where
+/// to redirect focus. By reimplementing this function for an object,
+/// you thus gain control of focus traversal for all child widgets.
+///
+/// **See also:** focusNextChild()
+/// focusPreviousChild()
+
+unsafe extern "C" fn widget_focus_next_prev_child_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    next: bool,
+) -> bool {
+    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, next);
+}
+
+unsafe extern "C" fn widget_focus_next_prev_child_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    next: bool,
+) -> bool {
+    let f: &&(Fn(bool) + 'static) = transmute(func);
+
+    f(next);
+}
+
 pub trait WidgetType<'a> {
-    ///     Shows the widget and its child widgets.
     ///
-    ///     This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
-    ///     depending on the platform's default behavior for the window flags.
+    /// Returns the window system identifier of the widget.
     ///
-    ///      raise(), showEvent(), hide(), setVisible(), showMinimized(), showMaximized(),
-    ///     showNormal(), isVisible(), windowFlags()
-
-    fn show(&self) -> &Self {
+    /// Portable in principle, but if you use it you are probably about to
+    /// do something non-portable. Be careful.
+    ///
+    /// If a widget is non-native (alien) and winId() is invoked on it, that widget
+    /// will be provided a native handle.
+    ///
+    /// This value may change at run-time. An event with type QEvent::WinIdChange
+    /// will be sent to the widget following a change in window system identifier.
+    ///
+    /// **See also:** find()
+    fn win_id(&self) -> WId {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).show)(obj_data);
+            let ret_val = ((*funcs).win_id)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = WId::new_from_rc(t);
+            } else {
+                ret_val = WId::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    fn create_win_id(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).create_win_id)(obj_data);
         }
         self
     }
-    ///     Hides the widget. This function is equivalent to
-    ///     setVisible(false).
-    ///
-    ///     you are working with QDialog or its subclasses and you invoke
-    ///     the show() function after this function, the dialog will be displayed in
-    ///     its original position.
-    ///
-    ///     hideEvent(), isHidden(), show(), setVisible(), isVisible(), close()
-
-    fn hide(&self) -> &Self {
+    fn internal_win_id(&self) -> WId {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).hide)(obj_data);
+            let ret_val = ((*funcs).internal_win_id)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = WId::new_from_rc(t);
+            } else {
+                ret_val = WId::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the effective window system identifier of the widget, i.e. the
+    /// native parent's window system identifier.
+    ///
+    /// If the widget is native, this function returns the native widget ID.
+    /// Otherwise, the window ID of the first native parent widget, i.e., the
+    /// top-level widget that contains this widget, is returned.
+    ///
+    /// **Note**: We recommend that you do not store this value as it is likely to
+    /// change at run-time.
+    ///
+    /// **See also:** nativeParentWidget()
+    fn effective_win_id(&self) -> WId {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).effective_win_id)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = WId::new_from_rc(t);
+            } else {
+                ret_val = WId::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// The style sheet contains a textual description of customizations to the
+    /// widget's style, as described in the [Qt Style Sheets](Qt%20Style%20Sheets)
+    /// document.
+    ///
+    /// Since Qt 4.5, Qt style sheets fully supports MacOS .
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** setStyle()
+    /// QApplication::styleSheet
+    /// {Qt Style Sheets}
+    ///
+    /// **See also:** QWidget::setStyle()
+    /// QApplication::setStyle()
+    /// QApplication::style()
+    fn style(&self) -> Option<Style> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style::new_from_rc(t);
+            } else {
+                ret_val = Style::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Sets the widget's GUI style to *style.* The ownership of the style
+    /// object is not transferred.
+    ///
+    /// If no style is set, the widget uses the application's style,
+    /// QApplication::style() instead.
+    ///
+    /// Setting a widget's style has no effect on existing or future child
+    /// widgets.
+    ///
+    /// **Warning**: This function is particularly useful for demonstration
+    /// purposes, where you want to show Qt's styling capabilities. Real
+    /// applications should avoid it and use one consistent GUI style
+    /// instead.
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** style()
+    /// QStyle
+    /// QApplication::style()
+    /// QApplication::setStyle()
+    fn set_style<S: StyleType<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_style_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_style)(obj_data, obj_arg0_1);
         }
         self
     }
-    ///     Sets both the minimum and maximum width of the widget to \a w
-    ///     without changing the heights. Provided for convenience.
     ///
-    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
+    /// Use isWindow() instead.
+    fn is_top_level(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_top_level)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the widget is an independent window, otherwise
+    /// returns `false.`
+    ///
+    /// A window is a widget that isn't visually the child of any other
+    /// widget and that usually has a frame and a
+    /// [window title](QWidget::setWindowTitle())
+    ///
+    ///
+    /// A window can have a [parent widget](QWidget::parentWidget())
+    ///
+    /// It will then be grouped with its parent and deleted when the
+    /// parent is deleted, minimized when the parent is minimized etc. If
+    /// supported by the window manager, it will also have a common
+    /// taskbar entry with its parent.
+    ///
+    /// QDialog and QMainWindow widgets are by default windows, even if a
+    /// parent widget is specified in the constructor. This behavior is
+    /// specified by the Qt::Window flag.
+    ///
+    /// **See also:** window()
+    /// isModal()
+    /// parentWidget()
+    fn is_window(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window)(obj_data);
+            ret_val
+        }
+    }
+    fn is_modal(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_modal)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// This property only makes sense for windows. A modal widget
+    /// prevents widgets in other windows from getting input. The value of
+    /// this property controls which windows are blocked when the widget
+    /// is visible. Changing this property while the window is visible has
+    /// no effect; you must hide() the widget first, then show() it again.
+    ///
+    /// By default, this property is Qt::NonModal.
+    ///
+    /// **See also:** isWindow()
+    /// QWidget::modal
+    /// QDialog
+    fn window_modality(&self) -> WindowModality {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_modality)(obj_data);
+            let ret_val = { transmute::<i32, WindowModality>(ret_val) };
+            ret_val
+        }
+    }
+    fn set_window_modality(&self, window_modality: WindowModality) -> &Self {
+        let enum_window_modality_1 = window_modality as i32;
 
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_modality)(obj_data, enum_window_modality_1);
+        }
+        self
+    }
+    ///
+    /// Returns `true` if this widget would become enabled if *ancestor* is
+    /// enabled; otherwise returns `false.`
+    ///
+    /// This is the case if neither the widget itself nor every parent up
+    /// to but excluding *ancestor* has been explicitly disabled.
+    ///
+    /// isEnabledTo(0) returns false if this widget or any if its ancestors
+    /// was explicitly disabled.
+    ///
+    /// The word ancestor here means a parent widget within the same window.
+    ///
+    /// Therefore isEnabledTo(0) stops at this widget's window, unlike
+    /// isEnabled() which also takes parent windows into considerations.
+    ///
+    /// **See also:** setEnabled()
+    /// enabled
+    ///
+    fn is_enabled(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_enabled)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if this widget would become enabled if *ancestor* is
+    /// enabled; otherwise returns `false.`
+    ///
+    /// This is the case if neither the widget itself nor every parent up
+    /// to but excluding *ancestor* has been explicitly disabled.
+    ///
+    /// isEnabledTo(0) returns false if this widget or any if its ancestors
+    /// was explicitly disabled.
+    ///
+    /// The word ancestor here means a parent widget within the same window.
+    ///
+    /// Therefore isEnabledTo(0) stops at this widget's window, unlike
+    /// isEnabled() which also takes parent windows into considerations.
+    ///
+    /// **See also:** setEnabled()
+    /// enabled
+    ///
+    /// This function is deprecated. It is equivalent to isEnabled()
+    fn is_enabled_to<W: WidgetType<'a>>(&self, arg0: &W) -> bool {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_enabled_to)(obj_data, obj_arg0_1);
+            ret_val
+        }
+    }
+    fn set_enabled(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_enabled)(obj_data, arg0);
+        }
+        self
+    }
+    ///
+    /// Disables widget input events if *disable* is true; otherwise
+    /// enables input events.
+    ///
+    /// See the [enabled](enabled)
+    /// documentation for more information.
+    ///
+    /// **See also:** isEnabledTo()
+    /// QKeyEvent
+    /// QMouseEvent
+    /// changeEvent()
+    fn set_disabled(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_disabled)(obj_data, arg0);
+        }
+        self
+    }
+    fn set_window_modified(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_modified)(obj_data, arg0);
+        }
+        self
+    }
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// By default, this property has a value of 0.
+    ///
+    /// **See also:** frameGeometry
+    ///
+    /// pos
+    fn x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).x)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// By default, this property has a value of 0.
+    ///
+    /// **See also:** frameGeometry
+    ///
+    /// pos
+    fn y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).y)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If the widget is a window, the position is that of the widget on
+    /// the desktop, including its frame.
+    ///
+    /// When changing the position, the widget, if visible, receives a
+    /// move event (moveEvent()) immediately. If the widget is not
+    /// currently visible, it is guaranteed to receive an event before it
+    /// is shown.
+    ///
+    /// By default, this property contains a position that refers to the
+    /// origin.
+    ///
+    /// **Warning**: Calling move() or setGeometry() inside moveEvent() can
+    /// lead to infinite recursion.
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// **See also:** frameGeometry
+    /// size
+    /// x()
+    /// y()
+    fn pos(&self) -> Point {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).pos)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// By default, this property contains a value that depends on the user's
+    /// platform and screen geometry.
+    fn frame_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).frame_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// If the widget is visible when it is being resized, it receives a resize event
+    /// (resizeEvent()) immediately. If the widget is not currently
+    /// visible, it is guaranteed to receive an event before it is shown.
+    ///
+    /// The size is adjusted if it lies outside the range defined by
+    /// minimumSize() and maximumSize().
+    ///
+    /// By default, this property contains a value that depends on the user's
+    /// platform and screen geometry.
+    ///
+    /// **Warning**: Calling resize() or setGeometry() inside resizeEvent() can
+    /// lead to infinite recursion.
+    ///
+    /// **Note**: Setting the size to `QSize(0, 0)` will cause the widget to not
+    /// appear on screen. This also applies to windows.
+    ///
+    /// **See also:** pos
+    /// geometry
+    /// minimumSize
+    /// maximumSize
+    /// resizeEvent()
+    /// adjustSize()
+    ///
+    /// When the user resizes the window, the size will move in steps of
+    /// sizeIncrement().width() pixels horizontally and
+    /// sizeIncrement.height() pixels vertically, with baseSize() as the
+    /// basis. Preferred widget sizes are for non-negative integers *i*
+    /// and *j:*
+    ///
+    /// Note that while you can set the size increment for all widgets, it
+    /// only affects windows.
+    ///
+    /// By default, this property contains a size with zero width and height.
+    ///
+    /// **Warning**: The size increment has no effect under Windows, and may
+    /// be disregarded by the window manager on X11.
+    ///
+    /// **See also:** size
+    /// minimumSize
+    /// maximumSize
+    ///
+    /// If the value of this property is an invalid size, no size is
+    /// recommended.
+    ///
+    /// The default implementation of sizeHint() returns an invalid size
+    /// if there is no layout for this widget, and returns the layout's
+    /// preferred size otherwise.
+    ///
+    /// **See also:** QSize::isValid()
+    /// minimumSizeHint()
+    /// sizePolicy()
+    /// setMinimumSize()
+    /// updateGeometry()
+    ///
+    /// If there is a QLayout that manages this widget's children, the
+    /// size policy specified by that layout is used. If there is no such
+    /// QLayout, the result of this function is used.
+    ///
+    /// The default policy is Preferred/Preferred, which means that the
+    /// widget can be freely resized, but prefers to be the size
+    /// sizeHint() returns. Button-like widgets set the size policy to
+    /// specify that they may stretch horizontally, but are fixed
+    /// vertically. The same applies to lineedit controls (such as
+    /// QLineEdit, QSpinBox or an editable QComboBox) and other
+    /// horizontally orientated widgets (such as QProgressBar).
+    /// QToolButton's are normally square, so they allow growth in both
+    /// directions. Widgets that support different directions (such as
+    /// QSlider, QScrollBar or QHeader) specify stretching in the
+    /// respective direction only. Widgets that can provide scroll bars
+    /// (usually subclasses of QScrollArea) tend to specify that they can
+    /// use additional space, and that they can make do with less than
+    /// sizeHint().
+    ///
+    /// **See also:** sizeHint()
+    /// QLayout
+    /// QSizePolicy
+    /// updateGeometry()
+    fn size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// **Note**: Do not use this function to find the width of a screen on
+    /// a [multiple screen desktop](QDesktopWidget)
+    /// . Read
+    /// [this note](QDesktopWidget%23Screen%20Geometry)
+    /// for details.
+    ///
+    /// By default, this property contains a value that depends on the user's
+    /// platform and screen geometry.
+    ///
+    /// **See also:** geometry
+    /// height
+    /// size
+    fn width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).width)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// **Note**: Do not use this function to find the height of a screen
+    /// on a [multiple screen desktop](QDesktopWidget)
+    /// . Read
+    /// [this note](QDesktopWidget%23Screen%20Geometry)
+    /// for details.
+    ///
+    /// By default, this property contains a value that depends on the user's
+    /// platform and screen geometry.
+    ///
+    /// **See also:** geometry
+    /// width
+    /// size
+    ///
+    /// Returns the preferred height for this widget, given the width *w.*
+    ///
+    /// If this widget has a layout, the default implementation returns
+    /// the layout's preferred height. if there is no layout, the default
+    /// implementation returns -1 indicating that the preferred height
+    /// does not depend on the width.
+    fn height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// The rect property equals QRect(0, 0, width(), height()).
+    ///
+    /// See the [Window Geometry](Window%20Geometry)
+    /// documentation for an overview of geometry
+    /// issues with windows.
+    ///
+    /// By default, this property contains a value that depends on the user's
+    /// platform and screen geometry.
+    ///
+    /// **See also:** size
+    fn rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Hidden children are excluded.
+    ///
+    /// By default, for a widget with no children, this property contains a
+    /// rectangle with zero width and height located at the origin.
+    ///
+    /// **See also:** childrenRegion()
+    /// geometry()
+    fn children_rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).children_rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Hidden children are excluded.
+    ///
+    /// By default, for a widget with no children, this property contains an
+    /// empty region.
+    ///
+    /// **See also:** childrenRect()
+    /// geometry()
+    /// mask()
+    fn children_region(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).children_region)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// The widget cannot be resized to a smaller size than the minimum
+    /// widget size. The widget's size is forced to the minimum size if
+    /// the current size is smaller.
+    ///
+    /// The minimum size set by this function will override the minimum size
+    /// defined by QLayout. In order to unset the minimum size, use a
+    /// value of `QSize(0, 0)` .
+    ///
+    /// By default, this property contains a size with zero width and height.
+    ///
+    /// **See also:** minimumWidth
+    /// minimumHeight
+    /// maximumSize
+    /// sizeIncrement
+    ///
+    /// If the value of this property is an invalid size, no minimum size
+    /// is recommended.
+    ///
+    /// The default implementation of minimumSizeHint() returns an invalid
+    /// size if there is no layout for this widget, and returns the
+    /// layout's minimum size otherwise. Most built-in widgets reimplement
+    /// minimumSizeHint().
+    ///
+    /// [QLayout](QLayout)
+    /// will never resize a widget to a size smaller than the
+    /// minimum size hint unless minimumSize() is set or the size policy is
+    /// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
+    /// size hint will be ignored.
+    ///
+    /// **See also:** QSize::isValid()
+    /// resize()
+    /// setMinimumSize()
+    /// sizePolicy()
+    fn minimum_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// The widget cannot be resized to a larger size than the maximum
+    /// widget size.
+    ///
+    /// By default, this property contains a size in which both width and height
+    /// have values of 16777215.
+    ///
+    /// **Note**: The definition of the `QWIDGETSIZE_MAX` macro limits the maximum size
+    /// of widgets.
+    ///
+    /// **See also:** maximumWidth
+    /// maximumHeight
+    /// minimumSize
+    /// sizeIncrement
+    fn maximum_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// This property corresponds to the width held by the [minimumSize](minimumSize)
+    /// property.
+    ///
+    /// By default, this property has a value of 0.
+    ///
+    /// **See also:** minimumSize
+    /// minimumHeight
+    fn minimum_width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_width)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// This property corresponds to the height held by the [minimumSize](minimumSize)
+    /// property.
+    ///
+    /// By default, this property has a value of 0.
+    ///
+    /// **See also:** minimumSize
+    /// minimumWidth
+    fn minimum_height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_height)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// This property corresponds to the width held by the [maximumSize](maximumSize)
+    /// property.
+    ///
+    /// By default, this property contains a value of 16777215.
+    ///
+    /// **Note**: The definition of the `QWIDGETSIZE_MAX` macro limits the maximum size
+    /// of widgets.
+    ///
+    /// **See also:** maximumSize
+    /// maximumHeight
+    fn maximum_width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_width)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// This property corresponds to the height held by the [maximumSize](maximumSize)
+    /// property.
+    ///
+    /// By default, this property contains a value of 16777215.
+    ///
+    /// **Note**: The definition of the `QWIDGETSIZE_MAX` macro limits the maximum size
+    /// of widgets.
+    ///
+    /// **See also:** maximumSize
+    /// maximumWidth
+    fn maximum_height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_height)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the minimum width to *minw* and the minimum height to *minh.*
+    fn set_minimum_size<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    /// Sets the maximum width to *maxw* and the maximum height
+    fn set_maximum_size(&self, maxw: i32, maxh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_size)(obj_data, maxw, maxh);
+        }
+        self
+    }
+    fn set_minimum_width(&self, minw: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_width)(obj_data, minw);
+        }
+        self
+    }
+    fn set_minimum_height(&self, minh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_height)(obj_data, minh);
+        }
+        self
+    }
+    fn set_maximum_width(&self, maxw: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_width)(obj_data, maxw);
+        }
+        self
+    }
+    fn set_maximum_height(&self, maxh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_height)(obj_data, maxh);
+        }
+        self
+    }
+    ///
+    /// When the user resizes the window, the size will move in steps of
+    /// sizeIncrement().width() pixels horizontally and
+    /// sizeIncrement.height() pixels vertically, with baseSize() as the
+    /// basis. Preferred widget sizes are for non-negative integers *i*
+    /// and *j:*
+    ///
+    /// Note that while you can set the size increment for all widgets, it
+    /// only affects windows.
+    ///
+    /// By default, this property contains a size with zero width and height.
+    ///
+    /// **Warning**: The size increment has no effect under Windows, and may
+    /// be disregarded by the window manager on X11.
+    ///
+    /// **See also:** size
+    /// minimumSize
+    /// maximumSize
+    fn size_increment(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_increment)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// Sets the x (width) size increment to *w* and the y (height) size
+    /// increment to *h.*
+    fn set_size_increment<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_increment)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// **Overloads**
+    /// Sets the x (width) size increment to *w* and the y (height) size
+    /// increment to *h.*
+    fn set_size_increment(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_increment)(obj_data, w, h);
+        }
+        self
+    }
+    ///
+    /// The base size is used to calculate a proper widget size if the
+    /// widget defines sizeIncrement().
+    ///
+    /// By default, for a newly-created widget, this property contains a size with
+    /// zero width and height.
+    ///
+    /// **See also:** setSizeIncrement()
+    fn base_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).base_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
+    /// the widgets base size to width *basew* and height *baseh.*
+    fn set_base_size<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_base_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// **Overloads**
+    /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
+    /// the widgets base size to width *basew* and height *baseh.*
+    fn set_base_size(&self, basew: i32, baseh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_base_size)(obj_data, basew, baseh);
+        }
+        self
+    }
+    ///
+    /// Sets both the minimum and maximum sizes of the widget to *s,*
+    /// thereby preventing it from ever growing or shrinking.
+    ///
+    /// This will override the default size constraints set by QLayout.
+    ///
+    /// To remove constraints, set the size to QWIDGETSIZE_MAX.
+    ///
+    /// Alternatively, if you want the widget to have a
+    /// fixed size based on its contents, you can call
+    /// QLayout::setSizeConstraint(QLayout::SetFixedSize);
+    ///
+    /// **See also:** maximumSize
+    /// minimumSize
+    ///
+    /// **Overloads**
+    /// Sets the width of the widget to *w* and the height to *h.*
+    fn set_fixed_size(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_size)(obj_data, w, h);
+        }
+        self
+    }
+    ///
+    /// Sets both the minimum and maximum width of the widget to *w*
+    /// without changing the heights. Provided for convenience.
+    ///
+    /// **See also:** sizeHint()
+    /// minimumSize()
+    /// maximumSize()
+    /// setFixedSize()
     fn set_fixed_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -305,11 +4348,14 @@ pub trait WidgetType<'a> {
         }
         self
     }
-    ///     Sets both the minimum and maximum heights of the widget to h
-    ///     without changing the widths. Provided for convenience.
     ///
-    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
-
+    /// Sets both the minimum and maximum heights of the widget to *h*
+    /// without changing the widths. Provided for convenience.
+    ///
+    /// **See also:** sizeHint()
+    /// minimumSize()
+    /// maximumSize()
+    /// setFixedSize()
     fn set_fixed_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -317,16 +4363,3347 @@ pub trait WidgetType<'a> {
         }
         self
     }
-    /// Resize doc
+    ///
+    /// Translates the widget coordinate *pos* to global screen
+    /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
+    /// the global coordinates of the top-left pixel of the widget.
+    ///
+    /// **See also:** mapFromGlobal()
+    /// mapTo()
+    /// mapToParent()
+    fn map_to_global<P: PointType<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
-    fn resize(&self, width: i32, height: i32) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).resize)(obj_data, width, height);
+            let ret_val = ((*funcs).map_to_global)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Translates the global screen coordinate *pos* to widget
+    /// coordinates.
+    ///
+    /// **See also:** mapToGlobal()
+    /// mapFrom()
+    /// mapFromParent()
+    fn map_from_global<P: PointType<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from_global)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Translates the widget coordinate *pos* to a coordinate in the
+    /// parent widget.
+    ///
+    /// Same as mapToGlobal() if the widget has no parent.
+    ///
+    /// **See also:** mapFromParent()
+    /// mapTo()
+    /// mapToGlobal()
+    /// underMouse()
+    fn map_to_parent<P: PointType<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_to_parent)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Translates the parent widget coordinate *pos* to widget
+    /// coordinates.
+    ///
+    /// Same as mapFromGlobal() if the widget has no parent.
+    ///
+    /// **See also:** mapToParent()
+    /// mapFrom()
+    /// mapFromGlobal()
+    /// underMouse()
+    fn map_from_parent<P: PointType<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from_parent)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Translates the widget coordinate *pos* to the coordinate system
+    /// of *parent.* The *parent* must not be 0 and must be a parent
+    /// of the calling widget.
+    ///
+    /// **See also:** mapFrom()
+    /// mapToParent()
+    /// mapToGlobal()
+    /// underMouse()
+    ///
+    /// Translates the widget coordinate *pos* to a coordinate in the
+    /// parent widget.
+    ///
+    /// Same as mapToGlobal() if the widget has no parent.
+    ///
+    /// **See also:** mapFromParent()
+    /// mapTo()
+    /// mapToGlobal()
+    /// underMouse()
+    ///
+    /// Translates the widget coordinate *pos* to global screen
+    /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
+    /// the global coordinates of the top-left pixel of the widget.
+    ///
+    /// **See also:** mapFromGlobal()
+    /// mapTo()
+    /// mapToParent()
+    fn map_to<P: PointType<'a>, W: WidgetType<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_to)(obj_data, obj_arg0_1, obj_arg1_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Translates the widget coordinate *pos* from the coordinate system
+    /// of *parent* to this widget's coordinate system. The *parent*
+    /// must not be 0 and must be a parent of the calling widget.
+    ///
+    /// **See also:** mapTo()
+    /// mapFromParent()
+    /// mapFromGlobal()
+    /// underMouse()
+    ///
+    /// Translates the parent widget coordinate *pos* to widget
+    /// coordinates.
+    ///
+    /// Same as mapFromGlobal() if the widget has no parent.
+    ///
+    /// **See also:** mapToParent()
+    /// mapFrom()
+    /// mapFromGlobal()
+    /// underMouse()
+    ///
+    /// Translates the global screen coordinate *pos* to widget
+    /// coordinates.
+    ///
+    /// **See also:** mapToGlobal()
+    /// mapFrom()
+    /// mapFromParent()
+    fn map_from<P: PointType<'a>, W: WidgetType<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from)(obj_data, obj_arg0_1, obj_arg1_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// If this is a native widget, return the associated QWindow.
+    /// Otherwise return None.
+    ///
+    /// Native widgets include toplevel widgets, QGLWidget, and child widgets
+    /// on which winId() was called.
+    ///
+    /// **See also:** winId()
+    ///
+    /// This property only makes sense for windows. A modal widget
+    /// prevents widgets in other windows from getting input. The value of
+    /// this property controls which windows are blocked when the widget
+    /// is visible. Changing this property while the window is visible has
+    /// no effect; you must hide() the widget first, then show() it again.
+    ///
+    /// By default, this property is Qt::NonModal.
+    ///
+    /// **See also:** isWindow()
+    /// QWidget::modal
+    /// QDialog
+    ///
+    /// Returns the current window state. The window state is a OR'ed
+    /// combination of Qt::WindowState: Qt::WindowMinimized,
+    /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
+    ///
+    /// **See also:** Qt::WindowState
+    /// setWindowState()
+    ///
+    /// Returns the window for this widget, i.e. the next ancestor widget
+    /// that has (or could have) a window-system frame.
+    ///
+    /// If the widget is a window, the widget itself is returned.
+    ///
+    /// Typical usage is changing the window title:
+    ///
+    /// **See also:** isWindow()
+    ///
+    /// This property only makes sense for top-level widgets, such as
+    /// windows and dialogs. If no caption has been set, the title is based of the
+    /// [windowFilePath.](windowFilePath.)
+    /// If neither of these is set, then the title is
+    /// an empty string.
+    ///
+    /// If you use the [windowModified](windowModified)
+    /// mechanism, the window title must
+    /// contain a placeholder, which indicates where the '*' should
+    /// appear. Normally, it should appear right after the file name
+    /// (e.g., ). If the [windowModified](windowModified)
+    /// property is `false` (the default), the placeholder
+    /// is simply removed.
+    ///
+    /// On some desktop platforms (including Windows and Unix), the application name
+    /// (from QGuiApplication::applicationDisplayName) is added at the end of the
+    /// window title, if set. This is done by the QPA plugin, so it is shown to the
+    /// user, but isn't part of the windowTitle string.
+    ///
+    /// **See also:** windowIcon
+    /// windowModified
+    /// windowFilePath
+    ///
+    /// This signal is emitted when the window's icon text has changed, with the
+    /// new *iconText* as an argument.
+    ///
+    /// This signal is deprecated.
+    ///
+    /// This signal is emitted when the window's title has changed, with the
+    /// new *title* as an argument.
+    ///
+    ///
+    /// This property only makes sense for windows. If no icon
+    /// has been set, windowIcon() returns the application icon
+    /// (QApplication::windowIcon()).
+    ///
+    /// **See also:** windowTitle
+    ///
+    /// This signal is emitted when the window's icon has changed, with the
+    /// new *icon* as an argument.
+    ///
+    ///
+    /// This property only makes sense for windows. If no icon
+    /// text has been set, this accessor returns an empty string.
+    /// It is only implemented on the X11 platform, and only certain
+    /// window managers use this window property.
+    ///
+    /// This property is deprecated.
+    ///
+    /// **See also:** windowIcon
+    /// windowTitle
+    ///
+    /// This property only makes sense for windows. It associates a file path with
+    /// a window. If you set the file path, but have not set the window title, Qt
+    /// sets the window title to the file name of the specified path, obtained using
+    /// QFileInfo::fileName().
+    ///
+    /// If the window title is set at any point, then the window title takes precedence and
+    /// will be shown instead of the file path string.
+    ///
+    /// Additionally, on MacOS , this has an added benefit that it sets the
+    /// [proxy icon](http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGWindows/chapter_17_section_3.html)
+    ///
+    /// for the window, assuming that the file path exists.
+    ///
+    /// If no file path is set, this property contains an empty string.
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** windowTitle
+    /// windowIcon
+    ///
+    /// Returns the window's role, or an empty string.
+    ///
+    /// **See also:** windowIcon
+    /// windowTitle
+    ///
+    /// Window flags are a combination of a type (e.g. Qt::Dialog) and
+    /// zero or more hints to the window system (e.g.
+    /// Qt::FramelessWindowHint).
+    ///
+    /// If the widget had type Qt::Widget or Qt::SubWindow and becomes a
+    /// window (Qt::Window, Qt::Dialog, etc.), it is put at position (0,
+    /// 0) on the desktop. If the widget is a window and becomes a
+    /// Qt::Widget or Qt::SubWindow, it is put at position (0, 0)
+    /// relative to its parent widget.
+    ///
+    /// **Note**: This function calls setParent() when changing the flags for
+    /// a window, causing the widget to be hidden. You must call show() to make
+    /// the widget visible again..
+    ///
+    /// **See also:** windowType()
+    /// setWindowFlag()
+    /// {Window Flags Example}
+    ///
+    /// Returns the window type of this widget. This is identical to
+    /// windowFlags() & Qt::WindowType_Mask.
+    ///
+    /// **See also:** windowFlags
+    ///
+    /// The valid range of opacity is from 1.0 (completely opaque) to
+    /// 0.0 (completely transparent).
+    ///
+    /// By default the value of this property is 1.0.
+    ///
+    /// This feature is available on Embedded Linux, MacOS , Windows,
+    /// and X11 platforms that support the Composite extension.
+    ///
+    /// **Note**: On X11 you need to have a composite manager running,
+    /// and the X11 specific _NET_WM_WINDOW_OPACITY atom needs to be
+    /// supported by the window manager you are using.
+    ///
+    /// **Warning**: Changing this property from opaque to transparent might issue a
+    /// paint event that needs to be processed before the window is displayed
+    /// correctly. This affects mainly the use of QPixmap::grabWindow(). Also note
+    /// that semi-transparent windows update and resize significantly slower than
+    /// opaque windows.
+    ///
+    /// **See also:** setMask()
+    ///
+    /// A modified window is a window whose content has changed but has
+    /// not been saved to disk. This flag will have different effects
+    /// varied by the platform. On MacOS the close button will have a
+    /// modified look; on other platforms, the window title will have an
+    /// '*' (asterisk).
+    ///
+    /// The window title must contain a placeholder, which
+    /// indicates where the '*' should appear. Normally, it should appear
+    /// right after the file name (e.g., ). If the window isn't modified, the placeholder is simply
+    /// removed.
+    ///
+    /// Note that if a widget is set as modified, all its ancestors will
+    /// also be set as modified. However, if you call `setWindowModified(false)` on a widget, this will not propagate to
+    /// its parent because other children of the parent might have been
+    /// modified.
+    ///
+    /// **See also:** windowTitle
+    /// {Application Example}
+    /// {SDI Example}
+    /// {MDI Example}
+    fn window(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the native parent for this widget, i.e. the next ancestor widget
+    /// that has a system identifier, or 0 if it does not have any native parent.
+    ///
+    /// **See also:** effectiveWinId()
+    fn native_parent_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).native_parent_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Use window() instead.
+    fn top_level_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).top_level_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// This property describes the widget's palette. The palette is used by the
+    /// widget's style when rendering standard components, and is available as a
+    /// means to ensure that custom widgets can maintain consistency with the
+    /// native platform's look and feel. It's common that different platforms, or
+    /// different styles, have different palettes.
+    ///
+    /// When you assign a new palette to a widget, the color roles from this
+    /// palette are combined with the widget's default palette to form the
+    /// widget's final palette. The palette entry for the widget's background role
+    /// is used to fill the widget's background (see QWidget::autoFillBackground),
+    /// and the foreground role initializes QPainter's pen.
+    ///
+    /// The default depends on the system environment. QApplication maintains a
+    /// system/theme palette which serves as a default for all widgets. There may
+    /// also be special palette defaults for certain types of widgets (e.g., on
+    /// Windows Vista, all classes that derive from QMenuBar have a special
+    /// default palette). You can also define default palettes for widgets
+    /// yourself by passing a custom palette and the name of a widget to
+    /// QApplication::setPalette(). Finally, the style always has the option of
+    /// polishing the palette as it's assigned (see QStyle::polish()).
+    ///
+    /// QWidget propagates explicit palette roles from parent to child. If you
+    /// assign a brush or color to a specific role on a palette and assign that
+    /// palette to a widget, that role will propagate to all the widget's
+    /// children, overriding any system defaults for that role. Note that palettes
+    /// by default don't propagate to windows (see isWindow()) unless the
+    /// Qt::WA_WindowPropagation attribute is enabled.
+    ///
+    /// QWidget's palette propagation is similar to its font propagation.
+    ///
+    /// The current style, which is used to render the content of all standard Qt
+    /// widgets, is free to choose colors and brushes from the widget palette, or
+    /// in some cases, to ignore the palette (partially, or completely). In
+    /// particular, certain styles like GTK style, Mac style, and Windows Vista
+    /// style, depend on third party APIs to render the content of widgets,
+    /// and these styles typically do not follow the palette. Because of this,
+    /// assigning roles to a widget's palette is not guaranteed to change the
+    /// appearance of the widget. Instead, you may choose to apply a [styleSheet.](styleSheet.)
+    /// You can refer to our Knowledge Base article
+    /// [here](http://qt.nokia.com/developer/knowledgebase/22)
+    /// for more
+    /// information.
+    ///
+    /// **Warning**: Do not use this function in conjunction with [Qt Style Sheets](Qt%20Style%20Sheets)
+    ///
+    /// When using style sheets, the palette of a widget can be customized using
+    /// the , , ,
+    /// and .
+    ///
+    /// **See also:** QApplication::palette()
+    /// QWidget::font()
+    fn palette(&self) -> Option<Palette> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Palette::new_from_rc(t);
+            } else {
+                ret_val = Palette::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    fn set_palette<P: PaletteType<'a>>(&self, arg0: &P) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_palette_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_palette)(obj_data, obj_arg0_1);
         }
         self
     }
+    ///
+    /// Sets the background role of the widget to *role.*
+    ///
+    /// The background role defines the brush from the widget's [palette](palette)
+    /// that
+    /// is used to render the background.
+    ///
+    /// If *role* is QPalette::NoRole, then the widget inherits its
+    /// parent's background role.
+    ///
+    /// Note that styles are free to choose any color from the palette.
+    /// You can modify the palette or set a style sheet if you don't
+    /// achieve the result you want with setBackgroundRole().
+    ///
+    /// **See also:** backgroundRole()
+    /// foregroundRole()
+    fn set_background_role(&self, arg0: ColorRole) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
 
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_background_role)(obj_data, enum_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Returns the background role of the widget.
+    ///
+    /// The background role defines the brush from the widget's [palette](palette)
+    /// that
+    /// is used to render the background.
+    ///
+    /// If no explicit background role is set, the widget inherts its parent
+    /// widget's background role.
+    ///
+    /// **See also:** setBackgroundRole()
+    /// foregroundRole()
+    fn background_role(&self) -> ColorRole {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).background_role)(obj_data);
+            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Sets the foreground role of the widget to *role.*
+    ///
+    /// The foreground role defines the color from the widget's [palette](palette)
+    /// that
+    /// is used to draw the foreground.
+    ///
+    /// If *role* is QPalette::NoRole, the widget uses a foreground role
+    /// that contrasts with the background role.
+    ///
+    /// Note that styles are free to choose any color from the palette.
+    /// You can modify the palette or set a style sheet if you don't
+    /// achieve the result you want with setForegroundRole().
+    ///
+    /// **See also:** foregroundRole()
+    /// backgroundRole()
+    fn set_foreground_role(&self, arg0: ColorRole) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_foreground_role)(obj_data, enum_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Returns the foreground role.
+    ///
+    /// The foreground role defines the color from the widget's [palette](palette)
+    /// that
+    /// is used to draw the foreground.
+    ///
+    /// If no explicit foreground role is set, the function returns a role
+    /// that contrasts with the background role.
+    ///
+    /// **See also:** setForegroundRole()
+    /// backgroundRole()
+    fn foreground_role(&self) -> ColorRole {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).foreground_role)(obj_data);
+            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// This property describes the widget's requested font. The font is used by
+    /// the widget's style when rendering standard components, and is available as
+    /// a means to ensure that custom widgets can maintain consistency with the
+    /// native platform's look and feel. It's common that different platforms, or
+    /// different styles, define different fonts for an application.
+    ///
+    /// When you assign a new font to a widget, the properties from this font are
+    /// combined with the widget's default font to form the widget's final
+    /// font. You can call fontInfo() to get a copy of the widget's final
+    /// font. The final font is also used to initialize QPainter's font.
+    ///
+    /// The default depends on the system environment. QApplication maintains a
+    /// system/theme font which serves as a default for all widgets. There may
+    /// also be special font defaults for certain types of widgets. You can also
+    /// define default fonts for widgets yourself by passing a custom font and the
+    /// name of a widget to QApplication::setFont(). Finally, the font is matched
+    /// against Qt's font database to find the best match.
+    ///
+    /// QWidget propagates explicit font properties from parent to child. If you
+    /// change a specific property on a font and assign that font to a widget,
+    /// that property will propagate to all the widget's children, overriding any
+    /// system defaults for that property. Note that fonts by default don't
+    /// propagate to windows (see isWindow()) unless the Qt::WA_WindowPropagation
+    /// attribute is enabled.
+    ///
+    /// QWidget's font propagation is similar to its palette propagation.
+    ///
+    /// The current style, which is used to render the content of all standard Qt
+    /// widgets, is free to choose to use the widget font, or in some cases, to
+    /// ignore it (partially, or completely). In particular, certain styles like
+    /// GTK style, Mac style, and Windows Vista style, apply special
+    /// modifications to the widget font to match the platform's native look and
+    /// feel. Because of this, assigning properties to a widget's font is not
+    /// guaranteed to change the appearance of the widget. Instead, you may choose
+    /// to apply a [styleSheet.](styleSheet.)
+    ///
+    /// **Note**: If [Qt Style Sheets](Qt%20Style%20Sheets)
+    /// are used on the same widget as setFont(),
+    /// style sheets will take precedence if the settings conflict.
+    ///
+    /// **See also:** fontInfo()
+    /// fontMetrics()
+    ///
+    /// Returns the font metrics for the widget's current font.
+    /// Equivalent to `QFontMetrics(widget->font()).`
+    ///
+    /// **See also:** font()
+    /// fontInfo()
+    /// setFont()
+    ///
+    /// Returns the font info for the widget's current font.
+    /// Equivalent to `QFontInfo(widget->font()).`
+    ///
+    /// **See also:** font()
+    /// fontMetrics()
+    /// setFont()
+    fn font(&self) -> Option<Font> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    fn set_font<F: FontType<'a>>(&self, arg0: &F) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_font)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Returns the font info for the widget's current font.
+    /// Equivalent to `QFontInfo(widget->font()).`
+    ///
+    /// **See also:** font()
+    /// fontMetrics()
+    /// setFont()
+    fn font_info(&self) -> FontInfo {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).font_info)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = FontInfo::new_from_rc(t);
+            } else {
+                ret_val = FontInfo::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// The mouse cursor will assume this shape when it's over this
+    /// widget. See the [list of predefined cursor objects](Qt::CursorShape)
+    /// for a range of useful shapes.
+    ///
+    /// An editor widget might use an I-beam cursor:
+    ///
+    /// If no cursor has been set, or after a call to unsetCursor(), the
+    /// parent's cursor is used.
+    ///
+    /// By default, this property contains a cursor with the Qt::ArrowCursor
+    /// shape.
+    ///
+    /// Some underlying window implementations will reset the cursor if it
+    /// leaves a widget even if the mouse is grabbed. If you want to have
+    /// a cursor set for all widgets, even when outside the window, consider
+    /// QApplication::setOverrideCursor().
+    ///
+    /// **See also:** QApplication::setOverrideCursor()
+    fn cursor(&self) -> Cursor {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).cursor)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Cursor::new_from_rc(t);
+            } else {
+                ret_val = Cursor::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    fn set_cursor<C: CursorType<'a>>(&self, arg0: &C) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_cursor)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    fn unset_cursor(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).unset_cursor)(obj_data);
+        }
+        self
+    }
+    fn set_mouse_tracking(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mouse_tracking)(obj_data, enable);
+        }
+        self
+    }
+    fn has_mouse_tracking(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_mouse_tracking)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the widget is under the mouse cursor; otherwise
+    /// returns `false.`
+    ///
+    /// This value is not updated properly during drag and drop
+    /// operations.
+    ///
+    /// **See also:** enterEvent()
+    /// leaveEvent()
+    fn under_mouse(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).under_mouse)(obj_data);
+            ret_val
+        }
+    }
+    fn set_tablet_tracking(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tablet_tracking)(obj_data, enable);
+        }
+        self
+    }
+    fn has_tablet_tracking(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_tablet_tracking)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// Causes only the parts of the widget which overlap *region* to be
+    /// visible. If the region includes pixels outside the rect() of the
+    /// widget, window system controls in that area may or may not be
+    /// visible, depending on the platform.
+    ///
+    /// Note that this effect can be slow if the region is particularly
+    /// complex.
+    ///
+    /// **See also:** windowOpacity
+    ///
+    /// Causes only the pixels of the widget for which *bitmap* has a
+    /// corresponding 1 bit to be visible. If the region includes pixels
+    /// outside the rect() of the widget, window system controls in that
+    /// area may or may not be visible, depending on the platform.
+    ///
+    /// Note that this effect can be slow if the region is particularly
+    /// complex.
+    ///
+    /// The following code shows how an image with an alpha channel can be
+    /// used to generate a mask for a widget:
+    ///
+    /// The label shown by this code is masked using the image it contains,
+    /// giving the appearance that an irregularly-shaped image is being drawn
+    /// directly onto the screen.
+    ///
+    /// Masked widgets receive mouse events only on their visible
+    /// portions.
+    ///
+    /// **See also:** clearMask()
+    /// windowOpacity()
+    /// {Shaped Clock Example}
+    fn set_mask<B: BitmapType<'a>>(&self, arg0: &B) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_bitmap_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mask)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// **Overloads**
+    /// Causes only the parts of the widget which overlap *region* to be
+    /// visible. If the region includes pixels outside the rect() of the
+    /// widget, window system controls in that area may or may not be
+    /// visible, depending on the platform.
+    ///
+    /// Note that this effect can be slow if the region is particularly
+    /// complex.
+    ///
+    /// **See also:** windowOpacity
+    ///
+    /// Causes only the pixels of the widget for which *bitmap* has a
+    /// corresponding 1 bit to be visible. If the region includes pixels
+    /// outside the rect() of the widget, window system controls in that
+    /// area may or may not be visible, depending on the platform.
+    ///
+    /// Note that this effect can be slow if the region is particularly
+    /// complex.
+    ///
+    /// The following code shows how an image with an alpha channel can be
+    /// used to generate a mask for a widget:
+    ///
+    /// The label shown by this code is masked using the image it contains,
+    /// giving the appearance that an irregularly-shaped image is being drawn
+    /// directly onto the screen.
+    ///
+    /// Masked widgets receive mouse events only on their visible
+    /// portions.
+    ///
+    /// **See also:** clearMask()
+    /// windowOpacity()
+    /// {Shaped Clock Example}
+    fn set_mask<R: RegionType<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mask)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Returns the mask currently set on a widget. If no mask is set the
+    /// return value will be an empty region.
+    ///
+    /// **See also:** setMask()
+    /// clearMask()
+    /// QRegion::isEmpty()
+    /// {Shaped Clock Example}
+    fn mask(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).mask)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Removes any mask set by setMask().
+    ///
+    /// **See also:** setMask()
+    fn clear_mask(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).clear_mask)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Renders the *sourceRegion* of this widget into the *target*
+    /// using *renderFlags* to determine how to render. Rendering
+    /// starts at *targetOffset* in the *target.* For example:
+    ///
+    /// If *sourceRegion* is a null region, this function will use QWidget::rect() as
+    /// the region, i.e. the entire widget.
+    ///
+    /// Ensure that you call QPainter::end() for the *target* device's
+    /// active painter (if any) before rendering. For example:
+    ///
+    /// **Note**: To obtain the contents of a QOpenGLWidget, use QOpenGLWidget::grabFramebuffer()
+    /// instead.
+    ///
+    /// **Note**: To obtain the contents of a QGLWidget (deprecated), use
+    /// QGLWidget::grabFrameBuffer() or QGLWidget::renderPixmap() instead.
+    ///
+    /// **Overloads**
+    /// Renders the widget into the *painter's* QPainter::device().
+    ///
+    /// Transformations and settings applied to the *painter* will be used
+    /// when rendering.
+    ///
+    /// **Note**: The *painter* must be active. On MacOS the widget will be
+    /// rendered into a QPixmap and then drawn by the *painter.*
+    ///
+    /// **See also:** QPainter::device()
+    fn render<P: PaintDeviceType<'a>, Q: PointType<'a>, R: RegionType<'a>>(
+        &self,
+        target: &P,
+        target_offset: &Q,
+        source_region: &R,
+        render_flags: RenderFlags,
+    ) -> &Self {
+        let (obj_target_1, _funcs) = target.get_paint_device_obj_funcs();
+        let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
+        let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
+        let enum_render_flags_4 = render_flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).render)(
+                obj_data,
+                obj_target_1,
+                obj_target_offset_2,
+                obj_source_region_3,
+                enum_render_flags_4,
+            );
+        }
+        self
+    }
+    ///
+    /// Renders the *sourceRegion* of this widget into the *target*
+    /// using *renderFlags* to determine how to render. Rendering
+    /// starts at *targetOffset* in the *target.* For example:
+    ///
+    /// If *sourceRegion* is a null region, this function will use QWidget::rect() as
+    /// the region, i.e. the entire widget.
+    ///
+    /// Ensure that you call QPainter::end() for the *target* device's
+    /// active painter (if any) before rendering. For example:
+    ///
+    /// **Note**: To obtain the contents of a QOpenGLWidget, use QOpenGLWidget::grabFramebuffer()
+    /// instead.
+    ///
+    /// **Note**: To obtain the contents of a QGLWidget (deprecated), use
+    /// QGLWidget::grabFrameBuffer() or QGLWidget::renderPixmap() instead.
+    ///
+    /// **Overloads**
+    /// Renders the widget into the *painter's* QPainter::device().
+    ///
+    /// Transformations and settings applied to the *painter* will be used
+    /// when rendering.
+    ///
+    /// **Note**: The *painter* must be active. On MacOS the widget will be
+    /// rendered into a QPixmap and then drawn by the *painter.*
+    ///
+    /// **See also:** QPainter::device()
+    fn render<P: PainterType<'a>, Q: PointType<'a>, R: RegionType<'a>>(
+        &self,
+        painter: &P,
+        target_offset: &Q,
+        source_region: &R,
+        render_flags: RenderFlags,
+    ) -> &Self {
+        let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
+        let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
+        let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
+        let enum_render_flags_4 = render_flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).render)(
+                obj_data,
+                obj_painter_1,
+                obj_target_offset_2,
+                obj_source_region_3,
+                enum_render_flags_4,
+            );
+        }
+        self
+    }
+    ///
+    /// Renders the widget into a pixmap restricted by the
+    /// given *rectangle.* If the widget has any children, then
+    /// they are also painted in the appropriate positions.
+    ///
+    /// If a rectangle with an invalid size is specified (the default),
+    /// the entire widget is painted.
+    ///
+    /// **See also:** render()
+    /// QPixmap
+    ///
+    /// Adds a shortcut to Qt's shortcut system that watches for the given
+    /// *key* sequence in the given *context.* If the *context* is
+    /// Qt::ApplicationShortcut, the shortcut applies to the application as a
+    /// whole. Otherwise, it is either local to this widget, Qt::WidgetShortcut,
+    /// or to the window itself, Qt::WindowShortcut.
+    ///
+    /// If the same *key* sequence has been grabbed by several widgets,
+    /// when the *key* sequence occurs a QEvent::Shortcut event is sent
+    /// to all the widgets to which it applies in a non-deterministic
+    /// order, but with the ``ambiguous'' flag set to true.
+    ///
+    /// **Warning**: You should not normally need to use this function;
+    /// instead create [QAction](QAction)
+    /// s with the shortcut key sequences you
+    /// require (if you also want equivalent menu options and toolbar
+    /// buttons), or create [QShortcut](QShortcut)
+    /// s if you just need key sequences.
+    /// Both QAction and QShortcut handle all the event filtering for you,
+    /// and provide signals which are triggered when the user triggers the
+    /// key sequence, so are much easier to use than this low-level
+    /// function.
+    ///
+    /// **See also:** releaseShortcut()
+    /// setShortcutEnabled()
+    ///
+    /// Subscribes the widget to a given *gesture* with specific *flags.*
+    ///
+    /// **See also:** ungrabGesture()
+    /// QGestureEvent
+    ///
+    /// Grabs the mouse input.
+    ///
+    /// This widget receives all mouse events until releaseMouse() is
+    /// called; other widgets get no mouse events at all. Keyboard
+    /// events are not affected. Use grabKeyboard() if you want to grab
+    /// that.
+    ///
+    /// **Warning**: Bugs in mouse-grabbing applications very often lock the
+    /// terminal. Use this function with extreme caution, and consider
+    /// using the `-nograb` command line option while debugging.
+    ///
+    /// It is almost never necessary to grab the mouse when using Qt, as
+    /// Qt grabs and releases it sensibly. In particular, Qt grabs the
+    /// mouse when a mouse button is pressed and keeps it until the last
+    /// button is released.
+    ///
+    /// **Note**: Only visible widgets can grab mouse input. If isVisible()
+    /// returns `false` for a widget, that widget cannot call grabMouse().
+    ///
+    /// **Note**: On Windows, grabMouse() only works when the mouse is inside a window
+    /// owned by the process.
+    /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    ///
+    /// **Overloads** grabMouse()
+    /// Grabs the mouse input and changes the cursor shape.
+    ///
+    /// The cursor will assume shape *cursor* (for as long as the mouse
+    /// focus is grabbed) and this widget will be the only one to receive
+    /// mouse events until releaseMouse() is called().
+    ///
+    /// **Warning**: Grabbing the mouse might lock the terminal.
+    ///
+    /// **Note**: See the note in QWidget::grabMouse().
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    /// setCursor()
+    ///
+    /// Grabs the keyboard input.
+    ///
+    /// This widget receives all keyboard events until releaseKeyboard()
+    /// is called; other widgets get no keyboard events at all. Mouse
+    /// events are not affected. Use grabMouse() if you want to grab that.
+    ///
+    /// The focus widget is not affected, except that it doesn't receive
+    /// any keyboard events. setFocus() moves the focus as usual, but the
+    /// new focus widget receives keyboard events only after
+    /// releaseKeyboard() is called.
+    ///
+    /// If a different widget is currently grabbing keyboard input, that
+    /// widget's grab is released first.
+    ///
+    /// **See also:** releaseKeyboard()
+    /// grabMouse()
+    /// releaseMouse()
+    /// focusWidget()
+    fn grab<R: RectType<'a>>(&self, rectangle: &R) -> Pixmap {
+        let (obj_rectangle_1, _funcs) = rectangle.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).grab)(obj_data, obj_rectangle_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    fn graphics_effect(&self) -> Option<GraphicsEffect> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).graphics_effect)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = GraphicsEffect::new_from_rc(t);
+            } else {
+                ret_val = GraphicsEffect::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    fn set_graphics_effect<G: GraphicsEffectType<'a>>(&self, effect: &G) -> &Self {
+        let (obj_effect_1, _funcs) = effect.get_graphics_effect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_graphics_effect)(obj_data, obj_effect_1);
+        }
+        self
+    }
+    ///
+    /// Subscribes the widget to a given *gesture* with specific *flags.*
+    ///
+    /// **See also:** ungrabGesture()
+    /// QGestureEvent
+    fn grab_gesture(&self, gesture_type: GestureType, flags: GestureFlags) -> &Self {
+        let enum_gesture_type_1 = gesture_type as i32;
+        let enum_flags_2 = flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_gesture)(obj_data, enum_gesture_type_1, enum_flags_2);
+        }
+        self
+    }
+    ///
+    /// Unsubscribes the widget from a given *gesture* type
+    ///
+    /// **See also:** grabGesture()
+    /// QGestureEvent
+    fn ungrab_gesture(&self, gesture_type: GestureType) -> &Self {
+        let enum_gesture_type_1 = gesture_type as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).ungrab_gesture)(obj_data, enum_gesture_type_1);
+        }
+        self
+    }
+    fn set_window_title(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_title)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    fn set_style_sheet(&self, style_sheet: &str) -> &Self {
+        let str_in_style_sheet_1 = CString::new(style_sheet).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_style_sheet)(obj_data, str_in_style_sheet_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// The style sheet contains a textual description of customizations to the
+    /// widget's style, as described in the [Qt Style Sheets](Qt%20Style%20Sheets)
+    /// document.
+    ///
+    /// Since Qt 4.5, Qt style sheets fully supports MacOS .
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** setStyle()
+    /// QApplication::styleSheet
+    /// {Qt Style Sheets}
+    fn style_sheet(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style_sheet)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// This property only makes sense for top-level widgets, such as
+    /// windows and dialogs. If no caption has been set, the title is based of the
+    /// [windowFilePath.](windowFilePath.)
+    /// If neither of these is set, then the title is
+    /// an empty string.
+    ///
+    /// If you use the [windowModified](windowModified)
+    /// mechanism, the window title must
+    /// contain a placeholder, which indicates where the '*' should
+    /// appear. Normally, it should appear right after the file name
+    /// (e.g., ). If the [windowModified](windowModified)
+    /// property is `false` (the default), the placeholder
+    /// is simply removed.
+    ///
+    /// On some desktop platforms (including Windows and Unix), the application name
+    /// (from QGuiApplication::applicationDisplayName) is added at the end of the
+    /// window title, if set. This is done by the QPA plugin, so it is shown to the
+    /// user, but isn't part of the windowTitle string.
+    ///
+    /// **See also:** windowIcon
+    /// windowModified
+    /// windowFilePath
+    ///
+    /// This signal is emitted when the window's title has changed, with the
+    /// new *title* as an argument.
+    ///
+    fn window_title(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_title)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_window_icon<I: IconType<'a>>(&self, icon: &I) -> &Self {
+        let (obj_icon_1, _funcs) = icon.get_icon_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_icon)(obj_data, obj_icon_1);
+        }
+        self
+    }
+    ///
+    /// This signal is emitted when the window's icon text has changed, with the
+    /// new *iconText* as an argument.
+    ///
+    /// This signal is deprecated.
+    ///
+    /// This property only makes sense for windows. If no icon
+    /// has been set, windowIcon() returns the application icon
+    /// (QApplication::windowIcon()).
+    ///
+    /// **See also:** windowTitle
+    ///
+    /// This signal is emitted when the window's icon has changed, with the
+    /// new *icon* as an argument.
+    ///
+    ///
+    /// This property only makes sense for windows. If no icon
+    /// text has been set, this accessor returns an empty string.
+    /// It is only implemented on the X11 platform, and only certain
+    /// window managers use this window property.
+    ///
+    /// This property is deprecated.
+    ///
+    /// **See also:** windowIcon
+    /// windowTitle
+    fn window_icon(&self) -> Icon {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_icon)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Icon::new_from_rc(t);
+            } else {
+                ret_val = Icon::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    fn set_window_icon_text(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_icon_text)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// This signal is emitted when the window's icon text has changed, with the
+    /// new *iconText* as an argument.
+    ///
+    /// This signal is deprecated.
+    ///
+    /// This property only makes sense for windows. If no icon
+    /// text has been set, this accessor returns an empty string.
+    /// It is only implemented on the X11 platform, and only certain
+    /// window managers use this window property.
+    ///
+    /// This property is deprecated.
+    ///
+    /// **See also:** windowIcon
+    /// windowTitle
+    fn window_icon_text(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_icon_text)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Sets the window's role to *role.* This only makes sense for
+    /// windows on X11.
+    fn set_window_role(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_role)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// Returns the window's role, or an empty string.
+    ///
+    /// **See also:** windowIcon
+    /// windowTitle
+    fn window_role(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_role)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_window_file_path(&self, file_path: &str) -> &Self {
+        let str_in_file_path_1 = CString::new(file_path).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_file_path)(obj_data, str_in_file_path_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// This property only makes sense for windows. It associates a file path with
+    /// a window. If you set the file path, but have not set the window title, Qt
+    /// sets the window title to the file name of the specified path, obtained using
+    /// QFileInfo::fileName().
+    ///
+    /// If the window title is set at any point, then the window title takes precedence and
+    /// will be shown instead of the file path string.
+    ///
+    /// Additionally, on MacOS , this has an added benefit that it sets the
+    /// [proxy icon](http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGWindows/chapter_17_section_3.html)
+    ///
+    /// for the window, assuming that the file path exists.
+    ///
+    /// If no file path is set, this property contains an empty string.
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** windowTitle
+    /// windowIcon
+    fn window_file_path(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_file_path)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_window_opacity(&self, level: f32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_opacity)(obj_data, level);
+        }
+        self
+    }
+    ///
+    /// The valid range of opacity is from 1.0 (completely opaque) to
+    /// 0.0 (completely transparent).
+    ///
+    /// By default the value of this property is 1.0.
+    ///
+    /// This feature is available on Embedded Linux, MacOS , Windows,
+    /// and X11 platforms that support the Composite extension.
+    ///
+    /// **Note**: On X11 you need to have a composite manager running,
+    /// and the X11 specific _NET_WM_WINDOW_OPACITY atom needs to be
+    /// supported by the window manager you are using.
+    ///
+    /// **Warning**: Changing this property from opaque to transparent might issue a
+    /// paint event that needs to be processed before the window is displayed
+    /// correctly. This affects mainly the use of QPixmap::grabWindow(). Also note
+    /// that semi-transparent windows update and resize significantly slower than
+    /// opaque windows.
+    ///
+    /// **See also:** setMask()
+    fn window_opacity(&self) -> f32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_opacity)(obj_data);
+            ret_val
+        }
+    }
+    fn is_window_modified(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_modified)(obj_data);
+            ret_val
+        }
+    }
+    fn set_tool_tip(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tool_tip)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// Note that by default tooltips are only shown for widgets that are
+    /// children of the active window. You can change this behavior by
+    /// setting the attribute Qt::WA_AlwaysShowToolTips on the *window,*
+    /// not on the widget with the tooltip.
+    ///
+    /// If you want to control a tooltip's behavior, you can intercept the
+    /// event() function and catch the QEvent::ToolTip event (e.g., if you
+    /// want to customize the area for which the tooltip should be shown).
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** QToolTip
+    /// statusTip
+    /// whatsThis
+    ///
+    /// Specifies how long time the tooltip will be displayed, in milliseconds.
+    /// If the value is -1 (default) the duration is calculated depending on the length of the tooltip.
+    ///
+    /// **See also:** toolTip
+    fn tool_tip(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).tool_tip)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_tool_tip_duration(&self, msec: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tool_tip_duration)(obj_data, msec);
+        }
+        self
+    }
+    ///
+    /// Specifies how long time the tooltip will be displayed, in milliseconds.
+    /// If the value is -1 (default) the duration is calculated depending on the length of the tooltip.
+    ///
+    /// **See also:** toolTip
+    fn tool_tip_duration(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).tool_tip_duration)(obj_data);
+            ret_val
+        }
+    }
+    fn set_status_tip(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_status_tip)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** toolTip
+    /// whatsThis
+    fn status_tip(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).status_tip)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_whats_this(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_whats_this)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** QWhatsThis
+    /// QWidget::toolTip
+    /// QWidget::statusTip
+    fn whats_this(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).whats_this)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// This is the primary name by which assistive technology such as screen readers
+    /// announce this widget. For most widgets setting this property is not required.
+    /// For example for QPushButton the button's text will be used.
+    ///
+    /// It is important to set this property when the widget does not provide any
+    /// text. For example a button that only contains an icon needs to set this
+    /// property to work with screen readers.
+    /// The name should be short and equivalent to the visual information conveyed
+    /// by the widget.
+    ///
+    /// This property has to be [localized](Internationalization%20with%20Qt)
+    ///
+    ///
+    /// By default, this property contains an empty string.
+    ///
+    /// **See also:** QWidget::accessibleDescription
+    /// QAccessibleInterface::text()
+    fn accessible_name(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accessible_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_accessible_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accessible_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    ///
+    /// The accessible description of a widget should convey what a widget does.
+    /// While the [accessibleName](accessibleName)
+    /// should be a short and consise string (e.g. **Save** ),
+    /// the description should give more context, such as **Saves the current document** .
+    ///
+    /// This property has to be [localized](Internationalization%20with%20Qt)
+    ///
+    ///
+    /// By default, this property contains an empty string and Qt falls back
+    /// to using the tool tip to provide this information.
+    ///
+    /// **See also:** QWidget::accessibleName
+    /// QAccessibleInterface::text()
+    fn accessible_description(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accessible_description)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    fn set_accessible_description(&self, description: &str) -> &Self {
+        let str_in_description_1 = CString::new(description).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accessible_description)(obj_data, str_in_description_1.as_ptr());
+        }
+        self
+    }
+    fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
+        let enum_direction_1 = direction as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_layout_direction)(obj_data, enum_direction_1);
+        }
+        self
+    }
+    ///
+    /// By default, this property is set to Qt::LeftToRight.
+    ///
+    /// When the layout direction is set on a widget, it will propagate to
+    /// the widget's children, but not to a child that is a window and not
+    /// to a child for which setLayoutDirection() has been explicitly
+    /// called. Also, child widgets added *after* setLayoutDirection()
+    /// has been called for the parent do not inherit the parent's layout
+    /// direction.
+    ///
+    /// This method no longer affects text layout direction since Qt 4.7.
+    ///
+    /// **See also:** QApplication::layoutDirection
+    fn layout_direction(&self) -> LayoutDirection {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).layout_direction)(obj_data);
+            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            ret_val
+        }
+    }
+    fn unset_layout_direction(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).unset_layout_direction)(obj_data);
+        }
+        self
+    }
+    fn set_locale<L: LocaleType<'a>>(&self, locale: &L) -> &Self {
+        let (obj_locale_1, _funcs) = locale.get_locale_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_locale)(obj_data, obj_locale_1);
+        }
+        self
+    }
+    ///
+    /// As long as no special locale has been set, this is either
+    /// the parent's locale or (if this widget is a top level widget),
+    /// the default locale.
+    ///
+    /// If the widget displays dates or numbers, these should be formatted
+    /// using the widget's locale.
+    ///
+    /// **See also:** QLocale
+    /// QLocale::setDefault()
+    fn locale(&self) -> Locale {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).locale)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Locale::new_from_rc(t);
+            } else {
+                ret_val = Locale::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    fn unset_locale(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).unset_locale)(obj_data);
+        }
+        self
+    }
+    fn is_right_to_left(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_right_to_left)(obj_data);
+            ret_val
+        }
+    }
+    fn is_left_to_right(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_left_to_right)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the widget's focus proxy to widget *w.* If *w* is 0, the
+    /// function resets this widget to have no focus proxy.
+    ///
+    /// Some widgets can , but create a child widget, such as
+    /// QLineEdit, to actually handle the focus. In this case, the widget
+    /// can set the line edit to be its focus proxy.
+    ///
+    /// setFocusProxy() sets the widget which will actually get focus when
+    /// gets it. If there is a focus proxy, setFocus() and
+    /// hasFocus() operate on the focus proxy.
+    ///
+    /// **See also:** focusProxy()
+    ///
+    /// Gives the keyboard input focus to this widget (or its focus
+    /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
+    /// . The *reason* argument will
+    /// be passed into any focus event sent from this function, it is used
+    /// to give an explanation of what caused the widget to get focus.
+    /// If the window is not active, the widget will be given the focus when
+    /// the window becomes active.
+    ///
+    /// First, a focus about to change event is sent to the focus widget (if any) to
+    /// tell it that it is about to lose the focus. Then focus is changed, a
+    /// focus out event is sent to the previous focus item and a focus in event is sent
+    /// to the new item to tell it that it just received the focus.
+    /// (Nothing happens if the focus in and focus out widgets are the
+    /// same.)
+    ///
+    /// **Note**: On embedded platforms, setFocus() will not cause an input panel
+    /// to be opened by the input method. If you want this to happen, you
+    /// have to send a QEvent::RequestSoftwareInputPanel event to the
+    /// widget yourself.
+    ///
+    /// setFocus() gives focus to a widget regardless of its focus policy,
+    /// but does not clear any keyboard grab (see grabKeyboard()).
+    ///
+    /// Be aware that if the widget is hidden, it will not accept focus
+    /// until it is shown.
+    ///
+    /// **Warning**: If you call setFocus() in a function which may itself be
+    /// called from focusOutEvent() or focusInEvent(), you may get an
+    /// infinite recursion.
+    ///
+    /// **See also:** hasFocus()
+    /// clearFocus()
+    /// focusInEvent()
+    /// focusOutEvent()
+    /// setFocusPolicy()
+    /// focusWidget()
+    /// QApplication::focusWidget()
+    /// grabKeyboard()
+    /// grabMouse()
+    /// {Keyboard Focus in Widgets}
+    /// QEvent::RequestSoftwareInputPanel
+    ///
+    /// **Overloads**
+    /// Gives the keyboard input focus to this widget (or its focus
+    /// proxy) if this widget or one of its parents is the
+    /// [active window](isActiveWindow())
+    ///
+    fn set_focus(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus)(obj_data);
+        }
+        self
+    }
+    ///
+    /// The active window is the window that contains the widget that has
+    /// keyboard focus (The window may still have focus if it has no
+    /// widgets or none of its widgets accepts keyboard focus).
+    ///
+    /// When popup windows are visible, this property is `true` for both the
+    /// active window *and* for the popup.
+    ///
+    /// By default, this property is `false.`
+    ///
+    /// **See also:** activateWindow()
+    /// QApplication::activeWindow()
+    fn is_active_window(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_active_window)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the top-level widget containing this widget to be the active
+    /// window.
+    ///
+    /// An active window is a visible top-level window that has the
+    /// keyboard input focus.
+    ///
+    /// This function performs the same operation as clicking the mouse on
+    /// the title bar of a top-level window. On X11, the result depends on
+    /// the Window Manager. If you want to ensure that the window is
+    /// stacked on top as well you should also call raise(). Note that the
+    /// window must be visible, otherwise activateWindow() has no effect.
+    ///
+    /// On Windows, if you are calling this when the application is not
+    /// currently the active one then it will not make it the active
+    /// window. It will change the color of the taskbar entry to indicate
+    /// that the window has changed in some way. This is because Microsoft
+    /// does not allow an application to interrupt what the user is currently
+    /// doing in another application.
+    ///
+    /// **See also:** isActiveWindow()
+    /// window()
+    /// show()
+    /// QWindowsWindowFunctions::setWindowActivationBehavior()
+    fn activate_window(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).activate_window)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Takes keyboard input focus from the widget.
+    ///
+    /// If the widget has active focus, a [focus out event](focusOutEvent())
+    /// is sent to this widget to tell it that it has
+    /// lost the focus.
+    ///
+    /// This widget must enable focus setting in order to get the keyboard
+    /// input focus, i.e. it must call setFocusPolicy().
+    ///
+    /// **See also:** hasFocus()
+    /// setFocus()
+    /// focusInEvent()
+    /// focusOutEvent()
+    /// setFocusPolicy()
+    /// QApplication::focusWidget()
+    fn clear_focus(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).clear_focus)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Sets the widget's focus proxy to widget *w.* If *w* is 0, the
+    /// function resets this widget to have no focus proxy.
+    ///
+    /// Some widgets can , but create a child widget, such as
+    /// QLineEdit, to actually handle the focus. In this case, the widget
+    /// can set the line edit to be its focus proxy.
+    ///
+    /// setFocusProxy() sets the widget which will actually get focus when
+    /// gets it. If there is a focus proxy, setFocus() and
+    /// hasFocus() operate on the focus proxy.
+    ///
+    /// **See also:** focusProxy()
+    ///
+    /// Gives the keyboard input focus to this widget (or its focus
+    /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
+    /// . The *reason* argument will
+    /// be passed into any focus event sent from this function, it is used
+    /// to give an explanation of what caused the widget to get focus.
+    /// If the window is not active, the widget will be given the focus when
+    /// the window becomes active.
+    ///
+    /// First, a focus about to change event is sent to the focus widget (if any) to
+    /// tell it that it is about to lose the focus. Then focus is changed, a
+    /// focus out event is sent to the previous focus item and a focus in event is sent
+    /// to the new item to tell it that it just received the focus.
+    /// (Nothing happens if the focus in and focus out widgets are the
+    /// same.)
+    ///
+    /// **Note**: On embedded platforms, setFocus() will not cause an input panel
+    /// to be opened by the input method. If you want this to happen, you
+    /// have to send a QEvent::RequestSoftwareInputPanel event to the
+    /// widget yourself.
+    ///
+    /// setFocus() gives focus to a widget regardless of its focus policy,
+    /// but does not clear any keyboard grab (see grabKeyboard()).
+    ///
+    /// Be aware that if the widget is hidden, it will not accept focus
+    /// until it is shown.
+    ///
+    /// **Warning**: If you call setFocus() in a function which may itself be
+    /// called from focusOutEvent() or focusInEvent(), you may get an
+    /// infinite recursion.
+    ///
+    /// **See also:** hasFocus()
+    /// clearFocus()
+    /// focusInEvent()
+    /// focusOutEvent()
+    /// setFocusPolicy()
+    /// focusWidget()
+    /// QApplication::focusWidget()
+    /// grabKeyboard()
+    /// grabMouse()
+    /// {Keyboard Focus in Widgets}
+    /// QEvent::RequestSoftwareInputPanel
+    ///
+    /// **Overloads**
+    /// Gives the keyboard input focus to this widget (or its focus
+    /// proxy) if this widget or one of its parents is the
+    /// [active window](isActiveWindow())
+    ///
+    fn set_focus(&self, reason: FocusReason) -> &Self {
+        let enum_reason_1 = reason as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus)(obj_data, enum_reason_1);
+        }
+        self
+    }
+    ///
+    /// The policy is Qt::TabFocus if the widget accepts keyboard
+    /// focus by tabbing, Qt::ClickFocus if the widget accepts
+    /// focus by clicking, Qt::StrongFocus if it accepts both, and
+    /// Qt::NoFocus (the default) if it does not accept focus at
+    /// all.
+    ///
+    /// You must enable keyboard focus for a widget if it processes
+    /// keyboard events. This is normally done from the widget's
+    /// constructor. For instance, the QLineEdit constructor calls
+    /// setFocusPolicy(Qt::StrongFocus).
+    ///
+    /// If the widget has a focus proxy, then the focus policy will
+    /// be propagated to it.
+    ///
+    /// **See also:** focusInEvent()
+    /// focusOutEvent()
+    /// keyPressEvent()
+    /// keyReleaseEvent()
+    /// enabled
+    fn focus_policy(&self) -> FocusPolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_policy)(obj_data);
+            let ret_val = { transmute::<i32, FocusPolicy>(ret_val) };
+            ret_val
+        }
+    }
+    fn set_focus_policy(&self, policy: FocusPolicy) -> &Self {
+        let enum_policy_1 = policy as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus_policy)(obj_data, enum_policy_1);
+        }
+        self
+    }
+    fn has_focus(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_focus)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the widget's focus proxy to widget *w.* If *w* is 0, the
+    /// function resets this widget to have no focus proxy.
+    ///
+    /// Some widgets can , but create a child widget, such as
+    /// QLineEdit, to actually handle the focus. In this case, the widget
+    /// can set the line edit to be its focus proxy.
+    ///
+    /// setFocusProxy() sets the widget which will actually get focus when
+    /// gets it. If there is a focus proxy, setFocus() and
+    /// hasFocus() operate on the focus proxy.
+    ///
+    /// **See also:** focusProxy()
+    fn set_focus_proxy<W: WidgetType<'a>>(&self, arg0: &W) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus_proxy)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Returns the focus proxy, or 0 if there is no focus proxy.
+    ///
+    /// **See also:** setFocusProxy()
+    fn focus_proxy(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_proxy)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// The default value of this property is Qt::DefaultContextMenu,
+    /// which means the contextMenuEvent() handler is called. Other values
+    /// are Qt::NoContextMenu, Qt::PreventContextMenu,
+    /// Qt::ActionsContextMenu, and Qt::CustomContextMenu. With
+    /// Qt::CustomContextMenu, the signal customContextMenuRequested() is
+    /// emitted.
+    ///
+    /// **See also:** contextMenuEvent()
+    /// customContextMenuRequested()
+    /// actions()
+    fn context_menu_policy(&self) -> ContextMenuPolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).context_menu_policy)(obj_data);
+            let ret_val = { transmute::<i32, ContextMenuPolicy>(ret_val) };
+            ret_val
+        }
+    }
+    fn set_context_menu_policy(&self, policy: ContextMenuPolicy) -> &Self {
+        let enum_policy_1 = policy as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_context_menu_policy)(obj_data, enum_policy_1);
+        }
+        self
+    }
+    ///
+    /// Grabs the mouse input.
+    ///
+    /// This widget receives all mouse events until releaseMouse() is
+    /// called; other widgets get no mouse events at all. Keyboard
+    /// events are not affected. Use grabKeyboard() if you want to grab
+    /// that.
+    ///
+    /// **Warning**: Bugs in mouse-grabbing applications very often lock the
+    /// terminal. Use this function with extreme caution, and consider
+    /// using the `-nograb` command line option while debugging.
+    ///
+    /// It is almost never necessary to grab the mouse when using Qt, as
+    /// Qt grabs and releases it sensibly. In particular, Qt grabs the
+    /// mouse when a mouse button is pressed and keeps it until the last
+    /// button is released.
+    ///
+    /// **Note**: Only visible widgets can grab mouse input. If isVisible()
+    /// returns `false` for a widget, that widget cannot call grabMouse().
+    ///
+    /// **Note**: On Windows, grabMouse() only works when the mouse is inside a window
+    /// owned by the process.
+    /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    ///
+    /// **Overloads** grabMouse()
+    /// Grabs the mouse input and changes the cursor shape.
+    ///
+    /// The cursor will assume shape *cursor* (for as long as the mouse
+    /// focus is grabbed) and this widget will be the only one to receive
+    /// mouse events until releaseMouse() is called().
+    ///
+    /// **Warning**: Grabbing the mouse might lock the terminal.
+    ///
+    /// **Note**: See the note in QWidget::grabMouse().
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    /// setCursor()
+    fn grab_mouse(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_mouse)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Grabs the mouse input.
+    ///
+    /// This widget receives all mouse events until releaseMouse() is
+    /// called; other widgets get no mouse events at all. Keyboard
+    /// events are not affected. Use grabKeyboard() if you want to grab
+    /// that.
+    ///
+    /// **Warning**: Bugs in mouse-grabbing applications very often lock the
+    /// terminal. Use this function with extreme caution, and consider
+    /// using the `-nograb` command line option while debugging.
+    ///
+    /// It is almost never necessary to grab the mouse when using Qt, as
+    /// Qt grabs and releases it sensibly. In particular, Qt grabs the
+    /// mouse when a mouse button is pressed and keeps it until the last
+    /// button is released.
+    ///
+    /// **Note**: Only visible widgets can grab mouse input. If isVisible()
+    /// returns `false` for a widget, that widget cannot call grabMouse().
+    ///
+    /// **Note**: On Windows, grabMouse() only works when the mouse is inside a window
+    /// owned by the process.
+    /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    ///
+    /// **Overloads** grabMouse()
+    /// Grabs the mouse input and changes the cursor shape.
+    ///
+    /// The cursor will assume shape *cursor* (for as long as the mouse
+    /// focus is grabbed) and this widget will be the only one to receive
+    /// mouse events until releaseMouse() is called().
+    ///
+    /// **Warning**: Grabbing the mouse might lock the terminal.
+    ///
+    /// **Note**: See the note in QWidget::grabMouse().
+    ///
+    /// **See also:** releaseMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    /// setCursor()
+    fn grab_mouse<C: CursorType<'a>>(&self, arg0: &C) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_mouse)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Releases the mouse grab.
+    ///
+    /// **See also:** grabMouse()
+    /// grabKeyboard()
+    /// releaseKeyboard()
+    fn release_mouse(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_mouse)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Grabs the keyboard input.
+    ///
+    /// This widget receives all keyboard events until releaseKeyboard()
+    /// is called; other widgets get no keyboard events at all. Mouse
+    /// events are not affected. Use grabMouse() if you want to grab that.
+    ///
+    /// The focus widget is not affected, except that it doesn't receive
+    /// any keyboard events. setFocus() moves the focus as usual, but the
+    /// new focus widget receives keyboard events only after
+    /// releaseKeyboard() is called.
+    ///
+    /// If a different widget is currently grabbing keyboard input, that
+    /// widget's grab is released first.
+    ///
+    /// **See also:** releaseKeyboard()
+    /// grabMouse()
+    /// releaseMouse()
+    /// focusWidget()
+    fn grab_keyboard(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_keyboard)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Releases the keyboard grab.
+    ///
+    /// **See also:** grabKeyboard()
+    /// grabMouse()
+    /// releaseMouse()
+    fn release_keyboard(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_keyboard)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Adds a shortcut to Qt's shortcut system that watches for the given
+    /// *key* sequence in the given *context.* If the *context* is
+    /// Qt::ApplicationShortcut, the shortcut applies to the application as a
+    /// whole. Otherwise, it is either local to this widget, Qt::WidgetShortcut,
+    /// or to the window itself, Qt::WindowShortcut.
+    ///
+    /// If the same *key* sequence has been grabbed by several widgets,
+    /// when the *key* sequence occurs a QEvent::Shortcut event is sent
+    /// to all the widgets to which it applies in a non-deterministic
+    /// order, but with the ``ambiguous'' flag set to true.
+    ///
+    /// **Warning**: You should not normally need to use this function;
+    /// instead create [QAction](QAction)
+    /// s with the shortcut key sequences you
+    /// require (if you also want equivalent menu options and toolbar
+    /// buttons), or create [QShortcut](QShortcut)
+    /// s if you just need key sequences.
+    /// Both QAction and QShortcut handle all the event filtering for you,
+    /// and provide signals which are triggered when the user triggers the
+    /// key sequence, so are much easier to use than this low-level
+    /// function.
+    ///
+    /// **See also:** releaseShortcut()
+    /// setShortcutEnabled()
+    fn grab_shortcut<K: KeySequenceType<'a>>(&self, key: &K, context: ShortcutContext) -> i32 {
+        let (obj_key_1, _funcs) = key.get_key_sequence_obj_funcs();
+        let enum_context_2 = context as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).grab_shortcut)(obj_data, obj_key_1, enum_context_2);
+            ret_val
+        }
+    }
+    ///
+    /// Removes the shortcut with the given *id* from Qt's shortcut
+    /// system. The widget will no longer receive QEvent::Shortcut events
+    /// for the shortcut's key sequence (unless it has other shortcuts
+    /// with the same key sequence).
+    ///
+    /// **Warning**: You should not normally need to use this function since
+    /// Qt's shortcut system removes shortcuts automatically when their
+    /// parent widget is destroyed. It is best to use QAction or
+    /// QShortcut to handle shortcuts, since they are easier to use than
+    /// this low-level function. Note also that this is an expensive
+    /// operation.
+    ///
+    /// **See also:** grabShortcut()
+    /// setShortcutEnabled()
+    fn release_shortcut(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_shortcut)(obj_data, id);
+        }
+        self
+    }
+    ///
+    /// If *enable* is true, the shortcut with the given *id* is
+    /// enabled; otherwise the shortcut is disabled.
+    ///
+    /// **Warning**: You should not normally need to use this function since
+    /// Qt's shortcut system enables/disables shortcuts automatically as
+    /// widgets become hidden/visible and gain or lose focus. It is best
+    /// to use QAction or QShortcut to handle shortcuts, since they are
+    /// easier to use than this low-level function.
+    ///
+    /// **See also:** grabShortcut()
+    /// releaseShortcut()
+    fn set_shortcut_enabled(&self, id: i32, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_shortcut_enabled)(obj_data, id, enable);
+        }
+        self
+    }
+    ///
+    /// If *enable* is true, auto repeat of the shortcut with the
+    /// given *id* is enabled; otherwise it is disabled.
+    ///
+    /// **See also:** grabShortcut()
+    /// releaseShortcut()
+    fn set_shortcut_auto_repeat(&self, id: i32, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_shortcut_auto_repeat)(obj_data, id, enable);
+        }
+        self
+    }
+    ///
+    /// An updates enabled widget receives paint events and has a system
+    /// background; a disabled widget does not. This also implies that
+    /// calling update() and repaint() has no effect if updates are
+    /// disabled.
+    ///
+    /// By default, this property is `true.`
+    ///
+    /// setUpdatesEnabled() is normally used to disable updates for a
+    /// short period of time, for instance to avoid screen flicker during
+    /// large changes. In Qt, widgets normally do not generate screen
+    /// flicker, but on X11 the server might erase regions on the screen
+    /// when widgets get hidden before they can be replaced by other
+    /// widgets. Disabling updates solves this.
+    ///
+    /// Example:
+    ///
+    /// Disabling a widget implicitly disables all its children. Enabling a widget
+    /// enables all child widgets *except* top-level widgets or those that
+    /// have been explicitly disabled. Re-enabling updates implicitly calls
+    /// update() on the widget.
+    ///
+    /// **See also:** paintEvent()
+    fn updates_enabled(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).updates_enabled)(obj_data);
+            ret_val
+        }
+    }
+    fn set_updates_enabled(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_updates_enabled)(obj_data, enable);
+        }
+        self
+    }
+    ///
+    /// An updates enabled widget receives paint events and has a system
+    /// background; a disabled widget does not. This also implies that
+    /// calling update() and repaint() has no effect if updates are
+    /// disabled.
+    ///
+    /// By default, this property is `true.`
+    ///
+    /// setUpdatesEnabled() is normally used to disable updates for a
+    /// short period of time, for instance to avoid screen flicker during
+    /// large changes. In Qt, widgets normally do not generate screen
+    /// flicker, but on X11 the server might erase regions on the screen
+    /// when widgets get hidden before they can be replaced by other
+    /// widgets. Disabling updates solves this.
+    ///
+    /// Example:
+    ///
+    /// Disabling a widget implicitly disables all its children. Enabling a widget
+    /// enables all child widgets *except* top-level widgets or those that
+    /// have been explicitly disabled. Re-enabling updates implicitly calls
+    /// update() on the widget.
+    ///
+    /// **See also:** paintEvent()
+    ///
+    /// Notifies the layout system that this widget has changed and may
+    /// need to change geometry.
+    ///
+    /// Call this function if the sizeHint() or sizePolicy() have changed.
+    ///
+    /// For explicitly hidden widgets, updateGeometry() is a no-op. The
+    /// layout system will be notified as soon as the widget is shown.
+    ///
+    /// Updates the widget unless updates are disabled or the widget is
+    /// hidden.
+    ///
+    /// This function does not cause an immediate repaint; instead it
+    /// schedules a paint event for processing when Qt returns to the main
+    /// event loop. This permits Qt to optimize for more speed and less
+    /// flicker than a call to repaint() does.
+    ///
+    /// Calling update() several times normally results in just one
+    /// paintEvent() call.
+    ///
+    /// Qt normally erases the widget's area before the paintEvent() call.
+    /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
+    /// responsible for painting all its pixels with an opaque color.
+    ///
+    /// **See also:** repaint()
+    /// paintEvent()
+    /// setUpdatesEnabled()
+    /// {Analog Clock Example}
+    /// **Overloads**
+    /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// **Overloads**
+    /// This version updates a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    ///
+    /// Updates the widget's micro focus.
+    fn update(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Repaints the widget directly by calling paintEvent() immediately,
+    /// unless updates are disabled or the widget is hidden.
+    ///
+    /// We suggest only using repaint() if you need an immediate repaint,
+    /// for example during animation. In almost all circumstances update()
+    /// is better, as it permits Qt to optimize for speed and minimize
+    /// flicker.
+    ///
+    /// **Warning**: If you call repaint() in a function which may itself be
+    /// called from paintEvent(), you may get infinite recursion. The
+    /// update() function never causes recursion.
+    ///
+    /// **See also:** update()
+    /// paintEvent()
+    /// setUpdatesEnabled()
+    /// **Overloads**
+    /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// If *w* is negative, it is replaced with `width() - x` , and if
+    /// *h* is negative, it is replaced width `height() - y` .
+    /// **Overloads**
+    /// This version repaints a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    fn repaint(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint)(obj_data);
+        }
+        self
+    }
+    ///
+    /// An updates enabled widget receives paint events and has a system
+    /// background; a disabled widget does not. This also implies that
+    /// calling update() and repaint() has no effect if updates are
+    /// disabled.
+    ///
+    /// By default, this property is `true.`
+    ///
+    /// setUpdatesEnabled() is normally used to disable updates for a
+    /// short period of time, for instance to avoid screen flicker during
+    /// large changes. In Qt, widgets normally do not generate screen
+    /// flicker, but on X11 the server might erase regions on the screen
+    /// when widgets get hidden before they can be replaced by other
+    /// widgets. Disabling updates solves this.
+    ///
+    /// Example:
+    ///
+    /// Disabling a widget implicitly disables all its children. Enabling a widget
+    /// enables all child widgets *except* top-level widgets or those that
+    /// have been explicitly disabled. Re-enabling updates implicitly calls
+    /// update() on the widget.
+    ///
+    /// **See also:** paintEvent()
+    ///
+    /// Notifies the layout system that this widget has changed and may
+    /// need to change geometry.
+    ///
+    /// Call this function if the sizeHint() or sizePolicy() have changed.
+    ///
+    /// For explicitly hidden widgets, updateGeometry() is a no-op. The
+    /// layout system will be notified as soon as the widget is shown.
+    ///
+    /// Updates the widget unless updates are disabled or the widget is
+    /// hidden.
+    ///
+    /// This function does not cause an immediate repaint; instead it
+    /// schedules a paint event for processing when Qt returns to the main
+    /// event loop. This permits Qt to optimize for more speed and less
+    /// flicker than a call to repaint() does.
+    ///
+    /// Calling update() several times normally results in just one
+    /// paintEvent() call.
+    ///
+    /// Qt normally erases the widget's area before the paintEvent() call.
+    /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
+    /// responsible for painting all its pixels with an opaque color.
+    ///
+    /// **See also:** repaint()
+    /// paintEvent()
+    /// setUpdatesEnabled()
+    /// {Analog Clock Example}
+    /// **Overloads**
+    /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// **Overloads**
+    /// This version updates a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    ///
+    /// Updates the widget's micro focus.
+    fn update(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update)(obj_data, x, y, w, h);
+        }
+        self
+    }
+    ///
+    /// Repaints the widget directly by calling paintEvent() immediately,
+    /// unless updates are disabled or the widget is hidden.
+    ///
+    /// We suggest only using repaint() if you need an immediate repaint,
+    /// for example during animation. In almost all circumstances update()
+    /// is better, as it permits Qt to optimize for speed and minimize
+    /// flicker.
+    ///
+    /// **Warning**: If you call repaint() in a function which may itself be
+    /// called from paintEvent(), you may get infinite recursion. The
+    /// update() function never causes recursion.
+    ///
+    /// **See also:** update()
+    /// paintEvent()
+    /// setUpdatesEnabled()
+    /// **Overloads**
+    /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// If *w* is negative, it is replaced with `width() - x` , and if
+    /// *h* is negative, it is replaced width `height() - y` .
+    /// **Overloads**
+    /// This version repaints a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    fn repaint(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint)(obj_data, x, y, w, h);
+        }
+        self
+    }
+    ///
+    /// Convenience function, equivalent to setVisible(! *hidden).*
+    fn set_hidden(&self, hidden: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_hidden)(obj_data, hidden);
+        }
+        self
+    }
+    ///
+    /// Shows the widget minimized, as an icon.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// **See also:** showNormal()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    /// isMinimized()
+    ///
+    /// Shows the widget in full-screen mode.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// To return from full-screen mode, call showNormal().
+    ///
+    /// Full-screen mode works fine under Windows, but has certain
+    /// problems under X. These problems are due to limitations of the
+    /// ICCCM protocol that specifies the communication between X11
+    /// clients and the window manager. ICCCM simply does not understand
+    /// the concept of non-decorated full-screen windows. Therefore, the
+    /// best we can do is to request a borderless window and place and
+    /// resize it to fill the entire screen. Depending on the window
+    /// manager, this may or may not work. The borderless window is
+    /// requested using MOTIF hints, which are at least partially
+    /// supported by virtually all modern window managers.
+    ///
+    /// An alternative would be to bypass the window manager entirely and
+    /// create a window with the Qt::X11BypassWindowManagerHint flag. This
+    /// has other severe problems though, like totally broken keyboard focus
+    /// and very strange effects on desktop changes or when the user raises
+    /// other windows.
+    ///
+    /// X11 window managers that follow modern post-ICCCM specifications
+    /// support full-screen mode properly.
+    ///
+    /// **See also:** showNormal()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    ///
+    /// Shows the widget maximized.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// On X11, this function may not work properly with certain window
+    /// managers. See the [Window Geometry](Window%20Geometry)
+    /// documentation for an explanation.
+    ///
+    /// **See also:** setWindowState()
+    /// showNormal()
+    /// showMinimized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    ///
+    /// Restores the widget after it has been maximized or minimized.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// **See also:** setWindowState()
+    /// showMinimized()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    ///
+    /// Shows the widget and its child widgets.
+    ///
+    /// This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
+    /// depending on the platform's default behavior for the window flags.
+    ///
+    /// **See also:** raise()
+    /// showEvent()
+    /// hide()
+    /// setVisible()
+    /// showMinimized()
+    /// showMaximized()
+    /// showNormal()
+    /// isVisible()
+    /// windowFlags()
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget show events which are passed in the *event* parameter.
+    ///
+    /// Non-spontaneous show events are sent to widgets immediately
+    /// before they are shown. The spontaneous show events of windows are
+    /// delivered afterwards.
+    ///
+    /// Note: A widget receives spontaneous show and hide events when its
+    /// mapping status is changed by the window system, e.g. a spontaneous
+    /// hide event when the user minimizes the window, and a spontaneous
+    /// show event when the window is restored again. After receiving a
+    /// spontaneous hide event, a widget is still considered visible in
+    /// the sense of isVisible().
+    ///
+    /// **See also:** visible
+    /// event()
+    /// QShowEvent
+    fn show(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Hides the widget. This function is equivalent to
+    /// setVisible(false).
+    ///
+    /// **Note**: If you are working with QDialog or its subclasses and you invoke
+    /// the show() function after this function, the dialog will be displayed in
+    /// its original position.
+    ///
+    /// **See also:** hideEvent()
+    /// isHidden()
+    /// show()
+    /// setVisible()
+    /// isVisible()
+    /// close()
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget hide events. The event is passed in the *event* parameter.
+    ///
+    /// Hide events are sent to widgets immediately after they have been
+    /// hidden.
+    ///
+    /// Note: A widget receives spontaneous show and hide events when its
+    /// mapping status is changed by the window system, e.g. a spontaneous
+    /// hide event when the user minimizes the window, and a spontaneous
+    /// show event when the window is restored again. After receiving a
+    /// spontaneous hide event, a widget is still considered visible in
+    /// the sense of isVisible().
+    ///
+    /// **See also:** visible
+    /// event()
+    /// QHideEvent
+    fn hide(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).hide)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Shows the widget minimized, as an icon.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// **See also:** showNormal()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    /// isMinimized()
+    fn show_minimized(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_minimized)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Shows the widget maximized.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// On X11, this function may not work properly with certain window
+    /// managers. See the [Window Geometry](Window%20Geometry)
+    /// documentation for an explanation.
+    ///
+    /// **See also:** setWindowState()
+    /// showNormal()
+    /// showMinimized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    fn show_maximized(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_maximized)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Shows the widget in full-screen mode.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// To return from full-screen mode, call showNormal().
+    ///
+    /// Full-screen mode works fine under Windows, but has certain
+    /// problems under X. These problems are due to limitations of the
+    /// ICCCM protocol that specifies the communication between X11
+    /// clients and the window manager. ICCCM simply does not understand
+    /// the concept of non-decorated full-screen windows. Therefore, the
+    /// best we can do is to request a borderless window and place and
+    /// resize it to fill the entire screen. Depending on the window
+    /// manager, this may or may not work. The borderless window is
+    /// requested using MOTIF hints, which are at least partially
+    /// supported by virtually all modern window managers.
+    ///
+    /// An alternative would be to bypass the window manager entirely and
+    /// create a window with the Qt::X11BypassWindowManagerHint flag. This
+    /// has other severe problems though, like totally broken keyboard focus
+    /// and very strange effects on desktop changes or when the user raises
+    /// other windows.
+    ///
+    /// X11 window managers that follow modern post-ICCCM specifications
+    /// support full-screen mode properly.
+    ///
+    /// **See also:** showNormal()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    fn show_full_screen(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_full_screen)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Restores the widget after it has been maximized or minimized.
+    ///
+    /// Calling this function only affects [windows](isWindow())
+    ///
+    ///
+    /// **See also:** setWindowState()
+    /// showMinimized()
+    /// showMaximized()
+    /// show()
+    /// hide()
+    /// isVisible()
+    fn show_normal(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_normal)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Closes this widget. Returns `true` if the widget was closed;
+    /// otherwise returns `false.`
+    ///
+    /// First it sends the widget a QCloseEvent. The widget is
+    /// [hidden](hide())
+    /// if it [accepts](QEvent::accept())
+    ///
+    /// the close event. If it [ignores](QEvent::ignore())
+    ///
+    /// the event, nothing happens. The default
+    /// implementation of QWidget::closeEvent() accepts the close event.
+    ///
+    /// If the widget has the Qt::WA_DeleteOnClose flag, the widget
+    /// is also deleted. A close events is delivered to the widget no
+    /// matter if the widget is visible or not.
+    ///
+    /// The [QApplication::lastWindowClosed()](QApplication::lastWindowClosed())
+    /// signal is emitted when the
+    /// last visible primary window (i.e. window with no parent) with the
+    /// Qt::WA_QuitOnClose attribute set is closed. By default this
+    /// attribute is set for all widgets except transient windows such as
+    /// splash screens, tool windows, and popup menus.
+    ///
+    ///
+    /// This event handler is called with the given *event* when Qt receives a window
+    /// close request for a top-level widget from the window system.
+    ///
+    /// By default, the event is accepted and the widget is closed. You can reimplement
+    /// this function to change the way the widget responds to window close requests.
+    /// For example, you can prevent the window from closing by calling [ignore()](QEvent::)
+    ///
+    /// on all events.
+    ///
+    /// Main window applications typically use reimplementations of this function to check
+    /// whether the user's work has been saved and ask for permission before closing.
+    /// For example, the [Application Example](Application%20Example)
+    /// uses a helper function to determine whether
+    /// or not to close the window:
+    ///
+    /// **See also:** event()
+    /// hide()
+    /// close()
+    /// QCloseEvent
+    /// {Application Example}
+    fn close(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).close)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Raises this widget to the top of the parent widget's stack.
+    ///
+    /// After this call the widget will be visually in front of any
+    /// overlapping sibling widgets.
+    ///
+    /// **Note**: When using activateWindow(), you can call this function to
+    /// ensure that the window is stacked on top.
+    ///
+    /// **See also:** lower()
+    /// stackUnder()
+    fn raise(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).raise)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Lowers the widget to the bottom of the parent widget's stack.
+    ///
+    /// After this call the widget will be visually behind (and therefore
+    /// obscured by) any overlapping sibling widgets.
+    ///
+    /// **See also:** raise()
+    /// stackUnder()
+    fn lower(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).lower)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Places the widget under *w* in the parent widget's stack.
+    ///
+    /// To make this work, the widget itself and *w* must be siblings.
+    ///
+    /// **See also:** raise()
+    /// lower()
+    fn stack_under<W: WidgetType<'a>>(&self, arg0: &W) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).stack_under)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// **Overloads**
+    /// This corresponds to move(QPoint( *x,* *y)).*
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget move events which are passed in the *event* parameter.
+    /// When the widget receives this event, it is already at the new
+    /// position.
+    ///
+    /// The old position is accessible through QMoveEvent::oldPos().
+    ///
+    /// **See also:** resizeEvent()
+    /// event()
+    /// move()
+    /// QMoveEvent
+    fn move_widget(&self, x: i32, y: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).move_widget)(obj_data, x, y);
+        }
+        self
+    }
+    /// This corresponds to resize(QSize( *w,* *h)).*
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget resize events which are passed in the *event* parameter.
+    /// When resizeEvent() is called, the widget already has its new
+    /// geometry. The old size is accessible through
+    /// QResizeEvent::oldSize().
+    ///
+    /// The widget will be erased and receive a paint event immediately
+    /// after processing the resize event. No drawing need be (or should
+    /// be) done inside this handler.
+    ///
+    /// **See also:** moveEvent()
+    /// event()
+    /// resize()
+    /// QResizeEvent
+    /// paintEvent()
+    /// {Scribble Example}
+    fn resize(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).resize)(obj_data, w, h);
+        }
+        self
+    }
+    ///
+    /// Adjusts the size of the widget to fit its contents.
+    ///
+    /// This function uses sizeHint() if it is valid, i.e., the size hint's width
+    /// and height are \>= 0. Otherwise, it sets the size to the children
+    /// rectangle that covers all child widgets (the union of all child widget
+    /// rectangles).
+    ///
+    /// For windows, the screen size is also taken into account. If the sizeHint()
+    /// is less than (200, 100) and the size policy is [expanding](QSizePolicy::Expanding)
+    /// , the window will be at least (200, 100). The maximum size of
+    /// a window is 2/3 of the screen's width and height.
+    ///
+    /// **See also:** sizeHint()
+    /// childrenRect()
+    fn adjust_size(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).adjust_size)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Returns `true` if this widget would become visible if *ancestor* is
+    /// shown; otherwise returns `false.`
+    ///
+    /// The true case occurs if neither the widget itself nor any parent
+    /// up to but excluding *ancestor* has been explicitly hidden.
+    ///
+    /// This function will still return true if the widget is obscured by
+    /// other windows on the screen, but could be physically visible if it
+    /// or they were to be moved.
+    ///
+    /// isVisibleTo(0) is identical to isVisible().
+    ///
+    /// **See also:** show()
+    /// hide()
+    /// isVisible()
+    fn is_visible(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_visible)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if this widget would become visible if *ancestor* is
+    /// shown; otherwise returns `false.`
+    ///
+    /// The true case occurs if neither the widget itself nor any parent
+    /// up to but excluding *ancestor* has been explicitly hidden.
+    ///
+    /// This function will still return true if the widget is obscured by
+    /// other windows on the screen, but could be physically visible if it
+    /// or they were to be moved.
+    ///
+    /// isVisibleTo(0) is identical to isVisible().
+    ///
+    /// **See also:** show()
+    /// hide()
+    /// isVisible()
+    fn is_visible_to<W: WidgetType<'a>>(&self, arg0: &W) -> bool {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_visible_to)(obj_data, obj_arg0_1);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the widget is hidden, otherwise returns `false.`
+    ///
+    /// A hidden widget will only become visible when show() is called on
+    /// it. It will not be automatically shown when the parent is shown.
+    ///
+    /// To check visibility, use !isVisible() instead (notice the exclamation mark).
+    ///
+    /// isHidden() implies !isVisible(), but a widget can be not visible
+    /// and not hidden at the same time. This is the case for widgets that are children of
+    /// widgets that are not visible.
+    ///
+    /// Widgets are hidden if:
+    /// * they were created as independent windows,
+    /// * they were created as children of visible widgets,
+    /// * hide() or setVisible(false) was called.
+    fn is_hidden(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_hidden)(obj_data);
+            ret_val
+        }
+    }
+    fn is_minimized(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_minimized)(obj_data);
+            ret_val
+        }
+    }
+    fn is_maximized(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_maximized)(obj_data);
+            ret_val
+        }
+    }
+    fn is_full_screen(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_full_screen)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns the current window state. The window state is a OR'ed
+    /// combination of Qt::WindowState: Qt::WindowMinimized,
+    /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
+    ///
+    /// **See also:** Qt::WindowState
+    /// setWindowState()
+    fn window_state(&self) -> WindowStates {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_state)(obj_data);
+            let ret_val = { transmute::<i32, WindowStates>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Sets the window state to *windowState.* The window state is a OR'ed
+    /// combination of Qt::WindowState: Qt::WindowMinimized,
+    /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
+    ///
+    /// If the window is not visible (i.e. isVisible() returns `false),` the
+    /// window state will take effect when show() is called. For visible
+    /// windows, the change is immediate. For example, to toggle between
+    /// full-screen and normal mode, use the following code:
+    ///
+    /// In order to restore and activate a minimized window (while
+    /// preserving its maximized and/or full-screen state), use the following:
+    ///
+    /// Calling this function will hide the widget. You must call show() to make
+    /// the widget visible again.
+    ///
+    /// **Note**: On some window systems Qt::WindowActive is not immediate, and may be
+    /// ignored in certain cases.
+    ///
+    /// When the window state changes, the widget receives a changeEvent()
+    /// of type QEvent::WindowStateChange.
+    ///
+    /// **See also:** Qt::WindowState
+    /// windowState()
+    fn set_window_state(&self, state: WindowStates) -> &Self {
+        let enum_state_1 = state as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_state)(obj_data, enum_state_1);
+        }
+        self
+    }
+    fn override_window_state(&self, state: WindowStates) -> &Self {
+        let enum_state_1 = state as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).override_window_state)(obj_data, enum_state_1);
+        }
+        self
+    }
+    ///
+    /// If there is a QLayout that manages this widget's children, the
+    /// size policy specified by that layout is used. If there is no such
+    /// QLayout, the result of this function is used.
+    ///
+    /// The default policy is Preferred/Preferred, which means that the
+    /// widget can be freely resized, but prefers to be the size
+    /// sizeHint() returns. Button-like widgets set the size policy to
+    /// specify that they may stretch horizontally, but are fixed
+    /// vertically. The same applies to lineedit controls (such as
+    /// QLineEdit, QSpinBox or an editable QComboBox) and other
+    /// horizontally orientated widgets (such as QProgressBar).
+    /// QToolButton's are normally square, so they allow growth in both
+    /// directions. Widgets that support different directions (such as
+    /// QSlider, QScrollBar or QHeader) specify stretching in the
+    /// respective direction only. Widgets that can provide scroll bars
+    /// (usually subclasses of QScrollArea) tend to specify that they can
+    /// use additional space, and that they can make do with less than
+    /// sizeHint().
+    ///
+    /// **See also:** sizeHint()
+    /// QLayout
+    /// QSizePolicy
+    /// updateGeometry()
+    fn size_policy(&self) -> SizePolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_policy)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = SizePolicy::new_from_rc(t);
+            } else {
+                ret_val = SizePolicy::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
+    ///
+    /// **See also:** QSizePolicy::QSizePolicy()
+    fn set_size_policy<S: SizePolicyType<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_policy_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_policy)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// **Overloads**
+    /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
+    ///
+    /// **See also:** QSizePolicy::QSizePolicy()
+    fn set_size_policy(&self, horizontal: Policy, vertical: Policy) -> &Self {
+        let enum_horizontal_1 = horizontal as i32;
+        let enum_vertical_2 = vertical as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_policy)(obj_data, enum_horizontal_1, enum_vertical_2);
+        }
+        self
+    }
+    ///
+    /// Returns the unobscured region where paint events can occur.
+    ///
+    /// For visible widgets, this is an approximation of the area not
+    /// covered by other widgets; otherwise, this is an empty region.
+    ///
+    /// The repaint() function calls this function if necessary, so in
+    /// general you do not need to call it.
+    ///
+    fn visible_region(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).visible_region)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Sets the margins around the contents of the widget to have the sizes
+    /// *left,* *top,* *right,* and *bottom.* The margins are used by
+    /// the layout system, and may be used by subclasses to specify the area
+    /// to draw in (e.g. excluding the frame).
+    ///
+    /// Changing the margins will trigger a resizeEvent().
+    ///
+    /// **See also:** contentsRect()
+    /// getContentsMargins()
+    ///
+    /// **Overloads**
+    ///
+    /// Sets the margins around the contents of the widget to have the
+    /// sizes determined by *margins.* The margins are
+    /// used by the layout system, and may be used by subclasses to
+    /// specify the area to draw in (e.g. excluding the frame).
+    ///
+    /// Changing the margins will trigger a resizeEvent().
+    ///
+    /// **See also:** contentsRect()
+    /// getContentsMargins()
+    fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_contents_margins)(obj_data, left, top, right, bottom);
+        }
+        self
+    }
+    ///
+    /// **See also:** getContentsMargins()
+    /// setContentsMargins()
+    /// contentsRect()
+    fn contents_margins(&self) -> Margins {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contents_margins)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Margins::new_from_rc(t);
+            } else {
+                ret_val = Margins::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the area inside the widget's margins.
+    ///
+    /// **See also:** setContentsMargins()
+    /// getContentsMargins()
+    fn contents_rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contents_rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// By default, this property is set to Qt::LeftToRight.
+    ///
+    /// When the layout direction is set on a widget, it will propagate to
+    /// the widget's children, but not to a child that is a window and not
+    /// to a child for which setLayoutDirection() has been explicitly
+    /// called. Also, child widgets added *after* setLayoutDirection()
+    /// has been called for the parent do not inherit the parent's layout
+    /// direction.
+    ///
+    /// This method no longer affects text layout direction since Qt 4.7.
+    ///
+    /// **See also:** QApplication::layoutDirection
+    ///
+    /// Returns the layout manager that is installed on this widget, or 0
+    /// if no layout manager is installed.
+    ///
+    /// The layout manager sets the geometry of the widget's children
+    /// that have been added to the layout.
+    ///
+    /// **See also:** setLayout()
+    /// sizePolicy()
+    /// {Layout Management}
+    fn layout(&self) -> Option<Layout> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).layout)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Layout::new_from_rc(t);
+            } else {
+                ret_val = Layout::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Sets the layout manager for this widget to *layout.*
+    ///
+    /// If there already is a layout manager installed on this widget,
+    /// QWidget won't let you install another. You must first delete the
+    /// existing layout manager (returned by layout()) before you can
+    /// call setLayout() with the new layout.
+    ///
+    /// If *layout* is the layout manager on a different widget, setLayout()
+    /// will reparent the layout and make it the layout manager for this widget.
+    ///
+    /// Example:
+    ///
+    /// An alternative to calling this function is to pass this widget to
+    /// the layout's constructor.
+    ///
+    /// The QWidget will take ownership of *layout.*
+    ///
+    /// **See also:** layout()
+    /// {Layout Management}
+    fn set_layout<L: LayoutType<'a>>(&self, arg0: &L) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_layout_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_layout)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    ///
+    /// Sets the parent of the widget to *parent,* and resets the window
+    /// flags. The widget is moved to position (0, 0) in its new parent.
+    ///
+    /// If the new parent widget is in a different window, the
+    /// reparented widget and its children are appended to the end of the
+    /// [tab chain](setFocusPolicy())
+    /// of the new parent
+    /// widget, in the same internal order as before. If one of the moved
+    /// widgets had keyboard focus, setParent() calls clearFocus() for that
+    /// widget.
+    ///
+    /// If the new parent widget is in the same window as the
+    /// old parent, setting the parent doesn't change the tab order or
+    /// keyboard focus.
+    ///
+    /// If the parent widget is the old parent widget, this function
+    /// does nothing.
+    ///
+    /// **Note**: The widget becomes invisible as part of changing its parent,
+    /// even if it was previously visible. You must call show() to make the
+    /// widget visible again.
+    ///
+    /// **Warning**: It is very unlikely that you will ever need this
+    /// function. If you have a widget that changes its content
+    /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
+    ///
+    /// **See also:** setWindowFlags()
+    ///
+    /// **Overloads**
+    /// This function also takes widget flags, *f* as an argument.
     fn set_parent<W: WidgetType<'a>>(&self, parent: &W) -> &Self {
         let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
 
@@ -336,15 +7713,619 @@ pub trait WidgetType<'a> {
         }
         self
     }
+    ///
+    /// Sets the parent of the widget to *parent,* and resets the window
+    /// flags. The widget is moved to position (0, 0) in its new parent.
+    ///
+    /// If the new parent widget is in a different window, the
+    /// reparented widget and its children are appended to the end of the
+    /// [tab chain](setFocusPolicy())
+    /// of the new parent
+    /// widget, in the same internal order as before. If one of the moved
+    /// widgets had keyboard focus, setParent() calls clearFocus() for that
+    /// widget.
+    ///
+    /// If the new parent widget is in the same window as the
+    /// old parent, setting the parent doesn't change the tab order or
+    /// keyboard focus.
+    ///
+    /// If the parent widget is the old parent widget, this function
+    /// does nothing.
+    ///
+    /// **Note**: The widget becomes invisible as part of changing its parent,
+    /// even if it was previously visible. You must call show() to make the
+    /// widget visible again.
+    ///
+    /// **Warning**: It is very unlikely that you will ever need this
+    /// function. If you have a widget that changes its content
+    /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
+    ///
+    /// **See also:** setWindowFlags()
+    ///
+    /// **Overloads**
+    /// This function also takes widget flags, *f* as an argument.
+    fn set_parent<W: WidgetType<'a>>(&self, parent: &W, f: WindowFlags) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
+        let enum_f_2 = f as i32;
 
-    fn update(&self) -> &Self {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).update)(obj_data);
+            ((*funcs).set_parent)(obj_data, obj_parent_1, enum_f_2);
         }
         self
     }
-    /// Signal for when Window tile changes  
+    ///
+    /// Scrolls the widget including its children *dx* pixels to the
+    /// right and *dy* downward. Both *dx* and *dy* may be negative.
+    ///
+    /// After scrolling, the widgets will receive paint events for
+    /// the areas that need to be repainted. For widgets that Qt knows to
+    /// be opaque, this is only the newly exposed parts.
+    /// For example, if an opaque widget is scrolled 8 pixels to the left,
+    /// only an 8-pixel wide stripe at the right edge needs updating.
+    ///
+    /// Since widgets propagate the contents of their parents by default,
+    /// you need to set the [autoFillBackground](autoFillBackground)
+    /// property, or use
+    /// setAttribute() to set the Qt::WA_OpaquePaintEvent attribute, to make
+    /// a widget opaque.
+    ///
+    /// For widgets that use contents propagation, a scroll will cause an
+    /// update of the entire scroll area.
+    ///
+    /// **See also:** {Transparency and Double Buffering}
+    ///
+    /// **Overloads**
+    /// This version only scrolls *r* and does not move the children of
+    /// the widget.
+    ///
+    /// If *r* is empty or invalid, the result is undefined.
+    ///
+    /// **See also:** QScrollArea
+    fn scroll(&self, dx: i32, dy: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).scroll)(obj_data, dx, dy);
+        }
+        self
+    }
+    ///
+    /// Scrolls the widget including its children *dx* pixels to the
+    /// right and *dy* downward. Both *dx* and *dy* may be negative.
+    ///
+    /// After scrolling, the widgets will receive paint events for
+    /// the areas that need to be repainted. For widgets that Qt knows to
+    /// be opaque, this is only the newly exposed parts.
+    /// For example, if an opaque widget is scrolled 8 pixels to the left,
+    /// only an 8-pixel wide stripe at the right edge needs updating.
+    ///
+    /// Since widgets propagate the contents of their parents by default,
+    /// you need to set the [autoFillBackground](autoFillBackground)
+    /// property, or use
+    /// setAttribute() to set the Qt::WA_OpaquePaintEvent attribute, to make
+    /// a widget opaque.
+    ///
+    /// For widgets that use contents propagation, a scroll will cause an
+    /// update of the entire scroll area.
+    ///
+    /// **See also:** {Transparency and Double Buffering}
+    ///
+    /// **Overloads**
+    /// This version only scrolls *r* and does not move the children of
+    /// the widget.
+    ///
+    /// If *r* is empty or invalid, the result is undefined.
+    ///
+    /// **See also:** QScrollArea
+    fn scroll_by_rect<R: RectType<'a>>(&self, dx: i32, dy: i32, arg0: &R) -> &Self {
+        let (obj_arg0_3, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).scroll_by_rect)(obj_data, dx, dy, obj_arg0_3);
+        }
+        self
+    }
+    ///
+    /// Returns the last child of this widget that setFocus had been
+    /// called on. For top level widgets this is the widget that will get
+    /// focus in case this window gets activated
+    ///
+    /// This is not the same as QApplication::focusWidget(), which returns
+    /// the focus widget in the currently active window.
+    fn focus_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the next widget in this widget's focus chain.
+    ///
+    /// **See also:** previousInFocusChain()
+    fn next_in_focus_chain(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).next_in_focus_chain)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// **See also:** nextInFocusChain()
+    ///
+    fn previous_in_focus_chain(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).previous_in_focus_chain)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Setting this property to true announces to the system that this
+    /// widget *may* be able to accept drop events.
+    ///
+    /// If the widget is the desktop (windowType() == Qt::Desktop), this may
+    /// fail if another application is using the desktop; you can call
+    /// acceptDrops() to test if this occurs.
+    ///
+    /// **Warning**: Do not modify this property in a drag and drop event handler.
+    ///
+    /// By default, this property is `false.`
+    ///
+    /// **See also:** {Drag and Drop}
+    fn accept_drops(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accept_drops)(obj_data);
+            ret_val
+        }
+    }
+    fn set_accept_drops(&self, on: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accept_drops)(obj_data, on);
+        }
+        self
+    }
+    /// Returns the parent of this widget, or 0 if it does not have any
+    /// parent widget.
+    fn parent_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    fn set_window_flags(&self, flags: WindowFlags) -> &Self {
+        let enum_flags_1 = flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_flags)(obj_data, enum_flags_1);
+        }
+        self
+    }
+    ///
+    /// Window flags are a combination of a type (e.g. Qt::Dialog) and
+    /// zero or more hints to the window system (e.g.
+    /// Qt::FramelessWindowHint).
+    ///
+    /// If the widget had type Qt::Widget or Qt::SubWindow and becomes a
+    /// window (Qt::Window, Qt::Dialog, etc.), it is put at position (0,
+    /// 0) on the desktop. If the widget is a window and becomes a
+    /// Qt::Widget or Qt::SubWindow, it is put at position (0, 0)
+    /// relative to its parent widget.
+    ///
+    /// **Note**: This function calls setParent() when changing the flags for
+    /// a window, causing the widget to be hidden. You must call show() to make
+    /// the widget visible again..
+    ///
+    /// **See also:** windowType()
+    /// setWindowFlag()
+    /// {Window Flags Example}
+    fn window_flags(&self) -> WindowFlags {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_flags)(obj_data);
+            let ret_val = { transmute::<i32, WindowFlags>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Sets the window flag *flag* on this widget if *on* is true;
+    /// otherwise clears the flag.
+    ///
+    /// **See also:** setWindowFlags()
+    /// windowFlags()
+    /// windowType()
+    fn set_window_flag(&self, flag: WindowType, on: bool) -> &Self {
+        let enum_flag_1 = flag as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_flag)(obj_data, enum_flag_1, on);
+        }
+        self
+    }
+    ///
+    /// Sets the window flags for the widget to *flags,*
+    /// *without* telling the window system.
+    ///
+    /// **Warning**: Do not call this function unless you really know what
+    /// you're doing.
+    ///
+    /// **See also:** setWindowFlags()
+    fn override_window_flags(&self, flags: WindowFlags) -> &Self {
+        let enum_flags_1 = flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).override_window_flags)(obj_data, enum_flags_1);
+        }
+        self
+    }
+    ///
+    /// Returns the window type of this widget. This is identical to
+    /// windowFlags() & Qt::WindowType_Mask.
+    ///
+    /// **See also:** windowFlags
+    fn window_type(&self) -> WindowType {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_type)(obj_data);
+            let ret_val = { transmute::<i32, WindowType>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Returns the visible child widget at the position ( *x* , *y* )
+    /// in the widget's coordinate system. If there is no visible child
+    /// widget at the specified position, the function returns 0.
+    ///
+    /// **Overloads**
+    /// Returns the visible child widget at point *p* in the widget's own
+    /// coordinate system.
+    fn child_at(&self, x: i32, y: i32) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).child_at)(obj_data, x, y);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the visible child widget at the position ( *x* , *y* )
+    /// in the widget's coordinate system. If there is no visible child
+    /// widget at the specified position, the function returns 0.
+    ///
+    /// **Overloads**
+    /// Returns the visible child widget at point *p* in the widget's own
+    /// coordinate system.
+    fn child_at<P: PointType<'a>>(&self, p: &P) -> Option<Widget> {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).child_at)(obj_data, obj_p_1);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Ensures that the widget and its children have been polished by
+    /// QStyle (i.e., have a proper font and palette).
+    ///
+    /// QWidget calls this function after it has been fully constructed
+    /// but before it is shown the very first time. You can call this
+    /// function if you want to ensure that the widget is polished before
+    /// doing an operation, e.g., the correct font size might be needed in
+    /// the widget's sizeHint() reimplementation. Note that this function
+    /// *is* called from the default implementation of sizeHint().
+    ///
+    /// Polishing is useful for final initialization that must happen after
+    /// all constructors (from base classes as well as from subclasses)
+    /// have been called.
+    ///
+    /// If you need to change some settings when a widget is polished,
+    /// reimplement event() and handle the QEvent::Polish event type.
+    ///
+    /// **Note:** The function is declared const so that it can be called from
+    /// other const functions (e.g., sizeHint()).
+    ///
+    /// **See also:** event()
+    fn ensure_polished(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).ensure_polished)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Returns `true` if this widget is a parent, (or grandparent and so on
+    /// to any level), of the given *child,* and both widgets are within
+    /// the same window; otherwise returns `false.`
+    fn is_ancestor_of<W: WidgetType<'a>>(&self, child: &W) -> bool {
+        let (obj_child_1, _funcs) = child.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_ancestor_of)(obj_data, obj_child_1);
+            ret_val
+        }
+    }
+    ///
+    /// If enabled, this property will cause Qt to fill the background of the
+    /// widget before invoking the paint event. The color used is defined by the
+    /// QPalette::Window color role from the widget's [palette](QPalette)
+    ///
+    ///
+    /// In addition, Windows are always filled with QPalette::Window, unless the
+    /// WA_OpaquePaintEvent or WA_NoSystemBackground attributes are set.
+    ///
+    /// This property cannot be turned off (i.e., set to false) if a widget's
+    /// parent has a static gradient for its background.
+    ///
+    /// **Warning**: Use this property with caution in conjunction with
+    /// [Qt Style Sheets](Qt%20Style%20Sheets)
+    /// . When a widget has a style sheet with a valid
+    /// background or a border-image, this property is automatically disabled.
+    ///
+    /// By default, this property is `false.`
+    ///
+    /// **See also:** Qt::WA_OpaquePaintEvent
+    /// Qt::WA_NoSystemBackground
+    /// {QWidget#Transparency and Double Buffering}{Transparency and Double Buffering}
+    fn auto_fill_background(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).auto_fill_background)(obj_data);
+            ret_val
+        }
+    }
+    fn set_auto_fill_background(&self, enabled: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_auto_fill_background)(obj_data, enabled);
+        }
+        self
+    }
+    ///
+    /// Returns the QBackingStore this widget will be drawn into.
+    fn backing_store(&self) -> Option<BackingStore> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).backing_store)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = BackingStore::new_from_rc(t);
+            } else {
+                ret_val = BackingStore::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// If this is a native widget, return the associated QWindow.
+    /// Otherwise return null.
+    ///
+    /// Native widgets include toplevel widgets, QGLWidget, and child widgets
+    /// on which winId() was called.
+    ///
+    /// **See also:** winId()
+    fn window_handle(&self) -> Option<Window> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_handle)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Window::new_from_rc(t);
+            } else {
+                ret_val = Window::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// This is only relevant for input widgets. It is used by
+    /// the input method to retrieve hints as to how the input method
+    /// should operate. For example, if the Qt::ImhFormattedNumbersOnly flag
+    /// is set, the input method may change its visual components to reflect
+    /// that only numbers can be entered.
+    ///
+    /// **Warning**: Some widgets require certain flags in order to work as
+    /// intended. To set a flag, do `w->setInputMethodHints(w->inputMethodHints()|f)`
+    /// instead of `w->setInputMethodHints(f)` .
+    ///
+    /// **Note**: The flags are only hints, so the particular input method
+    /// implementation is free to ignore them. If you want to be
+    /// sure that a certain type of characters are entered,
+    /// you should also set a QValidator on the widget.
+    ///
+    /// The default value is Qt::ImhNone.
+    ///
+    /// **See also:** inputMethodQuery()
+    fn input_method_hints(&self) -> InputMethodHints {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).input_method_hints)(obj_data);
+            let ret_val = { transmute::<i32, InputMethodHints>(ret_val) };
+            ret_val
+        }
+    }
+    fn set_input_method_hints(&self, hints: InputMethodHints) -> &Self {
+        let enum_hints_1 = hints as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_input_method_hints)(obj_data, enum_hints_1);
+        }
+        self
+    }
+    ///
+    /// Updates the widget's micro focus.
+    fn update_micro_focus(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_micro_focus)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Creates a QWidget that makes it possible to embed *window* into
+    /// a QWidget-based application.
+    ///
+    /// The window container is created as a child of *parent* and with
+    /// window flags *flags.*
+    ///
+    /// Once the window has been embedded into the container, the
+    /// container will control the window's geometry and
+    /// visibility. Explicit calls to QWindow::setGeometry(),
+    /// QWindow::show() or QWindow::hide() on an embedded window is not
+    /// recommended.
+    ///
+    /// The container takes over ownership of *window.* The window can
+    /// be removed from the window container with a call to
+    /// QWindow::setParent().
+    ///
+    /// The window container is attached as a native child window to the
+    /// toplevel window it is a child of. When a window container is used
+    /// as a child of a QAbstractScrollArea or QMdiArea, it will
+    /// create a [native window](Native%20Widgets%20vs%20Alien%20Widgets)
+    /// for
+    /// every widget in its parent chain to allow for proper stacking and
+    /// clipping in this use case. Creating a native window for the window
+    /// container also allows for proper stacking and clipping. This must
+    /// be done before showing the window container. Applications with
+    /// many native child windows may suffer from performance issues.
+    ///
+    /// The window container has a number of known limitations:
+    ///
+    /// * Stacking order; The embedded window will stack on top of the widget hierarchy as an opaque box. The stacking order of multiple overlapping window container instances is undefined.
+    /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
+    /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
+    /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
+    ///
+    /// Creates a new widget window.
+    ///
+    /// The parameter *window* is ignored in Qt 5. Please use
+    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
+    /// window and pass it to QWidget::createWindowContainer() instead.
+    ///
+    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
+    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
+    ///
+    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
+    /// window yourself (using platform native code).
+    ///
+    /// The QWidget constructor calls create(0,true,true) to create a
+    /// window for this widget.
+    ///
+    /// **See also:** createWindowContainer()
+    /// QWindow::fromWinId()
+    fn create(&self, arg0: WId, initialize_window: bool, destroy_old_window: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).create)(obj_data, arg0, initialize_window, destroy_old_window);
+        }
+        self
+    }
+    ///
+    /// Finds a new widget to give the keyboard focus to, as appropriate
+    /// for **Tab,** and returns `true` if it can find a new widget, or
+    /// false if it can't.
+    ///
+    /// **See also:** focusPreviousChild()
+    fn focus_next_child(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_next_child)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Finds a new widget to give the keyboard focus to, as appropriate
+    /// for **Shift+Tab,** and returns `true` if it can find a new widget,
+    /// or false if it can't.
+    ///
+    /// **See also:** focusNextChild()
+    fn focus_previous_child(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_previous_child)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// This signal is emitted when the window's title has changed, with the
+    /// new *title* as an argument.
+    ///
 
     fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
@@ -386,6 +8367,152 @@ pub trait WidgetType<'a> {
 
         self
     }
+    ///
+    /// This signal is emitted when the window's icon has changed, with the
+    /// new *icon* as an argument.
+    ///
+
+    fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &IconType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &IconType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_icon_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    fn set_window_icon_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&IconType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&IconType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_icon_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// This signal is emitted when the window's icon text has changed, with the
+    /// new *iconText* as an argument.
+    ///
+    /// This signal is deprecated.
+
+    fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &str) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_icon_text_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_text_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    fn set_window_icon_text_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&str) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_icon_text_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_text_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// This signal is emitted when the widget's [contextMenuPolicy](contextMenuPolicy)
+    /// is
+    /// Qt::CustomContextMenu, and the user has requested a context menu on
+    /// the widget. The position *pos* is the position of the context menu
+    /// event that the widget receives. Normally this is in widget
+    /// coordinates. The exception to this rule is QAbstractScrollArea and
+    /// its subclasses that map the context menu event to coordinates of the
+    /// [viewport()](QAbstractScrollArea::viewport())
+    ///
+    ///
+    /// **See also:** mapToGlobal()
+    /// QMenu
+    /// contextMenuPolicy
+
+    fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &PointType) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &PointType) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_context_menu_requested_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_custom_context_menu_requested_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    fn set_custom_context_menu_requested_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&PointType) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&PointType) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_context_menu_requested_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_custom_context_menu_requested_trampoline as usize),
+            );
+        }
+
+        self
+    }
 
     #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs);
@@ -398,3 +8525,203 @@ impl<'a> WidgetType<'a> for Widget<'a> {
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
     }
 }
+pub trait WidgetStaticType {
+    ///
+    /// Puts the *second* widget after the *first* widget in the focus order.
+    ///
+    /// It effectively removes the *second* widget from its focus chain and
+    /// inserts it after the *first* widget.
+    ///
+    /// Note that since the tab order of the *second* widget is changed, you
+    /// should order a chain like this:
+    ///
+    /// *not* like this:
+    ///
+    /// If *first* or *second* has a focus proxy, setTabOrder()
+    /// correctly substitutes the proxy.
+    ///
+    /// **Note**: Since Qt 5.10: A widget that has a child as focus proxy is understood as
+    /// a compound widget. When setting a tab order between one or two compound widgets, the
+    /// local tab order inside each will be preserved. This means that if both widgets are
+    /// compound widgets, the resulting tab order will be from the last child inside
+    /// *first,* to the first child inside *second.*
+    ///
+    /// **See also:** setFocusPolicy()
+    /// setFocusProxy()
+    /// {Keyboard Focus in Widgets}
+    fn set_tab_order<'a, W: WidgetType<'a>>(arg0: &W, arg1: &W) {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_tab_order)(obj_data, obj_arg0_1, obj_arg1_2);
+        }
+    }
+    ///
+    /// Returns the widget that is currently grabbing the mouse input.
+    ///
+    /// If no widget in this application is currently grabbing the mouse,
+    /// 0 is returned.
+    ///
+    /// **See also:** grabMouse()
+    /// keyboardGrabber()
+    fn mouse_grabber<'a>() -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).mouse_grabber)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the widget that is currently grabbing the keyboard input.
+    ///
+    /// If no widget in this application is currently grabbing the
+    /// keyboard, 0 is returned.
+    ///
+    /// **See also:** grabMouse()
+    /// mouseGrabber()
+    fn keyboard_grabber<'a>() -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).keyboard_grabber)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns a pointer to the widget with window identifer/handle *id.*
+    ///
+    /// The window identifier type depends on the underlying window
+    /// system, see `qwindowdefs.h` for the actual definition. If there
+    /// is no widget with this identifier, 0 is returned.
+    fn find<'a>(arg0: WId<'a>) -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).find)(obj_data, arg0);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Creates a QWidget that makes it possible to embed *window* into
+    /// a QWidget-based application.
+    ///
+    /// The window container is created as a child of *parent* and with
+    /// window flags *flags.*
+    ///
+    /// Once the window has been embedded into the container, the
+    /// container will control the window's geometry and
+    /// visibility. Explicit calls to QWindow::setGeometry(),
+    /// QWindow::show() or QWindow::hide() on an embedded window is not
+    /// recommended.
+    ///
+    /// The container takes over ownership of *window.* The window can
+    /// be removed from the window container with a call to
+    /// QWindow::setParent().
+    ///
+    /// The window container is attached as a native child window to the
+    /// toplevel window it is a child of. When a window container is used
+    /// as a child of a QAbstractScrollArea or QMdiArea, it will
+    /// create a [native window](Native%20Widgets%20vs%20Alien%20Widgets)
+    /// for
+    /// every widget in its parent chain to allow for proper stacking and
+    /// clipping in this use case. Creating a native window for the window
+    /// container also allows for proper stacking and clipping. This must
+    /// be done before showing the window container. Applications with
+    /// many native child windows may suffer from performance issues.
+    ///
+    /// The window container has a number of known limitations:
+    ///
+    /// * Stacking order; The embedded window will stack on top of the widget hierarchy as an opaque box. The stacking order of multiple overlapping window container instances is undefined.
+    /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
+    /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
+    /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
+    fn create_window_container<'a, A: WidgetType<'a>, W: WindowType<'a>>(
+        window: &W,
+        parent: &A,
+        flags: WindowFlags,
+    ) -> Option<Widget<'a>> {
+        let (obj_window_1, _funcs) = window.get_window_obj_funcs();
+        let (obj_parent_2, _funcs) = parent.get_widget_obj_funcs();
+        let enum_flags_3 = flags as i32;
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).create_window_container)(
+                obj_data,
+                obj_window_1,
+                obj_parent_2,
+                enum_flags_3,
+            );
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+}
+
+impl<'a> WidgetStaticType for Widget<'a> {}
+
+impl<'a> WidgetStaticType for WidgetStatic<'a> {}

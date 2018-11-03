@@ -397,6 +397,7 @@ impl ApiParser {
 				}
 
 				Rule::doc_comment => {
+					doc_comments.push_str("    ");
 					doc_comments.push_str(entry.as_str());
 					doc_comments.push_str("\n");
 				}
@@ -1053,7 +1054,7 @@ impl Function {
     /// cased) without the _event if it has that at the end
     ///
     pub fn get_name_skip_event(&self) -> &str {
-        if self.name.ends_with("event") {
+        if self.name.ends_with("event") && self.name != "event" {
             &self.name[..self.name.len() - 6]
         } else {
             &self.name

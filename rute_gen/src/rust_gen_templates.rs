@@ -151,8 +151,8 @@ impl<'a> Drop for {{type_name}}<'a> {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_FUNC_IMPL_TEMPLATE: &str = "
-    fn {{func_name_header}}{{function_def}} {
+pub static RUST_FUNC_IMPL_TEMPLATE: &str = 
+"    fn {{func_name_header}}{{function_def}} {
 {{ body_setup }}
     {%- if static_func %}
         let (obj_data, funcs) = unsafe {

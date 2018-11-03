@@ -85,7 +85,6 @@ pub trait ListWidgetType<'a> {
         }
         self
     }
-
     fn clear(&self) -> &Self {
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {

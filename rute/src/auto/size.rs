@@ -83,7 +83,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -91,7 +90,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -99,7 +97,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -107,7 +104,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -115,7 +111,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn set_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -123,7 +118,6 @@ pub trait SizeType<'a> {
         }
         self
     }
-
     fn set_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
@@ -131,7 +125,6 @@ pub trait SizeType<'a> {
         }
         self
     }
-
     fn scale(&self, w: i32, h: i32, mode: AspectRatioMode) -> &Self {
         let enum_mode_3 = mode as i32;
 
@@ -141,7 +134,6 @@ pub trait SizeType<'a> {
         }
         self
     }
-
     fn scale_by_size<S: SizeType<'a>>(&self, s: &S, mode: AspectRatioMode) -> &Self {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
@@ -152,7 +144,6 @@ pub trait SizeType<'a> {
         }
         self
     }
-
     fn scaled(&self, w: i32, h: i32, mode: AspectRatioMode) -> Size {
         let enum_mode_3 = mode as i32;
 
@@ -169,7 +160,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn scaled_by_size<S: SizeType<'a>>(&self, s: &S, mode: AspectRatioMode) -> Size {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
@@ -187,7 +177,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn expanded_to<S: SizeType<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
@@ -204,7 +193,6 @@ pub trait SizeType<'a> {
             ret_val
         }
     }
-
     fn bounded_to<S: SizeType<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 

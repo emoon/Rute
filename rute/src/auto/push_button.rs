@@ -158,7 +158,6 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-
     fn set_auto_default(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -166,7 +165,6 @@ pub trait PushButtonType<'a> {
         }
         self
     }
-
     fn is_default(&self) -> bool {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -174,7 +172,6 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-
     fn set_default(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -182,7 +179,6 @@ pub trait PushButtonType<'a> {
         }
         self
     }
-
     fn set_flat(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -190,7 +186,6 @@ pub trait PushButtonType<'a> {
         }
         self
     }
-
     fn is_flat(&self) -> bool {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -198,7 +193,6 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-
     fn show_menu(&self) -> &Self {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -206,7 +200,6 @@ pub trait PushButtonType<'a> {
         }
         self
     }
-
     fn set_text(&self, text: &str) -> &Self {
         let str_in_text_1 = CString::new(text).unwrap();
 
@@ -216,7 +209,6 @@ pub trait PushButtonType<'a> {
         }
         self
     }
-
     fn text(&self) -> String {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {

@@ -64,7 +64,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn manufacturer(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -73,7 +72,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn model(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -82,7 +80,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn serial_number(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -91,7 +88,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn depth(&self) -> i32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -99,7 +95,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn physical_dots_per_inch_x(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -107,7 +102,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn physical_dots_per_inch_y(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -115,7 +109,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn physical_dots_per_inch(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -123,7 +116,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn logical_dots_per_inch_x(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -131,7 +123,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn logical_dots_per_inch_y(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -139,7 +130,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn logical_dots_per_inch(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -147,7 +137,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -155,7 +144,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn available_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -170,7 +158,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn virtual_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -185,7 +172,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn available_virtual_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -200,7 +186,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn primary_orientation(&self) -> ScreenOrientation {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -209,7 +194,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn angle_between(&self, a: ScreenOrientation, b: ScreenOrientation) -> i32 {
         let enum_a_1 = a as i32;
         let enum_b_2 = b as i32;
@@ -220,7 +204,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn is_landscape(&self, orientation: ScreenOrientation) -> bool {
         let enum_orientation_1 = orientation as i32;
 
@@ -230,7 +213,6 @@ pub trait ScreenType<'a> {
             ret_val
         }
     }
-
     fn refresh_rate(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
