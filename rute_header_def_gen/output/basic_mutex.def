@@ -5,13 +5,11 @@
 struct BasicMutex {
     lock(),
     unlock(),
-    ///     \since 5.7
     /// 
-    ///     Returns \c true if the mutex is recursive.
+    /// Returns `true` if the mutex is recursive.
     is_recursive() -> bool,
-    ///     \since 5.7
     /// 
-    ///     Returns \c true if the mutex is recursive.
+    /// Returns `true` if the mutex is recursive.
     is_recursive() -> bool,
 }
 

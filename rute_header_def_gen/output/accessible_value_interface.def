@@ -1,27 +1,49 @@
-///     \class QAccessibleValueInterface
-///     \inmodule QtGui
-///     \ingroup accessibility
 /// 
-///     \brief The QAccessibleValueInterface class implements support for objects that manipulate a value.
+/// This interface should be implemented by accessible objects that represent a value.
+/// Examples are spinner, slider, dial and scroll bar.
 /// 
-///     This interface should be implemented by accessible objects that represent a value.
-///     Examples are spinner, slider, dial and scroll bar.
+/// Instead of forcing the user to deal with the individual parts of the widgets, this interface
+/// gives an easier approach to the kind of widget it represents.
 /// 
-///     Instead of forcing the user to deal with the individual parts of the widgets, this interface
-///     gives an easier approach to the kind of widget it represents.
+/// Usually this interface is implemented by classes that also implement [QAccessibleInterface.](QAccessibleInterface.)
 /// 
-///     Usually this interface is implemented by classes that also implement \l QAccessibleInterface.
-/// 
-///     \l{IAccessible2 Specification}
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleValueInterface {
+    /// 
+    /// Returns the current value of the widget. This is usually a double or int.
+    /// **See also:** setCurrentValue()
     [event] current_value() -> Variant,
+    /// 
+    /// Sets the *value.* If the desired *value* is out of the range of permissible values,
+    /// this call will be ignored.
+    /// 
+    /// **See also:** currentValue()
+    /// minimumValue()
+    /// maximumValue()
     [event] set_current_value(value: &VariantType),
+    /// 
+    /// Returns the maximum value this object accepts.
+    /// **See also:** minimumValue()
+    /// currentValue()
     [event] maximum_value() -> Variant,
+    /// 
+    /// Returns the minimum value this object accepts.
+    /// **See also:** maximumValue()
+    /// currentValue()
     [event] minimum_value() -> Variant,
+    /// 
+    /// Returns the minimum step size for the accessible.
+    /// This is the smalles increment that makes sense when changing the value.
+    /// When programatically changing the value it should always be a multiple
+    /// of the minimum step size.
+    /// 
+    /// Some tools use this value even when the setCurrentValue does not
+    /// perform any action. Progress bars for example are read-only but
+    /// should return their range divided by 100.
     [event] minimum_step_size() -> Variant,
 }
 

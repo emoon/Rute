@@ -1,21 +1,22 @@
-///     \class QAccessibleApplication
-///     \brief The QAccessibleApplication class implements the QAccessibleInterface for QApplication.
-/// 
-///     \internal
-/// 
-///     \ingroup accessibility
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessibleApplication : AccessibleObject {
     [event] window() -> Window?,
+    /// 
     [event] child_count() -> i32,
+    /// 
     [event] index_of_child(arg0: *AccessibleInterfaceType) -> i32,
+    /// 
     [event] focus_child() -> AccessibleInterface?,
     [event] parent() -> AccessibleInterface?,
+    /// 
     [event] child(index: i32) -> AccessibleInterface?,
+    /// 
     [event] text(t: Accessible::Text) -> String,
+    /// 
     [event] role() -> Accessible::Role,
+    /// 
     [event] state() -> Accessible::State,
 }
 

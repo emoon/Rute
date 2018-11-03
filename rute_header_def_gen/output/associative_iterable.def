@@ -1,48 +1,47 @@
-///     \class QAssociativeIterable
-///     \since 5.2
-///     \inmodule QtCore
-///     \brief The QAssociativeIterable class is an iterable interface for an associative container in a QVariant.
 /// 
-///     This class allows several methods of accessing the elements of an associative container held within
-///     a QVariant. An instance of QAssociativeIterable can be extracted from a QVariant if it can
-///     be converted to a QVariantHash or QVariantMap.
+/// This class allows several methods of accessing the elements of an associative container held within
+/// a QVariant. An instance of QAssociativeIterable can be extracted from a QVariant if it can
+/// be converted to a QVariantHash or QVariantMap.
 /// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 10
+/// The container itself is not copied before iterating over it.
 /// 
-///     The container itself is not copied before iterating over it.
-/// 
-///     \sa QVariant
+/// **See also:** QVariant
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AssociativeIterable {
-    ///     Returns a QAssociativeIterable::const_iterator for the beginning of the container. This
-    ///     can be used in stl-style iteration.
     /// 
-    ///     \sa end()
+    /// Returns a QAssociativeIterable::const_iterator for the beginning of the container. This
+    /// can be used in stl-style iteration.
+    /// 
+    /// **See also:** end()
     begin() -> AssociativeIterable::const_iterator,
-    ///     Returns a QAssociativeIterable::const_iterator for the end of the container. This
-    ///     can be used in stl-style iteration.
     /// 
-    ///     \sa begin()
+    /// Returns a QAssociativeIterable::const_iterator for the end of the container. This
+    /// can be used in stl-style iteration.
+    /// 
+    /// **See also:** begin()
     end() -> AssociativeIterable::const_iterator,
-    ///     \since 5.5
     /// 
-    ///     Returns a QAssociativeIterable::const_iterator for the given key \a key
-    ///     in the container, if the types are convertible.
+    /// Returns a QAssociativeIterable::const_iterator for the given key *key*
+    /// in the container, if the types are convertible.
     /// 
-    ///     If the key is not found, returns end().
+    /// If the key is not found, returns end().
     /// 
-    ///     This can be used in stl-style iteration.
+    /// This can be used in stl-style iteration.
     /// 
-    ///     \sa begin(), end(), value()
+    /// **See also:** begin()
+    /// end()
+    /// value()
     find(key: &VariantType) -> AssociativeIterable::const_iterator,
-    ///     Returns the value for the given \a key in the container, if the types are convertible.
     /// 
-    ///     \sa find()
+    /// Returns the value for the given *key* in the container, if the types are convertible.
+    /// 
+    /// **See also:** find()
     value(key: &VariantType) -> Variant,
-    ///     Returns the number of elements in the container.
+    /// 
+    /// Returns the number of elements in the container.
     size() -> i32,
 }
 

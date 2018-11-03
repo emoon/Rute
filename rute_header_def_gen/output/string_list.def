@@ -1,123 +1,293 @@
-///     \class QStringList
-///     \inmodule QtCore
-///     \brief The QStringList class provides a list of strings.
 /// 
-///     \ingroup tools
-///     \ingroup shared
-///     \ingroup string-processing
+/// QStringList inherits from QList<QString>. Like QList, QStringList is
+/// [implicitly shared](implicitly%20shared)
+/// . It provides fast index-based access as well as fast
+/// insertions and removals. Passing string lists as value parameters is both
+/// fast and safe.
 /// 
-///     \reentrant
+/// All of QList's functionality also applies to QStringList. For example, you
+/// can use isEmpty() to test whether the list is empty, and you can call
+/// functions like append(), prepend(), insert(), replace(), removeAll(),
+/// removeAt(), removeFirst(), removeLast(), and removeOne() to modify a
+/// QStringList. In addition, QStringList provides a few convenience
+/// functions that make handling lists of strings easier:
 /// 
-///     QStringList inherits from QList<QString>. Like QList, QStringList is
-///     \l{implicitly shared}. It provides fast index-based access as well as fast
-///     insertions and removals. Passing string lists as value parameters is both
-///     fast and safe.
+/// # Initializing
 /// 
-///     All of QList's functionality also applies to QStringList. For example, you
-///     can use isEmpty() to test whether the list is empty, and you can call
-///     functions like append(), prepend(), insert(), replace(), removeAll(),
-///     removeAt(), removeFirst(), removeLast(), and removeOne() to modify a
-///     QStringList. In addition, QStringList provides a few convenience
-///     functions that make handling lists of strings easier:
+/// The default constructor creates an empty list. You can use the
+/// initializer-list constructor to create a list with elements:
 /// 
-///     \tableofcontents
+/// # Adding Strings
 /// 
-///     \section1 Initializing
+/// Strings can be added to a list using the [insert()](QList::insert())
+/// [append()](QList::append())
+/// , [operator+=()](QList::operator+=())
+/// and [operator<<()](operator%3C%3C())
+/// functions.
 /// 
-///     The default constructor creates an empty list. You can use the
-///     initializer-list constructor to create a list with elements:
+/// [operator<<()](operator%3C%3C())
+/// can be used to
+/// conveniently add multiple elements to a list:
 /// 
-///     \snippet qstringlist/main.cpp 0a
+/// # Iterating Over the Strings
 /// 
-///     \section1 Adding Strings
+/// To iterate over a list, you can either use index positions or
+/// QList's Java-style and STL-style iterator types:
 /// 
-///     Strings can be added to a list using the \l
-///     {QList::insert()}{insert()} \l
-///     {QList::append()}{append()}, \l
-///     {QList::operator+=()}{operator+=()} and \l
-///     {operator<<()} functions.
+/// Indexing:
 /// 
-///     \l{operator<<()} can be used to
-///     conveniently add multiple elements to a list:
+/// Java-style iterator:
 /// 
-///     \snippet qstringlist/main.cpp 0b
+/// STL-style iterator:
 /// 
-///     \section1 Iterating Over the Strings
+/// The QStringListIterator class is simply a type definition for
+/// QListIterator<QString>. QStringList also provide the
+/// QMutableStringListIterator class which is a type definition for
+/// QMutableListIterator<QString>.
 /// 
-///     To iterate over a list, you can either use index positions or
-///     QList's Java-style and STL-style iterator types:
+/// # Manipulating the Strings
 /// 
-///     Indexing:
+/// QStringList provides several functions allowing you to manipulate
+/// the contents of a list. You can concatenate all the strings in a
+/// string list into a single string (with an optional separator)
+/// using the join() function. For example:
 /// 
-///     \snippet qstringlist/main.cpp 1
+/// The argument to join can be a single character or a string.
 /// 
-///     Java-style iterator:
+/// To break up a string into a string list, use the QString::split()
+/// function:
 /// 
-///     \snippet qstringlist/main.cpp 2
+/// The argument to split can be a single character, a string, a
+/// QRegularExpression or a (deprecated) QRegExp.
 /// 
-///     STL-style iterator:
+/// In addition, the [operator+()](QStringList::operator+())
 /// 
-///     \snippet qstringlist/main.cpp 3
+/// function allows you to concatenate two string lists into one. To
+/// sort a string list, use the sort() function.
 /// 
-///     The QStringListIterator class is simply a type definition for
-///     QListIterator<QString>. QStringList also provide the
-///     QMutableStringListIterator class which is a type definition for
-///     QMutableListIterator<QString>.
+/// QString list also provides the filter() function which lets you
+/// to extract a new list which contains only those strings which
+/// contain a particular substring (or match a particular regular
+/// expression):
 /// 
-///     \section1 Manipulating the Strings
+/// The contains() function tells you whether the list contains a
+/// given string, while the indexOf() function returns the index of
+/// the first occurrence of the given string. The lastIndexOf()
+/// function on the other hand, returns the index of the last
+/// occurrence of the string.
 /// 
-///     QStringList provides several functions allowing you to manipulate
-///     the contents of a list. You can concatenate all the strings in a
-///     string list into a single string (with an optional separator)
-///     using the join() function. For example:
+/// Finally, the replaceInStrings() function calls QString::replace()
+/// on each string in the string list in turn. For example:
 /// 
-///     \snippet qstringlist/main.cpp 4
-/// 
-///     The argument to join can be a single character or a string.
-/// 
-///     To break up a string into a string list, use the QString::split()
-///     function:
-/// 
-///     \snippet qstringlist/main.cpp 6
-/// 
-///     The argument to split can be a single character, a string, a
-///     QRegularExpression or a (deprecated) QRegExp.
-/// 
-///     In addition, the \l {QStringList::operator+()}{operator+()}
-///     function allows you to concatenate two string lists into one. To
-///     sort a string list, use the sort() function.
-/// 
-///     QString list also provides the filter() function which lets you
-///     to extract a new list which contains only those strings which
-///     contain a particular substring (or match a particular regular
-///     expression):
-/// 
-///     \snippet qstringlist/main.cpp 7
-/// 
-///     The contains() function tells you whether the list contains a
-///     given string, while the indexOf() function returns the index of
-///     the first occurrence of the given string. The lastIndexOf()
-///     function on the other hand, returns the index of the last
-///     occurrence of the string.
-/// 
-///     Finally, the replaceInStrings() function calls QString::replace()
-///     on each string in the string list in turn. For example:
-/// 
-///     \snippet qstringlist/main.cpp 8
-/// 
-///     \sa QString
+/// **See also:** QString
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StringList {
+    /// 
+    /// Returns `true` if the list contains the string *str;* otherwise
+    /// returns `false.` The search is case insensitive if *cs* is
+    /// Qt::CaseInsensitive; the search is case sensitive by default.
+    /// 
+    /// **See also:** indexOf()
+    /// lastIndexOf()
+    /// QString::contains()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the list contains the string *str;* otherwise
+    /// returns `false.` The search is case insensitive if *cs* is
+    /// Qt::CaseInsensitive; the search is case sensitive by default.
+    /// 
+    /// **See also:** indexOf()
+    /// lastIndexOf()
+    /// QString::contains()
     contains(str: String, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if the list contains the string *str;* otherwise
+    /// returns `false.` The search is case insensitive if *cs* is
+    /// Qt::CaseInsensitive; the search is case sensitive by default.
+    /// 
+    /// **See also:** indexOf()
+    /// lastIndexOf()
+    /// QString::contains()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the list contains the string *str;* otherwise
+    /// returns `false.` The search is case insensitive if *cs* is
+    /// Qt::CaseInsensitive; the search is case sensitive by default.
+    /// 
+    /// **See also:** indexOf()
+    /// lastIndexOf()
+    /// QString::contains()
     contains(str: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the first exact match of *re* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
     index_of(rx: &RegExpType, from: i32) -> i32,
+    /// 
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the last exact match of *re* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
     last_index_of(rx: &RegExpType, from: i32) -> i32,
+    /// 
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the first exact match of *re* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
     index_of(rx: &RegExpType, from: i32) -> i32,
+    /// 
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the last exact match of *re* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
     last_index_of(rx: &RegExpType, from: i32) -> i32,
+    /// 
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first exact match of *rx* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** lastIndexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the first exact match of *re* in
+    /// the list, searching forward from index position *from.* Returns
+    /// -1 if no item matched.
+    /// 
+    /// **See also:** lastIndexOf()
     index_of(re: &RegularExpressionType, from: i32) -> i32,
+    /// 
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last exact match of *rx* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// If an item matched, the *rx* regular expression will contain the
+    /// matched objects (see QRegExp::matchedLength, QRegExp::cap).
+    /// 
+    /// **See also:** indexOf()
+    /// contains()
+    /// QRegExp::exactMatch()
+    /// 
+    /// **Overloads**
+    /// Returns the index position of the last exact match of *re* in
+    /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
+    /// Returns -1 if no item matched.
+    /// 
+    /// **See also:** indexOf()
     last_index_of(re: &RegularExpressionType, from: i32) -> i32,
 }
 

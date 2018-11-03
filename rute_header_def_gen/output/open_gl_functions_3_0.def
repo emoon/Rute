@@ -1,14 +1,10 @@
-///     \class QOpenGLFunctions_3_0
-///     \inmodule QtGui
-///     \since 5.1
-///     \wrapper
-///     \brief The QOpenGLFunctions_3_0 class provides all functions for OpenGL 3.0 specification.
 /// 
-///     This class is a wrapper for functions from OpenGL 3.0 specification.
-///     See reference pages on \l {http://www.opengl.org/sdk/docs/}{opengl.org}
-///     for function documentation.
+/// This class is a wrapper for functions from OpenGL 3.0 specification.
+/// See reference pages on [opengl.org](http://www.opengl.org/sdk/docs/)
 /// 
-///     \sa QAbstractOpenGLFunctions
+/// for function documentation.
+/// 
+/// **See also:** QAbstractOpenGLFunctions
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

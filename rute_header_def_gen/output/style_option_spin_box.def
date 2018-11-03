@@ -1,21 +1,18 @@
-///     \class QStyleOptionSpinBox
-///     \brief The QStyleOptionSpinBox class is used to describe the
-///     parameters necessary for drawing a spin box.
 /// 
-///     \inmodule QtWidgets
+/// QStyleOptionSpinBox contains all the information that QStyle
+/// functions need to draw QSpinBox and QDateTimeEdit.
 /// 
-///     QStyleOptionSpinBox contains all the information that QStyle
-///     functions need to draw QSpinBox and QDateTimeEdit.
+/// For performance reasons, the access to the member variables is
+/// direct (i.e., using the `.` or `->` operator). This low-level feel
+/// makes the structures straightforward to use and emphasizes that
+/// these are simply parameters used by the style functions.
 /// 
-///     For performance reasons, the access to the member variables is
-///     direct (i.e., using the \c . or \c -> operator). This low-level feel
-///     makes the structures straightforward to use and emphasizes that
-///     these are simply parameters used by the style functions.
+/// For an example demonstrating how style options can be used, see
+/// the [Styles](widgets/styles)
+/// example.
 /// 
-///     For an example demonstrating how style options can be used, see
-///     the \l {widgets/styles}{Styles} example.
-/// 
-///     \sa QStyleOption, QStyleOptionComplex
+/// **See also:** QStyleOption
+/// QStyleOptionComplex
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

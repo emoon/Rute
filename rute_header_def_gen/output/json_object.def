@@ -1,90 +1,289 @@
-///     \class QJsonObject
-///     \inmodule QtCore
-///     \ingroup json
-///     \ingroup shared
-///     \reentrant
-///     \since 5.0
 /// 
-///     \brief The QJsonObject class encapsulates a JSON object.
+/// A JSON object is a list of key value pairs, where the keys are unique strings
+/// and the values are represented by a QJsonValue.
 /// 
-///     A JSON object is a list of key value pairs, where the keys are unique strings
-///     and the values are represented by a QJsonValue.
+/// A QJsonObject can be converted to and from a QVariantMap. You can query the
+/// number of (key, value) pairs with size(), insert(), and remove() entries from it
+/// and iterate over its content using the standard C++ iterator pattern.
 /// 
-///     A QJsonObject can be converted to and from a QVariantMap. You can query the
-///     number of (key, value) pairs with size(), insert(), and remove() entries from it
-///     and iterate over its content using the standard C++ iterator pattern.
+/// QJsonObject is an implicitly shared class, and shares the data with the document
+/// it has been created from as long as it is not being modified.
 /// 
-///     QJsonObject is an implicitly shared class, and shares the data with the document
-///     it has been created from as long as it is not being modified.
+/// You can convert the object to and from text based JSON through QJsonDocument.
 /// 
-///     You can convert the object to and from text based JSON through QJsonDocument.
-/// 
-///     \sa {JSON Support in Qt}, {JSON Save Game Example}
+/// **See also:** {JSON Support in Qt}
+/// {JSON Save Game Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct JsonObject {
+    /// 
+    /// Swaps the object *other* with this. This operation is very fast and never fails.
     swap(other: &JsonObjectType),
+    /// 
+    /// Converts the variant map *map* to a QJsonObject.
+    /// 
+    /// The keys in *map* will be used as the keys in the JSON object,
+    /// and the QVariant values will be converted to JSON values.
+    /// 
+    /// **See also:** fromVariantHash()
+    /// toVariantMap()
+    /// QJsonValue::fromVariant()
     [static] from_variant_map(map: &VariantMapType) -> JsonObject,
+    /// 
+    /// Converts this object to a QVariantMap.
+    /// 
+    /// Returns the created map.
+    /// 
+    /// **See also:** toVariantHash()
     to_variant_map() -> VariantMap,
+    /// 
+    /// Converts the variant hash *hash* to a QJsonObject.
+    /// 
+    /// The keys in *hash* will be used as the keys in the JSON object,
+    /// and the QVariant values will be converted to JSON values.
+    /// 
+    /// **See also:** fromVariantMap()
+    /// toVariantHash()
+    /// QJsonValue::fromVariant()
     [static] from_variant_hash(map: &VariantHashType) -> JsonObject,
+    /// 
+    /// Converts this object to a QVariantHash.
+    /// 
+    /// Returns the created hash.
+    /// 
+    /// **See also:** toVariantMap()
     to_variant_hash() -> VariantHash,
+    /// 
+    /// Returns a list of all keys in this object.
+    /// 
+    /// The list is sorted lexographically.
     keys() -> [String],
+    /// 
+    /// Returns the number of (key, value) pairs stored in the object.
     size() -> i32,
+    /// 
+    /// **Overloads**
+    /// Same as size().
     count() -> i32,
+    /// 
+    /// **Overloads**
+    /// Same as size().
     length() -> i32,
+    /// 
+    /// Returns `true` if the object is empty. This is the same as size() == 0.
+    /// 
+    /// **See also:** size()
     is_empty() -> bool,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns a QJsonValue representing the value for the key *key.*
+    /// 
+    /// The returned QJsonValue is QJsonValue::Undefined if the key does not exist.
+    /// 
+    /// **See also:** QJsonValue
+    /// QJsonValue::isUndefined()
+    /// 
+    /// **Overloads**
     value(key: String) -> JsonValue,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns a QJsonValue representing the value for the key *key.*
+    /// 
+    /// The returned QJsonValue is QJsonValue::Undefined if the key does not exist.
+    /// 
+    /// **See also:** QJsonValue
+    /// QJsonValue::isUndefined()
+    /// 
+    /// **Overloads**
     value(key: Latin1StringType) -> JsonValue,
+    /// 
+    /// Removes *key* from the object.
+    /// 
+    /// **See also:** insert()
+    /// take()
     remove(key: String),
+    /// 
+    /// Removes *key* from the object.
+    /// 
+    /// Returns a QJsonValue containing the value referenced by *key.*
+    /// If *key* was not contained in the object, the returned QJsonValue
+    /// is QJsonValue::Undefined.
+    /// 
+    /// **See also:** insert()
+    /// remove()
+    /// QJsonValue
     take(key: String) -> JsonValue,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns `true` if the object contains key *key.*
+    /// 
+    /// **See also:** insert()
+    /// remove()
+    /// take()
+    /// 
+    /// **Overloads**
     contains(key: String) -> bool,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns `true` if the object contains key *key.*
+    /// 
+    /// **See also:** insert()
+    /// remove()
+    /// take()
+    /// 
+    /// **Overloads**
     contains(key: Latin1StringType) -> bool,
-    ///     \fn bool QJsonObject::empty() const
     /// 
-    ///     This function is provided for STL compatibility. It is equivalent
-    ///     to isEmpty(), returning \c true if the object is empty; otherwise
-    ///     returning \c false.
+    /// Returns an [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first item in
+    /// the object.
+    /// 
+    /// **See also:** constBegin()
+    /// end()
+    /// 
+    /// **Overloads**
     begin() -> JsonObject::iterator,
-    ///     \fn bool QJsonObject::empty() const
     /// 
-    ///     This function is provided for STL compatibility. It is equivalent
-    ///     to isEmpty(), returning \c true if the object is empty; otherwise
-    ///     returning \c false.
+    /// Returns an [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first item in
+    /// the object.
+    /// 
+    /// **See also:** constBegin()
+    /// end()
+    /// 
+    /// **Overloads**
     begin() -> JsonObject::const_iterator,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first item
+    /// in the object.
+    /// 
+    /// **See also:** begin()
+    /// constEnd()
     const_begin() -> JsonObject::const_iterator,
+    /// 
+    /// Returns an [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary item
+    /// after the last item in the object.
+    /// 
+    /// **See also:** begin()
+    /// constEnd()
+    /// 
+    /// **Overloads**
     end() -> JsonObject::iterator,
+    /// 
+    /// Returns an [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary item
+    /// after the last item in the object.
+    /// 
+    /// **See also:** begin()
+    /// constEnd()
+    /// 
+    /// **Overloads**
     end() -> JsonObject::const_iterator,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary
+    /// item after the last item in the object.
+    /// 
+    /// **See also:** constBegin()
+    /// end()
     const_end() -> JsonObject::const_iterator,
+    /// 
+    /// Removes the (key, value) pair pointed to by the iterator *it*
+    /// from the map, and returns an iterator to the next item in the
+    /// map.
+    /// 
+    /// **See also:** remove()
     erase(it: JsonObject::iterator) -> JsonObject::iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns an iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns end().
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
     find(key: String) -> JsonObject::iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns an iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns end().
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
     find(key: Latin1StringType) -> JsonObject::iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns an iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns end().
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
     find(key: String) -> JsonObject::const_iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns an iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns end().
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
     find(key: Latin1StringType) -> JsonObject::const_iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns a const iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns constEnd().
+    /// 
+    /// **Overloads**
     const_find(key: String) -> JsonObject::const_iterator,
-    ///     \overload
-    ///     \since 5.7
+    /// 
+    /// Returns a const iterator pointing to the item with key *key* in the
+    /// map.
+    /// 
+    /// If the map contains no item with key *key,* the function
+    /// returns constEnd().
+    /// 
+    /// **Overloads**
     const_find(key: Latin1StringType) -> JsonObject::const_iterator,
+    /// 
+    /// Inserts a new item with the key *key* and a value of *value.*
+    /// 
+    /// If there is already an item with the key *key,* then that item's value
+    /// is replaced with *value.*
+    /// 
+    /// Returns an iterator pointing to the inserted item.
+    /// 
+    /// If the value is QJsonValue::Undefined, it will cause the key to get removed
+    /// from the object. The returned iterator will then point to end().
+    /// 
+    /// **See also:** remove()
+    /// take()
+    /// QJsonObject::iterator
+    /// end()
     insert(key: String, value: &JsonValueType) -> JsonObject::iterator,
+    /// 
+    /// This function is provided for STL compatibility. It is equivalent
+    /// to isEmpty(), returning `true` if the object is empty; otherwise
+    /// returning `false.`
     empty() -> bool,
 }
 

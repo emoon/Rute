@@ -1,62 +1,98 @@
-///     \class QProxyStyle
 /// 
-///     \brief The QProxyStyle class is a convenience class that simplifies
-///     dynamically overriding QStyle elements.
+/// A QProxyStyle wraps a QStyle (usually the default system style) for the
+/// purpose of dynamically overriding painting or other specific style behavior.
 /// 
-///     \since 4.6
+/// The following example shows how to override the shortcut underline
+/// behavior on any platform:
 /// 
-///     \inmodule QtWidgets
+/// Warning: The [common styles](QCommonStyle)
+/// provided by Qt will
+/// respect this hint, because they call QStyle::proxy(), but there is
+/// no guarantee that QStyle::proxy() will be called for user defined
+/// or system controlled styles. It would not work on a Mac, for
+/// example, where menus are handled by the operating system.
 /// 
-///     A QProxyStyle wraps a QStyle (usually the default system style) for the
-///     purpose of dynamically overriding painting or other specific style behavior.
-/// 
-///     The following example shows how to override the shortcut underline
-///     behavior on any platform:
-/// 
-///     \snippet code/src_gui_qproxystyle.cpp 1
-/// 
-///     Warning: The \l {QCommonStyle} {common styles} provided by Qt will
-///     respect this hint, because they call QStyle::proxy(), but there is
-///     no guarantee that QStyle::proxy() will be called for user defined
-///     or system controlled styles. It would not work on a Mac, for
-///     example, where menus are handled by the operating system.
-/// 
-///     \sa QStyle
+/// **See also:** QStyle
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ProxyStyle : CommonStyle {
-    ///     Returns the proxy base style object. If no base style
-    ///     is set on the proxy style, QProxyStyle will create
-    ///     an instance of the application style instead.
     /// 
-    ///     \sa setBaseStyle(), QStyle
+    /// Returns the proxy base style object. If no base style
+    /// is set on the proxy style, QProxyStyle will create
+    /// an instance of the application style instead.
+    /// 
+    /// **See also:** setBaseStyle()
+    /// QStyle
     base_style() -> Style?,
-    ///     Sets the base style that should be proxied.
     /// 
-    ///     Ownership of \a style is transferred to QProxyStyle.
+    /// Sets the base style that should be proxied.
     /// 
-    ///     If style is zero, a desktop-dependant style will be
-    ///     assigned automatically.
+    /// Ownership of *style* is transferred to QProxyStyle.
+    /// 
+    /// If style is zero, a desktop-dependant style will be
+    /// assigned automatically.
     set_base_style(style: *StyleType),
+    /// 
     [event] draw_primitive(element: Style::PrimitiveElement, option: *StyleOptionType, painter: *PainterType, widget: *WidgetType),
+    /// 
     [event] draw_item_text(painter: *PainterType, rect: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
+    /// 
     [event] draw_item_pixmap(painter: *PainterType, rect: &RectType, alignment: i32, pixmap: &PixmapType),
+    /// 
     [event] size_from_contents(type: Style::ContentsType, option: *StyleOptionType, size: &SizeType, widget: *WidgetType) -> Size,
+    /// 
     [event] sub_element_rect(element: Style::SubElement, option: *StyleOptionType, widget: *WidgetType) -> Rect,
+    /// 
     [event] item_text_rect(fm: &FontMetricsType, r: &RectType, flags: i32, enabled: bool, text: String) -> Rect,
+    /// 
     [event] item_pixmap_rect(r: &RectType, flags: i32, pixmap: &PixmapType) -> Rect,
+    /// 
     [event] style_hint(hint: Style::StyleHint, option: *StyleOptionType, widget: *WidgetType, return_data: *StyleHintReturnType) -> i32,
+    /// 
+    /// This slot is called by layoutSpacing() to determine the spacing that
+    /// should be used between *control1* and *control2* in a layout. *orientation* specifies whether the controls are laid out side by side
+    /// or stacked vertically. The *option* parameter can be used to pass
+    /// extra information about the parent widget. The *widget* parameter
+    /// is optional and can also be used if *option* is 0.
+    /// 
+    /// The default implementation returns -1.
+    /// 
+    /// **See also:** combinedLayoutSpacing()
     [event] layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
+    /// 
+    /// Returns an icon for the given *standardIcon.*
+    /// 
+    /// Reimplement this slot to provide your own icons in a QStyle
+    /// subclass. The *option* argument can be used to pass extra
+    /// information required to find the appropriate icon. The *widget*
+    /// argument is optional and can also be used to help find the icon.
     [event] standard_icon(standard_icon: Style::StandardPixmap, option: *StyleOptionType, widget: *WidgetType) -> Icon,
+    /// 
     [event] standard_pixmap(standard_pixmap: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
+    /// 
     [event] generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
+    /// 
     [event] standard_palette() -> Palette,
+    /// 
+    /// 
+    /// 
     [event] polish(widget: *WidgetType),
+    /// 
+    /// 
+    /// 
     [event] polish(pal: &PaletteType),
+    /// 
+    /// 
+    /// 
     [event] polish(app: *ApplicationType),
+    /// 
+    /// 
     [event] unpolish(widget: *WidgetType),
+    /// 
+    /// 
     [event] unpolish(app: *ApplicationType),
+    /// 
     [event] event(e: *EventType) -> bool,
 }
 

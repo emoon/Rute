@@ -1,138 +1,121 @@
-///     \class QTransform
-///     \brief The QTransform class specifies 2D transformations of a coordinate system.
-///     \since 4.3
-///     \ingroup painting
-///     \inmodule QtGui
 /// 
-///     A transformation specifies how to translate, scale, shear, rotate
-///     or project the coordinate system, and is typically used when
-///     rendering graphics.
+/// A transformation specifies how to translate, scale, shear, rotate
+/// or project the coordinate system, and is typically used when
+/// rendering graphics.
 /// 
-///     QTransform differs from QMatrix in that it is a true 3x3 matrix,
-///     allowing perspective transformations. QTransform's toAffine()
-///     method allows casting QTransform to QMatrix. If a perspective
-///     transformation has been specified on the matrix, then the
-///     conversion will cause loss of data.
+/// QTransform differs from QMatrix in that it is a true 3x3 matrix,
+/// allowing perspective transformations. QTransform's toAffine()
+/// method allows casting QTransform to QMatrix. If a perspective
+/// transformation has been specified on the matrix, then the
+/// conversion will cause loss of data.
 /// 
-///     QTransform is the recommended transformation class in Qt.
+/// QTransform is the recommended transformation class in Qt.
 /// 
-///     A QTransform object can be built using the setMatrix(), scale(),
-///     rotate(), translate() and shear() functions.  Alternatively, it
-///     can be built by applying \l {QTransform#Basic Matrix
-///     Operations}{basic matrix operations}. The matrix can also be
-///     defined when constructed, and it can be reset to the identity
-///     matrix (the default) using the reset() function.
+/// A QTransform object can be built using the setMatrix(), scale(),
+/// rotate(), translate() and shear() functions. Alternatively, it
+/// can be built by applying [basic matrix operations](QTransform%23Basic%20Matrix%0A%20%20%20%20Operations)
+/// . The matrix can also be
+/// defined when constructed, and it can be reset to the identity
+/// matrix (the default) using the reset() function.
 /// 
-///     The QTransform class supports mapping of graphic primitives: A given
-///     point, line, polygon, region, or painter path can be mapped to the
-///     coordinate system defined by \e this matrix using the map()
-///     function. In case of a rectangle, its coordinates can be
-///     transformed using the mapRect() function. A rectangle can also be
-///     transformed into a \e polygon (mapped to the coordinate system
-///     defined by \e this matrix), using the mapToPolygon() function.
+/// The QTransform class supports mapping of graphic primitives: A given
+/// point, line, polygon, region, or painter path can be mapped to the
+/// coordinate system defined by *this* matrix using the map()
+/// function. In case of a rectangle, its coordinates can be
+/// transformed using the mapRect() function. A rectangle can also be
+/// transformed into a *polygon* (mapped to the coordinate system
+/// defined by *this* matrix), using the mapToPolygon() function.
 /// 
-///     QTransform provides the isIdentity() function which returns \c true if
-///     the matrix is the identity matrix, and the isInvertible() function
-///     which returns \c true if the matrix is non-singular (i.e. AB = BA =
-///     I). The inverted() function returns an inverted copy of \e this
-///     matrix if it is invertible (otherwise it returns the identity
-///     matrix), and adjoint() returns the matrix's classical adjoint.
-///     In addition, QTransform provides the determinant() function which
-///     returns the matrix's determinant.
+/// QTransform provides the isIdentity() function which returns `true` if
+/// the matrix is the identity matrix, and the isInvertible() function
+/// which returns `true` if the matrix is non-singular (i.e. AB = BA =
+/// I). The inverted() function returns an inverted copy of *this*
+/// matrix if it is invertible (otherwise it returns the identity
+/// matrix), and adjoint() returns the matrix's classical adjoint.
+/// In addition, QTransform provides the determinant() function which
+/// returns the matrix's determinant.
 /// 
-///     Finally, the QTransform class supports matrix multiplication, addition
-///     and subtraction, and objects of the class can be streamed as well
-///     as compared.
+/// Finally, the QTransform class supports matrix multiplication, addition
+/// and subtraction, and objects of the class can be streamed as well
+/// as compared.
 /// 
-///     \tableofcontents
+/// # Rendering Graphics
 /// 
-///     \section1 Rendering Graphics
+/// When rendering graphics, the matrix defines the transformations
+/// but the actual transformation is performed by the drawing routines
+/// in QPainter.
 /// 
-///     When rendering graphics, the matrix defines the transformations
-///     but the actual transformation is performed by the drawing routines
-///     in QPainter.
+/// By default, QPainter operates on the associated device's own
+/// coordinate system. The standard coordinate system of a
+/// QPaintDevice has its origin located at the top-left position. The
+/// *x* values increase to the right; *y* values increase
+/// downward. For a complete description, see the [coordinate system](Coordinate%0A%20%20%20%20System)
+/// documentation.
 /// 
-///     By default, QPainter operates on the associated device's own
-///     coordinate system.  The standard coordinate system of a
-///     QPaintDevice has its origin located at the top-left position. The
-///     \e x values increase to the right; \e y values increase
-///     downward. For a complete description, see the \l {Coordinate
-///     System} {coordinate system} documentation.
+/// QPainter has functions to translate, scale, shear and rotate the
+/// coordinate system without using a QTransform. For example:
 /// 
-///     QPainter has functions to translate, scale, shear and rotate the
-///     coordinate system without using a QTransform. For example:
+/// * ![qtransform-simpletransformation.png](qtransform-simpletransformation.png)
 /// 
-///     \table 100%
-///     \row
-///     \li \inlineimage qtransform-simpletransformation.png
-///     \li
-///     \snippet transform/main.cpp 0
-///     \endtable
 /// 
-///     Although these functions are very convenient, it can be more
-///     efficient to build a QTransform and call QPainter::setTransform() if you
-///     want to perform more than a single transform operation. For
-///     example:
 /// 
-///     \table 100%
-///     \row
-///     \li \inlineimage qtransform-combinedtransformation.png
-///     \li
-///     \snippet transform/main.cpp 1
-///     \endtable
+/// Although these functions are very convenient, it can be more
+/// efficient to build a QTransform and call QPainter::setTransform() if you
+/// want to perform more than a single transform operation. For
+/// example:
 /// 
-///     \section1 Basic Matrix Operations
+/// * ![qtransform-combinedtransformation.png](qtransform-combinedtransformation.png)
 /// 
-///     \image qtransform-representation.png
 /// 
-///     A QTransform object contains a 3 x 3 matrix.  The \c m31 (\c dx) and
-///     \c m32 (\c dy) elements specify horizontal and vertical translation.
-///     The \c m11 and \c m22 elements specify horizontal and vertical scaling.
-///     The \c m21 and \c m12 elements specify horizontal and vertical \e shearing.
-///     And finally, the \c m13 and \c m23 elements specify horizontal and vertical
-///     projection, with \c m33 as an additional projection factor.
 /// 
-///     QTransform transforms a point in the plane to another point using the
-///     following formulas:
+/// # Basic Matrix Operations
 /// 
-///     \snippet code/src_gui_painting_qtransform.cpp 0
+/// ![qtransform-representation.png](qtransform-representation.png)
 /// 
-///     The point \e (x, y) is the original point, and \e (x', y') is the
-///     transformed point. \e (x', y') can be transformed back to \e (x,
-///     y) by performing the same operation on the inverted() matrix.
+/// A QTransform object contains a 3 x 3 matrix. The `m31` ( `dx)` and
+/// `m32` ( `dy)` elements specify horizontal and vertical translation.
+/// The `m11` and `m22` elements specify horizontal and vertical scaling.
+/// The `m21` and `m12` elements specify horizontal and vertical *shearing.*
+/// And finally, the `m13` and `m23` elements specify horizontal and vertical
+/// projection, with `m33` as an additional projection factor.
 /// 
-///     The various matrix elements can be set when constructing the
-///     matrix, or by using the setMatrix() function later on. They can also
-///     be manipulated using the translate(), rotate(), scale() and
-///     shear() convenience functions. The currently set values can be
-///     retrieved using the m11(), m12(), m13(), m21(), m22(), m23(),
-///     m31(), m32(), m33(), dx() and dy() functions.
+/// QTransform transforms a point in the plane to another point using the
+/// following formulas:
 /// 
-///     Translation is the simplest transformation. Setting \c dx and \c
-///     dy will move the coordinate system \c dx units along the X axis
-///     and \c dy units along the Y axis.  Scaling can be done by setting
-///     \c m11 and \c m22. For example, setting \c m11 to 2 and \c m22 to
-///     1.5 will double the height and increase the width by 50%.  The
-///     identity matrix has \c m11, \c m22, and \c m33 set to 1 (all others are set
-///     to 0) mapping a point to itself. Shearing is controlled by \c m12
-///     and \c m21. Setting these elements to values different from zero
-///     will twist the coordinate system. Rotation is achieved by
-///     setting both the shearing factors and the scaling factors. Perspective
-///     transformation is achieved by setting both the projection factors and
-///     the scaling factors.
+/// The point *(x,* y) is the original point, and *(x',* y') is the
+/// transformed point. *(x',* y') can be transformed back to *(x,*
+/// y) by performing the same operation on the inverted() matrix.
 /// 
-///     Here's the combined transformations example using basic matrix
-///     operations:
+/// The various matrix elements can be set when constructing the
+/// matrix, or by using the setMatrix() function later on. They can also
+/// be manipulated using the translate(), rotate(), scale() and
+/// shear() convenience functions. The currently set values can be
+/// retrieved using the m11(), m12(), m13(), m21(), m22(), m23(),
+/// m31(), m32(), m33(), dx() and dy() functions.
 /// 
-///     \table 100%
-///     \row
-///     \li \inlineimage qtransform-combinedtransformation2.png
-///     \li
-///     \snippet transform/main.cpp 2
-///     \endtable
+/// Translation is the simplest transformation. Setting `dx` and `dy` will move the coordinate system `dx` units along the X axis
+/// and `dy` units along the Y axis. Scaling can be done by setting
+/// `m11` and `m22.` For example, setting `m11` to 2 and `m22` to
+/// 1.5 will double the height and increase the width by 50%. The
+/// identity matrix has `m11,` `m22,` and `m33` set to 1 (all others are set
+/// to 0) mapping a point to itself. Shearing is controlled by `m12`
+/// and `m21.` Setting these elements to values different from zero
+/// will twist the coordinate system. Rotation is achieved by
+/// setting both the shearing factors and the scaling factors. Perspective
+/// transformation is achieved by setting both the projection factors and
+/// the scaling factors.
 /// 
-///     \sa QPainter, {Coordinate System}, {painting/affine}{Affine
-///     Transformations Example}, {Transformations Example}
+/// Here's the combined transformations example using basic matrix
+/// operations:
+/// 
+/// * ![qtransform-combinedtransformation2.png](qtransform-combinedtransformation2.png)
+/// 
+/// 
+/// 
+/// **See also:** QPainter
+/// {Coordinate System}
+/// {painting/affine}{Affine
+/// Transformations Example}, {Transformations Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -148,232 +131,1233 @@ enum TransformationType {
 
 
 struct Transform {
+    /// 
+    /// Returns `true` if the matrix represent an affine transformation,
+    /// otherwise returns `false.`
     is_affine() -> bool,
+    /// 
+    /// Returns `true` if the matrix is the identity matrix, otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** reset()
     is_identity() -> bool,
+    /// 
+    /// Returns `true` if the matrix is invertible, otherwise returns `false.`
+    /// 
+    /// **See also:** inverted()
     is_invertible() -> bool,
+    /// 
+    /// Returns `true` if the matrix represents a scaling
+    /// transformation, otherwise returns `false.`
+    /// 
+    /// **See also:** reset()
     is_scaling() -> bool,
+    /// 
+    /// Returns `true` if the matrix represents some kind of a
+    /// rotating transformation, otherwise returns `false.`
+    /// 
+    /// **Note**: A rotation transformation of 180 degrees and/or 360 degrees is treated as a scaling transformation.
+    /// 
+    /// **See also:** reset()
     is_rotating() -> bool,
+    /// 
+    /// Returns `true` if the matrix represents a translating
+    /// transformation, otherwise returns `false.`
+    /// 
+    /// **See also:** reset()
     is_translating() -> bool,
+    /// 
+    /// Returns the transformation type of this matrix.
+    /// 
+    /// The transformation type is the highest enumeration value
+    /// capturing all of the matrix's transformations. For example,
+    /// if the matrix both scales and shears, the type would be `TxShear,`
+    /// because `TxShear` has a higher enumeration value than `TxScale.`
+    /// 
+    /// Knowing the transformation type of a matrix is useful for optimization:
+    /// you can often handle specific types more optimally than handling
+    /// the generic case.
     type() -> Transform::TransformationType,
+    /// 
+    /// Returns the matrix's determinant.
     determinant() -> f32,
+    /// 
+    /// Returns the matrix's determinant. Use determinant() instead.
+    /// 
+    /// Returns the matrix's determinant.
     det() -> f32,
+    /// 
+    /// Returns the horizontal scaling factor.
+    /// 
+    /// **See also:** scale()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m11() -> f32,
+    /// 
+    /// Returns the vertical shearing factor.
+    /// 
+    /// **See also:** shear()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m12() -> f32,
+    /// 
+    /// Returns the horizontal projection factor.
+    /// 
+    /// **See also:** translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m13() -> f32,
+    /// 
+    /// Returns the horizontal shearing factor.
+    /// 
+    /// **See also:** shear()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m21() -> f32,
+    /// 
+    /// Returns the vertical scaling factor.
+    /// 
+    /// **See also:** scale()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m22() -> f32,
+    /// 
+    /// Returns the vertical projection factor.
+    /// 
+    /// **See also:** translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m23() -> f32,
+    /// 
+    /// Returns the horizontal translation factor.
+    /// 
+    /// **See also:** dx()
+    /// translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m31() -> f32,
+    /// 
+    /// Returns the vertical translation factor.
+    /// 
+    /// **See also:** dy()
+    /// translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m32() -> f32,
+    /// 
+    /// Returns the division factor.
+    /// 
+    /// **See also:** translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     m33() -> f32,
+    /// 
+    /// Returns the horizontal translation factor.
+    /// 
+    /// **See also:** m31()
+    /// translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     dx() -> f32,
+    /// 
+    /// Returns the vertical translation factor.
+    /// 
+    /// **See also:** translate()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     dy() -> f32,
-    ///     Returns an inverted copy of this matrix.
     /// 
-    ///     If the matrix is singular (not invertible), the returned matrix is
-    ///     the identity matrix. If \a invertible is valid (i.e. not 0), its
-    ///     value is set to true if the matrix is invertible, otherwise it is
-    ///     set to false.
+    /// Returns an inverted copy of this matrix.
     /// 
-    ///     \sa isInvertible()
+    /// If the matrix is singular (not invertible), the returned matrix is
+    /// the identity matrix. If *invertible* is valid (i.e. not 0), its
+    /// value is set to true if the matrix is invertible, otherwise it is
+    /// set to false.
+    /// 
+    /// **See also:** isInvertible()
     inverted(invertible: *bool) -> Transform,
-    ///     Returns the adjoint of this matrix.
+    /// 
+    /// Returns the adjoint of this matrix.
     adjoint() -> Transform,
-    ///     Scales the coordinate system by \a sx horizontally and \a sy
-    ///     vertically, and returns a reference to the matrix.
     /// 
-    ///     \sa setMatrix()
+    /// Scales the coordinate system by *sx* horizontally and *sy*
+    /// vertically, and returns a reference to the matrix.
+    /// 
+    /// **See also:** setMatrix()
     scale(sx: f32, sy: f32) -> Transform?,
-    ///     Shears the coordinate system by \a sh horizontally and \a sv
-    ///     vertically, and returns a reference to the matrix.
     /// 
-    ///     \sa setMatrix()
+    /// Shears the coordinate system by *sh* horizontally and *sv*
+    /// vertically, and returns a reference to the matrix.
+    /// 
+    /// **See also:** setMatrix()
     shear(sh: f32, sv: f32) -> Transform?,
-    ///     \fn QTransform &QTransform::rotate(qreal angle, Qt::Axis axis)
     /// 
-    ///     Rotates the coordinate system counterclockwise by the given \a angle
-    ///     about the specified \a axis and returns a reference to the matrix.
+    /// Rotates the coordinate system counterclockwise by the given *angle*
+    /// about the specified *axis* and returns a reference to the matrix.
     /// 
-    ///     Note that if you apply a QTransform to a point defined in widget
-    ///     coordinates, the direction of the rotation will be clockwise
-    ///     because the y-axis points downwards.
+    /// Note that if you apply a QTransform to a point defined in widget
+    /// coordinates, the direction of the rotation will be clockwise
+    /// because the y-axis points downwards.
     /// 
-    ///     The angle is specified in degrees.
+    /// The angle is specified in degrees.
     /// 
-    ///     \sa setMatrix()
+    /// **See also:** setMatrix()
+    /// 
+    /// Rotates the coordinate system counterclockwise by the given *angle*
+    /// about the specified *axis* and returns a reference to the matrix.
+    /// 
+    /// Note that if you apply a QTransform to a point defined in widget
+    /// coordinates, the direction of the rotation will be clockwise
+    /// because the y-axis points downwards.
+    /// 
+    /// The angle is specified in radians.
+    /// 
+    /// **See also:** setMatrix()
     rotate(a: f32, axis: Rute::Axis) -> Transform?,
-    ///     \fn QTransform & QTransform::rotateRadians(qreal angle, Qt::Axis axis)
     /// 
-    ///     Rotates the coordinate system counterclockwise by the given \a angle
-    ///     about the specified \a axis and returns a reference to the matrix.
+    /// Rotates the coordinate system counterclockwise by the given *angle*
+    /// about the specified *axis* and returns a reference to the matrix.
     /// 
-    ///     Note that if you apply a QTransform to a point defined in widget
-    ///     coordinates, the direction of the rotation will be clockwise
-    ///     because the y-axis points downwards.
+    /// Note that if you apply a QTransform to a point defined in widget
+    /// coordinates, the direction of the rotation will be clockwise
+    /// because the y-axis points downwards.
     /// 
-    ///     The angle is specified in radians.
+    /// The angle is specified in radians.
     /// 
-    ///     \sa setMatrix()
+    /// **See also:** setMatrix()
     rotate_radians(a: f32, axis: Rute::Axis) -> Transform?,
-    ///     Creates a transformation matrix, \a trans, that maps a unit square
-    ///     to a four-sided polygon, \a quad. Returns \c true if the transformation
-    ///     is constructed or false if such a transformation does not exist.
     /// 
-    ///     \sa quadToSquare(), quadToQuad()
+    /// Creates a transformation matrix, *trans,* that maps a unit square
+    /// to a four-sided polygon, *quad.* Returns `true` if the transformation
+    /// is constructed or false if such a transformation does not exist.
+    /// 
+    /// **See also:** quadToSquare()
+    /// quadToQuad()
     [static] square_to_quad(square: &PolygonFType, result: &TransformType) -> bool,
-    ///     \fn bool QTransform::quadToSquare(const QPolygonF &quad, QTransform &trans)
     /// 
-    ///     Creates a transformation matrix, \a trans, that maps a four-sided polygon,
-    ///     \a quad, to a unit square. Returns \c true if the transformation is constructed
-    ///     or false if such a transformation does not exist.
+    /// Creates a transformation matrix, *trans,* that maps a four-sided polygon,
+    /// *quad,* to a unit square. Returns `true` if the transformation is constructed
+    /// or false if such a transformation does not exist.
     /// 
-    ///     \sa squareToQuad(), quadToQuad()
+    /// **See also:** squareToQuad()
+    /// quadToQuad()
     [static] quad_to_square(quad: &PolygonFType, result: &TransformType) -> bool,
+    /// 
+    /// Creates a transformation matrix, *trans,* that maps a four-sided
+    /// polygon, *one,* to another four-sided polygon, *two.*
+    /// Returns `true` if the transformation is possible; otherwise returns
+    /// false.
+    /// 
+    /// This is a convenience method combining quadToSquare() and
+    /// squareToQuad() methods. It allows the input quad to be
+    /// transformed into any other quad.
+    /// 
+    /// **See also:** squareToQuad()
+    /// quadToSquare()
     [static] quad_to_quad(one: &PolygonFType, two: &PolygonFType, result: &TransformType) -> bool,
-    ///     Resets the matrix to an identity matrix, i.e. all elements are set
-    ///     to zero, except \c m11 and \c m22 (specifying the scale) and \c m33
-    ///     which are set to 1.
     /// 
-    ///     \sa QTransform(), isIdentity(), {QTransform#Basic Matrix
-    ///     Operations}{Basic Matrix Operations}
+    /// Resets the matrix to an identity matrix, i.e. all elements are set
+    /// to zero, except `m11` and `m22` (specifying the scale) and `m33`
+    /// which are set to 1.
+    /// 
+    /// **See also:** QTransform()
+    /// isIdentity()
+    /// {QTransform#Basic Matrix
+    /// Operations}{Basic Matrix Operations}
     reset(),
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(p: &PointType) -> Point,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(p: &PointFType) -> PointF,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(l: &LineType) -> Line,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(l: &LineFType) -> LineF,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(a: &PolygonFType) -> PolygonF,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(a: &PolygonType) -> Polygon,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(r: &RegionType) -> Region,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(p: &PainterPathType) -> PainterPath,
-    ///     \fn QPolygon QTransform::mapToPolygon(const QRect &rectangle) const
     /// 
-    ///     Creates and returns a QPolygon representation of the given \a
-    ///     rectangle, mapped into the coordinate system defined by this
-    ///     matrix.
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
     /// 
-    ///     The rectangle's coordinates are transformed using the following
-    ///     formulas:
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
     /// 
-    ///     \snippet code/src_gui_painting_qtransform.cpp 1
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
     /// 
-    ///     Polygons and rectangles behave slightly differently when
-    ///     transformed (due to integer rounding), so
-    ///     \c{matrix.map(QPolygon(rectangle))} is not always the same as
-    ///     \c{matrix.mapToPolygon(rectangle)}.
-    /// 
-    ///     \sa mapRect(), {QTransform#Basic Matrix Operations}{Basic Matrix
-    ///     Operations}
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     map_to_polygon(r: &RectType) -> Polygon,
-    ///     \fn QRectF QTransform::mapRect(const QRectF &rectangle) const
     /// 
-    ///     Creates and returns a QRectF object that is a copy of the given \a
-    ///     rectangle, mapped into the coordinate system defined by this
-    ///     matrix.
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
     /// 
-    ///     The rectangle's coordinates are transformed using the following
-    ///     formulas:
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
     /// 
-    ///     \snippet code/src_gui_painting_qtransform.cpp 2
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
     /// 
-    ///     If rotation or shearing has been specified, this function returns
-    ///     the \e bounding rectangle. To retrieve the exact region the given
-    ///     \a rectangle maps to, use the mapToPolygon() function instead.
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     /// 
-    ///     \sa mapToPolygon(), {QTransform#Basic Matrix Operations}{Basic Matrix
-    ///     Operations}
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
     map_rect(arg0: &RectType) -> Rect,
-    ///     \fn QRectF QTransform::mapRect(const QRectF &rectangle) const
     /// 
-    ///     Creates and returns a QRectF object that is a copy of the given \a
-    ///     rectangle, mapped into the coordinate system defined by this
-    ///     matrix.
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
     /// 
-    ///     The rectangle's coordinates are transformed using the following
-    ///     formulas:
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
     /// 
-    ///     \snippet code/src_gui_painting_qtransform.cpp 2
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
     /// 
-    ///     If rotation or shearing has been specified, this function returns
-    ///     the \e bounding rectangle. To retrieve the exact region the given
-    ///     \a rectangle maps to, use the mapToPolygon() function instead.
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
     /// 
-    ///     \sa mapToPolygon(), {QTransform#Basic Matrix Operations}{Basic Matrix
-    ///     Operations}
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
     map_rect(arg0: &RectFType) -> RectF,
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(x: i32, y: i32, tx: *i32, ty: *i32),
-    ///     \overload
     /// 
-    ///     Maps the given coordinates \a x and \a y into the coordinate
-    ///     system defined by this matrix. The resulting values are put in *\a
-    ///     tx and *\a ty, respectively. Note that the transformed coordinates
-    ///     are rounded to the nearest integer.
+    /// **Overloads**
+    /// Creates and returns a QPointF object that is a copy of the given point,
+    /// *p,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPoint object that is a copy of the given *point,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QLineF object that is a copy of the given line,
+    /// *l,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// **Overloads**
+    /// 
+    /// Creates and returns a QLine object that is a copy of the given *line,* mapped into the coordinate system defined by this matrix.
+    /// Note that the transformed coordinates are rounded to the nearest
+    /// integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygonF object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPolygon object that is a copy of the given
+    /// *polygon,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRegion object that is a copy of the given
+    /// *region,* mapped into the coordinate system defined by this matrix.
+    /// 
+    /// Calling this method can be rather expensive if rotations or
+    /// shearing are used.
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QPainterPath object that is a copy of the
+    /// given *path,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// Polygons and rectangles behave slightly differently when
+    /// transformed (due to integer rounding), so
+    /// `matrix.map(QPolygon(rectangle))` is not always the same as
+    /// `matrix.mapToPolygon(rectangle)` .
+    /// 
+    /// **See also:** mapRect()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix.
+    /// 
+    /// The rectangle's coordinates are transformed using the following
+    /// formulas:
+    /// 
+    /// If rotation or shearing has been specified, this function returns
+    /// the *bounding* rectangle. To retrieve the exact region the given
+    /// *rectangle* maps to, use the mapToPolygon() function instead.
+    /// 
+    /// **See also:** mapToPolygon()
+    /// {QTransform#Basic Matrix Operations}{Basic Matrix
+    /// Operations}
+    /// 
+    /// **Overloads**
+    /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
+    /// matrix. Note that the transformed coordinates are rounded to the
+    /// nearest integer.
+    /// 
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
+    /// 
+    /// The coordinates are transformed using the following formulas:
+    /// 
+    /// The point (x, y) is the original point, and (x', y') is the
+    /// transformed point.
+    /// 
+    /// **See also:** {QTransform#Basic Matrix Operations}{Basic Matrix Operations}
+    /// 
+    /// **Overloads**
+    /// Maps the given coordinates *x* and *y* into the coordinate
+    /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
+    /// are rounded to the nearest integer.
     map(x: f32, y: f32, tx: *f32, ty: *f32),
+    /// 
+    /// Returns the QTransform as an affine matrix.
+    /// 
+    /// **Warning**: If a perspective transformation has been specified,
+    /// then the conversion will cause loss of data.
     to_affine() -> Matrix?,
-    ///     Creates a matrix which corresponds to a translation of \a dx along
-    ///     the x axis and \a dy along the y axis. This is the same as
-    ///     QTransform().translate(dx, dy) but slightly faster.
     /// 
-    ///     \since 4.5
+    /// Creates a matrix which corresponds to a translation of *dx* along
+    /// the x axis and *dy* along the y axis. This is the same as
+    /// QTransform().translate(dx, dy) but slightly faster.
+    /// 
     [static] from_translate(dx: f32, dy: f32) -> Transform,
-    ///     Creates a matrix which corresponds to a scaling of
-    ///     \a sx horizontally and \a sy vertically.
-    ///     This is the same as QTransform().scale(sx, sy) but slightly faster.
     /// 
-    ///     \since 4.5
+    /// Creates a matrix which corresponds to a scaling of
+    /// *sx* horizontally and *sy* vertically.
+    /// This is the same as QTransform().scale(sx, sy) but slightly faster.
+    /// 
     [static] from_scale(dx: f32, dy: f32) -> Transform,
 }
 

@@ -1,28 +1,74 @@
-///     \class QPlatformCursorImage
-///     \since 5.0
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-/// 
-///     \brief The QPlatformCursorImage class provides a set of graphics
-///     intended to be used as cursors.
-/// 
-///     \sa QPlatformCursor
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PlatformCursorImage {
+    /// 
     image() -> Image?,
+    /// 
     hotspot() -> Point,
-    ///     Sets the cursor image to the given \a image, with the hotspot at the
-    ///     point specified by (\a hx, \a hy).
+    /// 
+    /// *id* is one of the defined Qt::CursorShape values.
+    /// 
+    /// If id is invalid, Qt::BitmapCursor, or unknown by the implementation,
+    /// Qt::ArrowCursor is used instead.
+    /// 
+    /// Sets the cursor image to the given *image,* with the hotspot at the
+    /// point specified by ( *hx,* *hy).*
+    /// 
+    /// Sets the cursor image to the graphic represented by the combination of
+    /// *data* and *mask,* with dimensions given by *width* and *height* and a
+    /// hotspot at the point specified by ( *hx,* *hy).*
+    /// 
+    /// The image data specified by *data* must be supplied in the format
+    /// described by QImage::Format_Indexed8.
+    /// 
+    /// The corresponding mask data specified by *mask* must be supplied in a
+    /// character array containing packed 1 bit per pixel format data, with any
+    /// padding bits at the end of the array. Bits of value 0 represent transparent
+    /// pixels in the image data.
     set(data: *uchar, mask: *uchar, width: i32, height: i32, hot_x: i32, hot_y: i32),
-    ///     Sets the cursor image to the given \a image, with the hotspot at the
-    ///     point specified by (\a hx, \a hy).
+    /// 
+    /// *id* is one of the defined Qt::CursorShape values.
+    /// 
+    /// If id is invalid, Qt::BitmapCursor, or unknown by the implementation,
+    /// Qt::ArrowCursor is used instead.
+    /// 
+    /// Sets the cursor image to the given *image,* with the hotspot at the
+    /// point specified by ( *hx,* *hy).*
+    /// 
+    /// Sets the cursor image to the graphic represented by the combination of
+    /// *data* and *mask,* with dimensions given by *width* and *height* and a
+    /// hotspot at the point specified by ( *hx,* *hy).*
+    /// 
+    /// The image data specified by *data* must be supplied in the format
+    /// described by QImage::Format_Indexed8.
+    /// 
+    /// The corresponding mask data specified by *mask* must be supplied in a
+    /// character array containing packed 1 bit per pixel format data, with any
+    /// padding bits at the end of the array. Bits of value 0 represent transparent
+    /// pixels in the image data.
     set(image: &ImageType, hx: i32, hy: i32),
-    ///     Sets the cursor image to the given \a image, with the hotspot at the
-    ///     point specified by (\a hx, \a hy).
+    /// 
+    /// *id* is one of the defined Qt::CursorShape values.
+    /// 
+    /// If id is invalid, Qt::BitmapCursor, or unknown by the implementation,
+    /// Qt::ArrowCursor is used instead.
+    /// 
+    /// Sets the cursor image to the given *image,* with the hotspot at the
+    /// point specified by ( *hx,* *hy).*
+    /// 
+    /// Sets the cursor image to the graphic represented by the combination of
+    /// *data* and *mask,* with dimensions given by *width* and *height* and a
+    /// hotspot at the point specified by ( *hx,* *hy).*
+    /// 
+    /// The image data specified by *data* must be supplied in the format
+    /// described by QImage::Format_Indexed8.
+    /// 
+    /// The corresponding mask data specified by *mask* must be supplied in a
+    /// character array containing packed 1 bit per pixel format data, with any
+    /// padding bits at the end of the array. Bits of value 0 represent transparent
+    /// pixels in the image data.
     set(arg0: Rute::CursorShape),
 }
 

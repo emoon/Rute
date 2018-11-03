@@ -1,26 +1,24 @@
-///     \class QGenericPlugin
-///     \ingroup plugins
-///     \inmodule QtGui
 /// 
-///     \brief The QGenericPlugin class is an abstract base class for
-///     plugins.
+/// A mouse plugin can be created by subclassing
+/// QGenericPlugin and reimplementing the pure virtual create()
+/// function. By exporting the derived class using the
+/// Q_PLUGIN_METADATA() macro, The default implementation of the
+/// QGenericPluginFactory class will automatically detect the plugin and
+/// load the driver into the server application at run-time. See [How to Create Qt Plugins](How%20to%20Create%20Qt%20Plugins)
+/// for details.
 /// 
-///     A mouse plugin can be created by subclassing
-///     QGenericPlugin and reimplementing the pure virtual create()
-///     function. By exporting the derived class using the
-///     Q_PLUGIN_METADATA() macro, The default implementation of the
-///     QGenericPluginFactory class will automatically detect the plugin and
-///     load the driver into the server application at run-time. See \l
-///     {How to Create Qt Plugins} for details.
+/// The json metadata file should contain a list of keys supported by this
+/// plugin.
 /// 
-///     The json metadata file should contain a list of keys supported by this
-///     plugin.
-/// 
-///     \sa QGenericPluginFactory
+/// **See also:** QGenericPluginFactory
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GenericPlugin : Object {
+    /// 
+    /// Implement this function to create a driver matching the type
+    /// specified by the given *key* and *specification* parameters. Note that
+    /// keys are case-insensitive.
     [event] create(name: String, spec: String) -> Object?,
 }
 

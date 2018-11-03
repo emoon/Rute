@@ -1,66 +1,71 @@
-///     \class QValidator
-///     \brief The QValidator class provides validation of input text.
-///     \inmodule QtGui
 /// 
-///     The class itself is abstract. Two subclasses, \l QIntValidator and
-///     \l QDoubleValidator, provide basic numeric-range checking, and \l
-///     QRegExpValidator provides general checking using a custom regular
-///     expression.
+/// The class itself is abstract. Two subclasses, [QIntValidator](QIntValidator)
+/// and
+/// [QDoubleValidator,](QDoubleValidator,)
+/// provide basic numeric-range checking, and [QRegExpValidator](QRegExpValidator)
+/// provides general checking using a custom regular
+/// expression.
 /// 
-///     If the built-in validators aren't sufficient, you can subclass
-///     QValidator. The class has two virtual functions: validate() and
-///     fixup().
+/// If the built-in validators aren't sufficient, you can subclass
+/// QValidator. The class has two virtual functions: validate() and
+/// fixup().
 /// 
-///     \l validate() must be implemented by every subclass. It returns
-///     \l Invalid, \l Intermediate or \l Acceptable depending on whether
-///     its argument is valid (for the subclass's definition of valid).
+/// [validate()](validate())
+/// must be implemented by every subclass. It returns
+/// [Invalid,](Invalid,)
+/// [Intermediate](Intermediate)
+/// or [Acceptable](Acceptable)
+/// depending on whether
+/// its argument is valid (for the subclass's definition of valid).
 /// 
-///     These three states require some explanation. An \l Invalid string
-///     is \e clearly invalid. \l Intermediate is less obvious: the
-///     concept of validity is difficult to apply when the string is
-///     incomplete (still being edited). QValidator defines \l Intermediate
-///     as the property of a string that is neither clearly invalid nor
-///     acceptable as a final result. \l Acceptable means that the string
-///     is acceptable as a final result. One might say that any string
-///     that is a plausible intermediate state during entry of an \l
-///     Acceptable string is \l Intermediate.
+/// These three states require some explanation. An [Invalid](Invalid)
+/// string
+/// is *clearly* invalid. [Intermediate](Intermediate)
+/// is less obvious: the
+/// concept of validity is difficult to apply when the string is
+/// incomplete (still being edited). QValidator defines [Intermediate](Intermediate)
 /// 
-///     Here are some examples:
+/// as the property of a string that is neither clearly invalid nor
+/// acceptable as a final result. [Acceptable](Acceptable)
+/// means that the string
+/// is acceptable as a final result. One might say that any string
+/// that is a plausible intermediate state during entry of an [Acceptable](Acceptable)
+/// string is [Intermediate.](Intermediate.)
 /// 
-///     \list
+/// Here are some examples:
 /// 
-///     \li For a line edit that accepts integers from 10 to 1000 inclusive,
-///     42 and 123 are \l Acceptable, the empty string and 5 are \l
-///     Intermediate, and "asdf" and 1114 is \l Invalid.
+/// * For a line edit that accepts integers from 10 to 1000 inclusive, 42 and 123 are [Acceptable,](Acceptable,)
+/// the empty string and 5 are [Intermediate,](Intermediate,)
+/// and "asdf" and 1114 is [Invalid.](Invalid.)
 /// 
-///     \li For an editable combobox that accepts URLs, any well-formed URL
-///     is \l Acceptable, "http://example.com/," is \l Intermediate
-///     (it might be a cut and paste action that accidentally took in a
-///     comma at the end), the empty string is \l Intermediate (the user
-///     might select and delete all of the text in preparation for entering
-///     a new URL) and "http:///./" is \l Invalid.
+/// * For an editable combobox that accepts URLs, any well-formed URL is [Acceptable,](Acceptable,)
+/// "http://example.com/," is [Intermediate](Intermediate)
+/// (it might be a cut and paste action that accidentally took in a comma at the end), the empty string is [Intermediate](Intermediate)
+/// (the user might select and delete all of the text in preparation for entering a new URL) and "http:///./" is [Invalid.](Invalid.)
 /// 
-///     \li For a spin box that accepts lengths, "11cm" and "1in" are \l
-///     Acceptable, "11" and the empty string are \l Intermediate, and
-///     "http://example.com" and "hour" are \l Invalid.
+/// * For a spin box that accepts lengths, "11cm" and "1in" are [Acceptable,](Acceptable,)
+/// "11" and the empty string are [Intermediate,](Intermediate,)
+/// and "http://example.com" and "hour" are [Invalid.](Invalid.)
 /// 
-///     \endlist
+/// [fixup()](fixup())
+/// is provided for validators that can repair some user
+/// errors. The default implementation does nothing. QLineEdit, for
+/// example, will call fixup() if the user presses Enter (or Return)
+/// and the content is not currently valid. This allows the fixup()
+/// function the opportunity of performing some magic to make an [Invalid](Invalid)
+/// string [Acceptable.](Acceptable.)
 /// 
-///     \l fixup() is provided for validators that can repair some user
-///     errors. The default implementation does nothing. QLineEdit, for
-///     example, will call fixup() if the user presses Enter (or Return)
-///     and the content is not currently valid. This allows the fixup()
-///     function the opportunity of performing some magic to make an \l
-///     Invalid string \l Acceptable.
+/// A validator has a locale, set with setLocale(). It is typically used
+/// to parse localized data. For example, QIntValidator and QDoubleValidator
+/// use it to parse localized representations of integers and doubles.
 /// 
-///     A validator has a locale, set with setLocale(). It is typically used
-///     to parse localized data. For example, QIntValidator and QDoubleValidator
-///     use it to parse localized representations of integers and doubles.
+/// QValidator is typically used with QLineEdit, QSpinBox and
+/// QComboBox.
 /// 
-///     QValidator is typically used with QLineEdit, QSpinBox and
-///     QComboBox.
-/// 
-///     \sa QIntValidator, QDoubleValidator, QRegExpValidator, {Line Edits Example}
+/// **See also:** QIntValidator
+/// QDoubleValidator
+/// QRegExpValidator
+/// {Line Edits Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -72,34 +77,52 @@ enum State {
 }
 
 struct Validator : Object {
-    ///     Sets the \a locale that will be used for the validator. Unless
-    ///     setLocale has been called, the validator will use the default
-    ///     locale set with QLocale::setDefault(). If a default locale has not
-    ///     been set, it is the operating system's locale.
     /// 
-    ///     \sa locale(), QLocale::setDefault()
+    /// Sets the *locale* that will be used for the validator. Unless
+    /// setLocale has been called, the validator will use the default
+    /// locale set with QLocale::setDefault(). If a default locale has not
+    /// been set, it is the operating system's locale.
+    /// 
+    /// **See also:** locale()
+    /// QLocale::setDefault()
     set_locale(locale: &LocaleType),
-    ///     Returns the locale for the validator. The locale is by default initialized to the same as QLocale().
     /// 
-    ///     \sa setLocale()
-    ///     \sa QLocale::QLocale()
+    /// Returns the locale for the validator. The locale is by default initialized to the same as QLocale().
+    /// 
+    /// **See also:** setLocale()
+    /// **See also:** QLocale::QLocale()
     locale() -> Locale,
+    /// 
+    /// This virtual function returns [Invalid](Invalid)
+    /// if *input* is invalid
+    /// according to this validator's rules, [Intermediate](Intermediate)
+    /// if it
+    /// is likely that a little more editing will make the input
+    /// acceptable (e.g. the user types into a widget which accepts
+    /// integers between 10 and 99), and [Acceptable](Acceptable)
+    /// if the input is
+    /// valid.
+    /// 
+    /// The function can change both *input* and *pos* (the cursor position)
+    /// if required.
     [event] validate(arg0: String, arg1: &i32) -> Validator::State,
-    ///     \fn void QValidator::fixup(QString & input) const
     /// 
-    ///     This function attempts to change \a input to be valid according to
-    ///     this validator's rules. It need not result in a valid string:
-    ///     callers of this function must re-test afterwards; the default does
-    ///     nothing.
+    /// This function attempts to change *input* to be valid according to
+    /// this validator's rules. It need not result in a valid string:
+    /// callers of this function must re-test afterwards; the default does
+    /// nothing.
     /// 
-    ///     Reimplementations of this function can change \a input even if
-    ///     they do not produce a valid string. For example, an ISBN validator
-    ///     might want to delete every character except digits and "-", even
-    ///     if the result is still not a valid ISBN; a surname validator might
-    ///     want to remove whitespace from the start and end of the string,
-    ///     even if the resulting string is not in the list of accepted
-    ///     surnames.
+    /// Reimplementations of this function can change *input* even if
+    /// they do not produce a valid string. For example, an ISBN validator
+    /// might want to delete every character except digits and , even
+    /// if the result is still not a valid ISBN; a surname validator might
+    /// want to remove whitespace from the start and end of the string,
+    /// even if the resulting string is not in the list of accepted
+    /// surnames.
     [event] fixup(arg0: String),
+    /// 
+    /// This signal is emitted when any property that may affect the validity of
+    /// a string has changed.
     [signal] changed(),
 }
 

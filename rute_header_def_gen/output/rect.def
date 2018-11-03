@@ -1,276 +1,817 @@
-///     \class QRect
-///     \inmodule QtCore
-///     \ingroup painting
-///     \reentrant
 /// 
-///     \brief The QRect class defines a rectangle in the plane using
-///     integer precision.
+/// A rectangle is normally expressed as a top-left corner and a
+/// size. The size (width and height) of a QRect is always equivalent
+/// to the mathematical rectangle that forms the basis for its
+/// rendering.
 /// 
-///     A rectangle is normally expressed as a top-left corner and a
-///     size.  The size (width and height) of a QRect is always equivalent
-///     to the mathematical rectangle that forms the basis for its
-///     rendering.
+/// A QRect can be constructed with a set of left, top, width and
+/// height integers, or from a QPoint and a QSize. The following code
+/// creates two identical rectangles.
 /// 
-///     A QRect can be constructed with a set of left, top, width and
-///     height integers, or from a QPoint and a QSize.  The following code
-///     creates two identical rectangles.
+/// There is a third constructor that creates a QRect using the
+/// top-left and bottom-right coordinates, but we recommend that you
+/// avoid using it. The rationale is that for historical reasons the
+/// values returned by the bottom() and right() functions deviate from
+/// the true bottom-right corner of the rectangle.
 /// 
-///     \snippet code/src_corelib_tools_qrect.cpp 0
+/// The QRect class provides a collection of functions that return the
+/// various rectangle coordinates, and enable manipulation of
+/// these. QRect also provides functions to move the rectangle relative
+/// to the various coordinates. In addition there is a moveTo()
+/// function that moves the rectangle, leaving its top left corner at
+/// the given coordinates. Alternatively, the translate() function
+/// moves the rectangle the given offset relative to the current
+/// position, and the translated() function returns a translated copy
+/// of this rectangle.
 /// 
-///     There is a third constructor that creates a QRect using the
-///     top-left and bottom-right coordinates, but we recommend that you
-///     avoid using it. The rationale is that for historical reasons the
-///     values returned by the bottom() and right() functions deviate from
-///     the true bottom-right corner of the rectangle.
+/// The size() function returns the rectange's dimensions as a
+/// QSize. The dimensions can also be retrieved separately using the
+/// width() and height() functions. To manipulate the dimensions use
+/// the setSize(), setWidth() or setHeight() functions. Alternatively,
+/// the size can be changed by applying either of the functions
+/// setting the rectangle coordinates, for example, setBottom() or
+/// setRight().
 /// 
-///     The QRect class provides a collection of functions that return the
-///     various rectangle coordinates, and enable manipulation of
-///     these. QRect also provides functions to move the rectangle relative
-///     to the various coordinates. In addition there is a moveTo()
-///     function that moves the rectangle, leaving its top left corner at
-///     the given coordinates. Alternatively, the translate() function
-///     moves the rectangle the given offset relative to the current
-///     position, and the translated() function returns a translated copy
-///     of this rectangle.
+/// The contains() function tells whether a given point is inside the
+/// rectangle or not, and the intersects() function returns `true` if
+/// this rectangle intersects with a given rectangle. The QRect class
+/// also provides the intersected() function which returns the
+/// intersection rectangle, and the united() function which returns the
+/// rectangle that encloses the given rectangle and this:
 /// 
-///     The size() function returns the rectange's dimensions as a
-///     QSize. The dimensions can also be retrieved separately using the
-///     width() and height() functions. To manipulate the dimensions use
-///     the setSize(), setWidth() or setHeight() functions. Alternatively,
-///     the size can be changed by applying either of the functions
-///     setting the rectangle coordinates, for example, setBottom() or
-///     setRight().
+/// * ![qrect-intersect.png](qrect-intersect.png)
 /// 
-///     The contains() function tells whether a given point is inside the
-///     rectangle or not, and the intersects() function returns \c true if
-///     this rectangle intersects with a given rectangle. The QRect class
-///     also provides the intersected() function which returns the
-///     intersection rectangle, and the united() function which returns the
-///     rectangle that encloses the given rectangle and this:
+/// * ![qrect-unite.png](qrect-unite.png)
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qrect-intersect.png
-///     \li \inlineimage qrect-unite.png
-///     \row
-///     \li intersected()
-///     \li united()
-///     \endtable
+/// * intersected()
+/// * united()
 /// 
-///     The isEmpty() function returns \c true if left() > right() or top() >
-///     bottom(). Note that an empty rectangle is not valid: The isValid()
-///     function returns \c true if left() <= right() \e and top() <=
-///     bottom(). A null rectangle (isNull() == true) on the other hand,
-///     has both width and height set to 0.
+/// The isEmpty() function returns `true` if left() > right() or top() >
+/// bottom(). Note that an empty rectangle is not valid: The isValid()
+/// function returns `true` if left() <= right() *and* top() <=
+/// bottom(). A null rectangle (isNull() == true) on the other hand,
+/// has both width and height set to 0.
 /// 
-///     Note that due to the way QRect and QRectF are defined, an
-///     empty QRect is defined in essentially the same way as QRectF.
+/// Note that due to the way QRect and QRectF are defined, an
+/// empty QRect is defined in essentially the same way as QRectF.
 /// 
-///     Finally, QRect objects can be streamed as well as compared.
+/// Finally, QRect objects can be streamed as well as compared.
 /// 
-///     \tableofcontents
+/// # Rendering
 /// 
-///     \section1 Rendering
+/// When using an [anti-aliased](QPainter::Antialiasing)
+/// painter,
+/// the boundary line of a QRect will be rendered symmetrically on
+/// both sides of the mathematical rectangle's boundary line. But when
+/// using an aliased painter (the default) other rules apply.
 /// 
-///     When using an \l {QPainter::Antialiasing}{anti-aliased} painter,
-///     the boundary line of a QRect will be rendered symmetrically on
-///     both sides of the mathematical rectangle's boundary line. But when
-///     using an aliased painter (the default) other rules apply.
+/// Then, when rendering with a one pixel wide pen the QRect's boundary
+/// line will be rendered to the right and below the mathematical
+/// rectangle's boundary line.
 /// 
-///     Then, when rendering with a one pixel wide pen the QRect's boundary
-///     line will be rendered to the right and below the mathematical
-///     rectangle's boundary line.
+/// When rendering with a two pixels wide pen the boundary line will
+/// be split in the middle by the mathematical rectangle. This will be
+/// the case whenever the pen is set to an even number of pixels,
+/// while rendering with a pen with an odd number of pixels, the spare
+/// pixel will be rendered to the right and below the mathematical
+/// rectangle as in the one pixel case.
 /// 
-///     When rendering with a two pixels wide pen the boundary line will
-///     be split in the middle by the mathematical rectangle. This will be
-///     the case whenever the pen is set to an even number of pixels,
-///     while rendering with a pen with an odd number of pixels, the spare
-///     pixel will be rendered to the right and below the mathematical
-///     rectangle as in the one pixel case.
+/// * ![qrect-diagram-zero.png](qrect-diagram-zero.png)
 /// 
-///     \table
-///     \row
-///         \li \inlineimage qrect-diagram-zero.png
-///         \li \inlineimage qrect-diagram-one.png
-///     \row
-///         \li Logical representation
-///         \li One pixel wide pen
-///     \row
-///         \li \inlineimage qrect-diagram-two.png
-///         \li \inlineimage qrect-diagram-three.png
-///     \row
-///         \li Two pixel wide pen
-///         \li Three pixel wide pen
-///     \endtable
+/// * ![qrect-diagram-one.png](qrect-diagram-one.png)
 /// 
-///     \section1 Coordinates
+/// * Logical representation
+/// * One pixel wide pen
 /// 
-///     The QRect class provides a collection of functions that return the
-///     various rectangle coordinates, and enable manipulation of
-///     these. QRect also provides functions to move the rectangle relative
-///     to the various coordinates.
+/// * ![qrect-diagram-two.png](qrect-diagram-two.png)
 /// 
-///     For example the left(), setLeft() and moveLeft() functions as an
-///     example: left() returns the x-coordinate of the rectangle's left
-///     edge, setLeft() sets the left edge of the rectangle to the given x
-///     coordinate (it may change the width, but will never change the
-///     rectangle's right edge) and moveLeft() moves the entire rectangle
-///     horizontally, leaving the rectangle's left edge at the given x
-///     coordinate and its size unchanged.
+/// * ![qrect-diagram-three.png](qrect-diagram-three.png)
 /// 
-///     \image qrect-coordinates.png
+/// * Two pixel wide pen
+/// * Three pixel wide pen
 /// 
-///     Note that for historical reasons the values returned by the
-///     bottom() and right() functions deviate from the true bottom-right
-///     corner of the rectangle: The right() function returns \e { left()
-///     + width() - 1} and the bottom() function returns \e {top() +
-///     height() - 1}. The same is the case for the point returned by the
-///     bottomRight() convenience function. In addition, the x and y
-///     coordinate of the topRight() and bottomLeft() functions,
-///     respectively, contain the same deviation from the true right and
-///     bottom edges.
+/// # Coordinates
 /// 
-///     We recommend that you use x() + width() and y() + height() to find
-///     the true bottom-right corner, and avoid right() and
-///     bottom(). Another solution is to use QRectF: The QRectF class
-///     defines a rectangle in the plane using floating point accuracy for
-///     coordinates, and the QRectF::right() and QRectF::bottom()
-///     functions \e do return the right and bottom coordinates.
+/// The QRect class provides a collection of functions that return the
+/// various rectangle coordinates, and enable manipulation of
+/// these. QRect also provides functions to move the rectangle relative
+/// to the various coordinates.
 /// 
-///     It is also possible to add offsets to this rectangle's coordinates
-///     using the adjust() function, as well as retrieve a new rectangle
-///     based on adjustments of the original one using the adjusted()
-///     function. If either of the width and height is negative, use the
-///     normalized() function to retrieve a rectangle where the corners
-///     are swapped.
+/// For example the left(), setLeft() and moveLeft() functions as an
+/// example: left() returns the x-coordinate of the rectangle's left
+/// edge, setLeft() sets the left edge of the rectangle to the given x
+/// coordinate (it may change the width, but will never change the
+/// rectangle's right edge) and moveLeft() moves the entire rectangle
+/// horizontally, leaving the rectangle's left edge at the given x
+/// coordinate and its size unchanged.
 /// 
-///     In addition, QRect provides the getCoords() function which extracts
-///     the position of the rectangle's top-left and bottom-right corner,
-///     and the getRect() function which extracts the rectangle's top-left
-///     corner, width and height. Use the setCoords() and setRect()
-///     function to manipulate the rectangle's coordinates and dimensions
-///     in one go.
+/// ![qrect-coordinates.png](qrect-coordinates.png)
 /// 
-///     \section1 Constraints
+/// Note that for historical reasons the values returned by the
+/// bottom() and right() functions deviate from the true bottom-right
+/// corner of the rectangle: The right() function returns *left()
+/// + width() - 1* and the bottom() function returns *top() +
+/// height() - 1* . The same is the case for the point returned by the
+/// bottomRight() convenience function. In addition, the x and y
+/// coordinate of the topRight() and bottomLeft() functions,
+/// respectively, contain the same deviation from the true right and
+/// bottom edges.
 /// 
-///     QRect is limited to the minimum and maximum values for the \c int type.
-///     Operations on a QRect that could potentially result in values outside this
-///     range will result in undefined behavior.
+/// We recommend that you use x() + width() and y() + height() to find
+/// the true bottom-right corner, and avoid right() and
+/// bottom(). Another solution is to use QRectF: The QRectF class
+/// defines a rectangle in the plane using floating point accuracy for
+/// coordinates, and the QRectF::right() and QRectF::bottom()
+/// functions *do* return the right and bottom coordinates.
 /// 
-///     \sa QRectF, QRegion
+/// It is also possible to add offsets to this rectangle's coordinates
+/// using the adjust() function, as well as retrieve a new rectangle
+/// based on adjustments of the original one using the adjusted()
+/// function. If either of the width and height is negative, use the
+/// normalized() function to retrieve a rectangle where the corners
+/// are swapped.
+/// 
+/// In addition, QRect provides the getCoords() function which extracts
+/// the position of the rectangle's top-left and bottom-right corner,
+/// and the getRect() function which extracts the rectangle's top-left
+/// corner, width and height. Use the setCoords() and setRect()
+/// function to manipulate the rectangle's coordinates and dimensions
+/// in one go.
+/// 
+/// # Constraints
+/// 
+/// QRect is limited to the minimum and maximum values for the `int` type.
+/// Operations on a QRect that could potentially result in values outside this
+/// range will result in undefined behavior.
+/// 
+/// **See also:** QRectF
+/// QRegion
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Rect {
+    /// 
+    /// Returns `true` if the rectangle is a null rectangle, otherwise
+    /// returns `false.`
+    /// 
+    /// A null rectangle has both the width and the height set to 0 (i.e.,
+    /// right() == left() - 1 and bottom() == top() - 1). A null rectangle
+    /// is also empty, and hence is not valid.
+    /// 
+    /// **See also:** isEmpty()
+    /// isValid()
     is_null() -> bool,
+    /// 
+    /// Returns `true` if the rectangle is empty, otherwise returns `false.`
+    /// 
+    /// An empty rectangle has a left() > right() or top() > bottom(). An
+    /// empty rectangle is not valid (i.e., isEmpty() == !isValid()).
+    /// 
+    /// Use the normalized() function to retrieve a rectangle where the
+    /// corners are swapped.
+    /// 
+    /// **See also:** isNull()
+    /// isValid()
+    /// normalized()
     is_empty() -> bool,
+    /// 
+    /// Returns `true` if the rectangle is valid, otherwise returns `false.`
+    /// 
+    /// A valid rectangle has a left() <= right() and top() <=
+    /// bottom(). Note that non-trivial operations like intersections are
+    /// not defined for invalid rectangles. A valid rectangle is not empty
+    /// (i.e., isValid() == !isEmpty()).
+    /// 
+    /// **See also:** isNull()
+    /// isEmpty()
+    /// normalized()
     is_valid() -> bool,
+    /// 
+    /// Returns the x-coordinate of the rectangle's left edge. Equivalent
+    /// to x().
+    /// 
+    /// **See also:** setLeft()
+    /// topLeft()
+    /// bottomLeft()
     left() -> i32,
+    /// 
+    /// Returns the y-coordinate of the rectangle's top edge.
+    /// Equivalent to y().
+    /// 
+    /// **See also:** setTop()
+    /// topLeft()
+    /// topRight()
+    /// 
+    /// Returns the position of the rectangle's top-left corner.
+    /// 
+    /// **See also:** setTopLeft()
+    /// top()
+    /// left()
+    /// 
+    /// Returns the position of the rectangle's top-right corner.
+    /// 
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top()).
+    /// 
+    /// **See also:** setTopRight()
+    /// top()
+    /// right()
     top() -> i32,
+    /// 
+    /// Returns the x-coordinate of the rectangle's right edge.
+    /// 
+    /// Note that for historical reasons this function returns left() +
+    /// width() - 1; use x() + width() to retrieve the true x-coordinate.
+    /// 
+    /// **See also:** setRight()
+    /// topRight()
+    /// bottomRight()
     right() -> i32,
+    /// 
+    /// Returns the y-coordinate of the rectangle's bottom edge.
+    /// 
+    /// Note that for historical reasons this function returns top() +
+    /// height() - 1; use y() + height() to retrieve the true y-coordinate.
+    /// 
+    /// **See also:** setBottom()
+    /// bottomLeft()
+    /// bottomRight()
+    /// 
+    /// Returns the position of the rectangle's bottom-right corner.
+    /// 
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top() + height() - 1).
+    /// 
+    /// **See also:** setBottomRight()
+    /// bottom()
+    /// right()
+    /// 
+    /// Returns the position of the rectangle's bottom-left corner. Note
+    /// that for historical reasons this function returns QPoint(left(),
+    /// top() + height() - 1).
+    /// 
+    /// **See also:** setBottomLeft()
+    /// bottom()
+    /// left()
     bottom() -> i32,
-    ///     Returns a normalized rectangle; i.e., a rectangle that has a
-    ///     non-negative width and height.
     /// 
-    ///     If width() < 0 the function swaps the left and right corners, and
-    ///     it swaps the top and bottom corners if height() < 0.
+    /// Returns a normalized rectangle; i.e., a rectangle that has a
+    /// non-negative width and height.
     /// 
-    ///     \sa isValid(), isEmpty()
+    /// If width() < 0 the function swaps the left and right corners, and
+    /// it swaps the top and bottom corners if height() < 0.
+    /// 
+    /// **See also:** isValid()
+    /// isEmpty()
     normalized() -> Rect,
+    /// 
+    /// Returns the x-coordinate of the rectangle's left edge. Equivalent to left().
+    /// 
+    /// **See also:** setX()
+    /// y()
+    /// topLeft()
     x() -> i32,
+    /// 
+    /// Returns the y-coordinate of the rectangle's top edge. Equivalent to top().
+    /// 
+    /// **See also:** setY()
+    /// x()
+    /// topLeft()
     y() -> i32,
+    /// 
+    /// Sets the left edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the right
+    /// edge of the rectangle.
+    /// 
+    /// Equivalent to setX().
+    /// 
+    /// **See also:** left()
+    /// moveLeft()
     set_left(pos: i32),
+    /// 
+    /// Sets the top edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the
+    /// bottom edge of the rectangle.
+    /// 
+    /// Equivalent to setY().
+    /// 
+    /// **See also:** top()
+    /// moveTop()
+    /// 
+    /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-right corner of the rectangle.
+    /// 
+    /// **See also:** topLeft()
+    /// moveTopLeft()
+    /// 
+    /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-left corner of the rectangle.
+    /// 
+    /// **See also:** topRight()
+    /// moveTopRight()
     set_top(pos: i32),
+    /// 
+    /// Sets the right edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the left
+    /// edge of the rectangle.
+    /// 
+    /// **See also:** right()
+    /// moveRight()
     set_right(pos: i32),
+    /// 
+    /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-left corner of the rectangle.
+    /// 
+    /// **See also:** bottomRight()
+    /// moveBottomRight()
+    /// 
+    /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-right corner of the rectangle.
+    /// 
+    /// **See also:** bottomLeft()
+    /// moveBottomLeft()
     set_bottom(pos: i32),
+    /// 
+    /// Sets the bottom edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the top
+    /// edge of the rectangle.
+    /// 
+    /// **See also:** bottom()
+    /// moveBottom()
+    /// */
+    /// 
+    /// /*!
+    /// 
+    /// Sets the left edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the right
+    /// edge of the rectangle.
+    /// 
+    /// Equivalent to setLeft().
+    /// 
+    /// **See also:** x()
+    /// setY()
+    /// setTopLeft()
     set_x(x: i32),
+    /// 
+    /// Sets the top edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the
+    /// bottom edge of the rectangle.
+    /// 
+    /// Equivalent to setTop().
+    /// 
+    /// **See also:** y()
+    /// setX()
+    /// setTopLeft()
     set_y(y: i32),
+    /// 
+    /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-right corner of the rectangle.
+    /// 
+    /// **See also:** topLeft()
+    /// moveTopLeft()
     set_top_left(p: &PointType),
+    /// 
+    /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-left corner of the rectangle.
+    /// 
+    /// **See also:** bottomRight()
+    /// moveBottomRight()
     set_bottom_right(p: &PointType),
+    /// 
+    /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-left corner of the rectangle.
+    /// 
+    /// **See also:** topRight()
+    /// moveTopRight()
     set_top_right(p: &PointType),
+    /// 
+    /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-right corner of the rectangle.
+    /// 
+    /// **See also:** bottomLeft()
+    /// moveBottomLeft()
     set_bottom_left(p: &PointType),
+    /// 
+    /// Returns the position of the rectangle's top-left corner.
+    /// 
+    /// **See also:** setTopLeft()
+    /// top()
+    /// left()
     top_left() -> Point,
+    /// 
+    /// Returns the position of the rectangle's bottom-right corner.
+    /// 
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top() + height() - 1).
+    /// 
+    /// **See also:** setBottomRight()
+    /// bottom()
+    /// right()
     bottom_right() -> Point,
+    /// 
+    /// Returns the position of the rectangle's top-right corner.
+    /// 
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top()).
+    /// 
+    /// **See also:** setTopRight()
+    /// top()
+    /// right()
     top_right() -> Point,
+    /// 
+    /// Returns the position of the rectangle's bottom-left corner. Note
+    /// that for historical reasons this function returns QPoint(left(),
+    /// top() + height() - 1).
+    /// 
+    /// **See also:** setBottomLeft()
+    /// bottom()
+    /// left()
     bottom_left() -> Point,
+    /// 
+    /// Returns the center point of the rectangle.
+    /// 
+    /// **See also:** moveCenter()
     center() -> Point,
+    /// 
+    /// Moves the rectangle horizontally, leaving the rectangle's left
+    /// edge at the given *x* coordinate. The rectangle's size is
+    /// unchanged.
+    /// 
+    /// **See also:** left()
+    /// setLeft()
+    /// moveRight()
     move_left(pos: i32),
+    /// 
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    /// 
+    /// **See also:** top()
+    /// setTop()
+    /// moveBottom()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopLeft()
+    /// moveTop()
+    /// moveLeft()
+    /// 
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopRight()
+    /// moveTop()
+    /// moveRight()
     move_top(pos: i32),
+    /// 
+    /// Moves the rectangle horizontally, leaving the rectangle's right
+    /// edge at the given *x* coordinate. The rectangle's size is
+    /// unchanged.
+    /// 
+    /// **See also:** right()
+    /// setRight()
+    /// moveLeft()
     move_right(pos: i32),
+    /// 
+    /// Moves the rectangle vertically, leaving the rectangle's bottom
+    /// edge at the given *y* coordinate. The rectangle's size is
+    /// unchanged.
+    /// 
+    /// **See also:** bottom()
+    /// setBottom()
+    /// moveTop()
+    /// 
+    /// Moves the rectangle, leaving the bottom-right corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setBottomRight()
+    /// moveRight()
+    /// moveBottom()
+    /// 
+    /// Moves the rectangle, leaving the bottom-left corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setBottomLeft()
+    /// moveBottom()
+    /// moveLeft()
     move_bottom(pos: i32),
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopLeft()
+    /// moveTop()
+    /// moveLeft()
     move_top_left(p: &PointType),
+    /// 
+    /// Moves the rectangle, leaving the bottom-right corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setBottomRight()
+    /// moveRight()
+    /// moveBottom()
     move_bottom_right(p: &PointType),
+    /// 
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopRight()
+    /// moveTop()
+    /// moveRight()
     move_top_right(p: &PointType),
+    /// 
+    /// Moves the rectangle, leaving the bottom-left corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setBottomLeft()
+    /// moveBottom()
+    /// moveLeft()
     move_bottom_left(p: &PointType),
+    /// 
+    /// Moves the rectangle, leaving the center point at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** center()
     move_center(p: &PointType),
+    /// 
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    /// 
+    /// **See also:** top()
+    /// setTop()
+    /// moveBottom()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopLeft()
+    /// moveTop()
+    /// moveLeft()
+    /// 
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopRight()
+    /// moveTop()
+    /// moveRight()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given
+    /// position ( *x,* *y).* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** translate()
+    /// moveTopLeft()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.*
     move_to(x: i32, t: i32),
+    /// 
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    /// 
+    /// **See also:** top()
+    /// setTop()
+    /// moveBottom()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopLeft()
+    /// moveTop()
+    /// moveLeft()
+    /// 
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** setTopRight()
+    /// moveTop()
+    /// moveRight()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given
+    /// position ( *x,* *y).* The rectangle's size is unchanged.
+    /// 
+    /// **See also:** translate()
+    /// moveTopLeft()
+    /// 
+    /// Moves the rectangle, leaving the top-left corner at the given *position.*
     move_to(p: &PointType),
+    /// 
+    /// Sets the coordinates of the rectangle's top-left corner to ( *x* ,
+    /// *y* ), and its size to the given *width* and *height.*
+    /// 
+    /// **See also:** getRect()
+    /// setCoords()
     set_rect(x: i32, y: i32, w: i32, h: i32),
+    /// 
+    /// Extracts the position of the rectangle's top-left corner to * *x*
+    /// and * *y,* and its dimensions to * *width* and * *height.*
+    /// 
+    /// **See also:** setRect()
+    /// getCoords()
     get_rect(x: *i32, y: *i32, w: *i32, h: *i32),
+    /// 
+    /// Sets the coordinates of the rectangle's top-left corner to ( *x1,*
+    /// *y1),* and the coordinates of its bottom-right corner to ( *x2,*
+    /// *y2).*
+    /// 
+    /// **See also:** getCoords()
+    /// setRect()
     set_coords(x1: i32, y1: i32, x2: i32, y2: i32),
+    /// 
+    /// Extracts the position of the rectangle's top-left corner to * *x1*
+    /// and * *y1,* and the position of the bottom-right corner to * *x2*
+    /// and * *y2.*
+    /// 
+    /// **See also:** setCoords()
+    /// getRect()
     get_coords(x1: *i32, y1: *i32, x2: *i32, y2: *i32),
+    /// 
+    /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
+    /// added respectively to the existing coordinates of this rectangle.
+    /// 
+    /// **See also:** adjust()
+    /// 
+    /// Adds *dx1,* *dy1,* *dx2* and *dy2* respectively to the
+    /// existing coordinates of the rectangle.
+    /// 
+    /// **See also:** adjusted()
+    /// setRect()
     adjust(x1: i32, y1: i32, x2: i32, y2: i32),
-    ///     \fn void QRect::setCoords(int x1, int y1, int x2, int y2)
     /// 
-    ///     Sets the coordinates of the rectangle's top-left corner to (\a x1,
-    ///     \a y1), and the coordinates of its bottom-right corner to (\a x2,
-    ///     \a y2).
+    /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
+    /// added respectively to the existing coordinates of this rectangle.
     /// 
-    ///     \sa getCoords(), setRect()
+    /// **See also:** adjust()
     adjusted(x1: i32, y1: i32, x2: i32, y2: i32) -> Rect,
+    /// 
+    /// Returns the size of the rectangle.
+    /// 
+    /// **See also:** setSize()
+    /// width()
+    /// height()
     size() -> Size,
+    /// 
+    /// Returns the width of the rectangle.
+    /// 
+    /// **See also:** setWidth()
+    /// height()
+    /// size()
     width() -> i32,
+    /// 
+    /// Returns the height of the rectangle.
+    /// 
+    /// **See also:** setHeight()
+    /// width()
+    /// size()
     height() -> i32,
+    /// 
+    /// Sets the width of the rectangle to the given *width.* The right
+    /// edge is changed, but not the left one.
+    /// 
+    /// **See also:** width()
+    /// setSize()
     set_width(w: i32),
+    /// 
+    /// Sets the height of the rectangle to the given *height.* The bottom
+    /// edge is changed, but not the top one.
+    /// 
+    /// **See also:** height()
+    /// setSize()
     set_height(h: i32),
+    /// 
+    /// Sets the size of the rectangle to the given *size.* The top-left
+    /// corner is not moved.
+    /// 
+    /// **See also:** size()
+    /// setWidth()
+    /// setHeight()
     set_size(s: &SizeType),
-    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
-    ///     \overload
     /// 
-    ///     Returns \c true if the given \a rectangle is inside this rectangle.
-    ///     otherwise returns \c false. If \a proper is true, this function only
-    ///     returns \c true if the \a rectangle is entirely inside this
-    ///     rectangle (not on the edge).
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    /// 
+    /// **See also:** intersects()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
     contains(r: &RectType, proper: bool) -> bool,
-    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
-    ///     \overload
     /// 
-    ///     Returns \c true if the given \a rectangle is inside this rectangle.
-    ///     otherwise returns \c false. If \a proper is true, this function only
-    ///     returns \c true if the \a rectangle is entirely inside this
-    ///     rectangle (not on the edge).
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    /// 
+    /// **See also:** intersects()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
     contains(p: &PointType, proper: bool) -> bool,
-    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
-    ///     \overload
     /// 
-    ///     Returns \c true if the given \a rectangle is inside this rectangle.
-    ///     otherwise returns \c false. If \a proper is true, this function only
-    ///     returns \c true if the \a rectangle is entirely inside this
-    ///     rectangle (not on the edge).
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    /// 
+    /// **See also:** intersects()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
     contains(x: i32, y: i32) -> bool,
-    ///     \fn bool QRect::contains(const QRect &rectangle, bool proper) const
-    ///     \overload
     /// 
-    ///     Returns \c true if the given \a rectangle is inside this rectangle.
-    ///     otherwise returns \c false. If \a proper is true, this function only
-    ///     returns \c true if the \a rectangle is entirely inside this
-    ///     rectangle (not on the edge).
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    /// 
+    /// **See also:** intersects()
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
     contains(x: i32, y: i32, proper: bool) -> bool,
+    /// 
+    /// Returns the bounding rectangle of this rectangle and the given *rectangle.*
+    /// 
+    /// ![qrect-unite.png](qrect-unite.png)
+    /// 
+    /// **See also:** intersected()
     united(other: &RectType) -> Rect,
+    /// 
+    /// Returns the intersection of this rectangle and the given *rectangle.* Note that `r.intersected(s)` is equivalent to `r & s` .
+    /// 
+    /// ![qrect-intersect.png](qrect-intersect.png)
+    /// 
+    /// **See also:** intersects()
+    /// united()
+    /// operator&=()
     intersected(other: &RectType) -> Rect,
-    ///     \fn bool QRect::intersects(const QRect &rectangle) const
     /// 
-    ///     Returns \c true if this rectangle intersects with the given \a
-    ///     rectangle (i.e., there is at least one pixel that is within both
-    ///     rectangles), otherwise returns \c false.
+    /// Returns `true` if this rectangle intersects with the given *rectangle* (i.e., there is at least one pixel that is within both
+    /// rectangles), otherwise returns `false.`
     /// 
-    ///     The intersection rectangle can be retrieved using the intersected()
-    ///     function.
+    /// The intersection rectangle can be retrieved using the intersected()
+    /// function.
     /// 
-    ///     \sa contains()
+    /// **See also:** contains()
     intersects(r: &RectType) -> bool,
+    /// 
+    /// Returns a rectangle grown by the *margins.*
+    /// 
+    /// **See also:** operator+=()
+    /// marginsRemoved()
+    /// operator-=()
+    /// 
     margins_added(margins: &MarginsType) -> Rect,
+    /// 
+    /// Removes the *margins* from the rectangle, shrinking it.
+    /// 
+    /// **See also:** marginsAdded()
+    /// operator+=()
+    /// operator-=()
+    /// 
     margins_removed(margins: &MarginsType) -> Rect,
 }
 

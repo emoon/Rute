@@ -1,159 +1,317 @@
-///     \class QUndoGroup
-///     \brief The QUndoGroup class is a group of QUndoStack objects.
-///     \since 4.2
-///     \inmodule QtWidgets
 /// 
-///     For an overview of the Qt's undo framework, see the
-///     \l{qundo.html}{overview}.
+/// For an overview of the Qt's undo framework, see the
+/// [overview](qundo.html)
 /// 
-///     An application often has multiple undo stacks, one for each opened document. At the
-///     same time, an application usually has one undo action and one redo action, which
-///     triggers undo or redo in the active document.
 /// 
-///     QUndoGroup is a group of QUndoStack objects, one of which may be active. It has
-///     an undo() and redo() slot, which calls QUndoStack::undo() and QUndoStack::redo()
-///     for the active stack. It also has the functions createUndoAction() and createRedoAction().
-///     The actions returned by these functions behave in the same way as those returned by
-///     QUndoStack::createUndoAction() and QUndoStack::createRedoAction() of the active
-///     stack.
+/// An application often has multiple undo stacks, one for each opened document. At the
+/// same time, an application usually has one undo action and one redo action, which
+/// triggers undo or redo in the active document.
 /// 
-///     Stacks are added to a group with addStack() and removed with removeStack(). A stack
-///     is implicitly added to a group when it is created with the group as its parent
-///     QObject.
+/// QUndoGroup is a group of QUndoStack objects, one of which may be active. It has
+/// an undo() and redo() slot, which calls QUndoStack::undo() and QUndoStack::redo()
+/// for the active stack. It also has the functions createUndoAction() and createRedoAction().
+/// The actions returned by these functions behave in the same way as those returned by
+/// QUndoStack::createUndoAction() and QUndoStack::createRedoAction() of the active
+/// stack.
 /// 
-///     It is the programmer's responsibility to specify which stack is active by
-///     calling QUndoStack::setActive(), usually when the associated document window receives focus.
-///     The active stack may also be set with setActiveStack(), and is returned by activeStack().
+/// Stacks are added to a group with addStack() and removed with removeStack(). A stack
+/// is implicitly added to a group when it is created with the group as its parent
+/// QObject.
 /// 
-///     When a stack is added to a group using addStack(), the group does not take ownership
-///     of the stack. This means the stack has to be deleted separately from the group. When
-///     a stack is deleted, it is automatically removed from a group. A stack may belong to
-///     only one group. Adding it to another group will cause it to be removed from the previous
-///     group.
+/// It is the programmer's responsibility to specify which stack is active by
+/// calling QUndoStack::setActive(), usually when the associated document window receives focus.
+/// The active stack may also be set with setActiveStack(), and is returned by activeStack().
 /// 
-///     A QUndoGroup is also useful in conjunction with QUndoView. If a QUndoView is
-///     set to watch a group using QUndoView::setGroup(), it will update itself to display
-///     the active stack.
+/// When a stack is added to a group using addStack(), the group does not take ownership
+/// of the stack. This means the stack has to be deleted separately from the group. When
+/// a stack is deleted, it is automatically removed from a group. A stack may belong to
+/// only one group. Adding it to another group will cause it to be removed from the previous
+/// group.
+/// 
+/// A QUndoGroup is also useful in conjunction with QUndoView. If a QUndoView is
+/// set to watch a group using QUndoView::setGroup(), it will update itself to display
+/// the active stack.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct UndoGroup : Object {
-    ///     Adds \a stack to this group. The group does not take ownership of the stack. Another
-    ///     way of adding a stack to a group is by specifying the group as the stack's parent
-    ///     QObject in QUndoStack::QUndoStack(). In this case, the stack is deleted when the
-    ///     group is deleted, in the usual manner of QObjects.
     /// 
-    ///     \sa removeStack(), stacks(), QUndoStack::QUndoStack()
+    /// Adds *stack* to this group. The group does not take ownership of the stack. Another
+    /// way of adding a stack to a group is by specifying the group as the stack's parent
+    /// QObject in QUndoStack::QUndoStack(). In this case, the stack is deleted when the
+    /// group is deleted, in the usual manner of QObjects.
+    /// 
+    /// **See also:** removeStack()
+    /// stacks()
+    /// QUndoStack::QUndoStack()
     add_stack(stack: *UndoStackType),
-    ///     Removes \a stack from this group. If the stack was the active stack in the group,
-    ///     the active stack becomes 0.
     /// 
-    ///     \sa addStack(), stacks(), QUndoStack::~QUndoStack()
+    /// Removes *stack* from this group. If the stack was the active stack in the group,
+    /// the active stack becomes 0.
+    /// 
+    /// **See also:** addStack()
+    /// stacks()
+    /// QUndoStack::~QUndoStack()
     remove_stack(stack: *UndoStackType),
-    ///     Returns a list of stacks in this group.
     /// 
-    ///     \sa addStack(), removeStack()
+    /// Returns a list of stacks in this group.
+    /// 
+    /// **See also:** addStack()
+    /// removeStack()
     stacks() -> [UndoStack?],
-    ///     Returns the active stack of this group.
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns 0.
+    /// Returns the active stack of this group.
     /// 
-    ///     \sa setActiveStack(), QUndoStack::setActive()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns 0.
+    /// 
+    /// **See also:** setActiveStack()
+    /// QUndoStack::setActive()
+    /// 
+    /// This signal is emitted whenever the active stack of the group changes. This can happen
+    /// when setActiveStack() or QUndoStack::setActive() is called, or when the active stack
+    /// is removed form the group. *stack* is the new active stack. If no stack is active,
+    /// *stack* is 0.
+    /// 
+    /// **See also:** setActiveStack()
+    /// QUndoStack::setActive()
     active_stack() -> UndoStack?,
-    ///     Creates an undo QAction object with parent \a parent.
     /// 
-    ///     Triggering this action will cause a call to QUndoStack::undo() on the active stack.
-    ///     The text of this action will always be the text of the command which will be undone
-    ///     in the next call to undo(), prefixed by \a prefix. If there is no command available
-    ///     for undo, if the group is empty or if none of the stacks are active, this action will
-    ///     be disabled.
+    /// Creates an undo QAction object with parent *parent.*
     /// 
-    ///     If \a prefix is empty, the default template "Undo %1" is used instead of prefix.
-    ///     Before Qt 4.8, the prefix "Undo" was used by default.
+    /// Triggering this action will cause a call to QUndoStack::undo() on the active stack.
+    /// The text of this action will always be the text of the command which will be undone
+    /// in the next call to undo(), prefixed by *prefix.* If there is no command available
+    /// for undo, if the group is empty or if none of the stacks are active, this action will
+    /// be disabled.
     /// 
-    ///     \sa createRedoAction(), canUndo(), QUndoCommand::text()
+    /// If *prefix* is empty, the default template is used instead of prefix.
+    /// Before Qt 4.8, the prefix was used by default.
+    /// 
+    /// **See also:** createRedoAction()
+    /// canUndo()
+    /// QUndoCommand::text()
     create_undo_action(parent: *ObjectType, prefix: String) -> Action?,
-    ///     Creates an redo QAction object with parent \a parent.
     /// 
-    ///     Triggering this action will cause a call to QUndoStack::redo() on the active stack.
-    ///     The text of this action will always be the text of the command which will be redone
-    ///     in the next call to redo(), prefixed by \a prefix. If there is no command available
-    ///     for redo, if the group is empty or if none of the stacks are active, this action will
-    ///     be disabled.
+    /// Creates an redo QAction object with parent *parent.*
     /// 
-    ///     If \a prefix is empty, the default template "Redo %1" is used instead of prefix.
-    ///     Before Qt 4.8, the prefix "Redo" was used by default.
+    /// Triggering this action will cause a call to QUndoStack::redo() on the active stack.
+    /// The text of this action will always be the text of the command which will be redone
+    /// in the next call to redo(), prefixed by *prefix.* If there is no command available
+    /// for redo, if the group is empty or if none of the stacks are active, this action will
+    /// be disabled.
     /// 
-    ///     \sa createUndoAction(), canRedo(), QUndoCommand::text()
+    /// If *prefix* is empty, the default template is used instead of prefix.
+    /// Before Qt 4.8, the prefix was used by default.
+    /// 
+    /// **See also:** createUndoAction()
+    /// canRedo()
+    /// QUndoCommand::text()
     create_redo_action(parent: *ObjectType, prefix: String) -> Action?,
-    ///     Returns the value of the active stack's QUndoStack::canUndo().
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns \c false.
+    /// Returns the value of the active stack's QUndoStack::canUndo().
     /// 
-    ///     \sa canRedo(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns `false.`
+    /// 
+    /// **See also:** canRedo()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::canUndoChanged()
+    /// or the active stack changes.
+    /// 
+    /// *canUndo* is the new state, or false if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::canUndoChanged()
+    /// setActiveStack()
     can_undo() -> bool,
-    ///     Returns the value of the active stack's QUndoStack::canRedo().
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns \c false.
+    /// Returns the value of the active stack's QUndoStack::canRedo().
     /// 
-    ///     \sa canUndo(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns `false.`
+    /// 
+    /// **See also:** canUndo()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::canRedoChanged()
+    /// or the active stack changes.
+    /// 
+    /// *canRedo* is the new state, or false if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::canRedoChanged()
+    /// setActiveStack()
     can_redo() -> bool,
-    ///     Returns the value of the active stack's QUndoStack::undoText().
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns an empty string.
+    /// Returns the value of the active stack's QUndoStack::undoText().
     /// 
-    ///     \sa redoText(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns an empty string.
+    /// 
+    /// **See also:** redoText()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *undoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::undoTextChanged()
+    /// setActiveStack()
     undo_text() -> String,
-    ///     Returns the value of the active stack's QUndoStack::redoText().
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns an empty string.
+    /// Returns the value of the active stack's QUndoStack::redoText().
     /// 
-    ///     \sa undoText(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns an empty string.
+    /// 
+    /// **See also:** undoText()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *redoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::redoTextChanged()
+    /// setActiveStack()
     redo_text() -> String,
-    ///     Returns the value of the active stack's QUndoStack::isClean().
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     returns \c true.
+    /// Returns the value of the active stack's QUndoStack::isClean().
     /// 
-    ///     \sa setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns `true.`
+    /// 
+    /// **See also:** setActiveStack()
     is_clean() -> bool,
-    ///     Calls QUndoStack::undo() on the active stack.
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     does nothing.
+    /// Calls QUndoStack::undo() on the active stack.
     /// 
-    ///     \sa redo(), canUndo(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// does nothing.
+    /// 
+    /// **See also:** redo()
+    /// canUndo()
+    /// setActiveStack()
+    /// 
+    /// Returns the value of the active stack's QUndoStack::undoText().
+    /// 
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns an empty string.
+    /// 
+    /// **See also:** redoText()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *undoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::undoTextChanged()
+    /// setActiveStack()
     undo(),
-    ///     Calls QUndoStack::redo() on the active stack.
     /// 
-    ///     If none of the stacks are active, or if the group is empty, this function
-    ///     does nothing.
+    /// Calls QUndoStack::redo() on the active stack.
     /// 
-    ///     \sa undo(), canRedo(), setActiveStack()
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// does nothing.
+    /// 
+    /// **See also:** undo()
+    /// canRedo()
+    /// setActiveStack()
+    /// 
+    /// Returns the value of the active stack's QUndoStack::redoText().
+    /// 
+    /// If none of the stacks are active, or if the group is empty, this function
+    /// returns an empty string.
+    /// 
+    /// **See also:** undoText()
+    /// setActiveStack()
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *redoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::redoTextChanged()
+    /// setActiveStack()
     redo(),
-    ///     Sets the active stack of this group to \a stack.
     /// 
-    ///     If the stack is not a member of this group, this function does nothing.
+    /// Sets the active stack of this group to *stack.*
     /// 
-    ///     Synonymous with calling QUndoStack::setActive() on \a stack.
+    /// If the stack is not a member of this group, this function does nothing.
     /// 
-    ///     The actions returned by createUndoAction() and createRedoAction() will now behave
-    ///     in the same way as those returned by \a stack's QUndoStack::createUndoAction()
-    ///     and QUndoStack::createRedoAction().
+    /// Synonymous with calling QUndoStack::setActive() on *stack.*
     /// 
-    ///     \sa QUndoStack::setActive(), activeStack()
+    /// The actions returned by createUndoAction() and createRedoAction() will now behave
+    /// in the same way as those returned by *stack's* QUndoStack::createUndoAction()
+    /// and QUndoStack::createRedoAction().
+    /// 
+    /// **See also:** QUndoStack::setActive()
+    /// activeStack()
     set_active_stack(stack: *UndoStackType),
+    /// 
+    /// This signal is emitted whenever the active stack of the group changes. This can happen
+    /// when setActiveStack() or QUndoStack::setActive() is called, or when the active stack
+    /// is removed form the group. *stack* is the new active stack. If no stack is active,
+    /// *stack* is 0.
+    /// 
+    /// **See also:** setActiveStack()
+    /// QUndoStack::setActive()
     [signal] active_stack_changed(stack: *UndoStackType),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::indexChanged()
+    /// or the active stack changes.
+    /// 
+    /// *idx* is the new current index, or 0 if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::indexChanged()
+    /// setActiveStack()
     [signal] index_changed(idx: i32),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::cleanChanged()
+    /// or the active stack changes.
+    /// 
+    /// *clean* is the new state, or true if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::cleanChanged()
+    /// setActiveStack()
     [signal] clean_changed(clean: bool),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::canUndoChanged()
+    /// or the active stack changes.
+    /// 
+    /// *canUndo* is the new state, or false if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::canUndoChanged()
+    /// setActiveStack()
     [signal] can_undo_changed(can_undo: bool),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::canRedoChanged()
+    /// or the active stack changes.
+    /// 
+    /// *canRedo* is the new state, or false if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::canRedoChanged()
+    /// setActiveStack()
     [signal] can_redo_changed(can_redo: bool),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *undoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::undoTextChanged()
+    /// setActiveStack()
     [signal] undo_text_changed(undo_text: String),
+    /// 
+    /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
+    /// or the active stack changes.
+    /// 
+    /// *redoText* is the new state, or an empty string if the active stack is 0.
+    /// 
+    /// **See also:** QUndoStack::redoTextChanged()
+    /// setActiveStack()
     [signal] redo_text_changed(redo_text: String),
 }
 

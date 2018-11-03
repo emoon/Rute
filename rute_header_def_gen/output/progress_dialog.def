@@ -1,216 +1,232 @@
-///   \class QProgressDialog
-///   \brief The QProgressDialog class provides feedback on the progress of a slow operation.
-///   \ingroup standard-dialogs
-///   \inmodule QtWidgets
 /// 
+/// A progress dialog is used to give the user an indication of how long
+/// an operation is going to take, and to demonstrate that the
+/// application has not frozen. It can also give the user an opportunity
+/// to abort the operation.
 /// 
-///   A progress dialog is used to give the user an indication of how long
-///   an operation is going to take, and to demonstrate that the
-///   application has not frozen. It can also give the user an opportunity
-///   to abort the operation.
+/// A common problem with progress dialogs is that it is difficult to know
+/// when to use them; operations take different amounts of time on different
+/// hardware. QProgressDialog offers a solution to this problem:
+/// it estimates the time the operation will take (based on time for
+/// steps), and only shows itself if that estimate is beyond minimumDuration()
+/// (4 seconds by default).
 /// 
-///   A common problem with progress dialogs is that it is difficult to know
-///   when to use them; operations take different amounts of time on different
-///   hardware.  QProgressDialog offers a solution to this problem:
-///   it estimates the time the operation will take (based on time for
-///   steps), and only shows itself if that estimate is beyond minimumDuration()
-///   (4 seconds by default).
+/// Use setMinimum() and setMaximum() or the constructor to set the number of
+/// in the operation and call setValue() as the operation
+/// progresses. The number of steps can be chosen arbitrarily. It can be the
+/// number of files copied, the number of bytes received, the number of
+/// iterations through the main loop of your algorithm, or some other
+/// suitable unit. Progress starts at the value set by setMinimum(),
+/// and the progress dialog shows that the operation has finished when
+/// you call setValue() with the value set by setMaximum() as its argument.
 /// 
-///   Use setMinimum() and setMaximum() or the constructor to set the number of
-///   "steps" in the operation and call setValue() as the operation
-///   progresses. The number of steps can be chosen arbitrarily. It can be the
-///   number of files copied, the number of bytes received, the number of
-///   iterations through the main loop of your algorithm, or some other
-///   suitable unit. Progress starts at the value set by setMinimum(),
-///   and the progress dialog shows that the operation has finished when
-///   you call setValue() with the value set by setMaximum() as its argument.
+/// The dialog automatically resets and hides itself at the end of the
+/// operation. Use setAutoReset() and setAutoClose() to change this
+/// behavior. Note that if you set a new maximum (using setMaximum() or
+/// setRange()) that equals your current value(), the dialog will not
+/// close regardless.
 /// 
-///   The dialog automatically resets and hides itself at the end of the
-///   operation.  Use setAutoReset() and setAutoClose() to change this
-///   behavior. Note that if you set a new maximum (using setMaximum() or
-///   setRange()) that equals your current value(), the dialog will not
-///   close regardless.
+/// There are two ways of using QProgressDialog: modal and modeless.
 /// 
-///   There are two ways of using QProgressDialog: modal and modeless.
+/// Compared to a modeless QProgressDialog, a modal QProgressDialog is simpler
+/// to use for the programmer. Do the operation in a loop, call [setValue()](setValue())
+/// at
+/// intervals, and check for cancellation with wasCanceled(). For example:
 /// 
-///   Compared to a modeless QProgressDialog, a modal QProgressDialog is simpler
-///   to use for the programmer. Do the operation in a loop, call \l setValue() at
-///   intervals, and check for cancellation with wasCanceled(). For example:
+/// A modeless progress dialog is suitable for operations that take
+/// place in the background, where the user is able to interact with the
+/// application. Such operations are typically based on QTimer (or
+/// QObject::timerEvent()) or QSocketNotifier; or performed
+/// in a separate thread. A QProgressBar in the status bar of your main window
+/// is often an alternative to a modeless progress dialog.
 /// 
-///   \snippet dialogs/dialogs.cpp 3
+/// You need to have an event loop to be running, connect the
+/// canceled() signal to a slot that stops the operation, and call [setValue()](setValue())
+/// at intervals. For example:
 /// 
-///   A modeless progress dialog is suitable for operations that take
-///   place in the background, where the user is able to interact with the
-///   application. Such operations are typically based on QTimer (or
-///   QObject::timerEvent()) or QSocketNotifier; or performed
-///   in a separate thread. A QProgressBar in the status bar of your main window
-///   is often an alternative to a modeless progress dialog.
+/// In both modes the progress dialog may be customized by
+/// replacing the child widgets with custom widgets by using setLabel(),
+/// setBar(), and setCancelButton().
+/// The functions setLabelText() and setCancelButtonText()
+/// set the texts shown.
 /// 
-///   You need to have an event loop to be running, connect the
-///   canceled() signal to a slot that stops the operation, and call \l
-///   setValue() at intervals. For example:
+/// ![A progress dialog shown in the Fusion widget style.](fusion-progressdialog.png)
 /// 
-///   \snippet dialogs/dialogs.cpp 4
-///   \codeline
-///   \snippet dialogs/dialogs.cpp 5
-///   \codeline
-///   \snippet dialogs/dialogs.cpp 6
-/// 
-///   In both modes the progress dialog may be customized by
-///   replacing the child widgets with custom widgets by using setLabel(),
-///   setBar(), and setCancelButton().
-///   The functions setLabelText() and setCancelButtonText()
-///   set the texts shown.
-/// 
-///   \image fusion-progressdialog.png A progress dialog shown in the Fusion widget style.
-/// 
-///   \sa QDialog, QProgressBar, {fowler}{GUI Design Handbook: Progress Indicator},
-///       {Find Files Example}, {Pixelator Example}
+/// **See also:** QDialog
+/// QProgressBar
+/// {fowler}{GUI Design Handbook: Progress Indicator}
+/// {Find Files Example}
+/// {Pixelator Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ProgressDialog : Dialog {
-    ///   Sets the label to \a label. The progress dialog resizes to fit. The
-    ///   label becomes owned by the progress dialog and will be deleted when
-    ///   necessary, so do not pass the address of an object on the stack.
     /// 
-    ///   \sa setLabelText()
+    /// Sets the label to *label.* The progress dialog resizes to fit. The
+    /// label becomes owned by the progress dialog and will be deleted when
+    /// necessary, so do not pass the address of an object on the stack.
+    /// 
+    /// **See also:** setLabelText()
     set_label(label: *LabelType),
-    ///   Sets the cancel button to the push button, \a cancelButton. The
-    ///   progress dialog takes ownership of this button which will be deleted
-    ///   when necessary, so do not pass the address of an object that is on
-    ///   the stack, i.e. use new() to create the button.  If 0 is passed then
-    ///   no cancel button will be shown.
     /// 
-    ///   \sa setCancelButtonText()
+    /// Sets the cancel button to the push button, *cancelButton.* The
+    /// progress dialog takes ownership of this button which will be deleted
+    /// when necessary, so do not pass the address of an object that is on
+    /// the stack, i.e. use new() to create the button. If 0 is passed then
+    /// no cancel button will be shown.
+    /// 
+    /// **See also:** setCancelButtonText()
+    /// 
+    /// Sets the cancel button's text to *cancelButtonText.* If the text
+    /// is set to QString() then it will cause the cancel button to be
+    /// hidden and deleted.
+    /// 
+    /// **See also:** setCancelButton()
     set_cancel_button(button: *PushButtonType),
-    ///   Sets the progress bar widget to \a bar. The progress dialog resizes to
-    ///   fit. The progress dialog takes ownership of the progress \a bar which
-    ///   will be deleted when necessary, so do not use a progress bar
-    ///   allocated on the stack.
+    /// 
+    /// Sets the progress bar widget to *bar.* The progress dialog resizes to
+    /// fit. The progress dialog takes ownership of the progress *bar* which
+    /// will be deleted when necessary, so do not use a progress bar
+    /// allocated on the stack.
     set_bar(bar: *ProgressBarType),
-    ///   \property QProgressDialog::wasCanceled
-    ///   \brief whether the dialog was canceled
+    /// 
     was_canceled() -> bool,
-    ///     \property QProgressDialog::minimum
-    ///     \brief the lowest value represented by the progress bar
     /// 
-    ///     The default is 0.
+    /// The default is 0.
     /// 
-    ///     \sa maximum, setRange()
+    /// **See also:** maximum
+    /// setRange()
+    /// 
+    /// If the expected duration of the task is less than the
+    /// minimumDuration, the dialog will not appear at all. This prevents
+    /// the dialog popping up for tasks that are quickly over. For tasks
+    /// that are expected to exceed the minimumDuration, the dialog will
+    /// pop up after the minimumDuration time or as soon as any progress
+    /// is set.
+    /// 
+    /// If set to 0, the dialog is always shown as soon as any progress is
+    /// set. The default is 4000 milliseconds.
     minimum() -> i32,
-    ///     \property QProgressDialog::maximum
-    ///     \brief the highest value represented by the progress bar
     /// 
-    ///     The default is 100.
+    /// The default is 100.
     /// 
-    ///     \sa minimum, setRange()
+    /// **See also:** minimum
+    /// setRange()
     maximum() -> i32,
+    /// 
+    /// For the progress dialog to work as expected, you should initially set
+    /// this property to QProgressDialog::minimum() and finally set it to
+    /// QProgressDialog::maximum(); you can call setValue() any number of times
+    /// in-between.
+    /// 
+    /// **Warning**: If the progress dialog is modal
+    /// (see QProgressDialog::QProgressDialog()),
+    /// setValue() calls QApplication::processEvents(), so take care that
+    /// this does not cause undesirable re-entrancy in your code. For example,
+    /// don't use a QProgressDialog inside a paintEvent()!
+    /// 
+    /// **See also:** minimum
+    /// maximum
     value() -> i32,
-    ///   Returns a size that fits the contents of the progress dialog.
-    ///   The progress dialog resizes itself as required, so you should not
-    ///   need to call this yourself.
+    /// 
+    /// Returns a size that fits the contents of the progress dialog.
+    /// The progress dialog resizes itself as required, so you should not
+    /// need to call this yourself.
     [event] size_hint() -> Size,
-    ///   \property QProgressDialog::labelText
-    ///   \brief the label's text
     /// 
-    ///   The default text is an empty string.
+    /// The default text is an empty string.
     label_text() -> String,
+    /// 
+    /// If the expected duration of the task is less than the
+    /// minimumDuration, the dialog will not appear at all. This prevents
+    /// the dialog popping up for tasks that are quickly over. For tasks
+    /// that are expected to exceed the minimumDuration, the dialog will
+    /// pop up after the minimumDuration time or as soon as any progress
+    /// is set.
+    /// 
+    /// If set to 0, the dialog is always shown as soon as any progress is
+    /// set. The default is 4000 milliseconds.
     minimum_duration() -> i32,
-    ///   \property QProgressDialog::autoReset
-    ///   \brief whether the progress dialog calls reset() as soon as value() equals maximum()
-    /// 
-    ///   The default is true.
-    /// 
-    ///   \sa setAutoClose()
     set_auto_reset(reset: bool),
+    /// 
+    /// The default is true.
+    /// 
+    /// **See also:** setAutoClose()
     auto_reset() -> bool,
-    ///   \property QProgressDialog::autoClose
-    ///   \brief whether the dialog gets hidden by reset()
-    /// 
-    ///   The default is true.
-    /// 
-    ///   \sa setAutoReset()
     set_auto_close(close: bool),
+    /// 
+    /// The default is true.
+    /// 
+    /// **See also:** setAutoReset()
     auto_close() -> bool,
-    ///     \since 4.5
-    ///     \overload
     /// 
-    ///     Opens the dialog and connects its canceled() signal to the slot specified
-    ///     by \a receiver and \a member.
+    /// **Overloads**
+    /// Opens the dialog and connects its canceled() signal to the slot specified
+    /// by *receiver* and *member.*
     /// 
-    ///     The signal will be disconnected from the slot when the dialog is closed.
+    /// The signal will be disconnected from the slot when the dialog is closed.
     open(receiver: *ObjectType, member: *char),
-    ///   Resets the progress dialog. wasCanceled() becomes true until
-    ///   the progress dialog is reset.
-    ///   The progress dialog becomes hidden.
-    cancel(),
-    ///   Resets the progress dialog.
-    ///   The progress dialog becomes hidden if autoClose() is true.
     /// 
-    ///   \sa setAutoClose(), setAutoReset()
+    /// This signal is emitted when the cancel button is clicked.
+    /// It is connected to the cancel() slot by default.
+    /// 
+    /// **See also:** wasCanceled()
+    /// 
+    /// Resets the progress dialog. wasCanceled() becomes true until
+    /// the progress dialog is reset.
+    /// The progress dialog becomes hidden.
+    cancel(),
+    /// 
+    /// Resets the progress dialog.
+    /// The progress dialog becomes hidden if autoClose() is true.
+    /// 
+    /// **See also:** setAutoClose()
+    /// setAutoReset()
     reset(),
     set_maximum(maximum: i32),
     set_minimum(minimum: i32),
-    ///     Sets the progress dialog's minimum and maximum values
-    ///     to \a minimum and \a maximum, respectively.
     /// 
-    ///     If \a maximum is smaller than \a minimum, \a minimum becomes the only
-    ///     legal value.
+    /// Sets the progress dialog's minimum and maximum values
+    /// to *minimum* and *maximum,* respectively.
     /// 
-    ///     If the current value falls outside the new range, the progress
-    ///     dialog is reset with reset().
+    /// If *maximum* is smaller than *minimum,* *minimum* becomes the only
+    /// legal value.
     /// 
-    ///     \sa minimum, maximum
+    /// If the current value falls outside the new range, the progress
+    /// dialog is reset with reset().
+    /// 
+    /// **See also:** minimum
+    /// maximum
     set_range(minimum: i32, maximum: i32),
-    ///   \property QProgressDialog::value
-    ///   \brief the current amount of progress made.
-    /// 
-    ///   For the progress dialog to work as expected, you should initially set
-    ///   this property to QProgressDialog::minimum() and finally set it to
-    ///   QProgressDialog::maximum(); you can call setValue() any number of times
-    ///   in-between.
-    /// 
-    ///   \warning If the progress dialog is modal
-    ///     (see QProgressDialog::QProgressDialog()),
-    ///     setValue() calls QApplication::processEvents(), so take care that
-    ///     this does not cause undesirable re-entrancy in your code. For example,
-    ///     don't use a QProgressDialog inside a paintEvent()!
-    /// 
-    ///   \sa minimum, maximum
     set_value(progress: i32),
     set_label_text(text: String),
-    ///   Sets the cancel button's text to \a cancelButtonText.  If the text
-    ///   is set to QString() then it will cause the cancel button to be
-    ///   hidden and deleted.
     /// 
-    ///   \sa setCancelButton()
+    /// Sets the cancel button's text to *cancelButtonText.* If the text
+    /// is set to QString() then it will cause the cancel button to be
+    /// hidden and deleted.
+    /// 
+    /// **See also:** setCancelButton()
     set_cancel_button_text(text: String),
-    ///     \property QProgressDialog::minimumDuration
-    ///     \brief the time that must pass before the dialog appears
-    /// 
-    ///     If the expected duration of the task is less than the
-    ///     minimumDuration, the dialog will not appear at all. This prevents
-    ///     the dialog popping up for tasks that are quickly over. For tasks
-    ///     that are expected to exceed the minimumDuration, the dialog will
-    ///     pop up after the minimumDuration time or as soon as any progress
-    ///     is set.
-    /// 
-    ///     If set to 0, the dialog is always shown as soon as any progress is
-    ///     set. The default is 4000 milliseconds.
     set_minimum_duration(ms: i32),
-    [signal] canceled(),
-    [event] resize_event(event: *ResizeEventType),
-    ///   \reimp
-    [event] close_event(event: *CloseEventType),
-    ///   \reimp
-    [event] change_event(event: *EventType),
-    ///   \reimp
-    [event] show_event(event: *ShowEventType),
-    ///   Shows the dialog if it is still hidden after the algorithm has been started
-    ///   and minimumDuration milliseconds have passed.
     /// 
-    ///   \sa setMinimumDuration()
+    /// This signal is emitted when the cancel button is clicked.
+    /// It is connected to the cancel() slot by default.
+    /// 
+    /// **See also:** wasCanceled()
+    [signal] canceled(),
+    /// 
+    [event] resize_event(event: *ResizeEventType),
+    /// 
+    [event] close_event(event: *CloseEventType),
+    /// 
+    [event] change_event(event: *EventType),
+    /// 
+    [event] show_event(event: *ShowEventType),
+    /// 
+    /// Shows the dialog if it is still hidden after the algorithm has been started
+    /// and minimumDuration milliseconds have passed.
+    /// 
+    /// **See also:** setMinimumDuration()
     force_show(),
 }
 

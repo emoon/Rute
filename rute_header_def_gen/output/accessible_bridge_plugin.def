@@ -1,21 +1,12 @@
-///     \class QAccessibleBridgePlugin
-///     \brief The QAccessibleBridgePlugin class provides an abstract
-///     base for accessibility bridge plugins.
-///     \internal
-/// 
-///     \ingroup plugins
-///     \ingroup accessibility
-///     \inmodule QtWidgets
-/// 
-///     Writing an accessibility bridge plugin is achieved by subclassing
-///     this base class, reimplementing the pure virtual function create(),
-///     and exporting the class with the Q_PLUGIN_METADATA() macro.
-/// 
-///     \sa QAccessibleBridge, QAccessiblePlugin, {How to Create Qt Plugins}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessibleBridgePlugin : Object {
+    /// 
+    /// Creates and returns the QAccessibleBridge object corresponding to
+    /// the given *key.* Keys are case sensitive.
+    /// 
+    /// **See also:** keys()
     [event] create(key: String) -> AccessibleBridge?,
 }
 

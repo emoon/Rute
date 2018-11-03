@@ -1,61 +1,51 @@
-///     \class QTextDocument
-///     \reentrant
-///     \inmodule QtGui
 /// 
-///     \brief The QTextDocument class holds formatted text.
+/// QTextDocument is a container for structured rich text documents, providing
+/// support for styled text and various types of document elements, such as
+/// lists, tables, frames, and images.
+/// They can be created for use in a QTextEdit, or used independently.
 /// 
-///     \ingroup richtext-processing
+/// Each document element is described by an associated format object. Each
+/// format object is treated as a unique object by QTextDocuments, and can be
+/// passed to objectForFormat() to obtain the document element that it is
+/// applied to.
 /// 
+/// A QTextDocument can be edited programmatically using a QTextCursor, and
+/// its contents can be examined by traversing the document structure. The
+/// entire document structure is stored as a hierarchy of document elements
+/// beneath the root frame, found with the rootFrame() function. Alternatively,
+/// if you just want to iterate over the textual contents of the document you
+/// can use begin(), end(), and findBlock() to retrieve text blocks that you
+/// can examine and iterate over.
 /// 
-///     QTextDocument is a container for structured rich text documents, providing
-///     support for styled text and various types of document elements, such as
-///     lists, tables, frames, and images.
-///     They can be created for use in a QTextEdit, or used independently.
+/// The layout of a document is determined by the documentLayout();
+/// you can create your own QAbstractTextDocumentLayout subclass and
+/// set it using setDocumentLayout() if you want to use your own
+/// layout logic. The document's title and other meta-information can be
+/// obtained by calling the metaInformation() function. For documents that
+/// are exposed to users through the QTextEdit class, the document title
+/// is also available via the QTextEdit::documentTitle() function.
 /// 
-///     Each document element is described by an associated format object. Each
-///     format object is treated as a unique object by QTextDocuments, and can be
-///     passed to objectForFormat() to obtain the document element that it is
-///     applied to.
+/// The toPlainText() and toHtml() convenience functions allow you to retrieve the
+/// contents of the document as plain text and HTML.
+/// The document's text can be searched using the find() functions.
 /// 
-///     A QTextDocument can be edited programmatically using a QTextCursor, and
-///     its contents can be examined by traversing the document structure. The
-///     entire document structure is stored as a hierarchy of document elements
-///     beneath the root frame, found with the rootFrame() function. Alternatively,
-///     if you just want to iterate over the textual contents of the document you
-///     can use begin(), end(), and findBlock() to retrieve text blocks that you
-///     can examine and iterate over.
+/// Undo/redo of operations performed on the document can be controlled using
+/// the setUndoRedoEnabled() function. The undo/redo system can be controlled
+/// by an editor widget through the undo() and redo() slots; the document also
+/// provides contentsChanged(), undoAvailable(), and redoAvailable() signals
+/// that inform connected editor widgets about the state of the undo/redo
+/// system. The following are the undo/redo operations of a QTextDocument:
 /// 
-///     The layout of a document is determined by the documentLayout();
-///     you can create your own QAbstractTextDocumentLayout subclass and
-///     set it using setDocumentLayout() if you want to use your own
-///     layout logic. The document's title and other meta-information can be
-///     obtained by calling the metaInformation() function. For documents that
-///     are exposed to users through the QTextEdit class, the document title
-///     is also available via the QTextEdit::documentTitle() function.
+/// * Insertion or removal of characters. A sequence of insertions or removals within the same text block are regarded as a single undo/redo operation.
+/// * Insertion or removal of text blocks. Sequences of insertion or removals in a single operation (e.g., by selecting and then deleting text) are regarded as a single undo/redo operation.
+/// * Text character format changes.
+/// * Text block format changes.
+/// * Text block group format changes.
 /// 
-///     The toPlainText() and toHtml() convenience functions allow you to retrieve the
-///     contents of the document as plain text and HTML.
-///     The document's text can be searched using the find() functions.
-/// 
-///     Undo/redo of operations performed on the document can be controlled using
-///     the setUndoRedoEnabled() function. The undo/redo system can be controlled
-///     by an editor widget through the undo() and redo() slots; the document also
-///     provides contentsChanged(), undoAvailable(), and redoAvailable() signals
-///     that inform connected editor widgets about the state of the undo/redo
-///     system. The following are the undo/redo operations of a QTextDocument:
-/// 
-///     \list
-///         \li Insertion or removal of characters. A sequence of insertions or removals
-///            within the same text block are regarded as a single undo/redo operation.
-///         \li Insertion or removal of text blocks. Sequences of insertion or removals
-///            in a single operation (e.g., by selecting and then deleting text) are
-///            regarded as a single undo/redo operation.
-///         \li Text character format changes.
-///         \li Text block format changes.
-///         \li Text block group format changes.
-///     \endlist
-/// 
-///     \sa QTextCursor, QTextEdit, {Rich Text Processing}, {Text Object Example}
+/// **See also:** QTextCursor
+/// QTextEdit
+/// {Rich Text Processing}
+/// {Text Object Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -88,563 +78,1213 @@ enum Stacks {
 }
 
 struct TextDocument : Object {
-    ///   Creates a new QTextDocument that is a copy of this text document. \a
-    ///   parent is the parent of the returned text document.
-    clone(parent: *ObjectType) -> TextDocument?,
-    ///     Returns \c true if the document is empty; otherwise returns \c false.
-    is_empty() -> bool,
-    ///   Clears the document.
-    [event] clear(),
-    ///     \property QTextDocument::undoRedoEnabled
-    ///     \brief whether undo/redo are enabled for this document
     /// 
-    ///     This defaults to true. If disabled, the undo stack is cleared and
-    ///     no items will be added to it.
+    /// Creates a new QTextDocument that is a copy of this text document. *parent* is the parent of the returned text document.
+    clone(parent: *ObjectType) -> TextDocument?,
+    /// 
+    /// Returns `true` if the document is empty; otherwise returns `false.`
+    is_empty() -> bool,
+    /// 
+    /// Clears the document.
+    /// 
+    /// Clears the stacks specified by *stacksToClear.*
+    /// 
+    /// This method clears any commands on the undo stack, the redo stack,
+    /// or both (the default). If commands are cleared, the appropriate
+    /// signals are emitted, QTextDocument::undoAvailable() or
+    /// QTextDocument::redoAvailable().
+    /// 
+    /// **See also:** QTextDocument::undoAvailable()
+    /// QTextDocument::redoAvailable()
+    [event] clear(),
     set_undo_redo_enabled(enable: bool),
     is_undo_redo_enabled() -> bool,
-    ///     Returns \c true if undo is available; otherwise returns \c false.
     /// 
-    ///     \sa isRedoAvailable(), availableUndoSteps()
+    /// Returns `true` if undo is available; otherwise returns `false.`
+    /// 
+    /// **See also:** isRedoAvailable()
+    /// availableUndoSteps()
     is_undo_available() -> bool,
-    ///     Returns \c true if redo is available; otherwise returns \c false.
     /// 
-    ///     \sa isUndoAvailable(), availableRedoSteps()
+    /// Returns `true` if redo is available; otherwise returns `false.`
+    /// 
+    /// **See also:** isUndoAvailable()
+    /// availableRedoSteps()
     is_redo_available() -> bool,
+    /// 
+    /// Returns the number of available undo steps.
+    /// 
+    /// **See also:** isUndoAvailable()
     available_undo_steps() -> i32,
+    /// 
+    /// Returns the number of available redo steps.
+    /// 
+    /// **See also:** isRedoAvailable()
     available_redo_steps() -> i32,
+    /// 
+    /// Returns the document's revision (if undo is enabled).
+    /// 
+    /// The revision is guaranteed to increase when a document that is not
+    /// modified is edited.
+    /// 
+    /// **See also:** QTextBlock::revision()
+    /// isModified()
     revision() -> i32,
-    ///     Sets the document to use the given \a layout. The previous layout
-    ///     is deleted.
     /// 
-    ///     \sa documentLayoutChanged()
+    /// Sets the document to use the given *layout.* The previous layout
+    /// is deleted.
+    /// 
+    /// **See also:** documentLayoutChanged()
     set_document_layout(layout: *AbstractTextDocumentLayoutType),
-    ///     Returns the document layout for this document.
+    /// 
+    /// This signal is emitted when a new document layout is set.
+    /// 
+    /// **See also:** setDocumentLayout()
+    /// 
+    /// 
+    /// Returns the document layout for this document.
     document_layout() -> AbstractTextDocumentLayout?,
-    ///     Sets the document's meta information of the type specified by \a info
-    ///     to the given \a string.
     /// 
-    ///     \sa metaInformation()
+    /// Sets the document's meta information of the type specified by *info*
+    /// to the given *string.*
+    /// 
+    /// **See also:** metaInformation()
     set_meta_information(info: TextDocument::MetaInformation, arg0: String),
-    ///     Returns meta information about the document of the type specified by
-    ///     \a info.
     /// 
-    ///     \sa setMetaInformation()
+    /// Returns meta information about the document of the type specified by
+    /// *info.*
+    /// 
+    /// **See also:** setMetaInformation()
     meta_information(info: TextDocument::MetaInformation) -> String,
-    ///     Returns a string containing an HTML representation of the document.
-    /// 
-    ///     The \a encoding parameter specifies the value for the charset attribute
-    ///     in the html header. For example if 'utf-8' is specified then the
-    ///     beginning of the generated html will look like this:
-    ///     \snippet code/src_gui_text_qtextdocument.cpp 0
-    /// 
-    ///     If no encoding is specified then no such meta information is generated.
-    /// 
-    ///     If you later on convert the returned html string into a byte array for
-    ///     transmission over a network or when saving to disk you should specify
-    ///     the encoding you're going to use for the conversion to a byte array here.
-    /// 
-    ///     \sa {Supported HTML Subset}
     to_html(encoding: &ByteArrayType) -> String,
-    ///     Replaces the entire contents of the document with the given
-    ///     HTML-formatted text in the \a html string. The undo/redo history
-    ///     is reset when this function is called.
-    /// 
-    ///     The HTML formatting is respected as much as possible; for example,
-    ///     "<b>bold</b> text" will produce text where the first word has a font
-    ///     weight that gives it a bold appearance: "\b{bold} text".
-    /// 
-    ///     \note It is the responsibility of the caller to make sure that the
-    ///     text is correctly decoded when a QString containing HTML is created
-    ///     and passed to setHtml().
-    /// 
-    ///     \sa setPlainText(), {Supported HTML Subset}
     set_html(html: String),
-    ///     Returns the raw text contained in the document without any
-    ///     formatting information. If you want formatting information
-    ///     use a QTextCursor instead.
     /// 
-    ///     \since 5.9
-    ///     \sa toPlainText()
+    /// Returns the raw text contained in the document without any
+    /// formatting information. If you want formatting information
+    /// use a QTextCursor instead.
+    /// 
+    /// **See also:** toPlainText()
     to_raw_text() -> String,
-    ///     Returns the plain text contained in the document. If you want
-    ///     formatting information use a QTextCursor instead.
     /// 
-    ///     This function returns the same as toRawText(), but will replace
-    ///     some unicode characters with ASCII alternatives.
-    ///     In particular, no-break space (U+00A0) is replaced by a regular
-    ///     space (U+0020), and both paragraph (U+2029) and line (U+2028)
-    ///     separators are replaced by line feed (U+000A).
-    ///     If you need the precise contents of the document, use toRawText()
-    ///     instead.
+    /// Returns the plain text contained in the document. If you want
+    /// formatting information use a QTextCursor instead.
     /// 
-    ///     \note Embedded objects, such as images, are represented by a
-    ///     Unicode value U+FFFC (OBJECT REPLACEMENT CHARACTER).
+    /// This function returns the same as toRawText(), but will replace
+    /// some unicode characters with ASCII alternatives.
+    /// In particular, no-break space (U+00A0) is replaced by a regular
+    /// space (U+0020), and both paragraph (U+2029) and line (U+2028)
+    /// separators are replaced by line feed (U+000A).
+    /// If you need the precise contents of the document, use toRawText()
+    /// instead.
     /// 
-    ///     \sa toHtml()
+    /// **Note**: Embedded objects, such as images, are represented by a
+    /// Unicode value U+FFFC (OBJECT REPLACEMENT CHARACTER).
+    /// 
+    /// **See also:** toHtml()
     to_plain_text() -> String,
-    ///     Replaces the entire contents of the document with the given plain
-    ///     \a text. The undo/redo history is reset when this function is called.
     /// 
-    ///     \sa setHtml()
+    /// Replaces the entire contents of the document with the given plain
+    /// *text.* The undo/redo history is reset when this function is called.
+    /// 
+    /// **See also:** setHtml()
     set_plain_text(text: String),
+    /// 
+    /// Returns the character at position *pos,* or a null character if the
+    /// position is out of range.
+    /// 
+    /// **See also:** characterCount()
     character_at(pos: i32) -> Char,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(sub_string: String, from: i32, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(sub_string: String, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(expr: &RegExpType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(expr: &RegExpType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(expr: &RegularExpressionType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \since 5.5
     /// 
-    ///     Finds the next occurrence that matches the given regular expression,
-    ///     \a expr, within the same paragraph in the document.
+    /// **Overloads**
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the given *position,* and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
     /// 
-    ///     The search starts at the position of the given \a cursor, and proceeds
-    ///     forwards through the document unless specified otherwise in the search
-    ///     options. The \a options control the type of search performed.
+    /// Returns a cursor with the match selected if *subString*
+    /// was found; otherwise returns a null cursor.
     /// 
-    ///     Returns a cursor with the match selected if a match was found; otherwise
-    ///     returns a null cursor.
+    /// If the *position* is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
     /// 
-    ///     If the given \a cursor has a selection, the search begins after the
-    ///     selection; otherwise it begins at the cursor's position.
+    /// Finds the next occurrence of the string, *subString,* in the document.
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
     /// 
-    ///     By default the search is case insensitive, and can match text anywhere in the
-    ///     document.
+    /// Returns a cursor with the match selected if *subString* was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// **Overloads**
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given from *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed. The FindCaseSensitively
+    /// option is ignored for this overload, use QRegExp::caseSensitivity instead.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the given *from* position, and proceeds forwards
+    /// through the document unless specified otherwise in the search options.
+    /// The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the *from* position is 0 (the default) the search begins from the beginning
+    /// of the document; otherwise it begins at the specified position.
+    /// 
+    /// Finds the next occurrence that matches the given regular expression,
+    /// *expr,* within the same paragraph in the document.
+    /// 
+    /// The search starts at the position of the given *cursor,* and proceeds
+    /// forwards through the document unless specified otherwise in the search
+    /// options. The *options* control the type of search performed.
+    /// 
+    /// Returns a cursor with the match selected if a match was found; otherwise
+    /// returns a null cursor.
+    /// 
+    /// If the given *cursor* has a selection, the search begins after the
+    /// selection; otherwise it begins at the cursor's position.
+    /// 
+    /// By default the search is case insensitive, and can match text anywhere in the
+    /// document.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find(expr: &RegularExpressionType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
-    ///     \internal
-    /// 
-    ///     Returns the frame that contains the text cursor position \a pos.
     frame_at(pos: i32) -> TextFrame?,
-    ///     Returns the document's root frame.
+    /// 
+    /// Returns the document's root frame.
     root_frame() -> TextFrame?,
-    ///     Returns the text object associated with the given \a objectIndex.
+    /// 
+    /// Returns the text object associated with the given *objectIndex.*
+    /// 
+    /// Returns the text object associated with the format *f.*
     object(object_index: i32) -> TextObject?,
-    ///     Returns the text object associated with the format \a f.
+    /// 
+    /// Returns the text object associated with the format *f.*
     object_for_format(arg0: &TextFormatType) -> TextObject?,
-    ///     Returns the text block that contains the \a{pos}-th character.
+    /// 
+    /// Returns the text block that contains the *pos* -th character.
+    /// 
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
+    /// 
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find_block(pos: i32) -> TextBlock,
-    ///     \since 4.4
-    ///     Returns the text block with the specified \a blockNumber.
     /// 
-    ///     \sa QTextBlock::blockNumber()
+    /// Returns the text block with the specified *blockNumber.*
+    /// 
+    /// **See also:** QTextBlock::blockNumber()
     find_block_by_number(block_number: i32) -> TextBlock,
-    ///     \since 4.5
-    ///     Returns the text block that contains the specified \a lineNumber.
     /// 
-    ///     \sa QTextBlock::firstLineNumber()
+    /// Returns the text block that contains the specified *lineNumber.*
+    /// 
+    /// **See also:** QTextBlock::firstLineNumber()
     find_block_by_line_number(block_number: i32) -> TextBlock,
-    ///     Returns the document's first text block.
     /// 
-    ///     \sa firstBlock()
+    /// Returns the document's first text block.
+    /// 
+    /// **See also:** firstBlock()
     begin() -> TextBlock,
-    ///     This function returns a block to test for the end of the document
-    ///     while iterating over it.
     /// 
-    ///     \snippet textdocumentendsnippet.cpp 0
+    /// This function returns a block to test for the end of the document
+    /// while iterating over it.
     /// 
-    ///     The block returned is invalid and represents the block after the
-    ///     last block in the document. You can use lastBlock() to retrieve the
-    ///     last valid block of the document.
+    /// The block returned is invalid and represents the block after the
+    /// last block in the document. You can use lastBlock() to retrieve the
+    /// last valid block of the document.
     /// 
-    ///     \sa lastBlock()
+    /// **See also:** lastBlock()
     end() -> TextBlock,
-    ///     \since 4.4
-    ///     Returns the document's first text block.
+    /// 
+    /// Returns the document's first text block.
     first_block() -> TextBlock,
-    ///     \since 4.4
-    ///     Returns the document's last (valid) text block.
+    /// 
+    /// Returns the document's last (valid) text block.
     last_block() -> TextBlock,
-    ///     \property QTextDocument::pageSize
-    ///     \brief the page size that should be used for laying out the document
-    /// 
-    ///     The units are determined by the underlying paint device. The size is
-    ///     measured in logical pixels when painting to the screen, and in points
-    ///     (1/72 inch) when painting to a printer.
-    /// 
-    ///     By default, for a newly-created, empty document, this property contains
-    ///     an undefined size.
-    /// 
-    ///     \sa modificationChanged()
     set_page_size(size: &SizeFType),
+    /// 
+    /// The units are determined by the underlying paint device. The size is
+    /// measured in logical pixels when painting to the screen, and in points
+    /// (1/72 inch) when painting to a printer.
+    /// 
+    /// By default, for a newly-created, empty document, this property contains
+    /// an undefined size.
+    /// 
+    /// **See also:** modificationChanged()
     page_size() -> SizeF,
-    ///     Sets the default \a font to use in the document layout.
+    /// 
+    /// Sets the default *font* to use in the document layout.
     set_default_font(font: &FontType),
-    ///     Returns the default font to be used in the document layout.
+    /// 
+    /// 
+    /// Returns the default font to be used in the document layout.
     default_font() -> Font,
-    ///   returns the number of pages in this document.
+    /// 
+    /// returns the number of pages in this document.
     page_count() -> i32,
-    ///     \property QTextDocument::modified
-    ///     \brief whether the document has been modified by the user
-    /// 
-    ///     By default, this property is \c false.
-    /// 
-    ///     \sa modificationChanged()
     is_modified() -> bool,
-    ///     Prints the document to the given \a printer. The QPageablePaintDevice must be
-    ///     set up before being used with this function.
     /// 
-    ///     This is only a convenience method to print the whole document to the printer.
+    /// Prints the document to the given *printer.* The QPageablePaintDevice must be
+    /// set up before being used with this function.
     /// 
-    ///     If the document is already paginated through a specified height in the pageSize()
-    ///     property it is printed as-is.
+    /// This is only a convenience method to print the whole document to the printer.
     /// 
-    ///     If the document is not paginated, like for example a document used in a QTextEdit,
-    ///     then a temporary copy of the document is created and the copy is broken into
-    ///     multiple pages according to the size of the paint device's paperRect(). By default
-    ///     a 2 cm margin is set around the document contents. In addition the current page
-    ///     number is printed at the bottom of each page.
+    /// If the document is already paginated through a specified height in the pageSize()
+    /// property it is printed as-is.
     /// 
-    ///     \sa QTextEdit::print()
+    /// If the document is not paginated, like for example a document used in a QTextEdit,
+    /// then a temporary copy of the document is created and the copy is broken into
+    /// multiple pages according to the size of the paint device's paperRect(). By default
+    /// a 2 cm margin is set around the document contents. In addition the current page
+    /// number is printed at the bottom of each page.
+    /// 
+    /// **See also:** QTextEdit::print()
     print(printer: *PagedPaintDeviceType),
-    ///     Returns data of the specified \a type from the resource with the
-    ///     given \a name.
     /// 
-    ///     This function is called by the rich text engine to request data that isn't
-    ///     directly stored by QTextDocument, but still associated with it. For example,
-    ///     images are referenced indirectly by the name attribute of a QTextImageFormat
-    ///     object.
+    /// Returns data of the specified *type* from the resource with the
+    /// given *name.*
     /// 
-    ///     Resources are cached internally in the document. If a resource can
-    ///     not be found in the cache, loadResource is called to try to load
-    ///     the resource. loadResource should then use addResource to add the
-    ///     resource to the cache.
+    /// This function is called by the rich text engine to request data that isn't
+    /// directly stored by QTextDocument, but still associated with it. For example,
+    /// images are referenced indirectly by the name attribute of a QTextImageFormat
+    /// object.
     /// 
-    ///     \sa QTextDocument::ResourceType
+    /// Resources are cached internally in the document. If a resource can
+    /// not be found in the cache, loadResource is called to try to load
+    /// the resource. loadResource should then use addResource to add the
+    /// resource to the cache.
+    /// 
+    /// **See also:** QTextDocument::ResourceType
     resource(type: i32, name: &UrlType) -> Variant,
-    ///     Adds the resource \a resource to the resource cache, using \a
-    ///     type and \a name as identifiers. \a type should be a value from
-    ///     QTextDocument::ResourceType.
     /// 
-    ///     For example, you can add an image as a resource in order to reference it
-    ///     from within the document:
+    /// Adds the resource *resource* to the resource cache, using *type* and *name* as identifiers. *type* should be a value from
+    /// QTextDocument::ResourceType.
     /// 
-    ///     \snippet textdocument-resources/main.cpp Adding a resource
+    /// For example, you can add an image as a resource in order to reference it
+    /// from within the document:
     /// 
-    ///     The image can be inserted into the document using the QTextCursor API:
+    /// The image can be inserted into the document using the QTextCursor API:
     /// 
-    ///     \snippet textdocument-resources/main.cpp Inserting an image with a cursor
+    /// Alternatively, you can insert images using the HTML `img` tag:
     /// 
-    ///     Alternatively, you can insert images using the HTML \c img tag:
-    /// 
-    ///     \snippet textdocument-resources/main.cpp Inserting an image using HTML
     add_resource(type: i32, name: &UrlType, resource: &VariantType),
-    ///     Returns a vector of text formats for all the formats used in the document.
+    /// 
+    /// Returns a vector of text formats for all the formats used in the document.
     all_formats() -> [TextFormat],
-    ///     \fn void QTextDocument::markContentsDirty(int position, int length)
     /// 
-    ///     Marks the contents specified by the given \a position and \a length
-    ///     as "dirty", informing the document that it needs to be laid out
-    ///     again.
+    /// Marks the contents specified by the given *position* and *length*
+    /// as , informing the document that it needs to be laid out
+    /// again.
     mark_contents_dirty(from: i32, length: i32),
-    ///     \since 4.2
     /// 
-    ///     Draws the content of the document with painter \a p, clipped to \a rect.
-    ///     If \a rect is a null rectangle (default) then the document is painted unclipped.
+    /// Draws the content of the document with painter *p,* clipped to *rect.*
+    /// If *rect* is a null rectangle (default) then the document is painted unclipped.
     draw_contents(painter: *PainterType, rect: &RectFType),
-    ///     \property QTextDocument::textWidth
-    ///     \since 4.2
-    /// 
-    ///     The text width specifies the preferred width for text in the document. If
-    ///     the text (or content in general) is wider than the specified with it is broken
-    ///     into multiple lines and grows vertically. If the text cannot be broken into multiple
-    ///     lines to fit into the specified text width it will be larger and the size() and the
-    ///     idealWidth() property will reflect that.
-    /// 
-    ///     If the text width is set to -1 then the text will not be broken into multiple lines
-    ///     unless it is enforced through an explicit line break or a new paragraph.
-    /// 
-    ///     The default value is -1.
-    /// 
-    ///     Setting the text width will also set the page height to -1, causing the document to
-    ///     grow or shrink vertically in a continuous way. If you want the document layout to break
-    ///     the text into multiple pages then you have to set the pageSize property instead.
-    /// 
-    ///     \sa size(), idealWidth(), pageSize()
     set_text_width(width: f32),
+    /// 
+    /// The text width specifies the preferred width for text in the document. If
+    /// the text (or content in general) is wider than the specified with it is broken
+    /// into multiple lines and grows vertically. If the text cannot be broken into multiple
+    /// lines to fit into the specified text width it will be larger and the size() and the
+    /// idealWidth() property will reflect that.
+    /// 
+    /// If the text width is set to -1 then the text will not be broken into multiple lines
+    /// unless it is enforced through an explicit line break or a new paragraph.
+    /// 
+    /// The default value is -1.
+    /// 
+    /// Setting the text width will also set the page height to -1, causing the document to
+    /// grow or shrink vertically in a continuous way. If you want the document layout to break
+    /// the text into multiple pages then you have to set the pageSize property instead.
+    /// 
+    /// **See also:** size()
+    /// idealWidth()
+    /// pageSize()
     text_width() -> f32,
-    ///     \since 4.2
     /// 
-    ///     Returns the ideal width of the text document. The ideal width is the actually used width
-    ///     of the document without optional alignments taken into account. It is always <= size().width().
+    /// Returns the ideal width of the text document. The ideal width is the actually used width
+    /// of the document without optional alignments taken into account. It is always <= size().width().
     /// 
-    ///     \sa adjustSize(), textWidth
+    /// **See also:** adjustSize()
+    /// textWidth
     ideal_width() -> f32,
-    ///     \property QTextDocument::indentWidth
-    ///     \since 4.4
     /// 
-    ///     Returns the width used for text list and text block indenting.
+    /// Returns the width used for text list and text block indenting.
     /// 
-    ///     The indent properties of QTextListFormat and QTextBlockFormat specify
-    ///     multiples of this value. The default indent width is 40.
+    /// The indent properties of QTextListFormat and QTextBlockFormat specify
+    /// multiples of this value. The default indent width is 40.
     indent_width() -> f32,
-    ///     \since 4.4
     /// 
-    ///     Sets the \a width used for text list and text block indenting.
+    /// Sets the *width* used for text list and text block indenting.
     /// 
-    ///     The indent properties of QTextListFormat and QTextBlockFormat specify
-    ///     multiples of this value. The default indent width is 40 .
+    /// The indent properties of QTextListFormat and QTextBlockFormat specify
+    /// multiples of this value. The default indent width is 40 .
     /// 
-    ///     \sa indentWidth()
+    /// **See also:** indentWidth()
     set_indent_width(width: f32),
-    ///     \property QTextDocument::documentMargin
-    ///     \since 4.5
     /// 
-    ///      The margin around the document. The default is 4.
+    /// The margin around the document. The default is 4.
     document_margin() -> f32,
     set_document_margin(margin: f32),
-    ///     \since 4.2
     /// 
-    ///     Adjusts the document to a reasonable size.
+    /// Adjusts the document to a reasonable size.
     /// 
-    ///     \sa idealWidth(), textWidth, size
+    /// **See also:** idealWidth()
+    /// textWidth
+    /// size
     adjust_size(),
-    ///     \property QTextDocument::size
-    ///     \since 4.2
     /// 
-    ///     Returns the actual size of the document.
-    ///     This is equivalent to documentLayout()->documentSize();
+    /// Returns the actual size of the document.
+    /// This is equivalent to documentLayout()->documentSize();
     /// 
-    ///     The size of the document can be changed either by setting
-    ///     a text width or setting an entire page size.
+    /// The size of the document can be changed either by setting
+    /// a text width or setting an entire page size.
     /// 
-    ///     Note that the width is always >= pageSize().width().
+    /// Note that the width is always >= pageSize().width().
     /// 
-    ///     By default, for a newly-created, empty document, this property contains
-    ///     a configuration-dependent size.
+    /// By default, for a newly-created, empty document, this property contains
+    /// a configuration-dependent size.
     /// 
-    ///     \sa setTextWidth(), setPageSize(), idealWidth()
+    /// **See also:** setTextWidth()
+    /// setPageSize()
+    /// idealWidth()
     size() -> SizeF,
-    ///     \property QTextDocument::blockCount
-    ///     \since 4.2
     /// 
-    ///     Returns the number of text blocks in the document.
+    /// Returns the number of text blocks in the document.
     /// 
-    ///     The value of this property is undefined in documents with tables or frames.
+    /// The value of this property is undefined in documents with tables or frames.
     /// 
-    ///     By default, if defined, this property contains a value of 1.
-    ///     \sa lineCount(), characterCount()
+    /// By default, if defined, this property contains a value of 1.
+    /// **See also:** lineCount()
+    /// characterCount()
+    /// 
+    /// This signal is emitted when the total number of text blocks in the
+    /// document changes. The value passed in *newBlockCount* is the new
+    /// total.
     block_count() -> i32,
+    /// 
+    /// Returns the number of lines of this document (if the layout supports
+    /// this). Otherwise, this is identical to the number of blocks.
+    /// 
+    /// **See also:** blockCount()
+    /// characterCount()
     line_count() -> i32,
+    /// 
+    /// Returns the number of characters of this document.
+    /// 
+    /// **See also:** blockCount()
+    /// characterAt()
     character_count() -> i32,
-    ///     \property QTextDocument::defaultStyleSheet
-    ///     \since 4.2
-    /// 
-    ///     The default style sheet is applied to all newly HTML formatted text that is
-    ///     inserted into the document, for example using setHtml() or QTextCursor::insertHtml().
-    /// 
-    ///     The style sheet needs to be compliant to CSS 2.1 syntax.
-    /// 
-    ///     \b{Note:} Changing the default style sheet does not have any effect to the existing content
-    ///     of the document.
-    /// 
-    ///     \sa {Supported HTML Subset}
     set_default_style_sheet(sheet: String),
+    /// 
+    /// The default style sheet is applied to all newly HTML formatted text that is
+    /// inserted into the document, for example using setHtml() or QTextCursor::insertHtml().
+    /// 
+    /// The style sheet needs to be compliant to CSS 2.1 syntax.
+    /// 
+    /// **Note:** Changing the default style sheet does not have any effect to the existing content
+    /// of the document.
+    /// 
+    /// **See also:** {Supported HTML Subset}
     default_style_sheet() -> String,
-    ///     \overload
     /// 
+    /// Undoes the last editing operation on the document if undo is
+    /// available. The provided *cursor* is positioned at the end of the
+    /// location where the edition operation was undone.
+    /// 
+    /// See the [Qt Undo Framework](Overview%20of%20Qt's%20Undo%20Framework)
+    /// 
+    /// documentation for details.
+    /// 
+    /// **See also:** undoAvailable()
+    /// isUndoRedoEnabled()
+    /// 
+    /// **Overloads**
+    /// 
+    /// This defaults to true. If disabled, the undo stack is cleared and
+    /// no items will be added to it.
+    /// 
+    /// This signal is emitted whenever undo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
+    /// 
+    /// See the [Qt Undo Framework](Overview%20of%20Qt's%20Undo%20Framework)
+    /// 
+    /// documentation for details.
+    /// 
+    /// **See also:** undo()
+    /// isUndoRedoEnabled()
+    /// 
+    /// This signal is emitted every time a new level of undo is added to the QTextDocument.
     undo(cursor: *TextCursorType),
-    ///     \overload
-    ///     Redoes the last editing operation on the document if \l{QTextDocument::isRedoAvailable()}{redo is available}.
+    /// 
+    /// Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
+    /// 
+    /// 
+    /// The provided *cursor* is positioned at the end of the location where
+    /// the edition operation was redone.
+    /// 
+    /// **Overloads**  Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
+    /// 
+    /// 
+    /// This signal is emitted whenever redo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     redo(cursor: *TextCursorType),
-    ///     \since 4.7
-    ///     Clears the stacks specified by \a stacksToClear.
     /// 
-    ///     This method clears any commands on the undo stack, the redo stack,
-    ///     or both (the default). If commands are cleared, the appropriate
-    ///     signals are emitted, QTextDocument::undoAvailable() or
-    ///     QTextDocument::redoAvailable().
+    /// Clears the stacks specified by *stacksToClear.*
     /// 
-    ///     \sa QTextDocument::undoAvailable(), QTextDocument::redoAvailable()
+    /// This method clears any commands on the undo stack, the redo stack,
+    /// or both (the default). If commands are cleared, the appropriate
+    /// signals are emitted, QTextDocument::undoAvailable() or
+    /// QTextDocument::redoAvailable().
+    /// 
+    /// **See also:** QTextDocument::undoAvailable()
+    /// QTextDocument::redoAvailable()
     clear_undo_redo_stacks(history_to_clear: TextDocument::Stacks),
-    ///     \property QTextDocument::maximumBlockCount
-    ///     \since 4.2
-    ///     \brief Specifies the limit for blocks in the document.
     /// 
-    ///     Specifies the maximum number of blocks the document may have. If there are
-    ///     more blocks in the document that specified with this property blocks are removed
-    ///     from the beginning of the document.
+    /// Specifies the maximum number of blocks the document may have. If there are
+    /// more blocks in the document that specified with this property blocks are removed
+    /// from the beginning of the document.
     /// 
-    ///     A negative or zero value specifies that the document may contain an unlimited
-    ///     amount of blocks.
+    /// A negative or zero value specifies that the document may contain an unlimited
+    /// amount of blocks.
     /// 
-    ///     The default value is 0.
+    /// The default value is 0.
     /// 
-    ///     Note that setting this property will apply the limit immediately to the document
-    ///     contents.
+    /// Note that setting this property will apply the limit immediately to the document
+    /// contents.
     /// 
-    ///     Setting this property also disables the undo redo history.
+    /// Setting this property also disables the undo redo history.
     /// 
-    ///     This property is undefined in documents with tables or frames.
+    /// This property is undefined in documents with tables or frames.
     maximum_block_count() -> i32,
     set_maximum_block_count(maximum: i32),
-    ///     \since 4.3
     /// 
-    ///     The default text option is used on all QTextLayout objects in the document.
-    ///     This allows setting global properties for the document such as the default
-    ///     word wrap mode.
+    /// [QTextLayout](QTextLayout)
+    /// s in the document.
+    /// 
+    /// When [QTextBlock](QTextBlock)
+    /// s are created, the defaultTextOption is set on their
+    /// QTextLayout. This allows setting global properties for the document such as the
+    /// default word wrap mode.
+    /// 
+    /// The default text option is used on all QTextLayout objects in the document.
+    /// This allows setting global properties for the document such as the default
+    /// word wrap mode.
     default_text_option() -> TextOption,
-    ///     \since 4.3
     /// 
-    ///     Sets the default text option to \a option.
+    /// Sets the default text option to *option.*
     set_default_text_option(option: &TextOptionType),
-    ///     \property QTextDocument::baseUrl
-    ///     \since 5.3
-    ///     \brief the base URL used to resolve relative resource URLs within the document.
     /// 
-    ///     Resource URLs are resolved to be within the same directory as the target of the base
-    ///     URL meaning any portion of the path after the last '/' will be ignored.
+    /// Resource URLs are resolved to be within the same directory as the target of the base
+    /// URL meaning any portion of the path after the last '/' will be ignored.
     /// 
-    ///     \table
-    ///     \header \li Base URL \li Relative URL \li Resolved URL
-    ///     \row \li file:///path/to/content \li images/logo.png \li file:///path/to/images/logo.png
-    ///     \row \li file:///path/to/content/ \li images/logo.png \li file:///path/to/content/images/logo.png
-    ///     \row \li file:///path/to/content/index.html \li images/logo.png \li file:///path/to/content/images/logo.png
-    ///     \row \li file:///path/to/content/images/ \li ../images/logo.png \li file:///path/to/content/images/logo.png
-    ///     \endtable
+    /// * Base URL
+    /// * Relative URL
+    /// * Resolved URL
+    /// * file:///path/to/content
+    /// * images/logo.png
+    /// * file:///path/to/images/logo.png
+    /// * file:///path/to/content/
+    /// * images/logo.png
+    /// * file:///path/to/content/images/logo.png
+    /// * file:///path/to/content/index.html
+    /// * images/logo.png
+    /// * file:///path/to/content/images/logo.png
+    /// * file:///path/to/content/images/
+    /// * ../images/logo.png
+    /// * file:///path/to/content/images/logo.png
     base_url() -> Url,
     set_base_url(url: &UrlType),
-    ///     \since 4.8
     /// 
-    ///     The default cursor movement style is used by all QTextCursor objects
-    ///     created from the document. The default is Qt::LogicalMoveStyle.
+    /// The default cursor movement style is used by all QTextCursor objects
+    /// created from the document. The default is Qt::LogicalMoveStyle.
     default_cursor_move_style() -> Rute::CursorMoveStyle,
-    ///     \since 4.8
     /// 
-    ///     Sets the default cursor movement style to the given \a style.
+    /// Sets the default cursor movement style to the given *style.*
     set_default_cursor_move_style(style: Rute::CursorMoveStyle),
+    /// 
+    /// This signal is emitted whenever the document's content changes; for
+    /// example, when text is inserted or deleted, or when formatting is applied.
+    /// 
+    /// **See also:** contentsChange()
+    /// 
+    /// This signal is emitted whenever the document's content changes; for
+    /// example, when text is inserted or deleted, or when formatting is applied.
+    /// 
+    /// Information is provided about the *position* of the character in the
+    /// document where the change occurred, the number of characters removed
+    /// ( *charsRemoved),* and the number of characters added ( *charsAdded).*
+    /// 
+    /// The signal is emitted before the document's layout manager is notified
+    /// about the change. This hook allows you to implement syntax highlighting
+    /// for the document.
+    /// 
+    /// **See also:** QAbstractTextDocumentLayout::documentChanged()
+    /// contentsChanged()
     [signal] contents_change(from: i32, chars_removed: i32, chars_added: i32),
+    /// 
+    /// This signal is emitted whenever the document's content changes; for
+    /// example, when text is inserted or deleted, or when formatting is applied.
+    /// 
+    /// **See also:** contentsChange()
     [signal] contents_changed(),
+    /// 
+    /// This signal is emitted whenever undo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
+    /// 
+    /// See the [Qt Undo Framework](Overview%20of%20Qt's%20Undo%20Framework)
+    /// 
+    /// documentation for details.
+    /// 
+    /// **See also:** undo()
+    /// isUndoRedoEnabled()
     [signal] undo_available(arg0: bool),
+    /// 
+    /// This signal is emitted whenever redo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     [signal] redo_available(arg0: bool),
+    /// 
+    /// This signal is emitted every time a new level of undo is added to the QTextDocument.
     [signal] undo_command_added(),
+    /// 
+    /// This signal is emitted whenever the content of the document
+    /// changes in a way that affects the modification state. If *changed* is true, the document has been modified; otherwise it is
+    /// false.
+    /// 
+    /// For example, calling setModified(false) on a document and then
+    /// inserting text causes the signal to get emitted. If you undo that
+    /// operation, causing the document to return to its original
+    /// unmodified state, the signal will get emitted again.
     [signal] modification_changed(m: bool),
+    /// 
+    /// This signal is emitted whenever the position of a cursor changed
+    /// due to an editing operation. The cursor that changed is passed in
+    /// *cursor.* If the document is used with the QTextEdit class and you need a signal when the
+    /// cursor is moved with the arrow keys you can use the [cursorPositionChanged()](QTextEdit::)
+    /// 
+    /// signal in QTextEdit.
     [signal] cursor_position_changed(cursor: &TextCursorType),
+    /// 
+    /// This signal is emitted when the total number of text blocks in the
+    /// document changes. The value passed in *newBlockCount* is the new
+    /// total.
     [signal] block_count_changed(new_block_count: i32),
     [signal] base_url_changed(url: &UrlType),
+    /// 
+    /// This signal is emitted when a new document layout is set.
+    /// 
+    /// **See also:** setDocumentLayout()
+    /// 
     [signal] document_layout_changed(),
-    ///     \overload
     /// 
+    /// Undoes the last editing operation on the document if undo is
+    /// available. The provided *cursor* is positioned at the end of the
+    /// location where the edition operation was undone.
+    /// 
+    /// See the [Qt Undo Framework](Overview%20of%20Qt's%20Undo%20Framework)
+    /// 
+    /// documentation for details.
+    /// 
+    /// **See also:** undoAvailable()
+    /// isUndoRedoEnabled()
+    /// 
+    /// **Overloads**
+    /// 
+    /// This defaults to true. If disabled, the undo stack is cleared and
+    /// no items will be added to it.
+    /// 
+    /// This signal is emitted whenever undo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
+    /// 
+    /// See the [Qt Undo Framework](Overview%20of%20Qt's%20Undo%20Framework)
+    /// 
+    /// documentation for details.
+    /// 
+    /// **See also:** undo()
+    /// isUndoRedoEnabled()
+    /// 
+    /// This signal is emitted every time a new level of undo is added to the QTextDocument.
     undo(),
-    ///     \overload
-    ///     Redoes the last editing operation on the document if \l{QTextDocument::isRedoAvailable()}{redo is available}.
-    redo(),
-    ///     \internal
     /// 
-    ///     Appends a custom undo \a item to the undo stack.
+    /// Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
+    /// 
+    /// 
+    /// The provided *cursor* is positioned at the end of the location where
+    /// the edition operation was redone.
+    /// 
+    /// **Overloads**  Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
+    /// 
+    /// 
+    /// This signal is emitted whenever redo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
+    redo(),
     append_undo_item(arg0: *AbstractUndoItemType),
     set_modified(m: bool),
-    ///     \fn QTextObject *QTextDocument::createObject(const QTextFormat &format)
     /// 
-    ///     Creates and returns a new document object (a QTextObject), based
-    ///     on the given \a format.
+    /// Creates and returns a new document object (a QTextObject), based
+    /// on the given *format.*
     /// 
-    ///     QTextObjects will always get created through this method, so you
-    ///     must reimplement it if you use custom text objects inside your document.
+    /// QTextObjects will always get created through this method, so you
+    /// must reimplement it if you use custom text objects inside your document.
     [event] create_object(f: &TextFormatType) -> TextObject?,
-    ///     Loads data of the specified \a type from the resource with the
-    ///     given \a name.
     /// 
-    ///     This function is called by the rich text engine to request data that isn't
-    ///     directly stored by QTextDocument, but still associated with it. For example,
-    ///     images are referenced indirectly by the name attribute of a QTextImageFormat
-    ///     object.
+    /// Loads data of the specified *type* from the resource with the
+    /// given *name.*
     /// 
-    ///     When called by Qt, \a type is one of the values of
-    ///     QTextDocument::ResourceType.
+    /// This function is called by the rich text engine to request data that isn't
+    /// directly stored by QTextDocument, but still associated with it. For example,
+    /// images are referenced indirectly by the name attribute of a QTextImageFormat
+    /// object.
     /// 
-    ///     If the QTextDocument is a child object of a QObject that has an invokable
-    ///     loadResource method such as QTextEdit, QTextBrowser
-    ///     or a QTextDocument itself then the default implementation tries
-    ///     to retrieve the data from the parent.
+    /// When called by Qt, *type* is one of the values of
+    /// QTextDocument::ResourceType.
+    /// 
+    /// If the QTextDocument is a child object of a QObject that has an invokable
+    /// loadResource method such as QTextEdit, QTextBrowser
+    /// or a QTextDocument itself then the default implementation tries
+    /// to retrieve the data from the parent.
     [event] load_resource(type: i32, name: &UrlType) -> Variant,
-    ///   \internal
-    /// 
-    ///   So that not all classes have to be friends of each other...
     doc_handle() -> TextDocumentPrivate?,
 }
 

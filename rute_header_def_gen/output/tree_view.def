@@ -1,524 +1,575 @@
-///     \class QTreeView
-///     \brief The QTreeView class provides a default model/view implementation of a tree view.
 /// 
-///     \ingroup model-view
-///     \ingroup advanced
-///     \inmodule QtWidgets
+/// ![windows-treeview.png](windows-treeview.png)
 /// 
-///     \image windows-treeview.png
+/// A QTreeView implements a tree representation of items from a
+/// model. This class is used to provide standard hierarchical lists that
+/// were previously provided by the `QListView` class, but using the more
+/// flexible approach provided by Qt's model/view architecture.
 /// 
-///     A QTreeView implements a tree representation of items from a
-///     model. This class is used to provide standard hierarchical lists that
-///     were previously provided by the \c QListView class, but using the more
-///     flexible approach provided by Qt's model/view architecture.
+/// The QTreeView class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of
+/// Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     The QTreeView class is one of the \l{Model/View Classes} and is part of
-///     Qt's \l{Model/View Programming}{model/view framework}.
 /// 
-///     QTreeView implements the interfaces defined by the
-///     QAbstractItemView class to allow it to display data provided by
-///     models derived from the QAbstractItemModel class.
+/// QTreeView implements the interfaces defined by the
+/// QAbstractItemView class to allow it to display data provided by
+/// models derived from the QAbstractItemModel class.
 /// 
-///     It is simple to construct a tree view displaying data from a
-///     model. In the following example, the contents of a directory are
-///     supplied by a QFileSystemModel and displayed as a tree:
+/// It is simple to construct a tree view displaying data from a
+/// model. In the following example, the contents of a directory are
+/// supplied by a QFileSystemModel and displayed as a tree:
 /// 
-///     \snippet shareddirmodel/main.cpp 3
-///     \snippet shareddirmodel/main.cpp 6
+/// The model/view architecture ensures that the contents of the tree view
+/// are updated as the model changes.
 /// 
-///     The model/view architecture ensures that the contents of the tree view
-///     are updated as the model changes.
+/// Items that have children can be in an expanded (children are
+/// visible) or collapsed (children are hidden) state. When this state
+/// changes a collapsed() or expanded() signal is emitted with the
+/// model index of the relevant item.
 /// 
-///     Items that have children can be in an expanded (children are
-///     visible) or collapsed (children are hidden) state. When this state
-///     changes a collapsed() or expanded() signal is emitted with the
-///     model index of the relevant item.
+/// The amount of indentation used to indicate levels of hierarchy is
+/// controlled by the [indentation](indentation)
+/// property.
 /// 
-///     The amount of indentation used to indicate levels of hierarchy is
-///     controlled by the \l indentation property.
+/// Headers in tree views are constructed using the QHeaderView class and can
+/// be hidden using `header()->hide()` . Note that each header is configured
+/// with its [stretchLastSection](QHeaderView::)
+/// property set to true,
+/// ensuring that the view does not waste any of the space assigned to it for
+/// its header. If this value is set to true, this property will override the
+/// resize mode set on the last section in the header.
 /// 
-///     Headers in tree views are constructed using the QHeaderView class and can
-///     be hidden using \c{header()->hide()}. Note that each header is configured
-///     with its \l{QHeaderView::}{stretchLastSection} property set to true,
-///     ensuring that the view does not waste any of the space assigned to it for
-///     its header. If this value is set to true, this property will override the
-///     resize mode set on the last section in the header.
+/// By default, all columns in a tree view are movable except the first. To
+/// disable movement of these columns, use QHeaderView's
+/// [setSectionsMovable()](QHeaderView::)
+/// function. For more information
+/// about rearranging sections, see [Moving Header Sections](Moving%20Header%20Sections)
 /// 
-///     By default, all columns in a tree view are movable except the first. To
-///     disable movement of these columns, use QHeaderView's
-///     \l {QHeaderView::}{setSectionsMovable()} function. For more information
-///     about rearranging sections, see \l {Moving Header Sections}.
 /// 
-///     \section1 Key Bindings
+/// # Key Bindings
 /// 
-///     QTreeView supports a set of key bindings that enable the user to
-///     navigate in the view and interact with the contents of items:
+/// QTreeView supports a set of key bindings that enable the user to
+/// navigate in the view and interact with the contents of items:
 /// 
-///     \table
-///     \header \li Key \li Action
-///     \row \li Up   \li Moves the cursor to the item in the same column on
-///          the previous row. If the parent of the current item has no more rows to
-///          navigate to, the cursor moves to the relevant item in the last row
-///          of the sibling that precedes the parent.
-///     \row \li Down \li Moves the cursor to the item in the same column on
-///          the next row. If the parent of the current item has no more rows to
-///          navigate to, the cursor moves to the relevant item in the first row
-///          of the sibling that follows the parent.
-///     \row \li Left  \li Hides the children of the current item (if present)
-///          by collapsing a branch.
-///     \row \li Minus  \li Same as LeftArrow.
-///     \row \li Right \li Reveals the children of the current item (if present)
-///          by expanding a branch.
-///     \row \li Plus  \li Same as RightArrow.
-///     \row \li Asterisk  \li Expands all children of the current item (if present).
-///     \row \li PageUp   \li Moves the cursor up one page.
-///     \row \li PageDown \li Moves the cursor down one page.
-///     \row \li Home \li Moves the cursor to an item in the same column of the first
-///          row of the first top-level item in the model.
-///     \row \li End  \li Moves the cursor to an item in the same column of the last
-///          row of the last top-level item in the model.
-///     \row \li F2   \li In editable models, this opens the current item for editing.
-///          The Escape key can be used to cancel the editing process and revert
-///          any changes to the data displayed.
-///     \endtable
+/// * Key
+/// * Action
+/// * Up
+/// * Moves the cursor to the item in the same column on the previous row. If the parent of the current item has no more rows to navigate to, the cursor moves to the relevant item in the last row of the sibling that precedes the parent.
+/// * Down
+/// * Moves the cursor to the item in the same column on the next row. If the parent of the current item has no more rows to navigate to, the cursor moves to the relevant item in the first row of the sibling that follows the parent.
+/// * Left
+/// * Hides the children of the current item (if present) by collapsing a branch.
+/// * Minus
+/// * Same as LeftArrow.
+/// * Right
+/// * Reveals the children of the current item (if present) by expanding a branch.
+/// * Plus
+/// * Same as RightArrow.
+/// * Asterisk
+/// * Expands all children of the current item (if present).
+/// * PageUp
+/// * Moves the cursor up one page.
+/// * PageDown
+/// * Moves the cursor down one page.
+/// * Home
+/// * Moves the cursor to an item in the same column of the first row of the first top-level item in the model.
+/// * End
+/// * Moves the cursor to an item in the same column of the last row of the last top-level item in the model.
+/// * F2
+/// * In editable models, this opens the current item for editing. The Escape key can be used to cancel the editing process and revert any changes to the data displayed.
 /// 
-///     \omit
-///     Describe the expanding/collapsing concept if not covered elsewhere.
-///     \endomit
+/// # Improving Performance
 /// 
-///     \section1 Improving Performance
+/// It is possible to give the view hints about the data it is handling in order
+/// to improve its performance when displaying large numbers of items. One approach
+/// that can be taken for views that are intended to display items with equal heights
+/// is to set the [uniformRowHeights](uniformRowHeights)
+/// property to true.
 /// 
-///     It is possible to give the view hints about the data it is handling in order
-///     to improve its performance when displaying large numbers of items. One approach
-///     that can be taken for views that are intended to display items with equal heights
-///     is to set the \l uniformRowHeights property to true.
-/// 
-///     \sa QListView, QTreeWidget, {View Classes}, QAbstractItemModel, QAbstractItemView,
-///         {Dir View Example}
+/// **See also:** QListView
+/// QTreeWidget
+/// {View Classes}
+/// QAbstractItemModel
+/// QAbstractItemView
+/// {Dir View Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TreeView : AbstractItemView {
-    ///   \reimp
+    /// 
     [event] set_model(model: *AbstractItemModelType),
-    ///   \reimp
+    /// 
     [event] set_root_index(index: &ModelIndexType),
-    ///   \reimp
+    /// 
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///   Returns the header for the tree view.
     /// 
-    ///   \sa QAbstractItemModel::headerData()
+    /// Returns the header for the tree view.
+    /// 
+    /// **See also:** QAbstractItemModel::headerData()
+    /// 
+    /// If this property is `true,` the header is not shown otherwise it is.
+    /// The default value is false.
+    /// 
+    /// **See also:** header()
     header() -> HeaderView?,
-    ///     Sets the header for the tree view, to the given \a header.
     /// 
-    ///     The view takes ownership over the given \a header and deletes it
-    ///     when a new header is set.
+    /// Sets the header for the tree view, to the given *header.*
     /// 
-    ///     \sa QAbstractItemModel::headerData()
+    /// The view takes ownership over the given *header* and deletes it
+    /// when a new header is set.
+    /// 
+    /// **See also:** QAbstractItemModel::headerData()
     set_header(header: *HeaderViewType),
-    ///   \property QTreeView::autoExpandDelay
-    ///   \brief The delay time before items in a tree are opened during a drag and drop operation.
-    ///   \since 4.3
     /// 
-    ///   This property holds the amount of time in milliseconds that the user must wait over
-    ///   a node before that node will automatically open or close.  If the time is
-    ///   set to less then 0 then it will not be activated.
+    /// This property holds the amount of time in milliseconds that the user must wait over
+    /// a node before that node will automatically open or close. If the time is
+    /// set to less then 0 then it will not be activated.
     /// 
-    ///   By default, this property has a value of -1, meaning that auto-expansion is disabled.
+    /// By default, this property has a value of -1, meaning that auto-expansion is disabled.
     auto_expand_delay() -> i32,
     set_auto_expand_delay(delay: i32),
-    ///   \property QTreeView::indentation
-    ///   \brief indentation of the items in the tree view.
     /// 
-    ///   This property holds the indentation measured in pixels of the items for each
-    ///   level in the tree view. For top-level items, the indentation specifies the
-    ///   horizontal distance from the viewport edge to the items in the first column;
-    ///   for child items, it specifies their indentation from their parent items.
+    /// This property holds the indentation measured in pixels of the items for each
+    /// level in the tree view. For top-level items, the indentation specifies the
+    /// horizontal distance from the viewport edge to the items in the first column;
+    /// for child items, it specifies their indentation from their parent items.
     /// 
-    ///   By default, the value of this property is style dependent. Thus, when the style
-    ///   changes, this property updates from it. Calling setIndentation() stops the updates,
-    ///   calling resetIndentation() will restore default behavior.
+    /// By default, the value of this property is style dependent. Thus, when the style
+    /// changes, this property updates from it. Calling setIndentation() stops the updates,
+    /// calling resetIndentation() will restore default behavior.
     indentation() -> i32,
     set_indentation(i: i32),
     reset_indentation(),
-    ///   \property QTreeView::rootIsDecorated
-    ///   \brief whether to show controls for expanding and collapsing top-level items
     /// 
-    ///   Items with children are typically shown with controls to expand and collapse
-    ///   them, allowing their children to be shown or hidden. If this property is
-    ///   false, these controls are not shown for top-level items. This can be used to
-    ///   make a single level tree structure appear like a simple list of items.
+    /// Items with children are typically shown with controls to expand and collapse
+    /// them, allowing their children to be shown or hidden. If this property is
+    /// false, these controls are not shown for top-level items. This can be used to
+    /// make a single level tree structure appear like a simple list of items.
     /// 
-    ///   By default, this property is \c true.
+    /// By default, this property is `true.`
     root_is_decorated() -> bool,
     set_root_is_decorated(show: bool),
-    ///   \property QTreeView::uniformRowHeights
-    ///   \brief whether all items in the treeview have the same height
     /// 
-    ///   This property should only be set to true if it is guaranteed that all items
-    ///   in the view has the same height. This enables the view to do some
-    ///   optimizations.
+    /// This property should only be set to true if it is guaranteed that all items
+    /// in the view has the same height. This enables the view to do some
+    /// optimizations.
     /// 
-    ///   The height is obtained from the first item in the view.  It is updated
-    ///   when the data changes on that item.
+    /// The height is obtained from the first item in the view. It is updated
+    /// when the data changes on that item.
     /// 
-    ///   \note If the editor size hint is bigger than the cell size hint, then the
-    ///   size hint of the editor will be used.
+    /// **Note**: If the editor size hint is bigger than the cell size hint, then the
+    /// size hint of the editor will be used.
     /// 
-    ///   By default, this property is \c false.
+    /// By default, this property is `false.`
     uniform_row_heights() -> bool,
     set_uniform_row_heights(uniform: bool),
-    ///   \property QTreeView::itemsExpandable
-    ///   \brief whether the items are expandable by the user.
     /// 
-    ///   This property holds whether the user can expand and collapse items
-    ///   interactively.
+    /// This property holds whether the user can expand and collapse items
+    /// interactively.
     /// 
-    ///   By default, this property is \c true.
+    /// By default, this property is `true.`
     /// 
     items_expandable() -> bool,
     set_items_expandable(enable: bool),
-    ///   \property QTreeView::expandsOnDoubleClick
-    ///   \since 4.4
-    ///   \brief whether the items can be expanded by double-clicking.
     /// 
-    ///   This property holds whether the user can expand and collapse items
-    ///   by double-clicking. The default value is true.
+    /// This property holds whether the user can expand and collapse items
+    /// by double-clicking. The default value is true.
     /// 
-    ///   \sa itemsExpandable
+    /// **See also:** itemsExpandable
     expands_on_double_click() -> bool,
     set_expands_on_double_click(enable: bool),
-    ///   Returns the horizontal position of the \a column in the viewport.
+    /// 
+    /// Returns the horizontal position of the *column* in the viewport.
     column_viewport_position(column: i32) -> i32,
-    ///   Returns the width of the \a column.
     /// 
-    ///   \sa resizeColumnToContents(), setColumnWidth()
+    /// Returns the width of the *column.*
+    /// 
+    /// **See also:** resizeColumnToContents()
+    /// setColumnWidth()
     column_width(column: i32) -> i32,
-    ///   \since 4.2
     /// 
-    ///   Sets the width of the given \a column to the \a width specified.
+    /// Sets the width of the given *column* to the *width* specified.
     /// 
-    ///   \sa columnWidth(), resizeColumnToContents()
+    /// **See also:** columnWidth()
+    /// resizeColumnToContents()
     set_column_width(column: i32, width: i32),
-    ///   Returns the column in the tree view whose header covers the \a x
-    ///   coordinate given.
+    /// 
+    /// Returns the column in the tree view whose header covers the *x*
+    /// coordinate given.
     column_at(x: i32) -> i32,
-    ///     Returns \c true if the \a column is hidden; otherwise returns \c false.
     /// 
-    ///     \sa hideColumn(), isRowHidden()
+    /// Returns `true` if the *column* is hidden; otherwise returns `false.`
+    /// 
+    /// **See also:** hideColumn()
+    /// isRowHidden()
     is_column_hidden(column: i32) -> bool,
-    ///   If \a hide is true the \a column is hidden, otherwise the \a column is shown.
     /// 
-    ///   \sa hideColumn(), setRowHidden()
+    /// If *hide* is true the *column* is hidden, otherwise the *column* is shown.
+    /// 
+    /// **See also:** hideColumn()
+    /// setRowHidden()
     set_column_hidden(column: i32, hide: bool),
-    ///   \property QTreeView::headerHidden
-    ///   \brief whether the header is shown or not.
-    ///   \since 4.4
-    /// 
-    ///   If this property is \c true, the header is not shown otherwise it is.
-    ///   The default value is false.
-    /// 
-    ///   \sa header()
     is_header_hidden() -> bool,
     set_header_hidden(hide: bool),
-    ///     Returns \c true if the item in the given \a row of the \a parent is hidden;
-    ///     otherwise returns \c false.
     /// 
-    ///     \sa setRowHidden(), isColumnHidden()
+    /// Returns `true` if the item in the given *row* of the *parent* is hidden;
+    /// otherwise returns `false.`
+    /// 
+    /// **See also:** setRowHidden()
+    /// isColumnHidden()
     is_row_hidden(row: i32, parent: &ModelIndexType) -> bool,
-    ///   If \a hide is true the \a row with the given \a parent is hidden, otherwise the \a row is shown.
     /// 
-    ///   \sa isRowHidden(), setColumnHidden()
+    /// If *hide* is true the *row* with the given *parent* is hidden, otherwise the *row* is shown.
+    /// 
+    /// **See also:** isRowHidden()
+    /// setColumnHidden()
     set_row_hidden(row: i32, parent: &ModelIndexType, hide: bool),
-    ///   \since 4.3
     /// 
-    ///   Returns \c true if the item in first column in the given \a row
-    ///   of the \a parent is spanning all the columns; otherwise returns \c false.
+    /// Returns `true` if the item in first column in the given *row*
+    /// of the *parent* is spanning all the columns; otherwise returns `false.`
     /// 
-    ///   \sa setFirstColumnSpanned()
+    /// **See also:** setFirstColumnSpanned()
     is_first_column_spanned(row: i32, parent: &ModelIndexType) -> bool,
-    ///   \since 4.3
     /// 
-    ///   If \a span is true the item in the first column in the \a row
-    ///   with the given \a parent is set to span all columns, otherwise all items
-    ///   on the \a row are shown.
+    /// If *span* is true the item in the first column in the *row*
+    /// with the given *parent* is set to span all columns, otherwise all items
+    /// on the *row* are shown.
     /// 
-    ///   \sa isFirstColumnSpanned()
+    /// **See also:** isFirstColumnSpanned()
     set_first_column_spanned(row: i32, parent: &ModelIndexType, span: bool),
-    ///   \fn bool QTreeView::isExpanded(const QModelIndex &index) const
     /// 
-    ///   Returns \c true if the model item \a index is expanded; otherwise returns
-    ///   false.
+    /// Returns `true` if the model item *index* is expanded; otherwise returns
+    /// false.
     /// 
-    ///   \sa expand(), expanded(), setExpanded()
+    /// **See also:** expand()
+    /// expanded()
+    /// setExpanded()
     is_expanded(index: &ModelIndexType) -> bool,
-    ///   Sets the item referred to by \a index to either collapse or expanded,
-    ///   depending on the value of \a expanded.
     /// 
-    ///   \sa expanded(), expand(), isExpanded()
+    /// Sets the item referred to by *index* to either collapse or expanded,
+    /// depending on the value of *expanded.*
+    /// 
+    /// **See also:** expanded()
+    /// expand()
+    /// isExpanded()
     set_expanded(index: &ModelIndexType, expand: bool),
-    ///     \since 4.2
-    ///     \property QTreeView::sortingEnabled
-    ///     \brief whether sorting is enabled
-    /// 
-    ///     If this property is \c true, sorting is enabled for the tree; if the property
-    ///     is false, sorting is not enabled. The default value is false.
-    /// 
-    ///     \note In order to avoid performance issues, it is recommended that
-    ///     sorting is enabled \e after inserting the items into the tree.
-    ///     Alternatively, you could also insert the items into a list before inserting
-    ///     the items into the tree.
-    /// 
-    ///     \sa sortByColumn()
     set_sorting_enabled(enable: bool),
     is_sorting_enabled() -> bool,
-    ///     \since 4.2
-    ///     \property QTreeView::animated
-    ///     \brief whether animations are enabled
-    /// 
-    ///     If this property is \c true the treeview will animate expansion
-    ///     and collapsing of branches. If this property is \c false, the treeview
-    ///     will expand or collapse branches immediately without showing
-    ///     the animation.
-    /// 
-    ///     By default, this property is \c false.
     set_animated(enable: bool),
     is_animated() -> bool,
-    ///     \since 4.2
-    ///     \property QTreeView::allColumnsShowFocus
-    ///     \brief whether items should show keyboard focus using all columns
-    /// 
-    ///     If this property is \c true all columns will show focus, otherwise only
-    ///     one column will show focus.
-    /// 
-    ///     The default is false.
     set_all_columns_show_focus(enable: bool),
+    /// 
+    /// If this property is `true` all columns will show focus, otherwise only
+    /// one column will show focus.
+    /// 
+    /// The default is false.
     all_columns_show_focus() -> bool,
-    ///     \property QTreeView::wordWrap
-    ///     \brief the item text word-wrapping policy
-    ///     \since 4.3
-    /// 
-    ///     If this property is \c true then the item text is wrapped where
-    ///     necessary at word-breaks; otherwise it is not wrapped at all.
-    ///     This property is \c false by default.
-    /// 
-    ///     Note that even if wrapping is enabled, the cell will not be
-    ///     expanded to fit all text. Ellipsis will be inserted according to
-    ///     the current \l{QAbstractItemView::}{textElideMode}.
     set_word_wrap(on: bool),
+    /// 
+    /// If this property is `true` then the item text is wrapped where
+    /// necessary at word-breaks; otherwise it is not wrapped at all.
+    /// This property is `false` by default.
+    /// 
+    /// Note that even if wrapping is enabled, the cell will not be
+    /// expanded to fit all text. Ellipsis will be inserted according to
+    /// the current [textElideMode](QAbstractItemView::)
+    /// 
     word_wrap() -> bool,
-    ///     \since 5.2
     /// 
-    ///     This specifies that the tree structure should be placed at logical index \a index.
-    ///     If \index is set to -1 then the tree will always follow visual index 0.
-    /// 
-    ///     \sa treePosition(), QHeaderView::swapSections(), QHeaderView::moveSection()
+    /// This specifies that the tree structure should be placed at logical index *index.*
+    /// If
+    /// **See also:** treePosition()
+    /// QHeaderView::swapSections()
+    /// QHeaderView::moveSection()
     set_tree_position(logical_index: i32),
+    /// 
     [event] keyboard_search(search: String),
-    ///   Returns the rectangle on the viewport occupied by the item at \a index.
-    ///   If the index is not visible or explicitly hidden, the returned rectangle is invalid.
+    /// 
+    /// Returns the rectangle on the viewport occupied by the item at *index.*
+    /// If the index is not visible or explicitly hidden, the returned rectangle is invalid.
     [event] visual_rect(index: &ModelIndexType) -> Rect,
-    ///     Scroll the contents of the tree view until the given model item
-    ///     \a index is visible. The \a hint parameter specifies more
-    ///     precisely where the item should be located after the
-    ///     operation.
-    ///     If any of the parents of the model item are collapsed, they will
-    ///     be expanded to ensure that the model item is visible.
+    /// 
+    /// Scroll the contents of the tree view until the given model item
+    /// *index* is visible. The *hint* parameter specifies more
+    /// precisely where the item should be located after the
+    /// operation.
+    /// If any of the parents of the model item are collapsed, they will
+    /// be expanded to ensure that the model item is visible.
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
-    ///   \reimp
+    /// 
     [event] index_at(p: &PointType) -> ModelIndex,
-    ///   Returns the model index of the item above \a index.
+    /// 
+    /// Returns the model index of the item above *index.*
     index_above(index: &ModelIndexType) -> ModelIndex,
-    ///   Returns the model index of the item below \a index.
+    /// 
+    /// Returns the model index of the item below *index.*
     index_below(index: &ModelIndexType) -> ModelIndex,
-    ///     \internal
-    /// 
-    ///     Lays out the items in the tree view.
     [event] do_items_layout(),
-    ///   \reimp
+    /// 
     [event] reset(),
-    ///   \since 4.2
     /// 
-    ///   Sets the model up for sorting by the values in the given \a column and \a order.
+    /// **Overloads**
+    /// Sorts the model by the values in the given *column.*
     /// 
-    ///   \a column may be -1, in which case no sort indicator will be shown
-    ///   and the model will return to its natural, unsorted order. Note that not
-    ///   all models support this and may even crash in this case.
+    /// Sets the model up for sorting by the values in the given *column* and *order.*
     /// 
-    ///   \sa sortingEnabled
+    /// *column* may be -1, in which case no sort indicator will be shown
+    /// and the model will return to its natural, unsorted order. Note that not
+    /// all models support this and may even crash in this case.
+    /// 
+    /// **See also:** sortingEnabled
     sort_by_column(column: i32, order: Rute::SortOrder),
-    ///   \reimp
+    /// 
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
-    ///   \reimp
+    /// 
     [event] select_all(),
+    /// 
+    /// This signal is emitted when the item specified by *index* is expanded.
     [signal] expanded(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when the item specified by *index* is collapsed.
     [signal] collapsed(index: &ModelIndexType),
-    ///   Hides the \a column given.
     /// 
-    ///   \note This function should only be called after the model has been
-    ///   initialized, as the view needs to know the number of columns in order to
-    ///   hide \a column.
+    /// Hides the *column* given.
     /// 
-    ///   \sa showColumn(), setColumnHidden()
+    /// **Note**: This function should only be called after the model has been
+    /// initialized, as the view needs to know the number of columns in order to
+    /// hide *column.*
+    /// 
+    /// **See also:** showColumn()
+    /// setColumnHidden()
     hide_column(column: i32),
-    ///   Shows the given \a column in the tree view.
     /// 
-    ///   \sa hideColumn(), setColumnHidden()
+    /// Shows the given *column* in the tree view.
+    /// 
+    /// **See also:** hideColumn()
+    /// setColumnHidden()
     show_column(column: i32),
-    ///   \fn void QTreeView::expand(const QModelIndex &index)
     /// 
-    ///   Expands the model item specified by the \a index.
+    /// This signal is emitted when the item specified by *index* is expanded.
     /// 
-    ///   \sa expanded()
+    /// This property holds whether the user can expand and collapse items
+    /// by double-clicking. The default value is true.
+    /// 
+    /// **See also:** itemsExpandable
+    /// 
+    /// Expands the model item specified by the *index.*
+    /// 
+    /// **See also:** expanded()
+    /// 
+    /// Expands all expandable items.
+    /// 
+    /// Warning: if the model contains a large number of items,
+    /// this function will take some time to execute.
+    /// 
+    /// **See also:** collapseAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
+    /// 
+    /// Expands all expandable items to the given *depth.*
+    /// 
+    /// **See also:** expandAll()
+    /// collapseAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
     expand(index: &ModelIndexType),
-    ///   \fn void QTreeView::collapse(const QModelIndex &index)
     /// 
-    ///   Collapses the model item specified by the \a index.
+    /// This signal is emitted when the item specified by *index* is collapsed.
     /// 
-    ///   \sa collapsed()
+    /// Collapses the model item specified by the *index.*
+    /// 
+    /// **See also:** collapsed()
+    /// 
+    /// Collapses all expanded items.
+    /// 
+    /// **See also:** expandAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
     collapse(index: &ModelIndexType),
-    ///   Resizes the \a column given to the size of its contents.
     /// 
-    ///   \sa columnWidth(), setColumnWidth(), sizeHintForColumn(), QHeaderView::resizeContentsPrecision()
+    /// Resizes the *column* given to the size of its contents.
+    /// 
+    /// **See also:** columnWidth()
+    /// setColumnWidth()
+    /// sizeHintForColumn()
+    /// QHeaderView::resizeContentsPrecision()
     resize_column_to_contents(column: i32),
-    ///   \since 4.2
     /// 
-    ///   Sets the model up for sorting by the values in the given \a column and \a order.
+    /// **Overloads**
+    /// Sorts the model by the values in the given *column.*
     /// 
-    ///   \a column may be -1, in which case no sort indicator will be shown
-    ///   and the model will return to its natural, unsorted order. Note that not
-    ///   all models support this and may even crash in this case.
+    /// Sets the model up for sorting by the values in the given *column* and *order.*
     /// 
-    ///   \sa sortingEnabled
+    /// *column* may be -1, in which case no sort indicator will be shown
+    /// and the model will return to its natural, unsorted order. Note that not
+    /// all models support this and may even crash in this case.
+    /// 
+    /// **See also:** sortingEnabled
     sort_by_column(column: i32),
-    ///   \since 4.2
-    ///   Expands all expandable items.
     /// 
-    ///   Warning: if the model contains a large number of items,
-    ///   this function will take some time to execute.
+    /// Expands all expandable items.
     /// 
-    ///   \sa collapseAll(), expand(), collapse(), setExpanded()
+    /// Warning: if the model contains a large number of items,
+    /// this function will take some time to execute.
+    /// 
+    /// **See also:** collapseAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
     expand_all(),
-    ///   \since 4.2
     /// 
-    ///   Collapses all expanded items.
+    /// Collapses all expanded items.
     /// 
-    ///   \sa expandAll(), expand(), collapse(), setExpanded()
+    /// **See also:** expandAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
     collapse_all(),
-    ///   \since 4.3
-    ///   Expands all expandable items to the given \a depth.
     /// 
-    ///   \sa expandAll(), collapseAll(), expand(), collapse(), setExpanded()
+    /// Expands all expandable items to the given *depth.*
+    /// 
+    /// **See also:** expandAll()
+    /// collapseAll()
+    /// expand()
+    /// collapse()
+    /// setExpanded()
     expand_to_depth(depth: i32),
-    ///     This function is called whenever \a{column}'s size is changed in
-    ///     the header. \a oldSize and \a newSize give the previous size and
-    ///     the new size in pixels.
     /// 
-    ///     \sa setColumnWidth()
+    /// This function is called whenever *column* 's size is changed in
+    /// the header. *oldSize* and *newSize* give the previous size and
+    /// the new size in pixels.
+    /// 
+    /// **See also:** setColumnWidth()
     column_resized(column: i32, old_size: i32, new_size: i32),
-    ///   Informs the tree view that the number of columns in the tree view has
-    ///   changed from \a oldCount to \a newCount.
+    /// 
+    /// Informs the tree view that the number of columns in the tree view has
+    /// changed from *oldCount* to *newCount.*
     column_count_changed(old_count: i32, new_count: i32),
-    ///   This slot is called whenever a column has been moved.
+    /// 
+    /// This slot is called whenever a column has been moved.
     column_moved(),
-    ///   \internal
     reexpand(),
-    ///     \since 4.1
     /// 
-    ///     Informs the view that the rows from the \a start row to the \a end row
-    ///     inclusive have been removed from the given \a parent model item.
+    /// Informs the view that the rows from the *start* row to the *end* row
+    /// inclusive have been removed from the given *parent* model item.
     rows_removed(parent: &ModelIndexType, first: i32, last: i32),
-    ///    \internal
     [event] vertical_scrollbar_value_changed(value: i32),
-    ///   Scrolls the contents of the tree view by (\a dx, \a dy).
+    /// 
+    /// Scrolls the contents of the tree view by ( *dx,* *dy).*
     [event] scroll_contents_by(dx: i32, dy: i32),
-    ///   Informs the view that the rows from the \a start row to the \a end row
-    ///   inclusive have been inserted into the \a parent model item.
+    /// 
+    /// Informs the view that the rows from the *start* row to the *end* row
+    /// inclusive have been inserted into the *parent* model item.
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
-    ///   Informs the view that the rows from the \a start row to the \a end row
-    ///   inclusive are about to removed from the given \a parent model item.
+    /// 
+    /// Informs the view that the rows from the *start* row to the *end* row
+    /// inclusive are about to removed from the given *parent* model item.
     [event] rows_about_to_be_removed(parent: &ModelIndexType, start: i32, end: i32),
-    ///     Move the cursor in the way described by \a cursorAction, using the
-    ///     information provided by the button \a modifiers.
+    /// 
+    /// Move the cursor in the way described by *cursorAction,* using the
+    /// information provided by the button *modifiers.*
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
-    ///   Returns the horizontal offset of the items in the treeview.
     /// 
-    ///   Note that the tree view uses the horizontal header section
-    ///   positions to determine the positions of columns in the view.
+    /// Returns the horizontal offset of the items in the treeview.
     /// 
-    ///   \sa verticalOffset()
+    /// Note that the tree view uses the horizontal header section
+    /// positions to determine the positions of columns in the view.
+    /// 
+    /// **See also:** verticalOffset()
     [event] horizontal_offset() -> i32,
-    ///   Returns the vertical offset of the items in the tree view.
     /// 
-    ///   \sa horizontalOffset()
+    /// Returns the vertical offset of the items in the tree view.
+    /// 
+    /// **See also:** horizontalOffset()
     [event] vertical_offset() -> i32,
-    ///   Applies the selection \a command to the items in or touched by the
-    ///   rectangle, \a rect.
     /// 
-    ///   \sa selectionCommand()
+    /// 
+    /// Applies the selection *command* to the items in or touched by the
+    /// rectangle, *rect.*
+    /// 
+    /// **See also:** selectionCommand()
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
-    ///   Returns the rectangle from the viewport of the items in the given
-    ///   \a selection.
     /// 
-    ///   Since 4.7, the returned region only contains rectangles intersecting
-    ///   (or included in) the viewport.
+    /// Returns the rectangle from the viewport of the items in the given
+    /// *selection.*
+    /// 
+    /// Since 4.7, the returned region only contains rectangles intersecting
+    /// (or included in) the viewport.
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    ///   \reimp
+    /// 
     [event] selected_indexes() -> [ModelIndex],
-    ///   \reimp
+    /// 
     [event] timer_event(event: *TimerEventType),
-    ///   \reimp
+    /// 
     [event] paint_event(event: *PaintEventType),
-    ///   \since 4.2
-    ///   Draws the part of the tree intersecting the given \a region using the specified
-    ///   \a painter.
     /// 
-    ///   \sa paintEvent()
+    /// Draws the part of the tree intersecting the given *region* using the specified
+    /// *painter.*
+    /// 
+    /// **See also:** paintEvent()
     draw_tree(painter: *PainterType, region: &RegionType),
+    /// 
+    /// Draws the row in the tree view that contains the model item *index,*
+    /// using the *painter* given. The *option* controls how the item is
+    /// displayed.
+    /// 
+    /// **See also:** setAlternatingRowColors()
     [event] draw_row(painter: *PainterType, options: &StyleOptionViewItemType, index: &ModelIndexType),
+    /// 
+    /// Draws the branches in the tree view on the same row as the model item
+    /// *index,* using the *painter* given. The branches are drawn in the
+    /// rectangle specified by *rect.*
     [event] draw_branches(painter: *PainterType, rect: &RectType, index: &ModelIndexType),
-    ///   \reimp
+    /// 
     [event] mouse_press_event(event: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_release_event(event: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_double_click_event(event: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_move_event(event: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] key_press_event(event: *KeyEventType),
-    ///   \reimp
     [event] drag_move_event(event: *DragMoveEventType),
-    ///   \reimp
+    /// 
     [event] viewport_event(event: *EventType) -> bool,
-    ///   \reimp
+    /// 
     [event] viewport_size_hint() -> Size,
-    ///   Returns the size hint for the \a column's width or -1 if there is no
-    ///   model.
     /// 
-    ///   If you need to set the width of a given column to a fixed value, call
-    ///   QHeaderView::resizeSection() on the view's header.
+    /// Returns the size hint for the *column's* width or -1 if there is no
+    /// model.
     /// 
-    ///   If you reimplement this function in a subclass, note that the value you
-    ///   return is only used when resizeColumnToContents() is called. In that case,
-    ///   if a larger column width is required by either the view's header or
-    ///   the item delegate, that width will be used instead.
+    /// If you need to set the width of a given column to a fixed value, call
+    /// QHeaderView::resizeSection() on the view's header.
     /// 
-    ///   \sa QWidget::sizeHint, header(), QHeaderView::resizeContentsPrecision()
+    /// If you reimplement this function in a subclass, note that the value you
+    /// return is only used when resizeColumnToContents() is called. In that case,
+    /// if a larger column width is required by either the view's header or
+    /// the item delegate, that width will be used instead.
+    /// 
+    /// **See also:** QWidget::sizeHint
+    /// header()
+    /// QHeaderView::resizeContentsPrecision()
     [event] size_hint_for_column(column: i32) -> i32,
-    ///   Returns the size hint for the row indicated by \a index.
     /// 
-    ///   \sa sizeHintForColumn(), uniformRowHeights()
+    /// Returns the size hint for the row indicated by *index.*
+    /// 
+    /// **See also:** sizeHintForColumn()
+    /// uniformRowHeights()
     index_row_size_hint(index: &ModelIndexType) -> i32,
-    ///     \since 4.3
-    ///     Returns the height of the row indicated by the given \a index.
-    ///     \sa indexRowSizeHint()
+    /// 
+    /// Returns the height of the row indicated by the given *index.*
+    /// **See also:** indexRowSizeHint()
     row_height(index: &ModelIndexType) -> i32,
-    ///   \internal
     [event] horizontal_scrollbar_action(action: i32),
-    ///   \reimp
+    /// 
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
+    /// 
     [event] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
+    /// 
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
 }
 

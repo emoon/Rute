@@ -1,34 +1,58 @@
-///     \class QTextImageFormat
-///     \reentrant
 /// 
-///     \brief The QTextImageFormat class provides formatting information for
-///     images in a QTextDocument.
-///     \inmodule QtGui
+/// Inline images are represented by a Unicode value U+FFFC (OBJECT
+/// REPLACEMENT CHARACTER) which has an associated QTextImageFormat. The
+/// image format specifies a name with setName() that is used to
+/// locate the image. The size of the rectangle that the image will
+/// occupy is specified using setWidth() and setHeight().
 /// 
-///     \ingroup richtext-processing
-///     \ingroup shared
+/// Images can be supplied in any format for which Qt has an image
+/// reader, so SVG drawings can be included alongside PNG, TIFF and
+/// other bitmap formats.
 /// 
-///     Inline images are represented by a Unicode value U+FFFC (OBJECT
-///     REPLACEMENT CHARACTER) which has an associated QTextImageFormat. The
-///     image format specifies a name with setName() that is used to
-///     locate the image. The size of the rectangle that the image will
-///     occupy is specified using setWidth() and setHeight().
-/// 
-///     Images can be supplied in any format for which Qt has an image
-///     reader, so SVG drawings can be included alongside PNG, TIFF and
-///     other bitmap formats.
-/// 
-///     \sa QImage, QImageReader
+/// **See also:** QImage
+/// QImageReader
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextImageFormat : TextCharFormat {
+    /// 
+    /// Returns `true` if this image format is valid; otherwise returns `false.`
     is_valid() -> bool,
+    /// 
+    /// Sets the *name* of the image. The *name* is used to locate the image
+    /// in the application's resources.
+    /// 
+    /// **See also:** name()
     set_name(name: String),
+    /// 
+    /// Returns the name of the image. The name refers to an entry in the
+    /// application's resources file.
+    /// 
+    /// **See also:** setName()
     name() -> String,
+    /// 
+    /// Sets the *width* of the rectangle occupied by the image.
+    /// 
+    /// **See also:** width()
+    /// setHeight()
     set_width(width: f32),
+    /// 
+    /// Returns the width of the rectangle occupied by the image.
+    /// 
+    /// **See also:** height()
+    /// setWidth()
     width() -> f32,
+    /// 
+    /// Sets the *height* of the rectangle occupied by the image.
+    /// 
+    /// **See also:** height()
+    /// setWidth()
     set_height(height: f32),
+    /// 
+    /// Returns the height of the rectangle occupied by the image.
+    /// 
+    /// **See also:** width()
+    /// setHeight()
     height() -> f32,
 }
 

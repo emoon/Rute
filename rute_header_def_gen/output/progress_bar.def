@@ -1,33 +1,29 @@
-///     \class QProgressBar
-///     \brief The QProgressBar widget provides a horizontal or vertical progress bar.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// ![windows-progressbar.png](windows-progressbar.png)
 /// 
-///     \image windows-progressbar.png
+/// A progress bar is used to give the user an indication of the
+/// progress of an operation and to reassure them that the application
+/// is still running.
 /// 
-///     A progress bar is used to give the user an indication of the
-///     progress of an operation and to reassure them that the application
-///     is still running.
+/// The progress bar uses the concept of *steps.* You set it up by
+/// specifying the minimum and maximum possible step values, and it
+/// will display the percentage of steps that have been completed
+/// when you later give it the current step value. The percentage is
+/// calculated by dividing the progress (value() - minimum()) divided
+/// by maximum() - minimum().
 /// 
-///     The progress bar uses the concept of \e steps. You set it up by
-///     specifying the minimum and maximum possible step values, and it
-///     will display the percentage of steps that have been completed
-///     when you later give it the current step value. The percentage is
-///     calculated by dividing the progress (value() - minimum()) divided
-///     by maximum() - minimum().
+/// You can specify the minimum and maximum number of steps with
+/// setMinimum() and setMaximum. The current number of steps is set
+/// with setValue(). The progress bar can be rewound to the
+/// beginning with reset().
 /// 
-///     You can specify the minimum and maximum number of steps with
-///     setMinimum() and setMaximum. The current number of steps is set
-///     with setValue(). The progress bar can be rewound to the
-///     beginning with reset().
+/// If minimum and maximum both are set to 0, the bar shows a busy
+/// indicator instead of a percentage of steps. This is useful, for
+/// example, when using QNetworkAccessManager to download items when
+/// they are unable to determine the size of the item being downloaded.
 /// 
-///     If minimum and maximum both are set to 0, the bar shows a busy
-///     indicator instead of a percentage of steps. This is useful, for
-///     example, when using QNetworkAccessManager to download items when
-///     they are unable to determine the size of the item being downloaded.
-/// 
-///     \sa QProgressDialog, {fowler}{GUI Design Handbook: Progress Indicator}
+/// **See also:** QProgressDialog
+/// {fowler}{GUI Design Handbook: Progress Indicator}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -38,131 +34,137 @@ enum Direction {
 }
 
 struct ProgressBar : Widget {
+    /// 
+    /// When setting this property, the [maximum](maximum)
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the
+    /// current value falls outside the new range, the progress bar is reset
+    /// with reset().
+    /// 
     minimum() -> i32,
+    /// 
+    /// When setting this property, the [minimum](minimum)
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the
+    /// current value falls outside the new range, the progress bar is reset
+    /// with reset().
     maximum() -> i32,
+    /// 
+    /// This signal is emitted when the value shown in the progress bar changes.
+    /// *value* is the new value shown by the progress bar.
+    /// 
+    /// Attempting to change the current value to one outside
+    /// the minimum-maximum range has no effect on the current value.
     value() -> i32,
-    ///     \property QProgressBar::text
-    ///     \brief the descriptive text shown with the progress bar
     /// 
-    ///     The text returned is the same as the text displayed in the center
-    ///     (or in some styles, to the left) of the progress bar.
+    /// This property may be ignored by the style (e.g., QMacStyle never draws the text).
     /// 
-    ///     The progress shown in the text may be smaller than the minimum value,
-    ///     indicating that the progress bar is in the "reset" state before any
-    ///     progress is set.
+    /// **See also:** textDirection
     /// 
-    ///     In the default implementation, the text either contains a percentage
-    ///     value that indicates the progress so far, or it is blank because the
-    ///     progress bar is in the reset state.
+    /// The text returned is the same as the text displayed in the center
+    /// (or in some styles, to the left) of the progress bar.
+    /// 
+    /// The progress shown in the text may be smaller than the minimum value,
+    /// indicating that the progress bar is in the state before any
+    /// progress is set.
+    /// 
+    /// In the default implementation, the text either contains a percentage
+    /// value that indicates the progress so far, or it is blank because the
+    /// progress bar is in the reset state.
+    /// 
+    /// [text](text)
+    /// for vertical progress bars
+    /// 
+    /// This property has no impact on horizontal progress bars.
+    /// By default, the reading direction is QProgressBar::TopToBottom.
+    /// 
+    /// **See also:** orientation
+    /// textVisible
     [event] text() -> String,
-    ///     \property QProgressBar::textVisible
-    ///     \brief whether the current completed percentage should be displayed
-    /// 
-    ///     This property may be ignored by the style (e.g., QMacStyle never draws the text).
-    /// 
-    ///     \sa textDirection
     set_text_visible(visible: bool),
     is_text_visible() -> bool,
+    /// 
     alignment() -> Rute::Alignment,
-    ///     \property QProgressBar::alignment
-    ///     \brief the alignment of the progress bar
     set_alignment(alignment: Rute::Alignment),
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
+    /// 
+    /// The orientation must be [Qt::Horizontal](Qt::Horizontal)
+    /// (the default) or [Qt::Vertical.](Qt::Vertical.)
+    /// 
+    /// **See also:** invertedAppearance
+    /// textDirection
     orientation() -> Rute::Orientation,
-    ///     \since 4.1
-    ///     \property QProgressBar::invertedAppearance
-    ///     \brief whether or not a progress bar shows its progress inverted
-    /// 
-    ///     If this property is \c true, the progress bar grows in the other
-    ///     direction (e.g. from right to left). By default, the progress bar
-    ///     is not inverted.
-    /// 
-    ///     \sa orientation, layoutDirection
     set_inverted_appearance(invert: bool),
+    /// 
+    /// If this property is `true,` the progress bar grows in the other
+    /// direction (e.g. from right to left). By default, the progress bar
+    /// is not inverted.
+    /// 
+    /// **See also:** orientation
+    /// layoutDirection
     inverted_appearance() -> bool,
-    ///     \since 4.1
-    ///     \property QProgressBar::textDirection
-    ///     \brief the reading direction of the \l text for vertical progress bars
-    /// 
-    ///     This property has no impact on horizontal progress bars.
-    ///     By default, the reading direction is QProgressBar::TopToBottom.
-    /// 
-    ///     \sa orientation, textVisible
     set_text_direction(text_direction: ProgressBar::Direction),
+    /// 
+    /// [text](text)
+    /// for vertical progress bars
+    /// 
+    /// This property has no impact on horizontal progress bars.
+    /// By default, the reading direction is QProgressBar::TopToBottom.
+    /// 
+    /// **See also:** orientation
+    /// textVisible
     text_direction() -> ProgressBar::Direction,
-    ///     \since 4.2
-    ///     \property QProgressBar::format
-    ///     \brief the string used to generate the current text
-    /// 
-    ///     %p - is replaced by the percentage completed.
-    ///     %v - is replaced by the current value.
-    ///     %m - is replaced by the total number of steps.
-    /// 
-    ///     The default value is "%p%".
-    /// 
-    ///     \sa text()
     set_format(format: String),
     reset_format(),
+    /// 
+    /// %p - is replaced by the percentage completed.
+    /// %v - is replaced by the current value.
+    /// %m - is replaced by the total number of steps.
+    /// 
+    /// The default value is .
+    /// 
+    /// **See also:** text()
     format() -> String,
-    ///     Reset the progress bar. The progress bar "rewinds" and shows no
-    ///     progress.
+    /// 
+    /// Reset the progress bar. The progress bar and shows no
+    /// progress.
     reset(),
-    ///     Sets the progress bar's minimum and maximum values to \a minimum and
-    ///     \a maximum respectively.
     /// 
-    ///     If \a maximum is smaller than \a minimum, \a minimum becomes the only
-    ///     legal value.
+    /// Sets the progress bar's minimum and maximum values to *minimum* and
+    /// *maximum* respectively.
     /// 
-    ///     If the current value falls outside the new range, the progress bar is reset
-    ///     with reset().
+    /// If *maximum* is smaller than *minimum,* *minimum* becomes the only
+    /// legal value.
     /// 
-    ///     The QProgressBar can be set to undetermined state by using setRange(0, 0).
+    /// If the current value falls outside the new range, the progress bar is reset
+    /// with reset().
     /// 
-    ///     \sa minimum, maximum
+    /// The QProgressBar can be set to undetermined state by using setRange(0, 0).
+    /// 
+    /// **See also:** minimum
+    /// maximum
     set_range(minimum: i32, maximum: i32),
-    ///     \property QProgressBar::minimum
-    ///     \brief the progress bar's minimum value
-    /// 
-    ///     When setting this property, the \l maximum is adjusted if
-    ///     necessary to ensure that the range remains valid. If the
-    ///     current value falls outside the new range, the progress bar is reset
-    ///     with reset().
     set_minimum(minimum: i32),
-    ///     \property QProgressBar::maximum
-    ///     \brief the progress bar's maximum value
-    /// 
-    ///     When setting this property, the \l minimum is adjusted if
-    ///     necessary to ensure that the range remains valid. If the
-    ///     current value falls outside the new range, the progress bar is reset
-    ///     with reset().
     set_maximum(maximum: i32),
-    ///     \property QProgressBar::value
-    ///     \brief the progress bar's current value
-    /// 
-    ///     Attempting to change the current value to one outside
-    ///     the minimum-maximum range has no effect on the current value.
     set_value(value: i32),
-    ///     \since 4.1
-    ///     \property QProgressBar::orientation
-    ///     \brief the orientation of the progress bar
-    /// 
-    ///     The orientation must be \l Qt::Horizontal (the default) or \l
-    ///     Qt::Vertical.
-    /// 
-    ///     \sa invertedAppearance, textDirection
     set_orientation(arg0: Rute::Orientation),
-    [signal] value_changed(value: i32),
-    [event] event(e: *EventType) -> bool,
-    ///     \reimp
-    [event] paint_event(arg0: *PaintEventType),
-    ///     Initialize \a option with the values from this QProgressBar. This method is useful
-    ///     for subclasses when they need a QStyleOptionProgressBar,
-    ///     but don't want to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// This signal is emitted when the value shown in the progress bar changes.
+    /// *value* is the new value shown by the progress bar.
+    [signal] value_changed(value: i32),
+    /// 
+    [event] event(e: *EventType) -> bool,
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    /// Initialize *option* with the values from this QProgressBar. This method is useful
+    /// for subclasses when they need a QStyleOptionProgressBar,
+    /// but don't want to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionProgressBarType),
 }
 

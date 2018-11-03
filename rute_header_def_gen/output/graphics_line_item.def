@@ -1,24 +1,22 @@
-///     \class QGraphicsLineItem
-///     \brief The QGraphicsLineItem class provides a line item that you can add to a
-///     QGraphicsScene.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     To set the item's line, pass a QLineF to QGraphicsLineItem's
-///     constructor, or call the setLine() function. The line() function
-///     returns the current line. By default the line is black with a
-///     width of 0, but you can change this by calling setPen().
+/// To set the item's line, pass a QLineF to QGraphicsLineItem's
+/// constructor, or call the setLine() function. The line() function
+/// returns the current line. By default the line is black with a
+/// width of 0, but you can change this by calling setPen().
 /// 
-///     \image graphicsview-lineitem.png
+/// ![graphicsview-lineitem.png](graphicsview-lineitem.png)
 /// 
-///     QGraphicsLineItem uses the line and the pen width to provide a reasonable
-///     implementation of boundingRect(), shape(), and contains(). The paint()
-///     function draws the line using the item's associated pen.
+/// QGraphicsLineItem uses the line and the pen width to provide a reasonable
+/// implementation of boundingRect(), shape(), and contains(). The paint()
+/// function draws the line using the item's associated pen.
 /// 
-///     \sa QGraphicsPathItem, QGraphicsRectItem, QGraphicsEllipseItem,
-///     QGraphicsTextItem, QGraphicsPolygonItem, QGraphicsPixmapItem,
-///     {Graphics View Framework}
+/// **See also:** QGraphicsPathItem
+/// QGraphicsRectItem
+/// QGraphicsEllipseItem
+/// QGraphicsTextItem
+/// QGraphicsPolygonItem
+/// QGraphicsPixmapItem
+/// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -28,47 +26,59 @@ enum GraphicsLineItemFixMeEnums {
 }
 
 struct GraphicsLineItem : GraphicsItem {
-    ///     Returns the item's pen, or a black solid 0-width pen if no pen has
-    ///     been set.
     /// 
-    ///     \sa setPen()
+    /// Returns the item's pen, or a black solid 0-width pen if no pen has
+    /// been set.
+    /// 
+    /// **See also:** setPen()
     pen() -> Pen,
-    ///     Sets the item's pen to \a pen. If no pen is set, the line will be painted
-    ///     using a black solid 0-width pen.
     /// 
-    ///     \sa pen()
+    /// Sets the item's pen to *pen.* If no pen is set, the line will be painted
+    /// using a black solid 0-width pen.
+    /// 
+    /// **See also:** pen()
     set_pen(pen: &PenType),
-    ///     Returns the item's line, or a null line if no line has been set.
     /// 
-    ///     \sa setLine()
+    /// Returns the item's line, or a null line if no line has been set.
+    /// 
+    /// **See also:** setLine()
     line() -> LineF,
-    ///     Sets the item's line to be the given \a line.
     /// 
-    ///     \sa line()
+    /// Sets the item's line to be the given *line.*
+    /// 
+    /// **See also:** line()
+    /// 
+    /// **Overloads**
+    /// Sets the item's line to be the line between ( *x1,* *y1)* and ( *x2,* *y2).*
+    /// 
+    /// This is the same as calling `setLine(QLineF(x1, y1, x2, y2))` .
     set_line(line: &LineFType),
-    ///     Sets the item's line to be the given \a line.
     /// 
-    ///     \sa line()
+    /// Sets the item's line to be the given *line.*
+    /// 
+    /// **See also:** line()
+    /// 
+    /// **Overloads**
+    /// Sets the item's line to be the line between ( *x1,* *y1)* and ( *x2,* *y2).*
+    /// 
+    /// This is the same as calling `setLine(QLineF(x1, y1, x2, y2))` .
     set_line(x1: f32, y1: f32, x2: f32, y2: f32),
-    ///     \reimp
+    /// 
     [event] bounding_rect() -> RectF,
-    ///     \reimp
+    /// 
     [event] shape() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] contains(point: &PointFType) -> bool,
-    ///     \reimp
+    /// 
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
-    ///     \reimp
+    /// 
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
-    ///     \reimp
+    /// 
     [event] opaque_area() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] type() -> i32,
-    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
-    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

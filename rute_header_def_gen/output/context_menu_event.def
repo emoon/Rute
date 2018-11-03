@@ -1,22 +1,17 @@
-///     \class QContextMenuEvent
-///     \brief The QContextMenuEvent class contains parameters that describe a context menu event.
-///     \inmodule QtGui
 /// 
-///     \ingroup events
+/// Context menu events are sent to widgets when a user performs
+/// an action associated with opening a context menu.
+/// The actions required to open context menus vary between platforms;
+/// for example, on Windows, pressing the menu button or clicking the
+/// right mouse button will cause this event to be sent.
 /// 
-///     Context menu events are sent to widgets when a user performs
-///     an action associated with opening a context menu.
-///     The actions required to open context menus vary between platforms;
-///     for example, on Windows, pressing the menu button or clicking the
-///     right mouse button will cause this event to be sent.
+/// When this event occurs it is customary to show a QMenu with a
+/// context menu, if this is relevant to the context.
 /// 
-///     When this event occurs it is customary to show a QMenu with a
-///     context menu, if this is relevant to the context.
-/// 
-///     Context menu events contain a special accept flag that indicates
-///     whether the receiver accepted the event. If the event handler does
-///     not accept the event then, if possible, whatever triggered the event will be
-///     handled as a regular input event.
+/// Context menu events contain a special accept flag that indicates
+/// whether the receiver accepted the event. If the event handler does
+/// not accept the event then, if possible, whatever triggered the event will be
+/// handled as a regular input event.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -28,12 +23,52 @@ enum Reason {
 }
 
 struct ContextMenuEvent : InputEvent {
+    /// 
+    /// Returns the x position of the mouse pointer, relative to the
+    /// widget that received the event.
+    /// 
+    /// **See also:** y()
+    /// pos()
     x() -> i32,
+    /// 
+    /// Returns the y position of the mouse pointer, relative to the
+    /// widget that received the event.
+    /// 
+    /// **See also:** x()
+    /// pos()
     y() -> i32,
+    /// 
+    /// Returns the global x position of the mouse pointer at the time of
+    /// the event.
+    /// 
+    /// **See also:** globalY()
+    /// globalPos()
     global_x() -> i32,
+    /// 
+    /// Returns the global y position of the mouse pointer at the time of
+    /// the event.
+    /// 
+    /// **See also:** globalX()
+    /// globalPos()
     global_y() -> i32,
+    /// 
+    /// Returns the position of the mouse pointer relative to the widget
+    /// that received the event.
+    /// 
+    /// **See also:** x()
+    /// y()
+    /// globalPos()
     pos() -> Point?,
+    /// 
+    /// Returns the global position of the mouse pointer at the time of
+    /// the event.
+    /// 
+    /// **See also:** x()
+    /// y()
+    /// pos()
     global_pos() -> Point?,
+    /// 
+    /// Returns the reason for this context event.
     reason() -> ContextMenuEvent::Reason,
 }
 

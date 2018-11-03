@@ -7,8 +7,10 @@ authors = ["Daniel Collin <daniel@collin.com>"]
 heck = "0.3"
 walkdir = "2"
 rayon = "1.0"
-pest = "2"
-pest_derive = "2"
+pest = "2.0.2"
+pest_derive = "2.0.1"
+# qdoc_parser = { git = "https://github.com/emoon/qdoc_parser" }
+qdoc_parser = { path = "../../qdoc_parser" }
 
 [dependencies.clang]
 version = "0.20"

@@ -1,49 +1,53 @@
-///     \class QOpenGLVersionProfile
-///     \inmodule QtGui
-///     \since 5.1
-///     \brief The QOpenGLVersionProfile class represents the version and if applicable
-///            the profile of an OpenGL context.
 /// 
-///     An object of this class can be passed to QOpenGLContext::versionFunctions() to
-///     request a functions object for a specific version and profile of OpenGL.
+/// An object of this class can be passed to QOpenGLContext::versionFunctions() to
+/// request a functions object for a specific version and profile of OpenGL.
 /// 
-///     It also contains some helper functions to check if a version supports profiles
-///     or is a legacy version.
+/// It also contains some helper functions to check if a version supports profiles
+/// or is a legacy version.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct OpenGLVersionProfile {
-    ///     Returns a QPair<int,int> where the components represent the major and minor OpenGL
-    ///     version numbers respectively.
     /// 
-    ///     \sa setVersion()
+    /// Returns a QPair<int,int> where the components represent the major and minor OpenGL
+    /// version numbers respectively.
+    /// 
+    /// **See also:** setVersion()
     version() -> Pair<int,,
-    ///     Sets the major and minor version numbers to \a majorVersion and \a minorVersion respectively.
     /// 
-    ///     \sa version()
+    /// Sets the major and minor version numbers to *majorVersion* and *minorVersion* respectively.
+    /// 
+    /// **See also:** version()
     set_version(major_version: i32, minor_version: i32),
-    ///     Returns the OpenGL profile. Only makes sense if profiles are supported by this version.
     /// 
-    ///     \sa setProfile()
+    /// Returns the OpenGL profile. Only makes sense if profiles are supported by this version.
+    /// 
+    /// **See also:** setProfile()
     profile() -> SurfaceFormat::OpenGLContextProfile,
-    ///     Sets the OpenGL profile \a profile. Only makes sense if profiles are supported by
-    ///     this version.
     /// 
-    ///     \sa profile()
+    /// Sets the OpenGL profile *profile.* Only makes sense if profiles are supported by
+    /// this version.
+    /// 
+    /// **See also:** profile()
     set_profile(profile: SurfaceFormat::OpenGLContextProfile),
-    ///     Returns \c true if profiles are supported by the OpenGL version returned by version(). Only
-    ///     OpenGL versions >= 3.2 support profiles.
     /// 
-    ///     \sa profile(), version()
+    /// Returns `true` if profiles are supported by the OpenGL version returned by version(). Only
+    /// OpenGL versions >= 3.2 support profiles.
+    /// 
+    /// **See also:** profile()
+    /// version()
     has_profiles() -> bool,
-    ///     Returns \c true is the OpenGL version returned by version() contains deprecated functions
-    ///     and does not support profiles i.e. if the OpenGL version is <= 3.1.
-    is_legacy_version() -> bool,
-    ///     Returns \c true if the version number is valid. Note that for a default constructed
-    ///     QOpenGLVersionProfile object this function will return \c false.
     /// 
-    ///     \sa setVersion(), version()
+    /// Returns `true` is the OpenGL version returned by version() contains deprecated functions
+    /// and does not support profiles i.e. if the OpenGL version is <= 3.1.
+    is_legacy_version() -> bool,
+    /// 
+    /// Returns `true` if the version number is valid. Note that for a default constructed
+    /// QOpenGLVersionProfile object this function will return `false.`
+    /// 
+    /// **See also:** setVersion()
+    /// version()
     is_valid() -> bool,
 }
 

@@ -1,65 +1,64 @@
-///     \class QUndoView
-///     \brief The QUndoView class displays the contents of a QUndoStack.
-///     \since 4.2
 /// 
-///     \ingroup advanced
-///     \inmodule QtWidgets
+/// QUndoView is a QListView which displays the list of commands pushed on an undo stack.
+/// The most recently executed command is always selected. Selecting a different command
+/// results in a call to QUndoStack::setIndex(), rolling the state of the document
+/// backwards or forward to the new command.
 /// 
-///     QUndoView is a QListView which displays the list of commands pushed on an undo stack.
-///     The most recently executed command is always selected. Selecting a different command
-///     results in a call to QUndoStack::setIndex(), rolling the state of the document
-///     backwards or forward to the new command.
+/// The stack can be set explicitly with setStack(). Alternatively, a QUndoGroup object can
+/// be set with setGroup(). The view will then update itself automatically whenever the
+/// active stack of the group changes.
 /// 
-///     The stack can be set explicitly with setStack(). Alternatively, a QUndoGroup object can
-///     be set with setGroup(). The view will then update itself automatically whenever the
-///     active stack of the group changes.
+/// ![qundoview.png](qundoview.png)
 /// 
-///     \image qundoview.png
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct UndoView : ListView {
-    ///     Returns the stack currently displayed by this view. If the view is looking at a
-    ///     QUndoGroup, this the group's active stack.
     /// 
-    ///     \sa setStack(), setGroup()
+    /// Returns the stack currently displayed by this view. If the view is looking at a
+    /// QUndoGroup, this the group's active stack.
+    /// 
+    /// **See also:** setStack()
+    /// setGroup()
     stack() -> UndoStack?,
-    ///     Returns the group displayed by this view.
     /// 
-    ///     If the view is not looking at group, this function returns 0.
+    /// Returns the group displayed by this view.
     /// 
-    ///     \sa setGroup(), setStack()
+    /// If the view is not looking at group, this function returns 0.
+    /// 
+    /// **See also:** setGroup()
+    /// setStack()
     group() -> UndoGroup?,
-    ///     \property QUndoView::emptyLabel
-    ///     \brief the label used for the empty state.
-    /// 
-    ///     The empty label is the topmost element in the list of commands, which represents
-    ///     the state of the document before any commands were pushed on the stack. The default
-    ///     is the string "<empty>".
     set_empty_label(label: String),
+    /// 
+    /// The empty label is the topmost element in the list of commands, which represents
+    /// the state of the document before any commands were pushed on the stack. The default
+    /// is the string .
     empty_label() -> String,
-    ///     \property QUndoView::cleanIcon
-    ///     \brief the icon used to represent the clean state.
-    /// 
-    ///     A stack may have a clean state set with QUndoStack::setClean(). This is usually
-    ///     the state of the document at the point it was saved. QUndoView can display an
-    ///     icon in the list of commands to show the clean state. If this property is
-    ///     a null icon, no icon is shown. The default value is the null icon.
     set_clean_icon(icon: &IconType),
+    /// 
+    /// A stack may have a clean state set with QUndoStack::setClean(). This is usually
+    /// the state of the document at the point it was saved. QUndoView can display an
+    /// icon in the list of commands to show the clean state. If this property is
+    /// a null icon, no icon is shown. The default value is the null icon.
     clean_icon() -> Icon,
-    ///     Sets the stack displayed by this view to \a stack. If \a stack is 0, the view
-    ///     will be empty.
     /// 
-    ///     If the view was previously looking at a QUndoGroup, the group is set to 0.
+    /// Sets the stack displayed by this view to *stack.* If *stack* is 0, the view
+    /// will be empty.
     /// 
-    ///     \sa stack(), setGroup()
+    /// If the view was previously looking at a QUndoGroup, the group is set to 0.
+    /// 
+    /// **See also:** stack()
+    /// setGroup()
     set_stack(stack: *UndoStackType),
-    ///     Sets the group displayed by this view to \a group. If \a group is 0, the view will
-    ///     be empty.
     /// 
-    ///     The view will update itself autmiatically whenever the active stack of the group changes.
+    /// Sets the group displayed by this view to *group.* If *group* is 0, the view will
+    /// be empty.
     /// 
-    ///     \sa group(), setStack()
+    /// The view will update itself autmiatically whenever the active stack of the group changes.
+    /// 
+    /// **See also:** group()
+    /// setStack()
     set_group(group: *UndoGroupType),
 }
 

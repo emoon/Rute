@@ -1,48 +1,43 @@
-///     \class QAbstractItemDelegate
 /// 
-///     \brief The QAbstractItemDelegate class is used to display and edit
-///     data items from a model.
+/// A QAbstractItemDelegate provides the interface and common functionality
+/// for delegates in the model/view architecture. Delegates display
+/// individual items in views, and handle the editing of model data.
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// The QAbstractItemDelegate class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     A QAbstractItemDelegate provides the interface and common functionality
-///     for delegates in the model/view architecture. Delegates display
-///     individual items in views, and handle the editing of model data.
 /// 
-///     The QAbstractItemDelegate class is one of the \l{Model/View Classes}
-///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// To render an item in a custom way, you must implement paint() and
+/// sizeHint(). The QItemDelegate class provides default implementations for
+/// these functions; if you do not need custom rendering, subclass that
+/// class instead.
 /// 
-///     To render an item in a custom way, you must implement paint() and
-///     sizeHint(). The QItemDelegate class provides default implementations for
-///     these functions; if you do not need custom rendering, subclass that
-///     class instead.
+/// We give an example of drawing a progress bar in items; in our case
+/// for a package management program.
 /// 
-///     We give an example of drawing a progress bar in items; in our case
-///     for a package management program.
+/// ![widgetdelegate.png](widgetdelegate.png)
 /// 
-///     \image widgetdelegate.png
+/// We create the `WidgetDelegate` class, which inherits from
+/// QStyledItemDelegate. We do the drawing in the paint() function:
 /// 
-///     We create the \c WidgetDelegate class, which inherits from
-///     QStyledItemDelegate. We do the drawing in the paint() function:
+/// Notice that we use a QStyleOptionProgressBar and initialize its
+/// members. We can then use the current QStyle to draw it.
 /// 
-///     \snippet widgetdelegate.cpp 0
+/// To provide custom editing, there are two approaches that can be
+/// used. The first approach is to create an editor widget and display
+/// it directly on top of the item. To do this you must reimplement
+/// createEditor() to provide an editor widget, setEditorData() to populate
+/// the editor with the data from the model, and setModelData() so that the
+/// delegate can update the model with data from the editor.
 /// 
-///     Notice that we use a QStyleOptionProgressBar and initialize its
-///     members. We can then use the current QStyle to draw it.
+/// The second approach is to handle user events directly by reimplementing
+/// editorEvent().
 /// 
-///     To provide custom editing, there are two approaches that can be
-///     used. The first approach is to create an editor widget and display
-///     it directly on top of the item. To do this you must reimplement
-///     createEditor() to provide an editor widget, setEditorData() to populate
-///     the editor with the data from the model, and setModelData() so that the
-///     delegate can update the model with data from the editor.
-/// 
-///     The second approach is to handle user events directly by reimplementing
-///     editorEvent().
-/// 
-///     \sa {model-view-programming}{Model/View Programming}, QItemDelegate,
-///         {Pixelator Example}, QStyledItemDelegate, QStyle
+/// **See also:** {model-view-programming}{Model/View Programming}
+/// QItemDelegate
+/// {Pixelator Example}
+/// QStyledItemDelegate
+/// QStyle
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -56,20 +51,120 @@ enum EndEditHint {
 }
 
 struct AbstractItemDelegate : Object {
-    [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
-    [event] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
-    [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
-    [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
-    [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
-    [event] editor_event(event: *EventType, model: *AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
-    [static] elided_text(font_metrics: &FontMetricsType, width: i32, mode: Rute::TextElideMode, text: String) -> String,
-    [event] help_event(event: *HelpEventType, view: *AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
-    ///     \internal
     /// 
-    ///     This virtual method is reserved and will be used in Qt 5.1.
+    /// This pure abstract function must be reimplemented if you want to
+    /// provide custom rendering. Use the *painter* and style *option* to
+    /// render the item specified by the item *index.*
+    /// 
+    /// If you reimplement this you must also reimplement sizeHint().
+    [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
+    /// 
+    /// This signal must be emitted when the sizeHint() of *index* changed.
+    /// 
+    /// Views automatically connect to this signal and relayout items as necessary.
+    /// 
+    /// This pure abstract function must be reimplemented if you want to
+    /// provide custom rendering. The options are specified by *option*
+    /// and the model item by *index.*
+    /// 
+    /// If you reimplement this you must also reimplement paint().
+    [event] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
+    /// 
+    /// Returns the editor to be used for editing the data item with the
+    /// given *index.* Note that the index contains information about the
+    /// model being used. The editor's parent widget is specified by *parent,*
+    /// and the item options by *option.*
+    /// 
+    /// The base implementation returns 0. If you want custom editing you
+    /// will need to reimplement this function.
+    /// 
+    /// The returned editor widget should have Qt::StrongFocus;
+    /// otherwise, [QMouseEvent](QMouseEvent)
+    /// s received by the widget will propagate
+    /// to the view. The view's background will shine through unless the
+    /// editor paints its own background (e.g., with
+    /// [setAutoFillBackground()](QWidget::)
+    /// ).
+    /// 
+    /// **See also:** destroyEditor()
+    /// setModelData()
+    /// setEditorData()
+    [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
+    /// 
+    /// Sets the contents of the given *editor* to the data for the item
+    /// at the given *index.* Note that the index contains information
+    /// about the model being used.
+    /// 
+    /// The base implementation does nothing. If you want custom editing
+    /// you will need to reimplement this function.
+    /// 
+    /// **See also:** setModelData()
+    [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
+    /// 
+    /// Sets the data for the item at the given *index* in the *model*
+    /// to the contents of the given *editor.*
+    /// 
+    /// The base implementation does nothing. If you want custom editing
+    /// you will need to reimplement this function.
+    /// 
+    /// **See also:** setEditorData()
+    [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
+    /// 
+    /// When editing of an item starts, this function is called with the
+    /// *event* that triggered the editing, the *model,* the *index* of
+    /// the item, and the *option* used for rendering the item.
+    /// 
+    /// Mouse events are sent to editorEvent() even if they don't start
+    /// editing of the item. This can, for instance, be useful if you wish
+    /// to open a context menu when the right mouse button is pressed on
+    /// an item.
+    /// 
+    /// The base implementation returns `false` (indicating that it has not
+    /// handled the event).
+    [event] editor_event(event: *EventType, model: *AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
+    /// 
+    /// Use QFontMetrics::elidedText() instead.
+    /// 
+    /// QFontMetrics fm = ...
+    /// QString str = QAbstractItemDelegate::elidedText(fm, width, mode, text);
+    /// 
+    [static] elided_text(font_metrics: &FontMetricsType, width: i32, mode: Rute::TextElideMode, text: String) -> String,
+    /// 
+    /// Whenever a help event occurs, this function is called with the *event*
+    /// *view* *option* and the *index* that corresponds to the item where the
+    /// event occurs.
+    /// 
+    /// Returns `true` if the delegate can handle the event; otherwise returns `false.`
+    /// A return value of true indicates that the data obtained using the index had
+    /// the required role.
+    /// 
+    /// For QEvent::ToolTip and QEvent::WhatsThis events that were handled successfully,
+    /// the relevant popup may be shown depending on the user's system configuration.
+    /// 
+    /// **See also:** QHelpEvent
+    [event] help_event(event: *HelpEventType, view: *AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
     [event] painting_roles() -> [i32],
+    /// 
+    /// This signal must be emitted when the *editor* widget has completed
+    /// editing the data, and wants to write it back into the model.
     [signal] commit_data(editor: *WidgetType),
+    /// 
+    /// This signal is emitted when the user has finished editing an item using
+    /// the specified *editor.*
+    /// 
+    /// The *hint* provides a way for the delegate to influence how the model and
+    /// view behave after editing is completed. It indicates to these components
+    /// what action should be performed next to provide a comfortable editing
+    /// experience for the user. For example, if `EditNextItem` is specified,
+    /// the view should use a delegate to open an editor on the next item in the
+    /// model.
+    /// 
+    /// **See also:** EndEditHint
     [signal] close_editor(editor: *WidgetType, hint: AbstractItemDelegate::EndEditHint),
+    /// 
+    /// This signal must be emitted when the sizeHint() of *index* changed.
+    /// 
+    /// Views automatically connect to this signal and relayout items as necessary.
     [signal] size_hint_changed(arg0: &ModelIndexType),
 }
 

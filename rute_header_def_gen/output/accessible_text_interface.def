@@ -1,37 +1,170 @@
-///     \class QAccessibleTextInterface
-///     \inmodule QtGui
 /// 
-///     \ingroup accessibility
+/// This interface corresponds to the IAccessibleText interface.
+/// It should be implemented for widgets that display more text than a plain label.
+/// Labels should be represented by only [QAccessibleInterface](QAccessibleInterface)
 /// 
-///     \brief The QAccessibleTextInterface class implements support for text handling.
+/// and return their text as name ( [QAccessibleInterface::text()](QAccessibleInterface::text())
+/// with [QAccessible::Name](QAccessible::Name)
+/// as type).
+/// The QAccessibleTextInterface is typically for text that a screen reader
+/// might want to read line by line, and for widgets that support text selection and input.
+/// This interface is, for example, implemented for QLineEdit.
 /// 
-///     This interface corresponds to the IAccessibleText interface.
-///     It should be implemented for widgets that display more text than a plain label.
-///     Labels should be represented by only \l QAccessibleInterface
-///     and return their text as name (\l QAccessibleInterface::text() with \l QAccessible::Name as type).
-///     The QAccessibleTextInterface is typically for text that a screen reader
-///     might want to read line by line, and for widgets that support text selection and input.
-///     This interface is, for example, implemented for QLineEdit.
-/// 
-///     \l{IAccessible2 Specification}
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleTextInterface {
+    /// 
+    /// Returns the number of selections in this text.
+    /// 
+    /// Returns a selection. The size of the selection is returned in *startOffset* and *endOffset.*
+    /// If there is no selection both *startOffset* and *endOffset* are 0.
+    /// 
+    /// The accessibility APIs support multiple selections. For most widgets though, only one selection
+    /// is supported with *selectionIndex* equal to 0.
     [event] selection(selection_index: i32, start_offset: *i32, end_offset: *i32),
+    /// 
+    /// Returns the number of selections in this text.
     [event] selection_count() -> i32,
+    /// 
+    /// Select the text from *startOffset* to *endOffset.*
+    /// The *startOffset* is the first character that will be selected.
+    /// The *endOffset* is the first character that will not be selected.
+    /// 
+    /// When the object supports multiple selections (e.g. in a word processor),
+    /// this adds a new selection, otherwise it replaces the previous selection.
+    /// 
+    /// The selection will be *endOffset* - *startOffset* characters long.
     [event] add_selection(start_offset: i32, end_offset: i32),
+    /// 
+    /// Clears the selection with index *selectionIndex.*
     [event] remove_selection(selection_index: i32),
+    /// 
+    /// Set the selection *selectionIndex* to the range from *startOffset* to *endOffset.*
+    /// 
+    /// **See also:** addSelection()
+    /// removeSelection()
     [event] set_selection(selection_index: i32, start_offset: i32, end_offset: i32),
+    /// 
+    /// Returns the current cursor position.
     [event] cursor_position() -> i32,
+    /// 
+    /// Moves the cursor to *position.*
     [event] set_cursor_position(position: i32),
+    /// 
+    /// Returns the text from *startOffset* to *endOffset.*
+    /// The *startOffset* is the first character that will be returned.
+    /// The *endOffset* is the first character that will not be returned.
+    /// 
+    /// Returns the text item of type *boundaryType* that is close to offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
+    /// 
+    /// Returns the text item of type *boundaryType* that is right after offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
+    /// 
+    /// Returns the text item of type *boundaryType* at offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
     [event] text(start_offset: i32, end_offset: i32) -> String,
+    /// 
+    /// Returns the text item of type *boundaryType* that is close to offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
     [event] text_before_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
+    /// 
+    /// Returns the text item of type *boundaryType* that is right after offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
     [event] text_after_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
+    /// 
+    /// Returns the text item of type *boundaryType* at offset *offset*
+    /// and sets *startOffset* and *endOffset* values to the start and end positions
+    /// of that item; returns an empty string if there is no such an item.
+    /// Sets *startOffset* and *endOffset* values to -1 on error.
+    /// 
+    /// This default implementation is provided for small text edits. A word processor or
+    /// text editor should provide their own efficient implementations. This function makes no
+    /// distinction between paragraphs and lines.
+    /// 
+    /// **Note**: this function can not take the cursor position into account. By convention
+    /// an *offset* of -2 means that this function should use the cursor position as offset.
+    /// Thus an offset of -2 must be converted to the cursor position before calling this
+    /// function.
+    /// An offset of -1 is used for the text length and custom implementations of this function
+    /// have to return the result as if the length was passed in as offset.
     [event] text_at_offset(offset: i32, boundary_type: Accessible::TextBoundaryType, start_offset: *i32, end_offset: *i32) -> String,
+    /// 
+    /// Returns the length of the text (total size including spaces).
     [event] character_count() -> i32,
+    /// 
+    /// Returns the position and size of the character at position *offset* in screen coordinates.
     [event] character_rect(offset: i32) -> Rect,
+    /// 
+    /// Returns the offset of the character at the *point* in screen coordinates.
     [event] offset_at_point(point: &PointType) -> i32,
 }
 

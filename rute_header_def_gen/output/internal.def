@@ -41,13 +41,6 @@ enum Callback {
 
 
 struct Internal {
-    ///     \macro Q_UNUSED(name)
-    ///     \relates <QtGlobal>
-    /// 
-    ///     Indicates to the compiler that the parameter with the specified
-    ///     \a name is not used in the body of a function. This can be used to
-    ///     suppress compiler warnings while allowing functions to be defined
-    ///     with meaningful parameter names in their signatures.
     [static] register_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
     [static] unregister_callback(arg0: Internal::Callback, arg1: qInternalCallback) -> bool,
     [static] activate_callbacks(arg0: Internal::Callback, arg1: *void) -> bool,

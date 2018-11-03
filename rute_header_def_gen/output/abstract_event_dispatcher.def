@@ -1,166 +1,232 @@
-///     \class QAbstractEventDispatcher
-///     \inmodule QtCore
-///     \brief The QAbstractEventDispatcher class provides an interface to manage Qt's event queue.
 /// 
-///     \ingroup events
+/// An event dispatcher receives events from the window system and other
+/// sources. It then sends them to the QCoreApplication or QApplication
+/// instance for processing and delivery. QAbstractEventDispatcher provides
+/// fine-grained control over event delivery.
 /// 
-///     An event dispatcher receives events from the window system and other
-///     sources. It then sends them to the QCoreApplication or QApplication
-///     instance for processing and delivery. QAbstractEventDispatcher provides
-///     fine-grained control over event delivery.
+/// For simple control of event processing use
+/// QCoreApplication::processEvents().
 /// 
-///     For simple control of event processing use
-///     QCoreApplication::processEvents().
+/// For finer control of the application's event loop, call
+/// instance() and call functions on the QAbstractEventDispatcher
+/// object that is returned. If you want to use your own instance of
+/// QAbstractEventDispatcher or of a QAbstractEventDispatcher
+/// subclass, you must install it with QCoreApplication::setEventDispatcher()
+/// or QThread::setEventDispatcher() *before* a default event dispatcher has
+/// been installed.
 /// 
-///     For finer control of the application's event loop, call
-///     instance() and call functions on the QAbstractEventDispatcher
-///     object that is returned. If you want to use your own instance of
-///     QAbstractEventDispatcher or of a QAbstractEventDispatcher
-///     subclass, you must install it with QCoreApplication::setEventDispatcher()
-///     or QThread::setEventDispatcher() \e before a default event dispatcher has
-///     been installed.
+/// The main event loop is started by calling
+/// QCoreApplication::exec(), and stopped by calling
+/// QCoreApplication::exit(). Local event loops can be created using
+/// QEventLoop.
 /// 
-///     The main event loop is started by calling
-///     QCoreApplication::exec(), and stopped by calling
-///     QCoreApplication::exit(). Local event loops can be created using
-///     QEventLoop.
+/// Programs that perform long operations can call processEvents()
+/// with a bitwise OR combination of various QEventLoop::ProcessEventsFlag
+/// values to control which events should be delivered.
 /// 
-///     Programs that perform long operations can call processEvents()
-///     with a bitwise OR combination of various QEventLoop::ProcessEventsFlag
-///     values to control which events should be delivered.
+/// QAbstractEventDispatcher also allows the integration of an
+/// external event loop with the Qt event loop.
 /// 
-///     QAbstractEventDispatcher also allows the integration of an
-///     external event loop with the Qt event loop.
-/// 
-///     \sa QEventLoop, QCoreApplication, QThread
+/// **See also:** QEventLoop
+/// QCoreApplication
+/// QThread
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractEventDispatcher : Object {
+    /// 
+    /// Returns a pointer to the event dispatcher object for the specified
+    /// *thread.* If *thread* is zero, the current thread is used. If no
+    /// event dispatcher exists for the specified thread, this function
+    /// returns 0.
+    /// 
+    /// **Note:** If Qt is built without thread support, the *thread*
+    /// argument is ignored.
     [static] instance(thread: *ThreadType) -> AbstractEventDispatcher?,
+    /// 
+    /// Processes pending events that match *flags* until there are no
+    /// more events to process. Returns `true` if an event was processed;
+    /// otherwise returns `false.`
+    /// 
+    /// This function is especially useful if you have a long running
+    /// operation, and want to show its progress without allowing user
+    /// input by using the QEventLoop::ExcludeUserInputEvents flag.
+    /// 
+    /// If the QEventLoop::WaitForMoreEvents flag is set in *flags,* the
+    /// behavior of this function is as follows:
+    /// 
+    /// * If events are available, this function returns after processing them.
+    /// * If no events are available, this function will wait until more are available and return after processing newly available events.
+    /// 
+    /// If the QEventLoop::WaitForMoreEvents flag is not set in *flags,*
+    /// and no events are available, this function will return
+    /// immediately.
+    /// 
+    /// **Note:** This function does not process events continuously; it
+    /// returns after all available events are processed.
+    /// 
+    /// **See also:** hasPendingEvents()
     [event] process_events(flags: EventLoop::ProcessEventsFlags) -> bool,
-    ///     \fn bool QAbstractEventDispatcher::processEvents(QEventLoop::ProcessEventsFlags flags)
     /// 
-    ///     Processes pending events that match \a flags until there are no
-    ///     more events to process. Returns \c true if an event was processed;
-    ///     otherwise returns \c false.
-    /// 
-    ///     This function is especially useful if you have a long running
-    ///     operation, and want to show its progress without allowing user
-    ///     input by using the QEventLoop::ExcludeUserInputEvents flag.
-    /// 
-    ///     If the QEventLoop::WaitForMoreEvents flag is set in \a flags, the
-    ///     behavior of this function is as follows:
-    /// 
-    ///     \list
-    /// 
-    ///     \li If events are available, this function returns after processing
-    ///     them.
-    /// 
-    ///     \li If no events are available, this function will wait until more
-    ///     are available and return after processing newly available events.
-    /// 
-    ///     \endlist
-    /// 
-    ///     If the QEventLoop::WaitForMoreEvents flag is not set in \a flags,
-    ///     and no events are available, this function will return
-    ///     immediately.
-    /// 
-    ///     \b{Note:} This function does not process events continuously; it
-    ///     returns after all available events are processed.
-    /// 
-    ///     \sa hasPendingEvents()
+    /// Returns `true` if there is an event waiting; otherwise returns false. This
+    /// function is an implementation detail for
+    /// QCoreApplication::hasPendingEvents() and must not be called directly.
     [event] has_pending_events() -> bool,
+    /// 
+    /// Registers *notifier* with the event loop. Subclasses must
+    /// implement this method to tie a socket notifier into another
+    /// event loop.
     [event] register_socket_notifier(notifier: *SocketNotifierType),
-    ///     \fn void QAbstractEventDispatcher::registerSocketNotifier(QSocketNotifier *notifier)
     /// 
-    ///     Registers \a notifier with the event loop. Subclasses must
-    ///     implement this method to tie a socket notifier into another
-    ///     event loop.
+    /// Unregisters *notifier* from the event dispatcher. Subclasses must
+    /// reimplement this method to tie a socket notifier into another
+    /// event loop. Reimplementations must call the base
+    /// implementation.
     [event] unregister_socket_notifier(notifier: *SocketNotifierType),
-    ///     Registers a timer with the specified \a interval and \a timerType for the
-    ///     given \a object and returns the timer id.
+    /// 
+    /// Registers a timer with the specified *interval* for the given *object*
+    /// and returns the timer id.
+    /// 
+    /// Register a timer with the specified *timerId* and *interval* for the
+    /// given *object.*
+    /// 
+    /// Registers a timer with the specified *interval* and *timerType* for the
+    /// given *object* and returns the timer id.
+    /// 
+    /// Register a timer with the specified *timerId,* *interval,* and *timerType* for the given *object.*
     register_timer(interval: i32, timer_type: Rute::TimerType, object: *ObjectType) -> i32,
-    ///     Registers a timer with the specified \a interval and \a timerType for the
-    ///     given \a object and returns the timer id.
+    /// 
+    /// Registers a timer with the specified *interval* for the given *object*
+    /// and returns the timer id.
+    /// 
+    /// Register a timer with the specified *timerId* and *interval* for the
+    /// given *object.*
+    /// 
+    /// Registers a timer with the specified *interval* and *timerType* for the
+    /// given *object* and returns the timer id.
+    /// 
+    /// Register a timer with the specified *timerId,* *interval,* and *timerType* for the given *object.*
     [event] register_timer(timer_id: i32, interval: i32, timer_type: Rute::TimerType, object: *ObjectType),
+    /// 
+    /// Unregisters the timer with the given *timerId.*
+    /// Returns `true` if successful; otherwise returns `false.`
+    /// 
+    /// **See also:** registerTimer()
+    /// unregisterTimers()
+    /// 
+    /// Unregisters all the timers associated with the given *object.*
+    /// Returns `true` if all timers were successful removed; otherwise returns `false.`
+    /// 
+    /// **See also:** unregisterTimer()
+    /// registeredTimers()
     [event] unregister_timer(timer_id: i32) -> bool,
+    /// 
+    /// Unregisters all the timers associated with the given *object.*
+    /// Returns `true` if all timers were successful removed; otherwise returns `false.`
+    /// 
+    /// **See also:** unregisterTimer()
+    /// registeredTimers()
     [event] unregister_timers(object: *ObjectType) -> bool,
+    /// 
+    /// Returns a list of registered timers for *object.* The TimerInfo struct has
+    /// `timerId,` `interval,` and `timerType` members.
+    /// 
+    /// **See also:** Qt::TimerType
     [event] registered_timers(object: *ObjectType) -> List<QAbstractEventDispatcher::TimerInfo>,
+    /// 
+    /// Returns the remaining time in milliseconds with the given *timerId.*
+    /// If the timer is inactive, the returned value will be -1. If the timer is
+    /// overdue, the returned value will be 0.
+    /// 
+    /// **See also:** Qt::TimerType
     [event] remaining_time(timer_id: i32) -> i32,
-    ///     \fn int QAbstractEventDispatcher::remainingTime(int timerId)
     /// 
-    ///     Returns the remaining time in milliseconds with the given \a timerId.
-    ///     If the timer is inactive, the returned value will be -1. If the timer is
-    ///     overdue, the returned value will be 0.
+    /// Wakes up the event loop.
     /// 
-    ///     \sa Qt::TimerType
+    /// **See also:** awake()
     [event] wake_up(),
+    /// 
+    /// Interrupts event dispatching. The event dispatcher will
+    /// return from processEvents() as soon as possible.
     [event] interrupt(),
-    ///     \fn void QAbstractEventDispatcher::interrupt()
     /// 
-    ///     Interrupts event dispatching.  The event dispatcher will
-    ///     return from processEvents() as soon as possible.
+    /// Depending from the event dispatcher implementation does nothing or
+    /// calls QApplication::sendPostedEvents().
     [event] flush(),
-    ///     \internal
     [event] starting_up(),
-    ///     \internal
     [event] closing_down(),
-    ///     Installs an event filter \a filterObj for all native events received by the application.
     /// 
-    ///     The event filter \a filterObj receives events via its \l {QAbstractNativeEventFilter::}{nativeEventFilter()}
-    ///     function, which is called for all events received by all threads.
+    /// Installs an event filter *filterObj* for all native events received by the application.
     /// 
-    ///     The  \l {QAbstractNativeEventFilter::}{nativeEventFilter()} function should return true
-    ///     if the event should be filtered, (in this case, stopped). It should return false to allow
-    ///     normal Qt processing to continue: the native event can then be translated
-    ///     into a QEvent and handled by the standard Qt \l{QEvent} {event} filtering,
-    ///     e.g. QObject::installEventFilter().
+    /// The event filter *filterObj* receives events via its [nativeEventFilter()](QAbstractNativeEventFilter::)
     /// 
-    ///     If multiple event filters are installed, the filter that was installed last
-    ///     is activated first.
+    /// function, which is called for all events received by all threads.
     /// 
-    ///     \note The filter function set here receives native messages,
-    ///     that is, MSG or XEvent structs.
+    /// The [nativeEventFilter()](QAbstractNativeEventFilter::)
+    /// function should return true
+    /// if the event should be filtered, (in this case, stopped). It should return false to allow
+    /// normal Qt processing to continue: the native event can then be translated
+    /// into a QEvent and handled by the standard Qt [event](QEvent)
+    /// filtering,
+    /// e.g. QObject::installEventFilter().
     /// 
-    ///     For maximum portability, you should always try to use QEvent objects
-    ///     and QObject::installEventFilter() whenever possible.
+    /// If multiple event filters are installed, the filter that was installed last
+    /// is activated first.
     /// 
-    ///     \sa QObject::installEventFilter()
+    /// **Note**: The filter function set here receives native messages,
+    /// that is, MSG or XEvent structs.
     /// 
-    ///     \since 5.0
+    /// For maximum portability, you should always try to use QEvent objects
+    /// and QObject::installEventFilter() whenever possible.
+    /// 
+    /// **See also:** QObject::installEventFilter()
+    /// 
     install_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
-    ///     Removes the event filter \a filter from this object. The
-    ///     request is ignored if such an event filter has not been installed.
     /// 
-    ///     All event filters for this object are automatically removed when
-    ///     this object is destroyed.
+    /// Removes the event filter *filter* from this object. The
+    /// request is ignored if such an event filter has not been installed.
     /// 
-    ///     It is always safe to remove an event filter, even during event filter
-    ///     filter activation (that is, even from within the \l {QAbstractNativeEventFilter::}{nativeEventFilter()} function).
+    /// All event filters for this object are automatically removed when
+    /// this object is destroyed.
     /// 
-    ///     \sa installNativeEventFilter(), QAbstractNativeEventFilter
-    ///     \since 5.0
+    /// It is always safe to remove an event filter, even during event filter
+    /// filter activation (that is, even from within the [nativeEventFilter()](QAbstractNativeEventFilter::)
+    /// function).
+    /// 
+    /// **See also:** installNativeEventFilter()
+    /// QAbstractNativeEventFilter
     remove_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
-    ///     Sends \a message through the event filters that were set by
-    ///     installNativeEventFilter().  This function returns \c true as soon as an
-    ///     event filter returns \c true, and false otherwise to indicate that
-    ///     the processing of the event should continue.
     /// 
-    ///     Subclasses of QAbstractEventDispatcher \e must call this function
-    ///     for \e all messages received from the system to ensure
-    ///     compatibility with any extensions that may be used in the
-    ///     application. The type of event \a eventType is specific to the platform
-    ///     plugin chosen at run-time, and can be used to cast message to the right type.
-    ///     The \a result pointer is only used on Windows, and corresponds to the LRESULT pointer.
+    /// Sends *message* through the event filters that were set by
+    /// installNativeEventFilter(). This function returns `true` as soon as an
+    /// event filter returns `true,` and false otherwise to indicate that
+    /// the processing of the event should continue.
     /// 
-    ///     Note that the type of \a message is platform dependent. See
-    ///     QAbstractNativeEventFilter for details.
+    /// Subclasses of QAbstractEventDispatcher *must* call this function
+    /// for *all* messages received from the system to ensure
+    /// compatibility with any extensions that may be used in the
+    /// application. The type of event *eventType* is specific to the platform
+    /// plugin chosen at run-time, and can be used to cast message to the right type.
+    /// The *result* pointer is only used on Windows, and corresponds to the LRESULT pointer.
     /// 
-    ///     \sa installNativeEventFilter(), QAbstractNativeEventFilter::nativeEventFilter()
-    ///     \since 5.0
+    /// Note that the type of *message* is platform dependent. See
+    /// QAbstractNativeEventFilter for details.
+    /// 
+    /// **See also:** installNativeEventFilter()
+    /// QAbstractNativeEventFilter::nativeEventFilter()
     filter_native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
+    /// 
+    /// This signal is emitted before the event loop calls a function that
+    /// could block.
+    /// 
+    /// **See also:** awake()
     [signal] about_to_block(),
+    /// 
+    /// This signal is emitted after the event loop returns from a
+    /// function that could block.
+    /// 
+    /// **See also:** wakeUp()
+    /// aboutToBlock()
     [signal] awake(),
 }
 

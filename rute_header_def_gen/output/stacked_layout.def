@@ -1,51 +1,38 @@
-///     \class QStackedLayout
 /// 
-///     \brief The QStackedLayout class provides a stack of widgets where
-///     only one widget is visible at a time.
+/// QStackedLayout can be used to create a user interface similar to
+/// the one provided by QTabWidget. There is also a convenience
+/// QStackedWidget class built on top of QStackedLayout.
 /// 
-///     \ingroup geomanagement
-///     \inmodule QtWidgets
+/// A QStackedLayout can be populated with a number of child widgets
+/// ("pages"). For example:
 /// 
-///     QStackedLayout can be used to create a user interface similar to
-///     the one provided by QTabWidget. There is also a convenience
-///     QStackedWidget class built on top of QStackedLayout.
+/// QStackedLayout provides no intrinsic means for the user to switch
+/// page. This is typically done through a QComboBox or a QListWidget
+/// that stores the titles of the QStackedLayout's pages. For
+/// example:
 /// 
-///     A QStackedLayout can be populated with a number of child widgets
-///     ("pages"). For example:
+/// When populating a layout, the widgets are added to an internal
+/// list. The indexOf() function returns the index of a widget in that
+/// list. The widgets can either be added to the end of the list using
+/// the addWidget() function, or inserted at a given index using the
+/// insertWidget() function. The removeWidget() function removes the
+/// widget at the given index from the layout. The number of widgets
+/// contained in the layout, can be obtained using the count()
+/// function.
 /// 
-///     \snippet qstackedlayout/main.cpp 0
-///     \codeline
-///     \snippet qstackedlayout/main.cpp 2
-///     \snippet qstackedlayout/main.cpp 3
+/// The widget() function returns the widget at a given index
+/// position. The index of the widget that is shown on screen is given
+/// by currentIndex() and can be changed using setCurrentIndex(). In a
+/// similar manner, the currently shown widget can be retrieved using
+/// the currentWidget() function, and altered using the
+/// setCurrentWidget() function.
 /// 
-///     QStackedLayout provides no intrinsic means for the user to switch
-///     page. This is typically done through a QComboBox or a QListWidget
-///     that stores the titles of the QStackedLayout's pages. For
-///     example:
+/// Whenever the current widget in the layout changes or a widget is
+/// removed from the layout, the currentChanged() and widgetRemoved()
+/// signals are emitted respectively.
 /// 
-///     \snippet qstackedlayout/main.cpp 1
-/// 
-///     When populating a layout, the widgets are added to an internal
-///     list. The indexOf() function returns the index of a widget in that
-///     list. The widgets can either be added to the end of the list using
-///     the addWidget() function, or inserted at a given index using the
-///     insertWidget() function. The removeWidget() function removes the
-///     widget at the given index from the layout. The number of widgets
-///     contained in the layout, can be obtained using the count()
-///     function.
-/// 
-///     The widget() function returns the widget at a given index
-///     position. The index of the widget that is shown on screen is given
-///     by currentIndex() and can be changed using setCurrentIndex(). In a
-///     similar manner, the currently shown widget can be retrieved using
-///     the currentWidget() function, and altered using the
-///     setCurrentWidget() function.
-/// 
-///     Whenever the current widget in the layout changes or a widget is
-///     removed from the layout, the currentChanged() and widgetRemoved()
-///     signals are emitted respectively.
-/// 
-///     \sa QStackedWidget, QTabWidget
+/// **See also:** QStackedWidget
+/// QTabWidget
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -56,76 +43,105 @@ enum StackingMode {
 }
 
 struct StackedLayout : Layout {
-    ///     Adds the given \a widget to the end of this layout and returns the
-    ///     index position of the \a widget.
     /// 
-    ///     If the QStackedLayout is empty before this function is called,
-    ///     the given \a widget becomes the current widget.
+    /// Adds the given *widget* to the end of this layout and returns the
+    /// index position of the *widget.*
     /// 
-    ///     \sa insertWidget(), removeWidget(), setCurrentWidget()
+    /// If the QStackedLayout is empty before this function is called,
+    /// the given *widget* becomes the current widget.
+    /// 
+    /// **See also:** insertWidget()
+    /// removeWidget()
+    /// setCurrentWidget()
     add_widget(w: *WidgetType) -> i32,
-    ///     Inserts the given \a widget at the given \a index in this
-    ///     QStackedLayout. If \a index is out of range, the widget is
-    ///     appended (in which case it is the actual index of the \a widget
-    ///     that is returned).
     /// 
-    ///     If the QStackedLayout is empty before this function is called, the
-    ///     given \a widget becomes the current widget.
+    /// Inserts the given *widget* at the given *index* in this
+    /// QStackedLayout. If *index* is out of range, the widget is
+    /// appended (in which case it is the actual index of the *widget*
+    /// that is returned).
     /// 
-    ///     Inserting a new widget at an index less than or equal to the current index
-    ///     will increment the current index, but keep the current widget.
+    /// If the QStackedLayout is empty before this function is called, the
+    /// given *widget* becomes the current widget.
     /// 
-    ///     \sa addWidget(), removeWidget(), setCurrentWidget()
+    /// Inserting a new widget at an index less than or equal to the current index
+    /// will increment the current index, but keep the current widget.
+    /// 
+    /// **See also:** addWidget()
+    /// removeWidget()
+    /// setCurrentWidget()
     insert_widget(index: i32, w: *WidgetType) -> i32,
-    ///     Returns the current widget, or 0 if there are no widgets in this
-    ///     layout.
     /// 
-    ///     \sa currentIndex(), setCurrentWidget()
+    /// Returns the current widget, or 0 if there are no widgets in this
+    /// layout.
+    /// 
+    /// **See also:** currentIndex()
+    /// setCurrentWidget()
     current_widget() -> Widget?,
+    /// 
+    /// The current index is -1 if there is no current widget.
+    /// 
+    /// **See also:** currentWidget()
+    /// indexOf()
     current_index() -> i32,
-    ///     Returns the widget at the given \a index, or 0 if there is no
-    ///     widget at the given position.
     /// 
-    ///     \sa currentWidget(), indexOf()
+    /// This signal is emitted whenever a widget is removed from the
+    /// layout. The widget's *index* is passed as parameter.
+    /// 
+    /// **See also:** removeWidget()
+    /// 
+    /// Returns the widget at the given *index,* or 0 if there is no
+    /// widget at the given position.
+    /// 
+    /// **See also:** currentWidget()
+    /// indexOf()
     widget(arg0: i32) -> Widget?,
-    ///     \property QStackedLayout::count
-    ///     \brief the number of widgets contained in the layout
     /// 
-    ///     \sa currentIndex(), widget()
+    /// **See also:** currentIndex()
+    /// widget()
     [event] count() -> i32,
-    ///     \property QStackedLayout::stackingMode
-    ///     \brief determines the way visibility of child widgets are handled.
-    ///     \since 4.4
     /// 
-    ///     The default value is StackOne. Setting the property to StackAll
-    ///     allows you to make use of the layout for overlay widgets
-    ///     that do additional drawing on top of other widgets, for example,
-    ///     graphical editors.
+    /// The default value is StackOne. Setting the property to StackAll
+    /// allows you to make use of the layout for overlay widgets
+    /// that do additional drawing on top of other widgets, for example,
+    /// graphical editors.
     stacking_mode() -> StackedLayout::StackingMode,
     set_stacking_mode(stacking_mode: StackedLayout::StackingMode),
-    ///     \reimp
+    /// 
     [event] add_item(item: *LayoutItemType),
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] minimum_size() -> Size,
-    ///     \reimp
+    /// 
     [event] item_at(arg0: i32) -> LayoutItem?,
-    ///     \reimp
+    /// 
     [event] take_at(arg0: i32) -> LayoutItem?,
-    ///     \reimp
+    /// 
     [event] has_height_for_width() -> bool,
-    ///     \reimp
+    /// 
     [event] height_for_width(width: i32) -> i32,
+    /// 
+    /// This signal is emitted whenever a widget is removed from the
+    /// layout. The widget's *index* is passed as parameter.
+    /// 
+    /// **See also:** removeWidget()
     [signal] widget_removed(index: i32),
+    /// 
+    /// This signal is emitted whenever the current widget in the layout
+    /// changes. The *index* specifies the index of the new current
+    /// widget, or -1 if there isn't a new one (for example, if there
+    /// are no widgets in the QStackedLayout)
+    /// 
+    /// **See also:** currentWidget()
+    /// setCurrentWidget()
     [signal] current_changed(index: i32),
-    ///     \property QStackedLayout::currentIndex
-    ///     \brief the index position of the widget that is visible
-    /// 
-    ///     The current index is -1 if there is no current widget.
-    /// 
-    ///     \sa currentWidget(), indexOf()
     set_current_index(index: i32),
+    /// 
+    /// Sets the current widget to be the specified *widget.* The new
+    /// current widget must already be contained in this stacked layout.
+    /// 
+    /// **See also:** setCurrentIndex()
+    /// currentWidget()
     set_current_widget(w: *WidgetType),
 }
 

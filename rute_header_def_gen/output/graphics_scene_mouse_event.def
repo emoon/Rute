@@ -1,115 +1,175 @@
-///     \class QGraphicsSceneMouseEvent
-///     \brief The QGraphicsSceneMouseEvent class provides mouse events
-///            in the graphics view framework.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     When a QGraphicsView receives a QMouseEvent, it translates it to a
-///     QGraphicsSceneMouseEvent. The event is then forwarded to the
-///     QGraphicsScene associated with the view. If the event is not
-///     handled by the scene, the view may use it, e.g., for the
-///     \l{QGraphicsView::}{DragMode}.
+/// When a QGraphicsView receives a QMouseEvent, it translates it to a
+/// QGraphicsSceneMouseEvent. The event is then forwarded to the
+/// QGraphicsScene associated with the view. If the event is not
+/// handled by the scene, the view may use it, e.g., for the
+/// [DragMode](QGraphicsView::)
 /// 
-///     In addition to containing the item, scene, and screen coordinates
-///     of the event (as pos(), scenePos(), and screenPos()), mouse
-///     events also contain the coordinates of the previous mouse
-///     event received by the view. These can be retrieved with
-///     lastPos(), lastScreenPos(), and lastScenePos().
 /// 
-///     \sa QGraphicsSceneContextMenuEvent,
-///         QGraphicsSceneHoverEvent, QGraphicsSceneWheelEvent,
-///         QMouseEvent
+/// In addition to containing the item, scene, and screen coordinates
+/// of the event (as pos(), scenePos(), and screenPos()), mouse
+/// events also contain the coordinates of the previous mouse
+/// event received by the view. These can be retrieved with
+/// lastPos(), lastScreenPos(), and lastScenePos().
+/// 
+/// **See also:** QGraphicsSceneContextMenuEvent
+/// QGraphicsSceneHoverEvent
+/// QGraphicsSceneWheelEvent
+/// QMouseEvent
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneMouseEvent : GraphicsSceneEvent {
-    ///     Returns the mouse cursor position in item coordinates.
     /// 
-    ///     \sa scenePos(), screenPos(), lastPos()
+    /// Returns the mouse cursor position in item coordinates.
+    /// 
+    /// **See also:** scenePos()
+    /// screenPos()
+    /// lastPos()
     pos() -> PointF,
-    ///     \internal
     set_pos(pos: &PointFType),
-    ///     Returns the mouse cursor position in scene coordinates.
     /// 
-    ///     \sa pos(), screenPos(), lastScenePos()
+    /// Returns the mouse cursor position in scene coordinates.
+    /// 
+    /// **See also:** pos()
+    /// screenPos()
+    /// lastScenePos()
     scene_pos() -> PointF,
-    ///     \internal
     set_scene_pos(pos: &PointFType),
-    ///     Returns the mouse cursor position in screen coordinates.
     /// 
-    ///     \sa pos(), scenePos(), lastScreenPos()
+    /// Returns the mouse cursor position in screen coordinates.
+    /// 
+    /// **See also:** pos()
+    /// scenePos()
+    /// lastScreenPos()
     screen_pos() -> Point,
-    ///     \internal
     set_screen_pos(pos: &PointType),
-    ///     Returns the mouse cursor position in item coordinates where the specified
-    ///     \a button was clicked.
     /// 
-    ///     \sa buttonDownScenePos(), buttonDownScreenPos(), pos()
+    /// Returns the mouse cursor position in item coordinates where the specified
+    /// *button* was clicked.
+    /// 
+    /// **See also:** buttonDownScenePos()
+    /// buttonDownScreenPos()
+    /// pos()
     button_down_pos(button: Rute::MouseButton) -> PointF,
-    ///     \internal
     set_button_down_pos(button: Rute::MouseButton, pos: &PointFType),
-    ///     Returns the mouse cursor position in scene coordinates where the
-    ///     specified \a button was clicked.
     /// 
-    ///     \sa buttonDownPos(), buttonDownScreenPos(), scenePos()
+    /// Returns the mouse cursor position in scene coordinates where the
+    /// specified *button* was clicked.
+    /// 
+    /// **See also:** buttonDownPos()
+    /// buttonDownScreenPos()
+    /// scenePos()
     button_down_scene_pos(button: Rute::MouseButton) -> PointF,
-    ///     \internal
     set_button_down_scene_pos(button: Rute::MouseButton, pos: &PointFType),
-    ///     Returns the mouse cursor position in screen coordinates where the
-    ///     specified \a button was clicked.
     /// 
-    ///     \sa screenPos(), buttonDownPos(), buttonDownScenePos()
+    /// Returns the mouse cursor position in screen coordinates where the
+    /// specified *button* was clicked.
+    /// 
+    /// **See also:** screenPos()
+    /// buttonDownPos()
+    /// buttonDownScenePos()
     button_down_screen_pos(button: Rute::MouseButton) -> Point,
-    ///     \internal
     set_button_down_screen_pos(button: Rute::MouseButton, pos: &PointType),
-    ///     Returns the last recorded mouse cursor position in item
-    ///     coordinates.
     /// 
-    ///     \sa lastScenePos(), lastScreenPos(), pos()
+    /// Returns the last recorded mouse cursor position in item
+    /// coordinates.
+    /// 
+    /// **See also:** lastScenePos()
+    /// lastScreenPos()
+    /// pos()
     last_pos() -> PointF,
-    ///     \internal
     set_last_pos(pos: &PointFType),
-    ///     Returns the last recorded mouse cursor position in scene
-    ///     coordinates. The last recorded position is the position of
-    ///     the previous mouse event received by the view that created
-    ///     the event.
     /// 
-    ///     \sa lastPos(), lastScreenPos(), scenePos()
+    /// Returns the last recorded mouse cursor position in scene
+    /// coordinates. The last recorded position is the position of
+    /// the previous mouse event received by the view that created
+    /// the event.
+    /// 
+    /// **See also:** lastPos()
+    /// lastScreenPos()
+    /// scenePos()
     last_scene_pos() -> PointF,
-    ///     \internal
     set_last_scene_pos(pos: &PointFType),
-    ///     Returns the last recorded mouse cursor position in screen
-    ///     coordinates. The last recorded position is the position of
-    ///     the previous mouse event received by the view that created
-    ///     the event.
     /// 
-    ///     \sa lastPos(), lastScenePos(), screenPos()
+    /// Returns the last recorded mouse cursor position in screen
+    /// coordinates. The last recorded position is the position of
+    /// the previous mouse event received by the view that created
+    /// the event.
+    /// 
+    /// **See also:** lastPos()
+    /// lastScenePos()
+    /// screenPos()
     last_screen_pos() -> Point,
-    ///     \internal
     set_last_screen_pos(pos: &PointType),
-    ///     Returns the combination of mouse buttons that were pressed at the
-    ///     time the event was sent.
     /// 
-    ///     \sa button(), modifiers()
+    /// Returns the combination of mouse buttons that were pressed at the
+    /// time the event was sent.
+    /// 
+    /// **See also:** button()
+    /// modifiers()
     buttons() -> Rute::MouseButtons,
-    ///     \internal
     set_buttons(buttons: Rute::MouseButtons),
-    ///     Returns the mouse button (if any) that caused the event.
     /// 
-    ///     \sa buttons(), modifiers()
+    /// Returns the mouse cursor position in item coordinates where the specified
+    /// *button* was clicked.
+    /// 
+    /// **See also:** buttonDownScenePos()
+    /// buttonDownScreenPos()
+    /// pos()
+    /// 
+    /// Returns the mouse cursor position in scene coordinates where the
+    /// specified *button* was clicked.
+    /// 
+    /// **See also:** buttonDownPos()
+    /// buttonDownScreenPos()
+    /// scenePos()
+    /// 
+    /// Returns the mouse cursor position in screen coordinates where the
+    /// specified *button* was clicked.
+    /// 
+    /// **See also:** screenPos()
+    /// buttonDownPos()
+    /// buttonDownScenePos()
+    /// 
+    /// Returns the combination of mouse buttons that were pressed at the
+    /// time the event was sent.
+    /// 
+    /// **See also:** button()
+    /// modifiers()
+    /// 
+    /// Returns the mouse button (if any) that caused the event.
+    /// 
+    /// **See also:** buttons()
+    /// modifiers()
     button() -> Rute::MouseButton,
-    ///     \internal
     set_button(button: Rute::MouseButton),
-    ///     Returns the keyboard modifiers in use at the time the event was
-    ///     sent.
     /// 
-    ///     \sa buttons(), button()
+    /// Returns the keyboard modifiers in use at the time the event was
+    /// sent.
+    /// 
+    /// **See also:** buttons()
+    /// button()
     modifiers() -> Rute::KeyboardModifiers,
-    ///     \internal
     set_modifiers(modifiers: Rute::KeyboardModifiers),
+    /// 
+    /// Returns information about the mouse event source.
+    /// 
+    /// The mouse event source can be used to distinguish between genuine
+    /// and artificial mouse events. The latter are events that are
+    /// synthesized from touch events by the operating system or Qt itself.
+    /// 
+    /// **See also:** Qt::MouseEventSource
+    /// **See also:** QMouseEvent::source()
     source() -> Rute::MouseEventSource,
     set_source(source: Rute::MouseEventSource),
+    /// 
+    /// Returns the mouse event flags.
+    /// 
+    /// The mouse event flags provide additional information about a mouse event.
+    /// 
+    /// **See also:** Qt::MouseEventFlag
+    /// **See also:** QMouseEvent::flags()
     flags() -> Rute::MouseEventFlags,
     set_flags(arg0: Rute::MouseEventFlags),
 }

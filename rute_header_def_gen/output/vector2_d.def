@@ -1,65 +1,134 @@
-///     \class QVector2D
-///     \brief The QVector2D class represents a vector or vertex in 2D space.
-///     \since 4.6
-///     \ingroup painting
-///     \ingroup painting-3D
-///     \inmodule QtGui
 /// 
-///     The QVector2D class can also be used to represent vertices in 2D space.
-///     We therefore do not need to provide a separate vertex class.
+/// The QVector2D class can also be used to represent vertices in 2D space.
+/// We therefore do not need to provide a separate vertex class.
 /// 
-///     \sa QVector3D, QVector4D, QQuaternion
+/// **See also:** QVector3D
+/// QVector4D
+/// QQuaternion
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Vector2D {
+    /// 
+    /// Returns `true` if the x and y coordinates are set to 0.0,
+    /// otherwise returns `false.`
     is_null() -> bool,
+    /// 
+    /// Returns the x coordinate of this point.
+    /// 
+    /// **See also:** setX()
+    /// y()
     x() -> f32,
+    /// 
+    /// Returns the y coordinate of this point.
+    /// 
+    /// **See also:** setY()
+    /// x()
     y() -> f32,
+    /// 
+    /// Sets the x coordinate of this point to the given *x* coordinate.
+    /// 
+    /// **See also:** x()
+    /// setY()
     set_x(x: f32),
+    /// 
+    /// Sets the y coordinate of this point to the given *y* coordinate.
+    /// 
+    /// **See also:** y()
+    /// setX()
     set_y(y: f32),
-    ///     Returns the length of the vector from the origin.
     /// 
-    ///     \sa lengthSquared(), normalized()
+    /// Returns the length of the vector from the origin.
+    /// 
+    /// **See also:** lengthSquared()
+    /// normalized()
+    /// 
+    /// Returns the squared length of the vector from the origin.
+    /// This is equivalent to the dot product of the vector with itself.
+    /// 
+    /// **See also:** length()
+    /// dotProduct()
     length() -> f32,
-    ///     Returns the squared length of the vector from the origin.
-    ///     This is equivalent to the dot product of the vector with itself.
     /// 
-    ///     \sa length(), dotProduct()
+    /// Returns the squared length of the vector from the origin.
+    /// This is equivalent to the dot product of the vector with itself.
+    /// 
+    /// **See also:** length()
+    /// dotProduct()
     length_squared() -> f32,
-    ///     Returns the normalized unit vector form of this vector.
     /// 
-    ///     If this vector is null, then a null vector is returned.  If the length
-    ///     of the vector is very close to 1, then the vector will be returned as-is.
-    ///     Otherwise the normalized form of the vector of length 1 will be returned.
+    /// Returns the normalized unit vector form of this vector.
     /// 
-    ///     \sa length(), normalize()
+    /// If this vector is null, then a null vector is returned. If the length
+    /// of the vector is very close to 1, then the vector will be returned as-is.
+    /// Otherwise the normalized form of the vector of length 1 will be returned.
+    /// 
+    /// **See also:** length()
+    /// normalize()
     normalized() -> Vector2D,
-    ///     Normalizes the currect vector in place.  Nothing happens if this
-    ///     vector is a null vector or the length of the vector is very close to 1.
     /// 
-    ///     \sa length(), normalized()
+    /// Returns the normalized unit vector form of this vector.
+    /// 
+    /// If this vector is null, then a null vector is returned. If the length
+    /// of the vector is very close to 1, then the vector will be returned as-is.
+    /// Otherwise the normalized form of the vector of length 1 will be returned.
+    /// 
+    /// **See also:** length()
+    /// normalize()
+    /// 
+    /// Normalizes the currect vector in place. Nothing happens if this
+    /// vector is a null vector or the length of the vector is very close to 1.
+    /// 
+    /// **See also:** length()
+    /// normalized()
     normalize(),
-    ///     \since 5.1
     /// 
-    ///     Returns the distance from this vertex to a point defined by
-    ///     the vertex \a point.
+    /// Returns the distance from this vertex to a point defined by
+    /// the vertex *point.*
     /// 
-    ///     \sa distanceToLine()
+    /// **See also:** distanceToLine()
     distance_to_point(point: &Vector2DType) -> f32,
+    /// 
+    /// Returns the distance that this vertex is from a line defined
+    /// by *point* and the unit vector *direction.*
+    /// 
+    /// If *direction* is a null vector, then it does not define a line.
+    /// In that case, the distance from *point* to this vertex is returned.
+    /// 
+    /// **See also:** distanceToPoint()
     distance_to_line(point: &Vector2DType, direction: &Vector2DType) -> f32,
-    ///     Returns the dot product of \a v1 and \a v2.
+    /// 
+    /// Returns the dot product of *v1* and *v2.*
     [static] dot_product(v1: &Vector2DType, v2: &Vector2DType) -> f32,
-    ///     Returns the 3D form of this 2D vector, with the z coordinate set to zero.
     /// 
-    ///     \sa toVector4D(), toPoint()
+    /// Returns the 3D form of this 2D vector, with the z coordinate set to zero.
+    /// 
+    /// **See also:** toVector4D()
+    /// toPoint()
     to_vector3_d() -> Vector3D,
-    ///     Returns the 4D form of this 2D vector, with the z and w coordinates set to zero.
     /// 
-    ///     \sa toVector3D(), toPoint()
+    /// Returns the 4D form of this 2D vector, with the z and w coordinates set to zero.
+    /// 
+    /// **See also:** toVector3D()
+    /// toPoint()
     to_vector4_d() -> Vector4D,
+    /// 
+    /// Returns the QPoint form of this 2D vector.
+    /// 
+    /// **See also:** toPointF()
+    /// toVector3D()
+    /// 
+    /// Returns the QPointF form of this 2D vector.
+    /// 
+    /// **See also:** toPoint()
+    /// toVector3D()
     to_point() -> Point,
+    /// 
+    /// Returns the QPointF form of this 2D vector.
+    /// 
+    /// **See also:** toPoint()
+    /// toVector3D()
     to_point_f() -> PointF,
 }
 

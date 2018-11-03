@@ -1,40 +1,61 @@
-///     \class QItemEditorCreatorBase
-///     \brief The QItemEditorCreatorBase class provides an abstract base class that
-///     must be subclassed when implementing new item editor creators.
-///     \since 4.2
-///     \ingroup model-view
-///     \inmodule QtWidgets
 /// 
-///     QItemEditorCreatorBase objects are specialized widget factories that
-///     provide editor widgets for one particular QVariant data type. They
-///     are used by QItemEditorFactory to create editors for
-///     \l{QItemDelegate}s. Creator bases must be registered with
-///     QItemEditorFactory::registerEditor().
+/// QItemEditorCreatorBase objects are specialized widget factories that
+/// provide editor widgets for one particular QVariant data type. They
+/// are used by QItemEditorFactory to create editors for
+/// [QItemDelegate](QItemDelegate)
+/// s. Creator bases must be registered with
+/// QItemEditorFactory::registerEditor().
 /// 
-///     An editor should provide a user property for the data it edits.
-///     QItemDelagates can then access the property using Qt's
-///     \l{Meta-Object System}{meta-object system} to set and retrieve the
-///     editing data. A property is set as the user property with the USER
-///     keyword:
+/// An editor should provide a user property for the data it edits.
+/// QItemDelagates can then access the property using Qt's
+/// [meta-object system](Meta-Object%20System)
+/// to set and retrieve the
+/// editing data. A property is set as the user property with the USER
+/// keyword:
 /// 
-///     \snippet code/src_gui_itemviews_qitemeditorfactory.cpp 0
+/// If the editor does not provide a user property, it must return the
+/// name of the property from valuePropertyName(); delegates will then
+/// use the name to access the property. If a user property exists,
+/// item delegates will not call valuePropertyName().
 /// 
-///     If the editor does not provide a user property, it must return the
-///     name of the property from valuePropertyName(); delegates will then
-///     use the name to access the property. If a user property exists,
-///     item delegates will not call valuePropertyName().
+/// QStandardItemEditorCreator is a convenience template class that can be used
+/// to register widgets without the need to subclass QItemEditorCreatorBase.
 /// 
-///     QStandardItemEditorCreator is a convenience template class that can be used
-///     to register widgets without the need to subclass QItemEditorCreatorBase.
-/// 
-///     \sa QStandardItemEditorCreator, QItemEditorFactory,
-///     {Model/View Programming}, {Color Editor Factory Example}
+/// **See also:** QStandardItemEditorCreator
+/// QItemEditorFactory
+/// {Model/View Programming}
+/// {Color Editor Factory Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ItemEditorCreatorBase {
+    /// 
+    /// Returns an editor widget with the given *parent.*
+    /// 
+    /// When implementing this function in subclasses of this class, you must
+    /// construct and return new editor widgets with the parent widget specified.
     [event] create_widget(parent: *WidgetType) -> Widget?,
+    /// 
+    /// Returns the name of the property used to get and set values in the creator's
+    /// editor widgets.
+    /// 
+    /// When implementing this function in subclasses, you must ensure that the
+    /// editor widget's property specified by this function can accept the type
+    /// the creator is registered for. For example, a creator which constructs
+    /// QCheckBox widgets to edit boolean values would return the
+    /// [checkable](QCheckBox::checkable)
+    /// property name from this function,
+    /// and must be registered in the item editor factory for the QVariant::Bool
+    /// type.
+    /// 
+    /// Note: Since Qt 4.2 the item delegates query the user property of widgets,
+    /// and only call this function if the widget has no user property. You can
+    /// override this behavior by reimplementing QAbstractItemDelegate::setModelData()
+    /// and QAbstractItemDelegate::setEditorData().
+    /// 
+    /// **See also:** QMetaObject::userProperty()
+    /// QItemEditorFactory::registerEditor()
     [event] value_property_name() -> ByteArray,
 }
 

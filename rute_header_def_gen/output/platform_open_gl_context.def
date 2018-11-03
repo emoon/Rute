@@ -1,57 +1,32 @@
-///     \class QPlatformOpenGLContext
-///     \since 4.8
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-/// 
-///     \brief The QPlatformOpenGLContext class provides an abstraction for native GL contexts.
-/// 
-///     In QPA the way to support OpenGL or OpenVG or other technologies that requires a native GL
-///     context is through the QPlatformOpenGLContext wrapper.
-/// 
-///     There is no factory function for QPlatformOpenGLContexts, but rather only one accessor function.
-///     The only place to retrieve a QPlatformOpenGLContext from is through a QPlatformWindow.
-/// 
-///     The context which is current for a specific thread can be collected by the currentContext()
-///     function. This is how QPlatformOpenGLContext also makes it possible to use the Qt GUI module
-///     withhout using QOpenGLWidget. When using QOpenGLContext::currentContext(), it will ask
-///     QPlatformOpenGLContext for the currentContext. Then a corresponding QOpenGLContext will be returned,
-///     which maps to the QPlatformOpenGLContext.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PlatformOpenGLContext {
+    /// 
+    /// Called after a new instance is constructed. The default implementation does nothing.
+    /// 
+    /// Subclasses can use this function to perform additional initialization that relies on
+    /// virtual functions.
     [event] initialize(),
     [event] format() -> SurfaceFormat,
-    ///     \class QPlatformOpenGLContext
-    ///     \since 4.8
-    ///     \internal
-    ///     \preliminary
-    ///     \ingroup qpa
+    /// Reimplement in subclass to native swap buffers calls
     /// 
-    ///     \brief The QPlatformOpenGLContext class provides an abstraction for native GL contexts.
-    /// 
-    ///     In QPA the way to support OpenGL or OpenVG or other technologies that requires a native GL
-    ///     context is through the QPlatformOpenGLContext wrapper.
-    /// 
-    ///     There is no factory function for QPlatformOpenGLContexts, but rather only one accessor function.
-    ///     The only place to retrieve a QPlatformOpenGLContext from is through a QPlatformWindow.
-    /// 
-    ///     The context which is current for a specific thread can be collected by the currentContext()
-    ///     function. This is how QPlatformOpenGLContext also makes it possible to use the Qt GUI module
-    ///     withhout using QOpenGLWidget. When using QOpenGLContext::currentContext(), it will ask
-    ///     QPlatformOpenGLContext for the currentContext. Then a corresponding QOpenGLContext will be returned,
-    ///     which maps to the QPlatformOpenGLContext.
+    /// The implementation must support being called in a thread different than the gui-thread.
     [event] swap_buffers(surface: *PlatformSurfaceType),
-    ///     Reimplement in subclass if your platform uses framebuffer objects for surfaces.
     /// 
-    ///     The default implementation returns 0.
+    /// Reimplement in subclass if your platform uses framebuffer objects for surfaces.
+    /// 
+    /// The default implementation returns 0.
     default_framebuffer_object(surface: *PlatformSurfaceType) -> i32,
     [event] make_current(surface: *PlatformSurfaceType) -> bool,
     [event] done_current(),
     [event] is_sharing() -> bool,
     [event] is_valid() -> bool,
+    /// 
+    /// Reimplement in subclass to allow dynamic querying of OpenGL symbols. As opposed to e.g. the wglGetProcAddress
+    /// function on Windows, Qt expects this methods to be able to return valid function pointers even for standard
+    /// OpenGL symbols.
     [event] get_proc_address(proc_name: *char) -> FunctionPointer,
     context() -> OpenGLContext?,
     [static] parse_open_gl_version(version_string: &ByteArrayType, major: &i32, minor: &i32) -> bool,

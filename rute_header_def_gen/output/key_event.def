@@ -1,54 +1,109 @@
-///     \class QKeyEvent
-///     \brief The QKeyEvent class describes a key event.
 /// 
-///     \ingroup events
-///     \inmodule QtGui
+/// Key events are sent to the widget with keyboard input focus
+/// when keys are pressed or released.
 /// 
-///     Key events are sent to the widget with keyboard input focus
-///     when keys are pressed or released.
+/// A key event contains a special accept flag that indicates whether
+/// the receiver will handle the key event. This flag is set by default
+/// for QEvent::KeyPress and QEvent::KeyRelease, so there is no need to
+/// call accept() when acting on a key event. For QEvent::ShortcutOverride
+/// the receiver needs to explicitly accept the event to trigger the override.
+/// Calling ignore() on a key event will propagate it to the parent widget.
+/// The event is propagated up the parent widget chain until a widget
+/// accepts it or an event filter consumes it.
 /// 
-///     A key event contains a special accept flag that indicates whether
-///     the receiver will handle the key event. This flag is set by default
-///     for QEvent::KeyPress and QEvent::KeyRelease, so there is no need to
-///     call accept() when acting on a key event. For QEvent::ShortcutOverride
-///     the receiver needs to explicitly accept the event to trigger the override.
-///     Calling ignore() on a key event will propagate it to the parent widget.
-///     The event is propagated up the parent widget chain until a widget
-///     accepts it or an event filter consumes it.
+/// The QWidget::setEnabled() function can be used to enable or disable
+/// mouse and keyboard events for a widget.
 /// 
-///     The QWidget::setEnabled() function can be used to enable or disable
-///     mouse and keyboard events for a widget.
+/// The event handlers QWidget::keyPressEvent(), QWidget::keyReleaseEvent(),
+/// QGraphicsItem::keyPressEvent() and QGraphicsItem::keyReleaseEvent()
+/// receive key events.
 /// 
-///     The event handlers QWidget::keyPressEvent(), QWidget::keyReleaseEvent(),
-///     QGraphicsItem::keyPressEvent() and QGraphicsItem::keyReleaseEvent()
-///     receive key events.
-/// 
-///     \sa QFocusEvent, QWidget::grabKeyboard()
+/// **See also:** QFocusEvent
+/// QWidget::grabKeyboard()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct KeyEvent : InputEvent {
+    /// 
+    /// Returns the code of the key that was pressed or released.
+    /// 
+    /// See [Qt::Key](Qt::Key)
+    /// for the list of keyboard codes. These codes are
+    /// independent of the underlying window system. Note that this
+    /// function does not distinguish between capital and non-capital
+    /// letters, use the text() function (returning the Unicode text the
+    /// key generated) for this purpose.
+    /// 
+    /// A value of either 0 or Qt::Key_unknown means that the event is not
+    /// the result of a known key; for example, it may be the result of
+    /// a compose sequence, a keyboard macro, or due to key event
+    /// compression.
+    /// 
+    /// **See also:** Qt::WA_KeyCompression
     key() -> i32,
-    ///     \fn bool QKeyEvent::matches(QKeySequence::StandardKey key) const
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if the key event matches the given standard \a key;
-    ///     otherwise returns \c false.
+    /// Returns `true` if the key event matches the given standard *key;*
+    /// otherwise returns `false.`
     matches(key: KeySequence::StandardKey) -> bool,
-    ///     Returns the keyboard modifier flags that existed immediately
-    ///     after the event occurred.
     /// 
-    ///     \warning This function cannot always be trusted. The user can
-    ///     confuse it by pressing both \uicontrol{Shift} keys simultaneously and
-    ///     releasing one of them, for example.
+    /// Returns the keyboard modifier flags that existed immediately
+    /// after the event occurred.
     /// 
-    ///     \sa QGuiApplication::keyboardModifiers()
+    /// **Warning**: This function cannot always be trusted. The user can
+    /// confuse it by pressing both **{Shift}** keys simultaneously and
+    /// releasing one of them, for example.
+    /// 
+    /// **See also:** QGuiApplication::keyboardModifiers()
     modifiers() -> Rute::KeyboardModifiers,
+    /// 
+    /// Returns the Unicode text that this key generated.
+    /// 
+    /// Return values when modifier keys such as
+    /// Shift, Control, Alt, and Meta are pressed
+    /// differ among platforms and could return an empty string.
+    /// 
+    /// **Note**: [key()](key())
+    /// will always return a valid value,
+    /// independent of modifier keys.
+    /// 
+    /// **See also:** Qt::WA_KeyCompression
     text() -> String,
+    /// 
+    /// Returns `true` if this event comes from an auto-repeating key;
+    /// returns `false` if it comes from an initial key press.
+    /// 
+    /// Note that if the event is a multiple-key compressed event that is
+    /// partly due to auto-repeat, this function could return either true
+    /// or false indeterminately.
     is_auto_repeat() -> bool,
+    /// 
+    /// Returns the number of keys involved in this event. If text()
+    /// is not empty, this is simply the length of the string.
+    /// 
+    /// **See also:** Qt::WA_KeyCompression
     count() -> i32,
+    /// 
+    /// Returns the native scan code of the key event. If the key event
+    /// does not contain this data 0 is returned.
+    /// 
+    /// Note: The native scan code may be 0, even if the key event contains
+    /// extended information.
+    /// 
+    /// Note: On Mac OS/X, this function is not useful, because there is no
+    /// way to get the scan code from Carbon or Cocoa. The function always
+    /// returns 1 (or 0 in the case explained above).
     native_scan_code() -> u32,
+    /// 
+    /// Returns the native virtual key, or key sym of the key event.
+    /// If the key event does not contain this data 0 is returned.
+    /// 
+    /// Note: The native virtual key may be 0, even if the key event contains extended information.
     native_virtual_key() -> u32,
+    /// 
+    /// Returns the native modifiers of a key event.
+    /// If the key event does not contain this data 0 is returned.
+    /// 
+    /// Note: The native modifiers may be 0, even if the key event contains extended information.
     native_modifiers() -> u32,
 }
 

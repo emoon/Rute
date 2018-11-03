@@ -1,48 +1,45 @@
-///     \class QTextBlockGroup
-///     \reentrant
 /// 
-///     \brief The QTextBlockGroup class provides a container for text blocks within
-///     a QTextDocument.
-///     \inmodule QtGui
+/// Block groups can be used to organize blocks of text within a document.
+/// They maintain an up-to-date list of the text blocks that belong to
+/// them, even when text blocks are being edited.
 /// 
-///     \ingroup richtext-processing
+/// Each group has a parent document which is specified when the group is
+/// constructed.
 /// 
-///     Block groups can be used to organize blocks of text within a document.
-///     They maintain an up-to-date list of the text blocks that belong to
-///     them, even when text blocks are being edited.
+/// Text blocks can be inserted into a group with blockInserted(), and removed
+/// with blockRemoved(). If a block's format is changed, blockFormatChanged()
+/// is called.
 /// 
-///     Each group has a parent document which is specified when the group is
-///     constructed.
+/// The list of blocks in the group is returned by blockList(). Note that the
+/// blocks in the list are not necessarily adjacent elements in the document;
+/// for example, the top-level items in a multi-level list will be separated
+/// by the items in lower levels of the list.
 /// 
-///     Text blocks can be inserted into a group with blockInserted(), and removed
-///     with blockRemoved(). If a block's format is changed, blockFormatChanged()
-///     is called.
-/// 
-///     The list of blocks in the group is returned by blockList(). Note that the
-///     blocks in the list are not necessarily adjacent elements in the document;
-///     for example, the top-level items in a multi-level list will be separated
-///     by the items in lower levels of the list.
-/// 
-///     \sa QTextBlock, QTextDocument
+/// **See also:** QTextBlock
+/// QTextDocument
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextBlockGroup : TextObject {
-    ///     Appends the given \a block to the end of the group.
     /// 
-    ///     \warning If you reimplement this function you must call the base
-    ///     class implementation.
+    /// Appends the given *block* to the end of the group.
+    /// 
+    /// **Warning**: If you reimplement this function you must call the base
+    /// class implementation.
     [event] block_inserted(block: &TextBlockType),
-    ///     Removes the given \a block from the group; the block itself is not
-    ///     deleted, it simply isn't a member of this group anymore.
-    [event] block_removed(block: &TextBlockType),
-    ///     This function is called whenever the specified \a block of text is changed.
-    ///     The text block is a member of this group.
     /// 
-    ///     The base class implementation does nothing.
+    /// Removes the given *block* from the group; the block itself is not
+    /// deleted, it simply isn't a member of this group anymore.
+    [event] block_removed(block: &TextBlockType),
+    /// 
+    /// This function is called whenever the specified *block* of text is changed.
+    /// The text block is a member of this group.
+    /// 
+    /// The base class implementation does nothing.
     [event] block_format_changed(block: &TextBlockType),
-    ///     Returns a (possibly empty) list of all the blocks that are part of
-    ///     the block group.
+    /// 
+    /// Returns a (possibly empty) list of all the blocks that are part of
+    /// the block group.
     block_list() -> [TextBlock],
 }
 

@@ -1,43 +1,39 @@
-///     \class QAccessibleEvent
-///     \ingroup accessibility
-///     \inmodule QtGui
 /// 
-///     \brief The QAccessibleEvent class is the base class for accessibility notifications.
+/// This class is used with [QAccessible::updateAccessibility().](QAccessible::updateAccessibility().)
 /// 
-///     This class is used with \l QAccessible::updateAccessibility().
+/// The event type is one of the values of [QAccessible::Event.](QAccessible::Event.)
 /// 
-///     The event type is one of the values of \l QAccessible::Event.
-///     There are a number of subclasses that should be used to provide more details about the
-///     event.
+/// There are a number of subclasses that should be used to provide more details about the
+/// event.
 /// 
-///     For example to notify about a focus change when re-implementing QWidget::setFocus,
-///     the event could be used as follows:
-///     \code
-///     void MyWidget::setFocus(Qt::FocusReason reason)
-///     {
-///         // handle custom focus setting...
-///         QAccessibleEvent event(f, QAccessible::Focus);
-///         QAccessible::updateAccessibility(&event);
-///     }
-///     \endcode
+/// For example to notify about a focus change when re-implementing QWidget::setFocus,
+/// the event could be used as follows:
+/// ```
+/// void MyWidget::setFocus(Qt::FocusReason reason)
 /// 
-///     To enable in process screen readers, all events must be sent after the change has happened.
+/// // handle custom focus setting...
+/// QAccessibleEvent event(f, QAccessible::Focus);
+/// QAccessible::updateAccessibility(&event);
+/// 
+/// ```
+/// 
+/// To enable in process screen readers, all events must be sent after the change has happened.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleEvent {
+    /// Returns the event type.
     type() -> Accessible::Event,
+    /// Returns the event object.
     object() -> Object?,
-    ///     \internal
-    ///     Returns the uniqueId of the QAccessibleInterface represented by this event.
-    /// 
-    ///     In case the object() function returns 0 this is the only way to access the
-    ///     interface.
     unique_id() -> Accessible::Id,
+    /// Sets the child index to *child.*
     set_child(chld: i32),
+    /// Returns the child index.
     child() -> i32,
-    ///     Returns the QAccessibleInterface associated with the event.
+    /// 
+    /// Returns the QAccessibleInterface associated with the event.
     [event] accessible_interface() -> AccessibleInterface?,
 }
 

@@ -1,43 +1,49 @@
-///     \class QCommonStyle
-///     \brief The QCommonStyle class encapsulates the common Look and Feel of a GUI.
 /// 
-///     \ingroup appearance
-///     \inmodule QtWidgets
+/// This abstract class implements some of the widget's look and feel
+/// that is common to all GUI styles provided and shipped as part of
+/// Qt.
 /// 
-///     This abstract class implements some of the widget's look and feel
-///     that is common to all GUI styles provided and shipped as part of
-///     Qt.
+/// Since QCommonStyle inherits QStyle, all of its functions are fully documented
+/// in the QStyle documentation.
 /// 
-///     Since QCommonStyle inherits QStyle, all of its functions are fully documented
-///     in the QStyle documentation.
-///     \omit
-///     , although the
-///     extra functions that QCommonStyle provides, e.g.
-///     drawComplexControl(), drawControl(), drawPrimitive(),
-///     hitTestComplexControl(), subControlRect(), sizeFromContents(), and
-///     subElementRect() are documented here.
-///     \endomit
-/// 
-///     \sa QStyle, QProxyStyle
+/// **See also:** QStyle
+/// QProxyStyle
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct CommonStyle : Style {
+    /// 
     [event] draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
+    /// 
     [event] sub_element_rect(r: Style::SubElement, opt: *StyleOptionType, widget: *WidgetType) -> Rect,
+    /// 
     [event] size_from_contents(ct: Style::ContentsType, opt: *StyleOptionType, contents_size: &SizeType, widget: *WidgetType) -> Size,
+    /// 
     [event] style_hint(sh: Style::StyleHint, opt: *StyleOptionType, w: *WidgetType, shret: *StyleHintReturnType) -> i32,
     [event] standard_icon(standard_icon: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Icon,
+    /// 
     [event] standard_pixmap(sp: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
+    /// 
     [event] generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
+    /// 
     [event] layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
-    ///   \reimp
+    /// 
+    /// 
+    /// 
     [event] polish(arg0: &PaletteType),
-    ///   \reimp
+    /// 
+    /// 
+    /// 
     [event] polish(app: *ApplicationType),
-    ///   \reimp
+    /// 
+    /// 
+    /// 
     [event] polish(widget: *WidgetType),
+    /// 
+    /// 
     [event] unpolish(widget: *WidgetType),
+    /// 
+    /// 
     [event] unpolish(application: *ApplicationType),
 }
 

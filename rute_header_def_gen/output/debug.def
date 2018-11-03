@@ -1,51 +1,45 @@
-///     \class QDebug
-///     \inmodule QtCore
-///     \ingroup shared
 /// 
-///     \brief The QDebug class provides an output stream for debugging information.
+/// QDebug is used whenever the developer needs to write out debugging or tracing
+/// information to a device, file, string or console.
 /// 
-///     QDebug is used whenever the developer needs to write out debugging or tracing
-///     information to a device, file, string or console.
+/// # Basic Use
 /// 
-///     \section1 Basic Use
+/// In the common case, it is useful to call the qDebug() function to obtain a
+/// default QDebug object to use for writing debugging information.
 /// 
-///     In the common case, it is useful to call the qDebug() function to obtain a
-///     default QDebug object to use for writing debugging information.
+/// This constructs a QDebug object using the constructor that accepts a QtMsgType
+/// value of QtDebugMsg. Similarly, the qWarning(), qCritical() and qFatal()
+/// functions also return QDebug objects for the corresponding message types.
 /// 
-///     \snippet qdebug/qdebugsnippet.cpp 1
+/// The class also provides several constructors for other situations, including
+/// a constructor that accepts a QFile or any other QIODevice subclass that is
+/// used to write debugging information to files and other devices. The constructor
+/// that accepts a QString is used to write to a string for display or serialization.
 /// 
-///     This constructs a QDebug object using the constructor that accepts a QtMsgType
-///     value of QtDebugMsg. Similarly, the qWarning(), qCritical() and qFatal()
-///     functions also return QDebug objects for the corresponding message types.
+/// # Formatting Options
 /// 
-///     The class also provides several constructors for other situations, including
-///     a constructor that accepts a QFile or any other QIODevice subclass that is
-///     used to write debugging information to files and other devices. The constructor
-///     that accepts a QString is used to write to a string for display or serialization.
+/// QDebug formats output so that it's easily readable. It automatically adds spaces
+/// between arguments, and adds quotes around QString, QByteArray, QChar arguments.
 /// 
-///     \section1 Formatting Options
+/// You can tweak these options through the space(), nospace() and quote(), noquote()
+/// methods. Furthermore, [QTextStream manipulators](QTextStream%20manipulators)
+/// can be piped into a QDebug
+/// stream.
 /// 
-///     QDebug formats output so that it's easily readable. It automatically adds spaces
-///     between arguments, and adds quotes around QString, QByteArray, QChar arguments.
+/// QDebugStateSaver limits changes to the formatting to the current scope.
+/// resetFormat() resets the options to the default ones.
 /// 
-///     You can tweak these options through the space(), nospace() and quote(), noquote()
-///     methods. Furthermore, \l{QTextStream manipulators} can be piped into a QDebug
-///     stream.
+/// # Writing Custom Types to a Stream
 /// 
-///     QDebugStateSaver limits changes to the formatting to the current scope.
-///     resetFormat() resets the options to the default ones.
+/// Many standard types can be written to QDebug objects, and Qt provides support for
+/// most Qt value types. To add support for custom types, you need to implement a
+/// streaming operator, as in the following example:
 /// 
-///     \section1 Writing Custom Types to a Stream
+/// This is described in the [Debugging Techniques](Debugging%20Techniques)
+/// and
+/// [Creating Custom Qt Types](Creating%20Custom%20Qt%20Types%23Making%20the%20Type%20Printable)
 /// 
-///     Many standard types can be written to QDebug objects, and Qt provides support for
-///     most Qt value types. To add support for custom types, you need to implement a
-///     streaming operator, as in the following example:
-/// 
-///     \snippet qdebug/qdebugsnippet.cpp 0
-/// 
-///     This is described in the \l{Debugging Techniques} and
-///     \l{Creating Custom Qt Types#Making the Type Printable}{Creating Custom Qt Types}
-///     documents.
+/// documents.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -57,22 +51,98 @@ enum Latin1Content {
 
 
 struct Debug {
-    ///     \internal
     put_ucs4(ucs4: uint),
-    ///     \internal
-    ///     Duplicated from QtTest::toPrettyCString().
     put_byte_array(begin: *char, length: size_t, content: Debug::Latin1Content),
+    /// 
+    /// Swaps this debug stream instance with *other.* This function is
+    /// very fast and never fails.
     swap(other: &DebugType),
+    /// 
+    /// Resets the stream formatting options, bringing it back to its original constructed state.
+    /// 
+    /// **See also:** space()
+    /// quote()
     reset_format() -> Debug?,
+    /// 
+    /// Writes a space character to the debug stream and returns a reference to
+    /// the stream.
+    /// 
+    /// The stream remembers that automatic insertion of spaces is
+    /// enabled for future writes.
+    /// 
+    /// **See also:** nospace()
+    /// maybeSpace()
     space() -> Debug?,
+    /// 
+    /// Disables automatic insertion of spaces and returns a reference to the stream.
+    /// 
+    /// **See also:** space()
+    /// maybeSpace()
     nospace() -> Debug?,
+    /// 
+    /// Writes a space character to the debug stream, depending on the current
+    /// setting for automatic insertion of spaces, and returns a reference to the stream.
+    /// 
+    /// **See also:** space()
+    /// nospace()
     maybe_space() -> Debug?,
+    /// 
+    /// Returns the verbosity of the debug stream.
+    /// 
+    /// Streaming operators can check the value to decide whether
+    /// verbose output is desired and print more information depending on the
+    /// level. Higher values indicate that more information is desired.
+    /// 
+    /// The allowed range is from 0 to 7. The default value is 2.
+    /// 
+    /// **See also:** setVerbosity()
     verbosity() -> i32,
+    /// 
+    /// Sets the verbosity of the stream to *verbosityLevel.*
+    /// 
+    /// The allowed range is from 0 to 7. The default value is 2.
+    /// 
+    /// **See also:** verbosity()
     set_verbosity(verbosity_level: i32),
+    /// 
+    /// Returns `true` if this QDebug instance will automatically insert spaces
+    /// between writes.
+    /// 
+    /// **See also:** QDebugStateSaver
     auto_insert_spaces() -> bool,
+    /// 
+    /// Enables automatic insertion of spaces between writes if *b* is true; otherwise
+    /// automatic insertion of spaces is disabled.
+    /// 
+    /// **See also:** QDebugStateSaver
     set_auto_insert_spaces(b: bool),
+    /// 
+    /// Enables automatic insertion of quotation characters around QChar, QString and QByteArray
+    /// contents and returns a reference to the stream.
+    /// 
+    /// Quoting is enabled by default.
+    /// 
+    /// **See also:** noquote()
+    /// maybeQuote()
     quote() -> Debug?,
+    /// 
+    /// Disables automatic insertion of quotation characters around QChar, QString and QByteArray
+    /// contents and returns a reference to the stream.
+    /// 
+    /// When quoting is disabled, these types are printed without quotation
+    /// characters and without escaping of non-printable characters.
+    /// 
+    /// **See also:** quote()
+    /// maybeQuote()
     noquote() -> Debug?,
+    /// 
+    /// Writes a character *c* to the debug stream, depending on the
+    /// current setting for automatic insertion of quotes, and returns a reference to the stream.
+    /// 
+    /// The default character is a double quote `"` .
+    /// 
+    /// **See also:** quote()
+    /// noquote()
     maybe_quote(c: char) -> Debug?,
 }
 

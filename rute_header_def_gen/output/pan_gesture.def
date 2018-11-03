@@ -1,22 +1,35 @@
-///     \class QPanGesture
-///     \since 4.6
-///     \brief The QPanGesture class describes a panning gesture made by the user.
-///     \ingroup gestures
-///     \inmodule QtWidgets
 /// 
-///     \image pangesture.png
+/// ![pangesture.png](pangesture.png)
 /// 
-///     For an overview of gesture handling in Qt and information on using gestures
-///     in your applications, see the \l{Gestures in Widgets and Graphics View} document.
+/// For an overview of gesture handling in Qt and information on using gestures
+/// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
+/// document.
 /// 
-///     \sa QPinchGesture, QSwipeGesture
+/// **See also:** QPinchGesture
+/// QSwipeGesture
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PanGesture : Gesture {
+    /// 
+    /// The last offset contains the change in position of the user's input as
+    /// reported in the [offset](offset)
+    /// property when a previous gesture event was
+    /// delivered for this gesture.
+    /// 
+    /// If no previous event was delivered with information about this gesture
+    /// (i.e., this gesture object contains information about the first movement
+    /// in the gesture) then this property contains a zero size.
     last_offset() -> PointF,
+    /// 
+    /// The offset measures the total change in position of the user's input
+    /// covered by the gesture on the input device.
     offset() -> PointF,
+    /// 
+    /// This is essentially the same as the difference between offset() and
+    /// lastOffset().
     delta() -> PointF,
+    /// 
     acceleration() -> f32,
     set_last_offset(value: &PointFType),
     set_offset(value: &PointFType),

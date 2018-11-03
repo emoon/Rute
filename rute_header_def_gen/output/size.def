@@ -1,61 +1,179 @@
-///     \class QSize
-///     \inmodule QtCore
-///     \ingroup painting
 /// 
-///     \brief The QSize class defines the size of a two-dimensional
-///     object using integer point precision.
+/// A size is specified by a width() and a height(). It can be set in
+/// the constructor and changed using the setWidth(), setHeight(), or
+/// scale() functions, or using arithmetic operators. A size can also
+/// be manipulated directly by retrieving references to the width and
+/// height using the rwidth() and rheight() functions. Finally, the
+/// width and height can be swapped using the transpose() function.
 /// 
-///     A size is specified by a width() and a height().  It can be set in
-///     the constructor and changed using the setWidth(), setHeight(), or
-///     scale() functions, or using arithmetic operators. A size can also
-///     be manipulated directly by retrieving references to the width and
-///     height using the rwidth() and rheight() functions. Finally, the
-///     width and height can be swapped using the transpose() function.
+/// The isValid() function determines if a size is valid (a valid size
+/// has both width and height greater than or equal to zero). The isEmpty()
+/// function returns `true` if either of the width and height is less
+/// than, or equal to, zero, while the isNull() function returns `true`
+/// only if both the width and the height is zero.
 /// 
-///     The isValid() function determines if a size is valid (a valid size
-///     has both width and height greater than or equal to zero). The isEmpty()
-///     function returns \c true if either of the width and height is less
-///     than, or equal to, zero, while the isNull() function returns \c true
-///     only if both the width and the height is zero.
+/// Use the expandedTo() function to retrieve a size which holds the
+/// maximum height and width of *this* size and a given
+/// size. Similarly, the boundedTo() function returns a size which
+/// holds the minimum height and width of *this* size and a given
+/// size.
 /// 
-///     Use the expandedTo() function to retrieve a size which holds the
-///     maximum height and width of \e this size and a given
-///     size. Similarly, the boundedTo() function returns a size which
-///     holds the minimum height and width of \e this size and a given
-///     size.
+/// QSize objects can be streamed as well as compared.
 /// 
-///     QSize objects can be streamed as well as compared.
-/// 
-///     \sa QSizeF, QPoint, QRect
+/// **See also:** QSizeF
+/// QPoint
+/// QRect
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Size {
+    /// 
+    /// Returns `true` if both the width and height is 0; otherwise returns
+    /// false.
+    /// 
+    /// **See also:** isValid()
+    /// isEmpty()
     is_null() -> bool,
+    /// 
+    /// Returns `true` if either of the width and height is less than or
+    /// equal to 0; otherwise returns `false.`
+    /// 
+    /// **See also:** isNull()
+    /// isValid()
     is_empty() -> bool,
+    /// 
+    /// Returns `true` if both the width and height is equal to or greater
+    /// than 0; otherwise returns `false.`
+    /// 
+    /// **See also:** isNull()
+    /// isEmpty()
     is_valid() -> bool,
+    /// 
+    /// Returns the width.
+    /// 
+    /// **See also:** height()
+    /// setWidth()
     width() -> i32,
+    /// 
+    /// Returns the height.
+    /// 
+    /// **See also:** width()
+    /// setHeight()
     height() -> i32,
+    /// 
+    /// Sets the width to the given *width.*
+    /// 
+    /// **See also:** rwidth()
+    /// width()
+    /// setHeight()
     set_width(w: i32),
+    /// 
+    /// Sets the height to the given *height.*
+    /// 
+    /// **See also:** rheight()
+    /// height()
+    /// setWidth()
     set_height(h: i32),
+    /// 
+    /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode:*
+    /// 
+    /// * If *mode* is Qt::IgnoreAspectRatio, the size is set to ( *width,* *height).*
+    /// * If *mode* is Qt::KeepAspectRatio, the current size is scaled to a rectangle as large as possible inside ( *width,* *height),* preserving the aspect ratio.
+    /// * If *mode* is Qt::KeepAspectRatioByExpanding, the current size is scaled to a rectangle as small as possible outside ( *width,* *height),* preserving the aspect ratio.
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** setWidth()
+    /// setHeight()
+    /// scaled()
+    /// 
+    /// **Overloads**
+    /// Scales the size to a rectangle with the given *size,* according to
+    /// the specified *mode.*
+    /// 
+    /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
+    /// 
+    /// **See also:** scale()
+    /// 
+    /// **Overloads**
+    /// Return a size scaled to a rectangle with the given size *s,*
+    /// according to the specified *mode.*
     scale(w: i32, h: i32, mode: Rute::AspectRatioMode),
+    /// 
+    /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode:*
+    /// 
+    /// * If *mode* is Qt::IgnoreAspectRatio, the size is set to ( *width,* *height).*
+    /// * If *mode* is Qt::KeepAspectRatio, the current size is scaled to a rectangle as large as possible inside ( *width,* *height),* preserving the aspect ratio.
+    /// * If *mode* is Qt::KeepAspectRatioByExpanding, the current size is scaled to a rectangle as small as possible outside ( *width,* *height),* preserving the aspect ratio.
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** setWidth()
+    /// setHeight()
+    /// scaled()
+    /// 
+    /// **Overloads**
+    /// Scales the size to a rectangle with the given *size,* according to
+    /// the specified *mode.*
+    /// 
+    /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
+    /// 
+    /// **See also:** scale()
+    /// 
+    /// **Overloads**
+    /// Return a size scaled to a rectangle with the given size *s,*
+    /// according to the specified *mode.*
     scale(s: &SizeType, mode: Rute::AspectRatioMode),
-    ///     \overload
-    ///     \since 5.0
     /// 
-    ///     Return a size scaled to a rectangle with the given size \a s,
-    ///     according to the specified \a mode.
+    /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
+    /// 
+    /// **See also:** scale()
+    /// 
+    /// **Overloads**
+    /// Return a size scaled to a rectangle with the given size *s,*
+    /// according to the specified *mode.*
     scaled(w: i32, h: i32, mode: Rute::AspectRatioMode) -> Size,
-    ///     \overload
-    ///     \since 5.0
     /// 
-    ///     Return a size scaled to a rectangle with the given size \a s,
-    ///     according to the specified \a mode.
+    /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
+    /// 
+    /// **See also:** scale()
+    /// 
+    /// **Overloads**
+    /// Return a size scaled to a rectangle with the given size *s,*
+    /// according to the specified *mode.*
     scaled(s: &SizeType, mode: Rute::AspectRatioMode) -> Size,
+    /// 
+    /// Returns a size holding the maximum width and height of this size
+    /// and the given *otherSize.*
+    /// 
+    /// **See also:** boundedTo()
+    /// scale()
     expanded_to(arg0: &SizeType) -> Size,
+    /// 
+    /// Returns a size holding the minimum width and height of this size
+    /// and the given *otherSize.*
+    /// 
+    /// **See also:** expandedTo()
+    /// scale()
     bounded_to(arg0: &SizeType) -> Size,
+    /// 
+    /// Returns a reference to the width.
+    /// 
+    /// Using a reference makes it possible to manipulate the width
+    /// directly. For example:
+    /// 
+    /// **See also:** rheight()
+    /// setWidth()
     rwidth() -> i32?,
+    /// 
+    /// Returns a reference to the height.
+    /// 
+    /// Using a reference makes it possible to manipulate the height
+    /// directly. For example:
+    /// 
+    /// **See also:** rwidth()
+    /// setHeight()
     rheight() -> i32?,
 }
 

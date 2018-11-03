@@ -1,24 +1,18 @@
-///     \class QMatrix4x4
-///     \brief The QMatrix4x4 class represents a 4x4 transformation matrix in 3D space.
-///     \since 4.6
-///     \ingroup painting-3D
-///     \inmodule QtGui
 /// 
-///     The QMatrix4x4 class in general is treated as a row-major matrix, in that the
-///     constructors and operator() functions take data in row-major format, as is
-///     familiar in C-style usage.
+/// The QMatrix4x4 class in general is treated as a row-major matrix, in that the
+/// constructors and operator() functions take data in row-major format, as is
+/// familiar in C-style usage.
 /// 
-///     Internally the data is stored as column-major format, so as to be optimal for
-///     passing to OpenGL functions, which expect column-major data.
+/// Internally the data is stored as column-major format, so as to be optimal for
+/// passing to OpenGL functions, which expect column-major data.
 /// 
-///     When using these functions be aware that they return data in \b{column-major}
-///     format:
-///     \list
-///     \li data()
-///     \li constData()
-///     \endlist
+/// When using these functions be aware that they return data in **column-major**
+/// format:
+/// * data()
+/// * constData()
 /// 
-///     \sa QVector3D, QGenericMatrix
+/// **See also:** QVector3D
+/// QGenericMatrix
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -35,210 +29,690 @@ enum Matrix4x4FixMeEnums {
 
 
 struct Matrix4x4 {
+    /// 
+    /// Returns the elements of column *index* as a 4D vector.
+    /// 
+    /// **See also:** setColumn()
+    /// row()
     column(index: i32) -> Vector4D,
+    /// 
+    /// Sets the elements of column *index* to the components of *value.*
+    /// 
+    /// **See also:** column()
+    /// setRow()
     set_column(index: i32, value: &Vector4DType),
+    /// 
+    /// Returns the elements of row *index* as a 4D vector.
+    /// 
+    /// **See also:** setRow()
+    /// column()
     row(index: i32) -> Vector4D,
+    /// 
+    /// Sets the elements of row *index* to the components of *value.*
+    /// 
+    /// **See also:** row()
+    /// setColumn()
     set_row(index: i32, value: &Vector4DType),
+    /// 
+    /// Returns `true` if this matrix is affine matrix; false otherwise.
+    /// 
+    /// An affine matrix is a 4x4 matrix with row 3 equal to (0, 0, 0, 1),
+    /// e.g. no projective coefficients.
+    /// 
+    /// **See also:** isIdentity()
     is_affine() -> bool,
+    /// 
+    /// Returns `true` if this matrix is the identity; false otherwise.
+    /// 
+    /// **See also:** setToIdentity()
     is_identity() -> bool,
+    /// 
+    /// Sets this matrix to the identity.
+    /// 
+    /// **See also:** isIdentity()
     set_to_identity(),
+    /// 
+    /// Fills all elements of this matrx with *value.*
     fill(value: f32),
-    ///     Returns the determinant of this matrix.
+    /// 
+    /// Returns the determinant of this matrix.
     determinant() -> double,
-    ///     Returns the inverse of this matrix.  Returns the identity if
-    ///     this matrix cannot be inverted; i.e. determinant() is zero.
-    ///     If \a invertible is not null, then true will be written to
-    ///     that location if the matrix can be inverted; false otherwise.
     /// 
-    ///     If the matrix is recognized as the identity or an orthonormal
-    ///     matrix, then this function will quickly invert the matrix
-    ///     using optimized routines.
+    /// Returns the inverse of this matrix. Returns the identity if
+    /// this matrix cannot be inverted; i.e. determinant() is zero.
+    /// If *invertible* is not null, then true will be written to
+    /// that location if the matrix can be inverted; false otherwise.
     /// 
-    ///     \sa determinant(), normalMatrix()
+    /// If the matrix is recognized as the identity or an orthonormal
+    /// matrix, then this function will quickly invert the matrix
+    /// using optimized routines.
+    /// 
+    /// **See also:** determinant()
+    /// normalMatrix()
     inverted(invertible: *bool) -> Matrix4x4,
-    ///     \overload
     /// 
-    ///     Multiplies this matrix by another that scales coordinates by the
-    ///     given \a factor.
+    /// Multiplies this matrix by another that scales coordinates by
+    /// the components of *vector.*
     /// 
-    ///     \sa translate(), rotate()
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* and *y.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* *y,* and *z.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// given *factor.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
     scale(vector: &Vector3DType),
-    ///     Multiples this matrix by another that rotates coordinates according
-    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
-    ///     been normalized.
     /// 
-    ///     \sa scale(), translate(), QQuaternion
+    /// Multiples this matrix by another that rotates coordinates through
+    /// *angle* degrees about *vector.*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that rotates coordinates through
+    /// *angle* degrees about the vector ( *x,* *y,* *z).*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// Multiples this matrix by another that rotates coordinates according
+    /// to a specified *quaternion.* The *quaternion* is assumed to have
+    /// been normalized.
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// QQuaternion
     rotate(angle: f32, vector: &Vector3DType),
-    ///     \overload
     /// 
-    ///     Multiplies this matrix by another that scales coordinates by the
-    ///     given \a factor.
+    /// Multiplies this matrix by another that scales coordinates by
+    /// the components of *vector.*
     /// 
-    ///     \sa translate(), rotate()
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* and *y.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* *y,* and *z.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// given *factor.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
     scale(x: f32, y: f32),
-    ///     \overload
     /// 
-    ///     Multiplies this matrix by another that scales coordinates by the
-    ///     given \a factor.
+    /// Multiplies this matrix by another that scales coordinates by
+    /// the components of *vector.*
     /// 
-    ///     \sa translate(), rotate()
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* and *y.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* *y,* and *z.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// given *factor.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
     scale(x: f32, y: f32, z: f32),
-    ///     \overload
     /// 
-    ///     Multiplies this matrix by another that scales coordinates by the
-    ///     given \a factor.
+    /// Multiplies this matrix by another that scales coordinates by
+    /// the components of *vector.*
     /// 
-    ///     \sa translate(), rotate()
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* and *y.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// components *x,* *y,* and *z.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that scales coordinates by the
+    /// given *factor.*
+    /// 
+    /// **See also:** translate()
+    /// rotate()
     scale(factor: f32),
-    ///     Multiples this matrix by another that rotates coordinates according
-    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
-    ///     been normalized.
     /// 
-    ///     \sa scale(), translate(), QQuaternion
+    /// Multiples this matrix by another that rotates coordinates through
+    /// *angle* degrees about *vector.*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that rotates coordinates through
+    /// *angle* degrees about the vector ( *x,* *y,* *z).*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// Multiples this matrix by another that rotates coordinates according
+    /// to a specified *quaternion.* The *quaternion* is assumed to have
+    /// been normalized.
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// QQuaternion
     rotate(angle: f32, x: f32, y: f32, z: f32),
-    ///     Multiples this matrix by another that rotates coordinates according
-    ///     to a specified \a quaternion.  The \a quaternion is assumed to have
-    ///     been normalized.
     /// 
-    ///     \sa scale(), translate(), QQuaternion
+    /// Multiples this matrix by another that rotates coordinates through
+    /// *angle* degrees about *vector.*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that rotates coordinates through
+    /// *angle* degrees about the vector ( *x,* *y,* *z).*
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// 
+    /// Multiples this matrix by another that rotates coordinates according
+    /// to a specified *quaternion.* The *quaternion* is assumed to have
+    /// been normalized.
+    /// 
+    /// **See also:** scale()
+    /// translate()
+    /// QQuaternion
     rotate(quaternion: &QuaternionType),
-    ///     Multiplies this matrix by another that applies an orthographic
-    ///     projection for a window with lower-left corner (\a left, \a bottom),
-    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
-    ///     and \a farPlane clipping planes.
     /// 
-    ///     \sa frustum(), perspective()
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with lower-left corner ( *left,* *bottom),*
+    /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
+    /// and *farPlane* clipping planes.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
     ortho(rect: &RectType),
-    ///     Multiplies this matrix by another that applies an orthographic
-    ///     projection for a window with lower-left corner (\a left, \a bottom),
-    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
-    ///     and \a farPlane clipping planes.
     /// 
-    ///     \sa frustum(), perspective()
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with lower-left corner ( *left,* *bottom),*
+    /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
+    /// and *farPlane* clipping planes.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
     ortho(rect: &RectFType),
-    ///     Multiplies this matrix by another that applies an orthographic
-    ///     projection for a window with lower-left corner (\a left, \a bottom),
-    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
-    ///     and \a farPlane clipping planes.
     /// 
-    ///     \sa frustum(), perspective()
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// **Overloads**
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with boundaries specified by *rect.*
+    /// The near and far clipping planes will be -1 and 1 respectively.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
+    /// 
+    /// Multiplies this matrix by another that applies an orthographic
+    /// projection for a window with lower-left corner ( *left,* *bottom),*
+    /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
+    /// and *farPlane* clipping planes.
+    /// 
+    /// **See also:** frustum()
+    /// perspective()
     ortho(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
-    ///     Multiplies this matrix by another that applies a perspective
-    ///     frustum projection for a window with lower-left corner (\a left, \a bottom),
-    ///     upper-right corner (\a right, \a top), and the specified \a nearPlane
-    ///     and \a farPlane clipping planes.
     /// 
-    ///     \sa ortho(), perspective()
+    /// Multiplies this matrix by another that applies a perspective
+    /// frustum projection for a window with lower-left corner ( *left,* *bottom),*
+    /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
+    /// and *farPlane* clipping planes.
+    /// 
+    /// **See also:** ortho()
+    /// perspective()
     frustum(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
-    ///     Multiplies this matrix by another that applies a perspective
-    ///     projection. The vertical field of view will be \a verticalAngle degrees
-    ///     within a window with a given \a aspectRatio that determines the horizontal
-    ///     field of view.
-    ///     The projection will have the specified \a nearPlane and \a farPlane clipping
-    ///     planes which are the distances from the viewer to the corresponding planes.
     /// 
-    ///     \sa ortho(), frustum()
+    /// Multiplies this matrix by another that applies a perspective
+    /// projection. The vertical field of view will be *verticalAngle* degrees
+    /// within a window with a given *aspectRatio* that determines the horizontal
+    /// field of view.
+    /// The projection will have the specified *nearPlane* and *farPlane* clipping
+    /// planes which are the distances from the viewer to the corresponding planes.
+    /// 
+    /// **See also:** ortho()
+    /// frustum()
     perspective(vertical_angle: f32, aspect_ratio: f32, near_plane: f32, far_plane: f32),
-    ///     Multiplies this matrix by a viewing matrix derived from an eye
-    ///     point. The \a center value indicates the center of the view that
-    ///     the \a eye is looking at.  The \a up value indicates which direction
-    ///     should be considered up with respect to the \a eye.
     /// 
-    ///     \note The \a up vector must not be parallel to the line of sight
-    ///     from \a eye to \a center.
+    /// Multiplies this matrix by a viewing matrix derived from an eye
+    /// point. The *center* value indicates the center of the view that
+    /// the *eye* is looking at. The *up* value indicates which direction
+    /// should be considered up with respect to the *eye.*
+    /// 
+    /// **Note**: The *up* vector must not be parallel to the line of sight
+    /// from *eye* to *center.*
     look_at(eye: &Vector3DType, center: &Vector3DType, up: &Vector3DType),
+    /// 
+    /// **Overloads**
+    /// Sets up viewport transform for viewport bounded by *rect* and with near and far set
+    /// to 0 and 1 respectively.
+    /// 
+    /// Multiplies this matrix by another that performs the scale and bias
+    /// transformation used by OpenGL to transform from normalized device
+    /// coordinates (NDC) to viewport (window) coordinates. That is it maps
+    /// points from the cube ranging over [-1, 1] in each dimension to the
+    /// viewport with it's near-lower-left corner at ( *left,* *bottom,* *nearPlane)*
+    /// and with size ( *width,* *height,* *farPlane* - *nearPlane).*
+    /// 
+    /// This matches the transform used by the fixed function OpenGL viewport
+    /// transform controlled by the functions glViewport() and glDepthRange().
     viewport(rect: &RectFType),
+    /// 
+    /// **Overloads**
+    /// Sets up viewport transform for viewport bounded by *rect* and with near and far set
+    /// to 0 and 1 respectively.
+    /// 
+    /// Multiplies this matrix by another that performs the scale and bias
+    /// transformation used by OpenGL to transform from normalized device
+    /// coordinates (NDC) to viewport (window) coordinates. That is it maps
+    /// points from the cube ranging over [-1, 1] in each dimension to the
+    /// viewport with it's near-lower-left corner at ( *left,* *bottom,* *nearPlane)*
+    /// and with size ( *width,* *height,* *farPlane* - *nearPlane).*
+    /// 
+    /// This matches the transform used by the fixed function OpenGL viewport
+    /// transform controlled by the functions glViewport() and glDepthRange().
     viewport(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
-    ///     \deprecated
     /// 
-    ///     Flips between right-handed and left-handed coordinate systems
-    ///     by multiplying the y and z co-ordinates by -1.  This is normally
-    ///     used to create a left-handed orthographic view without scaling
-    ///     the viewport as ortho() does.
+    /// Flips between right-handed and left-handed coordinate systems
+    /// by multiplying the y and z co-ordinates by -1. This is normally
+    /// used to create a left-handed orthographic view without scaling
+    /// the viewport as ortho() does.
     /// 
-    ///     \sa ortho()
+    /// **See also:** ortho()
     flip_coordinates(),
-    ///     Retrieves the 16 items in this matrix and copies them to \a values
-    ///     in row-major order.
+    /// 
+    /// Retrieves the 16 items in this matrix and copies them to *values*
+    /// in row-major order.
     copy_data_to(values: *f32),
-    ///     Returns the conventional Qt 2D affine transformation matrix that
-    ///     corresponds to this matrix.  It is assumed that this matrix
-    ///     only contains 2D affine transformation elements.
     /// 
-    ///     \sa toTransform()
+    /// Returns the conventional Qt 2D affine transformation matrix that
+    /// corresponds to this matrix. It is assumed that this matrix
+    /// only contains 2D affine transformation elements.
+    /// 
+    /// **See also:** toTransform()
     to_affine() -> Matrix,
-    ///     Returns the conventional Qt 2D transformation matrix that
-    ///     corresponds to this matrix.
     /// 
-    ///     If \a distanceToPlane is non-zero, it indicates a projection
-    ///     factor to use to adjust for the z co-ordinate.  The value of
-    ///     1024 corresponds to the projection factor used
-    ///     by QTransform::rotate() for the x and y axes.
+    /// Returns the conventional Qt 2D transformation matrix that
+    /// corresponds to this matrix.
     /// 
-    ///     If \a distanceToPlane is zero, then the returned QTransform
-    ///     is formed by simply dropping the third row and third column
-    ///     of the QMatrix4x4.  This is suitable for implementing
-    ///     orthographic projections where the z co-ordinate should
-    ///     be dropped rather than projected.
+    /// The returned QTransform is formed by simply dropping the
+    /// third row and third column of the QMatrix4x4. This is suitable
+    /// for implementing orthographic projections where the z co-ordinate
+    /// should be dropped rather than projected.
     /// 
-    ///     \sa toAffine()
+    /// **See also:** toAffine()
+    /// 
+    /// Returns the conventional Qt 2D transformation matrix that
+    /// corresponds to this matrix.
+    /// 
+    /// If *distanceToPlane* is non-zero, it indicates a projection
+    /// factor to use to adjust for the z co-ordinate. The value of
+    /// 1024 corresponds to the projection factor used
+    /// by QTransform::rotate() for the x and y axes.
+    /// 
+    /// If *distanceToPlane* is zero, then the returned QTransform
+    /// is formed by simply dropping the third row and third column
+    /// of the QMatrix4x4. This is suitable for implementing
+    /// orthographic projections where the z co-ordinate should
+    /// be dropped rather than projected.
+    /// 
+    /// **See also:** toAffine()
     to_transform() -> Transform,
-    ///     Returns the conventional Qt 2D transformation matrix that
-    ///     corresponds to this matrix.
     /// 
-    ///     If \a distanceToPlane is non-zero, it indicates a projection
-    ///     factor to use to adjust for the z co-ordinate.  The value of
-    ///     1024 corresponds to the projection factor used
-    ///     by QTransform::rotate() for the x and y axes.
+    /// Returns the conventional Qt 2D transformation matrix that
+    /// corresponds to this matrix.
     /// 
-    ///     If \a distanceToPlane is zero, then the returned QTransform
-    ///     is formed by simply dropping the third row and third column
-    ///     of the QMatrix4x4.  This is suitable for implementing
-    ///     orthographic projections where the z co-ordinate should
-    ///     be dropped rather than projected.
+    /// The returned QTransform is formed by simply dropping the
+    /// third row and third column of the QMatrix4x4. This is suitable
+    /// for implementing orthographic projections where the z co-ordinate
+    /// should be dropped rather than projected.
     /// 
-    ///     \sa toAffine()
+    /// **See also:** toAffine()
+    /// 
+    /// Returns the conventional Qt 2D transformation matrix that
+    /// corresponds to this matrix.
+    /// 
+    /// If *distanceToPlane* is non-zero, it indicates a projection
+    /// factor to use to adjust for the z co-ordinate. The value of
+    /// 1024 corresponds to the projection factor used
+    /// by QTransform::rotate() for the x and y axes.
+    /// 
+    /// If *distanceToPlane* is zero, then the returned QTransform
+    /// is formed by simply dropping the third row and third column
+    /// of the QMatrix4x4. This is suitable for implementing
+    /// orthographic projections where the z co-ordinate should
+    /// be dropped rather than projected.
+    /// 
+    /// **See also:** toAffine()
     to_transform(distance_to_plane: f32) -> Transform,
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// mapVector()
+    /// 
+    /// Maps *vector* by multiplying the top 3x3 portion of this matrix
+    /// by *vector.* The translation and projection components of
+    /// this matrix are ignored.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map(point: &PointType) -> Point,
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// mapVector()
+    /// 
+    /// Maps *vector* by multiplying the top 3x3 portion of this matrix
+    /// by *vector.* The translation and projection components of
+    /// this matrix are ignored.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map(point: &PointFType) -> PointF,
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// mapVector()
+    /// 
+    /// Maps *vector* by multiplying the top 3x3 portion of this matrix
+    /// by *vector.* The translation and projection components of
+    /// this matrix are ignored.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map(point: &Vector3DType) -> Vector3D,
+    /// 
+    /// Maps *vector* by multiplying the top 3x3 portion of this matrix
+    /// by *vector.* The translation and projection components of
+    /// this matrix are ignored.
+    /// 
+    /// **See also:** map()
     map_vector(vector: &Vector3DType) -> Vector3D,
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// mapVector()
+    /// 
+    /// Maps *vector* by multiplying the top 3x3 portion of this matrix
+    /// by *vector.* The translation and projection components of
+    /// this matrix are ignored.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *point* by multiplying this matrix by *point.*
+    /// 
+    /// **See also:** mapRect()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map(point: &Vector4DType) -> Vector4D,
-    ///     Maps \a rect by multiplying this matrix by the corners
-    ///     of \a rect and then forming a new rectangle from the results.
-    ///     The returned rectangle will be an ordinary 2D rectangle
-    ///     with sides parallel to the horizontal and vertical axes.
     /// 
-    ///     \sa map()
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map_rect(rect: &RectType) -> Rect,
-    ///     Maps \a rect by multiplying this matrix by the corners
-    ///     of \a rect and then forming a new rectangle from the results.
-    ///     The returned rectangle will be an ordinary 2D rectangle
-    ///     with sides parallel to the horizontal and vertical axes.
     /// 
-    ///     \sa map()
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
+    /// 
+    /// Maps *rect* by multiplying this matrix by the corners
+    /// of *rect* and then forming a new rectangle from the results.
+    /// The returned rectangle will be an ordinary 2D rectangle
+    /// with sides parallel to the horizontal and vertical axes.
+    /// 
+    /// **See also:** map()
     map_rect(rect: &RectFType) -> RectF,
+    /// 
+    /// Returns a pointer to the raw data of this matrix.
+    /// 
+    /// **See also:** constData()
+    /// optimize()
+    /// 
+    /// Returns a constant pointer to the raw data of this matrix.
+    /// This raw data is stored in column-major format.
+    /// 
+    /// **See also:** constData()
     data() -> f32?,
+    /// 
+    /// Returns a pointer to the raw data of this matrix.
+    /// 
+    /// **See also:** constData()
+    /// optimize()
+    /// 
+    /// Returns a constant pointer to the raw data of this matrix.
+    /// This raw data is stored in column-major format.
+    /// 
+    /// **See also:** constData()
     data() -> f32?,
+    /// 
+    /// Returns a constant pointer to the raw data of this matrix.
+    /// This raw data is stored in column-major format.
+    /// 
+    /// **See also:** data()
     const_data() -> f32?,
-    ///     Optimize the usage of this matrix from its current elements.
     /// 
-    ///     Some operations such as translate(), scale(), and rotate() can be
-    ///     performed more efficiently if the matrix being modified is already
-    ///     known to be the identity, a previous translate(), a previous
-    ///     scale(), etc.
+    /// Optimize the usage of this matrix from its current elements.
     /// 
-    ///     Normally the QMatrix4x4 class keeps track of this special type internally
-    ///     as operations are performed.  However, if the matrix is modified
-    ///     directly with {QLoggingCategory::operator()}{operator()()} or data(), then QMatrix4x4 will lose track of
-    ///     the special type and will revert to the safest but least efficient
-    ///     operations thereafter.
+    /// Some operations such as translate(), scale(), and rotate() can be
+    /// performed more efficiently if the matrix being modified is already
+    /// known to be the identity, a previous translate(), a previous
+    /// scale(), etc.
     /// 
-    ///     By calling optimize() after directly modifying the matrix,
-    ///     the programmer can force QMatrix4x4 to recover the special type if
-    ///     the elements appear to conform to one of the known optimized types.
+    /// Normally the QMatrix4x4 class keeps track of this special type internally
+    /// as operations are performed. However, if the matrix is modified
+    /// directly with {QLoggingCategory::operator()}{operator()()} or data(), then QMatrix4x4 will lose track of
+    /// the special type and will revert to the safest but least efficient
+    /// operations thereafter.
     /// 
-    ///     \sa {QLoggingCategory::operator()}{operator()()}, data(), translate()
+    /// By calling optimize() after directly modifying the matrix,
+    /// the programmer can force QMatrix4x4 to recover the special type if
+    /// the elements appear to conform to one of the known optimized types.
+    /// 
+    /// **See also:** {QLoggingCategory::operator()}{operator()()}
+    /// data()
+    /// translate()
     optimize(),
 }
 

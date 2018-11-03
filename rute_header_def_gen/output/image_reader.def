@@ -1,66 +1,66 @@
-///     \class QImageReader
-///     \brief The QImageReader class provides a format independent interface
-///     for reading images from files or other devices.
 /// 
-///     \inmodule QtGui
-///     \reentrant
-///     \ingroup painting
-///     \ingroup io
+/// The most common way to read images is through QImage and QPixmap's
+/// constructors, or by calling QImage::load() and
+/// QPixmap::load(). QImageReader is a specialized class which gives
+/// you more control when reading images. For example, you can read an
+/// image into a specific size by calling setScaledSize(), and you can
+/// select a clip rect, effectively loading only parts of an image, by
+/// calling setClipRect(). Depending on the underlying support in the
+/// image format, this can save memory and speed up loading of images.
 /// 
-///     The most common way to read images is through QImage and QPixmap's
-///     constructors, or by calling QImage::load() and
-///     QPixmap::load(). QImageReader is a specialized class which gives
-///     you more control when reading images. For example, you can read an
-///     image into a specific size by calling setScaledSize(), and you can
-///     select a clip rect, effectively loading only parts of an image, by
-///     calling setClipRect(). Depending on the underlying support in the
-///     image format, this can save memory and speed up loading of images.
+/// To read an image, you start by constructing a QImageReader object.
+/// Pass either a file name or a device pointer, and the image format
+/// to QImageReader's constructor. You can then set several options,
+/// such as the clip rect (by calling setClipRect()) and scaled size
+/// (by calling setScaledSize()). canRead() returns the image if the
+/// QImageReader can read the image (i.e., the image format is
+/// supported and the device is open for reading). Call read() to read
+/// the image.
 /// 
-///     To read an image, you start by constructing a QImageReader object.
-///     Pass either a file name or a device pointer, and the image format
-///     to QImageReader's constructor. You can then set several options,
-///     such as the clip rect (by calling setClipRect()) and scaled size
-///     (by calling setScaledSize()). canRead() returns the image if the
-///     QImageReader can read the image (i.e., the image format is
-///     supported and the device is open for reading). Call read() to read
-///     the image.
+/// If any error occurs when reading the image, read() will return a
+/// null QImage. You can then call error() to find the type of error
+/// that occurred, or errorString() to get a human readable
+/// description of what went wrong.
 /// 
-///     If any error occurs when reading the image, read() will return a
-///     null QImage. You can then call error() to find the type of error
-///     that occurred, or errorString() to get a human readable
-///     description of what went wrong.
+/// **Note**: QImageReader assumes exclusive control over the file or
+/// device that is assigned. Any attempts to modify the assigned file
+/// or device during the lifetime of the QImageReader object will
+/// yield undefined results.
 /// 
-///     \note QImageReader assumes exclusive control over the file or
-///     device that is assigned. Any attempts to modify the assigned file
-///     or device during the lifetime of the QImageReader object will
-///     yield undefined results.
+/// # Formats
 /// 
-///     \section1 Formats
+/// Call supportedImageFormats() for a list of formats that
+/// QImageReader can read. QImageReader supports all built-in image
+/// formats, in addition to any image format plugins that support
+/// reading. Call supportedMimeTypes() to obtain a list of supported MIME
+/// types, which for example can be passed to QFileDialog::setMimeTypeFilters().
 /// 
-///     Call supportedImageFormats() for a list of formats that
-///     QImageReader can read. QImageReader supports all built-in image
-///     formats, in addition to any image format plugins that support
-///     reading. Call supportedMimeTypes() to obtain a list of supported MIME
-///     types, which for example can be passed to QFileDialog::setMimeTypeFilters().
+/// QImageReader autodetects the image format by default, by looking at the
+/// provided (optional) format string, the file name suffix, and the data
+/// stream contents. You can enable or disable this feature, by calling
+/// setAutoDetectImageFormat().
 /// 
-///     QImageReader autodetects the image format by default, by looking at the
-///     provided (optional) format string, the file name suffix, and the data
-///     stream contents. You can enable or disable this feature, by calling
-///     setAutoDetectImageFormat().
+/// # High Resolution Versions of Images
 /// 
-///     \section1 High Resolution Versions of Images
+/// It is possible to provide high resolution versions of images should a scaling
+/// between *device pixels* and *device independent pixels* be in effect.
 /// 
-///     It is possible to provide high resolution versions of images should a scaling
-///     between \e{device pixels} and \e{device independent pixels} be in effect.
+/// The high resolution version is marked by the suffix `@2x` on the base name.
+/// The image read will have its *device pixel ratio* set to a value of 2.
 /// 
-///     The high resolution version is marked by the suffix \c @2x on the base name.
-///     The image read will have its \e{device pixel ratio} set to a value of 2.
+/// This can be disabled by setting the environment variable
+/// `QT_HIGHDPI_DISABLE_2X_IMAGE_LOADING.`
 /// 
-///     This can be disabled by setting the environment variable
-///     \c QT_HIGHDPI_DISABLE_2X_IMAGE_LOADING.
-/// 
-///     \sa QImageWriter, QImageIOHandler, QImageIOPlugin, QMimeDatabase
-///     \sa QImage::devicePixelRatio(), QPixmap::devicePixelRatio(), QIcon, QPainter::drawPixmap(), QPainter::drawImage(), Qt::AA_UseHighDpiPixmaps
+/// **See also:** QImageWriter
+/// QImageIOHandler
+/// QImageIOPlugin
+/// QMimeDatabase
+/// **See also:** QImage::devicePixelRatio()
+/// QPixmap::devicePixelRatio()
+/// QIcon
+/// QPainter::drawPixmap()
+/// QPainter::drawImage()
+/// Qt::AA_UseHighDpiPixmaps
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -75,448 +75,595 @@ enum ImageReaderError {
 
 
 struct ImageReader {
-    ///     Sets the format QImageReader will use when reading images, to \a
-    ///     format. \a format is a case insensitive text string. Example:
     /// 
-    ///     \snippet code/src_gui_image_qimagereader.cpp 0
+    /// Sets the format QImageReader will use when reading images, to *format.* *format* is a case insensitive text string. Example:
     /// 
-    ///     You can call supportedImageFormats() for the full list of formats
-    ///     QImageReader supports.
+    /// You can call supportedImageFormats() for the full list of formats
+    /// QImageReader supports.
     /// 
-    ///     \sa format()
+    /// **See also:** format()
     set_format(format: &ByteArrayType),
-    ///     Returns the format QImageReader uses for reading images.
     /// 
-    ///     You can call this function after assigning a device to the
-    ///     reader to determine the format of the device. For example:
+    /// Returns the format QImageReader uses for reading images.
     /// 
-    ///     \snippet code/src_gui_image_qimagereader.cpp 1
+    /// You can call this function after assigning a device to the
+    /// reader to determine the format of the device. For example:
     /// 
-    ///     If the reader cannot read any image from the device (e.g., there is no
-    ///     image there, or the image has already been read), or if the format is
-    ///     unsupported, this function returns an empty QByteArray().
+    /// If the reader cannot read any image from the device (e.g., there is no
+    /// image there, or the image has already been read), or if the format is
+    /// unsupported, this function returns an empty QByteArray().
     /// 
-    ///     \sa setFormat(), supportedImageFormats()
+    /// **See also:** setFormat()
+    /// supportedImageFormats()
     format() -> ByteArray,
-    ///     If \a enabled is true, image format autodetection is enabled; otherwise,
-    ///     it is disabled. By default, autodetection is enabled.
     /// 
-    ///     QImageReader uses an extensive approach to detecting the image format;
-    ///     firstly, if you pass a file name to QImageReader, it will attempt to
-    ///     detect the file extension if the given file name does not point to an
-    ///     existing file, by appending supported default extensions to the given file
-    ///     name, one at a time. It then uses the following approach to detect the
-    ///     image format:
+    /// If *enabled* is true, image format autodetection is enabled; otherwise,
+    /// it is disabled. By default, autodetection is enabled.
     /// 
-    ///     \list
+    /// QImageReader uses an extensive approach to detecting the image format;
+    /// firstly, if you pass a file name to QImageReader, it will attempt to
+    /// detect the file extension if the given file name does not point to an
+    /// existing file, by appending supported default extensions to the given file
+    /// name, one at a time. It then uses the following approach to detect the
+    /// image format:
     /// 
-    ///     \li Image plugins are queried first, based on either the optional format
-    ///     string, or the file name suffix (if the source device is a file). No
-    ///     content detection is done at this stage. QImageReader will choose the
-    ///     first plugin that supports reading for this format.
+    /// * Image plugins are queried first, based on either the optional format string, or the file name suffix (if the source device is a file). No content detection is done at this stage. QImageReader will choose the first plugin that supports reading for this format.
+    /// * If no plugin supports the image format, Qt's built-in handlers are checked based on either the optional format string, or the file name suffix.
+    /// * If no capable plugins or built-in handlers are found, each plugin is tested by inspecting the content of the data stream.
+    /// * If no plugins could detect the image format based on data contents, each built-in image handler is tested by inspecting the contents.
+    /// * Finally, if all above approaches fail, QImageReader will report failure when trying to read the image.
     /// 
-    ///     \li If no plugin supports the image format, Qt's built-in handlers are
-    ///     checked based on either the optional format string, or the file name
-    ///     suffix.
+    /// By disabling image format autodetection, QImageReader will only query the
+    /// plugins and built-in handlers based on the format string (i.e., no file
+    /// name extensions are tested).
     /// 
-    ///     \li If no capable plugins or built-in handlers are found, each plugin is
-    ///     tested by inspecting the content of the data stream.
-    /// 
-    ///     \li If no plugins could detect the image format based on data contents,
-    ///     each built-in image handler is tested by inspecting the contents.
-    /// 
-    ///     \li Finally, if all above approaches fail, QImageReader will report failure
-    ///     when trying to read the image.
-    /// 
-    ///     \endlist
-    /// 
-    ///     By disabling image format autodetection, QImageReader will only query the
-    ///     plugins and built-in handlers based on the format string (i.e., no file
-    ///     name extensions are tested).
-    /// 
-    ///     \sa QImageIOHandler::canRead(), QImageIOPlugin::capabilities()
+    /// **See also:** QImageIOHandler::canRead()
+    /// QImageIOPlugin::capabilities()
     set_auto_detect_image_format(enabled: bool),
-    ///     Returns \c true if image format autodetection is enabled on this image
-    ///     reader; otherwise returns \c false. By default, autodetection is enabled.
     /// 
-    ///     \sa setAutoDetectImageFormat()
+    /// Returns `true` if image format autodetection is enabled on this image
+    /// reader; otherwise returns `false.` By default, autodetection is enabled.
+    /// 
+    /// **See also:** setAutoDetectImageFormat()
     auto_detect_image_format() -> bool,
-    ///     If \a ignored is set to true, then the image reader will ignore
-    ///     specified formats or file extensions and decide which plugin to
-    ///     use only based on the contents in the datastream.
     /// 
-    ///     Setting this flag means that all image plugins gets loaded. Each
-    ///     plugin will read the first bytes in the image data and decide if
-    ///     the plugin is compatible or not.
+    /// If *ignored* is set to true, then the image reader will ignore
+    /// specified formats or file extensions and decide which plugin to
+    /// use only based on the contents in the datastream.
     /// 
-    ///     This also disables auto detecting the image format.
+    /// Setting this flag means that all image plugins gets loaded. Each
+    /// plugin will read the first bytes in the image data and decide if
+    /// the plugin is compatible or not.
     /// 
-    ///     \sa decideFormatFromContent()
+    /// This also disables auto detecting the image format.
+    /// 
+    /// **See also:** decideFormatFromContent()
     set_decide_format_from_content(ignored: bool),
-    ///     Returns whether the image reader should decide which plugin to use
-    ///     only based on the contents of the datastream rather than on the file
-    ///     extension.
     /// 
-    ///     \sa setDecideFormatFromContent()
+    /// Returns whether the image reader should decide which plugin to use
+    /// only based on the contents of the datastream rather than on the file
+    /// extension.
+    /// 
+    /// **See also:** setDecideFormatFromContent()
     decide_format_from_content() -> bool,
-    ///     Sets QImageReader's device to \a device. If a device has already
-    ///     been set, the old device is removed from QImageReader and is
-    ///     otherwise left unchanged.
     /// 
-    ///     If the device is not already open, QImageReader will attempt to
-    ///     open the device in \l QIODevice::ReadOnly mode by calling
-    ///     open(). Note that this does not work for certain devices, such as
-    ///     QProcess, QTcpSocket and QUdpSocket, where more logic is required
-    ///     to open the device.
+    /// Sets QImageReader's device to *device.* If a device has already
+    /// been set, the old device is removed from QImageReader and is
+    /// otherwise left unchanged.
     /// 
-    ///     \sa device(), setFileName()
+    /// If the device is not already open, QImageReader will attempt to
+    /// open the device in [QIODevice::ReadOnly](QIODevice::ReadOnly)
+    /// mode by calling
+    /// open(). Note that this does not work for certain devices, such as
+    /// QProcess, QTcpSocket and QUdpSocket, where more logic is required
+    /// to open the device.
+    /// 
+    /// **See also:** device()
+    /// setFileName()
     set_device(device: *IODeviceType),
-    ///     Returns the device currently assigned to QImageReader, or 0 if no
-    ///     device has been assigned.
+    /// 
+    /// Returns the device currently assigned to QImageReader, or 0 if no
+    /// device has been assigned.
     device() -> IODevice?,
-    ///     Sets the file name of QImageReader to \a fileName. Internally,
-    ///     QImageReader will create a QFile object and open it in \l
-    ///     QIODevice::ReadOnly mode, and use this when reading images.
     /// 
-    ///     If \a fileName does not include a file extension (e.g., .png or .bmp),
-    ///     QImageReader will cycle through all supported extensions until it finds
-    ///     a matching file.
+    /// Sets the file name of QImageReader to *fileName.* Internally,
+    /// QImageReader will create a QFile object and open it in [QIODevice::ReadOnly](QIODevice::ReadOnly)
+    /// mode, and use this when reading images.
     /// 
-    ///     \sa fileName(), setDevice(), supportedImageFormats()
+    /// If *fileName* does not include a file extension (e.g., .png or .bmp),
+    /// QImageReader will cycle through all supported extensions until it finds
+    /// a matching file.
+    /// 
+    /// **See also:** fileName()
+    /// setDevice()
+    /// supportedImageFormats()
     set_file_name(file_name: String),
-    ///     If the currently assigned device is a QFile, or if setFileName()
-    ///     has been called, this function returns the name of the file
-    ///     QImageReader reads from. Otherwise (i.e., if no device has been
-    ///     assigned or the device is not a QFile), an empty QString is
-    ///     returned.
     /// 
-    ///     \sa setFileName(), setDevice()
+    /// If the currently assigned device is a QFile, or if setFileName()
+    /// has been called, this function returns the name of the file
+    /// QImageReader reads from. Otherwise (i.e., if no device has been
+    /// assigned or the device is not a QFile), an empty QString is
+    /// returned.
+    /// 
+    /// **See also:** setFileName()
+    /// setDevice()
     file_name() -> String,
-    ///     Returns the size of the image, without actually reading the image
-    ///     contents.
     /// 
-    ///     If the image format does not support this feature, this function returns
-    ///     an invalid size. Qt's built-in image handlers all support this feature,
-    ///     but custom image format plugins are not required to do so.
+    /// Returns the size of the image, without actually reading the image
+    /// contents.
     /// 
-    ///     \sa QImageIOHandler::ImageOption, QImageIOHandler::option(), QImageIOHandler::supportsOption()
+    /// If the image format does not support this feature, this function returns
+    /// an invalid size. Qt's built-in image handlers all support this feature,
+    /// but custom image format plugins are not required to do so.
+    /// 
+    /// **See also:** QImageIOHandler::ImageOption
+    /// QImageIOHandler::option()
+    /// QImageIOHandler::supportsOption()
     size() -> Size,
-    ///     If supported, this function returns the image format of the device
-    ///     \a device. Otherwise, an empty string is returned.
     /// 
-    ///     \sa QImageReader::autoDetectImageFormat()
+    /// Returns the format of the image, without actually reading the image
+    /// contents. The format describes the image format [QImageReader::read()](QImageReader::read())
+    /// 
+    /// returns, not the format of the actual image.
+    /// 
+    /// If the image format does not support this feature, this function returns
+    /// an invalid format.
+    /// 
+    /// **See also:** QImageIOHandler::ImageOption
+    /// QImageIOHandler::option()
+    /// QImageIOHandler::supportsOption()
+    /// 
+    /// If supported, this function returns the image format of the file
+    /// *fileName.* Otherwise, an empty string is returned.
+    /// 
+    /// If supported, this function returns the image format of the device
+    /// *device.* Otherwise, an empty string is returned.
+    /// 
+    /// **See also:** QImageReader::autoDetectImageFormat()
     image_format() -> Image::Format,
-    ///     \since 4.1
     /// 
-    ///     Returns the text keys for this image. You can use
-    ///     these keys with text() to list the image text for
-    ///     a certain key.
+    /// Returns the text keys for this image. You can use
+    /// these keys with text() to list the image text for
+    /// a certain key.
     /// 
-    ///     Support for this option is implemented through
-    ///     QImageIOHandler::Description.
+    /// Support for this option is implemented through
+    /// QImageIOHandler::Description.
     /// 
-    ///     \sa text(), QImageWriter::setText(), QImage::textKeys()
+    /// **See also:** text()
+    /// QImageWriter::setText()
+    /// QImage::textKeys()
     text_keys() -> [String],
-    ///     \since 4.1
     /// 
-    ///     Returns the image text associated with \a key.
+    /// Returns the text keys for this image. You can use
+    /// these keys with text() to list the image text for
+    /// a certain key.
     /// 
-    ///     Support for this option is implemented through
-    ///     QImageIOHandler::Description.
+    /// Support for this option is implemented through
+    /// QImageIOHandler::Description.
     /// 
-    ///     \sa textKeys(), QImageWriter::setText()
+    /// **See also:** text()
+    /// QImageWriter::setText()
+    /// QImage::textKeys()
+    /// 
+    /// Returns the image text associated with *key.*
+    /// 
+    /// Support for this option is implemented through
+    /// QImageIOHandler::Description.
+    /// 
+    /// **See also:** textKeys()
+    /// QImageWriter::setText()
     text(key: String) -> String,
-    ///     Sets the image clip rect (also known as the ROI, or Region Of
-    ///     Interest) to \a rect. The coordinates of \a rect are relative to
-    ///     the untransformed image size, as returned by size().
     /// 
-    ///     \sa clipRect(), setScaledSize(), setScaledClipRect()
+    /// Sets the image clip rect (also known as the ROI, or Region Of
+    /// Interest) to *rect.* The coordinates of *rect* are relative to
+    /// the untransformed image size, as returned by size().
+    /// 
+    /// **See also:** clipRect()
+    /// setScaledSize()
+    /// setScaledClipRect()
     set_clip_rect(rect: &RectType),
-    ///     Returns the clip rect (also known as the ROI, or Region Of
-    ///     Interest) of the image. If no clip rect has been set, an invalid
-    ///     QRect is returned.
     /// 
-    ///     \sa setClipRect()
+    /// Returns the clip rect (also known as the ROI, or Region Of
+    /// Interest) of the image. If no clip rect has been set, an invalid
+    /// QRect is returned.
+    /// 
+    /// **See also:** setClipRect()
     clip_rect() -> Rect,
-    ///     Sets the scaled size of the image to \a size. The scaling is
-    ///     performed after the initial clip rect, but before the scaled clip
-    ///     rect is applied. The algorithm used for scaling depends on the
-    ///     image format. By default (i.e., if the image format does not
-    ///     support scaling), QImageReader will use QImage::scale() with
-    ///     Qt::SmoothScaling.
     /// 
-    ///     \sa scaledSize(), setClipRect(), setScaledClipRect()
+    /// Sets the scaled size of the image to *size.* The scaling is
+    /// performed after the initial clip rect, but before the scaled clip
+    /// rect is applied. The algorithm used for scaling depends on the
+    /// image format. By default (i.e., if the image format does not
+    /// support scaling), QImageReader will use QImage::scale() with
+    /// Qt::SmoothScaling.
+    /// 
+    /// **See also:** scaledSize()
+    /// setClipRect()
+    /// setScaledClipRect()
     set_scaled_size(size: &SizeType),
-    ///     Returns the scaled size of the image.
     /// 
-    ///     \sa setScaledSize()
+    /// Returns the scaled size of the image.
+    /// 
+    /// **See also:** setScaledSize()
     scaled_size() -> Size,
-    ///     \since 4.2
     /// 
-    ///     Sets the quality setting of the image format to \a quality.
+    /// Sets the quality setting of the image format to *quality.*
     /// 
-    ///     Some image formats, in particular lossy ones, entail a tradeoff between a)
-    ///     visual quality of the resulting image, and b) decoding execution time.
-    ///     This function sets the level of that tradeoff for image formats that
-    ///     support it.
+    /// Some image formats, in particular lossy ones, entail a tradeoff between a)
+    /// visual quality of the resulting image, and b) decoding execution time.
+    /// This function sets the level of that tradeoff for image formats that
+    /// support it.
     /// 
-    ///     In case of scaled image reading, the quality setting may also influence the
-    ///     tradeoff level between visual quality and execution speed of the scaling
-    ///     algorithm.
+    /// In case of scaled image reading, the quality setting may also influence the
+    /// tradeoff level between visual quality and execution speed of the scaling
+    /// algorithm.
     /// 
-    ///     The value range of \a quality depends on the image format. For example,
-    ///     the "jpeg" format supports a quality range from 0 (low visual quality) to
-    ///     100 (high visual quality).
+    /// The value range of *quality* depends on the image format. For example,
+    /// the format supports a quality range from 0 (low visual quality) to
+    /// 100 (high visual quality).
     /// 
-    ///     \sa quality() setScaledSize()
+    /// **See also:** quality() setScaledSize()
     set_quality(quality: i32),
-    ///     \since 4.2
     /// 
-    ///     Returns the quality setting of the image format.
+    /// Returns the quality setting of the image format.
     /// 
-    ///     \sa setQuality()
+    /// **See also:** setQuality()
     quality() -> i32,
-    ///     Sets the scaled clip rect to \a rect. The scaled clip rect is the
-    ///     clip rect (also known as ROI, or Region Of Interest) that is
-    ///     applied after the image has been scaled.
     /// 
-    ///     \sa scaledClipRect(), setScaledSize()
+    /// Sets the scaled clip rect to *rect.* The scaled clip rect is the
+    /// clip rect (also known as ROI, or Region Of Interest) that is
+    /// applied after the image has been scaled.
+    /// 
+    /// **See also:** scaledClipRect()
+    /// setScaledSize()
     set_scaled_clip_rect(rect: &RectType),
-    ///     Returns the scaled clip rect of the image.
     /// 
-    ///     \sa setScaledClipRect()
+    /// Returns the scaled clip rect of the image.
+    /// 
+    /// **See also:** setScaledClipRect()
     scaled_clip_rect() -> Rect,
-    ///     \since 4.1
     /// 
-    ///     Sets the background color to \a color.
-    ///     Image formats that support this operation are expected to
-    ///     initialize the background to \a color before reading an image.
+    /// Sets the background color to *color.*
+    /// Image formats that support this operation are expected to
+    /// initialize the background to *color* before reading an image.
     /// 
-    ///     \sa backgroundColor(), read()
+    /// **See also:** backgroundColor()
+    /// read()
     set_background_color(color: &ColorType),
-    ///     \since 4.1
     /// 
-    ///     Returns the background color that's used when reading an image.
-    ///     If the image format does not support setting the background color
-    ///     an invalid color is returned.
+    /// Returns the background color that's used when reading an image.
+    /// If the image format does not support setting the background color
+    /// an invalid color is returned.
     /// 
-    ///     \sa setBackgroundColor(), read()
+    /// **See also:** setBackgroundColor()
+    /// read()
     background_color() -> Color,
-    ///     \since 4.1
     /// 
-    ///     Returns \c true if the image format supports animation;
-    ///     otherwise, false is returned.
+    /// Returns `true` if the image format supports animation;
+    /// otherwise, false is returned.
     /// 
-    ///     \sa QMovie::supportedFormats()
+    /// **See also:** QMovie::supportedFormats()
     supports_animation() -> bool,
-    ///     \since 5.5
     /// 
-    ///     Determines that images returned by read() should have transformation metadata automatically
-    ///     applied if \a enabled is \c true.
+    /// Determines that images returned by read() should have transformation metadata automatically
+    /// applied if *enabled* is `true.`
     /// 
-    ///     \sa autoTransform(), transformation(), read()
+    /// **See also:** autoTransform()
+    /// transformation()
+    /// read()
     set_auto_transform(enabled: bool),
-    ///     \since 5.5
     /// 
-    ///     Returns \c true if the image handler will apply transformation metadata on read().
+    /// Returns `true` if the image handler will apply transformation metadata on read().
     /// 
-    ///     \sa setAutoTransform(), transformation(), read()
+    /// **See also:** setAutoTransform()
+    /// transformation()
+    /// read()
     auto_transform() -> bool,
-    ///     \since 5.6
     /// 
-    ///     This is an image format specific function that forces images with
-    ///     gamma information to be gamma corrected to \a gamma. For image formats
-    ///     that do not support gamma correction, this value is ignored.
+    /// This is an image format specific function that forces images with
+    /// gamma information to be gamma corrected to *gamma.* For image formats
+    /// that do not support gamma correction, this value is ignored.
     /// 
-    ///     To gamma correct to a standard PC color-space, set gamma to \c 1/2.2.
+    /// To gamma correct to a standard PC color-space, set gamma to `1/2.2.`
     /// 
-    ///     \sa gamma()
+    /// **See also:** gamma()
     set_gamma(gamma: f32),
-    ///     \since 5.6
     /// 
-    ///     Returns the gamma level of the decoded image. If setGamma() has been
-    ///     called and gamma correction is supported it will return the gamma set.
-    ///     If gamma level is not supported by the image format, \c 0.0 is returned.
+    /// Returns the gamma level of the decoded image. If setGamma() has been
+    /// called and gamma correction is supported it will return the gamma set.
+    /// If gamma level is not supported by the image format, `0.0` is returned.
     /// 
-    ///     \sa setGamma()
+    /// **See also:** setGamma()
     gamma() -> f32,
-    ///     \since 5.4
     /// 
-    ///     Returns the subtype of the image.
+    /// Returns the subtype of the image.
     sub_type() -> ByteArray,
-    ///     \since 5.4
     /// 
-    ///     Returns the list of subtypes supported by an image.
+    /// Returns the list of subtypes supported by an image.
     supported_sub_types() -> [ByteArray],
-    ///     Returns \c true if an image can be read for the device (i.e., the
-    ///     image format is supported, and the device seems to contain valid
-    ///     data); otherwise returns \c false.
     /// 
-    ///     canRead() is a lightweight function that only does a quick test to
-    ///     see if the image data is valid. read() may still return false
-    ///     after canRead() returns \c true, if the image data is corrupt.
+    /// Returns `true` if an image can be read for the device (i.e., the
+    /// image format is supported, and the device seems to contain valid
+    /// data); otherwise returns `false.`
     /// 
-    ///     \note A QMimeDatabase lookup is normally a better approach than this
-    ///     function for identifying potentially non-image files or data.
+    /// canRead() is a lightweight function that only does a quick test to
+    /// see if the image data is valid. read() may still return false
+    /// after canRead() returns `true,` if the image data is corrupt.
     /// 
-    ///     For images that support animation, canRead() returns \c false when
-    ///     all frames have been read.
+    /// **Note**: A QMimeDatabase lookup is normally a better approach than this
+    /// function for identifying potentially non-image files or data.
     /// 
-    ///     \sa read(), supportedImageFormats(), QMimeDatabase
+    /// For images that support animation, canRead() returns `false` when
+    /// all frames have been read.
+    /// 
+    /// **See also:** read()
+    /// supportedImageFormats()
+    /// QMimeDatabase
     can_read() -> bool,
-    ///     \overload
     /// 
-    ///     Reads an image from the device into \a image, which must point to a
-    ///     QImage. Returns \c true on success; otherwise, returns \c false.
+    /// Reads an image from the device. On success, the image that was
+    /// read is returned; otherwise, a null QImage is returned. You can
+    /// then call error() to find the type of error that occurred, or
+    /// errorString() to get a human readable description of the error.
     /// 
-    ///     If \a image has same format and size as the image data that is about to be
-    ///     read, this function may not need to allocate a new image before
-    ///     reading. Because of this, it can be faster than the other read() overload,
-    ///     which always constructs a new image; especially when reading several
-    ///     images with the same format and size.
+    /// For image formats that support animation, calling read()
+    /// repeatedly will return the next frame. When all frames have been
+    /// read, a null image will be returned.
     /// 
-    ///     \snippet code/src_gui_image_qimagereader.cpp 2
+    /// **See also:** canRead()
+    /// supportedImageFormats()
+    /// supportsAnimation()
+    /// QMovie
     /// 
-    ///     For image formats that support animation, calling read() repeatedly will
-    ///     return the next frame. When all frames have been read, a null image will
-    ///     be returned.
+    /// **Overloads**
+    /// Reads an image from the device into *image,* which must point to a
+    /// QImage. Returns `true` on success; otherwise, returns `false.`
     /// 
-    ///     \sa canRead(), supportedImageFormats(), supportsAnimation(), QMovie
+    /// If *image* has same format and size as the image data that is about to be
+    /// read, this function may not need to allocate a new image before
+    /// reading. Because of this, it can be faster than the other read() overload,
+    /// which always constructs a new image; especially when reading several
+    /// images with the same format and size.
+    /// 
+    /// For image formats that support animation, calling read() repeatedly will
+    /// return the next frame. When all frames have been read, a null image will
+    /// be returned.
+    /// 
+    /// **See also:** canRead()
+    /// supportedImageFormats()
+    /// supportsAnimation()
+    /// QMovie
     read() -> Image,
-    ///     \overload
     /// 
-    ///     Reads an image from the device into \a image, which must point to a
-    ///     QImage. Returns \c true on success; otherwise, returns \c false.
+    /// Reads an image from the device. On success, the image that was
+    /// read is returned; otherwise, a null QImage is returned. You can
+    /// then call error() to find the type of error that occurred, or
+    /// errorString() to get a human readable description of the error.
     /// 
-    ///     If \a image has same format and size as the image data that is about to be
-    ///     read, this function may not need to allocate a new image before
-    ///     reading. Because of this, it can be faster than the other read() overload,
-    ///     which always constructs a new image; especially when reading several
-    ///     images with the same format and size.
+    /// For image formats that support animation, calling read()
+    /// repeatedly will return the next frame. When all frames have been
+    /// read, a null image will be returned.
     /// 
-    ///     \snippet code/src_gui_image_qimagereader.cpp 2
+    /// **See also:** canRead()
+    /// supportedImageFormats()
+    /// supportsAnimation()
+    /// QMovie
     /// 
-    ///     For image formats that support animation, calling read() repeatedly will
-    ///     return the next frame. When all frames have been read, a null image will
-    ///     be returned.
+    /// **Overloads**
+    /// Reads an image from the device into *image,* which must point to a
+    /// QImage. Returns `true` on success; otherwise, returns `false.`
     /// 
-    ///     \sa canRead(), supportedImageFormats(), supportsAnimation(), QMovie
+    /// If *image* has same format and size as the image data that is about to be
+    /// read, this function may not need to allocate a new image before
+    /// reading. Because of this, it can be faster than the other read() overload,
+    /// which always constructs a new image; especially when reading several
+    /// images with the same format and size.
+    /// 
+    /// For image formats that support animation, calling read() repeatedly will
+    /// return the next frame. When all frames have been read, a null image will
+    /// be returned.
+    /// 
+    /// **See also:** canRead()
+    /// supportedImageFormats()
+    /// supportsAnimation()
+    /// QMovie
     read(image: *ImageType) -> bool,
-    ///    For image formats that support animation, this function steps over the
-    ///    current image, returning true if successful or false if there is no
-    ///    following image in the animation.
     /// 
-    ///    The default implementation calls read(), then discards the resulting
-    ///    image, but the image handler may have a more efficient way of implementing
-    ///    this operation.
+    /// For image formats that support animation, this function steps over the
+    /// current image, returning true if successful or false if there is no
+    /// following image in the animation.
     /// 
-    ///    \sa jumpToImage(), QImageIOHandler::jumpToNextImage()
+    /// The default implementation calls read(), then discards the resulting
+    /// image, but the image handler may have a more efficient way of implementing
+    /// this operation.
+    /// 
+    /// **See also:** jumpToImage()
+    /// QImageIOHandler::jumpToNextImage()
     jump_to_next_image() -> bool,
-    ///    For image formats that support animation, this function skips to the image
-    ///    whose sequence number is \a imageNumber, returning true if successful
-    ///    or false if the corresponding image cannot be found.
     /// 
-    ///    The next call to read() will attempt to read this image.
+    /// For image formats that support animation, this function skips to the image
+    /// whose sequence number is *imageNumber,* returning true if successful
+    /// or false if the corresponding image cannot be found.
     /// 
-    ///    \sa jumpToNextImage(), QImageIOHandler::jumpToImage()
+    /// The next call to read() will attempt to read this image.
+    /// 
+    /// **See also:** jumpToNextImage()
+    /// QImageIOHandler::jumpToImage()
     jump_to_image(image_number: i32) -> bool,
-    ///     For image formats that support animation, this function returns the number
-    ///     of times the animation should loop. If this function returns -1, it can
-    ///     either mean the animation should loop forever, or that an error occurred.
-    ///     If an error occurred, canRead() will return false.
     /// 
-    ///     \sa supportsAnimation(), QImageIOHandler::loopCount(), canRead()
+    /// For image formats that support animation, this function returns the number
+    /// of times the animation should loop. If this function returns -1, it can
+    /// either mean the animation should loop forever, or that an error occurred.
+    /// If an error occurred, canRead() will return false.
+    /// 
+    /// **See also:** supportsAnimation()
+    /// QImageIOHandler::loopCount()
+    /// canRead()
     loop_count() -> i32,
-    ///     For image formats that support animation, this function returns the total
-    ///     number of images in the animation. If the format does not support
-    ///     animation, 0 is returned.
     /// 
-    ///     This function returns -1 if an error occurred.
+    /// For image formats that support animation, this function returns the total
+    /// number of images in the animation. If the format does not support
+    /// animation, 0 is returned.
     /// 
-    ///     \sa supportsAnimation(), QImageIOHandler::imageCount(), canRead()
+    /// This function returns -1 if an error occurred.
+    /// 
+    /// **See also:** supportsAnimation()
+    /// QImageIOHandler::imageCount()
+    /// canRead()
     image_count() -> i32,
-    ///     For image formats that support animation, this function returns the number
-    ///     of milliseconds to wait until displaying the next frame in the animation.
-    ///     If the image format doesn't support animation, 0 is returned.
     /// 
-    ///     This function returns -1 if an error occurred.
+    /// For image formats that support animation, this function returns the number
+    /// of milliseconds to wait until displaying the next frame in the animation.
+    /// If the image format doesn't support animation, 0 is returned.
     /// 
-    ///     \sa supportsAnimation(), QImageIOHandler::nextImageDelay(), canRead()
+    /// This function returns -1 if an error occurred.
+    /// 
+    /// **See also:** supportsAnimation()
+    /// QImageIOHandler::nextImageDelay()
+    /// canRead()
     next_image_delay() -> i32,
-    ///     For image formats that support animation, this function returns the
-    ///     sequence number of the current frame. If the image format doesn't support
-    ///     animation, 0 is returned.
     /// 
-    ///     This function returns -1 if an error occurred.
+    /// For image formats that support animation, this function returns the
+    /// sequence number of the current frame. If the image format doesn't support
+    /// animation, 0 is returned.
     /// 
-    ///     \sa supportsAnimation(), QImageIOHandler::currentImageNumber(), canRead()
+    /// This function returns -1 if an error occurred.
+    /// 
+    /// **See also:** supportsAnimation()
+    /// QImageIOHandler::currentImageNumber()
+    /// canRead()
     current_image_number() -> i32,
-    ///     For image formats that support animation, this function returns
-    ///     the rect for the current frame. Otherwise, a null rect is returned.
     /// 
-    ///     \sa supportsAnimation(), QImageIOHandler::currentImageRect()
+    /// For image formats that support animation, this function returns
+    /// the rect for the current frame. Otherwise, a null rect is returned.
+    /// 
+    /// **See also:** supportsAnimation()
+    /// QImageIOHandler::currentImageRect()
     current_image_rect() -> Rect,
-    ///     Returns the type of error that occurred last.
     /// 
-    ///     \sa ImageReaderError, errorString()
+    /// Returns the type of error that occurred last.
+    /// 
+    /// **See also:** ImageReaderError
+    /// errorString()
+    /// 
+    /// Returns a human readable description of the last error that
+    /// occurred.
+    /// 
+    /// **See also:** error()
     error() -> ImageReader::ImageReaderError,
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if the reader supports \a option; otherwise returns
-    ///     false.
+    /// Returns `true` if the reader supports *option;* otherwise returns
+    /// false.
     /// 
-    ///     Different image formats support different options. Call this function to
-    ///     determine whether a certain option is supported by the current format. For
-    ///     example, the PNG format allows you to embed text into the image's metadata
-    ///     (see text()), and the BMP format allows you to determine the image's size
-    ///     without loading the whole image into memory (see size()).
+    /// Different image formats support different options. Call this function to
+    /// determine whether a certain option is supported by the current format. For
+    /// example, the PNG format allows you to embed text into the image's metadata
+    /// (see text()), and the BMP format allows you to determine the image's size
+    /// without loading the whole image into memory (see size()).
     /// 
-    ///     \snippet code/src_gui_image_qimagereader.cpp 3
-    /// 
-    ///     \sa QImageWriter::supportsOption()
+    /// **See also:** QImageWriter::supportsOption()
     supports_option(option: ImageIOHandler::ImageOption) -> bool,
-    ///     If supported, this function returns the image format of the device
-    ///     \a device. Otherwise, an empty string is returned.
     /// 
-    ///     \sa QImageReader::autoDetectImageFormat()
+    /// Returns the format of the image, without actually reading the image
+    /// contents. The format describes the image format [QImageReader::read()](QImageReader::read())
+    /// 
+    /// returns, not the format of the actual image.
+    /// 
+    /// If the image format does not support this feature, this function returns
+    /// an invalid format.
+    /// 
+    /// **See also:** QImageIOHandler::ImageOption
+    /// QImageIOHandler::option()
+    /// QImageIOHandler::supportsOption()
+    /// 
+    /// If supported, this function returns the image format of the file
+    /// *fileName.* Otherwise, an empty string is returned.
+    /// 
+    /// If supported, this function returns the image format of the device
+    /// *device.* Otherwise, an empty string is returned.
+    /// 
+    /// **See also:** QImageReader::autoDetectImageFormat()
     [static] image_format(file_name: String) -> ByteArray,
-    ///     If supported, this function returns the image format of the device
-    ///     \a device. Otherwise, an empty string is returned.
     /// 
-    ///     \sa QImageReader::autoDetectImageFormat()
+    /// Returns the format of the image, without actually reading the image
+    /// contents. The format describes the image format [QImageReader::read()](QImageReader::read())
+    /// 
+    /// returns, not the format of the actual image.
+    /// 
+    /// If the image format does not support this feature, this function returns
+    /// an invalid format.
+    /// 
+    /// **See also:** QImageIOHandler::ImageOption
+    /// QImageIOHandler::option()
+    /// QImageIOHandler::supportsOption()
+    /// 
+    /// If supported, this function returns the image format of the file
+    /// *fileName.* Otherwise, an empty string is returned.
+    /// 
+    /// If supported, this function returns the image format of the device
+    /// *device.* Otherwise, an empty string is returned.
+    /// 
+    /// **See also:** QImageReader::autoDetectImageFormat()
     [static] image_format(device: *IODeviceType) -> ByteArray,
-    ///     Returns the list of image formats supported by QImageReader.
     /// 
-    ///     By default, Qt can read the following formats:
+    /// Returns the list of image formats supported by QImageReader.
     /// 
-    ///     \table
-    ///     \header \li Format \li MIME type                    \li Description
-    ///     \row    \li BMP    \li image/bmp                    \li Windows Bitmap
-    ///     \row    \li GIF    \li image/gif                    \li Graphic Interchange Format (optional)
-    ///     \row    \li JPG    \li image/jpeg                   \li Joint Photographic Experts Group
-    ///     \row    \li PNG    \li image/png                    \li Portable Network Graphics
-    ///     \row    \li PBM    \li image/x-portable-bitmap      \li Portable Bitmap
-    ///     \row    \li PGM    \li image/x-portable-graymap     \li Portable Graymap
-    ///     \row    \li PPM    \li image/x-portable-pixmap      \li Portable Pixmap
-    ///     \row    \li XBM    \li image/x-xbitmap              \li X11 Bitmap
-    ///     \row    \li XPM    \li image/x-xpixmap              \li X11 Pixmap
-    ///     \row    \li SVG    \li image/svg+xml                \li Scalable Vector Graphics
-    ///     \endtable
+    /// By default, Qt can read the following formats:
     /// 
-    ///     Reading and writing SVG files is supported through the \l{Qt SVG} module.
-    ///     The \l{Qt Image Formats} module provides support for additional image formats.
+    /// * Format
+    /// * MIME type
+    /// * Description
+    /// * BMP
+    /// * image/bmp
+    /// * Windows Bitmap
+    /// * GIF
+    /// * image/gif
+    /// * Graphic Interchange Format (optional)
+    /// * JPG
+    /// * image/jpeg
+    /// * Joint Photographic Experts Group
+    /// * PNG
+    /// * image/png
+    /// * Portable Network Graphics
+    /// * PBM
+    /// * image/x-portable-bitmap
+    /// * Portable Bitmap
+    /// * PGM
+    /// * image/x-portable-graymap
+    /// * Portable Graymap
+    /// * PPM
+    /// * image/x-portable-pixmap
+    /// * Portable Pixmap
+    /// * XBM
+    /// * image/x-xbitmap
+    /// * X11 Bitmap
+    /// * XPM
+    /// * image/x-xpixmap
+    /// * X11 Pixmap
+    /// * SVG
+    /// * image/svg+xml
+    /// * Scalable Vector Graphics
     /// 
-    ///     Note that the QApplication instance must be created before this function is
-    ///     called.
+    /// Reading and writing SVG files is supported through the [Qt SVG](Qt%20SVG)
+    /// module.
+    /// The [Qt Image Formats](Qt%20Image%20Formats)
+    /// module provides support for additional image formats.
     /// 
-    ///     \sa setFormat(), QImageWriter::supportedImageFormats(), QImageIOPlugin
+    /// Note that the QApplication instance must be created before this function is
+    /// called.
+    /// 
+    /// **See also:** setFormat()
+    /// QImageWriter::supportedImageFormats()
+    /// QImageIOPlugin
     [static] supported_image_formats() -> [ByteArray],
-    ///     Returns the list of MIME types supported by QImageReader.
     /// 
-    ///     Note that the QApplication instance must be created before this function is
-    ///     called.
+    /// Returns the list of MIME types supported by QImageReader.
     /// 
-    ///     \sa supportedImageFormats(), QImageWriter::supportedMimeTypes()
+    /// Note that the QApplication instance must be created before this function is
+    /// called.
+    /// 
+    /// **See also:** supportedImageFormats()
+    /// QImageWriter::supportedMimeTypes()
     [static] supported_mime_types() -> [ByteArray],
 }
 

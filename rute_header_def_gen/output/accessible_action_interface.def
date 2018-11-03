@@ -1,60 +1,167 @@
-///     \class QAccessibleActionInterface
-///     \ingroup accessibility
 /// 
-///     \brief The QAccessibleActionInterface class implements support for
-///     invocable actions in the interface.
+/// Accessible objects should implement the action interface if they support user interaction.
+/// Usually this interface is implemented by classes that also implement [QAccessibleInterface.](QAccessibleInterface.)
 /// 
-///     Accessible objects should implement the action interface if they support user interaction.
-///     Usually this interface is implemented by classes that also implement \l QAccessibleInterface.
+/// The supported actions should use the predefined actions offered in this class unless they do not
+/// fit a predefined action. In that case a custom action can be added.
 /// 
-///     The supported actions should use the predefined actions offered in this class unless they do not
-///     fit a predefined action. In that case a custom action can be added.
+/// When subclassing QAccessibleActionInterface you need to provide a list of actionNames which
+/// is the primary means to discover the available actions. Action names are never localized.
+/// In order to present actions to the user there are two functions that need to return localized versions
+/// of the name and give a description of the action. For the predefined action names use
+/// [QAccessibleActionInterface::localizedActionName()](QAccessibleActionInterface::localizedActionName())
+/// and [QAccessibleActionInterface::localizedActionDescription()](QAccessibleActionInterface::localizedActionDescription())
 /// 
-///     When subclassing QAccessibleActionInterface you need to provide a list of actionNames which
-///     is the primary means to discover the available actions. Action names are never localized.
-///     In order to present actions to the user there are two functions that need to return localized versions
-///     of the name and give a description of the action. For the predefined action names use
-///     \l QAccessibleActionInterface::localizedActionName() and \l QAccessibleActionInterface::localizedActionDescription()
-///     to return their localized counterparts.
+/// to return their localized counterparts.
 /// 
-///     In general you should use one of the predefined action names, unless describing an action that does not fit these:
-///     \table
-///     \header \li Action name         \li Description
-///     \row    \li \l toggleAction()   \li toggles the item (checkbox, radio button, switch, ...)
-///     \row    \li \l decreaseAction() \li decrease the value of the accessible (e.g. spinbox)
-///     \row    \li \l increaseAction() \li increase the value of the accessible (e.g. spinbox)
-///     \row    \li \l pressAction()    \li press or click or activate the accessible (should correspont to clicking the object with the mouse)
-///     \row    \li \l setFocusAction() \li set the focus to this accessible
-///     \row    \li \l showMenuAction() \li show a context menu, corresponds to right-clicks
-///     \endtable
+/// In general you should use one of the predefined action names, unless describing an action that does not fit these:
+/// * Action name
+/// * Description
+/// * [toggleAction()](toggleAction())
 /// 
-///     In order to invoke the action, \l doAction() is called with an action name.
+/// * toggles the item (checkbox, radio button, switch, ...)
+/// * [decreaseAction()](decreaseAction())
 /// 
-///     Most widgets will simply implement \l pressAction(). This is what happens when the widget is activated by
-///     being clicked, space pressed or similar.
+/// * decrease the value of the accessible (e.g. spinbox)
+/// * [increaseAction()](increaseAction())
 /// 
-///     \l{IAccessible2 Specification}
+/// * increase the value of the accessible (e.g. spinbox)
+/// * [pressAction()](pressAction())
+/// 
+/// * press or click or activate the accessible (should correspont to clicking the object with the mouse)
+/// * [setFocusAction()](setFocusAction())
+/// 
+/// * set the focus to this accessible
+/// * [showMenuAction()](showMenuAction())
+/// 
+/// * show a context menu, corresponds to right-clicks
+/// 
+/// In order to invoke the action, [doAction()](doAction())
+/// is called with an action name.
+/// 
+/// Most widgets will simply implement [pressAction().](pressAction().)
+/// This is what happens when the widget is activated by
+/// being clicked, space pressed or similar.
+/// 
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleActionInterface {
+    /// 
+    /// Returns the list of actions supported by this accessible object.
+    /// The actions returned should be in preferred order,
+    /// i.e. the action that the user most likely wants to trigger should be returned first,
+    /// while the least likely action should be returned last.
+    /// 
+    /// The list does only contain actions that can be invoked.
+    /// It won't return disabled actions, or actions associated with disabled UI controls.
+    /// 
+    /// The list can be empty.
+    /// 
+    /// Note that this list is not localized. For a localized representation re-implement [localizedActionName()](localizedActionName())
+    /// 
+    /// and [localizedActionDescription()](localizedActionDescription())
+    /// 
+    /// **See also:** doAction()
+    /// localizedActionName()
+    /// localizedActionDescription()
     [event] action_names() -> [String],
+    /// 
+    /// Returns a localized action name of *actionName.*
+    /// 
+    /// For custom actions this function has to be re-implemented.
+    /// When using one of the default names, you can call this function in QAccessibleActionInterface
+    /// to get the localized string.
+    /// 
+    /// **See also:** actionNames()
+    /// localizedActionDescription()
     [event] localized_action_name(name: String) -> String,
+    /// 
+    /// Returns a localized action description of the action *actionName.*
+    /// 
+    /// When using one of the default names, you can call this function in QAccessibleActionInterface
+    /// to get the localized string.
+    /// 
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [event] localized_action_description(name: String) -> String,
+    /// 
+    /// Invokes the action specified by *actionName.*
+    /// Note that *actionName* is the non-localized name as returned by [actionNames()](actionNames())
+    /// 
+    /// This function is usually implemented by calling the same functions
+    /// that other user interaction, such as clicking the object, would trigger.
+    /// 
+    /// **See also:** actionNames()
     [event] do_action(action_name: String),
+    /// 
+    /// Returns a list of the keyboard shortcuts available for invoking the action named *actionName.*
+    /// 
+    /// This is important to let users learn alternative ways of using the application by emphasizing the keyboard.
+    /// 
+    /// **See also:** actionNames()
     [event] key_bindings_for_action(action_name: String) -> [String],
+    /// 
+    /// Returns the name of the press default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] press_action() -> String?,
+    /// 
+    /// Returns the name of the increase default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] increase_action() -> String?,
+    /// 
+    /// Returns the name of the decrease default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] decrease_action() -> String?,
+    /// 
+    /// Returns the name of the show menu default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] show_menu_action() -> String?,
+    /// 
+    /// Returns the name of the set focus default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] set_focus_action() -> String?,
+    /// 
+    /// Returns the name of the toggle default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] toggle_action() -> String?,
+    /// 
+    /// Returns the name of the scroll left default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] scroll_left_action() -> String,
+    /// 
+    /// Returns the name of the scroll right default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] scroll_right_action() -> String,
+    /// 
+    /// Returns the name of the scroll up default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] scroll_up_action() -> String,
+    /// 
+    /// Returns the name of the scroll down default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] scroll_down_action() -> String,
+    /// 
+    /// Returns the name of the next page default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] next_page_action() -> String,
+    /// 
+    /// Returns the name of the previous page default action.
+    /// **See also:** actionNames()
+    /// localizedActionName()
     [static] previous_page_action() -> String,
 }
 

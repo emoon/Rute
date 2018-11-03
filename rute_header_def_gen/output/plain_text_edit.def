@@ -1,171 +1,200 @@
-///     \class QPlainTextEdit
-///     \since 4.4
-///     \brief The QPlainTextEdit class provides a widget that is used to edit and display
-///     plain text.
 /// 
-///     \ingroup richtext-processing
-///     \inmodule QtWidgets
+/// # Introduction and Concepts
 /// 
-///     \tableofcontents
+/// QPlainTextEdit is an advanced viewer/editor supporting plain
+/// text. It is optimized to handle large documents and to respond
+/// quickly to user input.
 /// 
-///     \section1 Introduction and Concepts
+/// QPlainText uses very much the same technology and concepts as
+/// QTextEdit, but is optimized for plain text handling.
 /// 
-///     QPlainTextEdit is an advanced viewer/editor supporting plain
-///     text. It is optimized to handle large documents and to respond
-///     quickly to user input.
+/// QPlainTextEdit works on paragraphs and characters. A paragraph is
+/// a formatted string which is word-wrapped to fit into the width of
+/// the widget. By default when reading plain text, one newline
+/// signifies a paragraph. A document consists of zero or more
+/// paragraphs. Paragraphs are separated by hard line breaks. Each
+/// character within a paragraph has its own attributes, for example,
+/// font and color.
 /// 
-///     QPlainText uses very much the same technology and concepts as
-///     QTextEdit, but is optimized for plain text handling.
+/// The shape of the mouse cursor on a QPlainTextEdit is
+/// Qt::IBeamCursor by default. It can be changed through the
+/// viewport()'s cursor property.
 /// 
-///     QPlainTextEdit works on paragraphs and characters. A paragraph is
-///     a formatted string which is word-wrapped to fit into the width of
-///     the widget. By default when reading plain text, one newline
-///     signifies a paragraph. A document consists of zero or more
-///     paragraphs. Paragraphs are separated by hard line breaks. Each
-///     character within a paragraph has its own attributes, for example,
-///     font and color.
+/// # Using QPlainTextEdit as a Display Widget
 /// 
-///     The shape of the mouse cursor on a QPlainTextEdit is
-///     Qt::IBeamCursor by default.  It can be changed through the
-///     viewport()'s cursor property.
+/// The text is set or replaced using setPlainText() which deletes the
+/// existing text and replaces it with the text passed to setPlainText().
 /// 
-///     \section1 Using QPlainTextEdit as a Display Widget
+/// Text can be inserted using the QTextCursor class or using the
+/// convenience functions insertPlainText(), appendPlainText() or
+/// paste().
 /// 
-///     The text is set or replaced using setPlainText() which deletes the
-///     existing text and replaces it with the text passed to setPlainText().
+/// By default, the text edit wraps words at whitespace to fit within
+/// the text edit widget. The setLineWrapMode() function is used to
+/// specify the kind of line wrap you want, [WidgetWidth](WidgetWidth)
+/// or [NoWrap](NoWrap)
+/// if you don't want any wrapping. If you use word wrap to
+/// the widget's width [WidgetWidth,](WidgetWidth,)
+/// you can specify whether to
+/// break on whitespace or anywhere with setWordWrapMode().
 /// 
-///     Text can be inserted using the QTextCursor class or using the
-///     convenience functions insertPlainText(), appendPlainText() or
-///     paste().
+/// The find() function can be used to find and select a given string
+/// within the text.
 /// 
-///     By default, the text edit wraps words at whitespace to fit within
-///     the text edit widget. The setLineWrapMode() function is used to
-///     specify the kind of line wrap you want, \l WidgetWidth or \l
-///     NoWrap if you don't want any wrapping.  If you use word wrap to
-///     the widget's width \l WidgetWidth, you can specify whether to
-///     break on whitespace or anywhere with setWordWrapMode().
+/// If you want to limit the total number of paragraphs in a
+/// QPlainTextEdit, as it is for example useful in a log viewer, then
+/// you can use the maximumBlockCount property. The combination of
+/// setMaximumBlockCount() and appendPlainText() turns QPlainTextEdit
+/// into an efficient viewer for log text. The scrolling can be
+/// reduced with the centerOnScroll() property, making the log viewer
+/// even faster. Text can be formatted in a limited way, either using
+/// a syntax highlighter (see below), or by appending html-formatted
+/// text with appendHtml(). While QPlainTextEdit does not support
+/// complex rich text rendering with tables and floats, it does
+/// support limited paragraph-based formatting that you may need in a
+/// log viewer.
 /// 
-///     The find() function can be used to find and select a given string
-///     within the text.
+/// ## Read-only Key Bindings
 /// 
-///     If you want to limit the total number of paragraphs in a
-///     QPlainTextEdit, as it is for example useful in a log viewer, then
-///     you can use the maximumBlockCount property. The combination of
-///     setMaximumBlockCount() and appendPlainText() turns QPlainTextEdit
-///     into an efficient viewer for log text. The scrolling can be
-///     reduced with the centerOnScroll() property, making the log viewer
-///     even faster. Text can be formatted in a limited way, either using
-///     a syntax highlighter (see below), or by appending html-formatted
-///     text with appendHtml(). While QPlainTextEdit does not support
-///     complex rich text rendering with tables and floats, it does
-///     support limited paragraph-based formatting that you may need in a
-///     log viewer.
+/// When QPlainTextEdit is used read-only the key bindings are limited to
+/// navigation, and text may only be selected with the mouse:
+/// * Keypresses
+/// * Action
+/// * Qt::UpArrow
+/// * Moves one line up.
+/// * Qt::DownArrow
+/// * Moves one line down.
+/// * Qt::LeftArrow
+/// * Moves one character to the left.
+/// * Qt::RightArrow
+/// * Moves one character to the right.
+/// * PageUp
+/// * Moves one (viewport) page up.
+/// * PageDown
+/// * Moves one (viewport) page down.
+/// * Home
+/// * Moves to the beginning of the text.
+/// * End
+/// * Moves to the end of the text.
+/// * Alt+Wheel
+/// * Scrolls the page horizontally (the Wheel is the mouse wheel).
+/// * Ctrl+Wheel
+/// * Zooms the text.
+/// * Ctrl+A
+/// * Selects all text.
 /// 
-///     \section2 Read-only Key Bindings
+/// # Using QPlainTextEdit as an Editor
 /// 
-///     When QPlainTextEdit is used read-only the key bindings are limited to
-///     navigation, and text may only be selected with the mouse:
-///     \table
-///     \header \li Keypresses \li Action
-///     \row \li Qt::UpArrow        \li Moves one line up.
-///     \row \li Qt::DownArrow        \li Moves one line down.
-///     \row \li Qt::LeftArrow        \li Moves one character to the left.
-///     \row \li Qt::RightArrow        \li Moves one character to the right.
-///     \row \li PageUp        \li Moves one (viewport) page up.
-///     \row \li PageDown        \li Moves one (viewport) page down.
-///     \row \li Home        \li Moves to the beginning of the text.
-///     \row \li End                \li Moves to the end of the text.
-///     \row \li Alt+Wheel
-///          \li Scrolls the page horizontally (the Wheel is the mouse wheel).
-///     \row \li Ctrl+Wheel        \li Zooms the text.
-///     \row \li Ctrl+A            \li Selects all text.
-///     \endtable
+/// All the information about using QPlainTextEdit as a display widget also
+/// applies here.
 /// 
+/// Selection of text is handled by the QTextCursor class, which provides
+/// functionality for creating selections, retrieving the text contents or
+/// deleting selections. You can retrieve the object that corresponds with
+/// the user-visible cursor using the textCursor() method. If you want to set
+/// a selection in QPlainTextEdit just create one on a QTextCursor object and
+/// then make that cursor the visible cursor using setCursor(). The selection
+/// can be copied to the clipboard with copy(), or cut to the clipboard with
+/// cut(). The entire text can be selected using selectAll().
 /// 
-///     \section1 Using QPlainTextEdit as an Editor
+/// QPlainTextEdit holds a QTextDocument object which can be retrieved using the
+/// document() method. You can also set your own document object using setDocument().
+/// QTextDocument emits a textChanged() signal if the text changes and it also
+/// provides a isModified() function which will return true if the text has been
+/// modified since it was either loaded or since the last call to setModified
+/// with false as argument. In addition it provides methods for undo and redo.
 /// 
-///     All the information about using QPlainTextEdit as a display widget also
-///     applies here.
+/// ## Syntax Highlighting
 /// 
-///     Selection of text is handled by the QTextCursor class, which provides
-///     functionality for creating selections, retrieving the text contents or
-///     deleting selections. You can retrieve the object that corresponds with
-///     the user-visible cursor using the textCursor() method. If you want to set
-///     a selection in QPlainTextEdit just create one on a QTextCursor object and
-///     then make that cursor the visible cursor using setCursor(). The selection
-///     can be copied to the clipboard with copy(), or cut to the clipboard with
-///     cut(). The entire text can be selected using selectAll().
+/// Just like QTextEdit, QPlainTextEdit works together with
+/// QSyntaxHighlighter.
 /// 
-///     QPlainTextEdit holds a QTextDocument object which can be retrieved using the
-///     document() method. You can also set your own document object using setDocument().
-///     QTextDocument emits a textChanged() signal if the text changes and it also
-///     provides a isModified() function which will return true if the text has been
-///     modified since it was either loaded or since the last call to setModified
-///     with false as argument. In addition it provides methods for undo and redo.
+/// ## Editing Key Bindings
 /// 
-///     \section2 Syntax Highlighting
+/// The list of key bindings which are implemented for editing:
+/// * Keypresses
+/// * Action
+/// * Backspace
+/// * Deletes the character to the left of the cursor.
+/// * Delete
+/// * Deletes the character to the right of the cursor.
+/// * Ctrl+C
+/// * Copy the selected text to the clipboard.
+/// * Ctrl+Insert
+/// * Copy the selected text to the clipboard.
+/// * Ctrl+K
+/// * Deletes to the end of the line.
+/// * Ctrl+V
+/// * Pastes the clipboard text into text edit.
+/// * Shift+Insert
+/// * Pastes the clipboard text into text edit.
+/// * Ctrl+X
+/// * Deletes the selected text and copies it to the clipboard.
+/// * Shift+Delete
+/// * Deletes the selected text and copies it to the clipboard.
+/// * Ctrl+Z
+/// * Undoes the last operation.
+/// * Ctrl+Y
+/// * Redoes the last operation.
+/// * LeftArrow
+/// * Moves the cursor one character to the left.
+/// * Ctrl+LeftArrow
+/// * Moves the cursor one word to the left.
+/// * RightArrow
+/// * Moves the cursor one character to the right.
+/// * Ctrl+RightArrow
+/// * Moves the cursor one word to the right.
+/// * UpArrow
+/// * Moves the cursor one line up.
+/// * Ctrl+UpArrow
+/// * Moves the cursor one word up.
+/// * DownArrow
+/// * Moves the cursor one line down.
+/// * Ctrl+Down Arrow
+/// * Moves the cursor one word down.
+/// * PageUp
+/// * Moves the cursor one page up.
+/// * PageDown
+/// * Moves the cursor one page down.
+/// * Home
+/// * Moves the cursor to the beginning of the line.
+/// * Ctrl+Home
+/// * Moves the cursor to the beginning of the text.
+/// * End
+/// * Moves the cursor to the end of the line.
+/// * Ctrl+End
+/// * Moves the cursor to the end of the text.
+/// * Alt+Wheel
+/// * Scrolls the page horizontally (the Wheel is the mouse wheel).
+/// * Ctrl+Wheel
+/// * Zooms the text.
 /// 
-///     Just like QTextEdit, QPlainTextEdit works together with
-///     QSyntaxHighlighter.
+/// To select (mark) text hold down the Shift key whilst pressing one
+/// of the movement keystrokes, for example, *Shift+Right Arrow*
+/// will select the character to the right, and *Shift+Ctrl+Right
+/// Arrow* will select the word to the right, etc.
 /// 
-///     \section2 Editing Key Bindings
+/// # Differences to QTextEdit
 /// 
-///     The list of key bindings which are implemented for editing:
-///     \table
-///     \header \li Keypresses \li Action
-///     \row \li Backspace \li Deletes the character to the left of the cursor.
-///     \row \li Delete \li Deletes the character to the right of the cursor.
-///     \row \li Ctrl+C \li Copy the selected text to the clipboard.
-///     \row \li Ctrl+Insert \li Copy the selected text to the clipboard.
-///     \row \li Ctrl+K \li Deletes to the end of the line.
-///     \row \li Ctrl+V \li Pastes the clipboard text into text edit.
-///     \row \li Shift+Insert \li Pastes the clipboard text into text edit.
-///     \row \li Ctrl+X \li Deletes the selected text and copies it to the clipboard.
-///     \row \li Shift+Delete \li Deletes the selected text and copies it to the clipboard.
-///     \row \li Ctrl+Z \li Undoes the last operation.
-///     \row \li Ctrl+Y \li Redoes the last operation.
-///     \row \li LeftArrow \li Moves the cursor one character to the left.
-///     \row \li Ctrl+LeftArrow \li Moves the cursor one word to the left.
-///     \row \li RightArrow \li Moves the cursor one character to the right.
-///     \row \li Ctrl+RightArrow \li Moves the cursor one word to the right.
-///     \row \li UpArrow \li Moves the cursor one line up.
-///     \row \li Ctrl+UpArrow \li Moves the cursor one word up.
-///     \row \li DownArrow \li Moves the cursor one line down.
-///     \row \li Ctrl+Down Arrow \li Moves the cursor one word down.
-///     \row \li PageUp \li Moves the cursor one page up.
-///     \row \li PageDown \li Moves the cursor one page down.
-///     \row \li Home \li Moves the cursor to the beginning of the line.
-///     \row \li Ctrl+Home \li Moves the cursor to the beginning of the text.
-///     \row \li End \li Moves the cursor to the end of the line.
-///     \row \li Ctrl+End \li Moves the cursor to the end of the text.
-///     \row \li Alt+Wheel \li Scrolls the page horizontally (the Wheel is the mouse wheel).
-///     \row \li Ctrl+Wheel \li Zooms the text.
-///     \endtable
+/// QPlainTextEdit is a thin class, implemented by using most of the
+/// technology that is behind QTextEdit and QTextDocument. Its
+/// performance benefits over QTextEdit stem mostly from using a
+/// different and simplified text layout called
+/// QPlainTextDocumentLayout on the text document (see
+/// QTextDocument::setDocumentLayout()). The plain text document layout
+/// does not support tables nor embedded frames, and *replaces a
+/// pixel-exact height calculation with a line-by-line respectively
+/// paragraph-by-paragraph scrolling approach* . This makes it possible
+/// to handle significantly larger documents, and still resize the
+/// editor with line wrap enabled in real time. It also makes for a
+/// fast log viewer (see setMaximumBlockCount()).
 /// 
-///     To select (mark) text hold down the Shift key whilst pressing one
-///     of the movement keystrokes, for example, \e{Shift+Right Arrow}
-///     will select the character to the right, and \e{Shift+Ctrl+Right
-///     Arrow} will select the word to the right, etc.
-/// 
-///    \section1 Differences to QTextEdit
-/// 
-///    QPlainTextEdit is a thin class, implemented by using most of the
-///    technology that is behind QTextEdit and QTextDocument. Its
-///    performance benefits over QTextEdit stem mostly from using a
-///    different and simplified text layout called
-///    QPlainTextDocumentLayout on the text document (see
-///    QTextDocument::setDocumentLayout()). The plain text document layout
-///    does not support tables nor embedded frames, and \e{replaces a
-///    pixel-exact height calculation with a line-by-line respectively
-///    paragraph-by-paragraph scrolling approach}. This makes it possible
-///    to handle significantly larger documents, and still resize the
-///    editor with line wrap enabled in real time. It also makes for a
-///    fast log viewer (see setMaximumBlockCount()).
-/// 
-/// 
-///     \sa QTextDocument, QTextCursor, {Application Example},
-///         {Code Editor Example}, {Syntax Highlighter Example},
-///         {Rich Text Processing}
+/// **See also:** QTextDocument
+/// QTextCursor
+/// {Application Example}
+/// {Code Editor Example}
+/// {Syntax Highlighter Example}
+/// {Rich Text Processing}
 /// 
 /// # Licence
 ///
@@ -177,398 +206,573 @@ enum LineWrapMode {
 }
 
 struct PlainTextEdit : AbstractScrollArea {
-    ///     Makes \a document the new document of the text editor.
     /// 
-    ///     The parent QObject of the provided document remains the owner
-    ///     of the object. If the current document is a child of the text
-    ///     editor, then it is deleted.
+    /// Makes *document* the new document of the text editor.
     /// 
-    ///     The document must have a document layout that inherits
-    ///     QPlainTextDocumentLayout (see QTextDocument::setDocumentLayout()).
+    /// The parent QObject of the provided document remains the owner
+    /// of the object. If the current document is a child of the text
+    /// editor, then it is deleted.
     /// 
-    ///     \sa document()
+    /// The document must have a document layout that inherits
+    /// QPlainTextDocumentLayout (see QTextDocument::setDocumentLayout()).
+    /// 
+    /// **See also:** document()
     set_document(document: *TextDocumentType),
-    ///     Returns a pointer to the underlying document.
     /// 
-    ///     \sa setDocument()
+    /// Returns a pointer to the underlying document.
+    /// 
+    /// **See also:** setDocument()
+    /// 
+    /// By default, this property contains an empty string.
     document() -> TextDocument?,
-    ///     \since 5.3
-    /// 
-    ///     \property QPlainTextEdit::placeholderText
-    ///     \brief the editor placeholder text
-    /// 
-    ///     Setting this property makes the editor display a grayed-out
-    ///     placeholder text as long as the document() is empty.
-    /// 
-    ///     By default, this property contains an empty string.
-    /// 
-    ///     \sa document()
     set_placeholder_text(placeholder_text: String),
+    /// 
+    /// Setting this property makes the editor display a grayed-out
+    /// placeholder text as long as the document() is empty.
+    /// 
+    /// By default, this property contains an empty string.
+    /// 
+    /// **See also:** document()
     placeholder_text() -> String,
-    ///     Sets the visible \a cursor.
+    /// 
+    /// Sets the visible *cursor.*
     set_text_cursor(cursor: &TextCursorType),
+    /// 
+    /// Returns a copy of the QTextCursor that represents the currently visible cursor.
+    /// Note that changes on the returned cursor do not affect QPlainTextEdit's cursor; use
+    /// setTextCursor() to update the visible cursor.
     text_cursor() -> TextCursor,
-    ///     \property QPlainTextEdit::readOnly
-    ///     \brief whether the text edit is read-only
-    /// 
-    ///     In a read-only text edit the user can only navigate through the
-    ///     text and select text; modifying the text is not possible.
-    /// 
-    ///     This property's default is false.
     is_read_only() -> bool,
     set_read_only(ro: bool),
-    ///     \property QPlainTextEdit::textInteractionFlags
-    /// 
-    ///     Specifies how the label should interact with user input if it displays text.
-    /// 
-    ///     If the flags contain either Qt::LinksAccessibleByKeyboard or Qt::TextSelectableByKeyboard
-    ///     then the focus policy is also automatically set to Qt::ClickFocus.
-    /// 
-    ///     The default value depends on whether the QPlainTextEdit is read-only
-    ///     or editable.
     set_text_interaction_flags(flags: Rute::TextInteractionFlags),
+    /// 
+    /// Specifies how the label should interact with user input if it displays text.
+    /// 
+    /// If the flags contain either Qt::LinksAccessibleByKeyboard or Qt::TextSelectableByKeyboard
+    /// then the focus policy is also automatically set to Qt::ClickFocus.
+    /// 
+    /// The default value depends on whether the QPlainTextEdit is read-only
+    /// or editable.
     text_interaction_flags() -> Rute::TextInteractionFlags,
+    /// 
+    /// Merges the properties specified in *modifier* into the current character
+    /// format by calling QTextCursor::mergeCharFormat on the editor's cursor.
+    /// If the editor has a selection then the properties of *modifier* are
+    /// directly applied to the selection.
+    /// 
+    /// **See also:** QTextCursor::mergeCharFormat()
     merge_current_char_format(modifier: &TextCharFormatType),
+    /// 
+    /// Sets the char format that is be used when inserting new text to *format* by calling QTextCursor::setCharFormat() on the editor's
+    /// cursor. If the editor has a selection then the char format is
+    /// directly applied to the selection.
     set_current_char_format(format: &TextCharFormatType),
+    /// 
+    /// Returns the char format that is used when inserting new text.
     current_char_format() -> TextCharFormat,
+    /// **Tab** changes focus or is accepted as input
+    /// 
+    /// In some occasions text edits should not allow the user to input
+    /// tabulators or change indentation using the **Tab** key, as this breaks
+    /// the focus chain. The default is false.
+    /// 
     tab_changes_focus() -> bool,
     set_tab_changes_focus(b: bool),
     set_document_title(title: String),
+    /// 
+    /// By default, this property contains an empty string.
     document_title() -> String,
     is_undo_redo_enabled() -> bool,
     set_undo_redo_enabled(enable: bool),
     set_maximum_block_count(maximum: i32),
-    maximum_block_count() -> i32,
-    ///     \property QPlainTextEdit::lineWrapMode
-    ///     \brief the line wrap mode
     /// 
-    ///     The default mode is WidgetWidth which causes words to be
-    ///     wrapped at the right edge of the text edit. Wrapping occurs at
-    ///     whitespace, keeping whole words intact. If you want wrapping to
-    ///     occur within words use setWordWrapMode().
+    /// Specifies the maximum number of blocks the document may have. If there are
+    /// more blocks in the document that specified with this property blocks are removed
+    /// from the beginning of the document.
+    /// 
+    /// A negative or zero value specifies that the document may contain an unlimited
+    /// amount of blocks.
+    /// 
+    /// The default value is 0.
+    /// 
+    /// Note that setting this property will apply the limit immediately to the document
+    /// contents. Setting this property also disables the undo redo history.
+    /// 
+    maximum_block_count() -> i32,
+    /// 
+    /// The default mode is WidgetWidth which causes words to be
+    /// wrapped at the right edge of the text edit. Wrapping occurs at
+    /// whitespace, keeping whole words intact. If you want wrapping to
+    /// occur within words use setWordWrapMode().
     line_wrap_mode() -> PlainTextEdit::LineWrapMode,
     set_line_wrap_mode(mode: PlainTextEdit::LineWrapMode),
-    ///     \property QPlainTextEdit::wordWrapMode
-    ///     \brief the mode QPlainTextEdit will use when wrapping text by words
     /// 
-    ///     By default, this property is set to QTextOption::WrapAtWordBoundaryOrAnywhere.
+    /// By default, this property is set to QTextOption::WrapAtWordBoundaryOrAnywhere.
     /// 
-    ///     \sa QTextOption::WrapMode
+    /// **See also:** QTextOption::WrapMode
     word_wrap_mode() -> TextOption::WrapMode,
     set_word_wrap_mode(policy: TextOption::WrapMode),
     set_background_visible(visible: bool),
-    ///     \property QPlainTextEdit::backgroundVisible
-    ///     \brief whether the palette background is visible outside the document area
     /// 
-    ///     If set to true, the plain text edit paints the palette background
-    ///     on the viewport area not covered by the text document. Otherwise,
-    ///     if set to false, it won't. The feature makes it possible for
-    ///     the user to visually distinguish between the area of the document,
-    ///     painted with the base color of the palette, and the empty
-    ///     area not covered by any document.
+    /// If set to true, the plain text edit paints the palette background
+    /// on the viewport area not covered by the text document. Otherwise,
+    /// if set to false, it won't. The feature makes it possible for
+    /// the user to visually distinguish between the area of the document,
+    /// painted with the base color of the palette, and the empty
+    /// area not covered by any document.
     /// 
-    ///     The default is false.
+    /// The default is false.
     background_visible() -> bool,
     set_center_on_scroll(enabled: bool),
-    ///     \property QPlainTextEdit::centerOnScroll
-    ///     \brief whether the cursor should be centered on screen
     /// 
-    ///     If set to true, the plain text edit scrolls the document
-    ///     vertically to make the cursor visible at the center of the
-    ///     viewport. This also allows the text edit to scroll below the end
-    ///     of the document. Otherwise, if set to false, the plain text edit
-    ///     scrolls the smallest amount possible to ensure the cursor is
-    ///     visible.  The same algorithm is applied to any new line appended
-    ///     through appendPlainText().
+    /// If set to true, the plain text edit scrolls the document
+    /// vertically to make the cursor visible at the center of the
+    /// viewport. This also allows the text edit to scroll below the end
+    /// of the document. Otherwise, if set to false, the plain text edit
+    /// scrolls the smallest amount possible to ensure the cursor is
+    /// visible. The same algorithm is applied to any new line appended
+    /// through appendPlainText().
     /// 
-    ///     The default is false.
+    /// The default is false.
     /// 
-    ///     \sa centerCursor(), ensureCursorVisible()
+    /// **See also:** centerCursor()
+    /// ensureCursorVisible()
     center_on_scroll() -> bool,
-    ///     \fn bool QPlainTextEdit::find(const QRegExp &exp, QTextDocument::FindFlags options)
     /// 
-    ///     \since 5.3
-    ///     \overload
+    /// Finds the next occurrence of the string, *exp,* using the given
+    /// *options.* Returns `true` if *exp* was found and changes the
+    /// cursor to select the match; otherwise returns `false.`
     /// 
-    ///     Finds the next occurrence, matching the regular expression, \a exp, using the given
-    ///     \a options. The QTextDocument::FindCaseSensitively option is ignored for this overload,
-    ///     use QRegExp::caseSensitivity instead.
+    /// **Overloads**
+    /// Finds the next occurrence, matching the regular expression, *exp,* using the given
+    /// *options.* The QTextDocument::FindCaseSensitively option is ignored for this overload,
+    /// use QRegExp::caseSensitivity instead.
     /// 
-    ///     Returns \c true if a match was found and changes the cursor to select the match;
-    ///     otherwise returns \c false.
+    /// Returns `true` if a match was found and changes the cursor to select the match;
+    /// otherwise returns `false.`
     find(exp: String, options: TextDocument::FindFlags) -> bool,
-    ///     \fn bool QPlainTextEdit::find(const QRegExp &exp, QTextDocument::FindFlags options)
     /// 
-    ///     \since 5.3
-    ///     \overload
+    /// Finds the next occurrence of the string, *exp,* using the given
+    /// *options.* Returns `true` if *exp* was found and changes the
+    /// cursor to select the match; otherwise returns `false.`
     /// 
-    ///     Finds the next occurrence, matching the regular expression, \a exp, using the given
-    ///     \a options. The QTextDocument::FindCaseSensitively option is ignored for this overload,
-    ///     use QRegExp::caseSensitivity instead.
+    /// **Overloads**
+    /// Finds the next occurrence, matching the regular expression, *exp,* using the given
+    /// *options.* The QTextDocument::FindCaseSensitively option is ignored for this overload,
+    /// use QRegExp::caseSensitivity instead.
     /// 
-    ///     Returns \c true if a match was found and changes the cursor to select the match;
-    ///     otherwise returns \c false.
+    /// Returns `true` if a match was found and changes the cursor to select the match;
+    /// otherwise returns `false.`
     find(exp: &RegExpType, options: TextDocument::FindFlags) -> bool,
+    /// 
+    /// Returns the text of the text edit as plain text.
+    /// 
+    /// **See also:** QPlainTextEdit::setPlainText()
     to_plain_text() -> String,
-    ///     Ensures that the cursor is visible by scrolling the text edit if
-    ///     necessary.
     /// 
-    ///     \sa centerCursor(), centerOnScroll
+    /// Ensures that the cursor is visible by scrolling the text edit if
+    /// necessary.
+    /// 
+    /// **See also:** centerCursor()
+    /// centerOnScroll
     ensure_cursor_visible(),
-    ///     Loads the resource specified by the given \a type and \a name.
     /// 
-    ///     This function is an extension of QTextDocument::loadResource().
+    /// Loads the resource specified by the given *type* and *name.*
     /// 
-    ///     \sa QTextDocument::loadResource()
+    /// This function is an extension of QTextDocument::loadResource().
+    /// 
+    /// **See also:** QTextDocument::loadResource()
     [event] load_resource(type: i32, name: &UrlType) -> Variant,
-    ///   \since 5.5
-    ///   This function creates the standard context menu which is shown
-    ///   when the user clicks on the text edit with the right mouse
-    ///   button. It is called from the default contextMenuEvent() handler
-    ///   and it takes the \a position in document coordinates where the mouse click was.
-    ///   This can enable actions that are sensitive to the position where the user clicked.
-    ///   The popup menu's ownership is transferred to the caller.
+    /// This function creates the standard context menu which is shown
+    /// when the user clicks on the text edit with the right mouse
+    /// button. It is called from the default contextMenuEvent() handler.
+    /// The popup menu's ownership is transferred to the caller.
+    /// 
+    /// We recommend that you use the createStandardContextMenu(QPoint) version instead
+    /// which will enable the actions that are sensitive to where the user clicked.
+    /// 
+    /// This function creates the standard context menu which is shown
+    /// when the user clicks on the text edit with the right mouse
+    /// button. It is called from the default contextMenuEvent() handler
+    /// and it takes the *position* in document coordinates where the mouse click was.
+    /// This can enable actions that are sensitive to the position where the user clicked.
+    /// The popup menu's ownership is transferred to the caller.
     create_standard_context_menu() -> Menu?,
-    ///   \since 5.5
-    ///   This function creates the standard context menu which is shown
-    ///   when the user clicks on the text edit with the right mouse
-    ///   button. It is called from the default contextMenuEvent() handler
-    ///   and it takes the \a position in document coordinates where the mouse click was.
-    ///   This can enable actions that are sensitive to the position where the user clicked.
-    ///   The popup menu's ownership is transferred to the caller.
+    /// This function creates the standard context menu which is shown
+    /// when the user clicks on the text edit with the right mouse
+    /// button. It is called from the default contextMenuEvent() handler.
+    /// The popup menu's ownership is transferred to the caller.
+    /// 
+    /// We recommend that you use the createStandardContextMenu(QPoint) version instead
+    /// which will enable the actions that are sensitive to where the user clicked.
+    /// 
+    /// This function creates the standard context menu which is shown
+    /// when the user clicks on the text edit with the right mouse
+    /// button. It is called from the default contextMenuEvent() handler
+    /// and it takes the *position* in document coordinates where the mouse click was.
+    /// This can enable actions that are sensitive to the position where the user clicked.
+    /// The popup menu's ownership is transferred to the caller.
     create_standard_context_menu(position: &PointType) -> Menu?,
-    ///   returns a QTextCursor at position \a pos (in viewport coordinates).
+    /// 
+    /// returns a QTextCursor at position *pos* (in viewport coordinates).
     cursor_for_position(pos: &PointType) -> TextCursor,
+    /// 
+    /// returns a rectangle (in viewport coordinates) that includes the
+    /// *cursor.*
+    /// 
+    /// returns a rectangle (in viewport coordinates) that includes the
+    /// cursor of the text edit.
     cursor_rect(cursor: &TextCursorType) -> Rect,
+    /// 
+    /// returns a rectangle (in viewport coordinates) that includes the
+    /// *cursor.*
+    /// 
+    /// returns a rectangle (in viewport coordinates) that includes the
+    /// cursor of the text edit.
     cursor_rect() -> Rect,
+    /// 
+    /// Returns the reference of the anchor at position *pos,* or an
+    /// empty string if no anchor exists at that point.
+    /// 
     anchor_at(pos: &PointType) -> String,
-    ///    \property QPlainTextEdit::overwriteMode
-    ///    \brief whether text entered by the user will overwrite existing text
     /// 
-    ///    As with many text editors, the plain text editor widget can be configured
-    ///    to insert or overwrite existing text with new text entered by the user.
+    /// As with many text editors, the plain text editor widget can be configured
+    /// to insert or overwrite existing text with new text entered by the user.
     /// 
-    ///    If this property is \c true, existing text is overwritten, character-for-character
-    ///    by new text; otherwise, text is inserted at the cursor position, displacing
-    ///    existing text.
+    /// If this property is `true,` existing text is overwritten, character-for-character
+    /// by new text; otherwise, text is inserted at the cursor position, displacing
+    /// existing text.
     /// 
-    ///    By default, this property is \c false (new text does not overwrite existing text).
+    /// By default, this property is `false` (new text does not overwrite existing text).
     overwrite_mode() -> bool,
     set_overwrite_mode(overwrite: bool),
-    ///     \property QPlainTextEdit::tabStopWidth
-    ///     \brief the tab stop width in pixels
-    ///     \deprecated in Qt 5.10. Use tabStopDistance instead.
     /// 
-    ///     By default, this property contains a value of 80.
+    /// By default, this property contains a value of 80.
     tab_stop_width() -> i32,
     set_tab_stop_width(width: i32),
-    ///     \property QPlainTextEdit::tabStopDistance
-    ///     \brief the tab stop distance in pixels
-    ///     \since 5.10
     /// 
-    ///     By default, this property contains a value of 80.
+    /// By default, this property contains a value of 80.
     tab_stop_distance() -> f32,
     set_tab_stop_distance(distance: f32),
-    ///     \property QPlainTextEdit::cursorWidth
     /// 
-    ///     This property specifies the width of the cursor in pixels. The default value is 1.
+    /// This property specifies the width of the cursor in pixels. The default value is 1.
     cursor_width() -> i32,
     set_cursor_width(width: i32),
-    ///     Moves the cursor by performing the given \a operation.
     /// 
-    ///     If \a mode is QTextCursor::KeepAnchor, the cursor selects the text it moves over.
-    ///     This is the same effect that the user achieves when they hold down the Shift key
-    ///     and move the cursor with the cursor keys.
+    /// Moves the cursor by performing the given *operation.*
     /// 
-    ///     \sa QTextCursor::movePosition()
+    /// If *mode* is QTextCursor::KeepAnchor, the cursor selects the text it moves over.
+    /// This is the same effect that the user achieves when they hold down the Shift key
+    /// and move the cursor with the cursor keys.
+    /// 
+    /// **See also:** QTextCursor::movePosition()
     move_cursor(operation: TextCursor::MoveOperation, mode: TextCursor::MoveMode),
-    ///     Returns whether text can be pasted from the clipboard into the textedit.
+    /// 
+    /// Returns whether text can be pasted from the clipboard into the textedit.
     can_paste() -> bool,
-    ///     Convenience function to print the text edit's document to the given \a printer. This
-    ///     is equivalent to calling the print method on the document directly except that this
-    ///     function also supports QPrinter::Selection as print range.
-    /// 
-    ///     \sa QTextDocument::print()
     print(printer: *PagedPaintDeviceType),
-    ///     \property QPlainTextEdit::blockCount
-    ///     \brief the number of text blocks in the document.
     /// 
-    ///     By default, in an empty document, this property contains a value of 1.
+    /// This signal is emitted whenever the block count changes. The new
+    /// block count is passed in *newBlockCount.*
+    /// 
+    /// By default, in an empty document, this property contains a value of 1.
     block_count() -> i32,
+    /// 
     [event] input_method_query(property: Rute::InputMethodQuery) -> Variant,
+    /// 
     input_method_query(query: Rute::InputMethodQuery, argument: VariantType) -> Variant,
-    ///     Changes the text of the text edit to the string \a text.
-    ///     Any previous text is removed.
     /// 
-    ///     \a text is interpreted as plain text.
+    /// Changes the text of the text edit to the string *text.*
+    /// Any previous text is removed.
     /// 
-    ///     Note that the undo/redo history is cleared by this function.
+    /// *text* is interpreted as plain text.
     /// 
-    ///     \sa toPlainText()
+    /// Note that the undo/redo history is cleared by this function.
+    /// 
+    /// **See also:** toPlainText()
     set_plain_text(text: String),
-    ///     Copies the selected text to the clipboard and deletes it from
-    ///     the text edit.
     /// 
-    ///     If there is no selected text nothing happens.
+    /// Copies the selected text to the clipboard and deletes it from
+    /// the text edit.
     /// 
-    ///     \sa copy(), paste()
+    /// If there is no selected text nothing happens.
+    /// 
+    /// **See also:** copy()
+    /// paste()
     cut(),
-    ///     Copies any selected text to the clipboard.
     /// 
-    ///     \sa copyAvailable()
+    /// Copies any selected text to the clipboard.
+    /// 
+    /// **See also:** copyAvailable()
+    /// 
+    /// This signal is emitted when text is selected or de-selected in the
+    /// text edit.
+    /// 
+    /// When text is selected this signal will be emitted with *yes* set
+    /// to true. If no text has been selected or if the selected text is
+    /// de-selected this signal is emitted with *yes* set to false.
+    /// 
+    /// If *yes* is true then copy() can be used to copy the selection to
+    /// the clipboard. If *yes* is false then copy() does nothing.
+    /// 
+    /// **See also:** selectionChanged()
     copy(),
-    ///     Pastes the text from the clipboard into the text edit at the
-    ///     current cursor position.
     /// 
-    ///     If there is no text in the clipboard nothing happens.
+    /// Pastes the text from the clipboard into the text edit at the
+    /// current cursor position.
     /// 
-    ///     To change the behavior of this function, i.e. to modify what
-    ///     QPlainTextEdit can paste and how it is being pasted, reimplement the
-    ///     virtual canInsertFromMimeData() and insertFromMimeData()
-    ///     functions.
+    /// If there is no text in the clipboard nothing happens.
     /// 
-    ///     \sa cut(), copy()
+    /// To change the behavior of this function, i.e. to modify what
+    /// QPlainTextEdit can paste and how it is being pasted, reimplement the
+    /// virtual canInsertFromMimeData() and insertFromMimeData()
+    /// functions.
+    /// 
+    /// **See also:** cut()
+    /// copy()
     paste(),
-    ///     Undoes the last operation.
     /// 
-    ///     If there is no operation to undo, i.e. there is no undo step in
-    ///     the undo/redo history, nothing happens.
+    /// Users are only able to undo or redo actions if this property is
+    /// true, and if there is an action that can be undone (or redone).
     /// 
-    ///     \sa redo()
+    /// By default, this property is `true.`
+    /// 
+    /// Undoes the last operation.
+    /// 
+    /// If there is no operation to undo, i.e. there is no undo step in
+    /// the undo/redo history, nothing happens.
+    /// 
+    /// **See also:** redo()
+    /// 
+    /// This signal is emitted whenever undo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     undo(),
+    /// 
+    /// Redoes the last operation.
+    /// 
+    /// If there is no operation to redo, i.e. there is no redo step in
+    /// the undo/redo history, nothing happens.
+    /// 
+    /// **See also:** undo()
+    /// 
+    /// This signal is emitted whenever redo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     redo(),
-    ///     Deletes all the text in the text edit.
     /// 
-    ///     Note that the undo/redo history is cleared by this function.
+    /// Deletes all the text in the text edit.
     /// 
-    ///     \sa cut(), setPlainText()
+    /// Note that the undo/redo history is cleared by this function.
+    /// 
+    /// **See also:** cut()
+    /// setPlainText()
     clear(),
+    /// 
+    /// Selects all text.
+    /// 
+    /// **See also:** copy()
+    /// cut()
+    /// textCursor()
     select_all(),
+    /// 
+    /// Convenience slot that inserts *text* at the current
+    /// cursor position.
+    /// 
+    /// It is equivalent to
+    /// 
     insert_plain_text(text: String),
-    ///     Appends a new paragraph with \a text to the end of the text edit.
     /// 
-    ///     \sa appendHtml()
+    /// Appends a new paragraph with *text* to the end of the text edit.
+    /// 
+    /// **See also:** appendHtml()
     append_plain_text(text: String),
-    ///     Appends a new paragraph with \a html to the end of the text edit.
     /// 
-    ///     appendPlainText()
+    /// Appends a new paragraph with *html* to the end of the text edit.
+    /// 
+    /// appendPlainText()
     append_html(html: String),
+    /// Scrolls the document in order to center the cursor vertically.
+    /// 
+    /// **See also:** ensureCursorVisible()
+    /// centerOnScroll
     center_cursor(),
-    ///     \fn QPlainTextEdit::zoomIn(int range)
     /// 
-    ///     Zooms in on the text by making the base font size \a range
-    ///     points larger and recalculating all font sizes to be the new size.
-    ///     This does not change the size of any images.
+    /// Zooms in on the text by making the base font size *range*
+    /// points larger and recalculating all font sizes to be the new size.
+    /// This does not change the size of any images.
     /// 
-    ///     \sa zoomOut()
+    /// **See also:** zoomOut()
     zoom_in(range: i32),
-    ///     \fn QPlainTextEdit::zoomOut(int range)
     /// 
-    ///     \overload
+    /// **Overloads**
+    /// Zooms out on the text by making the base font size *range* points
+    /// smaller and recalculating all font sizes to be the new size. This
+    /// does not change the size of any images.
     /// 
-    ///     Zooms out on the text by making the base font size \a range points
-    ///     smaller and recalculating all font sizes to be the new size. This
-    ///     does not change the size of any images.
-    /// 
-    ///     \sa zoomIn()
+    /// **See also:** zoomIn()
     zoom_out(range: i32),
+    /// 
+    /// This signal is emitted whenever the document's content changes; for
+    /// example, when text is inserted or deleted, or when formatting is applied.
     [signal] text_changed(),
+    /// 
+    /// This signal is emitted whenever undo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     [signal] undo_available(b: bool),
+    /// 
+    /// This signal is emitted whenever redo operations become available
+    /// ( *available* is true) or unavailable ( *available* is false).
     [signal] redo_available(b: bool),
+    /// 
+    /// This signal is emitted when text is selected or de-selected in the
+    /// text edit.
+    /// 
+    /// When text is selected this signal will be emitted with *yes* set
+    /// to true. If no text has been selected or if the selected text is
+    /// de-selected this signal is emitted with *yes* set to false.
+    /// 
+    /// If *yes* is true then copy() can be used to copy the selection to
+    /// the clipboard. If *yes* is false then copy() does nothing.
+    /// 
+    /// **See also:** selectionChanged()
     [signal] copy_available(b: bool),
+    /// 
+    /// This signal is emitted whenever the selection changes.
+    /// 
+    /// **See also:** copyAvailable()
     [signal] selection_changed(),
+    /// 
+    /// This signal is emitted whenever the position of the
+    /// cursor changed.
     [signal] cursor_position_changed(),
+    /// 
+    /// This signal is emitted when the text document needs an update of
+    /// the specified *rect.* If the text is scrolled, *rect* will cover
+    /// the entire viewport area. If the text is scrolled vertically, *dy* carries the amount of pixels the viewport was scrolled.
+    /// 
+    /// The purpose of the signal is to support extra widgets in plain
+    /// text edit subclasses that e.g. show line numbers, breakpoints, or
+    /// other extra information.
     [signal] update_request(rect: &RectType, dy: i32),
-    ///     \fn void QPlainTextEdit::updateRequest(const QRect &rect, int dy)
     /// 
-    ///     This signal is emitted when the text document needs an update of
-    ///     the specified \a rect. If the text is scrolled, \a rect will cover
-    ///     the entire viewport area. If the text is scrolled vertically, \a
-    ///     dy carries the amount of pixels the viewport was scrolled.
-    /// 
-    ///     The purpose of the signal is to support extra widgets in plain
-    ///     text edit subclasses that e.g. show line numbers, breakpoints, or
-    ///     other extra information.
+    /// This signal is emitted whenever the block count changes. The new
+    /// block count is passed in *newBlockCount.*
     [signal] block_count_changed(new_block_count: i32),
+    /// 
+    /// This signal is emitted whenever the content of the document
+    /// changes in a way that affects the modification state. If *changed* is true, the document has been modified; otherwise it is
+    /// false.
+    /// 
+    /// For example, calling setModified(false) on a document and then
+    /// inserting text causes the signal to get emitted. If you undo that
+    /// operation, causing the document to return to its original
+    /// unmodified state, the signal will get emitted again.
     [signal] modification_changed(arg0: bool),
-    ///     Selects all text.
-    /// 
-    ///     \sa copy(), cut(), textCursor()
-    ///  */
-    /// void QPlainTextEdit::selectAll()
-    /// {
-    ///     Q_D(QPlainTextEdit);
-    ///     d->control->selectAll();
-    /// }
-    /// 
     [event] event(e: *EventType) -> bool,
     [event] timer_event(e: *TimerEventType),
-    ///     \fn QString QPlainTextEdit::toPlainText() const
-    /// 
-    ///     Returns the text of the text edit as plain text.
-    /// 
-    ///     \sa QPlainTextEdit::setPlainText()
-    ///  */
     /// 
     [event] key_press_event(e: *KeyEventType),
+    /// 
     [event] key_release_event(e: *KeyEventType),
+    /// 
     [event] resize_event(e: *ResizeEventType),
+    /// 
     [event] paint_event(e: *PaintEventType),
+    /// 
     [event] mouse_press_event(e: *MouseEventType),
+    /// 
     [event] mouse_move_event(e: *MouseEventType),
+    /// 
     [event] mouse_release_event(e: *MouseEventType),
+    /// 
     [event] mouse_double_click_event(e: *MouseEventType),
+    /// 
     [event] focus_next_prev_child(next: bool) -> bool,
-    ///   \fn void QPlainTextEdit::contextMenuEvent(QContextMenuEvent *event)
     /// 
-    ///   Shows the standard context menu created with createStandardContextMenu().
+    /// Shows the standard context menu created with createStandardContextMenu().
     /// 
-    ///   If you do not want the text edit to have a context menu, you can set
-    ///   its \l contextMenuPolicy to Qt::NoContextMenu. If you want to
-    ///   customize the context menu, reimplement this function. If you want
-    ///   to extend the standard context menu, reimplement this function, call
-    ///   createStandardContextMenu() and extend the menu returned.
+    /// If you do not want the text edit to have a context menu, you can set
+    /// its [contextMenuPolicy](contextMenuPolicy)
+    /// to Qt::NoContextMenu. If you want to
+    /// customize the context menu, reimplement this function. If you want
+    /// to extend the standard context menu, reimplement this function, call
+    /// createStandardContextMenu() and extend the menu returned.
     /// 
-    ///   Information about the event is passed in the \a event object.
+    /// Information about the event is passed in the *event* object.
     /// 
-    ///   \snippet code/src_gui_widgets_qplaintextedit.cpp 0
     [event] context_menu_event(e: *ContextMenuEventType),
+    /// 
     [event] drag_enter_event(e: *DragEnterEventType),
+    /// 
     [event] drag_leave_event(e: *DragLeaveEventType),
+    /// 
     [event] drag_move_event(e: *DragMoveEventType),
+    /// 
     [event] drop_event(e: *DropEventType),
+    /// 
     [event] focus_in_event(e: *FocusEventType),
+    /// 
     [event] focus_out_event(e: *FocusEventType),
+    /// 
     [event] show_event(arg0: *ShowEventType),
+    /// 
     [event] change_event(e: *EventType),
     [event] wheel_event(e: *WheelEventType),
-    ///     This function returns a new MIME data object to represent the contents
-    ///     of the text edit's current selection. It is called when the selection needs
-    ///     to be encapsulated into a new QMimeData object; for example, when a drag
-    ///     and drop operation is started, or when data is copied to the clipboard.
     /// 
-    ///     If you reimplement this function, note that the ownership of the returned
-    ///     QMimeData object is passed to the caller. The selection can be retrieved
-    ///     by using the textCursor() function.
+    /// This function returns a new MIME data object to represent the contents
+    /// of the text edit's current selection. It is called when the selection needs
+    /// to be encapsulated into a new QMimeData object; for example, when a drag
+    /// and drop operation is started, or when data is copied to the clipboard.
+    /// 
+    /// If you reimplement this function, note that the ownership of the returned
+    /// QMimeData object is passed to the caller. The selection can be retrieved
+    /// by using the textCursor() function.
     [event] create_mime_data_from_selection() -> MimeData?,
-    [event] can_insert_from_mime_data(source: *MimeDataType) -> bool,
-    ///     This function inserts the contents of the MIME data object, specified
-    ///     by \a source, into the text edit at the current cursor position. It is
-    ///     called whenever text is inserted as the result of a clipboard paste
-    ///     operation, or when the text edit accepts data from a drag and drop
-    ///     operation.
-    [event] insert_from_mime_data(source: *MimeDataType),
-    [event] input_method_event(arg0: *InputMethodEventType),
-    [event] scroll_contents_by(dx: i32, dy: i32),
-    ///     \internal
     /// 
-    ///      This provides a hook for subclasses to intercept cursor changes.
+    /// This function returns `true` if the contents of the MIME data object, specified
+    /// by *source,* can be decoded and inserted into the document. It is called
+    /// for example when during a drag operation the mouse enters this widget and it
+    /// is necessary to determine whether it is possible to accept the drag.
+    [event] can_insert_from_mime_data(source: *MimeDataType) -> bool,
+    /// 
+    /// This function inserts the contents of the MIME data object, specified
+    /// by *source,* into the text edit at the current cursor position. It is
+    /// called whenever text is inserted as the result of a clipboard paste
+    /// operation, or when the text edit accepts data from a drag and drop
+    /// operation.
+    [event] insert_from_mime_data(source: *MimeDataType),
+    /// 
+    [event] input_method_event(arg0: *InputMethodEventType),
+    /// 
+    [event] scroll_contents_by(dx: i32, dy: i32),
     [event] do_set_text_cursor(cursor: &TextCursorType),
+    /// 
+    /// Returns the first visible block.
+    /// 
+    /// **See also:** blockBoundingRect()
     first_visible_block() -> TextBlock,
+    /// Returns the content's origin in viewport coordinates.
+    /// 
+    /// The origin of the content of a plain text edit is always the top
+    /// left corner of the first visible text block. The content offset
+    /// is different from (0,0) when the text has been scrolled
+    /// horizontally, or when the first visible block has been scrolled
+    /// partially off the screen, i.e. the visible text does not start
+    /// with the first line of the first visible block, or when the first
+    /// visible block is the very first block and the editor displays a
+    /// margin.
+    /// 
+    /// **See also:** firstVisibleBlock()
+    /// horizontalScrollBar()
+    /// verticalScrollBar()
     content_offset() -> PointF,
+    /// 
+    /// Returns the bounding rectangle of the text *block* in the block's own coordinates.
+    /// 
+    /// **See also:** blockBoundingGeometry()
     block_bounding_rect(block: &TextBlockType) -> RectF,
+    /// Returns the paint context for the viewport(), useful only when
+    /// reimplementing paintEvent().
     get_paint_context() -> AbstractTextDocumentLayout::PaintContext,
-    ///     \internal
     zoom_in_f(range: f32),
 }
 

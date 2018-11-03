@@ -1,77 +1,71 @@
-///     \class QSizeGrip
 /// 
-///     \brief The QSizeGrip class provides a resize handle for resizing top-level windows.
+/// This widget works like the standard Windows resize handle. In the
+/// X11 version this resize handle generally works differently from
+/// the one provided by the system if the X11 window manager does not
+/// support necessary modern post-ICCCM specifications.
 /// 
-///     \ingroup mainwindow-classes
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// Put this widget anywhere in a widget tree and the user can use it
+/// to resize the top-level window or any widget with the Qt::SubWindow
+/// flag set. Generally, this should be in the lower right-hand corner.
 /// 
-///     This widget works like the standard Windows resize handle. In the
-///     X11 version this resize handle generally works differently from
-///     the one provided by the system if the X11 window manager does not
-///     support necessary modern post-ICCCM specifications.
+/// Note that QStatusBar already uses this widget, so if you have a
+/// status bar (e.g., you are using QMainWindow), then you don't need
+/// to use this widget explicitly. The same goes for QDialog, for which
+/// you can just call [QDialog::setSizeGripEnabled()](QDialog::setSizeGripEnabled())
 /// 
-///     Put this widget anywhere in a widget tree and the user can use it
-///     to resize the top-level window or any widget with the Qt::SubWindow
-///     flag set. Generally, this should be in the lower right-hand corner.
 /// 
-///     Note that QStatusBar already uses this widget, so if you have a
-///     status bar (e.g., you are using QMainWindow), then you don't need
-///     to use this widget explicitly. The same goes for QDialog, for which
-///     you can just call \l {QDialog::setSizeGripEnabled()}
-///     {QDialog::setSizeGripEnabled()}.
+/// On some platforms the size grip automatically hides itself when the
+/// window is shown full screen or maximised.
 /// 
-///     On some platforms the size grip automatically hides itself when the
-///     window is shown full screen or maximised.
+/// * ![Screenshot of a Fusion style size grip](fusion-statusbar-sizegrip.png)
 /// 
-///     \table 50%
-///     \row \li \inlineimage fusion-statusbar-sizegrip.png Screenshot of a Fusion style size grip
-///     \li A size grip widget at the bottom-right corner of a main window, shown in the
-///     \l{Qt Widget Gallery}{Fusion widget style}.
-///     \endtable
+/// * A size grip widget at the bottom-right corner of a main window, shown in the [Fusion widget style](Qt%20Widget%20Gallery)
 /// 
-///     The QSizeGrip class inherits QWidget and reimplements the \l
-///     {QWidget::mousePressEvent()}{mousePressEvent()} and \l
-///     {QWidget::mouseMoveEvent()}{mouseMoveEvent()} functions to feature
-///     the resize functionality, and the \l
-///     {QWidget::paintEvent()}{paintEvent()} function to render the
-///     size grip widget.
 /// 
-///     \sa QStatusBar, QWidget::windowState()
+/// The QSizeGrip class inherits QWidget and reimplements the [mousePressEvent()](QWidget::mousePressEvent())
+/// and [mouseMoveEvent()](QWidget::mouseMoveEvent())
+/// functions to feature
+/// the resize functionality, and the [paintEvent()](QWidget::paintEvent())
+/// function to render the
+/// size grip widget.
+/// 
+/// **See also:** QStatusBar
+/// QWidget::windowState()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct SizeGrip : Widget {
-    ///   \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] set_visible(arg0: bool),
-    ///     Paints the resize grip.
     /// 
-    ///     Resize grips are usually rendered as small diagonal textured lines
-    ///     in the lower-right corner. The paint event is passed in the \a
-    ///     event parameter.
+    /// Paints the resize grip.
+    /// 
+    /// Resize grips are usually rendered as small diagonal textured lines
+    /// in the lower-right corner. The paint event is passed in the *event* parameter.
     [event] paint_event(arg0: *PaintEventType),
-    ///     \fn void QSizeGrip::mousePressEvent(QMouseEvent * event)
     /// 
-    ///     Receives the mouse press events for the widget, and primes the
-    ///     resize operation. The mouse press event is passed in the \a event
-    ///     parameter.
+    /// Receives the mouse press events for the widget, and primes the
+    /// resize operation. The mouse press event is passed in the *event*
+    /// parameter.
     [event] mouse_press_event(arg0: *MouseEventType),
-    ///     \fn void QSizeGrip::mouseMoveEvent(QMouseEvent * event)
-    ///     Resizes the top-level widget containing this widget. The mouse
-    ///     move event is passed in the \a event parameter.
+    /// 
+    /// Resizes the top-level widget containing this widget. The mouse
+    /// move event is passed in the *event* parameter.
     [event] mouse_move_event(arg0: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_release_event(mouse_event: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] move_event(move_event: *MoveEventType),
-    ///   \reimp
+    /// 
     [event] show_event(show_event: *ShowEventType),
-    ///   \reimp
+    /// 
     [event] hide_event(hide_event: *HideEventType),
+    /// 
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
-    ///     \reimp
+    /// 
+    /// 
     [event] event(arg0: *EventType) -> bool,
 }
 

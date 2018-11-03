@@ -1,16 +1,13 @@
-///     \class QWhatsThisClickedEvent
-///     \brief The QWhatsThisClickedEvent class provides an event that
-///     can be used to handle hyperlinks in a "What's This?" text.
 /// 
-///     \ingroup events
-///     \ingroup helpsystem
-///     \inmodule QtGui
-/// 
-///     \sa QWhatsThis, QHelpEvent, QStatusTipEvent
+/// **See also:** QWhatsThis
+/// QHelpEvent
+/// QStatusTipEvent
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct WhatsThisClickedEvent : Event {
+    /// 
+    /// Returns the URL that was clicked by the user in the text.
     href() -> String,
 }
 

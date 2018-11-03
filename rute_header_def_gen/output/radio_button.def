@@ -1,65 +1,63 @@
-///     \class QRadioButton
-///     \brief The QRadioButton widget provides a radio button with a text label.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// ![windows-radiobutton.png](windows-radiobutton.png)
 /// 
-///     \image windows-radiobutton.png
+/// A QRadioButton is an option button that can be switched on (checked) or
+/// off (unchecked). Radio buttons typically present the user with a choice. In a group of radio buttons, only one radio button at
+/// a time can be checked; if the user selects another button, the
+/// previously selected button is switched off.
 /// 
-///     A QRadioButton is an option button that can be switched on (checked) or
-///     off (unchecked). Radio buttons typically present the user with a "one
-///     of many" choice. In a group of radio buttons, only one radio button at
-///     a time can be checked; if the user selects another button, the
-///     previously selected button is switched off.
+/// Radio buttons are autoExclusive by default. If auto-exclusive is
+/// enabled, radio buttons that belong to the same parent widget
+/// behave as if they were part of the same exclusive button group. If
+/// you need multiple exclusive button groups for radio buttons that
+/// belong to the same parent widget, put them into a QButtonGroup.
 /// 
-///     Radio buttons are autoExclusive by default. If auto-exclusive is
-///     enabled, radio buttons that belong to the same parent widget
-///     behave as if they were part of the same exclusive button group. If
-///     you need multiple exclusive button groups for radio buttons that
-///     belong to the same parent widget, put them into a QButtonGroup.
+/// Whenever a button is switched on or off, it emits the toggled() signal.
+/// Connect to this signal if you want to trigger an action each time the
+/// button changes state. Use isChecked() to see if a particular button is
+/// selected.
 /// 
-///     Whenever a button is switched on or off, it emits the toggled() signal.
-///     Connect to this signal if you want to trigger an action each time the
-///     button changes state. Use isChecked() to see if a particular button is
-///     selected.
+/// Just like QPushButton, a radio button displays text, and
+/// optionally a small icon. The icon is set with setIcon(). The text
+/// can be set in the constructor or with setText(). A shortcut key
+/// can be specified by preceding the preferred character with an
+/// ampersand in the text. For example:
 /// 
-///     Just like QPushButton, a radio button displays text, and
-///     optionally a small icon. The icon is set with setIcon(). The text
-///     can be set in the constructor or with setText(). A shortcut key
-///     can be specified by preceding the preferred character with an
-///     ampersand in the text. For example:
+/// In this example the shortcut is *Alt+c* . See the [QShortcut](QShortcut%23mnemonic)
+/// documentation for details. To
+/// display an actual ampersand, use '&&'.
 /// 
-///     \snippet code/src_gui_widgets_qradiobutton.cpp 0
+/// Important inherited members: text(), setText(), text(),
+/// setDown(), isDown(), autoRepeat(), group(), setAutoRepeat(),
+/// toggle(), pressed(), released(), clicked(), and toggled().
 /// 
-///     In this example the shortcut is \e{Alt+c}. See the \l
-///     {QShortcut#mnemonic}{QShortcut} documentation for details. To
-///     display an actual ampersand, use '&&'.
-/// 
-///     Important inherited members: text(), setText(), text(),
-///     setDown(), isDown(), autoRepeat(), group(), setAutoRepeat(),
-///     toggle(), pressed(), released(), clicked(), and toggled().
-/// 
-///     \sa QPushButton, QToolButton, QCheckBox, {fowler}{GUI Design Handbook: Radio Button},
-///         {Group Box Example}
+/// **See also:** QPushButton
+/// QToolButton
+/// QCheckBox
+/// {fowler}{GUI Design Handbook: Radio Button}
+/// {Group Box Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct RadioButton : AbstractButton {
-    ///     \reimp
-    [event] size_hint() -> Size,
-    ///     \reimp
-    [event] minimum_size_hint() -> Size,
-    [event] event(e: *EventType) -> bool,
-    ///     \reimp
-    [event] hit_button(arg0: &PointType) -> bool,
-    [event] paint_event(arg0: *PaintEventType),
-    ///     \reimp
-    [event] mouse_move_event(arg0: *MouseEventType),
-    ///     Initialize \a option with the values from this QRadioButton. This method is useful
-    ///     for subclasses when they need a QStyleOptionButton, but don't want to fill
-    ///     in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    [event] size_hint() -> Size,
+    /// 
+    [event] minimum_size_hint() -> Size,
+    /// 
+    [event] event(e: *EventType) -> bool,
+    /// 
+    [event] hit_button(arg0: &PointType) -> bool,
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    [event] mouse_move_event(arg0: *MouseEventType),
+    /// 
+    /// Initialize *option* with the values from this QRadioButton. This method is useful
+    /// for subclasses when they need a QStyleOptionButton, but don't want to fill
+    /// in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(button: *StyleOptionButtonType),
 }
 

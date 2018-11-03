@@ -1,39 +1,35 @@
-///     \class QColorDialog
-///     \brief The QColorDialog class provides a dialog widget for specifying colors.
 /// 
-///     \ingroup standard-dialogs
-///     \inmodule QtWidgets
+/// The color dialog's function is to allow users to choose colors.
+/// For example, you might use this in a drawing program to allow the
+/// user to set the brush color.
 /// 
-///     The color dialog's function is to allow users to choose colors.
-///     For example, you might use this in a drawing program to allow the
-///     user to set the brush color.
+/// The static functions provide modal color dialogs.
 /// 
-///     The static functions provide modal color dialogs.
-///     \omit
-///     If you require a modeless dialog, use the QColorDialog constructor.
-///     \endomit
+/// The static getColor() function shows the dialog, and allows the user to
+/// specify a color. This function can also be used to let users choose a
+/// color with a level of transparency: pass the ShowAlphaChannel option as
+/// an additional argument.
 /// 
-///     The static getColor() function shows the dialog, and allows the user to
-///     specify a color. This function can also be used to let users choose a
-///     color with a level of transparency: pass the ShowAlphaChannel option as
-///     an additional argument.
+/// The user can store customCount() different custom colors. The
+/// custom colors are shared by all color dialogs, and remembered
+/// during the execution of the program. Use setCustomColor() to set
+/// the custom colors, and use customColor() to get them.
 /// 
-///     The user can store customCount() different custom colors. The
-///     custom colors are shared by all color dialogs, and remembered
-///     during the execution of the program. Use setCustomColor() to set
-///     the custom colors, and use customColor() to get them.
+/// When pressing the button, the cursor changes to a haircross
+/// and the colors on the screen are scanned. The user can pick up one by clicking
+/// the mouse or the Enter button. Pressing Escape restores the last color selected
+/// before entering this mode.
 /// 
-///     When pressing the "Pick Screen Color" button, the cursor changes to a haircross
-///     and the colors on the screen are scanned. The user can pick up one by clicking
-///     the mouse or the Enter button. Pressing Escape restores the last color selected
-///     before entering this mode.
+/// The [Standard Dialogs](dialogs/standarddialogs)
+/// example shows
+/// how to use QColorDialog as well as other built-in Qt dialogs.
 /// 
-///     The \l{dialogs/standarddialogs}{Standard Dialogs} example shows
-///     how to use QColorDialog as well as other built-in Qt dialogs.
+/// ![A color dialog in the Fusion widget style.](fusion-colordialog.png)
 /// 
-///     \image fusion-colordialog.png A color dialog in the Fusion widget style.
-/// 
-///     \sa QColor, QFileDialog, QFontDialog, {Standard Dialogs Example}
+/// **See also:** QColor
+/// QFileDialog
+/// QFontDialog
+/// {Standard Dialogs Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -45,99 +41,127 @@ enum ColorDialogOption {
 }
 
 struct ColorDialog : Dialog {
-    ///     \property QColorDialog::currentColor
-    ///     \brief the currently selected color in the dialog
     set_current_color(color: &ColorType),
+    /// 
+    /// 
+    /// This signal is emitted whenever the current color changes in the dialog.
+    /// The current color is specified by *color.*
+    /// 
+    /// **See also:** color
+    /// colorSelected()
     current_color() -> Color,
-    ///     Returns the color that the user selected by clicking the \uicontrol{OK}
-    ///     or equivalent button.
     /// 
-    ///     \note This color is not always the same as the color held by the
-    ///     \l currentColor property since the user can choose different colors
-    ///     before finally selecting the one to use.
+    /// Returns the color that the user selected by clicking the **{OK}**
+    /// or equivalent button.
+    /// 
+    /// **Note**: This color is not always the same as the color held by the
+    /// [currentColor](currentColor)
+    /// property since the user can choose different colors
+    /// before finally selecting the one to use.
     selected_color() -> Color,
-    ///     Sets the given \a option to be enabled if \a on is true;
-    ///     otherwise, clears the given \a option.
     /// 
-    ///     \sa options, testOption()
+    /// Sets the given *option* to be enabled if *on* is true;
+    /// otherwise, clears the given *option.*
+    /// 
+    /// **See also:** options
+    /// testOption()
     set_option(option: ColorDialog::ColorDialogOption, on: bool),
-    ///     \since 4.5
     /// 
-    ///     Returns \c true if the given \a option is enabled; otherwise, returns
-    ///     false.
+    /// Returns `true` if the given *option* is enabled; otherwise, returns
+    /// false.
     /// 
-    ///     \sa options, setOption()
+    /// **See also:** options
+    /// setOption()
     test_option(option: ColorDialog::ColorDialogOption) -> bool,
-    ///     \property QColorDialog::options
-    ///     \brief the various options that affect the look and feel of the dialog
-    /// 
-    ///     By default, all options are disabled.
-    /// 
-    ///     Options should be set before showing the dialog. Setting them while the
-    ///     dialog is visible is not guaranteed to have an immediate effect on the
-    ///     dialog (depending on the option and on the platform).
-    /// 
-    ///     \sa setOption(), testOption()
     set_options(options: ColorDialog::ColorDialogOptions),
+    /// 
+    /// By default, all options are disabled.
+    /// 
+    /// Options should be set before showing the dialog. Setting them while the
+    /// dialog is visible is not guaranteed to have an immediate effect on the
+    /// dialog (depending on the option and on the platform).
+    /// 
+    /// **See also:** setOption()
+    /// testOption()
     options() -> ColorDialog::ColorDialogOptions,
-    ///     \overload
-    ///     \since 4.5
     /// 
-    ///     Opens the dialog and connects its colorSelected() signal to the slot specified
-    ///     by \a receiver and \a member.
+    /// **Overloads**
+    /// Opens the dialog and connects its colorSelected() signal to the slot specified
+    /// by *receiver* and *member.*
     /// 
-    ///     The signal will be disconnected from the slot when the dialog is closed.
+    /// The signal will be disconnected from the slot when the dialog is closed.
     open(receiver: *ObjectType, member: *char),
-    ///     Changes the visibility of the dialog. If \a visible is true, the dialog
-    ///     is shown; otherwise, it is hidden.
+    /// 
+    /// Changes the visibility of the dialog. If *visible* is true, the dialog
+    /// is shown; otherwise, it is hidden.
     [event] set_visible(visible: bool),
+    /// 
+    /// Pops up a modal color dialog with the given window *title* (or if none is
+    /// specified), lets the user choose a color, and returns that color. The color is initially set
+    /// to *initial.* The dialog is a child of *parent.* It returns an invalid (see
+    /// QColor::isValid()) color if the user cancels the dialog.
+    /// 
+    /// The *options* argument allows you to customize the dialog.
     [static] get_color(initial: &ColorType, parent: *WidgetType, title: String, options: ColorDialog::ColorDialogOptions) -> Color,
-    ///     \obsolete
     /// 
-    ///     Pops up a modal color dialog to allow the user to choose a color
-    ///     and an alpha channel (transparency) value. The color+alpha is
-    ///     initially set to \a initial. The dialog is a child of \a parent.
+    /// Pops up a modal color dialog to allow the user to choose a color
+    /// and an alpha channel (transparency) value. The color+alpha is
+    /// initially set to *initial.* The dialog is a child of *parent.*
     /// 
-    ///     If \a ok is non-null, \e *\a ok is set to true if the user clicked
-    ///     \uicontrol{OK}, and to false if the user clicked Cancel.
+    /// If *ok* is non-null, *** *ok* is set to true if the user clicked
+    /// **{OK},** and to false if the user clicked Cancel.
     /// 
-    ///     If the user clicks Cancel, the \a initial value is returned.
+    /// If the user clicks Cancel, the *initial* value is returned.
     /// 
-    ///     Use QColorDialog::getColor() instead, passing the
-    ///     QColorDialog::ShowAlphaChannel option.
+    /// Use QColorDialog::getColor() instead, passing the
+    /// QColorDialog::ShowAlphaChannel option.
     [static] get_rgba(rgba: RgbType, ok: *bool, parent: *WidgetType) -> Rgb,
-    ///     Returns the number of custom colors supported by QColorDialog. All
-    ///     color dialogs share the same custom colors.
+    /// 
+    /// Returns the number of custom colors supported by QColorDialog. All
+    /// color dialogs share the same custom colors.
     [static] custom_count() -> i32,
-    ///     \since 4.5
     /// 
-    ///     Returns the custom color at the given \a index as a QColor value.
+    /// Returns the custom color at the given *index* as a QColor value.
     [static] custom_color(index: i32) -> Color,
-    ///     Sets the custom color at \a index to the QColor \a color value.
     /// 
-    ///     \note This function does not apply to the Native Color Dialog on the
-    ///     \macos platform. If you still require this function, use the
-    ///     QColorDialog::DontUseNativeDialog option.
+    /// Sets the custom color at *index* to the QColor *color* value.
+    /// 
+    /// **Note**: This function does not apply to the Native Color Dialog on the
+    /// MacOS platform. If you still require this function, use the
+    /// QColorDialog::DontUseNativeDialog option.
     [static] set_custom_color(index: i32, color: ColorType),
-    ///     \since 5.0
     /// 
-    ///     Returns the standard color at the given \a index as a QColor value.
+    /// Returns the standard color at the given *index* as a QColor value.
     [static] standard_color(index: i32) -> Color,
-    ///     Sets the standard color at \a index to the QColor \a color value.
     /// 
-    ///     \note This function does not apply to the Native Color Dialog on the
-    ///     \macos platform. If you still require this function, use the
-    ///     QColorDialog::DontUseNativeDialog option.
+    /// Sets the standard color at *index* to the QColor *color* value.
+    /// 
+    /// **Note**: This function does not apply to the Native Color Dialog on the
+    /// MacOS platform. If you still require this function, use the
+    /// QColorDialog::DontUseNativeDialog option.
     [static] set_standard_color(index: i32, color: ColorType),
-    [signal] current_color_changed(color: &ColorType),
-    [signal] color_selected(color: &ColorType),
-    ///     \reimp
-    [event] change_event(event: *EventType),
-    ///   Closes the dialog and sets its result code to \a result. If this dialog
-    ///   is shown with exec(), done() causes the local event loop to finish,
-    ///   and exec() to return \a result.
     /// 
-    ///   \sa QDialog::done()
+    /// This signal is emitted whenever the current color changes in the dialog.
+    /// The current color is specified by *color.*
+    /// 
+    /// **See also:** color
+    /// colorSelected()
+    [signal] current_color_changed(color: &ColorType),
+    /// 
+    /// This signal is emitted just after the user has clicked **{OK}** to
+    /// select a color to use. The chosen color is specified by *color.*
+    /// 
+    /// **See also:** color
+    /// currentColorChanged()
+    [signal] color_selected(color: &ColorType),
+    /// 
+    [event] change_event(event: *EventType),
+    /// 
+    /// Closes the dialog and sets its result code to *result.* If this dialog
+    /// is shown with exec(), done() causes the local event loop to finish,
+    /// and exec() to return *result.*
+    /// 
+    /// **See also:** QDialog::done()
     [event] done(result: i32),
 }
 

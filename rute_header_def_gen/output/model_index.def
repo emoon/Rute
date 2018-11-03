@@ -1,62 +1,140 @@
-///     \class QModelIndex
-///     \inmodule QtCore
 /// 
-///     \brief The QModelIndex class is used to locate data in a data model.
+/// This class is used as an index into item models derived from
+/// QAbstractItemModel. The index is used by item views, delegates, and
+/// selection models to locate an item in the model.
 /// 
-///     \ingroup model-view
+/// New QModelIndex objects are created by the model using the
+/// QAbstractItemModel::createIndex() function. An *invalid* model index can
+/// be constructed with the QModelIndex constructor. Invalid indexes are often
+/// used as parent indexes when referring to top-level items in a model.
 /// 
+/// Model indexes refer to items in models, and contain all the information
+/// required to specify their locations in those models. Each index is located
+/// in a given row and column, and may have a parent index; use row(),
+/// column(), and parent() to obtain this information. Each top-level item in a
+/// model is represented by a model index that does not have a parent index -
+/// in this case, parent() will return an invalid model index, equivalent to an
+/// index constructed with the zero argument form of the QModelIndex()
+/// constructor.
 /// 
-///     This class is used as an index into item models derived from
-///     QAbstractItemModel. The index is used by item views, delegates, and
-///     selection models to locate an item in the model.
+/// To obtain a model index that refers to an existing item in a model, call
+/// QAbstractItemModel::index() with the required row and column values, and
+/// the model index of the parent. When referring to top-level items in a
+/// model, supply QModelIndex() as the parent index.
 /// 
-///     New QModelIndex objects are created by the model using the
-///     QAbstractItemModel::createIndex() function. An \e invalid model index can
-///     be constructed with the QModelIndex constructor. Invalid indexes are often
-///     used as parent indexes when referring to top-level items in a model.
+/// The model() function returns the model that the index references as a
+/// QAbstractItemModel. The child() function is used to examine items held
+/// under the index in the model. The sibling() function allows you to traverse
+/// items in the model on the same level as the index.
 /// 
-///     Model indexes refer to items in models, and contain all the information
-///     required to specify their locations in those models. Each index is located
-///     in a given row and column, and may have a parent index; use row(),
-///     column(), and parent() to obtain this information. Each top-level item in a
-///     model is represented by a model index that does not have a parent index -
-///     in this case, parent() will return an invalid model index, equivalent to an
-///     index constructed with the zero argument form of the QModelIndex()
-///     constructor.
+/// **Note**: Model indexes should be used immediately and then discarded. You
+/// should not rely on indexes to remain valid after calling model functions
+/// that change the structure of the model or delete items. If you need to
+/// keep a model index over time use a QPersistentModelIndex.
 /// 
-///     To obtain a model index that refers to an existing item in a model, call
-///     QAbstractItemModel::index() with the required row and column values, and
-///     the model index of the parent. When referring to top-level items in a
-///     model, supply QModelIndex() as the parent index.
-/// 
-///     The model() function returns the model that the index references as a
-///     QAbstractItemModel. The child() function is used to examine items held
-///     under the index in the model. The sibling() function allows you to traverse
-///     items in the model on the same level as the index.
-/// 
-///     \note Model indexes should be used immediately and then discarded. You
-///     should not rely on indexes to remain valid after calling model functions
-///     that change the structure of the model or delete items. If you need to
-///     keep a model index over time use a QPersistentModelIndex.
-/// 
-///     \sa {Model/View Programming}, QPersistentModelIndex, QAbstractItemModel
+/// **See also:** {Model/View Programming}
+/// QPersistentModelIndex
+/// QAbstractItemModel
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ModelIndex {
+    /// 
+    /// Returns the row this model index refers to.
     row() -> i32,
+    /// 
+    /// Returns the column this model index refers to.
     column() -> i32,
+    /// 
+    /// Returns a `quintptr` used by the model to associate
+    /// the index with the internal data structure.
+    /// 
+    /// **See also:** QAbstractItemModel::createIndex()
     internal_id() -> quintptr,
+    /// 
+    /// Returns a `void` `*` pointer used by the model to associate
+    /// the index with the internal data structure.
+    /// 
+    /// **See also:** QAbstractItemModel::createIndex()
     internal_pointer(),
+    /// 
+    /// Returns the parent of the model index, or QModelIndex() if it has no
+    /// parent.
+    /// 
+    /// **See also:** sibling()
+    /// model()
     parent() -> ModelIndex,
+    /// 
+    /// Returns the sibling at *row* and *column.* If there is no sibling at this
+    /// position, an invalid QModelIndex is returned.
+    /// 
+    /// **See also:** parent()
+    /// siblingAtColumn()
+    /// siblingAtRow()
+    /// 
+    /// Returns the sibling at *column* for the current row. If there is no sibling
+    /// at this position, an invalid QModelIndex is returned.
+    /// 
+    /// **See also:** sibling()
+    /// siblingAtRow()
+    /// 
+    /// Returns the sibling at *row* for the current column. If there is no sibling
+    /// at this position, an invalid QModelIndex is returned.
+    /// 
+    /// **See also:** sibling()
+    /// siblingAtColumn()
     sibling(row: i32, column: i32) -> ModelIndex,
+    /// 
+    /// Returns the sibling at *column* for the current row. If there is no sibling
+    /// at this position, an invalid QModelIndex is returned.
+    /// 
+    /// **See also:** sibling()
+    /// siblingAtRow()
     sibling_at_column(column: i32) -> ModelIndex,
+    /// 
+    /// Returns the sibling at *row* for the current column. If there is no sibling
+    /// at this position, an invalid QModelIndex is returned.
+    /// 
+    /// **See also:** sibling()
+    /// siblingAtColumn()
     sibling_at_row(row: i32) -> ModelIndex,
+    /// 
+    /// Use QAbstractItemModel::index() instead.
+    /// 
+    /// Returns the child of the model index that is stored in the given *row* and
+    /// *column.*
+    /// 
+    /// **Note**: This function does not work for an invalid model index which is often
+    /// used as the root index.
+    /// 
+    /// **See also:** parent()
+    /// sibling()
     child(row: i32, column: i32) -> ModelIndex,
+    /// 
+    /// Returns the data for the given *role* for the item referred to by the
+    /// index.
     data(role: i32) -> Variant,
+    /// 
+    /// Returns the flags for the item referred to by the index.
     flags() -> Rute::ItemFlags,
+    /// 
+    /// Returns a pointer to the model containing the item that this index
+    /// refers to.
+    /// 
+    /// A const pointer to the model is returned because calls to non-const
+    /// functions of the model might invalidate the model index and possibly
+    /// crash your application.
     model() -> AbstractItemModel?,
+    /// 
+    /// Returns `true` if this model index is valid; otherwise returns `false` .
+    /// 
+    /// A valid index belongs to a model, and has non-negative row and column
+    /// numbers.
+    /// 
+    /// **See also:** model()
+    /// row()
+    /// column()
     is_valid() -> bool,
 }
 

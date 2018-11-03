@@ -1,76 +1,83 @@
-///     \class QHeaderView
 /// 
-///     \brief The QHeaderView class provides a header row or header column for
-///     item views.
+/// A QHeaderView displays the headers used in item views such as the
+/// QTableView and QTreeView classes. It takes the place of Qt3's `QHeader`
+/// class previously used for the same purpose, but uses the Qt's model/view
+/// architecture for consistency with the item view classes.
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// The QHeaderView class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of
+/// Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     A QHeaderView displays the headers used in item views such as the
-///     QTableView and QTreeView classes. It takes the place of Qt3's \c QHeader
-///     class previously used for the same purpose, but uses the Qt's model/view
-///     architecture for consistency with the item view classes.
 /// 
-///     The QHeaderView class is one of the \l{Model/View Classes} and is part of
-///     Qt's \l{Model/View Programming}{model/view framework}.
+/// The header gets the data for each section from the model using the
+/// QAbstractItemModel::headerData() function. You can set the data by using
+/// QAbstractItemModel::setHeaderData().
 /// 
-///     The header gets the data for each section from the model using the
-///     QAbstractItemModel::headerData() function. You can set the data by using
-///     QAbstractItemModel::setHeaderData().
+/// Each header has an orientation() and a number of sections, given by the
+/// count() function. A section refers to a part of the header - either a row
+/// or a column, depending on the orientation.
 /// 
-///     Each header has an orientation() and a number of sections, given by the
-///     count() function. A section refers to a part of the header - either a row
-///     or a column, depending on the orientation.
+/// Sections can be moved and resized using moveSection() and resizeSection();
+/// they can also be hidden and shown with hideSection() and showSection().
 /// 
-///     Sections can be moved and resized using moveSection() and resizeSection();
-///     they can also be hidden and shown with hideSection() and showSection().
+/// Each section of a header is described by a section ID, specified by its
+/// section(), and can be located at a particular visualIndex() in the header.
+/// A section can have a sort indicator set with setSortIndicator(); this
+/// indicates whether the items in the associated item view will be sorted in
+/// the order given by the section.
 /// 
-///     Each section of a header is described by a section ID, specified by its
-///     section(), and can be located at a particular visualIndex() in the header.
-///     A section can have a sort indicator set with setSortIndicator(); this
-///     indicates whether the items in the associated item view will be sorted in
-///     the order given by the section.
+/// For a horizontal header the section is equivalent to a column in the model,
+/// and for a vertical header the section is equivalent to a row in the model.
 /// 
-///     For a horizontal header the section is equivalent to a column in the model,
-///     and for a vertical header the section is equivalent to a row in the model.
+/// # Moving Header Sections
 /// 
-///     \section1 Moving Header Sections
+/// A header can be fixed in place, or made movable with setSectionsMovable(). It can
+/// be made clickable with setSectionsClickable(), and has resizing behavior in
+/// accordance with setSectionResizeMode().
 /// 
-///     A header can be fixed in place, or made movable with setSectionsMovable(). It can
-///     be made clickable with setSectionsClickable(), and has resizing behavior in
-///     accordance with setSectionResizeMode().
+/// **Note**: Double-clicking on a header to resize a section only applies for
+/// visible rows.
 /// 
-///     \note Double-clicking on a header to resize a section only applies for
-///     visible rows.
+/// A header will emit sectionMoved() if the user moves a section,
+/// sectionResized() if the user resizes a section, and sectionClicked() as
+/// well as sectionHandleDoubleClicked() in response to mouse clicks. A header
+/// will also emit sectionCountChanged().
 /// 
-///     A header will emit sectionMoved() if the user moves a section,
-///     sectionResized() if the user resizes a section, and sectionClicked() as
-///     well as sectionHandleDoubleClicked() in response to mouse clicks. A header
-///     will also emit sectionCountChanged().
+/// You can identify a section using the logicalIndex() and logicalIndexAt()
+/// functions, or by its index position, using the visualIndex() and
+/// visualIndexAt() functions. The visual index will change if a section is
+/// moved, but the logical index will not change.
 /// 
-///     You can identify a section using the logicalIndex() and logicalIndexAt()
-///     functions, or by its index position, using the visualIndex() and
-///     visualIndexAt() functions. The visual index will change if a section is
-///     moved, but the logical index will not change.
+/// # Appearance
 /// 
-///     \section1 Appearance
+/// QTableWidget and QTableView create default headers. If you want
+/// the headers to be visible, you can use [setVisible()](QFrame::)
 /// 
-///     QTableWidget and QTableView create default headers. If you want
-///     the headers to be visible, you can use \l{QFrame::}{setVisible()}.
 /// 
-///     Not all \l{Qt::}{ItemDataRole}s will have an effect on a
-///     QHeaderView. If you need to draw other roles, you can subclass
-///     QHeaderView and reimplement \l{QHeaderView::}{paintEvent()}.
-///     QHeaderView respects the following item data roles:
-///     \l{Qt::}{TextAlignmentRole}, \l{Qt::}{DisplayRole},
-///     \l{Qt::}{FontRole}, \l{Qt::}{DecorationRole},
-///     \l{Qt::}{ForegroundRole}, and \l{Qt::}{BackgroundRole}.
+/// Not all [ItemDataRole](Qt::)
+/// s will have an effect on a
+/// QHeaderView. If you need to draw other roles, you can subclass
+/// QHeaderView and reimplement [paintEvent()](QHeaderView::)
 /// 
-///     \note Each header renders the data for each section itself, and does not
-///     rely on a delegate. As a result, calling a header's setItemDelegate()
-///     function will have no effect.
+/// QHeaderView respects the following item data roles:
+/// [TextAlignmentRole](Qt::)
+/// , [DisplayRole](Qt::)
 /// 
-///     \sa {Model/View Programming}, QListView, QTableView, QTreeView
+/// [FontRole](Qt::)
+/// , [DecorationRole](Qt::)
+/// 
+/// [ForegroundRole](Qt::)
+/// , and [BackgroundRole](Qt::)
+/// 
+/// 
+/// **Note**: Each header renders the data for each section itself, and does not
+/// rely on a delegate. As a result, calling a header's setItemDelegate()
+/// function will have no effect.
+/// 
+/// **See also:** {Model/View Programming}
+/// QListView
+/// QTableView
+/// QTreeView
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -84,501 +91,687 @@ enum ResizeMode {
 }
 
 struct HeaderView : AbstractItemView {
-    ///   \reimp
+    /// 
     [event] set_model(model: *AbstractItemModelType),
-    ///     Returns the orientation of the header.
     /// 
-    ///     \sa Qt::Orientation
+    /// Returns the orientation of the header.
+    /// 
+    /// **See also:** Qt::Orientation
     orientation() -> Rute::Orientation,
-    ///     Returns the offset of the header: this is the header's left-most (or
-    ///     top-most for vertical headers) visible pixel.
     /// 
-    ///     \sa setOffset()
+    /// Returns the offset of the header: this is the header's left-most (or
+    /// top-most for vertical headers) visible pixel.
+    /// 
+    /// **See also:** setOffset()
     offset() -> i32,
-    ///     Returns the length along the orientation of the header.
     /// 
-    ///     \sa sizeHint(), setSectionResizeMode(), offset()
+    /// Returns the length along the orientation of the header.
+    /// 
+    /// **See also:** sizeHint()
+    /// setSectionResizeMode()
+    /// offset()
     length() -> i32,
-    ///     Returns a suitable size hint for this header.
     /// 
-    ///     \sa sectionSizeHint()
+    /// Returns a suitable size hint for this header.
+    /// 
+    /// **See also:** sectionSizeHint()
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] set_visible(v: bool),
-    ///     Returns a suitable size hint for the section specified by \a logicalIndex.
     /// 
-    ///     \sa sizeHint(), defaultSectionSize(), minimumSectionSize(), maximumSectionSize()
-    ///     Qt::SizeHintRole
+    /// Returns a suitable size hint for the section specified by *logicalIndex.*
+    /// 
+    /// **See also:** sizeHint()
+    /// defaultSectionSize()
+    /// minimumSectionSize()
+    /// maximumSectionSize()
+    /// Qt::SizeHintRole
     section_size_hint(logical_index: i32) -> i32,
-    ///     Returns the visual index of the section that covers the given \a position
-    ///     in the viewport.
     /// 
-    ///     \sa logicalIndexAt()
+    /// Returns the visual index of the section that covers the given *position*
+    /// in the viewport.
+    /// 
+    /// **See also:** logicalIndexAt()
     visual_index_at(position: i32) -> i32,
-    ///     Returns the section that covers the given \a position in the viewport.
     /// 
-    ///     \sa visualIndexAt(), isSectionHidden()
+    /// Returns the section that covers the given *position* in the viewport.
+    /// 
+    /// **See also:** visualIndexAt()
+    /// isSectionHidden()
+    /// 
+    /// Returns the logical index of the section at the given coordinate. If the
+    /// header is horizontal *x* will be used, otherwise *y* will be used to
+    /// find the logical index.
+    /// 
+    /// Returns the logical index of the section at the position given in *pos.*
+    /// If the header is horizontal the x-coordinate will be used, otherwise the
+    /// y-coordinate will be used to find the logical index.
+    /// 
+    /// **See also:** sectionPosition()
     logical_index_at(position: i32) -> i32,
-    ///     Returns the section that covers the given \a position in the viewport.
     /// 
-    ///     \sa visualIndexAt(), isSectionHidden()
+    /// Returns the section that covers the given *position* in the viewport.
+    /// 
+    /// **See also:** visualIndexAt()
+    /// isSectionHidden()
+    /// 
+    /// Returns the logical index of the section at the given coordinate. If the
+    /// header is horizontal *x* will be used, otherwise *y* will be used to
+    /// find the logical index.
+    /// 
+    /// Returns the logical index of the section at the position given in *pos.*
+    /// If the header is horizontal the x-coordinate will be used, otherwise the
+    /// y-coordinate will be used to find the logical index.
+    /// 
+    /// **See also:** sectionPosition()
     logical_index_at(x: i32, y: i32) -> i32,
-    ///     Returns the section that covers the given \a position in the viewport.
     /// 
-    ///     \sa visualIndexAt(), isSectionHidden()
+    /// Returns the section that covers the given *position* in the viewport.
+    /// 
+    /// **See also:** visualIndexAt()
+    /// isSectionHidden()
+    /// 
+    /// Returns the logical index of the section at the given coordinate. If the
+    /// header is horizontal *x* will be used, otherwise *y* will be used to
+    /// find the logical index.
+    /// 
+    /// Returns the logical index of the section at the position given in *pos.*
+    /// If the header is horizontal the x-coordinate will be used, otherwise the
+    /// y-coordinate will be used to find the logical index.
+    /// 
+    /// **See also:** sectionPosition()
     logical_index_at(pos: &PointType) -> i32,
-    ///     Returns the width (or height for vertical headers) of the given
-    ///     \a logicalIndex.
     /// 
-    ///     \sa length(), setSectionResizeMode(), defaultSectionSize()
+    /// Returns a suitable size hint for the section specified by *logicalIndex.*
+    /// 
+    /// **See also:** sizeHint()
+    /// defaultSectionSize()
+    /// minimumSectionSize()
+    /// maximumSectionSize()
+    /// Qt::SizeHintRole
+    /// 
+    /// Returns the width (or height for vertical headers) of the given
+    /// *logicalIndex.*
+    /// 
+    /// **See also:** length()
+    /// setSectionResizeMode()
+    /// defaultSectionSize()
+    /// 
+    /// Returns the size of the contents of the section specified by the given
+    /// *logicalIndex.*
+    /// 
+    /// **See also:** defaultSectionSize()
     section_size(logical_index: i32) -> i32,
     /// 
-    ///     Returns the section position of the given \a logicalIndex, or -1
-    ///     if the section is hidden. The position is measured in pixels from
-    ///     the first visible item's top-left corner to the top-left corner of
-    ///     the item with \a logicalIndex. The measurement is along the x-axis
-    ///     for horizontal headers and along the y-axis for vertical headers.
+    /// Returns the section position of the given *logicalIndex,* or -1
+    /// if the section is hidden. The position is measured in pixels from
+    /// the first visible item's top-left corner to the top-left corner of
+    /// the item with *logicalIndex.* The measurement is along the x-axis
+    /// for horizontal headers and along the y-axis for vertical headers.
     /// 
-    ///     \sa sectionViewportPosition()
+    /// **See also:** sectionViewportPosition()
     section_position(logical_index: i32) -> i32,
-    ///     Returns the section viewport position of the given \a logicalIndex.
     /// 
-    ///     If the section is hidden, the return value is undefined.
+    /// Returns the section viewport position of the given *logicalIndex.*
     /// 
-    ///     \sa sectionPosition(), isSectionHidden()
+    /// If the section is hidden, the return value is undefined.
+    /// 
+    /// **See also:** sectionPosition()
+    /// isSectionHidden()
     section_viewport_position(logical_index: i32) -> i32,
-    ///     Moves the section at visual index \a from to occupy visual index \a to.
     /// 
-    ///     \sa sectionsMoved()
+    /// Moves the section at visual index *from* to occupy visual index *to.*
+    /// 
+    /// **See also:** sectionsMoved()
     move_section(from: i32, to: i32),
-    ///     \since 4.2
-    ///     Swaps the section at visual index \a first with the section at visual
-    ///     index \a second.
     /// 
-    ///     \sa moveSection()
+    /// Swaps the section at visual index *first* with the section at visual
+    /// index *second.*
+    /// 
+    /// **See also:** moveSection()
     swap_sections(first: i32, second: i32),
-    ///     \fn void QHeaderView::resizeSection(int logicalIndex, int size)
     /// 
-    ///     Resizes the section specified by \a logicalIndex to \a size measured in
-    ///     pixels. The size parameter must be a value larger or equal to zero. A
-    ///     size equal to zero is however not recommended. In that situation hideSection
-    ///     should be used instead.
+    /// Resizes the section specified by *logicalIndex* to *size* measured in
+    /// pixels. The size parameter must be a value larger or equal to zero. A
+    /// size equal to zero is however not recommended. In that situation hideSection
+    /// should be used instead.
     /// 
-    ///     \sa sectionResized(), resizeMode(), sectionSize(), hideSection()
+    /// **See also:** sectionResized()
+    /// resizeMode()
+    /// sectionSize()
+    /// hideSection()
+    /// 
+    /// Resizes the sections according to the given *mode,* ignoring the current
+    /// resize mode.
+    /// 
+    /// **See also:** resizeMode()
+    /// sectionResized()
+    /// 
+    /// Resizes the sections according to their size hints. Normally, you do not
+    /// have to call this function.
     resize_section(logical_index: i32, size: i32),
-    ///     Resizes the sections according to their size hints. Normally, you do not
-    ///     have to call this function.
+    /// 
+    /// Resizes the sections according to the given *mode,* ignoring the current
+    /// resize mode.
+    /// 
+    /// **See also:** resizeMode()
+    /// sectionResized()
+    /// 
+    /// Resizes the sections according to their size hints. Normally, you do not
+    /// have to call this function.
     resize_sections(mode: HeaderView::ResizeMode),
-    ///     Returns \c true if the section specified by \a logicalIndex is explicitly
-    ///     hidden from the user; otherwise returns \c false.
     /// 
-    ///     \sa hideSection(), showSection(), setSectionHidden(), hiddenSectionCount()
+    /// Returns `true` if the section specified by *logicalIndex* is explicitly
+    /// hidden from the user; otherwise returns `false.`
+    /// 
+    /// **See also:** hideSection()
+    /// showSection()
+    /// setSectionHidden()
+    /// hiddenSectionCount()
     is_section_hidden(logical_index: i32) -> bool,
-    ///   If \a hide is true the section specified by \a logicalIndex is hidden;
-    ///   otherwise the section is shown.
     /// 
-    ///   \sa isSectionHidden(), hiddenSectionCount()
+    /// If *hide* is true the section specified by *logicalIndex* is hidden;
+    /// otherwise the section is shown.
+    /// 
+    /// **See also:** isSectionHidden()
+    /// hiddenSectionCount()
     set_section_hidden(logical_index: i32, hide: bool),
-    ///     \since 4.1
     /// 
-    ///     Returns the number of sections in the header that has been hidden.
+    /// Returns the number of sections in the header that has been hidden.
     /// 
-    ///     \sa setSectionHidden(), isSectionHidden()
+    /// **See also:** setSectionHidden()
+    /// isSectionHidden()
     hidden_section_count() -> i32,
+    /// 
+    /// Hides the section specified by *logicalIndex.*
+    /// 
+    /// **See also:** showSection()
+    /// isSectionHidden()
+    /// hiddenSectionCount()
+    /// setSectionHidden()
     hide_section(logical_index: i32),
+    /// 
+    /// Shows the section specified by *logicalIndex.*
+    /// 
+    /// **See also:** hideSection()
+    /// isSectionHidden()
+    /// hiddenSectionCount()
+    /// setSectionHidden()
     show_section(logical_index: i32),
-    ///     Returns the number of sections in the header.
     /// 
-    ///     \sa sectionCountChanged(), length()
+    /// Returns the number of sections in the header.
+    /// 
+    /// **See also:** sectionCountChanged()
+    /// length()
     count() -> i32,
-    ///     Returns the visual index position of the section specified by the given
-    ///     \a logicalIndex, or -1 otherwise.
     /// 
-    ///     Hidden sections still have valid visual indexes.
+    /// Returns the visual index of the section that covers the given *position*
+    /// in the viewport.
     /// 
-    ///     \sa logicalIndex()
+    /// **See also:** logicalIndexAt()
+    /// 
+    /// Returns the visual index position of the section specified by the given
+    /// *logicalIndex,* or -1 otherwise.
+    /// 
+    /// Hidden sections still have valid visual indexes.
+    /// 
+    /// **See also:** logicalIndex()
     visual_index(logical_index: i32) -> i32,
-    ///     Returns the logicalIndex for the section at the given \a visualIndex
-    ///     position, or -1 if visualIndex < 0 or visualIndex >= QHeaderView::count().
     /// 
-    ///     Note that the visualIndex is not affected by hidden sections.
+    /// Returns the section that covers the given *position* in the viewport.
     /// 
-    ///     \sa visualIndex(), sectionPosition()
+    /// **See also:** visualIndexAt()
+    /// isSectionHidden()
+    /// 
+    /// Returns the logical index of the section at the given coordinate. If the
+    /// header is horizontal *x* will be used, otherwise *y* will be used to
+    /// find the logical index.
+    /// 
+    /// Returns the logical index of the section at the position given in *pos.*
+    /// If the header is horizontal the x-coordinate will be used, otherwise the
+    /// y-coordinate will be used to find the logical index.
+    /// 
+    /// **See also:** sectionPosition()
+    /// 
+    /// Returns the logicalIndex for the section at the given *visualIndex*
+    /// position, or -1 if visualIndex < 0 or visualIndex >= QHeaderView::count().
+    /// 
+    /// Note that the visualIndex is not affected by hidden sections.
+    /// 
+    /// **See also:** visualIndex()
+    /// sectionPosition()
     logical_index(visual_index: i32) -> i32,
-    ///     \since 5.0
     /// 
-    ///     If \a movable is true, the header sections may be moved by the user;
-    ///     otherwise they are fixed in place.
+    /// If *movable* is true, the header sections may be moved by the user;
+    /// otherwise they are fixed in place.
     /// 
-    ///     When used in combination with QTreeView, the first column is not
-    ///     movable (since it contains the tree structure), by default.
-    ///     You can make it movable with setFirstSectionMovable(true).
+    /// When used in combination with QTreeView, the first column is not
+    /// movable (since it contains the tree structure), by default.
+    /// You can make it movable with setFirstSectionMovable(true).
     /// 
-    ///     \sa sectionsMovable(), sectionMoved()
-    ///     \sa setFirstSectionMovable()
+    /// **See also:** sectionsMovable()
+    /// sectionMoved()
+    /// **See also:** setFirstSectionMovable()
     set_sections_movable(movable: bool),
-    ///     \since 5.0
     /// 
-    ///     Returns \c true if the header can be moved by the user; otherwise returns
-    ///     false.
+    /// Returns `true` if the header can be moved by the user; otherwise returns
+    /// false.
     /// 
-    ///     By default, sections are movable in QTreeView (except for the first one),
-    ///     and not movable in QTableView.
+    /// By default, sections are movable in QTreeView (except for the first one),
+    /// and not movable in QTableView.
     /// 
-    ///     \sa setSectionsMovable()
+    /// **See also:** setSectionsMovable()
     sections_movable() -> bool,
-    ///     \property QHeaderView::firstSectionMovable
-    ///     \brief Whether the first column can be moved by the user
-    /// 
-    ///     This property controls whether the first column can be moved by the user.
-    ///     In a QTreeView, the first column holds the tree structure and is
-    ///     therefore non-movable by default, even after setSectionsMovable(true).
-    /// 
-    ///     It can be made movable again, for instance in the case of flat lists
-    ///     without a tree structure, by calling this method.
-    ///     In such a scenario, it is recommended to call QTreeView::setRootIsDecorated(false)
-    ///     as well.
-    /// 
-    ///     Setting it to true has no effect unless setSectionsMovable(true) is called
-    ///     as well.
-    /// 
-    ///     \sa setSectionsMovable()
-    ///     \since 5.11
     set_first_section_movable(movable: bool),
     is_first_section_movable() -> bool,
-    ///     \since 5.0
     /// 
-    ///     If \a clickable is true, the header will respond to single clicks.
+    /// If *clickable* is true, the header will respond to single clicks.
     /// 
-    ///     \sa sectionsClickable(), sectionClicked(), sectionPressed(),
-    ///     setSortIndicatorShown()
+    /// **See also:** sectionsClickable()
+    /// sectionClicked()
+    /// sectionPressed()
+    /// setSortIndicatorShown()
     set_sections_clickable(clickable: bool),
-    ///     \since 5.0
     /// 
-    ///     Returns \c true if the header is clickable; otherwise returns \c false. A
-    ///     clickable header could be set up to allow the user to change the
-    ///     representation of the data in the view related to the header.
+    /// Returns `true` if the header is clickable; otherwise returns `false.` A
+    /// clickable header could be set up to allow the user to change the
+    /// representation of the data in the view related to the header.
     /// 
-    ///     \sa setSectionsClickable()
+    /// **See also:** setSectionsClickable()
     sections_clickable() -> bool,
-    ///     \obsolete
-    ///     \fn bool QHeaderView::isClickable() const
-    /// 
-    ///     Use sectionsClickable instead.
-    /// 
-    ///     \sa sectionsClickable()
     set_highlight_sections(highlight: bool),
+    /// 
+    /// By default, this property is `false.`
     highlight_sections() -> bool,
-    ///     \since 5.0
     /// 
-    ///     Returns the resize mode that applies to the section specified by the given
-    ///     \a logicalIndex.
+    /// Returns the resize mode that applies to the section specified by the given
+    /// *logicalIndex.*
     /// 
-    ///     \sa setSectionResizeMode()
+    /// **See also:** setSectionResizeMode()
     section_resize_mode(logical_index: i32) -> HeaderView::ResizeMode,
-    ///     \since 5.0
     /// 
-    ///     Sets the constraints on how the section specified by \a logicalIndex in
-    ///     the header can be resized to those described by the given \a mode. The logical
-    ///     index should exist at the time this function is called.
+    /// Sets the constraints on how the header can be resized to those described
+    /// by the given *mode.*
     /// 
-    ///     \note This setting will be ignored for the last section if the stretchLastSection
-    ///     property is set to true. This is the default for the horizontal headers provided
-    ///     by QTreeView.
+    /// **See also:** resizeMode()
+    /// length()
+    /// sectionResized()
     /// 
-    ///     \sa setStretchLastSection(), resizeContentsPrecision()
+    /// Sets the constraints on how the section specified by *logicalIndex* in
+    /// the header can be resized to those described by the given *mode.* The logical
+    /// index should exist at the time this function is called.
+    /// 
+    /// **Note**: This setting will be ignored for the last section if the stretchLastSection
+    /// property is set to true. This is the default for the horizontal headers provided
+    /// by QTreeView.
+    /// 
+    /// **See also:** setStretchLastSection()
+    /// resizeContentsPrecision()
     set_section_resize_mode(mode: HeaderView::ResizeMode),
-    ///     \since 5.0
     /// 
-    ///     Sets the constraints on how the section specified by \a logicalIndex in
-    ///     the header can be resized to those described by the given \a mode. The logical
-    ///     index should exist at the time this function is called.
+    /// Sets the constraints on how the header can be resized to those described
+    /// by the given *mode.*
     /// 
-    ///     \note This setting will be ignored for the last section if the stretchLastSection
-    ///     property is set to true. This is the default for the horizontal headers provided
-    ///     by QTreeView.
+    /// **See also:** resizeMode()
+    /// length()
+    /// sectionResized()
     /// 
-    ///     \sa setStretchLastSection(), resizeContentsPrecision()
+    /// Sets the constraints on how the section specified by *logicalIndex* in
+    /// the header can be resized to those described by the given *mode.* The logical
+    /// index should exist at the time this function is called.
+    /// 
+    /// **Note**: This setting will be ignored for the last section if the stretchLastSection
+    /// property is set to true. This is the default for the horizontal headers provided
+    /// by QTreeView.
+    /// 
+    /// **See also:** setStretchLastSection()
+    /// resizeContentsPrecision()
     set_section_resize_mode(logical_index: i32, mode: HeaderView::ResizeMode),
-    ///    \since 5.2
-    ///    Sets how precise QHeaderView should calculate the size when ResizeToContents is used.
-    ///    A low value will provide a less accurate but fast auto resize while a higher
-    ///    value will provide a more accurate resize that however can be slow.
     /// 
-    ///    The number \a precision specifies how many sections that should be consider
-    ///    when calculating the preferred size.
+    /// Sets how precise QHeaderView should calculate the size when ResizeToContents is used.
+    /// A low value will provide a less accurate but fast auto resize while a higher
+    /// value will provide a more accurate resize that however can be slow.
     /// 
-    ///    The default value is 1000 meaning that a horizontal column with auto-resize will look
-    ///    at maximum 1000 rows on calculating when doing an auto resize.
+    /// The number *precision* specifies how many sections that should be consider
+    /// when calculating the preferred size.
     /// 
-    ///    Special value 0 means that it will look at only the visible area.
-    ///    Special value -1 will imply looking at all elements.
+    /// The default value is 1000 meaning that a horizontal column with auto-resize will look
+    /// at maximum 1000 rows on calculating when doing an auto resize.
     /// 
-    ///    This value is used in QTableView::sizeHintForColumn(), QTableView::sizeHintForRow()
-    ///    and QTreeView::sizeHintForColumn(). Reimplementing these functions can make this
-    ///    function not having an effect.
+    /// Special value 0 means that it will look at only the visible area.
+    /// Special value -1 will imply looking at all elements.
     /// 
-    ///     \sa resizeContentsPrecision(), setSectionResizeMode(), resizeSections(), QTableView::sizeHintForColumn(), QTableView::sizeHintForRow(), QTreeView::sizeHintForColumn()
+    /// This value is used in QTableView::sizeHintForColumn(), QTableView::sizeHintForRow()
+    /// and QTreeView::sizeHintForColumn(). Reimplementing these functions can make this
+    /// function not having an effect.
+    /// 
+    /// **See also:** resizeContentsPrecision()
+    /// setSectionResizeMode()
+    /// resizeSections()
+    /// QTableView::sizeHintForColumn()
+    /// QTableView::sizeHintForRow()
+    /// QTreeView::sizeHintForColumn()
     set_resize_contents_precision(precision: i32),
-    ///   \since 5.2
-    ///   Returns how precise QHeaderView will calculate on ResizeToContents.
     /// 
-    ///   \sa setResizeContentsPrecision(), setSectionResizeMode()
+    /// Returns how precise QHeaderView will calculate on ResizeToContents.
+    /// 
+    /// **See also:** setResizeContentsPrecision()
+    /// setSectionResizeMode()
     /// 
     resize_contents_precision() -> i32,
-    ///   \property QHeaderView::showSortIndicator
-    ///   \brief whether the sort indicator is shown
-    /// 
-    ///   By default, this property is \c false.
-    /// 
-    ///   \sa setSectionsClickable()
     set_sort_indicator_shown(show: bool),
     is_sort_indicator_shown() -> bool,
-    ///     Sets the sort indicator for the section specified by the given
-    ///     \a logicalIndex in the direction specified by \a order, and removes the
-    ///     sort indicator from any other section that was showing it.
     /// 
-    ///     \a logicalIndex may be -1, in which case no sort indicator will be shown
-    ///     and the model will return to its natural, unsorted order. Note that not
-    ///     all models support this and may even crash in this case.
+    /// Sets the sort indicator for the section specified by the given
+    /// *logicalIndex* in the direction specified by *order,* and removes the
+    /// sort indicator from any other section that was showing it.
     /// 
-    ///     \sa sortIndicatorSection(), sortIndicatorOrder()
+    /// *logicalIndex* may be -1, in which case no sort indicator will be shown
+    /// and the model will return to its natural, unsorted order. Note that not
+    /// all models support this and may even crash in this case.
+    /// 
+    /// **See also:** sortIndicatorSection()
+    /// sortIndicatorOrder()
     set_sort_indicator(logical_index: i32, order: Rute::SortOrder),
-    ///     Returns the logical index of the section that has a sort indicator.
-    ///     By default this is section 0.
     /// 
-    ///     \sa setSortIndicator(), sortIndicatorOrder(), setSortIndicatorShown()
+    /// Returns the logical index of the section that has a sort indicator.
+    /// By default this is section 0.
+    /// 
+    /// **See also:** setSortIndicator()
+    /// sortIndicatorOrder()
+    /// setSortIndicatorShown()
     sort_indicator_section() -> i32,
-    ///     Returns the order for the sort indicator. If no section has a sort
-    ///     indicator the return value of this function is undefined.
     /// 
-    ///     \sa setSortIndicator(), sortIndicatorSection()
+    /// Returns the order for the sort indicator. If no section has a sort
+    /// indicator the return value of this function is undefined.
+    /// 
+    /// **See also:** setSortIndicator()
+    /// sortIndicatorSection()
     sort_indicator_order() -> Rute::SortOrder,
-    ///     \since 4.2
-    ///     \property QHeaderView::cascadingSectionResizes
-    ///     \brief whether interactive resizing will be cascaded to the following
-    ///     sections once the section being resized by the user has reached its
-    ///     minimum size
     /// 
-    ///     This property only affects sections that have \l Interactive as their
-    ///     resize mode.
+    /// This property only affects sections that have [Interactive](Interactive)
+    /// as their
+    /// resize mode.
     /// 
-    ///     The default value is false.
+    /// The default value is false.
     /// 
-    ///     \sa setSectionResizeMode()
+    /// **See also:** setSectionResizeMode()
     cascading_section_resizes() -> bool,
     set_cascading_section_resizes(enable: bool),
-    ///     \property QHeaderView::defaultSectionSize
-    ///     \brief the default size of the header sections before resizing.
     /// 
-    ///     This property only affects sections that have \l Interactive or \l Fixed
-    ///     as their resize mode.
+    /// This property only affects sections that have [Interactive](Interactive)
+    /// or [Fixed](Fixed)
     /// 
-    ///     By default, the value of this property is style dependent.
-    ///     Thus, when the style changes, this property updates from it.
-    ///     Calling setDefaultSectionSize() stops the updates, calling
-    ///     resetDefaultSectionSize() will restore default behavior.
+    /// as their resize mode.
     /// 
-    ///     \sa setSectionResizeMode(), minimumSectionSize
+    /// By default, the value of this property is style dependent.
+    /// Thus, when the style changes, this property updates from it.
+    /// Calling setDefaultSectionSize() stops the updates, calling
+    /// resetDefaultSectionSize() will restore default behavior.
+    /// 
+    /// **See also:** setSectionResizeMode()
+    /// minimumSectionSize
     default_section_size() -> i32,
     set_default_section_size(size: i32),
     reset_default_section_size(),
-    ///     \since 4.2
-    ///     \property QHeaderView::minimumSectionSize
-    ///     \brief the minimum size of the header sections.
     /// 
-    ///     The minimum section size is the smallest section size allowed. If the
-    ///     minimum section size is set to -1, QHeaderView will use the maximum of
-    ///     the \l{QApplication::globalStrut()}{global strut} or the
-    ///     \l{fontMetrics()}{font metrics} size.
+    /// The minimum section size is the smallest section size allowed. If the
+    /// minimum section size is set to -1, QHeaderView will use the maximum of
+    /// the [global strut](QApplication::globalStrut())
+    /// or the
+    /// [font metrics](fontMetrics())
+    /// size.
     /// 
-    ///     This property is honored by all \l{ResizeMode}{resize modes}.
+    /// This property is honored by all [resize modes](ResizeMode)
     /// 
-    ///     \sa setSectionResizeMode(), defaultSectionSize
+    /// 
+    /// **See also:** setSectionResizeMode()
+    /// defaultSectionSize
     minimum_section_size() -> i32,
     set_minimum_section_size(size: i32),
-    ///     \since 5.2
-    ///     \property QHeaderView::maximumSectionSize
-    ///     \brief the maximum size of the header sections.
     /// 
-    ///     The maximum section size is the largest section size allowed.
-    ///     The default value for this property is 1048575, which is also the largest
-    ///     possible size for a section. Setting maximum to -1 will reset the value to
-    ///     the largest section size.
+    /// The maximum section size is the largest section size allowed.
+    /// The default value for this property is 1048575, which is also the largest
+    /// possible size for a section. Setting maximum to -1 will reset the value to
+    /// the largest section size.
     /// 
-    ///     With exception of stretch this property is honored by all \l{ResizeMode}{resize modes}
+    /// With exception of stretch this property is honored by all [resize modes](ResizeMode)
     /// 
-    ///     \sa setSectionResizeMode(), defaultSectionSize
+    /// **See also:** setSectionResizeMode()
+    /// defaultSectionSize
     maximum_section_size() -> i32,
     set_maximum_section_size(size: i32),
-    ///     \since 4.1
-    ///     \property QHeaderView::defaultAlignment
-    ///     \brief the default alignment of the text in each header section
+    /// 
     default_alignment() -> Rute::Alignment,
     set_default_alignment(alignment: Rute::Alignment),
-    ///     \internal
     [event] do_items_layout(),
-    ///     Returns \c true if sections in the header has been moved; otherwise returns
-    ///     false;
     /// 
-    ///     \sa moveSection()
+    /// Returns `true` if sections in the header has been moved; otherwise returns
+    /// false;
+    /// 
+    /// **See also:** moveSection()
     sections_moved() -> bool,
-    ///     \since 4.1
     /// 
-    ///     Returns \c true if sections in the header has been hidden; otherwise returns
-    ///     false;
+    /// Returns `true` if sections in the header has been hidden; otherwise returns
+    /// false;
     /// 
-    ///     \sa setSectionHidden()
+    /// **See also:** setSectionHidden()
     sections_hidden() -> bool,
-    ///     \since 4.3
     /// 
-    ///     Saves the current state of this header view.
+    /// Saves the current state of this header view.
     /// 
-    ///     To restore the saved state, pass the return value to restoreState().
+    /// To restore the saved state, pass the return value to restoreState().
     /// 
-    ///     \sa restoreState()
+    /// **See also:** restoreState()
     save_state() -> ByteArray,
-    ///     \since 4.3
-    ///     Restores the \a state of this header view.
-    ///     This function returns \c true if the state was restored; otherwise returns
-    ///     false.
     /// 
-    ///     \sa saveState()
+    /// Restores the *state* of this header view.
+    /// This function returns `true` if the state was restored; otherwise returns
+    /// false.
+    /// 
+    /// **See also:** saveState()
     restore_state(state: &ByteArrayType) -> bool,
-    ///   \reimp
+    /// 
     [event] reset(),
-    ///     \fn void QHeaderView::setOffset(int offset)
     /// 
-    ///     Sets the header's offset to \a offset.
+    /// Sets the header's offset to *offset.*
     /// 
-    ///     \sa offset(), length()
+    /// **See also:** offset()
+    /// length()
+    /// 
+    /// Sets the offset to the start of the section at the given *visualSectionNumber.*
+    /// *visualSectionNumber* is the actual visible section when hiddenSections are
+    /// not considered. That is not always the same as visualIndex().
+    /// 
+    /// **See also:** setOffset()
+    /// sectionPosition()
+    /// 
+    /// Sets the offset to make the last section visible.
+    /// 
+    /// **See also:** setOffset()
+    /// sectionPosition()
+    /// setOffsetToSectionPosition()
     set_offset(offset: i32),
-    ///     \since 4.2
-    ///     Sets the offset to the start of the section at the given \a visualSectionNumber.
-    ///     \a visualSectionNumber is the actual visible section when hiddenSections are
-    ///     not considered. That is not always the same as visualIndex().
     /// 
-    ///     \sa setOffset(), sectionPosition()
+    /// Sets the offset to the start of the section at the given *visualSectionNumber.*
+    /// *visualSectionNumber* is the actual visible section when hiddenSections are
+    /// not considered. That is not always the same as visualIndex().
+    /// 
+    /// **See also:** setOffset()
+    /// sectionPosition()
     set_offset_to_section_position(visual_index: i32),
-    ///     \since 4.2
-    ///     Sets the offset to make the last section visible.
     /// 
-    ///     \sa setOffset(), sectionPosition(), setOffsetToSectionPosition()
+    /// Sets the offset to make the last section visible.
+    /// 
+    /// **See also:** setOffset()
+    /// sectionPosition()
+    /// setOffsetToSectionPosition()
     set_offset_to_last_section(),
-    ///     Updates the changed header sections with the given \a orientation, from
-    ///     \a logicalFirst to \a logicalLast inclusive.
+    /// 
+    /// Updates the changed header sections with the given *orientation,* from
+    /// *logicalFirst* to *logicalLast* inclusive.
     header_data_changed(orientation: Rute::Orientation, logical_first: i32, logical_last: i32),
+    /// 
+    /// int newVisualIndex)
+    /// 
+    /// This signal is emitted when a section is moved. The section's logical index
+    /// is specified by *logicalIndex,* the old index by *oldVisualIndex,* and
+    /// the new index position by *newVisualIndex.*
+    /// 
+    /// **See also:** moveSection()
     [signal] section_moved(logical_index: i32, old_visual_index: i32, new_visual_index: i32),
+    /// 
+    /// int newSize)
+    /// 
+    /// This signal is emitted when a section is resized. The section's logical
+    /// number is specified by *logicalIndex,* the old size by *oldSize,* and the
+    /// new size by *newSize.*
+    /// 
+    /// **See also:** resizeSection()
     [signal] section_resized(logical_index: i32, old_size: i32, new_size: i32),
+    /// 
+    /// This signal is emitted when a section is pressed. The section's logical
+    /// index is specified by *logicalIndex.*
+    /// 
+    /// **See also:** setSectionsClickable()
     [signal] section_pressed(logical_index: i32),
+    /// 
+    /// This signal is emitted when a section is clicked. The section's logical
+    /// index is specified by *logicalIndex.*
+    /// 
+    /// Note that the sectionPressed signal will also be emitted.
+    /// 
+    /// **See also:** setSectionsClickable()
+    /// sectionPressed()
     [signal] section_clicked(logical_index: i32),
+    /// 
+    /// This signal is emitted when the cursor moves over the section and the left
+    /// mouse button is pressed. The section's logical index is specified by
+    /// *logicalIndex.*
+    /// 
+    /// **See also:** setSectionsClickable()
+    /// sectionPressed()
     [signal] section_entered(logical_index: i32),
+    /// 
+    /// This signal is emitted when a section is double-clicked. The section's
+    /// logical index is specified by *logicalIndex.*
+    /// 
+    /// **See also:** setSectionsClickable()
     [signal] section_double_clicked(logical_index: i32),
+    /// 
+    /// This signal is emitted when the number of sections changes, i.e., when
+    /// sections are added or deleted. The original count is specified by
+    /// *oldCount,* and the new count by *newCount.*
+    /// 
+    /// **See also:** count()
+    /// length()
+    /// headerDataChanged()
     [signal] section_count_changed(old_count: i32, new_count: i32),
+    /// 
+    /// This signal is emitted when a section is double-clicked. The section's
+    /// logical index is specified by *logicalIndex.*
+    /// 
+    /// **See also:** setSectionsClickable()
     [signal] section_handle_double_clicked(logical_index: i32),
+    /// 
+    /// Qt::SortOrder order)
+    /// 
+    /// This signal is emitted when the section containing the sort indicator or
+    /// the order indicated is changed. The section's logical index is specified
+    /// by *logicalIndex* and the sort order is specified by *order.*
+    /// 
+    /// **See also:** setSortIndicator()
     [signal] sort_indicator_changed(logical_index: i32, order: Rute::SortOrder),
-    ///     \internal
-    ///     \since 4.2
-    /// 
-    ///     Updates the section specified by the given \a logicalIndex.
     update_section(logical_index: i32),
-    ///     Resizes the sections according to their size hints. Normally, you do not
-    ///     have to call this function.
+    /// 
+    /// Resizes the sections according to the given *mode,* ignoring the current
+    /// resize mode.
+    /// 
+    /// **See also:** resizeMode()
+    /// sectionResized()
+    /// 
+    /// Resizes the sections according to their size hints. Normally, you do not
+    /// have to call this function.
     resize_sections(),
+    /// 
+    /// This slot is called when sections are inserted into the *parent.*
+    /// *logicalFirst* and *logicalLast* indices signify where the new sections
+    /// were inserted.
+    /// 
+    /// If only one section is inserted, *logicalFirst* and *logicalLast* will
+    /// be the same.
     sections_inserted(parent: &ModelIndexType, logical_first: i32, logical_last: i32),
+    /// 
+    /// This slot is called when sections are removed from the *parent.*
+    /// *logicalFirst* and *logicalLast* signify where the sections were removed.
+    /// 
+    /// If only one section is removed, *logicalFirst* and *logicalLast* will
+    /// be the same.
     sections_about_to_be_removed(parent: &ModelIndexType, logical_first: i32, logical_last: i32),
-    ///   \internal
     initialize(),
-    ///     \internal
     initialize_sections(),
-    ///     \internal
     initialize_sections(start: i32, end: i32),
-    ///   \reimp
+    /// 
     [event] current_changed(current: &ModelIndexType, old: &ModelIndexType),
-    ///   \reimp
+    /// 
     [event] event(e: *EventType) -> bool,
-    ///   \reimp
+    /// 
     [event] paint_event(e: *PaintEventType),
-    ///   \reimp
+    /// 
     [event] mouse_press_event(e: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_move_event(e: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_release_event(e: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] mouse_double_click_event(e: *MouseEventType),
-    ///   \reimp
+    /// 
     [event] viewport_event(e: *EventType) -> bool,
-    ///     Paints the section specified by the given \a logicalIndex, using the given
-    ///     \a painter and \a rect.
     /// 
-    ///     Normally, you do not have to call this function.
+    /// Paints the section specified by the given *logicalIndex,* using the given
+    /// *painter* and *rect.*
+    /// 
+    /// Normally, you do not have to call this function.
     [event] paint_section(painter: *PainterType, rect: &RectType, logical_index: i32),
-    ///     Returns the size of the contents of the section specified by the given
-    ///     \a logicalIndex.
     /// 
-    ///     \sa defaultSectionSize()
+    /// Returns the size of the contents of the section specified by the given
+    /// *logicalIndex.*
+    /// 
+    /// **See also:** defaultSectionSize()
     [event] section_size_from_contents(logical_index: i32) -> Size,
-    ///     Returns the horizontal offset of the header. This is 0 for vertical
-    ///     headers.
     /// 
-    ///     \sa offset()
+    /// Returns the horizontal offset of the header. This is 0 for vertical
+    /// headers.
+    /// 
+    /// **See also:** offset()
     [event] horizontal_offset() -> i32,
-    ///     Returns the vertical offset of the header. This is 0 for horizontal
-    ///     headers.
     /// 
-    ///     \sa offset()
+    /// Returns the vertical offset of the header. This is 0 for horizontal
+    /// headers.
+    /// 
+    /// **See also:** offset()
     [event] vertical_offset() -> i32,
-    ///     \reimp
-    ///     \internal
     [event] scroll_contents_by(dx: i32, dy: i32),
-    ///     \reimp
-    ///     \internal
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] visual_rect(index: &ModelIndexType) -> Rect,
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] index_at(p: &PointType) -> ModelIndex,
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
-    ///     \reimp
-    ///     \internal
-    /// 
-    ///     Empty implementation because the header doesn't show QModelIndex items.
     [event] move_cursor(arg0: AbstractItemView::CursorAction, arg1: Rute::KeyboardModifiers) -> ModelIndex,
-    ///     \reimp
     /// 
-    ///     Selects the items in the given \a rect according to the specified
-    ///     \a flags.
+    /// Selects the items in the given *rect* according to the specified
+    /// *flags.*
     /// 
-    ///     The base class implementation does nothing.
+    /// The base class implementation does nothing.
     [event] set_selection(rect: &RectType, flags: ItemSelectionModel::SelectionFlags),
-    ///     \internal
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    ///     Initialize \a option with the values from this QHeaderView. This method is
-    ///     useful for subclasses when they need a QStyleOptionHeader, but do not want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// Initialize *option* with the values from this QHeaderView. This method is
+    /// useful for subclasses when they need a QStyleOptionHeader, but do not want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionHeaderType),
 }
 

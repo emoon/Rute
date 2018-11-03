@@ -1,60 +1,56 @@
-///    \class QGestureRecognizer
-///    \since 4.6
-///    \brief The QGestureRecognizer class provides the infrastructure for gesture recognition.
-///    \ingroup gestures
-///    \inmodule QtWidgets
 /// 
-///    Gesture recognizers are responsible for creating and managing QGesture objects and
-///    monitoring input events sent to QWidget and QGraphicsObject subclasses.
-///    QGestureRecognizer is the base class for implementing custom gestures.
+/// Gesture recognizers are responsible for creating and managing QGesture objects and
+/// monitoring input events sent to QWidget and QGraphicsObject subclasses.
+/// QGestureRecognizer is the base class for implementing custom gestures.
 /// 
-///    Developers that only need to provide gesture recognition for standard gestures do not
-///    need to use this class directly. Instances will be created behind the scenes by the
-///    framework.
+/// Developers that only need to provide gesture recognition for standard gestures do not
+/// need to use this class directly. Instances will be created behind the scenes by the
+/// framework.
 /// 
-///    For an overview of gesture handling in Qt and information on using gestures
-///    in your applications, see the \l{Gestures in Widgets and Graphics View} document.
+/// For an overview of gesture handling in Qt and information on using gestures
+/// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
+/// document.
 /// 
-///    \section1 Recognizing Gestures
+/// # Recognizing Gestures
 /// 
-///    The process of recognizing gestures involves filtering input events sent to specific
-///    objects, and modifying the associated QGesture objects to include relevant information
-///    about the user's input.
+/// The process of recognizing gestures involves filtering input events sent to specific
+/// objects, and modifying the associated QGesture objects to include relevant information
+/// about the user's input.
 /// 
-///    Gestures are created when the framework calls create() to handle user input
-///    for a particular instance of a QWidget or QGraphicsObject subclass. A QGesture object
-///    is created for each widget or item that is configured to use gestures.
+/// Gestures are created when the framework calls create() to handle user input
+/// for a particular instance of a QWidget or QGraphicsObject subclass. A QGesture object
+/// is created for each widget or item that is configured to use gestures.
 /// 
-///    Once a QGesture has been created for a target object, the gesture recognizer will
-///    receive events for it in its recognize() handler function.
+/// Once a QGesture has been created for a target object, the gesture recognizer will
+/// receive events for it in its recognize() handler function.
 /// 
-///    When a gesture is canceled, the reset() function is called, giving the recognizer the
-///    chance to update the appropriate properties in the corresponding QGesture object.
+/// When a gesture is canceled, the reset() function is called, giving the recognizer the
+/// chance to update the appropriate properties in the corresponding QGesture object.
 /// 
-///    \section1 Supporting New Gestures
+/// # Supporting New Gestures
 /// 
-///    To add support for new gestures, you need to derive from QGestureRecognizer to create
-///    a custom recognizer class, construct an instance of this class, and register it with
-///    the application by calling QGestureRecognizer::registerRecognizer(). You can also
-///    subclass QGesture to create a custom gesture class, or rely on dynamic properties
-///    to express specific details of the gesture you want to handle.
+/// To add support for new gestures, you need to derive from QGestureRecognizer to create
+/// a custom recognizer class, construct an instance of this class, and register it with
+/// the application by calling QGestureRecognizer::registerRecognizer(). You can also
+/// subclass QGesture to create a custom gesture class, or rely on dynamic properties
+/// to express specific details of the gesture you want to handle.
 /// 
-///    Your custom QGestureRecognizer subclass needs to reimplement the recognize()
-///    function to handle and filter the incoming input events for QWidget and
-///    QGraphicsObject subclasses. Although the logic for gesture recognition is
-///    implemented in this function, you can store persistent information about the
-///    state of the recognition process in the QGesture object supplied. The
-///    recognize() function must return a value of QGestureRecognizer::Result that
-///    indicates the state of recognition for a given gesture and target object.
-///    This determines whether or not a gesture event will be delivered to a target
-///    object.
+/// Your custom QGestureRecognizer subclass needs to reimplement the recognize()
+/// function to handle and filter the incoming input events for QWidget and
+/// QGraphicsObject subclasses. Although the logic for gesture recognition is
+/// implemented in this function, you can store persistent information about the
+/// state of the recognition process in the QGesture object supplied. The
+/// recognize() function must return a value of QGestureRecognizer::Result that
+/// indicates the state of recognition for a given gesture and target object.
+/// This determines whether or not a gesture event will be delivered to a target
+/// object.
 /// 
-///    If you choose to represent a gesture by a custom QGesture subclass, you will need to
-///    reimplement the create() function to construct instances of your gesture class.
-///    Similarly, you may need to reimplement the reset() function if your custom gesture
-///    objects need to be specially handled when a gesture is canceled.
+/// If you choose to represent a gesture by a custom QGesture subclass, you will need to
+/// reimplement the create() function to construct instances of your gesture class.
+/// Similarly, you may need to reimplement the reset() function if your custom gesture
+/// objects need to be specially handled when a gesture is canceled.
 /// 
-///    \sa QGesture
+/// **See also:** QGesture
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -72,35 +68,52 @@ enum ResultFlag {
 
 
 struct GestureRecognizer {
-    ///     This function is called by Qt to create a new QGesture object for the
-    ///     given \a target (QWidget or QGraphicsObject).
     /// 
-    ///     Reimplement this function to create a custom QGesture-derived gesture
-    ///     object if necessary.
+    /// This function is called by Qt to create a new QGesture object for the
+    /// given *target* (QWidget or QGraphicsObject).
     /// 
-    ///     The application takes ownership of the created gesture object.
+    /// Reimplement this function to create a custom QGesture-derived gesture
+    /// object if necessary.
+    /// 
+    /// The application takes ownership of the created gesture object.
     [event] create(target: *ObjectType) -> Gesture?,
+    /// 
+    /// Handles the given *event* for the *watched* object, updating the state of the *gesture*
+    /// object as required, and returns a suitable result for the current recognition step.
+    /// 
+    /// This function is called by the framework to allow the recognizer to filter input events
+    /// dispatched to QWidget or QGraphicsObject instances that it is monitoring.
+    /// 
+    /// The result reflects how much of the gesture has been recognized. The state of the
+    /// *gesture* object is set depending on the result.
+    /// 
+    /// **See also:** QGestureRecognizer::Result
     [event] recognize(state: *GestureType, watched: *ObjectType, event: *EventType) -> GestureRecognizer::Result,
-    ///     This function is called by the framework to reset a given \a gesture.
     /// 
-    ///     Reimplement this function to implement additional requirements for custom QGesture
-    ///     objects. This may be necessary if you implement a custom QGesture whose properties
-    ///     need special handling when the gesture is reset.
+    /// This function is called by the framework to reset a given *gesture.*
+    /// 
+    /// Reimplement this function to implement additional requirements for custom QGesture
+    /// objects. This may be necessary if you implement a custom QGesture whose properties
+    /// need special handling when the gesture is reset.
     [event] reset(state: *GestureType),
-    ///     Registers the given \a recognizer in the gesture framework and returns a gesture ID
-    ///     for it.
     /// 
-    ///     The application takes ownership of the \a recognizer and returns the gesture type
-    ///     ID associated with it. For gesture recognizers which handle custom QGesture
-    ///     objects (i.e., those which return Qt::CustomGesture in a QGesture::gestureType()
-    ///     function) the return value is a generated gesture ID with the Qt::CustomGesture
-    ///     flag set.
+    /// Registers the given *recognizer* in the gesture framework and returns a gesture ID
+    /// for it.
     /// 
-    ///     \sa unregisterRecognizer(), QGestureRecognizer::create(), QGesture
+    /// The application takes ownership of the *recognizer* and returns the gesture type
+    /// ID associated with it. For gesture recognizers which handle custom QGesture
+    /// objects (i.e., those which return Qt::CustomGesture in a QGesture::gestureType()
+    /// function) the return value is a generated gesture ID with the Qt::CustomGesture
+    /// flag set.
+    /// 
+    /// **See also:** unregisterRecognizer()
+    /// QGestureRecognizer::create()
+    /// QGesture
     [static] register_recognizer(recognizer: *GestureRecognizerType) -> Rute::GestureType,
-    ///     Unregisters all gesture recognizers of the specified \a type.
     /// 
-    ///     \sa registerRecognizer()
+    /// Unregisters all gesture recognizers of the specified *type.*
+    /// 
+    /// **See also:** registerRecognizer()
     [static] unregister_recognizer(type: Rute::GestureType),
 }
 

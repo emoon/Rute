@@ -1,3 +1,42 @@
+/// 
+/// Gesture objects are not constructed directly by developers. They are created by
+/// the QGestureRecognizer object that is registered with the application; see
+/// QGestureRecognizer::registerRecognizer().
+/// 
+/// For an overview of gesture handling in Qt and information on using gestures
+/// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
+/// document.
+/// 
+/// # Gesture Properties
+/// 
+/// The class has a list of properties that can be queried by the user to get
+/// some gesture-specific arguments. For example, the pinch gesture has a scale
+/// factor that is exposed as a property.
+/// 
+/// Developers of custom gesture recognizers can add additional properties in
+/// order to provide additional information about a gesture. This can be done
+/// by adding new dynamic properties to a QGesture object, or by subclassing
+/// the QGesture class (or one of its subclasses).
+/// 
+/// # Lifecycle of a Gesture Object
+/// 
+/// A QGesture instance is implicitly created when needed and is owned by Qt.
+/// Developers should never destroy them or store them for later use as Qt may
+/// destroy particular instances of them and create new ones to replace them.
+/// 
+/// The registered gesture recognizer monitors the input events for the target
+/// object via its [recognize()](QGestureRecognizer::)
+/// function, updating the
+/// properties of the gesture object as required.
+/// 
+/// The gesture object may be delivered to the target object in a QGestureEvent if
+/// the corresponding gesture is active or has just been canceled. Each event that
+/// is delivered contains a list of gesture objects, since support for more than
+/// one gesture may be enabled for the target object. Due to the way events are
+/// handled in Qt, gesture events may be filtered by other objects.
+/// 
+/// **See also:** QGestureEvent
+/// QGestureRecognizer
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -8,25 +47,28 @@ enum GestureCancelPolicy {
 }
 
 struct Gesture : Object {
-    ///     \property QGesture::hasHotSpot
-    ///     \brief whether the gesture has a hot-spot
+    /// 
     gesture_type() -> Rute::GestureType,
+    /// 
     state() -> Rute::GestureState,
+    /// 
+    /// The hot-spot is a point in the global coordinate system, use
+    /// QWidget::mapFromGlobal() or QGestureEvent::mapToGraphicsScene() to get a
+    /// local hot-spot.
+    /// 
+    /// The hot-spot should be set by the gesture recognizer to allow gesture event
+    /// delivery to a QGraphicsObject.
     hot_spot() -> PointF,
     set_hot_spot(value: &PointFType),
+    /// 
     has_hot_spot() -> bool,
     unset_hot_spot(),
-    ///     \enum QGesture::GestureCancelPolicy
-    /// 
-    ///     This enum describes how accepting a gesture can cancel other gestures
-    ///     automatically.
-    /// 
-    ///     \value CancelNone On accepting this gesture no other gestures will be affected.
-    /// 
-    ///     \value CancelAllInContext On accepting this gesture all gestures that are
-    ///     active in the context (respecting the Qt::GestureFlag that were specified
-    ///     when subscribed to the gesture) will be cancelled.
     set_gesture_cancel_policy(policy: Gesture::GestureCancelPolicy),
+    /// 
+    /// On accepting one gesture Qt can automatically cancel other gestures
+    /// that belong to other targets. The policy is normally set to not cancel
+    /// any other gestures and can be set to cancel all active gestures in the
+    /// context. For example for all child widgets.
     gesture_cancel_policy() -> Gesture::GestureCancelPolicy,
 }
 

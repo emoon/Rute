@@ -1,21 +1,3 @@
-///     \class QPlatformScreen
-///     \since 4.8
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-/// 
-///     \brief The QPlatformScreen class provides an abstraction for visual displays.
-/// 
-///     Many window systems has support for retrieving information on the attached displays. To be able
-///     to query the display QPA uses QPlatformScreen. Qt its self is most dependent on the
-///     physicalSize() function, since this is the function it uses to calculate the dpi to use when
-///     converting point sizes to pixels sizes. However, this is unfortunate on some systems, as the
-///     native system fakes its dpi size.
-/// 
-///     QPlatformScreen is also used by the public api QDesktopWidget for information about the desktop.
-///  */
-/// 
-///     Reimplement in subclass to return the pixel geometry of the screen
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -38,162 +20,186 @@ enum PowerState {
 
 
 struct PlatformScreen {
-    ///     \fn QPixmap QPlatformScreen::grabWindow(WId window, int x, int y, int width, int height) const
     /// 
-    ///     This function is called when Qt needs to be able to grab the content of a window.
+    /// This function is called when Qt needs to be able to grab the content of a window.
     /// 
-    ///     Returnes the content of the window specified with the WId handle within the boundaries of
-    ///     QRect(x,y,width,height).
+    /// Returnes the content of the window specified with the WId handle within the boundaries of
+    /// QRect(x,y,width,height).
     [event] grab_window(window: WId, x: i32, y: i32, width: i32, height: i32) -> Pixmap,
+    /// Reimplement in subclass to return current depth of the screen
     [event] depth() -> i32,
+    /// Reimplement in subclass to return the image format which corresponds to the screen format
     [event] format() -> Image::Format,
-    ///     Reimplement this function in subclass to return the physical size of the
-    ///     screen, in millimeters. The physical size represents the actual physical
-    ///     dimensions of the display.
     /// 
-    ///     The default implementation takes the pixel size of the screen, considers a
-    ///     resolution of 100 dots per inch, and returns the calculated physical size.
-    ///     A device with a screen that has different resolutions will need to be
-    ///     supported by a suitable reimplementation of this function.
+    /// Reimplement this function in subclass to return the physical size of the
+    /// screen, in millimeters. The physical size represents the actual physical
+    /// dimensions of the display.
     /// 
-    ///     \sa logcalDpi
+    /// The default implementation takes the pixel size of the screen, considers a
+    /// resolution of 100 dots per inch, and returns the calculated physical size.
+    /// A device with a screen that has different resolutions will need to be
+    /// supported by a suitable reimplementation of this function.
+    /// 
+    /// **See also:** logcalDpi
     [event] physical_size() -> SizeF,
-    ///     Reimplement this function in subclass to return the logical horizontal
-    ///     and vertical dots per inch metrics of the screen.
     /// 
-    ///     The logical dots per inch metrics are used by QFont to convert point sizes
-    ///     to pixel sizes.
+    /// Reimplement this function in subclass to return the logical horizontal
+    /// and vertical dots per inch metrics of the screen.
     /// 
-    ///     The default implementation uses the screen pixel size and physical size to
-    ///     compute the metrics.
+    /// The logical dots per inch metrics are used by QFont to convert point sizes
+    /// to pixel sizes.
     /// 
-    ///     \sa physicalSize
+    /// The default implementation uses the screen pixel size and physical size to
+    /// compute the metrics.
+    /// 
+    /// **See also:** physicalSize
     [event] logical_dpi() -> Dpi,
-    ///     Reimplement this function in subclass to return the device pixel ratio
-    ///     for the screen. This is the ratio between physical pixels and the
-    ///     device-independent pixels of the windowing system. The default
-    ///     implementation returns 1.0.
     /// 
-    ///     \sa QPlatformWindow::devicePixelRatio()
-    ///     \sa QPlatformScreen::pixelDensity()
+    /// Reimplement this function in subclass to return the device pixel ratio
+    /// for the screen. This is the ratio between physical pixels and the
+    /// device-independent pixels of the windowing system. The default
+    /// implementation returns 1.0.
+    /// 
+    /// **See also:** QPlatformWindow::devicePixelRatio()
+    /// **See also:** QPlatformScreen::pixelDensity()
     [event] device_pixel_ratio() -> f32,
-    ///     Reimplement this function in subclass to return the pixel density of the
-    ///     screen. This is the scale factor needed to make a low-dpi application
-    ///     usable on this screen. The default implementation returns 1.0.
     /// 
-    ///     Returning something else than 1.0 from this function causes Qt to
-    ///     apply the scale factor to the application's coordinate system.
-    ///     This is different from devicePixelRatio, which reports a scale
-    ///     factor already applied by the windowing system. A platform plugin
-    ///     typically implements one (or none) of these two functions.
+    /// Reimplement this function in subclass to return the pixel density of the
+    /// screen. This is the scale factor needed to make a low-dpi application
+    /// usable on this screen. The default implementation returns 1.0.
     /// 
-    ///     \sa QPlatformWindow::devicePixelRatio()
+    /// Returning something else than 1.0 from this function causes Qt to
+    /// apply the scale factor to the application's coordinate system.
+    /// This is different from devicePixelRatio, which reports a scale
+    /// factor already applied by the windowing system. A platform plugin
+    /// typically implements one (or none) of these two functions.
+    /// 
+    /// **See also:** QPlatformWindow::devicePixelRatio()
     [event] pixel_density() -> f32,
-    ///     Reimplement this function in subclass to return the vertical refresh rate
-    ///     of the screen, in Hz.
     /// 
-    ///     The default returns 60, a sensible default for modern displays.
+    /// Reimplement this function in subclass to return the vertical refresh rate
+    /// of the screen, in Hz.
+    /// 
+    /// The default returns 60, a sensible default for modern displays.
     [event] refresh_rate() -> f32,
-    ///     Reimplement this function in subclass to return the native orientation
-    ///     of the screen, e.g. the orientation where the logo sticker of the device
-    ///     appears the right way up.
     /// 
-    ///     The default implementation returns Qt::PrimaryOrientation.
+    /// Reimplement this function in subclass to return the native orientation
+    /// of the screen, e.g. the orientation where the logo sticker of the device
+    /// appears the right way up.
+    /// 
+    /// The default implementation returns Qt::PrimaryOrientation.
     [event] native_orientation() -> Rute::ScreenOrientation,
-    ///     Reimplement this function in subclass to return the current orientation
-    ///     of the screen, for example based on accelerometer data to determine
-    ///     the device orientation.
     /// 
-    ///     The default implementation returns Qt::PrimaryOrientation.
+    /// Reimplement this function in subclass to return the current orientation
+    /// of the screen, for example based on accelerometer data to determine
+    /// the device orientation.
+    /// 
+    /// The default implementation returns Qt::PrimaryOrientation.
     [event] orientation() -> Rute::ScreenOrientation,
     [event] set_orientation_update_mask(mask: Rute::ScreenOrientations),
-    ///     Return the given top level window for a given position.
     /// 
-    ///     Default implementation retrieves a list of all top level windows and finds the first window
-    ///     which contains point \a pos
+    /// Return the given top level window for a given position.
+    /// 
+    /// Default implementation retrieves a list of all top level windows and finds the first window
+    /// which contains point *pos*
     [event] top_level_at(point: &PointType) -> Window?,
-    ///     Return all windows residing on this screen.
-    windows() -> WindowList,
-    ///     Returns a list of all the platform screens that are part of the same
-    ///     virtual desktop.
     /// 
-    ///     Screens part of the same virtual desktop share a common coordinate system,
-    ///     and windows can be freely moved between them.
+    /// Return all windows residing on this screen.
+    windows() -> WindowList,
+    /// 
+    /// Returns a list of all the platform screens that are part of the same
+    /// virtual desktop.
+    /// 
+    /// Screens part of the same virtual desktop share a common coordinate system,
+    /// and windows can be freely moved between them.
     [event] virtual_siblings() -> [PlatformScreen?],
+    /// 
+    /// Find the sibling screen corresponding to *globalPos.*
+    /// 
+    /// Returns this screen if no suitable screen is found at the position.
     screen_for_position(point: &PointType) -> PlatformScreen?,
+    /// 
+    /// Find the sibling screen corresponding to *globalPos.*
+    /// 
+    /// Returns this screen if no suitable screen is found at the position.
     screen() -> Screen?,
     [static] platform_screen_for_window(window: *WindowType) -> PlatformScreen?,
     [event] name() -> String,
-    ///     Reimplement this function in subclass to return the manufacturer
-    ///     of this screen.
     /// 
-    ///     The default implementation returns an empty string.
+    /// Reimplement this function in subclass to return the manufacturer
+    /// of this screen.
     /// 
-    ///     \since 5.9
+    /// The default implementation returns an empty string.
+    /// 
     [event] manufacturer() -> String,
-    ///     Reimplement this function in subclass to return the model
-    ///     of this screen.
     /// 
-    ///     The default implementation returns an empty string.
+    /// Reimplement this function in subclass to return the model
+    /// of this screen.
     /// 
-    ///     \since 5.9
+    /// The default implementation returns an empty string.
+    /// 
     [event] model() -> String,
-    ///     Reimplement this function in subclass to return the serial number
-    ///     of this screen.
     /// 
-    ///     The default implementation returns an empty string.
+    /// Reimplement this function in subclass to return the serial number
+    /// of this screen.
     /// 
-    ///     \since 5.9
+    /// The default implementation returns an empty string.
+    /// 
     [event] serial_number() -> String,
-    ///     Reimplement this function in subclass to return the cursor of the screen.
     /// 
-    ///     The default implementation returns 0.
+    /// Reimplement this function in subclass to return the cursor of the screen.
+    /// 
+    /// The default implementation returns 0.
     [event] cursor() -> PlatformCursor?,
-    ///   Returns a hint about this screen's subpixel layout structure.
     /// 
-    ///   The default implementation queries the \b{QT_SUBPIXEL_AA_TYPE} env variable.
-    ///   This is just a hint because most platforms don't have a way to retrieve the correct value from hardware
-    ///   and instead rely on font configurations.
+    /// Returns a hint about this screen's subpixel layout structure.
+    /// 
+    /// The default implementation queries the **QT_SUBPIXEL_AA_TYPE** env variable.
+    /// This is just a hint because most platforms don't have a way to retrieve the correct value from hardware
+    /// and instead rely on font configurations.
     [event] subpixel_antialiasing_type_hint() -> PlatformScreen::SubpixelAntialiasingType,
-    ///   Returns the current power state.
     /// 
-    ///   The default implementation always returns PowerStateOn.
+    /// Returns the current power state.
+    /// 
+    /// The default implementation always returns PowerStateOn.
     [event] power_state() -> PlatformScreen::PowerState,
-    ///   Sets the power state for this screen.
+    /// 
+    /// Sets the power state for this screen.
     [event] set_power_state(state: PlatformScreen::PowerState),
-    ///     Reimplement this function in subclass to return the list
-    ///     of modes for this screen.
     /// 
-    ///     The default implementation returns a list with
-    ///     only one mode from the current screen size and refresh rate.
+    /// Reimplement this function in subclass to return the list
+    /// of modes for this screen.
     /// 
-    ///     \sa QPlatformScreen::geometry
-    ///     \sa QPlatformScreen::refreshRate
+    /// The default implementation returns a list with
+    /// only one mode from the current screen size and refresh rate.
     /// 
-    ///     \since 5.9
+    /// **See also:** QPlatformScreen::geometry
+    /// **See also:** QPlatformScreen::refreshRate
+    /// 
     [event] modes() -> Vector<QPlatformScreen::Mode>,
-    ///     Reimplement this function in subclass to return the
-    ///     index of the current mode from the modes list.
     /// 
-    ///     The default implementation returns 0.
+    /// Reimplement this function in subclass to return the
+    /// index of the current mode from the modes list.
     /// 
-    ///     \sa QPlatformScreen::modes
+    /// The default implementation returns 0.
     /// 
-    ///     \since 5.9
+    /// **See also:** QPlatformScreen::modes
+    /// 
     [event] current_mode() -> i32,
-    ///     Reimplement this function in subclass to return the preferred
-    ///     mode index from the modes list.
     /// 
-    ///     The default implementation returns 0.
+    /// Reimplement this function in subclass to return the preferred
+    /// mode index from the modes list.
     /// 
-    ///     \sa QPlatformScreen::modes
+    /// The default implementation returns 0.
     /// 
-    ///     \since 5.9
+    /// **See also:** QPlatformScreen::modes
+    /// 
     [event] preferred_mode() -> i32,
     [static] angle_between(a: Rute::ScreenOrientation, b: Rute::ScreenOrientation) -> i32,
     [static] map_between(a: Rute::ScreenOrientation, b: Rute::ScreenOrientation, rect: &RectType) -> Rect,
-    ///   Convenience method to resize all the maximized and fullscreen windows
-    ///   of this platform screen.
+    /// 
+    /// Convenience method to resize all the maximized and fullscreen windows
+    /// of this platform screen.
     resize_maximized_windows(),
 }
 

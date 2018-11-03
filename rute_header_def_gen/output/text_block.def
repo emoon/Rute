@@ -1,205 +1,283 @@
-///     \class QTextBlock
-///     \reentrant
 /// 
-///     \brief The QTextBlock class provides a container for text fragments in a
-///     QTextDocument.
-///     \inmodule QtGui
+/// A text block encapsulates a block or paragraph of text in a QTextDocument.
+/// QTextBlock provides read-only access to the block/paragraph structure of
+/// QTextDocuments. It is mainly of use if you want to implement your own
+/// layouts for the visual representation of a QTextDocument, or if you want to
+/// iterate over a document and write out the contents in your own custom
+/// format.
 /// 
-///     \ingroup richtext-processing
+/// Text blocks are created by their parent documents. If you need to create
+/// a new text block, or modify the contents of a document while examining its
+/// contents, use the cursor-based interface provided by QTextCursor instead.
 /// 
-///     A text block encapsulates a block or paragraph of text in a QTextDocument.
-///     QTextBlock provides read-only access to the block/paragraph structure of
-///     QTextDocuments. It is mainly of use if you want to implement your own
-///     layouts for the visual representation of a QTextDocument, or if you want to
-///     iterate over a document and write out the contents in your own custom
-///     format.
+/// Each text block is located at a specific position() in a document().
+/// The contents of the block can be obtained by using the text() function.
+/// The length() function determines the block's size within the document
+/// (including formatting characters).
+/// The visual properties of the block are determined by its text layout(),
+/// its charFormat(), and its blockFormat().
 /// 
-///     Text blocks are created by their parent documents. If you need to create
-///     a new text block, or modify the contents of a document while examining its
-///     contents, use the cursor-based interface provided by QTextCursor instead.
+/// The next() and previous() functions enable iteration over consecutive
+/// valid blocks in a document under the condition that the document is not
+/// modified by other means during the iteration process. Note that, although
+/// blocks are returned in sequence, adjacent blocks may come from different
+/// places in the document structure. The validity of a block can be determined
+/// by calling isValid().
 /// 
-///     Each text block is located at a specific position() in a document().
-///     The contents of the block can be obtained by using the text() function.
-///     The length() function determines the block's size within the document
-///     (including formatting characters).
-///     The visual properties of the block are determined by its text layout(),
-///     its charFormat(), and its blockFormat().
+/// QTextBlock provides comparison operators to make it easier to work with
+/// blocks: [operator==()](operator==())
+/// compares two block for equality, [operator!=()](operator!=())
 /// 
-///     The next() and previous() functions enable iteration over consecutive
-///     valid blocks in a document under the condition that the document is not
-///     modified by other means during the iteration process. Note that, although
-///     blocks are returned in sequence, adjacent blocks may come from different
-///     places in the document structure. The validity of a block can be determined
-///     by calling isValid().
+/// compares two blocks for inequality, and [operator<()](operator%3C())
+/// determines whether
+/// a block precedes another in the same document.
 /// 
-///     QTextBlock provides comparison operators to make it easier to work with
-///     blocks: \l operator==() compares two block for equality, \l operator!=()
-///     compares two blocks for inequality, and \l operator<() determines whether
-///     a block precedes another in the same document.
+/// ![qtextblock-sequence.png](qtextblock-sequence.png)
 /// 
-///     \image qtextblock-sequence.png
-/// 
-///     \sa QTextBlockFormat, QTextCharFormat, QTextFragment
-///  */
-/// 
+/// **See also:** QTextBlockFormat
+/// QTextCharFormat
+/// QTextFragment
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextBlock {
-    ///     \fn bool QTextBlock::isValid() const
     /// 
-    ///     Returns \c true if this text block is valid; otherwise returns \c false.
+    /// Returns `true` if this text block is valid; otherwise returns `false.`
     is_valid() -> bool,
+    /// 
+    /// Returns the index of the block's first character within the document.
     position() -> i32,
+    /// 
+    /// Returns the length of the block in characters.
+    /// 
+    /// **Note**: The length returned includes all formatting characters,
+    /// for example, newline.
+    /// 
+    /// **See also:** text()
+    /// charFormat()
+    /// blockFormat()
     length() -> i32,
+    /// 
+    /// Returns `true` if the given *position* is located within the text
+    /// block; otherwise returns `false.`
     contains(position: i32) -> bool,
+    /// 
+    /// Returns the QTextLayout that is used to lay out and display the
+    /// block's contents.
+    /// 
+    /// Note that the returned QTextLayout object can only be modified from the
+    /// documentChanged implementation of a QAbstractTextDocumentLayout subclass.
+    /// Any changes applied from the outside cause undefined behavior.
+    /// 
+    /// **See also:** clearLayout()
     layout() -> TextLayout?,
+    /// 
+    /// Clears the QTextLayout that is used to lay out and display the
+    /// block's contents.
+    /// 
+    /// **See also:** layout()
     clear_layout(),
+    /// 
+    /// Returns the QTextBlockFormat that describes block-specific properties.
+    /// 
+    /// **See also:** charFormat()
+    /// 
+    /// Returns an index into the document's internal list of block formats
+    /// for the text block's format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     block_format() -> TextBlockFormat,
-    ///     Returns an index into the document's internal list of block formats
-    ///     for the text block's format.
     /// 
-    ///     \sa QTextDocument::allFormats()
+    /// Returns an index into the document's internal list of block formats
+    /// for the text block's format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     block_format_index() -> i32,
+    /// 
+    /// Returns the QTextCharFormat that describes the block's character
+    /// format. The block's character format is used when inserting text into
+    /// an empty block.
+    /// 
+    /// **See also:** blockFormat()
+    /// 
+    /// Returns an index into the document's internal list of character formats
+    /// for the text block's character format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     char_format() -> TextCharFormat,
-    ///     Returns an index into the document's internal list of character formats
-    ///     for the text block's character format.
     /// 
-    ///     \sa QTextDocument::allFormats()
+    /// Returns an index into the document's internal list of character formats
+    /// for the text block's character format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     char_format_index() -> i32,
-    ///   \since 4.7
     /// 
-    ///   Returns the resolved text direction.
+    /// Returns the resolved text direction.
     /// 
-    ///   If the block has no explicit direction set, it will resolve the
-    ///   direction from the blocks content. Returns either Qt::LeftToRight
-    ///   or Qt::RightToLeft.
+    /// If the block has no explicit direction set, it will resolve the
+    /// direction from the blocks content. Returns either Qt::LeftToRight
+    /// or Qt::RightToLeft.
     /// 
-    ///   \sa QTextFormat::layoutDirection(), QString::isRightToLeft(), Qt::LayoutDirection
+    /// **See also:** QTextFormat::layoutDirection()
+    /// QString::isRightToLeft()
+    /// Qt::LayoutDirection
     text_direction() -> Rute::LayoutDirection,
+    /// 
+    /// Returns the resolved text direction.
+    /// 
+    /// If the block has no explicit direction set, it will resolve the
+    /// direction from the blocks content. Returns either Qt::LeftToRight
+    /// or Qt::RightToLeft.
+    /// 
+    /// **See also:** QTextFormat::layoutDirection()
+    /// QString::isRightToLeft()
+    /// Qt::LayoutDirection
+    /// 
+    /// Returns the block's contents as plain text.
+    /// 
+    /// **See also:** length()
+    /// charFormat()
+    /// blockFormat()
+    /// 
+    /// Returns the block's text format options as a list of continuous ranges
+    /// of QTextCharFormat. The range's character format is used when inserting text
+    /// within the range boundaries.
+    /// 
+    /// **See also:** charFormat()
+    /// blockFormat()
+    /// 
+    /// If the block represents a list item, returns the list that the item belongs
+    /// to; otherwise returns 0.
     text() -> String,
-    ///     \since 5.3
     /// 
-    ///     Returns the block's text format options as a list of continuous ranges
-    ///     of QTextCharFormat. The range's character format is used when inserting text
-    ///     within the range boundaries.
+    /// Returns the block's text format options as a list of continuous ranges
+    /// of QTextCharFormat. The range's character format is used when inserting text
+    /// within the range boundaries.
     /// 
-    ///     \sa charFormat(), blockFormat()
+    /// **See also:** charFormat()
+    /// blockFormat()
     text_formats() -> Vector<QTextLayout::FormatRange>,
-    ///     Returns the text document this text block belongs to, or 0 if the
-    ///     text block does not belong to any document.
+    /// 
+    /// Returns the text document this text block belongs to, or 0 if the
+    /// text block does not belong to any document.
     document() -> TextDocument?,
-    ///     If the block represents a list item, returns the list that the item belongs
-    ///     to; otherwise returns 0.
+    /// 
+    /// If the block represents a list item, returns the list that the item belongs
+    /// to; otherwise returns 0.
     text_list() -> TextList?,
-    ///     \since 4.1
     /// 
-    ///     Returns a pointer to a QTextBlockUserData object if previously set with
-    ///     setUserData() or a null pointer.
+    /// Returns a pointer to a QTextBlockUserData object if previously set with
+    /// setUserData() or a null pointer.
     user_data() -> TextBlockUserData?,
-    ///     \since 4.1
     /// 
-    ///     Attaches the given \a data object to the text block.
+    /// Attaches the given *data* object to the text block.
     /// 
-    ///     QTextBlockUserData can be used to store custom settings.  The
-    ///     ownership is passed to the underlying text document, i.e. the
-    ///     provided QTextBlockUserData object will be deleted if the
-    ///     corresponding text block gets deleted. The user data object is
-    ///     not stored in the undo history, so it will not be available after
-    ///     undoing the deletion of a text block.
+    /// QTextBlockUserData can be used to store custom settings. The
+    /// ownership is passed to the underlying text document, i.e. the
+    /// provided QTextBlockUserData object will be deleted if the
+    /// corresponding text block gets deleted. The user data object is
+    /// not stored in the undo history, so it will not be available after
+    /// undoing the deletion of a text block.
     /// 
-    ///     For example, if you write a programming editor in an IDE, you may
-    ///     want to let your user set breakpoints visually in your code for an
-    ///     integrated debugger. In a programming editor a line of text
-    ///     usually corresponds to one QTextBlock. The QTextBlockUserData
-    ///     interface allows the developer to store data for each QTextBlock,
-    ///     like for example in which lines of the source code the user has a
-    ///     breakpoint set. Of course this could also be stored externally,
-    ///     but by storing it inside the QTextDocument, it will for example be
-    ///     automatically deleted when the user deletes the associated
-    ///     line. It's really just a way to store custom information in the
-    ///     QTextDocument without using custom properties in QTextFormat which
-    ///     would affect the undo/redo stack.
+    /// For example, if you write a programming editor in an IDE, you may
+    /// want to let your user set breakpoints visually in your code for an
+    /// integrated debugger. In a programming editor a line of text
+    /// usually corresponds to one QTextBlock. The QTextBlockUserData
+    /// interface allows the developer to store data for each QTextBlock,
+    /// like for example in which lines of the source code the user has a
+    /// breakpoint set. Of course this could also be stored externally,
+    /// but by storing it inside the QTextDocument, it will for example be
+    /// automatically deleted when the user deletes the associated
+    /// line. It's really just a way to store custom information in the
+    /// QTextDocument without using custom properties in QTextFormat which
+    /// would affect the undo/redo stack.
     set_user_data(data: *TextBlockUserDataType),
-    ///     \since 4.1
     /// 
-    ///     Returns the integer value previously set with setUserState() or -1.
+    /// Returns the integer value previously set with setUserState() or -1.
     user_state() -> i32,
-    ///     \since 4.1
     /// 
-    ///     Stores the specified \a state integer value in the text block. This may be
-    ///     useful for example in a syntax highlighter to store a text parsing state.
+    /// Stores the specified *state* integer value in the text block. This may be
+    /// useful for example in a syntax highlighter to store a text parsing state.
     set_user_state(state: i32),
-    ///     \since 4.4
     /// 
-    ///     Returns the blocks revision.
+    /// Returns the blocks revision.
     /// 
-    ///     \sa setRevision(), QTextDocument::revision()
+    /// **See also:** setRevision()
+    /// QTextDocument::revision()
     revision() -> i32,
-    ///     \since 4.4
     /// 
-    ///     Sets a blocks revision to \a rev.
+    /// Sets a blocks revision to *rev.*
     /// 
-    ///     \sa revision(), QTextDocument::revision()
+    /// **See also:** revision()
+    /// QTextDocument::revision()
     set_revision(rev: i32),
-    ///     \since 4.4
     /// 
-    ///     Returns \c true if the block is visible; otherwise returns \c false.
+    /// Returns `true` if the block is visible; otherwise returns `false.`
     /// 
-    ///     \sa setVisible()
+    /// **See also:** setVisible()
     is_visible() -> bool,
-    ///     \since 4.4
     /// 
-    ///     Sets the block's visibility to \a visible.
+    /// Sets the block's visibility to *visible.*
     /// 
-    ///     \sa isVisible()
+    /// **See also:** isVisible()
     set_visible(visible: bool),
-    /// \since 4.4
     /// 
-    ///     Returns the number of this block, or -1 if the block is invalid.
+    /// Returns the number of this block, or -1 if the block is invalid.
     /// 
-    ///     \sa QTextCursor::blockNumber()
+    /// **See also:** QTextCursor::blockNumber()
     /// 
     block_number() -> i32,
-    /// \since 4.5
     /// 
-    ///     Returns the first line number of this block, or -1 if the block is invalid.
-    ///     Unless the layout supports it, the line number is identical to the block number.
+    /// Returns the first line number of this block, or -1 if the block is invalid.
+    /// Unless the layout supports it, the line number is identical to the block number.
     /// 
-    ///     \sa QTextBlock::blockNumber()
+    /// **See also:** QTextBlock::blockNumber()
     /// 
     first_line_number() -> i32,
-    /// \since 4.5
     /// 
-    /// Sets the line count to \a count.
+    /// Sets the line count to *count.*
     /// 
-    /// \sa lineCount()
+    /// **See also:** lineCount()
     set_line_count(count: i32),
+    /// 
+    /// Returns the line count. Not all document layouts support this feature.
+    /// 
+    /// **See also:** setLineCount()
     line_count() -> i32,
-    ///     Returns a text block iterator pointing to the beginning of the
-    ///     text block.
     /// 
-    ///     \sa end()
+    /// Returns a text block iterator pointing to the beginning of the
+    /// text block.
+    /// 
+    /// **See also:** end()
     begin() -> TextBlock::iterator,
-    ///     Returns a text block iterator pointing to the end of the text
-    ///     block.
     /// 
-    ///     \sa begin(), next(), previous()
+    /// Returns a text block iterator pointing to the end of the text
+    /// block.
+    /// 
+    /// **See also:** begin()
+    /// next()
+    /// previous()
     end() -> TextBlock::iterator,
-    ///     Returns the text block in the document after this block, or an empty
-    ///     text block if this is the last one.
     /// 
-    ///     Note that the next block may be in a different frame or table to this block.
+    /// Returns the text block in the document after this block, or an empty
+    /// text block if this is the last one.
     /// 
-    ///     \sa previous(), begin(), end()
+    /// Note that the next block may be in a different frame or table to this block.
+    /// 
+    /// **See also:** previous()
+    /// begin()
+    /// end()
     next() -> TextBlock,
-    ///     Returns the text block in the document before this block, or an empty text
-    ///     block if this is the first one.
     /// 
-    ///     Note that the previous block may be in a different frame or table to this block.
+    /// Returns the text block in the document before this block, or an empty text
+    /// block if this is the first one.
     /// 
-    ///     \sa next(), begin(), end()
+    /// Note that the previous block may be in a different frame or table to this block.
+    /// 
+    /// **See also:** next()
+    /// begin()
+    /// end()
     previous() -> TextBlock,
     doc_handle() -> TextDocumentPrivate?,
     fragment_index() -> i32,

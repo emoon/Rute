@@ -1,52 +1,51 @@
-///     \class QWidgetItem
-///     \ingroup geomanagement
-///     \brief The QWidgetItem class is a layout item that represents a widget.
 /// 
-///     \inmodule QtWidgets
+/// Normally, you don't need to use this class directly. Qt's
+/// built-in layout managers provide the following functions for
+/// manipulating widgets in layouts:
 /// 
-///     Normally, you don't need to use this class directly. Qt's
-///     built-in layout managers provide the following functions for
-///     manipulating widgets in layouts:
+/// * Class
+/// * Functions
+/// * QBoxLayout
+/// * [addWidget()](QBoxLayout::addWidget())
+/// , [insertWidget()](QBoxLayout::insertWidget())
+/// , [setStretchFactor()](QBoxLayout::setStretchFactor())
 /// 
-///     \table
-///     \header \li Class
-///             \li Functions
-///     \row    \li QBoxLayout
-///             \li \l{QBoxLayout::addWidget()}{addWidget()},
-///                \l{QBoxLayout::insertWidget()}{insertWidget()},
-///                \l{QBoxLayout::setStretchFactor()}{setStretchFactor()}
-///     \row    \li QGridLayout
-///             \li \l{QGridLayout::addWidget()}{addWidget()}
-///     \row    \li QStackedLayout
-///             \li \l{QStackedLayout::addWidget()}{addWidget()},
-///                \l{QStackedLayout::insertWidget()}{insertWidget()},
-///                \l{QStackedLayout::currentWidget()}{currentWidget()},
-///                \l{QStackedLayout::setCurrentWidget()}{setCurrentWidget()},
-///                \l{QStackedLayout::widget()}{widget()}
-///     \endtable
+/// * QGridLayout
+/// * [addWidget()](QGridLayout::addWidget())
 /// 
-///     \sa QLayout, QSpacerItem, QLayoutItem::widget()
+/// * QStackedLayout
+/// * [addWidget()](QStackedLayout::addWidget())
+/// , [insertWidget()](QStackedLayout::insertWidget())
+/// , [currentWidget()](QStackedLayout::currentWidget())
+/// , [setCurrentWidget()](QStackedLayout::setCurrentWidget())
+/// , [widget()](QStackedLayout::widget())
+/// 
+/// **See also:** QLayout
+/// QSpacerItem
+/// QLayoutItem::widget()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct WidgetItem : LayoutItem {
-    ///     \reimp
-    [event] size_hint() -> Size,
-    ///     \reimp
-    [event] minimum_size() -> Size,
-    ///     \reimp
-    [event] maximum_size() -> Size,
-    ///     \reimp
-    [event] expanding_directions() -> Rute::Orientations,
-    ///     Returns \c true if the widget is hidden; otherwise returns \c false.
     /// 
-    ///     \sa QWidget::isHidden()
+    [event] size_hint() -> Size,
+    /// 
+    [event] minimum_size() -> Size,
+    /// 
+    [event] maximum_size() -> Size,
+    /// 
+    [event] expanding_directions() -> Rute::Orientations,
+    /// 
+    /// Returns `true` if the widget is hidden; otherwise returns `false.`
+    /// 
+    /// **See also:** QWidget::isHidden()
     [event] is_empty() -> bool,
-    ///     Returns the widget managed by this item.
+    /// 
+    /// Returns the widget managed by this item.
     [event] widget() -> Widget?,
-    ///     \reimp
+    /// 
     [event] has_height_for_width() -> bool,
-    ///     \reimp
+    /// 
     [event] height_for_width(arg0: i32) -> i32,
 }
 

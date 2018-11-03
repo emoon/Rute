@@ -1,34 +1,28 @@
-///   \class QAbstractTransition
-///   \inmodule QtCore
 /// 
-///   \brief The QAbstractTransition class is the base class of transitions between QAbstractState objects.
+/// The QAbstractTransition class is the abstract base class of transitions
+/// between states (QAbstractState objects) of a
+/// QStateMachine. QAbstractTransition is part of [The State Machine
+/// Framework](The%20State%20Machine%0A%20%20Framework)
 /// 
-///   \since 4.6
-///   \ingroup statemachine
 /// 
-///   The QAbstractTransition class is the abstract base class of transitions
-///   between states (QAbstractState objects) of a
-///   QStateMachine. QAbstractTransition is part of \l{The State Machine
-///   Framework}.
+/// The sourceState() function returns the source of the transition. The
+/// targetStates() function returns the targets of the transition. The machine()
+/// function returns the state machine that the transition is part of.
 /// 
-///   The sourceState() function returns the source of the transition. The
-///   targetStates() function returns the targets of the transition. The machine()
-///   function returns the state machine that the transition is part of.
+/// The triggered() signal is emitted when the transition has been triggered.
 /// 
-///   The triggered() signal is emitted when the transition has been triggered.
+/// Transitions can cause animations to be played. Use the addAnimation()
+/// function to add an animation to the transition.
 /// 
-///   Transitions can cause animations to be played. Use the addAnimation()
-///   function to add an animation to the transition.
+/// # Subclassing
 /// 
-///   \section1 Subclassing
+/// The eventTest() function is called by the state machine to determine whether
+/// an event should trigger the transition. In your reimplementation you
+/// typically check the event type and cast the event object to the proper type,
+/// and check that one or more properties of the event meet your criteria.
 /// 
-///   The eventTest() function is called by the state machine to determine whether
-///   an event should trigger the transition. In your reimplementation you
-///   typically check the event type and cast the event object to the proper type,
-///   and check that one or more properties of the event meet your criteria.
-/// 
-///   The onTransition() function is called when the transition is triggered;
-///   reimplement this function to perform custom processing for the transition.
+/// The onTransition() function is called when the transition is triggered;
+/// reimplement this function to perform custom processing for the transition.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -39,43 +33,102 @@ enum TransitionType {
 }
 
 struct AbstractTransition : Object {
-    ///   Returns the source state of this transition, or 0 if this transition has no
-    ///   source state.
+    /// 
+    /// 
+    /// Returns the source state of this transition, or 0 if this transition has no
+    /// source state.
     source_state() -> State?,
-    ///   Returns the target state of this transition, or 0 if the transition has no
-    ///   target.
+    /// 
+    /// If a transition has no target state, the transition may still be
+    /// triggered, but this will not cause the state machine's configuration to
+    /// change (i.e. the current state will not be exited and re-entered).
+    /// 
+    /// If multiple states are specified, all must be descendants of the same
+    /// parallel group state.
+    /// 
+    /// Returns the target state of this transition, or 0 if the transition has no
+    /// target.
+    /// 
+    /// Returns the target states of this transition, or an empty list if this
+    /// transition has no target states.
+    /// 
+    /// This signal is emitted when the targetState property is changed.
+    /// 
+    /// **See also:** QAbstractTransition::targetState
+    /// 
+    /// This signal is emitted when the targetStates property is changed.
+    /// 
+    /// **See also:** QAbstractTransition::targetStates
     target_state() -> AbstractState?,
-    ///   Sets the \a target state of this transition.
+    /// 
+    /// Sets the *target* state of this transition.
+    /// 
+    /// Sets the target states of this transition to be the given *targets.*
     set_target_state(target: *AbstractStateType),
-    ///   Returns the target states of this transition, or an empty list if this
-    ///   transition has no target states.
+    /// 
+    /// If multiple states are specified, all must be descendants of the same
+    /// parallel group state.
+    /// 
+    /// Returns the target states of this transition, or an empty list if this
+    /// transition has no target states.
+    /// 
+    /// This signal is emitted when the targetStates property is changed.
+    /// 
+    /// **See also:** QAbstractTransition::targetStates
     target_states() -> [AbstractState?],
-    ///   Sets the target states of this transition to be the given \a targets.
+    /// 
+    /// Sets the target states of this transition to be the given *targets.*
     set_target_states(targets: [*AbstractStateType]),
-    ///   Sets the type of the transition to \a type.
+    /// 
+    /// Sets the type of the transition to *type.*
     set_transition_type(type: AbstractTransition::TransitionType),
-    ///   Returns the state machine that this transition is part of, or 0 if the
-    ///   transition is not part of a state machine.
+    /// 
+    /// Returns the state machine that this transition is part of, or 0 if the
+    /// transition is not part of a state machine.
     machine() -> StateMachine?,
-    ///   Adds the given \a animation to this transition.
-    ///   The transition does not take ownership of the animation.
     /// 
-    ///   \sa removeAnimation(), animations()
+    /// Adds the given *animation* to this transition.
+    /// The transition does not take ownership of the animation.
+    /// 
+    /// **See also:** removeAnimation()
+    /// animations()
     add_animation(animation: *AbstractAnimationType),
-    ///   Removes the given \a animation from this transition.
     /// 
-    ///   \sa addAnimation()
+    /// Removes the given *animation* from this transition.
+    /// 
+    /// **See also:** addAnimation()
     remove_animation(animation: *AbstractAnimationType),
-    ///   Returns the list of animations associated with this transition, or an empty
-    ///   list if it has no animations.
     /// 
-    ///   \sa addAnimation()
+    /// Returns the list of animations associated with this transition, or an empty
+    /// list if it has no animations.
+    /// 
+    /// **See also:** addAnimation()
     animations() -> [AbstractAnimation?],
+    /// 
+    /// This signal is emitted when the targetState property is changed.
+    /// 
+    /// **See also:** QAbstractTransition::targetState
     [signal] target_state_changed(arg0: AbstractTransition::QPrivateSignal),
+    /// 
+    /// This signal is emitted when the targetStates property is changed.
+    /// 
+    /// **See also:** QAbstractTransition::targetStates
     [signal] target_states_changed(arg0: AbstractTransition::QPrivateSignal),
+    /// 
+    /// This function is called to determine whether the given *event* should cause
+    /// this transition to trigger. Reimplement this function and return true if the
+    /// event should trigger the transition, otherwise return false.
     [event] event_test(event: *EventType) -> bool,
+    /// 
+    /// This function is called when the transition is triggered. The given *event*
+    /// is what caused the transition to trigger. Reimplement this function to
+    /// perform custom processing when the transition is triggered.
     [event] on_transition(event: *EventType),
-    ///   \reimp
+    /// 
+    /// This function is called to determine whether the given *event* should cause
+    /// this transition to trigger. Reimplement this function and return true if the
+    /// event should trigger the transition, otherwise return false.
+    /// 
     [event] event(e: *EventType) -> bool,
 }
 

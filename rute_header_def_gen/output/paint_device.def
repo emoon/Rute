@@ -35,11 +35,8 @@ struct PaintDevice {
     color_count() -> i32,
     depth() -> i32,
     [static] device_pixel_ratio_f_scale() -> f32,
-    ///     \internal
     [event] init_painter(painter: *PainterType),
-    ///     \internal
     [event] redirected(offset: *PointType) -> PaintDevice?,
-    ///     \internal
     [event] shared_painter() -> Painter?,
 }
 

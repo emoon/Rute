@@ -1,29 +1,3 @@
-///     \class QPlatformInputContext
-///     \since 5.0
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-///     \brief The QPlatformInputContext class abstracts the input method dependent data and composing state.
-/// 
-///     An input method is responsible for inputting complex text that cannot
-///     be inputted via simple keymap. It converts a sequence of input
-///     events (typically key events) into a text string through the input
-///     method specific converting process. The class of the processes are
-///     widely ranging from simple finite state machine to complex text
-///     translator that pools a whole paragraph of a text with text
-///     editing capability to perform grammar and semantic analysis.
-/// 
-///     To abstract such different input method specific intermediate
-///     information, Qt offers the QPlatformInputContext as base class. The
-///     concept is well known as 'input context' in the input method
-///     domain. An input context is created for a text widget in response
-///     to a demand. It is ensured that an input context is prepared for
-///     an input method before input to a text widget.
-/// 
-///     QPlatformInputContext provides an interface the actual input methods
-///     can derive from by reimplementing methods.
-/// 
-///     \sa QInputMethod
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -33,31 +7,75 @@ enum Capability {
 }
 
 struct PlatformInputContext : Object {
+    /// 
+    /// Returns input context validity. Deriving implementations should return true.
     [event] is_valid() -> bool,
     [event] has_capability(capability: PlatformInputContext::Capability) -> bool,
+    /// 
+    /// Method to be called when input method needs to be reset. Called by QInputMethod::reset().
+    /// No further QInputMethodEvents should be sent as response.
     [event] reset(),
     [event] commit(),
+    /// 
+    /// Notification on editor updates. Called by QInputMethod::update().
     [event] update(arg0: Rute::InputMethodQueries),
+    /// 
+    /// Called when when the word currently being composed in input item is tapped by
+    /// the user. Input methods often use this information to offer more word
+    /// suggestions to the user.
     [event] invoke_action(arg0: InputMethod::Action, cursor_position: i32),
-    ///     This function can be reimplemented to filter input events.
-    ///     Return true if the event has been consumed. Otherwise, the unfiltered event will
-    ///     be forwarded to widgets as ordinary way. Although the input events have accept()
-    ///     and ignore() methods, leave it untouched.
+    /// 
+    /// This function can be reimplemented to filter input events.
+    /// Return true if the event has been consumed. Otherwise, the unfiltered event will
+    /// be forwarded to widgets as ordinary way. Although the input events have accept()
+    /// and ignore() methods, leave it untouched.
     [event] filter_event(event: *EventType) -> bool,
+    /// 
+    /// This function can be reimplemented to return virtual keyboard rectangle in currently active
+    /// window coordinates. Default implementation returns invalid rectangle.
     [event] keyboard_rect() -> RectF,
+    /// 
+    /// Active QPlatformInputContext is responsible for providing keyboardRectangle property to QInputMethod.
+    /// In addition of providing the value in keyboardRect function, it also needs to call this emit
+    /// function whenever the property changes.
     emit_keyboard_rect_changed(),
+    /// 
+    /// This function can be reimplemented to return true whenever input method is animating
+    /// shown or hidden. Default implementation returns `false.`
     [event] is_animating() -> bool,
+    /// 
+    /// Active QPlatformInputContext is responsible for providing animating property to QInputMethod.
+    /// In addition of providing the value in isAnimation function, it also needs to call this emit
+    /// function whenever the property changes.
     emit_animating_changed(),
+    /// 
+    /// Request to show input panel.
     [event] show_input_panel(),
+    /// 
+    /// Request to hide input panel.
     [event] hide_input_panel(),
+    /// 
+    /// Returns input panel visibility status. Default implementation returns `false.`
     [event] is_input_panel_visible() -> bool,
+    /// 
+    /// Active QPlatformInputContext is responsible for providing visible property to QInputMethod.
+    /// In addition of providing the value in isInputPanelVisible function, it also needs to call this emit
+    /// function whenever the property changes.
     emit_input_panel_visible_changed(),
     [event] locale() -> Locale,
     emit_locale_changed(),
     [event] input_direction() -> Rute::LayoutDirection,
     emit_input_direction_changed(new_direction: Rute::LayoutDirection),
+    /// 
+    /// This virtual method gets called to notify updated focus to *object.*
+    /// **Warning**: Input methods must not call this function directly.
     [event] set_focus_object(object: *ObjectType),
+    /// 
+    /// Returns `true` if current focus object supports input method events.
     input_method_accepted() -> bool,
+    /// 
+    /// * **Parameter** anchorPos Beginning of selection in currently active window coordinates
+    /// * **Parameter** cursorPos End of selection in currently active window coordinates
     [static] set_selection_on_focus_object(anchor_pos: &PointFType, cursor_pos: &PointFType),
 }
 

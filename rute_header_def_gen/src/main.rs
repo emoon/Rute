@@ -1,19 +1,25 @@
-//extern crate clang;
+extern crate clang;
 extern crate heck;
 extern crate rayon;
 extern crate walkdir;
+extern crate qdoc_parser;
 
 #[macro_use]
 extern crate pest_derive;
 extern crate pest;
 
-mod doc_parser;
-//mod header_gen;
+//mod doc_parser;
+mod header_gen;
 
-use doc_parser::{DocEntry, DocInfo, DocParser};
-//use header_gen::{Generator, DocLookups};
+//use doc_parser::{DocEntry, DocInfo, DocParser};
+use header_gen::{Generator};
 use std::collections::HashMap;
 
+use qdoc_parser::{QDocParser, QDocFilterable};
+
+fn filter_func(data: &str, _doc_type: QDocFilterable) -> String {
+	data.to_owned()
+}
 
 fn main() {
     // Get all the files to parse
@@ -26,7 +32,6 @@ fn main() {
         .unwrap();
     */
 
-	/*
     // TODO: Don't hardcode these
     let header_files_path = &[
         "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
@@ -41,14 +46,35 @@ fn main() {
         "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
         "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2",
     ];
-    */
 
     // Parse source files for documentation
 
-    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src"];
-    //let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qtextedit.cpp"];
-    let source_directory = ["/Users/danielcollin/temp/test.cpp"];
-    DocParser::parse_file(&source_directory[0]);
+    let source_directory = ["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src"];
+    //let source_directory = vec!["/Users/danielcollin/Qt/5.11.2/Src/qtbase/src/widgets/widgets/qtextedit.cpp"];
+    //let source_directory = vec!["/Users/danielcollin/temp/test.cpp"];
+    //let res = QDocParser::parse_files(source_directory);
+	
+	let doc_parser = QDocParser::new(filter_func);
+	let docs = doc_parser.parse_files(&source_directory);
+
+	/*
+	for (_, e) in res {
+		println!("-----------------------------------------");
+		for entry in e.0 {
+			println!("{:?}", entry.data);
+		}
+	}
+	*/
+
+	/*
+    for (fname, entry) in res {
+    	let t = entry.unwrap();
+
+    	for e in t.0 {
+    		println!("{}", e);
+    	}
+    }
+    */
 
     // Build some lookup info for faster lookup when generating the output data
 	/*
@@ -71,20 +97,22 @@ fn main() {
             }
         }
     }
+    */
 
+	/*
     let lookups = DocLookups {
-    	cpp_name: cpp_name_lookup,
-    	class_name: class_lookup,
-    	property: property_lookup,
+    	cpp_name: HashMap::new(),
+    	class_name: HashMap::new(),
+    	property: HashMap::new(),
     };
 
     //println!("{:?}", cpp_name_lookup);
+    */
 
     Generator::generate(
         output_directory,
         header_files_path,
         compile_args,
-        &lookups,
+        &docs,
     );
-    */
 }

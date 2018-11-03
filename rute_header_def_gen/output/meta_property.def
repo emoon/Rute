@@ -1,203 +1,292 @@
-///     \class QMetaProperty
-///     \inmodule QtCore
-///     \brief The QMetaProperty class provides meta-data about a property.
 /// 
-///     \ingroup objectmodel
+/// Property meta-data is obtained from an object's meta-object. See
+/// QMetaObject::property() and QMetaObject::propertyCount() for
+/// details.
 /// 
-///     Property meta-data is obtained from an object's meta-object. See
-///     QMetaObject::property() and QMetaObject::propertyCount() for
-///     details.
+/// # Property Meta-Data
 /// 
-///     \section1 Property Meta-Data
+/// A property has a name() and a type(), as well as various
+/// attributes that specify its behavior: isReadable(), isWritable(),
+/// isDesignable(), isScriptable(), revision(), and isStored().
 /// 
-///     A property has a name() and a type(), as well as various
-///     attributes that specify its behavior: isReadable(), isWritable(),
-///     isDesignable(), isScriptable(), revision(), and isStored().
+/// If the property is an enumeration, isEnumType() returns `true;` if the
+/// property is an enumeration that is also a flag (i.e. its values
+/// can be combined using the OR operator), isEnumType() and
+/// isFlagType() both return true. The enumerator for these types is
+/// available from enumerator().
 /// 
-///     If the property is an enumeration, isEnumType() returns \c true; if the
-///     property is an enumeration that is also a flag (i.e. its values
-///     can be combined using the OR operator), isEnumType() and
-///     isFlagType() both return true. The enumerator for these types is
-///     available from enumerator().
+/// The property's values are set and retrieved with read(), write(),
+/// and reset(); they can also be changed through QObject's set and get
+/// functions. See QObject::setProperty() and QObject::property() for
+/// details.
 /// 
-///     The property's values are set and retrieved with read(), write(),
-///     and reset(); they can also be changed through QObject's set and get
-///     functions. See QObject::setProperty() and QObject::property() for
-///     details.
+/// # Copying and Assignment
 /// 
-///     \section1 Copying and Assignment
+/// QMetaProperty objects can be copied by value. However, each copy will
+/// refer to the same underlying property meta-data.
 /// 
-///     QMetaProperty objects can be copied by value. However, each copy will
-///     refer to the same underlying property meta-data.
-/// 
-///     \sa QMetaObject, QMetaEnum, QMetaMethod, {Qt's Property System}
+/// **See also:** QMetaObject
+/// QMetaEnum
+/// QMetaMethod
+/// {Qt's Property System}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct MetaProperty {
-    ///     Returns this property's name.
     /// 
-    ///     \sa type(), typeName()
+    /// Returns this property's name.
+    /// 
+    /// **See also:** type()
+    /// typeName()
     name() -> char?,
-    ///     Returns the name of this property's type.
     /// 
-    ///     \sa type(), name()
+    /// Returns the name of this property's type.
+    /// 
+    /// **See also:** type()
+    /// name()
     type_name() -> char?,
-    ///     Returns this property's type. The return value is one
-    ///     of the values of the QVariant::Type enumeration.
     /// 
-    ///     \sa userType(), typeName(), name()
+    /// Returns the name of this property's type.
+    /// 
+    /// **See also:** type()
+    /// name()
+    /// 
+    /// Returns this property's type. The return value is one
+    /// of the values of the QVariant::Type enumeration.
+    /// 
+    /// **See also:** userType()
+    /// typeName()
+    /// name()
     type() -> Variant::Type,
+    /// 
+    /// Returns this property's user type. The return value is one
+    /// of the values that are registered with QMetaType, or QMetaType::UnknownType if
+    /// the type is not registered.
+    /// 
+    /// **See also:** type()
+    /// QMetaType
+    /// typeName()
     user_type() -> i32,
-    ///   \since 4.6
     /// 
-    ///   Returns this property's index.
+    /// Returns this property's index.
     property_index() -> i32,
+    /// 
+    /// Returns `true` if this property is readable; otherwise returns `false.`
+    /// 
+    /// **See also:** isWritable()
+    /// read()
+    /// isValid()
     is_readable() -> bool,
+    /// 
+    /// Returns `true` if this property is writable; otherwise returns
+    /// false.
+    /// 
+    /// **See also:** isReadable()
+    /// write()
     is_writable() -> bool,
-    ///     Returns \c true if this property can be reset to a default value; otherwise
-    ///     returns \c false.
     /// 
-    ///     \sa reset()
+    /// Returns `true` if this property can be reset to a default value; otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** reset()
     is_resettable() -> bool,
-    ///     Returns \c true if this property is designable for the given \a object;
-    ///     otherwise returns \c false.
     /// 
-    ///     If no \a object is given, the function returns \c false if the
-    ///     \c{Q_PROPERTY()}'s \c DESIGNABLE attribute is false; otherwise
-    ///     returns \c true (if the attribute is true or is a function or expression).
+    /// Returns `true` if this property is designable for the given *object;*
+    /// otherwise returns `false.`
     /// 
-    ///     \sa isScriptable(), isStored()
+    /// If no *object* is given, the function returns `false` if the
+    /// `Q_PROPERTY()` 's `DESIGNABLE` attribute is false; otherwise
+    /// returns `true` (if the attribute is true or is a function or expression).
+    /// 
+    /// **See also:** isScriptable()
+    /// isStored()
     is_designable(obj: *ObjectType) -> bool,
-    ///     Returns \c true if the property is scriptable for the given \a object;
-    ///     otherwise returns \c false.
     /// 
-    ///     If no \a object is given, the function returns \c false if the
-    ///     \c{Q_PROPERTY()}'s \c SCRIPTABLE attribute is false; otherwise returns
-    ///     true (if the attribute is true or is a function or expression).
+    /// Returns `true` if the property is scriptable for the given *object;*
+    /// otherwise returns `false.`
     /// 
-    ///     \sa isDesignable(), isStored()
+    /// If no *object* is given, the function returns `false` if the
+    /// `Q_PROPERTY()` 's `SCRIPTABLE` attribute is false; otherwise returns
+    /// true (if the attribute is true or is a function or expression).
+    /// 
+    /// **See also:** isDesignable()
+    /// isStored()
     is_scriptable(obj: *ObjectType) -> bool,
-    ///     Returns \c true if the property is stored for \a object; otherwise returns
-    ///     false.
     /// 
-    ///     If no \a object is given, the function returns \c false if the
-    ///     \c{Q_PROPERTY()}'s \c STORED attribute is false; otherwise returns
-    ///     true (if the attribute is true or is a function or expression).
+    /// Returns `true` if the property is stored for *object;* otherwise returns
+    /// false.
     /// 
-    ///     \sa isDesignable(), isScriptable()
+    /// If no *object* is given, the function returns `false` if the
+    /// `Q_PROPERTY()` 's `STORED` attribute is false; otherwise returns
+    /// true (if the attribute is true or is a function or expression).
+    /// 
+    /// **See also:** isDesignable()
+    /// isScriptable()
     is_stored(obj: *ObjectType) -> bool,
-    ///     \obsolete
     /// 
-    ///     Returns \c true if the property is editable for the given \a object;
-    ///     otherwise returns \c false.
+    /// Returns `true` if the property is editable for the given *object;*
+    /// otherwise returns `false.`
     /// 
-    ///     If no \a object is given, the function returns \c false if the
-    ///     \c{Q_PROPERTY()}'s \c EDITABLE attribute is false; otherwise returns
-    ///     true (if the attribute is true or is a function or expression).
+    /// If no *object* is given, the function returns `false` if the
+    /// `Q_PROPERTY()` 's `EDITABLE` attribute is false; otherwise returns
+    /// true (if the attribute is true or is a function or expression).
     /// 
-    ///     \sa isDesignable(), isScriptable(), isStored()
+    /// **See also:** isDesignable()
+    /// isScriptable()
+    /// isStored()
     is_editable(obj: *ObjectType) -> bool,
-    ///     Returns \c true if this property is designated as the \c USER
-    ///     property, i.e., the one that the user can edit for \a object or
-    ///     that is significant in some other way.  Otherwise it returns
-    ///     false. e.g., the \c text property is the \c USER editable property
-    ///     of a QLineEdit.
     /// 
-    ///     If \a object is null, the function returns \c false if the \c
-    ///     {Q_PROPERTY()}'s \c USER attribute is false. Otherwise it returns
-    ///     true.
+    /// Returns `true` if this property is designated as the `USER`
+    /// property, i.e., the one that the user can edit for *object* or
+    /// that is significant in some other way. Otherwise it returns
+    /// false. e.g., the `text` property is the `USER` editable property
+    /// of a QLineEdit.
     /// 
-    ///     \sa QMetaObject::userProperty(), isDesignable(), isScriptable()
+    /// If *object* is null, the function returns `false` if the `Q_PROPERTY()` 's `USER` attribute is false. Otherwise it returns
+    /// true.
+    /// 
+    /// **See also:** QMetaObject::userProperty()
+    /// isDesignable()
+    /// isScriptable()
     is_user(obj: *ObjectType) -> bool,
-    ///     \since 4.6
-    ///     Returns \c true if the property is constant; otherwise returns \c false.
     /// 
-    ///     A property is constant if the \c{Q_PROPERTY()}'s \c CONSTANT attribute
-    ///     is set.
+    /// Returns `true` if the property is constant; otherwise returns `false.`
+    /// 
+    /// A property is constant if the `Q_PROPERTY()` 's `CONSTANT` attribute
+    /// is set.
     is_constant() -> bool,
-    ///     \since 4.6
-    ///     Returns \c true if the property is final; otherwise returns \c false.
     /// 
-    ///     A property is final if the \c{Q_PROPERTY()}'s \c FINAL attribute
-    ///     is set.
+    /// Returns `true` if the property is final; otherwise returns `false.`
+    /// 
+    /// A property is final if the `Q_PROPERTY()` 's `FINAL` attribute
+    /// is set.
     is_final() -> bool,
-    ///     Returns \c true if the property's type is an enumeration value that
-    ///     is used as a flag; otherwise returns \c false.
     /// 
-    ///     Flags can be combined using the OR operator. A flag type is
-    ///     implicitly also an enum type.
+    /// Returns `true` if the property's type is an enumeration value that
+    /// is used as a flag; otherwise returns `false.`
     /// 
-    ///     \sa isEnumType(), enumerator(), QMetaEnum::isFlag()
+    /// Flags can be combined using the OR operator. A flag type is
+    /// implicitly also an enum type.
+    /// 
+    /// **See also:** isEnumType()
+    /// enumerator()
+    /// QMetaEnum::isFlag()
     is_flag_type() -> bool,
-    ///     Returns \c true if the property's type is an enumeration value;
-    ///     otherwise returns \c false.
     /// 
-    ///     \sa enumerator(), isFlagType()
+    /// Returns `true` if the property's type is an enumeration value;
+    /// otherwise returns `false.`
+    /// 
+    /// **See also:** enumerator()
+    /// isFlagType()
     is_enum_type() -> bool,
-    ///     Returns the enumerator if this property's type is an enumerator
-    ///     type; otherwise the returned value is undefined.
     /// 
-    ///     \sa isEnumType(), isFlagType()
+    /// Returns the enumerator if this property's type is an enumerator
+    /// type; otherwise the returned value is undefined.
+    /// 
+    /// **See also:** isEnumType()
+    /// isFlagType()
     enumerator() -> MetaEnum,
+    /// 
+    /// Returns `true` if this property has a corresponding change notify signal;
+    /// otherwise returns `false.`
+    /// 
+    /// **See also:** notifySignal()
     has_notify_signal() -> bool,
+    /// 
+    /// Returns the QMetaMethod instance of the property change notifying signal if
+    /// one was specified, otherwise returns an invalid QMetaMethod.
+    /// 
+    /// **See also:** hasNotifySignal()
+    /// 
+    /// Returns the index of the property change notifying signal if one was
+    /// specified, otherwise returns -1.
+    /// 
+    /// **See also:** hasNotifySignal()
     notify_signal() -> MetaMethod,
+    /// 
+    /// Returns the index of the property change notifying signal if one was
+    /// specified, otherwise returns -1.
+    /// 
+    /// **See also:** hasNotifySignal()
     notify_signal_index() -> i32,
+    /// 
+    /// Returns the property revision if one was
+    /// specified by REVISION, otherwise returns 0.
     revision() -> i32,
-    ///     Reads the property's value from the given \a object. Returns the value
-    ///     if it was able to read it; otherwise returns an invalid variant.
     /// 
-    ///     \sa write(), reset(), isReadable()
+    /// Reads the property's value from the given *object.* Returns the value
+    /// if it was able to read it; otherwise returns an invalid variant.
+    /// 
+    /// **See also:** write()
+    /// reset()
+    /// isReadable()
+    /// 
+    /// Reads the property's value from the given *gadget.* Returns the value
+    /// if it was able to read it; otherwise returns an invalid variant.
+    /// 
+    /// This function should only be used if this is a property of a Q_GADGET
     read(obj: *ObjectType) -> Variant,
-    ///     Writes \a value as the property's value to the given \a object. Returns
-    ///     true if the write succeeded; otherwise returns \c false.
     /// 
-    ///     If \a value is not of the same type type as the property, a conversion
-    ///     is attempted. An empty QVariant() is equivalent to a call to reset()
-    ///     if this property is resetable, or setting a default-constructed object
-    ///     otherwise.
+    /// Writes *value* as the property's value to the given *object.* Returns
+    /// true if the write succeeded; otherwise returns `false.`
     /// 
-    ///     \sa read(), reset(), isWritable()
+    /// If *value* is not of the same type type as the property, a conversion
+    /// is attempted. An empty QVariant() is equivalent to a call to reset()
+    /// if this property is resetable, or setting a default-constructed object
+    /// otherwise.
+    /// 
+    /// **See also:** read()
+    /// reset()
+    /// isWritable()
+    /// 
+    /// Writes *value* as the property's value to the given *gadget.* Returns
+    /// true if the write succeeded; otherwise returns `false.`
+    /// 
+    /// This function should only be used if this is a property of a Q_GADGET
     write(obj: *ObjectType, value: &VariantType) -> bool,
-    ///     Resets the property for the given \a object with a reset method.
-    ///     Returns \c true if the reset worked; otherwise returns \c false.
     /// 
-    ///     Reset methods are optional; only a few properties support them.
+    /// Resets the property for the given *object* with a reset method.
+    /// Returns `true` if the reset worked; otherwise returns `false.`
     /// 
-    ///     \sa read(), write()
+    /// Reset methods are optional; only a few properties support them.
+    /// 
+    /// **See also:** read()
+    /// write()
+    /// 
+    /// Resets the property for the given *gadget* with a reset method.
+    /// Returns `true` if the reset worked; otherwise returns `false.`
+    /// 
+    /// Reset methods are optional; only a few properties support them.
+    /// 
+    /// This function should only be used if this is a property of a Q_GADGET
     reset(obj: *ObjectType) -> bool,
-    ///     \since 5.5
     /// 
-    ///     Reads the property's value from the given \a gadget. Returns the value
-    ///     if it was able to read it; otherwise returns an invalid variant.
+    /// Reads the property's value from the given *gadget.* Returns the value
+    /// if it was able to read it; otherwise returns an invalid variant.
     /// 
-    ///     This function should only be used if this is a property of a Q_GADGET
+    /// This function should only be used if this is a property of a Q_GADGET
     read_on_gadget(gadget: *void) -> Variant,
-    ///     \since 5.5
     /// 
-    ///     Writes \a value as the property's value to the given \a gadget. Returns
-    ///     true if the write succeeded; otherwise returns \c false.
+    /// Writes *value* as the property's value to the given *gadget.* Returns
+    /// true if the write succeeded; otherwise returns `false.`
     /// 
-    ///     This function should only be used if this is a property of a Q_GADGET
+    /// This function should only be used if this is a property of a Q_GADGET
     write_on_gadget(gadget: *void, value: &VariantType) -> bool,
-    ///     \since 5.5
     /// 
-    ///     Resets the property for the given \a gadget with a reset method.
-    ///     Returns \c true if the reset worked; otherwise returns \c false.
+    /// Resets the property for the given *gadget* with a reset method.
+    /// Returns `true` if the reset worked; otherwise returns `false.`
     /// 
-    ///     Reset methods are optional; only a few properties support them.
+    /// Reset methods are optional; only a few properties support them.
     /// 
-    ///     This function should only be used if this is a property of a Q_GADGET
+    /// This function should only be used if this is a property of a Q_GADGET
     reset_on_gadget(gadget: *void) -> bool,
-    ///     \internal
-    /// 
-    ///     Returns \c true if the property has a C++ setter function that
-    ///     follows Qt's standard "name" / "setName" pattern. Designer and uic
-    ///     query hasStdCppSet() in order to avoid expensive
-    ///     QObject::setProperty() calls. All properties in Qt [should] follow
-    ///     this pattern.
     has_std_cpp_set() -> bool,
+    /// 
+    /// Returns `true` if this property is valid (readable); otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** isReadable()
     is_valid() -> bool,
     enclosing_meta_object() -> MetaObject?,
 }

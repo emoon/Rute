@@ -1,126 +1,533 @@
-///     \class QStringView
-///     \inmodule QtCore
-///     \since 5.10
-///     \brief The QStringView class provides a unified view on UTF-16 strings with a read-only subset of the QString API.
-///     \reentrant
-///     \ingroup tools
-///     \ingroup string-processing
 /// 
-///     A QStringView references a contiguous portion of a UTF-16 string it does
-///     not own. It acts as an interface type to all kinds of UTF-16 string,
-///     without the need to construct a QString first.
+/// A QStringView references a contiguous portion of a UTF-16 string it does
+/// not own. It acts as an interface type to all kinds of UTF-16 string,
+/// without the need to construct a QString first.
 /// 
-///     The UTF-16 string may be represented as an array (or an array-compatible
-///     data-structure such as QString,
-///     std::basic_string, etc.) of QChar, \c ushort, \c char16_t (on compilers that
-///     support C++11 Unicode strings) or (on platforms, such as Windows,
-///     where it is a 16-bit type) \c wchar_t.
+/// The UTF-16 string may be represented as an array (or an array-compatible
+/// data-structure such as QString,
+/// std::basic_string, etc.) of QChar, `ushort,` `char16_t` (on compilers that
+/// support C++11 Unicode strings) or (on platforms, such as Windows,
+/// where it is a 16-bit type) `wchar_t.`
 /// 
-///     QStringView is designed as an interface type; its main use-case is
-///     as a function parameter type. When QStringViews are used as automatic
-///     variables or data members, care must be taken to ensure that the referenced
-///     string data (for example, owned by a QString) outlives the QStringView on all code paths,
-///     lest the string view ends up referencing deleted data.
+/// QStringView is designed as an interface type; its main use-case is
+/// as a function parameter type. When QStringViews are used as automatic
+/// variables or data members, care must be taken to ensure that the referenced
+/// string data (for example, owned by a QString) outlives the QStringView on all code paths,
+/// lest the string view ends up referencing deleted data.
 /// 
-///     When used as an interface type, QStringView allows a single function to accept
-///     a wide variety of UTF-16 string data sources. One function accepting QStringView
-///     thus replaces three function overloads (taking QString, QStringRef, and
-///     \c{(const QChar*, int)}), while at the same time enabling even more string data
-///     sources to be passed to the function, such as \c{u"Hello World"}, a \c char16_t
-///     string literal.
+/// When used as an interface type, QStringView allows a single function to accept
+/// a wide variety of UTF-16 string data sources. One function accepting QStringView
+/// thus replaces three function overloads (taking QString, QStringRef, and
+/// `(const QChar*, int)` ), while at the same time enabling even more string data
+/// sources to be passed to the function, such as `u"Hello World"` , a `char16_t`
+/// string literal.
 /// 
-///     QStringViews should be passed by value, not by reference-to-const:
-///     \code
-///     void myfun1(QStringView sv);        // preferred
-///     void myfun2(const QStringView &sv); // compiles and works, but slower
-///     \endcode
+/// QStringViews should be passed by value, not by reference-to-const:
+/// ```
+/// void myfun1(QStringView sv);        // preferred
+/// void myfun2(const QStringView &sv); // compiles and works, but slower
+/// ```
 /// 
-///     If you want to give your users maximum freedom in what strings they can pass
-///     to your function, accompany the QStringView overload with overloads for
+/// If you want to give your users maximum freedom in what strings they can pass
+/// to your function, accompany the QStringView overload with overloads for
 /// 
-///     \list
-///         \li \e QChar: this overload can delegate to the QStringView version:
-///             \code
-///             void fun(QChar ch) { fun(QStringView(&ch, 1)); }
-///             \endcode
-///             even though, for technical reasons, QStringView cannot provide a
-///             QChar constructor by itself.
-///         \li \e QString: if you store an unmodified copy of the string and thus would
-///             like to take advantage of QString's implicit sharing.
-///         \li QLatin1String: if you can implement the function without converting the
-///             QLatin1String to UTF-16 first; users expect a function overloaded on
-///             QLatin1String to perform strictly less memory allocations than the
-///             semantically equivalent call of the QStringView version, involving
-///             construction of a QString from the QLatin1String.
-///     \endlist
+/// * *QChar:* this overload can delegate to the QStringView version: ```
+/// void fun(QChar ch) { fun(QStringView(&ch, 1)); }
+/// ```
+/// even though, for technical reasons, QStringView cannot provide a QChar constructor by itself.
+/// * *QString:* if you store an unmodified copy of the string and thus would like to take advantage of QString's implicit sharing.
+/// * QLatin1String: if you can implement the function without converting the QLatin1String to UTF-16 first; users expect a function overloaded on QLatin1String to perform strictly less memory allocations than the semantically equivalent call of the QStringView version, involving construction of a QString from the QLatin1String.
 /// 
-///     QStringView can also be used as the return value of a function. If you call a
-///     function returning QStringView, take extra care to not keep the QStringView
-///     around longer than the function promises to keep the referenced string data alive.
-///     If in doubt, obtain a strong reference to the data by calling toString() to convert
-///     the QStringView into a QString.
+/// QStringView can also be used as the return value of a function. If you call a
+/// function returning QStringView, take extra care to not keep the QStringView
+/// around longer than the function promises to keep the referenced string data alive.
+/// If in doubt, obtain a strong reference to the data by calling toString() to convert
+/// the QStringView into a QString.
 /// 
-///     QStringView is a \e{Literal Type}, but since it stores data as \c{char16_t}, iteration
-///     is not \c constexpr (casts from \c{const char16_t*} to \c{const QChar*}, which is not
-///     allowed in \c constexpr functions). You can use an indexed loop and/or utf16() in
-///     \c constexpr contexts instead.
+/// QStringView is a *Literal Type* , but since it stores data as `char16_t` , iteration
+/// is not `constexpr` (casts from `const char16_t*` to `const QChar*` , which is not
+/// allowed in `constexpr` functions). You can use an indexed loop and/or utf16() in
+/// `constexpr` contexts instead.
 /// 
-///     \note We strongly discourage the use of QList<QStringView>,
-///     because QList is a very inefficient container for QStringViews (it would heap-allocate
-///     every element). Use QVector (or std::vector) to hold QStringViews instead.
+/// **Note**: We strongly discourage the use of QList<QStringView>,
+/// because QList is a very inefficient container for QStringViews (it would heap-allocate
+/// every element). Use QVector (or std::vector) to hold QStringViews instead.
 /// 
-///     \sa QString, QStringRef
+/// **See also:** QString
+/// QStringRef
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StringView {
+    /// 
+    /// Returns the size of this string view, in UTF-16 code points (that is,
+    /// surrogate pairs count as two for the purposes of this function, the same
+    /// as in QString and QStringRef).
+    /// 
+    /// **See also:** empty()
+    /// isEmpty()
+    /// isNull()
+    /// length()
     size() -> i32,
+    /// 
+    /// Returns a const pointer to the first character in the string.
+    /// 
+    /// **Note**: The character array represented by the return value is *not* null-terminated.
+    /// 
+    /// **See also:** begin()
+    /// end()
+    /// utf16()
     data() -> StringView::const_pointer,
+    /// 
+    /// Returns a const pointer to the first character in the string.
+    /// 
+    /// `storage_type` is `char16_t` .
+    /// 
+    /// **Note**: The character array represented by the return value is *not* null-terminated.
+    /// 
+    /// **See also:** begin()
+    /// end()
+    /// data()
     utf16() -> onst QStringView::storage_type *,
+    /// 
+    /// Returns a Latin-1 representation of the string as a QByteArray.
+    /// 
+    /// The behavior is undefined if the string contains non-Latin1 characters.
+    /// 
+    /// **See also:** toUtf8()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_latin1() -> ByteArray,
+    /// 
+    /// Returns a UTF-8 representation of the string as a QByteArray.
+    /// 
+    /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
+    /// string like QString.
+    /// 
+    /// **See also:** toLatin1()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_utf8() -> ByteArray,
+    /// 
+    /// Returns a local 8-bit representation of the string as a QByteArray.
+    /// 
+    /// QTextCodec::codecForLocale() is used to perform the conversion from
+    /// Unicode. If the locale's encoding could not be determined, this function
+    /// does the same as toLatin1().
+    /// 
+    /// The behavior is undefined if the string contains characters not
+    /// supported by the locale's 8-bit encoding.
+    /// 
+    /// **See also:** toLatin1()
+    /// toUtf8()
+    /// QTextCodec
     to_local8_bit() -> ByteArray,
+    /// 
+    /// Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
+    /// 
+    /// UCS-4 is a Unicode codec and therefore it is lossless. All characters from
+    /// this string will be encoded in UCS-4. Any invalid sequence of code units in
+    /// this string is replaced by the Unicode replacement character
+    /// (QChar::ReplacementCharacter, which corresponds to `U+FFFD` ).
+    /// 
+    /// The returned vector is not 0-terminated.
+    /// 
+    /// **See also:** toUtf8()
+    /// toLatin1()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_ucs4() -> [uint],
+    /// 
+    /// Returns the character at position *n* in this string view.
+    /// 
+    /// The behavior is undefined if *n* is negative or not less than size().
+    /// 
+    /// **See also:** operator[]()
+    /// front()
+    /// back()
     at(n: i32) -> Char,
+    /// 
+    /// Returns the substring starting at position *start* in this object,
+    /// and extending to the end of the string.
+    /// 
+    /// **Note**: The behavior is undefined when *start* < 0 or *start* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
+    /// 
+    /// **Overloads**
+    /// Returns the substring of length *length* starting at position
+    /// *start* in this object.
+    /// 
+    /// **Note**: The behavior is undefined when *start* < 0, *length* < 0,
+    /// or *start* + *length* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     mid(pos: i32) -> StringView,
+    /// 
+    /// Returns the substring starting at position *start* in this object,
+    /// and extending to the end of the string.
+    /// 
+    /// **Note**: The behavior is undefined when *start* < 0 or *start* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
+    /// 
+    /// **Overloads**
+    /// Returns the substring of length *length* starting at position
+    /// *start* in this object.
+    /// 
+    /// **Note**: The behavior is undefined when *start* < 0, *length* < 0,
+    /// or *start* + *length* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     mid(pos: i32, n: i32) -> StringView,
+    /// 
+    /// Returns the substring of length *length* starting at position
+    /// 0 in this object.
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     left(n: i32) -> StringView,
+    /// 
+    /// Returns the substring of length *length* starting at position
+    /// size() - *length* in this object.
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// chopped()
+    /// chop()
+    /// truncate()
     right(n: i32) -> StringView,
+    /// 
+    /// Returns the substring of length size() - *length* starting at the
+    /// beginning of this object.
+    /// 
+    /// Same as `left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chop()
+    /// truncate()
     chopped(n: i32) -> StringView,
+    /// 
+    /// Returns the substring of length size() - *length* starting at the
+    /// beginning of this object.
+    /// 
+    /// Same as `left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chop()
+    /// truncate()
+    /// 
+    /// Truncates this string view by *length* characters.
+    /// 
+    /// Same as `*this = left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chopped()
+    /// truncate()
     chop(n: i32),
+    /// 
+    /// Returns `true` if this string-view starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string-view starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string-view starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(c: CharType) -> bool,
+    /// 
+    /// Returns `true` if this string-view starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string-view ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string-view ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string-view ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(c: CharType) -> bool,
+    /// 
+    /// Returns `true` if this string-view ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if the string is read right to left.
+    /// 
+    /// **See also:** QString::isRightToLeft()
     is_right_to_left() -> bool,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first character in
+    /// the string.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** end()
+    /// cbegin()
+    /// rbegin()
+    /// data()
     begin() -> StringView::const_iterator,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary
+    /// character after the last character in the list.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** begin()
+    /// cend()
+    /// rend()
+    /// 
+    /// Returns `true` if this string-view ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     end() -> StringView::const_iterator,
+    /// 
+    /// Same as begin().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** cend()
+    /// begin()
+    /// crbegin()
+    /// data()
     cbegin() -> StringView::const_iterator,
-    ///     \fn QStringView::const_iterator QStringView::end() const
     /// 
-    ///     Returns a const \l{STL-style iterators}{STL-style iterator} pointing to the imaginary
-    ///     character after the last character in the list.
+    /// Same as end().
     /// 
-    ///     This function is provided for STL compatibility.
+    /// This function is provided for STL compatibility.
     /// 
-    ///     \sa begin(), cend(), rend()
+    /// **See also:** cbegin()
+    /// end()
+    /// crend()
     cend() -> StringView::const_iterator,
+    /// 
+    /// Returns a const [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to the first
+    /// character in the string, in reverse order.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** rend()
+    /// crbegin()
+    /// begin()
     rbegin() -> StringView::const_reverse_iterator,
+    /// 
+    /// Returns a [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to one past
+    /// the last character in the string, in reverse order.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** rbegin()
+    /// crend()
+    /// end()
     rend() -> StringView::const_reverse_iterator,
+    /// 
+    /// Same as rbegin().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** crend()
+    /// rbegin()
+    /// cbegin()
     crbegin() -> StringView::const_reverse_iterator,
+    /// 
+    /// Same as rend().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** crbegin()
+    /// rend()
+    /// cend()
     crend() -> StringView::const_reverse_iterator,
+    /// 
+    /// Returns whether this string view is empty - that is, whether `size() == 0` .
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** isEmpty()
+    /// isNull()
+    /// size()
+    /// length()
     empty() -> bool,
+    /// 
+    /// Returns the first character in the string. Same as first().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string view constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** back()
+    /// first()
+    /// last()
     front() -> Char,
+    /// 
+    /// Returns the last character in the string. Same as last().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string view constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** front()
+    /// first()
+    /// last()
     back() -> Char,
+    /// 
+    /// Returns whether this string view is null - that is, whether `data() == nullptr` .
+    /// 
+    /// This functions is provided for compatibility with other Qt containers.
+    /// 
+    /// **See also:** empty()
+    /// isEmpty()
+    /// size()
+    /// length()
     is_null() -> bool,
+    /// 
+    /// Returns whether this string view is empty - that is, whether `size() == 0` .
+    /// 
+    /// This function is provided for compatibility with other Qt containers.
+    /// 
+    /// **See also:** empty()
+    /// isNull()
+    /// size()
+    /// length()
     is_empty() -> bool,
+    /// 
+    /// Same as size(), except returns the result as an `int.`
+    /// 
+    /// This function is provided for compatibility with other Qt containers.
+    /// 
+    /// **Warning**: QStringView can represent strings with more than 2 ^{31} characters.
+    /// Calling this function on a string view for which size() returns a value greater
+    /// than `INT_MAX` constitutes undefined behavior.
+    /// 
+    /// **See also:** empty()
+    /// isEmpty()
+    /// isNull()
+    /// size()
     length() -> i32,
+    /// 
+    /// Returns the first character in the string. Same as front().
+    /// 
+    /// This function is provided for compatibility with other Qt containers.
+    /// 
+    /// **Warning**: Calling this function on an empty string view constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** front()
+    /// back()
+    /// last()
     first() -> Char,
+    /// 
+    /// Returns the last character in the string. Same as back().
+    /// 
+    /// This function is provided for compatibility with other Qt containers.
+    /// 
+    /// **Warning**: Calling this function on an empty string view constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** back()
+    /// front()
+    /// first()
     last() -> Char,
 }
 

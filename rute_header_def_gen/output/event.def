@@ -1,38 +1,36 @@
-///     \class QEvent
-///     \inmodule QtCore
-///     \brief The QEvent class is the base class of all
-///     event classes. Event objects contain event parameters.
 /// 
-///     \ingroup events
+/// Qt's main event loop (QCoreApplication::exec()) fetches native
+/// window system events from the event queue, translates them into
+/// QEvents, and sends the translated events to [QObject](QObject)
+/// s.
 /// 
-///     Qt's main event loop (QCoreApplication::exec()) fetches native
-///     window system events from the event queue, translates them into
-///     QEvents, and sends the translated events to \l{QObject}s.
+/// In general, events come from the underlying window system
+/// (spontaneous() returns `true),` but it is also possible to manually
+/// send events using QCoreApplication::sendEvent() and
+/// QCoreApplication::postEvent() (spontaneous() returns `false).`
 /// 
-///     In general, events come from the underlying window system
-///     (spontaneous() returns \c true), but it is also possible to manually
-///     send events using QCoreApplication::sendEvent() and
-///     QCoreApplication::postEvent() (spontaneous() returns \c false).
+/// [QObjects](QObject)
+/// receive events by having their QObject::event() function
+/// called. The function can be reimplemented in subclasses to
+/// customize event handling and add additional event types;
+/// QWidget::event() is a notable example. By default, events are
+/// dispatched to event handlers like QObject::timerEvent() and
+/// QWidget::mouseMoveEvent(). QObject::installEventFilter() allows an
+/// object to intercept events destined for another object.
 /// 
-///     \l {QObject}{QObjects} receive events by having their QObject::event() function
-///     called. The function can be reimplemented in subclasses to
-///     customize event handling and add additional event types;
-///     QWidget::event() is a notable example. By default, events are
-///     dispatched to event handlers like QObject::timerEvent() and
-///     QWidget::mouseMoveEvent(). QObject::installEventFilter() allows an
-///     object to intercept events destined for another object.
+/// The basic QEvent contains only an event type parameter and an
+/// flag. The accept flag set with accept(), and cleared
+/// with ignore(). It is set by default, but don't rely on this as
+/// subclasses may choose to clear it in their constructor.
 /// 
-///     The basic QEvent contains only an event type parameter and an
-///     "accept" flag.  The accept flag set with accept(), and cleared
-///     with ignore(). It is set by default, but don't rely on this as
-///     subclasses may choose to clear it in their constructor.
+/// Subclasses of QEvent contain additional parameters that describe
+/// the particular event.
 /// 
-///     Subclasses of QEvent contain additional parameters that describe
-///     the particular event.
-/// 
-///     \sa QObject::event(), QObject::installEventFilter(),
-///         QCoreApplication::sendEvent(),
-///         QCoreApplication::postEvent(), QCoreApplication::processEvents()
+/// **See also:** QObject::event()
+/// QObject::installEventFilter()
+/// QCoreApplication::sendEvent()
+/// QCoreApplication::postEvent()
+/// QCoreApplication::processEvents()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -215,23 +213,56 @@ enum Type {
 
 struct Event {
     qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the event type.
     type() -> Event::Type,
+    /// 
+    /// Returns `true` if the event originated outside the application (a
+    /// system event); otherwise returns `false.`
+    /// 
+    /// The return value of this function is not defined for paint events.
     spontaneous() -> bool,
     set_accepted(accepted: bool),
     is_accepted() -> bool,
+    /// 
+    /// the accept flag of the event object
+    /// 
+    /// Setting the accept parameter indicates that the event receiver
+    /// wants the event. Unwanted events might be propagated to the parent
+    /// widget. By default, isAccepted() is set to true, but don't rely on
+    /// this as subclasses may choose to clear it in their constructor.
+    /// 
+    /// For convenience, the accept flag can also be set with accept(),
+    /// and cleared with ignore().
+    /// 
+    /// Sets the accept flag of the event object, the equivalent of
+    /// calling setAccepted(true).
+    /// 
+    /// Setting the accept parameter indicates that the event receiver
+    /// wants the event. Unwanted events might be propagated to the parent
+    /// widget.
+    /// 
+    /// **See also:** ignore()
     accept(),
+    /// 
+    /// Clears the accept flag parameter of the event object, the
+    /// equivalent of calling setAccepted(false).
+    /// 
+    /// Clearing the accept parameter indicates that the event receiver
+    /// does not want the event. Unwanted events might be propagated to the
+    /// parent widget.
+    /// 
+    /// **See also:** accept()
     ignore(),
-    ///     \since 4.4
-    ///     \threadsafe
     /// 
-    ///     Registers and returns a custom event type. The \a hint provided
-    ///     will be used if it is available, otherwise it will return a value
-    ///     between QEvent::User and QEvent::MaxUser that has not yet been
-    ///     registered. The \a hint is ignored if its value is not between
-    ///     QEvent::User and QEvent::MaxUser.
+    /// Registers and returns a custom event type. The *hint* provided
+    /// will be used if it is available, otherwise it will return a value
+    /// between QEvent::User and QEvent::MaxUser that has not yet been
+    /// registered. The *hint* is ignored if its value is not between
+    /// QEvent::User and QEvent::MaxUser.
     /// 
-    ///     Returns -1 if all available values are already taken or the
-    ///     program is shutting down.
+    /// Returns -1 if all available values are already taken or the
+    /// program is shutting down.
     [static] register_event_type(hint: i32) -> i32,
 }
 

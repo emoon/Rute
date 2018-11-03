@@ -1,61 +1,59 @@
-///     \class QSlider
-///     \brief The QSlider widget provides a vertical or horizontal slider.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// ![windows-slider.png](windows-slider.png)
 /// 
-///     \image windows-slider.png
+/// The slider is the classic widget for controlling a bounded value.
+/// It lets the user move a slider handle along a horizontal or vertical
+/// groove and translates the handle's position into an integer value
+/// within the legal range.
 /// 
-///     The slider is the classic widget for controlling a bounded value.
-///     It lets the user move a slider handle along a horizontal or vertical
-///     groove and translates the handle's position into an integer value
-///     within the legal range.
+/// QSlider has very few of its own functions; most of the functionality is in
+/// QAbstractSlider. The most useful functions are setValue() to set
+/// the slider directly to some value; triggerAction() to simulate
+/// the effects of clicking (useful for shortcut keys);
+/// setSingleStep(), setPageStep() to set the steps; and setMinimum()
+/// and setMaximum() to define the range of the scroll bar.
 /// 
-///     QSlider has very few of its own functions; most of the functionality is in
-///     QAbstractSlider. The most useful functions are setValue() to set
-///     the slider directly to some value; triggerAction() to simulate
-///     the effects of clicking (useful for shortcut keys);
-///     setSingleStep(), setPageStep() to set the steps; and setMinimum()
-///     and setMaximum() to define the range of the scroll bar.
+/// QSlider provides methods for controlling tickmarks. You can use
+/// setTickPosition() to indicate where you want the tickmarks to be,
+/// setTickInterval() to indicate how many of them you want. the
+/// currently set tick position and interval can be queried using the
+/// tickPosition() and tickInterval() functions, respectively.
 /// 
-///     QSlider provides methods for controlling tickmarks.  You can use
-///     setTickPosition() to indicate where you want the tickmarks to be,
-///     setTickInterval() to indicate how many of them you want. the
-///     currently set tick position and interval can be queried using the
-///     tickPosition() and tickInterval() functions, respectively.
+/// QSlider inherits a comprehensive set of signals:
+/// * Signal
+/// * Description
+/// * [valueChanged()](valueChanged())
 /// 
-///     QSlider inherits a comprehensive set of signals:
-///     \table
-///     \header \li Signal \li Description
-///     \row \li \l valueChanged()
-///     \li Emitted when the slider's value has changed. The tracking()
-///        determines whether this signal is emitted during user
-///        interaction.
-///     \row \li \l sliderPressed()
-///     \li Emitted when the user starts to drag the slider.
-///     \row \li \l sliderMoved()
-///     \li Emitted when the user drags the slider.
-///     \row \li \l sliderReleased()
-///     \li Emitted when the user releases the slider.
-///     \endtable
+/// * Emitted when the slider's value has changed. The tracking() determines whether this signal is emitted during user interaction.
+/// * [sliderPressed()](sliderPressed())
 /// 
-///     QSlider only provides integer ranges. Note that although
-///     QSlider handles very large numbers, it becomes difficult for users
-///     to use a slider accurately for very large ranges.
+/// * Emitted when the user starts to drag the slider.
+/// * [sliderMoved()](sliderMoved())
 /// 
-///     A slider accepts focus on Tab and provides both a mouse wheel and a
-///     keyboard interface. The keyboard interface is the following:
+/// * Emitted when the user drags the slider.
+/// * [sliderReleased()](sliderReleased())
 /// 
-///     \list
-///         \li Left/Right move a horizontal slider by one single step.
-///         \li Up/Down move a vertical slider by one single step.
-///         \li PageUp moves up one page.
-///         \li PageDown moves down one page.
-///         \li Home moves to the start (mininum).
-///         \li End moves to the end (maximum).
-///     \endlist
+/// * Emitted when the user releases the slider.
 /// 
-///     \sa QScrollBar, QSpinBox, QDial, {fowler}{GUI Design Handbook: Slider}, {Sliders Example}
+/// QSlider only provides integer ranges. Note that although
+/// QSlider handles very large numbers, it becomes difficult for users
+/// to use a slider accurately for very large ranges.
+/// 
+/// A slider accepts focus on Tab and provides both a mouse wheel and a
+/// keyboard interface. The keyboard interface is the following:
+/// 
+/// * Left/Right move a horizontal slider by one single step.
+/// * Up/Down move a vertical slider by one single step.
+/// * PageUp moves up one page.
+/// * PageDown moves down one page.
+/// * Home moves to the start (mininum).
+/// * End moves to the end (maximum).
+/// 
+/// **See also:** QScrollBar
+/// QSpinBox
+/// QDial
+/// {fowler}{GUI Design Handbook: Slider}
+/// {Sliders Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -70,46 +68,45 @@ enum TickPosition {
 }
 
 struct Slider : AbstractSlider {
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
-    ///     \property QSlider::tickPosition
-    ///     \brief the tickmark position for this slider
-    /// 
-    ///     The valid values are described by the QSlider::TickPosition enum.
-    /// 
-    ///     The default value is \l QSlider::NoTicks.
-    /// 
-    ///     \sa tickInterval
     set_tick_position(position: Slider::TickPosition),
+    /// 
+    /// The valid values are described by the QSlider::TickPosition enum.
+    /// 
+    /// The default value is [QSlider::NoTicks.](QSlider::NoTicks.)
+    /// 
+    /// **See also:** tickInterval
     tick_position() -> Slider::TickPosition,
-    ///     \property QSlider::tickInterval
-    ///     \brief the interval between tickmarks
-    /// 
-    ///     This is a value interval, not a pixel interval. If it is 0, the
-    ///     slider will choose between singleStep and pageStep.
-    /// 
-    ///     The default value is 0.
-    /// 
-    ///     \sa tickPosition, singleStep, pageStep
     set_tick_interval(ti: i32),
-    tick_interval() -> i32,
-    ///     \reimp
-    [event] event(event: *EventType) -> bool,
-    ///     \reimp
-    [event] paint_event(ev: *PaintEventType),
-    ///     \reimp
-    [event] mouse_press_event(ev: *MouseEventType),
-    ///     \reimp
-    [event] mouse_release_event(ev: *MouseEventType),
-    ///     \reimp
-    [event] mouse_move_event(ev: *MouseEventType),
-    ///     Initialize \a option with the values from this QSlider. This method
-    ///     is useful for subclasses when they need a QStyleOptionSlider, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// This is a value interval, not a pixel interval. If it is 0, the
+    /// slider will choose between singleStep and pageStep.
+    /// 
+    /// The default value is 0.
+    /// 
+    /// **See also:** tickPosition
+    /// singleStep
+    /// pageStep
+    tick_interval() -> i32,
+    /// 
+    [event] event(event: *EventType) -> bool,
+    /// 
+    [event] paint_event(ev: *PaintEventType),
+    /// 
+    [event] mouse_press_event(ev: *MouseEventType),
+    /// 
+    [event] mouse_release_event(ev: *MouseEventType),
+    /// 
+    [event] mouse_move_event(ev: *MouseEventType),
+    /// 
+    /// Initialize *option* with the values from this QSlider. This method
+    /// is useful for subclasses when they need a QStyleOptionSlider, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSliderType),
 }
 

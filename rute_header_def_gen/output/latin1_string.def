@@ -1,62 +1,396 @@
+/// 
+/// Many of QString's member functions are overloaded to accept
+/// `const char *` instead of QString. This includes the copy
+/// constructor, the assignment operator, the comparison operators,
+/// and various other functions such as [insert()](QString::insert())
+/// , [replace()](QString::replace())
+/// 
+/// and [indexOf()](QString::indexOf())
+/// . These functions
+/// are usually optimized to avoid constructing a QString object for
+/// the `const char *` data. For example, assuming `str` is a
+/// QString,
+/// 
+/// is much faster than
+/// 
+/// because it doesn't construct four temporary QString objects and
+/// make a deep copy of the character data.
+/// 
+/// Applications that define `QT_NO_CAST_FROM_ASCII` (as explained
+/// in the QString documentation) don't have access to QString's
+/// `const char *` API. To provide an efficient way of specifying
+/// constant Latin-1 strings, Qt provides the QLatin1String, which is
+/// just a very thin wrapper around a `const char *` . Using
+/// QLatin1String, the example code above becomes
+/// 
+/// This is a bit longer to type, but it provides exactly the same
+/// benefits as the first version of the code, and is faster than
+/// converting the Latin-1 strings using QString::fromLatin1().
+/// 
+/// Thanks to the QString(QLatin1String) constructor,
+/// QLatin1String can be used everywhere a QString is expected. For
+/// example:
+/// 
+/// **Note**: If the function you're calling with a QLatin1String
+/// argument isn't actually overloaded to take QLatin1String, the
+/// implicit conversion to QString will trigger a memory allocation,
+/// which is usually what you want to avoid by using QLatin1String
+/// in the first place. In those cases, using QStringLiteral may be
+/// the better option.
+/// 
+/// **See also:** QString
+/// QLatin1Char
+/// {QStringLiteral()}{QStringLiteral}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Latin1String {
+    /// 
+    /// Returns the Latin-1 string stored in this object.
     latin1() -> char?,
+    /// 
+    /// Returns the size of the Latin-1 string stored in this object.
     size() -> i32,
+    /// 
+    /// Returns the Latin-1 string stored in this object.
     data() -> char?,
+    /// 
+    /// Returns whether the Latin-1 string stored in this object is null
+    /// ( `data() == nullptr` ) or not.
+    /// 
+    /// **See also:** isEmpty()
+    /// data()
     is_null() -> bool,
+    /// 
+    /// Returns whether the Latin-1 string stored in this object is empty
+    /// ( `size() == 0` ) or not.
+    /// 
+    /// **See also:** isNull()
+    /// size()
     is_empty() -> bool,
+    /// 
+    /// Returns the character at position *pos* in this object.
+    /// 
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *pos* < 0 or *pos* >= size().
+    /// 
+    /// **See also:** operator[]()
     at(i: i32) -> Latin1Char,
+    /// 
+    /// Returns the first character in the string.
+    /// Same as `at(0)` .
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** back()
+    /// at()
+    /// operator[]()
     front() -> Latin1Char,
+    /// 
+    /// Returns the last character in the string.
+    /// Same as `at(size() - 1)` .
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** front()
+    /// at()
+    /// operator[]()
     back() -> Latin1Char,
+    /// 
+    /// Returns `true` if this Latin-1 string starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(c: CharType) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string starts with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** endsWith()
     starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(c: CharType) -> bool,
+    /// 
+    /// Returns `true` if this Latin-1 string ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
     ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first character in
+    /// the string.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** end()
+    /// cbegin()
+    /// rbegin()
+    /// data()
     begin() -> Latin1String::const_iterator,
+    /// 
+    /// Same as begin().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** cend()
+    /// begin()
+    /// crbegin()
+    /// data()
     cbegin() -> Latin1String::const_iterator,
+    /// 
+    /// Returns `true` if this Latin-1 string ends with string-view *str,*
+    /// Latin-1 string *l1,* or character *ch,* respectively;
+    /// otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
+    /// otherwise the search is case-insensitive.
+    /// 
+    /// **See also:** startsWith()
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary
+    /// character after the last character in the list.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** begin()
+    /// cend()
+    /// rend()
     end() -> Latin1String::const_iterator,
-    ///     \fn QLatin1String::const_iterator QLatin1String::end() const
-    ///     \since 5.10
     /// 
-    ///     Returns a const \l{STL-style iterators}{STL-style iterator} pointing to the imaginary
-    ///     character after the last character in the list.
+    /// Same as end().
     /// 
-    ///     This function is provided for STL compatibility.
+    /// This function is provided for STL compatibility.
     /// 
-    ///     \sa begin(), cend(), rend()
+    /// **See also:** cbegin()
+    /// end()
+    /// crend()
     cend() -> Latin1String::const_iterator,
+    /// 
+    /// Returns a const [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to the first
+    /// character in the string, in reverse order.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** rend()
+    /// crbegin()
+    /// begin()
     rbegin() -> i32,
+    /// 
+    /// Same as rbegin().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** crend()
+    /// rbegin()
+    /// cbegin()
     crbegin() -> i32,
+    /// 
+    /// Returns a [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to one past
+    /// the last character in the string, in reverse order.
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** rbegin()
+    /// crend()
+    /// end()
     rend() -> i32,
+    /// 
+    /// Same as rend().
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **See also:** crbegin()
+    /// rend()
+    /// cend()
     crend() -> i32,
-    ///     \fn QLatin1String::const_reverse_iterator QLatin1String::crend() const
-    ///     \since 5.10
     /// 
-    ///     Same as rend().
+    /// Returns the substring starting at position *start* in this object,
+    /// and extending to the end of the string.
     /// 
-    ///     This function is provided for STL compatibility.
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *start* < 0 or *start* > size().
     /// 
-    ///     \sa crbegin(), rend(), cend()
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
+    /// **Overloads**
+    /// Returns the substring of length *length* starting at position
+    /// *start* in this object.
+    /// 
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *start* < 0, *length* < 0,
+    /// or *start* + *length* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     mid(pos: i32) -> Latin1String,
-    ///     \fn QLatin1String::const_reverse_iterator QLatin1String::crend() const
-    ///     \since 5.10
     /// 
-    ///     Same as rend().
+    /// Returns the substring starting at position *start* in this object,
+    /// and extending to the end of the string.
     /// 
-    ///     This function is provided for STL compatibility.
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *start* < 0 or *start* > size().
     /// 
-    ///     \sa crbegin(), rend(), cend()
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
+    /// **Overloads**
+    /// Returns the substring of length *length* starting at position
+    /// *start* in this object.
+    /// 
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *start* < 0, *length* < 0,
+    /// or *start* + *length* > size().
+    /// 
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     mid(pos: i32, n: i32) -> Latin1String,
+    /// 
+    /// Returns the substring of length *length* starting at position
+    /// 0 in this object.
+    /// 
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     left(n: i32) -> Latin1String,
+    /// 
+    /// Returns the substring of length *length* starting at position
+    /// size() - *length* in this object.
+    /// 
+    /// **Note**: This function performs no error checking.
+    /// The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// chopped()
+    /// chop()
+    /// truncate()
     right(n: i32) -> Latin1String,
+    /// 
+    /// Returns the substring of length size() - *length* starting at the
+    /// beginning of this object.
+    /// 
+    /// Same as `left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chop()
+    /// truncate()
     chopped(n: i32) -> Latin1String,
+    /// 
+    /// Returns the substring of length size() - *length* starting at the
+    /// beginning of this object.
+    /// 
+    /// Same as `left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chop()
+    /// truncate()
+    /// 
+    /// Truncates this string by *length* characters.
+    /// 
+    /// Same as `*this = left(size() - length)` .
+    /// 
+    /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
+    /// 
+    /// **See also:** mid()
+    /// left()
+    /// right()
+    /// chopped()
+    /// truncate()
     chop(n: i32),
 }
 

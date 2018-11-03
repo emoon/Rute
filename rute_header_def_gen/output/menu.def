@@ -1,468 +1,1010 @@
-///     \class QMenu
-///     \brief The QMenu class provides a menu widget for use in menu
-///     bars, context menus, and other popup menus.
 /// 
-///     \ingroup mainwindow-classes
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// ![fusion-menu.png](fusion-menu.png)
 /// 
-///     \image fusion-menu.png
+/// A menu widget is a selection menu. It can be either a pull-down
+/// menu in a menu bar or a standalone context menu. Pull-down menus
+/// are shown by the menu bar when the user clicks on the respective
+/// item or presses the specified shortcut key. Use
+/// QMenuBar::addMenu() to insert a menu into a menu bar. Context
+/// menus are usually invoked by some special keyboard key or by
+/// right-clicking. They can be executed either asynchronously with
+/// popup() or synchronously with exec(). Menus can also be invoked in
+/// response to button presses; these are just like context menus
+/// except for how they are invoked.
 /// 
-///     A menu widget is a selection menu. It can be either a pull-down
-///     menu in a menu bar or a standalone context menu. Pull-down menus
-///     are shown by the menu bar when the user clicks on the respective
-///     item or presses the specified shortcut key. Use
-///     QMenuBar::addMenu() to insert a menu into a menu bar. Context
-///     menus are usually invoked by some special keyboard key or by
-///     right-clicking. They can be executed either asynchronously with
-///     popup() or synchronously with exec(). Menus can also be invoked in
-///     response to button presses; these are just like context menus
-///     except for how they are invoked.
+/// # Actions
 /// 
-///     \section1 Actions
+/// A menu consists of a list of action items. Actions are added with
+/// the addAction(), addActions() and insertAction() functions. An action
+/// is represented vertically and rendered by QStyle. In addition, actions
+/// can have a text label, an optional icon drawn on the very left side,
+/// and shortcut key sequence such as .
 /// 
-///     A menu consists of a list of action items. Actions are added with
-///     the addAction(), addActions() and insertAction() functions. An action
-///     is represented vertically and rendered by QStyle. In addition, actions
-///     can have a text label, an optional icon drawn on the very left side,
-///     and shortcut key sequence such as "Ctrl+X".
+/// The existing actions held by a menu can be found with actions().
 /// 
-///     The existing actions held by a menu can be found with actions().
+/// There are four kinds of action items: separators, actions that
+/// show a submenu, widgets, and actions that perform an action.
+/// Separators are inserted with addSeparator(), submenus with addMenu(),
+/// and all other items are considered action items.
 /// 
-///     There are four kinds of action items: separators, actions that
-///     show a submenu, widgets, and actions that perform an action.
-///     Separators are inserted with addSeparator(), submenus with addMenu(),
-///     and all other items are considered action items.
+/// When inserting action items you usually specify a receiver and a
+/// slot. The receiver will be notifed whenever the item is
+/// [triggered()](QAction::triggered())
+/// . In addition, QMenu provides
+/// two signals, triggered() and hovered(), which signal the
+/// QAction that was triggered from the menu.
 /// 
-///     When inserting action items you usually specify a receiver and a
-///     slot. The receiver will be notifed whenever the item is
-///     \l{QAction::triggered()}{triggered()}. In addition, QMenu provides
-///     two signals, triggered() and hovered(), which signal the
-///     QAction that was triggered from the menu.
+/// You clear a menu with clear() and remove individual action items
+/// with removeAction().
 /// 
-///     You clear a menu with clear() and remove individual action items
-///     with removeAction().
+/// A QMenu can also provide a tear-off menu. A tear-off menu is a
+/// top-level window that contains a copy of the menu. This makes it
+/// possible for the user to frequently used menus and
+/// position them in a convenient place on the screen. If you want
+/// this functionality for a particular menu, insert a tear-off handle
+/// with setTearOffEnabled(). When using tear-off menus, bear in mind
+/// that the concept isn't typically used on Microsoft Windows so
+/// some users may not be familiar with it. Consider using a QToolBar
+/// instead.
 /// 
-///     A QMenu can also provide a tear-off menu. A tear-off menu is a
-///     top-level window that contains a copy of the menu. This makes it
-///     possible for the user to "tear off" frequently used menus and
-///     position them in a convenient place on the screen. If you want
-///     this functionality for a particular menu, insert a tear-off handle
-///     with setTearOffEnabled(). When using tear-off menus, bear in mind
-///     that the concept isn't typically used on Microsoft Windows so
-///     some users may not be familiar with it. Consider using a QToolBar
-///     instead.
+/// Widgets can be inserted into menus with the QWidgetAction class.
+/// Instances of this class are used to hold widgets, and are inserted
+/// into menus with the addAction() overload that takes a QAction.
 /// 
-///     Widgets can be inserted into menus with the QWidgetAction class.
-///     Instances of this class are used to hold widgets, and are inserted
-///     into menus with the addAction() overload that takes a QAction.
+/// Conversely, actions can be added to widgets with the addAction(),
+/// addActions() and insertAction() functions.
 /// 
-///     Conversely, actions can be added to widgets with the addAction(),
-///     addActions() and insertAction() functions.
+/// **Warning**: To make QMenu visible on the screen, exec() or popup() should be
+/// used instead of show().
 /// 
-///     \warning To make QMenu visible on the screen, exec() or popup() should be
-///     used instead of show().
+/// # QMenu on \macos with Qt Build Against Cocoa
 /// 
-///     \section1 QMenu on \macos with Qt Build Against Cocoa
+/// QMenu can be inserted only once in a menu/menubar. Subsequent insertions will
+/// have no effect or will result in a disabled menu item.
 /// 
-///     QMenu can be inserted only once in a menu/menubar. Subsequent insertions will
-///     have no effect or will result in a disabled menu item.
+/// See the [Menus](mainwindows/menus)
+/// example for an example of how
+/// to use QMenuBar and QMenu in your application.
 /// 
-///     See the \l{mainwindows/menus}{Menus} example for an example of how
-///     to use QMenuBar and QMenu in your application.
+/// **Important inherited functions:** addAction(), removeAction(), clear(),
+/// addSeparator(), and addMenu().
 /// 
-///     \b{Important inherited functions:} addAction(), removeAction(), clear(),
-///     addSeparator(), and addMenu().
-/// 
-///     \sa QMenuBar, {fowler}{GUI Design Handbook: Menu, Drop-Down and Pop-Up},
-///         {Application Example}, {Menus Example}
+/// **See also:** QMenuBar
+/// {fowler}{GUI Design Handbook: Menu
+/// Drop-Down and Pop-Up}
+/// {Application Example}
+/// {Menus Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct Menu : Widget {
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the text \a
-    ///     text and an optional shortcut \a shortcut. The action's
-    ///     \l{QAction::triggered()}{triggered()} signal is connected to the
-    ///     \a receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text.* The function adds the newly created action to
+    /// the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon* and
+    /// some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *member* slot of the *receiver* object. The function adds the
+    /// newly created action to the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_action(text: String) -> Action?,
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the text \a
-    ///     text and an optional shortcut \a shortcut. The action's
-    ///     \l{QAction::triggered()}{triggered()} signal is connected to the
-    ///     \a receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text.* The function adds the newly created action to
+    /// the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon* and
+    /// some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *member* slot of the *receiver* object. The function adds the
+    /// newly created action to the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_action(icon: &IconType, text: String) -> Action?,
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the text \a
-    ///     text and an optional shortcut \a shortcut. The action's
-    ///     \l{QAction::triggered()}{triggered()} signal is connected to the
-    ///     \a receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text.* The function adds the newly created action to
+    /// the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon* and
+    /// some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *member* slot of the *receiver* object. The function adds the
+    /// newly created action to the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_action(text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the text \a
-    ///     text and an optional shortcut \a shortcut. The action's
-    ///     \l{QAction::triggered()}{triggered()} signal is connected to the
-    ///     \a receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text.* The function adds the newly created action to
+    /// the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon*
+    /// and some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// If *context* is destroyed, the functor will not be called.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with an *icon* and
+    /// some *text* and an optional shortcut *shortcut.* The action's
+    /// [triggered()](QAction::triggered())
+    /// signal is connected to the
+    /// *member* slot of the *receiver* object. The function adds the
+    /// newly created action to the menu's list of actions, and returns it.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_action(icon: &IconType, text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
-    ///   Appends a new QMenu with \a icon and \a title to the menu. The menu
-    ///   takes ownership of the menu. Returns the new menu.
     /// 
-    ///   \sa QWidget::addAction(), QMenu::menuAction()
+    /// This convenience function adds *menu* as a submenu to this menu.
+    /// It returns *menu's* menuAction(). This menu does not take
+    /// ownership of *menu.*
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
     add_menu(title: String) -> Menu?,
-    ///   Appends a new QMenu with \a icon and \a title to the menu. The menu
-    ///   takes ownership of the menu. Returns the new menu.
     /// 
-    ///   \sa QWidget::addAction(), QMenu::menuAction()
+    /// This convenience function adds *menu* as a submenu to this menu.
+    /// It returns *menu's* menuAction(). This menu does not take
+    /// ownership of *menu.*
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
     add_menu(icon: &IconType, title: String) -> Menu?,
-    ///     This convenience function creates a new separator action, i.e. an
-    ///     action with QAction::isSeparator() returning true, and adds the new
-    ///     action to this menu's list of actions. It returns the newly
-    ///     created action.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// This convenience function creates a new separator action, i.e. an
+    /// action with QAction::isSeparator() returning true, and adds the new
+    /// action to this menu's list of actions. It returns the newly
+    /// created action.
     /// 
-    ///     \sa QWidget::addAction()
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_separator() -> Action?,
-    ///     \since 5.1
     /// 
-    ///     This convenience function creates a new section action, i.e. an
-    ///     action with QAction::isSeparator() returning true but also
-    ///     having \a text and \a icon hints, and adds the new action to this menu's
-    ///     list of actions. It returns the newly created action.
+    /// This convenience function creates a new section action, i.e. an
+    /// action with QAction::isSeparator() returning true but also
+    /// having *text* hint, and adds the new action to this menu's list
+    /// of actions. It returns the newly created action.
     /// 
-    ///     The rendering of the hints is style and platform dependent. Widget
-    ///     styles can use the text and icon information in the rendering for sections,
-    ///     or can choose to ignore them and render sections like simple separators.
+    /// The rendering of the hint is style and platform dependent. Widget
+    /// styles can use the text information in the rendering for sections,
+    /// or can choose to ignore it and render sections like simple separators.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// This convenience function creates a new section action, i.e. an
+    /// action with QAction::isSeparator() returning true but also
+    /// having *text* and *icon* hints, and adds the new action to this menu's
+    /// list of actions. It returns the newly created action.
+    /// 
+    /// The rendering of the hints is style and platform dependent. Widget
+    /// styles can use the text and icon information in the rendering for sections,
+    /// or can choose to ignore them and render sections like simple separators.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_section(text: String) -> Action?,
-    ///     \since 5.1
     /// 
-    ///     This convenience function creates a new section action, i.e. an
-    ///     action with QAction::isSeparator() returning true but also
-    ///     having \a text and \a icon hints, and adds the new action to this menu's
-    ///     list of actions. It returns the newly created action.
+    /// This convenience function creates a new section action, i.e. an
+    /// action with QAction::isSeparator() returning true but also
+    /// having *text* hint, and adds the new action to this menu's list
+    /// of actions. It returns the newly created action.
     /// 
-    ///     The rendering of the hints is style and platform dependent. Widget
-    ///     styles can use the text and icon information in the rendering for sections,
-    ///     or can choose to ignore them and render sections like simple separators.
+    /// The rendering of the hint is style and platform dependent. Widget
+    /// styles can use the text information in the rendering for sections,
+    /// or can choose to ignore it and render sections like simple separators.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::addAction()
+    /// **See also:** QWidget::addAction()
+    /// 
+    /// This convenience function creates a new section action, i.e. an
+    /// action with QAction::isSeparator() returning true but also
+    /// having *text* and *icon* hints, and adds the new action to this menu's
+    /// list of actions. It returns the newly created action.
+    /// 
+    /// The rendering of the hints is style and platform dependent. Widget
+    /// styles can use the text and icon information in the rendering for sections,
+    /// or can choose to ignore them and render sections like simple separators.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
     add_section(icon: &IconType, text: String) -> Action?,
-    ///     This convenience function inserts \a menu before action \a before
-    ///     and returns the menus menuAction().
     /// 
-    ///     \sa QWidget::insertAction(), addMenu()
+    /// This convenience function inserts *menu* before action *before*
+    /// and returns the menus menuAction().
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addMenu()
     insert_menu(before: *ActionType, menu: *MenuType) -> Action?,
-    ///     This convenience function creates a new separator action, i.e. an
-    ///     action with QAction::isSeparator() returning true. The function inserts
-    ///     the newly created action into this menu's list of actions before
-    ///     action \a before and returns it.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// This convenience function creates a new separator action, i.e. an
+    /// action with QAction::isSeparator() returning true. The function inserts
+    /// the newly created action into this menu's list of actions before
+    /// action *before* and returns it.
     /// 
-    ///     \sa QWidget::insertAction(), addSeparator()
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addSeparator()
     insert_separator(before: *ActionType) -> Action?,
-    ///     \since 5.1
     /// 
-    ///     This convenience function creates a new title action, i.e. an
-    ///     action with QAction::isSeparator() returning true but also having
-    ///     \a text and \a icon hints. The function inserts the newly created action
-    ///     into this menu's list of actions before action \a before and returns it.
+    /// This convenience function creates a new title action, i.e. an
+    /// action with QAction::isSeparator() returning true but also having
+    /// *text* hint. The function inserts the newly created action
+    /// into this menu's list of actions before action *before* and
+    /// returns it.
     /// 
-    ///     The rendering of the hints is style and platform dependent. Widget
-    ///     styles can use the text and icon information in the rendering for sections,
-    ///     or can choose to ignore them and render sections like simple separators.
+    /// The rendering of the hint is style and platform dependent. Widget
+    /// styles can use the text information in the rendering for sections,
+    /// or can choose to ignore it and render sections like simple separators.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::insertAction(), addSection()
+    /// **See also:** QWidget::insertAction()
+    /// addSection()
+    /// 
+    /// This convenience function creates a new title action, i.e. an
+    /// action with QAction::isSeparator() returning true but also having
+    /// *text* and *icon* hints. The function inserts the newly created action
+    /// into this menu's list of actions before action *before* and returns it.
+    /// 
+    /// The rendering of the hints is style and platform dependent. Widget
+    /// styles can use the text and icon information in the rendering for sections,
+    /// or can choose to ignore them and render sections like simple separators.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addSection()
     insert_section(before: *ActionType, text: String) -> Action?,
-    ///     \since 5.1
     /// 
-    ///     This convenience function creates a new title action, i.e. an
-    ///     action with QAction::isSeparator() returning true but also having
-    ///     \a text and \a icon hints. The function inserts the newly created action
-    ///     into this menu's list of actions before action \a before and returns it.
+    /// This convenience function creates a new title action, i.e. an
+    /// action with QAction::isSeparator() returning true but also having
+    /// *text* hint. The function inserts the newly created action
+    /// into this menu's list of actions before action *before* and
+    /// returns it.
     /// 
-    ///     The rendering of the hints is style and platform dependent. Widget
-    ///     styles can use the text and icon information in the rendering for sections,
-    ///     or can choose to ignore them and render sections like simple separators.
+    /// The rendering of the hint is style and platform dependent. Widget
+    /// styles can use the text information in the rendering for sections,
+    /// or can choose to ignore it and render sections like simple separators.
     /// 
-    ///     QMenu takes ownership of the returned QAction.
+    /// QMenu takes ownership of the returned QAction.
     /// 
-    ///     \sa QWidget::insertAction(), addSection()
+    /// **See also:** QWidget::insertAction()
+    /// addSection()
+    /// 
+    /// This convenience function creates a new title action, i.e. an
+    /// action with QAction::isSeparator() returning true but also having
+    /// *text* and *icon* hints. The function inserts the newly created action
+    /// into this menu's list of actions before action *before* and returns it.
+    /// 
+    /// The rendering of the hints is style and platform dependent. Widget
+    /// styles can use the text and icon information in the rendering for sections,
+    /// or can choose to ignore them and render sections like simple separators.
+    /// 
+    /// QMenu takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addSection()
     insert_section(before: *ActionType, icon: &IconType, text: String) -> Action?,
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if there are no visible actions inserted into the menu, false
-    ///     otherwise.
+    /// Returns `true` if there are no visible actions inserted into the menu, false
+    /// otherwise.
     /// 
-    ///     \sa QWidget::actions()
+    /// **See also:** QWidget::actions()
     is_empty() -> bool,
-    ///     Removes all the menu's actions. Actions owned by the menu and not
-    ///     shown in any other widget are deleted.
     /// 
-    ///     \sa removeAction()
+    /// Removes all the menu's actions. Actions owned by the menu and not
+    /// shown in any other widget are deleted.
+    /// 
+    /// **See also:** removeAction()
     clear(),
-    ///     \property QMenu::tearOffEnabled
-    ///     \brief whether the menu supports being torn off
-    /// 
-    ///     When true, the menu contains a special tear-off item (often shown as a dashed
-    ///     line at the top of the menu) that creates a copy of the menu when it is
-    ///     triggered.
-    /// 
-    ///     This "torn-off" copy lives in a separate window. It contains the same menu
-    ///     items as the original menu, with the exception of the tear-off handle.
-    /// 
-    ///     By default, this property is \c false.
     set_tear_off_enabled(arg0: bool),
     is_tear_off_enabled() -> bool,
-    ///   When a menu is torn off a second menu is shown to display the menu
-    ///   contents in a new window. When the menu is in this mode and the menu
-    ///   is visible returns \c true; otherwise false.
     /// 
-    ///   \sa showTearOffMenu(), hideTearOffMenu(), isTearOffEnabled()
+    /// When a menu is torn off a second menu is shown to display the menu
+    /// contents in a new window. When the menu is in this mode and the menu
+    /// is visible returns `true;` otherwise false.
+    /// 
+    /// **See also:** showTearOffMenu()
+    /// hideTearOffMenu()
+    /// isTearOffEnabled()
     is_tear_off_menu_visible() -> bool,
-    ///    \overload
-    ///    \since 5.7
     /// 
-    ///    This function will forcibly show the torn off menu making it
-    ///    appear on the user's desktop under the mouse currsor.
+    /// This function will forcibly show the torn off menu making it
+    /// appear on the user's desktop at the specified *global* position *pos.*
     /// 
-    ///    \sa hideTearOffMenu(), isTearOffMenuVisible(), isTearOffEnabled()
+    /// **See also:** hideTearOffMenu()
+    /// isTearOffMenuVisible()
+    /// isTearOffEnabled()
+    /// 
+    /// **Overloads**
+    /// This function will forcibly show the torn off menu making it
+    /// appear on the user's desktop under the mouse currsor.
+    /// 
+    /// **See also:** hideTearOffMenu()
+    /// isTearOffMenuVisible()
+    /// isTearOffEnabled()
     show_tear_off_menu(),
-    ///    \overload
-    ///    \since 5.7
     /// 
-    ///    This function will forcibly show the torn off menu making it
-    ///    appear on the user's desktop under the mouse currsor.
+    /// This function will forcibly show the torn off menu making it
+    /// appear on the user's desktop at the specified *global* position *pos.*
     /// 
-    ///    \sa hideTearOffMenu(), isTearOffMenuVisible(), isTearOffEnabled()
+    /// **See also:** hideTearOffMenu()
+    /// isTearOffMenuVisible()
+    /// isTearOffEnabled()
+    /// 
+    /// **Overloads**
+    /// This function will forcibly show the torn off menu making it
+    /// appear on the user's desktop under the mouse currsor.
+    /// 
+    /// **See also:** hideTearOffMenu()
+    /// isTearOffMenuVisible()
+    /// isTearOffEnabled()
     show_tear_off_menu(pos: &PointType),
-    ///    This function will forcibly hide the torn off menu making it
-    ///    disappear from the user's desktop.
     /// 
-    ///    \sa showTearOffMenu(), isTearOffMenuVisible(), isTearOffEnabled()
+    /// This function will forcibly hide the torn off menu making it
+    /// disappear from the user's desktop.
+    /// 
+    /// **See also:** showTearOffMenu()
+    /// isTearOffMenuVisible()
+    /// isTearOffEnabled()
     hide_tear_off_menu(),
-    ///   This sets the default action to \a act. The default action may have
-    ///   a visual cue, depending on the current QStyle. A default action
-    ///   usually indicates what will happen by default when a drop occurs.
     /// 
-    ///   \sa defaultAction()
+    /// This sets the default action to *act.* The default action may have
+    /// a visual cue, depending on the current QStyle. A default action
+    /// usually indicates what will happen by default when a drop occurs.
+    /// 
+    /// **See also:** defaultAction()
     set_default_action(arg0: *ActionType),
-    ///   Returns the current default action.
     /// 
-    ///   \sa setDefaultAction()
+    /// Returns the current default action.
+    /// 
+    /// **See also:** setDefaultAction()
     default_action() -> Action?,
-    ///   Sets the currently highlighted action to \a act.
+    /// 
+    /// Sets the currently highlighted action to *act.*
     set_active_action(act: *ActionType),
-    ///     Returns the currently highlighted action, or 0 if no
-    ///     action is currently highlighted.
+    /// 
+    /// Returns the currently highlighted action, or 0 if no
+    /// action is currently highlighted.
     active_action() -> Action?,
-    ///     Displays the menu so that the action \a atAction will be at the
-    ///     specified \e global position \a p. To translate a widget's local
-    ///     coordinates into global coordinates, use QWidget::mapToGlobal().
     /// 
-    ///     When positioning a menu with exec() or popup(), bear in mind that
-    ///     you cannot rely on the menu's current size(). For performance
-    ///     reasons, the menu adapts its size only when necessary, so in many
-    ///     cases, the size before and after the show is different. Instead,
-    ///     use sizeHint() which calculates the proper size depending on the
-    ///     menu's current contents.
+    /// Displays the menu so that the action *atAction* will be at the
+    /// specified *global* position *p.* To translate a widget's local
+    /// coordinates into global coordinates, use QWidget::mapToGlobal().
     /// 
-    ///     \sa QWidget::mapToGlobal(), exec()
+    /// When positioning a menu with exec() or popup(), bear in mind that
+    /// you cannot rely on the menu's current size(). For performance
+    /// reasons, the menu adapts its size only when necessary, so in many
+    /// cases, the size before and after the show is different. Instead,
+    /// use sizeHint() which calculates the proper size depending on the
+    /// menu's current contents.
+    /// 
+    /// **See also:** QWidget::mapToGlobal()
+    /// exec()
     popup(pos: &PointType, at: *ActionType),
-    ///     \overload
     /// 
-    ///     Executes a menu synchronously.
+    /// Executes this menu synchronously.
     /// 
-    ///     The menu's actions are specified by the list of \a actions. The menu will
-    ///     pop up so that the specified action, \a at, appears at global position \a
-    ///     pos. If \a at is not specified then the menu appears at position \a
-    ///     pos. \a parent is the menu's parent widget; specifying the parent will
-    ///     provide context when \a pos alone is not enough to decide where the menu
-    ///     should go (e.g., with multiple desktops or when the parent is embedded in
-    ///     QGraphicsView).
+    /// This is equivalent to `exec(pos())` .
     /// 
-    ///     The function returns the triggered QAction in either the popup
-    ///     menu or one of its submenus, or 0 if no item was triggered
-    ///     (normally because the user pressed Esc).
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
     /// 
-    ///     This is equivalent to:
-    ///     \snippet code/src_gui_widgets_qmenu.cpp 6
+    /// In most situations you'll want to specify the position yourself,
+    /// for example, the current mouse position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
     /// 
-    ///     \sa popup(), QWidget::mapToGlobal()
+    /// **Overloads**
+    /// Executes this menu synchronously.
+    /// 
+    /// Pops up the menu so that the action *action* will be at the
+    /// specified *global* position *p.* To translate a widget's local
+    /// coordinates into global coordinates, use QWidget::mapToGlobal().
+    /// 
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
+    /// 
+    /// Note that all signals are emitted as usual. If you connect a
+    /// QAction to a slot and call the menu's exec(), you get the result
+    /// both via the signal-slot connection and in the return value of
+    /// exec().
+    /// 
+    /// Common usage is to position the menu at the current mouse
+    /// position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
+    /// 
+    /// When positioning a menu with exec() or popup(), bear in mind that
+    /// you cannot rely on the menu's current size(). For performance
+    /// reasons, the menu adapts its size only when necessary. So in many
+    /// cases, the size before and after the show is different. Instead,
+    /// use sizeHint() which calculates the proper size depending on the
+    /// menu's current contents.
+    /// 
+    /// **See also:** popup()
+    /// QWidget::mapToGlobal()
     exec() -> Action?,
-    ///     \overload
     /// 
-    ///     Executes a menu synchronously.
+    /// Executes this menu synchronously.
     /// 
-    ///     The menu's actions are specified by the list of \a actions. The menu will
-    ///     pop up so that the specified action, \a at, appears at global position \a
-    ///     pos. If \a at is not specified then the menu appears at position \a
-    ///     pos. \a parent is the menu's parent widget; specifying the parent will
-    ///     provide context when \a pos alone is not enough to decide where the menu
-    ///     should go (e.g., with multiple desktops or when the parent is embedded in
-    ///     QGraphicsView).
+    /// This is equivalent to `exec(pos())` .
     /// 
-    ///     The function returns the triggered QAction in either the popup
-    ///     menu or one of its submenus, or 0 if no item was triggered
-    ///     (normally because the user pressed Esc).
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
     /// 
-    ///     This is equivalent to:
-    ///     \snippet code/src_gui_widgets_qmenu.cpp 6
+    /// In most situations you'll want to specify the position yourself,
+    /// for example, the current mouse position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
     /// 
-    ///     \sa popup(), QWidget::mapToGlobal()
+    /// **Overloads**
+    /// Executes this menu synchronously.
+    /// 
+    /// Pops up the menu so that the action *action* will be at the
+    /// specified *global* position *p.* To translate a widget's local
+    /// coordinates into global coordinates, use QWidget::mapToGlobal().
+    /// 
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
+    /// 
+    /// Note that all signals are emitted as usual. If you connect a
+    /// QAction to a slot and call the menu's exec(), you get the result
+    /// both via the signal-slot connection and in the return value of
+    /// exec().
+    /// 
+    /// Common usage is to position the menu at the current mouse
+    /// position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
+    /// 
+    /// When positioning a menu with exec() or popup(), bear in mind that
+    /// you cannot rely on the menu's current size(). For performance
+    /// reasons, the menu adapts its size only when necessary. So in many
+    /// cases, the size before and after the show is different. Instead,
+    /// use sizeHint() which calculates the proper size depending on the
+    /// menu's current contents.
+    /// 
+    /// **See also:** popup()
+    /// QWidget::mapToGlobal()
     exec(pos: &PointType, at: *ActionType) -> Action?,
-    ///     \overload
     /// 
-    ///     Executes a menu synchronously.
+    /// Executes this menu synchronously.
     /// 
-    ///     The menu's actions are specified by the list of \a actions. The menu will
-    ///     pop up so that the specified action, \a at, appears at global position \a
-    ///     pos. If \a at is not specified then the menu appears at position \a
-    ///     pos. \a parent is the menu's parent widget; specifying the parent will
-    ///     provide context when \a pos alone is not enough to decide where the menu
-    ///     should go (e.g., with multiple desktops or when the parent is embedded in
-    ///     QGraphicsView).
+    /// This is equivalent to `exec(pos())` .
     /// 
-    ///     The function returns the triggered QAction in either the popup
-    ///     menu or one of its submenus, or 0 if no item was triggered
-    ///     (normally because the user pressed Esc).
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
     /// 
-    ///     This is equivalent to:
-    ///     \snippet code/src_gui_widgets_qmenu.cpp 6
+    /// In most situations you'll want to specify the position yourself,
+    /// for example, the current mouse position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
     /// 
-    ///     \sa popup(), QWidget::mapToGlobal()
+    /// **Overloads**
+    /// Executes this menu synchronously.
+    /// 
+    /// Pops up the menu so that the action *action* will be at the
+    /// specified *global* position *p.* To translate a widget's local
+    /// coordinates into global coordinates, use QWidget::mapToGlobal().
+    /// 
+    /// This returns the triggered QAction in either the popup menu or one
+    /// of its submenus, or 0 if no item was triggered (normally because
+    /// the user pressed Esc).
+    /// 
+    /// Note that all signals are emitted as usual. If you connect a
+    /// QAction to a slot and call the menu's exec(), you get the result
+    /// both via the signal-slot connection and in the return value of
+    /// exec().
+    /// 
+    /// Common usage is to position the menu at the current mouse
+    /// position:
+    /// or aligned to a widget:
+    /// or in reaction to a QMouseEvent *e:
+    /// 
+    /// When positioning a menu with exec() or popup(), bear in mind that
+    /// you cannot rely on the menu's current size(). For performance
+    /// reasons, the menu adapts its size only when necessary. So in many
+    /// cases, the size before and after the show is different. Instead,
+    /// use sizeHint() which calculates the proper size depending on the
+    /// menu's current contents.
+    /// 
+    /// **See also:** popup()
+    /// QWidget::mapToGlobal()
     [static] exec(actions: [*ActionType], pos: &PointType, at: *ActionType, parent: *WidgetType) -> Action?,
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///   Returns the item at \a pt; returns 0 if there is no item there.
+    /// 
+    /// Returns the item at *pt;* returns 0 if there is no item there.
     action_at(arg0: &PointType) -> Action?,
-    ///     Returns the action associated with this menu.
+    /// 
+    /// Returns the action associated with this menu.
     menu_action() -> Action?,
-    ///   \property QMenu::title
-    ///   \brief The title of the menu
     /// 
-    ///   This is equivalent to the QAction::text property of the menuAction().
+    /// This is equivalent to the QAction::text property of the menuAction().
     /// 
-    ///   By default, this property contains an empty string.
+    /// By default, this property contains an empty string.
     title() -> String,
     set_title(title: String),
-    ///   \property QMenu::icon
     /// 
-    ///   \brief The icon of the menu
+    /// This is equivalent to the QAction::icon property of the menuAction().
     /// 
-    ///   This is equivalent to the QAction::icon property of the menuAction().
-    /// 
-    ///   By default, if no icon is explicitly set, this property contains a null icon.
+    /// By default, if no icon is explicitly set, this property contains a null icon.
     icon() -> Icon,
     set_icon(icon: &IconType),
-    ///     \fn void QMenu::hovered(QAction *action)
-    /// 
-    ///     This signal is emitted when a menu action is highlighted; \a action
-    ///     is the action that caused the signal to be emitted.
-    /// 
-    ///     Often this is used to update status information.
-    /// 
-    ///     \sa triggered(), QAction::hovered()
     set_no_replay_for(widget: *WidgetType),
     platform_menu() -> PlatformMenu?,
     set_platform_menu(platform_menu: *PlatformMenuType),
-    ///   \property QMenu::separatorsCollapsible
-    ///   \since 4.2
     /// 
-    ///   \brief whether consecutive separators should be collapsed
+    /// This property specifies whether consecutive separators in the menu
+    /// should be visually collapsed to a single one. Separators at the
+    /// beginning or the end of the menu are also hidden.
     /// 
-    ///   This property specifies whether consecutive separators in the menu
-    ///   should be visually collapsed to a single one. Separators at the
-    ///   beginning or the end of the menu are also hidden.
-    /// 
-    ///   By default, this property is \c true.
+    /// By default, this property is `true.`
     separators_collapsible() -> bool,
     set_separators_collapsible(collapse: bool),
-    ///   \property QMenu::toolTipsVisible
-    ///   \since 5.1
     /// 
-    ///   \brief whether tooltips of menu actions should be visible
+    /// This property specifies whether action menu entries show
+    /// their tooltip.
     /// 
-    ///   This property specifies whether action menu entries show
-    ///   their tooltip.
-    /// 
-    ///   By default, this property is \c false.
+    /// By default, this property is `false.`
     tool_tips_visible() -> bool,
     set_tool_tips_visible(visible: bool),
+    /// 
+    /// This signal is emitted just before the menu is shown to the user.
+    /// 
+    /// **See also:** aboutToHide()
+    /// show()
     [signal] about_to_show(),
+    /// 
+    /// This signal is emitted just before the menu is hidden from the user.
+    /// 
+    /// **See also:** aboutToShow()
+    /// hide()
     [signal] about_to_hide(),
+    /// 
+    /// This signal is emitted when a menu action is highlighted; *action*
+    /// is the action that caused the signal to be emitted.
+    /// 
+    /// Often this is used to update status information.
+    /// 
+    /// **See also:** triggered()
+    /// QAction::hovered()
     [signal] hovered(action: *ActionType),
-    ///   If a menu does not fit on the screen it lays itself out so that it
-    ///   does fit. It is style dependent what layout means (for example, on
-    ///   Windows it will use multiple columns).
     /// 
-    ///   This functions returns the number of columns necessary.
+    /// If a menu does not fit on the screen it lays itself out so that it
+    /// does fit. It is style dependent what layout means (for example, on
+    /// Windows it will use multiple columns).
+    /// 
+    /// This functions returns the number of columns necessary.
     column_count() -> i32,
-    ///   \reimp
-    [event] change_event(arg0: *EventType),
-    ///   \reimp
-    [event] key_press_event(arg0: *KeyEventType),
-    ///   \reimp
-    [event] mouse_release_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] mouse_press_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] mouse_move_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] wheel_event(arg0: *WheelEventType),
-    ///   \reimp
-    [event] enter_event(arg0: *EventType),
-    ///   \reimp
-    [event] leave_event(arg0: *EventType),
-    ///   \reimp
-    [event] hide_event(arg0: *HideEventType),
-    ///   \reimp
-    [event] paint_event(arg0: *PaintEventType),
-    ///   \reimp
-    [event] action_event(arg0: *ActionEventType),
-    ///   \reimp
-    [event] timer_event(arg0: *TimerEventType),
-    ///   \reimp
-    [event] event(arg0: *EventType) -> bool,
-    ///     \reimp
-    [event] focus_next_prev_child(next: bool) -> bool,
-    ///     Initialize \a option with the values from this menu and information from \a action. This method
-    ///     is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom(), QMenuBar::initStyleOption()
+    [event] change_event(arg0: *EventType),
+    /// 
+    [event] key_press_event(arg0: *KeyEventType),
+    /// 
+    [event] mouse_release_event(arg0: *MouseEventType),
+    /// 
+    [event] mouse_press_event(arg0: *MouseEventType),
+    /// 
+    [event] mouse_move_event(arg0: *MouseEventType),
+    /// 
+    [event] wheel_event(arg0: *WheelEventType),
+    /// 
+    [event] enter_event(arg0: *EventType),
+    /// 
+    [event] leave_event(arg0: *EventType),
+    /// 
+    [event] hide_event(arg0: *HideEventType),
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    [event] action_event(arg0: *ActionEventType),
+    /// 
+    [event] timer_event(arg0: *TimerEventType),
+    /// 
+    [event] event(arg0: *EventType) -> bool,
+    /// 
+    [event] focus_next_prev_child(next: bool) -> bool,
+    /// 
+    /// Initialize *option* with the values from this menu and information from *action.* This method
+    /// is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
+    /// QMenuBar::initStyleOption()
     init_style_option(option: *StyleOptionMenuItemType, action: *ActionType),
 }
 

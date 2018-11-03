@@ -1,148 +1,137 @@
-///     \class QUrl
-///     \inmodule QtCore
 /// 
-///     \brief The QUrl class provides a convenient interface for working
-///     with URLs.
+/// It can parse and construct URLs in both encoded and unencoded
+/// form. QUrl also has support for internationalized domain names
+/// (IDNs).
 /// 
-///     \reentrant
-///     \ingroup io
-///     \ingroup network
-///     \ingroup shared
+/// The most common way to use QUrl is to initialize it via the
+/// constructor by passing a QString. Otherwise, setUrl() can also
+/// be used.
+/// 
+/// URLs can be represented in two forms: encoded or unencoded. The
+/// unencoded representation is suitable for showing to users, but
+/// the encoded representation is typically what you would send to
+/// a web server. For example, the unencoded URL
+/// 
+/// would be sent to the server as
 /// 
 /// 
-///     It can parse and construct URLs in both encoded and unencoded
-///     form. QUrl also has support for internationalized domain names
-///     (IDNs).
+/// A URL can also be constructed piece by piece by calling
+/// setScheme(), setUserName(), setPassword(), setHost(), setPort(),
+/// setPath(), setQuery() and setFragment(). Some convenience
+/// functions are also available: setAuthority() sets the user name,
+/// password, host and port. setUserInfo() sets the user name and
+/// password at once.
 /// 
-///     The most common way to use QUrl is to initialize it via the
-///     constructor by passing a QString. Otherwise, setUrl() can also
-///     be used.
+/// Call isValid() to check if the URL is valid. This can be done at any point
+/// during the constructing of a URL. If isValid() returns `false,` you should
+/// clear() the URL before proceeding, or start over by parsing a new URL with
+/// setUrl().
 /// 
-///     URLs can be represented in two forms: encoded or unencoded. The
-///     unencoded representation is suitable for showing to users, but
-///     the encoded representation is typically what you would send to
-///     a web server. For example, the unencoded URL
-///     "http://bühler.example.com/List of applicants.xml"
-///     would be sent to the server as
-///     "http://xn--bhler-kva.example.com/List%20of%20applicants.xml".
+/// Constructing a query is particularly convenient through the use of the [QUrlQuery](QUrlQuery)
+/// class and its methods QUrlQuery::setQueryItems(),
+/// QUrlQuery::addQueryItem() and QUrlQuery::removeQueryItem(). Use
+/// QUrlQuery::setQueryDelimiters() to customize the delimiters used for
+/// generating the query string.
 /// 
-///     A URL can also be constructed piece by piece by calling
-///     setScheme(), setUserName(), setPassword(), setHost(), setPort(),
-///     setPath(), setQuery() and setFragment(). Some convenience
-///     functions are also available: setAuthority() sets the user name,
-///     password, host and port. setUserInfo() sets the user name and
-///     password at once.
+/// For the convenience of generating encoded URL strings or query
+/// strings, there are two static functions called
+/// fromPercentEncoding() and toPercentEncoding() which deal with
+/// percent encoding and decoding of QString objects.
 /// 
-///     Call isValid() to check if the URL is valid. This can be done at any point
-///     during the constructing of a URL. If isValid() returns \c false, you should
-///     clear() the URL before proceeding, or start over by parsing a new URL with
-///     setUrl().
+/// fromLocalFile() constructs a QUrl by parsing a local
+/// file path. toLocalFile() converts a URL to a local file path.
 /// 
-///     Constructing a query is particularly convenient through the use of the \l
-///     QUrlQuery class and its methods QUrlQuery::setQueryItems(),
-///     QUrlQuery::addQueryItem() and QUrlQuery::removeQueryItem(). Use
-///     QUrlQuery::setQueryDelimiters() to customize the delimiters used for
-///     generating the query string.
+/// The human readable representation of the URL is fetched with
+/// toString(). This representation is appropriate for displaying a
+/// URL to a user in unencoded form. The encoded form however, as
+/// returned by toEncoded(), is for internal use, passing to web
+/// servers, mail clients and so on. Both forms are technically correct
+/// and represent the same URL unambiguously -- in fact, passing either
+/// form to QUrl's constructor or to setUrl() will yield the same QUrl
+/// object.
 /// 
-///     For the convenience of generating encoded URL strings or query
-///     strings, there are two static functions called
-///     fromPercentEncoding() and toPercentEncoding() which deal with
-///     percent encoding and decoding of QString objects.
+/// QUrl conforms to the URI specification from
+/// [RFC 3986](RFC%203986)
+/// (Uniform Resource Identifier: Generic Syntax), and includes
+/// scheme extensions from [RFC 1738](RFC%201738)
+/// (Uniform Resource Locators). Case
+/// folding rules in QUrl conform to [RFC 3491](RFC%203491)
+/// (Nameprep: A Stringprep
+/// Profile for Internationalized Domain Names (IDN)). It is also compatible with the
+/// [file URI specification](http://freedesktop.org/wiki/Specifications/file-uri-spec/)
 /// 
-///     fromLocalFile() constructs a QUrl by parsing a local
-///     file path. toLocalFile() converts a URL to a local file path.
+/// from freedesktop.org, provided that the locale encodes file names using
+/// UTF-8 (required by IDN).
 /// 
-///     The human readable representation of the URL is fetched with
-///     toString(). This representation is appropriate for displaying a
-///     URL to a user in unencoded form. The encoded form however, as
-///     returned by toEncoded(), is for internal use, passing to web
-///     servers, mail clients and so on. Both forms are technically correct
-///     and represent the same URL unambiguously -- in fact, passing either
-///     form to QUrl's constructor or to setUrl() will yield the same QUrl
-///     object.
+/// ## Relative URLs vs Relative Paths
 /// 
-///     QUrl conforms to the URI specification from
-///     \l{RFC 3986} (Uniform Resource Identifier: Generic Syntax), and includes
-///     scheme extensions from \l{RFC 1738} (Uniform Resource Locators). Case
-///     folding rules in QUrl conform to \l{RFC 3491} (Nameprep: A Stringprep
-///     Profile for Internationalized Domain Names (IDN)). It is also compatible with the
-///     \l{http://freedesktop.org/wiki/Specifications/file-uri-spec/}{file URI specification}
-///     from freedesktop.org, provided that the locale encodes file names using
-///     UTF-8 (required by IDN).
+/// Calling isRelative() will return whether or not the URL is relative.
+/// A relative URL has no [scheme](scheme)
+/// . For example:
 /// 
-///     \section2 Relative URLs vs Relative Paths
+/// ```
+/// qDebug() << QUrl("main.qml").isRelative();          // true: no scheme
+/// qDebug() << QUrl("qml/main.qml").isRelative();      // true: no scheme
+/// qDebug() << QUrl("file:main.qml").isRelative();     // false: has "file" scheme
+/// qDebug() << QUrl("file:qml/main.qml").isRelative(); // false: has "file" scheme
+/// ```
 /// 
-///     Calling isRelative() will return whether or not the URL is relative.
-///     A relative URL has no \l {scheme}. For example:
+/// Notice that a URL can be absolute while containing a relative path, and
+/// vice versa:
 /// 
-///     \code
-///     qDebug() << QUrl("main.qml").isRelative();          // true: no scheme
-///     qDebug() << QUrl("qml/main.qml").isRelative();      // true: no scheme
-///     qDebug() << QUrl("file:main.qml").isRelative();     // false: has "file" scheme
-///     qDebug() << QUrl("file:qml/main.qml").isRelative(); // false: has "file" scheme
-///     \endcode
+/// ```
+/// // Absolute URL, relative path
+/// QUrl url("file:file.txt");
+/// qDebug() << url.isRelative();                 // false: has "file" scheme
+/// qDebug() << QDir::isAbsolutePath(url.path()); // false: relative path
 /// 
-///     Notice that a URL can be absolute while containing a relative path, and
-///     vice versa:
+/// // Relative URL, absolute path
+/// url = QUrl("/home/user/file.txt");
+/// qDebug() << url.isRelative();                 // true: has no scheme
+/// qDebug() << QDir::isAbsolutePath(url.path()); // true: absolute path
+/// ```
 /// 
-///     \code
-///     // Absolute URL, relative path
-///     QUrl url("file:file.txt");
-///     qDebug() << url.isRelative();                 // false: has "file" scheme
-///     qDebug() << QDir::isAbsolutePath(url.path()); // false: relative path
+/// A relative URL can be resolved by passing it as an argument to resolved(),
+/// which returns an absolute URL. isParentOf() is used for determining whether
+/// one URL is a parent of another.
 /// 
-///     // Relative URL, absolute path
-///     url = QUrl("/home/user/file.txt");
-///     qDebug() << url.isRelative();                 // true: has no scheme
-///     qDebug() << QDir::isAbsolutePath(url.path()); // true: absolute path
-///     \endcode
+/// ## Error checking
 /// 
-///     A relative URL can be resolved by passing it as an argument to resolved(),
-///     which returns an absolute URL. isParentOf() is used for determining whether
-///     one URL is a parent of another.
+/// QUrl is capable of detecting many errors in URLs while parsing it or when
+/// components of the URL are set with individual setter methods (like
+/// setScheme(), setHost() or setPath()). If the parsing or setter function is
+/// successful, any previously recorded error conditions will be discarded.
 /// 
-///     \section2 Error checking
+/// By default, QUrl setter methods operate in QUrl::TolerantMode, which means
+/// they accept some common mistakes and mis-representation of data. An
+/// alternate method of parsing is QUrl::StrictMode, which applies further
+/// checks. See QUrl::ParsingMode for a description of the difference of the
+/// parsing modes.
 /// 
-///     QUrl is capable of detecting many errors in URLs while parsing it or when
-///     components of the URL are set with individual setter methods (like
-///     setScheme(), setHost() or setPath()). If the parsing or setter function is
-///     successful, any previously recorded error conditions will be discarded.
+/// QUrl only checks for conformance with the URL specification. It does not
+/// try to verify that high-level protocol URLs are in the format they are
+/// expected to be by handlers elsewhere. For example, the following URIs are
+/// all considered valid by QUrl, even if they do not make sense when used:
 /// 
-///     By default, QUrl setter methods operate in QUrl::TolerantMode, which means
-///     they accept some common mistakes and mis-representation of data. An
-///     alternate method of parsing is QUrl::StrictMode, which applies further
-///     checks. See QUrl::ParsingMode for a description of the difference of the
-///     parsing modes.
+/// * "http:/filename.html"
+/// * "mailto://example.com"
 /// 
-///     QUrl only checks for conformance with the URL specification. It does not
-///     try to verify that high-level protocol URLs are in the format they are
-///     expected to be by handlers elsewhere. For example, the following URIs are
-///     all considered valid by QUrl, even if they do not make sense when used:
+/// When the parser encounters an error, it signals the event by making
+/// isValid() return false and toString() / toEncoded() return an empty string.
+/// If it is necessary to show the user the reason why the URL failed to parse,
+/// the error condition can be obtained from QUrl by calling errorString().
+/// Note that this message is highly technical and may not make sense to
+/// end-users.
 /// 
-///     \list
-///       \li "http:/filename.html"
-///       \li "mailto://example.com"
-///     \endlist
+/// QUrl is capable of recording only one error condition. If more than one
+/// error is found, it is undefined which error is reported.
 /// 
-///     When the parser encounters an error, it signals the event by making
-///     isValid() return false and toString() / toEncoded() return an empty string.
-///     If it is necessary to show the user the reason why the URL failed to parse,
-///     the error condition can be obtained from QUrl by calling errorString().
-///     Note that this message is highly technical and may not make sense to
-///     end-users.
+/// ## Character Conversions
 /// 
-///     QUrl is capable of recording only one error condition. If more than one
-///     error is found, it is undefined which error is reported.
+/// Follow these rules to avoid erroneous character conversion when
+/// dealing with URLs and strings:
 /// 
-///     \section2 Character Conversions
-/// 
-///     Follow these rules to avoid erroneous character conversion when
-///     dealing with URLs and strings:
-/// 
-///     \list
-///     \li When creating a QString to contain a URL from a QByteArray or a
-///        char*, always use QString::fromUtf8().
-///     \endlist
+/// * When creating a QString to contain a URL from a QByteArray or a char*, always use QString::fromUtf8().
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -190,773 +179,956 @@ enum UserInputResolutionOption {
 
 
 struct Url {
+    /// 
+    /// Swaps URL *other* with this URL. This operation is very
+    /// fast and never fails.
     swap(other: &UrlType),
-    ///     Parses \a url and sets this object to that value. QUrl will automatically
-    ///     percent encode all characters that are not allowed in a URL and decode the
-    ///     percent-encoded sequences that represent an unreserved character (letters,
-    ///     digits, hyphens, undercores, dots and tildes). All other characters are
-    ///     left in their original forms.
     /// 
-    ///     Parses the \a url using the parser mode \a parsingMode. In TolerantMode
-    ///     (the default), QUrl will correct certain mistakes, notably the presence of
-    ///     a percent character ('%') not followed by two hexadecimal digits, and it
-    ///     will accept any character in any position. In StrictMode, encoding mistakes
-    ///     will not be tolerated and QUrl will also check that certain forbidden
-    ///     characters are not present in unencoded form. If an error is detected in
-    ///     StrictMode, isValid() will return false. The parsing mode DecodedMode is
-    ///     not permitted in this context and will produce a run-time warning.
+    /// Parses *url* and sets this object to that value. QUrl will automatically
+    /// percent encode all characters that are not allowed in a URL and decode the
+    /// percent-encoded sequences that represent an unreserved character (letters,
+    /// digits, hyphens, undercores, dots and tildes). All other characters are
+    /// left in their original forms.
     /// 
-    ///     \sa url(), toString()
+    /// Parses the *url* using the parser mode *parsingMode.* In TolerantMode
+    /// (the default), QUrl will correct certain mistakes, notably the presence of
+    /// a percent character ('%') not followed by two hexadecimal digits, and it
+    /// will accept any character in any position. In StrictMode, encoding mistakes
+    /// will not be tolerated and QUrl will also check that certain forbidden
+    /// characters are not present in unencoded form. If an error is detected in
+    /// StrictMode, isValid() will return false. The parsing mode DecodedMode is
+    /// not permitted in this context and will produce a run-time warning.
+    /// 
+    /// **See also:** url()
+    /// toString()
     set_url(url: String, mode: Url::ParsingMode),
-    ///     Returns a string representation of the URL. The output can be customized by
-    ///     passing flags with \a options. The option QUrl::FullyDecoded is not
-    ///     permitted in this function since it would generate ambiguous data.
     /// 
-    ///     The resulting QString can be passed back to a QUrl later on.
+    /// Returns a string representation of the URL. The output can be customized by
+    /// passing flags with *options.* The option QUrl::FullyDecoded is not
+    /// permitted in this function since it would generate ambiguous data.
     /// 
-    ///     Synonym for toString(options).
+    /// The resulting QString can be passed back to a QUrl later on.
     /// 
-    ///     \sa FormattingOptions, toEncoded(), toString()
+    /// Synonym for toString(options).
+    /// 
+    /// **See also:** FormattingOptions
+    /// toEncoded()
+    /// toString()
     url(options: Url::FormattingOptions) -> String,
-    ///     \since 5.2
     /// 
-    ///     Returns an adjusted version of the URL.
-    ///     The output can be customized by passing flags with \a options.
+    /// Returns an adjusted version of the URL.
+    /// The output can be customized by passing flags with *options.*
     /// 
-    ///     The encoding options from QUrl::ComponentFormattingOption don't make
-    ///     much sense for this method, nor does QUrl::PreferLocalFile.
+    /// The encoding options from QUrl::ComponentFormattingOption don't make
+    /// much sense for this method, nor does QUrl::PreferLocalFile.
     /// 
-    ///     This is always equivalent to QUrl(url.toString(options)).
+    /// This is always equivalent to QUrl(url.toString(options)).
     /// 
-    ///     \sa FormattingOptions, toEncoded(), toString()
+    /// **See also:** FormattingOptions
+    /// toEncoded()
+    /// toString()
     adjusted(options: Url::FormattingOptions) -> Url,
-    ///     Returns the encoded representation of the URL if it's valid;
-    ///     otherwise an empty QByteArray is returned. The output can be
-    ///     customized by passing flags with \a options.
     /// 
-    ///     The user info, path and fragment are all converted to UTF-8, and
-    ///     all non-ASCII characters are then percent encoded. The host name
-    ///     is encoded using Punycode.
+    /// Returns the encoded representation of the URL if it's valid;
+    /// otherwise an empty QByteArray is returned. The output can be
+    /// customized by passing flags with *options.*
+    /// 
+    /// The user info, path and fragment are all converted to UTF-8, and
+    /// all non-ASCII characters are then percent encoded. The host name
+    /// is encoded using Punycode.
     to_encoded(options: Url::FormattingOptions) -> ByteArray,
-    ///     \fn QUrl QUrl::fromEncoded(const QByteArray &input, ParsingMode parsingMode)
     /// 
-    ///     Parses \a input and returns the corresponding QUrl. \a input is
-    ///     assumed to be in encoded form, containing only ASCII characters.
+    /// Parses *input* and returns the corresponding QUrl. *input* is
+    /// assumed to be in encoded form, containing only ASCII characters.
     /// 
-    ///     Parses the URL using \a parsingMode. See setUrl() for more information on
-    ///     this parameter. QUrl::DecodedMode is not permitted in this context.
+    /// Parses the URL using *parsingMode.* See setUrl() for more information on
+    /// this parameter. QUrl::DecodedMode is not permitted in this context.
     /// 
-    ///     \sa toEncoded(), setUrl()
+    /// **See also:** toEncoded()
+    /// setUrl()
     [static] from_encoded(url: &ByteArrayType, mode: Url::ParsingMode) -> Url,
-    ///     Returns a valid URL from a user supplied \a userInput string if one can be
-    ///     deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     \since 4.6
+    /// Returns a valid URL from a user supplied *userInput* string if one can be
+    /// deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     Most applications that can browse the web, allow the user to input a URL
-    ///     in the form of a plain string. This string can be manually typed into
-    ///     a location bar, obtained from the clipboard, or passed in via command
-    ///     line arguments.
+    /// This overload takes a *workingDirectory* path, in order to be able to
+    /// handle relative paths. This is especially useful when handling command
+    /// line arguments.
+    /// If *workingDirectory* is empty, no handling of relative paths will be done,
+    /// so this method will behave like its one argument overload.
     /// 
-    ///     When the string is not already a valid URL, a best guess is performed,
-    ///     making various web related assumptions.
+    /// By default, an input string that looks like a relative path will only be treated
+    /// as such if the file actually exists in the given working directory.
     /// 
-    ///     In the case the string corresponds to a valid file path on the system,
-    ///     a file:// URL is constructed, using QUrl::fromLocalFile().
+    /// If the application can handle files that don't exist yet, it should pass the
+    /// flag AssumeLocalFile in *options.*
     /// 
-    ///     If that is not the case, an attempt is made to turn the string into a
-    ///     http:// or ftp:// URL. The latter in the case the string starts with
-    ///     'ftp'. The result is then passed through QUrl's tolerant parser, and
-    ///     in the case or success, a valid QUrl is returned, or else a QUrl().
     /// 
-    ///     \section1 Examples:
+    /// Returns a valid URL from a user supplied *userInput* string if one can be
+    /// deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     \list
-    ///     \li qt-project.org becomes http://qt-project.org
-    ///     \li ftp.qt-project.org becomes ftp://ftp.qt-project.org
-    ///     \li hostname becomes http://hostname
-    ///     \li /home/user/test.html becomes file:///home/user/test.html
-    ///     \endlist
+    /// Most applications that can browse the web, allow the user to input a URL
+    /// in the form of a plain string. This string can be manually typed into
+    /// a location bar, obtained from the clipboard, or passed in via command
+    /// line arguments.
+    /// 
+    /// When the string is not already a valid URL, a best guess is performed,
+    /// making various web related assumptions.
+    /// 
+    /// In the case the string corresponds to a valid file path on the system,
+    /// a file:// URL is constructed, using QUrl::fromLocalFile().
+    /// 
+    /// If that is not the case, an attempt is made to turn the string into a
+    /// http:// or ftp:// URL. The latter in the case the string starts with
+    /// 'ftp'. The result is then passed through QUrl's tolerant parser, and
+    /// in the case or success, a valid QUrl is returned, or else a QUrl().
+    /// 
+    /// # Examples:
+    /// 
+    /// * qt-project.org becomes http://qt-project.org
+    /// * ftp.qt-project.org becomes ftp://ftp.qt-project.org
+    /// * hostname becomes http://hostname
+    /// * /home/user/test.html becomes file:///home/user/test.html
     [static] from_user_input(user_input: String) -> Url,
-    ///     Returns a valid URL from a user supplied \a userInput string if one can be
-    ///     deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     \since 4.6
+    /// Returns a valid URL from a user supplied *userInput* string if one can be
+    /// deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     Most applications that can browse the web, allow the user to input a URL
-    ///     in the form of a plain string. This string can be manually typed into
-    ///     a location bar, obtained from the clipboard, or passed in via command
-    ///     line arguments.
+    /// This overload takes a *workingDirectory* path, in order to be able to
+    /// handle relative paths. This is especially useful when handling command
+    /// line arguments.
+    /// If *workingDirectory* is empty, no handling of relative paths will be done,
+    /// so this method will behave like its one argument overload.
     /// 
-    ///     When the string is not already a valid URL, a best guess is performed,
-    ///     making various web related assumptions.
+    /// By default, an input string that looks like a relative path will only be treated
+    /// as such if the file actually exists in the given working directory.
     /// 
-    ///     In the case the string corresponds to a valid file path on the system,
-    ///     a file:// URL is constructed, using QUrl::fromLocalFile().
+    /// If the application can handle files that don't exist yet, it should pass the
+    /// flag AssumeLocalFile in *options.*
     /// 
-    ///     If that is not the case, an attempt is made to turn the string into a
-    ///     http:// or ftp:// URL. The latter in the case the string starts with
-    ///     'ftp'. The result is then passed through QUrl's tolerant parser, and
-    ///     in the case or success, a valid QUrl is returned, or else a QUrl().
     /// 
-    ///     \section1 Examples:
+    /// Returns a valid URL from a user supplied *userInput* string if one can be
+    /// deducted. In the case that is not possible, an invalid QUrl() is returned.
     /// 
-    ///     \list
-    ///     \li qt-project.org becomes http://qt-project.org
-    ///     \li ftp.qt-project.org becomes ftp://ftp.qt-project.org
-    ///     \li hostname becomes http://hostname
-    ///     \li /home/user/test.html becomes file:///home/user/test.html
-    ///     \endlist
+    /// Most applications that can browse the web, allow the user to input a URL
+    /// in the form of a plain string. This string can be manually typed into
+    /// a location bar, obtained from the clipboard, or passed in via command
+    /// line arguments.
+    /// 
+    /// When the string is not already a valid URL, a best guess is performed,
+    /// making various web related assumptions.
+    /// 
+    /// In the case the string corresponds to a valid file path on the system,
+    /// a file:// URL is constructed, using QUrl::fromLocalFile().
+    /// 
+    /// If that is not the case, an attempt is made to turn the string into a
+    /// http:// or ftp:// URL. The latter in the case the string starts with
+    /// 'ftp'. The result is then passed through QUrl's tolerant parser, and
+    /// in the case or success, a valid QUrl is returned, or else a QUrl().
+    /// 
+    /// # Examples:
+    /// 
+    /// * qt-project.org becomes http://qt-project.org
+    /// * ftp.qt-project.org becomes ftp://ftp.qt-project.org
+    /// * hostname becomes http://hostname
+    /// * /home/user/test.html becomes file:///home/user/test.html
     [static] from_user_input(user_input: String, working_directory: String, options: Url::UserInputResolutionOptions) -> Url,
-    ///     Returns \c true if the URL is non-empty and valid; otherwise returns \c false.
     /// 
-    ///     The URL is run through a conformance test. Every part of the URL
-    ///     must conform to the standard encoding rules of the URI standard
-    ///     for the URL to be reported as valid.
+    /// Returns `true` if the URL is non-empty and valid; otherwise returns `false.`
     /// 
-    ///     \snippet code/src_corelib_io_qurl.cpp 2
+    /// The URL is run through a conformance test. Every part of the URL
+    /// must conform to the standard encoding rules of the URI standard
+    /// for the URL to be reported as valid.
+    /// 
     is_valid() -> bool,
-    ///     Returns \c true if the URL has no data; otherwise returns \c false.
     /// 
-    ///     \sa clear()
+    /// Returns `true` if the URL has no data; otherwise returns `false.`
+    /// 
+    /// **See also:** clear()
     is_empty() -> bool,
-    ///     Resets the content of the QUrl. After calling this function, the
-    ///     QUrl is equal to one that has been constructed with the default
-    ///     empty constructor.
     /// 
-    ///     \sa isEmpty()
+    /// Resets the content of the QUrl. After calling this function, the
+    /// QUrl is equal to one that has been constructed with the default
+    /// empty constructor.
+    /// 
+    /// **See also:** isEmpty()
     clear(),
-    ///     Sets the scheme of the URL to \a scheme. As a scheme can only
-    ///     contain ASCII characters, no conversion or decoding is done on the
-    ///     input. It must also start with an ASCII letter.
     /// 
-    ///     The scheme describes the type (or protocol) of the URL. It's
-    ///     represented by one or more ASCII characters at the start the URL.
+    /// Sets the scheme of the URL to *scheme.* As a scheme can only
+    /// contain ASCII characters, no conversion or decoding is done on the
+    /// input. It must also start with an ASCII letter.
     /// 
-    ///     A scheme is strictly \l {http://www.ietf.org/rfc/rfc3986.txt} {RFC 3986}-compliant:
-    ///         \tt {scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )}
+    /// The scheme describes the type (or protocol) of the URL. It's
+    /// represented by one or more ASCII characters at the start the URL.
     /// 
-    ///     The following example shows a URL where the scheme is "ftp":
+    /// A scheme is strictly [RFC 3986](http://www.ietf.org/rfc/rfc3986.txt)
+    /// -compliant:
+    /// `scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )`
     /// 
-    ///     \image qurl-authority2.png
+    /// The following example shows a URL where the scheme is :
     /// 
-    ///     To set the scheme, the following call is used:
-    ///     \code
-    ///         QUrl url;
-    ///         url.setScheme("ftp");
-    ///     \endcode
+    /// ![qurl-authority2.png](qurl-authority2.png)
     /// 
-    ///     The scheme can also be empty, in which case the URL is interpreted
-    ///     as relative.
+    /// To set the scheme, the following call is used:
+    /// ```
+    /// QUrl url;
+    /// url.setScheme("ftp");
+    /// ```
     /// 
-    ///     \sa scheme(), isRelative()
+    /// The scheme can also be empty, in which case the URL is interpreted
+    /// as relative.
+    /// 
+    /// **See also:** scheme()
+    /// isRelative()
     set_scheme(scheme: String),
-    ///     Returns the scheme of the URL. If an empty string is returned,
-    ///     this means the scheme is undefined and the URL is then relative.
     /// 
-    ///     The scheme can only contain US-ASCII letters or digits, which means it
-    ///     cannot contain any character that would otherwise require encoding.
-    ///     Additionally, schemes are always returned in lowercase form.
+    /// Returns the scheme of the URL. If an empty string is returned,
+    /// this means the scheme is undefined and the URL is then relative.
     /// 
-    ///     \sa setScheme(), isRelative()
+    /// The scheme can only contain US-ASCII letters or digits, which means it
+    /// cannot contain any character that would otherwise require encoding.
+    /// Additionally, schemes are always returned in lowercase form.
+    /// 
+    /// **See also:** setScheme()
+    /// isRelative()
     scheme() -> String,
-    ///     Sets the authority of the URL to \a authority.
     /// 
-    ///     The authority of a URL is the combination of user info, a host
-    ///     name and a port. All of these elements are optional; an empty
-    ///     authority is therefore valid.
+    /// Sets the authority of the URL to *authority.*
     /// 
-    ///     The user info and host are separated by a '@', and the host and
-    ///     port are separated by a ':'. If the user info is empty, the '@'
-    ///     must be omitted; although a stray ':' is permitted if the port is
-    ///     empty.
+    /// The authority of a URL is the combination of user info, a host
+    /// name and a port. All of these elements are optional; an empty
+    /// authority is therefore valid.
     /// 
-    ///     The following example shows a valid authority string:
+    /// The user info and host are separated by a '@', and the host and
+    /// port are separated by a ':'. If the user info is empty, the '@'
+    /// must be omitted; although a stray ':' is permitted if the port is
+    /// empty.
     /// 
-    ///     \image qurl-authority.png
+    /// The following example shows a valid authority string:
     /// 
-    ///     The \a authority data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode (the default), all characters are accepted in undecoded form
-    ///     and the tolerant parser will correct stray '%' not followed by two hex
-    ///     characters.
+    /// ![qurl-authority.png](qurl-authority.png)
     /// 
-    ///     This function does not allow \a mode to be QUrl::DecodedMode. To set fully
-    ///     decoded data, call setUserName(), setPassword(), setHost() and setPort()
-    ///     individually.
+    /// The *authority* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode (the default), all characters are accepted in undecoded form
+    /// and the tolerant parser will correct stray '%' not followed by two hex
+    /// characters.
     /// 
-    ///     \sa setUserInfo(), setHost(), setPort()
+    /// This function does not allow *mode* to be QUrl::DecodedMode. To set fully
+    /// decoded data, call setUserName(), setPassword(), setHost() and setPort()
+    /// individually.
+    /// 
+    /// **See also:** setUserInfo()
+    /// setHost()
+    /// setPort()
     set_authority(authority: String, mode: Url::ParsingMode),
-    ///     Returns the authority of the URL if it is defined; otherwise
-    ///     an empty string is returned.
     /// 
-    ///     This function returns an unambiguous value, which may contain that
-    ///     characters still percent-encoded, plus some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the authority of the URL if it is defined; otherwise
+    /// an empty string is returned.
     /// 
-    ///     The \a options argument controls how to format the user info component. The
-    ///     value of QUrl::FullyDecoded is not permitted in this function. If you need
-    ///     to obtain fully decoded data, call userName(), password(), host() and
-    ///     port() individually.
+    /// This function returns an unambiguous value, which may contain that
+    /// characters still percent-encoded, plus some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     \sa setAuthority(), userInfo(), userName(), password(), host(), port()
+    /// The *options* argument controls how to format the user info component. The
+    /// value of QUrl::FullyDecoded is not permitted in this function. If you need
+    /// to obtain fully decoded data, call userName(), password(), host() and
+    /// port() individually.
+    /// 
+    /// **See also:** setAuthority()
+    /// userInfo()
+    /// userName()
+    /// password()
+    /// host()
+    /// port()
     authority(options: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the user info of the URL to \a userInfo. The user info is an
-    ///     optional part of the authority of the URL, as described in
-    ///     setAuthority().
     /// 
-    ///     The user info consists of a user name and optionally a password,
-    ///     separated by a ':'. If the password is empty, the colon must be
-    ///     omitted. The following example shows a valid user info string:
+    /// Sets the user info of the URL to *userInfo.* The user info is an
+    /// optional part of the authority of the URL, as described in
+    /// setAuthority().
     /// 
-    ///     \image qurl-authority3.png
+    /// The user info consists of a user name and optionally a password,
+    /// separated by a ':'. If the password is empty, the colon must be
+    /// omitted. The following example shows a valid user info string:
     /// 
-    ///     The \a userInfo data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode (the default), all characters are accepted in undecoded form
-    ///     and the tolerant parser will correct stray '%' not followed by two hex
-    ///     characters.
+    /// ![qurl-authority3.png](qurl-authority3.png)
     /// 
-    ///     This function does not allow \a mode to be QUrl::DecodedMode. To set fully
-    ///     decoded data, call setUserName() and setPassword() individually.
+    /// The *userInfo* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode (the default), all characters are accepted in undecoded form
+    /// and the tolerant parser will correct stray '%' not followed by two hex
+    /// characters.
     /// 
-    ///     \sa userInfo(), setUserName(), setPassword(), setAuthority()
+    /// This function does not allow *mode* to be QUrl::DecodedMode. To set fully
+    /// decoded data, call setUserName() and setPassword() individually.
+    /// 
+    /// **See also:** userInfo()
+    /// setUserName()
+    /// setPassword()
+    /// setAuthority()
     set_user_info(user_info: String, mode: Url::ParsingMode),
-    ///     Returns the user info of the URL, or an empty string if the user
-    ///     info is undefined.
     /// 
-    ///     This function returns an unambiguous value, which may contain that
-    ///     characters still percent-encoded, plus some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the user info of the URL, or an empty string if the user
+    /// info is undefined.
     /// 
-    ///     The \a options argument controls how to format the user info component. The
-    ///     value of QUrl::FullyDecoded is not permitted in this function. If you need
-    ///     to obtain fully decoded data, call userName() and password() individually.
+    /// This function returns an unambiguous value, which may contain that
+    /// characters still percent-encoded, plus some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     \sa setUserInfo(), userName(), password(), authority()
+    /// The *options* argument controls how to format the user info component. The
+    /// value of QUrl::FullyDecoded is not permitted in this function. If you need
+    /// to obtain fully decoded data, call userName() and password() individually.
+    /// 
+    /// **See also:** setUserInfo()
+    /// userName()
+    /// password()
+    /// authority()
     user_info(options: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the URL's user name to \a userName. The \a userName is part
-    ///     of the user info element in the authority of the URL, as described
-    ///     in setUserInfo().
     /// 
-    ///     The \a userName data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode (the default), all characters are accepted in undecoded form
-    ///     and the tolerant parser will correct stray '%' not followed by two hex
-    ///     characters. In DecodedMode, '%' stand for themselves and encoded characters
-    ///     are not possible.
+    /// Sets the URL's user name to *userName.* The *userName* is part
+    /// of the user info element in the authority of the URL, as described
+    /// in setUserInfo().
     /// 
-    ///     QUrl::DecodedMode should be used when setting the user name from a data
-    ///     source which is not a URL, such as a password dialog shown to the user or
-    ///     with a user name obtained by calling userName() with the QUrl::FullyDecoded
-    ///     formatting option.
+    /// The *userName* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode (the default), all characters are accepted in undecoded form
+    /// and the tolerant parser will correct stray '%' not followed by two hex
+    /// characters. In DecodedMode, '%' stand for themselves and encoded characters
+    /// are not possible.
     /// 
-    ///     \sa userName(), setUserInfo()
+    /// QUrl::DecodedMode should be used when setting the user name from a data
+    /// source which is not a URL, such as a password dialog shown to the user or
+    /// with a user name obtained by calling userName() with the QUrl::FullyDecoded
+    /// formatting option.
+    /// 
+    /// **See also:** userName()
+    /// setUserInfo()
     set_user_name(user_name: String, mode: Url::ParsingMode),
-    ///     Returns the user name of the URL if it is defined; otherwise
-    ///     an empty string is returned.
     /// 
-    ///     The \a options argument controls how to format the user name component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the user name of the URL if it is defined; otherwise
+    /// an empty string is returned.
     /// 
-    ///     Note that QUrl::FullyDecoded may cause data loss if those non-representable
-    ///     sequences are present. It is recommended to use that value when the result
-    ///     will be used in a non-URL context, such as setting in QAuthenticator or
-    ///     negotiating a login.
+    /// The *options* argument controls how to format the user name component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     \sa setUserName(), userInfo()
+    /// Note that QUrl::FullyDecoded may cause data loss if those non-representable
+    /// sequences are present. It is recommended to use that value when the result
+    /// will be used in a non-URL context, such as setting in QAuthenticator or
+    /// negotiating a login.
+    /// 
+    /// **See also:** setUserName()
+    /// userInfo()
     user_name(options: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the URL's password to \a password. The \a password is part of
-    ///     the user info element in the authority of the URL, as described in
-    ///     setUserInfo().
     /// 
-    ///     The \a password data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode, all characters are accepted in undecoded form and the
-    ///     tolerant parser will correct stray '%' not followed by two hex characters.
-    ///     In DecodedMode, '%' stand for themselves and encoded characters are not
-    ///     possible.
+    /// Sets the URL's password to *password.* The *password* is part of
+    /// the user info element in the authority of the URL, as described in
+    /// setUserInfo().
     /// 
-    ///     QUrl::DecodedMode should be used when setting the password from a data
-    ///     source which is not a URL, such as a password dialog shown to the user or
-    ///     with a password obtained by calling password() with the QUrl::FullyDecoded
-    ///     formatting option.
+    /// The *password* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
     /// 
-    ///     \sa password(), setUserInfo()
+    /// QUrl::DecodedMode should be used when setting the password from a data
+    /// source which is not a URL, such as a password dialog shown to the user or
+    /// with a password obtained by calling password() with the QUrl::FullyDecoded
+    /// formatting option.
+    /// 
+    /// **See also:** password()
+    /// setUserInfo()
     set_password(password: String, mode: Url::ParsingMode),
-    ///     Returns the password of the URL if it is defined; otherwise
-    ///     an empty string is returned.
     /// 
-    ///     The \a options argument controls how to format the user name component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the password of the URL if it is defined; otherwise
+    /// an empty string is returned.
     /// 
-    ///     Note that QUrl::FullyDecoded may cause data loss if those non-representable
-    ///     sequences are present. It is recommended to use that value when the result
-    ///     will be used in a non-URL context, such as setting in QAuthenticator or
-    ///     negotiating a login.
+    /// The *options* argument controls how to format the user name component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     \sa setPassword()
+    /// Note that QUrl::FullyDecoded may cause data loss if those non-representable
+    /// sequences are present. It is recommended to use that value when the result
+    /// will be used in a non-URL context, such as setting in QAuthenticator or
+    /// negotiating a login.
+    /// 
+    /// **See also:** setPassword()
     password(arg0: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the host of the URL to \a host. The host is part of the
-    ///     authority.
     /// 
-    ///     The \a host data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode, all characters are accepted in undecoded form and the
-    ///     tolerant parser will correct stray '%' not followed by two hex characters.
-    ///     In DecodedMode, '%' stand for themselves and encoded characters are not
-    ///     possible.
+    /// Sets the host of the URL to *host.* The host is part of the
+    /// authority.
     /// 
-    ///     Note that, in all cases, the result of the parsing must be a valid hostname
-    ///     according to STD 3 rules, as modified by the Internationalized Resource
-    ///     Identifiers specification (RFC 3987). Invalid hostnames are not permitted
-    ///     and will cause isValid() to become false.
+    /// The *host* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
     /// 
-    ///     \sa host(), setAuthority()
+    /// Note that, in all cases, the result of the parsing must be a valid hostname
+    /// according to STD 3 rules, as modified by the Internationalized Resource
+    /// Identifiers specification (RFC 3987). Invalid hostnames are not permitted
+    /// and will cause isValid() to become false.
+    /// 
+    /// **See also:** host()
+    /// setAuthority()
     set_host(host: String, mode: Url::ParsingMode),
-    ///     Returns the host of the URL if it is defined; otherwise
-    ///     an empty string is returned.
     /// 
-    ///     The \a options argument controls how the hostname will be formatted. The
-    ///     QUrl::EncodeUnicode option will cause this function to return the hostname
-    ///     in the ASCII-Compatible Encoding (ACE) form, which is suitable for use in
-    ///     channels that are not 8-bit clean or that require the legacy hostname (such
-    ///     as DNS requests or in HTTP request headers). If that flag is not present,
-    ///     this function returns the International Domain Name (IDN) in Unicode form,
-    ///     according to the list of permissible top-level domains (see
-    ///     idnWhitelist()).
+    /// Returns the host of the URL if it is defined; otherwise
+    /// an empty string is returned.
     /// 
-    ///     All other flags are ignored. Host names cannot contain control or percent
-    ///     characters, so the returned value can be considered fully decoded.
+    /// The *options* argument controls how the hostname will be formatted. The
+    /// QUrl::EncodeUnicode option will cause this function to return the hostname
+    /// in the ASCII-Compatible Encoding (ACE) form, which is suitable for use in
+    /// channels that are not 8-bit clean or that require the legacy hostname (such
+    /// as DNS requests or in HTTP request headers). If that flag is not present,
+    /// this function returns the International Domain Name (IDN) in Unicode form,
+    /// according to the list of permissible top-level domains (see
+    /// idnWhitelist()).
     /// 
-    ///     \sa setHost(), idnWhitelist(), setIdnWhitelist(), authority()
+    /// All other flags are ignored. Host names cannot contain control or percent
+    /// characters, so the returned value can be considered fully decoded.
+    /// 
+    /// **See also:** setHost()
+    /// idnWhitelist()
+    /// setIdnWhitelist()
+    /// authority()
     host(arg0: Url::ComponentFormattingOptions) -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns the TLD (Top-Level Domain) of the URL, (e.g. .co.uk, .net).
-    ///     Note that the return value is prefixed with a '.' unless the
-    ///     URL does not contain a valid TLD, in which case the function returns
-    ///     an empty string.
+    /// Returns the TLD (Top-Level Domain) of the URL, (e.g. .co.uk, .net).
+    /// Note that the return value is prefixed with a '.' unless the
+    /// URL does not contain a valid TLD, in which case the function returns
+    /// an empty string.
     /// 
-    ///     Note that this function considers a TLD to be any domain that allows users
-    ///     to register subdomains under, including many home, dynamic DNS websites and
-    ///     blogging providers. This is useful for determining whether two websites
-    ///     belong to the same infrastructure and communication should be allowed, such
-    ///     as browser cookies: two domains should be considered part of the same
-    ///     website if they share at least one label in addition to the value
-    ///     returned by this function.
+    /// Note that this function considers a TLD to be any domain that allows users
+    /// to register subdomains under, including many home, dynamic DNS websites and
+    /// blogging providers. This is useful for determining whether two websites
+    /// belong to the same infrastructure and communication should be allowed, such
+    /// as browser cookies: two domains should be considered part of the same
+    /// website if they share at least one label in addition to the value
+    /// returned by this function.
     /// 
-    ///     \list
-    ///       \li \c{foo.co.uk} and \c{foo.com} do not share a top-level domain
-    ///       \li \c{foo.co.uk} and \c{bar.co.uk} share the \c{.co.uk} domain, but the next label is different
-    ///       \li \c{www.foo.co.uk} and \c{ftp.foo.co.uk} share the same top-level domain and one more label,
-    ///           so they are considered part of the same site
-    ///     \endlist
+    /// * `foo.co.uk` and `foo.com` do not share a top-level domain
+    /// * `foo.co.uk` and `bar.co.uk` share the `.co.uk` domain, but the next label is different
+    /// * `www.foo.co.uk` and `ftp.foo.co.uk` share the same top-level domain and one more label, so they are considered part of the same site
     /// 
-    ///     If \a options includes EncodeUnicode, the returned string will be in
-    ///     ASCII Compatible Encoding.
+    /// If *options* includes EncodeUnicode, the returned string will be in
+    /// ASCII Compatible Encoding.
     top_level_domain(options: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the port of the URL to \a port. The port is part of the
-    ///     authority of the URL, as described in setAuthority().
     /// 
-    ///     \a port must be between 0 and 65535 inclusive. Setting the
-    ///     port to -1 indicates that the port is unspecified.
+    /// Sets the port of the URL to *port.* The port is part of the
+    /// authority of the URL, as described in setAuthority().
+    /// 
+    /// *port* must be between 0 and 65535 inclusive. Setting the
+    /// port to -1 indicates that the port is unspecified.
     set_port(port: i32),
-    ///     \since 4.1
     /// 
-    ///     Returns the port of the URL, or \a defaultPort if the port is
-    ///     unspecified.
+    /// Returns the port of the URL, or *defaultPort* if the port is
+    /// unspecified.
     /// 
-    ///     Example:
+    /// Example:
     /// 
-    ///     \snippet code/src_corelib_io_qurl.cpp 3
     port(default_port: i32) -> i32,
-    ///     Sets the path of the URL to \a path. The path is the part of the
-    ///     URL that comes after the authority but before the query string.
     /// 
-    ///     \image qurl-ftppath.png
+    /// Sets the path of the URL to *path.* The path is the part of the
+    /// URL that comes after the authority but before the query string.
     /// 
-    ///     For non-hierarchical schemes, the path will be everything
-    ///     following the scheme declaration, as in the following example:
+    /// ![qurl-ftppath.png](qurl-ftppath.png)
     /// 
-    ///     \image qurl-mailtopath.png
+    /// For non-hierarchical schemes, the path will be everything
+    /// following the scheme declaration, as in the following example:
     /// 
-    ///     The \a path data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode, all characters are accepted in undecoded form and the
-    ///     tolerant parser will correct stray '%' not followed by two hex characters.
-    ///     In DecodedMode, '%' stand for themselves and encoded characters are not
-    ///     possible.
+    /// ![qurl-mailtopath.png](qurl-mailtopath.png)
     /// 
-    ///     QUrl::DecodedMode should be used when setting the path from a data source
-    ///     which is not a URL, such as a dialog shown to the user or with a path
-    ///     obtained by calling path() with the QUrl::FullyDecoded formatting option.
+    /// The *path* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
     /// 
-    ///     \sa path()
+    /// QUrl::DecodedMode should be used when setting the path from a data source
+    /// which is not a URL, such as a dialog shown to the user or with a path
+    /// obtained by calling path() with the QUrl::FullyDecoded formatting option.
+    /// 
+    /// **See also:** path()
     set_path(path: String, mode: Url::ParsingMode),
-    ///     Returns the path of the URL.
     /// 
-    ///     \code
-    ///     qDebug() << QUrl("file:file.txt").path();                   // "file.txt"
-    ///     qDebug() << QUrl("/home/user/file.txt").path();             // "/home/user/file.txt"
-    ///     qDebug() << QUrl("http://www.example.com/test/123").path(); // "/test/123"
-    ///     \endcode
+    /// Returns the path of the URL.
     /// 
-    ///     The \a options argument controls how to format the path component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
+    /// ```
+    /// qDebug() << QUrl("file:file.txt").path();                   // "file.txt"
+    /// qDebug() << QUrl("/home/user/file.txt").path();             // "/home/user/file.txt"
+    /// qDebug() << QUrl("http://www.example.com/test/123").path(); // "/test/123"
+    /// ```
     /// 
-    ///     Note that QUrl::FullyDecoded may cause data loss if those non-representable
-    ///     sequences are present. It is recommended to use that value when the result
-    ///     will be used in a non-URL context, such as sending to an FTP server.
+    /// The *options* argument controls how to format the path component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     An example of data loss is when you have non-Unicode percent-encoded sequences
-    ///     and use FullyDecoded (the default):
+    /// Note that QUrl::FullyDecoded may cause data loss if those non-representable
+    /// sequences are present. It is recommended to use that value when the result
+    /// will be used in a non-URL context, such as sending to an FTP server.
     /// 
-    ///     \code
-    ///     qDebug() << QUrl("/foo%FFbar").path();
-    ///     \endcode
+    /// An example of data loss is when you have non-Unicode percent-encoded sequences
+    /// and use FullyDecoded (the default):
     /// 
-    ///     In this example, there will be some level of data loss because the \c %FF cannot
-    ///     be converted.
+    /// ```
+    /// qDebug() << QUrl("/foo%FFbar").path();
+    /// ```
     /// 
-    ///     Data loss can also occur when the path contains sub-delimiters (such as \c +):
+    /// In this example, there will be some level of data loss because the `%FF` cannot
+    /// be converted.
     /// 
-    ///     \code
-    ///     qDebug() << QUrl("/foo+bar%2B").path(); // "/foo+bar+"
-    ///     \endcode
+    /// Data loss can also occur when the path contains sub-delimiters (such as `+):`
     /// 
-    ///     Other decoding examples:
+    /// ```
+    /// qDebug() << QUrl("/foo+bar%2B").path(); // "/foo+bar+"
+    /// ```
     /// 
-    ///     \code
-    ///     const QUrl url("/tmp/Mambo %235%3F.mp3");
-    ///     qDebug() << url.path(QUrl::FullyDecoded);  // "/tmp/Mambo #5?.mp3"
-    ///     qDebug() << url.path(QUrl::PrettyDecoded); // "/tmp/Mambo #5?.mp3"
-    ///     qDebug() << url.path(QUrl::FullyEncoded);  // "/tmp/Mambo%20%235%3F.mp3"
-    ///     \endcode
+    /// Other decoding examples:
     /// 
-    ///     \sa setPath()
+    /// ```
+    /// const QUrl url("/tmp/Mambo %235%3F.mp3");
+    /// qDebug() << url.path(QUrl::FullyDecoded);  // "/tmp/Mambo #5?.mp3"
+    /// qDebug() << url.path(QUrl::PrettyDecoded); // "/tmp/Mambo #5?.mp3"
+    /// qDebug() << url.path(QUrl::FullyEncoded);  // "/tmp/Mambo%20%235%3F.mp3"
+    /// ```
+    /// 
+    /// **See also:** setPath()
     path(options: Url::ComponentFormattingOptions) -> String,
-    ///     \since 5.2
     /// 
-    ///     Returns the name of the file, excluding the directory path.
+    /// Returns the name of the file, excluding the directory path.
     /// 
-    ///     Note that, if this QUrl object is given a path ending in a slash, the name of the file is considered empty.
+    /// Note that, if this QUrl object is given a path ending in a slash, the name of the file is considered empty.
     /// 
-    ///     If the path doesn't contain any slash, it is fully returned as the fileName.
+    /// If the path doesn't contain any slash, it is fully returned as the fileName.
     /// 
-    ///     Example:
+    /// Example:
     /// 
-    ///     \snippet code/src_corelib_io_qurl.cpp 7
+    /// The *options* argument controls how to format the file name component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     The \a options argument controls how to format the file name component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
-    /// 
-    ///     \sa path()
+    /// **See also:** path()
     file_name(options: Url::ComponentFormattingOptions) -> String,
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if this URL contains a Query (i.e., if ? was seen on it).
+    /// Returns `true` if this URL contains a Query (i.e., if ? was seen on it).
     /// 
-    ///     \sa setQuery(), query(), hasFragment()
+    /// **See also:** setQuery()
+    /// query()
+    /// hasFragment()
+    /// 
+    /// Returns `true` if there is a query string pair whose key is equal
+    /// to *key* from the URL.
+    /// 
+    /// **See also:** hasEncodedQueryItem()
     has_query() -> bool,
-    ///     \overload
-    ///     \since 5.0
-    ///     Sets the query string of the URL to \a query.
     /// 
-    ///     This function reconstructs the query string from the QUrlQuery object and
-    ///     sets on this QUrl object. This function does not have parsing parameters
-    ///     because the QUrlQuery contains data that is already parsed.
+    /// Sets the query string of the URL to *query.*
     /// 
-    ///     \sa query(), hasQuery()
+    /// This function is useful if you need to pass a query string that
+    /// does not fit into the key-value pattern, or that uses a different
+    /// scheme for encoding special characters than what is suggested by
+    /// QUrl.
+    /// 
+    /// Passing a value of QString() to *query* (a null QString) unsets
+    /// the query completely. However, passing a value of QString("")
+    /// will set the query to an empty value, as if the original URL
+    /// had a lone .
+    /// 
+    /// The *query* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
+    /// 
+    /// Query strings often contain percent-encoded sequences, so use of
+    /// DecodedMode is discouraged. One special sequence to be aware of is that of
+    /// the plus character ('+'). QUrl does not convert spaces to plus characters,
+    /// even though HTML forms posted by web browsers do. In order to represent an
+    /// actual plus character in a query, the sequence is usually used. This
+    /// function will leave sequences untouched in TolerantMode or
+    /// StrictMode.
+    /// 
+    /// **See also:** query()
+    /// hasQuery()
+    /// 
+    /// **Overloads**  Sets the query string of the URL to *query.*
+    /// 
+    /// This function reconstructs the query string from the QUrlQuery object and
+    /// sets on this QUrl object. This function does not have parsing parameters
+    /// because the QUrlQuery contains data that is already parsed.
+    /// 
+    /// **See also:** query()
+    /// hasQuery()
+    /// 
+    /// Sets the query string of the URL to an encoded version of *query.* The contents of *query* are converted to a string
+    /// internally, each pair delimited by the character returned by
+    /// [queryPairDelimiter()](QUrlQuery::queryPairDelimiter())
+    /// , and the key and value are delimited by
+    /// [queryValueDelimiter()](QUrlQuery::queryValueDelimiter())
+    /// 
+    /// **Note**: This method does not encode spaces (ASCII 0x20) as plus (+) signs,
+    /// like HTML forms do. If you need that kind of encoding, you must encode
+    /// the value yourself and use QUrl::setEncodedQueryItems.
+    /// 
+    /// **See also:** queryItems()
+    /// setEncodedQueryItems()
     set_query(query: String, mode: Url::ParsingMode),
-    ///     \overload
-    ///     \since 5.0
-    ///     Sets the query string of the URL to \a query.
     /// 
-    ///     This function reconstructs the query string from the QUrlQuery object and
-    ///     sets on this QUrl object. This function does not have parsing parameters
-    ///     because the QUrlQuery contains data that is already parsed.
+    /// Sets the query string of the URL to *query.*
     /// 
-    ///     \sa query(), hasQuery()
+    /// This function is useful if you need to pass a query string that
+    /// does not fit into the key-value pattern, or that uses a different
+    /// scheme for encoding special characters than what is suggested by
+    /// QUrl.
+    /// 
+    /// Passing a value of QString() to *query* (a null QString) unsets
+    /// the query completely. However, passing a value of QString("")
+    /// will set the query to an empty value, as if the original URL
+    /// had a lone .
+    /// 
+    /// The *query* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
+    /// 
+    /// Query strings often contain percent-encoded sequences, so use of
+    /// DecodedMode is discouraged. One special sequence to be aware of is that of
+    /// the plus character ('+'). QUrl does not convert spaces to plus characters,
+    /// even though HTML forms posted by web browsers do. In order to represent an
+    /// actual plus character in a query, the sequence is usually used. This
+    /// function will leave sequences untouched in TolerantMode or
+    /// StrictMode.
+    /// 
+    /// **See also:** query()
+    /// hasQuery()
+    /// 
+    /// **Overloads**  Sets the query string of the URL to *query.*
+    /// 
+    /// This function reconstructs the query string from the QUrlQuery object and
+    /// sets on this QUrl object. This function does not have parsing parameters
+    /// because the QUrlQuery contains data that is already parsed.
+    /// 
+    /// **See also:** query()
+    /// hasQuery()
+    /// 
+    /// Sets the query string of the URL to an encoded version of *query.* The contents of *query* are converted to a string
+    /// internally, each pair delimited by the character returned by
+    /// [queryPairDelimiter()](QUrlQuery::queryPairDelimiter())
+    /// , and the key and value are delimited by
+    /// [queryValueDelimiter()](QUrlQuery::queryValueDelimiter())
+    /// 
+    /// **Note**: This method does not encode spaces (ASCII 0x20) as plus (+) signs,
+    /// like HTML forms do. If you need that kind of encoding, you must encode
+    /// the value yourself and use QUrl::setEncodedQueryItems.
+    /// 
+    /// **See also:** queryItems()
+    /// setEncodedQueryItems()
     set_query(query: &UrlQueryType),
-    ///     Returns the query string of the URL if there's a query string, or an empty
-    ///     result if not. To determine if the parsed URL contained a query string, use
-    ///     hasQuery().
     /// 
-    ///     The \a options argument controls how to format the query component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the query string of the URL, as a map of keys and values.
     /// 
-    ///     Note that use of QUrl::FullyDecoded in queries is discouraged, as queries
-    ///     often contain data that is supposed to remain percent-encoded, including
-    ///     the use of the "%2B" sequence to represent a plus character ('+').
+    /// **Note**: This method does not decode spaces plus (+) signs as spaces (ASCII
+    /// 0x20), like HTML forms do. If you need that kind of decoding, you must
+    /// use QUrl::encodedQueryItems and decode the data yourself.
     /// 
-    ///     \sa setQuery(), hasQuery()
+    /// **See also:** setQueryItems()
+    /// setEncodedQuery()
+    /// 
+    /// Returns the first query string value whose key is equal to *key*
+    /// from the URL.
+    /// 
+    /// **Note**: This method does not decode spaces plus (+) signs as spaces (ASCII
+    /// 0x20), like HTML forms do. If you need that kind of decoding, you must
+    /// use QUrl::encodedQueryItemValue and decode the data yourself.
+    /// 
+    /// **See also:** allQueryItemValues()
+    /// 
+    /// Returns the query string of the URL if there's a query string, or an empty
+    /// result if not. To determine if the parsed URL contained a query string, use
+    /// hasQuery().
+    /// 
+    /// The *options* argument controls how to format the query component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
+    /// 
+    /// Note that use of QUrl::FullyDecoded in queries is discouraged, as queries
+    /// often contain data that is supposed to remain percent-encoded, including
+    /// the use of the sequence to represent a plus character ('+').
+    /// 
+    /// **See also:** setQuery()
+    /// hasQuery()
     query(arg0: Url::ComponentFormattingOptions) -> String,
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if this URL contains a fragment (i.e., if # was seen on it).
+    /// Returns `true` if this URL contains a fragment (i.e., if # was seen on it).
     /// 
-    ///     \sa fragment(), setFragment()
+    /// **See also:** fragment()
+    /// setFragment()
     has_fragment() -> bool,
-    ///     Returns the fragment of the URL. To determine if the parsed URL contained a
-    ///     fragment, use hasFragment().
     /// 
-    ///     The \a options argument controls how to format the fragment component. All
-    ///     values produce an unambiguous result. With QUrl::FullyDecoded, all
-    ///     percent-encoded sequences are decoded; otherwise, the returned value may
-    ///     contain some percent-encoded sequences for some control sequences not
-    ///     representable in decoded form in QString.
+    /// Returns the fragment of the URL. To determine if the parsed URL contained a
+    /// fragment, use hasFragment().
     /// 
-    ///     Note that QUrl::FullyDecoded may cause data loss if those non-representable
-    ///     sequences are present. It is recommended to use that value when the result
-    ///     will be used in a non-URL context.
+    /// The *options* argument controls how to format the fragment component. All
+    /// values produce an unambiguous result. With QUrl::FullyDecoded, all
+    /// percent-encoded sequences are decoded; otherwise, the returned value may
+    /// contain some percent-encoded sequences for some control sequences not
+    /// representable in decoded form in QString.
     /// 
-    ///     \sa setFragment(), hasFragment()
+    /// Note that QUrl::FullyDecoded may cause data loss if those non-representable
+    /// sequences are present. It is recommended to use that value when the result
+    /// will be used in a non-URL context.
+    /// 
+    /// **See also:** setFragment()
+    /// hasFragment()
     fragment(options: Url::ComponentFormattingOptions) -> String,
-    ///     Sets the fragment of the URL to \a fragment. The fragment is the
-    ///     last part of the URL, represented by a '#' followed by a string of
-    ///     characters. It is typically used in HTTP for referring to a
-    ///     certain link or point on a page:
     /// 
-    ///     \image qurl-fragment.png
+    /// Sets the fragment of the URL to *fragment.* The fragment is the
+    /// last part of the URL, represented by a '#' followed by a string of
+    /// characters. It is typically used in HTTP for referring to a
+    /// certain link or point on a page:
     /// 
-    ///     The fragment is sometimes also referred to as the URL "reference".
+    /// ![qurl-fragment.png](qurl-fragment.png)
     /// 
-    ///     Passing an argument of QString() (a null QString) will unset the fragment.
-    ///     Passing an argument of QString("") (an empty but not null QString) will set the
-    ///     fragment to an empty string (as if the original URL had a lone "#").
+    /// The fragment is sometimes also referred to as the URL .
     /// 
-    ///     The \a fragment data is interpreted according to \a mode: in StrictMode,
-    ///     any '%' characters must be followed by exactly two hexadecimal characters
-    ///     and some characters (including space) are not allowed in undecoded form. In
-    ///     TolerantMode, all characters are accepted in undecoded form and the
-    ///     tolerant parser will correct stray '%' not followed by two hex characters.
-    ///     In DecodedMode, '%' stand for themselves and encoded characters are not
-    ///     possible.
+    /// Passing an argument of QString() (a null QString) will unset the fragment.
+    /// Passing an argument of QString("") (an empty but not null QString) will set the
+    /// fragment to an empty string (as if the original URL had a lone ).
     /// 
-    ///     QUrl::DecodedMode should be used when setting the fragment from a data
-    ///     source which is not a URL or with a fragment obtained by calling
-    ///     fragment() with the QUrl::FullyDecoded formatting option.
+    /// The *fragment* data is interpreted according to *mode:* in StrictMode,
+    /// any '%' characters must be followed by exactly two hexadecimal characters
+    /// and some characters (including space) are not allowed in undecoded form. In
+    /// TolerantMode, all characters are accepted in undecoded form and the
+    /// tolerant parser will correct stray '%' not followed by two hex characters.
+    /// In DecodedMode, '%' stand for themselves and encoded characters are not
+    /// possible.
     /// 
-    ///     \sa fragment(), hasFragment()
+    /// QUrl::DecodedMode should be used when setting the fragment from a data
+    /// source which is not a URL or with a fragment obtained by calling
+    /// fragment() with the QUrl::FullyDecoded formatting option.
+    /// 
+    /// **See also:** fragment()
+    /// hasFragment()
     set_fragment(fragment: String, mode: Url::ParsingMode),
-    ///     Returns the result of the merge of this URL with \a relative. This
-    ///     URL is used as a base to convert \a relative to an absolute URL.
     /// 
-    ///     If \a relative is not a relative URL, this function will return \a
-    ///     relative directly. Otherwise, the paths of the two URLs are
-    ///     merged, and the new URL returned has the scheme and authority of
-    ///     the base URL, but with the merged path, as in the following
-    ///     example:
+    /// Returns the result of the merge of this URL with *relative.* This
+    /// URL is used as a base to convert *relative* to an absolute URL.
     /// 
-    ///     \snippet code/src_corelib_io_qurl.cpp 5
+    /// If *relative* is not a relative URL, this function will return *relative* directly. Otherwise, the paths of the two URLs are
+    /// merged, and the new URL returned has the scheme and authority of
+    /// the base URL, but with the merged path, as in the following
+    /// example:
     /// 
-    ///     Calling resolved() with ".." returns a QUrl whose directory is
-    ///     one level higher than the original. Similarly, calling resolved()
-    ///     with "../.." removes two levels from the path. If \a relative is
-    ///     "/", the path becomes "/".
+    /// Calling resolved() with returns a QUrl whose directory is
+    /// one level higher than the original. Similarly, calling resolved()
+    /// with removes two levels from the path. If *relative* is
+    /// , the path becomes .
     /// 
-    ///     \sa isRelative()
+    /// **See also:** isRelative()
     resolved(relative: &UrlType) -> Url,
-    ///     Returns \c true if the URL is relative; otherwise returns \c false. A URL is
-    ///     relative reference if its scheme is undefined; this function is therefore
-    ///     equivalent to calling scheme().isEmpty().
     /// 
-    ///     Relative references are defined in RFC 3986 section 4.2.
+    /// Returns `true` if the URL is relative; otherwise returns `false.` A URL is
+    /// relative reference if its scheme is undefined; this function is therefore
+    /// equivalent to calling scheme().isEmpty().
     /// 
-    ///     \sa {Relative URLs vs Relative Paths}
+    /// Relative references are defined in RFC 3986 section 4.2.
+    /// 
+    /// **See also:** {Relative URLs vs Relative Paths}
     is_relative() -> bool,
-    ///     Returns \c true if this URL is a parent of \a childUrl. \a childUrl is a child
-    ///     of this URL if the two URLs share the same scheme and authority,
-    ///     and this URL's path is a parent of the path of \a childUrl.
+    /// 
+    /// Returns `true` if this URL is a parent of *childUrl.* *childUrl* is a child
+    /// of this URL if the two URLs share the same scheme and authority,
+    /// and this URL's path is a parent of the path of *childUrl.*
     is_parent_of(url: &UrlType) -> bool,
-    ///     \since 4.8
-    ///     Returns \c true if this URL is pointing to a local file path. A URL is a
-    ///     local file path if the scheme is "file".
     /// 
-    ///     Note that this function considers URLs with hostnames to be local file
-    ///     paths, even if the eventual file path cannot be opened with
-    ///     QFile::open().
+    /// Returns `true` if this URL is pointing to a local file path. A URL is a
+    /// local file path if the scheme is .
     /// 
-    ///     \sa fromLocalFile(), toLocalFile()
+    /// Note that this function considers URLs with hostnames to be local file
+    /// paths, even if the eventual file path cannot be opened with
+    /// QFile::open().
+    /// 
+    /// **See also:** fromLocalFile()
+    /// toLocalFile()
     is_local_file() -> bool,
-    ///     Returns a QUrl representation of \a localFile, interpreted as a local
-    ///     file. This function accepts paths separated by slashes as well as the
-    ///     native separator for this platform.
     /// 
-    ///     This function also accepts paths with a doubled leading slash (or
-    ///     backslash) to indicate a remote file, as in
-    ///     "//servername/path/to/file.txt". Note that only certain platforms can
-    ///     actually open this file using QFile::open().
+    /// Returns a QUrl representation of *localFile,* interpreted as a local
+    /// file. This function accepts paths separated by slashes as well as the
+    /// native separator for this platform.
     /// 
-    ///     An empty \a localFile leads to an empty URL (since Qt 5.4).
+    /// This function also accepts paths with a doubled leading slash (or
+    /// backslash) to indicate a remote file, as in
+    /// . Note that only certain platforms can
+    /// actually open this file using QFile::open().
     /// 
-    ///     \code
-    ///     qDebug() << QUrl::fromLocalFile("file.txt");            // QUrl("file:file.txt")
-    ///     qDebug() << QUrl::fromLocalFile("/home/user/file.txt"); // QUrl("file:///home/user/file.txt")
-    ///     qDebug() << QUrl::fromLocalFile("file:file.txt");       // doesn't make sense; expects path, not url with scheme
-    ///     \endcode
+    /// An empty *localFile* leads to an empty URL (since Qt 5.4).
     /// 
-    ///     In the first line in snippet above, a file URL is constructed from a
-    ///     local, relative path. A file URL with a relative path only makes sense
-    ///     if there is a base URL to resolve it against. For example:
+    /// ```
+    /// qDebug() << QUrl::fromLocalFile("file.txt");            // QUrl("file:file.txt")
+    /// qDebug() << QUrl::fromLocalFile("/home/user/file.txt"); // QUrl("file:///home/user/file.txt")
+    /// qDebug() << QUrl::fromLocalFile("file:file.txt");       // doesn't make sense; expects path, not url with scheme
+    /// ```
     /// 
-    ///     \code
-    ///     QUrl url = QUrl::fromLocalFile("file.txt");
-    ///     QUrl baseUrl = QUrl("file:/home/user/");
-    ///     // wrong: prints QUrl("file:file.txt"), as url already has a scheme
-    ///     qDebug() << baseUrl.resolved(url);
-    ///     \endcode
+    /// In the first line in snippet above, a file URL is constructed from a
+    /// local, relative path. A file URL with a relative path only makes sense
+    /// if there is a base URL to resolve it against. For example:
     /// 
-    ///     To resolve such a URL, it's necessary to remove the scheme beforehand:
+    /// ```
+    /// QUrl url = QUrl::fromLocalFile("file.txt");
+    /// QUrl baseUrl = QUrl("file:/home/user/");
+    /// // wrong: prints QUrl("file:file.txt"), as url already has a scheme
+    /// qDebug() << baseUrl.resolved(url);
+    /// ```
     /// 
-    ///     \code
-    ///     // correct: prints QUrl("file:///home/user/file.txt")
-    ///     url.setScheme(QString());
-    ///     qDebug() << baseUrl.resolved(url);
-    ///     \endcode
+    /// To resolve such a URL, it's necessary to remove the scheme beforehand:
     /// 
-    ///     For this reason, it is better to use a relative URL (that is, no scheme)
-    ///     for relative file paths:
+    /// ```
+    /// // correct: prints QUrl("file:///home/user/file.txt")
+    /// url.setScheme(QString());
+    /// qDebug() << baseUrl.resolved(url);
+    /// ```
     /// 
-    ///     \code
-    ///     QUrl url = QUrl("file.txt");
-    ///     QUrl baseUrl = QUrl("file:/home/user/");
-    ///     // prints QUrl("file:///home/user/file.txt")
-    ///     qDebug() << baseUrl.resolved(url);
-    ///     \endcode
+    /// For this reason, it is better to use a relative URL (that is, no scheme)
+    /// for relative file paths:
     /// 
-    ///     \sa toLocalFile(), isLocalFile(), QDir::toNativeSeparators()
+    /// ```
+    /// QUrl url = QUrl("file.txt");
+    /// QUrl baseUrl = QUrl("file:/home/user/");
+    /// // prints QUrl("file:///home/user/file.txt")
+    /// qDebug() << baseUrl.resolved(url);
+    /// ```
+    /// 
+    /// **See also:** toLocalFile()
+    /// isLocalFile()
+    /// QDir::toNativeSeparators()
     [static] from_local_file(localfile: String) -> Url,
-    ///     Returns the path of this URL formatted as a local file path. The path
-    ///     returned will use forward slashes, even if it was originally created
-    ///     from one with backslashes.
     /// 
-    ///     If this URL contains a non-empty hostname, it will be encoded in the
-    ///     returned value in the form found on SMB networks (for example,
-    ///     "//servername/path/to/file.txt").
+    /// Returns the path of this URL formatted as a local file path. The path
+    /// returned will use forward slashes, even if it was originally created
+    /// from one with backslashes.
     /// 
-    ///     \code
-    ///     qDebug() << QUrl("file:file.txt").toLocalFile();            // "file:file.txt"
-    ///     qDebug() << QUrl("file:/home/user/file.txt").toLocalFile(); // "file:///home/user/file.txt"
-    ///     qDebug() << QUrl("file.txt").toLocalFile();                 // ""; wasn't a local file as it had no scheme
-    ///     \endcode
+    /// If this URL contains a non-empty hostname, it will be encoded in the
+    /// returned value in the form found on SMB networks (for example,
+    /// ).
     /// 
-    ///     Note: if the path component of this URL contains a non-UTF-8 binary
-    ///     sequence (such as %80), the behaviour of this function is undefined.
+    /// ```
+    /// qDebug() << QUrl("file:file.txt").toLocalFile();            // "file:file.txt"
+    /// qDebug() << QUrl("file:/home/user/file.txt").toLocalFile(); // "file:///home/user/file.txt"
+    /// qDebug() << QUrl("file.txt").toLocalFile();                 // ""; wasn't a local file as it had no scheme
+    /// ```
     /// 
-    ///     \sa fromLocalFile(), isLocalFile()
+    /// Note: if the path component of this URL contains a non-UTF-8 binary
+    /// sequence (such as %80), the behaviour of this function is undefined.
+    /// 
+    /// **See also:** fromLocalFile()
+    /// isLocalFile()
     to_local_file() -> String,
-    ///     \internal
-    /// 
-    ///     Forces a detach.
     detach(),
-    ///     \internal
     is_detached() -> bool,
-    ///     \since 5.2
     /// 
-    ///     Returns \c true if this URL and the given \a url are equal after
-    ///     applying \a options to both; otherwise returns \c false.
+    /// Returns `true` if this URL and the given *url* are equal after
+    /// applying *options* to both; otherwise returns `false.`
     /// 
-    ///     This is equivalent to calling adjusted(options) on both URLs
-    ///     and comparing the resulting urls, but faster.
+    /// This is equivalent to calling adjusted(options) on both URLs
+    /// and comparing the resulting urls, but faster.
     /// 
     matches(url: &UrlType, options: Url::FormattingOptions) -> bool,
-    ///     Returns a decoded copy of \a input. \a input is first decoded from
-    ///     percent encoding, then converted from UTF-8 to unicode.
     /// 
-    ///     \note Given invalid input (such as a string containing the sequence "%G5",
-    ///     which is not a valid hexadecimal number) the output will be invalid as
-    ///     well. As an example: the sequence "%G5" could be decoded to 'W'.
+    /// Returns a decoded copy of *input.* *input* is first decoded from
+    /// percent encoding, then converted from UTF-8 to unicode.
+    /// 
+    /// **Note**: Given invalid input (such as a string containing the sequence ,
+    /// which is not a valid hexadecimal number) the output will be invalid as
+    /// well. As an example: the sequence could be decoded to 'W'.
     [static] from_percent_encoding(arg0: &ByteArrayType) -> String,
-    ///     Returns an encoded copy of \a input. \a input is first converted
-    ///     to UTF-8, and all ASCII-characters that are not in the unreserved group
-    ///     are percent encoded. To prevent characters from being percent encoded
-    ///     pass them to \a exclude. To force characters to be percent encoded pass
-    ///     them to \a include.
     /// 
-    ///     Unreserved is defined as:
-    ///        \tt {ALPHA / DIGIT / "-" / "." / "_" / "~"}
+    /// Returns an encoded copy of *input.* *input* is first converted
+    /// to UTF-8, and all ASCII-characters that are not in the unreserved group
+    /// are percent encoded. To prevent characters from being percent encoded
+    /// pass them to *exclude.* To force characters to be percent encoded pass
+    /// them to *include.*
     /// 
-    ///     \snippet code/src_corelib_io_qurl.cpp 6
+    /// Unreserved is defined as:
+    /// `ALPHA / DIGIT / "-" / "." / "_" / "~"`
+    /// 
     [static] to_percent_encoding(arg0: String, exclude: &ByteArrayType, include: &ByteArrayType) -> ByteArray,
-    ///     \since 4.2
     /// 
-    ///     Returns the Unicode form of the given domain name
-    ///     \a domain, which is encoded in the ASCII Compatible Encoding (ACE).
-    ///     The result of this function is considered equivalent to \a domain.
+    /// Returns the Unicode form of the given domain name
+    /// *domain,* which is encoded in the ASCII Compatible Encoding (ACE).
+    /// The result of this function is considered equivalent to *domain.*
     /// 
-    ///     If the value in \a domain cannot be encoded, it will be converted
-    ///     to QString and returned.
+    /// If the value in *domain* cannot be encoded, it will be converted
+    /// to QString and returned.
     /// 
-    ///     The ASCII Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491
-    ///     and RFC 3492. It is part of the Internationalizing Domain Names in
-    ///     Applications (IDNA) specification, which allows for domain names
-    ///     (like \c "example.com") to be written using international
-    ///     characters.
+    /// The ASCII Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491
+    /// and RFC 3492. It is part of the Internationalizing Domain Names in
+    /// Applications (IDNA) specification, which allows for domain names
+    /// (like `"example.com")` to be written using international
+    /// characters.
     [static] from_ace(arg0: &ByteArrayType) -> String,
-    ///     \since 4.2
     /// 
-    ///     Returns the ASCII Compatible Encoding of the given domain name \a domain.
-    ///     The result of this function is considered equivalent to \a domain.
+    /// Returns the ASCII Compatible Encoding of the given domain name *domain.*
+    /// The result of this function is considered equivalent to *domain.*
     /// 
-    ///     The ASCII-Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491
-    ///     and RFC 3492. It is part of the Internationalizing Domain Names in
-    ///     Applications (IDNA) specification, which allows for domain names
-    ///     (like \c "example.com") to be written using international
-    ///     characters.
+    /// The ASCII-Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491
+    /// and RFC 3492. It is part of the Internationalizing Domain Names in
+    /// Applications (IDNA) specification, which allows for domain names
+    /// (like `"example.com")` to be written using international
+    /// characters.
     /// 
-    ///     This function returns an empty QByteArray if \a domain is not a valid
-    ///     hostname. Note, in particular, that IPv6 literals are not valid domain
-    ///     names.
+    /// This function returns an empty QByteArray if *domain* is not a valid
+    /// hostname. Note, in particular, that IPv6 literals are not valid domain
+    /// names.
     [static] to_ace(arg0: String) -> ByteArray,
-    ///     \since 4.2
     /// 
-    ///     Returns the current whitelist of top-level domains that are allowed
-    ///     to have non-ASCII characters in their compositions.
+    /// Returns the current whitelist of top-level domains that are allowed
+    /// to have non-ASCII characters in their compositions.
     /// 
-    ///     See setIdnWhitelist() for the rationale of this list.
+    /// See setIdnWhitelist() for the rationale of this list.
     [static] idn_whitelist() -> [String],
-    ///     \since 4.2
     /// 
-    ///     Sets the whitelist of Top-Level Domains (TLDs) that are allowed to have
-    ///     non-ASCII characters in domains to the value of \a list.
+    /// Sets the whitelist of Top-Level Domains (TLDs) that are allowed to have
+    /// non-ASCII characters in domains to the value of *list.*
     /// 
-    ///     Note that if you call this function, you need to do so \e before
-    ///     you start any threads that might access idnWhitelist().
+    /// Note that if you call this function, you need to do so *before*
+    /// you start any threads that might access idnWhitelist().
     /// 
-    ///     Qt comes with a default list that contains the Internet top-level domains
-    ///     that have published support for Internationalized Domain Names (IDNs)
-    ///     and rules to guarantee that no deception can happen between similarly-looking
-    ///     characters (such as the Latin lowercase letter \c 'a' and the Cyrillic
-    ///     equivalent, which in most fonts are visually identical).
+    /// Qt comes with a default list that contains the Internet top-level domains
+    /// that have published support for Internationalized Domain Names (IDNs)
+    /// and rules to guarantee that no deception can happen between similarly-looking
+    /// characters (such as the Latin lowercase letter `'a'` and the Cyrillic
+    /// equivalent, which in most fonts are visually identical).
     /// 
-    ///     This list is periodically maintained, as registrars publish new rules.
+    /// This list is periodically maintained, as registrars publish new rules.
     /// 
-    ///     This function is provided for those who need to manipulate the list, in
-    ///     order to add or remove a TLD. It is not recommended to change its value
-    ///     for purposes other than testing, as it may expose users to security risks.
+    /// This function is provided for those who need to manipulate the list, in
+    /// order to add or remove a TLD. It is not recommended to change its value
+    /// for purposes other than testing, as it may expose users to security risks.
     [static] set_idn_whitelist(arg0: &[String]),
 }
 

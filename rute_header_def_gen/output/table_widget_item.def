@@ -1,45 +1,41 @@
-///     \class QTableWidgetItem
-///     \brief The QTableWidgetItem class provides an item for use with the
-///     QTableWidget class.
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// Table items are used to hold pieces of information for table widgets.
+/// Items usually contain text, icons, or checkboxes
 /// 
-///     Table items are used to hold pieces of information for table widgets.
-///     Items usually contain text, icons, or checkboxes
+/// The QTableWidgetItem class is a convenience class that replaces the
+/// `QTableItem` class in Qt 3. It provides an item for use with
+/// the QTableWidget class.
 /// 
-///     The QTableWidgetItem class is a convenience class that replaces the
-///     \c QTableItem class in Qt 3. It provides an item for use with
-///     the QTableWidget class.
+/// Top-level items are constructed without a parent then inserted at the
+/// position specified by a pair of row and column numbers:
 /// 
-///     Top-level items are constructed without a parent then inserted at the
-///     position specified by a pair of row and column numbers:
+/// Each item can have its own background brush which is set with
+/// the setBackground() function. The current background brush can be
+/// found with background().
+/// The text label for each item can be rendered with its own font and brush.
+/// These are specified with the setFont() and setForeground() functions,
+/// and read with font() and foreground().
 /// 
-///     \snippet qtablewidget-using/mainwindow.cpp 3
+/// By default, items are enabled, editable, selectable, checkable, and can be
+/// used both as the source of a drag and drop operation and as a drop target.
+/// Each item's flags can be changed by calling setFlags() with the appropriate
+/// value (see [Qt::ItemFlags](Qt::ItemFlags)
+/// ). Checkable items can be checked and unchecked
+/// with the setCheckState() function. The corresponding checkState() function
+/// indicates whether the item is currently checked.
 /// 
-///     Each item can have its own background brush which is set with
-///     the setBackground() function. The current background brush can be
-///     found with background().
-///     The text label for each item can be rendered with its own font and brush.
-///     These are specified with the setFont() and setForeground() functions,
-///     and read with font() and foreground().
+/// # Subclassing
 /// 
-///     By default, items are enabled, editable, selectable, checkable, and can be
-///     used both as the source of a drag and drop operation and as a drop target.
-///     Each item's flags can be changed by calling setFlags() with the appropriate
-///     value (see \l{Qt::ItemFlags}). Checkable items can be checked and unchecked
-///     with the setCheckState() function. The corresponding checkState() function
-///     indicates whether the item is currently checked.
+/// When subclassing QTableWidgetItem to provide custom items, it is possible to
+/// define new types for them so that they can be distinguished from standard
+/// items. The constructors for subclasses that require this feature need to
+/// call the base class constructor with a new type value equal to or greater
+/// than [UserType.](UserType.)
 /// 
-///     \section1 Subclassing
-/// 
-///     When subclassing QTableWidgetItem to provide custom items, it is possible to
-///     define new types for them so that they can be distinguished from standard
-///     items. The constructors for subclasses that require this feature need to
-///     call the base class constructor with a new type value equal to or greater
-///     than \l UserType.
-/// 
-///     \sa QTableWidget, {Model/View Programming}, QListWidgetItem, QTreeWidgetItem
+/// **See also:** QTableWidget
+/// {Model/View Programming}
+/// QListWidgetItem
+/// QTreeWidgetItem
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -51,64 +47,221 @@ enum ItemType {
 
 
 struct TableWidgetItem {
-    ///     Creates a copy of the item.
+    /// 
+    /// Creates a copy of the item.
     [event] clone() -> TableWidgetItem?,
+    /// 
+    /// Returns the table widget that contains the item.
     table_widget() -> TableWidget?,
+    /// 
+    /// Returns the row of the item in the table.
+    /// If the item is not in a table, this function will return -1.
+    /// 
+    /// **See also:** column()
     row() -> i32,
+    /// 
+    /// Returns the column of the item in the table.
+    /// If the item is not in a table, this function will return -1.
+    /// 
+    /// **See also:** row()
     column() -> i32,
+    /// 
+    /// Sets the selected state of the item to *select.*
+    /// 
+    /// **See also:** isSelected()
     set_selected(select: bool),
+    /// 
+    /// Returns `true` if the item is selected, otherwise returns `false.`
+    /// 
+    /// **See also:** setSelected()
     is_selected() -> bool,
+    /// 
+    /// Returns the flags used to describe the item. These determine whether
+    /// the item can be checked, edited, and selected.
+    /// 
+    /// **See also:** setFlags()
     flags() -> Rute::ItemFlags,
-    ///     \fn void QTableWidgetItem::setFlags(Qt::ItemFlags flags)
     /// 
-    ///     Sets the flags for the item to the given \a flags. These determine whether
-    ///     the item can be selected or modified.
+    /// Sets the flags for the item to the given *flags.* These determine whether
+    /// the item can be selected or modified.
     /// 
-    ///     \sa flags()
+    /// **See also:** flags()
     set_flags(flags: Rute::ItemFlags),
+    /// 
+    /// Returns the item's text.
+    /// 
+    /// **See also:** setText()
+    /// 
+    /// This function is deprecated. Use foreground() instead.
+    /// 
+    /// Returns the text alignment for the item's text.
+    /// 
+    /// **See also:** Qt::Alignment
     text() -> String,
+    /// 
+    /// Sets the item's text to the *text* specified.
+    /// 
+    /// **See also:** text()
+    /// setFont()
+    /// setForeground()
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
+    /// 
+    /// Sets the text alignment for the item's text to the *alignment*
+    /// specified.
+    /// 
+    /// **See also:** Qt::Alignment
     set_text(text: String),
+    /// 
+    /// Returns the item's icon.
+    /// 
+    /// **See also:** setIcon()
+    /// {QAbstractItemView::iconSize}{iconSize}
     icon() -> Icon,
+    /// 
+    /// Sets the item's icon to the *icon* specified.
+    /// 
+    /// **See also:** icon()
+    /// setText()
+    /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(icon: &IconType),
+    /// 
+    /// Returns the item's status tip.
+    /// 
+    /// **See also:** setStatusTip()
     status_tip() -> String,
+    /// 
+    /// Sets the status tip for the table item to the text specified by
+    /// *statusTip.* QTableWidget mouse tracking needs to be enabled for this
+    /// feature to work.
+    /// 
+    /// **See also:** statusTip()
+    /// setToolTip()
+    /// setWhatsThis()
     set_status_tip(status_tip: String),
+    /// 
+    /// Returns the item's tooltip.
+    /// 
+    /// **See also:** setToolTip()
     tool_tip() -> String,
+    /// 
+    /// Sets the item's tooltip to the string specified by *toolTip.*
+    /// 
+    /// **See also:** toolTip()
+    /// setStatusTip()
+    /// setWhatsThis()
     set_tool_tip(tool_tip: String),
+    /// 
+    /// Returns the item's help.
+    /// 
+    /// **See also:** setWhatsThis()
     whats_this() -> String,
+    /// 
+    /// Sets the item's help to the string specified by *whatsThis.*
+    /// 
+    /// **See also:** whatsThis()
+    /// setStatusTip()
+    /// setToolTip()
     set_whats_this(whats_this: String),
+    /// 
+    /// Returns the font used to render the item's text.
+    /// 
+    /// **See also:** setFont()
     font() -> Font,
+    /// 
+    /// Sets the font used to display the item's text to the given *font.*
+    /// 
+    /// **See also:** font()
+    /// setText()
+    /// setForeground()
     set_font(font: &FontType),
+    /// 
+    /// Returns the text alignment for the item's text.
+    /// 
+    /// **See also:** Qt::Alignment
     text_alignment() -> i32,
+    /// 
+    /// Sets the text alignment for the item's text to the *alignment*
+    /// specified.
+    /// 
+    /// **See also:** Qt::Alignment
     set_text_alignment(alignment: i32),
+    /// 
+    /// This function is deprecated. Use background() instead.
     background_color() -> Color,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
     set_background_color(color: &ColorType),
+    /// 
+    /// This function is deprecated. Use background() instead.
+    /// 
+    /// Returns the brush used to render the item's background.
+    /// 
+    /// **See also:** foreground()
     background() -> Brush,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
+    /// 
+    /// Sets the item's background brush to the specified *brush.*
+    /// 
+    /// **See also:** setForeground()
     set_background(brush: &BrushType),
+    /// 
+    /// This function is deprecated. Use foreground() instead.
     text_color() -> Color,
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
     set_text_color(color: &ColorType),
+    /// 
+    /// Returns the brush used to render the item's foreground (e.g. text).
+    /// 
+    /// **See also:** background()
     foreground() -> Brush,
+    /// 
+    /// Sets the item's foreground brush to the specified *brush.*
+    /// 
+    /// **See also:** setBackground()
     set_foreground(brush: &BrushType),
+    /// 
+    /// Returns the checked state of the table item.
+    /// 
+    /// **See also:** flags()
     check_state() -> Rute::CheckState,
+    /// 
+    /// Sets the check state of the table item to be *state.*
     set_check_state(state: Rute::CheckState),
+    /// 
+    /// Returns the size hint set for the table item.
     size_hint() -> Size,
+    /// 
+    /// Sets the size hint for the table item to be *size.*
+    /// If no size hint is set, the item delegate will compute the
+    /// size hint based on the item data.
     set_size_hint(size: &SizeType),
-    ///     Returns the item's data for the given \a role.
+    /// 
+    /// Returns the item's data for the given *role.*
     [event] data(role: i32) -> Variant,
-    ///     Sets the item's data for the given \a role to the specified \a value.
     /// 
-    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole as
-    ///     referring to the same data.
+    /// Sets the item's data for the given *role* to the specified *value.*
     /// 
-    ///     \sa Qt::ItemDataRole, data()
+    /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole as
+    /// referring to the same data.
+    /// 
+    /// **See also:** Qt::ItemDataRole
+    /// data()
     [event] set_data(role: i32, value: &VariantType),
-    ///     Reads the item from stream \a in.
     /// 
-    ///     \sa write()
+    /// Reads the item from stream *in.*
+    /// 
+    /// **See also:** write()
     [event] read(in: &DataStreamType),
-    ///     Writes the item to stream \a out.
     /// 
-    ///     \sa read()
+    /// Writes the item to stream *out.*
+    /// 
+    /// **See also:** read()
     [event] write(out: &DataStreamType),
+    /// 
+    /// Returns the type passed to the QTableWidgetItem constructor.
     type() -> i32,
 }
 

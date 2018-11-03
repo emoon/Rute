@@ -1,96 +1,94 @@
-///     \class QSplitterHandle
-///     \brief The QSplitterHandle class provides handle functionality for the splitter.
 /// 
-///     \ingroup organizers
-///     \inmodule QtWidgets
+/// QSplitterHandle is typically what people think about when they think about
+/// a splitter. It is the handle that is used to resize the widgets.
 /// 
-///     QSplitterHandle is typically what people think about when they think about
-///     a splitter. It is the handle that is used to resize the widgets.
+/// A typical developer using QSplitter will never have to worry about
+/// QSplitterHandle. It is provided for developers who want splitter handles
+/// that provide extra features, such as popup menus.
 /// 
-///     A typical developer using QSplitter will never have to worry about
-///     QSplitterHandle. It is provided for developers who want splitter handles
-///     that provide extra features, such as popup menus.
+/// The typical way one would create splitter handles is to subclass QSplitter and then
+/// reimplement QSplitter::createHandle() to instantiate the custom splitter
+/// handle. For example, a minimum QSplitter subclass might look like this:
 /// 
-///     The typical way one would create splitter handles is to subclass QSplitter and then
-///     reimplement QSplitter::createHandle() to instantiate the custom splitter
-///     handle. For example, a minimum QSplitter subclass might look like this:
+/// The [createHandle()](QSplitter::)
+/// implementation simply constructs a
+/// custom splitter handle, called `Splitter` in this example:
 /// 
-///     \snippet splitterhandle/splitter.h 0
+/// Information about a given handle can be obtained using functions like
+/// orientation() and opaqueResize(), and is retrieved from its parent splitter.
+/// Details like these can be used to give custom handles different appearances
+/// depending on the splitter's orientation.
 /// 
-///     The \l{QSplitter::}{createHandle()} implementation simply constructs a
-///     custom splitter handle, called \c Splitter in this example:
+/// The complexity of a custom handle subclass depends on the tasks that it
+/// needs to perform. A simple subclass might only provide a paintEvent()
+/// implementation:
 /// 
-///     \snippet splitterhandle/splitter.cpp 1
+/// In this example, a predefined gradient is set up differently depending on
+/// the orientation of the handle. QSplitterHandle provides a reasonable
+/// size hint for the handle, so the subclass does not need to provide a
+/// reimplementation of sizeHint() unless the handle has special size
+/// requirements.
 /// 
-///     Information about a given handle can be obtained using functions like
-///     orientation() and opaqueResize(), and is retrieved from its parent splitter.
-///     Details like these can be used to give custom handles different appearances
-///     depending on the splitter's orientation.
-/// 
-///     The complexity of a custom handle subclass depends on the tasks that it
-///     needs to perform. A simple subclass might only provide a paintEvent()
-///     implementation:
-/// 
-///     \snippet splitterhandle/splitter.cpp 0
-/// 
-///     In this example, a predefined gradient is set up differently depending on
-///     the orientation of the handle. QSplitterHandle provides a reasonable
-///     size hint for the handle, so the subclass does not need to provide a
-///     reimplementation of sizeHint() unless the handle has special size
-///     requirements.
-/// 
-///     \sa QSplitter
+/// **See also:** QSplitter
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct SplitterHandle : Widget {
-    ///     Sets the orientation of the splitter handle to \a orientation.
-    ///     This is usually propagated from the QSplitter.
     /// 
-    ///     \sa QSplitter::setOrientation()
+    /// Sets the orientation of the splitter handle to *orientation.*
+    /// This is usually propagated from the QSplitter.
+    /// 
+    /// **See also:** QSplitter::setOrientation()
     set_orientation(o: Rute::Orientation),
-    ///    Returns the handle's orientation. This is usually propagated from the QSplitter.
     /// 
-    ///    \sa QSplitter::orientation()
+    /// Returns the handle's orientation. This is usually propagated from the QSplitter.
+    /// 
+    /// **See also:** QSplitter::orientation()
     orientation() -> Rute::Orientation,
-    ///     Returns \c true if widgets are resized dynamically (opaquely), otherwise
-    ///     returns \c false. This value is controlled by the QSplitter.
     /// 
-    ///     \sa QSplitter::opaqueResize()
+    /// Returns `true` if widgets are resized dynamically (opaquely), otherwise
+    /// returns `false.` This value is controlled by the QSplitter.
+    /// 
+    /// **See also:** QSplitter::opaqueResize()
     /// 
     opaque_resize() -> bool,
-    ///     Returns the splitter associated with this splitter handle.
     /// 
-    ///     \sa QSplitter::handle()
+    /// Returns the splitter associated with this splitter handle.
+    /// 
+    /// **See also:** QSplitter::handle()
     splitter() -> Splitter?,
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///    \reimp
+    /// 
     [event] paint_event(arg0: *PaintEventType),
-    ///     \reimp
+    /// 
     [event] mouse_move_event(arg0: *MouseEventType),
-    ///    \reimp
+    /// 
     [event] mouse_press_event(arg0: *MouseEventType),
-    ///    \reimp
+    /// 
     [event] mouse_release_event(arg0: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] resize_event(arg0: *ResizeEventType),
-    ///     \reimp
+    /// 
     [event] event(arg0: *EventType) -> bool,
-    ///     Tells the splitter to move this handle to position \a pos, which is
-    ///     the distance from the left or top edge of the widget.
     /// 
-    ///     Note that \a pos is also measured from the left (or top) for
-    ///     right-to-left languages. This function will map \a pos to the
-    ///     appropriate position before calling QSplitter::moveSplitter().
+    /// Tells the splitter to move this handle to position *pos,* which is
+    /// the distance from the left or top edge of the widget.
     /// 
-    ///     \sa QSplitter::moveSplitter(), closestLegalPosition()
+    /// Note that *pos* is also measured from the left (or top) for
+    /// right-to-left languages. This function will map *pos* to the
+    /// appropriate position before calling QSplitter::moveSplitter().
+    /// 
+    /// **See also:** QSplitter::moveSplitter()
+    /// closestLegalPosition()
     move_splitter(p: i32),
-    ///    Returns the closest legal position to \a pos of the splitter
-    ///    handle. The positions are measured from the left or top edge of
-    ///    the splitter, even for right-to-left languages.
     /// 
-    ///    \sa QSplitter::closestLegalPosition(), moveSplitter()
+    /// Returns the closest legal position to *pos* of the splitter
+    /// handle. The positions are measured from the left or top edge of
+    /// the splitter, even for right-to-left languages.
+    /// 
+    /// **See also:** QSplitter::closestLegalPosition()
+    /// moveSplitter()
     closest_legal_position(p: i32) -> i32,
 }
 

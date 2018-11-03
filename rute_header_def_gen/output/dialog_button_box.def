@@ -1,95 +1,85 @@
-///     \class QDialogButtonBox
-///     \since 4.2
-///     \brief The QDialogButtonBox class is a widget that presents buttons in a
-///     layout that is appropriate to the current widget style.
 /// 
-///     \ingroup dialog-classes
-///     \inmodule QtWidgets
+/// Dialogs and message boxes typically present buttons in a layout that
+/// conforms to the interface guidelines for that platform. Invariably,
+/// different platforms have different layouts for their dialogs.
+/// QDialogButtonBox allows a developer to add buttons to it and will
+/// automatically use the appropriate layout for the user's desktop
+/// environment.
 /// 
-///     Dialogs and message boxes typically present buttons in a layout that
-///     conforms to the interface guidelines for that platform. Invariably,
-///     different platforms have different layouts for their dialogs.
-///     QDialogButtonBox allows a developer to add buttons to it and will
-///     automatically use the appropriate layout for the user's desktop
-///     environment.
+/// Most buttons for a dialog follow certain roles. Such roles include:
 /// 
-///     Most buttons for a dialog follow certain roles. Such roles include:
+/// * Accepting or rejecting the dialog.
+/// * Asking for help.
+/// * Performing actions on the dialog itself (such as resetting fields or applying changes).
 /// 
-///     \list
-///     \li Accepting or rejecting the dialog.
-///     \li Asking for help.
-///     \li Performing actions on the dialog itself (such as resetting fields or
-///        applying changes).
-///     \endlist
+/// There can also be alternate ways of dismissing the dialog which may cause
+/// destructive results.
 /// 
-///     There can also be alternate ways of dismissing the dialog which may cause
-///     destructive results.
+/// Most dialogs have buttons that can almost be considered standard (e.g.
+/// **OK** and **Cancel** buttons). It is sometimes convenient to create these
+/// buttons in a standard way.
 /// 
-///     Most dialogs have buttons that can almost be considered standard (e.g.
-///     \uicontrol OK and \uicontrol Cancel buttons). It is sometimes convenient to create these
-///     buttons in a standard way.
+/// There are a couple ways of using QDialogButtonBox. One ways is to create
+/// the buttons (or button texts) yourself and add them to the button box,
+/// specifying their role.
 /// 
-///     There are a couple ways of using QDialogButtonBox. One ways is to create
-///     the buttons (or button texts) yourself and add them to the button box,
-///     specifying their role.
+/// Alternatively, QDialogButtonBox provides several standard buttons (e.g. OK, Cancel, Save)
+/// that you can use. They exist as flags so you can OR them together in the constructor.
 /// 
-///     \snippet dialogs/extension/finddialog.cpp 1
+/// You can mix and match normal buttons and standard buttons.
 /// 
-///     Alternatively, QDialogButtonBox provides several standard buttons (e.g. OK, Cancel, Save)
-///     that you can use. They exist as flags so you can OR them together in the constructor.
+/// Currently the buttons are laid out in the following way if the button box is horizontal:
+/// * ![GnomeLayout Horizontal](buttonbox-gnomelayout-horizontal.png)
 /// 
-///     \snippet dialogs/tabdialog/tabdialog.cpp 2
+/// * Button box laid out in horizontal GnomeLayout
+/// * ![KdeLayout Horizontal](buttonbox-kdelayout-horizontal.png)
 /// 
-///     You can mix and match normal buttons and standard buttons.
+/// * Button box laid out in horizontal KdeLayout
+/// * ![MacLayout Horizontal](buttonbox-maclayout-horizontal.png)
 /// 
-///     Currently the buttons are laid out in the following way if the button box is horizontal:
-///     \table
-///     \row \li \inlineimage buttonbox-gnomelayout-horizontal.png GnomeLayout Horizontal
-///          \li Button box laid out in horizontal GnomeLayout
-///     \row \li \inlineimage buttonbox-kdelayout-horizontal.png KdeLayout Horizontal
-///          \li Button box laid out in horizontal KdeLayout
-///     \row \li \inlineimage buttonbox-maclayout-horizontal.png MacLayout Horizontal
-///          \li Button box laid out in horizontal MacLayout
-///     \row \li \inlineimage buttonbox-winlayout-horizontal.png  WinLayout Horizontal
-///          \li Button box laid out in horizontal WinLayout
-///     \endtable
+/// * Button box laid out in horizontal MacLayout
+/// * ![WinLayout Horizontal](buttonbox-winlayout-horizontal.png)
 /// 
-///     The buttons are laid out the following way if the button box is vertical:
+/// * Button box laid out in horizontal WinLayout
 /// 
-///     \table
-///     \row \li GnomeLayout
-///          \li KdeLayout
-///          \li MacLayout
-///          \li WinLayout
-///     \row \li \inlineimage buttonbox-gnomelayout-vertical.png GnomeLayout Vertical
-///          \li \inlineimage buttonbox-kdelayout-vertical.png KdeLayout Vertical
-///          \li \inlineimage buttonbox-maclayout-vertical.png MacLayout Vertical
-///          \li \inlineimage buttonbox-winlayout-vertical.png WinLayout Vertical
-///     \endtable
+/// The buttons are laid out the following way if the button box is vertical:
 /// 
-///     Additionally, button boxes that contain only buttons with ActionRole or
-///     HelpRole can be considered modeless and have an alternate look on \macos:
+/// * GnomeLayout
+/// * KdeLayout
+/// * MacLayout
+/// * WinLayout
+/// * ![GnomeLayout Vertical](buttonbox-gnomelayout-vertical.png)
 /// 
-///     \table
-///     \row \li modeless horizontal MacLayout
-///          \li \inlineimage buttonbox-mac-modeless-horizontal.png Screenshot of modeless horizontal MacLayout
-///     \row \li modeless vertical MacLayout
-///          \li \inlineimage buttonbox-mac-modeless-vertical.png Screenshot of modeless vertical MacLayout
-///     \endtable
+/// * ![KdeLayout Vertical](buttonbox-kdelayout-vertical.png)
 /// 
-///     When a button is clicked in the button box, the clicked() signal is emitted
-///     for the actual button is that is pressed. For convenience, if the button
-///     has an AcceptRole, RejectRole, or HelpRole, the accepted(), rejected(), or
-///     helpRequested() signals are emitted respectively.
+/// * ![MacLayout Vertical](buttonbox-maclayout-vertical.png)
 /// 
-///     If you want a specific button to be default you need to call
-///     QPushButton::setDefault() on it yourself. However, if there is no default
-///     button set and to preserve which button is the default button across
-///     platforms when using the QPushButton::autoDefault property, the first push
-///     button with the accept role is made the default button when the
-///     QDialogButtonBox is shown,
+/// * ![WinLayout Vertical](buttonbox-winlayout-vertical.png)
 /// 
-///     \sa QMessageBox, QPushButton, QDialog
+/// Additionally, button boxes that contain only buttons with ActionRole or
+/// HelpRole can be considered modeless and have an alternate look on MacOS :
+/// 
+/// * modeless horizontal MacLayout
+/// * ![Screenshot of modeless horizontal MacLayout](buttonbox-mac-modeless-horizontal.png)
+/// 
+/// * modeless vertical MacLayout
+/// * ![Screenshot of modeless vertical MacLayout](buttonbox-mac-modeless-vertical.png)
+/// 
+/// When a button is clicked in the button box, the clicked() signal is emitted
+/// for the actual button is that is pressed. For convenience, if the button
+/// has an AcceptRole, RejectRole, or HelpRole, the accepted(), rejected(), or
+/// helpRequested() signals are emitted respectively.
+/// 
+/// If you want a specific button to be default you need to call
+/// QPushButton::setDefault() on it yourself. However, if there is no default
+/// button set and to preserve which button is the default button across
+/// platforms when using the QPushButton::autoDefault property, the first push
+/// button with the accept role is made the default button when the
+/// QDialogButtonBox is shown,
+/// 
+/// **See also:** QMessageBox
+/// QPushButton
+/// QDialog
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -144,84 +134,202 @@ enum ButtonLayout {
 
 struct DialogButtonBox : Widget {
     set_orientation(orientation: Rute::Orientation),
-    ///     \property QDialogButtonBox::orientation
-    ///     \brief the orientation of the button box
     /// 
-    ///     By default, the orientation is horizontal (i.e. the buttons are laid out
-    ///     side by side). The possible orientations are Qt::Horizontal and
-    ///     Qt::Vertical.
+    /// By default, the orientation is horizontal (i.e. the buttons are laid out
+    /// side by side). The possible orientations are Qt::Horizontal and
+    /// Qt::Vertical.
     orientation() -> Rute::Orientation,
-    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
-    ///     a push button. If \a button is invalid, it is not added to the button box, and
-    ///     zero is returned.
     /// 
-    ///     \sa removeButton(), clear()
+    /// Adds the given *button* to the button box with the specified *role.*
+    /// If the role is invalid, the button is not added.
+    /// 
+    /// If the button has already been added, it is removed and added again with the
+    /// new role.
+    /// 
+    /// **Note**: The button box takes ownership of the button.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Creates a push button with the given *text,* adds it to the button box for the
+    /// specified *role,* and returns the corresponding push button. If *role* is
+    /// invalid, no button is created, and zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Adds a standard *button* to the button box if it is valid to do so, and returns
+    /// a push button. If *button* is invalid, it is not added to the button box, and
+    /// zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
     add_button(button: *AbstractButtonType, role: DialogButtonBox::ButtonRole),
-    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
-    ///     a push button. If \a button is invalid, it is not added to the button box, and
-    ///     zero is returned.
     /// 
-    ///     \sa removeButton(), clear()
+    /// Adds the given *button* to the button box with the specified *role.*
+    /// If the role is invalid, the button is not added.
+    /// 
+    /// If the button has already been added, it is removed and added again with the
+    /// new role.
+    /// 
+    /// **Note**: The button box takes ownership of the button.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Creates a push button with the given *text,* adds it to the button box for the
+    /// specified *role,* and returns the corresponding push button. If *role* is
+    /// invalid, no button is created, and zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Adds a standard *button* to the button box if it is valid to do so, and returns
+    /// a push button. If *button* is invalid, it is not added to the button box, and
+    /// zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
     add_button(text: String, role: DialogButtonBox::ButtonRole) -> PushButton?,
-    ///     Adds a standard \a button to the button box if it is valid to do so, and returns
-    ///     a push button. If \a button is invalid, it is not added to the button box, and
-    ///     zero is returned.
     /// 
-    ///     \sa removeButton(), clear()
+    /// Adds the given *button* to the button box with the specified *role.*
+    /// If the role is invalid, the button is not added.
+    /// 
+    /// If the button has already been added, it is removed and added again with the
+    /// new role.
+    /// 
+    /// **Note**: The button box takes ownership of the button.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Creates a push button with the given *text,* adds it to the button box for the
+    /// specified *role,* and returns the corresponding push button. If *role* is
+    /// invalid, no button is created, and zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
+    /// 
+    /// Adds a standard *button* to the button box if it is valid to do so, and returns
+    /// a push button. If *button* is invalid, it is not added to the button box, and
+    /// zero is returned.
+    /// 
+    /// **See also:** removeButton()
+    /// clear()
     add_button(button: DialogButtonBox::StandardButton) -> PushButton?,
-    ///     Removes \a button from the button box without deleting it and sets its parent to zero.
     /// 
-    ///     \sa clear(), buttons(), addButton()
+    /// Removes *button* from the button box without deleting it and sets its parent to zero.
+    /// 
+    /// **See also:** clear()
+    /// buttons()
+    /// addButton()
     remove_button(button: *AbstractButtonType),
-    ///     Clears the button box, deleting all buttons within it.
     /// 
-    ///     \sa removeButton(), addButton()
+    /// Clears the button box, deleting all buttons within it.
+    /// 
+    /// **See also:** removeButton()
+    /// addButton()
     clear(),
-    ///     Returns a list of all the buttons that have been added to the button box.
     /// 
-    ///     \sa buttonRole(), addButton(), removeButton()
+    /// Returns a list of all the buttons that have been added to the button box.
+    /// 
+    /// **See also:** buttonRole()
+    /// addButton()
+    /// removeButton()
     buttons() -> [AbstractButton?],
-    ///     Returns the button role for the specified \a button. This function returns
-    ///     \l InvalidRole if \a button is 0 or has not been added to the button box.
     /// 
-    ///     \sa buttons(), addButton()
+    /// Returns the button role for the specified *button.* This function returns
+    /// [InvalidRole](InvalidRole)
+    /// if *button* is 0 or has not been added to the button box.
+    /// 
+    /// **See also:** buttons()
+    /// addButton()
     button_role(button: *AbstractButtonType) -> DialogButtonBox::ButtonRole,
-    ///     \property QDialogButtonBox::standardButtons
-    ///     \brief collection of standard buttons in the button box
-    /// 
-    ///     This property controls which standard buttons are used by the button box.
-    /// 
-    ///     \sa addButton()
     set_standard_buttons(buttons: DialogButtonBox::StandardButtons),
+    /// 
+    /// This property controls which standard buttons are used by the button box.
+    /// 
+    /// **See also:** addButton()
     standard_buttons() -> DialogButtonBox::StandardButtons,
-    ///     Returns the standard button enum value corresponding to the given \a button,
-    ///     or NoButton if the given \a button isn't a standard button.
     /// 
-    ///     \sa button(), buttons(), standardButtons()
+    /// This property controls which standard buttons are used by the button box.
+    /// 
+    /// **See also:** addButton()
+    /// 
+    /// Returns the standard button enum value corresponding to the given *button,*
+    /// or NoButton if the given *button* isn't a standard button.
+    /// 
+    /// **See also:** button()
+    /// buttons()
+    /// standardButtons()
     standard_button(button: *AbstractButtonType) -> DialogButtonBox::StandardButton,
-    ///     Returns the QPushButton corresponding to the standard button \a which,
-    ///     or 0 if the standard button doesn't exist in this button box.
     /// 
-    ///     \sa standardButton(), standardButtons(), buttons()
+    /// Returns a list of all the buttons that have been added to the button box.
+    /// 
+    /// **See also:** buttonRole()
+    /// addButton()
+    /// removeButton()
+    /// 
+    /// Returns the button role for the specified *button.* This function returns
+    /// [InvalidRole](InvalidRole)
+    /// if *button* is 0 or has not been added to the button box.
+    /// 
+    /// **See also:** buttons()
+    /// addButton()
+    /// 
+    /// Returns the QPushButton corresponding to the standard button *which,*
+    /// or 0 if the standard button doesn't exist in this button box.
+    /// 
+    /// **See also:** standardButton()
+    /// standardButtons()
+    /// buttons()
     button(which: DialogButtonBox::StandardButton) -> PushButton?,
-    ///     \property QDialogButtonBox::centerButtons
-    ///     \brief whether the buttons in the button box are centered
-    /// 
-    ///     By default, this property is \c false. This behavior is appopriate
-    ///     for most types of dialogs. A notable exception is message boxes
-    ///     on most platforms (e.g. Windows), where the button box is
-    ///     centered horizontally.
-    /// 
-    ///     \sa QMessageBox
     set_center_buttons(center: bool),
+    /// 
+    /// By default, this property is `false.` This behavior is appopriate
+    /// for most types of dialogs. A notable exception is message boxes
+    /// on most platforms (e.g. Windows), where the button box is
+    /// centered horizontally.
+    /// 
+    /// **See also:** QMessageBox
     center_buttons() -> bool,
+    /// 
+    /// This signal is emitted when a button inside the button box is clicked. The
+    /// specific button that was pressed is specified by *button.*
+    /// 
+    /// **See also:** accepted()
+    /// rejected()
+    /// helpRequested()
     [signal] clicked(button: *AbstractButtonType),
+    /// 
+    /// This signal is emitted when a button inside the button box is clicked, as long
+    /// as it was defined with the [AcceptRole](AcceptRole)
+    /// or [YesRole.](YesRole.)
+    /// 
+    /// **See also:** rejected()
+    /// clicked()
+    /// helpRequested()
     [signal] accepted(),
+    /// 
+    /// This signal is emitted when a button inside the button box is clicked, as long
+    /// as it was defined with the [HelpRole.](HelpRole.)
+    /// 
+    /// **See also:** accepted()
+    /// rejected()
+    /// clicked()
     [signal] help_requested(),
+    /// 
+    /// This signal is emitted when a button inside the button box is clicked, as long
+    /// as it was defined with the [RejectRole](RejectRole)
+    /// or [NoRole.](NoRole.)
+    /// 
+    /// **See also:** accepted()
+    /// helpRequested()
+    /// clicked()
     [signal] rejected(),
-    ///     \reimp
+    /// 
     [event] change_event(event: *EventType),
-    ///     \reimp
+    /// 
     [event] event(event: *EventType) -> bool,
 }
 

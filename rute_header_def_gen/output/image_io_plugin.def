@@ -1,49 +1,45 @@
-///     \class QImageIOPlugin
-///     \inmodule QtGui
-///     \brief The QImageIOPlugin class defines an interface for writing
-///     an image format plugin.
-///     \reentrant
 /// 
-///     \ingroup plugins
+/// QImageIOPlugin is a factory for creating QImageIOHandler objects,
+/// which are used internally by QImageReader and QImageWriter to add
+/// support for different image formats to Qt.
 /// 
-///     QImageIOPlugin is a factory for creating QImageIOHandler objects,
-///     which are used internally by QImageReader and QImageWriter to add
-///     support for different image formats to Qt.
+/// Writing an image I/O plugin is achieved by subclassing this
+/// base class, reimplementing the pure virtual functions capabilities()
+/// and create(), and exporting the class with the
+/// Q_PLUGIN_METADATA() macro. See [How to Create Qt Plugins](How%20to%20Create%20Qt%20Plugins)
+/// for details.
 /// 
-///     Writing an image I/O plugin is achieved by subclassing this
-///     base class, reimplementing the pure virtual functions capabilities()
-///     and create(), and exporting the class with the
-///     Q_PLUGIN_METADATA() macro. See \l{How to Create Qt Plugins} for details.
+/// An image format plugin can support three capabilities: reading ( [CanRead),](CanRead),)
+/// writing ( [CanWrite)](CanWrite))
+/// and *incremental* reading ( [CanReadIncremental).](CanReadIncremental).)
+/// Reimplement capabilities() in you subclass to
+/// expose the capabilities of your image format.
 /// 
-///     An image format plugin can support three capabilities: reading (\l
-///     CanRead), writing (\l CanWrite) and \e incremental reading (\l
-///     CanReadIncremental). Reimplement capabilities() in you subclass to
-///     expose the capabilities of your image format.
+/// create() should create an instance of your QImageIOHandler
+/// subclass, with the provided device and format properly set, and
+/// return this handler.
 /// 
-///     create() should create an instance of your QImageIOHandler
-///     subclass, with the provided device and format properly set, and
-///     return this handler.
+/// The json metadata file for the plugin needs to contain information
+/// about the image formats the plugins supports, together with the
+/// corresponding MIME types (one for each format). For a jpeg plugin, this
+/// could, for example, look as follows:
 /// 
-///     The json metadata file for the plugin needs to contain information
-///     about the image formats the plugins supports, together with the
-///     corresponding MIME types (one for each format). For a jpeg plugin, this
-///     could, for example, look as follows:
+/// ```
 /// 
-///     \code
-///     {
-///       "Keys": [ "jpg", "jpeg" ],
-///       "MimeTypes": [ "image/jpeg", "image/jpeg" ]
-///     }
-///     \endcode
+/// "Keys": [ "jpg", "jpeg" ],
+/// "MimeTypes": [ "image/jpeg", "image/jpeg" ]
 /// 
-///     Different plugins can support different capabilities. For example,
-///     you may have one plugin that supports reading the GIF format, and
-///     another that supports writing. Qt will select the correct plugin
-///     for the job, depending on the return value of capabilities(). If
-///     several plugins support the same capability, Qt will select one
-///     arbitrarily.
+/// ```
 /// 
-///     \sa QImageIOHandler, {How to Create Qt Plugins}
+/// Different plugins can support different capabilities. For example,
+/// you may have one plugin that supports reading the GIF format, and
+/// another that supports writing. Qt will select the correct plugin
+/// for the job, depending on the return value of capabilities(). If
+/// several plugins support the same capability, Qt will select one
+/// arbitrarily.
+/// 
+/// **See also:** QImageIOHandler
+/// {How to Create Qt Plugins}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -55,7 +51,32 @@ enum Capability {
 }
 
 struct ImageIOPlugin : Object {
+    /// 
+    /// Returns the capabilities of the plugin, based on the data in *device* and the format *format.* If *device* is `0,` it should
+    /// simply report whether the format can be read or written. Otherwise,
+    /// it should attempt to determine whether the given format (or any
+    /// format supported by the plugin if *format* is empty) can be read
+    /// from or written to *device.* It should do this without changing
+    /// the state of *device* (typically by using QIODevice::peek()).
+    /// 
+    /// For example, if the QImageIOPlugin supports the BMP format, *format*
+    /// is either empty or `"bmp",` and the data in the device starts with the
+    /// characters `"BM",` this function should return [CanRead.](CanRead.)
+    /// If *format*
+    /// is `"bmp",` *device* is `0` and the handler supports both reading and
+    /// writing, this function should return [CanRead](CanRead)
+    /// | [CanWrite.](CanWrite.)
+    /// 
+    /// Format names are always given in lower case.
     [event] capabilities(device: *IODeviceType, format: &ByteArrayType) -> ImageIOPlugin::Capabilities,
+    /// 
+    /// Creates and returns a QImageIOHandler subclass, with *device*
+    /// and *format* set. The *format* must come from the values listed
+    /// in the `"Keys"` entry in the plugin metadata, or be empty. If it is
+    /// empty, the data in *device* must have been recognized by the
+    /// capabilities() method (with a likewise empty format).
+    /// 
+    /// Format names are always given in lower case.
     [event] create(device: *IODeviceType, format: &ByteArrayType) -> ImageIOHandler?,
 }
 

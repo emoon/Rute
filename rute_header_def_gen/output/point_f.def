@@ -1,49 +1,91 @@
-///     \class QPointF
-///     \inmodule QtCore
-///     \ingroup painting
-///     \reentrant
 /// 
-///     \brief The QPointF class defines a point in the plane using
-///     floating point precision.
+/// A point is specified by a x coordinate and an y coordinate which
+/// can be accessed using the x() and y() functions. The coordinates
+/// of the point are specified using floating point numbers for
+/// accuracy. The isNull() function returns `true` if both x and y are
+/// set to 0.0. The coordinates can be set (or altered) using the setX()
+/// and setY() functions, or alternatively the rx() and ry() functions which
+/// return references to the coordinates (allowing direct
+/// manipulation).
 /// 
-///     A point is specified by a x coordinate and an y coordinate which
-///     can be accessed using the x() and y() functions. The coordinates
-///     of the point are specified using floating point numbers for
-///     accuracy. The isNull() function returns \c true if both x and y are
-///     set to 0.0. The coordinates can be set (or altered) using the setX()
-///     and setY() functions, or alternatively the rx() and ry() functions which
-///     return references to the coordinates (allowing direct
-///     manipulation).
+/// Given a point *p,* the following statements are all equivalent:
 /// 
-///     Given a point \e p, the following statements are all equivalent:
+/// A QPointF object can also be used as a vector: Addition and
+/// subtraction are defined as for vectors (each component is added
+/// separately). A QPointF object can also be divided or multiplied by
+/// an `int` or a `qreal.`
 /// 
-///     \snippet code/src_corelib_tools_qpoint.cpp 9
+/// In addition, the QPointF class provides a constructor converting a
+/// QPoint object into a QPointF object, and a corresponding toPoint()
+/// function which returns a QPoint copy of *this* point. Finally,
+/// QPointF objects can be streamed as well as compared.
 /// 
-///     A QPointF object can also be used as a vector: Addition and
-///     subtraction are defined as for vectors (each component is added
-///     separately). A QPointF object can also be divided or multiplied by
-///     an \c int or a \c qreal.
-/// 
-///     In addition, the QPointF class provides a constructor converting a
-///     QPoint object into a QPointF object, and a corresponding toPoint()
-///     function which returns a QPoint copy of \e this point. Finally,
-///     QPointF objects can be streamed as well as compared.
-/// 
-///     \sa QPoint, QPolygonF
+/// **See also:** QPoint
+/// QPolygonF
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PointF {
+    /// 
+    /// Returns the sum of the absolute values of x() and y(),
+    /// traditionally known as the of the vector from
+    /// the origin to the point.
+    /// 
+    /// **See also:** QPoint::manhattanLength()
     manhattan_length() -> f32,
+    /// 
+    /// Returns `true` if both the x and y coordinates are set to 0.0 (ignoring
+    /// the sign); otherwise returns `false.`
     is_null() -> bool,
+    /// 
+    /// Returns the x coordinate of this point.
+    /// 
+    /// **See also:** setX()
+    /// rx()
     x() -> f32,
+    /// 
+    /// Returns the y coordinate of this point.
+    /// 
+    /// **See also:** setY()
+    /// ry()
     y() -> f32,
+    /// 
+    /// Sets the x coordinate of this point to the given *x* coordinate.
+    /// 
+    /// **See also:** x()
+    /// setY()
     set_x(x: f32),
+    /// 
+    /// Sets the y coordinate of this point to the given *y* coordinate.
+    /// 
+    /// **See also:** y()
+    /// setX()
     set_y(y: f32),
+    /// 
+    /// Returns a reference to the x coordinate of this point.
+    /// 
+    /// Using a reference makes it possible to directly manipulate x. For example:
+    /// 
+    /// **See also:** x()
+    /// setX()
     rx() -> f32?,
+    /// 
+    /// Returns a reference to the y coordinate of this point.
+    /// 
+    /// Using a reference makes it possible to directly manipulate y. For example:
+    /// 
+    /// **See also:** y()
+    /// setY()
     ry() -> f32?,
+    /// 
+    /// Returns the dot product of *p1* and *p2.*
     [static] dot_product(p1: &PointFType, p2: &PointFType) -> f32,
+    /// 
+    /// Rounds the coordinates of this point to the nearest integer, and
+    /// returns a QPoint object with the rounded coordinates.
+    /// 
+    /// **See also:** QPointF()
     to_point() -> Point,
 }
 

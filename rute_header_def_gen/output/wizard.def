@@ -1,300 +1,261 @@
-///     \class QWizard
-///     \since 4.3
-///     \brief The QWizard class provides a framework for wizards.
 /// 
-///     \inmodule QtWidgets
+/// A wizard (also called an assistant on MacOS ) is a special type
+/// of input dialog that consists of a sequence of pages. A wizard's
+/// purpose is to guide the user through a process step by step.
+/// Wizards are useful for complex or infrequent tasks that users may
+/// find difficult to learn.
 /// 
-///     A wizard (also called an assistant on \macos) is a special type
-///     of input dialog that consists of a sequence of pages. A wizard's
-///     purpose is to guide the user through a process step by step.
-///     Wizards are useful for complex or infrequent tasks that users may
-///     find difficult to learn.
+/// QWizard inherits QDialog and represents a wizard. Each page is a
+/// QWizardPage (a QWidget subclass). To create your own wizards, you
+/// can use these classes directly, or you can subclass them for more
+/// control.
 /// 
-///     QWizard inherits QDialog and represents a wizard. Each page is a
-///     QWizardPage (a QWidget subclass). To create your own wizards, you
-///     can use these classes directly, or you can subclass them for more
-///     control.
+/// Topics:
 /// 
-///     Topics:
+/// # A Trivial Example
 /// 
-///     \tableofcontents
+/// The following example illustrates how to create wizard pages and
+/// add them to a wizard. For more advanced examples, see
+/// [Class Wizard](dialogs/classwizard)
+/// and [License
+/// Wizard](dialogs/licensewizard)
 /// 
-///     \section1 A Trivial Example
 /// 
-///     The following example illustrates how to create wizard pages and
-///     add them to a wizard. For more advanced examples, see
-///     \l{dialogs/classwizard}{Class Wizard} and \l{dialogs/licensewizard}{License
-///     Wizard}.
+/// ...
 /// 
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 1
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 3
-///     \dots
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 4
-///     \codeline
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 5
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 7
-///     \dots
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 8
-///     \codeline
-///     \snippet dialogs/trivialwizard/trivialwizard.cpp 10
+/// # Wizard Look and Feel
 /// 
-///     \section1 Wizard Look and Feel
+/// QWizard supports four wizard looks:
 /// 
-///     QWizard supports four wizard looks:
+/// * ClassicStyle
+/// * ModernStyle
+/// * MacStyle
+/// * AeroStyle
 /// 
-///     \list
-///     \li ClassicStyle
-///     \li ModernStyle
-///     \li MacStyle
-///     \li AeroStyle
-///     \endlist
+/// You can explicitly set the look to use using setWizardStyle()
+/// (e.g., if you want the same look on all platforms).
 /// 
-///     You can explicitly set the look to use using setWizardStyle()
-///     (e.g., if you want the same look on all platforms).
+/// * ClassicStyle
+/// * ModernStyle
+/// * MacStyle
+/// * AeroStyle
+/// * ![qtwizard-classic1.png](qtwizard-classic1.png)
 /// 
-///     \table
-///     \header \li ClassicStyle
-///             \li ModernStyle
-///             \li MacStyle
-///             \li AeroStyle
-///     \row    \li \inlineimage qtwizard-classic1.png
-///             \li \inlineimage qtwizard-modern1.png
-///             \li \inlineimage qtwizard-mac1.png
-///             \li \inlineimage qtwizard-aero1.png
-///     \row    \li \inlineimage qtwizard-classic2.png
-///             \li \inlineimage qtwizard-modern2.png
-///             \li \inlineimage qtwizard-mac2.png
-///             \li \inlineimage qtwizard-aero2.png
-///     \endtable
+/// * ![qtwizard-modern1.png](qtwizard-modern1.png)
 /// 
-///     Note: AeroStyle has effect only on a Windows Vista system with alpha compositing enabled.
-///     ModernStyle is used as a fallback when this condition is not met.
+/// * ![qtwizard-mac1.png](qtwizard-mac1.png)
 /// 
-///     In addition to the wizard style, there are several options that
-///     control the look and feel of the wizard. These can be set using
-///     setOption() or setOptions(). For example, HaveHelpButton makes
-///     QWizard show a \uicontrol Help button along with the other wizard
-///     buttons.
+/// * ![qtwizard-aero1.png](qtwizard-aero1.png)
 /// 
-///     You can even change the order of the wizard buttons to any
-///     arbitrary order using setButtonLayout(), and you can add up to
-///     three custom buttons (e.g., a \uicontrol Print button) to the button
-///     row. This is achieved by calling setButton() or setButtonText()
-///     with CustomButton1, CustomButton2, or CustomButton3 to set up the
-///     button, and by enabling the HaveCustomButton1, HaveCustomButton2,
-///     or HaveCustomButton3 options. Whenever the user clicks a custom
-///     button, customButtonClicked() is emitted. For example:
+/// * ![qtwizard-classic2.png](qtwizard-classic2.png)
 /// 
-///     \snippet dialogs/licensewizard/licensewizard.cpp 29
+/// * ![qtwizard-modern2.png](qtwizard-modern2.png)
 /// 
-///     \section1 Elements of a Wizard Page
+/// * ![qtwizard-mac2.png](qtwizard-mac2.png)
 /// 
-///     Wizards consist of a sequence of \l{QWizardPage}s. At any time,
-///     only one page is shown. A page has the following attributes:
+/// * ![qtwizard-aero2.png](qtwizard-aero2.png)
 /// 
-///     \list
-///     \li A \l{QWizardPage::}{title}.
-///     \li A \l{QWizardPage::}{subTitle}.
-///     \li A set of pixmaps, which may or may not be honored, depending
-///        on the wizard's style:
-///         \list
-///         \li WatermarkPixmap (used by ClassicStyle and ModernStyle)
-///         \li BannerPixmap (used by ModernStyle)
-///         \li LogoPixmap (used by ClassicStyle and ModernStyle)
-///         \li BackgroundPixmap (used by MacStyle)
-///         \endlist
-///     \endlist
+/// Note: AeroStyle has effect only on a Windows Vista system with alpha compositing enabled.
+/// ModernStyle is used as a fallback when this condition is not met.
 /// 
-///     The diagram belows shows how QWizard renders these attributes,
-///     assuming they are all present and ModernStyle is used:
+/// In addition to the wizard style, there are several options that
+/// control the look and feel of the wizard. These can be set using
+/// setOption() or setOptions(). For example, HaveHelpButton makes
+/// QWizard show a **Help** button along with the other wizard
+/// buttons.
 /// 
-///     \image qtwizard-nonmacpage.png
+/// You can even change the order of the wizard buttons to any
+/// arbitrary order using setButtonLayout(), and you can add up to
+/// three custom buttons (e.g., a **Print** button) to the button
+/// row. This is achieved by calling setButton() or setButtonText()
+/// with CustomButton1, CustomButton2, or CustomButton3 to set up the
+/// button, and by enabling the HaveCustomButton1, HaveCustomButton2,
+/// or HaveCustomButton3 options. Whenever the user clicks a custom
+/// button, customButtonClicked() is emitted. For example:
 /// 
-///     When a \l{QWizardPage::}{subTitle} is set, QWizard displays it
-///     in a header, in which case it also uses the BannerPixmap and the
-///     LogoPixmap to decorate the header. The WatermarkPixmap is
-///     displayed on the left side, below the header. At the bottom,
-///     there is a row of buttons allowing the user to navigate through
-///     the pages.
+/// # Elements of a Wizard Page
 /// 
-///     The page itself (the \l{QWizardPage} widget) occupies the area
-///     between the header, the watermark, and the button row. Typically,
-///     the page is a QWizardPage on which a QGridLayout is installed,
-///     with standard child widgets (\l{QLabel}s, \l{QLineEdit}s, etc.).
+/// Wizards consist of a sequence of [QWizardPage](QWizardPage)
+/// s. At any time,
+/// only one page is shown. A page has the following attributes:
 /// 
-///     If the wizard's style is MacStyle, the page looks radically
-///     different:
+/// * A [title](QWizardPage::)
 /// 
-///     \image qtwizard-macpage.png
+/// * A [subTitle](QWizardPage::)
 /// 
-///     The watermark, banner, and logo pixmaps are ignored by the
-///     MacStyle. If the BackgroundPixmap is set, it is used as the
-///     background for the wizard; otherwise, a default "assistant" image
-///     is used.
+/// * A set of pixmaps, which may or may not be honored, depending on the wizard's style:
+/// * WatermarkPixmap (used by ClassicStyle and ModernStyle)
+/// * BannerPixmap (used by ModernStyle)
+/// * LogoPixmap (used by ClassicStyle and ModernStyle)
+/// * BackgroundPixmap (used by MacStyle)
 /// 
-///     The title and subtitle are set by calling
-///     QWizardPage::setTitle() and QWizardPage::setSubTitle() on the
-///     individual pages. They may be plain text or HTML (see titleFormat
-///     and subTitleFormat). The pixmaps can be set globally for the
-///     entire wizard using setPixmap(), or on a per-page basis using
-///     QWizardPage::setPixmap().
+/// The diagram belows shows how QWizard renders these attributes,
+/// assuming they are all present and ModernStyle is used:
 /// 
-///     \target field mechanism
-///     \section1 Registering and Using Fields
+/// ![qtwizard-nonmacpage.png](qtwizard-nonmacpage.png)
 /// 
-///     In many wizards, the contents of a page may affect the default
-///     values of the fields of a later page. To make it easy to
-///     communicate between pages, QWizard supports a "field" mechanism
-///     that allows you to register a field (e.g., a QLineEdit) on a page
-///     and to access its value from any page. It is also possible to
-///     specify mandatory fields (i.e., fields that must be filled before
-///     the user can advance to the next page).
+/// When a [subTitle](QWizardPage::)
+/// is set, QWizard displays it
+/// in a header, in which case it also uses the BannerPixmap and the
+/// LogoPixmap to decorate the header. The WatermarkPixmap is
+/// displayed on the left side, below the header. At the bottom,
+/// there is a row of buttons allowing the user to navigate through
+/// the pages.
 /// 
-///     To register a field, call QWizardPage::registerField() field.
-///     For example:
+/// The page itself (the [QWizardPage](QWizardPage)
+/// widget) occupies the area
+/// between the header, the watermark, and the button row. Typically,
+/// the page is a QWizardPage on which a QGridLayout is installed,
+/// with standard child widgets ( [QLabel](QLabel)
+/// s, [QLineEdit](QLineEdit)
+/// s, etc.).
 /// 
-///     \snippet dialogs/classwizard/classwizard.cpp 8
-///     \dots
-///     \snippet dialogs/classwizard/classwizard.cpp 10
-///     \snippet dialogs/classwizard/classwizard.cpp 11
-///     \dots
-///     \snippet dialogs/classwizard/classwizard.cpp 13
+/// If the wizard's style is MacStyle, the page looks radically
+/// different:
 /// 
-///     The above code registers three fields, \c className, \c
-///     baseClass, and \c qobjectMacro, which are associated with three
-///     child widgets. The asterisk (\c *) next to \c className denotes a
-///     mandatory field.
+/// ![qtwizard-macpage.png](qtwizard-macpage.png)
 /// 
-///     \target initialize page
-///     The fields of any page are accessible from any other page. For
-///     example:
+/// The watermark, banner, and logo pixmaps are ignored by the
+/// MacStyle. If the BackgroundPixmap is set, it is used as the
+/// background for the wizard; otherwise, a default image
+/// is used.
 /// 
-///     \snippet dialogs/classwizard/classwizard.cpp 17
+/// The title and subtitle are set by calling
+/// QWizardPage::setTitle() and QWizardPage::setSubTitle() on the
+/// individual pages. They may be plain text or HTML (see titleFormat
+/// and subTitleFormat). The pixmaps can be set globally for the
+/// entire wizard using setPixmap(), or on a per-page basis using
+/// QWizardPage::setPixmap().
 /// 
-///     Here, we call QWizardPage::field() to access the contents of the
-///     \c className field (which was defined in the \c ClassInfoPage)
-///     and use it to initialize the \c OutputFilePage. The field's
-///     contents is returned as a QVariant.
+/// # Registering and Using Fields
 /// 
-///     When we create a field using QWizardPage::registerField(), we
-///     pass a unique field name and a widget. We can also provide a Qt
-///     property name and a "changed" signal (a signal that is emitted
-///     when the property changes) as third and fourth arguments;
-///     however, this is not necessary for the most common Qt widgets,
-///     such as QLineEdit, QCheckBox, and QComboBox, because QWizard
-///     knows which properties to look for.
+/// In many wizards, the contents of a page may affect the default
+/// values of the fields of a later page. To make it easy to
+/// communicate between pages, QWizard supports a mechanism
+/// that allows you to register a field (e.g., a QLineEdit) on a page
+/// and to access its value from any page. It is also possible to
+/// specify mandatory fields (i.e., fields that must be filled before
+/// the user can advance to the next page).
 /// 
-///     \target mandatory fields
+/// To register a field, call QWizardPage::registerField() field.
+/// For example:
 /// 
-///     If an asterisk (\c *) is appended to the name when the property
-///     is registered, the field is a \e{mandatory field}. When a page has
-///     mandatory fields, the \uicontrol Next and/or \uicontrol Finish buttons are
-///     enabled only when all mandatory fields are filled.
+/// ...
 /// 
-///     To consider a field "filled", QWizard simply checks that the
-///     field's current value doesn't equal the original value (the value
-///     it had when initializePage() was called). For QLineEdit and
-///     QAbstractSpinBox subclasses, QWizard also checks that
-///     \l{QLineEdit::hasAcceptableInput()}{hasAcceptableInput()} returns
-///     true, to honor any validator or mask.
+/// The above code registers three fields, `className,` `baseClass,` and `qobjectMacro,` which are associated with three
+/// child widgets. The asterisk ( `*)` next to `className` denotes a
+/// mandatory field.
 /// 
-///     QWizard's mandatory field mechanism is provided for convenience.
-///     A more powerful (but also more cumbersome) alternative is to
-///     reimplement QWizardPage::isComplete() and to emit the
-///     QWizardPage::completeChanged() signal whenever the page becomes
-///     complete or incomplete.
+/// The fields of any page are accessible from any other page. For
+/// example:
 /// 
-///     The enabled/disabled state of the \uicontrol Next and/or \uicontrol Finish
-///     buttons is one way to perform validation on the user input.
-///     Another way is to reimplement validateCurrentPage() (or
-///     QWizardPage::validatePage()) to perform some last-minute
-///     validation (and show an error message if the user has entered
-///     incomplete or invalid information). If the function returns \c true,
-///     the next page is shown (or the wizard finishes); otherwise, the
-///     current page stays up.
+/// Here, we call QWizardPage::field() to access the contents of the
+/// `className` field (which was defined in the `ClassInfoPage)`
+/// and use it to initialize the `OutputFilePage.` The field's
+/// contents is returned as a QVariant.
 /// 
-///     \section1 Creating Linear Wizards
+/// When we create a field using QWizardPage::registerField(), we
+/// pass a unique field name and a widget. We can also provide a Qt
+/// property name and a signal (a signal that is emitted
+/// when the property changes) as third and fourth arguments;
+/// however, this is not necessary for the most common Qt widgets,
+/// such as QLineEdit, QCheckBox, and QComboBox, because QWizard
+/// knows which properties to look for.
 /// 
-///     Most wizards have a linear structure, with page 1 followed by
-///     page 2 and so on until the last page. The \l{dialogs/classwizard}{Class
-///     Wizard} example is such a wizard. With QWizard, linear wizards
-///     are created by instantiating the \l{QWizardPage}s and inserting
-///     them using addPage(). By default, the pages are shown in the
-///     order in which they were added. For example:
+/// If an asterisk ( `*)` is appended to the name when the property
+/// is registered, the field is a *mandatory field* . When a page has
+/// mandatory fields, the **Next** and/or **Finish** buttons are
+/// enabled only when all mandatory fields are filled.
 /// 
-///     \snippet dialogs/classwizard/classwizard.cpp 0
-///     \dots
-///     \snippet dialogs/classwizard/classwizard.cpp 2
+/// To consider a field , QWizard simply checks that the
+/// field's current value doesn't equal the original value (the value
+/// it had when initializePage() was called). For QLineEdit and
+/// QAbstractSpinBox subclasses, QWizard also checks that
+/// [hasAcceptableInput()](QLineEdit::hasAcceptableInput())
+/// returns
+/// true, to honor any validator or mask.
 /// 
-///     When a page is about to be shown, QWizard calls initializePage()
-///     (which in turn calls QWizardPage::initializePage()) to fill the
-///     page with default values. By default, this function does nothing,
-///     but it can be reimplemented to initialize the page's contents
-///     based on other pages' fields (see the \l{initialize page}{example
-///     above}).
+/// QWizard's mandatory field mechanism is provided for convenience.
+/// A more powerful (but also more cumbersome) alternative is to
+/// reimplement QWizardPage::isComplete() and to emit the
+/// QWizardPage::completeChanged() signal whenever the page becomes
+/// complete or incomplete.
 /// 
-///     If the user presses \uicontrol Back, cleanupPage() is called (which in
-///     turn calls QWizardPage::cleanupPage()). The default
-///     implementation resets the page's fields to their original values
-///     (the values they had before initializePage() was called). If you
-///     want the \uicontrol Back button to be non-destructive and keep the
-///     values entered by the user, simply enable the IndependentPages
-///     option.
+/// The enabled/disabled state of the **Next** and/or **Finish**
+/// buttons is one way to perform validation on the user input.
+/// Another way is to reimplement validateCurrentPage() (or
+/// QWizardPage::validatePage()) to perform some last-minute
+/// validation (and show an error message if the user has entered
+/// incomplete or invalid information). If the function returns `true,`
+/// the next page is shown (or the wizard finishes); otherwise, the
+/// current page stays up.
 /// 
-///     \section1 Creating Non-Linear Wizards
+/// # Creating Linear Wizards
 /// 
-///     Some wizards are more complex in that they allow different
-///     traversal paths based on the information provided by the user.
-///     The \l{dialogs/licensewizard}{License Wizard} example illustrates this.
-///     It provides five wizard pages; depending on which options are
-///     selected, the user can reach different pages.
+/// Most wizards have a linear structure, with page 1 followed by
+/// page 2 and so on until the last page. The [Class
+/// Wizard](dialogs/classwizard)
+/// example is such a wizard. With QWizard, linear wizards
+/// are created by instantiating the [QWizardPage](QWizardPage)
+/// s and inserting
+/// them using addPage(). By default, the pages are shown in the
+/// order in which they were added. For example:
 /// 
-///     \image licensewizard-flow.png
+/// ...
 /// 
-///     In complex wizards, pages are identified by IDs. These IDs are
-///     typically defined using an enum. For example:
+/// When a page is about to be shown, QWizard calls initializePage()
+/// (which in turn calls QWizardPage::initializePage()) to fill the
+/// page with default values. By default, this function does nothing,
+/// but it can be reimplemented to initialize the page's contents
+/// based on other pages' fields (see the [example
+/// above](initialize%20page)
+/// ).
 /// 
-///     \snippet dialogs/licensewizard/licensewizard.h 0
-///     \dots
-///     \snippet dialogs/licensewizard/licensewizard.h 2
-///     \dots
-///     \snippet dialogs/licensewizard/licensewizard.h 3
+/// If the user presses **Back,** cleanupPage() is called (which in
+/// turn calls QWizardPage::cleanupPage()). The default
+/// implementation resets the page's fields to their original values
+/// (the values they had before initializePage() was called). If you
+/// want the **Back** button to be non-destructive and keep the
+/// values entered by the user, simply enable the IndependentPages
+/// option.
 /// 
-///     The pages are inserted using setPage(), which takes an ID and an
-///     instance of QWizardPage (or of a subclass):
+/// # Creating Non-Linear Wizards
 /// 
-///     \snippet dialogs/licensewizard/licensewizard.cpp 1
-///     \dots
-///     \snippet dialogs/licensewizard/licensewizard.cpp 8
+/// Some wizards are more complex in that they allow different
+/// traversal paths based on the information provided by the user.
+/// The [License Wizard](dialogs/licensewizard)
+/// example illustrates this.
+/// It provides five wizard pages; depending on which options are
+/// selected, the user can reach different pages.
 /// 
-///     By default, the pages are shown in increasing ID order. To
-///     provide a dynamic order that depends on the options chosen by the
-///     user, we must reimplement QWizardPage::nextId(). For example:
+/// ![licensewizard-flow.png](licensewizard-flow.png)
 /// 
-///     \snippet dialogs/licensewizard/licensewizard.cpp 18
-///     \codeline
-///     \snippet dialogs/licensewizard/licensewizard.cpp 23
-///     \codeline
-///     \snippet dialogs/licensewizard/licensewizard.cpp 24
-///     \codeline
-///     \snippet dialogs/licensewizard/licensewizard.cpp 25
-///     \codeline
-///     \snippet dialogs/licensewizard/licensewizard.cpp 26
+/// In complex wizards, pages are identified by IDs. These IDs are
+/// typically defined using an enum. For example:
 /// 
-///     It would also be possible to put all the logic in one place, in a
-///     QWizard::nextId() reimplementation. For example:
+/// ...
 /// 
-///     \snippet code/src_gui_dialogs_qwizard.cpp 0
+/// The pages are inserted using setPage(), which takes an ID and an
+/// instance of QWizardPage (or of a subclass):
 /// 
-///     To start at another page than the page with the lowest ID, call
-///     setStartId().
+/// ...
 /// 
-///     To test whether a page has been visited or not, call
-///     hasVisitedPage(). For example:
+/// By default, the pages are shown in increasing ID order. To
+/// provide a dynamic order that depends on the options chosen by the
+/// user, we must reimplement QWizardPage::nextId(). For example:
 /// 
-///     \snippet dialogs/licensewizard/licensewizard.cpp 27
+/// It would also be possible to put all the logic in one place, in a
+/// QWizard::nextId() reimplementation. For example:
 /// 
-///     \sa QWizardPage, {Class Wizard Example}, {License Wizard Example}
+/// To start at another page than the page with the lowest ID, call
+/// setStartId().
+/// 
+/// To test whether a page has been visited or not, call
+/// hasVisitedPage(). For example:
+/// 
+/// **See also:** QWizardPage
+/// {Class Wizard Example}
+/// {License Wizard Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -355,340 +316,554 @@ enum WizardOption {
 }
 
 struct Wizard : Dialog {
-    ///     Adds the given \a page to the wizard, and returns the page's ID.
     /// 
-    ///     The ID is guaranteed to be larger than any other ID in the
-    ///     QWizard so far.
+    /// Adds the given *page* to the wizard, and returns the page's ID.
     /// 
-    ///     \sa setPage(), page(), pageAdded()
+    /// The ID is guaranteed to be larger than any other ID in the
+    /// QWizard so far.
+    /// 
+    /// **See also:** setPage()
+    /// page()
+    /// pageAdded()
     add_page(page: *WizardPageType) -> i32,
-    ///     \fn void QWizard::setPage(int id, QWizardPage *page)
     /// 
-    ///     Adds the given \a page to the wizard with the given \a id.
+    /// Adds the given *page* to the wizard with the given *id.*
     /// 
-    ///     \note Adding a page may influence the value of the startId property
-    ///     in case it was not set explicitly.
+    /// **Note**: Adding a page may influence the value of the startId property
+    /// in case it was not set explicitly.
     /// 
-    ///     \sa addPage(), page(), pageAdded()
+    /// **See also:** addPage()
+    /// page()
+    /// pageAdded()
     set_page(id: i32, page: *WizardPageType),
-    ///     Removes the page with the given \a id. cleanupPage() will be called if necessary.
     /// 
-    ///     \note Removing a page may influence the value of the startId property.
+    /// Removes the page with the given *id.* cleanupPage() will be called if necessary.
     /// 
-    ///     \since 4.5
-    ///     \sa addPage(), setPage(), pageRemoved(), startId()
+    /// **Note**: Removing a page may influence the value of the startId property.
+    /// 
+    /// **See also:** addPage()
+    /// setPage()
+    /// pageRemoved()
+    /// startId()
     remove_page(id: i32),
-    ///     \fn QWizardPage *QWizard::page(int id) const
     /// 
-    ///     Returns the page with the given \a id, or 0 if there is no such
-    ///     page.
+    /// Returns the page with the given *id,* or 0 if there is no such
+    /// page.
     /// 
-    ///     \sa addPage(), setPage()
+    /// **See also:** addPage()
+    /// setPage()
+    /// 
+    /// Returns the list of page IDs.
+    /// 
+    /// This signal is emitted whenever a page is added to the
+    /// wizard. The page's *id* is passed as parameter.
+    /// 
+    /// **See also:** addPage()
+    /// setPage()
+    /// startId()
+    /// 
+    /// This signal is emitted whenever a page is removed from the
+    /// wizard. The page's *id* is passed as parameter.
+    /// 
+    /// **See also:** removePage()
+    /// startId()
     page(id: i32) -> WizardPage?,
-    ///     \fn bool QWizard::hasVisitedPage(int id) const
     /// 
-    ///     Returns \c true if the page history contains page \a id; otherwise,
-    ///     returns \c false.
+    /// Returns `true` if the page history contains page *id;* otherwise,
+    /// returns `false.`
     /// 
-    ///     Pressing \uicontrol Back marks the current page as "unvisited" again.
+    /// Pressing **Back** marks the current page as again.
     /// 
-    ///     \sa visitedPages()
+    /// **See also:** visitedPages()
     has_visited_page(id: i32) -> bool,
-    ///     Returns the list of IDs of visited pages, in the order in which the pages
-    ///     were visited.
     /// 
-    ///     Pressing \uicontrol Back marks the current page as "unvisited" again.
+    /// Returns the list of IDs of visited pages, in the order in which the pages
+    /// were visited.
     /// 
-    ///     \sa hasVisitedPage()
+    /// Pressing **Back** marks the current page as again.
+    /// 
+    /// **See also:** hasVisitedPage()
     visited_pages() -> [i32],
-    ///     Returns the list of page IDs.
-    ///    \since 4.5
+    /// 
+    /// Returns the list of page IDs.
     page_ids() -> [i32],
-    ///     \property QWizard::startId
-    ///     \brief the ID of the first page
-    /// 
-    ///     If this property isn't explicitly set, this property defaults to
-    ///     the lowest page ID in this wizard, or -1 if no page has been
-    ///     inserted yet.
-    /// 
-    ///     \sa restart(), nextId()
     set_start_id(id: i32),
+    /// 
+    /// If this property isn't explicitly set, this property defaults to
+    /// the lowest page ID in this wizard, or -1 if no page has been
+    /// inserted yet.
+    /// 
+    /// **See also:** restart()
+    /// nextId()
     start_id() -> i32,
-    ///     Returns a pointer to the current page, or 0 if there is no current
-    ///     page (e.g., before the wizard is shown).
     /// 
-    ///     This is equivalent to calling page(currentId()).
+    /// Returns a pointer to the current page, or 0 if there is no current
+    /// page (e.g., before the wizard is shown).
     /// 
-    ///     \sa page(), currentId(), restart()
+    /// This is equivalent to calling page(currentId()).
+    /// 
+    /// **See also:** page()
+    /// currentId()
+    /// restart()
     current_page() -> WizardPage?,
-    ///     \property QWizard::currentId
-    ///     \brief the ID of the current page
     /// 
-    ///     This property cannot be set directly. To change the current page,
-    ///     call next(), back(), or restart().
+    /// This property cannot be set directly. To change the current page,
+    /// call next(), back(), or restart().
     /// 
-    ///     By default, this property has a value of -1, indicating that no page is
-    ///     currently shown.
+    /// By default, this property has a value of -1, indicating that no page is
+    /// currently shown.
     /// 
-    ///     \sa currentPage()
+    /// **See also:** currentPage()
+    /// 
+    /// This signal is emitted when the current page changes, with the new
+    /// current *id.*
+    /// 
+    /// **See also:** currentId()
+    /// currentPage()
     current_id() -> i32,
-    ///     This virtual function is called by QWizard when the user clicks
-    ///     \uicontrol Next or \uicontrol Finish to perform some last-minute validation.
-    ///     If it returns \c true, the next page is shown (or the wizard
-    ///     finishes); otherwise, the current page stays up.
     /// 
-    ///     The default implementation calls QWizardPage::validatePage() on
-    ///     the currentPage().
+    /// This virtual function is called by QWizard when the user clicks
+    /// **Next** or **Finish** to perform some last-minute validation.
+    /// If it returns `true,` the next page is shown (or the wizard
+    /// finishes); otherwise, the current page stays up.
     /// 
-    ///     When possible, it is usually better style to disable the \uicontrol
-    ///     Next or \uicontrol Finish button (by specifying \l{mandatory fields} or
-    ///     by reimplementing QWizardPage::isComplete()) than to reimplement
-    ///     validateCurrentPage().
+    /// The default implementation calls QWizardPage::validatePage() on
+    /// the currentPage().
     /// 
-    ///     \sa QWizardPage::validatePage(), currentPage()
+    /// When possible, it is usually better style to disable the **Next** or **Finish** button (by specifying [mandatory fields](mandatory%20fields)
+    /// or
+    /// by reimplementing QWizardPage::isComplete()) than to reimplement
+    /// validateCurrentPage().
+    /// 
+    /// **See also:** QWizardPage::validatePage()
+    /// currentPage()
     [event] validate_current_page() -> bool,
-    ///     This virtual function is called by QWizard to find out which page
-    ///     to show when the user clicks the \uicontrol Next button.
     /// 
-    ///     The return value is the ID of the next page, or -1 if no page follows.
+    /// This virtual function is called by QWizard to find out which page
+    /// to show when the user clicks the **Next** button.
     /// 
-    ///     The default implementation calls QWizardPage::nextId() on the
-    ///     currentPage().
+    /// The return value is the ID of the next page, or -1 if no page follows.
     /// 
-    ///     By reimplementing this function, you can specify a dynamic page
-    ///     order.
+    /// The default implementation calls QWizardPage::nextId() on the
+    /// currentPage().
     /// 
-    ///     \sa QWizardPage::nextId(), currentPage()
+    /// By reimplementing this function, you can specify a dynamic page
+    /// order.
+    /// 
+    /// **See also:** QWizardPage::nextId()
+    /// currentPage()
     [event] next_id() -> i32,
-    ///     Sets the value of the field called \a name to \a value.
     /// 
-    ///     This function can be used to set fields on any page of the wizard.
+    /// Sets the value of the field called *name* to *value.*
     /// 
-    ///     \sa QWizardPage::registerField(), QWizardPage::setField(), field()
+    /// This function can be used to set fields on any page of the wizard.
+    /// 
+    /// **See also:** QWizardPage::registerField()
+    /// QWizardPage::setField()
+    /// field()
     set_field(name: String, value: &VariantType),
-    ///     Returns the value of the field called \a name.
     /// 
-    ///     This function can be used to access fields on any page of the wizard.
+    /// Returns the value of the field called *name.*
     /// 
-    ///     \sa QWizardPage::registerField(), QWizardPage::field(), setField()
+    /// This function can be used to access fields on any page of the wizard.
+    /// 
+    /// **See also:** QWizardPage::registerField()
+    /// QWizardPage::field()
+    /// setField()
     field(name: String) -> Variant,
-    ///     \property QWizard::wizardStyle
-    ///     \brief the look and feel of the wizard
-    /// 
-    ///     By default, QWizard uses the AeroStyle on a Windows Vista system with alpha compositing
-    ///     enabled, regardless of the current widget style. If this is not the case, the default
-    ///     wizard style depends on the current widget style as follows: MacStyle is the default if
-    ///     the current widget style is QMacStyle, ModernStyle is the default if the current widget
-    ///     style is QWindowsStyle, and ClassicStyle is the default in all other cases.
-    /// 
-    ///     \sa {Wizard Look and Feel}, options
     set_wizard_style(style: Wizard::WizardStyle),
+    /// 
+    /// By default, QWizard uses the AeroStyle on a Windows Vista system with alpha compositing
+    /// enabled, regardless of the current widget style. If this is not the case, the default
+    /// wizard style depends on the current widget style as follows: MacStyle is the default if
+    /// the current widget style is QMacStyle, ModernStyle is the default if the current widget
+    /// style is QWindowsStyle, and ClassicStyle is the default in all other cases.
+    /// 
+    /// **See also:** {Wizard Look and Feel}
+    /// options
     wizard_style() -> Wizard::WizardStyle,
-    ///     Sets the given \a option to be enabled if \a on is true;
-    ///     otherwise, clears the given \a option.
     /// 
-    ///     \sa options, testOption(), setWizardStyle()
+    /// Sets the given *option* to be enabled if *on* is true;
+    /// otherwise, clears the given *option.*
+    /// 
+    /// **See also:** options
+    /// testOption()
+    /// setWizardStyle()
     set_option(option: Wizard::WizardOption, on: bool),
-    ///     Returns \c true if the given \a option is enabled; otherwise, returns
-    ///     false.
     /// 
-    ///     \sa options, setOption(), setWizardStyle()
+    /// Returns `true` if the given *option* is enabled; otherwise, returns
+    /// false.
+    /// 
+    /// **See also:** options
+    /// setOption()
+    /// setWizardStyle()
     test_option(option: Wizard::WizardOption) -> bool,
-    ///     \property QWizard::options
-    ///     \brief the various options that affect the look and feel of the wizard
-    /// 
-    ///     By default, the following options are set (depending on the platform):
-    /// 
-    ///     \list
-    ///     \li Windows: HelpButtonOnRight.
-    ///     \li \macos: NoDefaultButton and NoCancelButton.
-    ///     \li X11 and QWS (Qt for Embedded Linux): none.
-    ///     \endlist
-    /// 
-    ///     \sa wizardStyle
     set_options(options: Wizard::WizardOptions),
+    /// 
+    /// By default, the following options are set (depending on the platform):
+    /// 
+    /// * Windows: HelpButtonOnRight.
+    /// * MacOS : NoDefaultButton and NoCancelButton.
+    /// * X11 and QWS (Qt for Embedded Linux): none.
+    /// 
+    /// **See also:** wizardStyle
     options() -> Wizard::WizardOptions,
-    ///     Sets the text on button \a which to be \a text.
     /// 
-    ///     By default, the text on buttons depends on the wizardStyle. For
-    ///     example, on \macos, the \uicontrol Next button is called \uicontrol
-    ///     Continue.
+    /// Sets the text on button *which* to be *text.*
     /// 
-    ///     To add extra buttons to the wizard (e.g., a \uicontrol Print button),
-    ///     one way is to call setButtonText() with CustomButton1,
-    ///     CustomButton2, or CustomButton3 to set their text, and make the
-    ///     buttons visible using the HaveCustomButton1, HaveCustomButton2,
-    ///     and/or HaveCustomButton3 options.
+    /// By default, the text on buttons depends on the wizardStyle. For
+    /// example, on MacOS , the **Next** button is called **Continue.**
     /// 
-    ///     Button texts may also be set on a per-page basis using QWizardPage::setButtonText().
+    /// To add extra buttons to the wizard (e.g., a **Print** button),
+    /// one way is to call setButtonText() with CustomButton1,
+    /// CustomButton2, or CustomButton3 to set their text, and make the
+    /// buttons visible using the HaveCustomButton1, HaveCustomButton2,
+    /// and/or HaveCustomButton3 options.
     /// 
-    ///     \sa setButton(), button(), setButtonLayout(), setOptions(), QWizardPage::setButtonText()
+    /// Button texts may also be set on a per-page basis using QWizardPage::setButtonText().
+    /// 
+    /// **See also:** setButton()
+    /// button()
+    /// setButtonLayout()
+    /// setOptions()
+    /// QWizardPage::setButtonText()
     set_button_text(which: Wizard::WizardButton, text: String),
-    ///     Returns the text on button \a which.
     /// 
-    ///     If a text has ben set using setButtonText(), this text is returned.
+    /// Returns the text on button *which.*
     /// 
-    ///     By default, the text on buttons depends on the wizardStyle. For
-    ///     example, on \macos, the \uicontrol Next button is called \uicontrol
-    ///     Continue.
+    /// If a text has ben set using setButtonText(), this text is returned.
     /// 
-    ///     \sa button(), setButton(), setButtonText(), QWizardPage::buttonText(),
-    ///     QWizardPage::setButtonText()
+    /// By default, the text on buttons depends on the wizardStyle. For
+    /// example, on MacOS , the **Next** button is called **Continue.**
+    /// 
+    /// **See also:** button()
+    /// setButton()
+    /// setButtonText()
+    /// QWizardPage::buttonText()
+    /// QWizardPage::setButtonText()
     button_text(which: Wizard::WizardButton) -> String,
-    ///     Sets the order in which buttons are displayed to \a layout, where
-    ///     \a layout is a list of \l{WizardButton}s.
     /// 
-    ///     The default layout depends on the options (e.g., whether
-    ///     HelpButtonOnRight) that are set. You can call this function if
-    ///     you need more control over the buttons' layout than what \l
-    ///     options already provides.
+    /// Sets the order in which buttons are displayed to *layout,* where
+    /// *layout* is a list of [WizardButton](WizardButton)
+    /// s.
     /// 
-    ///     You can specify horizontal stretches in the layout using \l
-    ///     Stretch.
+    /// The default layout depends on the options (e.g., whether
+    /// HelpButtonOnRight) that are set. You can call this function if
+    /// you need more control over the buttons' layout than what [options](options)
+    /// already provides.
     /// 
-    ///     Example:
+    /// You can specify horizontal stretches in the layout using [Stretch.](Stretch.)
     /// 
-    ///     \snippet code/src_gui_dialogs_qwizard.cpp 1
+    /// Example:
     /// 
-    ///     \sa setButton(), setButtonText(), setOptions()
+    /// **See also:** setButton()
+    /// setButtonText()
+    /// setOptions()
     set_button_layout(layout: onst QList<QWizard::WizardButton> &),
-    ///     Sets the button corresponding to role \a which to \a button.
     /// 
-    ///     To add extra buttons to the wizard (e.g., a \uicontrol Print button),
-    ///     one way is to call setButton() with CustomButton1 to
-    ///     CustomButton3, and make the buttons visible using the
-    ///     HaveCustomButton1 to HaveCustomButton3 options.
+    /// Sets the text on button *which* to be *text.*
     /// 
-    ///     \sa setButtonText(), setButtonLayout(), options
+    /// By default, the text on buttons depends on the wizardStyle. For
+    /// example, on MacOS , the **Next** button is called **Continue.**
+    /// 
+    /// To add extra buttons to the wizard (e.g., a **Print** button),
+    /// one way is to call setButtonText() with CustomButton1,
+    /// CustomButton2, or CustomButton3 to set their text, and make the
+    /// buttons visible using the HaveCustomButton1, HaveCustomButton2,
+    /// and/or HaveCustomButton3 options.
+    /// 
+    /// Button texts may also be set on a per-page basis using QWizardPage::setButtonText().
+    /// 
+    /// **See also:** setButton()
+    /// button()
+    /// setButtonLayout()
+    /// setOptions()
+    /// QWizardPage::setButtonText()
+    /// 
+    /// Sets the order in which buttons are displayed to *layout,* where
+    /// *layout* is a list of [WizardButton](WizardButton)
+    /// s.
+    /// 
+    /// The default layout depends on the options (e.g., whether
+    /// HelpButtonOnRight) that are set. You can call this function if
+    /// you need more control over the buttons' layout than what [options](options)
+    /// already provides.
+    /// 
+    /// You can specify horizontal stretches in the layout using [Stretch.](Stretch.)
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** setButton()
+    /// setButtonText()
+    /// setOptions()
+    /// 
+    /// Sets the button corresponding to role *which* to *button.*
+    /// 
+    /// To add extra buttons to the wizard (e.g., a **Print** button),
+    /// one way is to call setButton() with CustomButton1 to
+    /// CustomButton3, and make the buttons visible using the
+    /// HaveCustomButton1 to HaveCustomButton3 options.
+    /// 
+    /// **See also:** setButtonText()
+    /// setButtonLayout()
+    /// options
     set_button(which: Wizard::WizardButton, button: *AbstractButtonType),
-    ///     Returns the button corresponding to role \a which.
     /// 
-    ///     \sa setButton(), setButtonText()
+    /// Returns the text on button *which.*
+    /// 
+    /// If a text has ben set using setButtonText(), this text is returned.
+    /// 
+    /// By default, the text on buttons depends on the wizardStyle. For
+    /// example, on MacOS , the **Next** button is called **Continue.**
+    /// 
+    /// **See also:** button()
+    /// setButton()
+    /// setButtonText()
+    /// QWizardPage::buttonText()
+    /// QWizardPage::setButtonText()
+    /// 
+    /// Returns the button corresponding to role *which.*
+    /// 
+    /// **See also:** setButton()
+    /// setButtonText()
     button(which: Wizard::WizardButton) -> AbstractButton?,
-    ///     \property QWizard::titleFormat
-    ///     \brief the text format used by page titles
-    /// 
-    ///     The default format is Qt::AutoText.
-    /// 
-    ///     \sa QWizardPage::title, subTitleFormat
     set_title_format(format: Rute::TextFormat),
+    /// 
+    /// The default format is Qt::AutoText.
+    /// 
+    /// **See also:** QWizardPage::title
+    /// subTitleFormat
     title_format() -> Rute::TextFormat,
-    ///     \property QWizard::subTitleFormat
-    ///     \brief the text format used by page subtitles
-    /// 
-    ///     The default format is Qt::AutoText.
-    /// 
-    ///     \sa QWizardPage::title, titleFormat
     set_sub_title_format(format: Rute::TextFormat),
+    /// 
+    /// The default format is Qt::AutoText.
+    /// 
+    /// **See also:** QWizardPage::title
+    /// titleFormat
     sub_title_format() -> Rute::TextFormat,
-    ///     Sets the pixmap for role \a which to \a pixmap.
     /// 
-    ///     The pixmaps are used by QWizard when displaying a page. Which
-    ///     pixmaps are actually used depend on the \l{Wizard Look and
-    ///     Feel}{wizard style}.
+    /// Sets the pixmap for role *which* to *pixmap.*
     /// 
-    ///     Pixmaps can also be set for a specific page using
-    ///     QWizardPage::setPixmap().
+    /// The pixmaps are used by QWizard when displaying a page. Which
+    /// pixmaps are actually used depend on the [wizard style](Wizard%20Look%20and%0A%20%20%20%20Feel)
     /// 
-    ///     \sa QWizardPage::setPixmap(), {Elements of a Wizard Page}
+    /// 
+    /// Pixmaps can also be set for a specific page using
+    /// QWizardPage::setPixmap().
+    /// 
+    /// **See also:** QWizardPage::setPixmap()
+    /// {Elements of a Wizard Page}
     set_pixmap(which: Wizard::WizardPixmap, pixmap: &PixmapType),
-    ///     Returns the pixmap set for role \a which.
     /// 
-    ///     By default, the only pixmap that is set is the BackgroundPixmap on
-    ///     \macos.
+    /// Returns the pixmap set for role *which.*
     /// 
-    ///     \sa QWizardPage::pixmap(), {Elements of a Wizard Page}
+    /// By default, the only pixmap that is set is the BackgroundPixmap on
+    /// MacOS .
+    /// 
+    /// **See also:** QWizardPage::pixmap()
+    /// {Elements of a Wizard Page}
     pixmap(which: Wizard::WizardPixmap) -> Pixmap,
-    ///     \since 4.7
     /// 
-    ///     Sets the given \a widget to be shown on the left side of the wizard.
-    ///     For styles which use the WatermarkPixmap (ClassicStyle and ModernStyle)
-    ///     the side widget is displayed on top of the watermark, for other styles
-    ///     or when the watermark is not provided the side widget is displayed
-    ///     on the left side of the wizard.
+    /// Sets the given *widget* to be shown on the left side of the wizard.
+    /// For styles which use the WatermarkPixmap (ClassicStyle and ModernStyle)
+    /// the side widget is displayed on top of the watermark, for other styles
+    /// or when the watermark is not provided the side widget is displayed
+    /// on the left side of the wizard.
     /// 
-    ///     Passing 0 shows no side widget.
+    /// Passing 0 shows no side widget.
     /// 
-    ///     When the \a widget is not 0 the wizard reparents it.
+    /// When the *widget* is not 0 the wizard reparents it.
     /// 
-    ///     Any previous side widget is hidden.
+    /// Any previous side widget is hidden.
     /// 
-    ///     You may call setSideWidget() with the same widget at different
-    ///     times.
+    /// You may call setSideWidget() with the same widget at different
+    /// times.
     /// 
-    ///     All widgets set here will be deleted by the wizard when it is
-    ///     destroyed unless you separately reparent the widget after setting
-    ///     some other side widget (or 0).
+    /// All widgets set here will be deleted by the wizard when it is
+    /// destroyed unless you separately reparent the widget after setting
+    /// some other side widget (or 0).
     /// 
-    ///     By default, no side widget is present.
+    /// By default, no side widget is present.
     set_side_widget(widget: *WidgetType),
-    ///     \since 4.7
     /// 
-    ///     Returns the widget on the left side of the wizard or 0.
+    /// Returns the widget on the left side of the wizard or 0.
     /// 
-    ///     By default, no side widget is present.
+    /// By default, no side widget is present.
     side_widget() -> Widget?,
+    /// 
+    /// Sets the default property for *className* to be *property,*
+    /// and the associated change signal to be *changedSignal.*
+    /// 
+    /// The default property is used when an instance of *className* (or
+    /// of one of its subclasses) is passed to
+    /// QWizardPage::registerField() and no property is specified.
+    /// 
+    /// QWizard knows the most common Qt widgets. For these (or their
+    /// subclasses), you don't need to specify a *property* or a *changedSignal.* The table below lists these widgets:
+    /// 
+    /// * Widget
+    /// * Property
+    /// * Change Notification Signal
+    /// * QAbstractButton
+    /// * bool [checked](QAbstractButton::)
+    /// 
+    /// * [toggled()](QAbstractButton::)
+    /// 
+    /// * QAbstractSlider
+    /// * int [value](QAbstractSlider::)
+    /// 
+    /// * [valueChanged()](QAbstractSlider::)
+    /// 
+    /// * QComboBox
+    /// * int [currentIndex](QComboBox::)
+    /// 
+    /// * [currentIndexChanged()](QComboBox::)
+    /// 
+    /// * QDateTimeEdit
+    /// * QDateTime [dateTime](QDateTimeEdit::)
+    /// 
+    /// * [dateTimeChanged()](QDateTimeEdit::)
+    /// 
+    /// * QLineEdit
+    /// * QString [text](QLineEdit::)
+    /// 
+    /// * [textChanged()](QLineEdit::)
+    /// 
+    /// * QListWidget
+    /// * int [currentRow](QListWidget::)
+    /// 
+    /// * [currentRowChanged()](QListWidget::)
+    /// 
+    /// * QSpinBox
+    /// * int [value](QSpinBox::)
+    /// 
+    /// * [valueChanged()](QSpinBox::)
+    /// 
+    /// **See also:** QWizardPage::registerField()
     set_default_property(class_name: *char, property: *char, changed_signal: *char),
-    ///     \reimp
+    /// 
     [event] set_visible(visible: bool),
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
+    /// 
+    /// This signal is emitted when the current page changes, with the new
+    /// current *id.*
+    /// 
+    /// **See also:** currentId()
+    /// currentPage()
     [signal] current_id_changed(id: i32),
+    /// 
+    /// This signal is emitted when the user clicks the **Help** button.
+    /// 
+    /// By default, no **Help** button is shown. Call
+    /// setOption(HaveHelpButton, true) to have one.
+    /// 
+    /// Example:
+    /// 
+    /// ...
+    /// 
+    /// **See also:** customButtonClicked()
     [signal] help_requested(),
+    /// 
+    /// This signal is emitted when the user clicks a custom button. *which* can be CustomButton1, CustomButton2, or CustomButton3.
+    /// 
+    /// By default, no custom button is shown. Call setOption() with
+    /// HaveCustomButton1, HaveCustomButton2, or HaveCustomButton3 to have
+    /// one, and use setButtonText() or setButton() to configure it.
+    /// 
+    /// **See also:** helpRequested()
     [signal] custom_button_clicked(which: i32),
+    /// 
+    /// This signal is emitted whenever a page is added to the
+    /// wizard. The page's *id* is passed as parameter.
+    /// 
+    /// **See also:** addPage()
+    /// setPage()
+    /// startId()
     [signal] page_added(id: i32),
+    /// 
+    /// This signal is emitted whenever a page is removed from the
+    /// wizard. The page's *id* is passed as parameter.
+    /// 
+    /// **See also:** removePage()
+    /// startId()
     [signal] page_removed(id: i32),
-    ///     Goes back to the previous page.
     /// 
-    ///     This is equivalent to pressing the \uicontrol Back button.
+    /// Goes back to the previous page.
     /// 
-    ///     \sa next(), accept(), reject(), restart()
+    /// This is equivalent to pressing the **Back** button.
+    /// 
+    /// **See also:** next()
+    /// accept()
+    /// reject()
+    /// restart()
     back(),
-    ///     Advances to the next page.
     /// 
-    ///     This is equivalent to pressing the \uicontrol Next or \uicontrol Commit button.
+    /// Advances to the next page.
     /// 
-    ///     \sa nextId(), back(), accept(), reject(), restart()
+    /// This is equivalent to pressing the **Next** or **Commit** button.
+    /// 
+    /// **See also:** nextId()
+    /// back()
+    /// accept()
+    /// reject()
+    /// restart()
+    /// 
+    /// This virtual function is called by QWizard to find out which page
+    /// to show when the user clicks the **Next** button.
+    /// 
+    /// The return value is the ID of the next page, or -1 if no page follows.
+    /// 
+    /// The default implementation calls QWizardPage::nextId() on the
+    /// currentPage().
+    /// 
+    /// By reimplementing this function, you can specify a dynamic page
+    /// order.
+    /// 
+    /// **See also:** QWizardPage::nextId()
+    /// currentPage()
     next(),
-    ///     Restarts the wizard at the start page. This function is called automatically when the
-    ///     wizard is shown.
     /// 
-    ///     \sa startId()
+    /// Restarts the wizard at the start page. This function is called automatically when the
+    /// wizard is shown.
+    /// 
+    /// **See also:** startId()
     restart(),
-    ///     \reimp
+    /// 
     [event] event(event: *EventType) -> bool,
-    ///     \reimp
+    /// 
     [event] resize_event(event: *ResizeEventType),
-    ///     \reimp
+    /// 
     [event] paint_event(event: *PaintEventType),
-    ///     \reimp
+    /// 
     [event] done(result: i32),
-    ///     \fn void QWizard::initializePage(int id)
     /// 
-    ///     This virtual function is called by QWizard to prepare page \a id
-    ///     just before it is shown either as a result of QWizard::restart()
-    ///     being called, or as a result of the user clicking \uicontrol Next. (However, if the \l
-    ///     QWizard::IndependentPages option is set, this function is only
-    ///     called the first time the page is shown.)
+    /// This virtual function is called by QWizard to prepare page *id*
+    /// just before it is shown either as a result of QWizard::restart()
+    /// being called, or as a result of the user clicking **Next.** (However, if the [QWizard::IndependentPages](QWizard::IndependentPages)
+    /// option is set, this function is only
+    /// called the first time the page is shown.)
     /// 
-    ///     By reimplementing this function, you can ensure that the page's
-    ///     fields are properly initialized based on fields from previous
-    ///     pages.
+    /// By reimplementing this function, you can ensure that the page's
+    /// fields are properly initialized based on fields from previous
+    /// pages.
     /// 
-    ///     The default implementation calls QWizardPage::initializePage() on
-    ///     page(\a id).
+    /// The default implementation calls QWizardPage::initializePage() on
+    /// page( *id).*
     /// 
-    ///     \sa QWizardPage::initializePage(), cleanupPage()
+    /// **See also:** QWizardPage::initializePage()
+    /// cleanupPage()
     [event] initialize_page(id: i32),
-    ///     \fn void QWizard::cleanupPage(int id)
     /// 
-    ///     This virtual function is called by QWizard to clean up page \a id just before the
-    ///     user leaves it by clicking \uicontrol Back (unless the \l QWizard::IndependentPages option is set).
+    /// This virtual function is called by QWizard to clean up page *id* just before the
+    /// user leaves it by clicking **Back** (unless the [QWizard::IndependentPages](QWizard::IndependentPages)
+    /// option is set).
     /// 
-    ///     The default implementation calls QWizardPage::cleanupPage() on
-    ///     page(\a id).
+    /// The default implementation calls QWizardPage::cleanupPage() on
+    /// page( *id).*
     /// 
-    ///     \sa QWizardPage::cleanupPage(), initializePage()
+    /// **See also:** QWizardPage::cleanupPage()
+    /// initializePage()
     [event] cleanup_page(id: i32),
 }
 

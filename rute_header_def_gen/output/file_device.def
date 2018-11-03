@@ -1,20 +1,13 @@
-///     \class QFileDevice
-///     \inmodule QtCore
-///     \since 5.0
 /// 
-///     \brief The QFileDevice class provides an interface for reading from and writing to open files.
+/// QFileDevice is the base class for I/O devices that can read and write text and binary files
+/// and [resources](The%20Qt%20Resource%20System)
+/// . QFile offers the main functionality,
+/// QFileDevice serves as a base class for sharing functionality with other file devices such
+/// as QTemporaryFile, by providing all the operations that can be done on files that have
+/// been opened by QFile or QTemporaryFile.
 /// 
-///     \ingroup io
-/// 
-///     \reentrant
-/// 
-///     QFileDevice is the base class for I/O devices that can read and write text and binary files
-///     and \l{The Qt Resource System}{resources}. QFile offers the main functionality,
-///     QFileDevice serves as a base class for sharing functionality with other file devices such
-///     as QTemporaryFile, by providing all the operations that can be done on files that have
-///     been opened by QFile or QTemporaryFile.
-/// 
-///     \sa QFile, QTemporaryFile
+/// **See also:** QFile
+/// QTemporaryFile
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -74,121 +67,157 @@ enum MemoryMapFlags {
 }
 
 struct FileDevice : IODevice {
-    ///     Returns the file error status.
     /// 
-    ///     The I/O device status returns an error code. For example, if open()
-    ///     returns \c false, or a read/write operation returns -1, this function can
-    ///     be called to find out the reason why the operation failed.
+    /// Returns the file error status.
     /// 
-    ///     \sa unsetError()
+    /// The I/O device status returns an error code. For example, if open()
+    /// returns `false,` or a read/write operation returns -1, this function can
+    /// be called to find out the reason why the operation failed.
+    /// 
+    /// **See also:** unsetError()
     error() -> FileDevice::FileError,
-    ///     Sets the file's error to QFileDevice::NoError.
     /// 
-    ///     \sa error()
+    /// Sets the file's error to QFileDevice::NoError.
+    /// 
+    /// **See also:** error()
     unset_error(),
-    ///   Calls QFileDevice::flush() and closes the file. Errors from flush are ignored.
     /// 
-    ///   \sa QIODevice::close()
+    /// Calls QFileDevice::flush() and closes the file. Errors from flush are ignored.
+    /// 
+    /// **See also:** QIODevice::close()
     [event] close(),
-    ///     Returns \c true if the file can only be manipulated sequentially;
-    ///     otherwise returns \c false.
     /// 
-    ///     Most files support random-access, but some special files may not.
+    /// Returns `true` if the file can only be manipulated sequentially;
+    /// otherwise returns `false.`
     /// 
-    ///     \sa QIODevice::isSequential()
+    /// Most files support random-access, but some special files may not.
+    /// 
+    /// **See also:** QIODevice::isSequential()
     [event] is_sequential() -> bool,
-    ///   Returns the file handle of the file.
     /// 
-    ///   This is a small positive integer, suitable for use with C library
-    ///   functions such as \c fdopen() and \c fcntl(). On systems that use file
-    ///   descriptors for sockets (i.e. Unix systems, but not Windows) the handle
-    ///   can be used with QSocketNotifier as well.
+    /// Returns the file handle of the file.
     /// 
-    ///   If the file is not open, or there is an error, handle() returns -1.
+    /// This is a small positive integer, suitable for use with C library
+    /// functions such as `fdopen()` and `fcntl().` On systems that use file
+    /// descriptors for sockets (i.e. Unix systems, but not Windows) the handle
+    /// can be used with QSocketNotifier as well.
     /// 
-    ///   \sa QSocketNotifier
+    /// If the file is not open, or there is an error, handle() returns -1.
+    /// 
+    /// **See also:** QSocketNotifier
     handle() -> i32,
-    ///     Returns the name of the file.
-    ///     The default implementation in QFileDevice returns a null string.
+    /// 
+    /// Returns the name of the file.
+    /// The default implementation in QFileDevice returns a null string.
     [event] file_name() -> String,
-    ///   \reimp
+    /// 
     [event] pos() -> i64,
-    ///     \fn bool QFileDevice::seek(qint64 pos)
     /// 
-    ///     For random-access devices, this function sets the current position
-    ///     to \a pos, returning true on success, or false if an error occurred.
-    ///     For sequential devices, the default behavior is to do nothing and
-    ///     return false.
+    /// For random-access devices, this function sets the current position
+    /// to *pos,* returning true on success, or false if an error occurred.
+    /// For sequential devices, the default behavior is to do nothing and
+    /// return false.
     /// 
-    ///     Seeking beyond the end of a file:
-    ///     If the position is beyond the end of a file, then seek() will not
-    ///     immediately extend the file. If a write is performed at this position,
-    ///     then the file will be extended. The content of the file between the
-    ///     previous end of file and the newly written data is UNDEFINED and
-    ///     varies between platforms and file systems.
+    /// Seeking beyond the end of a file:
+    /// If the position is beyond the end of a file, then seek() will not
+    /// immediately extend the file. If a write is performed at this position,
+    /// then the file will be extended. The content of the file between the
+    /// previous end of file and the newly written data is UNDEFINED and
+    /// varies between platforms and file systems.
     [event] seek(offset: i64) -> bool,
-    ///   Returns \c true if the end of the file has been reached; otherwise returns
-    ///   false.
     /// 
-    ///   For regular empty files on Unix (e.g. those in \c /proc), this function
-    ///   returns \c true, since the file system reports that the size of such a file is
-    ///   0. Therefore, you should not depend on atEnd() when reading data from such a
-    ///   file, but rather call read() until no more data can be read.
+    /// Returns `true` if the end of the file has been reached; otherwise returns
+    /// false.
+    /// 
+    /// For regular empty files on Unix (e.g. those in `/proc),` this function
+    /// returns `true,` since the file system reports that the size of such a file is
+    /// 0. Therefore, you should not depend on atEnd() when reading data from such a
+    /// file, but rather call read() until no more data can be read.
     [event] at_end() -> bool,
-    ///     Flushes any buffered data to the file. Returns \c true if successful;
-    ///     otherwise returns \c false.
+    /// 
+    /// Flushes any buffered data to the file. Returns `true` if successful;
+    /// otherwise returns `false.`
     flush() -> bool,
-    ///   Returns the size of the file.
     /// 
-    ///   For regular empty files on Unix (e.g. those in \c /proc), this function
-    ///   returns 0; the contents of such a file are generated on demand in response
-    ///   to you calling read().
+    /// Returns the size of the file.
+    /// 
+    /// For regular empty files on Unix (e.g. those in `/proc),` this function
+    /// returns 0; the contents of such a file are generated on demand in response
+    /// to you calling read().
     [event] size() -> i64,
-    ///     Sets the file size (in bytes) \a sz. Returns \c true if the
-    ///     resize succeeds; false otherwise. If \a sz is larger than the file
-    ///     currently is, the new bytes will be set to 0; if \a sz is smaller, the
-    ///     file is simply truncated.
     /// 
-    ///     \warning This function can fail if the file doesn't exist.
+    /// Sets the file size (in bytes) *sz.* Returns `true` if the
+    /// resize succeeds; false otherwise. If *sz* is larger than the file
+    /// currently is, the new bytes will be set to 0; if *sz* is smaller, the
+    /// file is simply truncated.
     /// 
-    ///     \sa size()
+    /// **Warning**: This function can fail if the file doesn't exist.
+    /// 
+    /// **See also:** size()
     [event] resize(sz: i64) -> bool,
-    ///     Returns the complete OR-ed together combination of
-    ///     QFile::Permission for the file.
     /// 
-    ///     \sa setPermissions()
+    /// Returns the complete OR-ed together combination of
+    /// QFile::Permission for the file.
+    /// 
+    /// **See also:** setPermissions()
     [event] permissions() -> FileDevice::Permissions,
-    ///     Sets the permissions for the file to the \a permissions specified.
-    ///     Returns \c true if successful, or \c false if the permissions cannot be
-    ///     modified.
     /// 
-    ///     \warning This function does not manipulate ACLs, which may limit its
-    ///     effectiveness.
+    /// Sets the permissions for the file to the *permissions* specified.
+    /// Returns `true` if successful, or `false` if the permissions cannot be
+    /// modified.
     /// 
-    ///     \sa permissions()
+    /// **Warning**: This function does not manipulate ACLs, which may limit its
+    /// effectiveness.
+    /// 
+    /// **See also:** permissions()
     [event] set_permissions(permission_spec: FileDevice::Permissions) -> bool,
+    /// 
+    /// Maps *size* bytes of the file into memory starting at *offset.* A file
+    /// should be open for a map to succeed but the file does not need to stay
+    /// open after the memory has been mapped. When the QFile is destroyed
+    /// or a new file is opened with this object, any maps that have not been
+    /// unmapped will automatically be unmapped.
+    /// 
+    /// The mapping will have the same open mode as the file (read and/or write),
+    /// except when using MapPrivateOption, in which case it is always possible
+    /// to write to the mapped memory.
+    /// 
+    /// Any mapping options can be passed through *flags.*
+    /// 
+    /// Returns a pointer to the memory or 0 if there is an error.
+    /// 
+    /// **See also:** unmap()
     map(offset: i64, size: i64, flags: FileDevice::MemoryMapFlags) -> uchar?,
+    /// 
+    /// Unmaps the memory *address.*
+    /// 
+    /// Returns `true` if the unmap succeeds; false otherwise.
+    /// 
+    /// **See also:** map()
     unmap(address: *uchar) -> bool,
-    ///     \since 5.10
-    ///     Returns the file time specified by \a time.
-    ///     If the time cannot be determined return QDateTime() (an invalid
-    ///     date time).
     /// 
-    ///     \sa setFileTime(), FileTime, QDateTime::isValid()
+    /// Returns the file time specified by *time.*
+    /// If the time cannot be determined return QDateTime() (an invalid
+    /// date time).
+    /// 
+    /// **See also:** setFileTime()
+    /// FileTime
+    /// QDateTime::isValid()
     file_time(time: FileDevice::FileTime) -> DateTime,
-    ///     \since 5.10
-    ///     Sets the file time specified by \a fileTime to \a newDate, returning true
-    ///     if successful; otherwise returns false.
     /// 
-    ///     \note The file must be open to use this function.
+    /// Sets the file time specified by *fileTime* to *newDate,* returning true
+    /// if successful; otherwise returns false.
     /// 
-    ///     \sa fileTime(), FileTime
+    /// **Note**: The file must be open to use this function.
+    /// 
+    /// **See also:** fileTime()
+    /// FileTime
     set_file_time(new_date: &DateTimeType, file_time: FileDevice::FileTime) -> bool,
-    ///   \reimp
+    /// 
     [event] read_data(data: *char, maxlen: i64) -> i64,
-    ///   \reimp
+    /// 
     [event] write_data(data: *char, len: i64) -> i64,
-    ///   \reimp
+    /// 
     [event] read_line_data(data: *char, maxlen: i64) -> i64,
 }
 

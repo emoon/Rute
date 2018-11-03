@@ -1,598 +1,2248 @@
-///     \class QStringRef
-///     \inmodule QtCore
-///     \since 4.3
-///     \brief The QStringRef class provides a thin wrapper around QString substrings.
-///     \reentrant
-///     \ingroup tools
-///     \ingroup string-processing
 /// 
-///     QStringRef provides a read-only subset of the QString API.
+/// QStringRef provides a read-only subset of the QString API.
 /// 
-///     A string reference explicitly references a portion of a string()
-///     with a given size(), starting at a specific position(). Calling
-///     toString() returns a copy of the data as a real QString instance.
+/// A string reference explicitly references a portion of a string()
+/// with a given size(), starting at a specific position(). Calling
+/// toString() returns a copy of the data as a real QString instance.
 /// 
-///     This class is designed to improve the performance of substring
-///     handling when manipulating substrings obtained from existing QString
-///     instances. QStringRef avoids the memory allocation and reference
-///     counting overhead of a standard QString by simply referencing a
-///     part of the original string. This can prove to be advantageous in
-///     low level code, such as that used in a parser, at the expense of
-///     potentially more complex code.
+/// This class is designed to improve the performance of substring
+/// handling when manipulating substrings obtained from existing QString
+/// instances. QStringRef avoids the memory allocation and reference
+/// counting overhead of a standard QString by simply referencing a
+/// part of the original string. This can prove to be advantageous in
+/// low level code, such as that used in a parser, at the expense of
+/// potentially more complex code.
 /// 
-///     For most users, there are no semantic benefits to using QStringRef
-///     instead of QString since QStringRef requires attention to be paid
-///     to memory management issues, potentially making code more complex
-///     to write and maintain.
+/// For most users, there are no semantic benefits to using QStringRef
+/// instead of QString since QStringRef requires attention to be paid
+/// to memory management issues, potentially making code more complex
+/// to write and maintain.
 /// 
-///     \warning A QStringRef is only valid as long as the referenced
-///     string exists. If the original string is deleted, the string
-///     reference points to an invalid memory location.
+/// **Warning**: A QStringRef is only valid as long as the referenced
+/// string exists. If the original string is deleted, the string
+/// reference points to an invalid memory location.
 /// 
-///     We suggest that you only use this class in stable code where profiling
-///     has clearly identified that performance improvements can be made by
-///     replacing standard string operations with the optimized substring
-///     handling provided by this class.
+/// We suggest that you only use this class in stable code where profiling
+/// has clearly identified that performance improvements can be made by
+/// replacing standard string operations with the optimized substring
+/// handling provided by this class.
 /// 
-///     \sa {Implicitly Shared Classes}
+/// **See also:** {Implicitly Shared Classes}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct StringRef {
+    /// 
+    /// Returns the starting position in the referenced string that is referred to
+    /// by the string reference.
+    /// 
+    /// **See also:** size()
+    /// string()
     position() -> i32,
+    /// 
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to length() and count().
+    /// 
+    /// **See also:** position()
+    /// string()
     size() -> i32,
-    ///     \since 4.8
-    ///     \overload count()
     /// 
-    ///     Returns the number of (potentially overlapping) occurrences of the
-    ///     string reference \a str in this string reference.
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to size() and length().
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is
-    ///     case sensitive; otherwise the search is case insensitive.
+    /// **See also:** position()
+    /// string()
     /// 
-    ///     \sa QString::count(), contains(), indexOf()
+    /// Returns the number of (potentially overlapping) occurrences of
+    /// the string *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of occurrences of the character *ch* in the
+    /// string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of (potentially overlapping) occurrences of the
+    /// string reference *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
     count() -> i32,
+    /// 
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to size() and count().
+    /// 
+    /// **See also:** position()
+    /// string()
     length() -> i32,
-    ///     \since 4.8
     /// 
-    ///     \overload indexOf()
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
     /// 
-    ///     Returns the index position of the first occurrence of the string
-    ///     reference \a str in this string reference, searching forward from
-    ///     index position \a from. Returns -1 if \a str is not found.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
     /// 
-    ///     \sa QString::indexOf(), lastIndexOf(), contains(), count()
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the
+    /// character *ch* in the string reference, searching forward from
+    /// index position *from.* Returns -1 if *ch* could not be found.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the string
+    /// reference *str* in this string reference, searching forward from
+    /// index position *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
     index_of(str: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///     \since 4.8
     /// 
-    ///     \overload indexOf()
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
     /// 
-    ///     Returns the index position of the first occurrence of the string
-    ///     reference \a str in this string reference, searching forward from
-    ///     index position \a from. Returns -1 if \a str is not found.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
     /// 
-    ///     \sa QString::indexOf(), lastIndexOf(), contains(), count()
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the
+    /// character *ch* in the string reference, searching forward from
+    /// index position *from.* Returns -1 if *ch* could not be found.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the string
+    /// reference *str* in this string reference, searching forward from
+    /// index position *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
     index_of(ch: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///     \since 4.8
     /// 
-    ///     \overload indexOf()
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
     /// 
-    ///     Returns the index position of the first occurrence of the string
-    ///     reference \a str in this string reference, searching forward from
-    ///     index position \a from. Returns -1 if \a str is not found.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
     /// 
-    ///     \sa QString::indexOf(), lastIndexOf(), contains(), count()
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the
+    /// character *ch* in the string reference, searching forward from
+    /// index position *from.* Returns -1 if *ch* could not be found.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the string
+    /// reference *str* in this string reference, searching forward from
+    /// index position *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
     index_of(str: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///     \since 4.8
     /// 
-    ///     \overload indexOf()
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
     /// 
-    ///     Returns the index position of the first occurrence of the string
-    ///     reference \a str in this string reference, searching forward from
-    ///     index position \a from. Returns -1 if \a str is not found.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
     /// 
-    ///     \sa QString::indexOf(), lastIndexOf(), contains(), count()
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the
+    /// character *ch* in the string reference, searching forward from
+    /// index position *from.* Returns -1 if *ch* could not be found.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
+    /// *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// If *from* is -1, the search starts at the last character; if it is
+    /// -2, at the next to last character and so on.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** indexOf()
+    /// Returns the index position of the first occurrence of the string
+    /// reference *str* in this string reference, searching forward from
+    /// index position *from.* Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::indexOf()
+    /// lastIndexOf()
+    /// contains()
+    /// count()
     index_of(str: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///   \since 4.8
-    ///   \overload lastIndexOf()
     /// 
-    ///   Returns the index position of the last occurrence of the string
-    ///   reference \a str in this string reference, searching backward from
-    ///   index position \a from. If \a from is -1 (default), the search
-    ///   starts at the last character; if \a from is -2, at the next to last
-    ///   character and so on. Returns -1 if \a str is not found.
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
     /// 
-    ///   If \a cs is Qt::CaseSensitive (default), the search is case
-    ///   sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///   \sa QString::lastIndexOf(), indexOf(), contains(), count()
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the character
+    /// *ch,* searching backward from position *from.*
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string
+    /// reference *str* in this string reference, searching backward from
+    /// index position *from.* If *from* is -1 (default), the search
+    /// starts at the last character; if *from* is -2, at the next to last
+    /// character and so on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
     last_index_of(str: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///   \since 4.8
-    ///   \overload lastIndexOf()
     /// 
-    ///   Returns the index position of the last occurrence of the string
-    ///   reference \a str in this string reference, searching backward from
-    ///   index position \a from. If \a from is -1 (default), the search
-    ///   starts at the last character; if \a from is -2, at the next to last
-    ///   character and so on. Returns -1 if \a str is not found.
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
     /// 
-    ///   If \a cs is Qt::CaseSensitive (default), the search is case
-    ///   sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///   \sa QString::lastIndexOf(), indexOf(), contains(), count()
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the character
+    /// *ch,* searching backward from position *from.*
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string
+    /// reference *str* in this string reference, searching backward from
+    /// index position *from.* If *from* is -1 (default), the search
+    /// starts at the last character; if *from* is -2, at the next to last
+    /// character and so on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
     last_index_of(ch: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///   \since 4.8
-    ///   \overload lastIndexOf()
     /// 
-    ///   Returns the index position of the last occurrence of the string
-    ///   reference \a str in this string reference, searching backward from
-    ///   index position \a from. If \a from is -1 (default), the search
-    ///   starts at the last character; if \a from is -2, at the next to last
-    ///   character and so on. Returns -1 if \a str is not found.
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
     /// 
-    ///   If \a cs is Qt::CaseSensitive (default), the search is case
-    ///   sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///   \sa QString::lastIndexOf(), indexOf(), contains(), count()
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the character
+    /// *ch,* searching backward from position *from.*
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string
+    /// reference *str* in this string reference, searching backward from
+    /// index position *from.* If *from* is -1 (default), the search
+    /// starts at the last character; if *from* is -2, at the next to last
+    /// character and so on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
     last_index_of(str: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
-    ///   \since 4.8
-    ///   \overload lastIndexOf()
     /// 
-    ///   Returns the index position of the last occurrence of the string
-    ///   reference \a str in this string reference, searching backward from
-    ///   index position \a from. If \a from is -1 (default), the search
-    ///   starts at the last character; if \a from is -2, at the next to last
-    ///   character and so on. Returns -1 if \a str is not found.
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
     /// 
-    ///   If \a cs is Qt::CaseSensitive (default), the search is case
-    ///   sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
     /// 
-    ///   \sa QString::lastIndexOf(), indexOf(), contains(), count()
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the character
+    /// *ch,* searching backward from position *from.*
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
+    /// *from.* If *from* is -1 (default), the search starts at the last
+    /// character; if *from* is -2, at the next to last character and so
+    /// on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
+    /// 
+    /// **Overloads** lastIndexOf()
+    /// Returns the index position of the last occurrence of the string
+    /// reference *str* in this string reference, searching backward from
+    /// index position *from.* If *from* is -1 (default), the search
+    /// starts at the last character; if *from* is -2, at the next to last
+    /// character and so on. Returns -1 if *str* is not found.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::lastIndexOf()
+    /// indexOf()
+    /// contains()
+    /// count()
     last_index_of(str: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string contains an occurrence of the
+    /// character *ch;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string reference *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
     contains(str: String, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string contains an occurrence of the
+    /// character *ch;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string reference *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
     contains(ch: CharType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string contains an occurrence of the
+    /// character *ch;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string reference *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
     contains(str: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string contains an occurrence of the
+    /// character *ch;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string reference *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
+    /// **Overloads** contains()
+    /// Returns `true` if this string reference contains an occurrence of
+    /// the string *str;* otherwise returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** indexOf()
+    /// count()
     contains(str: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload count()
     /// 
-    ///     Returns the number of (potentially overlapping) occurrences of the
-    ///     string reference \a str in this string reference.
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to size() and length().
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is
-    ///     case sensitive; otherwise the search is case insensitive.
+    /// **See also:** position()
+    /// string()
     /// 
-    ///     \sa QString::count(), contains(), indexOf()
+    /// Returns the number of (potentially overlapping) occurrences of
+    /// the string *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of occurrences of the character *ch* in the
+    /// string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of (potentially overlapping) occurrences of the
+    /// string reference *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
     count(s: String, cs: Rute::CaseSensitivity) -> i32,
-    ///     \since 4.8
-    ///     \overload count()
     /// 
-    ///     Returns the number of (potentially overlapping) occurrences of the
-    ///     string reference \a str in this string reference.
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to size() and length().
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is
-    ///     case sensitive; otherwise the search is case insensitive.
+    /// **See also:** position()
+    /// string()
     /// 
-    ///     \sa QString::count(), contains(), indexOf()
+    /// Returns the number of (potentially overlapping) occurrences of
+    /// the string *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of occurrences of the character *ch* in the
+    /// string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of (potentially overlapping) occurrences of the
+    /// string reference *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
     count(c: CharType, cs: Rute::CaseSensitivity) -> i32,
-    ///     \since 4.8
-    ///     \overload count()
     /// 
-    ///     Returns the number of (potentially overlapping) occurrences of the
-    ///     string reference \a str in this string reference.
+    /// Returns the number of characters referred to by the string reference.
+    /// Equivalent to size() and length().
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is
-    ///     case sensitive; otherwise the search is case insensitive.
+    /// **See also:** position()
+    /// string()
     /// 
-    ///     \sa QString::count(), contains(), indexOf()
+    /// Returns the number of (potentially overlapping) occurrences of
+    /// the string *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of occurrences of the character *ch* in the
+    /// string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
+    /// 
+    /// **Overloads** count()
+    /// Returns the number of (potentially overlapping) occurrences of the
+    /// string reference *str* in this string reference.
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::count()
+    /// contains()
+    /// indexOf()
     count(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
-    ///     \overload
-    ///     \since 5.4
+    /// 
+    /// Splits the string into substrings references wherever *sep* occurs, and
+    /// returns the list of those strings.
+    /// 
+    /// See QString::split() for how *sep,* *behavior* and *cs* interact to form
+    /// the result.
+    /// 
+    /// **Note**: All references are valid as long this string is alive. Destroying this
+    /// string will cause all references be dangling pointers.
+    /// 
+    /// 
+    /// **Overloads**
     split(sep: String, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
-    ///     \overload
-    ///     \since 5.4
+    /// 
+    /// Splits the string into substrings references wherever *sep* occurs, and
+    /// returns the list of those strings.
+    /// 
+    /// See QString::split() for how *sep,* *behavior* and *cs* interact to form
+    /// the result.
+    /// 
+    /// **Note**: All references are valid as long this string is alive. Destroying this
+    /// string will cause all references be dangling pointers.
+    /// 
+    /// 
+    /// **Overloads**
     split(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
-    ///     \fn QStringRef::left(int n) const
-    ///     \since 5.2
     /// 
-    ///     Returns a substring reference to the \a n leftmost characters
-    ///     of the string.
+    /// Returns a substring reference to the *n* leftmost characters
+    /// of the string.
     /// 
-    ///     If \a n is greater than or equal to size(), or less than zero,
-    ///     a reference to the entire string is returned.
+    /// If *n* is greater than or equal to size(), or less than zero,
+    /// a reference to the entire string is returned.
     /// 
-    ///     \sa right(), mid(), startsWith(), chopped(), chop(), truncate()
+    /// **See also:** right()
+    /// mid()
+    /// startsWith()
+    /// chopped()
+    /// chop()
+    /// truncate()
     left(n: i32) -> StringRef,
-    ///     \fn QStringRef::right(int n) const
-    ///     \since 5.2
     /// 
-    ///     Returns a substring reference to the \a n rightmost characters
-    ///     of the string.
+    /// Returns a substring reference to the *n* rightmost characters
+    /// of the string.
     /// 
-    ///     If \a n is greater than or equal to size(), or less than zero,
-    ///     a reference to the entire string is returned.
+    /// If *n* is greater than or equal to size(), or less than zero,
+    /// a reference to the entire string is returned.
     /// 
-    ///     \sa left(), mid(), endsWith(), chopped(), chop(), truncate()
+    /// **See also:** left()
+    /// mid()
+    /// endsWith()
+    /// chopped()
+    /// chop()
+    /// truncate()
     right(n: i32) -> StringRef,
-    ///     \fn QStringRef QStringRef::mid(int position, int n = -1) const
-    ///     \since 5.2
     /// 
-    ///     Returns a substring reference to \a n characters of this string,
-    ///     starting at the specified \a position.
+    /// Returns a substring reference to *n* characters of this string,
+    /// starting at the specified *position.*
     /// 
-    ///     If the \a position exceeds the length of the string, a null
-    ///     reference is returned.
+    /// If the *position* exceeds the length of the string, a null
+    /// reference is returned.
     /// 
-    ///     If there are less than \a n characters available in the string,
-    ///     starting at the given \a position, or if \a n is -1 (default), the
-    ///     function returns all characters from the specified \a position
-    ///     onwards.
+    /// If there are less than *n* characters available in the string,
+    /// starting at the given *position,* or if *n* is -1 (default), the
+    /// function returns all characters from the specified *position*
+    /// onwards.
     /// 
-    ///     \sa left(), right(), chopped(), chop(), truncate()
+    /// **See also:** left()
+    /// right()
+    /// chopped()
+    /// chop()
+    /// truncate()
     mid(pos: i32, n: i32) -> StringRef,
+    /// 
+    /// Returns a substring reference to the size() - *len* leftmost characters
+    /// of this string.
+    /// 
+    /// **Note**: The behavior is undefined if *len* is negative or greater than size().
+    /// 
+    /// **See also:** endsWith()
+    /// left()
+    /// right()
+    /// mid()
+    /// chop()
+    /// truncate()
     chopped(n: i32) -> StringRef,
+    /// 
+    /// Returns a substring reference to the size() - *len* leftmost characters
+    /// of this string.
+    /// 
+    /// **Note**: The behavior is undefined if *len* is negative or greater than size().
+    /// 
+    /// **See also:** endsWith()
+    /// left()
+    /// right()
+    /// mid()
+    /// chop()
+    /// truncate()
+    /// 
+    /// Removes *n* characters from the end of the string.
+    /// 
+    /// If *n* is greater than or equal to size(), the result is an
+    /// empty string; if *n* is negative, it is equivalent to passing zero.
+    /// 
+    /// **See also:** QString::chop()
+    /// truncate()
     chop(n: i32),
-    ///     \since 5.9
     /// 
-    ///     Returns \c true if the string is read right to left.
+    /// Returns `true` if the string is read right to left.
     /// 
-    ///     \sa QString::isRightToLeft()
+    /// **See also:** QString::isRightToLeft()
     is_right_to_left() -> bool,
-    ///     \since 4.8
-    ///     \overload startsWith()
     /// 
-    ///     Returns \c true if the string reference starts with \a ch; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the string reference starts with *str;* otherwise
+    /// returns `false.`
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
     /// 
-    ///     \sa QString::startsWith(), endsWith()
+    /// **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith()
+    /// Returns `true` if the string reference starts with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::startsWith()
+    /// endsWith()
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload startsWith()
     /// 
-    ///     Returns \c true if the string reference starts with \a ch; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the string reference starts with *str;* otherwise
+    /// returns `false.`
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
     /// 
-    ///     \sa QString::startsWith(), endsWith()
+    /// **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith()
+    /// Returns `true` if the string reference starts with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::startsWith()
+    /// endsWith()
     starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload startsWith()
     /// 
-    ///     Returns \c true if the string reference starts with \a ch; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the string reference starts with *str;* otherwise
+    /// returns `false.`
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
     /// 
-    ///     \sa QString::startsWith(), endsWith()
+    /// **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith()
+    /// Returns `true` if the string reference starts with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::startsWith()
+    /// endsWith()
     starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload startsWith()
     /// 
-    ///     Returns \c true if the string reference starts with \a ch; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the string reference starts with *str;* otherwise
+    /// returns `false.`
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
     /// 
-    ///     \sa QString::startsWith(), endsWith()
+    /// **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith()
+    /// Returns `true` if the string reference starts with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::startsWith()
+    /// endsWith()
     starts_with(s: String, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload startsWith()
     /// 
-    ///     Returns \c true if the string reference starts with \a ch; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the string reference starts with *str;* otherwise
+    /// returns `false.`
     /// 
-    ///     If \a cs is Qt::CaseSensitive (default), the search is case
-    ///     sensitive; otherwise the search is case insensitive.
+    /// If *cs* is Qt::CaseSensitive (default), the search is
+    /// case sensitive; otherwise the search is case insensitive.
     /// 
-    ///     \sa QString::startsWith(), endsWith()
+    /// **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith() **See also:** QString::startsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** startsWith()
+    /// Returns `true` if the string reference starts with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::startsWith()
+    /// endsWith()
     starts_with(c: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload endsWith()
-    ///     \sa QString::endsWith(), endsWith()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload endsWith()
-    ///     \sa QString::endsWith(), endsWith()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload endsWith()
-    ///     \sa QString::endsWith(), endsWith()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload endsWith()
-    ///     \sa QString::endsWith(), endsWith()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     ends_with(s: String, cs: Rute::CaseSensitivity) -> bool,
-    ///     \since 4.8
-    ///     \overload endsWith()
-    ///     \sa QString::endsWith(), endsWith()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     ends_with(c: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
+    /// 
+    /// Returns a Unicode representation of the string reference. Since
+    /// the data stems directly from the referenced string, it is not
+    /// null-terminated unless the string reference includes the string's
+    /// null terminator.
+    /// 
+    /// **See also:** string()
     unicode() -> Char?,
+    /// 
+    /// Same as unicode().
     data() -> Char?,
+    /// 
+    /// Same as unicode().
     const_data() -> Char?,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the first character in
+    /// the string.
+    /// 
+    /// **See also:** cbegin()
+    /// constBegin()
+    /// end()
+    /// constEnd()
+    /// rbegin()
+    /// rend()
     begin() -> StringRef::const_iterator,
+    /// 
+    /// Same as begin().
+    /// 
+    /// **See also:** begin()
+    /// constBegin()
+    /// cend()
+    /// constEnd()
+    /// rbegin()
+    /// rend()
     cbegin() -> StringRef::const_iterator,
+    /// 
+    /// Same as begin().
+    /// 
+    /// **See also:** begin()
+    /// cend()
+    /// constEnd()
+    /// rbegin()
+    /// rend()
     const_begin() -> StringRef::const_iterator,
+    /// 
+    /// Returns a const [STL-style iterator](STL-style%20iterators)
+    /// pointing to the imaginary
+    /// character after the last character in the list.
+    /// 
+    /// **See also:** cbegin()
+    /// constBegin()
+    /// end()
+    /// constEnd()
+    /// rbegin()
+    /// rend()
+    /// 
+    /// Returns `true` if the string reference ends with *str;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith()
+    /// Returns `true` if the string reference ends with *ch;* otherwise
+    /// returns `false.`
+    /// 
+    /// If *cs* is Qt::CaseSensitive (default), the search is case
+    /// sensitive; otherwise the search is case insensitive.
+    /// 
+    /// **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// startsWith()
+    /// 
+    /// **Overloads** endsWith() **See also:** QString::endsWith()
+    /// endsWith()
     end() -> StringRef::const_iterator,
-    ///     \fn QStringRef::const_iterator QStringRef::end() const
-    ///     \since 5.4
     /// 
-    ///     Returns a const \l{STL-style iterators}{STL-style iterator} pointing to the imaginary
-    ///     character after the last character in the list.
+    /// Same as end().
     /// 
-    ///     \sa cbegin(), constBegin(), end(), constEnd(), rbegin(), rend()
+    /// **See also:** end()
+    /// constEnd()
+    /// cbegin()
+    /// constBegin()
+    /// rbegin()
+    /// rend()
     cend() -> StringRef::const_iterator,
+    /// 
+    /// Same as end().
+    /// 
+    /// **See also:** end()
+    /// cend()
+    /// cbegin()
+    /// constBegin()
+    /// rbegin()
+    /// rend()
     const_end() -> StringRef::const_iterator,
+    /// 
+    /// Returns a const [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to the first
+    /// character in the string, in reverse order.
+    /// 
+    /// **See also:** begin()
+    /// crbegin()
+    /// rend()
     rbegin() -> StringRef::const_reverse_iterator,
+    /// 
+    /// Same as rbegin().
+    /// 
+    /// **See also:** begin()
+    /// rbegin()
+    /// rend()
     crbegin() -> StringRef::const_reverse_iterator,
+    /// 
+    /// Returns a [STL-style](STL-style%20iterators)
+    /// reverse iterator pointing to one past
+    /// the last character in the string, in reverse order.
+    /// 
+    /// **See also:** end()
+    /// crend()
+    /// rbegin()
     rend() -> StringRef::const_reverse_iterator,
+    /// 
+    /// Same as rend().
+    /// 
+    /// **See also:** end()
+    /// rend()
+    /// rbegin()
     crend() -> StringRef::const_reverse_iterator,
-    ///     \since 4.8
     /// 
-    ///     Returns a Latin-1 representation of the string as a QByteArray.
+    /// Returns a Latin-1 representation of the string as a QByteArray.
     /// 
-    ///     The returned byte array is undefined if the string contains non-Latin1
-    ///     characters. Those characters may be suppressed or replaced with a
-    ///     question mark.
+    /// The returned byte array is undefined if the string contains non-Latin1
+    /// characters. Those characters may be suppressed or replaced with a
+    /// question mark.
     /// 
-    ///     \sa toUtf8(), toLocal8Bit(), QTextCodec
+    /// **See also:** toUtf8()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_latin1() -> ByteArray,
-    ///     \since 4.8
     /// 
-    ///     Returns a UTF-8 representation of the string as a QByteArray.
+    /// Returns a UTF-8 representation of the string as a QByteArray.
     /// 
-    ///     UTF-8 is a Unicode codec and can represent all characters in a Unicode
-    ///     string like QString.
+    /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
+    /// string like QString.
     /// 
-    ///     \sa toLatin1(), toLocal8Bit(), QTextCodec
+    /// **See also:** toLatin1()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_utf8() -> ByteArray,
-    ///     \since 4.8
     /// 
-    ///     Returns the local 8-bit representation of the string as a
-    ///     QByteArray. The returned byte array is undefined if the string
-    ///     contains characters not supported by the local 8-bit encoding.
+    /// Returns the local 8-bit representation of the string as a
+    /// QByteArray. The returned byte array is undefined if the string
+    /// contains characters not supported by the local 8-bit encoding.
     /// 
-    ///     QTextCodec::codecForLocale() is used to perform the conversion from
-    ///     Unicode. If the locale encoding could not be determined, this function
-    ///     does the same as toLatin1().
+    /// QTextCodec::codecForLocale() is used to perform the conversion from
+    /// Unicode. If the locale encoding could not be determined, this function
+    /// does the same as toLatin1().
     /// 
-    ///     If this string contains any characters that cannot be encoded in the
-    ///     locale, the returned byte array is undefined. Those characters may be
-    ///     suppressed or replaced by another.
+    /// If this string contains any characters that cannot be encoded in the
+    /// locale, the returned byte array is undefined. Those characters may be
+    /// suppressed or replaced by another.
     /// 
-    ///     \sa toLatin1(), toUtf8(), QTextCodec
+    /// **See also:** toLatin1()
+    /// toUtf8()
+    /// QTextCodec
     to_local8_bit() -> ByteArray,
-    ///     \since 4.8
     /// 
-    ///     Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
+    /// Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
     /// 
-    ///     UCS-4 is a Unicode codec and therefore it is lossless. All characters from
-    ///     this string will be encoded in UCS-4. Any invalid sequence of code units in
-    ///     this string is replaced by the Unicode's replacement character
-    ///     (QChar::ReplacementCharacter, which corresponds to \c{U+FFFD}).
+    /// UCS-4 is a Unicode codec and therefore it is lossless. All characters from
+    /// this string will be encoded in UCS-4. Any invalid sequence of code units in
+    /// this string is replaced by the Unicode's replacement character
+    /// (QChar::ReplacementCharacter, which corresponds to `U+FFFD` ).
     /// 
-    ///     The returned vector is not NUL terminated.
+    /// The returned vector is not NUL terminated.
     /// 
-    ///     \sa toUtf8(), toLatin1(), toLocal8Bit(), QTextCodec
+    /// **See also:** toUtf8()
+    /// toLatin1()
+    /// toLocal8Bit()
+    /// QTextCodec
     to_ucs4() -> [uint],
+    /// 
+    /// Clears the contents of the string reference by making it null and empty.
+    /// 
+    /// **See also:** isEmpty()
+    /// isNull()
     clear(),
+    /// 
+    /// Returns `true` if the string reference has no characters; otherwise returns
+    /// `false.`
+    /// 
+    /// A string reference is empty if its size is zero.
+    /// 
+    /// **See also:** size()
     is_empty() -> bool,
+    /// 
+    /// Returns `true` if string() returns a null pointer or a pointer to a
+    /// null string; otherwise returns `true.`
+    /// 
+    /// **See also:** size()
     is_null() -> bool,
-    ///     \fn DataPtr & QString::data_ptr()
-    ///     \internal
+    /// Appends the string reference to *string,* and returns a new
+    /// reference to the combined string data.
     append_to(string: String) -> StringRef,
+    /// 
+    /// Returns the character at the given index *position* in the
+    /// string reference.
+    /// 
+    /// The *position* must be a valid index position in the string
+    /// (i.e., 0 <= *position* < size()).
     at(i: i32) -> Char,
+    /// 
+    /// Returns the first character in the string.
+    /// Same as `at(0)` .
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** back()
+    /// at()
+    /// operator[]()
     front() -> Char,
+    /// 
+    /// Returns the last character in the string.
+    /// Same as `at(size() - 1)` .
+    /// 
+    /// This function is provided for STL compatibility.
+    /// 
+    /// **Warning**: Calling this function on an empty string constitutes
+    /// undefined behavior.
+    /// 
+    /// **See also:** front()
+    /// at()
+    /// operator[]()
     back() -> Char,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     compare(s: String, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     compare(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     compare(s: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     compare(s: &ByteArrayType, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     [static] compare(s1: &StringRefType, s2: String, arg0: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     [static] compare(s1: &StringRefType, s2: &StringRefType, arg0: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares the string *s1* with the string *s2* and returns an
+    /// integer less than, equal to, or greater than zero if *s1*
+    /// is less than, equal to, or greater than *s2.*
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
+    /// 
+    /// **Overloads**
+    /// Compares this string with *other* and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* byte array,
+    /// interpreted as a UTF-8 sequence.
+    /// 
+    /// If *cs* is Qt::CaseSensitive, the comparison is case sensitive;
+    /// otherwise the comparison is case insensitive.
+    /// 
+    /// Equivalent to `compare(*this, other, cs)` .
     [static] compare(s1: &StringRefType, s2: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
+    /// 
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// On MacOS and iOS, this function compares according the
+    /// setting in the International prefereces panel.
+    /// 
+    /// **See also:** compare()
+    /// QLocale
+    /// 
+    /// **Overloads**
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
     locale_aware_compare(s: String) -> i32,
+    /// 
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// On MacOS and iOS, this function compares according the
+    /// setting in the International prefereces panel.
+    /// 
+    /// **See also:** compare()
+    /// QLocale
+    /// 
+    /// **Overloads**
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
     locale_aware_compare(s: &StringRefType) -> i32,
+    /// 
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// On MacOS and iOS, this function compares according the
+    /// setting in the International prefereces panel.
+    /// 
+    /// **See also:** compare()
+    /// QLocale
+    /// 
+    /// **Overloads**
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
     [static] locale_aware_compare(s1: &StringRefType, s2: String) -> i32,
+    /// 
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// On MacOS and iOS, this function compares according the
+    /// setting in the International prefereces panel.
+    /// 
+    /// **See also:** compare()
+    /// QLocale
+    /// 
+    /// **Overloads**
+    /// Compares *s1* with *s2* and returns an integer less than, equal
+    /// to, or greater than zero if *s1* is less than, equal to, or
+    /// greater than *s2.*
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
+    /// 
+    /// **Overloads**
+    /// Compares this string with the *other* string and returns an
+    /// integer less than, equal to, or greater than zero if this string
+    /// is less than, equal to, or greater than the *other* string.
+    /// 
+    /// The comparison is performed in a locale- and also
+    /// platform-dependent manner. Use this function to present sorted
+    /// lists of strings to the user.
     [static] locale_aware_compare(s1: &StringRefType, s2: &StringRefType) -> i32,
-    ///     Returns the string converted to a \c short using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to a `short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toShort()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toShort()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toShort()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toShort()
+    /// 
     to_short(ok: *bool, base: i32) -> short,
-    ///     Returns the string converted to an \c{unsigned short} using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to an `unsigned short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toUShort()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toUShort()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toUShort()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toUShort()
+    /// 
     to_u_short(ok: *bool, base: i32) -> ushort,
-    ///     Returns the string converted to an \c int using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to an `int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toInt()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toInt()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toInt()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toInt()
+    /// 
     to_int(ok: *bool, base: i32) -> i32,
-    ///     Returns the string converted to an \c{unsigned int} using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to an `unsigned int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toUInt()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toUInt()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toUInt()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toUInt()
+    /// 
     to_u_int(ok: *bool, base: i32) -> uint,
-    ///     \fn long QStringRef::toLong(bool *ok, int base) const
     /// 
-    ///     Returns the string converted to a \c long using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
+    /// Returns the string converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toLong()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toLongLong()
     /// 
-    ///     \sa QString::toLong()
+    /// **See also:** QString::toLongLong()
     /// 
-    ///     \since 5.1
+    /// 
+    /// Returns the string converted to a `long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
+    /// 
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toLong()
+    /// 
+    /// **See also:** QString::toLong()
+    /// 
     to_long(ok: *bool, base: i32) -> long,
-    ///     \fn ulong QStringRef::toULong(bool *ok, int base) const
     /// 
-    ///     Returns the string converted to an \c{unsigned long} using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
+    /// Returns the string converted to an `unsigned long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toULongLong()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toULongLong()
     /// 
-    ///     \sa QString::toULong()
+    /// **See also:** QString::toULongLong()
     /// 
-    ///     \since 5.1
+    /// 
+    /// Returns the string converted to an `unsigned long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
+    /// 
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toULongLong()
+    /// 
+    /// **See also:** QString::toULong()
+    /// 
     to_u_long(ok: *bool, base: i32) -> ulong,
-    ///     Returns the string converted to a \c{long long} using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toLongLong()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toLongLong()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toLongLong()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toLongLong()
+    /// 
     to_long_long(ok: *bool, base: i32) -> i64,
-    ///     Returns the string converted to an \c{unsigned long long} using base \a
-    ///     base, which is 10 by default and must be between 2 and 36, or 0.
-    ///     Returns 0 if the conversion fails.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the string converted to an `unsigned long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
+    /// Returns 0 if the conversion fails.
     /// 
-    ///     If \a base is 0, the C language convention is used: If the string
-    ///     begins with "0x", base 16 is used; if the string begins with "0",
-    ///     base 8 is used; otherwise, base 10 is used.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toULongLong()
+    /// If *base* is 0, the C language convention is used: If the string
+    /// begins with , base 16 is used; if the string begins with ,
+    /// base 8 is used; otherwise, base 10 is used.
     /// 
-    ///     \sa QString::toULongLong()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toULongLong()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toULongLong()
+    /// 
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
-    ///     Returns the string converted to a \c float value.
     /// 
-    ///     Returns 0.0 if the conversion fails.
+    /// Returns the string converted to a `float` value.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns 0.0 if the conversion fails.
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toFloat()
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa QString::toFloat()
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toFloat()
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toFloat()
+    /// 
     to_float(ok: *bool) -> f32,
-    ///     Returns the string converted to a \c double value.
     /// 
-    ///     Returns 0.0 if the conversion fails.
+    /// Returns the string converted to a `double` value.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns 0.0 if the conversion fails.
     /// 
-    ///     The string conversion will always happen in the 'C' locale. For locale
-    ///     dependent conversion use QLocale::toDouble()
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     For historic reasons, this function does not handle
-    ///     thousands group separators. If you need to convert such numbers,
-    ///     use QLocale::toDouble().
+    /// The string conversion will always happen in the 'C' locale. For locale
+    /// dependent conversion use QLocale::toDouble()
     /// 
-    ///     \sa QString::toDouble()
+    /// For historic reasons, this function does not handle
+    /// thousands group separators. If you need to convert such numbers,
+    /// use QLocale::toDouble().
     /// 
-    ///     \since 5.1
+    /// **See also:** QString::toDouble()
+    /// 
     to_double(ok: *bool) -> double,
 }
 

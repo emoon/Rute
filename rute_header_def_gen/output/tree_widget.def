@@ -1,365 +1,573 @@
-///   \class QTreeWidget
 /// 
-///   \brief The QTreeWidget class provides a tree view that uses a predefined
-///   tree model.
+/// ![windows-treeview.png](windows-treeview.png)
 /// 
-///   \ingroup model-view
-///   \inmodule QtWidgets
+/// The QTreeWidget class is a convenience class that provides a standard
+/// tree widget with a classic item-based interface similar to that used by
+/// the QListView class in Qt 3.
+/// This class is based on Qt's Model/View architecture and uses a default
+/// model to hold items, each of which is a QTreeWidgetItem.
 /// 
-///   \image windows-treeview.png
+/// Developers who do not need the flexibility of the Model/View framework
+/// can use this class to create simple hierarchical lists very easily. A more
+/// flexible approach involves combining a QTreeView with a standard item model.
+/// This allows the storage of data to be separated from its representation.
 /// 
-///   The QTreeWidget class is a convenience class that provides a standard
-///   tree widget with a classic item-based interface similar to that used by
-///   the QListView class in Qt 3.
-///   This class is based on Qt's Model/View architecture and uses a default
-///   model to hold items, each of which is a QTreeWidgetItem.
+/// In its simplest form, a tree widget can be constructed in the following way:
 /// 
-///   Developers who do not need the flexibility of the Model/View framework
-///   can use this class to create simple hierarchical lists very easily. A more
-///   flexible approach involves combining a QTreeView with a standard item model.
-///   This allows the storage of data to be separated from its representation.
+/// Before items can be added to the tree widget, the number of columns must
+/// be set with setColumnCount(). This allows each item to have one or more
+/// labels or other decorations. The number of columns in use can be found
+/// with the columnCount() function.
 /// 
-///   In its simplest form, a tree widget can be constructed in the following way:
+/// The tree can have a header that contains a section for each column in
+/// the widget. It is easiest to set up the labels for each section by
+/// supplying a list of strings with setHeaderLabels(), but a custom header
+/// can be constructed with a QTreeWidgetItem and inserted into the tree
+/// with the setHeaderItem() function.
 /// 
-///   \snippet code/src_gui_itemviews_qtreewidget.cpp 0
+/// The items in the tree can be sorted by column according to a predefined
+/// sort order. If sorting is enabled, the user can sort the items by clicking
+/// on a column header. Sorting can be enabled or disabled by calling
+/// [setSortingEnabled()](QTreeView::setSortingEnabled())
+/// . The
+/// [isSortingEnabled()](QTreeView::isSortingEnabled())
+/// function indicates
+/// whether sorting is enabled.
 /// 
-///   Before items can be added to the tree widget, the number of columns must
-///   be set with setColumnCount(). This allows each item to have one or more
-///   labels or other decorations. The number of columns in use can be found
-///   with the columnCount() function.
-/// 
-///   The tree can have a header that contains a section for each column in
-///   the widget. It is easiest to set up the labels for each section by
-///   supplying a list of strings with setHeaderLabels(), but a custom header
-///   can be constructed with a QTreeWidgetItem and inserted into the tree
-///   with the setHeaderItem() function.
-/// 
-///   The items in the tree can be sorted by column according to a predefined
-///   sort order. If sorting is enabled, the user can sort the items by clicking
-///   on a column header. Sorting can be enabled or disabled by calling
-///   \l{QTreeView::setSortingEnabled()}{setSortingEnabled()}. The
-///   \l{QTreeView::isSortingEnabled()}{isSortingEnabled()} function indicates
-///   whether sorting is enabled.
-/// 
-///   \sa QTreeWidgetItem, QTreeWidgetItemIterator, QTreeView,
-///   {Model/View Programming}, {Settings Editor Example}
+/// **See also:** QTreeWidgetItem
+/// QTreeWidgetItemIterator
+/// QTreeView
+/// {Model/View Programming}
+/// {Settings Editor Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TreeWidget : TreeView {
+    /// 
+    /// By default, this property has a value of 1.
     column_count() -> i32,
     set_column_count(columns: i32),
-    ///   \since 4.2
     /// 
-    ///   Returns the tree widget's invisible root item.
+    /// Returns the tree widget's invisible root item.
     /// 
-    ///   The invisible root item provides access to the tree widget's top-level items
-    ///   through the QTreeWidgetItem API, making it possible to write functions that
-    ///   can treat top-level items and their children in a uniform way; for example,
-    ///   recursive functions.
+    /// The invisible root item provides access to the tree widget's top-level items
+    /// through the QTreeWidgetItem API, making it possible to write functions that
+    /// can treat top-level items and their children in a uniform way; for example,
+    /// recursive functions.
     invisible_root_item() -> TreeWidgetItem?,
-    ///   Returns the top level item at the given \a index, or 0 if the item does
-    ///   not exist.
     /// 
-    ///   \sa topLevelItemCount(), insertTopLevelItem()
+    /// Returns the top level item at the given *index,* or 0 if the item does
+    /// not exist.
+    /// 
+    /// **See also:** topLevelItemCount()
+    /// insertTopLevelItem()
+    /// 
+    /// By default, this property has a value of 0.
+    /// 
+    /// **See also:** columnCount()
+    /// currentItem()
     top_level_item(index: i32) -> TreeWidgetItem?,
-    ///     \property QTreeWidget::topLevelItemCount
-    ///     \brief the number of top-level items
     /// 
-    ///     By default, this property has a value of 0.
+    /// By default, this property has a value of 0.
     /// 
-    ///     \sa columnCount(), currentItem()
+    /// **See also:** columnCount()
+    /// currentItem()
     top_level_item_count() -> i32,
-    ///   Inserts the \a item at \a index in the top level in the view.
     /// 
-    ///   If the item has already been inserted somewhere else it won't be inserted.
+    /// Inserts the *item* at *index* in the top level in the view.
     /// 
-    ///   \sa addTopLevelItem(), columnCount()
+    /// If the item has already been inserted somewhere else it won't be inserted.
+    /// 
+    /// **See also:** addTopLevelItem()
+    /// columnCount()
+    /// 
+    /// Inserts the list of *items* at *index* in the top level in the view.
+    /// 
+    /// Items that have already been inserted somewhere else won't be inserted.
+    /// 
+    /// **See also:** addTopLevelItems()
     insert_top_level_item(index: i32, item: *TreeWidgetItemType),
-    ///     \since 4.1
     /// 
-    ///     Appends the \a item as a top-level item in the widget.
+    /// Appends the *item* as a top-level item in the widget.
     /// 
-    ///     \sa insertTopLevelItem()
+    /// **See also:** insertTopLevelItem()
+    /// 
+    /// Appends the list of *items* as a top-level items in the widget.
+    /// 
+    /// **See also:** insertTopLevelItems()
     add_top_level_item(item: *TreeWidgetItemType),
-    ///   Removes the top-level item at the given \a index in the tree and
-    ///   returns it, otherwise returns 0;
     /// 
-    ///   \sa insertTopLevelItem(), topLevelItem(), topLevelItemCount()
+    /// Removes the top-level item at the given *index* in the tree and
+    /// returns it, otherwise returns 0;
+    /// 
+    /// **See also:** insertTopLevelItem()
+    /// topLevelItem()
+    /// topLevelItemCount()
     take_top_level_item(index: i32) -> TreeWidgetItem?,
+    /// 
+    /// Returns the index of the given top-level *item,* or -1 if the item
+    /// cannot be found.
+    /// 
+    /// **See also:** sortItems()
+    /// topLevelItemCount()
     index_of_top_level_item(item: *TreeWidgetItemType) -> i32,
-    ///   \since 4.1
     /// 
-    ///   Inserts the list of \a items at \a index in the top level in the view.
+    /// Inserts the list of *items* at *index* in the top level in the view.
     /// 
-    ///   Items that have already been inserted somewhere else won't be inserted.
+    /// Items that have already been inserted somewhere else won't be inserted.
     /// 
-    ///   \sa addTopLevelItems()
+    /// **See also:** addTopLevelItems()
     insert_top_level_items(index: i32, items: [*TreeWidgetItemType]),
-    ///   Appends the list of \a items as a top-level items in the widget.
     /// 
-    ///   \sa insertTopLevelItems()
+    /// Appends the list of *items* as a top-level items in the widget.
+    /// 
+    /// **See also:** insertTopLevelItems()
     add_top_level_items(items: [*TreeWidgetItemType]),
-    ///     Returns the item used for the tree widget's header.
     /// 
-    ///     \sa setHeaderItem()
+    /// Returns the item used for the tree widget's header.
+    /// 
+    /// **See also:** setHeaderItem()
     header_item() -> TreeWidgetItem?,
-    ///     Sets the header \a item for the tree widget. The label for each column in
-    ///     the header is supplied by the corresponding label in the item.
     /// 
-    ///     The tree widget takes ownership of the item.
+    /// Sets the header *item* for the tree widget. The label for each column in
+    /// the header is supplied by the corresponding label in the item.
     /// 
-    ///     \sa headerItem(), setHeaderLabels()
+    /// The tree widget takes ownership of the item.
+    /// 
+    /// **See also:** headerItem()
+    /// setHeaderLabels()
     set_header_item(item: *TreeWidgetItemType),
-    ///   Adds a column in the header for each item in the \a labels list, and sets
-    ///   the label for each column.
     /// 
-    ///   Note that setHeaderLabels() won't remove existing columns.
+    /// Adds a column in the header for each item in the *labels* list, and sets
+    /// the label for each column.
     /// 
-    ///   \sa setHeaderItem(), setHeaderLabel()
+    /// Note that setHeaderLabels() won't remove existing columns.
+    /// 
+    /// **See also:** setHeaderItem()
+    /// setHeaderLabel()
     set_header_labels(labels: &[String]),
+    /// 
+    /// Adds a column in the header for each item in the *labels* list, and sets
+    /// the label for each column.
+    /// 
+    /// Note that setHeaderLabels() won't remove existing columns.
+    /// 
+    /// **See also:** setHeaderItem()
+    /// setHeaderLabel()
+    /// 
+    /// Same as setHeaderLabels(QStringList( *label)).*
     set_header_label(label: String),
-    ///     Returns the current item in the tree widget.
     /// 
-    ///     \sa setCurrentItem(), currentItemChanged()
+    /// This signal is emitted when the current item changes. The current
+    /// item is specified by *current,* and this replaces the *previous*
+    /// current item.
+    /// 
+    /// **See also:** setCurrentItem()
+    /// 
+    /// Returns the current item in the tree widget.
+    /// 
+    /// **See also:** setCurrentItem()
+    /// currentItemChanged()
     current_item() -> TreeWidgetItem?,
-    ///     \since 4.1
-    ///     Returns the current column in the tree widget.
     /// 
-    ///     \sa setCurrentItem(), columnCount()
+    /// Returns the current column in the tree widget.
+    /// 
+    /// **See also:** setCurrentItem()
+    /// columnCount()
     current_column() -> i32,
-    ///   \since 4.1
-    ///   Sets the current \a item in the tree widget and the current column to \a column.
     /// 
-    ///   \sa currentItem()
+    /// Sets the current *item* in the tree widget.
+    /// 
+    /// Unless the selection mode is [NoSelection](QAbstractItemView::)
+    /// 
+    /// the item is also selected.
+    /// 
+    /// **See also:** currentItem()
+    /// currentItemChanged()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column.*
+    /// 
+    /// **See also:** currentItem()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column,*
+    /// using the given *command.*
+    /// 
+    /// **See also:** currentItem()
     set_current_item(item: *TreeWidgetItemType),
-    ///   \since 4.1
-    ///   Sets the current \a item in the tree widget and the current column to \a column.
     /// 
-    ///   \sa currentItem()
+    /// Sets the current *item* in the tree widget.
+    /// 
+    /// Unless the selection mode is [NoSelection](QAbstractItemView::)
+    /// 
+    /// the item is also selected.
+    /// 
+    /// **See also:** currentItem()
+    /// currentItemChanged()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column.*
+    /// 
+    /// **See also:** currentItem()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column,*
+    /// using the given *command.*
+    /// 
+    /// **See also:** currentItem()
     set_current_item(item: *TreeWidgetItemType, column: i32),
-    ///   \since 4.1
-    ///   Sets the current \a item in the tree widget and the current column to \a column.
     /// 
-    ///   \sa currentItem()
+    /// Sets the current *item* in the tree widget.
+    /// 
+    /// Unless the selection mode is [NoSelection](QAbstractItemView::)
+    /// 
+    /// the item is also selected.
+    /// 
+    /// **See also:** currentItem()
+    /// currentItemChanged()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column.*
+    /// 
+    /// **See also:** currentItem()
+    /// 
+    /// Sets the current *item* in the tree widget and the current column to *column,*
+    /// using the given *command.*
+    /// 
+    /// **See also:** currentItem()
     set_current_item(item: *TreeWidgetItemType, column: i32, command: ItemSelectionModel::SelectionFlags),
-    ///   Returns a pointer to the item at the coordinates \a p. The coordinates
-    ///   are relative to the tree widget's \l{QAbstractScrollArea::}{viewport()}.
     /// 
-    ///   \sa visualItemRect()
+    /// Returns a pointer to the item at the coordinates *p.* The coordinates
+    /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// **See also:** visualItemRect()
+    /// 
+    /// **Overloads**
+    /// Returns a pointer to the item at the coordinates ( *x,* *y).* The coordinates
+    /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
+    /// 
     item_at(p: &PointType) -> TreeWidgetItem?,
-    ///   Returns a pointer to the item at the coordinates \a p. The coordinates
-    ///   are relative to the tree widget's \l{QAbstractScrollArea::}{viewport()}.
     /// 
-    ///   \sa visualItemRect()
+    /// Returns a pointer to the item at the coordinates *p.* The coordinates
+    /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// **See also:** visualItemRect()
+    /// 
+    /// **Overloads**
+    /// Returns a pointer to the item at the coordinates ( *x,* *y).* The coordinates
+    /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
+    /// 
     item_at(x: i32, y: i32) -> TreeWidgetItem?,
-    ///   Returns the rectangle on the viewport occupied by the item at \a item.
     /// 
-    ///   \sa itemAt()
+    /// Returns the rectangle on the viewport occupied by the item at *item.*
+    /// 
+    /// **See also:** itemAt()
     visual_item_rect(item: *TreeWidgetItemType) -> Rect,
-    ///   \since 4.1
     /// 
-    ///   Returns the column used to sort the contents of the widget.
+    /// Returns the column used to sort the contents of the widget.
     /// 
-    ///   \sa sortItems()
+    /// **See also:** sortItems()
     sort_column() -> i32,
-    ///   Sorts the items in the widget in the specified \a order by the values in
-    ///   the given \a column.
     /// 
-    ///   \sa sortColumn()
+    /// Sorts the items in the widget in the specified *order* by the values in
+    /// the given *column.*
+    /// 
+    /// **See also:** sortColumn()
     sort_items(column: i32, order: Rute::SortOrder),
-    ///   Starts editing the \a item in the given \a column if it is editable.
+    /// 
+    /// Starts editing the *item* in the given *column* if it is editable.
     edit_item(item: *TreeWidgetItemType, column: i32),
-    ///   Opens a persistent editor for the \a item in the given \a column.
     /// 
-    ///   \sa closePersistentEditor(), isPersistentEditorOpen()
+    /// Opens a persistent editor for the *item* in the given *column.*
+    /// 
+    /// **See also:** closePersistentEditor()
+    /// isPersistentEditorOpen()
     open_persistent_editor(item: *TreeWidgetItemType, column: i32),
-    ///   Closes the persistent editor for the \a item in the given \a column.
     /// 
-    ///   This function has no effect if no persistent editor is open for this
-    ///   combination of item and column.
+    /// Closes the persistent editor for the *item* in the given *column.*
     /// 
-    ///   \sa openPersistentEditor(), isPersistentEditorOpen()
+    /// This function has no effect if no persistent editor is open for this
+    /// combination of item and column.
+    /// 
+    /// **See also:** openPersistentEditor()
+    /// isPersistentEditorOpen()
     close_persistent_editor(item: *TreeWidgetItemType, column: i32),
-    ///     \since 5.10
     /// 
-    ///     Returns whether a persistent editor is open for item \a item in
-    ///     column \a column.
+    /// Returns whether a persistent editor is open for item *item* in
+    /// column *column.*
     /// 
-    ///     \sa openPersistentEditor(), closePersistentEditor()
+    /// **See also:** openPersistentEditor()
+    /// closePersistentEditor()
     is_persistent_editor_open(item: *TreeWidgetItemType, column: i32) -> bool,
-    ///     \since 4.1
     /// 
-    ///     Returns the widget displayed in the cell specified by \a item and the given \a column.
+    /// Returns the widget displayed in the cell specified by *item* and the given *column.*
     /// 
     item_widget(item: *TreeWidgetItemType, column: i32) -> Widget?,
-    ///     \since 4.1
     /// 
-    ///     Sets the given \a widget to be displayed in the cell specified by the given
-    ///     \a item and \a column.
+    /// Sets the given *widget* to be displayed in the cell specified by the given
+    /// *item* and *column.*
     /// 
-    ///     The given \a widget's \l {QWidget::}{autoFillBackground} property must be
-    ///     set to true, otherwise the widget's background will be transparent, showing
-    ///     both the model data and the tree widget item.
+    /// The given *widget's* [autoFillBackground](QWidget::)
+    /// property must be
+    /// set to true, otherwise the widget's background will be transparent, showing
+    /// both the model data and the tree widget item.
     /// 
-    ///     This function should only be used to display static content in the place of
-    ///     a tree widget item. If you want to display custom dynamic content or
-    ///     implement a custom editor widget, use QTreeView and subclass QItemDelegate
-    ///     instead.
+    /// This function should only be used to display static content in the place of
+    /// a tree widget item. If you want to display custom dynamic content or
+    /// implement a custom editor widget, use QTreeView and subclass QItemDelegate
+    /// instead.
     /// 
-    ///     This function cannot be called before the item hierarchy has been set up,
-    ///     i.e., the QTreeWidgetItem that will hold \a widget must have been added to
-    ///     the view before \a widget is set.
+    /// This function cannot be called before the item hierarchy has been set up,
+    /// i.e., the QTreeWidgetItem that will hold *widget* must have been added to
+    /// the view before *widget* is set.
     /// 
-    ///     \note The tree takes ownership of the widget.
+    /// **Note**: The tree takes ownership of the widget.
     /// 
-    ///     \sa {Delegate Classes}
+    /// **See also:** {Delegate Classes}
     set_item_widget(item: *TreeWidgetItemType, column: i32, widget: *WidgetType),
+    /// 
+    /// Removes the widget set in the given *item* in the given *column.*
     remove_item_widget(item: *TreeWidgetItemType, column: i32),
-    ///   Returns \c true if the \a item is selected; otherwise returns \c false.
     /// 
-    ///   \sa itemSelectionChanged()
+    /// Returns `true` if the *item* is selected; otherwise returns `false.`
     /// 
-    ///   \obsolete
+    /// **See also:** itemSelectionChanged()
     /// 
-    ///   This function is deprecated. Use \l{QTreeWidgetItem::isSelected()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::isSelected()](QTreeWidgetItem::isSelected())
+    /// instead.
     is_item_selected(item: *TreeWidgetItemType) -> bool,
-    ///   If \a select is true, the given \a item is selected; otherwise it is
-    ///   deselected.
     /// 
-    ///   \sa itemSelectionChanged()
+    /// If *select* is true, the given *item* is selected; otherwise it is
+    /// deselected.
     /// 
-    ///   \obsolete
+    /// **See also:** itemSelectionChanged()
     /// 
-    ///   This function is deprecated. Use \l{QTreeWidgetItem::setSelected()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::setSelected()](QTreeWidgetItem::setSelected())
+    /// instead.
     set_item_selected(item: *TreeWidgetItemType, select: bool),
-    ///   Returns a list of all selected non-hidden items.
     /// 
-    ///   \sa itemSelectionChanged()
+    /// Returns a list of all selected non-hidden items.
+    /// 
+    /// **See also:** itemSelectionChanged()
     selected_items() -> [TreeWidgetItem?],
-    ///   Returns a list of items that match the given \a text, using the given \a flags, in the given \a column.
+    /// 
+    /// Returns a list of items that match the given *text,* using the given *flags,* in the given *column.*
     find_items(text: String, flags: Rute::MatchFlags, column: i32) -> [TreeWidgetItem?],
-    ///   Returns \c true if the \a item is explicitly hidden, otherwise returns \c false.
     /// 
-    ///   \obsolete
+    /// Returns `true` if the *item* is explicitly hidden, otherwise returns `false.`
     /// 
-    ///   This function is deprecated. Use \l{QTreeWidgetItem::isHidden()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::isHidden()](QTreeWidgetItem::isHidden())
+    /// instead.
     is_item_hidden(item: *TreeWidgetItemType) -> bool,
-    ///   Hides the given \a item if \a hide is true; otherwise shows the item.
     /// 
-    ///   \sa itemChanged()
+    /// Hides the given *item* if *hide* is true; otherwise shows the item.
     /// 
-    ///   \obsolete
+    /// **See also:** itemChanged()
     /// 
-    ///   This function is deprecated. Use \l{QTreeWidgetItem::setHidden()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::setHidden()](QTreeWidgetItem::setHidden())
+    /// instead.
     set_item_hidden(item: *TreeWidgetItemType, hide: bool),
-    ///   Returns \c true if the given \a item is open; otherwise returns \c false.
     /// 
-    ///   \sa itemExpanded()
+    /// Returns `true` if the given *item* is open; otherwise returns `false.`
     /// 
-    ///   \obsolete
+    /// **See also:** itemExpanded()
     /// 
-    ///   This function is deprecated. Use \l{QTreeWidgetItem::isExpanded()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::isExpanded()](QTreeWidgetItem::isExpanded())
+    /// instead.
     is_item_expanded(item: *TreeWidgetItemType) -> bool,
-    ///     Sets the item referred to by \a item to either closed or opened,
-    ///     depending on the value of \a expand.
     /// 
-    ///     \sa expandItem(), collapseItem(), itemExpanded()
+    /// Sets the item referred to by *item* to either closed or opened,
+    /// depending on the value of *expand.*
     /// 
-    ///     \obsolete
+    /// **See also:** expandItem()
+    /// collapseItem()
+    /// itemExpanded()
     /// 
-    ///     This function is deprecated. Use \l{QTreeWidgetItem::setExpanded()} instead.
+    /// This function is deprecated. Use [QTreeWidgetItem::setExpanded()](QTreeWidgetItem::setExpanded())
+    /// instead.
     set_item_expanded(item: *TreeWidgetItemType, expand: bool),
-    ///   \since 4.3
     /// 
-    ///   Returns \c true if the given \a item is set to show only one section over all columns;
-    ///   otherwise returns \c false.
+    /// Returns `true` if the given *item* is set to show only one section over all columns;
+    /// otherwise returns `false.`
     /// 
-    ///   \sa setFirstItemColumnSpanned()
+    /// **See also:** setFirstItemColumnSpanned()
     is_first_item_column_spanned(item: *TreeWidgetItemType) -> bool,
-    ///   \since 4.3
     /// 
-    ///   Sets the given \a item to only show one section for all columns if \a span is true;
-    ///   otherwise the item will show one section per column.
+    /// Sets the given *item* to only show one section for all columns if *span* is true;
+    /// otherwise the item will show one section per column.
     /// 
-    ///   \sa isFirstItemColumnSpanned()
+    /// **See also:** isFirstItemColumnSpanned()
     set_first_item_column_spanned(item: *TreeWidgetItemType, span: bool),
-    ///   \since 4.3
     /// 
-    ///   Returns the item above the given \a item.
+    /// Returns the item above the given *item.*
     item_above(item: *TreeWidgetItemType) -> TreeWidgetItem?,
-    ///   \since 4.3
     /// 
-    ///   Returns the item visually below the given \a item.
+    /// Returns the item visually below the given *item.*
     item_below(item: *TreeWidgetItemType) -> TreeWidgetItem?,
+    /// 
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///     Ensures that the \a item is visible, scrolling the view if necessary using
-    ///     the specified \a hint.
     /// 
-    ///     \sa currentItem(), itemAt(), topLevelItem()
+    /// Ensures that the *item* is visible, scrolling the view if necessary using
+    /// the specified *hint.*
+    /// 
+    /// **See also:** currentItem()
+    /// itemAt()
+    /// topLevelItem()
     scroll_to_item(item: *TreeWidgetItemType, hint: AbstractItemView::ScrollHint),
-    ///     Expands the \a item. This causes the tree containing the item's children
-    ///     to be expanded.
     /// 
-    ///     \sa collapseItem(), currentItem(), itemAt(), topLevelItem(), itemExpanded()
+    /// Expands the *item.* This causes the tree containing the item's children
+    /// to be expanded.
+    /// 
+    /// **See also:** collapseItem()
+    /// currentItem()
+    /// itemAt()
+    /// topLevelItem()
+    /// itemExpanded()
     expand_item(item: *TreeWidgetItemType),
-    ///     Closes the \a item. This causes the tree containing the item's children
-    ///     to be collapsed.
     /// 
-    ///     \sa expandItem(), currentItem(), itemAt(), topLevelItem()
+    /// Closes the *item.* This causes the tree containing the item's children
+    /// to be collapsed.
+    /// 
+    /// **See also:** expandItem()
+    /// currentItem()
+    /// itemAt()
+    /// topLevelItem()
     collapse_item(item: *TreeWidgetItemType),
-    ///     Clears the tree widget by removing all of its items and selections.
     /// 
-    ///     \b{Note:} Since each item is removed from the tree widget before being
-    ///     deleted, the return value of QTreeWidgetItem::treeWidget() will be invalid
-    ///     when called from an item's destructor.
+    /// Clears the tree widget by removing all of its items and selections.
     /// 
-    ///     \sa takeTopLevelItem(), topLevelItemCount(), columnCount()
+    /// **Note:** Since each item is removed from the tree widget before being
+    /// deleted, the return value of QTreeWidgetItem::treeWidget() will be invalid
+    /// when called from an item's destructor.
+    /// 
+    /// **See also:** takeTopLevelItem()
+    /// topLevelItemCount()
+    /// columnCount()
     clear(),
+    /// 
+    /// This signal is emitted when the user presses a mouse button inside
+    /// the widget.
+    /// 
+    /// The specified *item* is the item that was clicked, or 0 if no
+    /// item was clicked. The *column* is the item's column that was
+    /// clicked, or -1 if no item was clicked.
     [signal] item_pressed(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the user clicks inside the widget.
+    /// 
+    /// The specified *item* is the item that was clicked. The *column* is the
+    /// item's column that was clicked. If no item was clicked, no signal will be
+    /// emitted.
     [signal] item_clicked(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the user double clicks inside the
+    /// widget.
+    /// 
+    /// The specified *item* is the item that was clicked, or 0 if no
+    /// item was clicked. The *column* is the item's column that was
+    /// clicked. If no item was double clicked, no signal will be emitted.
     [signal] item_double_clicked(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the user activates an item by single-
+    /// or double-clicking (depending on the platform, i.e. on the
+    /// QStyle::SH_ItemView_ActivateItemOnSingleClick style hint) or
+    /// pressing a special key (e.g., **Enter).**
+    /// 
+    /// The specified *item* is the item that was clicked, or 0 if no
+    /// item was clicked. The *column* is the item's column that was
+    /// clicked, or -1 if no item was clicked.
     [signal] item_activated(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the mouse cursor enters an *item* over the
+    /// specified *column.*
+    /// QTreeWidget mouse tracking needs to be enabled for this feature to work.
     [signal] item_entered(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the contents of the *column* in the specified
+    /// *item* changes.
     [signal] item_changed(item: *TreeWidgetItemType, column: i32),
+    /// 
+    /// This signal is emitted when the specified *item* is expanded so that
+    /// all of its children are displayed.
+    /// 
+    /// **Note**: This signal will not be emitted if an item changes its state when
+    /// expandAll() is invoked.
+    /// 
+    /// **See also:** QTreeWidgetItem::isExpanded()
+    /// itemCollapsed()
+    /// expandItem()
     [signal] item_expanded(item: *TreeWidgetItemType),
+    /// 
+    /// This signal is emitted when the specified *item* is collapsed so that
+    /// none of its children are displayed.
+    /// 
+    /// **Note**: This signal will not be emitted if an item changes its state when
+    /// collapseAll() is invoked.
+    /// 
+    /// **See also:** QTreeWidgetItem::isExpanded()
+    /// itemExpanded()
+    /// collapseItem()
     [signal] item_collapsed(item: *TreeWidgetItemType),
+    /// 
+    /// This signal is emitted when the current item changes. The current
+    /// item is specified by *current,* and this replaces the *previous*
+    /// current item.
+    /// 
+    /// **See also:** setCurrentItem()
     [signal] current_item_changed(current: *TreeWidgetItemType, previous: *TreeWidgetItemType),
+    /// 
+    /// This signal is emitted when the selection changes in the tree widget.
+    /// The current selection can be found with selectedItems().
     [signal] item_selection_changed(),
-    ///     \reimp
+    /// 
     [event] event(e: *EventType) -> bool,
-    ///     Returns a list of MIME types that can be used to describe a list of
-    ///     treewidget items.
     /// 
-    ///     \sa mimeData()
+    /// Returns a list of MIME types that can be used to describe a list of
+    /// treewidget items.
+    /// 
+    /// **See also:** mimeData()
     [event] mime_types() -> [String],
-    ///     Returns an object that contains a serialized description of the specified
-    ///     \a items. The format used to describe the items is obtained from the
-    ///     mimeTypes() function.
-    /// 
-    ///     If the list of items is empty, 0 is returned rather than a serialized
-    ///     empty list.
     [event] mime_data(items: [*TreeWidgetItemType]) -> MimeData?,
+    /// 
+    /// Handles the *data* supplied by a drag and drop operation that ended with
+    /// the given *action* in the *index* in the given *parent* item.
+    /// 
+    /// The default implementation returns `true` if the drop was
+    /// successfully handled by decoding the mime data and inserting it
+    /// into the model; otherwise it returns `false.`
+    /// 
+    /// **See also:** supportedDropActions()
     [event] drop_mime_data(parent: *TreeWidgetItemType, index: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
-    ///   Returns the drop actions supported by this view.
     /// 
-    ///   \sa Qt::DropActions
+    /// Returns the drop actions supported by this view.
+    /// 
+    /// **See also:** Qt::DropActions
     [event] supported_drop_actions() -> Rute::DropActions,
-    ///   \obsolete
-    ///   Returns an empty list
     /// 
-    ///   \sa mimeData()
+    /// Returns an empty list
+    /// 
+    /// **See also:** mimeData()
     items(data: *MimeDataType) -> [TreeWidgetItem?],
-    ///     \overload
-    ///     \internal
-    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
-    ///     \overload
-    ///     \internal
-    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
-    ///     Returns a pointer to the QTreeWidgetItem associated with the given \a index.
     /// 
-    ///     \sa indexFromItem()
+    /// Returns the QModelIndex associated with the given *item* in the given *column.*
+    /// 
+    /// **Note**: In Qt versions prior to 5.7, this function took a non- `const` *item.*
+    /// 
+    /// **See also:** itemFromIndex()
+    /// topLevelItem()
+    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
+    /// 
+    /// Returns the QModelIndex associated with the given *item* in the given *column.*
+    /// 
+    /// **Note**: In Qt versions prior to 5.7, this function took a non- `const` *item.*
+    /// 
+    /// **See also:** itemFromIndex()
+    /// topLevelItem()
+    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
+    /// 
+    /// Returns a pointer to the QTreeWidgetItem associated with the given *index.*
+    /// 
+    /// **See also:** indexFromItem()
     item_from_index(index: &ModelIndexType) -> TreeWidgetItem?,
+    /// 
     [event] drop_event(event: *DropEventType),
 }
 

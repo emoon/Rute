@@ -1,195 +1,290 @@
-///     \class QSyntaxHighlighter
-///     \reentrant
-///     \inmodule QtGui
 /// 
-///     \brief The QSyntaxHighlighter class allows you to define syntax
-///     highlighting rules, and in addition you can use the class to query
-///     a document's current formatting or user data.
+/// The QSyntaxHighlighter class is a base class for implementing
+/// QTextDocument syntax highlighters. A syntax highligher automatically
+/// highlights parts of the text in a QTextDocument. Syntax highlighters are
+/// often used when the user is entering text in a specific format (for example source code)
+/// and help the user to read the text and identify syntax errors.
 /// 
-///     \since 4.1
+/// To provide your own syntax highlighting, you must subclass
+/// QSyntaxHighlighter and reimplement highlightBlock().
 /// 
-///     \ingroup richtext-processing
+/// When you create an instance of your QSyntaxHighlighter subclass,
+/// pass it the QTextDocument that you want the syntax
+/// highlighting to be applied to. For example:
 /// 
-///     The QSyntaxHighlighter class is a base class for implementing
-///     QTextDocument syntax highlighters.  A syntax highligher automatically
-///     highlights parts of the text in a QTextDocument. Syntax highlighters are
-///     often used when the user is entering text in a specific format (for example source code)
-///     and help the user to read the text and identify syntax errors.
+/// After this your highlightBlock() function will be called
+/// automatically whenever necessary. Use your highlightBlock()
+/// function to apply formatting (e.g. setting the font and color) to
+/// the text that is passed to it. QSyntaxHighlighter provides the
+/// setFormat() function which applies a given QTextCharFormat on
+/// the current text block. For example:
 /// 
-///     To provide your own syntax highlighting, you must subclass
-///     QSyntaxHighlighter and reimplement highlightBlock().
+/// Some syntaxes can have constructs that span several text
+/// blocks. For example, a C++ syntax highlighter should be able to
+/// cope with `/` `*...*` `/` multiline comments. To deal with
+/// these cases it is necessary to know the end state of the previous
+/// text block (e.g. ).
 /// 
-///     When you create an instance of your QSyntaxHighlighter subclass,
-///     pass it the QTextDocument that you want the syntax
-///     highlighting to be applied to. For example:
+/// Inside your highlightBlock() implementation you can query the end
+/// state of the previous text block using the previousBlockState()
+/// function. After parsing the block you can save the last state
+/// using setCurrentBlockState().
 /// 
-///     \snippet code/src_gui_text_qsyntaxhighlighter.cpp 0
+/// The currentBlockState() and previousBlockState() functions return
+/// an int value. If no state is set, the returned value is -1. You
+/// can designate any other value to identify any given state using
+/// the setCurrentBlockState() function. Once the state is set the
+/// QTextBlock keeps that value until it is set set again or until the
+/// corresponding paragraph of text is deleted.
 /// 
-///     After this your highlightBlock() function will be called
-///     automatically whenever necessary. Use your highlightBlock()
-///     function to apply formatting (e.g. setting the font and color) to
-///     the text that is passed to it. QSyntaxHighlighter provides the
-///     setFormat() function which applies a given QTextCharFormat on
-///     the current text block. For example:
+/// For example, if you're writing a simple C++ syntax highlighter,
+/// you might designate 1 to signify :
 /// 
-///     \snippet code/src_gui_text_qsyntaxhighlighter.cpp 1
+/// In the example above, we first set the current block state to
+/// 0. Then, if the previous block ended within a comment, we highlight
+/// from the beginning of the current block ( `startIndex =
+/// 0` ). Otherwise, we search for the given start expression. If the
+/// specified end expression cannot be found in the text block, we
+/// change the current block state by calling setCurrentBlockState(),
+/// and make sure that the rest of the block is highlighted.
 /// 
-///     \target QSyntaxHighlighter multiblock
+/// In addition you can query the current formatting and user data
+/// using the format() and currentBlockUserData() functions
+/// respectively. You can also attach user data to the current text
+/// block using the setCurrentBlockUserData() function.
+/// QTextBlockUserData can be used to store custom settings. In the
+/// case of syntax highlighting, it is in particular interesting as
+/// cache storage for information that you may figure out while
+/// parsing the paragraph's text. For an example, see the
+/// setCurrentBlockUserData() documentation.
 /// 
-///     Some syntaxes can have constructs that span several text
-///     blocks. For example, a C++ syntax highlighter should be able to
-///     cope with \c{/}\c{*...*}\c{/} multiline comments. To deal with
-///     these cases it is necessary to know the end state of the previous
-///     text block (e.g. "in comment").
-/// 
-///     Inside your highlightBlock() implementation you can query the end
-///     state of the previous text block using the previousBlockState()
-///     function. After parsing the block you can save the last state
-///     using setCurrentBlockState().
-/// 
-///     The currentBlockState() and previousBlockState() functions return
-///     an int value. If no state is set, the returned value is -1. You
-///     can designate any other value to identify any given state using
-///     the setCurrentBlockState() function. Once the state is set the
-///     QTextBlock keeps that value until it is set set again or until the
-///     corresponding paragraph of text is deleted.
-/// 
-///     For example, if you're writing a simple C++ syntax highlighter,
-///     you might designate 1 to signify "in comment":
-/// 
-///     \snippet code/src_gui_text_qsyntaxhighlighter.cpp 2
-/// 
-///     In the example above, we first set the current block state to
-///     0. Then, if the previous block ended within a comment, we highlight
-///     from the beginning of the current block (\c {startIndex =
-///     0}). Otherwise, we search for the given start expression. If the
-///     specified end expression cannot be found in the text block, we
-///     change the current block state by calling setCurrentBlockState(),
-///     and make sure that the rest of the block is highlighted.
-/// 
-///     In addition you can query the current formatting and user data
-///     using the format() and currentBlockUserData() functions
-///     respectively. You can also attach user data to the current text
-///     block using the setCurrentBlockUserData() function.
-///     QTextBlockUserData can be used to store custom settings. In the
-///     case of syntax highlighting, it is in particular interesting as
-///     cache storage for information that you may figure out while
-///     parsing the paragraph's text. For an example, see the
-///     setCurrentBlockUserData() documentation.
-/// 
-///     \sa QTextDocument, {Syntax Highlighter Example}
+/// **See also:** QTextDocument
+/// {Syntax Highlighter Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct SyntaxHighlighter : Object {
-    ///     Installs the syntax highlighter on the given QTextDocument \a doc.
-    ///     A QSyntaxHighlighter can only be used with one document at a time.
+    /// 
+    /// Installs the syntax highlighter on the given QTextDocument *doc.*
+    /// A QSyntaxHighlighter can only be used with one document at a time.
     set_document(doc: *TextDocumentType),
-    ///     Returns the QTextDocument on which this syntax highlighter is
-    ///     installed.
+    /// 
+    /// Returns the QTextDocument on which this syntax highlighter is
+    /// installed.
     document() -> TextDocument?,
-    ///     \since 4.2
     /// 
-    ///     Reapplies the highlighting to the whole document.
+    /// Reapplies the highlighting to the whole document.
     /// 
-    ///     \sa rehighlightBlock()
+    /// **See also:** rehighlightBlock()
+    /// 
+    /// Reapplies the highlighting to the given QTextBlock *block.*
+    /// 
+    /// **See also:** rehighlight()
     rehighlight(),
-    ///     \since 4.6
     /// 
-    ///     Reapplies the highlighting to the given QTextBlock \a block.
+    /// Reapplies the highlighting to the given QTextBlock *block.*
     /// 
-    ///     \sa rehighlight()
+    /// **See also:** rehighlight()
     rehighlight_block(block: &TextBlockType),
+    /// 
+    /// Highlights the given text block. This function is called when
+    /// necessary by the rich text engine, i.e. on text blocks which have
+    /// changed.
+    /// 
+    /// To provide your own syntax highlighting, you must subclass
+    /// QSyntaxHighlighter and reimplement highlightBlock(). In your
+    /// reimplementation you should parse the block's *text* and call
+    /// setFormat() as often as necessary to apply any font and color
+    /// changes that you require. For example:
+    /// 
+    /// See the [Detailed Description](QSyntaxHighlighter%20multiblock)
+    /// for
+    /// examples of using setCurrentBlockState(), currentBlockState()
+    /// and previousBlockState() to handle syntaxes with constructs that
+    /// span several text blocks
+    /// 
+    /// **See also:** previousBlockState()
+    /// setFormat()
+    /// setCurrentBlockState()
     [event] highlight_block(text: String),
-    ///     \overload
     /// 
-    ///     The specified \a font is applied to the current text block from
-    ///     the \a start position for a length of \a count characters.
+    /// This function is applied to the syntax highlighter's current text
+    /// block (i.e. the text that is passed to the highlightBlock()
+    /// function).
     /// 
-    ///     The other attributes of the current text block, e.g. the font and
-    ///     background color, are reset to default values.
+    /// The specified *format* is applied to the text from the *start*
+    /// position for a length of *count* characters (if *count* is 0,
+    /// nothing is done). The formatting properties set in *format* are
+    /// merged at display time with the formatting information stored
+    /// directly in the document, for example as previously set with
+    /// QTextCursor's functions. Note that the document itself remains
+    /// unmodified by the format set through this function.
     /// 
-    ///     \sa format(), highlightBlock()
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *color* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *font* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
     set_format(start: i32, count: i32, format: &TextCharFormatType),
-    ///     \overload
     /// 
-    ///     The specified \a font is applied to the current text block from
-    ///     the \a start position for a length of \a count characters.
+    /// This function is applied to the syntax highlighter's current text
+    /// block (i.e. the text that is passed to the highlightBlock()
+    /// function).
     /// 
-    ///     The other attributes of the current text block, e.g. the font and
-    ///     background color, are reset to default values.
+    /// The specified *format* is applied to the text from the *start*
+    /// position for a length of *count* characters (if *count* is 0,
+    /// nothing is done). The formatting properties set in *format* are
+    /// merged at display time with the formatting information stored
+    /// directly in the document, for example as previously set with
+    /// QTextCursor's functions. Note that the document itself remains
+    /// unmodified by the format set through this function.
     /// 
-    ///     \sa format(), highlightBlock()
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *color* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *font* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
     set_format(start: i32, count: i32, color: &ColorType),
-    ///     \overload
     /// 
-    ///     The specified \a font is applied to the current text block from
-    ///     the \a start position for a length of \a count characters.
+    /// This function is applied to the syntax highlighter's current text
+    /// block (i.e. the text that is passed to the highlightBlock()
+    /// function).
     /// 
-    ///     The other attributes of the current text block, e.g. the font and
-    ///     background color, are reset to default values.
+    /// The specified *format* is applied to the text from the *start*
+    /// position for a length of *count* characters (if *count* is 0,
+    /// nothing is done). The formatting properties set in *format* are
+    /// merged at display time with the formatting information stored
+    /// directly in the document, for example as previously set with
+    /// QTextCursor's functions. Note that the document itself remains
+    /// unmodified by the format set through this function.
     /// 
-    ///     \sa format(), highlightBlock()
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *color* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
+    /// 
+    /// **Overloads**
+    /// The specified *font* is applied to the current text block from
+    /// the *start* position for a length of *count* characters.
+    /// 
+    /// The other attributes of the current text block, e.g. the font and
+    /// background color, are reset to default values.
+    /// 
+    /// **See also:** format()
+    /// highlightBlock()
     set_format(start: i32, count: i32, font: &FontType),
-    ///     \fn QTextCharFormat QSyntaxHighlighter::format(int position) const
     /// 
-    ///     Returns the format at \a position inside the syntax highlighter's
-    ///     current text block.
+    /// Returns the format at *position* inside the syntax highlighter's
+    /// current text block.
     format(pos: i32) -> TextCharFormat,
-    ///     Returns the end state of the text block previous to the
-    ///     syntax highlighter's current block. If no value was
-    ///     previously set, the returned value is -1.
     /// 
-    ///     \sa highlightBlock(), setCurrentBlockState()
+    /// Returns the end state of the text block previous to the
+    /// syntax highlighter's current block. If no value was
+    /// previously set, the returned value is -1.
+    /// 
+    /// **See also:** highlightBlock()
+    /// setCurrentBlockState()
     previous_block_state() -> i32,
-    ///     Returns the state of the current text block. If no value is set,
-    ///     the returned value is -1.
+    /// 
+    /// Returns the state of the current text block. If no value is set,
+    /// the returned value is -1.
     current_block_state() -> i32,
-    ///     Sets the state of the current text block to \a newState.
     /// 
-    ///     \sa highlightBlock()
+    /// Sets the state of the current text block to *newState.*
+    /// 
+    /// **See also:** highlightBlock()
     set_current_block_state(new_state: i32),
-    ///     Attaches the given \a data to the current text block.  The
-    ///     ownership is passed to the underlying text document, i.e. the
-    ///     provided QTextBlockUserData object will be deleted if the
-    ///     corresponding text block gets deleted.
     /// 
-    ///     QTextBlockUserData can be used to store custom settings. In the
-    ///     case of syntax highlighting, it is in particular interesting as
-    ///     cache storage for information that you may figure out while
-    ///     parsing the paragraph's text.
+    /// Attaches the given *data* to the current text block. The
+    /// ownership is passed to the underlying text document, i.e. the
+    /// provided QTextBlockUserData object will be deleted if the
+    /// corresponding text block gets deleted.
     /// 
-    ///     For example while parsing the text, you can keep track of
-    ///     parenthesis characters that you encounter ('{[(' and the like),
-    ///     and store their relative position and the actual QChar in a simple
-    ///     class derived from QTextBlockUserData:
+    /// QTextBlockUserData can be used to store custom settings. In the
+    /// case of syntax highlighting, it is in particular interesting as
+    /// cache storage for information that you may figure out while
+    /// parsing the paragraph's text.
     /// 
-    ///     \snippet code/src_gui_text_qsyntaxhighlighter.cpp 3
+    /// For example while parsing the text, you can keep track of
+    /// parenthesis characters that you encounter ('{[(' and the like),
+    /// and store their relative position and the actual QChar in a simple
+    /// class derived from QTextBlockUserData:
     /// 
-    ///     During cursor navigation in the associated editor, you can ask the
-    ///     current QTextBlock (retrieved using the QTextCursor::block()
-    ///     function) if it has a user data object set and cast it to your \c
-    ///     BlockData object. Then you can check if the current cursor
-    ///     position matches with a previously recorded parenthesis position,
-    ///     and, depending on the type of parenthesis (opening or closing),
-    ///     find the next opening or closing parenthesis on the same level.
+    /// During cursor navigation in the associated editor, you can ask the
+    /// current QTextBlock (retrieved using the QTextCursor::block()
+    /// function) if it has a user data object set and cast it to your `BlockData` object. Then you can check if the current cursor
+    /// position matches with a previously recorded parenthesis position,
+    /// and, depending on the type of parenthesis (opening or closing),
+    /// find the next opening or closing parenthesis on the same level.
     /// 
-    ///     In this way you can do a visual parenthesis matching and highlight
-    ///     from the current cursor position to the matching parenthesis. That
-    ///     makes it easier to spot a missing parenthesis in your code and to
-    ///     find where a corresponding opening/closing parenthesis is when
-    ///     editing parenthesis intensive code.
+    /// In this way you can do a visual parenthesis matching and highlight
+    /// from the current cursor position to the matching parenthesis. That
+    /// makes it easier to spot a missing parenthesis in your code and to
+    /// find where a corresponding opening/closing parenthesis is when
+    /// editing parenthesis intensive code.
     /// 
-    ///     \sa QTextBlock::setUserData()
+    /// **See also:** QTextBlock::setUserData()
     set_current_block_user_data(data: *TextBlockUserDataType),
-    ///     Returns the QTextBlockUserData object previously attached to the
-    ///     current text block.
     /// 
-    ///     \sa QTextBlock::userData(), setCurrentBlockUserData()
+    /// Returns the QTextBlockUserData object previously attached to the
+    /// current text block.
+    /// 
+    /// **See also:** QTextBlock::userData()
+    /// setCurrentBlockUserData()
     current_block_user_data() -> TextBlockUserData?,
-    ///     \since 4.4
     /// 
-    ///     Returns the current text block.
+    /// Returns the state of the current text block. If no value is set,
+    /// the returned value is -1.
+    /// 
+    /// Returns the QTextBlockUserData object previously attached to the
+    /// current text block.
+    /// 
+    /// **See also:** QTextBlock::userData()
+    /// setCurrentBlockUserData()
+    /// 
+    /// Returns the current text block.
     current_block() -> TextBlock,
 }
 

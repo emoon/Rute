@@ -1,111 +1,285 @@
-///     \class QAbstractTextDocumentLayout
-///     \reentrant
 /// 
-///     \brief The QAbstractTextDocumentLayout class is an abstract base
-///     class used to implement custom layouts for QTextDocuments.
-///     \inmodule QtGui
+/// The standard layout provided by Qt can handle simple word processing
+/// including inline images, lists and tables.
 /// 
-///     \ingroup richtext-processing
+/// Some applications, e.g., a word processor or a DTP application might need
+/// more features than the ones provided by Qt's layout engine, in which case
+/// you can subclass QAbstractTextDocumentLayout to provide custom layout
+/// behavior for your text documents.
 /// 
-///     The standard layout provided by Qt can handle simple word processing
-///     including inline images, lists and tables.
+/// An instance of the QAbstractTextDocumentLayout subclass can be installed
+/// on a QTextDocument object with the
+/// [setDocumentLayout()](QTextDocument::)
+/// function.
 /// 
-///     Some applications, e.g., a word processor or a DTP application might need
-///     more features than the ones provided by Qt's layout engine, in which case
-///     you can subclass QAbstractTextDocumentLayout to provide custom layout
-///     behavior for your text documents.
+/// You can insert custom objects into a QTextDocument; see the
+/// QTextObjectInterface class description for details.
 /// 
-///     An instance of the QAbstractTextDocumentLayout subclass can be installed
-///     on a QTextDocument object with the
-///     \l{QTextDocument::}{setDocumentLayout()} function.
-/// 
-///     You can insert custom objects into a QTextDocument; see the
-///     QTextObjectInterface class description for details.
-/// 
-///     \sa QTextObjectInterface
+/// **See also:** QTextObjectInterface
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractTextDocumentLayout : Object {
+    /// 
+    /// Draws the layout with the given *painter* using the given *context.*
+    /// 
+    /// This function is called to draw the inline object, *object,* with the
+    /// given *painter* within the rectangle specified by *rect* using the
+    /// specified text *format.*
+    /// 
+    /// *posInDocument* specifies the position of the object within the document.
+    /// 
+    /// The default implementation calls drawObject() on the object handlers. This
+    /// function is called only within Qt. Subclasses can reimplement this function
+    /// to customize the drawing of inline objects.
+    /// 
+    /// **See also:** draw()
     [event] draw(painter: *PainterType, context: onst QAbstractTextDocumentLayout::PaintContext &),
+    /// 
+    /// Returns the cursor position for the given *point* with the specified
+    /// *accuracy.* Returns -1 if no valid cursor position was found.
     [event] hit_test(point: &PointFType, accuracy: Rute::HitTestAccuracy) -> i32,
-    ///     \fn QString QAbstractTextDocumentLayout::anchorAt(const QPointF &position) const
     /// 
-    ///     Returns the reference of the anchor the given \a position, or an empty
-    ///     string if no anchor exists at that point.
+    /// Returns the reference of the anchor the given *position,* or an empty
+    /// string if no anchor exists at that point.
     anchor_at(pos: &PointFType) -> String,
-    ///     \since 5.8
     /// 
-    ///     Returns the source of the image at the given position \a pos, or an empty
-    ///     string if no image exists at that point.
+    /// Returns the source of the image at the given position *pos,* or an empty
+    /// string if no image exists at that point.
     image_at(pos: &PointFType) -> String,
-    ///     \since 5.8
     /// 
-    ///     Returns the text format at the given position \a pos.
+    /// Returns the text format at the given position *pos.*
     format_at(pos: &PointFType) -> TextFormat,
+    /// 
+    /// This signal is emitted when the number of pages in the layout changes;
+    /// *newPages* is the updated page count.
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when
+    /// the number of pages in the layout has changed. Changes to the page count
+    /// are caused by changes to the layout or the document content itself.
+    /// 
+    /// **See also:** pageCount()
+    /// 
+    /// Returns the number of pages contained in the layout.
+    /// 
+    /// **See also:** pageCountChanged()
     [event] page_count() -> i32,
+    /// 
+    /// This signal is emitted when the size of the document layout changes to
+    /// *newSize.*
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when the
+    /// document's entire layout size changes. This signal is useful for widgets
+    /// that display text documents since it enables them to update their scroll
+    /// bars correctly.
+    /// 
+    /// **See also:** documentSize()
+    /// 
+    /// Returns the total size of the document's layout.
+    /// 
+    /// This information can be used by display widgets to update their scroll bars
+    /// correctly.
+    /// 
+    /// **See also:** documentSizeChanged()
+    /// QTextDocument::pageSize
     [event] document_size() -> SizeF,
+    /// 
+    /// Returns the bounding rectangle of *frame.*
     [event] frame_bounding_rect(frame: *TextFrameType) -> RectF,
+    /// 
+    /// Returns the bounding rectangle of *block.*
     [event] block_bounding_rect(block: &TextBlockType) -> RectF,
-    ///     Sets the paint device used for rendering the document's layout to the given
-    ///     \a device.
     /// 
-    ///     \sa paintDevice()
+    /// Sets the paint device used for rendering the document's layout to the given
+    /// *device.*
+    /// 
+    /// **See also:** paintDevice()
     set_paint_device(device: *PaintDeviceType),
-    ///     Returns the paint device used to render the document's layout.
     /// 
-    ///     \sa setPaintDevice()
+    /// Returns the paint device used to render the document's layout.
+    /// 
+    /// **See also:** setPaintDevice()
     paint_device() -> PaintDevice?,
-    ///     Returns the text document that this layout is operating on.
+    /// 
+    /// This signal is emitted when the size of the document layout changes to
+    /// *newSize.*
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when the
+    /// document's entire layout size changes. This signal is useful for widgets
+    /// that display text documents since it enables them to update their scroll
+    /// bars correctly.
+    /// 
+    /// **See also:** documentSize()
+    /// 
+    /// Returns the total size of the document's layout.
+    /// 
+    /// This information can be used by display widgets to update their scroll bars
+    /// correctly.
+    /// 
+    /// **See also:** documentSizeChanged()
+    /// QTextDocument::pageSize
+    /// 
+    /// This function is called whenever the contents of the document change. A
+    /// change occurs when text is inserted, removed, or a combination of these
+    /// two. The change is specified by *position,* *charsRemoved,* and
+    /// *charsAdded* corresponding to the starting character position of the
+    /// change, the number of characters removed from the document, and the
+    /// number of characters added.
+    /// 
+    /// For example, when inserting the text into an empty document,
+    /// *charsRemoved* would be 0 and *charsAdded* would be 5 (the length of
+    /// the string).
+    /// 
+    /// Replacing text is a combination of removing and inserting. For example, if
+    /// the text gets replaced by , *charsRemoved* would be 5 and
+    /// *charsAdded* would be 2.
+    /// 
+    /// For subclasses of QAbstractTextDocumentLayout, this is the central function
+    /// where a large portion of the work to lay out and position document contents
+    /// is done.
+    /// 
+    /// For example, in a subclass that only arranges blocks of text, an
+    /// implementation of this function would have to do the following:
+    /// 
+    /// * Determine the list of changed [QTextBlock](QTextBlock)
+    /// (s) using the parameters provided.
+    /// * Each QTextBlock object's corresponding QTextLayout object needs to be processed. You can access the [QTextBlock](QTextBlock)
+    /// 's layout using the QTextBlock::layout() function. This processing should take the document's page size into consideration.
+    /// * If the total number of pages changed, the pageCountChanged() signal should be emitted.
+    /// * If the total size changed, the documentSizeChanged() signal should be emitted.
+    /// * The update() signal should be emitted to schedule a repaint of areas in the layout that require repainting.
+    /// 
+    /// **See also:** QTextLayout
+    /// 
+    /// Returns the text document that this layout is operating on.
     document() -> TextDocument?,
-    ///     Registers the given \a component as a handler for items of the given \a objectType.
     /// 
-    ///     \note registerHandler() has to be called once for each object type. This
-    ///     means that there is only one handler for multiple replacement characters
-    ///     of the same object type.
+    /// Registers the given *component* as a handler for items of the given *objectType.*
     /// 
-    ///     The text document layout does not take ownership of \c component.
+    /// **Note**: registerHandler() has to be called once for each object type. This
+    /// means that there is only one handler for multiple replacement characters
+    /// of the same object type.
+    /// 
+    /// The text document layout does not take ownership of `component.`
     register_handler(object_type: i32, component: *ObjectType),
-    ///     \since 5.2
     /// 
-    ///     Unregisters the given \a component as a handler for items of the given \a objectType, or
-    ///     any handler if the \a component is not specified.
+    /// Unregisters the given *component* as a handler for items of the given *objectType,* or
+    /// any handler if the *component* is not specified.
     unregister_handler(object_type: i32, component: *ObjectType),
-    ///     Returns a handler for objects of the given \a objectType.
+    /// 
+    /// Returns a handler for objects of the given *objectType.*
     handler_for_object(object_type: i32) -> TextObjectInterface?,
+    /// 
+    /// This signal is emitted when the rectangle *rect* has been updated.
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when
+    /// the layout of the contents change in order to repaint.
+    /// 
+    /// This signal is emitted when the specified *block* has been updated.
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when
+    /// the layout of *block* has changed in order to repaint.
     [signal] update(arg0: &RectFType),
+    /// 
+    /// This signal is emitted when the specified *block* has been updated.
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when
+    /// the layout of *block* has changed in order to repaint.
     [signal] update_block(block: &TextBlockType),
+    /// 
+    /// This signal is emitted when the size of the document layout changes to
+    /// *newSize.*
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when the
+    /// document's entire layout size changes. This signal is useful for widgets
+    /// that display text documents since it enables them to update their scroll
+    /// bars correctly.
+    /// 
+    /// **See also:** documentSize()
     [signal] document_size_changed(new_size: &SizeFType),
+    /// 
+    /// This signal is emitted when the number of pages in the layout changes;
+    /// *newPages* is the updated page count.
+    /// 
+    /// Subclasses of QAbstractTextDocumentLayout should emit this signal when
+    /// the number of pages in the layout has changed. Changes to the page count
+    /// are caused by changes to the layout or the document content itself.
+    /// 
+    /// **See also:** pageCount()
     [signal] page_count_changed(new_pages: i32),
+    /// 
+    /// This function is called whenever the contents of the document change. A
+    /// change occurs when text is inserted, removed, or a combination of these
+    /// two. The change is specified by *position,* *charsRemoved,* and
+    /// *charsAdded* corresponding to the starting character position of the
+    /// change, the number of characters removed from the document, and the
+    /// number of characters added.
+    /// 
+    /// For example, when inserting the text into an empty document,
+    /// *charsRemoved* would be 0 and *charsAdded* would be 5 (the length of
+    /// the string).
+    /// 
+    /// Replacing text is a combination of removing and inserting. For example, if
+    /// the text gets replaced by , *charsRemoved* would be 5 and
+    /// *charsAdded* would be 2.
+    /// 
+    /// For subclasses of QAbstractTextDocumentLayout, this is the central function
+    /// where a large portion of the work to lay out and position document contents
+    /// is done.
+    /// 
+    /// For example, in a subclass that only arranges blocks of text, an
+    /// implementation of this function would have to do the following:
+    /// 
+    /// * Determine the list of changed [QTextBlock](QTextBlock)
+    /// (s) using the parameters provided.
+    /// * Each QTextBlock object's corresponding QTextLayout object needs to be processed. You can access the [QTextBlock](QTextBlock)
+    /// 's layout using the QTextBlock::layout() function. This processing should take the document's page size into consideration.
+    /// * If the total number of pages changed, the pageCountChanged() signal should be emitted.
+    /// * If the total size changed, the documentSizeChanged() signal should be emitted.
+    /// * The update() signal should be emitted to schedule a repaint of areas in the layout that require repainting.
+    /// 
+    /// **See also:** QTextLayout
     [event] document_changed(from: i32, chars_removed: i32, chars_added: i32),
-    ///     Sets the size of the inline object \a item corresponding to the text
-    ///     \a format.
     /// 
-    ///     \a posInDocument specifies the position of the object within the document.
+    /// Sets the size of the inline object *item* corresponding to the text
+    /// *format.*
     /// 
-    ///     The default implementation resizes the \a item to the size returned by
-    ///     the object handler's intrinsicSize() function. This function is called only
-    ///     within Qt. Subclasses can reimplement this function to customize the
-    ///     resizing of inline objects.
+    /// *posInDocument* specifies the position of the object within the document.
+    /// 
+    /// The default implementation resizes the *item* to the size returned by
+    /// the object handler's intrinsicSize() function. This function is called only
+    /// within Qt. Subclasses can reimplement this function to customize the
+    /// resizing of inline objects.
     [event] resize_inline_object(item: TextInlineObjectType, pos_in_document: i32, format: &TextFormatType),
-    ///     Lays out the inline object \a item using the given text \a format.
     /// 
-    ///     \a posInDocument specifies the position of the object within the document.
+    /// Lays out the inline object *item* using the given text *format.*
     /// 
-    ///     The default implementation does nothing. This function is called only
-    ///     within Qt. Subclasses can reimplement this function to customize the
-    ///     position of inline objects.
+    /// *posInDocument* specifies the position of the object within the document.
     /// 
-    ///     \sa drawInlineObject()
+    /// The default implementation does nothing. This function is called only
+    /// within Qt. Subclasses can reimplement this function to customize the
+    /// position of inline objects.
+    /// 
+    /// **See also:** drawInlineObject()
     [event] position_inline_object(item: TextInlineObjectType, pos_in_document: i32, format: &TextFormatType),
+    /// 
+    /// This function is called to draw the inline object, *object,* with the
+    /// given *painter* within the rectangle specified by *rect* using the
+    /// specified text *format.*
+    /// 
+    /// *posInDocument* specifies the position of the object within the document.
+    /// 
+    /// The default implementation calls drawObject() on the object handlers. This
+    /// function is called only within Qt. Subclasses can reimplement this function
+    /// to customize the drawing of inline objects.
+    /// 
+    /// **See also:** draw()
     [event] draw_inline_object(painter: *PainterType, rect: &RectFType, object: TextInlineObjectType, pos_in_document: i32, format: &TextFormatType),
-    ///     \internal
-    /// 
-    ///     Returns the index of the format at position \a pos.
     format_index(pos: i32) -> i32,
-    ///     \fn QTextCharFormat QAbstractTextDocumentLayout::format(int position)
     /// 
-    ///     Returns the character format that is applicable at the given \a position.
+    /// Returns the character format that is applicable at the given *position.*
+    /// 
+    /// Returns the text format at the given position *pos.*
     format(pos: i32) -> TextCharFormat,
 }
 

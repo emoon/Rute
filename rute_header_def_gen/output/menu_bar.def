@@ -1,276 +1,350 @@
-///     \class QMenuBar
-///     \brief The QMenuBar class provides a horizontal menu bar.
 /// 
-///     \ingroup mainwindow-classes
-///     \inmodule QtWidgets
+/// A menu bar consists of a list of pull-down menu items. You add
+/// menu items with addMenu(). For example, asuming that `menubar`
+/// is a pointer to a QMenuBar and `fileMenu` is a pointer to a
+/// QMenu, the following statement inserts the menu into the menu bar:
 /// 
-///     A menu bar consists of a list of pull-down menu items. You add
-///     menu items with addMenu(). For example, asuming that \c menubar
-///     is a pointer to a QMenuBar and \c fileMenu is a pointer to a
-///     QMenu, the following statement inserts the menu into the menu bar:
-///     \snippet code/src_gui_widgets_qmenubar.cpp 0
+/// The ampersand in the menu item's text sets Alt+F as a shortcut for
+/// this menu. (You can use to get a real ampersand in the menu
+/// bar.)
 /// 
-///     The ampersand in the menu item's text sets Alt+F as a shortcut for
-///     this menu. (You can use "\&\&" to get a real ampersand in the menu
-///     bar.)
+/// There is no need to lay out a menu bar. It automatically sets its
+/// own geometry to the top of the parent widget and changes it
+/// appropriately whenever the parent is resized.
 /// 
-///     There is no need to lay out a menu bar. It automatically sets its
-///     own geometry to the top of the parent widget and changes it
-///     appropriately whenever the parent is resized.
+/// # Usage
 /// 
-///     \section1 Usage
+/// In most main window style applications you would use the
+/// [menuBar()](QMainWindow::)
+/// function provided in QMainWindow,
+/// adding [QMenu](QMenu)
+/// s to the menu bar and adding [QAction](QAction)
+/// s to the
+/// pop-up menus.
 /// 
-///     In most main window style applications you would use the
-///     \l{QMainWindow::}{menuBar()} function provided in QMainWindow,
-///     adding \l{QMenu}s to the menu bar and adding \l{QAction}s to the
-///     pop-up menus.
+/// Example (from the [Menus](mainwindows/menus)
+/// example):
 /// 
-///     Example (from the \l{mainwindows/menus}{Menus} example):
+/// Menu items may be removed with removeAction().
 /// 
-///     \snippet mainwindows/menus/mainwindow.cpp 9
+/// Widgets can be added to menus by using instances of the QWidgetAction
+/// class to hold them. These actions can then be inserted into menus
+/// in the usual way; see the QMenu documentation for more details.
 /// 
-///     Menu items may be removed with removeAction().
+/// # Platform Dependent Look and Feel
 /// 
-///     Widgets can be added to menus by using instances of the QWidgetAction
-///     class to hold them. These actions can then be inserted into menus
-///     in the usual way; see the QMenu documentation for more details.
+/// Different platforms have different requirements for the appearance
+/// of menu bars and their behavior when the user interacts with them.
+/// For example, Windows systems are often configured so that the
+/// underlined character mnemonics that indicate keyboard shortcuts
+/// for items in the menu bar are only shown when the **{Alt}** key is
+/// pressed.
 /// 
-///     \section1 Platform Dependent Look and Feel
+/// # QMenuBar as a Global Menu Bar
 /// 
-///     Different platforms have different requirements for the appearance
-///     of menu bars and their behavior when the user interacts with them.
-///     For example, Windows systems are often configured so that the
-///     underlined character mnemonics that indicate keyboard shortcuts
-///     for items in the menu bar are only shown when the \uicontrol{Alt} key is
-///     pressed.
+/// On MacOS and on certain Linux desktop environments such as
+/// Ubuntu Unity, QMenuBar is a wrapper for using the system-wide menu bar.
+/// If you have multiple menu bars in one dialog the outermost menu bar
+/// (normally inside a widget with widget flag Qt::Window) will
+/// be used for the system-wide menu bar.
 /// 
-///     \section1 QMenuBar as a Global Menu Bar
+/// Qt for MacOS also provides a menu bar merging feature to make
+/// QMenuBar conform more closely to accepted MacOS menu bar layout.
+/// The merging functionality is based on string matching the title of
+/// a QMenu entry. These strings are translated (using QObject::tr())
+/// in the context. If an entry is moved its slots will still
+/// fire as if it was in the original place. The table below outlines
+/// the strings looked for and where the entry is placed if matched:
 /// 
-///     On \macos and on certain Linux desktop environments such as
-///     Ubuntu Unity, QMenuBar is a wrapper for using the system-wide menu bar.
-///     If you have multiple menu bars in one dialog the outermost menu bar
-///     (normally inside a widget with widget flag Qt::Window) will
-///     be used for the system-wide menu bar.
+/// * String matches
+/// * Placement
+/// * Notes
+/// * about.*
+/// * Application Menu | About <application name>
+/// * The application name is fetched from the `Info.plist` file (see note below). If this entry is not found no About item will appear in the Application Menu.
+/// * config, options, setup, settings or preferences
+/// * Application Menu | Preferences
+/// * If this entry is not found the Settings item will be disabled
+/// * quit or exit
+/// * Application Menu | Quit <application name>
+/// * If this entry is not found a default Quit item will be created to call QCoreApplication::quit()
 /// 
-///     Qt for \macos also provides a menu bar merging feature to make
-///     QMenuBar conform more closely to accepted \macos menu bar layout.
-///     The merging functionality is based on string matching the title of
-///     a QMenu entry. These strings are translated (using QObject::tr())
-///     in the "QMenuBar" context. If an entry is moved its slots will still
-///     fire as if it was in the original place. The table below outlines
-///     the strings looked for and where the entry is placed if matched:
+/// You can override this behavior by using the QAction::menuRole()
+/// property.
 /// 
-///     \table
-///     \header \li String matches \li Placement \li Notes
-///     \row \li about.*
-///          \li Application Menu | About <application name>
-///          \li The application name is fetched from the \c {Info.plist} file
-///             (see note below). If this entry is not found no About item
-///             will appear in the Application Menu.
-///     \row \li config, options, setup, settings or preferences
-///          \li Application Menu | Preferences
-///          \li If this entry is not found the Settings item will be disabled
-///     \row \li quit or exit
-///          \li Application Menu | Quit <application name>
-///          \li If this entry is not found a default Quit item will be
-///             created to call QCoreApplication::quit()
-///     \endtable
+/// If you want all windows in a Mac application to share one menu
+/// bar, you must create a menu bar that does not have a parent.
+/// Create a parent-less menu bar this way:
 /// 
-///     You can override this behavior by using the QAction::menuRole()
-///     property.
+/// **Note:** Do *not* call QMainWindow::menuBar() to create the
+/// shared menu bar, because that menu bar will have the QMainWindow
+/// as its parent. That menu bar would only be displayed for the
+/// parent QMainWindow.
 /// 
-///     If you want all windows in a Mac application to share one menu
-///     bar, you must create a menu bar that does not have a parent.
-///     Create a parent-less menu bar this way:
+/// **Note:** The text used for the application name in the MacOS menu
+/// bar is obtained from the value set in the `Info.plist` file in
+/// the application's bundle. See [Qt for macOS - Deployment](Qt%20for%20macOS%20-%20Deployment)
+/// for more information.
 /// 
-///     \snippet code/src_gui_widgets_qmenubar.cpp 1
+/// **Note:** On Linux, if the com.canonical.AppMenu.Registrar
+/// service is available on the D-Bus session bus, then Qt will
+/// communicate with it to install the application's menus into the
+/// global menu bar, as described.
 /// 
-///     \b{Note:} Do \e{not} call QMainWindow::menuBar() to create the
-///     shared menu bar, because that menu bar will have the QMainWindow
-///     as its parent. That menu bar would only be displayed for the
-///     parent QMainWindow.
+/// # Examples
 /// 
-///     \b{Note:} The text used for the application name in the \macos menu
-///     bar is obtained from the value set in the \c{Info.plist} file in
-///     the application's bundle. See \l{Qt for macOS - Deployment}
-///     for more information.
+/// The [Menus](mainwindows/menus)
+/// example shows how to use QMenuBar
+/// and QMenu. The other [main window
+/// application examples](Main%20Window%20Examples)
+/// also provide menus using these classes.
 /// 
-///     \b{Note:} On Linux, if the com.canonical.AppMenu.Registrar
-///     service is available on the D-Bus session bus, then Qt will
-///     communicate with it to install the application's menus into the
-///     global menu bar, as described.
-/// 
-///     \section1 Examples
-/// 
-///     The \l{mainwindows/menus}{Menus} example shows how to use QMenuBar
-///     and QMenu.  The other \l{Main Window Examples}{main window
-///     application examples} also provide menus using these classes.
-/// 
-///     \sa QMenu, QShortcut, QAction,
-///         {http://developer.apple.com/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGIntro/XHIGIntro.html}{Introduction to Apple Human Interface Guidelines},
-///         {fowler}{GUI Design Handbook: Menu Bar}, {Menus Example}
+/// **See also:** QMenu
+/// QShortcut
+/// QAction
+/// {http://developer.apple.com/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGIntro/XHIGIntro.html}{Introduction to Apple Human Interface Guidelines}
+/// {fowler}{GUI Design Handbook: Menu Bar}
+/// {Menus Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct MenuBar : Widget {
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the given \a
-    ///     text. The action's triggered() signal is connected to the \a
-    ///     receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     \sa QWidget::addAction(), QWidget::actions()
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenuBar takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenuBar takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
     add_action(text: String) -> Action?,
-    ///     \overload
     /// 
-    ///     This convenience function creates a new action with the given \a
-    ///     text. The action's triggered() signal is connected to the \a
-    ///     receiver's \a member slot. The function adds the newly created
-    ///     action to the menu's list of actions and returns it.
+    /// **Overloads**
+    /// This convenience function creates a new action with *text.*
+    /// The function adds the newly created action to the menu's
+    /// list of actions, and returns it.
     /// 
-    ///     \sa QWidget::addAction(), QWidget::actions()
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the *receiver's* *member* slot. The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
+    /// *method* of the *receiver.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenuBar takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
+    /// 
+    /// **Overloads**
+    /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
+    /// *functor.* The function adds the newly created
+    /// action to the menu's list of actions and returns it.
+    /// 
+    /// QMenuBar takes ownership of the returned QAction.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QWidget::actions()
     add_action(text: String, receiver: *ObjectType, member: *char) -> Action?,
-    ///     Appends \a menu to the menu bar. Returns the menu's menuAction().
     /// 
-    ///     \note The returned QAction object can be used to hide the corresponding
-    ///     menu.
+    /// Appends a new QMenu with *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
     /// 
-    ///     \sa QWidget::addAction(), QMenu::menuAction()
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends *menu* to the menu bar. Returns the menu's menuAction().
+    /// 
+    /// **Note**: The returned QAction object can be used to hide the corresponding
+    /// menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
     add_menu(title: String) -> Menu?,
-    ///     Appends \a menu to the menu bar. Returns the menu's menuAction().
     /// 
-    ///     \note The returned QAction object can be used to hide the corresponding
-    ///     menu.
+    /// Appends a new QMenu with *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
     /// 
-    ///     \sa QWidget::addAction(), QMenu::menuAction()
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
+    /// 
+    /// Appends *menu* to the menu bar. Returns the menu's menuAction().
+    /// 
+    /// **Note**: The returned QAction object can be used to hide the corresponding
+    /// menu.
+    /// 
+    /// **See also:** QWidget::addAction()
+    /// QMenu::menuAction()
     add_menu(icon: &IconType, title: String) -> Menu?,
-    ///   Appends a separator to the menu.
+    /// 
+    /// Appends a separator to the menu.
     add_separator() -> Action?,
-    ///     This convenience function creates a new separator action, i.e. an
-    ///     action with QAction::isSeparator() returning true. The function inserts
-    ///     the newly created action into this menu bar's list of actions before
-    ///     action \a before and returns it.
     /// 
-    ///     \sa QWidget::insertAction(), addSeparator()
+    /// This convenience function creates a new separator action, i.e. an
+    /// action with QAction::isSeparator() returning true. The function inserts
+    /// the newly created action into this menu bar's list of actions before
+    /// action *before* and returns it.
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addSeparator()
     insert_separator(before: *ActionType) -> Action?,
-    ///   This convenience function inserts \a menu before action \a before
-    ///   and returns the menus menuAction().
     /// 
-    ///   \sa QWidget::insertAction(), addMenu()
+    /// This convenience function inserts *menu* before action *before*
+    /// and returns the menus menuAction().
+    /// 
+    /// **See also:** QWidget::insertAction()
+    /// addMenu()
     insert_menu(before: *ActionType, menu: *MenuType) -> Action?,
-    ///     Removes all the actions from the menu bar.
     /// 
-    ///     \note On \macos, menu items that have been merged to the system
-    ///     menu bar are not removed by this function. One way to handle this
-    ///     would be to remove the extra actions yourself. You can set the
-    ///     \l{QAction::MenuRole}{menu role} on the different menus, so that
-    ///     you know ahead of time which menu items get merged and which do
-    ///     not. Then decide what to recreate or remove yourself.
+    /// Removes all the actions from the menu bar.
     /// 
-    ///     \sa removeAction()
+    /// **Note**: On MacOS , menu items that have been merged to the system
+    /// menu bar are not removed by this function. One way to handle this
+    /// would be to remove the extra actions yourself. You can set the
+    /// [menu role](QAction::MenuRole)
+    /// on the different menus, so that
+    /// you know ahead of time which menu items get merged and which do
+    /// not. Then decide what to recreate or remove yourself.
+    /// 
+    /// **See also:** removeAction()
     clear(),
-    ///   Returns the QAction that is currently highlighted. A null pointer
-    ///   will be returned if no action is currently selected.
+    /// 
+    /// Returns the QAction that is currently highlighted. A null pointer
+    /// will be returned if no action is currently selected.
     active_action() -> Action?,
-    ///     \since 4.1
     /// 
-    ///     Sets the currently highlighted action to \a act.
+    /// Sets the currently highlighted action to *act.*
     set_active_action(action: *ActionType),
-    ///     \property QMenuBar::defaultUp
-    ///     \brief the popup orientation
-    /// 
-    ///     The default popup orientation. By default, menus pop "down" the
-    ///     screen. By setting the property to true, the menu will pop "up".
-    ///     You might call this for menus that are \e below the document to
-    ///     which they refer.
-    /// 
-    ///     If the menu would not fit on the screen, the other direction is
-    ///     used automatically.
     set_default_up(arg0: bool),
     is_default_up() -> bool,
-    ///   \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///   \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
-    ///   \reimp
+    /// 
     [event] height_for_width(arg0: i32) -> i32,
-    ///   Returns the QAction at \a pt. Returns 0 if there is no action at \a pt or if
+    /// 
+    /// Returns the QAction at *pt.* Returns 0 if there is no action at *pt* or if
     /// the location has a separator.
     /// 
-    ///     \sa addAction(), addSeparator()
+    /// **See also:** addAction()
+    /// addSeparator()
     action_at(arg0: &PointType) -> Action?,
-    ///     \fn void QMenuBar::setCornerWidget(QWidget *widget, Qt::Corner corner)
     /// 
-    ///     This sets the given \a widget to be shown directly on the left of the first
-    ///     menu item, or on the right of the last menu item, depending on \a corner.
+    /// This sets the given *widget* to be shown directly on the left of the first
+    /// menu item, or on the right of the last menu item, depending on *corner.*
     /// 
-    ///     The menu bar takes ownership of \a widget, reparenting it into the menu bar.
-    ///     However, if the \a corner already contains a widget, this previous widget
-    ///     will no longer be managed and will still be a visible child of the menu bar.
+    /// The menu bar takes ownership of *widget,* reparenting it into the menu bar.
+    /// However, if the *corner* already contains a widget, this previous widget
+    /// will no longer be managed and will still be a visible child of the menu bar.
     /// 
-    ///    \note Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
-    ///     will result in a warning.
+    /// **Note**: Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
+    /// will result in a warning.
     set_corner_widget(w: *WidgetType, corner: Rute::Corner),
-    ///     Returns the widget on the left of the first or on the right of the last menu
-    ///     item, depending on \a corner.
     /// 
-    ///    \note Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
-    ///     will result in a warning.
+    /// Returns the widget on the left of the first or on the right of the last menu
+    /// item, depending on *corner.*
+    /// 
+    /// **Note**: Using a corner other than Qt::TopRightCorner or Qt::TopLeftCorner
+    /// will result in a warning.
     corner_widget(corner: Rute::Corner) -> Widget?,
     is_native_menu_bar() -> bool,
-    ///     \property QMenuBar::nativeMenuBar
-    ///     \brief Whether or not a menubar will be used as a native menubar on platforms that support it
-    ///     \since 4.6
-    /// 
-    ///     This property specifies whether or not the menubar should be used as a native menubar on
-    ///     platforms that support it. The currently supported platforms are \macos, and
-    ///     Linux desktops which use the com.canonical.dbusmenu D-Bus interface (such as Ubuntu Unity).
-    ///     If this property is \c true, the menubar is used in the native menubar and is not in the window of
-    ///     its parent; if \c false the menubar remains in the window. On other platforms,
-    ///     setting this attribute has no effect, and reading this attribute will always return \c false.
-    /// 
-    ///     The default is to follow whether the Qt::AA_DontUseNativeMenuBar attribute
-    ///     is set for the application. Explicitly setting this property overrides
-    ///     the presence (or absence) of the attribute.
     set_native_menu_bar(native_menu_bar: bool),
-    ///     \internal
     platform_menu_bar() -> PlatformMenuBar?,
-    ///   \reimp
-    [event] set_visible(visible: bool),
-    [signal] hovered(action: *ActionType),
-    ///   \reimp
-    [event] change_event(arg0: *EventType),
-    ///   \reimp
-    [event] key_press_event(arg0: *KeyEventType),
-    ///   \reimp
-    [event] mouse_release_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] mouse_press_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] mouse_move_event(arg0: *MouseEventType),
-    ///   \reimp
-    [event] leave_event(arg0: *EventType),
-    ///   \reimp
-    [event] paint_event(arg0: *PaintEventType),
-    ///   \reimp
-    [event] resize_event(arg0: *ResizeEventType),
-    ///   \reimp
-    [event] action_event(arg0: *ActionEventType),
-    ///   \reimp
-    [event] focus_out_event(arg0: *FocusEventType),
-    ///   \reimp
-    [event] focus_in_event(arg0: *FocusEventType),
-    [event] timer_event(arg0: *TimerEventType),
-    ///   \reimp
-    [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
-    ///   \reimp
-    [event] event(arg0: *EventType) -> bool,
-    ///     Initialize \a option with the values from the menu bar and information from \a action. This method
-    ///     is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom(), QMenu::initStyleOption()
+    [event] set_visible(visible: bool),
+    /// 
+    /// This signal is emitted when a menu action is highlighted; *action*
+    /// is the action that caused the event to be sent.
+    /// 
+    /// Often this is used to update status information.
+    /// 
+    /// **See also:** triggered()
+    /// QAction::hovered()
+    [signal] hovered(action: *ActionType),
+    /// 
+    [event] change_event(arg0: *EventType),
+    /// 
+    [event] key_press_event(arg0: *KeyEventType),
+    /// 
+    [event] mouse_release_event(arg0: *MouseEventType),
+    /// 
+    [event] mouse_press_event(arg0: *MouseEventType),
+    /// 
+    [event] mouse_move_event(arg0: *MouseEventType),
+    /// 
+    [event] leave_event(arg0: *EventType),
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    [event] resize_event(arg0: *ResizeEventType),
+    /// 
+    [event] action_event(arg0: *ActionEventType),
+    /// 
+    [event] focus_out_event(arg0: *FocusEventType),
+    /// 
+    [event] focus_in_event(arg0: *FocusEventType),
+    /// 
+    [event] timer_event(arg0: *TimerEventType),
+    /// 
+    [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    /// 
+    /// 
+    [event] event(arg0: *EventType) -> bool,
+    /// 
+    /// Initialize *option* with the values from the menu bar and information from *action.* This method
+    /// is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
+    /// QMenu::initStyleOption()
     init_style_option(option: *StyleOptionMenuItemType, action: *ActionType),
 }
 

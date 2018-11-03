@@ -1,44 +1,39 @@
-///     \class QPointingDeviceUniqueId
-///     \since 5.8
-///     \ingroup events
-///     \inmodule QtGui
 /// 
-///     \brief QPointingDeviceUniqueId identifies a unique object, such as a tagged token
-///     or stylus, which is used with a pointing device.
+/// QPointingDeviceUniqueIds can be compared for equality, and can be used as keys in a QHash.
+/// You get access to the numerical ID via numericId(), if the device supports such IDs.
+/// For future extensions, though, you should not use that function, but compare objects
+/// of this type using the equality operator.
 /// 
-///     QPointingDeviceUniqueIds can be compared for equality, and can be used as keys in a QHash.
-///     You get access to the numerical ID via numericId(), if the device supports such IDs.
-///     For future extensions, though, you should not use that function, but compare objects
-///     of this type using the equality operator.
+/// This class is a thin wrapper around an integer ID. You pass it into and out of
+/// functions by value.
 /// 
-///     This class is a thin wrapper around an integer ID. You pass it into and out of
-///     functions by value.
+/// This type actively prevents you from holding it in a QList, because doing so would
+/// be very inefficient. Use a QVector instead, which has the same API as QList, but more
+/// efficient storage.
 /// 
-///     This type actively prevents you from holding it in a QList, because doing so would
-///     be very inefficient. Use a QVector instead, which has the same API as QList, but more
-///     efficient storage.
-/// 
-///     \sa QTouchEvent::TouchPoint
+/// **See also:** QTouchEvent::TouchPoint
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PointingDeviceUniqueId {
     qt_check_for_qgadget_macro(),
-    ///     Constructs a unique pointer ID from numeric ID \a id.
+    /// 
+    /// Constructs a unique pointer ID from numeric ID *id.*
     [static] from_numeric_id(id: i64) -> PointingDeviceUniqueId,
+    /// 
+    /// Returns whether this unique pointer ID is valid, that is, it represents an actual
+    /// pointer.
     is_valid() -> bool,
-    ///     \property QPointingDeviceUniqueId::numericId
-    ///     \brief the numeric unique ID of the token represented by a touchpoint
     /// 
-    ///     If the device provides a numeric ID, isValid() returns true, and this
-    ///     property provides the numeric ID;
-    ///     otherwise it is -1.
+    /// If the device provides a numeric ID, isValid() returns true, and this
+    /// property provides the numeric ID;
+    /// otherwise it is -1.
     /// 
-    ///     You should not use the value of this property in portable code, but
-    ///     instead rely on equality to identify pointers.
+    /// You should not use the value of this property in portable code, but
+    /// instead rely on equality to identify pointers.
     /// 
-    ///     \sa isValid()
+    /// **See also:** isValid()
     numeric_id() -> i64,
 }
 

@@ -1,32 +1,32 @@
-///     \class QStylePlugin
-///     \brief The QStylePlugin class provides an abstract base for custom QStyle plugins.
 /// 
-///     \ingroup plugins
-///     \inmodule QtWidgets
+/// QStylePlugin is a simple plugin interface that makes it easy
+/// to create custom styles that can be loaded dynamically into
+/// applications using the QStyleFactory class.
 /// 
-///     QStylePlugin is a simple plugin interface that makes it easy
-///     to create custom styles that can be loaded dynamically into
-///     applications using the QStyleFactory class.
+/// Writing a style plugin is achieved by subclassing this base class,
+/// reimplementing the pure virtual create() function, and
+/// exporting the class using the Q_PLUGIN_METADATA() macro.
 /// 
-///     Writing a style plugin is achieved by subclassing this base class,
-///     reimplementing the pure virtual create() function, and
-///     exporting the class using the Q_PLUGIN_METADATA() macro.
+/// The json metadata file `mystyleplugin.json` for the plugin needs
+/// to contain information about the names of the styles the plugins
+/// supports as follows:
 /// 
-///     \snippet qstyleplugin/main.cpp 0
+/// See [How to Create Qt Plugins](How%20to%20Create%20Qt%20Plugins)
+/// for details.
 /// 
-///     The json metadata file \c mystyleplugin.json for the plugin needs
-///     to contain information about the names of the styles the plugins
-///     supports as follows:
-/// 
-///     \quotefile qstyleplugin/mystyleplugin.json
-/// 
-///     See \l {How to Create Qt Plugins} for details.
-/// 
-///     \sa QStyleFactory, QStyle
+/// **See also:** QStyleFactory
+/// QStyle
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StylePlugin : Object {
+    /// 
+    /// Creates and returns a QStyle object for the given style *key.*
+    /// If a plugin cannot create a style, it should return 0 instead.
+    /// 
+    /// The style key is usually the class name of the required
+    /// style. Note that the keys are case insensitive. For example:
+    /// 
     [event] create(key: String) -> Style?,
 }
 

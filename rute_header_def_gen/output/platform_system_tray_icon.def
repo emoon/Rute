@@ -1,9 +1,3 @@
-///     \class QPlatformSystemTrayIcon
-///     \inmodule QtGui
-///     \brief The QPlatformSystemTrayIcon class abstracts the system tray icon and interaction.
-/// 
-///     \internal
-///     \sa QSystemTrayIcon
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -25,17 +19,58 @@ enum MessageIcon {
 }
 
 struct PlatformSystemTrayIcon : Object {
+    /// 
+    /// This method is called to initialize the platform dependent implementation.
     [event] init(),
+    /// 
+    /// This method is called to cleanup the platform dependent implementation.
     [event] cleanup(),
+    /// 
+    /// This method is called when the *icon* did change.
     [event] update_icon(icon: &IconType),
+    /// 
+    /// This method is called when the *tooltip* text did change.
     [event] update_tool_tip(tooltip: String),
+    /// 
+    /// This method is called when the system tray *menu* did change.
     [event] update_menu(menu: *PlatformMenuType),
+    /// 
+    /// const QIcon &icon, MessageIcon iconType, int msecs)
+    /// Shows a balloon message for the entry with the given *title,* message *msg* and *icon* for
+    /// the time specified in *msecs.* *iconType* is used as a hint for the implementing platform.
+    /// **See also:** QSystemTrayIcon::showMessage()
     [event] show_message(title: String, msg: String, icon: &IconType, icon_type: PlatformSystemTrayIcon::MessageIcon, msecs: i32),
+    /// 
+    /// Returns `true` if the system tray is available on the platform.
     [event] is_system_tray_available() -> bool,
+    /// 
+    /// Returns `true` if the system tray supports messages on the platform.
     [event] supports_messages() -> bool,
+    /// 
+    /// This method allows platforms to use a different QPlatformMenu for system
+    /// tray menus than what would normally be used for e.g. menu bars. The default
+    /// implementation falls back to a platform menu created by the platform theme,
+    /// which may be null on platforms without native menus.
+    /// 
+    /// **See also:** updateMenu()
     [event] create_menu() -> PlatformMenu?,
+    /// 
+    /// This signal is emitted when the user activates the system tray icon.
+    /// *reason* specifies the reason for activation.
+    /// **See also:** QSystemTrayIcon::ActivationReason
+    /// contextMenuRequested()
     [signal] activated(reason: PlatformSystemTrayIcon::ActivationReason),
+    /// 
+    /// This signal is emitted when the context menu is requested.
+    /// In particular, on platforms where createMenu() returns nullptr,
+    /// its emission will cause QSystemTrayIcon to show a QMenu-based menu.
+    /// **See also:** activated()
     [signal] context_menu_requested(global_pos: PointType, screen: *PlatformScreenType),
+    /// 
+    /// This signal is emitted when the message displayed using showMessage()
+    /// was clicked by the user.
+    /// 
+    /// **See also:** activated()
     [signal] message_clicked(),
 }
 

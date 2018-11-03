@@ -1,11 +1,7 @@
-///     \class QStandardPaths
-///     \inmodule QtCore
-///     \brief The QStandardPaths class provides methods for accessing standard paths.
-///     \since 5.0
 /// 
-///     This class contains functions to query standard locations on the local
-///     filesystem, for common tasks such as user-specific directories or system-wide
-///     configuration directories.
+/// This class contains functions to query standard locations on the local
+/// filesystem, for common tasks such as user-specific directories or system-wide
+/// configuration directories.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -42,42 +38,88 @@ enum LocateOption {
 
 struct StandardPaths {
     qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the directory where files of *type* should be written to, or an empty string
+    /// if the location cannot be determined.
+    /// 
+    /// **Note**: The storage location returned can be a directory that does not exist; i.e., it
+    /// may need to be created by the system or the user.
     [static] writable_location(type: StandardPaths::StandardLocation) -> String,
+    /// 
+    /// Returns all the directories where files of *type* belong.
+    /// 
+    /// The list of directories is sorted from high to low priority, starting with
+    /// writableLocation() if it can be determined. This list is empty if no locations
+    /// for *type* are defined.
+    /// 
+    /// **See also:** writableLocation()
     [static] standard_locations(type: StandardPaths::StandardLocation) -> [String],
+    /// 
+    /// Tries to find a file or directory called *fileName* in the standard locations
+    /// for *type.*
+    /// 
+    /// The full path to the first file or directory (depending on *options)* found is returned.
+    /// If no such file or directory can be found, an empty string is returned.
+    /// 
+    /// Tries to find all files or directories called *fileName* in the standard locations
+    /// for *type.*
+    /// 
+    /// The *options* flag allows to specify whether to look for files or directories.
+    /// 
+    /// Returns the list of all the files that were found.
     [static] locate(type: StandardPaths::StandardLocation, file_name: String, options: StandardPaths::LocateOptions) -> String,
+    /// 
+    /// Tries to find all files or directories called *fileName* in the standard locations
+    /// for *type.*
+    /// 
+    /// The *options* flag allows to specify whether to look for files or directories.
+    /// 
+    /// Returns the list of all the files that were found.
     [static] locate_all(type: StandardPaths::StandardLocation, file_name: String, options: StandardPaths::LocateOptions) -> [String],
-    ///     \fn QString QStandardPaths::displayName(StandardLocation type)
     /// 
-    ///     Returns a localized display name for the given location \a type or
-    ///     an empty QString if no relevant location can be found.
+    /// Returns a localized display name for the given location *type* or
+    /// an empty QString if no relevant location can be found.
     [static] display_name(type: StandardPaths::StandardLocation) -> String,
+    /// 
+    /// Finds the executable named *executableName* in the paths specified by *paths,*
+    /// or the system paths if *paths* is empty.
+    /// 
+    /// On most operating systems the system path is determined by the PATH environment variable.
+    /// 
+    /// The directories where to search for the executable can be set in the *paths* argument.
+    /// To search in both your own paths and the system paths, call findExecutable twice, once with
+    /// *paths* set and once with *paths* empty.
+    /// 
+    /// Symlinks are not resolved, in order to preserve behavior for the case of executables
+    /// whose behavior depends on the name they are invoked with.
+    /// 
+    /// **Note**: On Windows, the usual executable extensions (from the PATHEXT environment variable)
+    /// are automatically appended, so that for instance findExecutable("foo") will find foo.exe
+    /// or foo.bat if present.
+    /// 
+    /// Returns the absolute file path to the executable, or an empty string if not found.
     [static] find_executable(executable_name: String, paths: &[String]) -> String,
-    ///   \fn void QStandardPaths::setTestModeEnabled(bool testMode)
     /// 
-    ///   If \a testMode is true, this enables a special "test mode" in
-    ///   QStandardPaths, which changes writable locations
-    ///   to point to test directories, in order to prevent auto tests from reading from
-    ///   or writing to the current user's configuration.
-    /// 
-    ///   This affects the locations into which test programs might write files:
-    ///   GenericDataLocation, DataLocation, ConfigLocation, GenericConfigLocation,
-    ///   AppConfigLocation, GenericCacheLocation, CacheLocation.
-    ///   Other locations are not affected.
-    /// 
-    ///   On Unix, \c XDG_DATA_HOME is set to \e ~/.qttest/share, \c XDG_CONFIG_HOME is
-    ///   set to \e ~/.qttest/config, and \c XDG_CACHE_HOME is set to \e ~/.qttest/cache.
-    /// 
-    ///   On \macos, data goes to \e ~/.qttest/Application Support, cache goes to
-    ///   \e ~/.qttest/Cache, and config goes to \e ~/.qttest/Preferences.
-    /// 
-    ///   On Windows, everything goes to a "qttest" directory under Application Data.
     [static] enable_test_mode(test_mode: bool),
+    /// 
+    /// If *testMode* is true, this enables a special in
+    /// QStandardPaths, which changes writable locations
+    /// to point to test directories, in order to prevent auto tests from reading from
+    /// or writing to the current user's configuration.
+    /// 
+    /// This affects the locations into which test programs might write files:
+    /// GenericDataLocation, DataLocation, ConfigLocation, GenericConfigLocation,
+    /// AppConfigLocation, GenericCacheLocation, CacheLocation.
+    /// Other locations are not affected.
+    /// 
+    /// On Unix, `XDG_DATA_HOME` is set to *~/.qttest/share,* `XDG_CONFIG_HOME` is
+    /// set to *~/.qttest/config,* and `XDG_CACHE_HOME` is set to *~/.qttest/cache.*
+    /// 
+    /// On MacOS , data goes to *~/.qttest/Application* Support, cache goes to
+    /// *~/.qttest/Cache,* and config goes to *~/.qttest/Preferences.*
+    /// 
+    /// On Windows, everything goes to a directory under Application Data.
     [static] set_test_mode_enabled(test_mode: bool),
-    ///   \fn void QStandardPaths::isTestModeEnabled()
-    /// 
-    ///   \internal
-    /// 
-    ///   Returns \c true if test mode is enabled in QStandardPaths; otherwise returns \c false.
     [static] is_test_mode_enabled() -> bool,
 }
 

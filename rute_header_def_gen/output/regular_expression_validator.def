@@ -1,54 +1,57 @@
-///     \class QRegularExpressionValidator
-///     \brief The QRegularExpressionValidator class is used to check a string
-///     against a regular expression.
 /// 
-///     \since 5.1
+/// QRegularExpressionValidator uses a regular expression (regexp) to
+/// determine whether an input string is [Acceptable,](Acceptable,)
+/// [Intermediate,](Intermediate,)
+/// or [Invalid.](Invalid.)
+/// The regexp can either be supplied
+/// when the QRegularExpressionValidator is constructed, or at a later time.
 /// 
-///     QRegularExpressionValidator uses a regular expression (regexp) to
-///     determine whether an input string is \l Acceptable, \l
-///     Intermediate, or \l Invalid. The regexp can either be supplied
-///     when the QRegularExpressionValidator is constructed, or at a later time.
+/// If the regexp partially matches against the string, the result is
+/// considered [Intermediate.](Intermediate.)
+/// For example, and are [Intermediate](Intermediate)
+/// for
+/// the regexp **[A-Z][0-9]** (whereas would be [Invalid).](Invalid).)
 /// 
-///     If the regexp partially matches against the string, the result is
-///     considered \l Intermediate. For example, "" and "A" are \l Intermediate for
-///     the regexp \b{[A-Z][0-9]} (whereas "_" would be \l Invalid).
+/// QRegularExpressionValidator automatically wraps the regular expression in
+/// the `\\A` and `\\z` anchors; in other words, it always attempts to do
+/// an exact match.
 /// 
-///     QRegularExpressionValidator automatically wraps the regular expression in
-///     the \c{\\A} and \c{\\z} anchors; in other words, it always attempts to do
-///     an exact match.
+/// Example of use:
 /// 
-///     Example of use:
-///     \snippet code/src_gui_util_qvalidator.cpp 5
+/// Below we present some examples of validators. In practice they would
+/// normally be associated with a widget as in the example above.
 /// 
-///     Below we present some examples of validators. In practice they would
-///     normally be associated with a widget as in the example above.
-/// 
-///     \snippet code/src_gui_util_qvalidator.cpp 6
-/// 
-///     \sa QRegularExpression, QIntValidator, QDoubleValidator, QRegExpValidator
+/// **See also:** QRegularExpression
+/// QIntValidator
+/// QDoubleValidator
+/// QRegExpValidator
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct RegularExpressionValidator : Validator {
-    ///     Returns \l Acceptable if \a input is matched by the regular expression for
-    ///     this validator, \l Intermediate if it has matched partially (i.e. could be
-    ///     a valid match if additional valid characters are added), and \l Invalid if
-    ///     \a input is not matched.
     /// 
-    ///     In case the \a input is not matched, the \a pos parameter is set to
-    ///     the length of the \a input parameter; otherwise, it is not modified.
+    /// Returns [Acceptable](Acceptable)
+    /// if *input* is matched by the regular expression for
+    /// this validator, [Intermediate](Intermediate)
+    /// if it has matched partially (i.e. could be
+    /// a valid match if additional valid characters are added), and [Invalid](Invalid)
+    /// if
+    /// *input* is not matched.
     /// 
-    ///     For example, if the regular expression is \b{\\w\\d\\d} (word-character,
-    ///     digit, digit) then "A57" is \l Acceptable, "E5" is \l Intermediate, and
-    ///     "+9" is \l Invalid.
+    /// In case the *input* is not matched, the *pos* parameter is set to
+    /// the length of the *input* parameter; otherwise, it is not modified.
     /// 
-    ///     \sa QRegularExpression::match()
+    /// For example, if the regular expression is **\\w\\d\\d** (word-character,
+    /// digit, digit) then is [Acceptable,](Acceptable,)
+    /// is [Intermediate,](Intermediate,)
+    /// and
+    /// is [Invalid.](Invalid.)
+    /// 
+    /// **See also:** QRegularExpression::match()
     [event] validate(input: String, pos: &i32) -> Validator::State,
-    ///     \property QRegularExpressionValidator::regularExpression
-    ///     \brief the regular expression used for validation
     /// 
-    ///     By default, this property contains a regular expression with an empty
-    ///     pattern (which therefore matches any string).
+    /// By default, this property contains a regular expression with an empty
+    /// pattern (which therefore matches any string).
     regular_expression() -> RegularExpression,
     set_regular_expression(re: &RegularExpressionType),
     [signal] regular_expression_changed(re: &RegularExpressionType),

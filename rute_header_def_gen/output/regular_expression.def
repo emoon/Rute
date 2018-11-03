@@ -1,502 +1,433 @@
-///     \class QRegularExpression
-///     \inmodule QtCore
-///     \reentrant
 /// 
-///     \brief The QRegularExpression class provides pattern matching using regular
-///     expressions.
+/// **Keyword**: regular expression
 /// 
-///     \since 5.0
+/// Regular expressions, or *regexps* , are a very powerful tool to handle
+/// strings and texts. This is useful in many contexts, e.g.,
 /// 
-///     \ingroup tools
-///     \ingroup shared
+/// * Validation
+/// * A regexp can test whether a substring meets some criteria, e.g. is an integer or contains no whitespace.
+/// * Searching
+/// * A regexp provides more powerful pattern matching than simple substring matching, e.g., match one of the words *mail* , *letter* or *correspondence* , but none of the words *email* , *mailman* , *mailer* , *letterbox* , etc.
+/// * Search and Replace
+/// * A regexp can replace all occurrences of a substring with a different substring, e.g., replace all occurrences of *&* with *\&amp;* except where the *&* is already followed by an *amp;* .
+/// * String Splitting
+/// * A regexp can be used to identify where a string should be split apart, e.g. splitting tab-delimited strings.
 /// 
-///     \keyword regular expression
+/// This document is by no means a complete reference to pattern matching using
+/// regular expressions, and the following parts will require the reader to
+/// have some basic knowledge about Perl-like regular expressions and their
+/// pattern syntax.
 /// 
-///     Regular expressions, or \e{regexps}, are a very powerful tool to handle
-///     strings and texts. This is useful in many contexts, e.g.,
+/// Good references about regular expressions include:
+/// 
+/// * *Mastering Regular Expressions* (Third Edition) by Jeffrey E. F. Friedl, ISBN 0-596-52812-4;
+/// * the [pcrepattern(3)](http://pcre.org/pcre.txt)
+/// man page, describing the pattern syntax supported by PCRE (the reference implementation of Perl-compatible regular expressions);
+/// * the [Perl's regular expression
+/// documentation](http://perldoc.perl.org/perlre.html)
+/// and the [Perl's
+/// regular expression tutorial](http://perldoc.perl.org/perlretut.html)
 /// 
-///     \table
-///     \row \li Validation
-///          \li A regexp can test whether a substring meets some criteria,
-///          e.g. is an integer or contains no whitespace.
-///     \row \li Searching
-///          \li A regexp provides more powerful pattern matching than
-///          simple substring matching, e.g., match one of the words
-///          \e{mail}, \e{letter} or \e{correspondence}, but none of the
-///          words \e{email}, \e{mailman}, \e{mailer}, \e{letterbox}, etc.
-///     \row \li Search and Replace
-///          \li A regexp can replace all occurrences of a substring with a
-///          different substring, e.g., replace all occurrences of \e{&}
-///          with \e{\&amp;} except where the \e{&} is already followed by
-///          an \e{amp;}.
-///     \row \li String Splitting
-///          \li A regexp can be used to identify where a string should be
-///          split apart, e.g. splitting tab-delimited strings.
-///     \endtable
 /// 
-///     This document is by no means a complete reference to pattern matching using
-///     regular expressions, and the following parts will require the reader to
-///     have some basic knowledge about Perl-like regular expressions and their
-///     pattern syntax.
+/// # Introduction
 /// 
-///     Good references about regular expressions include:
+/// QRegularExpression implements Perl-compatible regular expressions. It fully
+/// supports Unicode. For an overview of the regular expression syntax
+/// supported by QRegularExpression, please refer to the aforementioned
+/// pcrepattern(3) man page. A regular expression is made up of two things: a
+/// **pattern string** and a set of **pattern options** that change the
+/// meaning of the pattern string.
 /// 
-///     \list
-///     \li \e {Mastering Regular Expressions} (Third Edition) by Jeffrey E. F.
-///     Friedl, ISBN 0-596-52812-4;
-///     \li the \l{http://pcre.org/pcre.txt} {pcrepattern(3)} man page, describing
-///     the pattern syntax supported by PCRE (the reference implementation of
-///     Perl-compatible regular expressions);
-///     \li the \l{http://perldoc.perl.org/perlre.html} {Perl's regular expression
-///     documentation} and the \l{http://perldoc.perl.org/perlretut.html} {Perl's
-///     regular expression tutorial}.
-///     \endlist
+/// You can set the pattern string by passing a string to the QRegularExpression
+/// constructor:
+/// 
+/// This sets the pattern string to `a pattern` . You can also use the
+/// setPattern() function to set a pattern on an existing QRegularExpression
+/// object:
+/// 
+/// Note that due to C++ literal strings rules, you must escape all backslashes
+/// inside the pattern string with another backslash:
+/// 
+/// The pattern() function returns the pattern that is currently set for a
+/// QRegularExpression object:
+/// 
+/// # Pattern Options
+/// 
+/// The meaning of the pattern string can be modified by setting one or more
+/// *pattern options* . For instance, it is possible to set a pattern to match
+/// case insensitively by setting the QRegularExpression::CaseInsensitiveOption.
+/// 
+/// You can set the options by passing them to the QRegularExpression
+/// constructor, as in:
+/// 
+/// Alternatively, you can use the setPatternOptions() function on an existing
+/// QRegularExpressionObject:
+/// 
+/// It is possible to get the pattern options currently set on a
+/// QRegularExpression object by using the patternOptions() function:
+/// 
+/// Please refer to the QRegularExpression::PatternOption enum documentation for
+/// more information about each pattern option.
+/// 
+/// # Match Type and Match Options
+/// 
+/// The last two arguments of the match() and the globalMatch() functions set
+/// the match type and the match options. The match type is a value of the
+/// QRegularExpression::MatchType enum; the matching algorithm is
+/// chosen by using the NormalMatch match type (the default). It is also
+/// possible to enable partial matching of the regular expression against a
+/// subject string: see the [partial matching](partial%20matching)
+/// section for more details.
+/// 
+/// The match options are a set of one or more QRegularExpression::MatchOption
+/// values. They change the way a specific match of a regular expression
+/// against a subject string is done. Please refer to the
+/// QRegularExpression::MatchOption enum documentation for more details.
+/// 
+/// # Normal Matching
+/// 
+/// In order to perform a match you can simply invoke the match() function
+/// passing a string to match against. We refer to this string as the
+/// *subject string* . The result of the match() function is a
+/// QRegularExpressionMatch object that can be used to inspect the results of
+/// the match. For instance:
+/// 
+/// If a match is successful, the (implicit) capturing group number 0 can be
+/// used to retrieve the substring matched by the entire pattern (see also the
+/// section about [extracting captured substrings](extracting%20captured%20substrings)
+/// ):
 /// 
-///     \tableofcontents
+/// It's also possible to start a match at an arbitrary offset inside the
+/// subject string by passing the offset as an argument of the
+/// match() function. In the following example `"12 abc"`
+/// is not matched because the match is started at offset 1:
+/// 
+/// ## Extracting captured substrings
+/// 
+/// The QRegularExpressionMatch object contains also information about the
+/// substrings captured by the capturing groups in the pattern string. The
+/// [captured()](QRegularExpressionMatch::)
+/// function will return the string
+/// captured by the n-th capturing group:
+/// 
+/// Capturing groups in the pattern are numbered starting from 1, and the
+/// implicit capturing group 0 is used to capture the substring that matched
+/// the entire pattern.
+/// 
+/// It's also possible to retrieve the starting and the ending offsets (inside
+/// the subject string) of each captured substring, by using the
+/// [capturedStart()](QRegularExpressionMatch::)
+/// and the
+/// [capturedEnd()](QRegularExpressionMatch::)
+/// functions:
+/// 
+/// All of these functions have an overload taking a QString as a parameter
+/// in order to extract *named* captured substrings. For instance:
+/// 
+/// # Global Matching
+/// 
+/// *Global matching* is useful to find all the occurrences of a given
+/// regular expression inside a subject string. Suppose that we want to extract
+/// all the words from a given string, where a word is a substring matching
+/// the pattern `\w+` .
+/// 
+/// QRegularExpression::globalMatch returns a QRegularExpressionMatchIterator,
+/// which is a Java-like forward iterator that can be used to iterate over the
+/// results. For instance:
+/// 
+/// Since it's a Java-like iterator, the QRegularExpressionMatchIterator will
+/// point immediately before the first result. Every result is returned as a
+/// QRegularExpressionMatch object. The
+/// [hasNext()](QRegularExpressionMatchIterator::)
+/// function will return true
+/// if there's at least one more result, and
+/// [next()](QRegularExpressionMatchIterator::)
+/// will return the next result
+/// and advance the iterator. Continuing from the previous example:
+/// 
+/// You can also use [peekNext()](QRegularExpressionMatchIterator::)
+/// to get
+/// the next result without advancing the iterator.
+/// 
+/// It is possible to pass a starting offset and one or more match options to
+/// the globalMatch() function, exactly like normal matching with match().
+/// 
+/// # Partial Matching
+/// 
+/// A *partial match* is obtained when the end of the subject string is
+/// reached, but more characters are needed to successfully complete the match.
+/// Note that a partial match is usually much more inefficient than a normal
+/// match because many optimizations of the matching algorithm cannot be
+/// employed.
+/// 
+/// A partial match must be explicitly requested by specifying a match type of
+/// PartialPreferCompleteMatch or PartialPreferFirstMatch when calling
+/// QRegularExpression::match or QRegularExpression::globalMatch. If a partial
+/// match is found, then calling the [hasMatch()](QRegularExpressionMatch::)
+/// 
+/// function on the QRegularExpressionMatch object returned by match() will
+/// return `false` , but [hasPartialMatch()](QRegularExpressionMatch::)
+/// will return
+/// `true` .
+/// 
+/// When a partial match is found, no captured substrings are returned, and the
+/// (implicit) capturing group 0 corresponding to the whole match captures the
+/// partially matched substring of the subject string.
+/// 
+/// Note that asking for a partial match can still lead to a complete match, if
+/// one is found; in this case, [hasMatch()](QRegularExpressionMatch::)
+/// will
+/// return `true` and [hasPartialMatch()](QRegularExpressionMatch::)
+/// 
+/// `false` . It never happens that a QRegularExpressionMatch reports both a
+/// partial and a complete match.
+/// 
+/// Partial matching is mainly useful in two scenarios: validating user input
+/// in real time and incremental/multi-segment matching.
+/// 
+/// ## Validating user input
+/// 
+/// Suppose that we would like the user to input a date in a specific
+/// format, for instance . We can check the input validity with
+/// a pattern like:
+/// 
+/// `^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d\d?, \d\d\d\d$`
+/// 
+/// (This pattern doesn't catch invalid days, but let's keep it for the
+/// example's purposes).
+/// 
+/// We would like to validate the input with this regular expression *while*
+/// the user is typing it, so that we can report an error in the input as soon
+/// as it is committed (for instance, the user typed the wrong key). In order
+/// to do so we must distinguish three cases:
+/// 
+/// * the input cannot possibly match the regular expression;
+/// * the input does match the regular expression;
+/// * the input does not match the regular expression right now, but it will if more characters will be added to it.
+/// 
+/// Note that these three cases represent exactly the possible states of a
+/// QValidator (see the QValidator::State enum).
+/// 
+/// In particular, in the last case we want the regular expression engine to
+/// report a partial match: we are successfully matching the pattern against
+/// the subject string but the matching cannot continue because the end of the
+/// subject is encountered. Notice, however, that the matching algorithm should
+/// continue and try all possibilities, and in case a complete (non-partial)
+/// match is found, then this one should be reported, and the input string
+/// accepted as fully valid.
+/// 
+/// This behaviour is implemented by the PartialPreferCompleteMatch match type.
+/// For instance:
+/// 
+/// If matching the same regular expression against the subject string leads to
+/// a complete match, it is reported as usual:
+/// 
+/// Another example with a different pattern, showing the behaviour of
+/// preferring a complete match over a partial one:
+/// 
+/// In this case, the subpattern `abc\\w+X` partially matches the subject
+/// string; however, the subpattern `def` matches the subject string
+/// completely, and therefore a complete match is reported.
+/// 
+/// If multiple partial matches are found when matching (but no complete
+/// match), then the QRegularExpressionMatch object will report the first one
+/// that is found. For instance:
+/// 
+/// ## Incremental/multi-segment matching
+/// 
+/// Incremental matching is another use case of partial matching. Suppose that
+/// we want to find the occurrences of a regular expression inside a large text
+/// (that is, substrings matching the regular expression). In order to do so we
+/// would like to the large text to the regular expression engines in
+/// smaller chunks. The obvious problem is what happens if the substring that
+/// matches the regular expression spans across two or more chunks.
+/// 
+/// In this case, the regular expression engine should report a partial match,
+/// so that we can match again adding new data and (eventually) get a complete
+/// match. This implies that the regular expression engine may assume that
+/// there are other characters *beyond the end* of the subject string. This
+/// is not to be taken literally -- the engine will never try to access
+/// any character after the last one in the subject.
+/// 
+/// QRegularExpression implements this behaviour when using the
+/// PartialPreferFirstMatch match type. This match type reports a partial match
+/// as soon as it is found, and other match alternatives are not tried
+/// (even if they could lead to a complete match). For instance:
+/// 
+/// This happens because when matching the first branch of the alternation
+/// operator a partial match is found, and therefore matching stops, without
+/// trying the second branch. Another example:
+/// 
+/// This shows what could seem a counterintuitve behaviour of quantifiers:
+/// since `?` is greedy, then the engine tries first to continue the match
+/// after having matched `"abc"` ; but then the matching reaches the end of the
+/// subject string, and therefore a partial match is reported. This is
+/// even more surprising in the following example:
+/// 
+/// It's easy to understand this behaviour if we remember that the engine
+/// expects the subject string to be only a substring of the whole text we're
+/// looking for a match into (that is, how we said before, that the engine
+/// assumes that there are other characters beyond the end of the subject
+/// string).
+/// 
+/// Since the `*` quantifier is greedy, then reporting a complete match could
+/// be an error, because after the current subject `"abc"` there may be other
+/// occurrences of `"abc"` . For instance, the complete text could have been
+/// , and therefore the *right* match to report (in the complete
+/// text) would have been `"abcabc"` ; by matching only against the leading
+/// `"abc"` we instead get a partial match.
+/// 
+/// # Error Handling
+/// 
+/// It is possible for a QRegularExpression object to be invalid because of
+/// syntax errors in the pattern string. The isValid() function will return
+/// true if the regular expression is valid, or false otherwise:
+/// 
+/// You can get more information about the specific error by calling the
+/// errorString() function; moreover, the patternErrorOffset() function
+/// will return the offset inside the pattern string
+/// 
+/// If a match is attempted with an invalid QRegularExpression, then the
+/// returned QRegularExpressionMatch object will be invalid as well (that is,
+/// its [isValid()](QRegularExpressionMatch::)
+/// function will return false).
+/// The same applies for attempting a global match.
+/// 
+/// # Unsupported Perl-compatible Regular Expressions Features
 /// 
-///     \section1 Introduction
+/// QRegularExpression does not support all the features available in
+/// Perl-compatible regular expressions. The most notable one is the fact that
+/// duplicated names for capturing groups are not supported, and using them can
+/// lead to undefined behaviour.
+/// 
+/// This may change in a future version of Qt.
+/// 
+/// # Notes for QRegExp Users
+/// 
+/// The QRegularExpression class introduced in Qt 5 is a big improvement upon
+/// QRegExp, in terms of APIs offered, supported pattern syntax and speed of
+/// execution. The biggest difference is that QRegularExpression simply holds a
+/// regular expression, and it's *not* modified when a match is requested.
+/// Instead, a QRegularExpressionMatch object is returned, in order to check
+/// the result of a match and extract the captured substring. The same applies
+/// with global matching and QRegularExpressionMatchIterator.
+/// 
+/// Other differences are outlined below.
 /// 
-///     QRegularExpression implements Perl-compatible regular expressions. It fully
-///     supports Unicode. For an overview of the regular expression syntax
-///     supported by QRegularExpression, please refer to the aforementioned
-///     pcrepattern(3) man page. A regular expression is made up of two things: a
-///     \b{pattern string} and a set of \b{pattern options} that change the
-///     meaning of the pattern string.
-/// 
-///     You can set the pattern string by passing a string to the QRegularExpression
-///     constructor:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 0
-/// 
-///     This sets the pattern string to \c{a pattern}. You can also use the
-///     setPattern() function to set a pattern on an existing QRegularExpression
-///     object:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 1
-/// 
-///     Note that due to C++ literal strings rules, you must escape all backslashes
-///     inside the pattern string with another backslash:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 2
-/// 
-///     The pattern() function returns the pattern that is currently set for a
-///     QRegularExpression object:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 3
-/// 
-///     \section1 Pattern Options
-/// 
-///     The meaning of the pattern string can be modified by setting one or more
-///     \e{pattern options}. For instance, it is possible to set a pattern to match
-///     case insensitively by setting the QRegularExpression::CaseInsensitiveOption.
-/// 
-///     You can set the options by passing them to the QRegularExpression
-///     constructor, as in:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 4
-/// 
-///     Alternatively, you can use the setPatternOptions() function on an existing
-///     QRegularExpressionObject:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 5
-/// 
-///     It is possible to get the pattern options currently set on a
-///     QRegularExpression object by using the patternOptions() function:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 6
-/// 
-///     Please refer to the QRegularExpression::PatternOption enum documentation for
-///     more information about each pattern option.
-/// 
-///     \section1 Match Type and Match Options
-/// 
-///     The last two arguments of the match() and the globalMatch() functions set
-///     the match type and the match options. The match type is a value of the
-///     QRegularExpression::MatchType enum; the "traditional" matching algorithm is
-///     chosen by using the NormalMatch match type (the default). It is also
-///     possible to enable partial matching of the regular expression against a
-///     subject string: see the \l{partial matching} section for more details.
-/// 
-///     The match options are a set of one or more QRegularExpression::MatchOption
-///     values. They change the way a specific match of a regular expression
-///     against a subject string is done. Please refer to the
-///     QRegularExpression::MatchOption enum documentation for more details.
-/// 
-///     \target normal matching
-///     \section1 Normal Matching
-/// 
-///     In order to perform a match you can simply invoke the match() function
-///     passing a string to match against. We refer to this string as the
-///     \e{subject string}. The result of the match() function is a
-///     QRegularExpressionMatch object that can be used to inspect the results of
-///     the match. For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 7
-/// 
-///     If a match is successful, the (implicit) capturing group number 0 can be
-///     used to retrieve the substring matched by the entire pattern (see also the
-///     section about \l{extracting captured substrings}):
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 8
-/// 
-///     It's also possible to start a match at an arbitrary offset inside the
-///     subject string by passing the offset as an argument of the
-///     match() function. In the following example \c{"12 abc"}
-///     is not matched because the match is started at offset 1:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 9
-/// 
-///     \target extracting captured substrings
-///     \section2 Extracting captured substrings
-/// 
-///     The QRegularExpressionMatch object contains also information about the
-///     substrings captured by the capturing groups in the pattern string. The
-///     \l{QRegularExpressionMatch::}{captured()} function will return the string
-///     captured by the n-th capturing group:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 10
-/// 
-///     Capturing groups in the pattern are numbered starting from 1, and the
-///     implicit capturing group 0 is used to capture the substring that matched
-///     the entire pattern.
-/// 
-///     It's also possible to retrieve the starting and the ending offsets (inside
-///     the subject string) of each captured substring, by using the
-///     \l{QRegularExpressionMatch::}{capturedStart()} and the
-///     \l{QRegularExpressionMatch::}{capturedEnd()} functions:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 11
-/// 
-///     All of these functions have an overload taking a QString as a parameter
-///     in order to extract \e{named} captured substrings. For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 12
-/// 
-///     \target global matching
-///     \section1 Global Matching
-/// 
-///     \e{Global matching} is useful to find all the occurrences of a given
-///     regular expression inside a subject string. Suppose that we want to extract
-///     all the words from a given string, where a word is a substring matching
-///     the pattern \c{\w+}.
-/// 
-///     QRegularExpression::globalMatch returns a QRegularExpressionMatchIterator,
-///     which is a Java-like forward iterator that can be used to iterate over the
-///     results. For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 13
-/// 
-///     Since it's a Java-like iterator, the QRegularExpressionMatchIterator will
-///     point immediately before the first result. Every result is returned as a
-///     QRegularExpressionMatch object. The
-///     \l{QRegularExpressionMatchIterator::}{hasNext()} function will return true
-///     if there's at least one more result, and
-///     \l{QRegularExpressionMatchIterator::}{next()} will return the next result
-///     and advance the iterator. Continuing from the previous example:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 14
-/// 
-///     You can also use \l{QRegularExpressionMatchIterator::}{peekNext()} to get
-///     the next result without advancing the iterator.
-/// 
-///     It is possible to pass a starting offset and one or more match options to
-///     the globalMatch() function, exactly like normal matching with match().
-/// 
-///     \target partial matching
-///     \section1 Partial Matching
-/// 
-///     A \e{partial match} is obtained when the end of the subject string is
-///     reached, but more characters are needed to successfully complete the match.
-///     Note that a partial match is usually much more inefficient than a normal
-///     match because many optimizations of the matching algorithm cannot be
-///     employed.
-/// 
-///     A partial match must be explicitly requested by specifying a match type of
-///     PartialPreferCompleteMatch or PartialPreferFirstMatch when calling
-///     QRegularExpression::match or QRegularExpression::globalMatch. If a partial
-///     match is found, then calling the \l{QRegularExpressionMatch::}{hasMatch()}
-///     function on the QRegularExpressionMatch object returned by match() will
-///     return \c{false}, but \l{QRegularExpressionMatch::}{hasPartialMatch()} will return
-///     \c{true}.
-/// 
-///     When a partial match is found, no captured substrings are returned, and the
-///     (implicit) capturing group 0 corresponding to the whole match captures the
-///     partially matched substring of the subject string.
-/// 
-///     Note that asking for a partial match can still lead to a complete match, if
-///     one is found; in this case, \l{QRegularExpressionMatch::}{hasMatch()} will
-///     return \c{true} and \l{QRegularExpressionMatch::}{hasPartialMatch()}
-///     \c{false}. It never happens that a QRegularExpressionMatch reports both a
-///     partial and a complete match.
-/// 
-///     Partial matching is mainly useful in two scenarios: validating user input
-///     in real time and incremental/multi-segment matching.
-/// 
-///     \target validating user input
-///     \section2 Validating user input
-/// 
-///     Suppose that we would like the user to input a date in a specific
-///     format, for instance "MMM dd, yyyy". We can check the input validity with
-///     a pattern like:
-/// 
-///     \c{^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d\d?, \d\d\d\d$}
-/// 
-///     (This pattern doesn't catch invalid days, but let's keep it for the
-///     example's purposes).
-/// 
-///     We would like to validate the input with this regular expression \e{while}
-///     the user is typing it, so that we can report an error in the input as soon
-///     as it is committed (for instance, the user typed the wrong key). In order
-///     to do so we must distinguish three cases:
-/// 
-///     \list
-///     \li the input cannot possibly match the regular expression;
-///     \li the input does match the regular expression;
-///     \li the input does not match the regular expression right now,
-///     but it will if more characters will be added to it.
-///     \endlist
-/// 
-///     Note that these three cases represent exactly the possible states of a
-///     QValidator (see the QValidator::State enum).
-/// 
-///     In particular, in the last case we want the regular expression engine to
-///     report a partial match: we are successfully matching the pattern against
-///     the subject string but the matching cannot continue because the end of the
-///     subject is encountered. Notice, however, that the matching algorithm should
-///     continue and try all possibilities, and in case a complete (non-partial)
-///     match is found, then this one should be reported, and the input string
-///     accepted as fully valid.
-/// 
-///     This behaviour is implemented by the PartialPreferCompleteMatch match type.
-///     For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 15
-/// 
-///     If matching the same regular expression against the subject string leads to
-///     a complete match, it is reported as usual:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 16
-/// 
-///     Another example with a different pattern, showing the behaviour of
-///     preferring a complete match over a partial one:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 17
-/// 
-///     In this case, the subpattern \c{abc\\w+X} partially matches the subject
-///     string; however, the subpattern \c{def} matches the subject string
-///     completely, and therefore a complete match is reported.
-/// 
-///     If multiple partial matches are found when matching (but no complete
-///     match), then the QRegularExpressionMatch object will report the first one
-///     that is found. For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 18
-/// 
-///     \section2 Incremental/multi-segment matching
-/// 
-///     Incremental matching is another use case of partial matching. Suppose that
-///     we want to find the occurrences of a regular expression inside a large text
-///     (that is, substrings matching the regular expression). In order to do so we
-///     would like to "feed" the large text to the regular expression engines in
-///     smaller chunks. The obvious problem is what happens if the substring that
-///     matches the regular expression spans across two or more chunks.
-/// 
-///     In this case, the regular expression engine should report a partial match,
-///     so that we can match again adding new data and (eventually) get a complete
-///     match. This implies that the regular expression engine may assume that
-///     there are other characters \e{beyond the end} of the subject string. This
-///     is not to be taken literally -- the engine will never try to access
-///     any character after the last one in the subject.
-/// 
-///     QRegularExpression implements this behaviour when using the
-///     PartialPreferFirstMatch match type. This match type reports a partial match
-///     as soon as it is found, and other match alternatives are not tried
-///     (even if they could lead to a complete match). For instance:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 19
-/// 
-///     This happens because when matching the first branch of the alternation
-///     operator a partial match is found, and therefore matching stops, without
-///     trying the second branch. Another example:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 20
-/// 
-///     This shows what could seem a counterintuitve behaviour of quantifiers:
-///     since \c{?} is greedy, then the engine tries first to continue the match
-///     after having matched \c{"abc"}; but then the matching reaches the end of the
-///     subject string, and therefore a partial match is reported. This is
-///     even more surprising in the following example:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 21
-/// 
-///     It's easy to understand this behaviour if we remember that the engine
-///     expects the subject string to be only a substring of the whole text we're
-///     looking for a match into (that is, how we said before, that the engine
-///     assumes that there are other characters beyond the end of the subject
-///     string).
-/// 
-///     Since the \c{*} quantifier is greedy, then reporting a complete match could
-///     be an error, because after the current subject \c{"abc"} there may be other
-///     occurrences of \c{"abc"}. For instance, the complete text could have been
-///     "abcabcX", and therefore the \e{right} match to report (in the complete
-///     text) would have been \c{"abcabc"}; by matching only against the leading
-///     \c{"abc"} we instead get a partial match.
-/// 
-///     \section1 Error Handling
-/// 
-///     It is possible for a QRegularExpression object to be invalid because of
-///     syntax errors in the pattern string. The isValid() function will return
-///     true if the regular expression is valid, or false otherwise:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 22
-/// 
-///     You can get more information about the specific error by calling the
-///     errorString() function; moreover, the patternErrorOffset() function
-///     will return the offset inside the pattern string
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 23
-/// 
-///     If a match is attempted with an invalid QRegularExpression, then the
-///     returned QRegularExpressionMatch object will be invalid as well (that is,
-///     its \l{QRegularExpressionMatch::}{isValid()} function will return false).
-///     The same applies for attempting a global match.
-/// 
-///     \section1 Unsupported Perl-compatible Regular Expressions Features
-/// 
-///     QRegularExpression does not support all the features available in
-///     Perl-compatible regular expressions. The most notable one is the fact that
-///     duplicated names for capturing groups are not supported, and using them can
-///     lead to undefined behaviour.
-/// 
-///     This may change in a future version of Qt.
-/// 
-///     \section1 Notes for QRegExp Users
-/// 
-///     The QRegularExpression class introduced in Qt 5 is a big improvement upon
-///     QRegExp, in terms of APIs offered, supported pattern syntax and speed of
-///     execution. The biggest difference is that QRegularExpression simply holds a
-///     regular expression, and it's \e{not} modified when a match is requested.
-///     Instead, a QRegularExpressionMatch object is returned, in order to check
-///     the result of a match and extract the captured substring. The same applies
-///     with global matching and QRegularExpressionMatchIterator.
-/// 
-///     Other differences are outlined below.
-/// 
-///     \section2 Porting from QRegExp::exactMatch()
-/// 
-///     QRegExp::exactMatch() in Qt 4 served two purposes: it exactly matched
-///     a regular expression against a subject string, and it implemented partial
-///     matching.
-/// 
-///     \section3 Porting from QRegExp's Exact Matching
-/// 
-///     Exact matching indicates whether the regular expression matches the entire
-///     subject string. For example, the classes yield on the subject string \c{"abc123"}:
-/// 
-///     \table
-///     \header \li                  \li QRegExp::exactMatch() \li QRegularExpressionMatch::hasMatch()
-///     \row    \li \c{"\\d+"}       \li \b false              \li \b true
-///     \row    \li \c{"[a-z]+\\d+"} \li \b true               \li \b true
-///     \endtable
-/// 
-///     Exact matching is not reflected in QRegularExpression. If you want to be
-///     sure that the subject string matches the regular expression exactly, you can wrap the
-///     pattern between a couple of anchoring expressions. Simply
-///     putting the pattern between the \c{^} and the \c{$} anchors is enough
-///     in most cases:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 24
-/// 
-///     However, remember that the \c{$} anchor not only matches at the end of the
-///     string, but also at a newline character right before the end of the string;
-///     that is, the previous pattern matches against the string "this pattern must
-///     match exactly\\n". Also, the behaviour of both the \c{^} and the \c{$}
-///     anchors changes if the MultiLineOption is set either explicitly (as a
-///     pattern option) or implicitly (as a directive inside the pattern string).
-/// 
-///     Therefore, in the most general case, you should wrap the pattern between
-///     the \c{\A} and the \c{\z} anchors:
-/// 
-///     \snippet code/src_corelib_tools_qregularexpression.cpp 25
-/// 
-///     Note the usage of the non-capturing group in order to preserve the meaning
-///     of the branch operator inside the pattern.
-/// 
-///     \section3 Porting from QRegExp's Partial Matching
-/// 
-///     When using QRegExp::exactMatch(), if an exact match was not found, one
-///     could still find out how much of the subject string was matched by the
-///     regular expression by calling QRegExp::matchedLength(). If the returned length
-///     was equal to the subject string's length, then one could conclude that a partial
-///     match was found.
-/// 
-///     QRegularExpression supports partial matching explicitly by means of the
-///     appropriate MatchType.
-/// 
-///     \section2 Global matching
-/// 
-///     Due to limitations of the QRegExp API it was impossible to implement global
-///     matching correctly (that is, like Perl does). In particular, patterns that
-///     can match 0 characters (like \c{"a*"}) are problematic.
-/// 
-///     QRegularExpression::globalMatch() implements Perl global match correctly, and
-///     the returned iterator can be used to examine each result.
-/// 
-///     \section2 Unicode properties support
-/// 
-///     When using QRegExp, character classes such as \c{\w}, \c{\d}, etc. match
-///     characters with the corresponding Unicode property: for instance, \c{\d}
-///     matches any character with the Unicode Nd (decimal digit) property.
-/// 
-///     Those character classes only match ASCII characters by default when using
-///     QRegularExpression: for instance, \c{\d} matches exactly a character in the
-///     \c{0-9} ASCII range. It is possible to change this behaviour by using the
-///     UseUnicodePropertiesOption pattern option.
-/// 
-///     \section2 Wildcard matching
-/// 
-///     There is no equivalent of wildcard matching in QRegularExpression.
-///     Nevertheless, rewriting a regular expression in wildcard syntax to a
-///     Perl-compatible regular expression is a very easy task, given the fact
-///     that wildcard syntax supported by QRegExp is very simple.
-/// 
-///     \section2 Other pattern syntaxes
-/// 
-///     QRegularExpression supports only Perl-compatible regular expressions.
-/// 
-///     \section2 Minimal matching
-/// 
-///     QRegExp::setMinimal() implemented minimal matching by simply reversing the
-///     greediness of the quantifiers (QRegExp did not support lazy quantifiers,
-///     like \c{*?}, \c{+?}, etc.). QRegularExpression instead does support greedy,
-///     lazy and possessive quantifiers. The InvertedGreedinessOption
-///     pattern option can be useful to emulate the effects of QRegExp::setMinimal():
-///     if enabled, it inverts the greediness of quantifiers (greedy ones become
-///     lazy and vice versa).
-/// 
-///     \section2 Caret modes
-/// 
-///     The AnchoredMatchOption match option can be used to emulate the
-///     QRegExp::CaretAtOffset behaviour. There is no equivalent for the other
-///     QRegExp::CaretMode modes.
-/// 
-///     \section1 Debugging Code that Uses QRegularExpression
-/// 
-///     QRegularExpression internally uses a just in time compiler (JIT) to
-///     optimize the execution of the matching algorithm. The JIT makes extensive
-///     usage of self-modifying code, which can lead debugging tools such as
-///     Valgrind to crash. You must enable all checks for self-modifying code if
-///     you want to debug programs using QRegularExpression (f.i., see Valgrind's
-///     \c{--smc-check} command line option). The downside of enabling such checks
-///     is that your program will run considerably slower.
-/// 
-///     To avoid that, the JIT is disabled by default if you compile Qt in debug
-///     mode. It is possible to override the default and enable or disable the JIT
-///     usage (both in debug or release mode) by setting the
-///     \c{QT_ENABLE_REGEXP_JIT} environment variable to a non-zero or zero value
-///     respectively.
-/// 
-///     \sa QRegularExpressionMatch, QRegularExpressionMatchIterator
+/// ## Porting from QRegExp::exactMatch()
+/// 
+/// QRegExp::exactMatch() in Qt 4 served two purposes: it exactly matched
+/// a regular expression against a subject string, and it implemented partial
+/// matching.
+/// 
+/// ### Porting from QRegExp's Exact Matching
+/// 
+/// Exact matching indicates whether the regular expression matches the entire
+/// subject string. For example, the classes yield on the subject string `"abc123"` :
+/// 
+/// 
+/// * QRegExp::exactMatch()
+/// * QRegularExpressionMatch::hasMatch()
+/// * `"\\d+"`
+/// * **false**
+/// * **true**
+/// * `"[a-z]+\\d+"`
+/// * **true**
+/// 
+/// Exact matching is not reflected in QRegularExpression. If you want to be
+/// sure that the subject string matches the regular expression exactly, you can wrap the
+/// pattern between a couple of anchoring expressions. Simply
+/// putting the pattern between the `^` and the `$` anchors is enough
+/// in most cases:
+/// 
+/// However, remember that the `$` anchor not only matches at the end of the
+/// string, but also at a newline character right before the end of the string;
+/// that is, the previous pattern matches against the string . Also, the behaviour of both the `^` and the `$`
+/// anchors changes if the MultiLineOption is set either explicitly (as a
+/// pattern option) or implicitly (as a directive inside the pattern string).
+/// 
+/// Therefore, in the most general case, you should wrap the pattern between
+/// the `\A` and the `\z` anchors:
+/// 
+/// Note the usage of the non-capturing group in order to preserve the meaning
+/// of the branch operator inside the pattern.
+/// 
+/// ### Porting from QRegExp's Partial Matching
+/// 
+/// When using QRegExp::exactMatch(), if an exact match was not found, one
+/// could still find out how much of the subject string was matched by the
+/// regular expression by calling QRegExp::matchedLength(). If the returned length
+/// was equal to the subject string's length, then one could conclude that a partial
+/// match was found.
+/// 
+/// QRegularExpression supports partial matching explicitly by means of the
+/// appropriate MatchType.
+/// 
+/// ## Global matching
+/// 
+/// Due to limitations of the QRegExp API it was impossible to implement global
+/// matching correctly (that is, like Perl does). In particular, patterns that
+/// can match 0 characters (like `"a*"` ) are problematic.
+/// 
+/// QRegularExpression::globalMatch() implements Perl global match correctly, and
+/// the returned iterator can be used to examine each result.
+/// 
+/// ## Unicode properties support
+/// 
+/// When using QRegExp, character classes such as `\w` , `\d` , etc. match
+/// characters with the corresponding Unicode property: for instance, `\d`
+/// matches any character with the Unicode Nd (decimal digit) property.
+/// 
+/// Those character classes only match ASCII characters by default when using
+/// QRegularExpression: for instance, `\d` matches exactly a character in the
+/// `0-9` ASCII range. It is possible to change this behaviour by using the
+/// UseUnicodePropertiesOption pattern option.
+/// 
+/// ## Wildcard matching
+/// 
+/// There is no equivalent of wildcard matching in QRegularExpression.
+/// Nevertheless, rewriting a regular expression in wildcard syntax to a
+/// Perl-compatible regular expression is a very easy task, given the fact
+/// that wildcard syntax supported by QRegExp is very simple.
+/// 
+/// ## Other pattern syntaxes
+/// 
+/// QRegularExpression supports only Perl-compatible regular expressions.
+/// 
+/// ## Minimal matching
+/// 
+/// QRegExp::setMinimal() implemented minimal matching by simply reversing the
+/// greediness of the quantifiers (QRegExp did not support lazy quantifiers,
+/// like `*?` , `+?` , etc.). QRegularExpression instead does support greedy,
+/// lazy and possessive quantifiers. The InvertedGreedinessOption
+/// pattern option can be useful to emulate the effects of QRegExp::setMinimal():
+/// if enabled, it inverts the greediness of quantifiers (greedy ones become
+/// lazy and vice versa).
+/// 
+/// ## Caret modes
+/// 
+/// The AnchoredMatchOption match option can be used to emulate the
+/// QRegExp::CaretAtOffset behaviour. There is no equivalent for the other
+/// QRegExp::CaretMode modes.
+/// 
+/// # Debugging Code that Uses QRegularExpression
+/// 
+/// QRegularExpression internally uses a just in time compiler (JIT) to
+/// optimize the execution of the matching algorithm. The JIT makes extensive
+/// usage of self-modifying code, which can lead debugging tools such as
+/// Valgrind to crash. You must enable all checks for self-modifying code if
+/// you want to debug programs using QRegularExpression (f.i., see Valgrind's
+/// `--smc-check` command line option). The downside of enabling such checks
+/// is that your program will run considerably slower.
+/// 
+/// To avoid that, the JIT is disabled by default if you compile Qt in debug
+/// mode. It is possible to override the default and enable or disable the JIT
+/// usage (both in debug or release mode) by setting the
+/// `QT_ENABLE_REGEXP_JIT` environment variable to a non-zero or zero value
+/// respectively.
+/// 
+/// **See also:** QRegularExpressionMatch
+/// QRegularExpressionMatchIterator
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -531,104 +462,221 @@ enum MatchOption {
 
 
 struct RegularExpression {
-    ///     Returns the pattern options for the regular expression.
     /// 
-    ///     \sa setPatternOptions(), pattern()
+    /// Returns the pattern options for the regular expression.
+    /// 
+    /// **See also:** setPatternOptions()
+    /// pattern()
     pattern_options() -> RegularExpression::PatternOptions,
-    ///     Sets the given \a options as the pattern options of the regular expression.
-    ///     The pattern string is left unchanged.
     /// 
-    ///     \sa patternOptions(), setPattern()
+    /// Sets the given *options* as the pattern options of the regular expression.
+    /// The pattern string is left unchanged.
+    /// 
+    /// **See also:** patternOptions()
+    /// setPattern()
     set_pattern_options(options: RegularExpression::PatternOptions),
+    /// 
+    /// Swaps the regular expression *other* with this regular expression. This
+    /// operation is very fast and never fails.
     swap(other: &RegularExpressionType),
-    ///     Returns the pattern string of the regular expression.
     /// 
-    ///     \sa setPattern(), patternOptions()
+    /// Returns the pattern string of the regular expression.
+    /// 
+    /// **See also:** setPattern()
+    /// patternOptions()
+    /// 
+    /// Returns the pattern options for the regular expression.
+    /// 
+    /// **See also:** setPatternOptions()
+    /// pattern()
+    /// 
+    /// Returns the offset, inside the pattern string, at which an error was found
+    /// when checking the validity of the regular expression. If no error was
+    /// found, then -1 is returned.
+    /// 
+    /// **See also:** pattern()
+    /// isValid()
+    /// errorString()
     pattern() -> String,
-    ///     Sets the pattern string of the regular expression to \a pattern. The
-    ///     pattern options are left unchanged.
     /// 
-    ///     \sa pattern(), setPatternOptions()
+    /// Sets the pattern string of the regular expression to *pattern.* The
+    /// pattern options are left unchanged.
+    /// 
+    /// **See also:** pattern()
+    /// setPatternOptions()
+    /// 
+    /// Sets the given *options* as the pattern options of the regular expression.
+    /// The pattern string is left unchanged.
+    /// 
+    /// **See also:** patternOptions()
+    /// setPattern()
     set_pattern(pattern: String),
-    ///     Returns \c true if the regular expression is a valid regular expression (that
-    ///     is, it contains no syntax errors, etc.), or false otherwise. Use
-    ///     errorString() to obtain a textual description of the error.
     /// 
-    ///     \sa errorString(), patternErrorOffset()
+    /// Returns `true` if the regular expression is a valid regular expression (that
+    /// is, it contains no syntax errors, etc.), or false otherwise. Use
+    /// errorString() to obtain a textual description of the error.
+    /// 
+    /// **See also:** errorString()
+    /// patternErrorOffset()
     is_valid() -> bool,
-    ///     Returns the offset, inside the pattern string, at which an error was found
-    ///     when checking the validity of the regular expression. If no error was
-    ///     found, then -1 is returned.
     /// 
-    ///     \sa pattern(), isValid(), errorString()
+    /// Returns the offset, inside the pattern string, at which an error was found
+    /// when checking the validity of the regular expression. If no error was
+    /// found, then -1 is returned.
+    /// 
+    /// **See also:** pattern()
+    /// isValid()
+    /// errorString()
     pattern_error_offset() -> i32,
-    ///     Returns the number of capturing groups inside the pattern string,
-    ///     or -1 if the regular expression is not valid.
     /// 
-    ///     \note The implicit capturing group 0 is \e{not} included in the returned number.
+    /// Returns the number of capturing groups inside the pattern string,
+    /// or -1 if the regular expression is not valid.
     /// 
-    ///     \sa isValid()
+    /// **Note**: The implicit capturing group 0 is *not* included in the returned number.
+    /// 
+    /// **See also:** isValid()
     capture_count() -> i32,
-    ///     \since 5.1
     /// 
-    ///     Returns a list of captureCount() + 1 elements, containing the names of the
-    ///     named capturing groups in the pattern string. The list is sorted such that
-    ///     the element of the list at position \c{i} is the name of the \c{i}-th
-    ///     capturing group, if it has a name, or an empty string if that capturing
-    ///     group is unnamed.
+    /// Returns a list of captureCount() + 1 elements, containing the names of the
+    /// named capturing groups in the pattern string. The list is sorted such that
+    /// the element of the list at position `i` is the name of the `i` -th
+    /// capturing group, if it has a name, or an empty string if that capturing
+    /// group is unnamed.
     /// 
-    ///     For instance, given the regular expression
+    /// For instance, given the regular expression
     /// 
-    ///     \code
-    ///         (?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (\w+) (?<name>\w+)
-    ///     \endcode
+    /// ```
+    /// (?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (\w+) (?<name>\w+)
+    /// ```
     /// 
-    ///     namedCaptureGroups() will return the following list:
+    /// namedCaptureGroups() will return the following list:
     /// 
-    ///     \code
-    ///         ("", "day", "month", "year", "", "name")
-    ///     \endcode
+    /// ```
+    /// ("", "day", "month", "year", "", "name")
+    /// ```
     /// 
-    ///     which corresponds to the fact that the capturing group #0 (corresponding to
-    ///     the whole match) has no name, the capturing group #1 has name "day", the
-    ///     capturing group #2 has name "month", etc.
+    /// which corresponds to the fact that the capturing group #0 (corresponding to
+    /// the whole match) has no name, the capturing group #1 has name , the
+    /// capturing group #2 has name , etc.
     /// 
-    ///     If the regular expression is not valid, returns an empty list.
+    /// If the regular expression is not valid, returns an empty list.
     /// 
-    ///     \sa isValid(), QRegularExpressionMatch::captured(), QString::isEmpty()
+    /// **See also:** isValid()
+    /// QRegularExpressionMatch::captured()
+    /// QString::isEmpty()
     named_capture_groups() -> [String],
+    /// 
+    /// Attempts to match the regular expression against the given *subject*
+    /// string, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** QRegularExpressionMatch
+    /// {normal matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to match the regular expression against the given *subjectRef*
+    /// string reference, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** QRegularExpressionMatch
+    /// {normal matching}
     match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    /// 
+    /// Attempts to match the regular expression against the given *subject*
+    /// string, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** QRegularExpressionMatch
+    /// {normal matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to match the regular expression against the given *subjectRef*
+    /// string reference, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** QRegularExpressionMatch
+    /// {normal matching}
     match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    /// 
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subject* string, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** QRegularExpressionMatchIterator
+    /// {global matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subjectRef* string reference, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** QRegularExpressionMatchIterator
+    /// {global matching}
     global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
+    /// 
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subject* string, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** QRegularExpressionMatchIterator
+    /// {global matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subjectRef* string reference, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** QRegularExpressionMatchIterator
+    /// {global matching}
     global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
-    ///     \since 5.4
     /// 
-    ///     Forces an immediate optimization of the pattern, including
-    ///     JIT-compiling it (if the JIT compiler is enabled).
+    /// Forces an immediate optimization of the pattern, including
+    /// JIT-compiling it (if the JIT compiler is enabled).
     /// 
-    ///     Patterns are normally optimized only after a certain number of usages.
-    ///     If you can predict that this QRegularExpression object is going to be
-    ///     used for several matches, it may be convenient to optimize it in
-    ///     advance by calling this function.
+    /// Patterns are normally optimized only after a certain number of usages.
+    /// If you can predict that this QRegularExpression object is going to be
+    /// used for several matches, it may be convenient to optimize it in
+    /// advance by calling this function.
     /// 
-    ///     \sa QRegularExpression::OptimizeOnFirstUsageOption
+    /// **See also:** QRegularExpression::OptimizeOnFirstUsageOption
     optimize(),
-    ///     Escapes all characters of \a str so that they no longer have any special
-    ///     meaning when used as a regular expression pattern string, and returns
-    ///     the escaped string. For instance:
     /// 
-    ///     \snippet code/src_corelib_tools_qregularexpression.cpp 26
+    /// Escapes all characters of *str* so that they no longer have any special
+    /// meaning when used as a regular expression pattern string, and returns
+    /// the escaped string. For instance:
     /// 
-    ///     This is very convenient in order to build patterns from arbitrary strings:
+    /// This is very convenient in order to build patterns from arbitrary strings:
     /// 
-    ///     \snippet code/src_corelib_tools_qregularexpression.cpp 27
-    /// 
-    ///     \note This function implements Perl's quotemeta algorithm and escapes with
-    ///     a backslash all characters in \a str, except for the characters in the
-    ///     \c{[A-Z]}, \c{[a-z]} and \c{[0-9]} ranges, as well as the underscore
-    ///     (\c{_}) character. The only difference with Perl is that a literal NUL
-    ///     inside \a str is escaped with the sequence \c{"\\0"} (backslash +
-    ///     \c{'0'}), instead of \c{"\\\0"} (backslash + \c{NUL}).
+    /// **Note**: This function implements Perl's quotemeta algorithm and escapes with
+    /// a backslash all characters in *str,* except for the characters in the
+    /// `[A-Z]` , `[a-z]` and `[0-9]` ranges, as well as the underscore
+    /// ( `_` ) character. The only difference with Perl is that a literal NUL
+    /// inside *str* is escaped with the sequence `"\\0"` (backslash +
+    /// `'0'` ), instead of `"\\\0"` (backslash + `NUL` ).
     [static] escape(str: String) -> String,
 }
 

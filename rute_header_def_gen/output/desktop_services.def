@@ -1,129 +1,125 @@
-///     \class QDesktopServices
-///     \brief The QDesktopServices class provides methods for accessing common desktop services.
-///     \since 4.2
-///     \ingroup desktop
-///     \inmodule QtGui
 /// 
-///     Many desktop environments provide services that can be used by applications to
-///     perform common tasks, such as opening a web page, in a way that is both consistent
-///     and takes into account the user's application preferences.
+/// Many desktop environments provide services that can be used by applications to
+/// perform common tasks, such as opening a web page, in a way that is both consistent
+/// and takes into account the user's application preferences.
 /// 
-///     This class contains functions that provide simple interfaces to these services
-///     that indicate whether they succeeded or failed.
+/// This class contains functions that provide simple interfaces to these services
+/// that indicate whether they succeeded or failed.
 /// 
-///     The openUrl() function is used to open files located at arbitrary URLs in external
-///     applications. For URLs that correspond to resources on the local filing system
-///     (where the URL scheme is "file"), a suitable application will be used to open the
-///     file; otherwise, a web browser will be used to fetch and display the file.
+/// The openUrl() function is used to open files located at arbitrary URLs in external
+/// applications. For URLs that correspond to resources on the local filing system
+/// (where the URL scheme is ), a suitable application will be used to open the
+/// file; otherwise, a web browser will be used to fetch and display the file.
 /// 
-///     The user's desktop settings control whether certain executable file types are
-///     opened for browsing, or if they are executed instead. Some desktop environments
-///     are configured to prevent users from executing files obtained from non-local URLs,
-///     or to ask the user's permission before doing so.
+/// The user's desktop settings control whether certain executable file types are
+/// opened for browsing, or if they are executed instead. Some desktop environments
+/// are configured to prevent users from executing files obtained from non-local URLs,
+/// or to ask the user's permission before doing so.
 /// 
-///     \section1 URL Handlers
+/// # URL Handlers
 /// 
-///     The behavior of the openUrl() function can be customized for individual URL
-///     schemes to allow applications to override the default handling behavior for
-///     certain types of URLs.
+/// The behavior of the openUrl() function can be customized for individual URL
+/// schemes to allow applications to override the default handling behavior for
+/// certain types of URLs.
 /// 
-///     The dispatch mechanism allows only one custom handler to be used for each URL
-///     scheme; this is set using the setUrlHandler() function. Each handler is
-///     implemented as a slot which accepts only a single QUrl argument.
+/// The dispatch mechanism allows only one custom handler to be used for each URL
+/// scheme; this is set using the setUrlHandler() function. Each handler is
+/// implemented as a slot which accepts only a single QUrl argument.
 /// 
-///     The existing handlers for each scheme can be removed with the
-///     unsetUrlHandler() function. This returns the handling behavior for the given
-///     scheme to the default behavior.
+/// The existing handlers for each scheme can be removed with the
+/// unsetUrlHandler() function. This returns the handling behavior for the given
+/// scheme to the default behavior.
 /// 
-///     This system makes it easy to implement a help system, for example. Help could be
-///     provided in labels and text browsers using \uicontrol{help://myapplication/mytopic}
-///     URLs, and by registering a handler it becomes possible to display the help text
-///     inside the application:
+/// This system makes it easy to implement a help system, for example. Help could be
+/// provided in labels and text browsers using **{help://myapplication/mytopic}**
+/// URLs, and by registering a handler it becomes possible to display the help text
+/// inside the application:
 /// 
-///     \snippet code/src_gui_util_qdesktopservices.cpp 0
+/// If inside the handler you decide that you can't open the requested
+/// URL, you can just call QDesktopServices::openUrl() again with the
+/// same argument, and it will try to open the URL using the
+/// appropriate mechanism for the user's desktop environment.
 /// 
-///     If inside the handler you decide that you can't open the requested
-///     URL, you can just call QDesktopServices::openUrl() again with the
-///     same argument, and it will try to open the URL using the
-///     appropriate mechanism for the user's desktop environment.
+/// **Note**: Since Qt 5, storageLocation() and displayName() are replaced by functionality
+/// provided by the QStandardPaths class.
 /// 
-///     \note Since Qt 5, storageLocation() and displayName() are replaced by functionality
-///     provided by the QStandardPaths class.
-/// 
-///     \sa QSystemTrayIcon, QProcess, QStandardPaths
+/// **See also:** QSystemTrayIcon
+/// QProcess
+/// QStandardPaths
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct DesktopServices {
-    ///     Opens the given \a url in the appropriate Web browser for the user's desktop
-    ///     environment, and returns \c true if successful; otherwise returns \c false.
     /// 
-    ///     If the URL is a reference to a local file (i.e., the URL scheme is "file") then
-    ///     it will be opened with a suitable application instead of a Web browser.
+    /// Opens the given *url* in the appropriate Web browser for the user's desktop
+    /// environment, and returns `true` if successful; otherwise returns `false.`
     /// 
-    ///     The following example opens a file on the Windows file system residing on a path
-    ///     that contains spaces:
+    /// If the URL is a reference to a local file (i.e., the URL scheme is ) then
+    /// it will be opened with a suitable application instead of a Web browser.
     /// 
-    ///     \snippet code/src_gui_util_qdesktopservices.cpp 2
+    /// The following example opens a file on the Windows file system residing on a path
+    /// that contains spaces:
     /// 
-    ///     If a \c mailto URL is specified, the user's e-mail client will be used to open a
-    ///     composer window containing the options specified in the URL, similar to the way
-    ///     \c mailto links are handled by a Web browser.
+    /// If a `mailto` URL is specified, the user's e-mail client will be used to open a
+    /// composer window containing the options specified in the URL, similar to the way
+    /// `mailto` links are handled by a Web browser.
     /// 
-    ///     For example, the following URL contains a recipient (\c{user@foo.com}), a
-    ///     subject (\c{Test}), and a message body (\c{Just a test}):
+    /// For example, the following URL contains a recipient ( `user@foo.com` ), a
+    /// subject ( `Test` ), and a message body ( `Just a test` ):
     /// 
-    ///     \snippet code/src_gui_util_qdesktopservices.cpp 1
+    /// **Warning**: Although many e-mail clients can send attachments and are
+    /// Unicode-aware, the user may have configured their client without these features.
+    /// Also, certain e-mail clients (e.g., Lotus Notes) have problems with long URLs.
     /// 
-    ///     \warning Although many e-mail clients can send attachments and are
-    ///     Unicode-aware, the user may have configured their client without these features.
-    ///     Also, certain e-mail clients (e.g., Lotus Notes) have problems with long URLs.
+    /// **Warning**: A return value of `true` indicates that the application has successfully requested
+    /// the operating system to open the URL in an external application. The external application may
+    /// still fail to launch or fail to open the requested URL. This result will not be reported back
+    /// to the application.
     /// 
-    ///     \warning A return value of \c true indicates that the application has successfully requested
-    ///     the operating system to open the URL in an external application. The external application may
-    ///     still fail to launch or fail to open the requested URL. This result will not be reported back
-    ///     to the application.
+    /// **Warning**: URLs passed to this function on iOS will not load unless their schemes are
+    /// listed in the `LSApplicationQueriesSchemes` key of the application's Info.plist file.
+    /// For more information, see the Apple Developer Documentation for
+    /// [canOpenURL(_:)](https://developer.apple.com/documentation/uikit/uiapplication/1622952-canopenurl)
     /// 
-    ///     \warning URLs passed to this function on iOS will not load unless their schemes are
-    ///     listed in the \c LSApplicationQueriesSchemes key of the application's Info.plist file.
-    ///     For more information, see the Apple Developer Documentation for
-    ///     \l{https://developer.apple.com/documentation/uikit/uiapplication/1622952-canopenurl}{canOpenURL(_:)}.
-    ///     For example, the following lines enable URLs with the HTTPS scheme:
+    /// For example, the following lines enable URLs with the HTTPS scheme:
     /// 
-    ///     \code
-    ///     <key>LSApplicationQueriesSchemes</key>
-    ///     <array>
-    ///         <string>https</string>
-    ///     </array>
-    ///     \endcode
+    /// ```
+    /// <key>LSApplicationQueriesSchemes</key>
+    /// <array>
+    /// <string>https</string>
+    /// </array>
+    /// ```
     /// 
-    ///     \sa setUrlHandler()
+    /// **See also:** setUrlHandler()
     [static] open_url(url: &UrlType) -> bool,
-    ///     Sets the handler for the given \a scheme to be the handler \a method provided by
-    ///     the \a receiver object.
     /// 
-    ///     This function provides a way to customize the behavior of openUrl(). If openUrl()
-    ///     is called with a URL with the specified \a scheme then the given \a method on the
-    ///     \a receiver object is called instead of QDesktopServices launching an external
-    ///     application.
+    /// Sets the handler for the given *scheme* to be the handler *method* provided by
+    /// the *receiver* object.
     /// 
-    ///     The provided method must be implemented as a slot that only accepts a single QUrl
-    ///     argument.
+    /// This function provides a way to customize the behavior of openUrl(). If openUrl()
+    /// is called with a URL with the specified *scheme* then the given *method* on the
+    /// *receiver* object is called instead of QDesktopServices launching an external
+    /// application.
     /// 
-    ///     If setUrlHandler() is used to set a new handler for a scheme which already
-    ///     has a handler, the existing handler is simply replaced with the new one.
-    ///     Since QDesktopServices does not take ownership of handlers, no objects are
-    ///     deleted when a handler is replaced.
+    /// The provided method must be implemented as a slot that only accepts a single QUrl
+    /// argument.
     /// 
-    ///     Note that the handler will always be called from within the same thread that
-    ///     calls QDesktopServices::openUrl().
+    /// If setUrlHandler() is used to set a new handler for a scheme which already
+    /// has a handler, the existing handler is simply replaced with the new one.
+    /// Since QDesktopServices does not take ownership of handlers, no objects are
+    /// deleted when a handler is replaced.
     /// 
-    ///     \sa openUrl(), unsetUrlHandler()
+    /// Note that the handler will always be called from within the same thread that
+    /// calls QDesktopServices::openUrl().
+    /// 
+    /// **See also:** openUrl()
+    /// unsetUrlHandler()
     [static] set_url_handler(scheme: String, receiver: *ObjectType, method: *char),
-    ///     Removes a previously set URL handler for the specified \a scheme.
     /// 
-    ///     \sa setUrlHandler()
+    /// Removes a previously set URL handler for the specified *scheme.*
+    /// 
+    /// **See also:** setUrlHandler()
     [static] unset_url_handler(scheme: String),
 }
 

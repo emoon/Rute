@@ -1,26 +1,20 @@
-///   \class QTimeEdit
-///   \brief The QTimeEdit class provides a widget for editing times based on
-///   the QDateTimeEdit widget.
 /// 
-///   \ingroup basicwidgets
-///   \inmodule QtWidgets
+/// ![windows-timeedit.png](windows-timeedit.png)
 /// 
-///   \image windows-timeedit.png
+/// Many of the properties and functions provided by QTimeEdit are implemented in
+/// QDateTimeEdit. These are the relevant properties of this class:
 /// 
-///   Many of the properties and functions provided by QTimeEdit are implemented in
-///   QDateTimeEdit. These are the relevant properties of this class:
+/// * [time](QDateTimeEdit::time)
+/// holds the time displayed by the widget.
+/// * [minimumTime](QDateTimeEdit::minimumTime)
+/// defines the minimum (earliest) time that can be set by the user.
+/// * [maximumTime](QDateTimeEdit::maximumTime)
+/// defines the maximum (latest) time that can be set by the user.
+/// * [displayFormat](QDateTimeEdit::displayFormat)
+/// contains a string that is used to format the time displayed in the widget.
 /// 
-///   \list
-///   \li \l{QDateTimeEdit::time}{time} holds the time displayed by the widget.
-///   \li \l{QDateTimeEdit::minimumTime}{minimumTime} defines the minimum (earliest) time
-///      that can be set by the user.
-///   \li \l{QDateTimeEdit::maximumTime}{maximumTime} defines the maximum (latest) time
-///      that can be set by the user.
-///   \li \l{QDateTimeEdit::displayFormat}{displayFormat} contains a string that is used
-///      to format the time displayed in the widget.
-///   \endlist
-/// 
-///   \sa QDateEdit, QDateTimeEdit
+/// **See also:** QDateEdit
+/// QDateTimeEdit
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

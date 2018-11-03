@@ -1,30 +1,26 @@
-///   \class QPaintEngine
-///   \ingroup painting
-///     \inmodule QtGui
 /// 
-///   \brief The QPaintEngine class provides an abstract definition of how
-///   QPainter draws to a given device on a given platform.
+/// Qt provides several premade implementations of QPaintEngine for the
+/// different painter backends we support. The primary paint engine
+/// provided is the raster paint engine, which contains a software
+/// rasterizer which supports the full feature set on all supported platforms.
+/// This is the default for painting on QWidget-based classes in e.g. on Windows,
+/// X11 and MacOS , it is the backend for painting on QImage and it is
+/// used as a fallback for paint engines that do not support a certain
+/// capability. In addition we provide QPaintEngine implementations for
+/// OpenGL (accessible through QGLWidget) and printing (which allows using
+/// QPainter to draw on a QPrinter object).
 /// 
-///   Qt provides several premade implementations of QPaintEngine for the
-///   different painter backends we support. The primary paint engine
-///   provided is the raster paint engine, which contains a software
-///   rasterizer which supports the full feature set on all supported platforms.
-///   This is the default for painting on QWidget-based classes in e.g. on Windows,
-///   X11 and \macos, it is the backend for painting on QImage and it is
-///   used as a fallback for paint engines that do not support a certain
-///   capability. In addition we provide QPaintEngine implementations for
-///   OpenGL (accessible through QGLWidget) and printing (which allows using
-///   QPainter to draw on a QPrinter object).
+/// If one wants to use QPainter to draw to a different backend,
+/// one must subclass QPaintEngine and reimplement all its virtual
+/// functions. The QPaintEngine implementation is then made available by
+/// subclassing QPaintDevice and reimplementing the virtual function
+/// QPaintDevice::paintEngine().
 /// 
-///   If one wants to use QPainter to draw to a different backend,
-///   one must subclass QPaintEngine and reimplement all its virtual
-///   functions. The QPaintEngine implementation is then made available by
-///   subclassing QPaintDevice and reimplementing the virtual function
-///   QPaintDevice::paintEngine().
+/// QPaintEngine is created and owned by the QPaintDevice that created it.
 /// 
-///   QPaintEngine is created and owned by the QPaintDevice that created it.
-/// 
-///   \sa QPainter, QPaintDevice::paintEngine(), {Paint System}
+/// **See also:** QPainter
+/// QPaintDevice::paintEngine()
+/// {Paint System}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -104,124 +100,197 @@ enum Type {
 
 
 struct PaintEngine {
+    /// 
+    /// Returns `true` if the paint engine is actively drawing; otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** setActive()
     is_active() -> bool,
+    /// 
+    /// Sets the active state of the paint engine to *state.*
+    /// 
+    /// **See also:** isActive()
     set_active(new_state: bool),
+    /// 
+    /// Reimplement this function to initialise your paint engine when
+    /// painting is to start on the paint device *pdev.* Return true if
+    /// the initialization was successful; otherwise return false.
+    /// 
+    /// **See also:** end()
+    /// isActive()
     [event] begin(pdev: *PaintDeviceType) -> bool,
+    /// 
+    /// Reimplement this function to finish painting on the current paint
+    /// device. Return true if painting was finished successfully;
+    /// otherwise return false.
+    /// 
+    /// **See also:** begin()
+    /// isActive()
     [event] end() -> bool,
+    /// 
+    /// Reimplement this function to update the state of a paint engine.
+    /// 
+    /// When implemented, this function is responsible for checking the
+    /// paint engine's current *state* and update the properties that are
+    /// changed. Use the QPaintEngineState::state() function to find out
+    /// which properties that must be updated, then use the corresponding
+    /// [get function](GetFunction)
+    /// to retrieve the current values for
+    /// the given properties.
+    /// 
+    /// **See also:** QPaintEngineState
     [event] update_state(state: &PaintEngineStateType),
-    ///     Draws the first \a rectCount rectangles in the buffer \a
-    ///     rects. The default implementation of this function calls drawPath()
-    ///     or drawPolygon() depending on the feature set of the paint engine.
+    /// 
+    /// **Overloads**
+    /// The default implementation converts the first *rectCount*
+    /// rectangles in the buffer *rects* to a QRectF and calls the
+    /// floating point version of this function.
+    /// 
+    /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
+    /// or drawPolygon() depending on the feature set of the paint engine.
     [event] draw_rects(rects: *RectType, rect_count: i32),
-    ///     Draws the first \a rectCount rectangles in the buffer \a
-    ///     rects. The default implementation of this function calls drawPath()
-    ///     or drawPolygon() depending on the feature set of the paint engine.
+    /// 
+    /// **Overloads**
+    /// The default implementation converts the first *rectCount*
+    /// rectangles in the buffer *rects* to a QRectF and calls the
+    /// floating point version of this function.
+    /// 
+    /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
+    /// or drawPolygon() depending on the feature set of the paint engine.
     [event] draw_rects(rects: *RectFType, rect_count: i32),
-    ///     \overload
     /// 
-    ///     The default implementation converts the first \a lineCount lines
-    ///     in \a lines to a QLineF and calls the floating point version of
-    ///     this function.
+    /// The default implementation splits the list of lines in *lines*
+    /// into *lineCount* separate calls to drawPath() or drawPolygon()
+    /// depending on the feature set of the paint engine.
+    /// 
+    /// **Overloads**
+    /// The default implementation converts the first *lineCount* lines
+    /// in *lines* to a QLineF and calls the floating point version of
+    /// this function.
     [event] draw_lines(lines: *LineType, line_count: i32),
-    ///     \overload
     /// 
-    ///     The default implementation converts the first \a lineCount lines
-    ///     in \a lines to a QLineF and calls the floating point version of
-    ///     this function.
+    /// The default implementation splits the list of lines in *lines*
+    /// into *lineCount* separate calls to drawPath() or drawPolygon()
+    /// depending on the feature set of the paint engine.
+    /// 
+    /// **Overloads**
+    /// The default implementation converts the first *lineCount* lines
+    /// in *lines* to a QLineF and calls the floating point version of
+    /// this function.
     [event] draw_lines(lines: *LineFType, line_count: i32),
-    ///     The default implementation of this function calls the floating
-    ///     point version of this function
-    [event] draw_ellipse(r: &RectFType),
-    ///     The default implementation of this function calls the floating
-    ///     point version of this function
-    [event] draw_ellipse(r: &RectType),
-    ///     The default implementation ignores the \a path and does nothing.
-    [event] draw_path(path: &PainterPathType),
-    ///     Draws the first \a pointCount points in the buffer \a points
     /// 
-    ///     The default implementation converts the first \a pointCount QPoints in \a points
-    ///     to QPointFs and calls the floating point version of drawPoints.
+    /// Reimplement this function to draw the largest ellipse that can be
+    /// contained within rectangle *rect.*
+    /// 
+    /// The default implementation calls drawPolygon().
+    /// 
+    /// The default implementation of this function calls the floating
+    /// point version of this function
+    [event] draw_ellipse(r: &RectFType),
+    /// 
+    /// Reimplement this function to draw the largest ellipse that can be
+    /// contained within rectangle *rect.*
+    /// 
+    /// The default implementation calls drawPolygon().
+    /// 
+    /// The default implementation of this function calls the floating
+    /// point version of this function
+    [event] draw_ellipse(r: &RectType),
+    /// 
+    /// The default implementation ignores the *path* and does nothing.
+    [event] draw_path(path: &PainterPathType),
+    /// 
+    /// Draws the first *pointCount* points in the buffer *points*
+    /// 
+    /// Draws the first *pointCount* points in the buffer *points*
+    /// 
+    /// The default implementation converts the first *pointCount* QPoints in *points*
+    /// to QPointFs and calls the floating point version of drawPoints.
     /// 
     [event] draw_points(points: *PointFType, point_count: i32),
-    ///     Draws the first \a pointCount points in the buffer \a points
     /// 
-    ///     The default implementation converts the first \a pointCount QPoints in \a points
-    ///     to QPointFs and calls the floating point version of drawPoints.
+    /// Draws the first *pointCount* points in the buffer *points*
+    /// 
+    /// Draws the first *pointCount* points in the buffer *points*
+    /// 
+    /// The default implementation converts the first *pointCount* QPoints in *points*
+    /// to QPointFs and calls the floating point version of drawPoints.
     /// 
     [event] draw_points(points: *PointType, point_count: i32),
-    ///     \overload
     /// 
-    ///     Reimplement this virtual function to draw the polygon defined by the
-    ///     \a pointCount first points in \a points, using mode \a mode.
+    /// PolygonDrawMode mode)
     /// 
-    ///     \note At least one of the drawPolygon() functions must be reimplemented.
+    /// Reimplement this virtual function to draw the polygon defined
+    /// by the *pointCount* first points in *points,* using mode *mode.*
+    /// 
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    /// 
+    /// **Overloads**
+    /// Reimplement this virtual function to draw the polygon defined by the
+    /// *pointCount* first points in *points,* using mode *mode.*
+    /// 
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
     [event] draw_polygon(points: *PointFType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
-    ///     \overload
     /// 
-    ///     Reimplement this virtual function to draw the polygon defined by the
-    ///     \a pointCount first points in \a points, using mode \a mode.
+    /// PolygonDrawMode mode)
     /// 
-    ///     \note At least one of the drawPolygon() functions must be reimplemented.
+    /// Reimplement this virtual function to draw the polygon defined
+    /// by the *pointCount* first points in *points,* using mode *mode.*
+    /// 
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    /// 
+    /// **Overloads**
+    /// Reimplement this virtual function to draw the polygon defined by the
+    /// *pointCount* first points in *points,* using mode *mode.*
+    /// 
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
     [event] draw_polygon(points: *PointType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
+    /// 
+    /// &pm, const QRectF &sr)
+    /// 
+    /// Reimplement this function to draw the part of the *pm*
+    /// specified by the *sr* rectangle in the given *r.*
     [event] draw_pixmap(r: &RectFType, pm: &PixmapType, sr: &RectFType),
-    ///     This function draws the text item \a textItem at position \a p. The
-    ///     default implementation of this function converts the text to a
-    ///     QPainterPath and paints the resulting path.
+    /// 
+    /// This function draws the text item *textItem* at position *p.* The
+    /// default implementation of this function converts the text to a
+    /// QPainterPath and paints the resulting path.
     [event] draw_text_item(p: &PointFType, text_item: &TextItemType),
-    ///     Reimplement this function to draw the \a pixmap in the given \a
-    ///     rect, starting at the given \a p. The pixmap will be
-    ///     drawn repeatedly until the \a rect is filled.
+    /// 
+    /// Reimplement this function to draw the *pixmap* in the given *rect,* starting at the given *p.* The pixmap will be
+    /// drawn repeatedly until the *rect* is filled.
     [event] draw_tiled_pixmap(r: &RectFType, pixmap: &PixmapType, s: &PointFType),
+    /// 
+    /// &image, const QRectF &sr, Qt::ImageConversionFlags flags)
+    /// 
+    /// Reimplement this function to draw the part of the *image*
+    /// specified by the *sr* rectangle in the given *rectangle* using
+    /// the given conversion flags *flags,* to convert it to a pixmap.
     [event] draw_image(r: &RectFType, pm: &ImageType, sr: &RectFType, flags: Rute::ImageConversionFlags),
-    ///     \internal
-    ///     Sets the paintdevice that this engine operates on to \a device
     set_paint_device(device: *PaintDeviceType),
-    ///     Returns the device that this engine is painting on, if painting is
-    ///     active; otherwise returns 0.
+    /// 
+    /// Returns the device that this engine is painting on, if painting is
+    /// active; otherwise returns 0.
     paint_device() -> PaintDevice?,
-    ///     \internal
-    /// 
-    ///     Sets the system clip for this engine. The system clip defines the
-    ///     basis area that the engine has to draw in. All clips that are
-    ///     set will be an intersection with the system clip.
-    /// 
-    ///     Reset the systemclip to no clip by setting an empty region.
     set_system_clip(base_clip: &RegionType),
-    ///     \internal
-    /// 
-    ///     Returns the system clip. The system clip is read only while the
-    ///     painter is active. An empty region indicates that system clip
-    ///     is not in use.
     system_clip() -> Region,
-    ///     \internal
-    /// 
-    ///     Sets the target rect for drawing within the backing store. This
-    ///     function should ONLY be used by the backing store.
     set_system_rect(rect: &RectType),
     system_rect() -> Rect,
-    ///     \internal
-    /// 
-    ///     Returns the offset from the painters origo to the engines
-    ///     origo. This value is used by QPainter for engines who have
-    ///     internal double buffering.
-    /// 
-    ///     This function only makes sense when the engine is active.
     [event] coordinate_offset() -> Point,
+    /// 
+    /// Reimplement this function to return the paint engine [Type](Type)
+    /// 
     [event] type() -> PaintEngine::Type,
     fix_neg_rect(x: *i32, y: *i32, w: *i32, h: *i32),
     test_dirty(df: PaintEngine::DirtyFlags) -> bool,
     set_dirty(df: PaintEngine::DirtyFlags),
     clear_dirty(df: PaintEngine::DirtyFlags),
+    /// 
+    /// Returns `true` if the paint engine supports the specified *feature;* otherwise returns `false.`
     has_feature(feature: PaintEngine::PaintEngineFeatures) -> bool,
-    ///     Returns the paint engine's painter.
+    /// 
+    /// Returns the paint engine's painter.
     painter() -> Painter?,
-    ///     \fn void QPaintEngine::syncState()
-    /// 
-    ///     \internal
-    /// 
-    ///     Updates all dirty states in this engine. This function should ONLY
-    ///     be used when drawing with native handles directly and immediate sync
-    ///     from QPainters state to the native state is required.
     sync_state(),
     is_extended() -> bool,
 }

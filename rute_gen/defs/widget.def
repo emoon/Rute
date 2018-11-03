@@ -60,51 +60,2046 @@
 
 [traits(PaintDevice, WidgetType)]
 struct Widget {
+    ///     \internal
+    [event] dev_type() -> i32,
+    ///     \fn u64 QWidget::winId() const
+    /// 
+    ///     Returns the window system identifier of the widget.
+    /// 
+    ///     Portable in principle, but if you use it you are probably about to
+    ///     do something non-portable. Be careful.
+    /// 
+    ///     If a widget is non-native (alien) and winId() is invoked on it, that widget
+    ///     will be provided a native handle.
+    /// 
+    ///     This value may change at run-time. An event with type QEvent::WinIdChange
+    ///     will be sent to the widget following a change in window system identifier.
+    /// 
+    ///     \sa find()
+    win_id() -> u64,
+    /// \internal
+    /// Ensures that the widget has a window system identifier, i.e. that it is known to the windowing system.
+    /// 
+    create_win_id(),
+    internal_win_id() -> u64,
+    ///     \since 4.4
+    /// 
+    ///     Returns the effective window system identifier of the widget, i.e. the
+    ///     native parent's window system identifier.
+    /// 
+    ///     If the widget is native, this function returns the native widget ID.
+    ///     Otherwise, the window ID of the first native parent widget, i.e., the
+    ///     top-level widget that contains this widget, is returned.
+    /// 
+    ///     \note We recommend that you do not store this value as it is likely to
+    ///     change at run-time.
+    /// 
+    ///     \sa nativeParentWidget()
+    effective_win_id() -> u64,
+    ///     \sa QWidget::setStyle(), QApplication::setStyle(), QApplication::style()
+    style() -> Style?,
+    ///     Sets the widget's GUI style to \a style. The ownership of the style
+    ///     object is not transferred.
+    /// 
+    ///     If no style is set, the widget uses the application's style,
+    ///     QApplication::style() instead.
+    /// 
+    ///     Setting a widget's style has no effect on existing or future child
+    ///     widgets.
+    /// 
+    ///     \warning This function is particularly useful for demonstration
+    ///     purposes, where you want to show Qt's styling capabilities. Real
+    ///     applications should avoid it and use one consistent GUI style
+    ///     instead.
+    /// 
+    ///     \warning Qt style sheets are currently not supported for custom QStyle
+    ///     subclasses. We plan to address this in some future release.
+    /// 
+    ///     \sa style(), QStyle, QApplication::style(), QApplication::setStyle()
+    set_style(arg0: *StyleType),
+    is_top_level() -> bool,
+    is_window() -> bool,
+    is_modal() -> bool,
+    ///     \property QWidget::windowModality
+    ///     \brief which windows are blocked by the modal widget
+    ///     \since 4.1
+    /// 
+    ///     This property only makes sense for windows. A modal widget
+    ///     prevents widgets in other windows from getting input. The value of
+    ///     this property controls which windows are blocked when the widget
+    ///     is visible. Changing this property while the window is visible has
+    ///     no effect; you must hide() the widget first, then show() it again.
+    /// 
+    ///     By default, this property is Qt::NonModal.
+    /// 
+    ///     \sa isWindow(), QWidget::modal, QDialog
+    window_modality() -> Rute::WindowModality,
+    set_window_modality(window_modality: Rute::WindowModality),
+    is_enabled() -> bool,
+    ///     Returns \c true if this widget would become enabled if \a ancestor is
+    ///     enabled; otherwise returns \c false.
+    /// 
+    /// 
+    /// 
+    ///     This is the case if neither the widget itself nor every parent up
+    ///     to but excluding \a ancestor has been explicitly disabled.
+    /// 
+    ///     isEnabledTo(0) returns false if this widget or any if its ancestors
+    ///     was explicitly disabled.
+    /// 
+    ///     The word ancestor here means a parent widget within the same window.
+    /// 
+    ///     Therefore isEnabledTo(0) stops at this widget's window, unlike
+    ///     isEnabled() which also takes parent windows into considerations.
+    /// 
+    ///     \sa setEnabled(), enabled
+    is_enabled_to(arg0: *WidgetType) -> bool,
+    is_enabled_to_tlw() -> bool,
+    ///     \property QWidget::enabled
+    ///     \brief whether the widget is enabled
+    /// 
+    ///     In general an enabled widget handles keyboard and mouse events; a disabled
+    ///     widget does not. An exception is made with \l{QAbstractButton}.
+    /// 
+    ///     Some widgets display themselves differently when they are
+    ///     disabled. For example a button might draw its label grayed out. If
+    ///     your widget needs to know when it becomes enabled or disabled, you
+    ///     can use the changeEvent() with type QEvent::EnabledChange.
+    /// 
+    ///     Disabling a widget implicitly disables all its children. Enabling
+    ///     respectively enables all child widgets unless they have been
+    ///     explicitly disabled. It it not possible to explicitly enable a child
+    ///     widget which is not a window while its parent widget remains disabled.
+    /// 
+    ///     By default, this property is \c true.
+    /// 
+    ///     \sa isEnabledTo(), QKeyEvent, QMouseEvent, changeEvent()
+    set_enabled(arg0: bool),
+    ///     Disables widget input events if \a disable is true; otherwise
+    ///     enables input events.
+    /// 
+    ///     See the \l enabled documentation for more information.
+    /// 
+    ///     \sa isEnabledTo(), QKeyEvent, QMouseEvent, changeEvent()
+    set_disabled(arg0: bool),
+    set_window_modified(arg0: bool),
+    ///     \property QWidget::x
+    /// 
+    ///     \brief the x coordinate of the widget relative to its parent including
+    ///     any window frame
+    /// 
+    ///     See the \l{Window Geometry} documentation for an overview of geometry
+    ///     issues with windows.
+    /// 
+    ///     By default, this property has a value of 0.
+    /// 
+    ///     \sa frameGeometry, y, pos
+    x() -> i32,
+    ///     \property QWidget::y
+    ///     \brief the y coordinate of the widget relative to its parent and
+    ///     including any window frame
+    /// 
+    ///     See the \l{Window Geometry} documentation for an overview of geometry
+    ///     issues with windows.
+    /// 
+    ///     By default, this property has a value of 0.
+    /// 
+    ///     \sa frameGeometry, x, pos
+    y() -> i32,
+    ///     \property QWidget::pos
+    ///     \brief the position of the widget within its parent widget
+    /// 
+    ///     If the widget is a window, the position is that of the widget on
+    ///     the desktop, including its frame.
+    /// 
+    ///     When changing the position, the widget, if visible, receives a
+    ///     move event (moveEvent()) immediately. If the widget is not
+    ///     currently visible, it is guaranteed to receive an event before it
+    ///     is shown.
+    /// 
+    ///     By default, this property contains a position that refers to the
+    ///     origin.
+    /// 
+    ///     \warning Calling move() or setGeometry() inside moveEvent() can
+    ///     lead to infinite recursion.
+    /// 
+    ///     See the \l{Window Geometry} documentation for an overview of geometry
+    ///     issues with windows.
+    /// 
+    ///     \sa frameGeometry, size, x(), y()
+    pos() -> Point,
+    ///     \property QWidget::frameSize
+    ///     \brief the size of the widget including any window frame
+    /// 
+    ///     By default, this property contains a value that depends on the user's
+    ///     platform and screen geometry.
+    frame_size() -> Size,
+    size() -> Size,
+    width() -> i32,
+    height() -> i32,
+    rect() -> Rect,
+    ///     \property QWidget::childrenRect
+    ///     \brief the bounding rectangle of the widget's children
+    /// 
+    ///     Hidden children are excluded.
+    /// 
+    ///     By default, for a widget with no children, this property contains a
+    ///     rectangle with zero width and height located at the origin.
+    /// 
+    ///     \sa childrenRegion(), geometry()
+    children_rect() -> Rect,
+    ///     \property QWidget::childrenRegion
+    ///     \brief the combined region occupied by the widget's children
+    /// 
+    ///     Hidden children are excluded.
+    /// 
+    ///     By default, for a widget with no children, this property contains an
+    ///     empty region.
+    /// 
+    ///     \sa childrenRect(), geometry(), mask()
+    children_region() -> Region,
+    ///     \property QWidget::minimumSize
+    ///     \brief the widget's minimum size
+    /// 
+    ///     The widget cannot be resized to a smaller size than the minimum
+    ///     widget size. The widget's size is forced to the minimum size if
+    ///     the current size is smaller.
+    /// 
+    ///     The minimum size set by this function will override the minimum size
+    ///     defined by QLayout. In order to unset the minimum size, use a
+    ///     value of \c{QSize(0, 0)}.
+    /// 
+    ///     By default, this property contains a size with zero width and height.
+    /// 
+    ///     \sa minimumWidth, minimumHeight, maximumSize, sizeIncrement
+    minimum_size() -> Size,
+    ///     \property QWidget::maximumSize
+    ///     \brief the widget's maximum size in pixels
+    /// 
+    ///     The widget cannot be resized to a larger size than the maximum
+    ///     widget size.
+    /// 
+    ///     By default, this property contains a size in which both width and height
+    ///     have values of 16777215.
+    /// 
+    ///     \note The definition of the \c QWIDGETSIZE_MAX macro limits the maximum size
+    ///     of widgets.
+    /// 
+    ///     \sa maximumWidth, maximumHeight, minimumSize, sizeIncrement
+    maximum_size() -> Size,
+    minimum_width() -> i32,
+    minimum_height() -> i32,
+    maximum_width() -> i32,
+    maximum_height() -> i32,
+    ///     \overload
+    /// 
+    ///     This function corresponds to setMinimumSize(QSize(minw, minh)).
+    ///     Sets the minimum width to \a minw and the minimum height to \a
+    ///     minh.
+    set_minimum_size(arg0: &SizeType),
+    ///     \overload
+    /// 
+    ///     This function corresponds to setMinimumSize(QSize(minw, minh)).
+    ///     Sets the minimum width to \a minw and the minimum height to \a
+    ///     minh.
+    set_minimum_size(minw: i32, minh: i32),
+    ///     \overload
+    /// 
+    ///     This function corresponds to setMaximumSize(QSize(\a maxw, \a
+    ///     maxh)). Sets the maximum width to \a maxw and the maximum height
+    ///     to \a maxh.
+    set_maximum_size(arg0: &SizeType),
+    ///     \overload
+    /// 
+    ///     This function corresponds to setMaximumSize(QSize(\a maxw, \a
+    ///     maxh)). Sets the maximum width to \a maxw and the maximum height
+    ///     to \a maxh.
+    set_maximum_size(maxw: i32, maxh: i32),
+    set_minimum_width(minw: i32),
+    set_minimum_height(minh: i32),
+    set_maximum_width(maxw: i32),
+    set_maximum_height(maxh: i32),
+    ///     \property QWidget::sizeIncrement
+    ///     \brief the size increment of the widget
+    /// 
+    ///     When the user resizes the window, the size will move in steps of
+    ///     sizeIncrement().width() pixels horizontally and
+    ///     sizeIncrement.height() pixels vertically, with baseSize() as the
+    ///     basis. Preferred widget sizes are for non-negative integers \e i
+    ///     and \e j:
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 2
+    /// 
+    ///     Note that while you can set the size increment for all widgets, it
+    ///     only affects windows.
+    /// 
+    ///     By default, this property contains a size with zero width and height.
+    /// 
+    ///     \warning The size increment has no effect under Windows, and may
+    ///     be disregarded by the window manager on X11.
+    /// 
+    ///     \sa size, minimumSize, maximumSize
+    size_increment() -> Size,
+    ///     \overload
+    /// 
+    ///     Sets the x (width) size increment to \a w and the y (height) size
+    ///     increment to \a h.
+    set_size_increment(arg0: &SizeType),
+    ///     \overload
+    /// 
+    ///     Sets the x (width) size increment to \a w and the y (height) size
+    ///     increment to \a h.
+    set_size_increment(w: i32, h: i32),
+    ///     \property QWidget::baseSize
+    ///     \brief the base size of the widget
+    /// 
+    ///     The base size is used to calculate a proper widget size if the
+    ///     widget defines sizeIncrement().
+    /// 
+    ///     By default, for a newly-created widget, this property contains a size with
+    ///     zero width and height.
+    /// 
+    ///     \sa setSizeIncrement()
+    base_size() -> Size,
+    ///     \overload
+    /// 
+    ///     This corresponds to setBaseSize(QSize(\a basew, \a baseh)). Sets
+    ///     the widgets base size to width \a basew and height \a baseh.
+    set_base_size(arg0: &SizeType),
+    ///     \overload
+    /// 
+    ///     This corresponds to setBaseSize(QSize(\a basew, \a baseh)). Sets
+    ///     the widgets base size to width \a basew and height \a baseh.
+    set_base_size(basew: i32, baseh: i32),
+    ///     \fn void QWidget::setFixedSize(int w, int h)
+    ///     \overload
+    /// 
+    ///     Sets the width of the widget to \a w and the height to \a h.
+    set_fixed_size(arg0: &SizeType),
+    ///     \fn void QWidget::setFixedSize(int w, int h)
+    ///     \overload
+    /// 
+    ///     Sets the width of the widget to \a w and the height to \a h.
+    set_fixed_size(w: i32, h: i32),
+    ///     Sets both the minimum and maximum width of the widget to \a w
+    ///     without changing the heights. Provided for convenience.
+    /// 
+    ///     \sa sizeHint(), minimumSize(), maximumSize(), setFixedSize()
+    set_fixed_width(w: i32),
+    ///     Sets both the minimum and maximum heights of the widget to \a h
+    ///     without changing the widths. Provided for convenience.
+    /// 
+    ///     \sa sizeHint(), minimumSize(), maximumSize(), setFixedSize()
+    set_fixed_height(h: i32),
+    ///     \fn QPoint QWidget::mapToGlobal(const QPoint &pos) const
+    /// 
+    ///     Translates the widget coordinate \a pos to global screen
+    ///     coordinates. For example, \c{mapToGlobal(QPoint(0,0))} would give
+    ///     the global coordinates of the top-left pixel of the widget.
+    /// 
+    ///     \sa mapFromGlobal(), mapTo(), mapToParent()
+    map_to_global(arg0: &PointType) -> Point,
+    ///     \fn QPoint QWidget::mapFromGlobal(const QPoint &pos) const
+    /// 
+    ///     Translates the global screen coordinate \a pos to widget
+    ///     coordinates.
+    /// 
+    ///     \sa mapToGlobal(), mapFrom(), mapFromParent()
+    map_from_global(arg0: &PointType) -> Point,
+    ///     Translates the widget coordinate \a pos to a coordinate in the
+    ///     parent widget.
+    /// 
+    ///     Same as mapToGlobal() if the widget has no parent.
+    /// 
+    ///     \sa mapFromParent(), mapTo(), mapToGlobal(), underMouse()
+    map_to_parent(arg0: &PointType) -> Point,
+    ///     Translates the parent widget coordinate \a pos to widget
+    ///     coordinates.
+    /// 
+    ///     Same as mapFromGlobal() if the widget has no parent.
+    /// 
+    ///     \sa mapToParent(), mapFrom(), mapFromGlobal(), underMouse()
+    map_from_parent(arg0: &PointType) -> Point,
+    ///     Translates the widget coordinate \a pos to the coordinate system
+    ///     of \a parent. The \a parent must not be 0 and must be a parent
+    ///     of the calling widget.
+    /// 
+    ///     \sa mapFrom(), mapToParent(), mapToGlobal(), underMouse()
+    map_to(arg0: *WidgetType, arg1: &PointType) -> Point,
+    ///     Translates the widget coordinate \a pos from the coordinate system
+    ///     of \a parent to this widget's coordinate system. The \a parent
+    ///     must not be 0 and must be a parent of the calling widget.
+    /// 
+    ///     \sa mapTo(), mapFromParent(), mapFromGlobal(), underMouse()
+    map_from(arg0: *WidgetType, arg1: &PointType) -> Point,
+    ///     Returns the window for this widget, i.e. the next ancestor widget
+    ///     that has (or could have) a window-system frame.
+    /// 
+    ///     If the widget is a window, the widget itself is returned.
+    /// 
+    ///     Typical usage is changing the window title:
+    /// 
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 3
+    /// 
+    ///     \sa isWindow()
+    window() -> Widget?,
+    ///     \since 4.4
+    /// 
+    ///     Returns the native parent for this widget, i.e. the next ancestor widget
+    ///     that has a system identifier, or 0 if it does not have any native parent.
+    /// 
+    ///     \sa effectiveWinId()
+    native_parent_widget() -> Widget?,
+    top_level_widget() -> Widget?,
+    palette() -> Palette?,
+    set_palette(arg0: &PaletteType),
+    set_background_role(arg0: Palette::ColorRole),
+    background_role() -> Palette::ColorRole,
+    set_foreground_role(arg0: Palette::ColorRole),
+    foreground_role() -> Palette::ColorRole,
+    font() -> Font?,
+    ///     \property QWidget::font
+    ///     \brief the font currently set for the widget
+    /// 
+    ///     This property describes the widget's requested font. The font is used by
+    ///     the widget's style when rendering standard components, and is available as
+    ///     a means to ensure that custom widgets can maintain consistency with the
+    ///     native platform's look and feel. It's common that different platforms, or
+    ///     different styles, define different fonts for an application.
+    /// 
+    ///     When you assign a new font to a widget, the properties from this font are
+    ///     combined with the widget's default font to form the widget's final
+    ///     font. You can call fontInfo() to get a copy of the widget's final
+    ///     font. The final font is also used to initialize QPainter's font.
+    /// 
+    ///     The default depends on the system environment. QApplication maintains a
+    ///     system/theme font which serves as a default for all widgets.  There may
+    ///     also be special font defaults for certain types of widgets. You can also
+    ///     define default fonts for widgets yourself by passing a custom font and the
+    ///     name of a widget to QApplication::setFont(). Finally, the font is matched
+    ///     against Qt's font database to find the best match.
+    /// 
+    ///     QWidget propagates explicit font properties from parent to child. If you
+    ///     change a specific property on a font and assign that font to a widget,
+    ///     that property will propagate to all the widget's children, overriding any
+    ///     system defaults for that property. Note that fonts by default don't
+    ///     propagate to windows (see isWindow()) unless the Qt::WA_WindowPropagation
+    ///     attribute is enabled.
+    /// 
+    ///     QWidget's font propagation is similar to its palette propagation.
+    /// 
+    ///     The current style, which is used to render the content of all standard Qt
+    ///     widgets, is free to choose to use the widget font, or in some cases, to
+    ///     ignore it (partially, or completely). In particular, certain styles like
+    ///     GTK style, Mac style, and Windows Vista style, apply special
+    ///     modifications to the widget font to match the platform's native look and
+    ///     feel. Because of this, assigning properties to a widget's font is not
+    ///     guaranteed to change the appearance of the widget. Instead, you may choose
+    ///     to apply a \l styleSheet.
+    /// 
+    ///     \note If \l{Qt Style Sheets} are used on the same widget as setFont(),
+    ///     style sheets will take precedence if the settings conflict.
+    /// 
+    ///     \sa fontInfo(), fontMetrics()
+    set_font(arg0: &FontType),
+    font_info() -> FontInfo,
+    ///     \property QWidget::cursor
+    ///     \brief the cursor shape for this widget
+    /// 
+    ///     The mouse cursor will assume this shape when it's over this
+    ///     widget. See the \l{Qt::CursorShape}{list of predefined cursor objects} for a range of useful shapes.
+    /// 
+    ///     An editor widget might use an I-beam cursor:
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 6
+    /// 
+    ///     If no cursor has been set, or after a call to unsetCursor(), the
+    ///     parent's cursor is used.
+    /// 
+    ///     By default, this property contains a cursor with the Qt::ArrowCursor
+    ///     shape.
+    /// 
+    ///     Some underlying window implementations will reset the cursor if it
+    ///     leaves a widget even if the mouse is grabbed. If you want to have
+    ///     a cursor set for all widgets, even when outside the window, consider
+    ///     QApplication::setOverrideCursor().
+    /// 
+    ///     \sa QApplication::setOverrideCursor()
+    cursor() -> Cursor,
+    set_cursor(arg0: &CursorType),
+    unset_cursor(),
+    set_mouse_tracking(enable: bool),
+    has_mouse_tracking() -> bool,
+    under_mouse() -> bool,
+    set_tablet_tracking(enable: bool),
+    has_tablet_tracking() -> bool,
+    ///     \fn void QWidget::setMask(const QBitmap &bitmap)
+    /// 
+    ///     Causes only the pixels of the widget for which \a bitmap has a
+    ///     corresponding 1 bit to be visible. If the region includes pixels
+    ///     outside the rect() of the widget, window system controls in that
+    ///     area may or may not be visible, depending on the platform.
+    /// 
+    ///     Note that this effect can be slow if the region is particularly
+    ///     complex.
+    /// 
+    ///     The following code shows how an image with an alpha channel can be
+    ///     used to generate a mask for a widget:
+    /// 
+    ///     \snippet widget-mask/main.cpp 0
+    /// 
+    ///     The label shown by this code is masked using the image it contains,
+    ///     giving the appearance that an irregularly-shaped image is being drawn
+    ///     directly onto the screen.
+    /// 
+    ///     Masked widgets receive mouse events only on their visible
+    ///     portions.
+    /// 
+    ///     \sa clearMask(), windowOpacity(), {Shaped Clock Example}
+    set_mask(arg0: &BitmapType),
+    ///     \fn void QWidget::setMask(const QBitmap &bitmap)
+    /// 
+    ///     Causes only the pixels of the widget for which \a bitmap has a
+    ///     corresponding 1 bit to be visible. If the region includes pixels
+    ///     outside the rect() of the widget, window system controls in that
+    ///     area may or may not be visible, depending on the platform.
+    /// 
+    ///     Note that this effect can be slow if the region is particularly
+    ///     complex.
+    /// 
+    ///     The following code shows how an image with an alpha channel can be
+    ///     used to generate a mask for a widget:
+    /// 
+    ///     \snippet widget-mask/main.cpp 0
+    /// 
+    ///     The label shown by this code is masked using the image it contains,
+    ///     giving the appearance that an irregularly-shaped image is being drawn
+    ///     directly onto the screen.
+    /// 
+    ///     Masked widgets receive mouse events only on their visible
+    ///     portions.
+    /// 
+    ///     \sa clearMask(), windowOpacity(), {Shaped Clock Example}
+    set_mask(arg0: &RegionType),
+    ///     Returns the mask currently set on a widget. If no mask is set the
+    ///     return value will be an empty region.
+    /// 
+    ///     \sa setMask(), clearMask(), QRegion::isEmpty(), {Shaped Clock Example}
+    mask() -> Region,
+    ///     \fn void QWidget::clearMask()
+    /// 
+    ///     Removes any mask set by setMask().
+    /// 
+    ///     \sa setMask()
+    clear_mask(),
+    render(target: *PaintDeviceType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
+    render(painter: *PainterType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
+    ///     \since 5.0
+    /// 
+    ///     Renders the widget into a pixmap restricted by the
+    ///     given \a rectangle. If the widget has any children, then
+    ///     they are also painted in the appropriate positions.
+    /// 
+    ///     If a rectangle with an invalid size is specified  (the default),
+    ///     the entire widget is painted.
+    /// 
+    ///     \sa render(), QPixmap
+    grab(rectangle: &RectType) -> Pixmap,
+    ///     \brief The graphicsEffect function returns a pointer to the
+    ///     widget's graphics effect.
+    /// 
+    ///     If the widget has no graphics effect, 0 is returned.
+    /// 
+    ///     \since 4.6
+    /// 
+    ///     \sa setGraphicsEffect()
+    graphics_effect() -> GraphicsEffect?,
+    /// 
+    ///   \brief The setGraphicsEffect function is for setting the widget's graphics effect.
+    /// 
+    ///     Sets \a effect as the widget's effect. If there already is an effect installed
+    ///     on this widget, QWidget will delete the existing effect before installing
+    ///     the new \a effect.
+    /// 
+    ///     If \a effect is the installed effect on a different widget, setGraphicsEffect() will remove
+    ///     the effect from the widget and install it on this widget.
+    /// 
+    ///     QWidget takes ownership of \a effect.
+    /// 
+    ///     \note This function will apply the effect on itself and all its children.
+    /// 
+    ///     \note Graphics effects are not supported for OpenGL-based widgets, such as QGLWidget,
+    ///     QOpenGLWidget and QQuickWidget.
+    /// 
+    ///     \since 4.6
+    /// 
+    ///     \sa graphicsEffect()
+    set_graphics_effect(effect: *GraphicsEffectType),
+    ///     Subscribes the widget to a given \a gesture with specific \a flags.
+    /// 
+    ///     \sa ungrabGesture(), QGestureEvent
+    ///     \since 4.6
+    grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
+    ///     Unsubscribes the widget from a given \a gesture type
+    /// 
+    ///     \sa grabGesture(), QGestureEvent
+    ///     \since 4.6
+    ungrab_gesture(type: Rute::GestureType),
+    ///     \fn void QWidget::windowTitleChanged(const QString &title)
+    /// 
+    ///     This signal is emitted when the window's title has changed, with the
+    ///     new \a title as an argument.
+    /// 
+    ///     \since 5.2
+    set_window_title(arg0: String),
+    set_style_sheet(style_sheet: String),
+    ///     \property QWidget::styleSheet
+    ///     \brief the widget's style sheet
+    ///     \since 4.2
+    /// 
+    ///     The style sheet contains a textual description of customizations to the
+    ///     widget's style, as described in the \l{Qt Style Sheets} document.
+    /// 
+    ///     Since Qt 4.5, Qt style sheets fully supports \macos.
+    /// 
+    ///     \warning Qt style sheets are currently not supported for custom QStyle
+    ///     subclasses. We plan to address this in some future release.
+    /// 
+    ///     \sa setStyle(), QApplication::styleSheet, {Qt Style Sheets}
+    style_sheet() -> String,
+    ///     \property QWidget::windowTitle
+    ///     \brief the window title (caption)
+    /// 
+    ///     This property only makes sense for top-level widgets, such as
+    ///     windows and dialogs. If no caption has been set, the title is based of the
+    ///     \l windowFilePath. If neither of these is set, then the title is
+    ///     an empty string.
+    /// 
+    ///     If you use the \l windowModified mechanism, the window title must
+    ///     contain a "[*]" placeholder, which indicates where the '*' should
+    ///     appear. Normally, it should appear right after the file name
+    ///     (e.g., "document1.txt[*] - Text Editor"). If the \l
+    ///     windowModified property is \c false (the default), the placeholder
+    ///     is simply removed.
+    /// 
+    ///     On some desktop platforms (including Windows and Unix), the application name
+    ///     (from QGuiApplication::applicationDisplayName) is added at the end of the
+    ///     window title, if set. This is done by the QPA plugin, so it is shown to the
+    ///     user, but isn't part of the windowTitle string.
+    /// 
+    ///     \sa windowIcon, windowModified, windowFilePath
+    window_title() -> String,
+    ///     \fn void QWidget::windowIconChanged(const QIcon &icon)
+    /// 
+    ///     This signal is emitted when the window's icon has changed, with the
+    ///     new \a icon as an argument.
+    /// 
+    ///     \since 5.2
+    set_window_icon(icon: &IconType),
+    ///     \property QWidget::windowIcon
+    ///     \brief the widget's icon
+    /// 
+    ///     This property only makes sense for windows. If no icon
+    ///     has been set, windowIcon() returns the application icon
+    ///     (QApplication::windowIcon()).
+    /// 
+    ///     \sa windowTitle
+    window_icon() -> Icon,
+    ///     \fn void QWidget::windowIconTextChanged(const QString &iconText)
+    /// 
+    ///     This signal is emitted when the window's icon text has changed, with the
+    ///     new \a iconText as an argument.
+    /// 
+    ///     \since 5.2
+    ///     \obsolete
+    /// 
+    ///     This signal is deprecated.
+    set_window_icon_text(arg0: String),
+    ///     \property QWidget::windowIconText
+    ///     \brief the text to be displayed on the icon of a minimized window
+    /// 
+    ///     This property only makes sense for windows. If no icon
+    ///     text has been set, this accessor returns an empty string.
+    ///     It is only implemented on the X11 platform, and only certain
+    ///     window managers use this window property.
+    /// 
+    ///     \obsolete
+    ///     This property is deprecated.
+    /// 
+    ///     \sa windowIcon, windowTitle
+    window_icon_text() -> String,
+    ///     Sets the window's role to \a role. This only makes sense for
+    ///     windows on X11.
+    set_window_role(arg0: String),
+    ///     Returns the window's role, or an empty string.
+    /// 
+    ///     \sa windowIcon, windowTitle
+    window_role() -> String,
+    set_window_file_path(file_path: String),
+    ///     \property QWidget::windowFilePath
+    ///     \since 4.4
+    ///     \brief the file path associated with a widget
+    /// 
+    ///     This property only makes sense for windows. It associates a file path with
+    ///     a window. If you set the file path, but have not set the window title, Qt
+    ///     sets the window title to the file name of the specified path, obtained using
+    ///     QFileInfo::fileName().
+    /// 
+    ///     If the window title is set at any point, then the window title takes precedence and
+    ///     will be shown instead of the file path string.
+    /// 
+    ///     Additionally, on \macos, this has an added benefit that it sets the
+    ///     \l{http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGWindows/chapter_17_section_3.html}{proxy icon}
+    ///     for the window, assuming that the file path exists.
+    /// 
+    ///     If no file path is set, this property contains an empty string.
+    /// 
+    ///     By default, this property contains an empty string.
+    /// 
+    ///     \sa windowTitle, windowIcon
+    window_file_path() -> String,
+    set_window_opacity(level: f32),
+    ///   \property QWidget::windowOpacity
+    /// 
+    ///   \brief The level of opacity for the window.
+    /// 
+    ///   The valid range of opacity is from 1.0 (completely opaque) to
+    ///   0.0 (completely transparent).
+    /// 
+    ///   By default the value of this property is 1.0.
+    /// 
+    ///   This feature is available on Embedded Linux, \macos, Windows,
+    ///   and X11 platforms that support the Composite extension.
+    /// 
+    ///   \note On X11 you need to have a composite manager running,
+    ///   and the X11 specific _NET_WM_WINDOW_OPACITY atom needs to be
+    ///   supported by the window manager you are using.
+    /// 
+    ///   \warning Changing this property from opaque to transparent might issue a
+    ///   paint event that needs to be processed before the window is displayed
+    ///   correctly. This affects mainly the use of QPixmap::grabWindow(). Also note
+    ///   that semi-transparent windows update and resize significantly slower than
+    ///   opaque windows.
+    /// 
+    ///   \sa setMask()
+    window_opacity() -> f32,
+    ///     \property QWidget::windowModified
+    ///     \brief whether the document shown in the window has unsaved changes
+    /// 
+    ///     A modified window is a window whose content has changed but has
+    ///     not been saved to disk. This flag will have different effects
+    ///     varied by the platform. On \macos the close button will have a
+    ///     modified look; on other platforms, the window title will have an
+    ///     '*' (asterisk).
+    /// 
+    ///     The window title must contain a "[*]" placeholder, which
+    ///     indicates where the '*' should appear. Normally, it should appear
+    ///     right after the file name (e.g., "document1.txt[*] - Text
+    ///     Editor"). If the window isn't modified, the placeholder is simply
+    ///     removed.
+    /// 
+    ///     Note that if a widget is set as modified, all its ancestors will
+    ///     also be set as modified. However, if you call \c
+    ///     {setWindowModified(false)} on a widget, this will not propagate to
+    ///     its parent because other children of the parent might have been
+    ///     modified.
+    /// 
+    ///     \sa windowTitle, {Application Example}, {SDI Example}, {MDI Example}
+    is_window_modified() -> bool,
+    ///   \property QWidget::toolTip
+    /// 
+    ///   \brief the widget's tooltip
+    /// 
+    ///   Note that by default tooltips are only shown for widgets that are
+    ///   children of the active window. You can change this behavior by
+    ///   setting the attribute Qt::WA_AlwaysShowToolTips on the \e window,
+    ///   not on the widget with the tooltip.
+    /// 
+    ///   If you want to control a tooltip's behavior, you can intercept the
+    ///   event() function and catch the QEvent::ToolTip event (e.g., if you
+    ///   want to customize the area for which the tooltip should be shown).
+    /// 
+    ///   By default, this property contains an empty string.
+    /// 
+    ///   \sa QToolTip, statusTip, whatsThis
+    set_tool_tip(arg0: String),
+    tool_tip() -> String,
+    ///   \property QWidget::toolTipDuration
+    ///   \brief the widget's tooltip duration
+    ///   \since 5.2
+    /// 
+    ///   Specifies how long time the tooltip will be displayed, in milliseconds.
+    ///   If the value is -1 (default) the duration is calculated depending on the length of the tooltip.
+    /// 
+    ///   \sa toolTip
+    set_tool_tip_duration(msec: i32),
+    tool_tip_duration() -> i32,
+    ///   \property QWidget::statusTip
+    ///   \brief the widget's status tip
+    /// 
+    ///   By default, this property contains an empty string.
+    /// 
+    ///   \sa toolTip, whatsThis
+    set_status_tip(arg0: String),
+    status_tip() -> String,
+    ///   \property QWidget::whatsThis
+    /// 
+    ///   \brief the widget's What's This help text.
+    /// 
+    ///   By default, this property contains an empty string.
+    /// 
+    ///   \sa QWhatsThis, QWidget::toolTip, QWidget::statusTip
+    set_whats_this(arg0: String),
+    whats_this() -> String,
+    accessible_name() -> String,
+    ///   \property QWidget::accessibleName
+    /// 
+    ///   \brief the widget's name as seen by assistive technologies
+    /// 
+    ///   This is the primary name by which assistive technology such as screen readers
+    ///   announce this widget. For most widgets setting this property is not required.
+    ///   For example for QPushButton the button's text will be used.
+    /// 
+    ///   It is important to set this property when the widget does not provide any
+    ///   text. For example a button that only contains an icon needs to set this
+    ///   property to work with screen readers.
+    ///   The name should be short and equivalent to the visual information conveyed
+    ///   by the widget.
+    /// 
+    ///   This property has to be \l{Internationalization with Qt}{localized}.
+    /// 
+    ///   By default, this property contains an empty string.
+    /// 
+    ///   \sa QWidget::accessibleDescription, QAccessibleInterface::text()
+    set_accessible_name(name: String),
+    accessible_description() -> String,
+    ///   \property QWidget::accessibleDescription
+    /// 
+    ///   \brief the widget's description as seen by assistive technologies
+    /// 
+    ///   The accessible description of a widget should convey what a widget does.
+    ///   While the \l accessibleName should be a short and consise string (e.g. \gui{Save}),
+    ///   the description should give more context, such as \gui{Saves the current document}.
+    /// 
+    ///   This property has to be \l{Internationalization with Qt}{localized}.
+    /// 
+    ///   By default, this property contains an empty string and Qt falls back
+    ///   to using the tool tip to provide this information.
+    /// 
+    ///   \sa QWidget::accessibleName, QAccessibleInterface::text()
+    set_accessible_description(description: String),
+    ///     \property QWidget::layoutDirection
+    /// 
+    ///     \brief the layout direction for this widget
+    /// 
+    ///     By default, this property is set to Qt::LeftToRight.
+    /// 
+    ///     When the layout direction is set on a widget, it will propagate to
+    ///     the widget's children, but not to a child that is a window and not
+    ///     to a child for which setLayoutDirection() has been explicitly
+    ///     called. Also, child widgets added \e after setLayoutDirection()
+    ///     has been called for the parent do not inherit the parent's layout
+    ///     direction.
+    /// 
+    ///     This method no longer affects text layout direction since Qt 4.7.
+    /// 
+    ///     \sa QApplication::layoutDirection
+    set_layout_direction(direction: Rute::LayoutDirection),
+    layout_direction() -> Rute::LayoutDirection,
+    unset_layout_direction(),
+    set_locale(locale: &LocaleType),
+    locale() -> Locale,
+    unset_locale(),
+    is_right_to_left() -> bool,
+    is_left_to_right() -> bool,
+    ///     Gives the keyboard input focus to this widget (or its focus
+    ///     proxy) if this widget or one of its parents is the \l{isActiveWindow()}{active window}. The \a reason argument will
+    ///     be passed into any focus event sent from this function, it is used
+    ///     to give an explanation of what caused the widget to get focus.
+    ///     If the window is not active, the widget will be given the focus when
+    ///     the window becomes active.
+    /// 
+    ///     First, a focus about to change event is sent to the focus widget (if any) to
+    ///     tell it that it is about to lose the focus. Then focus is changed, a
+    ///     focus out event is sent to the previous focus item and a focus in event is sent
+    ///     to the new item to tell it that it just received the focus.
+    ///     (Nothing happens if the focus in and focus out widgets are the
+    ///     same.)
+    /// 
+    ///     \note On embedded platforms, setFocus() will not cause an input panel
+    ///     to be opened by the input method. If you want this to happen, you
+    ///     have to send a QEvent::RequestSoftwareInputPanel event to the
+    ///     widget yourself.
+    /// 
+    ///     setFocus() gives focus to a widget regardless of its focus policy,
+    ///     but does not clear any keyboard grab (see grabKeyboard()).
+    /// 
+    ///     Be aware that if the widget is hidden, it will not accept focus
+    ///     until it is shown.
+    /// 
+    ///     \warning If you call setFocus() in a function which may itself be
+    ///     called from focusOutEvent() or focusInEvent(), you may get an
+    ///     infinite recursion.
+    /// 
+    ///     \sa hasFocus(), clearFocus(), focusInEvent(), focusOutEvent(),
+    ///     setFocusPolicy(), focusWidget(), QApplication::focusWidget(), grabKeyboard(),
+    ///     grabMouse(), {Keyboard Focus in Widgets}, QEvent::RequestSoftwareInputPanel
+    set_focus(),
+    ///     \property QWidget::isActiveWindow
+    ///     \brief whether this widget's window is the active window
+    /// 
+    ///     The active window is the window that contains the widget that has
+    ///     keyboard focus (The window may still have focus if it has no
+    ///     widgets or none of its widgets accepts keyboard focus).
+    /// 
+    ///     When popup windows are visible, this property is \c true for both the
+    ///     active window \e and for the popup.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa activateWindow(), QApplication::activeWindow()
+    is_active_window() -> bool,
+    ///     \fn void QWidget::activateWindow()
+    /// 
+    ///     Sets the top-level widget containing this widget to be the active
+    ///     window.
+    /// 
+    ///     An active window is a visible top-level window that has the
+    ///     keyboard input focus.
+    /// 
+    ///     This function performs the same operation as clicking the mouse on
+    ///     the title bar of a top-level window. On X11, the result depends on
+    ///     the Window Manager. If you want to ensure that the window is
+    ///     stacked on top as well you should also call raise(). Note that the
+    ///     window must be visible, otherwise activateWindow() has no effect.
+    /// 
+    ///     On Windows, if you are calling this when the application is not
+    ///     currently the active one then it will not make it the active
+    ///     window.  It will change the color of the taskbar entry to indicate
+    ///     that the window has changed in some way. This is because Microsoft
+    ///     does not allow an application to interrupt what the user is currently
+    ///     doing in another application.
+    /// 
+    ///     \sa isActiveWindow(), window(), show(), QWindowsWindowFunctions::setWindowActivationBehavior()
+    activate_window(),
+    ///     Takes keyboard input focus from the widget.
+    /// 
+    ///     If the widget has active focus, a \l{focusOutEvent()}{focus out event} is sent to this widget to tell it that it has
+    ///     lost the focus.
+    /// 
+    ///     This widget must enable focus setting in order to get the keyboard
+    ///     input focus, i.e. it must call setFocusPolicy().
+    /// 
+    ///     \sa hasFocus(), setFocus(), focusInEvent(), focusOutEvent(),
+    ///     setFocusPolicy(), QApplication::focusWidget()
+    clear_focus(),
+    ///     Gives the keyboard input focus to this widget (or its focus
+    ///     proxy) if this widget or one of its parents is the \l{isActiveWindow()}{active window}. The \a reason argument will
+    ///     be passed into any focus event sent from this function, it is used
+    ///     to give an explanation of what caused the widget to get focus.
+    ///     If the window is not active, the widget will be given the focus when
+    ///     the window becomes active.
+    /// 
+    ///     First, a focus about to change event is sent to the focus widget (if any) to
+    ///     tell it that it is about to lose the focus. Then focus is changed, a
+    ///     focus out event is sent to the previous focus item and a focus in event is sent
+    ///     to the new item to tell it that it just received the focus.
+    ///     (Nothing happens if the focus in and focus out widgets are the
+    ///     same.)
+    /// 
+    ///     \note On embedded platforms, setFocus() will not cause an input panel
+    ///     to be opened by the input method. If you want this to happen, you
+    ///     have to send a QEvent::RequestSoftwareInputPanel event to the
+    ///     widget yourself.
+    /// 
+    ///     setFocus() gives focus to a widget regardless of its focus policy,
+    ///     but does not clear any keyboard grab (see grabKeyboard()).
+    /// 
+    ///     Be aware that if the widget is hidden, it will not accept focus
+    ///     until it is shown.
+    /// 
+    ///     \warning If you call setFocus() in a function which may itself be
+    ///     called from focusOutEvent() or focusInEvent(), you may get an
+    ///     infinite recursion.
+    /// 
+    ///     \sa hasFocus(), clearFocus(), focusInEvent(), focusOutEvent(),
+    ///     setFocusPolicy(), focusWidget(), QApplication::focusWidget(), grabKeyboard(),
+    ///     grabMouse(), {Keyboard Focus in Widgets}, QEvent::RequestSoftwareInputPanel
+    set_focus(reason: Rute::FocusReason),
+    ///     \property QWidget::focusPolicy
+    ///     \brief the way the widget accepts keyboard focus
+    /// 
+    ///     The policy is Qt::TabFocus if the widget accepts keyboard
+    ///     focus by tabbing, Qt::ClickFocus if the widget accepts
+    ///     focus by clicking, Qt::StrongFocus if it accepts both, and
+    ///     Qt::NoFocus (the default) if it does not accept focus at
+    ///     all.
+    /// 
+    ///     You must enable keyboard focus for a widget if it processes
+    ///     keyboard events. This is normally done from the widget's
+    ///     constructor. For instance, the QLineEdit constructor calls
+    ///     setFocusPolicy(Qt::StrongFocus).
+    /// 
+    ///     If the widget has a focus proxy, then the focus policy will
+    ///     be propagated to it.
+    /// 
+    ///     \sa focusInEvent(), focusOutEvent(), keyPressEvent(), keyReleaseEvent(), enabled
+    focus_policy() -> Rute::FocusPolicy,
+    set_focus_policy(policy: Rute::FocusPolicy),
+    ///     \property QWidget::focus
+    ///     \brief whether this widget (or its focus proxy) has the keyboard
+    ///     input focus
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \note Obtaining the value of this property for a widget is effectively equivalent
+    ///     to checking whether QApplication::focusWidget() refers to the widget.
+    /// 
+    ///     \sa setFocus(), clearFocus(), setFocusPolicy(), QApplication::focusWidget()
+    has_focus() -> bool,
+    ///     Puts the \a second widget after the \a first widget in the focus order.
+    /// 
+    ///     It effectively removes the \a second widget from its focus chain and
+    ///     inserts it after the \a first widget.
+    /// 
+    ///     Note that since the tab order of the \a second widget is changed, you
+    ///     should order a chain like this:
+    /// 
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 9
+    /// 
+    ///     \e not like this:
+    /// 
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 10
+    /// 
+    ///     If \a first or \a second has a focus proxy, setTabOrder()
+    ///     correctly substitutes the proxy.
+    /// 
+    ///     \note Since Qt 5.10: A widget that has a child as focus proxy is understood as
+    ///     a compound widget. When setting a tab order between one or two compound widgets, the
+    ///     local tab order inside each will be preserved. This means that if both widgets are
+    ///     compound widgets, the resulting tab order will be from the last child inside
+    ///     \a first, to the first child inside \a second.
+    /// 
+    ///     \sa setFocusPolicy(), setFocusProxy(), {Keyboard Focus in Widgets}
+    [static] set_tab_order(arg0: *WidgetType, arg1: *WidgetType),
+    ///     Sets the widget's focus proxy to widget \a w. If \a w is 0, the
+    ///     function resets this widget to have no focus proxy.
+    /// 
+    ///     Some widgets can "have focus", but create a child widget, such as
+    ///     QLineEdit, to actually handle the focus. In this case, the widget
+    ///     can set the line edit to be its focus proxy.
+    /// 
+    ///     setFocusProxy() sets the widget which will actually get focus when
+    ///     "this widget" gets it. If there is a focus proxy, setFocus() and
+    ///     hasFocus() operate on the focus proxy.
+    /// 
+    ///     \sa focusProxy()
+    set_focus_proxy(arg0: *WidgetType),
+    ///     Returns the focus proxy, or 0 if there is no focus proxy.
+    /// 
+    ///     \sa setFocusProxy()
+    focus_proxy() -> Widget?,
+    ///     \property QWidget::contextMenuPolicy
+    ///     \brief how the widget shows a context menu
+    /// 
+    ///     The default value of this property is Qt::DefaultContextMenu,
+    ///     which means the contextMenuEvent() handler is called. Other values
+    ///     are Qt::NoContextMenu, Qt::PreventContextMenu,
+    ///     Qt::ActionsContextMenu, and Qt::CustomContextMenu. With
+    ///     Qt::CustomContextMenu, the signal customContextMenuRequested() is
+    ///     emitted.
+    /// 
+    ///     \sa contextMenuEvent(), customContextMenuRequested(), actions()
+    context_menu_policy() -> Rute::ContextMenuPolicy,
+    set_context_menu_policy(policy: Rute::ContextMenuPolicy),
+    ///     \fn void QWidget::grabMouse(const QCursor &cursor)
+    ///     \overload grabMouse()
+    /// 
+    ///     Grabs the mouse input and changes the cursor shape.
+    /// 
+    ///     The cursor will assume shape \a cursor (for as long as the mouse
+    ///     focus is grabbed) and this widget will be the only one to receive
+    ///     mouse events until releaseMouse() is called().
+    /// 
+    ///     \warning Grabbing the mouse might lock the terminal.
+    /// 
+    ///     \note See the note in QWidget::grabMouse().
+    /// 
+    ///     \sa releaseMouse(), grabKeyboard(), releaseKeyboard(), setCursor()
+    grab_mouse(),
+    ///     \fn void QWidget::grabMouse(const QCursor &cursor)
+    ///     \overload grabMouse()
+    /// 
+    ///     Grabs the mouse input and changes the cursor shape.
+    /// 
+    ///     The cursor will assume shape \a cursor (for as long as the mouse
+    ///     focus is grabbed) and this widget will be the only one to receive
+    ///     mouse events until releaseMouse() is called().
+    /// 
+    ///     \warning Grabbing the mouse might lock the terminal.
+    /// 
+    ///     \note See the note in QWidget::grabMouse().
+    /// 
+    ///     \sa releaseMouse(), grabKeyboard(), releaseKeyboard(), setCursor()
+    grab_mouse(arg0: &CursorType),
+    ///     \fn void QWidget::releaseMouse()
+    /// 
+    ///     Releases the mouse grab.
+    /// 
+    ///     \sa grabMouse(), grabKeyboard(), releaseKeyboard()
+    release_mouse(),
+    ///     \fn void QWidget::grabKeyboard()
+    /// 
+    ///     Grabs the keyboard input.
+    /// 
+    ///     This widget receives all keyboard events until releaseKeyboard()
+    ///     is called; other widgets get no keyboard events at all. Mouse
+    ///     events are not affected. Use grabMouse() if you want to grab that.
+    /// 
+    ///     The focus widget is not affected, except that it doesn't receive
+    ///     any keyboard events. setFocus() moves the focus as usual, but the
+    ///     new focus widget receives keyboard events only after
+    ///     releaseKeyboard() is called.
+    /// 
+    ///     If a different widget is currently grabbing keyboard input, that
+    ///     widget's grab is released first.
+    /// 
+    ///     \sa releaseKeyboard(), grabMouse(), releaseMouse(), focusWidget()
+    grab_keyboard(),
+    ///     \fn void QWidget::releaseKeyboard()
+    /// 
+    ///     Releases the keyboard grab.
+    /// 
+    ///     \sa grabKeyboard(), grabMouse(), releaseMouse()
+    release_keyboard(),
+    ///     Adds a shortcut to Qt's shortcut system that watches for the given
+    ///     \a key sequence in the given \a context. If the \a context is
+    ///     Qt::ApplicationShortcut, the shortcut applies to the application as a
+    ///     whole. Otherwise, it is either local to this widget, Qt::WidgetShortcut,
+    ///     or to the window itself, Qt::WindowShortcut.
+    /// 
+    ///     If the same \a key sequence has been grabbed by several widgets,
+    ///     when the \a key sequence occurs a QEvent::Shortcut event is sent
+    ///     to all the widgets to which it applies in a non-deterministic
+    ///     order, but with the ``ambiguous'' flag set to true.
+    /// 
+    ///     \warning You should not normally need to use this function;
+    ///     instead create \l{QAction}s with the shortcut key sequences you
+    ///     require (if you also want equivalent menu options and toolbar
+    ///     buttons), or create \l{QShortcut}s if you just need key sequences.
+    ///     Both QAction and QShortcut handle all the event filtering for you,
+    ///     and provide signals which are triggered when the user triggers the
+    ///     key sequence, so are much easier to use than this low-level
+    ///     function.
+    /// 
+    ///     \sa releaseShortcut(), setShortcutEnabled()
+    grab_shortcut(key: &KeySequenceType, context: Rute::ShortcutContext) -> i32,
+    ///     Removes the shortcut with the given \a id from Qt's shortcut
+    ///     system. The widget will no longer receive QEvent::Shortcut events
+    ///     for the shortcut's key sequence (unless it has other shortcuts
+    ///     with the same key sequence).
+    /// 
+    ///     \warning You should not normally need to use this function since
+    ///     Qt's shortcut system removes shortcuts automatically when their
+    ///     parent widget is destroyed. It is best to use QAction or
+    ///     QShortcut to handle shortcuts, since they are easier to use than
+    ///     this low-level function. Note also that this is an expensive
+    ///     operation.
+    /// 
+    ///     \sa grabShortcut(), setShortcutEnabled()
+    release_shortcut(id: i32),
+    ///     If \a enable is true, the shortcut with the given \a id is
+    ///     enabled; otherwise the shortcut is disabled.
+    /// 
+    ///     \warning You should not normally need to use this function since
+    ///     Qt's shortcut system enables/disables shortcuts automatically as
+    ///     widgets become hidden/visible and gain or lose focus. It is best
+    ///     to use QAction or QShortcut to handle shortcuts, since they are
+    ///     easier to use than this low-level function.
+    /// 
+    ///     \sa grabShortcut(), releaseShortcut()
+    set_shortcut_enabled(id: i32, enable: bool),
+    ///     \since 4.2
+    /// 
+    ///     If \a enable is true, auto repeat of the shortcut with the
+    ///     given \a id is enabled; otherwise it is disabled.
+    /// 
+    ///     \sa grabShortcut(), releaseShortcut()
+    set_shortcut_auto_repeat(id: i32, enable: bool),
+    ///     \fn QWidget *QWidget::mouseGrabber()
+    /// 
+    ///     Returns the widget that is currently grabbing the mouse input.
+    /// 
+    ///     If no widget in this application is currently grabbing the mouse,
+    ///     0 is returned.
+    /// 
+    ///     \sa grabMouse(), keyboardGrabber()
+    [static] mouse_grabber() -> Widget?,
+    ///     \fn QWidget *QWidget::keyboardGrabber()
+    /// 
+    ///     Returns the widget that is currently grabbing the keyboard input.
+    /// 
+    ///     If no widget in this application is currently grabbing the
+    ///     keyboard, 0 is returned.
+    /// 
+    ///     \sa grabMouse(), mouseGrabber()
+    [static] keyboard_grabber() -> Widget?,
+    updates_enabled() -> bool,
+    ///     \property QWidget::updatesEnabled
+    ///     \brief whether updates are enabled
+    /// 
+    ///     An updates enabled widget receives paint events and has a system
+    ///     background; a disabled widget does not. This also implies that
+    ///     calling update() and repaint() has no effect if updates are
+    ///     disabled.
+    /// 
+    ///     By default, this property is \c true.
+    /// 
+    ///     setUpdatesEnabled() is normally used to disable updates for a
+    ///     short period of time, for instance to avoid screen flicker during
+    ///     large changes. In Qt, widgets normally do not generate screen
+    ///     flicker, but on X11 the server might erase regions on the screen
+    ///     when widgets get hidden before they can be replaced by other
+    ///     widgets. Disabling updates solves this.
+    /// 
+    ///     Example:
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 13
+    /// 
+    ///     Disabling a widget implicitly disables all its children. Enabling a widget
+    ///     enables all child widgets \e except top-level widgets or those that
+    ///     have been explicitly disabled. Re-enabling updates implicitly calls
+    ///     update() on the widget.
+    /// 
+    ///     \sa paintEvent()
+    set_updates_enabled(enable: bool),
+    graphics_proxy_widget() -> GraphicsProxyWidget?,
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    update(),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    repaint(),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    update(x: i32, y: i32, w: i32, h: i32),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    update(arg0: &RectType),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    update(arg0: &RegionType),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    repaint(x: i32, y: i32, w: i32, h: i32),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    repaint(arg0: &RectType),
+    ///     \overload
+    /// 
+    ///     This version repaints a region \a rgn inside the widget.
+    repaint(arg0: &RegionType),
+    ///     \fn bool QWidget::isHidden() const
+    /// 
+    ///     Returns \c true if the widget is hidden, otherwise returns \c false.
+    /// 
+    ///     A hidden widget will only become visible when show() is called on
+    ///     it. It will not be automatically shown when the parent is shown.
+    /// 
+    ///     To check visibility, use !isVisible() instead (notice the exclamation mark).
+    /// 
+    ///     isHidden() implies !isVisible(), but a widget can be not visible
+    ///     and not hidden at the same time. This is the case for widgets that are children of
+    ///     widgets that are not visible.
+    /// 
+    /// 
+    ///     Widgets are hidden if:
+    ///     \list
+    ///         \li they were created as independent windows,
+    ///         \li they were created as children of visible widgets,
+    ///         \li hide() or setVisible(false) was called.
+    ///     \endlist
+    [event] set_visible(visible: bool),
+    ///     Convenience function, equivalent to setVisible(!\a hidden).
+    set_hidden(hidden: bool),
     ///     Shows the widget and its child widgets.
     /// 
     ///     This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
     ///     depending on the platform's default behavior for the window flags.
     /// 
-    ///      raise(), showEvent(), hide(), setVisible(), showMinimized(), showMaximized(),
+    ///      \sa raise(), showEvent(), hide(), setVisible(), showMinimized(), showMaximized(),
     ///     showNormal(), isVisible(), windowFlags()
     show(),
     ///     Hides the widget. This function is equivalent to
     ///     setVisible(false).
     /// 
-    ///     you are working with QDialog or its subclasses and you invoke
+    /// 
+    ///     \note If you are working with QDialog or its subclasses and you invoke
     ///     the show() function after this function, the dialog will be displayed in
     ///     its original position.
     /// 
-    ///     hideEvent(), isHidden(), show(), setVisible(), isVisible(), close()
+    ///     \sa hideEvent(), isHidden(), show(), setVisible(), isVisible(), close()
     hide(),
-    ///     Sets both the minimum and maximum width of the widget to \a w
-    ///     without changing the heights. Provided for convenience.
+    ///     Shows the widget minimized, as an icon.
     /// 
-    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
-    set_fixed_width(w: i32),
-    ///     Sets both the minimum and maximum heights of the widget to h
-    ///     without changing the widths. Provided for convenience.
+    ///     Calling this function only affects \l{isWindow()}{windows}.
     /// 
-    ///     sizeHint(), minimumSize(), maximumSize(), setFixedSize()
-    set_fixed_height(h: i32),
-
-    /// Resize doc
-    resize(width: i32, height: i32),
+    ///     \sa showNormal(), showMaximized(), show(), hide(), isVisible(),
+    ///         isMinimized()
+    show_minimized(),
+    ///     Shows the widget maximized.
+    /// 
+    ///     Calling this function only affects \l{isWindow()}{windows}.
+    /// 
+    ///     On X11, this function may not work properly with certain window
+    ///     managers. See the \l{Window Geometry} documentation for an explanation.
+    /// 
+    ///     \sa setWindowState(), showNormal(), showMinimized(), show(), hide(), isVisible()
+    show_maximized(),
+    ///     Shows the widget in full-screen mode.
+    /// 
+    ///     Calling this function only affects \l{isWindow()}{windows}.
+    /// 
+    ///     To return from full-screen mode, call showNormal().
+    /// 
+    ///     Full-screen mode works fine under Windows, but has certain
+    ///     problems under X. These problems are due to limitations of the
+    ///     ICCCM protocol that specifies the communication between X11
+    ///     clients and the window manager. ICCCM simply does not understand
+    ///     the concept of non-decorated full-screen windows. Therefore, the
+    ///     best we can do is to request a borderless window and place and
+    ///     resize it to fill the entire screen. Depending on the window
+    ///     manager, this may or may not work. The borderless window is
+    ///     requested using MOTIF hints, which are at least partially
+    ///     supported by virtually all modern window managers.
+    /// 
+    ///     An alternative would be to bypass the window manager entirely and
+    ///     create a window with the Qt::X11BypassWindowManagerHint flag. This
+    ///     has other severe problems though, like totally broken keyboard focus
+    ///     and very strange effects on desktop changes or when the user raises
+    ///     other windows.
+    /// 
+    ///     X11 window managers that follow modern post-ICCCM specifications
+    ///     support full-screen mode properly.
+    /// 
+    ///     \sa showNormal(), showMaximized(), show(), hide(), isVisible()
+    show_full_screen(),
+    ///     Restores the widget after it has been maximized or minimized.
+    /// 
+    ///     Calling this function only affects \l{isWindow()}{windows}.
+    /// 
+    ///     \sa setWindowState(), showMinimized(), showMaximized(), show(), hide(), isVisible()
+    show_normal(),
+    ///     Closes this widget. Returns \c true if the widget was closed;
+    ///     otherwise returns \c false.
+    /// 
+    ///     First it sends the widget a QCloseEvent. The widget is
+    ///     \l{hide()}{hidden} if it \l{QEvent::accept()}{accepts}
+    ///     the close event. If it \l{QEvent::ignore()}{ignores}
+    ///     the event, nothing happens. The default
+    ///     implementation of QWidget::closeEvent() accepts the close event.
+    /// 
+    ///     If the widget has the Qt::WA_DeleteOnClose flag, the widget
+    ///     is also deleted. A close events is delivered to the widget no
+    ///     matter if the widget is visible or not.
+    /// 
+    ///     The \l QApplication::lastWindowClosed() signal is emitted when the
+    ///     last visible primary window (i.e. window with no parent) with the
+    ///     Qt::WA_QuitOnClose attribute set is closed. By default this
+    ///     attribute is set for all widgets except transient windows such as
+    ///     splash screens, tool windows, and popup menus.
+    /// 
+    close() -> bool,
+    ///     Raises this widget to the top of the parent widget's stack.
+    /// 
+    ///     After this call the widget will be visually in front of any
+    ///     overlapping sibling widgets.
+    /// 
+    ///     \note When using activateWindow(), you can call this function to
+    ///     ensure that the window is stacked on top.
+    /// 
+    ///     \sa lower(), stackUnder()
+    raise(),
+    ///     Lowers the widget to the bottom of the parent widget's stack.
+    /// 
+    ///     After this call the widget will be visually behind (and therefore
+    ///     obscured by) any overlapping sibling widgets.
+    /// 
+    ///     \sa raise(), stackUnder()
+    lower(),
+    ///     Places the widget under \a w in the parent widget's stack.
+    /// 
+    ///     To make this work, the widget itself and \a w must be siblings.
+    /// 
+    ///     \sa raise(), lower()
+    stack_under(arg0: *WidgetType),
+    move(x: i32, y: i32),
+    move(arg0: &PointType),
+    resize(w: i32, h: i32),
+    resize(arg0: &SizeType),
+    ///     Adjusts the size of the widget to fit its contents.
+    /// 
+    ///     This function uses sizeHint() if it is valid, i.e., the size hint's width
+    ///     and height are \>= 0. Otherwise, it sets the size to the children
+    ///     rectangle that covers all child widgets (the union of all child widget
+    ///     rectangles).
+    /// 
+    ///     For windows, the screen size is also taken into account. If the sizeHint()
+    ///     is less than (200, 100) and the size policy is \l{QSizePolicy::Expanding}
+    ///     {expanding}, the window will be at least (200, 100). The maximum size of
+    ///     a window is 2/3 of the screen's width and height.
+    /// 
+    ///     \sa sizeHint(), childrenRect()
+    adjust_size(),
+    is_visible() -> bool,
+    ///     Returns \c true if this widget would become visible if \a ancestor is
+    ///     shown; otherwise returns \c false.
+    /// 
+    ///     The true case occurs if neither the widget itself nor any parent
+    ///     up to but excluding \a ancestor has been explicitly hidden.
+    /// 
+    ///     This function will still return true if the widget is obscured by
+    ///     other windows on the screen, but could be physically visible if it
+    ///     or they were to be moved.
+    /// 
+    ///     isVisibleTo(0) is identical to isVisible().
+    /// 
+    ///     \sa show(), hide(), isVisible()
+    is_visible_to(arg0: *WidgetType) -> bool,
+    is_hidden() -> bool,
+    ///     \property QWidget::minimized
+    ///     \brief whether this widget is minimized (iconified)
+    /// 
+    ///     This property is only relevant for windows.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa showMinimized(), visible, show(), hide(), showNormal(), maximized
+    is_minimized() -> bool,
+    ///     \property QWidget::maximized
+    ///     \brief whether this widget is maximized
+    /// 
+    ///     This property is only relevant for windows.
+    /// 
+    ///     \note Due to limitations on some window systems, this does not always
+    ///     report the expected results (e.g., if the user on X11 maximizes the
+    ///     window via the window manager, Qt has no way of distinguishing this
+    ///     from any other resize). This is expected to improve as window manager
+    ///     protocols evolve.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa windowState(), showMaximized(), visible, show(), hide(), showNormal(), minimized
+    is_maximized() -> bool,
+    ///     \property QWidget::fullScreen
+    ///     \brief whether the widget is shown in full screen mode
+    /// 
+    ///     A widget in full screen mode occupies the whole screen area and does not
+    ///     display window decorations, such as a title bar.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa windowState(), minimized, maximized
+    is_full_screen() -> bool,
+    window_state() -> Rute::WindowStates,
+    ///     \fn void QWidget::setWindowState(Qt::WindowStates windowState)
+    /// 
+    ///     Sets the window state to \a windowState. The window state is a OR'ed
+    ///     combination of Qt::WindowState: Qt::WindowMinimized,
+    ///     Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
+    /// 
+    ///     If the window is not visible (i.e. isVisible() returns \c false), the
+    ///     window state will take effect when show() is called. For visible
+    ///     windows, the change is immediate. For example, to toggle between
+    ///     full-screen and normal mode, use the following code:
+    /// 
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 0
+    /// 
+    ///     In order to restore and activate a minimized window (while
+    ///     preserving its maximized and/or full-screen state), use the following:
+    /// 
+    ///     \snippet code/src_gui_kernel_qwidget.cpp 1
+    /// 
+    ///     Calling this function will hide the widget. You must call show() to make
+    ///     the widget visible again.
+    /// 
+    ///     \note On some window systems Qt::WindowActive is not immediate, and may be
+    ///     ignored in certain cases.
+    /// 
+    ///     When the window state changes, the widget receives a changeEvent()
+    ///     of type QEvent::WindowStateChange.
+    /// 
+    ///     \sa Qt::WindowState, windowState()
+    set_window_state(state: Rute::WindowStates),
+    override_window_state(state: Rute::WindowStates),
+    ///     \property QWidget::sizeHint
+    ///     \brief the recommended size for the widget
+    /// 
+    ///     If the value of this property is an invalid size, no size is
+    ///     recommended.
+    /// 
+    ///     The default implementation of sizeHint() returns an invalid size
+    ///     if there is no layout for this widget, and returns the layout's
+    ///     preferred size otherwise.
+    /// 
+    ///     \sa QSize::isValid(), minimumSizeHint(), sizePolicy(),
+    ///     setMinimumSize(), updateGeometry()
+    [event] size_hint() -> Size,
+    ///     \property QWidget::minimumSizeHint
+    ///     \brief the recommended minimum size for the widget
+    /// 
+    ///     If the value of this property is an invalid size, no minimum size
+    ///     is recommended.
+    /// 
+    ///     The default implementation of minimumSizeHint() returns an invalid
+    ///     size if there is no layout for this widget, and returns the
+    ///     layout's minimum size otherwise. Most built-in widgets reimplement
+    ///     minimumSizeHint().
+    /// 
+    ///     \l QLayout will never resize a widget to a size smaller than the
+    ///     minimum size hint unless minimumSize() is set or the size policy is
+    ///     set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
+    ///     size hint will be ignored.
+    /// 
+    ///     \sa QSize::isValid(), resize(), setMinimumSize(), sizePolicy()
+    [event] minimum_size_hint() -> Size,
+    ///     \property QWidget::sizePolicy
+    ///     \brief the default layout behavior of the widget
+    /// 
+    ///     If there is a QLayout that manages this widget's children, the
+    ///     size policy specified by that layout is used. If there is no such
+    ///     QLayout, the result of this function is used.
+    /// 
+    ///     The default policy is Preferred/Preferred, which means that the
+    ///     widget can be freely resized, but prefers to be the size
+    ///     sizeHint() returns. Button-like widgets set the size policy to
+    ///     specify that they may stretch horizontally, but are fixed
+    ///     vertically. The same applies to lineedit controls (such as
+    ///     QLineEdit, QSpinBox or an editable QComboBox) and other
+    ///     horizontally orientated widgets (such as QProgressBar).
+    ///     QToolButton's are normally square, so they allow growth in both
+    ///     directions. Widgets that support different directions (such as
+    ///     QSlider, QScrollBar or QHeader) specify stretching in the
+    ///     respective direction only. Widgets that can provide scroll bars
+    ///     (usually subclasses of QScrollArea) tend to specify that they can
+    ///     use additional space, and that they can make do with less than
+    ///     sizeHint().
+    /// 
+    ///     \sa sizeHint(), QLayout, QSizePolicy, updateGeometry()
+    size_policy() -> SizePolicy,
+    set_size_policy(arg0: SizePolicyType),
+    set_size_policy(horizontal: SizePolicy::Policy, vertical: SizePolicy::Policy),
+    ///     Returns the preferred height for this widget, given the width \a w.
+    /// 
+    ///     If this widget has a layout, the default implementation returns
+    ///     the layout's preferred height.  if there is no layout, the default
+    ///     implementation returns -1 indicating that the preferred height
+    ///     does not depend on the width.
+    [event] height_for_width(arg0: i32) -> i32,
+    ///     \since 5.0
+    /// 
+    ///     Returns \c true if the widget's preferred height depends on its width; otherwise returns \c false.
+    [event] has_height_for_width() -> bool,
+    ///     Returns the unobscured region where paint events can occur.
+    /// 
+    ///     For visible widgets, this is an approximation of the area not
+    ///     covered by other widgets; otherwise, this is an empty region.
+    /// 
+    ///     The repaint() function calls this function if necessary, so in
+    ///     general you do not need to call it.
+    /// 
+    visible_region() -> Region,
+    ///   \overload
+    ///   \since 4.6
+    /// 
+    ///   \brief The setContentsMargins function sets the margins around the
+    ///   widget's contents.
+    /// 
+    ///   Sets the margins around the contents of the widget to have the
+    ///   sizes determined by \a margins. The margins are
+    ///   used by the layout system, and may be used by subclasses to
+    ///   specify the area to draw in (e.g. excluding the frame).
+    /// 
+    ///   Changing the margins will trigger a resizeEvent().
+    /// 
+    ///   \sa contentsRect(), getContentsMargins()
+    set_contents_margins(left: i32, top: i32, right: i32, bottom: i32),
+    ///   \overload
+    ///   \since 4.6
+    /// 
+    ///   \brief The setContentsMargins function sets the margins around the
+    ///   widget's contents.
+    /// 
+    ///   Sets the margins around the contents of the widget to have the
+    ///   sizes determined by \a margins. The margins are
+    ///   used by the layout system, and may be used by subclasses to
+    ///   specify the area to draw in (e.g. excluding the frame).
+    /// 
+    ///   Changing the margins will trigger a resizeEvent().
+    /// 
+    ///   \sa contentsRect(), getContentsMargins()
+    set_contents_margins(margins: &MarginsType),
+    get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
+    contents_margins() -> Margins,
+    ///     Returns the area inside the widget's margins.
+    /// 
+    ///     \sa setContentsMargins(), getContentsMargins()
+    contents_rect() -> Rect,
+    ///     Returns the layout manager that is installed on this widget, or 0
+    ///     if no layout manager is installed.
+    /// 
+    ///     The layout manager sets the geometry of the widget's children
+    ///     that have been added to the layout.
+    /// 
+    ///     \sa setLayout(), sizePolicy(), {Layout Management}
+    layout() -> Layout?,
+    ///     \fn void QWidget::setLayout(QLayout *layout)
+    /// 
+    ///     Sets the layout manager for this widget to \a layout.
+    /// 
+    ///     If there already is a layout manager installed on this widget,
+    ///     QWidget won't let you install another. You must first delete the
+    ///     existing layout manager (returned by layout()) before you can
+    ///     call setLayout() with the new layout.
+    /// 
+    ///     If \a layout is the layout manager on a different widget, setLayout()
+    ///     will reparent the layout and make it the layout manager for this widget.
+    /// 
+    ///     Example:
+    /// 
+    ///     \snippet layouts/layouts.cpp 24
+    /// 
+    ///     An alternative to calling this function is to pass this widget to
+    ///     the layout's constructor.
+    /// 
+    ///     The QWidget will take ownership of \a layout.
+    /// 
+    ///     \sa layout(), {Layout Management}
+    set_layout(arg0: *LayoutType),
+    ///     \overload
+    /// 
+    ///     This function also takes widget flags, \a f as an argument.
     set_parent(parent: *WidgetType),
-    update(),
-
-    /// Signal for when Window tile changes  
+    ///     \overload
+    /// 
+    ///     This function also takes widget flags, \a f as an argument.
+    set_parent(parent: *WidgetType, f: Rute::WindowFlags),
+    ///     \overload
+    /// 
+    ///     This version only scrolls \a r and does not move the children of
+    ///     the widget.
+    /// 
+    ///     If \a r is empty or invalid, the result is undefined.
+    /// 
+    ///     \sa QScrollArea
+    scroll(dx: i32, dy: i32),
+    ///     \overload
+    /// 
+    ///     This version only scrolls \a r and does not move the children of
+    ///     the widget.
+    /// 
+    ///     If \a r is empty or invalid, the result is undefined.
+    /// 
+    ///     \sa QScrollArea
+    scroll(dx: i32, dy: i32, arg0: &RectType),
+    ///     Returns the last child of this widget that setFocus had been
+    ///     called on.  For top level widgets this is the widget that will get
+    ///     focus in case this window gets activated
+    /// 
+    ///     This is not the same as QApplication::focusWidget(), which returns
+    ///     the focus widget in the currently active window.
+    focus_widget() -> Widget?,
+    ///     Returns the next widget in this widget's focus chain.
+    /// 
+    ///     \sa previousInFocusChain()
+    next_in_focus_chain() -> Widget?,
+    ///     \brief The previousInFocusChain function returns the previous
+    ///     widget in this widget's focus chain.
+    /// 
+    ///     \sa nextInFocusChain()
+    /// 
+    ///     \since 4.6
+    previous_in_focus_chain() -> Widget?,
+    ///     \property QWidget::acceptDrops
+    ///     \brief whether drop events are enabled for this widget
+    /// 
+    ///     Setting this property to true announces to the system that this
+    ///     widget \e may be able to accept drop events.
+    /// 
+    ///     If the widget is the desktop (windowType() == Qt::Desktop), this may
+    ///     fail if another application is using the desktop; you can call
+    ///     acceptDrops() to test if this occurs.
+    /// 
+    ///     \warning Do not modify this property in a drag and drop event handler.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa {Drag and Drop}
+    accept_drops() -> bool,
+    set_accept_drops(on: bool),
+    ///     Appends the action \a action to this widget's list of actions.
+    /// 
+    ///     All QWidgets have a list of \l{QAction}s, however they can be
+    ///     represented graphically in many different ways. The default use of
+    ///     the QAction list (as returned by actions()) is to create a context
+    ///     QMenu.
+    /// 
+    ///     A QWidget should only have one of each action and adding an action
+    ///     it already has will not cause the same action to be in the widget twice.
+    /// 
+    ///     The ownership of \a action is not transferred to this QWidget.
+    /// 
+    ///     \sa removeAction(), insertAction(), actions(), QMenu
+    add_action(action: *ActionType),
+    ///     Appends the actions \a actions to this widget's list of actions.
+    /// 
+    ///     \sa removeAction(), QMenu, addAction()
+    add_actions(actions: [*ActionType]),
+    ///     Inserts the actions \a actions to this widget's list of actions,
+    ///     before the action \a before. It appends the action if \a before is 0 or
+    ///     \a before is not a valid action for this widget.
+    /// 
+    ///     A QWidget can have at most one of each action.
+    /// 
+    ///     \sa removeAction(), QMenu, insertAction(), contextMenuPolicy
+    insert_actions(before: *ActionType, actions: [*ActionType]),
+    ///     Inserts the action \a action to this widget's list of actions,
+    ///     before the action \a before. It appends the action if \a before is 0 or
+    ///     \a before is not a valid action for this widget.
+    /// 
+    ///     A QWidget should only have one of each action.
+    /// 
+    ///     \sa removeAction(), addAction(), QMenu, contextMenuPolicy, actions()
+    insert_action(before: *ActionType, action: *ActionType),
+    ///     Removes the action \a action from this widget's list of actions.
+    ///     \sa insertAction(), actions(), insertAction()
+    remove_action(action: *ActionType),
+    ///     Returns the (possibly empty) list of this widget's actions.
+    /// 
+    ///     \sa contextMenuPolicy, insertAction(), removeAction()
+    actions() -> [Action?],
+    parent_widget() -> Widget?,
+    set_window_flags(type: Rute::WindowFlags),
+    window_flags() -> Rute::WindowFlags,
+    ///     \since 5.9
+    /// 
+    ///     Sets the window flag \a flag on this widget if \a on is true;
+    ///     otherwise clears the flag.
+    /// 
+    ///     \sa setWindowFlags(), windowFlags(), windowType()
+    set_window_flag(arg0: Rute::WindowType, on: bool),
+    ///     Sets the window flags for the widget to \a flags,
+    ///     \e without telling the window system.
+    /// 
+    ///     \warning Do not call this function unless you really know what
+    ///     you're doing.
+    /// 
+    ///     \sa setWindowFlags()
+    override_window_flags(type: Rute::WindowFlags),
+    window_type() -> Rute::WindowType,
+    ///     Returns a pointer to the widget with window identifer/handle \a
+    ///     id.
+    /// 
+    ///     The window identifier type depends on the underlying window
+    ///     system, see \c qwindowdefs.h for the actual definition. If there
+    ///     is no widget with this identifier, 0 is returned.
+    [static] find(arg0: u64) -> Widget?,
+    ///     \overload
+    /// 
+    ///     Returns the visible child widget at point \a p in the widget's own
+    ///     coordinate system.
+    child_at(x: i32, y: i32) -> Widget?,
+    ///     \overload
+    /// 
+    ///     Returns the visible child widget at point \a p in the widget's own
+    ///     coordinate system.
+    child_at(p: &PointType) -> Widget?,
+    ///     \fn QPaintEngine *QWidget::paintEngine() const
+    /// 
+    ///     Returns the widget's paint engine.
+    /// 
+    ///     Note that this function should not be called explicitly by the
+    ///     user, since it's meant for reimplementation purposes only. The
+    ///     function is called by Qt internally, and the default
+    ///     implementation may not always return a valid pointer.
+    [event] paint_engine() -> PaintEngine?,
+    ///     Ensures that the widget and its children have been polished by
+    ///     QStyle (i.e., have a proper font and palette).
+    /// 
+    ///     QWidget calls this function after it has been fully constructed
+    ///     but before it is shown the very first time. You can call this
+    ///     function if you want to ensure that the widget is polished before
+    ///     doing an operation, e.g., the correct font size might be needed in
+    ///     the widget's sizeHint() reimplementation. Note that this function
+    ///     \e is called from the default implementation of sizeHint().
+    /// 
+    ///     Polishing is useful for final initialization that must happen after
+    ///     all constructors (from base classes as well as from subclasses)
+    ///     have been called.
+    /// 
+    ///     If you need to change some settings when a widget is polished,
+    ///     reimplement event() and handle the QEvent::Polish event type.
+    /// 
+    ///     \b{Note:} The function is declared const so that it can be called from
+    ///     other const functions (e.g., sizeHint()).
+    /// 
+    ///     \sa event()
+    ensure_polished(),
+    ///     Returns \c true if this widget is a parent, (or grandparent and so on
+    ///     to any level), of the given \a child, and both widgets are within
+    ///     the same window; otherwise returns \c false.
+    is_ancestor_of(child: *WidgetType) -> bool,
+    ///     \property QWidget::autoFillBackground
+    ///     \brief whether the widget background is filled automatically
+    ///     \since 4.1
+    /// 
+    ///     If enabled, this property will cause Qt to fill the background of the
+    ///     widget before invoking the paint event. The color used is defined by the
+    ///     QPalette::Window color role from the widget's \l{QPalette}{palette}.
+    /// 
+    ///     In addition, Windows are always filled with QPalette::Window, unless the
+    ///     WA_OpaquePaintEvent or WA_NoSystemBackground attributes are set.
+    /// 
+    ///     This property cannot be turned off (i.e., set to false) if a widget's
+    ///     parent has a static gradient for its background.
+    /// 
+    ///     \warning Use this property with caution in conjunction with
+    ///     \l{Qt Style Sheets}. When a widget has a style sheet with a valid
+    ///     background or a border-image, this property is automatically disabled.
+    /// 
+    ///     By default, this property is \c false.
+    /// 
+    ///     \sa Qt::WA_OpaquePaintEvent, Qt::WA_NoSystemBackground,
+    ///     {QWidget#Transparency and Double Buffering}{Transparency and Double Buffering}
+    auto_fill_background() -> bool,
+    set_auto_fill_background(enabled: bool),
+    ///     \since 5.0
+    /// 
+    ///     Returns the QBackingStore this widget will be drawn into.
+    backing_store() -> BackingStore?,
+    ///     If this is a native widget, return the associated QWindow.
+    ///     Otherwise return null.
+    /// 
+    ///     Native widgets include toplevel widgets, QGLWidget, and child widgets
+    ///     on which winId() was called.
+    /// 
+    ///     \since 5.0
+    /// 
+    ///     \sa winId()
+    window_handle() -> Window?,
+    [static] create_window_container(window: *WindowType, parent: *WidgetType, flags: Rute::WindowFlags) -> Widget?,
     [signal] window_title_changed(title: String),
-
+    [signal] window_icon_changed(icon: &IconType),
+    [signal] window_icon_text_changed(icon_text: String),
+    [signal] custom_context_menu_requested(pos: &PointType),
+    ///     This is the main event handler; it handles event \a event. You can
+    ///     reimplement this function in a subclass, but we recommend using
+    ///     one of the specialized event handlers instead.
+    /// 
+    ///     Key press and release events are treated differently from other
+    ///     events. event() checks for Tab and Shift+Tab and tries to move the
+    ///     focus appropriately. If there is no widget to move the focus to
+    ///     (or the key press is not Tab or Shift+Tab), event() calls
+    ///     keyPressEvent().
+    /// 
+    ///     Mouse and tablet event handling is also slightly special: only
+    ///     when the widget is \l enabled, event() will call the specialized
+    ///     handlers such as mousePressEvent(); otherwise it will discard the
+    ///     event.
+    /// 
+    ///     This function returns \c true if the event was recognized, otherwise
+    ///     it returns \c false.  If the recognized event was accepted (see \l
+    ///     QEvent::accepted), any further processing such as event
+    ///     propagation to the parent widget stops.
+    /// 
+    ///     \sa closeEvent(), focusInEvent(), focusOutEvent(), enterEvent(),
+    ///     keyPressEvent(), keyReleaseEvent(), leaveEvent(),
+    ///     mouseDoubleClickEvent(), mouseMoveEvent(), mousePressEvent(),
+    ///     mouseReleaseEvent(), moveEvent(), paintEvent(), resizeEvent(),
+    ///     QObject::event(), QObject::timerEvent()
+    [event] event(event: *EventType) -> bool,
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive mouse press events for the widget.
+    /// 
+    ///     If you create new widgets in the mousePressEvent() the
+    ///     mouseReleaseEvent() may not end up where you expect, depending on
+    ///     the underlying window system (or X11 window manager), the widgets'
+    ///     location and maybe more.
+    /// 
+    ///     The default implementation implements the closing of popup widgets
+    ///     when you click outside the window. For other widget types it does
+    ///     nothing.
+    /// 
+    ///     \sa mouseReleaseEvent(), mouseDoubleClickEvent(),
+    ///     mouseMoveEvent(), event(), QMouseEvent, {Scribble Example}
+    [event] mouse_press_event(event: *MouseEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive mouse release events for the widget.
+    /// 
+    ///     \sa mousePressEvent(), mouseDoubleClickEvent(),
+    ///     mouseMoveEvent(), event(), QMouseEvent, {Scribble Example}
+    [event] mouse_release_event(event: *MouseEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive mouse double click events for the widget.
+    /// 
+    ///     The default implementation calls mousePressEvent().
+    /// 
+    ///     \note The widget will also receive mouse press and mouse release
+    ///     events in addition to the double click event. It is up to the
+    ///     developer to ensure that the application interprets these events
+    ///     correctly.
+    /// 
+    ///     \sa mousePressEvent(), mouseReleaseEvent(), mouseMoveEvent(),
+    ///     event(), QMouseEvent
+    [event] mouse_double_click_event(event: *MouseEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive mouse move events for the widget.
+    /// 
+    ///     If mouse tracking is switched off, mouse move events only occur if
+    ///     a mouse button is pressed while the mouse is being moved. If mouse
+    ///     tracking is switched on, mouse move events occur even if no mouse
+    ///     button is pressed.
+    /// 
+    ///     QMouseEvent::pos() reports the position of the mouse cursor,
+    ///     relative to this widget. For press and release events, the
+    ///     position is usually the same as the position of the last mouse
+    ///     move event, but it might be different if the user's hand shakes.
+    ///     This is a feature of the underlying window system, not Qt.
+    /// 
+    ///     If you want to show a tooltip immediately, while the mouse is
+    ///     moving (e.g., to get the mouse coordinates with QMouseEvent::pos()
+    ///     and show them as a tooltip), you must first enable mouse tracking
+    ///     as described above. Then, to ensure that the tooltip is updated
+    ///     immediately, you must call QToolTip::showText() instead of
+    ///     setToolTip() in your implementation of mouseMoveEvent().
+    /// 
+    ///     \sa setMouseTracking(), mousePressEvent(), mouseReleaseEvent(),
+    ///     mouseDoubleClickEvent(), event(), QMouseEvent, {Scribble Example}
+    [event] mouse_move_event(event: *MouseEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive wheel events for the widget.
+    /// 
+    ///     If you reimplement this handler, it is very important that you
+    ///     \l{QEvent}{ignore()} the event if you do not handle
+    ///     it, so that the widget's parent can interpret it.
+    /// 
+    ///     The default implementation ignores the event.
+    /// 
+    ///     \sa QEvent::ignore(), QEvent::accept(), event(),
+    ///     QWheelEvent
+    [event] wheel_event(event: *WheelEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive key press events for the widget.
+    /// 
+    ///     A widget must call setFocusPolicy() to accept focus initially and
+    ///     have focus in order to receive a key press event.
+    /// 
+    ///     If you reimplement this handler, it is very important that you
+    ///     call the base class implementation if you do not act upon the key.
+    /// 
+    ///     The default implementation closes popup widgets if the user
+    ///     presses the key sequence for QKeySequence::Cancel (typically the
+    ///     Escape key). Otherwise the event is ignored, so that the widget's
+    ///     parent can interpret it.
+    /// 
+    ///     Note that QKeyEvent starts with isAccepted() == true, so you do not
+    ///     need to call QKeyEvent::accept() - just do not call the base class
+    ///     implementation if you act upon the key.
+    /// 
+    ///     \sa keyReleaseEvent(), setFocusPolicy(),
+    ///     focusInEvent(), focusOutEvent(), event(), QKeyEvent, {Tetrix Example}
+    [event] key_press_event(event: *KeyEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive key release events for the widget.
+    /// 
+    ///     A widget must \l{setFocusPolicy()}{accept focus}
+    ///     initially and \l{hasFocus()}{have focus} in order to
+    ///     receive a key release event.
+    /// 
+    ///     If you reimplement this handler, it is very important that you
+    ///     call the base class implementation if you do not act upon the key.
+    /// 
+    ///     The default implementation ignores the event, so that the widget's
+    ///     parent can interpret it.
+    /// 
+    ///     Note that QKeyEvent starts with isAccepted() == true, so you do not
+    ///     need to call QKeyEvent::accept() - just do not call the base class
+    ///     implementation if you act upon the key.
+    /// 
+    ///     \sa keyPressEvent(), QEvent::ignore(), setFocusPolicy(),
+    ///     focusInEvent(), focusOutEvent(), event(), QKeyEvent
+    [event] key_release_event(event: *KeyEventType),
+    ///     \fn void QWidget::focusInEvent(QFocusEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     keyboard focus events (focus received) for the widget. The event
+    ///     is passed in the \a event parameter
+    /// 
+    ///     A widget normally must setFocusPolicy() to something other than
+    ///     Qt::NoFocus in order to receive focus events. (Note that the
+    ///     application programmer can call setFocus() on any widget, even
+    ///     those that do not normally accept focus.)
+    /// 
+    ///     The default implementation updates the widget (except for windows
+    ///     that do not specify a focusPolicy()).
+    /// 
+    ///     \sa focusOutEvent(), setFocusPolicy(), keyPressEvent(),
+    ///     keyReleaseEvent(), event(), QFocusEvent
+    [event] focus_in_event(event: *FocusEventType),
+    ///     \fn void QWidget::focusOutEvent(QFocusEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     keyboard focus events (focus lost) for the widget. The events is
+    ///     passed in the \a event parameter.
+    /// 
+    ///     A widget normally must setFocusPolicy() to something other than
+    ///     Qt::NoFocus in order to receive focus events. (Note that the
+    ///     application programmer can call setFocus() on any widget, even
+    ///     those that do not normally accept focus.)
+    /// 
+    ///     The default implementation updates the widget (except for windows
+    ///     that do not specify a focusPolicy()).
+    /// 
+    ///     \sa focusInEvent(), setFocusPolicy(), keyPressEvent(),
+    ///     keyReleaseEvent(), event(), QFocusEvent
+    [event] focus_out_event(event: *FocusEventType),
+    ///     \fn void QWidget::enterEvent(QEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget enter events which are passed in the \a event parameter.
+    /// 
+    ///     An event is sent to the widget when the mouse cursor enters the
+    ///     widget.
+    /// 
+    ///     \sa leaveEvent(), mouseMoveEvent(), event()
+    [event] enter_event(event: *EventType),
+    ///     \fn void QWidget::leaveEvent(QEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget leave events which are passed in the \a event parameter.
+    /// 
+    ///     A leave event is sent to the widget when the mouse cursor leaves
+    ///     the widget.
+    /// 
+    ///     \sa enterEvent(), mouseMoveEvent(), event()
+    [event] leave_event(event: *EventType),
+    ///     \fn void QWidget::paintEvent(QPaintEvent *event)
+    /// 
     ///     This event handler can be reimplemented in a subclass to receive paint
     ///     events passed in \a event.
     /// 
     ///     A paint event is a request to repaint all or part of a widget. It can
     ///     happen for one of the following reasons:
     /// 
-    ///     * repaint() or update() was invoked,
-    ///     * the widget was obscured and has now been uncovered, or
-    ///     * many other reasons.
+    ///     \list
+    ///         \li repaint() or update() was invoked,
+    ///         \li the widget was obscured and has now been uncovered, or
+    ///         \li many other reasons.
+    ///     \endlist
     /// 
     ///     Many widgets can simply repaint their entire surface when asked to, but
     ///     some slow widgets need to optimize by painting only the requested region:
@@ -126,17 +2121,321 @@ struct Widget {
     ///     Since Qt 4.0, QWidget automatically double-buffers its painting, so there
     ///     is no need to write double-buffering code in paintEvent() to avoid flicker.
     /// 
-    ///     Generally, you should refrain from calling update() or repaint()
+    ///     \note Generally, you should refrain from calling update() or repaint()
+    ///     \b{inside} a paintEvent(). For example, calling update() or repaint() on
     ///     children inside a paintEvent() results in undefined behavior; the child may
     ///     or may not get a paint event.
     /// 
-    ///     If you are using a custom paint engine without Qt's backingstore,
+    ///     \warning If you are using a custom paint engine without Qt's backingstore,
     ///     Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
     ///     never be called; the backingstore will be used instead.
     /// 
-    ///     event(), repaint(), update(), QPainter, QPixmap, QPaintEvent,
+    ///     \sa event(), repaint(), update(), QPainter, QPixmap, QPaintEvent,
     ///     {Analog Clock Example}
     [event] paint_event(event: *PaintEventType),
+    ///     \fn void QWidget::moveEvent(QMoveEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget move events which are passed in the \a event parameter.
+    ///     When the widget receives this event, it is already at the new
+    ///     position.
+    /// 
+    ///     The old position is accessible through QMoveEvent::oldPos().
+    /// 
+    ///     \sa resizeEvent(), event(), move(), QMoveEvent
+    [event] move_event(event: *MoveEventType),
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget resize events which are passed in the \a event parameter.
+    ///     When resizeEvent() is called, the widget already has its new
+    ///     geometry. The old size is accessible through
+    ///     QResizeEvent::oldSize().
+    /// 
+    ///     The widget will be erased and receive a paint event immediately
+    ///     after processing the resize event. No drawing need be (or should
+    ///     be) done inside this handler.
+    /// 
+    /// 
+    ///     \sa moveEvent(), event(), resize(), QResizeEvent, paintEvent(),
+    ///         {Scribble Example}
+    [event] resize_event(event: *ResizeEventType),
+    ///     This event handler is called with the given \a event when Qt receives a window
+    ///     close request for a top-level widget from the window system.
+    /// 
+    ///     By default, the event is accepted and the widget is closed. You can reimplement
+    ///     this function to change the way the widget responds to window close requests.
+    ///     For example, you can prevent the window from closing by calling \l{QEvent::}{ignore()}
+    ///     on all events.
+    /// 
+    ///     Main window applications typically use reimplementations of this function to check
+    ///     whether the user's work has been saved and ask for permission before closing.
+    ///     For example, the \l{Application Example} uses a helper function to determine whether
+    ///     or not to close the window:
+    /// 
+    ///     \snippet mainwindows/application/mainwindow.cpp 3
+    ///     \snippet mainwindows/application/mainwindow.cpp 4
+    /// 
+    ///     \sa event(), hide(), close(), QCloseEvent, {Application Example}
+    [event] close_event(event: *CloseEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive widget context menu events.
+    /// 
+    ///     The handler is called when the widget's \l contextMenuPolicy is
+    ///     Qt::DefaultContextMenu.
+    /// 
+    ///     The default implementation ignores the context event.
+    ///     See the \l QContextMenuEvent documentation for more details.
+    /// 
+    ///     \sa event(), QContextMenuEvent, customContextMenuRequested()
+    [event] context_menu_event(event: *ContextMenuEventType),
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive tablet events for the widget.
+    /// 
+    ///     If you reimplement this handler, it is very important that you
+    ///     \l{QEvent}{ignore()} the event if you do not handle
+    ///     it, so that the widget's parent can interpret it.
+    /// 
+    ///     The default implementation ignores the event.
+    /// 
+    ///     If tablet tracking is switched off, tablet move events only occur if the
+    ///     stylus is in contact with the tablet, or at least one stylus button is
+    ///     pressed, while the stylus is being moved. If tablet tracking is switched on,
+    ///     tablet move events occur even while the stylus is hovering in proximity of
+    ///     the tablet, with no buttons pressed.
+    /// 
+    ///     \sa QEvent::ignore(), QEvent::accept(), event(), setTabletTracking(),
+    ///     QTabletEvent
+    [event] tablet_event(event: *TabletEventType),
+    ///     \fn void QWidget::actionEvent(QActionEvent *event)
+    /// 
+    ///     This event handler is called with the given \a event whenever the
+    ///     widget's actions are changed.
+    /// 
+    ///     \sa addAction(), insertAction(), removeAction(), actions(), QActionEvent
+    [event] action_event(event: *ActionEventType),
+    ///     \fn void QWidget::dragEnterEvent(QDragEnterEvent *event)
+    /// 
+    ///     This event handler is called when a drag is in progress and the
+    ///     mouse enters this widget. The event is passed in the \a event parameter.
+    /// 
+    ///     If the event is ignored, the widget won't receive any \l{dragMoveEvent()}{drag
+    ///     move events}.
+    /// 
+    ///     See the \l{dnd.html}{Drag-and-drop documentation} for an
+    ///     overview of how to provide drag-and-drop in your application.
+    /// 
+    ///     \sa QDrag, QDragEnterEvent
+    [event] drag_enter_event(event: *DragEnterEventType),
+    ///     \fn void QWidget::dragMoveEvent(QDragMoveEvent *event)
+    /// 
+    ///     This event handler is called if a drag is in progress, and when
+    ///     any of the following conditions occur: the cursor enters this widget,
+    ///     the cursor moves within this widget, or a modifier key is pressed on
+    ///     the keyboard while this widget has the focus. The event is passed
+    ///     in the \a event parameter.
+    /// 
+    ///     See the \l{dnd.html}{Drag-and-drop documentation} for an
+    ///     overview of how to provide drag-and-drop in your application.
+    /// 
+    ///     \sa QDrag, QDragMoveEvent
+    [event] drag_move_event(event: *DragMoveEventType),
+    ///     \fn void QWidget::dragLeaveEvent(QDragLeaveEvent *event)
+    /// 
+    ///     This event handler is called when a drag is in progress and the
+    ///     mouse leaves this widget. The event is passed in the \a event
+    ///     parameter.
+    /// 
+    ///     See the \l{dnd.html}{Drag-and-drop documentation} for an
+    ///     overview of how to provide drag-and-drop in your application.
+    /// 
+    ///     \sa QDrag, QDragLeaveEvent
+    [event] drag_leave_event(event: *DragLeaveEventType),
+    ///     \fn void QWidget::dropEvent(QDropEvent *event)
+    /// 
+    ///     This event handler is called when the drag is dropped on this
+    ///     widget. The event is passed in the \a event parameter.
+    /// 
+    ///     See the \l{dnd.html}{Drag-and-drop documentation} for an
+    ///     overview of how to provide drag-and-drop in your application.
+    /// 
+    ///     \sa QDrag, QDropEvent
+    [event] drop_event(event: *DropEventType),
+    ///     \fn void QWidget::showEvent(QShowEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget show events which are passed in the \a event parameter.
+    /// 
+    ///     Non-spontaneous show events are sent to widgets immediately
+    ///     before they are shown. The spontaneous show events of windows are
+    ///     delivered afterwards.
+    /// 
+    ///     Note: A widget receives spontaneous show and hide events when its
+    ///     mapping status is changed by the window system, e.g. a spontaneous
+    ///     hide event when the user minimizes the window, and a spontaneous
+    ///     show event when the window is restored again. After receiving a
+    ///     spontaneous hide event, a widget is still considered visible in
+    ///     the sense of isVisible().
+    /// 
+    ///     \sa visible, event(), QShowEvent
+    [event] show_event(event: *ShowEventType),
+    ///     \fn void QWidget::hideEvent(QHideEvent *event)
+    /// 
+    ///     This event handler can be reimplemented in a subclass to receive
+    ///     widget hide events. The event is passed in the \a event parameter.
+    /// 
+    ///     Hide events are sent to widgets immediately after they have been
+    ///     hidden.
+    /// 
+    ///     Note: A widget receives spontaneous show and hide events when its
+    ///     mapping status is changed by the window system, e.g. a spontaneous
+    ///     hide event when the user minimizes the window, and a spontaneous
+    ///     show event when the window is restored again. After receiving a
+    ///     spontaneous hide event, a widget is still considered visible in
+    ///     the sense of isVisible().
+    /// 
+    ///     \sa visible, event(), QHideEvent
+    [event] hide_event(event: *HideEventType),
+    ///     This special event handler can be reimplemented in a subclass to
+    ///     receive native platform events identified by \a eventType
+    ///     which are passed in the \a message parameter.
+    /// 
+    ///     In your reimplementation of this function, if you want to stop the
+    ///     event being handled by Qt, return true and set \a result.
+    ///     If you return false, this native event is passed back to Qt,
+    ///     which translates the event into a Qt event and sends it to the widget.
+    /// 
+    ///     \note Events are only delivered to this event handler if the widget is
+    ///     has a native Window handle.
+    /// 
+    ///     \note This function superseedes the event filter functions
+    ///     x11Event(), winEvent() and macEvent() of Qt 4.
+    /// 
+    ///     \table
+    ///     \header \li Platform \li Event Type Identifier \li Message Type \li Result Type
+    ///     \row \li Windows \li "windows_generic_MSG" \li MSG * \li LRESULT
+    ///     \row \li macOS \li "NSEvent" \li NSEvent * \li
+    ///     \endtable
+    [event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
+    ///   This event handler can be reimplemented to handle state changes.
+    /// 
+    ///   The state being changed in this event can be retrieved through the \a event
+    ///   supplied.
+    /// 
+    ///   Change events include: QEvent::ToolBarChange,
+    ///   QEvent::ActivationChange, QEvent::EnabledChange, QEvent::FontChange,
+    ///   QEvent::StyleChange, QEvent::PaletteChange,
+    ///   QEvent::WindowTitleChange, QEvent::IconTextChange,
+    ///   QEvent::ModifiedChange, QEvent::MouseTrackingChange,
+    ///   QEvent::ParentChange, QEvent::WindowStateChange,
+    ///   QEvent::LanguageChange, QEvent::LocaleChange,
+    ///   QEvent::LayoutDirectionChange, QEvent::ReadOnlyChange.
+    /// 
+    [event] change_event(arg0: *EventType),
+    ///     Initializes the \a painter pen, background and font to the same as
+    ///     the given widget's. This function is called automatically when the
+    ///     painter is opened on a QWidget.
+    [event] init_painter(painter: *PainterType),
+    ///     \internal
+    /// 
+    ///     Do PaintDevice rendering with the specified \a offset.
+    [event] redirected(offset: *PointType) -> PaintDevice?,
+    ///     \internal
+    /// 
+    ///     A painter that is shared among other instances of QPainter.
+    [event] shared_painter() -> Painter?,
+    ///     This event handler, for event \a event, can be reimplemented in a
+    ///     subclass to receive Input Method composition events. This handler
+    ///     is called when the state of the input method changes.
+    /// 
+    ///     Note that when creating custom text editing widgets, the
+    ///     Qt::WA_InputMethodEnabled window attribute must be set explicitly
+    ///     (using the setAttribute() function) in order to receive input
+    ///     method events.
+    /// 
+    ///     The default implementation calls event->ignore(), which rejects the
+    ///     Input Method event. See the \l QInputMethodEvent documentation for more
+    ///     details.
+    /// 
+    ///     \sa event(), QInputMethodEvent
+    [event] input_method_event(arg0: *InputMethodEventType),
+    ///     This method is only relevant for input widgets. It is used by the
+    ///     input method to query a set of properties of the widget to be
+    ///     able to support complex input method operations as support for
+    ///     surrounding text and reconversions.
+    /// 
+    ///     \a query specifies which property is queried.
+    /// 
+    ///     \sa inputMethodEvent(), QInputMethodEvent, QInputMethodQueryEvent, inputMethodHints
+    [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
+    ///     \property QWidget::inputMethodHints
+    ///     \brief What input method specific hints the widget has.
+    /// 
+    ///     This is only relevant for input widgets. It is used by
+    ///     the input method to retrieve hints as to how the input method
+    ///     should operate. For example, if the Qt::ImhFormattedNumbersOnly flag
+    ///     is set, the input method may change its visual components to reflect
+    ///     that only numbers can be entered.
+    /// 
+    ///     \warning Some widgets require certain flags in order to work as
+    ///     intended. To set a flag, do \c{w->setInputMethodHints(w->inputMethodHints()|f)}
+    ///     instead of \c{w->setInputMethodHints(f)}.
+    /// 
+    ///     \note The flags are only hints, so the particular input method
+    ///           implementation is free to ignore them. If you want to be
+    ///           sure that a certain type of characters are entered,
+    ///           you should also set a QValidator on the widget.
+    /// 
+    ///     The default value is Qt::ImhNone.
+    /// 
+    ///     \since 4.6
+    /// 
+    ///     \sa inputMethodQuery()
+    input_method_hints() -> Rute::InputMethodHints,
+    set_input_method_hints(hints: Rute::InputMethodHints),
+    ///     Updates the widget's micro focus.
+    update_micro_focus(),
+    ///     Creates a new widget window.
+    /// 
+    ///     The parameter \a window is ignored in Qt 5. Please use
+    ///     QWindow::fromWinId() to create a QWindow wrapping a foreign
+    ///     window and pass it to QWidget::createWindowContainer() instead.
+    /// 
+    ///     Initializes the window (sets the geometry etc.) if \a
+    ///     initializeWindow is true. If \a initializeWindow is false, no
+    ///     initialization is performed. This parameter only makes sense if \a
+    ///     window is a valid window.
+    /// 
+    ///     Destroys the old window if \a destroyOldWindow is true. If \a
+    ///     destroyOldWindow is false, you are responsible for destroying the
+    ///     window yourself (using platform native code).
+    /// 
+    ///     The QWidget constructor calls create(0,true,true) to create a
+    ///     window for this widget.
+    /// 
+    ///     \sa createWindowContainer(), QWindow::fromWinId()
+    create(arg0: u64, initialize_window: bool, destroy_old_window: bool),
+    ///     Finds a new widget to give the keyboard focus to, as appropriate
+    ///     for Tab and Shift+Tab, and returns \c true if it can find a new
+    ///     widget, or false if it can't.
+    /// 
+    ///     If \a next is true, this function searches forward, if \a next
+    ///     is false, it searches backward.
+    /// 
+    ///     Sometimes, you will want to reimplement this function. For
+    ///     example, a web browser might reimplement it to move its "current
+    ///     active link" forward or backward, and call
+    ///     focusNextPrevChild() only when it reaches the last or
+    ///     first link on the "page".
+    /// 
+    ///     Child widgets call focusNextPrevChild() on their parent widgets,
+    ///     but only the window that contains the child widgets decides where
+    ///     to redirect focus. By reimplementing this function for an object,
+    ///     you thus gain control of focus traversal for all child widgets.
+    /// 
+    ///     \sa focusNextChild(), focusPreviousChild()
+    [event] focus_next_prev_child(next: bool) -> bool,
+    focus_next_child() -> bool,
+    focus_previous_child() -> bool,
+
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

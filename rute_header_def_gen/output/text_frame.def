@@ -1,91 +1,102 @@
-///     \class QTextFrame
-///     \reentrant
 /// 
-///     \brief The QTextFrame class represents a frame in a QTextDocument.
-///     \inmodule QtGui
+/// Text frames provide structure for the text in a document. They are used
+/// as generic containers for other document elements.
+/// Frames are usually created by using QTextCursor::insertFrame().
 /// 
-///     \ingroup richtext-processing
+/// Frames can be used to create hierarchical structures in rich text documents.
+/// Each document has a root frame (QTextDocument::rootFrame()), and each frame
+/// beneath the root frame has a parent frame and a (possibly empty) list of
+/// child frames. The parent frame can be found with parentFrame(), and the
+/// childFrames() function provides a list of child frames.
 /// 
-///     Text frames provide structure for the text in a document. They are used
-///     as generic containers for other document elements.
-///     Frames are usually created by using QTextCursor::insertFrame().
+/// Each frame contains at least one text block to enable text cursors to
+/// insert new document elements within. As a result, the QTextFrame::iterator
+/// class is used to traverse both the blocks and child frames within a given
+/// frame. The first and last child elements in the frame can be found with
+/// begin() and end().
 /// 
-///     \omit
-///     Each frame in a document consists of a frame start character,
-///     QChar(0xFDD0), followed by the frame's contents, followed by a
-///     frame end character, QChar(0xFDD1). The character formats of the
-///     start and end character contain a reference to the frame object's
-///     objectIndex.
-///     \endomit
+/// A frame also has a format (specified using QTextFrameFormat) which can be set
+/// with setFormat() and read with format().
 /// 
-///     Frames can be used to create hierarchical structures in rich text documents.
-///     Each document has a root frame (QTextDocument::rootFrame()), and each frame
-///     beneath the root frame has a parent frame and a (possibly empty) list of
-///     child frames. The parent frame can be found with parentFrame(), and the
-///     childFrames() function provides a list of child frames.
+/// Text cursors can be obtained that point to the first and last valid cursor
+/// positions within a frame; use the firstCursorPosition() and
+/// lastCursorPosition() functions for this. The frame's extent in the
+/// document can be found with firstPosition() and lastPosition().
 /// 
-///     Each frame contains at least one text block to enable text cursors to
-///     insert new document elements within. As a result, the QTextFrame::iterator
-///     class is used to traverse both the blocks and child frames within a given
-///     frame. The first and last child elements in the frame can be found with
-///     begin() and end().
+/// You can iterate over a frame's contents using the
+/// QTextFrame::iterator class: this provides read-only access to its
+/// internal list of text blocks and child frames.
 /// 
-///     A frame also has a format (specified using QTextFrameFormat) which can be set
-///     with setFormat() and read with format().
-/// 
-///     Text cursors can be obtained that point to the first and last valid cursor
-///     positions within a frame; use the firstCursorPosition() and
-///     lastCursorPosition() functions for this. The frame's extent in the
-///     document can be found with firstPosition() and lastPosition().
-/// 
-///     You can iterate over a frame's contents using the
-///     QTextFrame::iterator class: this provides read-only access to its
-///     internal list of text blocks and child frames.
-/// 
-///     \sa QTextCursor, QTextDocument
+/// **See also:** QTextCursor
+/// QTextDocument
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextFrame : TextObject {
+    /// 
+    /// Sets the frame's *format.*
+    /// 
+    /// **See also:** frameFormat()
     set_frame_format(format: &TextFrameFormatType),
+    /// 
+    /// Returns the frame's format.
+    /// 
+    /// **See also:** setFrameFormat()
     frame_format() -> TextFrameFormat,
-    ///     Returns the first cursor position inside the frame.
     /// 
-    ///     \sa lastCursorPosition(), firstPosition(), lastPosition()
+    /// Returns the first cursor position inside the frame.
+    /// 
+    /// **See also:** lastCursorPosition()
+    /// firstPosition()
+    /// lastPosition()
     first_cursor_position() -> TextCursor,
-    ///     Returns the last cursor position inside the frame.
     /// 
-    ///     \sa firstCursorPosition(), firstPosition(), lastPosition()
+    /// Returns the last cursor position inside the frame.
+    /// 
+    /// **See also:** firstCursorPosition()
+    /// firstPosition()
+    /// lastPosition()
     last_cursor_position() -> TextCursor,
-    ///     Returns the first document position inside the frame.
     /// 
-    ///     \sa lastPosition(), firstCursorPosition(), lastCursorPosition()
+    /// Returns the first document position inside the frame.
+    /// 
+    /// **See also:** lastPosition()
+    /// firstCursorPosition()
+    /// lastCursorPosition()
     first_position() -> i32,
-    ///     Returns the last document position inside the frame.
     /// 
-    ///     \sa firstPosition(), firstCursorPosition(), lastCursorPosition()
+    /// Returns the last document position inside the frame.
+    /// 
+    /// **See also:** firstPosition()
+    /// firstCursorPosition()
+    /// lastCursorPosition()
     last_position() -> i32,
-    ///   \internal
     layout_data() -> TextFrameLayoutData?,
-    ///   \internal
     set_layout_data(data: *TextFrameLayoutDataType),
-    ///     Returns a (possibly empty) list of the frame's child frames.
     /// 
-    ///     \sa parentFrame()
+    /// Returns a (possibly empty) list of the frame's child frames.
+    /// 
+    /// **See also:** parentFrame()
     child_frames() -> [TextFrame?],
-    ///     Returns the frame's parent frame. If the frame is the root frame of a
-    ///     document, this will return 0.
     /// 
-    ///     \sa childFrames(), QTextDocument::rootFrame()
+    /// Returns the frame's parent frame. If the frame is the root frame of a
+    /// document, this will return 0.
+    /// 
+    /// **See also:** childFrames()
+    /// QTextDocument::rootFrame()
     parent_frame() -> TextFrame?,
-    ///     Returns an iterator pointing to the first document element inside the frame.
-    ///     Please see the document \l{STL-style-Iterators} for more information.
     /// 
-    ///     \sa end()
+    /// Returns an iterator pointing to the first document element inside the frame.
+    /// Please see the document [STL-style-Iterators](STL-style-Iterators)
+    /// for more information.
+    /// 
+    /// **See also:** end()
     begin() -> TextFrame::iterator,
-    ///     Returns an iterator pointing to the position past the last document element inside the frame.
-    ///     Please see the document \l{STL-Style Iterators} for more information.
-    ///     \sa begin()
+    /// 
+    /// Returns an iterator pointing to the position past the last document element inside the frame.
+    /// Please see the document [STL-Style Iterators](STL-Style%20Iterators)
+    /// for more information.
+    /// **See also:** begin()
     end() -> TextFrame::iterator,
 }
 

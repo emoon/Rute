@@ -1,113 +1,168 @@
-///     \class QToolBox
 /// 
-///     \brief The QToolBox class provides a column of tabbed widget items.
+/// A toolbox is a widget that displays a column of tabs one above the
+/// other, with the current item displayed below the current tab.
+/// Every tab has an index position within the column of tabs. A tab's
+/// item is a QWidget.
 /// 
+/// Each item has an itemText(), an optional itemIcon(), an optional
+/// itemToolTip(), and a widget(). The item's attributes can be
+/// changed with setItemText(), setItemIcon(), and
+/// setItemToolTip(). Each item can be enabled or disabled
+/// individually with setItemEnabled().
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// Items are added using addItem(), or inserted at particular
+/// positions using insertItem(). The total number of items is given
+/// by count(). Items can be deleted with delete, or removed from the
+/// toolbox with removeItem(). Combining removeItem() and insertItem()
+/// allows you to move items to different positions.
 /// 
-///     A toolbox is a widget that displays a column of tabs one above the
-///     other, with the current item displayed below the current tab.
-///     Every tab has an index position within the column of tabs. A tab's
-///     item is a QWidget.
+/// The index of the current item widget is returned by currentIndex(),
+/// and set with setCurrentIndex(). The index of a particular item can
+/// be found using indexOf(), and the item at a given index is returned
+/// by item().
 /// 
-///     Each item has an itemText(), an optional itemIcon(), an optional
-///     itemToolTip(), and a widget(). The item's attributes can be
-///     changed with setItemText(), setItemIcon(), and
-///     setItemToolTip(). Each item can be enabled or disabled
-///     individually with setItemEnabled().
+/// The currentChanged() signal is emitted when the current item is
+/// changed.
 /// 
-///     Items are added using addItem(), or inserted at particular
-///     positions using insertItem(). The total number of items is given
-///     by count(). Items can be deleted with delete, or removed from the
-///     toolbox with removeItem(). Combining removeItem() and insertItem()
-///     allows you to move items to different positions.
-/// 
-///     The index of the current item widget is returned by currentIndex(),
-///     and set with setCurrentIndex(). The index of a particular item can
-///     be found using indexOf(), and the item at a given index is returned
-///     by item().
-/// 
-///     The currentChanged() signal is emitted when the current item is
-///     changed.
-/// 
-///     \sa QTabWidget
+/// **See also:** QTabWidget
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ToolBox : Frame {
+    /// 
+    /// **Overloads**
+    /// Adds the widget *w* in a new tab at bottom of the toolbox. The
+    /// new tab's text is set to *text.* Returns the new tab's index.
+    /// 
+    /// Adds the *widget* in a new tab at bottom of the toolbox. The
+    /// new tab's text is set to *text,* and the *iconSet* is
+    /// displayed to the left of the *text.* Returns the new tab's index.
     add_item(widget: *WidgetType, text: String) -> i32,
+    /// 
+    /// **Overloads**
+    /// Adds the widget *w* in a new tab at bottom of the toolbox. The
+    /// new tab's text is set to *text.* Returns the new tab's index.
+    /// 
+    /// Adds the *widget* in a new tab at bottom of the toolbox. The
+    /// new tab's text is set to *text,* and the *iconSet* is
+    /// displayed to the left of the *text.* Returns the new tab's index.
     add_item(widget: *WidgetType, icon: &IconType, text: String) -> i32,
-    ///     Inserts the \a widget at position \a index, or at the bottom
-    ///     of the toolbox if \a index is out of range. The new item's text
-    ///     is set to \a text, and the \a icon is displayed to the left of
-    ///     the \a text. Returns the new item's index.
+    /// 
+    /// **Overloads**
+    /// Inserts the *widget* at position *index,* or at the bottom
+    /// of the toolbox if *index* is out of range. The new item's text is
+    /// set to *text.* Returns the new item's index.
+    /// 
+    /// Inserts the *widget* at position *index,* or at the bottom
+    /// of the toolbox if *index* is out of range. The new item's text
+    /// is set to *text,* and the *icon* is displayed to the left of
+    /// the *text.* Returns the new item's index.
     insert_item(index: i32, widget: *WidgetType, text: String) -> i32,
-    ///     Inserts the \a widget at position \a index, or at the bottom
-    ///     of the toolbox if \a index is out of range. The new item's text
-    ///     is set to \a text, and the \a icon is displayed to the left of
-    ///     the \a text. Returns the new item's index.
+    /// 
+    /// **Overloads**
+    /// Inserts the *widget* at position *index,* or at the bottom
+    /// of the toolbox if *index* is out of range. The new item's text is
+    /// set to *text.* Returns the new item's index.
+    /// 
+    /// Inserts the *widget* at position *index,* or at the bottom
+    /// of the toolbox if *index* is out of range. The new item's text
+    /// is set to *text,* and the *icon* is displayed to the left of
+    /// the *text.* Returns the new item's index.
     insert_item(index: i32, widget: *WidgetType, icon: &IconType, text: String) -> i32,
-    ///     Removes the item at position \a index from the toolbox. Note that
-    ///     the widget is \e not deleted.
+    /// 
+    /// Removes the item at position *index* from the toolbox. Note that
+    /// the widget is *not* deleted.
     remove_item(index: i32),
-    ///     If \a enabled is true then the item at position \a index is enabled; otherwise
-    ///     the item at position \a index is disabled.
+    /// 
+    /// If *enabled* is true then the item at position *index* is enabled; otherwise
+    /// the item at position *index* is disabled.
     set_item_enabled(index: i32, enabled: bool),
-    ///     Returns \c true if the item at position \a index is enabled; otherwise returns \c false.
+    /// 
+    /// Returns `true` if the item at position *index* is enabled; otherwise returns `false.`
     is_item_enabled(index: i32) -> bool,
-    ///     Sets the text of the item at position \a index to \a text.
     /// 
-    ///     If the provided text contains an ampersand character ('&'), a
-    ///     mnemonic is automatically created for it. The character that
-    ///     follows the '&' will be used as the shortcut key. Any previous
-    ///     mnemonic will be overwritten, or cleared if no mnemonic is defined
-    ///     by the text. See the \l {QShortcut#mnemonic}{QShortcut}
-    ///     documentation for details (to display an actual ampersand, use
-    ///     '&&').
+    /// Sets the text of the item at position *index* to *text.*
+    /// 
+    /// If the provided text contains an ampersand character ('&'), a
+    /// mnemonic is automatically created for it. The character that
+    /// follows the '&' will be used as the shortcut key. Any previous
+    /// mnemonic will be overwritten, or cleared if no mnemonic is defined
+    /// by the text. See the [QShortcut](QShortcut%23mnemonic)
+    /// 
+    /// documentation for details (to display an actual ampersand, use
+    /// '&&').
     set_item_text(index: i32, text: String),
-    ///     Returns the text of the item at position \a index, or an empty string if
-    ///     \a index is out of range.
+    /// 
+    /// Returns the text of the item at position *index,* or an empty string if
+    /// *index* is out of range.
     item_text(index: i32) -> String,
-    ///     Sets the icon of the item at position \a index to \a icon.
+    /// 
+    /// Sets the icon of the item at position *index* to *icon.*
     set_item_icon(index: i32, icon: &IconType),
-    ///     Returns the icon of the item at position \a index, or a null
-    ///     icon if \a index is out of range.
+    /// 
+    /// Returns the icon of the item at position *index,* or a null
+    /// icon if *index* is out of range.
     item_icon(index: i32) -> Icon,
-    ///     Sets the tooltip of the item at position \a index to \a toolTip.
+    /// 
+    /// Sets the tooltip of the item at position *index* to *toolTip.*
     set_item_tool_tip(index: i32, tool_tip: String),
-    ///     Returns the tooltip of the item at position \a index, or an
-    ///     empty string if \a index is out of range.
+    /// 
+    /// Returns the tooltip of the item at position *index,* or an
+    /// empty string if *index* is out of range.
     item_tool_tip(index: i32) -> String,
-    ///     \property QToolBox::currentIndex
-    ///     \brief the index of the current item
     /// 
-    ///     By default, for an empty toolbox, this property has a value of -1.
+    /// By default, for an empty toolbox, this property has a value of -1.
     /// 
-    ///     \sa indexOf(), widget()
+    /// **See also:** indexOf()
+    /// widget()
     current_index() -> i32,
-    ///     Returns a pointer to the current widget, or 0 if there is no such item.
     /// 
-    ///     \sa currentIndex(), setCurrentWidget()
+    /// Returns a pointer to the current widget, or 0 if there is no such item.
+    /// 
+    /// **See also:** currentIndex()
+    /// setCurrentWidget()
     current_widget() -> Widget?,
-    ///     Returns the widget at position \a index, or 0 if there is no such
-    ///     item.
-    widget(index: i32) -> Widget?,
-    ///     Returns the index of \a widget, or -1 if the item does not
-    ///     exist.
-    index_of(widget: *WidgetType) -> i32,
-    ///     \property QToolBox::count
-    ///     \brief The number of items contained in the toolbox.
     /// 
-    ///     By default, this property has a value of 0.
+    /// Returns the widget at position *index,* or 0 if there is no such
+    /// item.
+    widget(index: i32) -> Widget?,
+    /// 
+    /// Returns the index of *widget,* or -1 if the item does not
+    /// exist.
+    index_of(widget: *WidgetType) -> i32,
+    /// 
+    /// By default, this property has a value of 0.
     count() -> i32,
     set_current_index(index: i32),
+    /// 
+    /// Makes *widget* the current widget. The *widget* must be an item in this tool box.
+    /// 
+    /// **See also:** addItem()
+    /// setCurrentIndex()
+    /// currentWidget()
     set_current_widget(widget: *WidgetType),
+    /// 
+    /// This signal is emitted when the current item is changed. The new
+    /// current item's index is passed in *index,* or -1 if there is no
+    /// current item.
     [signal] current_changed(index: i32),
+    /// 
     [event] event(e: *EventType) -> bool,
+    /// 
+    /// This virtual handler is called after a new item was added or
+    /// inserted at position *index.*
+    /// 
+    /// **See also:** itemRemoved()
     [event] item_inserted(index: i32),
+    /// 
+    /// This virtual handler is called after an item was removed from
+    /// position *index.*
+    /// 
+    /// **See also:** itemInserted()
     [event] item_removed(index: i32),
+    /// 
     [event] show_event(e: *ShowEventType),
+    /// 
     [event] change_event(arg0: *EventType),
 }
 

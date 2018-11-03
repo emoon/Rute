@@ -1,87 +1,51 @@
-///     \class QFormLayout
-///     \since 4.4
-///     \brief The QFormLayout class manages forms of input widgets and their associated labels.
 /// 
-///     \ingroup geomanagement
-///     \inmodule QtWidgets
+/// QFormLayout is a convenience layout class that lays out its
+/// children in a two-column form. The left column consists of labels
+/// and the right column consists of widgets (line editors,
+/// spin boxes, etc.).
 /// 
-///     QFormLayout is a convenience layout class that lays out its
-///     children in a two-column form. The left column consists of labels
-///     and the right column consists of "field" widgets (line editors,
-///     spin boxes, etc.).
+/// Traditionally, such two-column form layouts were achieved using
+/// QGridLayout. QFormLayout is a higher-level alternative that
+/// provides the following advantages:
 /// 
-///     Traditionally, such two-column form layouts were achieved using
-///     QGridLayout. QFormLayout is a higher-level alternative that
-///     provides the following advantages:
+/// * **Adherence to the different platform's look and feel guidelines.** For example, the [\macos Aqua](http://developer.apple.com/library/mac/%23documentation/UserExperience/Conceptual/AppleHIGuidelines/Intro/Intro.html)
+/// and KDE guidelines specify that the labels should be right-aligned, whereas Windows and GNOME applications normally use left-alignment.
+/// * **Support for wrapping long rows.** For devices with small displays, QFormLayout can be set to [wrap long rows](WrapLongRows)
+/// , or even to [wrap all rows](WrapAllRows)
 /// 
-///     \list
-///     \li \b{Adherence to the different platform's look and feel guidelines.}
+/// * **Convenient API for creating label--field pairs.** The addRow() overload that takes a QString and a QWidget * creates a QLabel behind the scenes and automatically set up its buddy. We can then write code like this: Compare this with the following code, written using QGridLayout:
 /// 
-///         For example, the
-///         \l{http://developer.apple.com/library/mac/#documentation/UserExperience/Conceptual/AppleHIGuidelines/Intro/Intro.html}{\macos Aqua} and KDE guidelines specify that the
-///         labels should be right-aligned, whereas Windows and GNOME
-///         applications normally use left-alignment.
+/// The table below shows the default appearance in different styles.
 /// 
-///     \li \b{Support for wrapping long rows.}
+/// * QCommonStyle derived styles (except QPlastiqueStyle)
+/// * QMacStyle
+/// * QPlastiqueStyle
+/// * Qt Extended styles
 /// 
-///        For devices with small displays, QFormLayout can be set to
-///        \l{WrapLongRows}{wrap long rows}, or even to
-///        \l{WrapAllRows}{wrap all rows}.
+/// * ![qformlayout-win.png](qformlayout-win.png)
 /// 
-///     \li \b{Convenient API for creating label--field pairs.}
+/// * ![qformlayout-mac.png](qformlayout-mac.png)
 /// 
-///        The addRow() overload that takes a QString and a QWidget *
-///        creates a QLabel behind the scenes and automatically set up
-///        its buddy. We can then write code like this:
+/// * ![qformlayout-kde.png](qformlayout-kde.png)
 /// 
-///     \snippet code/src_gui_kernel_qformlayout.cpp 0
+/// * ![qformlayout-qpe.png](qformlayout-qpe.png)
 /// 
-///        Compare this with the following code, written using QGridLayout:
+/// * Traditional style used for Windows, GNOME, and earlier versions of KDE. Labels are left aligned, and expanding fields grow to fill the available space. (This normally corresponds to what we would get using a two-column QGridLayout.)
+/// * Style based on the [\macos Aqua](http://developer.apple.com/library/mac/%23documentation/UserExperience/Conceptual/AppleHIGuidelines/Intro/Intro.html)
+/// guidelines. Labels are right-aligned, the fields don't grow beyond their size hint, and the form is horizontally centered.
+/// * Recommended style for [KDE applications](KDE%20applications)
+/// . Similar to MacStyle, except that the form is left-aligned and all fields grow to fill the available space.
+/// * Default style for Qt Extended styles. Labels are right-aligned, expanding fields grow to fill the available space, and row wrapping is enabled for long lines.
 /// 
-///     \snippet code/src_gui_kernel_qformlayout.cpp 1
-///     \endlist
+/// The form styles can be also be overridden individually by calling
+/// setLabelAlignment(), setFormAlignment(), setFieldGrowthPolicy(),
+/// and setRowWrapPolicy(). For example, to simulate the form layout
+/// appearance of QMacStyle on all platforms, but with left-aligned
+/// labels, you could write:
 /// 
-///     The table below shows the default appearance in different styles.
-/// 
-///     \table
-///     \header
-///         \li QCommonStyle derived styles (except QPlastiqueStyle)
-///         \li QMacStyle
-///         \li QPlastiqueStyle
-///         \li Qt Extended styles
-///     \row
-///         \li \inlineimage qformlayout-win.png
-///         \li \inlineimage qformlayout-mac.png
-///         \li \inlineimage qformlayout-kde.png
-///         \li \inlineimage qformlayout-qpe.png
-///     \row
-///         \li Traditional style used for Windows, GNOME, and earlier
-///            versions of KDE. Labels are left aligned, and expanding
-///            fields grow to fill the available space. (This normally
-///            corresponds to what we would get using a two-column
-///            QGridLayout.)
-///         \li Style based on the
-///            \l{http://developer.apple.com/library/mac/#documentation/UserExperience/Conceptual/AppleHIGuidelines/Intro/Intro.html}{\macos Aqua} guidelines. Labels are right-aligned,
-///            the fields don't grow beyond their size hint, and the
-///            form is horizontally centered.
-///         \li Recommended style for
-///            \l{KDE applications}. Similar to MacStyle, except that the form
-///            is left-aligned and all fields grow to fill the available
-///            space.
-///         \li Default style for Qt Extended styles. Labels are right-aligned,
-///            expanding fields grow to fill the available space, and row
-///            wrapping is enabled for long lines.
-///     \endtable
-/// 
-///     The form styles can be also be overridden individually by calling
-///     setLabelAlignment(), setFormAlignment(), setFieldGrowthPolicy(),
-///     and setRowWrapPolicy().  For example, to simulate the form layout
-///     appearance of QMacStyle on all platforms, but with left-aligned
-///     labels, you could write:
-/// 
-///     \snippet code/src_gui_kernel_qformlayout.cpp 2
-/// 
-///     \sa QGridLayout, QBoxLayout, QStackedLayout
+/// **See also:** QGridLayout
+/// QBoxLayout
+/// QStackedLayout
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -107,394 +71,943 @@ enum ItemRole {
 }
 
 struct FormLayout : Layout {
-    ///     \property QFormLayout::fieldGrowthPolicy
-    ///     \brief the way in which the form's fields grow
-    /// 
-    ///     The default value depends on the widget or application style. For
-    ///     QMacStyle, the default is FieldsStayAtSizeHint; for QCommonStyle
-    ///     derived styles (like Plastique and Windows), the default
-    ///     is ExpandingFieldsGrow; for Qt Extended styles, the default is
-    ///     AllNonFixedFieldsGrow.
-    /// 
-    ///     If none of the fields can grow and the form is resized, extra
-    ///     space is distributed according to the current
-    ///     \l{formAlignment}{form alignment}.
-    /// 
-    ///     \sa formAlignment, rowWrapPolicy
     set_field_growth_policy(policy: FormLayout::FieldGrowthPolicy),
+    /// 
+    /// The default value depends on the widget or application style. For
+    /// QMacStyle, the default is FieldsStayAtSizeHint; for QCommonStyle
+    /// derived styles (like Plastique and Windows), the default
+    /// is ExpandingFieldsGrow; for Qt Extended styles, the default is
+    /// AllNonFixedFieldsGrow.
+    /// 
+    /// If none of the fields can grow and the form is resized, extra
+    /// space is distributed according to the current
+    /// [form alignment](formAlignment)
+    /// 
+    /// 
+    /// **See also:** formAlignment
+    /// rowWrapPolicy
     field_growth_policy() -> FormLayout::FieldGrowthPolicy,
-    ///     \property QFormLayout::rowWrapPolicy
-    ///     \brief the way in which the form's rows wrap
-    /// 
-    ///     The default value depends on the widget or application style. For
-    ///     Qt Extended styles, the default is WrapLongRows;
-    ///     for the other styles, the default is DontWrapRows.
-    /// 
-    ///     If you want to display each label above its associated field
-    ///     (instead of next to it), set this property to WrapAllRows.
-    /// 
-    ///     \sa fieldGrowthPolicy
     set_row_wrap_policy(policy: FormLayout::RowWrapPolicy),
+    /// 
+    /// The default value depends on the widget or application style. For
+    /// Qt Extended styles, the default is WrapLongRows;
+    /// for the other styles, the default is DontWrapRows.
+    /// 
+    /// If you want to display each label above its associated field
+    /// (instead of next to it), set this property to WrapAllRows.
+    /// 
+    /// **See also:** fieldGrowthPolicy
     row_wrap_policy() -> FormLayout::RowWrapPolicy,
-    ///     \property QFormLayout::labelAlignment
-    ///     \brief the horizontal alignment of the labels
-    /// 
-    ///     The default value depends on the widget or application style. For
-    ///     QCommonStyle derived styles, except for QPlastiqueStyle, the
-    ///     default is Qt::AlignLeft; for the other styles, the default is
-    ///     Qt::AlignRight.
-    /// 
-    ///     \sa formAlignment
     set_label_alignment(alignment: Rute::Alignment),
+    /// 
+    /// The default value depends on the widget or application style. For
+    /// QCommonStyle derived styles, except for QPlastiqueStyle, the
+    /// default is Qt::AlignLeft; for the other styles, the default is
+    /// Qt::AlignRight.
+    /// 
+    /// **See also:** formAlignment
     label_alignment() -> Rute::Alignment,
-    ///     \property QFormLayout::formAlignment
-    ///     \brief the alignment of the form layout's contents within the layout's geometry
-    /// 
-    ///     The default value depends on the widget or application style. For
-    ///     QMacStyle, the default is Qt::AlignHCenter | Qt::AlignTop; for the
-    ///     other styles, the default is Qt::AlignLeft | Qt::AlignTop.
-    /// 
-    ///     \sa labelAlignment, rowWrapPolicy
     set_form_alignment(alignment: Rute::Alignment),
+    /// 
+    /// The default value depends on the widget or application style. For
+    /// QMacStyle, the default is Qt::AlignHCenter | Qt::AlignTop; for the
+    /// other styles, the default is Qt::AlignLeft | Qt::AlignTop.
+    /// 
+    /// **See also:** labelAlignment
+    /// rowWrapPolicy
     form_alignment() -> Rute::Alignment,
-    ///     \property QFormLayout::horizontalSpacing
-    ///     \brief the spacing between widgets that are laid out side by side
-    /// 
-    ///     By default, if no value is explicitly set, the layout's horizontal
-    ///     spacing is inherited from the parent layout, or from the style settings
-    ///     for the parent widget.
-    /// 
-    ///     \sa verticalSpacing, QStyle::pixelMetric(), {QStyle::}{PM_LayoutHorizontalSpacing}
     set_horizontal_spacing(spacing: i32),
+    /// 
+    /// By default, if no value is explicitly set, the layout's horizontal
+    /// spacing is inherited from the parent layout, or from the style settings
+    /// for the parent widget.
+    /// 
+    /// **See also:** verticalSpacing
+    /// QStyle::pixelMetric()
+    /// {QStyle::}{PM_LayoutHorizontalSpacing}
     horizontal_spacing() -> i32,
-    ///     \property QFormLayout::verticalSpacing
-    ///     \brief the spacing between widgets that are laid out vertically
-    /// 
-    ///     By default, if no value is explicitly set, the layout's vertical spacing is
-    ///     inherited from the parent layout, or from the style settings for the parent
-    ///     widget.
-    /// 
-    ///     \sa horizontalSpacing, QStyle::pixelMetric(), {QStyle::}{PM_LayoutHorizontalSpacing}
     set_vertical_spacing(spacing: i32),
+    /// 
+    /// By default, if no value is explicitly set, the layout's vertical spacing is
+    /// inherited from the parent layout, or from the style settings for the parent
+    /// widget.
+    /// 
+    /// **See also:** horizontalSpacing
+    /// QStyle::pixelMetric()
+    /// {QStyle::}{PM_LayoutHorizontalSpacing}
     vertical_spacing() -> i32,
-    ///     If the vertical spacing is equal to the horizontal spacing,
-    ///     this function returns that value; otherwise it returns -1.
     /// 
-    ///     \sa setSpacing(), verticalSpacing(), horizontalSpacing()
+    /// If the vertical spacing is equal to the horizontal spacing,
+    /// this function returns that value; otherwise it returns -1.
+    /// 
+    /// **See also:** setSpacing()
+    /// verticalSpacing()
+    /// horizontalSpacing()
     spacing() -> i32,
-    ///     This function sets both the vertical and horizontal spacing to
-    ///     \a spacing.
     /// 
-    ///     \sa setVerticalSpacing(), setHorizontalSpacing()
+    /// This function sets both the vertical and horizontal spacing to
+    /// *spacing.*
+    /// 
+    /// **See also:** setVerticalSpacing()
+    /// setHorizontalSpacing()
     set_spacing(arg0: i32),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(label: *WidgetType, field: *WidgetType),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(label: *WidgetType, field: *LayoutType),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(label_text: String, field: *WidgetType),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(label_text: String, field: *LayoutType),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(widget: *WidgetType),
-    ///     \overload
     /// 
-    ///     Adds the specified \a layout at the end of this form layout. The
-    ///     \a layout spans both columns.
+    /// Adds a new row to the bottom of this form layout, with the given
+    /// *label* and *field.*
+    /// 
+    /// **See also:** insertRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *widget* at the end of this form layout. The
+    /// *widget* spans both columns.
+    /// 
+    /// **Overloads**
+    /// Adds the specified *layout* at the end of this form layout. The
+    /// *layout* spans both columns.
     add_row(layout: *LayoutType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, label: *WidgetType, field: *WidgetType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, label: *WidgetType, field: *LayoutType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, label_text: String, field: *WidgetType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, label_text: String, field: *LayoutType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, widget: *WidgetType),
-    ///     \overload
     /// 
-    ///     Inserts the specified \a layout at position \a row in this form
-    ///     layout. The \a layout spans both columns. If \a row is out of
-    ///     bounds, the widget is added at the end.
+    /// Inserts a new row at position *row* in this form layout, with
+    /// the given *label* and *field.* If *row* is out of bounds, the
+    /// new row is added at the end.
+    /// 
+    /// **See also:** addRow()
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text. The *field* is set as the new
+    /// QLabel's [buddy](QLabel::setBuddy())
+    /// 
+    /// 
+    /// **Overloads**
+    /// This overload automatically creates a QLabel behind the scenes
+    /// with *labelText* as its text.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *widget* at position *row* in this form
+    /// layout. The *widget* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
+    /// 
+    /// **Overloads**
+    /// Inserts the specified *layout* at position *row* in this form
+    /// layout. The *layout* spans both columns. If *row* is out of
+    /// bounds, the widget is added at the end.
     insert_row(row: i32, layout: *LayoutType),
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Deletes row *row* from this form layout.
     /// 
-    ///     Deletes the row corresponding to \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     After this call, rowCount() is decremented by one. All widgets and
-    ///     nested layouts that occupied this row are deleted. That includes both
-    ///     the field widget(s) and the label, if any. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     You can use this function to undo a previous addRow() or insertRow():
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     flay->removeRow(layout); // vbl == nullptr at this point
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(2); // le == nullptr at this point
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout without deleting the inserted layout,
-    ///     use takeRow() instead.
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    ///     \sa takeRow()
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *widget* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(le); // le == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *layout* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// flay->removeRow(layout); // vbl == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout without deleting the inserted layout,
+    /// use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
     remove_row(row: i32),
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Deletes row *row* from this form layout.
     /// 
-    ///     Deletes the row corresponding to \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     After this call, rowCount() is decremented by one. All widgets and
-    ///     nested layouts that occupied this row are deleted. That includes both
-    ///     the field widget(s) and the label, if any. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     You can use this function to undo a previous addRow() or insertRow():
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     flay->removeRow(layout); // vbl == nullptr at this point
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(2); // le == nullptr at this point
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout without deleting the inserted layout,
-    ///     use takeRow() instead.
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    ///     \sa takeRow()
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *widget* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(le); // le == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *layout* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// flay->removeRow(layout); // vbl == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout without deleting the inserted layout,
+    /// use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
     remove_row(widget: *WidgetType),
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Deletes row *row* from this form layout.
     /// 
-    ///     Deletes the row corresponding to \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     After this call, rowCount() is decremented by one. All widgets and
-    ///     nested layouts that occupied this row are deleted. That includes both
-    ///     the field widget(s) and the label, if any. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     You can use this function to undo a previous addRow() or insertRow():
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     flay->removeRow(layout); // vbl == nullptr at this point
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(2); // le == nullptr at this point
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout without deleting the inserted layout,
-    ///     use takeRow() instead.
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    ///     \sa takeRow()
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *widget* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// flay->removeRow(le); // le == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
+    /// 
+    /// **Overloads**
+    /// Deletes the row corresponding to *layout* from this form layout.
+    /// 
+    /// After this call, rowCount() is decremented by one. All widgets and
+    /// nested layouts that occupied this row are deleted. That includes both
+    /// the field widget(s) and the label, if any. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// flay->removeRow(layout); // vbl == nullptr at this point
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout without deleting the inserted layout,
+    /// use takeRow() instead.
+    /// 
+    /// **See also:** takeRow()
     remove_row(layout: *LayoutType),
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Removes the specified *row* from this form layout.
     /// 
-    ///     Removes the specified \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     \note This function doesn't delete anything.
+    /// **Note**: This function doesn't delete anything.
     /// 
-    ///     After this call, rowCount() is decremented by one. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     QFormLayout::TakeRowResult result = flay->takeRow(widget);
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(2);
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout and delete the inserted layout,
-    ///     use removeRow() instead.
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
     /// 
-    ///     \return A structure containing both the widget and
-    ///     corresponding label layout items
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
     /// 
-    ///     \sa removeRow()
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *widget* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *layout* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout and delete the inserted layout,
+    /// use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
     take_row(row: i32) -> FormLayout::TakeRowResult,
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Removes the specified *row* from this form layout.
     /// 
-    ///     Removes the specified \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     \note This function doesn't delete anything.
+    /// **Note**: This function doesn't delete anything.
     /// 
-    ///     After this call, rowCount() is decremented by one. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     QFormLayout::TakeRowResult result = flay->takeRow(widget);
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(2);
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout and delete the inserted layout,
-    ///     use removeRow() instead.
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
     /// 
-    ///     \return A structure containing both the widget and
-    ///     corresponding label layout items
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
     /// 
-    ///     \sa removeRow()
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *widget* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *layout* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout and delete the inserted layout,
+    /// use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
     take_row(widget: *WidgetType) -> FormLayout::TakeRowResult,
-    ///     \since 5.8
     /// 
-    ///     \overload
+    /// Removes the specified *row* from this form layout.
     /// 
-    ///     Removes the specified \a layout from this form layout.
+    /// *row* must be non-negative and less than rowCount().
     /// 
-    ///     \note This function doesn't delete anything.
+    /// **Note**: This function doesn't delete anything.
     /// 
-    ///     After this call, rowCount() is decremented by one. All following rows are shifted
-    ///     up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
     /// 
-    ///     \code
-    ///     QFormLayout *flay = ...;
-    ///     QPointer<QVBoxLayout> vbl = new QVBoxLayout;
-    ///     flay->insertRow(2, "User:", vbl);
-    ///     // later:
-    ///     QFormLayout::TakeRowResult result = flay->takeRow(widget);
-    ///     \endcode
+    /// You can use this function to undo a previous addRow() or insertRow():
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(2);
+    /// ```
     /// 
-    ///     If you want to remove the row from the form layout and delete the inserted layout,
-    ///     use removeRow() instead.
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
     /// 
-    ///     \return A structure containing both the widget and
-    ///     corresponding label layout items
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
     /// 
-    ///     \sa removeRow()
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *widget* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QLineEdit> le = new QLineEdit;
+    /// flay->insertRow(2, "User:", le);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the layout and delete the widgets, use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
+    /// 
+    /// **Overloads**
+    /// Removes the specified *layout* from this form layout.
+    /// 
+    /// **Note**: This function doesn't delete anything.
+    /// 
+    /// After this call, rowCount() is decremented by one. All following rows are shifted
+    /// up one row and the freed vertical space is redistributed amongst the remaining rows.
+    /// 
+    /// ```
+    /// QFormLayout *flay = ...;
+    /// QPointer<QVBoxLayout> vbl = new QVBoxLayout;
+    /// flay->insertRow(2, "User:", vbl);
+    /// // later:
+    /// QFormLayout::TakeRowResult result = flay->takeRow(widget);
+    /// ```
+    /// 
+    /// If you want to remove the row from the form layout and delete the inserted layout,
+    /// use removeRow() instead.
+    /// 
+    /// **Returns** A structure containing both the widget and
+    /// corresponding label layout items
+    /// 
+    /// **See also:** removeRow()
     take_row(layout: *LayoutType) -> FormLayout::TakeRowResult,
-    ///     Sets the item in the given \a row for the given \a role to \a item, extending the
-    ///     layout with empty rows if necessary.
     /// 
-    ///     If the cell is already occupied, the \a item is not inserted and an error message is
-    ///     sent to the console.
-    ///     The \a item spans both columns.
+    /// Sets the item in the given *row* for the given *role* to *item,* extending the
+    /// layout with empty rows if necessary.
     /// 
-    ///     \warning Do not use this function to add child layouts or child
-    ///     widget items. Use setLayout() or setWidget() instead.
+    /// If the cell is already occupied, the *item* is not inserted and an error message is
+    /// sent to the console.
+    /// The *item* spans both columns.
     /// 
-    ///     \sa setLayout()
+    /// **Warning**: Do not use this function to add child layouts or child
+    /// widget items. Use setLayout() or setWidget() instead.
+    /// 
+    /// **See also:** setLayout()
     set_item(row: i32, role: FormLayout::ItemRole, item: *LayoutItemType),
-    ///     Sets the widget in the given \a row for the given \a role to \a widget, extending the
-    ///     layout with empty rows if necessary.
     /// 
-    ///     If the cell is already occupied, the \a widget is not inserted and an error message is
-    ///     sent to the console.
+    /// Sets the widget in the given *row* for the given *role* to *widget,* extending the
+    /// layout with empty rows if necessary.
     /// 
-    ///     \b{Note:} For most applications, addRow() or insertRow() should be used instead of setWidget().
+    /// If the cell is already occupied, the *widget* is not inserted and an error message is
+    /// sent to the console.
     /// 
-    ///     \sa setLayout()
+    /// **Note:** For most applications, addRow() or insertRow() should be used instead of setWidget().
+    /// 
+    /// **See also:** setLayout()
     set_widget(row: i32, role: FormLayout::ItemRole, widget: *WidgetType),
-    ///     Sets the sub-layout in the given \a row for the given \a role to \a layout, extending the
-    ///     form layout with empty rows if necessary.
     /// 
-    ///     If the cell is already occupied, the \a layout is not inserted and an error message is
-    ///     sent to the console.
+    /// Sets the sub-layout in the given *row* for the given *role* to *layout,* extending the
+    /// form layout with empty rows if necessary.
     /// 
-    ///     \b{Note:} For most applications, addRow() or insertRow() should be used instead of setLayout().
+    /// If the cell is already occupied, the *layout* is not inserted and an error message is
+    /// sent to the console.
     /// 
-    ///     \sa setWidget()
+    /// **Note:** For most applications, addRow() or insertRow() should be used instead of setLayout().
+    /// 
+    /// **See also:** setWidget()
     set_layout(row: i32, role: FormLayout::ItemRole, layout: *LayoutType),
-    ///     Returns the layout item in the given \a row with the specified \a
-    ///     role (column). Returns 0 if there is no such item.
     /// 
-    ///     \sa QLayout::itemAt(), setItem()
+    /// 
+    /// Returns the layout item in the given *row* with the specified *role* (column). Returns 0 if there is no such item.
+    /// 
+    /// **See also:** QLayout::itemAt()
+    /// setItem()
     item_at(row: i32, role: FormLayout::ItemRole) -> LayoutItem?,
-    ///     Retrieves the row and role (column) of the item at the specified
-    ///     \a index. If \a index is out of bounds, *\a rowPtr is set to -1;
-    ///     otherwise the row is stored in *\a rowPtr and the role is stored
-    ///     in *\a rolePtr.
     /// 
-    ///     \sa itemAt(), count(), getLayoutPosition(), getWidgetPosition()
+    /// Retrieves the row and role (column) of the item at the specified
+    /// *index.* If *index* is out of bounds, * *rowPtr* is set to -1;
+    /// otherwise the row is stored in * *rowPtr* and the role is stored
+    /// in * *rolePtr.*
+    /// 
+    /// **See also:** itemAt()
+    /// count()
+    /// getLayoutPosition()
+    /// getWidgetPosition()
     get_item_position(index: i32, row_ptr: *i32, role_ptr: FormLayout::ItemRole *),
-    ///     Retrieves the row and role (column) of the specified \a widget in
-    ///     the layout. If \a widget is not in the layout, *\a rowPtr is set
-    ///     to -1; otherwise the row is stored in *\a rowPtr and the role is stored
-    ///     in *\a rolePtr.
     /// 
-    ///     \sa getItemPosition(), itemAt()
+    /// Retrieves the row and role (column) of the specified *widget* in
+    /// the layout. If *widget* is not in the layout, * *rowPtr* is set
+    /// to -1; otherwise the row is stored in * *rowPtr* and the role is stored
+    /// in * *rolePtr.*
+    /// 
+    /// **See also:** getItemPosition()
+    /// itemAt()
     get_widget_position(widget: *WidgetType, row_ptr: *i32, role_ptr: FormLayout::ItemRole *),
-    ///     Retrieves the row and role (column) of the specified child \a
-    ///     layout. If \a layout is not in the form layout, *\a rowPtr is set
-    ///     to -1; otherwise the row is stored in *\a rowPtr and the role is stored
-    ///     in *\a rolePtr.
+    /// 
+    /// Retrieves the row and role (column) of the specified child *layout.* If *layout* is not in the form layout, * *rowPtr* is set
+    /// to -1; otherwise the row is stored in * *rowPtr* and the role is stored
+    /// in * *rolePtr.*
     get_layout_position(layout: *LayoutType, row_ptr: *i32, role_ptr: FormLayout::ItemRole *),
-    ///     \overload
+    /// 
+    /// Returns the label associated with the given *field.*
+    /// 
+    /// **See also:** itemAt()
+    /// 
+    /// **Overloads**
     label_for_field(field: *WidgetType) -> Widget?,
-    ///     \overload
+    /// 
+    /// Returns the label associated with the given *field.*
+    /// 
+    /// **See also:** itemAt()
+    /// 
+    /// **Overloads**
     label_for_field(field: *LayoutType) -> Widget?,
-    ///     \reimp
+    /// 
     [event] add_item(item: *LayoutItemType),
-    ///     Returns the layout item in the given \a row with the specified \a
-    ///     role (column). Returns 0 if there is no such item.
     /// 
-    ///     \sa QLayout::itemAt(), setItem()
+    /// 
+    /// Returns the layout item in the given *row* with the specified *role* (column). Returns 0 if there is no such item.
+    /// 
+    /// **See also:** QLayout::itemAt()
+    /// setItem()
     [event] item_at(index: i32) -> LayoutItem?,
-    ///     \reimp
-    [event] take_at(index: i32) -> LayoutItem?,
-    ///     \reimp
-    [event] minimum_size() -> Size,
-    ///     \reimp
-    [event] size_hint() -> Size,
-    ///     \reimp
-    [event] invalidate(),
-    ///     \reimp
-    [event] has_height_for_width() -> bool,
-    ///     \reimp
-    [event] height_for_width(width: i32) -> i32,
-    ///     \reimp
-    [event] expanding_directions() -> Rute::Orientations,
-    ///     \reimp
-    [event] count() -> i32,
-    ///     Returns the number of rows in the form.
     /// 
-    ///     \sa QLayout::count()
+    [event] take_at(index: i32) -> LayoutItem?,
+    /// 
+    [event] minimum_size() -> Size,
+    /// 
+    [event] size_hint() -> Size,
+    /// 
+    [event] invalidate(),
+    /// 
+    [event] has_height_for_width() -> bool,
+    /// 
+    [event] height_for_width(width: i32) -> i32,
+    /// 
+    [event] expanding_directions() -> Rute::Orientations,
+    /// 
+    [event] count() -> i32,
+    /// 
+    /// Returns the number of rows in the form.
+    /// 
+    /// **See also:** QLayout::count()
     row_count() -> i32,
 }
 

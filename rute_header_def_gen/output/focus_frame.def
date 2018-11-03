@@ -1,44 +1,45 @@
-///     \class QFocusFrame
-///     \brief The QFocusFrame widget provides a focus frame which can be
-///     outside of a widget's normal paintable area.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
-/// 
-///     Normally an application will not need to create its own
-///     QFocusFrame as QStyle will handle this detail for
-///     you. A style writer can optionally use a QFocusFrame to have a
-///     focus area outside of the widget's paintable geometry. In this way
-///     space need not be reserved for the widget to have focus but only
-///     set on a QWidget with QFocusFrame::setWidget. It is, however,
-///     legal to create your own QFocusFrame on a custom widget and set
-///     its geometry manually via QWidget::setGeometry however you will
-///     not get auto-placement when the focused widget changes size or
-///     placement.
+/// Normally an application will not need to create its own
+/// QFocusFrame as QStyle will handle this detail for
+/// you. A style writer can optionally use a QFocusFrame to have a
+/// focus area outside of the widget's paintable geometry. In this way
+/// space need not be reserved for the widget to have focus but only
+/// set on a QWidget with QFocusFrame::setWidget. It is, however,
+/// legal to create your own QFocusFrame on a custom widget and set
+/// its geometry manually via QWidget::setGeometry however you will
+/// not get auto-placement when the focused widget changes size or
+/// placement.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct FocusFrame : Widget {
-    ///   QFocusFrame will track changes to \a widget and resize itself automatically.
-    ///   If the monitored widget's parent changes, QFocusFrame will follow the widget
-    ///   and place itself around the widget automatically. If the monitored widget is deleted,
-    ///   QFocusFrame will set it to zero.
     /// 
-    ///   \sa QFocusFrame::widget()
+    /// QFocusFrame will track changes to *widget* and resize itself automatically.
+    /// If the monitored widget's parent changes, QFocusFrame will follow the widget
+    /// and place itself around the widget automatically. If the monitored widget is deleted,
+    /// QFocusFrame will set it to zero.
+    /// 
+    /// **See also:** QFocusFrame::widget()
     set_widget(widget: *WidgetType),
-    ///   Returns the currently monitored widget for automatically resize and
-    ///   update.
     /// 
-    ///    \sa QFocusFrame::setWidget()
+    /// Returns the currently monitored widget for automatically resize and
+    /// update.
+    /// 
+    /// **See also:** QFocusFrame::setWidget()
     widget() -> Widget?,
-    [event] event(e: *EventType) -> bool,
-    [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
-    [event] paint_event(arg0: *PaintEventType),
-    ///     Initialize \a option with the values from this QFocusFrame. This method is useful
-    ///     for subclasses when they need a QStyleOption, but don't want to fill
-    ///     in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// 
+    [event] event(e: *EventType) -> bool,
+    /// 
+    [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    /// Initialize *option* with the values from this QFocusFrame. This method is useful
+    /// for subclasses when they need a QStyleOption, but don't want to fill
+    /// in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionType),
 }
 

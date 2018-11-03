@@ -1,39 +1,35 @@
-///   \class QDateTimeEdit
-///   \brief The QDateTimeEdit class provides a widget for editing dates and times.
 /// 
-///   \ingroup basicwidgets
-///   \inmodule QtWidgets
+/// ![windows-datetimeedit.png](windows-datetimeedit.png)
 /// 
-///   \image windows-datetimeedit.png
+/// QDateTimeEdit allows the user to edit dates by using the keyboard or
+/// the arrow keys to increase and decrease date and time values. The
+/// arrow keys can be used to move from section to section within the
+/// QDateTimeEdit box. Dates and times appear in accordance with the
+/// format set; see setDisplayFormat().
 /// 
-///   QDateTimeEdit allows the user to edit dates by using the keyboard or
-///   the arrow keys to increase and decrease date and time values. The
-///   arrow keys can be used to move from section to section within the
-///   QDateTimeEdit box. Dates and times appear in accordance with the
-///   format set; see setDisplayFormat().
+/// Here we've created a new QDateTimeEdit object initialized with
+/// today's date, and restricted the valid date range to today plus or
+/// minus 365 days. We've set the order to month, day, year.
 /// 
-///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 0
+/// The minimum value for QDateTimeEdit is 14 September 1752. You can
+/// change this by calling setMinimumDate(), taking into account that
+/// the minimum value for QDate is 2 January 4713BC.
 /// 
-///   Here we've created a new QDateTimeEdit object initialized with
-///   today's date, and restricted the valid date range to today plus or
-///   minus 365 days. We've set the order to month, day, year.
+/// Other useful functions are setMaximumDate(), setMinimumTime()
+/// and setMaximumTime().
 /// 
-///   The minimum value for QDateTimeEdit is 14 September 1752. You can
-///   change this by calling setMinimumDate(), taking into account that
-///   the minimum value for QDate is 2 January 4713BC.
+/// # Using a Pop-up Calendar Widget
 /// 
-///   Other useful functions are setMaximumDate(), setMinimumTime()
-///   and setMaximumTime().
+/// QDateTimeEdit can be configured to allow a QCalendarWidget to be used
+/// to select dates. This is enabled by setting the calendarPopup property.
+/// Additionally, you can supply a custom calendar widget for use as the
+/// calendar pop-up by calling the setCalendarWidget() function. The existing
+/// calendar widget can be retrieved with calendarWidget().
 /// 
-///   \section1 Using a Pop-up Calendar Widget
-/// 
-///   QDateTimeEdit can be configured to allow a QCalendarWidget to be used
-///   to select dates. This is enabled by setting the calendarPopup property.
-///   Additionally, you can supply a custom calendar widget for use as the
-///   calendar pop-up by calling the setCalendarWidget() function. The existing
-///   calendar widget can be retrieved with calendarWidget().
-/// 
-///   \sa QDateEdit, QTimeEdit, QDate, QTime
+/// **See also:** QDateEdit
+/// QTimeEdit
+/// QDate
+/// QTime
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -53,335 +49,521 @@ enum Section {
 }
 
 struct DateTimeEdit : AbstractSpinBox {
-    ///   \property QDateTimeEdit::dateTime
-    ///   \brief the QDateTime that is set in the QDateTimeEdit
     /// 
-    ///   When setting this property the timespec of the QDateTimeEdit remains the same
-    ///   and the timespec of the new QDateTime is ignored.
+    /// This signal is emitted whenever the date or time is changed. The
+    /// new date and time is passed in *datetime.*
     /// 
-    ///   By default, this property contains a date that refers to January 1,
-    ///   2000 and a time of 00:00:00 and 0 milliseconds.
+    /// When setting this property the timespec of the QDateTimeEdit remains the same
+    /// and the timespec of the new QDateTime is ignored.
     /// 
-    ///   \sa date, time
+    /// By default, this property contains a date that refers to January 1,
+    /// 2000 and a time of 00:00:00 and 0 milliseconds.
+    /// 
+    /// **See also:** date
+    /// time
+    /// 
+    /// Returns an appropriate datetime for the given *text.*
+    /// 
+    /// This virtual function is used by the datetime edit whenever it
+    /// needs to interpret text entered by the user as a value.
+    /// 
+    /// **See also:** textFromDateTime()
+    /// validate()
     date_time() -> DateTime,
-    ///     Returns the date of the date time edit.
+    /// 
+    /// This signal is emitted whenever the date or time is changed. The
+    /// new date and time is passed in *datetime.*
+    /// 
+    /// This signal is emitted whenever the date is changed. The new date
+    /// is passed in *date.*
+    /// 
+    /// When setting this property the timespec of the QDateTimeEdit remains the same
+    /// and the timespec of the new QDateTime is ignored.
+    /// 
+    /// By default, this property contains a date that refers to January 1,
+    /// 2000 and a time of 00:00:00 and 0 milliseconds.
+    /// 
+    /// **See also:** date
+    /// time
+    /// 
+    /// By default, this property contains a date that refers to January 1, 2000.
+    /// 
+    /// **See also:** time
+    /// dateTime
+    /// 
+    /// Returns the date of the date time edit.
+    /// 
+    /// Returns an appropriate datetime for the given *text.*
+    /// 
+    /// This virtual function is used by the datetime edit whenever it
+    /// needs to interpret text entered by the user as a value.
+    /// 
+    /// **See also:** textFromDateTime()
+    /// validate()
     date() -> Date,
-    ///     Returns the time of the date time edit.
+    /// 
+    /// This signal is emitted whenever the time is changed. The new time
+    /// is passed in *time.*
+    /// 
+    /// By default, this property contains a time of 00:00:00 and 0 milliseconds.
+    /// 
+    /// **See also:** date
+    /// dateTime
+    /// 
+    /// Returns the time of the date time edit.
+    /// 
     time() -> Time,
-    ///   \property QDateTimeEdit::minimumDateTime
-    ///   \since 4.4
     /// 
-    ///   \brief the minimum datetime of the date time edit
+    /// When setting this property the [maximumDateTime()](maximumDateTime())
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the datetime is
+    /// not a valid QDateTime object, this function does nothing.
     /// 
-    ///   When setting this property the \l maximumDateTime() is adjusted if
-    ///   necessary to ensure that the range remains valid. If the datetime is
-    ///   not a valid QDateTime object, this function does nothing.
+    /// The default minimumDateTime can be restored with
+    /// clearMinimumDateTime()
     /// 
-    ///   The default minimumDateTime can be restored with
-    ///   clearMinimumDateTime()
+    /// By default, this property contains a date that refers to September 14,
+    /// 1752 and a time of 00:00:00 and 0 milliseconds.
     /// 
-    ///   By default, this property contains a date that refers to September 14,
-    ///   1752 and a time of 00:00:00 and 0 milliseconds.
-    /// 
-    ///   \sa maximumDateTime(), minimumTime(), maximumTime(), minimumDate(),
-    ///   maximumDate(), setDateTimeRange(), setDateRange(), setTimeRange(),
-    ///   clearMaximumDateTime(), clearMinimumDate(),
-    ///   clearMaximumDate(), clearMinimumTime(), clearMaximumTime()
+    /// **See also:** maximumDateTime()
+    /// minimumTime()
+    /// maximumTime()
+    /// minimumDate()
+    /// maximumDate()
+    /// setDateTimeRange()
+    /// setDateRange()
+    /// setTimeRange()
+    /// clearMaximumDateTime()
+    /// clearMinimumDate()
+    /// clearMaximumDate()
+    /// clearMinimumTime()
+    /// clearMaximumTime()
     minimum_date_time() -> DateTime,
     clear_minimum_date_time(),
     set_minimum_date_time(dt: &DateTimeType),
-    ///   \property QDateTimeEdit::maximumDateTime
-    ///   \since 4.4
     /// 
-    ///   \brief the maximum datetime of the date time edit
+    /// When setting this property the [minimumDateTime()](minimumDateTime())
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the datetime is
+    /// not a valid QDateTime object, this function does nothing.
     /// 
-    ///   When setting this property the \l minimumDateTime() is adjusted if
-    ///   necessary to ensure that the range remains valid. If the datetime is
-    ///   not a valid QDateTime object, this function does nothing.
+    /// The default maximumDateTime can be restored with
+    /// clearMaximumDateTime().
     /// 
-    ///   The default maximumDateTime can be restored with
-    ///   clearMaximumDateTime().
+    /// By default, this property contains a date that refers to 31 December,
+    /// 9999 and a time of 23:59:59 and 999 milliseconds.
     /// 
-    ///   By default, this property contains a date that refers to 31 December,
-    ///   9999 and a time of 23:59:59 and 999 milliseconds.
-    /// 
-    ///   \sa minimumDateTime(), minimumTime(), maximumTime(), minimumDate(),
-    ///   maximumDate(), setDateTimeRange(), setDateRange(), setTimeRange(),
-    ///   clearMinimumDateTime(), clearMinimumDate(),
-    ///   clearMaximumDate(), clearMinimumTime(), clearMaximumTime()
+    /// **See also:** minimumDateTime()
+    /// minimumTime()
+    /// maximumTime()
+    /// minimumDate()
+    /// maximumDate()
+    /// setDateTimeRange()
+    /// setDateRange()
+    /// setTimeRange()
+    /// clearMinimumDateTime()
+    /// clearMinimumDate()
+    /// clearMaximumDate()
+    /// clearMinimumTime()
+    /// clearMaximumTime()
     maximum_date_time() -> DateTime,
     clear_maximum_date_time(),
     set_maximum_date_time(dt: &DateTimeType),
-    ///   Convenience function to set minimum and maximum date time with one
-    ///   function call.
-    ///   \since 4.4
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 1
+    /// Convenience function to set minimum and maximum date time with one
+    /// function call.
     /// 
-    ///   is analogous to:
+    /// is analogous to:
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 2
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
     /// 
-    ///   If either \a min or \a max are not valid, this function does
-    ///   nothing.
-    /// 
-    ///   \sa setMinimumDate(), maximumDate(), setMaximumDate(),
-    ///   clearMinimumDate(), setMinimumTime(), maximumTime(),
-    ///   setMaximumTime(), clearMinimumTime(), QDateTime::isValid()
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QDateTime::isValid()
     set_date_time_range(min: &DateTimeType, max: &DateTimeType),
-    ///   \property QDateTimeEdit::minimumDate
     /// 
-    ///   \brief the minimum date of the date time edit
+    /// When setting this property the [maximumDateTime()](maximumDateTime())
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the datetime is
+    /// not a valid QDateTime object, this function does nothing.
     /// 
-    ///   When setting this property the \l maximumDate is adjusted if
-    ///   necessary, to ensure that the range remains valid. If the date is
-    ///   not a valid QDate object, this function does nothing.
+    /// The default minimumDateTime can be restored with
+    /// clearMinimumDateTime()
     /// 
-    ///   By default, this property contains a date that refers to September 14, 1752.
-    ///   The minimum date must be at least the first day in year 100, otherwise
-    ///   setMinimumDate() has no effect.
+    /// By default, this property contains a date that refers to September 14,
+    /// 1752 and a time of 00:00:00 and 0 milliseconds.
     /// 
-    ///   \sa minimumTime(), maximumTime(), setDateRange()
+    /// **See also:** maximumDateTime()
+    /// minimumTime()
+    /// maximumTime()
+    /// minimumDate()
+    /// maximumDate()
+    /// setDateTimeRange()
+    /// setDateRange()
+    /// setTimeRange()
+    /// clearMaximumDateTime()
+    /// clearMinimumDate()
+    /// clearMaximumDate()
+    /// clearMinimumTime()
+    /// clearMaximumTime()
+    /// 
+    /// When setting this property the [maximumDate](maximumDate)
+    /// is adjusted if
+    /// necessary, to ensure that the range remains valid. If the date is
+    /// not a valid QDate object, this function does nothing.
+    /// 
+    /// By default, this property contains a date that refers to September 14, 1752.
+    /// The minimum date must be at least the first day in year 100, otherwise
+    /// setMinimumDate() has no effect.
+    /// 
+    /// **See also:** minimumTime()
+    /// maximumTime()
+    /// setDateRange()
     minimum_date() -> Date,
     set_minimum_date(min: &DateType),
     clear_minimum_date(),
-    ///   \property QDateTimeEdit::maximumDate
     /// 
-    ///   \brief the maximum date of the date time edit
+    /// When setting this property the [minimumDateTime()](minimumDateTime())
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the datetime is
+    /// not a valid QDateTime object, this function does nothing.
     /// 
-    ///   When setting this property the \l minimumDate is adjusted if
-    ///   necessary to ensure that the range remains valid. If the date is
-    ///   not a valid QDate object, this function does nothing.
+    /// The default maximumDateTime can be restored with
+    /// clearMaximumDateTime().
     /// 
-    ///   By default, this property contains a date that refers to December 31, 9999.
+    /// By default, this property contains a date that refers to 31 December,
+    /// 9999 and a time of 23:59:59 and 999 milliseconds.
     /// 
-    ///   \sa minimumDate, minimumTime, maximumTime, setDateRange()
+    /// **See also:** minimumDateTime()
+    /// minimumTime()
+    /// maximumTime()
+    /// minimumDate()
+    /// maximumDate()
+    /// setDateTimeRange()
+    /// setDateRange()
+    /// setTimeRange()
+    /// clearMinimumDateTime()
+    /// clearMinimumDate()
+    /// clearMaximumDate()
+    /// clearMinimumTime()
+    /// clearMaximumTime()
+    /// 
+    /// When setting this property the [minimumDate](minimumDate)
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the date is
+    /// not a valid QDate object, this function does nothing.
+    /// 
+    /// By default, this property contains a date that refers to December 31, 9999.
+    /// 
+    /// **See also:** minimumDate
+    /// minimumTime
+    /// maximumTime
+    /// setDateRange()
     maximum_date() -> Date,
     set_maximum_date(max: &DateType),
     clear_maximum_date(),
-    ///   Convenience function to set minimum and maximum date with one
-    ///   function call.
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 3
+    /// Convenience function to set minimum and maximum date with one
+    /// function call.
     /// 
-    ///   is analogous to:
+    /// is analogous to:
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 4
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
     /// 
-    ///   If either \a min or \a max are not valid, this function does
-    ///   nothing.
-    /// 
-    ///   \sa setMinimumDate(), maximumDate(), setMaximumDate(),
-    ///   clearMinimumDate(), setMinimumTime(), maximumTime(),
-    ///   setMaximumTime(), clearMinimumTime(), QDate::isValid()
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QDate::isValid()
     set_date_range(min: &DateType, max: &DateType),
-    ///   \property QDateTimeEdit::minimumTime
     /// 
-    ///   \brief the minimum time of the date time edit
+    /// When setting this property the [maximumTime](maximumTime)
+    /// is adjusted if
+    /// necessary, to ensure that the range remains valid. If the time is
+    /// not a valid QTime object, this function does nothing.
     /// 
-    ///   When setting this property the \l maximumTime is adjusted if
-    ///   necessary, to ensure that the range remains valid. If the time is
-    ///   not a valid QTime object, this function does nothing.
+    /// By default, this property contains a time of 00:00:00 and 0 milliseconds.
     /// 
-    ///   By default, this property contains a time of 00:00:00 and 0 milliseconds.
-    /// 
-    ///   \sa maximumTime, minimumDate, maximumDate, setTimeRange()
+    /// **See also:** maximumTime
+    /// minimumDate
+    /// maximumDate
+    /// setTimeRange()
     minimum_time() -> Time,
     set_minimum_time(min: &TimeType),
     clear_minimum_time(),
-    ///   \property QDateTimeEdit::maximumTime
     /// 
-    ///   \brief the maximum time of the date time edit
+    /// When setting this property, the [minimumTime](minimumTime)
+    /// is adjusted if
+    /// necessary to ensure that the range remains valid. If the time is
+    /// not a valid QTime object, this function does nothing.
     /// 
-    ///   When setting this property, the \l minimumTime is adjusted if
-    ///   necessary to ensure that the range remains valid. If the time is
-    ///   not a valid QTime object, this function does nothing.
+    /// By default, this property contains a time of 23:59:59 and 999 milliseconds.
     /// 
-    ///   By default, this property contains a time of 23:59:59 and 999 milliseconds.
-    /// 
-    ///   \sa minimumTime, minimumDate, maximumDate, setTimeRange()
+    /// **See also:** minimumTime
+    /// minimumDate
+    /// maximumDate
+    /// setTimeRange()
     maximum_time() -> Time,
     set_maximum_time(max: &TimeType),
     clear_maximum_time(),
-    ///   Convenience function to set minimum and maximum time with one
-    ///   function call.
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 5
+    /// Convenience function to set minimum and maximum time with one
+    /// function call.
     /// 
-    ///   is analogous to:
+    /// is analogous to:
     /// 
-    ///   \snippet code/src_gui_widgets_qdatetimeedit.cpp 6
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
     /// 
-    ///   If either \a min or \a max are not valid, this function does
-    ///   nothing.
-    /// 
-    ///   \sa setMinimumDate(), maximumDate(), setMaximumDate(),
-    ///   clearMinimumDate(), setMinimumTime(), maximumTime(),
-    ///   setMaximumTime(), clearMinimumTime(), QTime::isValid()
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QTime::isValid()
     set_time_range(min: &TimeType, max: &TimeType),
-    ///   \property QDateTimeEdit::displayedSections
     /// 
-    ///   \brief the currently displayed fields of the date time edit
-    /// 
-    ///   Returns a bit set of the displayed sections for this format.
-    ///   \a setDisplayFormat(), displayFormat()
+    /// Returns a bit set of the displayed sections for this format.
+    /// *setDisplayFormat(),* displayFormat()
     displayed_sections() -> DateTimeEdit::Sections,
-    ///   \property QDateTimeEdit::currentSection
     /// 
-    ///   \brief the current section of the spinbox
-    ///   \a setCurrentSection()
+    /// *setCurrentSection()*
+    /// 
+    /// If the format is 'yyyy/MM/dd', the displayText is '2001/05/21', and
+    /// the cursorPosition is 5, currentSectionIndex returns 1. If the
+    /// cursorPosition is 3, currentSectionIndex is 0, and so on.
+    /// 
+    /// *setCurrentSection()*
+    /// **See also:** currentSection()
     current_section() -> DateTimeEdit::Section,
-    ///   \since 4.3
     /// 
-    ///   Returns the Section at \a index.
+    /// Returns the Section at *index.*
     /// 
-    ///   If the format is 'yyyy/MM/dd', sectionAt(0) returns YearSection,
-    ///   sectionAt(1) returns MonthSection, and sectionAt(2) returns
-    ///   YearSection,
+    /// If the format is 'yyyy/MM/dd', sectionAt(0) returns YearSection,
+    /// sectionAt(1) returns MonthSection, and sectionAt(2) returns
+    /// YearSection,
     section_at(index: i32) -> DateTimeEdit::Section,
     set_current_section(section: DateTimeEdit::Section),
-    ///   \since 4.3
     /// 
-    ///   \property QDateTimeEdit::currentSectionIndex
+    /// If the format is 'yyyy/MM/dd', the displayText is '2001/05/21', and
+    /// the cursorPosition is 5, currentSectionIndex returns 1. If the
+    /// cursorPosition is 3, currentSectionIndex is 0, and so on.
     /// 
-    ///   \brief the current section index of the spinbox
-    /// 
-    ///   If the format is 'yyyy/MM/dd', the displayText is '2001/05/21', and
-    ///   the cursorPosition is 5, currentSectionIndex returns 1. If the
-    ///   cursorPosition is 3, currentSectionIndex is 0, and so on.
-    /// 
-    ///   \a setCurrentSection()
-    ///   \sa currentSection()
+    /// *setCurrentSection()*
+    /// **See also:** currentSection()
     current_section_index() -> i32,
     set_current_section_index(index: i32),
-    ///   \since 4.4
     /// 
-    ///   \brief Returns the calendar widget for the editor if calendarPopup is
-    ///   set to true and (sections() & DateSections_Mask) != 0.
-    /// 
-    ///   This function creates and returns a calendar widget if none has been set.
+    /// This function creates and returns a calendar widget if none has been set.
     calendar_widget() -> CalendarWidget?,
-    ///   \since 4.4
     /// 
-    ///   Sets the given \a calendarWidget as the widget to be used for the calendar
-    ///   pop-up. The editor does not automatically take ownership of the calendar widget.
+    /// Sets the given *calendarWidget* as the widget to be used for the calendar
+    /// pop-up. The editor does not automatically take ownership of the calendar widget.
     /// 
-    ///   \note calendarPopup must be set to true before setting the calendar widget.
-    ///   \sa calendarPopup
+    /// **Note**: calendarPopup must be set to true before setting the calendar widget.
+    /// **See also:** calendarPopup
     set_calendar_widget(calendar_widget: *CalendarWidgetType),
-    ///   \since 4.3
     /// 
-    ///   \property QDateTimeEdit::sectionCount
-    /// 
-    ///   \brief the number of sections displayed.
-    ///   If the format is 'yyyy/yy/yyyy', sectionCount returns 3
     section_count() -> i32,
-    ///   \since 4.2
     /// 
-    ///   Selects \a section. If \a section doesn't exist in the currently
-    ///   displayed sections, this function does nothing. If \a section is
-    ///   NoSection, this function will unselect all text in the editor.
-    ///   Otherwise, this function will move the cursor and the current section
-    ///   to the selected section.
+    /// Selects *section.* If *section* doesn't exist in the currently
+    /// displayed sections, this function does nothing. If *section* is
+    /// NoSection, this function will unselect all text in the editor.
+    /// Otherwise, this function will move the cursor and the current section
+    /// to the selected section.
     /// 
-    ///   \sa currentSection()
+    /// **See also:** currentSection()
     set_selected_section(section: DateTimeEdit::Section),
-    ///   \fn QString QDateTimeEdit::sectionText(Section section) const
     /// 
-    ///   Returns the text from the given \a section.
+    /// Returns the text from the given *section.*
     /// 
-    ///   \sa currentSection()
+    /// **See also:** currentSection()
     section_text(section: DateTimeEdit::Section) -> String,
-    ///   \property QDateTimeEdit::displayFormat
     /// 
-    ///   \brief the format used to display the time/date of the date time edit
+    /// This format is described in QDateTime::toString() and QDateTime::fromString()
     /// 
-    ///   This format is described in QDateTime::toString() and QDateTime::fromString()
+    /// Example format strings (assuming that the date is 2nd of July 1969):
     /// 
-    ///   Example format strings (assuming that the date is 2nd of July 1969):
+    /// * Format
+    /// * Result
+    /// * dd.MM.yyyy
+    /// * 02.07.1969
+    /// * MMM d yy
+    /// * Jul 2 69
+    /// * MMMM d yy
+    /// * July 2 69
     /// 
-    ///   \table
-    ///   \header \li Format \li Result
-    ///   \row \li dd.MM.yyyy \li 02.07.1969
-    ///   \row \li MMM d yy \li Jul 2 69
-    ///   \row \li MMMM d yy \li July 2 69
-    ///   \endtable
+    /// Note that if you specify a two digit year, it will be interpreted
+    /// to be in the century in which the date time edit was initialized.
+    /// The default century is the 21 (2000-2099).
     /// 
-    ///   Note that if you specify a two digit year, it will be interpreted
-    ///   to be in the century in which the date time edit was initialized.
-    ///   The default century is the 21 (2000-2099).
+    /// If you specify an invalid format the format will not be set.
     /// 
-    ///   If you specify an invalid format the format will not be set.
-    /// 
-    ///   \sa QDateTime::toString(), displayedSections()
+    /// **See also:** QDateTime::toString()
+    /// displayedSections()
     display_format() -> String,
     set_display_format(format: String),
-    ///     \property QDateTimeEdit::calendarPopup
-    ///     \brief the current calendar pop-up show mode.
-    ///     \since 4.2
     /// 
-    ///     The calendar pop-up will be shown upon clicking the arrow button.
-    ///     This property is valid only if there is a valid date display format.
+    /// The calendar pop-up will be shown upon clicking the arrow button.
+    /// This property is valid only if there is a valid date display format.
     /// 
-    ///     \sa setDisplayFormat()
+    /// **See also:** setDisplayFormat()
     calendar_popup() -> bool,
     set_calendar_popup(enable: bool),
-    ///     \property QDateTimeEdit::timeSpec
-    ///     \brief the current timespec used by the date time edit.
-    ///     \since 4.4
+    /// 
     time_spec() -> Rute::TimeSpec,
     set_time_spec(spec: Rute::TimeSpec),
-    ///   \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///   \reimp
+    /// 
     [event] clear(),
-    ///   \reimp
+    /// 
     [event] step_by(steps: i32),
-    ///   \reimp
+    /// 
     [event] event(event: *EventType) -> bool,
+    /// 
+    /// This signal is emitted whenever the date or time is changed. The
+    /// new date and time is passed in *datetime.*
     [signal] date_time_changed(date_time: &DateTimeType),
+    /// 
+    /// This signal is emitted whenever the time is changed. The new time
+    /// is passed in *time.*
     [signal] time_changed(time: &TimeType),
+    /// 
+    /// This signal is emitted whenever the date is changed. The new date
+    /// is passed in *date.*
     [signal] date_changed(date: &DateType),
+    /// 
+    /// Convenience function to set minimum and maximum date time with one
+    /// function call.
+    /// 
+    /// is analogous to:
+    /// 
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
+    /// 
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QDateTime::isValid()
     set_date_time(date_time: &DateTimeType),
+    /// 
+    /// Convenience function to set minimum and maximum date time with one
+    /// function call.
+    /// 
+    /// is analogous to:
+    /// 
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
+    /// 
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QDateTime::isValid()
+    /// 
+    /// Convenience function to set minimum and maximum date with one
+    /// function call.
+    /// 
+    /// is analogous to:
+    /// 
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
+    /// 
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QDate::isValid()
     set_date(date: &DateType),
+    /// 
+    /// Convenience function to set minimum and maximum time with one
+    /// function call.
+    /// 
+    /// is analogous to:
+    /// 
+    /// If either *min* or *max* are not valid, this function does
+    /// nothing.
+    /// 
+    /// **See also:** setMinimumDate()
+    /// maximumDate()
+    /// setMaximumDate()
+    /// clearMinimumDate()
+    /// setMinimumTime()
+    /// maximumTime()
+    /// setMaximumTime()
+    /// clearMinimumTime()
+    /// QTime::isValid()
     set_time(time: &TimeType),
-    ///   \reimp
+    /// 
     [event] key_press_event(event: *KeyEventType),
-    ///   \reimp
     [event] wheel_event(event: *WheelEventType),
-    ///   \reimp
+    /// 
     [event] focus_in_event(event: *FocusEventType),
-    ///   \reimp
+    /// 
     [event] focus_next_prev_child(next: bool) -> bool,
-    ///   \reimp
+    /// 
     [event] validate(input: String, pos: &i32) -> Validator::State,
-    ///   \reimp
+    /// 
     [event] fixup(input: String),
-    ///   Returns an appropriate datetime for the given \a text.
     /// 
-    ///   This virtual function is used by the datetime edit whenever it
-    ///   needs to interpret text entered by the user as a value.
+    /// Returns an appropriate datetime for the given *text.*
     /// 
-    ///   \sa textFromDateTime(), validate()
+    /// This virtual function is used by the datetime edit whenever it
+    /// needs to interpret text entered by the user as a value.
+    /// 
+    /// **See also:** textFromDateTime()
+    /// validate()
     [event] date_time_from_text(text: String) -> DateTime,
-    ///   This virtual function is used by the date time edit whenever it
-    ///   needs to display \a dateTime.
     /// 
-    ///   If you reimplement this, you may also need to reimplement validate().
+    /// This virtual function is used by the date time edit whenever it
+    /// needs to display *dateTime.*
     /// 
-    ///   \sa dateTimeFromText(), validate()
+    /// If you reimplement this, you may also need to reimplement validate().
+    /// 
+    /// **See also:** dateTimeFromText()
+    /// validate()
     [event] text_from_date_time(dt: &DateTimeType) -> String,
-    ///   \reimp
-    [event] step_enabled() -> AbstractSpinBox::StepEnabled,
-    ///   \reimp
-    [event] mouse_press_event(event: *MouseEventType),
-    ///     \reimp
-    [event] paint_event(event: *PaintEventType),
-    ///     Initialize \a option with the values from this QDataTimeEdit. This method
-    ///     is useful for subclasses when they need a QStyleOptionSpinBox, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    [event] step_enabled() -> AbstractSpinBox::StepEnabled,
+    /// 
+    [event] mouse_press_event(event: *MouseEventType),
+    /// 
+    [event] paint_event(event: *PaintEventType),
+    /// 
+    /// Initialize *option* with the values from this QDataTimeEdit. This method
+    /// is useful for subclasses when they need a QStyleOptionSpinBox, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionSpinBoxType),
 }
 

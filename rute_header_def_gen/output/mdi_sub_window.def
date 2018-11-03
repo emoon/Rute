@@ -1,64 +1,62 @@
-///     \class QMdiSubWindow
-///     \brief The QMdiSubWindow class provides a subwindow class for
-///     QMdiArea.
-///     \since 4.3
-///     \ingroup mainwindow-classes
-///     \inmodule QtWidgets
 /// 
-///     QMdiSubWindow represents a top-level window in a QMdiArea, and consists
-///     of a title bar with window decorations, an internal widget, and
-///     (depending on the current style) a window frame and a size
-///     grip. QMdiSubWindow has its own layout, which consists of the
-///     title bar and a center area for the internal widget.
+/// QMdiSubWindow represents a top-level window in a QMdiArea, and consists
+/// of a title bar with window decorations, an internal widget, and
+/// (depending on the current style) a window frame and a size
+/// grip. QMdiSubWindow has its own layout, which consists of the
+/// title bar and a center area for the internal widget.
 /// 
-///     \image qmdisubwindowlayout.png
+/// ![qmdisubwindowlayout.png](qmdisubwindowlayout.png)
 /// 
-///     The most common way to construct a QMdiSubWindow is to call
-///     QMdiArea::addSubWindow() with the internal widget as the argument.
-///     You can also create a subwindow yourself, and set an internal
-///     widget by calling setWidget().
+/// The most common way to construct a QMdiSubWindow is to call
+/// QMdiArea::addSubWindow() with the internal widget as the argument.
+/// You can also create a subwindow yourself, and set an internal
+/// widget by calling setWidget().
 /// 
-///     You use the same API when programming with subwindows as with
-///     regular top-level windows (e.g., you can call functions such as
-///     show(), hide(), showMaximized(), and setWindowTitle()).
+/// You use the same API when programming with subwindows as with
+/// regular top-level windows (e.g., you can call functions such as
+/// show(), hide(), showMaximized(), and setWindowTitle()).
 /// 
-///     \section1 Subwindow Handling
+/// # Subwindow Handling
 /// 
-///     QMdiSubWindow also supports behavior specific to subwindows in
-///     an MDI area.
+/// QMdiSubWindow also supports behavior specific to subwindows in
+/// an MDI area.
 /// 
-///     By default, each QMdiSubWindow is visible inside the MDI area
-///     viewport when moved around, but it is also possible to specify
-///     transparent window movement and resizing behavior, where only
-///     the outline of a subwindow is updated during these operations.
-///     The setOption() function is used to enable this behavior.
+/// By default, each QMdiSubWindow is visible inside the MDI area
+/// viewport when moved around, but it is also possible to specify
+/// transparent window movement and resizing behavior, where only
+/// the outline of a subwindow is updated during these operations.
+/// The setOption() function is used to enable this behavior.
 /// 
-///     The isShaded() function detects whether the subwindow is
-///     currently shaded (i.e., the window is collapsed so that only the
-///     title bar is visible). To enter shaded mode, call showShaded().
-///     QMdiSubWindow emits the windowStateChanged() signal whenever the
-///     window state has changed (e.g., when the window becomes minimized,
-///     or is restored). It also emits aboutToActivate() before it is
-///     activated.
+/// The isShaded() function detects whether the subwindow is
+/// currently shaded (i.e., the window is collapsed so that only the
+/// title bar is visible). To enter shaded mode, call showShaded().
+/// QMdiSubWindow emits the windowStateChanged() signal whenever the
+/// window state has changed (e.g., when the window becomes minimized,
+/// or is restored). It also emits aboutToActivate() before it is
+/// activated.
 /// 
-///     In keyboard-interactive mode, the windows are moved and resized
-///     with the keyboard. You can enter this mode through the system menu
-///     of the window. The keyboardSingleStep and keyboardPageStep
-///     properties control the distance the widget is moved or resized for
-///     each keypress event. When shift is pressed down page step is used;
-///     otherwise single step is used.
+/// In keyboard-interactive mode, the windows are moved and resized
+/// with the keyboard. You can enter this mode through the system menu
+/// of the window. The keyboardSingleStep and keyboardPageStep
+/// properties control the distance the widget is moved or resized for
+/// each keypress event. When shift is pressed down page step is used;
+/// otherwise single step is used.
 /// 
-///     You can also change the active window with the keyboard. By
-///     pressing the control and tab keys at the same time, the next
-///     (using the current \l{QMdiArea::}{WindowOrder}) subwindow will be
-///     activated. By pressing control, shift, and tab, you will activate
-///     the previous window. This is equivalent to calling
-///     \l{QMdiArea::}{activateNextSubWindow()} and
-///     \l{QMdiArea::}{activatePreviousSubWindow()}. Note that these
-///     shortcuts overrides global shortcuts, but not the \l{QMdiArea}s
-///     shortcuts.
+/// You can also change the active window with the keyboard. By
+/// pressing the control and tab keys at the same time, the next
+/// (using the current [WindowOrder](QMdiArea::)
+/// ) subwindow will be
+/// activated. By pressing control, shift, and tab, you will activate
+/// the previous window. This is equivalent to calling
+/// [activateNextSubWindow()](QMdiArea::)
+/// and
+/// [activatePreviousSubWindow()](QMdiArea::)
+/// . Note that these
+/// shortcuts overrides global shortcuts, but not the [QMdiArea](QMdiArea)
 /// 
-///     \sa QMdiArea
+/// shortcuts.
+/// 
+/// **See also:** QMdiArea
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -71,158 +69,174 @@ enum SubWindowOption {
 }
 
 struct MdiSubWindow : Widget {
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
-    ///     Sets \a widget as the internal widget of this subwindow. The
-    ///     internal widget is displayed in the center of the subwindow
-    ///     beneath the title bar.
     /// 
-    ///     QMdiSubWindow takes temporary ownership of \a widget; you do
-    ///     not have to delete it. Any existing internal widget will be
-    ///     removed and reparented to the root window.
+    /// Sets *widget* as the internal widget of this subwindow. The
+    /// internal widget is displayed in the center of the subwindow
+    /// beneath the title bar.
     /// 
-    ///     \sa widget()
+    /// QMdiSubWindow takes temporary ownership of *widget;* you do
+    /// not have to delete it. Any existing internal widget will be
+    /// removed and reparented to the root window.
+    /// 
+    /// **See also:** widget()
     set_widget(widget: *WidgetType),
-    ///     Returns the current internal widget.
     /// 
-    ///     \sa setWidget()
+    /// Returns the current internal widget.
+    /// 
+    /// **See also:** setWidget()
     widget() -> Widget?,
-    ///     \internal
     maximized_buttons_widget() -> Widget?,
-    ///     \internal
     maximized_system_menu_icon_widget() -> Widget?,
-    ///     Returns \c true if this window is shaded; otherwise returns \c false.
     /// 
-    ///     A window is shaded if it is collapsed so that only the title bar is
-    ///     visible.
+    /// Returns `true` if this window is shaded; otherwise returns `false.`
+    /// 
+    /// A window is shaded if it is collapsed so that only the title bar is
+    /// visible.
     is_shaded() -> bool,
-    ///     If \a on is true, \a option is enabled on the subwindow; otherwise it is
-    ///     disabled. See SubWindowOption for the effect of each option.
     /// 
-    ///     \sa SubWindowOption, testOption()
+    /// If *on* is true, *option* is enabled on the subwindow; otherwise it is
+    /// disabled. See SubWindowOption for the effect of each option.
+    /// 
+    /// **See also:** SubWindowOption
+    /// testOption()
     set_option(option: MdiSubWindow::SubWindowOption, on: bool),
-    ///     Returns \c true if \a option is enabled; otherwise returns \c false.
     /// 
-    ///     \sa SubWindowOption, setOption()
+    /// Returns `true` if *option* is enabled; otherwise returns `false.`
+    /// 
+    /// **See also:** SubWindowOption
+    /// setOption()
     test_option(arg0: MdiSubWindow::SubWindowOption) -> bool,
     set_keyboard_single_step(step: i32),
-    ///     \property QMdiSubWindow::keyboardSingleStep
-    ///     \brief sets how far a widget should move or resize when using the
-    ///     keyboard arrow keys.
     /// 
-    ///     When in keyboard-interactive mode, you can use the arrow and page keys to
-    ///     either move or resize the window. This property controls the arrow keys.
-    ///     The common way to enter keyboard interactive mode is to enter the
-    ///     subwindow menu, and select either "resize" or "move".
+    /// When in keyboard-interactive mode, you can use the arrow and page keys to
+    /// either move or resize the window. This property controls the arrow keys.
+    /// The common way to enter keyboard interactive mode is to enter the
+    /// subwindow menu, and select either or .
     /// 
-    ///     The default keyboard single step value is 5 pixels.
+    /// The default keyboard single step value is 5 pixels.
     /// 
-    ///     \sa keyboardPageStep
+    /// **See also:** keyboardPageStep
     keyboard_single_step() -> i32,
     set_keyboard_page_step(step: i32),
-    ///     \property QMdiSubWindow::keyboardPageStep
-    ///     \brief sets how far a widget should move or resize when using the
-    ///     keyboard page keys.
     /// 
-    ///     When in keyboard-interactive mode, you can use the arrow and page keys to
-    ///     either move or resize the window. This property controls the page
-    ///     keys. The common way to enter keyboard interactive mode is to enter the
-    ///     subwindow menu, and select either "resize" or "move".
+    /// When in keyboard-interactive mode, you can use the arrow and page keys to
+    /// either move or resize the window. This property controls the page
+    /// keys. The common way to enter keyboard interactive mode is to enter the
+    /// subwindow menu, and select either or .
     /// 
-    ///     The default keyboard page step value is 20 pixels.
+    /// The default keyboard page step value is 20 pixels.
     /// 
-    ///     \sa keyboardSingleStep
+    /// **See also:** keyboardSingleStep
     keyboard_page_step() -> i32,
-    ///     Sets \a systemMenu as the current system menu for this subwindow.
     /// 
-    ///     By default, each QMdiSubWindow has a standard system menu.
+    /// Sets *systemMenu* as the current system menu for this subwindow.
     /// 
-    ///     QActions for the system menu created by QMdiSubWindow will
-    ///     automatically be updated depending on the current window state;
-    ///     e.g., the minimize action will be disabled after the window is
-    ///     minimized.
+    /// By default, each QMdiSubWindow has a standard system menu.
     /// 
-    ///     QActions added by the user are not updated by QMdiSubWindow.
+    /// QActions for the system menu created by QMdiSubWindow will
+    /// automatically be updated depending on the current window state;
+    /// e.g., the minimize action will be disabled after the window is
+    /// minimized.
     /// 
-    ///     QMdiSubWindow takes ownership of \a systemMenu; you do not have to
-    ///     delete it. Any existing menus will be deleted.
+    /// QActions added by the user are not updated by QMdiSubWindow.
     /// 
-    ///     \sa systemMenu(), showSystemMenu()
+    /// QMdiSubWindow takes ownership of *systemMenu;* you do not have to
+    /// delete it. Any existing menus will be deleted.
+    /// 
+    /// **See also:** systemMenu()
+    /// showSystemMenu()
     set_system_menu(system_menu: *MenuType),
-    ///     Returns a pointer to the current system menu, or zero if no system
-    ///     menu is set. QMdiSubWindow provides a default system menu, but you can
-    ///     also set the menu with setSystemMenu().
     /// 
-    ///     \sa setSystemMenu(), showSystemMenu()
+    /// Returns a pointer to the current system menu, or zero if no system
+    /// menu is set. QMdiSubWindow provides a default system menu, but you can
+    /// also set the menu with setSystemMenu().
+    /// 
+    /// **See also:** setSystemMenu()
+    /// showSystemMenu()
     system_menu() -> Menu?,
-    ///     \since 4.4
     /// 
-    ///     Returns the area containing this sub-window, or 0 if there is none.
+    /// Returns the area containing this sub-window, or 0 if there is none.
     /// 
-    ///     \sa QMdiArea::addSubWindow()
+    /// **See also:** QMdiArea::addSubWindow()
     mdi_area() -> MdiArea?,
+    /// 
+    /// QMdiSubWindow emits this signal after the window state changes. *oldState* is the window state before it changed, and *newState* is the
+    /// new, current state.
     [signal] window_state_changed(old_state: Rute::WindowStates, new_state: Rute::WindowStates),
+    /// 
+    /// QMdiSubWindow emits this signal immediately before it is
+    /// activated. After the subwindow has been activated, the QMdiArea that
+    /// manages the subwindow will also emit the
+    /// [subWindowActivated()](QMdiArea::)
+    /// signal.
+    /// 
+    /// **See also:** QMdiArea::subWindowActivated()
     [signal] about_to_activate(),
-    ///     Shows the system menu below the system menu icon in the title bar.
     /// 
-    ///     \sa setSystemMenu(), systemMenu()
+    /// Shows the system menu below the system menu icon in the title bar.
+    /// 
+    /// **See also:** setSystemMenu()
+    /// systemMenu()
     show_system_menu(),
-    ///     Calling this function makes the subwindow enter the shaded mode.
-    ///     When the subwindow is shaded, only the title bar is visible.
     /// 
-    ///     Although shading is not supported by all styles, this function will
-    ///     still show the subwindow as shaded, regardless of whether support
-    ///     for shading is available. However, when used with styles without
-    ///     shading support, the user will be unable to return from shaded mode
-    ///     through the user interface (e.g., through a shade button in the title
-    ///     bar).
+    /// Calling this function makes the subwindow enter the shaded mode.
+    /// When the subwindow is shaded, only the title bar is visible.
     /// 
-    ///     \sa isShaded()
+    /// Although shading is not supported by all styles, this function will
+    /// still show the subwindow as shaded, regardless of whether support
+    /// for shading is available. However, when used with styles without
+    /// shading support, the user will be unable to return from shaded mode
+    /// through the user interface (e.g., through a shade button in the title
+    /// bar).
+    /// 
+    /// **See also:** isShaded()
     show_shaded(),
-    ///     \reimp
-    [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
-    ///     \reimp
-    [event] event(event: *EventType) -> bool,
-    ///     \reimp
-    [event] show_event(show_event: *ShowEventType),
-    ///     \reimp
-    [event] hide_event(hide_event: *HideEventType),
-    ///     \reimp
-    [event] change_event(change_event: *EventType),
-    ///     \reimp
-    [event] close_event(close_event: *CloseEventType),
-    ///     \reimp
-    [event] leave_event(leave_event: *EventType),
-    ///     \reimp
     /// 
-    ///     \warning When maximizing or restoring a subwindow, the resulting call to this function
-    ///     may have an invalid QResizeEvent::oldSize().
+    [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
+    /// 
+    /// 
+    [event] event(event: *EventType) -> bool,
+    /// 
+    [event] show_event(show_event: *ShowEventType),
+    /// 
+    [event] hide_event(hide_event: *HideEventType),
+    /// 
+    [event] change_event(change_event: *EventType),
+    /// 
+    [event] close_event(close_event: *CloseEventType),
+    /// 
+    [event] leave_event(leave_event: *EventType),
+    /// 
+    /// **Warning**: When maximizing or restoring a subwindow, the resulting call to this function
+    /// may have an invalid QResizeEvent::oldSize().
     [event] resize_event(resize_event: *ResizeEventType),
-    ///     \reimp
+    /// 
     [event] timer_event(timer_event: *TimerEventType),
-    ///     \reimp
+    /// 
     [event] move_event(move_event: *MoveEventType),
-    ///     \reimp
+    /// 
     [event] paint_event(paint_event: *PaintEventType),
-    ///     \reimp
+    /// 
     [event] mouse_press_event(mouse_event: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_double_click_event(mouse_event: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_release_event(mouse_event: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_move_event(mouse_event: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] key_press_event(key_event: *KeyEventType),
-    ///     \reimp
+    /// 
     [event] context_menu_event(context_menu_event: *ContextMenuEventType),
-    ///     \reimp
+    /// 
     [event] focus_in_event(focus_in_event: *FocusEventType),
-    ///     \reimp
+    /// 
     [event] focus_out_event(focus_out_event: *FocusEventType),
-    ///     \reimp
+    /// 
     [event] child_event(child_event: *ChildEventType),
 }
 

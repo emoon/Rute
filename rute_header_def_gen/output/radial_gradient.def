@@ -1,125 +1,152 @@
-///     \class QRadialGradient
-///     \ingroup painting
-///     \inmodule QtGui
 /// 
-///     \brief The QRadialGradient class is used in combination with QBrush to
-///     specify a radial gradient brush.
+/// Qt supports both simple and extended radial gradients.
 /// 
-///     Qt supports both simple and extended radial gradients.
+/// Simple radial gradients interpolate colors between a focal point and end
+/// points on a circle surrounding it. Extended radial gradients interpolate
+/// colors between a focal circle and a center circle. Points outside the cone
+/// defined by the two circles will be transparent. For simple radial gradients
+/// the focal point is adjusted to lie inside the center circle, whereas the
+/// focal point can have any position in an extended radial gradient.
 /// 
-///     Simple radial gradients interpolate colors between a focal point and end
-///     points on a circle surrounding it. Extended radial gradients interpolate
-///     colors between a focal circle and a center circle. Points outside the cone
-///     defined by the two circles will be transparent. For simple radial gradients
-///     the focal point is adjusted to lie inside the center circle, whereas the
-///     focal point can have any position in an extended radial gradient.
+/// Outside the end points the gradient is either padded, reflected or repeated
+/// depending on the currently set [spread](QGradient::Spread)
+/// method:
 /// 
-///     Outside the end points the gradient is either padded, reflected or repeated
-///     depending on the currently set \l {QGradient::Spread}{spread} method:
+/// * ![qradialgradient-pad.png](qradialgradient-pad.png)
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qradialgradient-pad.png
-///     \li \inlineimage qradialgradient-reflect.png
-///     \li \inlineimage qradialgradient-repeat.png
-///     \row
-///     \li \l {QGradient::PadSpread}{PadSpread} (default)
-///     \li \l {QGradient::ReflectSpread}{ReflectSpread}
-///     \li \l {QGradient::RepeatSpread}{RepeatSpread}
-///     \endtable
+/// * ![qradialgradient-reflect.png](qradialgradient-reflect.png)
 /// 
-///     The colors in a gradient is defined using stop points of the
-///     QGradientStop type, i.e. a position and a color. Use the
-///     QGradient::setColorAt() or the QGradient::setStops() function to
-///     define the stop points. It is the gradient's complete set of stop
-///     points that describes how the gradient area should be filled.  If
-///     no stop points have been specified, a gradient of black at 0 to
-///     white at 1 is used.
+/// * ![qradialgradient-repeat.png](qradialgradient-repeat.png)
 /// 
-///     In addition to the functions inherited from QGradient, the
-///     QRadialGradient class provides the center(), focalPoint() and
-///     radius() functions returning the gradient's center, focal point
-///     and radius respectively.
+/// * [PadSpread](QGradient::PadSpread)
+/// (default)
+/// * [ReflectSpread](QGradient::ReflectSpread)
 /// 
-///     \sa QLinearGradient, QConicalGradient, {painting/gradients}{The
-///     Gradients Example}
+/// * [RepeatSpread](QGradient::RepeatSpread)
+/// 
+/// The colors in a gradient is defined using stop points of the
+/// QGradientStop type, i.e. a position and a color. Use the
+/// QGradient::setColorAt() or the QGradient::setStops() function to
+/// define the stop points. It is the gradient's complete set of stop
+/// points that describes how the gradient area should be filled. If
+/// no stop points have been specified, a gradient of black at 0 to
+/// white at 1 is used.
+/// 
+/// In addition to the functions inherited from QGradient, the
+/// QRadialGradient class provides the center(), focalPoint() and
+/// radius() functions returning the gradient's center, focal point
+/// and radius respectively.
+/// 
+/// **See also:** QLinearGradient
+/// QConicalGradient
+/// {painting/gradients}{The
+/// Gradients Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct RadialGradient : Gradient {
-    ///     Returns the center of this radial gradient in logical coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// Returns the center of this radial gradient in logical coordinates.
+    /// 
+    /// **See also:** QGradient::stops()
+    /// 
+    /// Returns the center radius of this radial gradient in logical
+    /// coordinates.
+    /// 
+    /// **See also:** QGradient::stops()
     center() -> PointF,
-    ///     \since 4.2
     /// 
-    ///     Sets the center of this radial gradient in logical coordinates
-    ///     to \a center.
+    /// **Overloads**
+    /// Sets the center of this radial gradient in logical coordinates
+    /// to ( *x,* *y).*
     /// 
-    ///     \sa center()
+    /// **See also:** center()
+    /// 
+    /// Sets the center of this radial gradient in logical coordinates
+    /// to *center.*
+    /// 
+    /// **See also:** center()
+    /// 
+    /// Sets the center radius of this radial gradient in logical coordinates
+    /// to *radius*
     set_center(center: &PointFType),
-    ///     \since 4.2
     /// 
-    ///     Sets the center of this radial gradient in logical coordinates
-    ///     to \a center.
+    /// **Overloads**
+    /// Sets the center of this radial gradient in logical coordinates
+    /// to ( *x,* *y).*
     /// 
-    ///     \sa center()
+    /// **See also:** center()
+    /// 
+    /// Sets the center of this radial gradient in logical coordinates
+    /// to *center.*
+    /// 
+    /// **See also:** center()
+    /// 
+    /// Sets the center radius of this radial gradient in logical coordinates
+    /// to *radius*
     set_center(x: f32, y: f32),
-    ///     Returns the focal point of this radial gradient in logical
-    ///     coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// Returns the focal point of this radial gradient in logical
+    /// coordinates.
+    /// 
+    /// **See also:** QGradient::stops()
     focal_point() -> PointF,
-    ///     \since 4.2
     /// 
-    ///     Sets the focal point of this radial gradient in logical
-    ///     coordinates to \a focalPoint.
+    /// **Overloads**
+    /// Sets the focal point of this radial gradient in logical
+    /// coordinates to ( *x,* *y).*
     /// 
-    ///     \sa focalPoint()
+    /// **See also:** focalPoint()
+    /// 
+    /// Sets the focal point of this radial gradient in logical
+    /// coordinates to *focalPoint.*
+    /// 
+    /// **See also:** focalPoint()
     set_focal_point(focal_point: &PointFType),
-    ///     \since 4.2
     /// 
-    ///     Sets the focal point of this radial gradient in logical
-    ///     coordinates to \a focalPoint.
+    /// **Overloads**
+    /// Sets the focal point of this radial gradient in logical
+    /// coordinates to ( *x,* *y).*
     /// 
-    ///     \sa focalPoint()
+    /// **See also:** focalPoint()
+    /// 
+    /// Sets the focal point of this radial gradient in logical
+    /// coordinates to *focalPoint.*
+    /// 
+    /// **See also:** focalPoint()
     set_focal_point(x: f32, y: f32),
-    ///     Returns the radius of this radial gradient in logical coordinates.
     /// 
-    ///     Equivalent to centerRadius()
+    /// Returns the radius of this radial gradient in logical coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// Equivalent to centerRadius()
+    /// 
+    /// **See also:** QGradient::stops()
     radius() -> f32,
-    ///     \since 4.2
     /// 
-    ///     Sets the radius of this radial gradient in logical coordinates
-    ///     to \a radius
+    /// Sets the radius of this radial gradient in logical coordinates
+    /// to *radius*
     /// 
-    ///     Equivalent to setCenterRadius()
+    /// Equivalent to setCenterRadius()
     set_radius(radius: f32),
-    ///     \since 4.8
     /// 
-    ///     Returns the center radius of this radial gradient in logical
-    ///     coordinates.
+    /// Returns the center radius of this radial gradient in logical
+    /// coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// **See also:** QGradient::stops()
     center_radius() -> f32,
-    ///    \since 4.8
     /// 
-    ///    Sets the center radius of this radial gradient in logical coordinates
-    ///    to \a radius
+    /// Sets the center radius of this radial gradient in logical coordinates
+    /// to *radius*
     set_center_radius(radius: f32),
-    ///     \since 4.8
     /// 
-    ///     Returns the focal radius of this radial gradient in logical
-    ///     coordinates.
+    /// Returns the focal radius of this radial gradient in logical
+    /// coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// **See also:** QGradient::stops()
     focal_radius() -> f32,
-    ///    \since 4.8
     /// 
-    ///    Sets the focal radius of this radial gradient in logical coordinates
-    ///    to \a radius
+    /// Sets the focal radius of this radial gradient in logical coordinates
+    /// to *radius*
     set_focal_radius(radius: f32),
 }
 

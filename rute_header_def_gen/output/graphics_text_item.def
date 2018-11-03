@@ -1,37 +1,38 @@
-///     \class QGraphicsTextItem
-///     \brief The QGraphicsTextItem class provides a text item that you can add to
-///     a QGraphicsScene to display formatted text.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     If you only need to show plain text in an item, consider using QGraphicsSimpleTextItem
-///     instead.
+/// If you only need to show plain text in an item, consider using QGraphicsSimpleTextItem
+/// instead.
 /// 
-///     To set the item's text, pass a QString to QGraphicsTextItem's
-///     constructor, or call setHtml()/setPlainText().
+/// To set the item's text, pass a QString to QGraphicsTextItem's
+/// constructor, or call setHtml()/setPlainText().
 /// 
-///     QGraphicsTextItem uses the text's formatted size and the associated font
-///     to provide a reasonable implementation of boundingRect(), shape(),
-///     and contains(). You can set the font by calling setFont().
+/// QGraphicsTextItem uses the text's formatted size and the associated font
+/// to provide a reasonable implementation of boundingRect(), shape(),
+/// and contains(). You can set the font by calling setFont().
 /// 
-///     It is possible to make the item editable by setting the Qt::TextEditorInteraction flag
-///     using setTextInteractionFlags().
+/// It is possible to make the item editable by setting the Qt::TextEditorInteraction flag
+/// using setTextInteractionFlags().
 /// 
-///     The item's preferred text width can be set using setTextWidth() and obtained
-///     using textWidth().
+/// The item's preferred text width can be set using setTextWidth() and obtained
+/// using textWidth().
 /// 
-///     \note In order to align HTML text in the center, the item's text width must be set.
-///     Otherwise, you can call adjustSize() after setting the item's text.
+/// **Note**: In order to align HTML text in the center, the item's text width must be set.
+/// Otherwise, you can call adjustSize() after setting the item's text.
 /// 
-///     \image graphicsview-textitem.png
+/// ![graphicsview-textitem.png](graphicsview-textitem.png)
 /// 
-///     \note QGraphicsTextItem accepts \l{QGraphicsItem::acceptHoverEvents()}{hover events}
-///           by default. You can change this with \l{QGraphicsItem::}{setAcceptHoverEvents()}.
+/// **Note**: QGraphicsTextItem accepts [hover events](QGraphicsItem::acceptHoverEvents())
 /// 
-///     \sa QGraphicsSimpleTextItem, QGraphicsPathItem, QGraphicsRectItem,
-///         QGraphicsEllipseItem, QGraphicsPixmapItem, QGraphicsPolygonItem,
-///         QGraphicsLineItem, {Graphics View Framework}
+/// by default. You can change this with [setAcceptHoverEvents()](QGraphicsItem::)
+/// 
+/// 
+/// **See also:** QGraphicsSimpleTextItem
+/// QGraphicsPathItem
+/// QGraphicsRectItem
+/// QGraphicsEllipseItem
+/// QGraphicsPixmapItem
+/// QGraphicsPolygonItem
+/// QGraphicsLineItem
+/// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -41,177 +42,205 @@ enum GraphicsTextItemFixMeEnums {
 }
 
 struct GraphicsTextItem : GraphicsObject {
-    ///     Returns the item's text converted to HTML, or an empty QString if no text has been set.
     /// 
-    ///     \sa setHtml()
+    /// Returns the item's text converted to HTML, or an empty QString if no text has been set.
+    /// 
+    /// **See also:** setHtml()
     to_html() -> String,
-    ///     Sets the item's text to \a text, assuming that text is HTML formatted. If
-    ///     the item has keyboard input focus, this function will also call
-    ///     ensureVisible() to ensure that the text is visible in all viewports.
     /// 
-    ///     \sa toHtml(), hasFocus(), QGraphicsSimpleTextItem
+    /// Sets the item's text to *text,* assuming that text is HTML formatted. If
+    /// the item has keyboard input focus, this function will also call
+    /// ensureVisible() to ensure that the text is visible in all viewports.
+    /// 
+    /// **See also:** toHtml()
+    /// hasFocus()
+    /// QGraphicsSimpleTextItem
     set_html(html: String),
-    ///     Returns the item's text converted to plain text, or an empty QString if no text has been set.
     /// 
-    ///     \sa setPlainText()
+    /// Returns the item's text converted to plain text, or an empty QString if no text has been set.
+    /// 
+    /// **See also:** setPlainText()
     to_plain_text() -> String,
-    ///     Sets the item's text to \a text. If the item has keyboard input focus,
-    ///     this function will also call ensureVisible() to ensure that the text is
-    ///     visible in all viewports.
     /// 
-    ///     \sa toHtml(), hasFocus()
+    /// Sets the item's text to *text.* If the item has keyboard input focus,
+    /// this function will also call ensureVisible() to ensure that the text is
+    /// visible in all viewports.
+    /// 
+    /// **See also:** toHtml()
+    /// hasFocus()
     set_plain_text(text: String),
-    ///     Returns the item's font, which is used to render the text.
     /// 
-    ///     \sa setFont()
+    /// Returns the item's font, which is used to render the text.
+    /// 
+    /// **See also:** setFont()
     font() -> Font,
-    ///     Sets the font used to render the text item to \a font.
     /// 
-    ///     \sa font()
+    /// Sets the font used to render the text item to *font.*
+    /// 
+    /// **See also:** font()
     set_font(font: &FontType),
-    ///     Sets the color for unformatted text to \a col.
+    /// 
+    /// Sets the color for unformatted text to *col.*
     set_default_text_color(c: &ColorType),
-    ///     Returns the default text color that is used for unformatted text.
+    /// 
+    /// Returns the default text color that is used for unformatted text.
     default_text_color() -> Color,
-    ///     \reimp
+    /// 
     [event] bounding_rect() -> RectF,
-    ///     \reimp
+    /// 
     [event] shape() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] contains(point: &PointFType) -> bool,
+    /// 
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
-    ///     \reimp
+    /// 
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
-    ///     \reimp
+    /// 
     [event] opaque_area() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] type() -> i32,
-    ///     Sets the preferred width for the item's text. If the actual text
-    ///     is wider than the specified width then it will be broken into
-    ///     multiple lines.
     /// 
-    ///     If \a width is set to -1 then the text will not be broken into
-    ///     multiple lines unless it is enforced through an explicit line
-    ///     break or a new paragraph.
+    /// Sets the preferred width for the item's text. If the actual text
+    /// is wider than the specified width then it will be broken into
+    /// multiple lines.
     /// 
-    ///     The default value is -1.
+    /// If *width* is set to -1 then the text will not be broken into
+    /// multiple lines unless it is enforced through an explicit line
+    /// break or a new paragraph.
     /// 
-    ///     Note that QGraphicsTextItem keeps a QTextDocument internally,
-    ///     which is used to calculate the text width.
+    /// The default value is -1.
     /// 
-    ///     \sa textWidth(), QTextDocument::setTextWidth()
+    /// Note that QGraphicsTextItem keeps a QTextDocument internally,
+    /// which is used to calculate the text width.
+    /// 
+    /// **See also:** textWidth()
+    /// QTextDocument::setTextWidth()
     set_text_width(width: f32),
-    ///     Returns the text width.
     /// 
-    ///     The width is calculated with the QTextDocument that
-    ///     QGraphicsTextItem keeps internally.
+    /// Returns the text width.
     /// 
-    ///     \sa setTextWidth(), QTextDocument::textWidth()
+    /// The width is calculated with the QTextDocument that
+    /// QGraphicsTextItem keeps internally.
+    /// 
+    /// **See also:** setTextWidth()
+    /// QTextDocument::textWidth()
     text_width() -> f32,
-    ///     Adjusts the text item to a reasonable size.
+    /// 
+    /// Adjusts the text item to a reasonable size.
     adjust_size(),
-    ///     Sets the text document \a document on the item.
+    /// 
+    /// Sets the text document *document* on the item.
     set_document(document: *TextDocumentType),
-    ///     Returns the item's text document.
+    /// 
+    /// Returns the item's text document.
     document() -> TextDocument?,
-    ///     Sets the flags \a flags to specify how the text item should react to user
-    ///     input.
     /// 
-    ///     The default for a QGraphicsTextItem is Qt::NoTextInteraction. This function
-    ///     also affects the ItemIsFocusable QGraphicsItem flag by setting it if \a flags
-    ///     is different from Qt::NoTextInteraction and clearing it otherwise.
+    /// Sets the flags *flags* to specify how the text item should react to user
+    /// input.
     /// 
-    ///     By default, the text is read-only. To transform the item into an editor,
-    ///     set the Qt::TextEditable flag.
+    /// The default for a QGraphicsTextItem is Qt::NoTextInteraction. This function
+    /// also affects the ItemIsFocusable QGraphicsItem flag by setting it if *flags*
+    /// is different from Qt::NoTextInteraction and clearing it otherwise.
+    /// 
+    /// By default, the text is read-only. To transform the item into an editor,
+    /// set the Qt::TextEditable flag.
     set_text_interaction_flags(flags: Rute::TextInteractionFlags),
-    ///     Returns the current text interaction flags.
     /// 
-    ///     \sa setTextInteractionFlags()
+    /// Returns the current text interaction flags.
+    /// 
+    /// **See also:** setTextInteractionFlags()
     text_interaction_flags() -> Rute::TextInteractionFlags,
-    ///     \since 4.5
     /// 
-    ///     If \a b is true, the \uicontrol Tab key will cause the widget to change focus;
-    ///     otherwise, the tab key will insert a tab into the document.
+    /// If *b* is true, the **Tab** key will cause the widget to change focus;
+    /// otherwise, the tab key will insert a tab into the document.
     /// 
-    ///     In some occasions text edits should not allow the user to input tabulators
-    ///     or change indentation using the \uicontrol Tab key, as this breaks the focus
-    ///     chain. The default is false.
+    /// In some occasions text edits should not allow the user to input tabulators
+    /// or change indentation using the **Tab** key, as this breaks the focus
+    /// chain. The default is false.
     /// 
-    ///     \sa tabChangesFocus(), ItemIsFocusable, textInteractionFlags()
+    /// **See also:** tabChangesFocus()
+    /// ItemIsFocusable
+    /// textInteractionFlags()
     set_tab_changes_focus(b: bool),
-    ///     \since 4.5
     /// 
-    ///     Returns \c true if the \uicontrol Tab key will cause the widget to change focus;
-    ///     otherwise, false is returned.
+    /// Returns `true` if the **Tab** key will cause the widget to change focus;
+    /// otherwise, false is returned.
     /// 
-    ///     By default, this behavior is disabled, and this function will return false.
+    /// By default, this behavior is disabled, and this function will return false.
     /// 
-    ///     \sa setTabChangesFocus()
+    /// **See also:** setTabChangesFocus()
     tab_changes_focus() -> bool,
-    ///     \property QGraphicsTextItem::openExternalLinks
-    /// 
-    ///     Specifies whether QGraphicsTextItem should automatically open links using
-    ///     QDesktopServices::openUrl() instead of emitting the
-    ///     linkActivated signal.
-    /// 
-    ///     The default value is false.
     set_open_external_links(open: bool),
+    /// 
+    /// Specifies whether QGraphicsTextItem should automatically open links using
+    /// QDesktopServices::openUrl() instead of emitting the
+    /// linkActivated signal.
+    /// 
+    /// The default value is false.
     open_external_links() -> bool,
-    ///     \property QGraphicsTextItem::textCursor
-    /// 
-    ///     This property represents the visible text cursor in an editable
-    ///     text item.
-    /// 
-    ///     By default, if the item's text has not been set, this property
-    ///     contains a null text cursor; otherwise it contains a text cursor
-    ///     placed at the start of the item's document.
     set_text_cursor(cursor: &TextCursorType),
+    /// 
+    /// This property represents the visible text cursor in an editable
+    /// text item.
+    /// 
+    /// By default, if the item's text has not been set, this property
+    /// contains a null text cursor; otherwise it contains a text cursor
+    /// placed at the start of the item's document.
     text_cursor() -> TextCursor,
+    /// 
+    /// This signal is emitted when the user clicks on a link on a text item
+    /// that enables Qt::LinksAccessibleByMouse or Qt::LinksAccessibleByKeyboard.
+    /// *link* is the link that was clicked.
+    /// 
+    /// **See also:** setTextInteractionFlags()
     [signal] link_activated(arg0: String),
+    /// 
+    /// This signal is emitted when the user hovers over a link on a text item
+    /// that enables Qt::LinksAccessibleByMouse. *link* is
+    /// the link that was hovered over.
+    /// 
+    /// **See also:** setTextInteractionFlags()
     [signal] link_hovered(arg0: String),
-    ///     \reimp
+    /// 
     [event] scene_event(event: *EventType) -> bool,
-    ///     \reimp
+    /// 
     [event] mouse_press_event(event: *GraphicsSceneMouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_move_event(event: *GraphicsSceneMouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_release_event(event: *GraphicsSceneMouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_double_click_event(event: *GraphicsSceneMouseEventType),
-    ///     \reimp
+    /// 
     [event] context_menu_event(event: *GraphicsSceneContextMenuEventType),
-    ///     \reimp
+    /// 
     [event] key_press_event(event: *KeyEventType),
-    ///     \reimp
+    /// 
     [event] key_release_event(event: *KeyEventType),
-    ///     \reimp
+    /// 
     [event] focus_in_event(event: *FocusEventType),
-    ///     \reimp
+    /// 
     [event] focus_out_event(event: *FocusEventType),
-    ///     \reimp
+    /// 
     [event] drag_enter_event(event: *GraphicsSceneDragDropEventType),
-    ///     \reimp
+    /// 
     [event] drag_leave_event(event: *GraphicsSceneDragDropEventType),
-    ///     \reimp
+    /// 
     [event] drag_move_event(event: *GraphicsSceneDragDropEventType),
-    ///     \reimp
+    /// 
     [event] drop_event(event: *GraphicsSceneDragDropEventType),
-    ///     \reimp
+    /// 
     [event] input_method_event(event: *InputMethodEventType),
-    ///     \reimp
+    /// 
     [event] hover_enter_event(event: *GraphicsSceneHoverEventType),
-    ///     \reimp
+    /// 
     [event] hover_move_event(event: *GraphicsSceneHoverEventType),
-    ///     \reimp
+    /// 
     [event] hover_leave_event(event: *GraphicsSceneHoverEventType),
-    ///     \reimp
+    /// 
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
-    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
-    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

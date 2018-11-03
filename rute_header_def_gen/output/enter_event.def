@@ -1,24 +1,36 @@
-///     \class QEnterEvent
-///     \ingroup events
-///     \inmodule QtGui
 /// 
-///     \brief The QEnterEvent class contains parameters that describe an enter event.
+/// Enter events occur when the mouse cursor enters a window or a widget.
 /// 
-///     Enter events occur when the mouse cursor enters a window or a widget.
-/// 
-///     \since 5.0
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct EnterEvent : Event {
+    /// 
+    /// Returns the position of the mouse cursor in global screen coordinates.
     pos() -> Point,
+    /// 
+    /// Returns the global position of the widget *at the time of the event* .
     global_pos() -> Point,
+    /// 
+    /// Returns the x position of the mouse cursor relative to the receiving widget.
     x() -> i32,
+    /// 
+    /// Returns the y position of the mouse cursor relative to the receiving widget.
     y() -> i32,
+    /// 
+    /// Returns the global position on the X-axis of the mouse cursor relative to the the widget.
     global_x() -> i32,
+    /// 
+    /// Returns the global position on the Y-axis of the mouse cursor relative to the the widget.
     global_y() -> i32,
+    /// 
+    /// Returns the mouse cursor's position relative to the receiving widget.
     local_pos() -> PointF?,
+    /// 
+    /// Returns the position of the mouse cursor relative to the receiving window.
     window_pos() -> PointF?,
+    /// 
+    /// Returns the position of the mouse cursor relative to the receiving screen.
     screen_pos() -> PointF?,
 }
 

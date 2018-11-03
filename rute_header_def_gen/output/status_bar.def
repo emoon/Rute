@@ -1,186 +1,186 @@
-///     \class QStatusBar
-///     \brief The QStatusBar class provides a horizontal bar suitable for
-///     presenting status information.
 /// 
-///     \ingroup mainwindow-classes
-///     \ingroup helpsystem
-///     \inmodule QtWidgets
+/// Each status indicator falls into one of three categories:
 /// 
-///     Each status indicator falls into one of three categories:
+/// * *Temporary* - briefly occupies most of the status bar. Used to explain tool tip texts or menu entries, for example.
+/// * *Normal* - occupies part of the status bar and may be hidden by temporary messages. Used to display the page and line number in a word processor, for example.
+/// * *Permanent* - is never hidden. Used for important mode indications, for example, some applications put a Caps Lock indicator in the status bar.
 /// 
-///     \list
-///     \li \e Temporary - briefly occupies most of the status bar. Used
-///         to explain tool tip texts or menu entries, for example.
-///     \li \e Normal - occupies part of the status bar and may be hidden
-///         by temporary messages. Used to display the page and line
-///         number in a word processor, for example.
-///     \li \e Permanent - is never hidden. Used for important mode
-///         indications, for example, some applications put a Caps Lock
-///         indicator in the status bar.
-///     \endlist
+/// QStatusBar lets you display all three types of indicators.
 /// 
-///     QStatusBar lets you display all three types of indicators.
+/// Typically, a request for the status bar functionality occurs in
+/// relation to a QMainWindow object. QMainWindow provides a main
+/// application window, with a menu bar, tool bars, dock widgets *and* a status bar around a large central widget. The status bar can
+/// be retrieved using the QMainWindow::statusBar() function, and
+/// replaced using the QMainWindow::setStatusBar() function.
 /// 
-///     Typically, a request for the status bar functionality occurs in
-///     relation to a QMainWindow object. QMainWindow provides a main
-///     application window, with a menu bar, tool bars, dock widgets \e
-///     and a status bar around a large central widget. The status bar can
-///     be retrieved using the QMainWindow::statusBar() function, and
-///     replaced using the QMainWindow::setStatusBar() function.
+/// Use the showMessage() slot to display a *temporary* message:
 /// 
-///     Use the showMessage() slot to display a \e temporary message:
+/// To remove a temporary message, use the clearMessage() slot, or set
+/// a time limit when calling showMessage(). For example:
 /// 
-///     \snippet mainwindows/dockwidgets/mainwindow.cpp 8
+/// Use the currentMessage() function to retrieve the temporary
+/// message currently shown. The QStatusBar class also provide the
+/// messageChanged() signal which is emitted whenever the temporary
+/// status message changes.
 /// 
-///     To remove a temporary message, use the clearMessage() slot, or set
-///     a time limit when calling showMessage(). For example:
+/// *Normal* and *Permanent* messages are displayed by creating a
+/// small widget (QLabel, QProgressBar or even QToolButton) and then
+/// adding it to the status bar using the addWidget() or the
+/// addPermanentWidget() function. Use the removeWidget() function to
+/// remove such messages from the status bar.
 /// 
-///     \snippet mainwindows/dockwidgets/mainwindow.cpp 3
+/// By default QStatusBar provides a QSizeGrip in the lower-right
+/// corner. You can disable it using the setSizeGripEnabled()
+/// function. Use the isSizeGripEnabled() function to determine the
+/// current status of the size grip.
 /// 
-///     Use the currentMessage() function to retrieve the temporary
-///     message currently shown. The QStatusBar class also provide the
-///     messageChanged() signal which is emitted whenever the temporary
-///     status message changes.
+/// ![A status bar shown in the Fusion widget style](fusion-statusbar-sizegrip.png)
 /// 
-///     \target permanent message
-///     \e Normal and \e Permanent messages are displayed by creating a
-///     small widget (QLabel, QProgressBar or even QToolButton) and then
-///     adding it to the status bar using the addWidget() or the
-///     addPermanentWidget() function. Use the removeWidget() function to
-///     remove such messages from the status bar.
-/// 
-///     \snippet code/src_gui_widgets_qstatusbar.cpp 0
-/// 
-///     By default QStatusBar provides a QSizeGrip in the lower-right
-///     corner. You can disable it using the setSizeGripEnabled()
-///     function. Use the isSizeGripEnabled() function to determine the
-///     current status of the size grip.
-/// 
-///     \image fusion-statusbar-sizegrip.png A status bar shown in the Fusion widget style
-/// 
-///     \sa QMainWindow, QStatusTipEvent, {fowler}{GUI Design Handbook:
-///     Status Bar}, {Application Example}
+/// **See also:** QMainWindow
+/// QStatusTipEvent
+/// {fowler}{GUI Design Handbook:
+/// Status Bar}, {Application Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StatusBar : Widget {
-    ///     Adds the given \a widget to this status bar, reparenting the
-    ///     widget if it isn't already a child of this QStatusBar object. The
-    ///     \a stretch parameter is used to compute a suitable size for the
-    ///     given \a widget as the status bar grows and shrinks. The default
-    ///     stretch factor is 0, i.e giving the widget a minimum of space.
     /// 
-    ///     The widget is located to the far left of the first permanent
-    ///     widget (see addPermanentWidget()) and may be obscured by temporary
-    ///     messages.
+    /// Adds the given *widget* to this status bar, reparenting the
+    /// widget if it isn't already a child of this QStatusBar object. The
+    /// *stretch* parameter is used to compute a suitable size for the
+    /// given *widget* as the status bar grows and shrinks. The default
+    /// stretch factor is 0, i.e giving the widget a minimum of space.
     /// 
-    ///     \sa insertWidget(), removeWidget(), addPermanentWidget()
+    /// The widget is located to the far left of the first permanent
+    /// widget (see addPermanentWidget()) and may be obscured by temporary
+    /// messages.
+    /// 
+    /// **See also:** insertWidget()
+    /// removeWidget()
+    /// addPermanentWidget()
     add_widget(widget: *WidgetType, stretch: i32),
-    ///     \since 4.2
     /// 
-    ///     Inserts the given \a widget at the given \a index to this status bar,
-    ///     reparenting the widget if it isn't already a child of this
-    ///     QStatusBar object. If \a index is out of range, the widget is appended
-    ///     (in which case it is the actual index of the widget that is returned).
+    /// Inserts the given *widget* at the given *index* to this status bar,
+    /// reparenting the widget if it isn't already a child of this
+    /// QStatusBar object. If *index* is out of range, the widget is appended
+    /// (in which case it is the actual index of the widget that is returned).
     /// 
-    ///     The \a stretch parameter is used to compute a suitable size for
-    ///     the given \a widget as the status bar grows and shrinks. The
-    ///     default stretch factor is 0, i.e giving the widget a minimum of
-    ///     space.
+    /// The *stretch* parameter is used to compute a suitable size for
+    /// the given *widget* as the status bar grows and shrinks. The
+    /// default stretch factor is 0, i.e giving the widget a minimum of
+    /// space.
     /// 
-    ///     The widget is located to the far left of the first permanent
-    ///     widget (see addPermanentWidget()) and may be obscured by temporary
-    ///     messages.
+    /// The widget is located to the far left of the first permanent
+    /// widget (see addPermanentWidget()) and may be obscured by temporary
+    /// messages.
     /// 
-    ///     \sa addWidget(), removeWidget(), addPermanentWidget()
+    /// **See also:** addWidget()
+    /// removeWidget()
+    /// addPermanentWidget()
     insert_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
-    ///     Adds the given \a widget permanently to this status bar,
-    ///     reparenting the widget if it isn't already a child of this
-    ///     QStatusBar object. The \a stretch parameter is used to compute a
-    ///     suitable size for the given \a widget as the status bar grows and
-    ///     shrinks. The default stretch factor is 0, i.e giving the widget a
-    ///     minimum of space.
     /// 
-    ///     Permanently means that the widget may not be obscured by temporary
-    ///     messages. It is is located at the far right of the status bar.
+    /// Adds the given *widget* permanently to this status bar,
+    /// reparenting the widget if it isn't already a child of this
+    /// QStatusBar object. The *stretch* parameter is used to compute a
+    /// suitable size for the given *widget* as the status bar grows and
+    /// shrinks. The default stretch factor is 0, i.e giving the widget a
+    /// minimum of space.
     /// 
-    ///     \sa insertPermanentWidget(), removeWidget(), addWidget()
+    /// Permanently means that the widget may not be obscured by temporary
+    /// messages. It is is located at the far right of the status bar.
+    /// 
+    /// **See also:** insertPermanentWidget()
+    /// removeWidget()
+    /// addWidget()
     add_permanent_widget(widget: *WidgetType, stretch: i32),
-    ///     \since 4.2
     /// 
-    ///     Inserts the given \a widget at the given \a index permanently to this status bar,
-    ///     reparenting the widget if it isn't already a child of this
-    ///     QStatusBar object. If \a index is out of range, the widget is appended
-    ///     (in which case it is the actual index of the widget that is returned).
+    /// Inserts the given *widget* at the given *index* permanently to this status bar,
+    /// reparenting the widget if it isn't already a child of this
+    /// QStatusBar object. If *index* is out of range, the widget is appended
+    /// (in which case it is the actual index of the widget that is returned).
     /// 
-    ///     The \a stretch parameter is used to compute a
-    ///     suitable size for the given \a widget as the status bar grows and
-    ///     shrinks. The default stretch factor is 0, i.e giving the widget a
-    ///     minimum of space.
+    /// The *stretch* parameter is used to compute a
+    /// suitable size for the given *widget* as the status bar grows and
+    /// shrinks. The default stretch factor is 0, i.e giving the widget a
+    /// minimum of space.
     /// 
-    ///     Permanently means that the widget may not be obscured by temporary
-    ///     messages. It is is located at the far right of the status bar.
+    /// Permanently means that the widget may not be obscured by temporary
+    /// messages. It is is located at the far right of the status bar.
     /// 
-    ///     \sa addPermanentWidget(), removeWidget(), addWidget()
+    /// **See also:** addPermanentWidget()
+    /// removeWidget()
+    /// addWidget()
     insert_permanent_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
-    ///     Removes the specified \a widget from the status bar.
     /// 
-    ///     \note This function does not delete the widget but \e hides it.
-    ///     To add the widget again, you must call both the addWidget() and
-    ///     show() functions.
+    /// Removes the specified *widget* from the status bar.
     /// 
-    ///     \sa addWidget(), addPermanentWidget(), clearMessage()
+    /// **Note**: This function does not delete the widget but *hides* it.
+    /// To add the widget again, you must call both the addWidget() and
+    /// show() functions.
+    /// 
+    /// **See also:** addWidget()
+    /// addPermanentWidget()
+    /// clearMessage()
     remove_widget(widget: *WidgetType),
     set_size_grip_enabled(arg0: bool),
-    ///     \property QStatusBar::sizeGripEnabled
-    /// 
-    ///     \brief whether the QSizeGrip in the bottom-right corner of the
-    ///     status bar is enabled
-    /// 
-    ///     The size grip is enabled by default.
     is_size_grip_enabled() -> bool,
-    ///     Returns the temporary message currently shown,
-    ///     or an empty string if there is no such message.
     /// 
-    ///     \sa showMessage()
+    /// Returns the temporary message currently shown,
+    /// or an empty string if there is no such message.
+    /// 
+    /// **See also:** showMessage()
     current_message() -> String,
     /// 
-    ///   Hides the normal status indications and displays the given \a
-    ///   message for the specified number of milli-seconds (\a{timeout}). If
-    ///   \a{timeout} is 0 (default), the \a {message} remains displayed until
-    ///   the clearMessage() slot is called or until the showMessage() slot is
-    ///   called again to change the message.
+    /// Hides the normal status indications and displays the given *message* for the specified number of milli-seconds ( *timeout* ). If
+    /// *timeout* is 0 (default), the *message* remains displayed until
+    /// the clearMessage() slot is called or until the showMessage() slot is
+    /// called again to change the message.
     /// 
-    ///   Note that showMessage() is called to show temporary explanations of
-    ///   tool tip texts, so passing a \a{timeout} of 0 is not sufficient to
-    ///   display a \l{permanent message}{permanent message}.
+    /// Note that showMessage() is called to show temporary explanations of
+    /// tool tip texts, so passing a *timeout* of 0 is not sufficient to
+    /// display a [permanent message](permanent%20message)
     /// 
-    ///     \sa messageChanged(), currentMessage(), clearMessage()
+    /// 
+    /// **See also:** messageChanged()
+    /// currentMessage()
+    /// clearMessage()
     show_message(text: String, timeout: i32),
-    ///     Removes any temporary message being shown.
     /// 
-    ///     \sa currentMessage(), showMessage(), removeWidget()
+    /// Removes any temporary message being shown.
+    /// 
+    /// **See also:** currentMessage()
+    /// showMessage()
+    /// removeWidget()
     clear_message(),
+    /// 
+    /// This signal is emitted whenever the temporary status message
+    /// changes. The new temporary message is passed in the *message*
+    /// parameter which is a null-string when the message has been
+    /// removed.
+    /// 
+    /// **See also:** showMessage()
+    /// clearMessage()
     [signal] message_changed(text: String),
+    /// 
     [event] show_event(arg0: *ShowEventType),
-    ///     \reimp
-    ///     \fn void QStatusBar::paintEvent(QPaintEvent *event)
     /// 
-    ///     Shows the temporary message, if appropriate, in response to the
-    ///     paint \a event.
+    /// Shows the temporary message, if appropriate, in response to the
+    /// paint *event.*
     [event] paint_event(arg0: *PaintEventType),
-    ///     \reimp
+    /// 
     [event] resize_event(arg0: *ResizeEventType),
-    ///     Changes the status bar's appearance to account for item changes.
     /// 
-    ///     Special subclasses may need this function, but geometry management
-    ///     will usually take care of any necessary rearrangements.
+    /// Changes the status bar's appearance to account for item changes.
+    /// 
+    /// Special subclasses may need this function, but geometry management
+    /// will usually take care of any necessary rearrangements.
     reformat(),
-    ///     Ensures that the right widgets are visible.
     /// 
-    ///     Used by the showMessage() and clearMessage() functions.
+    /// Ensures that the right widgets are visible.
+    /// 
+    /// Used by the showMessage() and clearMessage() functions.
     hide_or_show(),
-    ///     \reimp
+    /// 
     [event] event(arg0: *EventType) -> bool,
 }
 

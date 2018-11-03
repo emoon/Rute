@@ -1,31 +1,22 @@
-///     \class QHBoxLayout
-///     \brief The QHBoxLayout class lines up widgets horizontally.
 /// 
-///     \ingroup geomanagement
-///     \inmodule QtWidgets
+/// This class is used to construct horizontal box layout objects. See
+/// QBoxLayout for details.
 /// 
-///     This class is used to construct horizontal box layout objects. See
-///     QBoxLayout for details.
+/// The simplest use of the class is like this:
 /// 
-///     The simplest use of the class is like this:
+/// First, we create the widgets we want in the layout. Then, we
+/// create the QHBoxLayout object and add the widgets into the
+/// layout. Finally, we call QWidget::setLayout() to install the
+/// QHBoxLayout object onto the widget. At that point, the widgets in
+/// the layout are reparented to have `window` as their parent.
 /// 
-///     \snippet layouts/layouts.cpp 0
-///     \snippet layouts/layouts.cpp 1
-///     \snippet layouts/layouts.cpp 2
-///     \codeline
-///     \snippet layouts/layouts.cpp 3
-///     \snippet layouts/layouts.cpp 4
-///     \snippet layouts/layouts.cpp 5
+/// ![Horizontal box layout with five child widgets](qhboxlayout-with-5-children.png)
 /// 
-///     First, we create the widgets we want in the layout. Then, we
-///     create the QHBoxLayout object and add the widgets into the
-///     layout. Finally, we call QWidget::setLayout() to install the
-///     QHBoxLayout object onto the widget. At that point, the widgets in
-///     the layout are reparented to have \c window as their parent.
-/// 
-///     \image qhboxlayout-with-5-children.png Horizontal box layout with five child widgets
-/// 
-///     \sa QVBoxLayout, QGridLayout, QStackedLayout, {Layout Management}, {Basic Layouts Example}
+/// **See also:** QVBoxLayout
+/// QGridLayout
+/// QStackedLayout
+/// {Layout Management}
+/// {Basic Layouts Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

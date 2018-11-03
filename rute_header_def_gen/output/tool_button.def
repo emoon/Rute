@@ -1,61 +1,57 @@
-///     \class QToolButton
-///     \brief The QToolButton class provides a quick-access button to
-///     commands or options, usually used inside a QToolBar.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// A tool button is a special button that provides quick-access to
+/// specific commands or options. As opposed to a normal command
+/// button, a tool button usually doesn't show a text label, but shows
+/// an icon instead.
 /// 
-///     A tool button is a special button that provides quick-access to
-///     specific commands or options. As opposed to a normal command
-///     button, a tool button usually doesn't show a text label, but shows
-///     an icon instead.
+/// Tool buttons are normally created when new QAction instances are
+/// created with QToolBar::addAction() or existing actions are added
+/// to a toolbar with QToolBar::addAction(). It is also possible to
+/// construct tool buttons in the same way as any other widget, and
+/// arrange them alongside other widgets in layouts.
 /// 
-///     Tool buttons are normally created when new QAction instances are
-///     created with QToolBar::addAction() or existing actions are added
-///     to a toolbar with QToolBar::addAction(). It is also possible to
-///     construct tool buttons in the same way as any other widget, and
-///     arrange them alongside other widgets in layouts.
+/// One classic use of a tool button is to select tools; for example,
+/// the tool in a drawing program. This would be implemented
+/// by using a QToolButton as a toggle button (see setCheckable()).
 /// 
-///     One classic use of a tool button is to select tools; for example,
-///     the "pen" tool in a drawing program. This would be implemented
-///     by using a QToolButton as a toggle button (see setCheckable()).
+/// QToolButton supports auto-raising. In auto-raise mode, the button
+/// draws a 3D frame only when the mouse points at it. The feature is
+/// automatically turned on when a button is used inside a QToolBar.
+/// Change it with setAutoRaise().
 /// 
-///     QToolButton supports auto-raising. In auto-raise mode, the button
-///     draws a 3D frame only when the mouse points at it. The feature is
-///     automatically turned on when a button is used inside a QToolBar.
-///     Change it with setAutoRaise().
+/// A tool button's icon is set as QIcon. This makes it possible to
+/// specify different pixmaps for the disabled and active state. The
+/// disabled pixmap is used when the button's functionality is not
+/// available. The active pixmap is displayed when the button is
+/// auto-raised because the mouse pointer is hovering over it.
 /// 
-///     A tool button's icon is set as QIcon. This makes it possible to
-///     specify different pixmaps for the disabled and active state. The
-///     disabled pixmap is used when the button's functionality is not
-///     available. The active pixmap is displayed when the button is
-///     auto-raised because the mouse pointer is hovering over it.
+/// The button's look and dimension is adjustable with
+/// setToolButtonStyle() and setIconSize(). When used inside a
+/// QToolBar in a QMainWindow, the button automatically adjusts to
+/// QMainWindow's settings (see QMainWindow::setToolButtonStyle() and
+/// QMainWindow::setIconSize()). Instead of an icon, a tool button can
+/// also display an arrow symbol, specified with
+/// [arrowType](QToolButton::arrowType)
 /// 
-///     The button's look and dimension is adjustable with
-///     setToolButtonStyle() and setIconSize(). When used inside a
-///     QToolBar in a QMainWindow, the button automatically adjusts to
-///     QMainWindow's settings (see QMainWindow::setToolButtonStyle() and
-///     QMainWindow::setIconSize()). Instead of an icon, a tool button can
-///     also display an arrow symbol, specified with
-///     \l{QToolButton::arrowType} {arrowType}.
 /// 
-///     A tool button can offer additional choices in a popup menu. The
-///     popup menu can be set using setMenu(). Use setPopupMode() to
-///     configure the different modes available for tool buttons with a
-///     menu set. The default mode is DelayedPopupMode which is sometimes
-///     used with the "Back" button in a web browser.  After pressing and
-///     holding the button down for a while, a menu pops up showing a list
-///     of possible pages to jump to. The timeout is style dependent,
-///     see QStyle::SH_ToolButton_PopupDelay.
+/// A tool button can offer additional choices in a popup menu. The
+/// popup menu can be set using setMenu(). Use setPopupMode() to
+/// configure the different modes available for tool buttons with a
+/// menu set. The default mode is DelayedPopupMode which is sometimes
+/// used with the button in a web browser. After pressing and
+/// holding the button down for a while, a menu pops up showing a list
+/// of possible pages to jump to. The timeout is style dependent,
+/// see QStyle::SH_ToolButton_PopupDelay.
 /// 
-///     \table 100%
-///     \row \li \inlineimage assistant-toolbar.png Qt Assistant's toolbar with tool buttons
-///     \row \li Qt Assistant's toolbar contains tool buttons that are associated
-///          with actions used in other parts of the main window.
-///     \endtable
+/// * ![Qt Assistant's toolbar with tool buttons](assistant-toolbar.png)
 /// 
-///     \sa QPushButton, QToolBar, QMainWindow, QAction,
-///         {fowler}{GUI Design Handbook: Push Button}
+/// * Qt Assistant's toolbar contains tool buttons that are associated with actions used in other parts of the main window.
+/// 
+/// **See also:** QPushButton
+/// QToolBar
+/// QMainWindow
+/// QAction
+/// {fowler}{GUI Design Handbook: Push Button}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -67,74 +63,97 @@ enum ToolButtonPopupMode {
 }
 
 struct ToolButton : AbstractButton {
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
+    /// 
     [event] minimum_size_hint() -> Size,
-    ///     \property QToolButton::arrowType
-    ///     \brief whether the button displays an arrow instead of a normal icon
     /// 
-    ///     This displays an arrow as the icon for the QToolButton.
+    /// The default is Qt::ToolButtonIconOnly.
     /// 
-    ///     By default, this property is set to Qt::NoArrow.
+    /// To have the style of toolbuttons follow the system settings, set this property to Qt::ToolButtonFollowStyle.
+    /// On Unix, the user settings from the desktop environment will be used.
+    /// On other platforms, Qt::ToolButtonFollowStyle means icon only.
+    /// 
+    /// QToolButton automatically connects this slot to the relevant
+    /// signal in the QMainWindow in which is resides.
     tool_button_style() -> Rute::ToolButtonStyle,
+    /// 
+    /// This displays an arrow as the icon for the QToolButton.
+    /// 
+    /// By default, this property is set to Qt::NoArrow.
     arrow_type() -> Rute::ArrowType,
     set_arrow_type(type: Rute::ArrowType),
-    ///     Associates the given \a menu with this tool button.
     /// 
-    ///     The menu will be shown according to the button's \l popupMode.
+    /// Associates the given *menu* with this tool button.
     /// 
-    ///     Ownership of the menu is not transferred to the tool button.
+    /// The menu will be shown according to the button's [popupMode.](popupMode.)
     /// 
-    ///     \sa menu()
+    /// Ownership of the menu is not transferred to the tool button.
+    /// 
+    /// **See also:** menu()
     set_menu(menu: *MenuType),
-    ///     Returns the associated menu, or 0 if no menu has been defined.
     /// 
-    ///     \sa setMenu()
+    /// Returns the associated menu, or 0 if no menu has been defined.
+    /// 
+    /// **See also:** setMenu()
     menu() -> Menu?,
-    ///     \property QToolButton::popupMode
-    ///     \brief describes the way that popup menus are used with tool buttons
-    /// 
-    ///     By default, this property is set to \l DelayedPopup.
     set_popup_mode(mode: ToolButton::ToolButtonPopupMode),
+    /// 
+    /// By default, this property is set to [DelayedPopup.](DelayedPopup.)
+    /// 
     popup_mode() -> ToolButton::ToolButtonPopupMode,
+    /// 
+    /// Returns the default action.
+    /// 
+    /// **See also:** setDefaultAction()
     default_action() -> Action?,
-    ///     \property QToolButton::autoRaise
-    ///     \brief whether auto-raising is enabled or not.
-    /// 
-    ///     The default is disabled (i.e. false).
-    /// 
-    ///     This property is currently ignored on \macos when using QMacStyle.
     set_auto_raise(enable: bool),
+    /// 
+    /// The default is disabled (i.e. false).
+    /// 
+    /// This property is currently ignored on MacOS when using QMacStyle.
     auto_raise() -> bool,
-    ///     Shows (pops up) the associated popup menu. If there is no such
-    ///     menu, this function does nothing. This function does not return
-    ///     until the popup menu has been closed by the user.
+    /// 
+    /// Shows (pops up) the associated popup menu. If there is no such
+    /// menu, this function does nothing. This function does not return
+    /// until the popup menu has been closed by the user.
     show_menu(),
     set_tool_button_style(style: Rute::ToolButtonStyle),
+    /// 
+    /// Sets the default action to *action.*
+    /// 
+    /// If a tool button has a default action, the action defines the
+    /// button's properties like text, icon, tool tip, etc.
     set_default_action(arg0: *ActionType),
+    /// 
     [event] event(e: *EventType) -> bool,
-    ///     \reimp
+    /// 
     [event] mouse_press_event(arg0: *MouseEventType),
-    ///     \reimp
+    /// 
     [event] mouse_release_event(arg0: *MouseEventType),
-    ///     \fn void QToolButton::paintEvent(QPaintEvent *event)
     /// 
-    ///     Paints the button in response to the paint \a event.
+    /// Paints the button in response to the paint *event.*
     [event] paint_event(arg0: *PaintEventType),
-    [event] action_event(arg0: *ActionEventType),
-    [event] enter_event(arg0: *EventType),
-    [event] leave_event(arg0: *EventType),
-    [event] timer_event(arg0: *TimerEventType),
-    ///     \reimp
-    [event] change_event(arg0: *EventType),
-    ///     \reimp
-    [event] hit_button(pos: &PointType) -> bool,
-    [event] next_check_state(),
-    ///     Initialize \a option with the values from this QToolButton. This method
-    ///     is useful for subclasses when they need a QStyleOptionToolButton, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    [event] action_event(arg0: *ActionEventType),
+    /// 
+    [event] enter_event(arg0: *EventType),
+    /// 
+    [event] leave_event(arg0: *EventType),
+    /// 
+    [event] timer_event(arg0: *TimerEventType),
+    /// 
+    [event] change_event(arg0: *EventType),
+    /// 
+    [event] hit_button(pos: &PointType) -> bool,
+    /// 
+    [event] next_check_state(),
+    /// 
+    /// Initialize *option* with the values from this QToolButton. This method
+    /// is useful for subclasses when they need a QStyleOptionToolButton, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionToolButtonType),
 }
 

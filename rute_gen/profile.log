@@ -1,0 +1,2352 @@
+FUNCTION  syntastic#log#debug()
+Called 27 times
+Total time:   0.000234
+ Self time:   0.000153
+
+count  total (s)   self (s)
+   27   0.000198   0.000117     if !s:_isDebugEnabled(a:level)
+   27              0.000020         return
+                                endif
+                            
+                                let leader = s:_log_timestamp()
+                                call s:_logRedirect(1)
+                            
+                                if a:0
+                                    " filter out dictionary functions
+                                    echomsg leader . a:msg . ' ' . strtrans(string(type(a:1) == type({}) || type(a:1) == type([]) ? filter(copy(a:1), 'type(v:val) != type(function("tr"))') : a:1))
+                                else
+                                    echomsg leader . a:msg
+                                endif
+                            
+                                call s:_logRedirect(0)
+
+FUNCTION  <SNR>64__skip_file()
+Called 2 times
+Total time:   0.000220
+ Self time:   0.000145
+
+count  total (s)   self (s)
+    2              0.000007     let fname = bufname(a:buf)
+    2   0.000201   0.000126     let skip = s:_is_quitting(a:buf) || getbufvar(a:buf, 'syntastic_skip_checks') || (getbufvar(a:buf, '&buftype') !=# '') || !filereadable(fname) || getwinvar(0, '&diff') || getwinvar(0, '&previewwindow') || s:_ignore_file(fname) || fnamemodify(fname, ':e') =~? g:syntastic_ignore_extensions
+    2              0.000002     if skip
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, '_skip_file: skipping checks')
+                                endif
+    2              0.000002     return skip
+
+FUNCTION  <SNR>18_addtomrufs()
+Called 1 time
+Total time:   0.000220
+ Self time:   0.000220
+
+count  total (s)   self (s)
+    1              0.000025 	let fn = fnamemodify(a:fname, get(g:, 'ctrlp_tilde_homedir', 0) ? ':p:~' : ':p')
+    1              0.000007 	let fn = exists('+ssl') ? tr(fn, '/', '\') : fn
+    1              0.000010 	let abs_fn = fnamemodify(fn,':p')
+    1              0.000153 	if ( !empty({s:in}) && fn !~# {s:in} ) || ( !empty({s:ex}) && fn =~# {s:ex} ) || !empty(getbufvar('^' . abs_fn . '$', '&bt')) || !filereadable(abs_fn)
+                            		retu
+                            	en
+    1              0.000007 	let idx = index(s:mrufs, fn, 0, !{s:cseno})
+    1              0.000001 	if idx
+                            		cal filter(s:mrufs, 'v:val !='.( {s:cseno} ? '#' : '?' ).' fn')
+                            		cal insert(s:mrufs, fn)
+                            		if {s:soup} && idx < 0
+                            			cal s:savetofile(s:mergelists())
+                            		en
+                            	en
+
+FUNCTION  <SNR>64_CacheErrors()
+Called 1 time
+Total time:  12.756779
+ Self time:   0.000381
+
+count  total (s)   self (s)
+    1   0.000017   0.000009     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'CacheErrors: ' . (len(a:checker_names) ? join(a:checker_names) : 'default checkers'))
+    1   0.000552   0.000059     call s:ClearCache(a:buf)
+    1   0.000045   0.000008     let newLoclist = g:SyntasticLoclist.New([])
+    1   0.000011   0.000005     call newLoclist.setOwner(a:buf)
+                            
+    1   0.000112   0.000004     if !s:_skip_file(a:buf)
+                                    " debug logging {{{3
+    1   0.000014   0.000005         call syntastic#log#debugShowVariables(g:_SYNTASTIC_DEBUG_TRACE, 'aggregate_errors')
+    1   0.000016   0.000008         if syntastic#util#isRunningWindows()
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TMP = ' . string($TMP) . ', $TEMP = ' . string($TEMP))
+                                    else
+    1   0.000015   0.000007             call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TERM = ' . string($TERM))
+    1   0.000013   0.000006             call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TMPDIR = ' . string($TMPDIR))
+    1              0.000001         endif
+    1   0.000013   0.000007         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$PATH = ' . string($PATH))
+    1   0.000013   0.000007         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getcwd() = ' . string(getcwd()))
+                                    " }}}3
+                            
+    1   0.000256   0.000010         let clist = s:registry.getCheckers(getbufvar(a:buf, '&filetype'), a:checker_names)
+                            
+    1   0.000069   0.000025         let aggregate_errors = syntastic#util#var('aggregate_errors') || len(syntastic#util#unique(map(copy(clist), 'v:val.getFiletype()'))) > 1
+    1              0.000003         let decorate_errors = aggregate_errors && syntastic#util#var('id_checkers')
+    1              0.000003         let sort_aggregated_errors = aggregate_errors && syntastic#util#var('sort_aggregated_errors')
+                            
+    1              0.000001         let names = []
+    1              0.000002         let unavailable_checkers = 0
+    1              0.000001         for checker in clist
+    1   0.000008   0.000004             let cname = checker.getCName()
+    1   0.000080   0.000008             if !checker.isAvailable()
+                                            call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'CacheErrors: Checker ' . cname . ' is not available')
+                                            let unavailable_checkers += 1
+                                            continue
+                                        endif
+                            
+    1   0.000014   0.000006             call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'CacheErrors: Invoking checker: ' . cname)
+                            
+    1  12.755136   0.000025             let loclist = checker.getLocList()
+                            
+    1   0.000010   0.000008             if !loclist.isEmpty()
+    1              0.000001                 if decorate_errors
+                                                call loclist.decorate(cname)
+                                            endif
+    1              0.000002                 call add(names, cname)
+    1   0.000025   0.000007                 if checker.wantSort() && !sort_aggregated_errors
+                                                call loclist.sort()
+                                                call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'sorted:', loclist)
+                                            endif
+                            
+    1   0.000015   0.000005                 call newLoclist.extend(loclist)
+                            
+    1              0.000003                 if !aggregate_errors
+    1              0.000001                     break
+                                            endif
+                                        endif
+                                    endfor
+                            
+                                    " set names {{{3
+    1              0.000002         if !empty(names)
+    1   0.000047   0.000019             if len(syntastic#util#unique(map( copy(names), 'substitute(v:val, "\\m/.*", "", "")' ))) == 1
+    1              0.000008                 let type = substitute(names[0], '\m/.*', '', '')
+    1              0.000011                 let name = join(map( names, 'substitute(v:val, "\\m.\\{-}/", "", "")' ), ', ')
+    1   0.000015   0.000011                 call newLoclist.setName( name . ' ('. type . ')' )
+    1              0.000001             else
+                                            " checkers from mixed types
+                                            call newLoclist.setName(join(names, ', '))
+                                        endif
+    1              0.000000         endif
+                                    " }}}3
+                            
+                                    " issue warning about no active checkers {{{3
+    1              0.000003         if len(clist) == unavailable_checkers
+                                        if !empty(a:checker_names)
+                                            if len(a:checker_names) == 1
+                                                call syntastic#log#warn('checker ' . a:checker_names[0] . ' is not available')
+                                            else
+                                                call syntastic#log#warn('checkers ' . join(a:checker_names, ', ') . ' are not available')
+                                            endif
+                                        else
+                                            call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'CacheErrors: no checkers available for ' . &filetype)
+                                        endif
+                                    endif
+                                    " }}}3
+                            
+    1   0.000012   0.000005         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'aggregated:', newLoclist)
+    1              0.000001         if sort_aggregated_errors
+                                        call newLoclist.sort()
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'sorted:', newLoclist)
+                                    endif
+    1              0.000000     endif
+                            
+    1   0.000152   0.000004     call newLoclist.deploy()
+
+FUNCTION  <SNR>90_check_mixed_indent()
+Called 1 time
+Total time:   0.000216
+ Self time:   0.000216
+
+count  total (s)   self (s)
+    1              0.000003   let indent_algo = get(g:, 'airline#extensions#whitespace#mixed_indent_algo', 0)
+    1              0.000001   if indent_algo == 1
+                                " [<tab>]<space><tab>
+                                " spaces before or between tabs are not allowed
+                                let t_s_t = '(^\t* +\t\s*\S)'
+                                " <tab>(<space> x count)
+                                " count of spaces at the end of tabs should be less than tabstop value
+                                let t_l_s = '(^\t+ {' . &ts . ',}' . '\S)'
+                                return search('\v' . t_s_t . '|' . t_l_s, 'nw')
+                              elseif indent_algo == 2
+                                return search('\v(^\t* +\t\s*\S)', 'nw')
+                              else
+    1              0.000201     return search('\v(^\t+ +)|(^ +\t+)', 'nw')
+                              endif
+
+FUNCTION  <SNR>64__is_quitting()
+Called 2 times
+Total time:   0.000033
+ Self time:   0.000033
+
+count  total (s)   self (s)
+    2              0.000002     let quitting = 0
+    2              0.000006     if exists('w:syntastic_wid')
+                                    let key = a:buf . '_' . getbufvar(a:buf, 'changetick') . '_' . w:syntastic_wid
+                                    let idx = index(s:_quit_pre, key)
+                                    if idx >= 0
+                                        call remove(s:_quit_pre, idx)
+                                        let quitting = 1
+                                    endif
+                                endif
+                            
+    2              0.000002     return quitting
+
+FUNCTION  syntastic#log#debugShowOptions()
+Called 1 time
+Total time:   0.000006
+ Self time:   0.000004
+
+count  total (s)   self (s)
+    1   0.000005   0.000003     if !s:_isDebugEnabled(a:level)
+    1              0.000000         return
+                                endif
+                            
+                                let leader = s:_log_timestamp()
+                                call s:_logRedirect(1)
+                            
+                                let vlist = copy(type(a:names) == type('') ? [a:names] : a:names)
+                                let add_shell = index(vlist, 'shell') >= 0 && &shell !=# syntastic#util#var('shell')
+                                if !empty(vlist)
+                                    call map(vlist, "'&' . v:val . ' = ' . strtrans(string(eval('&' . v:val))) . (s:_is_modified(v:val) ? ' (!)' : '')")
+                                    if add_shell
+                                        call add(vlist, 'u:shell = ' . strtrans(string(syntastic#util#var('shell'))) . ' (!)')
+                                    endif
+                                    echomsg leader . join(vlist, ', ')
+                                endif
+                                call s:_logRedirect(0)
+
+FUNCTION  airline#check_mode()
+Called 13 times
+Total time:   0.001691
+ Self time:   0.001691
+
+count  total (s)   self (s)
+   13              0.000069   let context = s:contexts[a:winnr]
+                            
+   13              0.000078   if get(w:, 'airline_active', 1)
+   10              0.000047     let l:m = mode()
+   10              0.000030     if l:m ==# "i"
+                                  let l:mode = ['insert']
+                                elseif l:m ==# "R"
+                                  let l:mode = ['replace']
+                                elseif l:m =~# '\v(v|V||s|S|)'
+                                  let l:mode = ['visual']
+                                elseif l:m ==# "t"
+                                  let l:mode = ['terminal']
+                                else
+   10              0.000035       let l:mode = ['normal']
+   10              0.000009     endif
+   10              0.000070     let w:airline_current_mode = get(g:airline_mode_map, l:m, l:m)
+   10              0.000010   else
+    3              0.000007     let l:mode = ['inactive']
+    3              0.000023     let w:airline_current_mode = get(g:airline_mode_map, '__')
+    3              0.000003   endif
+                            
+   13              0.000052   if g:airline_detect_modified && &modified
+                                call add(l:mode, 'modified')
+                              endif
+                            
+   13              0.000028   if g:airline_detect_paste && &paste
+                                call add(l:mode, 'paste')
+                              endif
+                            
+   13              0.000073   if g:airline_detect_crypt && exists("+key") && !empty(&key)
+                                call add(l:mode, 'crypt')
+                              endif
+                            
+   13              0.000031   if g:airline_detect_spell && &spell
+                                call add(l:mode, 'spell')
+                              endif
+                            
+   13              0.000024   if &readonly || ! &modifiable
+    1              0.000003     call add(l:mode, 'readonly')
+    1              0.000001   endif
+                            
+   13              0.000111   let mode_string = join(l:mode)
+   13              0.000076   if get(w:, 'airline_lastmode', '') != mode_string
+                                call airline#highlighter#highlight_modified_inactive(context.bufnr)
+                                call airline#highlighter#highlight(l:mode, context.bufnr)
+                                let w:airline_lastmode = mode_string
+                              endif
+                            
+   13              0.000021   return ''
+
+FUNCTION  airline#util#append()
+Called 70 times
+Total time:   0.002600
+ Self time:   0.002600
+
+count  total (s)   self (s)
+   70              0.000300   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+   70              0.000350   let prefix = s:spc == "\ua0" ? s:spc : s:spc.s:spc
+   70              0.001735   return empty(a:text) ? '' : prefix.g:airline_left_alt_sep.s:spc.a:text
+
+FUNCTION  <SNR>108_nearest_cargo()
+Called 4 times
+Total time:   0.000851
+ Self time:   0.000851
+
+count  total (s)   self (s)
+                                " If the second argument is not specified, the first argument determines
+                                " whether we will start from the current directory or the directory of the
+                                " current buffer, otherwise, we start with the provided path on the 
+                                " second argument.
+                            
+    4              0.000016     let l:is_getcwd = get(a:, 1, 0)
+    4              0.000004     if l:is_getcwd 
+                                    let l:starting_path = get(a:, 2, getcwd())
+                                else
+    4              0.000056         let l:starting_path = get(a:, 2, expand('%:p:h'))
+    4              0.000003     endif
+                            
+    4              0.000742     return findfile('Cargo.toml', l:starting_path . ';')
+
+FUNCTION  syntastic#util#shescape()
+Called 2 times
+Total time:   0.000026
+ Self time:   0.000026
+
+count  total (s)   self (s)
+    2              0.000024     return a:string =~# '\m^[A-Za-z0-9_/.-]\+$' ? a:string : shellescape(a:string)
+
+FUNCTION  <SNR>64__os_name()
+Called 2 times
+Total time:   0.000004
+ Self time:   0.000004
+
+count  total (s)   self (s)
+    2              0.000003     return g:_SYNTASTIC_UNAME
+
+FUNCTION  364()
+Called 1 time
+Total time:   0.002983
+ Self time:   0.002949
+
+count  total (s)   self (s)
+    1              0.000003     if has('signs')
+    3              0.000007         for s in reverse(copy(a:ids))
+    2              0.002890             execute 'sign unplace ' . s
+    2   0.000072   0.000038             call remove(self._bufSignIds(), index(self._bufSignIds(), s))
+    2              0.000001         endfor
+    1              0.000000     endif
+
+FUNCTION  SyntaxCheckers_rust_cargo_GetLocList()
+Called 1 time
+Total time:  12.754630
+ Self time:   0.000215
+
+count  total (s)   self (s)
+    1   0.000454   0.000007     let makeprg = self.makeprgBuild({ "args": "check" })
+    1   0.001981   0.000009     let l:root_cargo_toml = cargo#nearestRootCargo(0)
+    1   0.000216   0.000013     let l:nearest_cargo_toml = cargo#nearestCargo(0)
+    1              0.000013     let b:rust_recent_root_cargo_toml = l:root_cargo_toml
+    1              0.000003     let b:rust_recent_nearest_cargo_toml = l:nearest_cargo_toml
+                            
+                                " All pathname prints are relative to the Cargo.toml of the workspace, if
+                                " there is a workspace, otherwise they are relative to the Cargo.toml of
+                                " the single crate. Where to actually execute under these varying
+                                " circumtances 'cargo' is determined here, and controlled by
+                                " configuration.
+                            
+    1   0.000037   0.000019     if rust#GetConfigVar('rust_cargo_avoid_whole_workspace', 1)
+    1              0.000003         if l:root_cargo_toml !=# l:nearest_cargo_toml
+                                        let makeprg = "cd " . fnamemodify(l:nearest_cargo_toml, ":p:h") . " && " . makeprg
+                                    endif
+    1              0.000000     else
+                                    let makeprg = "cd " . fnamemodify(l:root_cargo_toml, ":p:h") . " && " . makeprg
+                                endif
+                            
+    1   0.000018   0.000006     let l:check_all_targets = rust#GetConfigVar('rust_cargo_check_all_targets', 0)
+    1   0.000015   0.000005     let l:check_examples = rust#GetConfigVar('rust_cargo_check_examples', 0)
+    1   0.000014   0.000004     let l:check_tests = rust#GetConfigVar('rust_cargo_check_tests', 0)
+    1   0.000014   0.000004     let l:check_benches = rust#GetConfigVar('rust_cargo_check_benches', 0)
+                            
+    1              0.000009     let makeprg = makeprg. ' '  . (l:check_all_targets ? ' --all-targets' : '')  . (l:check_benches ? ' --benches' : '')  . (l:check_examples ? ' --examples' : '')  . (l:check_tests ? ' --tests' : '')
+                            
+                                " Ignored patterns, and blank lines
+    1              0.000003     let errorformat  = '%-G,' . '%-Gerror: aborting %.%#,' . '%-Gerror: Could not compile %.%#,'
+                            
+                                " Meaningful lines (errors, notes, warnings, contextual information)
+    1              0.000005     let errorformat .= '%Eerror: %m,' . '%Eerror[E%n]: %m,' . '%Wwarning: %m,' . '%Inote: %m,' . '%C %#--> %f:%l:%c'
+                            
+    1  12.751811   0.000078     return SyntasticMake({ 'makeprg': makeprg, 'cwd': fnamemodify(l:root_cargo_toml, ":p:h:."), 'errorformat': errorformat })
+
+FUNCTION  airline#parts#filetype()
+Called 12 times
+Total time:   0.000116
+ Self time:   0.000116
+
+count  total (s)   self (s)
+   12              0.000107   return winwidth(0) < 90 && strlen(&filetype) > 3 ? matchstr(&filetype, '...'). (&encoding is? 'utf-8' ? '…' : '>') : &filetype
+
+FUNCTION  airline#parts#iminsert()
+Called 10 times
+Total time:   0.000101
+ Self time:   0.000101
+
+count  total (s)   self (s)
+   10              0.000041   if g:airline_detect_iminsert && &iminsert && exists('b:keymap_name')
+                                return toupper(b:keymap_name)
+                              endif
+   10              0.000012   return ''
+
+FUNCTION  <SNR>18_record()
+Called 1 time
+Total time:   0.000270
+ Self time:   0.000050
+
+count  total (s)   self (s)
+    1              0.000005 	if s:locked | retu | en
+    1              0.000004 	let bufnr = a:bufnr + 0
+    1              0.000005 	let bufname = bufname(bufnr)
+    1              0.000004 	if bufnr > 0 && !empty(bufname)
+    1              0.000016 		cal filter(s:mrbs, 'v:val != bufnr')
+    1              0.000003 		cal insert(s:mrbs, bufnr)
+    1   0.000231   0.000011 		cal s:addtomrufs(bufname)
+    1              0.000001 	en
+
+FUNCTION  300()
+Called 1 time
+Total time:   0.000298
+ Self time:   0.000240
+
+count  total (s)   self (s)
+    1   0.000042   0.000009     if self.enabled()
+    1   0.000014   0.000006         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'highlighting: refresh')
+    1   0.000016   0.000003         call self._reset()
+    1              0.000003         let buf = bufnr('')
+    1   0.000018   0.000014         let issues = filter(a:loclist.copyRaw(), 'v:val["bufnr"] == buf')
+    3              0.000003         for item in issues
+    2              0.000015             let group = 'Syntastic' . get(item, 'subtype', '') . ( item['type'] ==? 'E' ? 'Error' : 'Warning' )
+                            
+                                        " The function `Syntastic_{filetype}_{checker}_GetHighlightRegex` is
+                                        " used to override default highlighting.
+    2              0.000007             if has_key(item, 'hl')
+                                            call matchadd(group, '\%' . item['lnum'] . 'l' . item['hl'])
+                                        elseif get(item, 'col', 0)
+    2              0.000004                 if get(item, 'vcol', 0)
+                                                let lastcol = virtcol([item['lnum'], '$'])
+                                                let coltype = 'v'
+                                            else
+    2              0.000014                     let lastcol = col([item['lnum'], '$'])
+    2              0.000002                     let coltype = 'c'
+    2              0.000002                 endif
+    2              0.000008                 let lcol = min([lastcol, item['col']])
+                            
+    2              0.000096                 call matchadd(group, '\%' . item['lnum'] . 'l\%' . lcol . coltype)
+    2              0.000002             endif
+    2              0.000002         endfor
+    1              0.000001     endif
+
+FUNCTION  301()
+Called 1 time
+Total time:   0.000054
+ Self time:   0.000012
+
+count  total (s)   self (s)
+    1              0.000002     if s:has_highlighting
+    1   0.000012   0.000004         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'highlighting: reset')
+    1   0.000039   0.000005         call self._reset()
+    1              0.000001     endif
+
+FUNCTION  303()
+Called 2 times
+Total time:   0.000047
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    4              0.000016     for match in getmatches()
+    2              0.000007         if stridx(match['group'], 'Syntastic') == 0
+    2              0.000007             call matchdelete(match['id'])
+    2              0.000001         endif
+    2              0.000001     endfor
+
+FUNCTION  304()
+Called 2 times
+Total time:   0.000162
+ Self time:   0.000162
+
+count  total (s)   self (s)
+    2              0.000034     let newObj = copy(self)
+                            
+    2              0.000055     let llist = filter(copy(a:rawLoclist), 'v:val["valid"]')
+                            
+    9              0.000009     for e in llist
+    7              0.000015         if get(e, 'type', '') ==# ''
+                                        let e['type'] = 'E'
+                                    endif
+    7              0.000004     endfor
+                            
+    2              0.000004     let newObj._rawLoclist = llist
+    2              0.000003     let newObj._name = ''
+    2              0.000005     let newObj._owner = bufnr('')
+    2              0.000002     let newObj._sorted = 0
+    2              0.000003     let newObj._columns = g:syntastic_cursor_columns
+                            
+    2              0.000002     return newObj
+
+FUNCTION  305()
+Called 22 times
+Total time:   0.000757
+ Self time:   0.000577
+
+count  total (s)   self (s)
+   22              0.000093     let buf = a:0 ? a:1 : bufnr('')
+   22   0.000373   0.000193     let loclist = syntastic#util#getbufvar(buf, 'syntastic_loclist', {})
+   22              0.000122     if type(loclist) != type({}) || empty(loclist)
+                                    unlet! loclist
+                                    let loclist = g:SyntasticLoclist.New([])
+                                endif
+   22              0.000027     return loclist
+
+FUNCTION  306()
+Called 1 time
+Total time:   0.000010
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    1   0.000010   0.000007     call extend(self._rawLoclist, a:other.copyRaw())
+
+FUNCTION  308()
+Called 6 times
+Total time:   0.000015
+ Self time:   0.000015
+
+count  total (s)   self (s)
+    6              0.000014     return empty(self._rawLoclist)
+
+FUNCTION  309()
+Called 3 times
+Total time:   0.000100
+ Self time:   0.000039
+
+count  total (s)   self (s)
+    3              0.000008     if !exists('self._stamp')
+                                    let self._stamp = []
+                                    return 0
+                                endif
+    3   0.000080   0.000019     return syntastic#util#compareLexi(self._stamp, a:stamp) > 0
+
+FUNCTION  syntastic#util#stamp()
+Called 3 times
+Total time:   0.000067
+ Self time:   0.000067
+
+count  total (s)   self (s)
+    3              0.000066     return split( split(reltimestr(reltime(g:_SYNTASTIC_START)))[0], '\.' )
+
+FUNCTION  310()
+Called 2 times
+Total time:   0.000007
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    2              0.000007     return copy(self._rawLoclist)
+
+FUNCTION  312()
+Called 2 times
+Total time:   0.000213
+ Self time:   0.000052
+
+count  total (s)   self (s)
+    2   0.000211   0.000050     return syntastic#util#unique(map(copy(self._rawLoclist), 'str2nr(v:val["bufnr"])') + [self._owner])
+
+FUNCTION  313()
+Called 1 time
+Total time:   0.000002
+ Self time:   0.000002
+
+count  total (s)   self (s)
+    1              0.000001     return self._columns
+
+FUNCTION  314()
+Called 20 times
+Total time:   0.007149
+ Self time:   0.006601
+
+count  total (s)   self (s)
+   20              0.000080     if !exists('self._stl_format')
+    1              0.000003         let self._stl_format = ''
+    1              0.000000     endif
+   20              0.000062     if !exists('self._stl_flag')
+    1              0.000001         let self._stl_flag = ''
+    1              0.000001     endif
+                            
+   20              0.000046     if g:syntastic_stl_format !=# self._stl_format
+   20              0.000052         let self._stl_format = g:syntastic_stl_format
+                            
+   20              0.000050         if !empty(self._rawLoclist)
+   20   0.000287   0.000101             let errors = self.errors()
+   20   0.000253   0.000090             let warnings = self.warnings()
+                            
+   20              0.000063             let num_errors = len(errors)
+   20              0.000053             let num_warnings = len(warnings)
+   20              0.000054             let num_issues = len(self._rawLoclist)
+                            
+   20              0.000034             let output = self._stl_format
+                            
+                                        "hide stuff wrapped in %E(...) unless there are errors
+   20              0.000327             let output = substitute(output, '\m\C%E{\([^}]*\)}', num_errors ? '\1' : '' , 'g')
+                            
+                                        "hide stuff wrapped in %W(...) unless there are warnings
+   20              0.000218             let output = substitute(output, '\m\C%W{\([^}]*\)}', num_warnings ? '\1' : '' , 'g')
+                            
+                                        "hide stuff wrapped in %B(...) unless there are both errors and warnings
+   20              0.000189             let output = substitute(output, '\m\C%B{\([^}]*\)}', (num_warnings && num_errors) ? '\1' : '' , 'g')
+                            
+   20              0.003891             let flags = { '%':  '%', 't':  num_issues, 'e':  num_errors, 'w':  num_warnings, 'N':  (num_issues ? fnamemodify( bufname(self._rawLoclist[0]['bufnr']), ':t') : ''), 'P':  (num_issues ? fnamemodify( bufname(self._rawLoclist[0]['bufnr']), ':p:~:.') : ''), 'F':  (num_issues ? self._rawLoclist[0]['lnum'] : ''), 'ne': (num_errors ? fnamemodify( bufname(errors[0]['bufnr']), ':t') : ''), 'pe': (num_errors ? fnamemodify( bufname(errors[0]['bufnr']), ':p:~:.') : ''), 'fe': (num_errors ? errors[0]['lnum'] : ''), 'nw': (num_warnings ? fnamemodify( bufname(warnings[0]['bufnr']), ':t') : ''), 'pw': (num_warnings ? fnamemodify( bufname(warnings[0]['bufnr']), ':p:~:.') : ''), 'fw': (num_warnings ? warnings[0]['lnum'] : '') }
+   20   0.001006   0.000807             let output = substitute(output, '\v\C\%(-?\d*%(\.\d+)?)([npf][ew]|[NPFtew%])', '\=syntastic#util#wformat(submatch(1), flags[submatch(2)])', 'g')
+                            
+   20              0.000049             let self._stl_flag = output
+   20              0.000021         else
+                                        let self._stl_flag = ''
+                                    endif
+   20              0.000013     endif
+                            
+   20              0.000031     return self._stl_flag
+
+FUNCTION  317()
+Called 1 time
+Total time:   0.000004
+ Self time:   0.000004
+
+count  total (s)   self (s)
+    1              0.000004     let self._name = a:name
+
+FUNCTION  319()
+Called 1 time
+Total time:   0.000006
+ Self time:   0.000006
+
+count  total (s)   self (s)
+    1              0.000006     let self._owner = type(a:buffer) == type(0) ? a:buffer : str2nr(a:buffer)
+
+FUNCTION  320()
+Called 1 time
+Total time:   0.000148
+ Self time:   0.000035
+
+count  total (s)   self (s)
+    1   0.000028   0.000011     let self._stamp = syntastic#util#stamp()
+    3   0.000102   0.000006     for buf in self.getBuffers()
+    2              0.000013         call setbufvar(buf, 'syntastic_loclist', self)
+    2              0.000001     endfor
+
+FUNCTION  321()
+Called 1 time
+Total time:   0.000143
+ Self time:   0.000026
+
+count  total (s)   self (s)
+    4   0.000123   0.000006     for buf in self.getBuffers()
+    3              0.000011         call setbufvar(buf, 'syntastic_loclist', {})
+    3              0.000001     endfor
+
+FUNCTION  323()
+Called 1 time
+Total time:   0.000217
+ Self time:   0.000217
+
+count  total (s)   self (s)
+    1              0.000004     if !exists('self._cachedBalloons')
+    1              0.000005         let sep = has('balloon_multiline') ? "\n" : ' | '
+                            
+    1              0.000003         let self._cachedBalloons = {}
+    8              0.000011         for e in self._rawLoclist
+    7              0.000015             let buf = e['bufnr']
+                            
+    7              0.000022             if !has_key(self._cachedBalloons, buf)
+    2              0.000007                 let self._cachedBalloons[buf] = {}
+    2              0.000002             endif
+                            
+    7              0.000029             if has_key(self._cachedBalloons[buf], e['lnum'])
+                                            let self._cachedBalloons[buf][e['lnum']] .= sep . e['text']
+                                        else
+    7              0.000037                 let self._cachedBalloons[buf][e['lnum']] = e['text']
+    7              0.000007             endif
+    7              0.000007         endfor
+    1              0.000001     endif
+                            
+    1              0.000007     return get(self._cachedBalloons, bufnr(''), {})
+
+FUNCTION  324()
+Called 22 times
+Total time:   0.000252
+ Self time:   0.000211
+
+count  total (s)   self (s)
+   22              0.000072     if !exists('self._cachedErrors')
+    1   0.000049   0.000008         let self._cachedErrors = self.filter({'type': 'E'})
+    1              0.000001     endif
+   22              0.000030     return self._cachedErrors
+
+FUNCTION  325()
+Called 22 times
+Total time:   0.000220
+ Self time:   0.000186
+
+count  total (s)   self (s)
+   22              0.000074     if !exists('self._cachedWarnings')
+    1   0.000040   0.000006         let self._cachedWarnings = self.filter({'type': 'W'})
+    1              0.000001     endif
+   22              0.000032     return self._cachedWarnings
+
+FUNCTION  327()
+Called 1 time
+Total time:   0.000605
+ Self time:   0.000378
+
+count  total (s)   self (s)
+    1              0.000003     if !exists('self._cachedMessages')
+    1              0.000003         let self._cachedMessages = {}
+                            
+    1   0.000020   0.000006         let errors = self.errors() + self.warnings()
+    8              0.000008         for e in errors
+    7              0.000010             let b = e['bufnr']
+    7              0.000010             let l = e['lnum']
+                            
+    7              0.000015             if !has_key(self._cachedMessages, b)
+    2              0.000007                 let self._cachedMessages[b] = {}
+    2              0.000003             endif
+                            
+    7              0.000019             if !has_key(self._cachedMessages[b], l)
+    7              0.000021                 let self._cachedMessages[b][l] = [e]
+    7              0.000006             elseif self._columns
+                                            call add(self._cachedMessages[b][l], e)
+                                        endif
+    7              0.000004         endfor
+                            
+    1              0.000001         if self._columns
+    1              0.000000             if !self._sorted
+    3              0.000005                 for b in keys(self._cachedMessages)
+    9              0.000018                     for l in keys(self._cachedMessages[b])
+    7              0.000016                         if len(self._cachedMessages[b][l]) > 1
+                                                        for e in self._cachedMessages[b][l]
+                                                            call s:_set_screen_column(e)
+                                                        endfor
+                                                        call sort(self._cachedMessages[b][l], 's:_compare_error_items_by_columns')
+                                                    endif
+    7              0.000004                     endfor
+    2              0.000002                 endfor
+    1              0.000000             endif
+                            
+    3              0.000004             for b in keys(self._cachedMessages)
+    9              0.000014                 for l in keys(self._cachedMessages[b])
+    7   0.000251   0.000038                     call s:_remove_shadowed_items(self._cachedMessages[b][l])
+    7              0.000004                 endfor
+    2              0.000001             endfor
+    1              0.000000         endif
+    1              0.000000     endif
+                            
+    1              0.000006     return get(self._cachedMessages, a:buf, {})
+
+FUNCTION  332()
+Called 1 time
+Total time:   0.000020
+ Self time:   0.000020
+
+count  total (s)   self (s)
+    1              0.000003     if exists('g:syntastic_mode_map')
+                                    let self._mode = get(g:syntastic_mode_map, 'mode', 'active')
+                                    let self._activeFiletypes = copy(get(g:syntastic_mode_map, 'active_filetypes', []))
+                                    let self._passiveFiletypes = copy(get(g:syntastic_mode_map, 'passive_filetypes', []))
+                                else
+    1              0.000003         let self._mode = 'active'
+    1              0.000002         let self._activeFiletypes = []
+    1              0.000002         let self._passiveFiletypes = []
+    1              0.000000     endif
+
+FUNCTION  333()
+Called 1 time
+Total time:   0.000087
+ Self time:   0.000030
+
+count  total (s)   self (s)
+    1   0.000017   0.000006     let registry = g:SyntasticRegistry.Instance()
+    1   0.000046   0.000011     let fts = registry.resolveFiletypes(a:filetype)
+                            
+    1   0.000007   0.000005     if self.isPassive()
+                                    return self._isOneFiletypeActive(fts)
+                                else
+    1   0.000014   0.000005         return self._noFiletypesArePassive(fts)
+                                endif
+
+FUNCTION  334()
+Called 1 time
+Total time:   0.000105
+ Self time:   0.000018
+
+count  total (s)   self (s)
+    1              0.000004     let local_mode = getbufvar(a:buf, 'syntastic_mode')
+    1              0.000002     if local_mode ==# 'active' || local_mode ==# 'passive'
+                                    return local_mode ==# 'active'
+                                endif
+                            
+    1   0.000096   0.000009     return self.allowsAutoChecking(getbufvar(a:buf, '&filetype'))
+
+FUNCTION  335()
+Called 1 time
+Total time:   0.000002
+ Self time:   0.000002
+
+count  total (s)   self (s)
+    1              0.000002     return self._mode ==# 'passive'
+
+FUNCTION  <SNR>59__translate()
+Called 2 times
+Total time:   0.000010
+ Self time:   0.000010
+
+count  total (s)   self (s)
+    2              0.000009     return 'get(v:val, ' . string(a:key) . ', "") ==? ' . string(a:val)
+
+FUNCTION  340()
+Called 1 time
+Total time:   0.000009
+ Self time:   0.000009
+
+count  total (s)   self (s)
+    1              0.000009     return empty(filter(copy(a:filetypes), 'index(self._passiveFiletypes, v:val) != -1'))
+
+FUNCTION  342()
+Called 1 time
+Total time:   0.006603
+ Self time:   0.000407
+
+count  total (s)   self (s)
+    1   0.000069   0.000018     if !syntastic#util#bufIsActive(bufnr('')) || (!a:loclist.isEmpty() && !a:loclist.isNewerThan([]))
+                                    " loclist not fully constructed yet
+                                    return
+                                endif
+                            
+    1   0.000011   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'notifiers: refresh')
+    6              0.000008     for type in self._enabled_types
+    5              0.000059         let class = substitute(type, '\m.*', 'Syntastic\u&Notifier', '')
+    5   0.000196   0.000076         if !has_key(g:{class}, 'enabled') || self._notifier[type].enabled()
+    5              0.000021             if index(s:_PERSISTENT_NOTIFIERS, type) > -1
+                                            " refresh only if loclist has changed since last call
+    2              0.000013                 if !exists('b:syntastic_private_' . type . '_stamp')
+                                                let b:syntastic_private_{type}_stamp = []
+                                            endif
+    2   0.000086   0.000015                 if a:loclist.isNewerThan(b:syntastic_private_{type}_stamp) || a:loclist.isEmpty()
+    2   0.004854   0.000020                     call self._notifier[type].refresh(a:loclist)
+    2   0.000075   0.000025                     let b:syntastic_private_{type}_stamp = syntastic#util#stamp()
+    2              0.000002                 endif
+    2              0.000001             else
+    3   0.001112   0.000048                 call self._notifier[type].refresh(a:loclist)
+    3              0.000001             endif
+    5              0.000004         endif
+    5              0.000004     endfor
+
+FUNCTION  343()
+Called 1 time
+Total time:   0.000307
+ Self time:   0.000164
+
+count  total (s)   self (s)
+    1   0.000012   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'notifiers: reset')
+    6              0.000007     for type in self._enabled_types
+    5              0.000042         let class = substitute(type, '\m.*', 'Syntastic\u&Notifier', '')
+                            
+                                    " reset notifiers regardless if they are enabled or not, since
+                                    " the user might have disabled them since the last refresh();
+                                    " notifiers MUST be prepared to deal with reset() when disabled
+    5              0.000020         if has_key(g:{class}, 'reset')
+    3   0.000155   0.000019             call self._notifier[type].reset(a:loclist)
+    3              0.000002         endif
+                            
+                                    " also reset stamps
+    5              0.000014         if index(s:_PERSISTENT_NOTIFIERS, type) > -1
+    2              0.000010             let b:syntastic_private_{type}_stamp = []
+    2              0.000001         endif
+    5              0.000005     endfor
+
+FUNCTION  345()
+Called 1 time
+Total time:   0.000011
+ Self time:   0.000011
+
+count  total (s)   self (s)
+    1              0.000004     if !exists('s:SyntasticRegistryInstance')
+                                    let s:SyntasticRegistryInstance = copy(self)
+                                    let s:SyntasticRegistryInstance._checkerMap = {}
+                                endif
+                            
+    1              0.000001     return s:SyntasticRegistryInstance
+
+FUNCTION  347()
+Called 1 time
+Total time:   0.000246
+ Self time:   0.000103
+
+count  total (s)   self (s)
+    1   0.000034   0.000006     let ftlist = self.resolveFiletypes(a:ftalias)
+                            
+    1              0.000006     let names = !empty(a:hints_list) ? a:hints_list : exists('b:syntastic_checkers') ? b:syntastic_checkers : []
+                            
+    1              0.000001     let cnames = []
+    1              0.000002     if !empty(names)
+                                    for name in names
+                                        if name !~# '/'
+                                            for ft in ftlist
+                                                call add(cnames, ft . '/' . name)
+                                            endfor
+                                        else
+                                            call add(cnames, name)
+                                        endif
+                                    endfor
+                                else
+    2              0.000003         for ft in ftlist
+    1   0.000033   0.000006             call self._sanityCheck(ft)
+    1              0.000008             let defs = exists('g:syntastic_' . ft . '_checkers') ? g:syntastic_{ft}_checkers : get(s:_DEFAULT_CHECKERS, ft, [])
+    1              0.000011             call extend(cnames, map(copy(defs), 'stridx(v:val, "/") < 0 ? ft . "/" . v:val : v:val' ))
+    1              0.000001         endfor
+    1              0.000001     endif
+    1   0.000032   0.000005     let cnames = syntastic#util#unique(cnames)
+                            
+    2   0.000039   0.000014     for ft in syntastic#util#unique(map( copy(cnames), 'v:val[: stridx(v:val, "/")-1]' ))
+    1   0.000011   0.000006         call self._loadCheckersFor(ft, 0)
+    1              0.000001     endfor
+                            
+    1   0.000036   0.000005     return self._filterCheckersByName(cnames)
+
+FUNCTION  352()
+Called 2 times
+Total time:   0.000063
+ Self time:   0.000033
+
+count  total (s)   self (s)
+    2   0.000063   0.000033     return map(split( get(g:syntastic_filetype_map, a:ftalias, a:ftalias), '\m\.' ), 's:_normalise_filetype(v:val)')
+
+FUNCTION  355()
+Called 1 time
+Total time:   0.000018
+ Self time:   0.000018
+
+count  total (s)   self (s)
+    1              0.000003     let sep_idx = stridx(a:cname, '/')
+    1              0.000002     if sep_idx > 0
+    1              0.000003         let ft = a:cname[: sep_idx-1]
+    1              0.000002         let name = a:cname[sep_idx+1 :]
+    1              0.000001     else
+                                    let ft = &filetype
+                                    let name = a:cname
+                                endif
+    1              0.000004     return get(self._checkerMap[ft], name, {})
+
+FUNCTION  356()
+Called 1 time
+Total time:   0.000031
+ Self time:   0.000013
+
+count  total (s)   self (s)
+    1   0.000031   0.000013     return filter( map(copy(a:cnames), 'self._findChecker(v:val)'), '!empty(v:val)' )
+
+FUNCTION  357()
+Called 1 time
+Total time:   0.000005
+ Self time:   0.000005
+
+count  total (s)   self (s)
+    1              0.000003     if !a:force && has_key(self._checkerMap, a:filetype)
+    1              0.000000         return
+                                endif
+                            
+                                execute 'runtime! syntax_checkers/' . a:filetype . '/*.vim'
+                            
+                                if !has_key(self._checkerMap, a:filetype)
+                                    let self._checkerMap[a:filetype] = {}
+                                endif
+
+FUNCTION  358()
+Called 1 time
+Total time:   0.000027
+ Self time:   0.000027
+
+count  total (s)   self (s)
+    1              0.000009     if exists('g:syntastic_' . a:filetype . '_checkers') && type(g:syntastic_{a:filetype}_checkers) != type([])
+                            
+                                    unlet! g:syntastic_{a:filetype}_checkers
+                                    call syntastic#log#error('variable g:syntastic_' . a:filetype . '_checkers has to be a list of strings')
+                                endif
+                            
+    1              0.000007     if exists('g:syntastic_' . a:filetype . '_checker') && !exists('g:syntastic_' . a:filetype . '_checkers') && type(g:syntastic_{a:filetype}_checker) == type('')
+                            
+                                    let g:syntastic_{a:filetype}_checkers = [g:syntastic_{a:filetype}_checker]
+                                    call syntastic#log#oneTimeWarn('variable g:syntastic_' . a:filetype . '_checker is deprecated')
+                                endif
+
+FUNCTION  360()
+Called 2 times
+Total time:   0.000032
+ Self time:   0.000011
+
+count  total (s)   self (s)
+    2   0.000031   0.000010     return has('signs') && syntastic#util#var('enable_signs')
+
+FUNCTION  361()
+Called 1 time
+Total time:   0.004488
+ Self time:   0.000038
+
+count  total (s)   self (s)
+    1   0.000011   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'signs: refresh')
+                            
+    1   0.000012   0.000005     let old_signs = copy(self._bufSignIds())
+    1   0.000018   0.000003     if self.enabled()
+    1              0.000002         if !s:setup_done
+                                        call self._setup()
+                                        let s:setup_done = 1
+                                        lockvar s:setup_done
+                                    endif
+                            
+    1   0.001448   0.000009         call self._signErrors(a:loclist)
+    1              0.000000     endif
+    1   0.002991   0.000008     call self._removeSigns(old_signs)
+
+FUNCTION  363()
+Called 1 time
+Total time:   0.001439
+ Self time:   0.001312
+
+count  total (s)   self (s)
+    1              0.000002     let loclist = a:loclist
+    1   0.000005   0.000003     if !loclist.isEmpty()
+                            
+    1              0.000001         let buf = bufnr('')
+    1              0.000001         if !bufloaded(buf)
+                                        " signs can be placed only in loaded buffers
+                                        return
+                                    endif
+                            
+                                    " errors come first, so that they are not masked by warnings
+    1   0.000064   0.000005         let issues = copy(loclist.errors())
+    1   0.000054   0.000004         call extend(issues, loclist.warnings())
+    1              0.000008         call filter(issues, 'v:val["bufnr"] == buf')
+    1              0.000002         let seen = {}
+                            
+    3              0.000003         for i in issues
+    2              0.000008             if i['lnum'] > 0 && !has_key(seen, i['lnum'])
+    2              0.000006                 let seen[i['lnum']] = 1
+                            
+    2              0.000005                 let sign_severity = i['type'] ==? 'W' ? 'Warning' : 'Error'
+    2              0.000006                 let sign_subtype = get(i, 'subtype', '')
+    2              0.000006                 let sign_type = 'Syntastic' . sign_subtype . sign_severity
+                            
+    2              0.001199                 execute 'sign place ' . s:next_sign_id . ' line=' . i['lnum'] . ' name=' . sign_type . ' buffer=' . i['bufnr']
+    2   0.000032   0.000016                 call add(self._bufSignIds(), s:next_sign_id)
+    2              0.000008                 let s:next_sign_id += 1
+    2              0.000002             endif
+    2              0.000001         endfor
+    1              0.000000     endif
+
+FUNCTION  365()
+Called 7 times
+Total time:   0.000057
+ Self time:   0.000057
+
+count  total (s)   self (s)
+    7              0.000024     if !exists('b:syntastic_private_sign_ids')
+                                    let b:syntastic_private_sign_ids = []
+                                endif
+    7              0.000011     return b:syntastic_private_sign_ids
+
+FUNCTION  <SNR>64_UpdateErrors()
+Called 1 time
+Total time:  12.763881
+ Self time:   0.000173
+
+count  total (s)   self (s)
+    1   0.000016   0.000008     call syntastic#log#debugShowVariables(g:_SYNTASTIC_DEBUG_TRACE, 'version')
+    1   0.000015   0.000009     call syntastic#log#debugShowOptions(g:_SYNTASTIC_DEBUG_TRACE, g:_SYNTASTIC_SHELL_OPTIONS)
+    1   0.000014   0.000007     call syntastic#log#debugDump(g:_SYNTASTIC_DEBUG_VARIABLES)
+    1   0.000016   0.000010     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'UpdateErrors' . (a:auto_invoked ? ' (auto)' : '') . ': ' . (len(a:checker_names) ? join(a:checker_names) : 'default checkers'))
+                            
+    1   0.000025   0.000005     call s:modemap.synch()
+                            
+    1   0.000125   0.000013     if s:_skip_file(a:buf)
+                                    return
+                                endif
+                            
+    1   0.000116   0.000011     let run_checks = !a:auto_invoked || s:modemap.doAutoChecking(a:buf)
+    1              0.000001     if run_checks
+    1  12.756810   0.000031         call s:CacheErrors(a:buf, a:checker_names)
+    1   0.000017   0.000009         call syntastic#util#setLastTick(a:buf)
+    1              0.000002     elseif a:auto_invoked
+                                    return
+                                endif
+                            
+    1   0.000038   0.000005     let loclist = g:SyntasticLoclist.current(a:buf)
+                            
+    1              0.000003     if exists('*SyntasticCheckHook')
+                                    call SyntasticCheckHook(loclist.getRaw())
+                                endif
+                            
+                                " populate loclist and jump {{{3
+    1   0.000015   0.000004     let do_jump = syntastic#util#var('auto_jump') + 0
+    1              0.000002     if do_jump == 2
+                                    let do_jump = loclist.getFirstError(1)
+                                elseif do_jump == 3
+                                    let do_jump = loclist.getFirstError()
+                                elseif 0 > do_jump || do_jump > 3
+                                    let do_jump = 0
+                                endif
+                            
+    1   0.000013   0.000003     if syntastic#util#var('always_populate_loc_list') || do_jump
+                                    call loclist.setloclist(1)
+                                    if run_checks && do_jump && !loclist.isEmpty()
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'loclist: jump')
+                                        execute 'silent! lrewind ' . do_jump
+                            
+                                        " XXX: Vim doesn't call autocmd commands in a predictible
+                                        " order, which can lead to missing filetype when jumping
+                                        " to a new file; the following is a workaround for the
+                                        " resulting brain damage
+                                        if &filetype ==# ''
+                                            silent! filetype detect
+                                        endif
+                                    endif
+                                endif
+                                " }}}3
+                            
+    1   0.006615   0.000012     call s:notifiers.refresh(loclist)
+
+FUNCTION  syntastic#util#system()
+Called 1 time
+Total time:  12.749929
+ Self time:   0.000543
+
+count  total (s)   self (s)
+    1              0.000002     let old_shell = &shell
+    1              0.000004     let old_lc_messages = $LC_MESSAGES
+    1              0.000001     let old_lc_all = $LC_ALL
+                            
+    1   0.000024   0.000007     let &shell = syntastic#util#var('shell')
+    1              0.000003     let $LC_MESSAGES = 'C'
+    1              0.000001     let $LC_ALL = ''
+                            
+    1              0.000001     let crashed = 0
+    1              0.000003     let cmd_start = reltime()
+    1              0.000001     try
+    1  12.749594   0.000258         let out = system(a:command)
+    1              0.000004     catch
+                                    let crashed = 1
+                                    call syntastic#log#error('exception running system(' . string(a:command) . '): ' . v:exception)
+                                    if syntastic#util#isRunningWindows()
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TMP = ' . string($TMP) . ', $TEMP = ' . string($TEMP))
+                                    else
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TERM = ' . string($TERM))
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TMPDIR = ' . string($TMPDIR))
+                                    endif
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, '$PATH = ' . string($PATH))
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getcwd() = ' . string(getcwd()))
+                                    call syntastic#log#debugShowOptions(g:_SYNTASTIC_DEBUG_TRACE, g:_SYNTASTIC_SHELL_OPTIONS)
+                                    let out = ''
+                                endtry
+    1              0.000132     let cmd_time = split(reltimestr(reltime(cmd_start)))[0]
+                            
+    1              0.000007     let $LC_ALL = old_lc_all
+    1              0.000002     let $LC_MESSAGES = old_lc_messages
+                            
+    1              0.000014     let &shell = old_shell
+                            
+    1              0.000005     if !crashed && exists('g:_SYNTASTIC_DEBUG_TRACE')
+    1   0.000053   0.000020         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'system: command run in ' . cmd_time . 's')
+    1              0.000001     endif
+                            
+    1              0.000003     return out
+
+FUNCTION  airline#util#wrap()
+Called 77 times
+Total time:   0.000566
+ Self time:   0.000566
+
+count  total (s)   self (s)
+   77              0.000239   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+   77              0.000113   return a:text
+
+FUNCTION  syntastic#log#debugShowVariables()
+Called 2 times
+Total time:   0.000017
+ Self time:   0.000011
+
+count  total (s)   self (s)
+    2   0.000014   0.000008     if !s:_isDebugEnabled(a:level)
+    2              0.000002         return
+                                endif
+                            
+                                let leader = s:_log_timestamp()
+                                call s:_logRedirect(1)
+                            
+                                let vlist = type(a:names) == type('') ? [a:names] : a:names
+                                for name in vlist
+                                    let msg = s:_format_variable(name)
+                                    if msg !=# ''
+                                        echomsg leader . msg
+                                    endif
+                                endfor
+                            
+                                call s:_logRedirect(0)
+
+FUNCTION  syntastic#util#getbufvar()
+Called 22 times
+Total time:   0.000180
+ Self time:   0.000180
+
+count  total (s)   self (s)
+   22              0.000165     return a:0 ? s:_getbufvar(a:buf, a:name, a:1) : getbufvar(a:buf, a:name)
+
+FUNCTION  airline#extensions#syntastic#get()
+Called 20 times
+Total time:   0.009767
+ Self time:   0.001616
+
+count  total (s)   self (s)
+   20              0.000109   let _backup = get(g:, 'syntastic_stl_format', '')
+   20              0.000059   let is_err = (a:type  is# 'error')
+   20              0.000024   if is_err
+   10              0.000105     let g:syntastic_stl_format = get(g:, 'airline#extensions#syntastic#stl_format_err', '%E{[%e(#%fe)]}')
+   10              0.000010   else
+   10              0.000053     let g:syntastic_stl_format = get(g:, 'airline#extensions#syntastic#stl_format_warn', '%W{[%w(#%fw)]}')
+   10              0.000010   endif
+   20   0.008264   0.000113   let cnt = SyntasticStatuslineFlag()
+   20              0.000060   if !empty(_backup)
+   20              0.000045     let g:syntastic_stl_format = _backup
+   20              0.000017   endif
+   20              0.000737   if empty(cnt)
+                                return ''
+                              else
+   20              0.000078     return (is_err ? s:error_symbol : s:warning_symbol).cnt
+                              endif
+
+FUNCTION  syntastic#util#isRunningWindows()
+Called 1 time
+Total time:   0.000008
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    1              0.000008     return has('win16') || has('win32') || has('win64')
+
+FUNCTION  airline#extensions#syntastic#get_error()
+Called 10 times
+Total time:   0.004434
+ Self time:   0.000088
+
+count  total (s)   self (s)
+   10   0.004429   0.000083   return airline#extensions#syntastic#get('error')
+
+FUNCTION  syntastic#util#var()
+Called 24 times
+Total time:   0.000375
+ Self time:   0.000202
+
+count  total (s)   self (s)
+   24   0.000364   0.000191     return call('syntastic#util#rawVar', ['syntastic_' . a:name] + a:000)
+
+FUNCTION  syntastic#util#compareLexi()
+Called 3 times
+Total time:   0.000061
+ Self time:   0.000061
+
+count  total (s)   self (s)
+    3              0.000019     for idx in range(max([len(a:a), len(a:b)]))
+    3              0.000013         let a_element = str2nr(get(a:a, idx, 0))
+    3              0.000012         let b_element = str2nr(get(a:b, idx, 0))
+    3              0.000005         if a_element != b_element
+    3              0.000005             return a_element > b_element ? 1 : -1
+                                    endif
+                                endfor
+                                " still here, thus everything matched
+                                return 0
+
+FUNCTION  <SNR>64_BufWritePostHook()
+Called 1 time
+Total time:  12.764082
+ Self time:   0.000050
+
+count  total (s)   self (s)
+    1   0.000147   0.000010     let buf = syntastic#util#fname2buf(a:fname)
+    1   0.000030   0.000016     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_AUTOCOMMANDS, 'autocmd: BufWritePost, buffer ' . buf . ' = ' . string(a:fname))
+    1  12.763898   0.000017     call s:UpdateErrors(buf, 1, [])
+
+FUNCTION  <SNR>64__ignore_file()
+Called 2 times
+Total time:   0.000042
+ Self time:   0.000042
+
+count  total (s)   self (s)
+    2              0.000024     let fname = fnamemodify(a:filename, ':p')
+    2              0.000005     for pattern in g:syntastic_ignore_files
+                                    if fname =~# pattern
+                                        return 1
+                                    endif
+                                endfor
+    2              0.000002     return 0
+
+FUNCTION  <SNR>90_check_mixed_indent_file()
+Called 1 time
+Total time:   0.000033
+ Self time:   0.000033
+
+count  total (s)   self (s)
+    1              0.000006   let c_like_langs = get(g:, 'airline#extensions#c_like_langs', [ 'arduino', 'c', 'cpp', 'cuda', 'go', 'javascript', 'ld', 'php' ])
+    1              0.000004   if index(c_like_langs, &ft) > -1
+                                " for C-like languages: allow /** */ comment style with one space before the '*'
+                                let head_spc = '\v(^ +\*@!)'
+                              else
+    1              0.000001     let head_spc = '\v(^ +)'
+    1              0.000001   endif
+    1              0.000007   let indent_tabs = search('\v(^\t+)', 'nw')
+    1              0.000006   let indent_spc  = search(head_spc, 'nw')
+    1              0.000002   if indent_tabs > 0 && indent_spc > 0
+    1              0.000004     return printf("%d:%d", indent_tabs, indent_spc)
+                              else
+                                return ''
+                              endif
+
+FUNCTION  airline#parts#ffenc()
+Called 13 times
+Total time:   0.000397
+ Self time:   0.000397
+
+count  total (s)   self (s)
+   13              0.000072   let expected = get(g:, 'airline#parts#ffenc#skip_expected_string', '')
+   13              0.000032   let bomb     = &l:bomb ? '[BOM]' : ''
+   13              0.000124   let ff       = strlen(&ff) ? '['.&ff.']' : ''
+   13              0.000069   if expected is# &fenc.bomb.ff
+                                return ''
+                              else
+   13              0.000051     return &fenc.bomb.ff
+                              endif
+
+FUNCTION  airline#util#ignore_buf()
+Called 12 times
+Total time:   0.000641
+ Self time:   0.000641
+
+count  total (s)   self (s)
+   12              0.000136   let pat = '\c\v'. get(g:, 'airline#ignore_bufadd_pat', ''). get(g:, 'airline#extensions#tabline#ignore_bufadd_pat',  'gundo|undotree|vimfiler|tagbar|nerd_tree|startify')
+   12              0.000486   return match(a:name, pat) > -1
+
+FUNCTION  rust#GetConfigVar()
+Called 5 times
+Total time:   0.000060
+ Self time:   0.000060
+
+count  total (s)   self (s)
+                                " Local buffer variable with same name takes predeence over global
+    5              0.000012     if has_key(b:, a:name) 
+                                    return get(b:, a:name)
+                                endif
+    5              0.000011     if has_key(g:, a:name) 
+                                    return get(g:, a:name)
+                                endif
+    5              0.000007     return a:default
+
+FUNCTION  airline#parts#paste()
+Called 10 times
+Total time:   0.000049
+ Self time:   0.000049
+
+count  total (s)   self (s)
+   10              0.000041   return g:airline_detect_paste && &paste ? g:airline_symbols.paste : ''
+
+FUNCTION  syntastic#util#wformat()
+Called 40 times
+Total time:   0.000199
+ Self time:   0.000199
+
+count  total (s)   self (s)
+   40              0.000097     if a:format ==# ''
+   40              0.000056         return a:str
+                                endif
+                            
+                             echomsg string(a:format) . ', ' . string(a:str)
+                                let specs = matchlist(a:format, '\v^(-?)(0?)(%([1-9]\d*))?%(\.(\d+))?$')
+                                if len(specs) < 5
+                                    return a:str
+                                endif
+                            
+                                let flushleft = specs[1] ==# '-'
+                                let lpad = specs[2] ==# '0' ? '0' : ' '
+                                let minlen = str2nr(specs[3])
+                                let maxlen = str2nr(specs[4])
+                                let out = substitute(a:str, "\t", ' ', 'g')
+                            
+                                if maxlen && s:_width(out) > maxlen
+                                    let chars = filter(split(out, '\zs\ze', 1), 'v:val !=# ""')
+                                    let out = ''
+                            
+                                    if flushleft
+                                        for c in chars
+                                            if s:_width(out . c) < maxlen
+                                                let out .= c
+                                            else
+                                                let out .= &encoding ==# 'utf-8' && &termencoding ==# 'utf-8' ? "\u2026" : '>'
+                                                break
+                                            endif
+                                        endfor
+                                    else
+                                        call reverse(chars)
+                                        for c in chars
+                                            if s:_width(c . out) < maxlen
+                                                let out = c . out
+                                            else
+                                                let out = (&encoding ==# 'utf-8' && &termencoding ==# 'utf-8' ? "\u2026" : '<') . out
+                                                break
+                                            endif
+                                        endfor
+                                    endif
+                                endif
+                            
+                                if minlen && s:_width(out) < minlen
+                                    if flushleft
+                                        let out .= repeat(' ', minlen - s:_width(out))
+                                    else
+                                        let out = repeat(lpad, minlen - s:_width(out)) . out
+                                    endif
+                                endif
+                            
+                                return out
+
+FUNCTION  airline#parts#readonly()
+Called 12 times
+Total time:   0.000974
+ Self time:   0.000333
+
+count  total (s)   self (s)
+                              " only consider regular buffers (e.g. ones that represent actual files, 
+                              " but not special ones like e.g. NERDTree)
+   12   0.000818   0.000177   if !empty(&buftype) || airline#util#ignore_buf(bufname('%'))
+                                return ''
+                              endif
+   12              0.000043   if &readonly && !filereadable(bufname('%'))
+                                return '[noperm]'
+                              else
+   12              0.000022     return &readonly ? g:airline_symbols.readonly : ''
+                              endif
+
+FUNCTION  syntastic#util#bufIsActive()
+Called 1 time
+Total time:   0.000020
+ Self time:   0.000020
+
+count  total (s)   self (s)
+                                " convert to number, or hell breaks loose
+    1              0.000003     let buf = str2nr(a:buffer)
+                            
+    1              0.000003     if !bufloaded(buf) || !buflisted(buf)
+                                    return 0
+                                endif
+                            
+                                " get rid of hidden buffers
+    1              0.000004     for tab in range(1, tabpagenr('$'))
+    1              0.000005         if index(tabpagebuflist(tab), buf) >= 0
+    1              0.000001             return 1
+                                    endif
+                                endfor
+                            
+                                return 0
+
+FUNCTION  airline#extensions#whitespace#check()
+Called 10 times
+Total time:   0.003554
+ Self time:   0.001655
+
+count  total (s)   self (s)
+   10              0.000057   let max_lines = get(g:, 'airline#extensions#whitespace#max_lines', 20000)
+   10              0.000098   if &readonly || !&modifiable || !s:enabled || line('$') > max_lines || get(b:, 'airline_whitespace_disabled', 0)
+                                return ''
+                              endif
+   10              0.000078   let skip_check_ft = extend(s:skip_check_ft, get(g:, 'airline#extensions#whitespace#skip_indent_check_ft', {}), 'force')
+                            
+   10              0.000043   if !exists('b:airline_whitespace_check')
+    1              0.000002     let b:airline_whitespace_check = ''
+    1              0.000005     let checks = get(b:, 'airline_whitespace_checks', get(g:, 'airline#extensions#whitespace#checks', s:default_checks))
+                            
+    1              0.000001     let trailing = 0
+    1              0.000001     let check = 'trailing'
+    1              0.000008     if index(checks, check) > -1 && index(get(skip_check_ft, &ft, []), check) < 0
+    1              0.000001       try
+    1              0.000003         let regexp = get(g:, 'airline#extensions#whitespace#trailing_regexp', '\s$')
+    1              0.000140         let trailing = search(regexp, 'nw')
+    1              0.000001       catch
+                                    echomsg 'airline#whitespace: error occurred evaluating '. regexp
+                                    echomsg v:exception
+                                    return ''
+                                  endtry
+    1              0.000000     endif
+                            
+    1              0.000001     let mixed = 0
+    1              0.000001     let check = 'indent'
+    1              0.000006     if index(checks, check) > -1 && index(get(skip_check_ft, &ft, []), check) < 0
+    1   0.000226   0.000010       let mixed = s:check_mixed_indent()
+    1              0.000000     endif
+                            
+    1              0.000001     let mixed_file = ''
+    1              0.000001     let check = 'mixed-indent-file'
+    1              0.000006     if index(checks, check) > -1 && index(get(skip_check_ft, &ft, []), check) < 0
+    1   0.000043   0.000010       let mixed_file = s:check_mixed_indent_file()
+    1              0.000001     endif
+                            
+    1              0.000001     let long = 0
+    1              0.000003     if index(checks, 'long') > -1 && &tw > 0
+                                  let long = search('\%>'.&tw.'v.\+', 'nw')
+                                endif
+                            
+    1              0.000003     if trailing != 0 || mixed != 0 || long != 0 || !empty(mixed_file)
+    1              0.000002       let b:airline_whitespace_check = s:symbol
+    1              0.000002       if strlen(s:symbol) > 0
+    1              0.000002         let space = (g:airline_symbols.space)
+    1              0.000000       else
+                                    let space = ''
+                                  endif
+                            
+    1              0.000001       if s:show_message
+    1              0.000001         if trailing != 0
+                                      let trailing_fmt = get(g:, 'airline#extensions#whitespace#trailing_format', '[%s]trailing')
+                                      let b:airline_whitespace_check .= space.printf(trailing_fmt, trailing)
+                                    endif
+    1              0.000001         if mixed != 0
+    1              0.000004           let mixed_indent_fmt = get(g:, 'airline#extensions#whitespace#mixed_indent_format', '[%s]mixed-indent')
+    1              0.000006           let b:airline_whitespace_check .= space.printf(mixed_indent_fmt, mixed)
+    1              0.000000         endif
+    1              0.000001         if long != 0
+                                      let long_fmt = get(g:, 'airline#extensions#whitespace#long_format', '[%s]long')
+                                      let b:airline_whitespace_check .= space.printf(long_fmt, long)
+                                    endif
+    1              0.000001         if !empty(mixed_file)
+    1              0.000003           let mixed_indent_file_fmt = get(g:, 'airline#extensions#whitespace#mixed_indent_file_format', '[%s]mix-indent-file')
+    1              0.000005           let b:airline_whitespace_check .= space.printf(mixed_indent_file_fmt, mixed_file)
+    1              0.000001         endif
+    1              0.000000       endif
+    1              0.000000     endif
+    1              0.000001   endif
+   10   0.001726   0.000076   return airline#util#shorten(b:airline_whitespace_check, 120, 9)
+
+FUNCTION  <SNR>99__isDebugEnabled_smart()
+Called 31 times
+Total time:   0.000091
+ Self time:   0.000091
+
+count  total (s)   self (s)
+   31              0.000071     return and(g:syntastic_debug, a:level)
+
+FUNCTION  <SNR>59__remove_shadowed_items()
+Called 7 times
+Total time:   0.000213
+ Self time:   0.000213
+
+count  total (s)   self (s)
+                                " keep only the first message at a given column
+    7              0.000005     let i = 0
+    7              0.000012     while i < len(a:errors) - 1
+                                    let j = i + 1
+                                    let dupes = 0
+                                    while j < len(a:errors) && a:errors[j].scol == a:errors[i].scol
+                                        let dupes = 1
+                                        let j += 1
+                                    endwhile
+                                    if dupes
+                                        call remove(a:errors, i + 1, j - 1)
+                                    endif
+                                    let i += 1
+                                endwhile
+                            
+                                " merge messages with the same text
+    7              0.000007     let i = 0
+    7              0.000014     while i < len(a:errors) - 1
+                                    let j = i + 1
+                                    let dupes = 0
+                                    while j < len(a:errors) && a:errors[j].text == a:errors[i].text
+                                        let dupes = 1
+                                        let j += 1
+                                    endwhile
+                                    if dupes
+                                        call remove(a:errors, i + 1, j - 1)
+                                    endif
+                                    let i += 1
+                                endwhile
+
+FUNCTION  cargo#nearestWorkspaceCargo()
+Called 1 time
+Total time:   0.001791
+ Self time:   0.001296
+
+count  total (s)   self (s)
+    1   0.000201   0.000009     let l:nearest = s:nearest_cargo(a:is_getcwd)
+    2              0.000005     while l:nearest !=# ''
+   16              0.001125         for l:line in readfile(l:nearest, '', 0x100)
+   15              0.000053             if l:line =~# '\V[workspace]'
+                                            return l:nearest
+                                        endif
+   15              0.000008         endfor
+    1              0.000026         let l:next = fnamemodify(l:nearest, ':p:h:h')
+    1   0.000315   0.000012         let l:nearest = s:nearest_cargo(0, l:next)
+    1              0.000002     endwhile
+    1              0.000001     return ''
+
+FUNCTION  <SNR>62__normalise_filetype()
+Called 2 times
+Total time:   0.000030
+ Self time:   0.000030
+
+count  total (s)   self (s)
+    2              0.000009     let ft = get(s:_DEFAULT_FILETYPE_MAP, a:ftalias, a:ftalias)
+    2              0.000006     let ft = get(g:syntastic_filetype_map, ft, ft)
+    2              0.000010     let ft = substitute(ft, '\m-', '_', 'g')
+    2              0.000003     return ft
+
+FUNCTION  airline#parts#spell()
+Called 10 times
+Total time:   0.000475
+ Self time:   0.000475
+
+count  total (s)   self (s)
+   10              0.000224   let spelllang = g:airline_detect_spelllang ? printf(" [%s]", toupper(substitute(&spelllang, ',', '/', 'g'))) : ''
+   10              0.000045   if g:airline_detect_spell && &spell
+                                if winwidth(0) >= 90
+                                  return g:airline_symbols.spell . spelllang
+                                elseif winwidth(0) >= 70
+                                  return g:airline_symbols.spell
+                                else
+                                  return split(g:airline_symbols.spell, '\zs')[0]
+                                endif
+                              endif
+   10              0.000014   return ''
+
+FUNCTION  airline#parts#crypt()
+Called 10 times
+Total time:   0.000093
+ Self time:   0.000093
+
+count  total (s)   self (s)
+   10              0.000083   return g:airline_detect_crypt && exists("+key") && !empty(&key) ? g:airline_symbols.crypt : ''
+
+FUNCTION  syntastic#log#debugDump()
+Called 1 time
+Total time:   0.000007
+ Self time:   0.000005
+
+count  total (s)   self (s)
+    1   0.000006   0.000004     if !s:_isDebugEnabled(a:level)
+    1              0.000001         return
+                                endif
+                            
+                                call syntastic#log#debugShowVariables( a:level, sort(keys(g:_SYNTASTIC_DEFAULTS)) )
+
+FUNCTION  airline#parts#mode()
+Called 10 times
+Total time:   0.000395
+ Self time:   0.000135
+
+count  total (s)   self (s)
+   10   0.000387   0.000127   return airline#util#shorten(get(w:, 'airline_current_mode', ''), 79, 1)
+
+FUNCTION  syntastic#util#fname2buf()
+Called 1 time
+Total time:   0.000137
+ Self time:   0.000137
+
+count  total (s)   self (s)
+    1              0.000003     if exists('+shellslash')
+                                    " bufnr() can't cope with backslashes
+                                    let old_shellslash = &shellslash
+                                    let &shellslash = 1
+                                endif
+                            
+                                " this is a best-effort attempt to escape file patterns (cf. :h file-pattern)
+                                " XXX it fails for filenames containing something like \{2,3}
+    1              0.000002     let buf = -1
+    1              0.000003     for md in [':~:.', ':~', ':p']
+    1              0.000002         try
+                                        " Older versions of Vim can throw E94 here
+    1              0.000099             let buf = bufnr('^' . escape(fnamemodify(a:fname, md), '\*?,{}[') . '$')
+    1              0.000002         catch
+                                        " catch everything
+                                    endtry
+    1              0.000002         if buf != -1
+    1              0.000001             break
+                                    endif
+                                endfor
+    1              0.000002     if buf == -1
+                                    " XXX definitely wrong, but hope is the last thing to die :)
+                                    let buf = bufnr(fnamemodify(a:fname, ':p'))
+                                endif
+                            
+    1              0.000002     if exists('+shellslash')
+                                    let &shellslash = old_shellslash
+                                endif
+                            
+    1              0.000001     return buf
+
+FUNCTION  cargo#nearestCargo()
+Called 1 time
+Total time:   0.000203
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    1   0.000202   0.000006     return s:nearest_cargo(a:is_getcwd)
+
+FUNCTION  SyntasticMake()
+Called 1 time
+Total time:  12.751733
+ Self time:   0.001740
+
+count  total (s)   self (s)
+    1   0.000020   0.000009     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'SyntasticMake: called with options:', a:options)
+                            
+                                " save options and locale env variables {{{3
+    1              0.000003     let old_local_errorformat = &l:errorformat
+    1              0.000003     let old_errorformat = &errorformat
+    1              0.000002     let old_cwd = getcwd()
+                                " }}}3
+                            
+    1              0.000003     if has_key(a:options, 'errorformat')
+    1              0.000008         let &errorformat = a:options['errorformat']
+    1              0.000004         set errorformat<
+    1              0.000001     endif
+                            
+    1              0.000002     if has_key(a:options, 'cwd')
+    1              0.000106         execute 'lcd ' . fnameescape(a:options['cwd'])
+    1              0.000002     endif
+                            
+                                " set environment variables {{{3
+    1              0.000002     let env_save = {}
+    1              0.000004     if has_key(a:options, 'env') && len(a:options['env'])
+                                    for key in keys(a:options['env'])
+                                        if key =~? '\m^[a-z_][a-z0-9_]*$'
+                                            execute 'let env_save[' . string(key) . '] = $' . key
+                                            execute 'let $' . key . ' = ' . string(a:options['env'][key])
+                                        endif
+                                    endfor
+                                endif
+                                " }}}3
+                            
+    1  12.750095   0.000166     let err_lines = split(syntastic#util#system(a:options['makeprg']), "\n", 1)
+                            
+                                " restore environment variables {{{3
+    1              0.000003     if len(env_save)
+                                    for key in keys(env_save)
+                                        execute 'let $' . key . ' = ' . string(env_save[key])
+                                    endfor
+                                endif
+                                " }}}3
+                            
+    1   0.000016   0.000006     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'checker output:', err_lines)
+                            
+                                " Does it still make sense to go on?
+    1   0.000045   0.000014     let bailout = syntastic#util#var('exit_checks') && has_key(a:options, 'returns') && index(a:options['returns'], v:shell_error) == -1
+                            
+    1              0.000000     if !bailout
+    1              0.000002         if has_key(a:options, 'Preprocess')
+                                        let err_lines = call(a:options['Preprocess'], [err_lines])
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'preprocess (external):', err_lines)
+                                    elseif has_key(a:options, 'preprocess')
+                                        let err_lines = call('syntastic#preprocess#' . a:options['preprocess'], [err_lines])
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'preprocess:', err_lines)
+                                    endif
+    1              0.000740         noautocmd lgetexpr err_lines
+                            
+    1              0.000331         let errors = deepcopy(getloclist(0))
+                            
+    1              0.000003         if has_key(a:options, 'cwd')
+    1              0.000150             execute 'lcd ' . fnameescape(old_cwd)
+    1              0.000001         endif
+                            
+    1              0.000000         try
+    1              0.000006             silent lolder
+    1              0.000002         catch /\m^Vim\%((\a\+)\)\=:E380/
+                                        " E380: At bottom of quickfix stack
+                                        call setloclist(0, [], 'r')
+                                        try
+                                            " Vim 7.4.2200 or later
+                                            call setloclist(0, [], 'r', { 'title': '' })
+                                        catch /\m^Vim\%((\a\+)\)\=:E\%(118\|731\)/
+                                            " do nothing
+                                        endtry
+                                    catch /\m^Vim\%((\a\+)\)\=:E776/
+                                        " E776: No location list
+                                        " do nothing
+                                    endtry
+    1              0.000001     else
+                                    let errors = []
+                                endif
+                            
+                                " restore options {{{3
+    1              0.000013     let &errorformat = old_errorformat
+    1              0.000003     let &l:errorformat = old_local_errorformat
+                                " }}}3
+                            
+    1   0.000030   0.000026     if !s:_running_windows && (s:_os_name() =~? 'FreeBSD' || s:_os_name() =~? 'OpenBSD')
+                                    call syntastic#util#redraw(g:syntastic_full_redraws)
+                                endif
+                            
+    1              0.000001     if bailout
+                                    call syntastic#log#ndebug(g:_SYNTASTIC_DEBUG_LOCLIST, 'checker output:', err_lines)
+                                    throw 'Syntastic: checker error'
+                                endif
+                            
+    1   0.000013   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'raw loclist:', errors)
+                            
+    1              0.000002     if has_key(a:options, 'defaults')
+                                    call s:_add_to_errors(errors, a:options['defaults'])
+                                endif
+                            
+                                " Add subtype info if present.
+    1              0.000002     if has_key(a:options, 'subtype')
+                                    call s:_add_to_errors(errors, { 'subtype': a:options['subtype'] })
+                                endif
+                            
+    1              0.000003     if has_key(a:options, 'Postprocess') && !empty(a:options['Postprocess'])
+                                    for rule in a:options['Postprocess']
+                                        let errors = call(rule, [errors])
+                                    endfor
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'postprocess (external):', errors)
+                                elseif has_key(a:options, 'postprocess') && !empty(a:options['postprocess'])
+                                    for rule in a:options['postprocess']
+                                        let errors = call('syntastic#postprocess#' . rule, [errors])
+                                    endfor
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'postprocess:', errors)
+                                endif
+                            
+    1              0.000004     return errors
+
+FUNCTION  328()
+Called 2 times
+Total time:   0.000075
+ Self time:   0.000065
+
+count  total (s)   self (s)
+    2   0.000032   0.000022     let conditions = values(map(copy(a:filters), 's:_translate(v:key, v:val)'))
+    2              0.000009     let filter = len(conditions) == 1 ? conditions[0] : join(map(conditions, '"(" . v:val . ")"'), ' && ')
+    2              0.000031     return filter(copy(self._rawLoclist), filter)
+
+FUNCTION  airline#statusline()
+Called 13 times
+Total time:   0.000324
+ Self time:   0.000324
+
+count  total (s)   self (s)
+   13              0.000161   if has_key(s:contexts, a:winnr)
+   13              0.000130     return '%{airline#check_mode('.a:winnr.')}'.s:contexts[a:winnr].line
+                              endif
+                            
+                              " in rare circumstances this happens...see #276
+                              return ''
+
+FUNCTION  syntastic#util#unique()
+Called 6 times
+Total time:   0.000267
+ Self time:   0.000267
+
+count  total (s)   self (s)
+    6              0.000010     let seen = {}
+    6              0.000007     let uniques = []
+   26              0.000024     for e in a:list
+   20              0.000046         let k = string(e)
+   20              0.000034         if !has_key(seen, k)
+    9              0.000017             let seen[k] = 1
+    9              0.000020             call add(uniques, e)
+    9              0.000007         endif
+   20              0.000010     endfor
+    6              0.000006     return uniques
+
+FUNCTION  268()
+Called 1 time
+Total time:   0.000082
+ Self time:   0.000013
+
+count  total (s)   self (s)
+    1   0.000016   0.000007     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'autoloclist: refresh')
+    1   0.000066   0.000006     call g:SyntasticAutoloclistNotifier.AutoToggle(a:loclist)
+
+FUNCTION  269()
+Called 1 time
+Total time:   0.000060
+ Self time:   0.000039
+
+count  total (s)   self (s)
+    1   0.000011   0.000004     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'autoloclist: toggle')
+    1   0.000015   0.000003     let auto_loc_list = syntastic#util#var('auto_loc_list')
+    1   0.000006   0.000004     if !a:loclist.isEmpty()
+    1              0.000002         if auto_loc_list == 1 || auto_loc_list == 3
+                                        call a:loclist.show()
+                                    endif
+    1              0.000001     else
+                                    if (auto_loc_list == 1 || auto_loc_list == 2) && !empty(get(w:, 'syntastic_loclist_set', []))
+                                        try
+                                            " Vim 7.4.2200 or later
+                                            let title = get(getloclist(0, { 'title': 1 }), 'title', ':SyntasticCheck ')
+                                        catch /\m^Vim\%((\a\+)\)\=:E\%(118\|731\)/
+                                            let title = ':SyntasticCheck '
+                                        endtry
+                            
+                                        if strpart(title, 0, 16) ==# ':SyntasticCheck '
+                                            " TODO: this will close the loc list window if one was opened
+                                            " by something other than syntastic
+                                            call SyntasticLoclistHide()
+                            
+                                            try
+                                                " Vim 7.4.2200 or later
+                                                call setloclist(0, [], 'r', { 'title': '' })
+                                            catch /\m^Vim\%((\a\+)\)\=:E\%(118\|731\)/
+                                                " do nothing
+                                            endtry
+                                            let w:syntastic_loclist_set = []
+                                        endif
+                                    endif
+                                endif
+
+FUNCTION  <SNR>90_ws_refresh()
+Called 3 times
+Total time:   0.000090
+ Self time:   0.000090
+
+count  total (s)   self (s)
+    3              0.000046   if get(b:, 'airline_ws_changedtick', 0) == b:changedtick
+    2              0.000008     return
+                              endif
+    1              0.000013   unlet! b:airline_whitespace_check
+    1              0.000003   if get(g:, 'airline_skip_empty_sections', 0)
+                                exe ':AirlineRefresh'
+                              endif
+    1              0.000004   let b:airline_ws_changedtick = b:changedtick
+
+FUNCTION  syntastic#util#setLastTick()
+Called 1 time
+Total time:   0.000008
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    1              0.000008     call setbufvar(a:buf, 'syntastic_lasttick', getbufvar(a:buf, 'changedtick'))
+
+FUNCTION  airline#util#shorten()
+Called 20 times
+Total time:   0.001910
+ Self time:   0.001910
+
+count  total (s)   self (s)
+   20              0.001478   if winwidth(0) < a:winwidth && len(split(a:text, '\zs')) > a:minwidth
+   10              0.000036     if get(a:000, 0, 0)
+                                  " shorten from tail
+                                  return '…'.matchstr(a:text, '.\{'.a:minwidth.'}$')
+                                else
+                                  " shorten from beginning of string
+   10              0.000155       return matchstr(a:text, '^.\{'.a:minwidth.'}').'…'
+                                endif
+                              else
+   10              0.000022     return a:text
+                              endif
+
+FUNCTION  271()
+Called 2 times
+Total time:   0.000056
+ Self time:   0.000019
+
+count  total (s)   self (s)
+    2   0.000055   0.000018     return has('balloon_eval') && syntastic#util#var('enable_balloons')
+
+FUNCTION  272()
+Called 1 time
+Total time:   0.000346
+ Self time:   0.000101
+
+count  total (s)   self (s)
+    1              0.000003     unlet! b:syntastic_private_balloons
+    1   0.000036   0.000008     if self.enabled() && !a:loclist.isEmpty()
+    1   0.000236   0.000019         let b:syntastic_private_balloons = a:loclist.balloons()
+    1              0.000004         if !empty(b:syntastic_private_balloons)
+    1              0.000062             set ballooneval balloonexpr=SyntasticBalloonsExprNotifier()
+    1              0.000002         endif
+    1              0.000001     endif
+
+FUNCTION  273()
+Called 1 time
+Total time:   0.000059
+ Self time:   0.000051
+
+count  total (s)   self (s)
+    1              0.000003     let b:syntastic_private_balloons = {}
+    1              0.000002     if has('balloon_eval')
+    1   0.000012   0.000004         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'balloons: reset')
+    1              0.000002         unlet! b:syntastic_private_balloons
+    1              0.000038         set noballooneval
+    1              0.000001     endif
+
+FUNCTION  275()
+Called 1 time
+Total time:   0.000002
+ Self time:   0.000002
+
+count  total (s)   self (s)
+    1              0.000002     return self._filetype
+
+FUNCTION  277()
+Called 2 times
+Total time:   0.000007
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    2              0.000005     return self._filetype . '/' . self._name
+
+FUNCTION  278()
+Called 1 time
+Total time:   0.000053
+ Self time:   0.000028
+
+count  total (s)   self (s)
+    1              0.000002     if a:0
+                                    let self._exec = a:1
+                                else
+    1              0.000002         let suffix = self._name . '_exec'
+    1   0.000046   0.000021         let self._exec = expand( syntastic#util#var(self._filetype . '_' . suffix, syntastic#util#var(suffix, self._exec_default)), 1 )
+    1              0.000001     endif
+
+FUNCTION  airline#extensions#keymap#status()
+Called 10 times
+Total time:   0.000270
+ Self time:   0.000270
+
+count  total (s)   self (s)
+   10              0.000154   if (get(g:, 'airline#extensions#keymap#enabled', 1) && has('keymap'))
+   10              0.000105     return printf('%s', (!empty(&keymap) ? (g:airline_symbols.keymap . ' '. &keymap) : ''))
+                              else
+                                return ''
+                              endif
+
+FUNCTION  280()
+Called 1 time
+Total time:   0.000020
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    1   0.000020   0.000008     return syntastic#util#shescape(self._exec)
+
+FUNCTION  281()
+Called 1 time
+Total time:  12.754888
+ Self time:   0.000143
+
+count  total (s)   self (s)
+    1              0.000003     let checker_start = reltime()
+    1   0.000006   0.000003     let name = self.getCName()
+                            
+    1              0.000002     if has_key(self, '_enable')
+                                    let status = syntastic#util#var(self._enable, -1)
+                                    if type(status) != type(0)
+                                        call syntastic#log#error('checker ' . name . ': invalid value ' . strtrans(string(status)) . ' for g:syntastic_' . self._enable . '; try 0 or 1 instead')
+                                        return []
+                                    endif
+                                    if status < 0
+                                        call syntastic#log#error('checker ' . name . ': checks disabled for security reasons; ' . 'set g:syntastic_' . self._enable . ' to 1 to override')
+                                    endif
+                                    if status <= 0
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getLocList: checker ' . name . ' enabled but not forced')
+                                        return []
+                                    else
+                                        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getLocList: checker ' . name . ' forced')
+                                    endif
+                                endif
+                            
+    1              0.000001     try
+    1  12.754675   0.000045         let list = self._locListFunc()
+    1              0.000004         if self._exec !=# ''
+    1   0.000016   0.000009             call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getLocList: checker ' . name . ' returned ' . v:shell_error)
+    1              0.000001         endif
+    1              0.000001     catch /\m\C^Syntastic: checker error$/
+                                    let list = []
+                                    if self._exec !=# ''
+                                        call syntastic#log#error('checker ' . name . ' returned abnormal status ' . v:shell_error)
+                                    else
+                                        call syntastic#log#error('checker ' . name . ' aborted')
+                                    endif
+                                endtry
+    1   0.000022   0.000009     call self._populateHighlightRegexes(list)
+    1   0.000012   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, name . ' raw:', list)
+    1   0.000082   0.000004     call self._quietMessages(list)
+    1   0.000026   0.000019     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getLocList: checker ' . name . ' run in ' . split(reltimestr(reltime(checker_start)))[0] . 's')
+    1              0.000001     return list
+
+FUNCTION  282()
+Called 1 time
+Total time:  12.755111
+ Self time:   0.000098
+
+count  total (s)   self (s)
+    1  12.755109   0.000096     return g:SyntasticLoclist.New(self.getLocListRaw())
+
+FUNCTION  286()
+Called 1 time
+Total time:   0.000447
+ Self time:   0.000056
+
+count  total (s)   self (s)
+    1              0.000003     let basename = self._filetype . '_' . self._name . '_'
+                            
+    1              0.000002     let parts = []
+    1   0.000111   0.000015     call extend(parts, self._getOpt(a:opts, basename, 'exe', self.getExecEscaped()))
+    1   0.000070   0.000006     call extend(parts, self._getOpt(a:opts, basename, 'args', ''))
+    1   0.000108   0.000015     call extend(parts, self._getOpt(a:opts, basename, 'fname', syntastic#util#shexpand('%')))
+    1   0.000075   0.000006     call extend(parts, self._getOpt(a:opts, basename, 'post_args', ''))
+    1   0.000073   0.000004     call extend(parts, self._getOpt(a:opts, basename, 'tail', ''))
+                            
+    1              0.000002     return join(parts)
+
+FUNCTION  287()
+Called 1 time
+Total time:   0.000072
+ Self time:   0.000019
+
+count  total (s)   self (s)
+    1   0.000059   0.000006     call self.syncExec()
+                            
+    1              0.000003     if !has_key(self, '_available')
+                                    let self._available = {}
+                                endif
+    1              0.000003     if !has_key(self._available, self._exec)
+                                    let self._available[self._exec] = self._isAvailableFunc()
+                                endif
+                            
+    1              0.000002     return self._available[self._exec]
+
+FUNCTION  289()
+Called 1 time
+Total time:   0.000018
+ Self time:   0.000006
+
+count  total (s)   self (s)
+    1   0.000018   0.000006     return syntastic#util#var(self._filetype . '_' . self._name . '_sort', 0)
+
+FUNCTION  syntastic#util#rawVar()
+Called 24 times
+Total time:   0.000173
+ Self time:   0.000173
+
+count  total (s)   self (s)
+   24              0.000156     return get(b:, a:name, get(g:, a:name, a:0 ? a:1 : ''))
+
+FUNCTION  syntastic#util#shexpand()
+Called 1 time
+Total time:   0.000022
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    1   0.000022   0.000008     return syntastic#util#shescape(a:0 ? expand(a:string, a:1) : expand(a:string, 1))
+
+FUNCTION  291()
+Called 1 time
+Total time:   0.000078
+ Self time:   0.000043
+
+count  total (s)   self (s)
+                                " wildcard quiet_messages
+    1   0.000023   0.000006     let quiet_filters = copy(syntastic#util#var('quiet_messages', {}))
+    1              0.000004     if type(quiet_filters) != type({})
+                                    call syntastic#log#warn('ignoring invalid syntastic_quiet_messages')
+                                    unlet quiet_filters
+                                    let quiet_filters = {}
+                                endif
+                            
+                                " per checker quiet_messages
+    1              0.000003     let name = self._filetype . '_' . self._name
+    1              0.000000     try
+    1   0.000018   0.000007         call extend( quiet_filters, copy(syntastic#util#var(name . '_quiet_messages', {})), 'force' )
+    1              0.000001     catch /\m^Vim\%((\a\+)\)\=:E712/
+                                    call syntastic#log#warn('ignoring invalid syntastic_' . name . '_quiet_messages')
+                                endtry
+                            
+    1   0.000011   0.000004     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'quiet_messages filter:', quiet_filters)
+                            
+    1              0.000002     if !empty(quiet_filters)
+                                    call syntastic#util#dictFilter(a:errors, quiet_filters)
+                                    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'filtered by quiet_messages:', a:errors)
+                                endif
+
+FUNCTION  292()
+Called 1 time
+Total time:   0.000013
+ Self time:   0.000013
+
+count  total (s)   self (s)
+    1              0.000003     if has_key(self, '_highlightRegexFunc')
+                                    for e in a:errors
+                                        if e['valid']
+                                            let term = self._highlightRegexFunc(e)
+                                            if term !=# ''
+                                                let e['hl'] = term
+                                            endif
+                                        endif
+                                    endfor
+                                endif
+
+FUNCTION  293()
+Called 5 times
+Total time:   0.000349
+ Self time:   0.000132
+
+count  total (s)   self (s)
+    5              0.000005     let ret = []
+    5   0.000094   0.000036     call extend( ret, syntastic#util#argsescape(get(a:opts, a:name . '_before', '')) )
+    5   0.000153   0.000050     call extend( ret, syntastic#util#argsescape(syntastic#util#var( a:basename . a:name, get(a:opts, a:name, a:default) )) )
+    5   0.000086   0.000030     call extend( ret, syntastic#util#argsescape(get(a:opts, a:name . '_after', '')) )
+                            
+    5              0.000004     return ret
+
+FUNCTION  295()
+Called 2 times
+Total time:   0.000035
+ Self time:   0.000010
+
+count  total (s)   self (s)
+    2   0.000035   0.000010     return syntastic#util#var('echo_current_error')
+
+FUNCTION  296()
+Called 1 time
+Total time:   0.000684
+ Self time:   0.000048
+
+count  total (s)   self (s)
+    1   0.000026   0.000005     if self.enabled() && !a:loclist.isEmpty()
+    1   0.000013   0.000005         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'cursor: refresh')
+    1   0.000624   0.000019         let b:syntastic_private_messages = copy(a:loclist.messages(bufnr('')))
+    1              0.000002         let b:syntastic_private_line = -1
+    1   0.000008   0.000006         let b:syntastic_cursor_columns = a:loclist.getCursorColumns()
+    1              0.000004         autocmd! syntastic CursorMoved
+    1              0.000006         autocmd syntastic CursorMoved * call SyntasticRefreshCursor()
+    1              0.000001     endif
+
+FUNCTION  297()
+Called 1 time
+Total time:   0.000023
+ Self time:   0.000016
+
+count  total (s)   self (s)
+    1   0.000012   0.000005     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'cursor: reset')
+    1              0.000006     autocmd! syntastic CursorMoved
+    1              0.000003     unlet! b:syntastic_private_messages
+    1              0.000002     let b:syntastic_private_line = -1
+
+FUNCTION  299()
+Called 2 times
+Total time:   0.000087
+ Self time:   0.000017
+
+count  total (s)   self (s)
+    2   0.000087   0.000017     return s:has_highlighting && syntastic#util#var('enable_highlighting')
+
+FUNCTION  syntastic#util#argsescape()
+Called 15 times
+Total time:   0.000157
+ Self time:   0.000157
+
+count  total (s)   self (s)
+   15              0.000051     if type(a:opt) == type('') && a:opt !=# ''
+    2              0.000003         return [a:opt]
+                                elseif type(a:opt) == type([])
+                                    return map(copy(a:opt), 'syntastic#util#shescape(v:val)')
+                                endif
+                            
+   13              0.000012     return []
+
+FUNCTION  SyntasticStatuslineFlag()
+Called 20 times
+Total time:   0.008151
+ Self time:   0.000304
+
+count  total (s)   self (s)
+   20   0.008135   0.000288     return g:SyntasticLoclist.current().getStatuslineFlag()
+
+FUNCTION  airline#extensions#syntastic#get_warning()
+Called 10 times
+Total time:   0.005521
+ Self time:   0.000100
+
+count  total (s)   self (s)
+   10   0.005512   0.000091   return airline#extensions#syntastic#get('warning')
+
+FUNCTION  airline#util#prepend()
+Called 12 times
+Total time:   0.000137
+ Self time:   0.000137
+
+count  total (s)   self (s)
+   12              0.000046   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+   12              0.000049   return empty(a:text) ? '' : a:text.s:spc.g:airline_right_alt_sep.s:spc
+
+FUNCTION  cargo#nearestRootCargo()
+Called 1 time
+Total time:   0.001972
+ Self time:   0.000021
+
+count  total (s)   self (s)
+                                " Try to find a workspace Cargo.toml, and if not found, take the nearest
+                                " regular Cargo.toml
+    1   0.001800   0.000009     let l:workspace_cargo = cargo#nearestWorkspaceCargo(a:is_getcwd)
+    1              0.000001     if l:workspace_cargo !=# ''
+                                    return l:workspace_cargo
+                                endif
+    1   0.000166   0.000006     return s:nearest_cargo(a:is_getcwd)
+
+FUNCTION  <SNR>64_ClearCache()
+Called 1 time
+Total time:   0.000493
+ Self time:   0.000017
+
+count  total (s)   self (s)
+    1   0.000032   0.000006     let loclist = g:SyntasticLoclist.current(a:buf)
+    1   0.000313   0.000006     call s:notifiers.reset(loclist)
+    1   0.000148   0.000005     call loclist.destroy()
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+    1  12.764082   0.000050  <SNR>64_BufWritePostHook()
+    1  12.763881   0.000173  <SNR>64_UpdateErrors()
+    1  12.756779   0.000381  <SNR>64_CacheErrors()
+    1  12.755111   0.000098  282()
+    1  12.754888   0.000143  281()
+    1  12.754630   0.000215  SyntaxCheckers_rust_cargo_GetLocList()
+    1  12.751733   0.001740  SyntasticMake()
+    1  12.749929   0.000543  syntastic#util#system()
+   20   0.009767   0.001616  airline#extensions#syntastic#get()
+   20   0.008151   0.000304  SyntasticStatuslineFlag()
+   20   0.007149   0.006601  314()
+    1   0.006603   0.000407  342()
+   10   0.005521   0.000100  airline#extensions#syntastic#get_warning()
+    1   0.004488   0.000038  361()
+   10   0.004434   0.000088  airline#extensions#syntastic#get_error()
+   10   0.003554   0.001655  airline#extensions#whitespace#check()
+    1   0.002983   0.002949  364()
+   70   0.002600             airline#util#append()
+    1   0.001972   0.000021  cargo#nearestRootCargo()
+   20   0.001910             airline#util#shorten()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+   20   0.007149   0.006601  314()
+    1   0.002983   0.002949  364()
+   70              0.002600  airline#util#append()
+   20              0.001910  airline#util#shorten()
+    1  12.751733   0.001740  SyntasticMake()
+   13              0.001691  airline#check_mode()
+   10   0.003554   0.001655  airline#extensions#whitespace#check()
+   20   0.009767   0.001616  airline#extensions#syntastic#get()
+    1   0.001439   0.001312  363()
+    1   0.001791   0.001296  cargo#nearestWorkspaceCargo()
+    4              0.000851  <SNR>108_nearest_cargo()
+   12              0.000641  airline#util#ignore_buf()
+   22   0.000757   0.000577  305()
+   77              0.000566  airline#util#wrap()
+    1  12.749929   0.000543  syntastic#util#system()
+   10              0.000475  airline#parts#spell()
+    1   0.006603   0.000407  342()
+   13              0.000397  airline#parts#ffenc()
+    1  12.756779   0.000381  <SNR>64_CacheErrors()
+    1   0.000605   0.000378  327()
+

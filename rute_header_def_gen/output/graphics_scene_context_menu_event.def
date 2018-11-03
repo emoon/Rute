@@ -1,17 +1,12 @@
-///     \class QGraphicsSceneContextMenuEvent
-///     \brief The QGraphicsSceneContextMenuEvent class provides context
-///            menu events in the graphics view framework.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     A QContextMenuEvent received by a QGraphicsView is translated
-///     into a QGraphicsSceneContextMenuEvent. The
-///     QContextMenuEvent::globalPos() is translated into item, scene, and
-///     screen coordinates (pos(), scenePos(), and screenPos()).
+/// A QContextMenuEvent received by a QGraphicsView is translated
+/// into a QGraphicsSceneContextMenuEvent. The
+/// QContextMenuEvent::globalPos() is translated into item, scene, and
+/// screen coordinates (pos(), scenePos(), and screenPos()).
 /// 
-///     \sa QGraphicsSceneMouseEvent, QGraphicsSceneWheelEvent,
-///     QContextMenuEvent
+/// **See also:** QGraphicsSceneMouseEvent
+/// QGraphicsSceneWheelEvent
+/// QContextMenuEvent
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -23,54 +18,39 @@ enum Reason {
 }
 
 struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
-    ///     Returns the position of the mouse cursor in item coordinates at the moment
-    ///     the context menu was requested.
     /// 
-    ///     \sa scenePos(), screenPos()
+    /// Returns the position of the mouse cursor in item coordinates at the moment
+    /// the context menu was requested.
+    /// 
+    /// **See also:** scenePos()
+    /// screenPos()
     pos() -> PointF,
-    ///     \fn void QGraphicsSceneContextMenuEvent::setPos(const QPointF &point)
-    ///     \internal
-    /// 
-    ///     Sets the position associated with the context menu to the given \a point
-    ///     in item coordinates.
     set_pos(pos: &PointFType),
-    ///     Returns the position of the mouse cursor in scene coordinates at the moment the
-    ///     context menu was requested.
     /// 
-    ///     \sa pos(), screenPos()
+    /// Returns the position of the mouse cursor in scene coordinates at the moment the
+    /// context menu was requested.
+    /// 
+    /// **See also:** pos()
+    /// screenPos()
     scene_pos() -> PointF,
-    ///     \fn void QGraphicsSceneContextMenuEvent::setScenePos(const QPointF &point)
-    ///     \internal
-    /// 
-    ///     Sets the position associated with the context menu to the given \a point
-    ///     in scene coordinates.
     set_scene_pos(pos: &PointFType),
-    ///     Returns the position of the mouse cursor in screen coordinates at the moment the
-    ///     context menu was requested.
     /// 
-    ///     \sa pos(), scenePos()
+    /// Returns the position of the mouse cursor in screen coordinates at the moment the
+    /// context menu was requested.
+    /// 
+    /// **See also:** pos()
+    /// scenePos()
     screen_pos() -> Point,
-    ///     \fn void QGraphicsSceneContextMenuEvent::setScreenPos(const QPoint &point)
-    ///     \internal
-    /// 
-    ///     Sets the position associated with the context menu to the given \a point
-    ///     in screen coordinates.
     set_screen_pos(pos: &PointType),
-    ///     Returns the keyboard modifiers in use when the context menu was requested.
+    /// 
+    /// Returns the keyboard modifiers in use when the context menu was requested.
     modifiers() -> Rute::KeyboardModifiers,
-    ///     \internal
-    /// 
-    ///     Sets the keyboard modifiers associated with the context menu to the \a
-    ///     modifiers specified.
     set_modifiers(modifiers: Rute::KeyboardModifiers),
-    ///     Returns the reason for the context menu event.
     /// 
-    ///     \sa QGraphicsSceneContextMenuEvent::Reason
+    /// Returns the reason for the context menu event.
+    /// 
+    /// **See also:** QGraphicsSceneContextMenuEvent::Reason
     reason() -> GraphicsSceneContextMenuEvent::Reason,
-    ///     \internal
-    ///     Sets the reason for the context menu event to \a reason.
-    /// 
-    ///     \sa reason()
     set_reason(reason: GraphicsSceneContextMenuEvent::Reason),
 }
 

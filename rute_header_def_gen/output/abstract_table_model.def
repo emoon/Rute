@@ -1,76 +1,65 @@
-///     \class QAbstractTableModel
-///     \inmodule QtCore
-///     \brief The QAbstractTableModel class provides an abstract model that can be
-///     subclassed to create table models.
 /// 
-///     \ingroup model-view
+/// QAbstractTableModel provides a standard interface for models that represent
+/// their data as a two-dimensional array of items. It is not used directly,
+/// but must be subclassed.
 /// 
-///     QAbstractTableModel provides a standard interface for models that represent
-///     their data as a two-dimensional array of items. It is not used directly,
-///     but must be subclassed.
+/// Since the model provides a more specialized interface than
+/// QAbstractItemModel, it is not suitable for use with tree views, although it
+/// can be used to provide data to a QListView. If you need to represent a
+/// simple list of items, and only need a model to contain a single column of
+/// data, subclassing the QAbstractListModel may be more appropriate.
 /// 
-///     Since the model provides a more specialized interface than
-///     QAbstractItemModel, it is not suitable for use with tree views, although it
-///     can be used to provide data to a QListView. If you need to represent a
-///     simple list of items, and only need a model to contain a single column of
-///     data, subclassing the QAbstractListModel may be more appropriate.
+/// The rowCount() and columnCount() functions return the dimensions of the
+/// table. To retrieve a model index corresponding to an item in the model, use
+/// index() and provide only the row and column numbers.
 /// 
-///     The rowCount() and columnCount() functions return the dimensions of the
-///     table. To retrieve a model index corresponding to an item in the model, use
-///     index() and provide only the row and column numbers.
+/// # Subclassing
 /// 
-///     \section1 Subclassing
+/// When subclassing QAbstractTableModel, you must implement rowCount(),
+/// columnCount(), and data(). Default implementations of the index() and
+/// parent() functions are provided by QAbstractTableModel.
+/// Well behaved models will also implement headerData().
 /// 
-///     When subclassing QAbstractTableModel, you must implement rowCount(),
-///     columnCount(), and data(). Default implementations of the index() and
-///     parent() functions are provided by QAbstractTableModel.
-///     Well behaved models will also implement headerData().
+/// Editable models need to implement setData(), and implement flags() to
+/// return a value containing
+/// [Qt::ItemIsEditable](Qt::ItemFlags)
 /// 
-///     Editable models need to implement setData(), and implement flags() to
-///     return a value containing
-///     \l{Qt::ItemFlags}{Qt::ItemIsEditable}.
 /// 
-///     Models that provide interfaces to resizable data structures can
-///     provide implementations of insertRows(), removeRows(), insertColumns(),
-///     and removeColumns(). When implementing these functions, it is
-///     important to call the appropriate functions so that all connected views
-///     are aware of any changes:
+/// Models that provide interfaces to resizable data structures can
+/// provide implementations of insertRows(), removeRows(), insertColumns(),
+/// and removeColumns(). When implementing these functions, it is
+/// important to call the appropriate functions so that all connected views
+/// are aware of any changes:
 /// 
-///     \list
-///     \li An insertRows() implementation must call beginInsertRows()
-///        \e before inserting new rows into the data structure, and it must
-///        call endInsertRows() \e{immediately afterwards}.
-///     \li An insertColumns() implementation must call beginInsertColumns()
-///        \e before inserting new columns into the data structure, and it must
-///        call endInsertColumns() \e{immediately afterwards}.
-///     \li A removeRows() implementation must call beginRemoveRows()
-///        \e before the rows are removed from the data structure, and it must
-///        call endRemoveRows() \e{immediately afterwards}.
-///     \li A removeColumns() implementation must call beginRemoveColumns()
-///        \e before the columns are removed from the data structure, and it must
-///        call endRemoveColumns() \e{immediately afterwards}.
-///     \endlist
+/// * An insertRows() implementation must call beginInsertRows() *before* inserting new rows into the data structure, and it must call endInsertRows() *immediately afterwards* .
+/// * An insertColumns() implementation must call beginInsertColumns() *before* inserting new columns into the data structure, and it must call endInsertColumns() *immediately afterwards* .
+/// * A removeRows() implementation must call beginRemoveRows() *before* the rows are removed from the data structure, and it must call endRemoveRows() *immediately afterwards* .
+/// * A removeColumns() implementation must call beginRemoveColumns() *before* the columns are removed from the data structure, and it must call endRemoveColumns() *immediately afterwards* .
 /// 
-///     \note Some general guidelines for subclassing models are available in the
-///     \l{Model Subclassing Reference}.
+/// **Note**: Some general guidelines for subclassing models are available in the
+/// [Model Subclassing Reference](Model%20Subclassing%20Reference)
 /// 
-///     \note
 /// 
-///     \sa {Model Classes}, QAbstractItemModel, QAbstractListModel,
-///     {Pixelator Example}
+/// **Note**:
+/// 
+/// **See also:** {Model Classes}
+/// QAbstractItemModel
+/// QAbstractListModel
+/// {Pixelator Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractTableModel : AbstractItemModel {
-    ///     \fn QModelIndex QAbstractTableModel::index(int row, int column, const QModelIndex &parent = QModelIndex()) const
     /// 
-    ///     Returns the index of the data in \a row and \a column with \a parent.
+    /// Returns the index of the data in *row* and *column* with *parent.*
     /// 
-    ///     \sa parent()
+    /// **See also:** parent()
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
-    ///     \reimp
+    /// 
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
+    /// 
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
+    /// 
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
 }
 

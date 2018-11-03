@@ -1,97 +1,119 @@
-///     \since 4.3
-///     \class QColumnView
-///     \brief The QColumnView class provides a model/view implementation of a column view.
-///     \ingroup model-view
-///     \ingroup advanced
-///     \inmodule QtWidgets
 /// 
-///     QColumnView displays a model in a number of QListViews, one for each
-///     hierarchy in the tree.  This is sometimes referred to as a cascading list.
+/// QColumnView displays a model in a number of QListViews, one for each
+/// hierarchy in the tree. This is sometimes referred to as a cascading list.
 /// 
-///     The QColumnView class is one of the \l{Model/View Classes}
-///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// The QColumnView class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     QColumnView implements the interfaces defined by the
-///     QAbstractItemView class to allow it to display data provided by
-///     models derived from the QAbstractItemModel class.
 /// 
-///     \image qcolumnview.png
+/// QColumnView implements the interfaces defined by the
+/// QAbstractItemView class to allow it to display data provided by
+/// models derived from the QAbstractItemModel class.
 /// 
-///     \sa {Model/View Programming}
+/// ![qcolumnview.png](qcolumnview.png)
+/// 
+/// **See also:** {Model/View Programming}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ColumnView : AbstractItemView {
+    /// 
+    /// This signal is emitted when the preview widget should be updated to
+    /// provide rich information about *index*
+    /// 
+    /// **See also:** previewWidget()
     [signal] update_preview_widget(index: &ModelIndexType),
-    ///     \reimp
+    /// 
     [event] index_at(point: &PointType) -> ModelIndex,
-    ///     \reimp
+    /// 
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] visual_rect(index: &ModelIndexType) -> Rect,
-    ///     \reimp
+    /// 
     [event] set_model(model: *AbstractItemModelType),
-    ///     \reimp
+    /// 
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///     \reimp
+    /// 
     [event] set_root_index(index: &ModelIndexType),
-    ///     \reimp
+    /// 
     [event] select_all(),
-    ///     \property QColumnView::resizeGripsVisible
-    ///     \brief the way to specify if the list views gets resize grips or not
-    /// 
-    ///     By default, \c visible is set to true
-    /// 
-    ///     \sa setRootIndex()
     set_resize_grips_visible(visible: bool),
+    /// 
+    /// By default, `visible` is set to true
+    /// 
+    /// **See also:** setRootIndex()
     resize_grips_visible() -> bool,
-    ///     Returns the preview widget, or 0 if there is none.
     /// 
-    ///     \sa setPreviewWidget(), updatePreviewWidget()
+    /// Returns the preview widget, or 0 if there is none.
+    /// 
+    /// **See also:** setPreviewWidget()
+    /// updatePreviewWidget()
     preview_widget() -> Widget?,
-    ///     Sets the preview \a widget.
     /// 
-    ///     The \a widget becomes a child of the column view, and will be
-    ///     destroyed when the column area is deleted or when a new widget is
-    ///     set.
+    /// Sets the preview *widget.*
     /// 
-    ///     \sa previewWidget(), updatePreviewWidget()
+    /// The *widget* becomes a child of the column view, and will be
+    /// destroyed when the column area is deleted or when a new widget is
+    /// set.
+    /// 
+    /// **See also:** previewWidget()
+    /// updatePreviewWidget()
     set_preview_widget(widget: *WidgetType),
-    ///     Sets the column widths to the values given in the \a list.  Extra values in the list are
-    ///     kept and used when the columns are created.
     /// 
-    ///     If list contains too few values, only width of the rest of the columns will not be modified.
+    /// Sets the column widths to the values given in the *list.* Extra values in the list are
+    /// kept and used when the columns are created.
     /// 
-    ///     \sa columnWidths(), createColumn()
+    /// If list contains too few values, only width of the rest of the columns will not be modified.
+    /// 
+    /// **See also:** columnWidths()
+    /// createColumn()
     set_column_widths(list: [i32]),
-    ///     Returns a list of the width of all the columns in this view.
     /// 
-    ///     \sa setColumnWidths()
+    /// Returns a list of the width of all the columns in this view.
+    /// 
+    /// **See also:** setColumnWidths()
     column_widths() -> [i32],
-    ///     \reimp
+    /// 
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
-    ///     \reimp
-    ///     Move left should go to the parent index
-    ///     Move right should go to the child index or down if there is no child
+    /// 
+    /// Move left should go to the parent index
+    /// Move right should go to the child index or down if there is no child
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
-    ///     \reimp
+    /// 
     [event] resize_event(event: *ResizeEventType),
-    ///     \reimp
+    /// 
+    /// 
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
-    ///     \reimp
+    /// 
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    ///     \reimp
+    /// 
     [event] horizontal_offset() -> i32,
-    ///     \reimp
+    /// 
     [event] vertical_offset() -> i32,
-    ///     \reimp
+    /// 
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
-    ///     \reimp
+    /// 
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
+    /// 
     [event] scroll_contents_by(dx: i32, dy: i32),
+    /// 
+    /// To use a custom widget for the final column when you select
+    /// an item overload this function and return a widget.
+    /// *index* is the root index that will be assigned to the view.
+    /// 
+    /// Return the new view. QColumnView will automatically take ownership of the widget.
+    /// 
+    /// **See also:** setPreviewWidget()
     [event] create_column(root_index: &ModelIndexType) -> AbstractItemView?,
+    /// 
+    /// Copies the behavior and options of the column view and applies them to
+    /// the *column* such as the iconSize(), textElideMode() and
+    /// alternatingRowColors(). This can be useful when reimplementing
+    /// createColumn().
+    /// 
+    /// **See also:** createColumn()
     initialize_column(column: *AbstractItemViewType),
 }
 

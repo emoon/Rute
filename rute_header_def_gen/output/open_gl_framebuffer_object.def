@@ -1,47 +1,41 @@
-///     \class QOpenGLFramebufferObject
-///     \brief The QOpenGLFramebufferObject class encapsulates an OpenGL framebuffer object.
-///     \since 5.0
-///     \inmodule QtGui
 /// 
-///     \ingroup painting-3D
+/// The QOpenGLFramebufferObject class encapsulates an OpenGL framebuffer
+/// object, defined by the `GL_EXT_framebuffer_object` extension. It provides
+/// a rendering surface that can be painted on with a QPainter with the help of
+/// QOpenGLPaintDevice, or rendered to using native OpenGL calls. This surface
+/// can be bound and used as a regular texture in your own OpenGL drawing code.
+/// By default, the QOpenGLFramebufferObject class generates a 2D OpenGL
+/// texture (using the `GL_TEXTURE_2D` target), which is used as the internal
+/// rendering target.
 /// 
-///     The QOpenGLFramebufferObject class encapsulates an OpenGL framebuffer
-///     object, defined by the \c{GL_EXT_framebuffer_object} extension. It provides
-///     a rendering surface that can be painted on with a QPainter with the help of
-///     QOpenGLPaintDevice, or rendered to using native OpenGL calls. This surface
-///     can be bound and used as a regular texture in your own OpenGL drawing code.
-///     By default, the QOpenGLFramebufferObject class generates a 2D OpenGL
-///     texture (using the \c{GL_TEXTURE_2D} target), which is used as the internal
-///     rendering target.
+/// **It is important to have a current OpenGL context when creating a
+/// QOpenGLFramebufferObject, otherwise initialization will fail.**
 /// 
-///     \b{It is important to have a current OpenGL context when creating a
-///     QOpenGLFramebufferObject, otherwise initialization will fail.}
+/// Create the QOpenGLFrameBufferObject instance with the CombinedDepthStencil
+/// attachment if you want QPainter to render correctly. Note that you need to
+/// create a QOpenGLFramebufferObject with more than one sample per pixel for
+/// primitives to be antialiased when drawing using a QPainter. To create a
+/// multisample framebuffer object you should use one of the constructors that
+/// take a QOpenGLFramebufferObjectFormat parameter, and set the
+/// QOpenGLFramebufferObjectFormat::samples() property to a non-zero value.
 /// 
-///     Create the QOpenGLFrameBufferObject instance with the CombinedDepthStencil
-///     attachment if you want QPainter to render correctly. Note that you need to
-///     create a QOpenGLFramebufferObject with more than one sample per pixel for
-///     primitives to be antialiased when drawing using a QPainter. To create a
-///     multisample framebuffer object you should use one of the constructors that
-///     take a QOpenGLFramebufferObjectFormat parameter, and set the
-///     QOpenGLFramebufferObjectFormat::samples() property to a non-zero value.
+/// For multisample framebuffer objects a color render buffer is created,
+/// otherwise a texture with the specified texture target is created.
+/// The color render buffer or texture will have the specified internal
+/// format, and will be bound to the `GL_COLOR_ATTACHMENT0`
+/// attachment in the framebuffer object.
 /// 
-///     For multisample framebuffer objects a color render buffer is created,
-///     otherwise a texture with the specified texture target is created.
-///     The color render buffer or texture will have the specified internal
-///     format, and will be bound to the \c GL_COLOR_ATTACHMENT0
-///     attachment in the framebuffer object.
+/// Multiple render targets are also supported, in case the OpenGL
+/// implementation supports this. Here there will be multiple textures (or, in
+/// case of multisampling, renderbuffers) present and each of them will get
+/// attached to `GL_COLOR_ATTACHMENT0,` `1,` `2,` ...
 /// 
-///     Multiple render targets are also supported, in case the OpenGL
-///     implementation supports this. Here there will be multiple textures (or, in
-///     case of multisampling, renderbuffers) present and each of them will get
-///     attached to \c GL_COLOR_ATTACHMENT0, \c 1, \c 2, ...
+/// If you want to use a framebuffer object with multisampling enabled
+/// as a texture, you first need to copy from it to a regular framebuffer
+/// object using QOpenGLContext::blitFramebuffer().
 /// 
-///     If you want to use a framebuffer object with multisampling enabled
-///     as a texture, you first need to copy from it to a regular framebuffer
-///     object using QOpenGLContext::blitFramebuffer().
-/// 
-///     It is possible to draw into a QOpenGLFramebufferObject using QPainter and
-///     QOpenGLPaintDevice in a separate thread.
+/// It is possible to draw into a QOpenGLFramebufferObject using QPainter and
+/// QOpenGLPaintDevice in a separate thread.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -61,137 +55,616 @@ enum FramebufferRestorePolicy {
 
 
 struct OpenGLFramebufferObject {
+    /// 
+    /// Creates and attaches an additional texture or renderbuffer of *size* width
+    /// and height.
+    /// 
+    /// There is always an attachment at GL_COLOR_ATTACHMENT0. Call this function
+    /// to set up additional attachments at GL_COLOR_ATTACHMENT1,
+    /// GL_COLOR_ATTACHMENT2, ...
+    /// 
+    /// When *internalFormat* is not `0,` it specifies the internal format of the
+    /// texture or renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is
+    /// used.
+    /// 
+    /// **Note**: This is only functional when multiple render targets are supported by
+    /// the OpenGL implementation. When that is not the case, the function will not
+    /// add any additional color attachments. Call
+    /// QOpenGLFunctions::hasOpenGLFeature() with
+    /// QOpenGLFunctions::MultipleRenderTargets at runtime to check if MRT is
+    /// supported.
+    /// 
+    /// **Note**: The internal format of the color attachments may differ but there may
+    /// be limitations on the supported combinations, depending on the drivers.
+    /// 
+    /// **Note**: The size of the color attachments may differ but rendering is limited
+    /// to the area that fits all the attachments, according to the OpenGL
+    /// specification. Some drivers may not be fully conformant in this respect,
+    /// however.
+    /// 
+    /// **Overloads**
+    /// Creates and attaches an additional texture or renderbuffer of size *width* and *height.*
+    /// 
+    /// When *internalFormat* is not `0,` it specifies the internal format of the texture or
+    /// renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is used.
+    /// 
     add_color_attachment(size: &SizeType, internal_format: i32),
+    /// 
+    /// Creates and attaches an additional texture or renderbuffer of *size* width
+    /// and height.
+    /// 
+    /// There is always an attachment at GL_COLOR_ATTACHMENT0. Call this function
+    /// to set up additional attachments at GL_COLOR_ATTACHMENT1,
+    /// GL_COLOR_ATTACHMENT2, ...
+    /// 
+    /// When *internalFormat* is not `0,` it specifies the internal format of the
+    /// texture or renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is
+    /// used.
+    /// 
+    /// **Note**: This is only functional when multiple render targets are supported by
+    /// the OpenGL implementation. When that is not the case, the function will not
+    /// add any additional color attachments. Call
+    /// QOpenGLFunctions::hasOpenGLFeature() with
+    /// QOpenGLFunctions::MultipleRenderTargets at runtime to check if MRT is
+    /// supported.
+    /// 
+    /// **Note**: The internal format of the color attachments may differ but there may
+    /// be limitations on the supported combinations, depending on the drivers.
+    /// 
+    /// **Note**: The size of the color attachments may differ but rendering is limited
+    /// to the area that fits all the attachments, according to the OpenGL
+    /// specification. Some drivers may not be fully conformant in this respect,
+    /// however.
+    /// 
+    /// **Overloads**
+    /// Creates and attaches an additional texture or renderbuffer of size *width* and *height.*
+    /// 
+    /// When *internalFormat* is not `0,` it specifies the internal format of the texture or
+    /// renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is used.
+    /// 
     add_color_attachment(width: i32, height: i32, internal_format: i32),
-    ///     Returns the format of this framebuffer object.
+    /// 
+    /// Returns the format of this framebuffer object.
     format() -> OpenGLFramebufferObjectFormat,
-    ///     \fn bool QOpenGLFramebufferObject::isValid() const
     /// 
-    ///     Returns \c true if the framebuffer object is valid.
+    /// Returns `true` if the framebuffer object is valid.
     /// 
-    ///     The framebuffer can become invalid if the initialization process
-    ///     fails, the user attaches an invalid buffer to the framebuffer
-    ///     object, or a non-power of two width/height is specified as the
-    ///     texture size if the texture target is \c{GL_TEXTURE_2D}.
-    ///     The non-power of two limitation does not apply if the OpenGL version
-    ///     is 2.0 or higher, or if the GL_ARB_texture_non_power_of_two extension
-    ///     is present.
+    /// The framebuffer can become invalid if the initialization process
+    /// fails, the user attaches an invalid buffer to the framebuffer
+    /// object, or a non-power of two width/height is specified as the
+    /// texture size if the texture target is `GL_TEXTURE_2D` .
+    /// The non-power of two limitation does not apply if the OpenGL version
+    /// is 2.0 or higher, or if the GL_ARB_texture_non_power_of_two extension
+    /// is present.
     /// 
-    ///     The framebuffer can also become invalid if the QOpenGLContext that
-    ///     the framebuffer was created within is destroyed and there are
-    ///     no other shared contexts that can take over ownership of the
-    ///     framebuffer.
+    /// The framebuffer can also become invalid if the QOpenGLContext that
+    /// the framebuffer was created within is destroyed and there are
+    /// no other shared contexts that can take over ownership of the
+    /// framebuffer.
     is_valid() -> bool,
-    ///     Returns \c true if the framebuffer object is currently bound to the current context,
-    ///     otherwise false is returned.
+    /// 
+    /// Returns `true` if the framebuffer object is currently bound to the current context,
+    /// otherwise false is returned.
     is_bound() -> bool,
-    ///     \fn bool QOpenGLFramebufferObject::bind()
     /// 
-    ///     Switches rendering from the default, windowing system provided
-    ///     framebuffer to this framebuffer object.
-    ///     Returns \c true upon success, false otherwise.
+    /// Switches rendering from the default, windowing system provided
+    /// framebuffer to this framebuffer object.
+    /// Returns `true` upon success, false otherwise.
     /// 
-    ///     \note If takeTexture() was called, a new texture is created and associated
-    ///     with the framebuffer object. This is potentially expensive and changes the
-    ///     context state (the currently bound texture).
+    /// **Note**: If takeTexture() was called, a new texture is created and associated
+    /// with the framebuffer object. This is potentially expensive and changes the
+    /// context state (the currently bound texture).
     /// 
-    ///     \sa release()
+    /// **See also:** release()
+    /// 
+    /// Switches rendering back to the default, windowing system provided
+    /// framebuffer.
+    /// Returns `true` upon success, false otherwise.
+    /// 
+    /// **See also:** bind()
+    /// release()
     bind() -> bool,
-    ///     \fn bool QOpenGLFramebufferObject::release()
     /// 
-    ///     Switches rendering back to the default, windowing system provided
-    ///     framebuffer.
-    ///     Returns \c true upon success, false otherwise.
+    /// Switches rendering back to the default, windowing system provided
+    /// framebuffer.
+    /// Returns `true` upon success, false otherwise.
     /// 
-    ///     \sa bind()
+    /// **See also:** bind()
     release() -> bool,
+    /// 
+    /// Returns the width of the framebuffer object attachments.
     width() -> i32,
+    /// 
+    /// Returns the height of the framebuffer object attachments.
     height() -> i32,
-    ///     \fn GLuint QOpenGLFramebufferObject::texture() const
     /// 
-    ///     Returns the texture id for the texture attached as the default
-    ///     rendering target in this framebuffer object. This texture id can
-    ///     be bound as a normal texture in your own OpenGL code.
+    /// Returns the texture id for the texture attached as the default
+    /// rendering target in this framebuffer object. This texture id can
+    /// be bound as a normal texture in your own OpenGL code.
     /// 
-    ///     If a multisample framebuffer object is used then the value returned
-    ///     from this function will be invalid.
+    /// If a multisample framebuffer object is used then the value returned
+    /// from this function will be invalid.
     /// 
-    ///     When multiple textures are attached, the return value is the ID of
-    ///     the first one.
+    /// When multiple textures are attached, the return value is the ID of
+    /// the first one.
     /// 
-    ///     \sa takeTexture(), textures()
+    /// **See also:** takeTexture()
+    /// textures()
+    /// 
+    /// Returns the texture id for all attached textures.
+    /// 
+    /// If a multisample framebuffer object is used, then an empty vector is returned.
+    /// 
+    /// **See also:** takeTexture()
+    /// texture()
     texture() -> i32,
-    ///     Returns the texture id for all attached textures.
     /// 
-    ///     If a multisample framebuffer object is used, then an empty vector is returned.
+    /// Returns the texture id for all attached textures.
     /// 
-    ///     \since 5.6
+    /// If a multisample framebuffer object is used, then an empty vector is returned.
     /// 
-    ///     \sa takeTexture(), texture()
+    /// **See also:** takeTexture()
+    /// texture()
     textures() -> i32,
+    /// 
+    /// Returns the texture id for the texture attached to this framebuffer
+    /// object. The ownership of the texture is transferred to the caller.
+    /// 
+    /// If the framebuffer object is currently bound, an implicit release()
+    /// will be done. During the next call to bind() a new texture will be
+    /// created.
+    /// 
+    /// If a multisample framebuffer object is used, then there is no
+    /// texture and the return value from this function will be invalid.
+    /// Similarly, incomplete framebuffer objects will also return 0.
+    /// 
+    /// **See also:** texture()
+    /// bind()
+    /// release()
+    /// **Overloads**
+    /// Returns the texture id for the texture attached to the color attachment of
+    /// index *colorAttachmentIndex* of this framebuffer object. The ownership of
+    /// the texture is transferred to the caller.
+    /// 
+    /// When *colorAttachmentIndex* is `0,` the behavior is identical to the
+    /// parameter-less variant of this function.
+    /// 
+    /// If the framebuffer object is currently bound, an implicit release()
+    /// will be done. During the next call to bind() a new texture will be
+    /// created.
+    /// 
+    /// If a multisample framebuffer object is used, then there is no
+    /// texture and the return value from this function will be invalid.
+    /// Similarly, incomplete framebuffer objects will also return 0.
+    /// 
     take_texture() -> i32,
+    /// 
+    /// Returns the texture id for the texture attached to this framebuffer
+    /// object. The ownership of the texture is transferred to the caller.
+    /// 
+    /// If the framebuffer object is currently bound, an implicit release()
+    /// will be done. During the next call to bind() a new texture will be
+    /// created.
+    /// 
+    /// If a multisample framebuffer object is used, then there is no
+    /// texture and the return value from this function will be invalid.
+    /// Similarly, incomplete framebuffer objects will also return 0.
+    /// 
+    /// **See also:** texture()
+    /// bind()
+    /// release()
+    /// **Overloads**
+    /// Returns the texture id for the texture attached to the color attachment of
+    /// index *colorAttachmentIndex* of this framebuffer object. The ownership of
+    /// the texture is transferred to the caller.
+    /// 
+    /// When *colorAttachmentIndex* is `0,` the behavior is identical to the
+    /// parameter-less variant of this function.
+    /// 
+    /// If the framebuffer object is currently bound, an implicit release()
+    /// will be done. During the next call to bind() a new texture will be
+    /// created.
+    /// 
+    /// If a multisample framebuffer object is used, then there is no
+    /// texture and the return value from this function will be invalid.
+    /// Similarly, incomplete framebuffer objects will also return 0.
+    /// 
     take_texture(color_attachment_index: i32) -> i32,
-    ///     \return the size of the color and depth/stencil attachments attached to
-    ///     this framebuffer object.
+    /// 
+    /// **Returns** the size of the color and depth/stencil attachments attached to
+    /// this framebuffer object.
+    /// 
+    /// **Returns** the sizes of all color attachments attached to this framebuffer
+    /// object.
+    /// 
     size() -> Size,
-    ///     \return the sizes of all color attachments attached to this framebuffer
-    ///     object.
     /// 
-    ///     \since 5.6
+    /// **Returns** the sizes of all color attachments attached to this framebuffer
+    /// object.
+    /// 
     sizes() -> [Size],
-    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
-    ///     \overload
     /// 
-    ///     Returns the contents of this framebuffer object as a QImage. This method flips
-    ///     the image from OpenGL coordinates to raster coordinates.
+    /// Returns the contents of this framebuffer object as a QImage.
+    /// 
+    /// If *flipped* is true the image is flipped from OpenGL coordinates to raster coordinates.
+    /// If used together with QOpenGLPaintDevice, *flipped* should be the opposite of the value
+    /// of QOpenGLPaintDevice::paintFlipped().
+    /// 
+    /// The returned image has a format of premultiplied ARGB32 or RGB32. The latter
+    /// is used only when internalTextureFormat() is set to `GL_RGB.` Since Qt 5.2
+    /// the function will fall back to premultiplied RGBA8888 or RGBx8888 when
+    /// reading to (A)RGB32 is not supported, and this includes OpenGL ES. Since Qt
+    /// 5.4 an A2BGR30 image is returned if the internal format is RGB10_A2.
+    /// 
+    /// If the rendering in the framebuffer was not done with premultiplied alpha in mind,
+    /// create a wrapper QImage with a non-premultiplied format. This is necessary before
+    /// performing operations like QImage::save() because otherwise the image data would get
+    /// unpremultiplied, even though it was not premultiplied in the first place. To create
+    /// such a wrapper without performing a copy of the pixel data, do the following:
+    /// 
+    /// ```
+    /// QImage fboImage(fbo.toImage());
+    /// QImage image(fboImage.constBits(), fboImage.width(), fboImage.height(), QImage::Format_ARGB32);
+    /// ```
+    /// 
+    /// For multisampled framebuffer objects the samples are resolved using the
+    /// `GL_EXT_framebuffer_blit` extension. If the extension is not available, the contents
+    /// of the returned image is undefined.
+    /// 
+    /// For singlesampled framebuffers the contents is retrieved via `glReadPixels.` This is
+    /// a potentially expensive and inefficient operation. Therefore it is recommended that
+    /// this function is used as seldom as possible.
+    /// 
+    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// 
+    /// **Overloads**
+    /// Returns the contents of this framebuffer object as a QImage. This method flips
+    /// the image from OpenGL coordinates to raster coordinates.
+    /// **Overloads**
+    /// Returns the contents of the color attachment of index *colorAttachmentIndex* of this framebuffer object as a QImage. This method
+    /// flips the image from OpenGL coordinates to raster coordinates when *flipped* is set to `true.`
+    /// 
+    /// **Note**: This overload is only fully functional when multiple render targets are
+    /// supported by the OpenGL implementation. When that is not the case, only one
+    /// color attachment will be set up.
+    /// 
     to_image() -> Image,
-    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
-    ///     \overload
     /// 
-    ///     Returns the contents of this framebuffer object as a QImage. This method flips
-    ///     the image from OpenGL coordinates to raster coordinates.
+    /// Returns the contents of this framebuffer object as a QImage.
+    /// 
+    /// If *flipped* is true the image is flipped from OpenGL coordinates to raster coordinates.
+    /// If used together with QOpenGLPaintDevice, *flipped* should be the opposite of the value
+    /// of QOpenGLPaintDevice::paintFlipped().
+    /// 
+    /// The returned image has a format of premultiplied ARGB32 or RGB32. The latter
+    /// is used only when internalTextureFormat() is set to `GL_RGB.` Since Qt 5.2
+    /// the function will fall back to premultiplied RGBA8888 or RGBx8888 when
+    /// reading to (A)RGB32 is not supported, and this includes OpenGL ES. Since Qt
+    /// 5.4 an A2BGR30 image is returned if the internal format is RGB10_A2.
+    /// 
+    /// If the rendering in the framebuffer was not done with premultiplied alpha in mind,
+    /// create a wrapper QImage with a non-premultiplied format. This is necessary before
+    /// performing operations like QImage::save() because otherwise the image data would get
+    /// unpremultiplied, even though it was not premultiplied in the first place. To create
+    /// such a wrapper without performing a copy of the pixel data, do the following:
+    /// 
+    /// ```
+    /// QImage fboImage(fbo.toImage());
+    /// QImage image(fboImage.constBits(), fboImage.width(), fboImage.height(), QImage::Format_ARGB32);
+    /// ```
+    /// 
+    /// For multisampled framebuffer objects the samples are resolved using the
+    /// `GL_EXT_framebuffer_blit` extension. If the extension is not available, the contents
+    /// of the returned image is undefined.
+    /// 
+    /// For singlesampled framebuffers the contents is retrieved via `glReadPixels.` This is
+    /// a potentially expensive and inefficient operation. Therefore it is recommended that
+    /// this function is used as seldom as possible.
+    /// 
+    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// 
+    /// **Overloads**
+    /// Returns the contents of this framebuffer object as a QImage. This method flips
+    /// the image from OpenGL coordinates to raster coordinates.
+    /// **Overloads**
+    /// Returns the contents of the color attachment of index *colorAttachmentIndex* of this framebuffer object as a QImage. This method
+    /// flips the image from OpenGL coordinates to raster coordinates when *flipped* is set to `true.`
+    /// 
+    /// **Note**: This overload is only fully functional when multiple render targets are
+    /// supported by the OpenGL implementation. When that is not the case, only one
+    /// color attachment will be set up.
+    /// 
     to_image(flipped: bool) -> Image,
-    ///     \fn QImage QOpenGLFramebufferObject::toImage() const
-    ///     \overload
     /// 
-    ///     Returns the contents of this framebuffer object as a QImage. This method flips
-    ///     the image from OpenGL coordinates to raster coordinates.
+    /// Returns the contents of this framebuffer object as a QImage.
+    /// 
+    /// If *flipped* is true the image is flipped from OpenGL coordinates to raster coordinates.
+    /// If used together with QOpenGLPaintDevice, *flipped* should be the opposite of the value
+    /// of QOpenGLPaintDevice::paintFlipped().
+    /// 
+    /// The returned image has a format of premultiplied ARGB32 or RGB32. The latter
+    /// is used only when internalTextureFormat() is set to `GL_RGB.` Since Qt 5.2
+    /// the function will fall back to premultiplied RGBA8888 or RGBx8888 when
+    /// reading to (A)RGB32 is not supported, and this includes OpenGL ES. Since Qt
+    /// 5.4 an A2BGR30 image is returned if the internal format is RGB10_A2.
+    /// 
+    /// If the rendering in the framebuffer was not done with premultiplied alpha in mind,
+    /// create a wrapper QImage with a non-premultiplied format. This is necessary before
+    /// performing operations like QImage::save() because otherwise the image data would get
+    /// unpremultiplied, even though it was not premultiplied in the first place. To create
+    /// such a wrapper without performing a copy of the pixel data, do the following:
+    /// 
+    /// ```
+    /// QImage fboImage(fbo.toImage());
+    /// QImage image(fboImage.constBits(), fboImage.width(), fboImage.height(), QImage::Format_ARGB32);
+    /// ```
+    /// 
+    /// For multisampled framebuffer objects the samples are resolved using the
+    /// `GL_EXT_framebuffer_blit` extension. If the extension is not available, the contents
+    /// of the returned image is undefined.
+    /// 
+    /// For singlesampled framebuffers the contents is retrieved via `glReadPixels.` This is
+    /// a potentially expensive and inefficient operation. Therefore it is recommended that
+    /// this function is used as seldom as possible.
+    /// 
+    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// 
+    /// **Overloads**
+    /// Returns the contents of this framebuffer object as a QImage. This method flips
+    /// the image from OpenGL coordinates to raster coordinates.
+    /// **Overloads**
+    /// Returns the contents of the color attachment of index *colorAttachmentIndex* of this framebuffer object as a QImage. This method
+    /// flips the image from OpenGL coordinates to raster coordinates when *flipped* is set to `true.`
+    /// 
+    /// **Note**: This overload is only fully functional when multiple render targets are
+    /// supported by the OpenGL implementation. When that is not the case, only one
+    /// color attachment will be set up.
+    /// 
     to_image(flipped: bool, color_attachment_index: i32) -> Image,
-    ///     Returns the status of the depth and stencil buffers attached to
-    ///     this framebuffer object.
+    /// 
+    /// Returns the status of the depth and stencil buffers attached to
+    /// this framebuffer object.
     attachment() -> OpenGLFramebufferObject::Attachment,
+    /// 
+    /// Sets the attachments of the framebuffer object to *attachment.*
+    /// 
+    /// This can be used to free or reattach the depth and stencil buffer
+    /// attachments as needed.
+    /// 
+    /// **Note**: This function alters the current framebuffer binding.
     set_attachment(attachment: OpenGLFramebufferObject::Attachment),
-    ///     \fn GLuint QOpenGLFramebufferObject::handle() const
     /// 
-    ///     Returns the OpenGL framebuffer object handle for this framebuffer
-    ///     object (returned by the \c{glGenFrameBuffersEXT()} function). This
-    ///     handle can be used to attach new images or buffers to the
-    ///     framebuffer. The user is responsible for cleaning up and
-    ///     destroying these objects.
+    /// Returns the OpenGL framebuffer object handle for this framebuffer
+    /// object (returned by the `glGenFrameBuffersEXT()` function). This
+    /// handle can be used to attach new images or buffers to the
+    /// framebuffer. The user is responsible for cleaning up and
+    /// destroying these objects.
     handle() -> i32,
-    ///     \fn bool QOpenGLFramebufferObject::bindDefault()
     /// 
-    ///     Switches rendering back to the default, windowing system provided
-    ///     framebuffer.
-    ///     Returns \c true upon success, false otherwise.
+    /// Switches rendering back to the default, windowing system provided
+    /// framebuffer.
+    /// Returns `true` upon success, false otherwise.
     /// 
-    ///     \sa bind(), release()
+    /// **See also:** bind()
+    /// release()
     [static] bind_default() -> bool,
-    ///     \fn bool QOpenGLFramebufferObject::hasOpenGLFramebufferObjects()
     /// 
-    ///     Returns \c true if the OpenGL \c{GL_EXT_framebuffer_object} extension
-    ///     is present on this system; otherwise returns \c false.
+    /// Returns `true` if the OpenGL `GL_EXT_framebuffer_object` extension
+    /// is present on this system; otherwise returns `false.`
     [static] has_open_gl_framebuffer_objects() -> bool,
-    ///     \fn bool QOpenGLFramebufferObject::hasOpenGLFramebufferBlit()
     /// 
-    ///     Returns \c true if the OpenGL \c{GL_EXT_framebuffer_blit} extension
-    ///     is present on this system; otherwise returns \c false.
+    /// Returns `true` if the OpenGL `GL_EXT_framebuffer_blit` extension
+    /// is present on this system; otherwise returns `false.`
     /// 
-    ///     \sa blitFramebuffer()
+    /// **See also:** blitFramebuffer()
     [static] has_open_gl_framebuffer_blit() -> bool,
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects.
+    /// **Overloads**  *
+    /// Convenience overload to blit between two framebuffer objects.
+    /// 
+    /// Blits from the *sourceRect* rectangle in the *source* framebuffer
+    /// object to the *targetRect* rectangle in the *target* framebuffer object.
+    /// 
+    /// If *source* or *target* is 0, the default framebuffer will be used
+    /// instead of a framebuffer object as source or target respectively.
+    /// 
+    /// This function will have no effect unless hasOpenGLFramebufferBlit() returns
+    /// true.
+    /// 
+    /// The *buffers* parameter should be a mask consisting of any combination of
+    /// `GL_COLOR_BUFFER_BIT,` `GL_DEPTH_BUFFER_BIT,` and
+    /// `GL_STENCIL_BUFFER_BIT.` Any buffer type that is not present both
+    /// in the source and target buffers is ignored.
+    /// 
+    /// The *sourceRect* and *targetRect* rectangles may have different sizes;
+    /// in this case *buffers* should not contain `GL_DEPTH_BUFFER_BIT` or
+    /// `GL_STENCIL_BUFFER_BIT.` The *filter* parameter should be set to
+    /// `GL_LINEAR` or `GL_NEAREST,` and specifies whether linear or nearest
+    /// interpolation should be used when scaling is performed.
+    /// 
+    /// If *source* equals *target* a copy is performed within the same buffer.
+    /// Results are undefined if the source and target rectangles overlap and
+    /// have different sizes. The sizes must also be the same if any of the
+    /// framebuffer objects are multisample framebuffers.
+    /// 
+    /// **Note**: The scissor test will restrict the blit area if enabled.
+    /// 
+    /// When multiple render targets are in use, *readColorAttachmentIndex* and *drawColorAttachmentIndex* specify the index of the color attachments in the
+    /// source and destination framebuffers.
+    /// 
+    /// The *restorePolicy* determines if the framebuffer that was bound prior to
+    /// calling this function should be restored, or if the default framebuffer
+    /// should be bound before returning, of if the caller is responsible for
+    /// tracking and setting the bound framebuffer. Restoring the previous
+    /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
+    /// which on some OpenGL drivers may imply a pipeline stall.
+    /// 
+    /// **See also:** hasOpenGLFramebufferBlit()
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects and
+    /// to restore the previous framebuffer binding. Equivalent to calling
+    /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
+    /// readColorAttachmentIndex, drawColorAttachmentIndex,
+    /// RestoreFrameBufferBinding).
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32, restore_policy: OpenGLFramebufferObject::FramebufferRestorePolicy),
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects.
+    /// **Overloads**  *
+    /// Convenience overload to blit between two framebuffer objects.
+    /// 
+    /// Blits from the *sourceRect* rectangle in the *source* framebuffer
+    /// object to the *targetRect* rectangle in the *target* framebuffer object.
+    /// 
+    /// If *source* or *target* is 0, the default framebuffer will be used
+    /// instead of a framebuffer object as source or target respectively.
+    /// 
+    /// This function will have no effect unless hasOpenGLFramebufferBlit() returns
+    /// true.
+    /// 
+    /// The *buffers* parameter should be a mask consisting of any combination of
+    /// `GL_COLOR_BUFFER_BIT,` `GL_DEPTH_BUFFER_BIT,` and
+    /// `GL_STENCIL_BUFFER_BIT.` Any buffer type that is not present both
+    /// in the source and target buffers is ignored.
+    /// 
+    /// The *sourceRect* and *targetRect* rectangles may have different sizes;
+    /// in this case *buffers* should not contain `GL_DEPTH_BUFFER_BIT` or
+    /// `GL_STENCIL_BUFFER_BIT.` The *filter* parameter should be set to
+    /// `GL_LINEAR` or `GL_NEAREST,` and specifies whether linear or nearest
+    /// interpolation should be used when scaling is performed.
+    /// 
+    /// If *source* equals *target* a copy is performed within the same buffer.
+    /// Results are undefined if the source and target rectangles overlap and
+    /// have different sizes. The sizes must also be the same if any of the
+    /// framebuffer objects are multisample framebuffers.
+    /// 
+    /// **Note**: The scissor test will restrict the blit area if enabled.
+    /// 
+    /// When multiple render targets are in use, *readColorAttachmentIndex* and *drawColorAttachmentIndex* specify the index of the color attachments in the
+    /// source and destination framebuffers.
+    /// 
+    /// The *restorePolicy* determines if the framebuffer that was bound prior to
+    /// calling this function should be restored, or if the default framebuffer
+    /// should be bound before returning, of if the caller is responsible for
+    /// tracking and setting the bound framebuffer. Restoring the previous
+    /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
+    /// which on some OpenGL drivers may imply a pipeline stall.
+    /// 
+    /// **See also:** hasOpenGLFramebufferBlit()
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects and
+    /// to restore the previous framebuffer binding. Equivalent to calling
+    /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
+    /// readColorAttachmentIndex, drawColorAttachmentIndex,
+    /// RestoreFrameBufferBinding).
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32),
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects.
+    /// **Overloads**  *
+    /// Convenience overload to blit between two framebuffer objects.
+    /// 
+    /// Blits from the *sourceRect* rectangle in the *source* framebuffer
+    /// object to the *targetRect* rectangle in the *target* framebuffer object.
+    /// 
+    /// If *source* or *target* is 0, the default framebuffer will be used
+    /// instead of a framebuffer object as source or target respectively.
+    /// 
+    /// This function will have no effect unless hasOpenGLFramebufferBlit() returns
+    /// true.
+    /// 
+    /// The *buffers* parameter should be a mask consisting of any combination of
+    /// `GL_COLOR_BUFFER_BIT,` `GL_DEPTH_BUFFER_BIT,` and
+    /// `GL_STENCIL_BUFFER_BIT.` Any buffer type that is not present both
+    /// in the source and target buffers is ignored.
+    /// 
+    /// The *sourceRect* and *targetRect* rectangles may have different sizes;
+    /// in this case *buffers* should not contain `GL_DEPTH_BUFFER_BIT` or
+    /// `GL_STENCIL_BUFFER_BIT.` The *filter* parameter should be set to
+    /// `GL_LINEAR` or `GL_NEAREST,` and specifies whether linear or nearest
+    /// interpolation should be used when scaling is performed.
+    /// 
+    /// If *source* equals *target* a copy is performed within the same buffer.
+    /// Results are undefined if the source and target rectangles overlap and
+    /// have different sizes. The sizes must also be the same if any of the
+    /// framebuffer objects are multisample framebuffers.
+    /// 
+    /// **Note**: The scissor test will restrict the blit area if enabled.
+    /// 
+    /// When multiple render targets are in use, *readColorAttachmentIndex* and *drawColorAttachmentIndex* specify the index of the color attachments in the
+    /// source and destination framebuffers.
+    /// 
+    /// The *restorePolicy* determines if the framebuffer that was bound prior to
+    /// calling this function should be restored, or if the default framebuffer
+    /// should be bound before returning, of if the caller is responsible for
+    /// tracking and setting the bound framebuffer. Restoring the previous
+    /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
+    /// which on some OpenGL drivers may imply a pipeline stall.
+    /// 
+    /// **See also:** hasOpenGLFramebufferBlit()
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects and
+    /// to restore the previous framebuffer binding. Equivalent to calling
+    /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
+    /// readColorAttachmentIndex, drawColorAttachmentIndex,
+    /// RestoreFrameBufferBinding).
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32),
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects.
+    /// **Overloads**  *
+    /// Convenience overload to blit between two framebuffer objects.
+    /// 
+    /// Blits from the *sourceRect* rectangle in the *source* framebuffer
+    /// object to the *targetRect* rectangle in the *target* framebuffer object.
+    /// 
+    /// If *source* or *target* is 0, the default framebuffer will be used
+    /// instead of a framebuffer object as source or target respectively.
+    /// 
+    /// This function will have no effect unless hasOpenGLFramebufferBlit() returns
+    /// true.
+    /// 
+    /// The *buffers* parameter should be a mask consisting of any combination of
+    /// `GL_COLOR_BUFFER_BIT,` `GL_DEPTH_BUFFER_BIT,` and
+    /// `GL_STENCIL_BUFFER_BIT.` Any buffer type that is not present both
+    /// in the source and target buffers is ignored.
+    /// 
+    /// The *sourceRect* and *targetRect* rectangles may have different sizes;
+    /// in this case *buffers* should not contain `GL_DEPTH_BUFFER_BIT` or
+    /// `GL_STENCIL_BUFFER_BIT.` The *filter* parameter should be set to
+    /// `GL_LINEAR` or `GL_NEAREST,` and specifies whether linear or nearest
+    /// interpolation should be used when scaling is performed.
+    /// 
+    /// If *source* equals *target* a copy is performed within the same buffer.
+    /// Results are undefined if the source and target rectangles overlap and
+    /// have different sizes. The sizes must also be the same if any of the
+    /// framebuffer objects are multisample framebuffers.
+    /// 
+    /// **Note**: The scissor test will restrict the blit area if enabled.
+    /// 
+    /// When multiple render targets are in use, *readColorAttachmentIndex* and *drawColorAttachmentIndex* specify the index of the color attachments in the
+    /// source and destination framebuffers.
+    /// 
+    /// The *restorePolicy* determines if the framebuffer that was bound prior to
+    /// calling this function should be restored, or if the default framebuffer
+    /// should be bound before returning, of if the caller is responsible for
+    /// tracking and setting the bound framebuffer. Restoring the previous
+    /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
+    /// which on some OpenGL drivers may imply a pipeline stall.
+    /// 
+    /// **See also:** hasOpenGLFramebufferBlit()
+    /// 
+    /// **Overloads**
+    /// Convenience overload to blit between two framebuffer objects and
+    /// to restore the previous framebuffer binding. Equivalent to calling
+    /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
+    /// readColorAttachmentIndex, drawColorAttachmentIndex,
+    /// RestoreFrameBufferBinding).
     [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, source: *OpenGLFramebufferObjectType, buffers: i32, filter: i32),
 }
 

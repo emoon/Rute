@@ -1,141 +1,134 @@
-///     \class QMainWindow
-///     \brief The QMainWindow class provides a main application
-///            window.
-///     \ingroup mainwindow-classes
-///     \inmodule QtWidgets
 /// 
-///     \tableofcontents
+/// # Qt Main Window Framework
 /// 
-///     \section1 Qt Main Window Framework
+/// A main window provides a framework for building an
+/// application's user interface. Qt has QMainWindow and its [related classes](Main%0A%20%20%20%20Window%20and%20Related%20Classes)
+/// for main window
+/// management. QMainWindow has its own layout to which you can add
+/// [QToolBar](QToolBar)
+/// s, [QDockWidget](QDockWidget)
+/// s, a
+/// QMenuBar, and a QStatusBar. The layout has a center area that can
+/// be occupied by any kind of widget. You can see an image of the
+/// layout below.
 /// 
-///     A main window provides a framework for building an
-///     application's user interface. Qt has QMainWindow and its \l{Main
-///     Window and Related Classes}{related classes} for main window
-///     management. QMainWindow has its own layout to which you can add
-///     \l{QToolBar}s, \l{QDockWidget}s, a
-///     QMenuBar, and a QStatusBar. The layout has a center area that can
-///     be occupied by any kind of widget. You can see an image of the
-///     layout below.
+/// ![mainwindowlayout.png](mainwindowlayout.png)
 /// 
-///     \image mainwindowlayout.png
+/// **Note**: Creating a main window without a central widget is not supported.
+/// You must have a central widget even if it is just a placeholder.
 /// 
-///     \note Creating a main window without a central widget is not supported.
-///     You must have a central widget even if it is just a placeholder.
+/// # Creating Main Window Components
 /// 
-///     \section1 Creating Main Window Components
+/// A central widget will typically be a standard Qt widget such
+/// as a QTextEdit or a QGraphicsView. Custom widgets can also be
+/// used for advanced applications. You set the central widget with `setCentralWidget().`
 /// 
-///     A central widget will typically be a standard Qt widget such
-///     as a QTextEdit or a QGraphicsView. Custom widgets can also be
-///     used for advanced applications. You set the central widget with \c
-///     setCentralWidget().
+/// Main windows have either a single (SDI) or multiple (MDI)
+/// document interface. You create MDI applications in Qt by using a
+/// QMdiArea as the central widget.
 /// 
-///     Main windows have either a single (SDI) or multiple (MDI)
-///     document interface. You create MDI applications in Qt by using a
-///     QMdiArea as the central widget.
+/// We will now examine each of the other widgets that can be
+/// added to a main window. We give examples on how to create and add
+/// them.
 /// 
-///     We will now examine each of the other widgets that can be
-///     added to a main window. We give examples on how to create and add
-///     them.
+/// ## Creating Menus
 /// 
-///     \section2 Creating Menus
+/// Qt implements menus in QMenu and QMainWindow keeps them in a
+/// QMenuBar. [QAction](QAction)
+/// s are added to the menus, which
+/// display them as menu items.
 /// 
-///     Qt implements menus in QMenu and QMainWindow keeps them in a
-///     QMenuBar. \l{QAction}{QAction}s are added to the menus, which
-///     display them as menu items.
+/// You can add new menus to the main window's menu bar by calling
+/// `menuBar(),` which returns the QMenuBar for the window, and then
+/// add a menu with QMenuBar::addMenu().
 /// 
-///     You can add new menus to the main window's menu bar by calling
-///     \c menuBar(), which returns the QMenuBar for the window, and then
-///     add a menu with QMenuBar::addMenu().
+/// QMainWindow comes with a default menu bar, but you can also
+/// set one yourself with `setMenuBar().` If you wish to implement a
+/// custom menu bar (i.e., not use the QMenuBar widget), you can set it
+/// with `setMenuWidget().`
 /// 
-///     QMainWindow comes with a default menu bar, but you can also
-///     set one yourself with \c setMenuBar(). If you wish to implement a
-///     custom menu bar (i.e., not use the QMenuBar widget), you can set it
-///     with \c setMenuWidget().
+/// An example of how to create menus follows:
 /// 
-///     An example of how to create menus follows:
+/// ```
+/// void MainWindow::createMenus()
 /// 
-///     \code
-///     void MainWindow::createMenus()
-///     {
-///         fileMenu = menuBar()->addMenu(tr("&File"));
-///         fileMenu->addAction(newAct);
-///         fileMenu->addAction(openAct);
-///         fileMenu->addAction(saveAct);
-///     \endcode
+/// fileMenu = menuBar()->addMenu(tr("&File"));
+/// fileMenu->addAction(newAct);
+/// fileMenu->addAction(openAct);
+/// fileMenu->addAction(saveAct);
+/// ```
 /// 
-///     The \c createPopupMenu() function creates popup menus when the
-///     main window receives context menu events.  The default
-///     implementation generates a menu with the checkable actions from
-///     the dock widgets and toolbars. You can reimplement \c
-///     createPopupMenu() for a custom menu.
+/// The `createPopupMenu()` function creates popup menus when the
+/// main window receives context menu events. The default
+/// implementation generates a menu with the checkable actions from
+/// the dock widgets and toolbars. You can reimplement `createPopupMenu()` for a custom menu.
 /// 
-///     \section2 Creating Toolbars
+/// ## Creating Toolbars
 /// 
-///     Toolbars are implemented in the QToolBar class.  You add a
-///     toolbar to a main window with \c addToolBar().
+/// Toolbars are implemented in the QToolBar class. You add a
+/// toolbar to a main window with `addToolBar().`
 /// 
-///     You control the initial position of toolbars by assigning them
-///     to a specific Qt::ToolBarArea. You can split an area by inserting
-///     a toolbar break - think of this as a line break in text editing -
-///     with \c addToolBarBreak() or \c insertToolBarBreak(). You can also
-///     restrict placement by the user with QToolBar::setAllowedAreas()
-///     and QToolBar::setMovable().
+/// You control the initial position of toolbars by assigning them
+/// to a specific Qt::ToolBarArea. You can split an area by inserting
+/// a toolbar break - think of this as a line break in text editing -
+/// with `addToolBarBreak()` or `insertToolBarBreak().` You can also
+/// restrict placement by the user with QToolBar::setAllowedAreas()
+/// and QToolBar::setMovable().
 /// 
-///     The size of toolbar icons can be retrieved with \c iconSize().
-///     The sizes are platform dependent; you can set a fixed size with \c
-///     setIconSize(). You can alter the appearance of all tool buttons in
-///     the toolbars with \c setToolButtonStyle().
+/// The size of toolbar icons can be retrieved with `iconSize().`
+/// The sizes are platform dependent; you can set a fixed size with `setIconSize().` You can alter the appearance of all tool buttons in
+/// the toolbars with `setToolButtonStyle().`
 /// 
-///     An example of toolbar creation follows:
+/// An example of toolbar creation follows:
 /// 
-///     \code
-///     void MainWindow::createToolBars()
-///     {
-///         fileToolBar = addToolBar(tr("File"));
-///         fileToolBar->addAction(newAct);
-///     \endcode
+/// ```
+/// void MainWindow::createToolBars()
 /// 
-///     \section2 Creating Dock Widgets
+/// fileToolBar = addToolBar(tr("File"));
+/// fileToolBar->addAction(newAct);
+/// ```
 /// 
-///     Dock widgets are implemented in the QDockWidget class. A dock
-///     widget is a window that can be docked into the main window.  You
-///     add dock widgets to a main window with \c addDockWidget().
+/// ## Creating Dock Widgets
 /// 
-///     There are four dock widget areas as given by the
-///     Qt::DockWidgetArea enum: left, right, top, and bottom. You can
-///     specify which dock widget area that should occupy the corners
-///     where the areas overlap with \c setCorner(). By default
-///     each area can only contain one row (vertical or horizontal) of
-///     dock widgets, but if you enable nesting with \c
-///     setDockNestingEnabled(), dock widgets can be added in either
-///     direction.
+/// Dock widgets are implemented in the QDockWidget class. A dock
+/// widget is a window that can be docked into the main window. You
+/// add dock widgets to a main window with `addDockWidget().`
 /// 
-///     Two dock widgets may also be stacked on top of each other. A
-///     QTabBar is then used to select which of the widgets should be
-///     displayed.
+/// There are four dock widget areas as given by the
+/// Qt::DockWidgetArea enum: left, right, top, and bottom. You can
+/// specify which dock widget area that should occupy the corners
+/// where the areas overlap with `setCorner().` By default
+/// each area can only contain one row (vertical or horizontal) of
+/// dock widgets, but if you enable nesting with `setDockNestingEnabled(),` dock widgets can be added in either
+/// direction.
 /// 
-///     We give an example of how to create and add dock widgets to a
-///     main window:
+/// Two dock widgets may also be stacked on top of each other. A
+/// QTabBar is then used to select which of the widgets should be
+/// displayed.
 /// 
-///     \snippet mainwindowsnippet.cpp 0
+/// We give an example of how to create and add dock widgets to a
+/// main window:
 /// 
-///     \section2 The Status Bar
+/// ## The Status Bar
 /// 
-///     You can set a status bar with \c setStatusBar(), but one is
-///     created the first time \c statusBar() (which returns the main
-///     window's status bar) is called. See QStatusBar for information on
-///     how to use it.
+/// You can set a status bar with `setStatusBar(),` but one is
+/// created the first time `statusBar()` (which returns the main
+/// window's status bar) is called. See QStatusBar for information on
+/// how to use it.
 /// 
-///     \section1 Storing State
+/// # Storing State
 /// 
-///     QMainWindow can store the state of its layout with \c
-///     saveState(); it can later be retrieved with \c restoreState(). It
-///     is the position and size (relative to the size of the main window)
-///     of the toolbars and dock widgets that are stored.
+/// QMainWindow can store the state of its layout with `saveState();` it can later be retrieved with `restoreState().` It
+/// is the position and size (relative to the size of the main window)
+/// of the toolbars and dock widgets that are stored.
 /// 
-///     \sa QMenuBar, QToolBar, QStatusBar, QDockWidget, {Application
-///     Example}, {Dock Widgets Example}, {MDI Example}, {SDI Example},
-///     {Menus Example}
+/// **See also:** QMenuBar
+/// QToolBar
+/// QStatusBar
+/// QDockWidget
+/// {Application
+/// Example}, {Dock Widgets Example}, {MDI Example}, {SDI Example},
+/// {Menus Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -150,298 +143,413 @@ enum DockOption {
 }
 
 struct MainWindow : Widget {
+    /// 
+    /// This signal is emitted when the size of the icons used in the
+    /// window is changed. The new icon size is passed in *iconSize.*
+    /// 
+    /// You can connect this signal to other components to help maintain
+    /// a consistent appearance for your application.
+    /// 
+    /// **See also:** setIconSize()
+    /// 
+    /// The default is the default tool bar icon size of the GUI style.
+    /// Note that the icons used must be at least of this size as the
+    /// icons are only scaled down.
     icon_size() -> Size,
     set_icon_size(icon_size: &SizeType),
+    /// 
+    /// This signal is emitted when the style used for tool buttons in the
+    /// window is changed. The new style is passed in *toolButtonStyle.*
+    /// 
+    /// You can connect this signal to other components to help maintain
+    /// a consistent appearance for your application.
+    /// 
+    /// **See also:** setToolButtonStyle()
+    /// 
+    /// To have the style of toolbuttons follow the system settings, set this property to Qt::ToolButtonFollowStyle.
+    /// On Unix, the user settings from the desktop environment will be used.
+    /// On other platforms, Qt::ToolButtonFollowStyle means icon only.
+    /// 
+    /// The default is Qt::ToolButtonIconOnly.
     tool_button_style() -> Rute::ToolButtonStyle,
     set_tool_button_style(tool_button_style: Rute::ToolButtonStyle),
     is_animated() -> bool,
     is_dock_nesting_enabled() -> bool,
-    ///     \property QMainWindow::documentMode
-    ///     \brief whether the tab bar for tabbed dockwidgets is set to document mode.
-    ///     \since 4.5
     /// 
-    ///     The default is false.
+    /// The default is false.
     /// 
-    ///     \sa QTabBar::documentMode
+    /// **See also:** QTabBar::documentMode
     document_mode() -> bool,
     set_document_mode(enabled: bool),
-    ///     \property QMainWindow::tabShape
-    ///     \brief the tab shape used for tabbed dock widgets.
-    ///     \since 4.5
     /// 
-    ///     The default is \l QTabWidget::Rounded.
+    /// The default is [QTabWidget::Rounded.](QTabWidget::Rounded.)
     /// 
-    ///     \sa setTabPosition()
+    /// **See also:** setTabPosition()
     tab_shape() -> TabWidget::TabShape,
     set_tab_shape(tab_shape: TabWidget::TabShape),
-    ///     \since 4.5
     /// 
-    ///     Returns the tab position for \a area.
+    /// Returns the tab position for *area.*
     /// 
-    ///     \note The \l VerticalTabs dock option overrides the tab positions returned
-    ///     by this function.
+    /// **Note**: The [VerticalTabs](VerticalTabs)
+    /// dock option overrides the tab positions returned
+    /// by this function.
     /// 
-    ///     \sa setTabPosition(), tabShape()
+    /// **See also:** setTabPosition()
+    /// tabShape()
     tab_position(area: Rute::DockWidgetArea) -> TabWidget::TabPosition,
-    ///     \since 4.5
     /// 
-    ///     Sets the tab position for the given dock widget \a areas to the specified
-    ///     \a tabPosition. By default, all dock areas show their tabs at the bottom.
+    /// Sets the tab position for the given dock widget *areas* to the specified
+    /// *tabPosition.* By default, all dock areas show their tabs at the bottom.
     /// 
-    ///     \note The \l VerticalTabs dock option overrides the tab positions set by
-    ///     this method.
+    /// **Note**: The [VerticalTabs](VerticalTabs)
+    /// dock option overrides the tab positions set by
+    /// this method.
     /// 
-    ///     \sa tabPosition(), setTabShape()
+    /// **See also:** tabPosition()
+    /// setTabShape()
     set_tab_position(areas: Rute::DockWidgetAreas, tab_position: TabWidget::TabPosition),
-    ///     \enum QMainWindow::DockOption
-    ///     \since 4.3
-    /// 
-    ///     This enum contains flags that specify the docking behavior of QMainWindow.
-    /// 
-    ///     \value AnimatedDocks    Identical to the \l animated property.
-    /// 
-    ///     \value AllowNestedDocks Identical to the \l dockNestingEnabled property.
-    /// 
-    ///     \value AllowTabbedDocks The user can drop one dock widget "on top" of
-    ///                             another. The two widgets are stacked and a tab
-    ///                             bar appears for selecting which one is visible.
-    /// 
-    ///     \value ForceTabbedDocks Each dock area contains a single stack of tabbed
-    ///                             dock widgets. In other words, dock widgets cannot
-    ///                             be placed next to each other in a dock area. If
-    ///                             this option is set, AllowNestedDocks has no effect.
-    /// 
-    ///     \value VerticalTabs     The two vertical dock areas on the sides of the
-    ///                             main window show their tabs vertically. If this
-    ///                             option is not set, all dock areas show their tabs
-    ///                             at the bottom. Implies AllowTabbedDocks. See also
-    ///                             \l setTabPosition().
-    /// 
-    ///     \value GroupedDragging  When dragging the titlebar of a dock, all the tabs
-    ///                             that are tabbed with it are going to be dragged.
-    ///                             Implies AllowTabbedDocks. Does not work well if
-    ///                             some QDockWidgets have restrictions in which area
-    ///                             they are allowed. (This enum value was added in Qt
-    ///                             5.6.)
-    /// 
-    ///     These options only control how dock widgets may be dropped in a QMainWindow.
-    ///     They do not re-arrange the dock widgets to conform with the specified
-    ///     options. For this reason they should be set before any dock widgets
-    ///     are added to the main window. Exceptions to this are the AnimatedDocks and
-    ///     VerticalTabs options, which may be set at any time.
     set_dock_options(options: MainWindow::DockOptions),
+    /// 
+    /// The default value is AnimatedDocks | AllowTabbedDocks.
     dock_options() -> MainWindow::DockOptions,
-    ///     \internal
     is_separator(pos: &PointType) -> bool,
-    ///     Returns the menu bar for the main window. This function creates
-    ///     and returns an empty menu bar if the menu bar does not exist.
     /// 
-    ///     If you want all windows in a Mac application to share one menu
-    ///     bar, don't use this function to create it, because the menu bar
-    ///     created here will have this QMainWindow as its parent.  Instead,
-    ///     you must create a menu bar that does not have a parent, which you
-    ///     can then share among all the Mac windows. Create a parent-less
-    ///     menu bar this way:
+    /// Returns the menu bar for the main window. This function creates
+    /// and returns an empty menu bar if the menu bar does not exist.
     /// 
-    ///     \snippet code/src_gui_widgets_qmenubar.cpp 1
+    /// If you want all windows in a Mac application to share one menu
+    /// bar, don't use this function to create it, because the menu bar
+    /// created here will have this QMainWindow as its parent. Instead,
+    /// you must create a menu bar that does not have a parent, which you
+    /// can then share among all the Mac windows. Create a parent-less
+    /// menu bar this way:
     /// 
-    ///     \sa setMenuBar()
+    /// **See also:** setMenuBar()
     menu_bar() -> MenuBar?,
-    ///     Sets the menu bar for the main window to \a menuBar.
     /// 
-    ///     Note: QMainWindow takes ownership of the \a menuBar pointer and
-    ///     deletes it at the appropriate time.
+    /// Sets the menu bar for the main window to *menuBar.*
     /// 
-    ///     \sa menuBar()
+    /// Note: QMainWindow takes ownership of the *menuBar* pointer and
+    /// deletes it at the appropriate time.
+    /// 
+    /// **See also:** menuBar()
     set_menu_bar(menubar: *MenuBarType),
-    ///     \since 4.2
     /// 
-    ///     Returns the menu bar for the main window. This function returns
-    ///     null if a menu bar hasn't been constructed yet.
+    /// Returns the menu bar for the main window. This function returns
+    /// null if a menu bar hasn't been constructed yet.
     menu_widget() -> Widget?,
-    ///     \since 4.2
     /// 
-    ///     Sets the menu bar for the main window to \a menuBar.
+    /// Sets the menu bar for the main window to *menuBar.*
     /// 
-    ///     QMainWindow takes ownership of the \a menuBar pointer and
-    ///     deletes it at the appropriate time.
+    /// QMainWindow takes ownership of the *menuBar* pointer and
+    /// deletes it at the appropriate time.
     set_menu_widget(menubar: *WidgetType),
-    ///     Returns the status bar for the main window. This function creates
-    ///     and returns an empty status bar if the status bar does not exist.
     /// 
-    ///     \sa setStatusBar()
+    /// Returns the status bar for the main window. This function creates
+    /// and returns an empty status bar if the status bar does not exist.
+    /// 
+    /// **See also:** setStatusBar()
     status_bar() -> StatusBar?,
-    ///     Sets the status bar for the main window to \a statusbar.
     /// 
-    ///     Setting the status bar to 0 will remove it from the main window.
-    ///     Note that QMainWindow takes ownership of the \a statusbar pointer
-    ///     and deletes it at the appropriate time.
+    /// Sets the status bar for the main window to *statusbar.*
     /// 
-    ///     \sa statusBar()
+    /// Setting the status bar to 0 will remove it from the main window.
+    /// Note that QMainWindow takes ownership of the *statusbar* pointer
+    /// and deletes it at the appropriate time.
+    /// 
+    /// **See also:** statusBar()
     set_status_bar(statusbar: *StatusBarType),
-    ///     Sets the given dock widget \a area to occupy the specified \a
-    ///     corner.
     /// 
-    ///     \sa corner()
+    /// Sets the given dock widget *area* to occupy the specified *corner.*
+    /// 
+    /// **See also:** corner()
     set_corner(corner: Rute::Corner, area: Rute::DockWidgetArea),
-    ///     Returns the dock widget area that occupies the specified \a
-    ///     corner.
     /// 
-    ///     \sa setCorner()
+    /// Returns the dock widget area that occupies the specified *corner.*
+    /// 
+    /// **See also:** setCorner()
     corner(corner: Rute::Corner) -> Rute::DockWidgetArea,
-    ///     Adds a toolbar break to the given \a area after all the other
-    ///     objects that are present.
+    /// 
+    /// Adds a toolbar break to the given *area* after all the other
+    /// objects that are present.
     add_tool_bar_break(area: Rute::ToolBarArea),
-    ///     Inserts a toolbar break before the toolbar specified by \a before.
+    /// 
+    /// Inserts a toolbar break before the toolbar specified by *before.*
     insert_tool_bar_break(before: *ToolBarType),
-    ///     \overload
     /// 
-    ///     Creates a QToolBar object, setting its window title to \a title,
-    ///     and inserts it into the top toolbar area.
+    /// Adds a toolbar break to the given *area* after all the other
+    /// objects that are present.
     /// 
-    ///     \sa setWindowTitle()
+    /// Adds the *toolbar* into the specified *area* in this main
+    /// window. The *toolbar* is placed at the end of the current tool
+    /// bar block (i.e. line). If the main window already manages *toolbar*
+    /// then it will only move the toolbar to *area.*
+    /// 
+    /// **See also:** insertToolBar()
+    /// addToolBarBreak()
+    /// insertToolBarBreak()
+    /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
+    /// 
+    /// **Overloads**
+    /// Creates a QToolBar object, setting its window title to *title,*
+    /// and inserts it into the top toolbar area.
+    /// 
+    /// **See also:** setWindowTitle()
     add_tool_bar(area: Rute::ToolBarArea, toolbar: *ToolBarType),
-    ///     \overload
     /// 
-    ///     Creates a QToolBar object, setting its window title to \a title,
-    ///     and inserts it into the top toolbar area.
+    /// Adds a toolbar break to the given *area* after all the other
+    /// objects that are present.
     /// 
-    ///     \sa setWindowTitle()
+    /// Adds the *toolbar* into the specified *area* in this main
+    /// window. The *toolbar* is placed at the end of the current tool
+    /// bar block (i.e. line). If the main window already manages *toolbar*
+    /// then it will only move the toolbar to *area.*
+    /// 
+    /// **See also:** insertToolBar()
+    /// addToolBarBreak()
+    /// insertToolBarBreak()
+    /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
+    /// 
+    /// **Overloads**
+    /// Creates a QToolBar object, setting its window title to *title,*
+    /// and inserts it into the top toolbar area.
+    /// 
+    /// **See also:** setWindowTitle()
     add_tool_bar(toolbar: *ToolBarType),
-    ///     \overload
     /// 
-    ///     Creates a QToolBar object, setting its window title to \a title,
-    ///     and inserts it into the top toolbar area.
+    /// Adds a toolbar break to the given *area* after all the other
+    /// objects that are present.
     /// 
-    ///     \sa setWindowTitle()
+    /// Adds the *toolbar* into the specified *area* in this main
+    /// window. The *toolbar* is placed at the end of the current tool
+    /// bar block (i.e. line). If the main window already manages *toolbar*
+    /// then it will only move the toolbar to *area.*
+    /// 
+    /// **See also:** insertToolBar()
+    /// addToolBarBreak()
+    /// insertToolBarBreak()
+    /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
+    /// 
+    /// **Overloads**
+    /// Creates a QToolBar object, setting its window title to *title,*
+    /// and inserts it into the top toolbar area.
+    /// 
+    /// **See also:** setWindowTitle()
     add_tool_bar(title: String) -> ToolBar?,
-    ///     Inserts the \a toolbar into the area occupied by the \a before toolbar
-    ///     so that it appears before it. For example, in normal left-to-right
-    ///     layout operation, this means that \a toolbar will appear to the left
-    ///     of the toolbar specified by \a before in a horizontal toolbar area.
     /// 
-    ///     \sa insertToolBarBreak(), addToolBar(), addToolBarBreak()
+    /// Inserts a toolbar break before the toolbar specified by *before.*
+    /// 
+    /// Inserts the *toolbar* into the area occupied by the *before* toolbar
+    /// so that it appears before it. For example, in normal left-to-right
+    /// layout operation, this means that *toolbar* will appear to the left
+    /// of the toolbar specified by *before* in a horizontal toolbar area.
+    /// 
+    /// **See also:** insertToolBarBreak()
+    /// addToolBar()
+    /// addToolBarBreak()
     insert_tool_bar(before: *ToolBarType, toolbar: *ToolBarType),
-    ///     Removes the \a toolbar from the main window layout and hides
-    ///     it. Note that the \a toolbar is \e not deleted.
-    remove_tool_bar(toolbar: *ToolBarType),
-    ///     Removes a toolbar break previously inserted before the toolbar specified by \a before.
-    remove_tool_bar_break(before: *ToolBarType),
-    unified_title_and_tool_bar_on_mac() -> bool,
-    ///     Returns the Qt::ToolBarArea for \a toolbar. If \a toolbar has not
-    ///     been added to the main window, this function returns \c
-    ///     Qt::NoToolBarArea.
     /// 
-    ///     \sa addToolBar(), addToolBarBreak(), Qt::ToolBarArea
+    /// Removes a toolbar break previously inserted before the toolbar specified by *before.*
+    /// 
+    /// Removes the *toolbar* from the main window layout and hides
+    /// it. Note that the *toolbar* is *not* deleted.
+    remove_tool_bar(toolbar: *ToolBarType),
+    /// 
+    /// Removes a toolbar break previously inserted before the toolbar specified by *before.*
+    remove_tool_bar_break(before: *ToolBarType),
+    /// 
+    /// MacOS
+    /// 
+    /// Note that the Qt 5 implementation has several limitations compared to Qt 4:
+    /// * Use in windows with OpenGL content is not supported. This includes QGLWidget and QOpenGLWidget.
+    /// * Using dockable or movable toolbars may result in painting errors and is not recommended
+    /// 
+    unified_title_and_tool_bar_on_mac() -> bool,
+    /// 
+    /// Returns the Qt::ToolBarArea for *toolbar.* If *toolbar* has not
+    /// been added to the main window, this function returns `Qt::NoToolBarArea.`
+    /// 
+    /// **See also:** addToolBar()
+    /// addToolBarBreak()
+    /// Qt::ToolBarArea
     tool_bar_area(toolbar: *ToolBarType) -> Rute::ToolBarArea,
     /// 
-    ///     Returns whether there is a toolbar
-    ///     break before the \a toolbar.
+    /// Returns whether there is a toolbar
+    /// break before the *toolbar.*
     /// 
-    ///     \sa addToolBarBreak(), insertToolBarBreak()
+    /// **See also:** addToolBarBreak()
+    /// insertToolBarBreak()
     tool_bar_break(toolbar: *ToolBarType) -> bool,
-    ///     Adds the given \a dockwidget to the specified \a area.
+    /// 
+    /// Adds the given *dockwidget* to the specified *area.*
+    /// 
+    /// Adds *dockwidget* into the given *area* in the direction
+    /// specified by the *orientation.*
     add_dock_widget(area: Rute::DockWidgetArea, dockwidget: *DockWidgetType),
-    ///     Adds the given \a dockwidget to the specified \a area.
+    /// 
+    /// Adds the given *dockwidget* to the specified *area.*
+    /// 
+    /// Adds *dockwidget* into the given *area* in the direction
+    /// specified by the *orientation.*
     add_dock_widget(area: Rute::DockWidgetArea, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
+    /// 
+    /// Splits the space covered by the *first* dock widget into two parts,
+    /// moves the *first* dock widget into the first part, and moves the
+    /// *second* dock widget into the second part.
+    /// 
+    /// The *orientation* specifies how the space is divided: A Qt::Horizontal
+    /// split places the second dock widget to the right of the first; a
+    /// Qt::Vertical split places the second dock widget below the first.
+    /// 
+    /// *Note:* if *first* is currently in a tabbed docked area, *second* will
+    /// be added as a new tab, not as a neighbor of *first.* This is because a
+    /// single tab can contain only one dock widget.
+    /// 
+    /// *Note:* The Qt::LayoutDirection influences the order of the dock widgets
+    /// in the two parts of the divided area. When right-to-left layout direction
+    /// is enabled, the placing of the dock widgets will be reversed.
+    /// 
+    /// **See also:** tabifyDockWidget()
+    /// addDockWidget()
+    /// removeDockWidget()
     split_dock_widget(after: *DockWidgetType, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
-    ///     \fn void QMainWindow::tabifyDockWidget(QDockWidget *first, QDockWidget *second)
     /// 
-    ///     Moves \a second dock widget on top of \a first dock widget, creating a tabbed
-    ///     docked area in the main window.
+    /// Moves *second* dock widget on top of *first* dock widget, creating a tabbed
+    /// docked area in the main window.
     /// 
-    ///     \sa tabifiedDockWidgets()
+    /// **See also:** tabifiedDockWidgets()
     tabify_dock_widget(first: *DockWidgetType, second: *DockWidgetType),
-    ///     \fn QList<QDockWidget*> QMainWindow::tabifiedDockWidgets(QDockWidget *dockwidget) const
     /// 
-    ///     Returns the dock widgets that are tabified together with \a dockwidget.
+    /// Returns the dock widgets that are tabified together with *dockwidget.*
     /// 
-    ///     \since 4.5
-    ///     \sa tabifyDockWidget()
+    /// **See also:** tabifyDockWidget()
     tabified_dock_widgets(dockwidget: *DockWidgetType) -> [DockWidget?],
-    ///     Removes the \a dockwidget from the main window layout and hides
-    ///     it. Note that the \a dockwidget is \e not deleted.
+    /// 
+    /// Removes the *dockwidget* from the main window layout and hides
+    /// it. Note that the *dockwidget* is *not* deleted.
     remove_dock_widget(dockwidget: *DockWidgetType),
-    ///     Restores the state of \a dockwidget if it is created after the call
-    ///     to restoreState(). Returns \c true if the state was restored; otherwise
-    ///     returns \c false.
     /// 
-    ///     \sa restoreState(), saveState()
+    /// Restores the state of *dockwidget* if it is created after the call
+    /// to restoreState(). Returns `true` if the state was restored; otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** restoreState()
+    /// saveState()
     restore_dock_widget(dockwidget: *DockWidgetType) -> bool,
-    ///     Returns the Qt::DockWidgetArea for \a dockwidget. If \a dockwidget
-    ///     has not been added to the main window, this function returns \c
-    ///     Qt::NoDockWidgetArea.
     /// 
-    ///     \sa addDockWidget(), splitDockWidget(), Qt::DockWidgetArea
+    /// Returns the Qt::DockWidgetArea for *dockwidget.* If *dockwidget*
+    /// has not been added to the main window, this function returns `Qt::NoDockWidgetArea.`
+    /// 
+    /// **See also:** addDockWidget()
+    /// splitDockWidget()
+    /// Qt::DockWidgetArea
     dock_widget_area(dockwidget: *DockWidgetType) -> Rute::DockWidgetArea,
+    /// 
+    /// Resizes the dock widgets in the list *docks* to the corresponding size in
+    /// pixels from the list *sizes.* If *orientation* is Qt::Horizontal, adjusts
+    /// the width, otherwise adjusts the height of the dock widgets.
+    /// The sizes will be adjusted such that the maximum and the minimum sizes are
+    /// respected and the QMainWindow itself will not be resized.
+    /// Any additional/missing space is distributed amongst the widgets according
+    /// to the relative weight of the sizes.
+    /// 
+    /// Example:
+    /// ```
+    /// resizeDocks({blueWidget, yellowWidget}, {20 , 40}, Qt::Horizontal);
+    /// ```
+    /// 
+    /// If the blue and the yellow widget are nested on the same level they will be
+    /// resized such that the yellowWidget is twice as big as the blueWidget
+    /// 
+    /// If some widgets are grouped in tabs, only one widget per group should be
+    /// specified. Widgets not in the list might be changed to repect the constraints.
     resize_docks(docks: [*DockWidgetType], sizes: [i32], orientation: Rute::Orientation),
-    ///     Saves the current state of this mainwindow's toolbars and
-    ///     dockwidgets. This includes the corner settings which can
-    ///     be set with setCorner(). The \a version number is stored
-    ///     as part of the data.
     /// 
-    ///     The \l{QObject::objectName}{objectName} property is used
-    ///     to identify each QToolBar and QDockWidget.  You should make sure
-    ///     that this property is unique for each QToolBar and QDockWidget you
-    ///     add to the QMainWindow
+    /// Saves the current state of this mainwindow's toolbars and
+    /// dockwidgets. This includes the corner settings which can
+    /// be set with setCorner(). The *version* number is stored
+    /// as part of the data.
     /// 
-    ///     To restore the saved state, pass the return value and \a version
-    ///     number to restoreState().
+    /// The [objectName](QObject::objectName)
+    /// property is used
+    /// to identify each QToolBar and QDockWidget. You should make sure
+    /// that this property is unique for each QToolBar and QDockWidget you
+    /// add to the QMainWindow
     /// 
-    ///     To save the geometry when the window closes, you can
-    ///     implement a close event like this:
+    /// To restore the saved state, pass the return value and *version*
+    /// number to restoreState().
     /// 
-    ///     \snippet code/src_gui_widgets_qmainwindow.cpp 0
+    /// To save the geometry when the window closes, you can
+    /// implement a close event like this:
     /// 
-    ///     \sa restoreState(), QWidget::saveGeometry(), QWidget::restoreGeometry()
+    /// **See also:** restoreState()
+    /// QWidget::saveGeometry()
+    /// QWidget::restoreGeometry()
     save_state(version: i32) -> ByteArray,
-    ///     Restores the \a state of this mainwindow's toolbars and
-    ///     dockwidgets. Also restores the corner settings too. The
-    ///     \a version number is compared with that stored in \a state.
-    ///     If they do not match, the mainwindow's state is left
-    ///     unchanged, and this function returns \c false; otherwise, the state
-    ///     is restored, and this function returns \c true.
     /// 
-    ///     To restore geometry saved using QSettings, you can use code like
-    ///     this:
+    /// Restores the *state* of this mainwindow's toolbars and
+    /// dockwidgets. Also restores the corner settings too. The
+    /// *version* number is compared with that stored in *state.*
+    /// If they do not match, the mainwindow's state is left
+    /// unchanged, and this function returns `false;` otherwise, the state
+    /// is restored, and this function returns `true.`
     /// 
-    ///     \snippet code/src_gui_widgets_qmainwindow.cpp 1
+    /// To restore geometry saved using QSettings, you can use code like
+    /// this:
     /// 
-    ///     \sa saveState(), QWidget::saveGeometry(),
-    ///     QWidget::restoreGeometry(), restoreDockWidget()
+    /// **See also:** saveState()
+    /// QWidget::saveGeometry()
+    /// QWidget::restoreGeometry()
+    /// restoreDockWidget()
     restore_state(state: &ByteArrayType, version: i32) -> bool,
-    ///     Returns a popup menu containing checkable entries for the toolbars and
-    ///     dock widgets present in the main window. If  there are no toolbars and
-    ///     dock widgets present, this function returns a null pointer.
     /// 
-    ///     By default, this function is called by the main window when the user
-    ///     activates a context menu, typically by right-clicking on a toolbar or a dock
-    ///     widget.
+    /// Returns a popup menu containing checkable entries for the toolbars and
+    /// dock widgets present in the main window. If there are no toolbars and
+    /// dock widgets present, this function returns a null pointer.
     /// 
-    ///     If you want to create a custom popup menu, reimplement this function and
-    ///     return a newly-created popup menu. Ownership of the popup menu is transferred
-    ///     to the caller.
+    /// By default, this function is called by the main window when the user
+    /// activates a context menu, typically by right-clicking on a toolbar or a dock
+    /// widget.
     /// 
-    ///     \sa addDockWidget(), addToolBar(), menuBar()
+    /// If you want to create a custom popup menu, reimplement this function and
+    /// return a newly-created popup menu. Ownership of the popup menu is transferred
+    /// to the caller.
+    /// 
+    /// **See also:** addDockWidget()
+    /// addToolBar()
+    /// menuBar()
     [event] create_popup_menu() -> Menu?,
     set_animated(enabled: bool),
     set_dock_nesting_enabled(enabled: bool),
-    ///     \property QMainWindow::unifiedTitleAndToolBarOnMac
-    ///     \brief whether the window uses the unified title and toolbar look on \macos
-    /// 
-    ///     Note that the Qt 5 implementation has several limitations compared to Qt 4:
-    ///     \list
-    ///         \li Use in windows with OpenGL content is not supported. This includes QGLWidget and QOpenGLWidget.
-    ///         \li Using dockable or movable toolbars may result in painting errors and is not recommended
-    ///     \endlist
-    /// 
-    ///     \since 5.2
     set_unified_title_and_tool_bar_on_mac(set: bool),
+    /// 
+    /// This signal is emitted when the size of the icons used in the
+    /// window is changed. The new icon size is passed in *iconSize.*
+    /// 
+    /// You can connect this signal to other components to help maintain
+    /// a consistent appearance for your application.
+    /// 
+    /// **See also:** setIconSize()
     [signal] icon_size_changed(icon_size: &SizeType),
+    /// 
+    /// This signal is emitted when the style used for tool buttons in the
+    /// window is changed. The new style is passed in *toolButtonStyle.*
+    /// 
+    /// You can connect this signal to other components to help maintain
+    /// a consistent appearance for your application.
+    /// 
+    /// **See also:** setToolButtonStyle()
     [signal] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
+    /// 
+    /// This signal is emitted when the tabified dock widget is activated by
+    /// selecting the tab. The activated dock widget is passed in *dockWidget.*
+    /// 
+    /// **See also:** tabifyDockWidget()
+    /// tabifiedDockWidgets()
     [signal] tabified_dock_widget_activated(dock_widget: *DockWidgetType),
-    ///     \reimp
+    /// 
     [event] context_menu_event(event: *ContextMenuEventType),
+    /// 
     [event] event(event: *EventType) -> bool,
 }
 

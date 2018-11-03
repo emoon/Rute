@@ -1,80 +1,99 @@
-///     \class QLinearGradient
-///     \ingroup painting
-///     \inmodule QtGui
 /// 
-///     \brief The QLinearGradient class is used in combination with QBrush to
-///     specify a linear gradient brush.
+/// Linear gradients interpolate colors between start and end
+/// points. Outside these points the gradient is either padded,
+/// reflected or repeated depending on the currently set [spread](QGradient::Spread)
+/// method:
 /// 
-///     Linear gradients interpolate colors between start and end
-///     points. Outside these points the gradient is either padded,
-///     reflected or repeated depending on the currently set \l
-///     {QGradient::Spread}{spread} method:
+/// * ![qlineargradient-pad.png](qlineargradient-pad.png)
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qlineargradient-pad.png
-///     \li \inlineimage qlineargradient-reflect.png
-///     \li \inlineimage qlineargradient-repeat.png
-///     \row
-///     \li \l {QGradient::PadSpread}{PadSpread} (default)
-///     \li \l {QGradient::ReflectSpread}{ReflectSpread}
-///     \li \l {QGradient::RepeatSpread}{RepeatSpread}
-///     \endtable
+/// * ![qlineargradient-reflect.png](qlineargradient-reflect.png)
 /// 
-///     The colors in a gradient is defined using stop points of the
-///     QGradientStop type, i.e. a position and a color. Use the
-///     QGradient::setColorAt() or the QGradient::setStops() function to
-///     define the stop points. It is the gradient's complete set of stop
-///     points that describes how the gradient area should be filled. If
-///     no stop points have been specified, a gradient of black at 0 to
-///     white at 1 is used.
+/// * ![qlineargradient-repeat.png](qlineargradient-repeat.png)
 /// 
-///     In addition to the functions inherited from QGradient, the
-///     QLinearGradient class provides the finalStop() function which
-///     returns the final stop point of the gradient, and the start()
-///     function returning the start point of the gradient.
+/// * [PadSpread](QGradient::PadSpread)
+/// (default)
+/// * [ReflectSpread](QGradient::ReflectSpread)
 /// 
-///     \sa QRadialGradient, QConicalGradient, {painting/gradients}{The
-///     Gradients Example}
+/// * [RepeatSpread](QGradient::RepeatSpread)
+/// 
+/// The colors in a gradient is defined using stop points of the
+/// QGradientStop type, i.e. a position and a color. Use the
+/// QGradient::setColorAt() or the QGradient::setStops() function to
+/// define the stop points. It is the gradient's complete set of stop
+/// points that describes how the gradient area should be filled. If
+/// no stop points have been specified, a gradient of black at 0 to
+/// white at 1 is used.
+/// 
+/// In addition to the functions inherited from QGradient, the
+/// QLinearGradient class provides the finalStop() function which
+/// returns the final stop point of the gradient, and the start()
+/// function returning the start point of the gradient.
+/// 
+/// **See also:** QRadialGradient
+/// QConicalGradient
+/// {painting/gradients}{The
+/// Gradients Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct LinearGradient : Gradient {
-    ///     Returns the start point of this linear gradient in logical coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// Returns the start point of this linear gradient in logical coordinates.
+    /// 
+    /// **See also:** QGradient::stops()
     start() -> PointF,
-    ///     \since 4.2
     /// 
-    ///     Sets the start point of this linear gradient in logical
-    ///     coordinates to \a start.
+    /// **Overloads**
+    /// Sets the start point of this linear gradient in logical
+    /// coordinates to *x,* *y.*
     /// 
-    ///     \sa start()
+    /// **See also:** start()
+    /// 
+    /// Sets the start point of this linear gradient in logical
+    /// coordinates to *start.*
+    /// 
+    /// **See also:** start()
     set_start(start: &PointFType),
-    ///     \since 4.2
     /// 
-    ///     Sets the start point of this linear gradient in logical
-    ///     coordinates to \a start.
+    /// **Overloads**
+    /// Sets the start point of this linear gradient in logical
+    /// coordinates to *x,* *y.*
     /// 
-    ///     \sa start()
+    /// **See also:** start()
+    /// 
+    /// Sets the start point of this linear gradient in logical
+    /// coordinates to *start.*
+    /// 
+    /// **See also:** start()
     set_start(x: f32, y: f32),
-    ///     Returns the final stop point of this linear gradient in logical coordinates.
     /// 
-    ///     \sa QGradient::stops()
+    /// Returns the final stop point of this linear gradient in logical coordinates.
+    /// 
+    /// **See also:** QGradient::stops()
     final_stop() -> PointF,
-    ///     \since 4.2
     /// 
-    ///     Sets the final stop point of this linear gradient in logical
-    ///     coordinates to \a stop.
+    /// **Overloads**
+    /// Sets the final stop point of this linear gradient in logical
+    /// coordinates to *x,* *y.*
     /// 
-    ///     \sa finalStop()
+    /// **See also:** start()
+    /// 
+    /// Sets the final stop point of this linear gradient in logical
+    /// coordinates to *stop.*
+    /// 
+    /// **See also:** finalStop()
     set_final_stop(stop: &PointFType),
-    ///     \since 4.2
     /// 
-    ///     Sets the final stop point of this linear gradient in logical
-    ///     coordinates to \a stop.
+    /// **Overloads**
+    /// Sets the final stop point of this linear gradient in logical
+    /// coordinates to *x,* *y.*
     /// 
-    ///     \sa finalStop()
+    /// **See also:** start()
+    /// 
+    /// Sets the final stop point of this linear gradient in logical
+    /// coordinates to *stop.*
+    /// 
+    /// **See also:** finalStop()
     set_final_stop(x: f32, y: f32),
 }
 

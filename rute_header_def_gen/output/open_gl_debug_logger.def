@@ -1,248 +1,228 @@
-///     \class QOpenGLDebugLogger
-///     \brief The QOpenGLDebugLogger enables logging of OpenGL debugging messages.
-///     \inmodule QtGui
-///     \since 5.1
-///     \ingroup painting-3D
 /// 
-///     \tableofcontents
-/// 
-///     \section1 Introduction
-/// 
-///     OpenGL programming can be very error prone. Most of the time, a single
-///     failing call to OpenGL can cause an entire portion of an application to
-///     stop working, with nothing being drawn on the screen.
-/// 
-///     The only way to be sure that no errors are being returned from the OpenGL
-///     implementation is checking with \c{glGetError} after each and every API
-///     call. Moreover, OpenGL errors stack up, therefore glGetError should always
-///     be used in a loop like this:
-/// 
-///     \code
-/// 
-///     GLenum error = GL_NO_ERROR;
-///     do {
-///         error = glGetError();
-///         if (error != GL_NO_ERROR)
-///             // handle the error
-///     } while (error != GL_NO_ERROR);
-/// 
-///     \endcode
-/// 
-///     There are also many other information we are interested in (as application
-///     developers), for instance performance issues, or warnings about using
-///     deprecated APIs. Those kind of messages are not reported through the
-///     ordinary OpenGL error reporting mechanisms.
-/// 
-///     QOpenGLDebugLogger aims at addressing these issues by providing access to
-///     the \e{OpenGL debug log}. If your OpenGL implementation supports it (by
-///     exposing the \c{GL_KHR_debug} extension), messages from the OpenGL server
-///     will be either logged in an internal OpenGL log, or passed in "real-time"
-///     to listeners as they're generated from OpenGL.
-/// 
-///     QOpenGLDebugLogger supports both these modes of operation. Refer to the
-///     following sections to find out the differences between them.
-/// 
-///     \section1 Creating an OpenGL Debug Context
-/// 
-///     For efficiency reasons, OpenGL implementations are allowed not to create
-///     any debug output at all, unless the OpenGL context is a debug context. In order
-///     to create a debug context from Qt, you must set the QSurfaceFormat::DebugContext
-///     format option on the QSurfaceFormat used to create the QOpenGLContext object:
-/// 
-///     \code
-/// 
-///     QSurfaceFormat format;
-///     // asks for a OpenGL 3.2 debug context using the Core profile
-///     format.setMajorVersion(3);
-///     format.setMinorVersion(2);
-///     format.setProfile(QSurfaceFormat::CoreProfile);
-///     format.setOption(QSurfaceFormat::DebugContext);
-/// 
-///     QOpenGLContext *context = new QOpenGLContext;
-///     context->setFormat(format);
-///     context->create();
-/// 
-///     \endcode
-/// 
-///     Note that requesting a 3.2 OpenGL Core Profile is just for the example's
-///     purposes; this class is not tied to any specific OpenGL or OpenGL ES
-///     version, as it relies on the availability of the \c{GL_KHR_debug} extension
-///     (see below).
-/// 
-///     \section1 Creating and Initializing a QOpenGLDebugLogger
-/// 
-///     QOpenGLDebugLogger is a simple QObject-derived class. Just like all QObject
-///     subclasses, you create an instance (and optionally specify a parent
-///     object), and like the other OpenGL functions in Qt you \e{must} initialize
-///     it before usage by calling initialize() whilst there is a current OpenGL context:
-/// 
-///     \code
-/// 
-///     QOpenGLContext *ctx = QOpenGLContext::currentContext();
-///     QOpenGLDebugLogger *logger = new QOpenGLDebugLogger(this);
-/// 
-///     logger->initialize(); // initializes in the current context, i.e. ctx
-/// 
-///     \endcode
-/// 
-///     Note that the \c{GL_KHR_debug} extension \e{must} be available in the context
-///     in order to access the messages logged by OpenGL. You can check the
-///     presence of this extension by calling:
-/// 
-///     \code
-/// 
-///     ctx->hasExtension(QByteArrayLiteral("GL_KHR_debug"))
-/// 
-///     \endcode
-/// 
-///     where \c{ctx} is a valid QOpenGLContext. If the extension is not available,
-///     initialize() will return false.
-/// 
-///     \section1 Reading the Internal OpenGL Debug Log
-/// 
-///     OpenGL implementations keep an internal log of debug messages. Messages
-///     stored in this log can be retrieved by using the loggedMessages() function:
-/// 
-///     \code
-/// 
-///     const QList<QOpenGLDebugMessage> messages = logger->loggedMessages();
-///     for (const QOpenGLDebugMessage &message : messages)
-///         qDebug() << message;
-/// 
-///     \endcode
-/// 
-///     The internal log has a limited size; when it fills up, older messages will
-///     get discarded to make room for the new incoming messages. When you call
-///     loggedMessages(), the internal log will be emptied as well.
-/// 
-///     If you want to be sure not to lose any debug message, you must use real-time
-///     logging instead of calling this function. However, debug messages might
-///     still be generated in the timespan between context creation and activation
-///     of real-time logging (or, in general, when the real-time logging is disabled).
-/// 
-///     \section1 Real-time logging of messages
-/// 
-///     It is also possible to receive a stream of debug messages from the OpenGL
-///     server \e{as they are generated} by the implementation. In order to do so,
-///     you need to connect a suitable slot to the messageLogged() signal, and
-///     start logging by calling startLogging():
-/// 
-///     \code
-/// 
-///     connect(logger, &QOpenGLDebugLogger::messageLogged, receiver, &LogHandler::handleLoggedMessage);
-///     logger->startLogging();
-/// 
-///     \endcode
-/// 
-///     Similarly, logging can be disabled at any time by calling the stopLogging()
-///     function.
-/// 
-///     Real-time logging can be either asynchronous or synchronous, depending on
-///     the parameter passed to startLogging(). When logging in asynchronous mode
-///     (the default, as it has a very small overhead), the OpenGL implementation
-///     can generate messages at any time, and/or in an order which is different from the
-///     order of the OpenGL commands which caused those messages to be logged.
-///     The messages could also be generated from a thread that it's different from
-///     the thread the context is currently bound to. This is because OpenGL
-///     implementations are usually highly threaded and asynchronous, and therefore
-///     no warranties are made about the relative order and the timings of the
-///     debug messages.
-/// 
-///     On the other hand, logging in synchronous mode has a high overhead, but
-///     the OpenGL implementation guarantees that all the messages caused by a
-///     certain command are received in order, before the command returns,
-///     and from the same thread the OpenGL context is bound to.
-/// 
-///     This means that when logging in synchronous mode you will be able to run
-///     your OpenGL application in a debugger, put a breakpoint on a slot connected
-///     to the messageLogged() signal, and see in the backtrace the exact call
-///     that caused the logged message. This can be extremely useful to debug
-///     an OpenGL problem. Note that if OpenGL rendering is happening in another
-///     thread, you must force the signal/slot connection type to Qt::DirectConnection
-///     in order to be able to see the actual backtrace.
-/// 
-///     Refer to the LoggingMode enum documentation for more information about
-///     logging modes.
-/// 
-///     \note When real-time logging is enabled, debug messages will \e{not} be
-///     inserted in the internal OpenGL debug log any more; messages already
-///     present in the internal log will not be deleted, nor they will be emitted
-///     through the messageLogged() signal. Since some messages might be generated
-///     before real-time logging is started (and therefore be kept in the internal
-///     OpenGL log), it is important to always check if it contains any message
-///     after calling startLogging().
-/// 
-///     \section1 Inserting Messages in the Debug Log
-/// 
-///     It is possible for applications and libraries to insert custom messages in
-///     the debug log, for instance for marking a group of related OpenGL commands
-///     and therefore being then able to identify eventual messages coming from them.
-/// 
-///     In order to do so, you can create a QOpenGLDebugMessage object by calling
-///     \l{QOpenGLDebugMessage::}{createApplicationMessage()} or
-///     \l{QOpenGLDebugMessage::}{createThirdPartyMessage()}, and then inserting it
-///     into the log by calling logMessage():
-/// 
-///     \code
-/// 
-///     QOpenGLDebugMessage message =
-///         QOpenGLDebugMessage::createApplicationMessage(QStringLiteral("Custom message"));
-/// 
-///     logger->logMessage(message);
-/// 
-///     \endcode
-/// 
-///     Note that OpenGL implementations have a vendor-specific limit to the length
-///     of the messages that can be inserted in the debug log. You can retrieve
-///     this length by calling the maximumMessageLength() method; messages longer
-///     than the limit will automatically get truncated.
-/// 
-///     \section1 Controlling the Debug Output
-/// 
-///     QOpenGLDebugMessage is also able to apply filters to the debug messages, and
-///     therefore limit the amount of messages logged. You can enable or disable
-///     logging of messages by calling enableMessages() and disableMessages()
-///     respectively. By default, all messages are logged.
-/// 
-///     It is possible to enable or disable messages by selecting them by:
-/// 
-///     \list
-///     \li source, type and severity (and including all ids in the selection);
-///     \li id, source and type (and including all severities in the selection).
-///     \endlist
-/// 
-///     Note that the "enabled" status for a given message is a property of the
-///     (id, source, type, severity) tuple; the message attributes \e{do not} form
-///     a hierarchy of any kind. You should be careful about the order of the calls
-///     to enableMessages() and disableMessages(), as it will change which
-///     messages will are enabled / disabled.
-/// 
-///     It's not possible to filter by the message text itself; applications
-///     have to do that on their own (in slots connected to the messageLogged()
-///     signal, or after fetching the messages in the internal debug log
-///     through loggedMessages()).
-/// 
-///     In order to simplify the management of the enabled / disabled statuses,
-///     QOpenGLDebugMessage also supports the concept of \c{debug groups}. A debug
-///     group contains the group of enabled / disabled configurations of debug
-///     messages. Moreover, debug groups are organized in a stack: it is possible
-///     to push and pop groups by calling pushGroup() and popGroup() respectively.
-///     (When an OpenGL context is created, there is already a group in the stack).
-/// 
-///     The enableMessages() and disableMessages() functions will modify the
-///     configuration in the current debug group, that is, the one at the top of
-///     the debug groups stack.
-/// 
-///     When a new group is pushed onto the debug groups stack, it will inherit
-///     the configuration of the group that was previously on the top of the stack.
-///     Vice versa, popping a debug group will restore the configuration of
-///     the debug group that becomes the new top.
-/// 
-///     Pushing (respectively popping) debug groups will also automatically generate
-///     a debug message of type QOpenGLDebugMessage::GroupPushType (respectively
-///     \l{QOpenGLDebugMessage::}{GroupPopType}).
-/// 
-///     \sa QOpenGLDebugMessage
+/// # Introduction
+/// 
+/// OpenGL programming can be very error prone. Most of the time, a single
+/// failing call to OpenGL can cause an entire portion of an application to
+/// stop working, with nothing being drawn on the screen.
+/// 
+/// The only way to be sure that no errors are being returned from the OpenGL
+/// implementation is checking with `glGetError` after each and every API
+/// call. Moreover, OpenGL errors stack up, therefore glGetError should always
+/// be used in a loop like this:
+/// 
+/// ```
+/// GLenum error = GL_NO_ERROR;
+/// do {
+/// error = glGetError();
+/// if (error != GL_NO_ERROR)
+/// // handle the error
+/// } while (error != GL_NO_ERROR);
+/// ```
+/// 
+/// There are also many other information we are interested in (as application
+/// developers), for instance performance issues, or warnings about using
+/// deprecated APIs. Those kind of messages are not reported through the
+/// ordinary OpenGL error reporting mechanisms.
+/// 
+/// QOpenGLDebugLogger aims at addressing these issues by providing access to
+/// the *OpenGL debug log* . If your OpenGL implementation supports it (by
+/// exposing the `GL_KHR_debug` extension), messages from the OpenGL server
+/// will be either logged in an internal OpenGL log, or passed in
+/// to listeners as they're generated from OpenGL.
+/// 
+/// QOpenGLDebugLogger supports both these modes of operation. Refer to the
+/// following sections to find out the differences between them.
+/// 
+/// # Creating an OpenGL Debug Context
+/// 
+/// For efficiency reasons, OpenGL implementations are allowed not to create
+/// any debug output at all, unless the OpenGL context is a debug context. In order
+/// to create a debug context from Qt, you must set the QSurfaceFormat::DebugContext
+/// format option on the QSurfaceFormat used to create the QOpenGLContext object:
+/// 
+/// ```
+/// QSurfaceFormat format;
+/// // asks for a OpenGL 3.2 debug context using the Core profile
+/// format.setMajorVersion(3);
+/// format.setMinorVersion(2);
+/// format.setProfile(QSurfaceFormat::CoreProfile);
+/// format.setOption(QSurfaceFormat::DebugContext);
+/// 
+/// QOpenGLContext *context = new QOpenGLContext;
+/// context->setFormat(format);
+/// context->create();
+/// ```
+/// 
+/// Note that requesting a 3.2 OpenGL Core Profile is just for the example's
+/// purposes; this class is not tied to any specific OpenGL or OpenGL ES
+/// version, as it relies on the availability of the `GL_KHR_debug` extension
+/// (see below).
+/// 
+/// # Creating and Initializing a QOpenGLDebugLogger
+/// 
+/// QOpenGLDebugLogger is a simple QObject-derived class. Just like all QObject
+/// subclasses, you create an instance (and optionally specify a parent
+/// object), and like the other OpenGL functions in Qt you *must* initialize
+/// it before usage by calling initialize() whilst there is a current OpenGL context:
+/// 
+/// ```
+/// QOpenGLContext *ctx = QOpenGLContext::currentContext();
+/// QOpenGLDebugLogger *logger = new QOpenGLDebugLogger(this);
+/// 
+/// logger->initialize(); // initializes in the current context, i.e. ctx
+/// ```
+/// 
+/// Note that the `GL_KHR_debug` extension *must* be available in the context
+/// in order to access the messages logged by OpenGL. You can check the
+/// presence of this extension by calling:
+/// 
+/// ```
+/// ctx->hasExtension(QByteArrayLiteral("GL_KHR_debug"))
+/// ```
+/// 
+/// where `ctx` is a valid QOpenGLContext. If the extension is not available,
+/// initialize() will return false.
+/// 
+/// # Reading the Internal OpenGL Debug Log
+/// 
+/// OpenGL implementations keep an internal log of debug messages. Messages
+/// stored in this log can be retrieved by using the loggedMessages() function:
+/// 
+/// ```
+/// const QList<QOpenGLDebugMessage> messages = logger->loggedMessages();
+/// for (const QOpenGLDebugMessage &message : messages)
+/// qDebug() << message;
+/// ```
+/// 
+/// The internal log has a limited size; when it fills up, older messages will
+/// get discarded to make room for the new incoming messages. When you call
+/// loggedMessages(), the internal log will be emptied as well.
+/// 
+/// If you want to be sure not to lose any debug message, you must use real-time
+/// logging instead of calling this function. However, debug messages might
+/// still be generated in the timespan between context creation and activation
+/// of real-time logging (or, in general, when the real-time logging is disabled).
+/// 
+/// # Real-time logging of messages
+/// 
+/// It is also possible to receive a stream of debug messages from the OpenGL
+/// server *as they are generated* by the implementation. In order to do so,
+/// you need to connect a suitable slot to the messageLogged() signal, and
+/// start logging by calling startLogging():
+/// 
+/// ```
+/// connect(logger, &QOpenGLDebugLogger::messageLogged, receiver, &LogHandler::handleLoggedMessage);
+/// logger->startLogging();
+/// ```
+/// 
+/// Similarly, logging can be disabled at any time by calling the stopLogging()
+/// function.
+/// 
+/// Real-time logging can be either asynchronous or synchronous, depending on
+/// the parameter passed to startLogging(). When logging in asynchronous mode
+/// (the default, as it has a very small overhead), the OpenGL implementation
+/// can generate messages at any time, and/or in an order which is different from the
+/// order of the OpenGL commands which caused those messages to be logged.
+/// The messages could also be generated from a thread that it's different from
+/// the thread the context is currently bound to. This is because OpenGL
+/// implementations are usually highly threaded and asynchronous, and therefore
+/// no warranties are made about the relative order and the timings of the
+/// debug messages.
+/// 
+/// On the other hand, logging in synchronous mode has a high overhead, but
+/// the OpenGL implementation guarantees that all the messages caused by a
+/// certain command are received in order, before the command returns,
+/// and from the same thread the OpenGL context is bound to.
+/// 
+/// This means that when logging in synchronous mode you will be able to run
+/// your OpenGL application in a debugger, put a breakpoint on a slot connected
+/// to the messageLogged() signal, and see in the backtrace the exact call
+/// that caused the logged message. This can be extremely useful to debug
+/// an OpenGL problem. Note that if OpenGL rendering is happening in another
+/// thread, you must force the signal/slot connection type to Qt::DirectConnection
+/// in order to be able to see the actual backtrace.
+/// 
+/// Refer to the LoggingMode enum documentation for more information about
+/// logging modes.
+/// 
+/// **Note**: When real-time logging is enabled, debug messages will *not* be
+/// inserted in the internal OpenGL debug log any more; messages already
+/// present in the internal log will not be deleted, nor they will be emitted
+/// through the messageLogged() signal. Since some messages might be generated
+/// before real-time logging is started (and therefore be kept in the internal
+/// OpenGL log), it is important to always check if it contains any message
+/// after calling startLogging().
+/// 
+/// # Inserting Messages in the Debug Log
+/// 
+/// It is possible for applications and libraries to insert custom messages in
+/// the debug log, for instance for marking a group of related OpenGL commands
+/// and therefore being then able to identify eventual messages coming from them.
+/// 
+/// In order to do so, you can create a QOpenGLDebugMessage object by calling
+/// [createApplicationMessage()](QOpenGLDebugMessage::)
+/// or
+/// [createThirdPartyMessage()](QOpenGLDebugMessage::)
+/// , and then inserting it
+/// into the log by calling logMessage():
+/// 
+/// ```
+/// QOpenGLDebugMessage message =
+/// QOpenGLDebugMessage::createApplicationMessage(QStringLiteral("Custom message"));
+/// 
+/// logger->logMessage(message);
+/// ```
+/// 
+/// Note that OpenGL implementations have a vendor-specific limit to the length
+/// of the messages that can be inserted in the debug log. You can retrieve
+/// this length by calling the maximumMessageLength() method; messages longer
+/// than the limit will automatically get truncated.
+/// 
+/// # Controlling the Debug Output
+/// 
+/// QOpenGLDebugMessage is also able to apply filters to the debug messages, and
+/// therefore limit the amount of messages logged. You can enable or disable
+/// logging of messages by calling enableMessages() and disableMessages()
+/// respectively. By default, all messages are logged.
+/// 
+/// It is possible to enable or disable messages by selecting them by:
+/// 
+/// * source, type and severity (and including all ids in the selection);
+/// * id, source and type (and including all severities in the selection).
+/// 
+/// Note that the status for a given message is a property of the
+/// (id, source, type, severity) tuple; the message attributes *do not* form
+/// a hierarchy of any kind. You should be careful about the order of the calls
+/// to enableMessages() and disableMessages(), as it will change which
+/// messages will are enabled / disabled.
+/// 
+/// It's not possible to filter by the message text itself; applications
+/// have to do that on their own (in slots connected to the messageLogged()
+/// signal, or after fetching the messages in the internal debug log
+/// through loggedMessages()).
+/// 
+/// In order to simplify the management of the enabled / disabled statuses,
+/// QOpenGLDebugMessage also supports the concept of `debug groups` . A debug
+/// group contains the group of enabled / disabled configurations of debug
+/// messages. Moreover, debug groups are organized in a stack: it is possible
+/// to push and pop groups by calling pushGroup() and popGroup() respectively.
+/// (When an OpenGL context is created, there is already a group in the stack).
+/// 
+/// The enableMessages() and disableMessages() functions will modify the
+/// configuration in the current debug group, that is, the one at the top of
+/// the debug groups stack.
+/// 
+/// When a new group is pushed onto the debug groups stack, it will inherit
+/// the configuration of the group that was previously on the top of the stack.
+/// Vice versa, popping a debug group will restore the configuration of
+/// the debug group that becomes the new top.
+/// 
+/// Pushing (respectively popping) debug groups will also automatically generate
+/// a debug message of type QOpenGLDebugMessage::GroupPushType (respectively
+/// [GroupPopType](QOpenGLDebugMessage::)
+/// ).
+/// 
+/// **See also:** QOpenGLDebugMessage
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -253,119 +233,221 @@ enum LoggingMode {
 }
 
 struct OpenGLDebugLogger : Object {
-    ///     Initializes the object in the current OpenGL context. The context must
-    ///     support the \c{GL_KHR_debug} extension for the initialization to succeed.
-    ///     The object must be initialized before any logging can happen.
     /// 
-    ///     It is safe to call this function multiple times from the same context.
+    /// Initializes the object in the current OpenGL context. The context must
+    /// support the `GL_KHR_debug` extension for the initialization to succeed.
+    /// The object must be initialized before any logging can happen.
     /// 
-    ///     This function can also be used to change the context of a previously
-    ///     initialized object; note that in this case the object must not be logging
-    ///     when you call this function.
+    /// It is safe to call this function multiple times from the same context.
     /// 
-    ///     Returns \c true if the logger is successfully initialized; false otherwise.
+    /// This function can also be used to change the context of a previously
+    /// initialized object; note that in this case the object must not be logging
+    /// when you call this function.
     /// 
-    ///     \sa QOpenGLContext
+    /// Returns `true` if the logger is successfully initialized; false otherwise.
+    /// 
+    /// **See also:** QOpenGLContext
     initialize() -> bool,
-    ///     Returns \c true if this object is currently logging, false otherwise.
     /// 
-    ///     \sa startLogging()
+    /// Returns `true` if this object is currently logging, false otherwise.
+    /// 
+    /// **See also:** startLogging()
     is_logging() -> bool,
-    ///     Returns the logging mode of the object.
     /// 
-    ///     \sa startLogging()
+    /// Note that logging must have been started or the value of this property
+    /// will be meaningless.
+    /// 
+    /// **See also:** startLogging()
+    /// isLogging()
+    /// 
+    /// Returns the logging mode of the object.
+    /// 
+    /// **See also:** startLogging()
     logging_mode() -> OpenGLDebugLogger::LoggingMode,
-    ///     Returns the maximum supported length, in bytes, for the text of the messages
-    ///     passed to logMessage(). This is also the maximum length of a debug group
-    ///     name, as pushing or popping groups will automatically log a message with
-    ///     the debug group name as the message text.
     /// 
-    ///     If a message text is too long, it will be automatically truncated by
-    ///     QOpenGLDebugLogger.
+    /// Returns the maximum supported length, in bytes, for the text of the messages
+    /// passed to logMessage(). This is also the maximum length of a debug group
+    /// name, as pushing or popping groups will automatically log a message with
+    /// the debug group name as the message text.
     /// 
-    ///     \note Message texts are encoded in UTF-8 when they get passed to OpenGL, so
-    ///     their size in bytes does not usually match the amount of UTF-16 code units,
-    ///     as returned f.i. by QString::length(). (It does if the message contains
-    ///     7-bit ASCII only data, which is typical for debug messages.)
+    /// If a message text is too long, it will be automatically truncated by
+    /// QOpenGLDebugLogger.
+    /// 
+    /// **Note**: Message texts are encoded in UTF-8 when they get passed to OpenGL, so
+    /// their size in bytes does not usually match the amount of UTF-16 code units,
+    /// as returned f.i. by QString::length(). (It does if the message contains
+    /// 7-bit ASCII only data, which is typical for debug messages.)
     maximum_message_length() -> i64,
-    ///     Pushes a debug group with name \a name, id \a id, and source \a source onto
-    ///     the debug groups stack. If the group is successfully pushed, OpenGL will
-    ///     automatically log a message with message \a name, id \a id, source \a
-    ///     source, type QOpenGLDebugMessage::GroupPushType and severity
-    ///     QOpenGLDebugMessage::NotificationSeverity.
     /// 
-    ///     The newly pushed group will inherit the same filtering settings of the
-    ///     group that was on the top of the stack; that is, the filtering will not be
-    ///     changed by pushing a new group.
+    /// Pushes a debug group with name *name,* id *id,* and source *source* onto
+    /// the debug groups stack. If the group is successfully pushed, OpenGL will
+    /// automatically log a message with message *name,* id *id,* source *source,* type QOpenGLDebugMessage::GroupPushType and severity
+    /// QOpenGLDebugMessage::NotificationSeverity.
     /// 
-    ///     \note The \a source must either be QOpenGLDebugMessage::ApplicationSource or
-    ///     QOpenGLDebugMessage::ThirdPartySource, otherwise the group will not be pushed.
+    /// The newly pushed group will inherit the same filtering settings of the
+    /// group that was on the top of the stack; that is, the filtering will not be
+    /// changed by pushing a new group.
     /// 
-    ///     \note The object must be initialized before managing debug groups.
+    /// **Note**: The *source* must either be QOpenGLDebugMessage::ApplicationSource or
+    /// QOpenGLDebugMessage::ThirdPartySource, otherwise the group will not be pushed.
     /// 
-    ///     \sa popGroup(), enableMessages(), disableMessages()
+    /// **Note**: The object must be initialized before managing debug groups.
+    /// 
+    /// **See also:** popGroup()
+    /// enableMessages()
+    /// disableMessages()
     push_group(name: String, id: i32, source: OpenGLDebugMessage::Source),
-    ///     Pops the topmost debug group from the debug groups stack. If the group is
-    ///     successfully popped, OpenGL will automatically log a message with message,
-    ///     id and source matching those of the popped group, type
-    ///     QOpenGLDebugMessage::GroupPopType and severity
-    ///     QOpenGLDebugMessage::NotificationSeverity.
     /// 
-    ///     Popping a debug group will restore the message filtering settings of the
-    ///     group that becomes the top of the debug groups stack.
+    /// Pops the topmost debug group from the debug groups stack. If the group is
+    /// successfully popped, OpenGL will automatically log a message with message,
+    /// id and source matching those of the popped group, type
+    /// QOpenGLDebugMessage::GroupPopType and severity
+    /// QOpenGLDebugMessage::NotificationSeverity.
     /// 
-    ///     \note The object must be initialized before managing debug groups.
+    /// Popping a debug group will restore the message filtering settings of the
+    /// group that becomes the top of the debug groups stack.
     /// 
-    ///     \sa pushGroup()
+    /// **Note**: The object must be initialized before managing debug groups.
+    /// 
+    /// **See also:** pushGroup()
     pop_group(),
+    /// 
+    /// Enables the logging of messages from the given *sources,* of the given *types* and with the given *severities* and any message id.
+    /// 
+    /// The logging will be enabled in the current control group.
+    /// 
+    /// **See also:** disableMessages()
+    /// pushGroup()
+    /// popGroup()
+    /// 
+    /// Enables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
+    /// 
+    /// The logging will be enabled in the current control group.
+    /// 
+    /// **See also:** disableMessages()
+    /// pushGroup()
+    /// popGroup()
     enable_messages(sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types, severities: OpenGLDebugMessage::Severities),
+    /// 
+    /// Enables the logging of messages from the given *sources,* of the given *types* and with the given *severities* and any message id.
+    /// 
+    /// The logging will be enabled in the current control group.
+    /// 
+    /// **See also:** disableMessages()
+    /// pushGroup()
+    /// popGroup()
+    /// 
+    /// Enables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
+    /// 
+    /// The logging will be enabled in the current control group.
+    /// 
+    /// **See also:** disableMessages()
+    /// pushGroup()
+    /// popGroup()
     enable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
+    /// 
+    /// Disables the logging of messages with the given *sources,* of the given *types* and with the given *severities* and any message id.
+    /// 
+    /// The logging will be disabled in the current control group.
+    /// 
+    /// **See also:** enableMessages()
+    /// pushGroup()
+    /// popGroup()
+    /// 
+    /// Disables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
+    /// 
+    /// The logging will be disabled in the current control group.
+    /// 
+    /// **See also:** enableMessages()
+    /// pushGroup()
+    /// popGroup()
     disable_messages(sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types, severities: OpenGLDebugMessage::Severities),
+    /// 
+    /// Disables the logging of messages with the given *sources,* of the given *types* and with the given *severities* and any message id.
+    /// 
+    /// The logging will be disabled in the current control group.
+    /// 
+    /// **See also:** enableMessages()
+    /// pushGroup()
+    /// popGroup()
+    /// 
+    /// Disables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
+    /// 
+    /// The logging will be disabled in the current control group.
+    /// 
+    /// **See also:** enableMessages()
+    /// pushGroup()
+    /// popGroup()
     disable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
-    ///     Reads all the available messages in the OpenGL internal debug log and
-    ///     returns them. Moreover, this function will clear the internal debug log,
-    ///     so that subsequent invocations will not return messages that were
-    ///     already returned.
     /// 
-    ///     \sa startLogging()
+    /// Reads all the available messages in the OpenGL internal debug log and
+    /// returns them. Moreover, this function will clear the internal debug log,
+    /// so that subsequent invocations will not return messages that were
+    /// already returned.
+    /// 
+    /// **See also:** startLogging()
     logged_messages() -> [OpenGLDebugMessage],
-    ///     Inserts the message \a debugMessage into the OpenGL debug log. This provides
-    ///     a way for applications or libraries to insert custom messages that can
-    ///     ease the debugging of OpenGL applications.
     /// 
-    ///     \note \a debugMessage must have QOpenGLDebugMessage::ApplicationSource or
-    ///     QOpenGLDebugMessage::ThirdPartySource as its source, and a valid
-    ///     type and severity, otherwise it will not be inserted into the log.
+    /// Inserts the message *debugMessage* into the OpenGL debug log. This provides
+    /// a way for applications or libraries to insert custom messages that can
+    /// ease the debugging of OpenGL applications.
     /// 
-    ///     \note The object must be initialized before logging can happen.
+    /// **Note**: *debugMessage* must have QOpenGLDebugMessage::ApplicationSource or
+    /// QOpenGLDebugMessage::ThirdPartySource as its source, and a valid
+    /// type and severity, otherwise it will not be inserted into the log.
     /// 
-    ///     \sa initialize()
+    /// **Note**: The object must be initialized before logging can happen.
+    /// 
+    /// **See also:** initialize()
     log_message(debug_message: &OpenGLDebugMessageType),
-    ///     Starts logging messages coming from the OpenGL server. When a new message
-    ///     is received, the signal messageLogged() is emitted, carrying the logged
-    ///     message as argument.
     /// 
-    ///     \a loggingMode specifies whether the logging must be asynchronous (the default)
-    ///     or synchronous.
+    /// Starts logging messages coming from the OpenGL server. When a new message
+    /// is received, the signal messageLogged() is emitted, carrying the logged
+    /// message as argument.
     /// 
-    ///     QOpenGLDebugLogger will record the values of \c{GL_DEBUG_OUTPUT} and
-    ///     \c{GL_DEBUG_OUTPUT_SYNCHRONOUS} when logging is started, and set them back
-    ///     when logging is stopped. Moreover, any user-defined OpenGL debug callback
-    ///     installed when this function is invoked will be restored when logging is
-    ///     stopped; QOpenGLDebugLogger will ensure that the pre-existing callback will
-    ///     still be invoked when logging.
+    /// *loggingMode* specifies whether the logging must be asynchronous (the default)
+    /// or synchronous.
     /// 
-    ///     \note It's not possible to change the logging mode without stopping and
-    ///     starting logging again. This might change in a future version of Qt.
+    /// QOpenGLDebugLogger will record the values of `GL_DEBUG_OUTPUT` and
+    /// `GL_DEBUG_OUTPUT_SYNCHRONOUS` when logging is started, and set them back
+    /// when logging is stopped. Moreover, any user-defined OpenGL debug callback
+    /// installed when this function is invoked will be restored when logging is
+    /// stopped; QOpenGLDebugLogger will ensure that the pre-existing callback will
+    /// still be invoked when logging.
     /// 
-    ///     \note The object must be initialized before logging can happen.
+    /// **Note**: It's not possible to change the logging mode without stopping and
+    /// starting logging again. This might change in a future version of Qt.
     /// 
-    ///     \sa stopLogging(), initialize()
+    /// **Note**: The object must be initialized before logging can happen.
+    /// 
+    /// **See also:** stopLogging()
+    /// initialize()
     start_logging(logging_mode: OpenGLDebugLogger::LoggingMode),
-    ///     Stops logging messages from the OpenGL server.
     /// 
-    ///     \sa startLogging()
+    /// Stops logging messages from the OpenGL server.
+    /// 
+    /// **See also:** startLogging()
     stop_logging(),
+    /// 
+    /// This signal is emitted when a debug message (wrapped by the *debugMessage*
+    /// argument) is logged from the OpenGL server.
+    /// 
+    /// Depending on the OpenGL implementation, this signal can be emitted
+    /// from other threads than the one(s) the receiver(s) lives in, and even
+    /// different from the thread the QOpenGLContext in which this object has
+    /// been initialized lives in. Moreover, the signal could be emitted from
+    /// multiple threads at the same time. This is normally not a problem,
+    /// as Qt will utilize a queued connection for cross-thread signal emissions,
+    /// but if you force the connection type to Direct then you must be aware of
+    /// the potential races in the slots connected to this signal.
+    /// 
+    /// If logging have been started in SynchronousLogging mode, OpenGL guarantees
+    /// that this signal will be emitted from the same thread the QOpenGLContext
+    /// has been bound to, and no concurrent invocations will ever happen.
+    /// 
+    /// **Note**: Logging must have been started, or this signal will not be emitted.
+    /// 
+    /// **See also:** startLogging()
     [signal] message_logged(debug_message: &OpenGLDebugMessageType),
 }
 

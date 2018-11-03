@@ -1,59 +1,85 @@
-///     \class QTextTableFormat
-///     \reentrant
 /// 
-///     \brief The QTextTableFormat class provides formatting information for
-///     tables in a QTextDocument.
-///     \inmodule QtGui
+/// A table is a group of cells ordered into rows and columns. Each table
+/// contains at least one row and one column. Each cell contains a block.
+/// Tables in rich text documents are formatted using the properties
+/// defined in this class.
 /// 
-///     \ingroup richtext-processing
-///     \ingroup shared
+/// Tables are horizontally justified within their parent frame according to the
+/// table's alignment. This can be read with the alignment() function and set
+/// with setAlignment().
 /// 
-///     A table is a group of cells ordered into rows and columns. Each table
-///     contains at least one row and one column. Each cell contains a block.
-///     Tables in rich text documents are formatted using the properties
-///     defined in this class.
+/// Cells within the table are separated by cell spacing. The number of pixels
+/// between cells is set with setCellSpacing() and read with cellSpacing().
+/// The contents of each cell is surrounded by cell padding. The number of pixels
+/// between each cell edge and its contents is set with setCellPadding() and read
+/// with cellPadding().
 /// 
-///     Tables are horizontally justified within their parent frame according to the
-///     table's alignment. This can be read with the alignment() function and set
-///     with setAlignment().
+/// ![qtexttableformat-cell.png](qtexttableformat-cell.png)
 /// 
-///     Cells within the table are separated by cell spacing. The number of pixels
-///     between cells is set with setCellSpacing() and read with cellSpacing().
-///     The contents of each cell is surrounded by cell padding. The number of pixels
-///     between each cell edge and its contents is set with setCellPadding() and read
-///     with cellPadding().
+/// The table's background color can be read with the background() function,
+/// and can be specified with setBackground(). The background color of each
+/// cell can be set independently, and will control the color of the cell within
+/// the padded area.
 /// 
-///     \image qtexttableformat-cell.png
+/// The table format also provides a way to constrain the widths of the columns
+/// in the table. Columns can be assigned a fixed width, a variable width, or
+/// a percentage of the available width (see QTextLength). The columns() function
+/// returns the number of columns with constraints, and the
+/// columnWidthConstraints() function returns the constraints defined for the
+/// table. These quantities can also be set by calling setColumnWidthConstraints()
+/// with a vector containing new constraints. If no constraints are
+/// required, clearColumnWidthConstraints() can be used to remove them.
 /// 
-///     The table's background color can be read with the background() function,
-///     and can be specified with setBackground(). The background color of each
-///     cell can be set independently, and will control the color of the cell within
-///     the padded area.
-/// 
-///     The table format also provides a way to constrain the widths of the columns
-///     in the table. Columns can be assigned a fixed width, a variable width, or
-///     a percentage of the available width (see QTextLength). The columns() function
-///     returns the number of columns with constraints, and the
-///     columnWidthConstraints() function returns the constraints defined for the
-///     table. These quantities can also be set by calling setColumnWidthConstraints()
-///     with a vector containing new constraints. If no constraints are
-///     required, clearColumnWidthConstraints() can be used to remove them.
-/// 
-///     \sa QTextTable, QTextTableCell, QTextLength
+/// **See also:** QTextTable
+/// QTextTableCell
+/// QTextLength
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TextTableFormat : TextFrameFormat {
+    /// 
+    /// Returns `true` if this table format is valid; otherwise
+    /// returns `false.`
     is_valid() -> bool,
+    /// 
+    /// Returns the number of columns specified by the table format.
     columns() -> i32,
     set_columns(columns: i32),
+    /// 
+    /// Returns the table's cell spacing. This describes the distance between
+    /// adjacent cells.
     cell_spacing() -> f32,
+    /// 
+    /// Sets the cell *spacing* for the table. This determines the distance
+    /// between adjacent cells.
     set_cell_spacing(spacing: f32),
+    /// 
+    /// Returns the table's cell padding. This describes the distance between
+    /// the border of a cell and its contents.
     cell_padding() -> f32,
+    /// 
+    /// Sets the cell *padding* for the table. This determines the distance
+    /// between the border of a cell and its contents.
     set_cell_padding(padding: f32),
+    /// 
+    /// Sets the table's *alignment.*
+    /// 
+    /// **See also:** alignment()
     set_alignment(alignment: Rute::Alignment),
+    /// 
+    /// Returns the table's alignment.
+    /// 
+    /// **See also:** setAlignment()
     alignment() -> Rute::Alignment,
+    /// 
+    /// Declares the first *count* rows of the table as table header.
+    /// The table header rows get repeated when a table is broken
+    /// across a page boundary.
     set_header_row_count(count: i32),
+    /// 
+    /// Returns the number of rows in the table that define the header.
+    /// 
+    /// **See also:** setHeaderRowCount()
     header_row_count() -> i32,
 }
 

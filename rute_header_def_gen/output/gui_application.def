@@ -1,470 +1,667 @@
-///     \class QGuiApplication
-///     \brief The QGuiApplication class manages the GUI application's control
-///     flow and main settings.
 /// 
-///     \inmodule QtGui
-///     \since 5.0
+/// QGuiApplication contains the main event loop, where all events from the window
+/// system and other sources are processed and dispatched. It also handles the
+/// application's initialization and finalization, and provides session management.
+/// In addition, QGuiApplication handles most of the system-wide and application-wide
+/// settings.
 /// 
-///     QGuiApplication contains the main event loop, where all events from the window
-///     system and other sources are processed and dispatched. It also handles the
-///     application's initialization and finalization, and provides session management.
-///     In addition, QGuiApplication handles most of the system-wide and application-wide
-///     settings.
+/// For any GUI application using Qt, there is precisely **one** QGuiApplication
+/// object no matter whether the application has 0, 1, 2 or more windows at
+/// any given time. For non-GUI Qt applications, use QCoreApplication instead,
+/// as it does not depend on the Qt GUI module. For QWidget based Qt applications,
+/// use QApplication instead, as it provides some functionality needed for creating
+/// QWidget instances.
 /// 
-///     For any GUI application using Qt, there is precisely \b one QGuiApplication
-///     object no matter whether the application has 0, 1, 2 or more windows at
-///     any given time. For non-GUI Qt applications, use QCoreApplication instead,
-///     as it does not depend on the Qt GUI module. For QWidget based Qt applications,
-///     use QApplication instead, as it provides some functionality needed for creating
-///     QWidget instances.
+/// The QGuiApplication object is accessible through the instance() function, which
+/// returns a pointer equivalent to the global [qApp](qApp)
+/// pointer.
 /// 
-///     The QGuiApplication object is accessible through the instance() function, which
-///     returns a pointer equivalent to the global \l qApp pointer.
+/// QGuiApplication's main areas of responsibility are:
+/// * It initializes the application with the user's desktop settings, such as palette(), font() and styleHints(). It keeps track of these properties in case the user changes the desktop globally, for example, through some kind of control panel.
+/// * It performs event handling, meaning that it receives events from the underlying window system and dispatches them to the relevant widgets. You can send your own events to windows by using sendEvent() and postEvent().
+/// * It parses common command line arguments and sets its internal state accordingly. See the [constructor documentation](QGuiApplication::QGuiApplication())
+/// below for more details.
+/// * It provides localization of strings that are visible to the user via translate().
+/// * It provides some magical objects like the clipboard().
+/// * It knows about the application's windows. You can ask which window is at a certain position using topLevelAt(), get a list of topLevelWindows(), etc.
+/// * It manages the application's mouse cursor handling, see setOverrideCursor()
+/// * It provides support for sophisticated [session management](Session%20Management)
+/// . This makes it possible for applications to terminate gracefully when the user logs out, to cancel a shutdown process if termination isn't possible and even to preserve the entire application's state for a future session. See isSessionRestored(), sessionId() and commitDataRequest() and saveStateRequest() for details.
 /// 
-///     QGuiApplication's main areas of responsibility are:
-///         \list
-///             \li  It initializes the application with the user's desktop settings,
-///                 such as palette(), font() and styleHints(). It keeps
-///                 track of these properties in case the user changes the desktop
-///                 globally, for example, through some kind of control panel.
+/// Since the QGuiApplication object does so much initialization, it *must* be
+/// created before any other objects related to the user interface are created.
+/// QGuiApplication also deals with common command line arguments. Hence, it is
+/// usually a good idea to create it *before* any interpretation or
+/// modification of `argv` is done in the application itself.
 /// 
-///             \li  It performs event handling, meaning that it receives events
-///                 from the underlying window system and dispatches them to the
-///                 relevant widgets. You can send your own events to windows by
-///                 using sendEvent() and postEvent().
+/// * {2,1} Groups of functions
 /// 
-///             \li  It parses common command line arguments and sets its internal
-///                 state accordingly. See the \l{QGuiApplication::QGuiApplication()}
-///                 {constructor documentation} below for more details.
+/// * System settings
+/// * desktopSettingsAware(), setDesktopSettingsAware(), styleHints(), palette(), setPalette(), font(), setFont().
 /// 
-///             \li  It provides localization of strings that are visible to the
-///                 user via translate().
+/// * Event handling
+/// * exec(), processEvents(), exit(), quit(). sendEvent(), postEvent(), sendPostedEvents(), removePostedEvents(), hasPendingEvents(), notify().
 /// 
-///             \li  It provides some magical objects like the clipboard().
+/// * Windows
+/// * allWindows(), topLevelWindows(), focusWindow(), clipboard(), topLevelAt().
 /// 
-///             \li  It knows about the application's windows. You can ask which
-///                 window is at a certain position using topLevelAt(), get a list of
-///                 topLevelWindows(), etc.
+/// * Advanced cursor handling
+/// * overrideCursor(), setOverrideCursor(), restoreOverrideCursor().
 /// 
-///             \li  It manages the application's mouse cursor handling, see
-///                 setOverrideCursor()
+/// * Session management
+/// * isSessionRestored(), sessionId(), commitDataRequest(), saveStateRequest().
 /// 
-///             \li  It provides support for sophisticated \l{Session Management}
-///                 {session management}. This makes it possible for applications
-///                 to terminate gracefully when the user logs out, to cancel a
-///                 shutdown process if termination isn't possible and even to
-///                 preserve the entire application's state for a future session.
-///                 See isSessionRestored(), sessionId() and commitDataRequest() and
-///                 saveStateRequest() for details.
-///         \endlist
+/// * Miscellaneous
+/// * startingUp(), closingDown().
 /// 
-///     Since the QGuiApplication object does so much initialization, it \e{must} be
-///     created before any other objects related to the user interface are created.
-///     QGuiApplication also deals with common command line arguments. Hence, it is
-///     usually a good idea to create it \e before any interpretation or
-///     modification of \c argv is done in the application itself.
-/// 
-///     \table
-///     \header
-///         \li{2,1} Groups of functions
-/// 
-///         \row
-///         \li  System settings
-///         \li  desktopSettingsAware(),
-///             setDesktopSettingsAware(),
-///             styleHints(),
-///             palette(),
-///             setPalette(),
-///             font(),
-///             setFont().
-/// 
-///         \row
-///         \li  Event handling
-///         \li  exec(),
-///             processEvents(),
-///             exit(),
-///             quit().
-///             sendEvent(),
-///             postEvent(),
-///             sendPostedEvents(),
-///             removePostedEvents(),
-///             hasPendingEvents(),
-///             notify().
-/// 
-///         \row
-///         \li  Windows
-///         \li  allWindows(),
-///             topLevelWindows(),
-///             focusWindow(),
-///             clipboard(),
-///             topLevelAt().
-/// 
-///         \row
-///         \li  Advanced cursor handling
-///         \li  overrideCursor(),
-///             setOverrideCursor(),
-///             restoreOverrideCursor().
-/// 
-///         \row
-///         \li  Session management
-///         \li  isSessionRestored(),
-///             sessionId(),
-///             commitDataRequest(),
-///             saveStateRequest().
-/// 
-///         \row
-///         \li  Miscellaneous
-///         \li  startingUp(),
-///             closingDown().
-///     \endtable
-/// 
-///     \sa QCoreApplication, QAbstractEventDispatcher, QEventLoop
+/// **See also:** QCoreApplication
+/// QAbstractEventDispatcher
+/// QEventLoop
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GuiApplication : CoreApplication {
-    ///     \property QGuiApplication::applicationDisplayName
-    ///     \brief the user-visible name of this application
-    ///     \since 5.0
-    /// 
-    ///     This name is shown to the user, for instance in window titles.
-    ///     It can be translated, if necessary.
-    /// 
-    ///     If not set, the application display name defaults to the application name.
-    /// 
-    ///     \sa applicationName
     [static] set_application_display_name(name: String),
+    /// 
+    /// This name is shown to the user, for instance in window titles.
+    /// It can be translated, if necessary.
+    /// 
+    /// If not set, the application display name defaults to the application name.
+    /// 
+    /// **See also:** applicationName
     [static] application_display_name() -> String,
-    ///     \property QGuiApplication::desktopFileName
-    ///     \brief the base name of the desktop entry for this application
-    ///     \since 5.7
-    /// 
-    ///     This is the file name, without the full path, of the desktop entry
-    ///     that represents this application according to the freedesktop desktop
-    ///     entry specification.
-    /// 
-    ///     This property gives a precise indication of what desktop entry represents
-    ///     the application and it is needed by the windowing system to retrieve
-    ///     such information without resorting to imprecise heuristics.
-    /// 
-    ///     The latest version of the freedesktop desktop entry specification can be obtained
-    ///     \l{http://standards.freedesktop.org/desktop-entry-spec/latest/}{here}.
     [static] set_desktop_file_name(name: String),
+    /// 
+    /// This is the file name, without the full path, of the desktop entry
+    /// that represents this application according to the freedesktop desktop
+    /// entry specification.
+    /// 
+    /// This property gives a precise indication of what desktop entry represents
+    /// the application and it is needed by the windowing system to retrieve
+    /// such information without resorting to imprecise heuristics.
+    /// 
+    /// The latest version of the freedesktop desktop entry specification can be obtained
+    /// [here](http://standards.freedesktop.org/desktop-entry-spec/latest/)
+    /// 
     [static] desktop_file_name() -> String,
+    /// 
+    /// Returns a list of all the windows in the application.
+    /// 
+    /// The list is empty if there are no windows.
+    /// 
+    /// **See also:** topLevelWindows()
     [static] all_windows() -> WindowList,
+    /// 
+    /// Returns a list of the top-level windows in the application.
+    /// 
+    /// **See also:** allWindows()
     [static] top_level_windows() -> WindowList,
-    ///     Returns the top level window at the given position \a pos, if any.
+    /// 
+    /// Returns the top level window at the given position *pos,* if any.
     [static] top_level_at(pos: &PointType) -> Window?,
     [static] set_window_icon(icon: &IconType),
-    ///     \property QGuiApplication::windowIcon
-    ///     \brief the default window icon
     /// 
-    ///     \sa QWindow::setIcon(), {Setting the Application Icon}
+    /// **See also:** QWindow::setIcon()
+    /// {Setting the Application Icon}
     [static] window_icon() -> Icon,
-    ///     \property QGuiApplication::platformName
-    ///     \brief The name of the underlying platform plugin.
     /// 
-    ///     The QPA platform plugins are located in \c {qtbase\src\plugins\platforms}.
-    ///     At the time of writing, the following platform plugin names are supported:
+    /// The QPA platform plugins are located in `qtbase\src\plugins\platforms` .
+    /// At the time of writing, the following platform plugin names are supported:
     /// 
-    ///     \list
-    ///         \li \c android
-    ///         \li \c cocoa is a platform plugin for \macos.
-    ///         \li \c directfb
-    ///         \li \c eglfs is a platform plugin for running Qt5 applications on top of
-    ///             EGL and  OpenGL ES 2.0 without an actual windowing system (like X11
-    ///             or Wayland). For more information, see \l{EGLFS}.
-    ///         \li \c ios (also used for tvOS)
-    ///         \li \c kms is an experimental platform plugin using kernel modesetting
-    ///             and \l{http://dri.freedesktop.org/wiki/DRM}{DRM} (Direct Rendering
-    ///             Manager).
-    ///         \li \c linuxfb writes directly to the framebuffer. For more information,
-    ///             see \l{LinuxFB}.
-    ///         \li \c minimal is provided as an examples for developers who want to
-    ///             write their own platform plugins. However, you can use the plugin to
-    ///             run GUI applications in environments without a GUI, such as servers.
-    ///         \li \c minimalegl is an example plugin.
-    ///         \li \c offscreen
-    ///         \li \c openwfd
-    ///         \li \c qnx
-    ///         \li \c windows
-    ///         \li \c wayland is a platform plugin for modern Linux desktops and some
-    ///             embedded systems.
-    ///         \li \c xcb is the X11 plugin used on regular desktop Linux platforms.
-    ///     \endlist
+    /// * `android`
+    /// * `cocoa` is a platform plugin for MacOS .
+    /// * `directfb`
+    /// * `eglfs` is a platform plugin for running Qt5 applications on top of EGL and OpenGL ES 2.0 without an actual windowing system (like X11 or Wayland). For more information, see [EGLFS](EGLFS)
     /// 
-    ///     For more information about the platform plugins for embedded Linux devices,
-    ///     see \l{Qt for Embedded Linux}.
+    /// * `ios` (also used for tvOS)
+    /// * `kms` is an experimental platform plugin using kernel modesetting and [DRM](http://dri.freedesktop.org/wiki/DRM)
+    /// (Direct Rendering Manager).
+    /// * `linuxfb` writes directly to the framebuffer. For more information, see [LinuxFB](LinuxFB)
+    /// 
+    /// * `minimal` is provided as an examples for developers who want to write their own platform plugins. However, you can use the plugin to run GUI applications in environments without a GUI, such as servers.
+    /// * `minimalegl` is an example plugin.
+    /// * `offscreen`
+    /// * `openwfd`
+    /// * `qnx`
+    /// * `windows`
+    /// * `wayland` is a platform plugin for modern Linux desktops and some embedded systems.
+    /// * `xcb` is the X11 plugin used on regular desktop Linux platforms.
+    /// 
+    /// For more information about the platform plugins for embedded Linux devices,
+    /// see [Qt for Embedded Linux](Qt%20for%20Embedded%20Linux)
+    /// 
     [static] platform_name() -> String,
-    ///     Returns the most recently shown modal window. If no modal windows are
-    ///     visible, this function returns zero.
     /// 
-    ///     A modal window is a window which has its
-    ///     \l{QWindow::modality}{modality} property set to Qt::WindowModal
-    ///     or Qt::ApplicationModal. A modal window must be closed before the user can
-    ///     continue with other parts of the program.
+    /// Returns the most recently shown modal window. If no modal windows are
+    /// visible, this function returns zero.
     /// 
-    ///     Modal window are organized in a stack. This function returns the modal
-    ///     window at the top of the stack.
+    /// A modal window is a window which has its
+    /// [modality](QWindow::modality)
+    /// property set to Qt::WindowModal
+    /// or Qt::ApplicationModal. A modal window must be closed before the user can
+    /// continue with other parts of the program.
     /// 
-    ///     \sa Qt::WindowModality, QWindow::setModality()
+    /// Modal window are organized in a stack. This function returns the modal
+    /// window at the top of the stack.
+    /// 
+    /// **See also:** Qt::WindowModality
+    /// QWindow::setModality()
     [static] modal_window() -> Window?,
-    ///     Returns the QWindow that receives events tied to focus,
-    ///     such as key events.
+    /// 
+    /// Returns the QWindow that receives events tied to focus,
+    /// such as key events.
+    /// 
+    /// This signal is emitted when the focused window changes.
+    /// *focusWindow* is the new focused window.
+    /// 
+    /// **See also:** focusWindow()
     [static] focus_window() -> Window?,
+    /// 
+    /// This signal is emitted when final receiver of events tied to focus is changed.
+    /// *focusObject* is the new receiver.
+    /// 
+    /// **See also:** focusObject()
+    /// 
+    /// Returns the QObject in currently active window that will be final receiver of events
+    /// tied to focus, such as key events.
     [static] focus_object() -> Object?,
+    /// 
+    /// This will be the screen where QWindows are initially shown, unless otherwise specified.
+    /// 
+    /// The primaryScreenChanged signal was introduced in Qt 5.6.
+    /// 
+    /// **See also:** screens()
     [static] primary_screen() -> Screen?,
-    ///     Returns a list of all the screens associated with the
-    ///     windowing system the application is connected to.
+    /// 
+    /// Returns a list of all the screens associated with the
+    /// windowing system the application is connected to.
     [static] screens() -> [Screen?],
-    ///     Returns the screen at \a point, or \c nullptr if outside of any screen.
     /// 
-    ///     The \a point is in relation to the virtualGeometry() of each set of virtual
-    ///     siblings. If the point maps to more than one set of virtual siblings the first
-    ///     match is returned.
+    /// Returns the screen at *point,* or `nullptr` if outside of any screen.
     /// 
-    ///     \since 5.10
+    /// The *point* is in relation to the virtualGeometry() of each set of virtual
+    /// siblings. If the point maps to more than one set of virtual siblings the first
+    /// match is returned.
+    /// 
     [static] screen_at(point: &PointType) -> Screen?,
-    ///     Returns the highest screen device pixel ratio found on
-    ///     the system. This is the ratio between physical pixels and
-    ///     device-independent pixels.
     /// 
-    ///     Use this function only when you don't know which window you are targeting.
-    ///     If you do know the target window, use QWindow::devicePixelRatio() instead.
+    /// Returns the highest screen device pixel ratio found on
+    /// the system. This is the ratio between physical pixels and
+    /// device-independent pixels.
     /// 
-    ///     \sa QWindow::devicePixelRatio()
+    /// Use this function only when you don't know which window you are targeting.
+    /// If you do know the target window, use QWindow::devicePixelRatio() instead.
+    /// 
+    /// **See also:** QWindow::devicePixelRatio()
     device_pixel_ratio() -> f32,
-    ///     \fn QCursor *QGuiApplication::overrideCursor()
     /// 
-    ///     Returns the active application override cursor.
+    /// Returns the active application override cursor.
     /// 
-    ///     This function returns 0 if no application cursor has been defined (i.e. the
-    ///     internal cursor stack is empty).
+    /// This function returns 0 if no application cursor has been defined (i.e. the
+    /// internal cursor stack is empty).
     /// 
-    ///     \sa setOverrideCursor(), restoreOverrideCursor()
+    /// **See also:** setOverrideCursor()
+    /// restoreOverrideCursor()
     [static] override_cursor() -> Cursor?,
-    ///     \fn void QGuiApplication::setOverrideCursor(const QCursor &cursor)
     /// 
-    ///     Sets the application override cursor to \a cursor.
+    /// Sets the application override cursor to *cursor.*
     /// 
-    ///     Application override cursors are intended for showing the user that the
-    ///     application is in a special state, for example during an operation that
-    ///     might take some time.
+    /// Application override cursors are intended for showing the user that the
+    /// application is in a special state, for example during an operation that
+    /// might take some time.
     /// 
-    ///     This cursor will be displayed in all the application's widgets until
-    ///     restoreOverrideCursor() or another setOverrideCursor() is called.
+    /// This cursor will be displayed in all the application's widgets until
+    /// restoreOverrideCursor() or another setOverrideCursor() is called.
     /// 
-    ///     Application cursors are stored on an internal stack. setOverrideCursor()
-    ///     pushes the cursor onto the stack, and restoreOverrideCursor() pops the
-    ///     active cursor off the stack. changeOverrideCursor() changes the curently
-    ///     active application override cursor.
+    /// Application cursors are stored on an internal stack. setOverrideCursor()
+    /// pushes the cursor onto the stack, and restoreOverrideCursor() pops the
+    /// active cursor off the stack. changeOverrideCursor() changes the curently
+    /// active application override cursor.
     /// 
-    ///     Every setOverrideCursor() must eventually be followed by a corresponding
-    ///     restoreOverrideCursor(), otherwise the stack will never be emptied.
+    /// Every setOverrideCursor() must eventually be followed by a corresponding
+    /// restoreOverrideCursor(), otherwise the stack will never be emptied.
     /// 
-    ///     Example:
-    ///     \snippet code/src_gui_kernel_qguiapplication_x11.cpp 0
+    /// Example:
     /// 
-    ///     \sa overrideCursor(), restoreOverrideCursor(), changeOverrideCursor(),
-    ///     QWidget::setCursor()
+    /// **See also:** overrideCursor()
+    /// restoreOverrideCursor()
+    /// changeOverrideCursor()
+    /// QWidget::setCursor()
     [static] set_override_cursor(arg0: &CursorType),
+    /// 
+    /// Changes the currently active application override cursor to *cursor.*
+    /// 
+    /// This function has no effect if setOverrideCursor() was not called.
+    /// 
+    /// **See also:** setOverrideCursor()
+    /// overrideCursor()
+    /// restoreOverrideCursor()
+    /// QWidget::setCursor()
     [static] change_override_cursor(arg0: &CursorType),
-    ///     \fn void QGuiApplication::restoreOverrideCursor()
     /// 
-    ///     Undoes the last setOverrideCursor().
+    /// Undoes the last setOverrideCursor().
     /// 
-    ///     If setOverrideCursor() has been called twice, calling
-    ///     restoreOverrideCursor() will activate the first cursor set. Calling this
-    ///     function a second time restores the original widgets' cursors.
+    /// If setOverrideCursor() has been called twice, calling
+    /// restoreOverrideCursor() will activate the first cursor set. Calling this
+    /// function a second time restores the original widgets' cursors.
     /// 
-    ///     \sa setOverrideCursor(), overrideCursor()
+    /// **See also:** setOverrideCursor()
+    /// overrideCursor()
     [static] restore_override_cursor(),
-    ///     Returns the default application font.
     /// 
-    ///     \sa setFont()
+    /// This signal is emitted when the *font* of the application changes.
+    /// 
+    /// **See also:** font()
+    /// 
+    /// Returns the default application font.
+    /// 
+    /// **See also:** setFont()
+    /// 
+    /// This signal is emitted when application fonts are loaded or removed.
+    /// 
+    /// **See also:** QFontDatabase::addApplicationFont()
+    /// QFontDatabase::addApplicationFontFromData()
+    /// QFontDatabase::removeAllApplicationFonts()
+    /// QFontDatabase::removeApplicationFont()
     [static] font() -> Font,
-    ///     Changes the default application font to \a font.
     /// 
-    ///     \sa font()
+    /// Changes the default application font to *font.*
+    /// 
+    /// **See also:** font()
     [static] set_font(arg0: &FontType),
-    ///     Returns the object for interacting with the clipboard.
+    /// 
+    /// Returns the object for interacting with the clipboard.
     [static] clipboard() -> Clipboard?,
-    ///     Returns the default application palette.
     /// 
-    ///     \sa setPalette()
+    /// This signal is emitted when the *palette* of the application changes.
+    /// 
+    /// **See also:** palette()
+    /// 
+    /// Returns the default application palette.
+    /// 
+    /// **See also:** setPalette()
     [static] palette() -> Palette,
-    ///     Changes the default application palette to \a pal.
     /// 
-    ///     \sa palette()
+    /// Changes the default application palette to *pal.*
+    /// 
+    /// **See also:** palette()
     [static] set_palette(pal: &PaletteType),
-    ///     Returns the current state of the modifier keys on the keyboard. The current
-    ///     state is updated sychronously as the event queue is emptied of events that
-    ///     will spontaneously change the keyboard state (QEvent::KeyPress and
-    ///     QEvent::KeyRelease events).
     /// 
-    ///     It should be noted this may not reflect the actual keys held on the input
-    ///     device at the time of calling but rather the modifiers as last reported in
-    ///     one of the above events. If no keys are being held Qt::NoModifier is
-    ///     returned.
+    /// Returns the current state of the modifier keys on the keyboard. The current
+    /// state is updated sychronously as the event queue is emptied of events that
+    /// will spontaneously change the keyboard state (QEvent::KeyPress and
+    /// QEvent::KeyRelease events).
     /// 
-    ///     \sa mouseButtons(), queryKeyboardModifiers()
+    /// It should be noted this may not reflect the actual keys held on the input
+    /// device at the time of calling but rather the modifiers as last reported in
+    /// one of the above events. If no keys are being held Qt::NoModifier is
+    /// returned.
+    /// 
+    /// **See also:** mouseButtons()
+    /// queryKeyboardModifiers()
     [static] keyboard_modifiers() -> Rute::KeyboardModifiers,
-    ///     \fn Qt::KeyboardModifiers QGuiApplication::queryKeyboardModifiers()
     /// 
-    ///     Queries and returns the state of the modifier keys on the keyboard.
-    ///     Unlike keyboardModifiers, this method returns the actual keys held
-    ///     on the input device at the time of calling the method.
+    /// Queries and returns the state of the modifier keys on the keyboard.
+    /// Unlike keyboardModifiers, this method returns the actual keys held
+    /// on the input device at the time of calling the method.
     /// 
-    ///     It does not rely on the keypress events having been received by this
-    ///     process, which makes it possible to check the modifiers while moving
-    ///     a window, for instance. Note that in most cases, you should use
-    ///     keyboardModifiers(), which is faster and more accurate since it contains
-    ///     the state of the modifiers as they were when the currently processed
-    ///     event was received.
+    /// It does not rely on the keypress events having been received by this
+    /// process, which makes it possible to check the modifiers while moving
+    /// a window, for instance. Note that in most cases, you should use
+    /// keyboardModifiers(), which is faster and more accurate since it contains
+    /// the state of the modifiers as they were when the currently processed
+    /// event was received.
     /// 
-    ///     \sa keyboardModifiers()
+    /// **See also:** keyboardModifiers()
     [static] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
-    ///     Returns the current state of the buttons on the mouse. The current state is
-    ///     updated syncronously as the event queue is emptied of events that will
-    ///     spontaneously change the mouse state (QEvent::MouseButtonPress and
-    ///     QEvent::MouseButtonRelease events).
     /// 
-    ///     It should be noted this may not reflect the actual buttons held on the
-    ///     input device at the time of calling but rather the mouse buttons as last
-    ///     reported in one of the above events. If no mouse buttons are being held
-    ///     Qt::NoButton is returned.
+    /// Returns the current state of the buttons on the mouse. The current state is
+    /// updated syncronously as the event queue is emptied of events that will
+    /// spontaneously change the mouse state (QEvent::MouseButtonPress and
+    /// QEvent::MouseButtonRelease events).
     /// 
-    ///     \sa keyboardModifiers()
+    /// It should be noted this may not reflect the actual buttons held on the
+    /// input device at the time of calling but rather the mouse buttons as last
+    /// reported in one of the above events. If no mouse buttons are being held
+    /// Qt::NoButton is returned.
+    /// 
+    /// **See also:** keyboardModifiers()
     [static] mouse_buttons() -> Rute::MouseButtons,
     [static] set_layout_direction(direction: Rute::LayoutDirection),
+    /// 
+    /// On system start-up, the default layout direction depends on the
+    /// application's language.
+    /// 
+    /// The notifier signal was introduced in Qt 5.4.
+    /// 
+    /// **See also:** QWidget::layoutDirection
+    /// isLeftToRight()
+    /// isRightToLeft()
     [static] layout_direction() -> Rute::LayoutDirection,
+    /// 
+    /// Returns `true` if the application's layout direction is
+    /// Qt::RightToLeft; otherwise returns `false.`
+    /// 
+    /// **See also:** layoutDirection()
+    /// isLeftToRight()
     [static] is_right_to_left() -> bool,
+    /// 
+    /// Returns `true` if the application's layout direction is
+    /// Qt::LeftToRight; otherwise returns `false.`
+    /// 
+    /// **See also:** layoutDirection()
+    /// isRightToLeft()
     [static] is_left_to_right() -> bool,
+    /// 
+    /// Returns the application's style hints.
+    /// 
+    /// The style hints encapsulate a set of platform dependent properties
+    /// such as double click intervals, full width selection and others.
+    /// 
+    /// The hints can be used to integrate tighter with the underlying platform.
+    /// 
+    /// **See also:** QStyleHints
     [static] style_hints() -> StyleHints?,
-    ///     Sets whether Qt should use the system's standard colors, fonts, etc., to
-    ///     \a on. By default, this is \c true.
     /// 
-    ///     This function must be called before creating the QGuiApplication object, like
-    ///     this:
+    /// Sets whether Qt should use the system's standard colors, fonts, etc., to
+    /// *on.* By default, this is `true.`
     /// 
-    ///     \snippet code/src_gui_kernel_qguiapplication.cpp 0
+    /// This function must be called before creating the QGuiApplication object, like
+    /// this:
     /// 
-    ///     \sa desktopSettingsAware()
+    /// **See also:** desktopSettingsAware()
     [static] set_desktop_settings_aware(on: bool),
-    ///     Returns \c true if Qt is set to use the system's standard colors, fonts, etc.;
-    ///     otherwise returns \c false. The default is \c true.
     /// 
-    ///     \sa setDesktopSettingsAware()
+    /// Returns `true` if Qt is set to use the system's standard colors, fonts, etc.;
+    /// otherwise returns `false.` The default is `true.`
+    /// 
+    /// **See also:** setDesktopSettingsAware()
     [static] desktop_settings_aware() -> bool,
+    /// 
+    /// returns the input method.
+    /// 
+    /// The input method returns properties about the state and position of
+    /// the virtual keyboard. It also provides information about the position of the
+    /// current focused input element.
+    /// 
+    /// **See also:** QInputMethod
     [static] input_method() -> InputMethod?,
-    ///     Returns the platform's native interface, for platform specific
-    ///     functionality.
+    /// 
+    /// Returns the platform's native interface, for platform specific
+    /// functionality.
     [static] platform_native_interface() -> PlatformNativeInterface?,
-    ///     Returns a function pointer from the platformplugin matching \a function
+    /// 
+    /// Returns a function pointer from the platformplugin matching *function*
     [static] platform_function(function: &ByteArrayType) -> FunctionPointer,
     [static] set_quit_on_last_window_closed(quit: bool),
+    /// 
+    /// The default is `true.`
+    /// 
+    /// If this property is `true,` the applications quits when the last visible
+    /// primary window (i.e. window with no parent) is closed.
+    /// 
+    /// **See also:** quit()
+    /// QWindow::close()
     [static] quit_on_last_window_closed() -> bool,
+    /// 
+    /// Returns the current state of the application.
+    /// 
+    /// You can react to application state changes to perform actions such as
+    /// stopping/resuming CPU-intensive tasks, freeing/loading resources or
+    /// saving/restoring application data.
+    /// 
+    /// This signal is emitted when the *state* of the application changes.
+    /// 
+    /// **See also:** applicationState()
     [static] application_state() -> Rute::ApplicationState,
-    ///     Enters the main event loop and waits until exit() is called, and then
-    ///     returns the value that was set to exit() (which is 0 if exit() is called
-    ///     via quit()).
     /// 
-    ///     It is necessary to call this function to start event handling. The main
-    ///     event loop receives events from the window system and dispatches these to
-    ///     the application widgets.
+    /// Enters the main event loop and waits until exit() is called, and then
+    /// returns the value that was set to exit() (which is 0 if exit() is called
+    /// via quit()).
     /// 
-    ///     Generally, no user interaction can take place before calling exec().
+    /// It is necessary to call this function to start event handling. The main
+    /// event loop receives events from the window system and dispatches these to
+    /// the application widgets.
     /// 
-    ///     To make your application perform idle processing, e.g., executing a special
-    ///     function whenever there are no pending events, use a QTimer with 0 timeout.
-    ///     More advanced idle processing schemes can be achieved using processEvents().
+    /// Generally, no user interaction can take place before calling exec().
     /// 
-    ///     We recommend that you connect clean-up code to the
-    ///     \l{QCoreApplication::}{aboutToQuit()} signal, instead of putting it in your
-    ///     application's \c{main()} function. This is because, on some platforms, the
-    ///     QApplication::exec() call may not return.
+    /// To make your application perform idle processing, e.g., executing a special
+    /// function whenever there are no pending events, use a QTimer with 0 timeout.
+    /// More advanced idle processing schemes can be achieved using processEvents().
     /// 
-    ///     \sa quitOnLastWindowClosed, quit(), exit(), processEvents(),
-    ///         QCoreApplication::exec()
+    /// We recommend that you connect clean-up code to the
+    /// [aboutToQuit()](QCoreApplication::)
+    /// signal, instead of putting it in your
+    /// application's `main()` function. This is because, on some platforms, the
+    /// QApplication::exec() call may not return.
+    /// 
+    /// **See also:** quitOnLastWindowClosed
+    /// quit()
+    /// exit()
+    /// processEvents()
+    /// QCoreApplication::exec()
     [static] exec() -> i32,
+    /// 
     [event] notify(arg0: *ObjectType, arg1: *EventType) -> bool,
-    ///     \fn QString QGuiApplication::sessionKey() const
     /// 
-    ///     Returns the session key in the current \l{Session Management}{session}.
+    /// Returns `true` if the application has been restored from an earlier
+    /// [session](Session%20Management)
+    /// ; otherwise returns `false.`
     /// 
-    ///     If the application has been restored from an earlier session, this key is
-    ///     the same as it was when the previous session ended.
-    /// 
-    ///     The session key changes every time the session is saved. If the shutdown process
-    ///     is cancelled, another session key will be used when shutting down again.
-    /// 
-    ///     \sa isSessionRestored(), sessionId(), commitDataRequest(), saveStateRequest()
+    /// **See also:** sessionId()
+    /// commitDataRequest()
+    /// saveStateRequest()
     is_session_restored() -> bool,
+    /// 
+    /// Returns the current [session's](Session%20Management)
+    /// identifier.
+    /// 
+    /// If the application has been restored from an earlier session, this
+    /// identifier is the same as it was in that previous session. The session
+    /// identifier is guaranteed to be unique both for different applications
+    /// and for different instances of the same application.
+    /// 
+    /// **See also:** isSessionRestored()
+    /// sessionKey()
+    /// commitDataRequest()
+    /// saveStateRequest()
     session_id() -> String,
+    /// 
+    /// Returns the session key in the current [session](Session%20Management)
+    /// 
+    /// 
+    /// If the application has been restored from an earlier session, this key is
+    /// the same as it was when the previous session ended.
+    /// 
+    /// The session key changes every time the session is saved. If the shutdown process
+    /// is cancelled, another session key will be used when shutting down again.
+    /// 
+    /// **See also:** isSessionRestored()
+    /// sessionId()
+    /// commitDataRequest()
+    /// saveStateRequest()
     session_key() -> String,
+    /// 
+    /// Returns `true` if the application is currently saving the
+    /// [session](Session%20Management)
+    /// ; otherwise returns `false.`
+    /// 
+    /// This is `true` when commitDataRequest() and saveStateRequest() are emitted,
+    /// but also when the windows are closed afterwards by session management.
+    /// 
+    /// **See also:** sessionId()
+    /// commitDataRequest()
+    /// saveStateRequest()
     is_saving_session() -> bool,
-    ///     \since 5.6
     /// 
-    ///     Returns whether QGuiApplication will use fallback session management.
+    /// Returns whether QGuiApplication will use fallback session management.
     /// 
-    ///     The default is \c true.
+    /// The default is `true.`
     /// 
-    ///     If this is \c true and the session manager allows user interaction,
-    ///     QGuiApplication will try to close toplevel windows after
-    ///     commitDataRequest() has been emitted. If a window cannot be closed, session
-    ///     shutdown will be canceled and the application will keep running.
+    /// If this is `true` and the session manager allows user interaction,
+    /// QGuiApplication will try to close toplevel windows after
+    /// commitDataRequest() has been emitted. If a window cannot be closed, session
+    /// shutdown will be canceled and the application will keep running.
     /// 
-    ///     Fallback session management only benefits applications that have an
-    ///     "are you sure you want to close this window?" feature or other logic that
-    ///     prevents closing a toplevel window depending on certain conditions, and
-    ///     that do nothing to explicitly implement session management. In applications
-    ///     that \e do implement session management using the proper session management
-    ///     API, fallback session management interferes and may break session
-    ///     management logic.
+    /// Fallback session management only benefits applications that have an
+    /// feature or other logic that
+    /// prevents closing a toplevel window depending on certain conditions, and
+    /// that do nothing to explicitly implement session management. In applications
+    /// that *do* implement session management using the proper session management
+    /// API, fallback session management interferes and may break session
+    /// management logic.
     /// 
-    ///     \warning If all windows \e are closed due to fallback session management
-    ///     and quitOnLastWindowClosed() is \c true, the application will quit before
-    ///     it is explicitly instructed to quit through the platform's session
-    ///     management protocol. That violation of protocol may prevent the platform
-    ///     session manager from saving application state.
+    /// **Warning**: If all windows *are* closed due to fallback session management
+    /// and quitOnLastWindowClosed() is `true,` the application will quit before
+    /// it is explicitly instructed to quit through the platform's session
+    /// management protocol. That violation of protocol may prevent the platform
+    /// session manager from saving application state.
     /// 
-    ///     \sa setFallbackSessionManagementEnabled(),
-    ///     QSessionManager::allowsInteraction(), saveStateRequest(),
-    ///     commitDataRequest(), {Session Management}
+    /// **See also:** setFallbackSessionManagementEnabled()
+    /// QSessionManager::allowsInteraction()
+    /// saveStateRequest()
+    /// commitDataRequest()
+    /// {Session Management}
     [static] is_fallback_session_management_enabled() -> bool,
-    ///    \since 5.6
     /// 
-    ///     Sets whether QGuiApplication will use fallback session management to
-    ///     \a enabled.
+    /// Sets whether QGuiApplication will use fallback session management to
+    /// *enabled.*
     /// 
-    ///     \sa isFallbackSessionManagementEnabled()
+    /// **See also:** isFallbackSessionManagementEnabled()
     [static] set_fallback_session_management_enabled(arg0: bool),
-    ///     \since 5.2
     /// 
-    ///     Function that can be used to sync Qt state with the Window Systems state.
+    /// Function that can be used to sync Qt state with the Window Systems state.
     /// 
-    ///     This function will first empty Qts events by calling QCoreApplication::processEvents(),
-    ///     then the platform plugin will sync up with the windowsystem, and finally Qts events
-    ///     will be delived by another call to QCoreApplication::processEvents();
+    /// This function will first empty Qts events by calling QCoreApplication::processEvents(),
+    /// then the platform plugin will sync up with the windowsystem, and finally Qts events
+    /// will be delived by another call to QCoreApplication::processEvents();
     /// 
-    ///     This function is timeconsuming and its use is discouraged.
+    /// This function is timeconsuming and its use is discouraged.
     [static] sync(),
+    /// 
+    /// This signal is emitted when application fonts are loaded or removed.
+    /// 
+    /// **See also:** QFontDatabase::addApplicationFont()
+    /// QFontDatabase::addApplicationFontFromData()
+    /// QFontDatabase::removeAllApplicationFonts()
+    /// QFontDatabase::removeApplicationFont()
     [signal] font_database_changed(),
+    /// 
+    /// This signal is emitted whenever a new screen *screen* has been added to the system.
+    /// 
+    /// **See also:** screens()
+    /// primaryScreen
+    /// screenRemoved()
     [signal] screen_added(screen: *ScreenType),
+    /// 
+    /// This signal is emitted whenever a *screen* is removed from the system. It
+    /// provides an opportunity to manage the windows on the screen before Qt falls back
+    /// to moving them to the primary screen.
+    /// 
+    /// **See also:** screens()
+    /// screenAdded()
+    /// QObject::destroyed()
+    /// QWindow::setScreen()
+    /// 
     [signal] screen_removed(screen: *ScreenType),
     [signal] primary_screen_changed(screen: *ScreenType),
+    /// 
+    /// This signal is emitted from exec() when the last visible
+    /// primary window (i.e. window with no parent) is closed.
+    /// 
+    /// By default, QGuiApplication quits after this signal is emitted. This feature
+    /// can be turned off by setting [quitOnLastWindowClosed](quitOnLastWindowClosed)
+    /// to `false.`
+    /// 
+    /// **See also:** QWindow::close()
+    /// QWindow::isTopLevel()
     [signal] last_window_closed(),
+    /// 
+    /// This signal is emitted when final receiver of events tied to focus is changed.
+    /// *focusObject* is the new receiver.
+    /// 
+    /// **See also:** focusObject()
     [signal] focus_object_changed(focus_object: *ObjectType),
+    /// 
+    /// This signal is emitted when the focused window changes.
+    /// *focusWindow* is the new focused window.
+    /// 
+    /// **See also:** focusWindow()
     [signal] focus_window_changed(focus_window: *WindowType),
+    /// 
+    /// This signal is emitted when the *state* of the application changes.
+    /// 
+    /// **See also:** applicationState()
     [signal] application_state_changed(state: Rute::ApplicationState),
     [signal] layout_direction_changed(direction: Rute::LayoutDirection),
+    /// 
+    /// This signal deals with [session management](Session%20Management)
+    /// . It is
+    /// emitted when the QSessionManager wants the application to commit all its
+    /// data.
+    /// 
+    /// Usually this means saving all open files, after getting permission from
+    /// the user. Furthermore you may want to provide a means by which the user
+    /// can cancel the shutdown.
+    /// 
+    /// You should not exit the application within this signal. Instead,
+    /// the session manager may or may not do this afterwards, depending on the
+    /// context.
+    /// 
+    /// **Warning**: Within this signal, no user interaction is possible, *unless* you ask the *manager* for explicit permission. See
+    /// QSessionManager::allowsInteraction() and
+    /// QSessionManager::allowsErrorInteraction() for details and example
+    /// usage.
+    /// 
+    /// **Note**: You should use Qt::DirectConnection when connecting to this signal.
+    /// 
+    /// **See also:** setFallbackSessionManagementEnabled()
+    /// isSessionRestored()
+    /// sessionId()
+    /// saveStateRequest()
+    /// {Session Management}
     [signal] commit_data_request(session_manager: &SessionManagerType),
+    /// 
+    /// This signal deals with [session management](Session%20Management)
+    /// . It is
+    /// invoked when the [session manager](QSessionManager)
+    /// wants the application
+    /// to preserve its state for a future session.
+    /// 
+    /// For example, a text editor would create a temporary file that includes the
+    /// current contents of its edit buffers, the location of the cursor and other
+    /// aspects of the current editing session.
+    /// 
+    /// You should never exit the application within this signal. Instead, the
+    /// session manager may or may not do this afterwards, depending on the
+    /// context. Furthermore, most session managers will very likely request a saved
+    /// state immediately after the application has been started. This permits the
+    /// session manager to learn about the application's restart policy.
+    /// 
+    /// **Warning**: Within this signal, no user interaction is possible, *unless* you ask the *manager* for explicit permission. See
+    /// QSessionManager::allowsInteraction() and
+    /// QSessionManager::allowsErrorInteraction() for details.
+    /// 
+    /// **Note**: You should use Qt::DirectConnection when connecting to this signal.
+    /// 
+    /// **See also:** isSessionRestored()
+    /// sessionId()
+    /// commitDataRequest()
+    /// {Session Management}
     [signal] save_state_request(session_manager: &SessionManagerType),
+    /// 
+    /// This signal is emitted when the *palette* of the application changes.
+    /// 
+    /// **See also:** palette()
     [signal] palette_changed(pal: &PaletteType),
     [signal] application_display_name_changed(),
+    /// 
+    /// This signal is emitted when the *font* of the application changes.
+    /// 
+    /// **See also:** font()
     [signal] font_changed(font: &FontType),
+    /// 
     [event] event(arg0: *EventType) -> bool,
-    ///     \internal
     [event] compress_event(arg0: *EventType, receiver: *ObjectType, arg1: *PostEventListType) -> bool,
 }
 

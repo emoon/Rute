@@ -1,17 +1,16 @@
-///     \class QDynamicPropertyChangeEvent
-///     \inmodule QtCore
-///     \since 4.2
-///     \brief The QDynamicPropertyChangeEvent class contains event parameters for dynamic
-///     property change events.
 /// 
-///     \ingroup events
-/// 
-///     Dynamic property change events are sent to objects when properties are
-///     dynamically added, changed or removed using QObject::setProperty().
+/// Dynamic property change events are sent to objects when properties are
+/// dynamically added, changed or removed using QObject::setProperty().
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct DynamicPropertyChangeEvent : Event {
+    /// 
+    /// Returns the name of the dynamic property that was added, changed or
+    /// removed.
+    /// 
+    /// **See also:** QObject::setProperty()
+    /// QObject::dynamicPropertyNames()
     property_name() -> ByteArray,
 }
 

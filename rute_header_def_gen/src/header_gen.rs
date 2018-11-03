@@ -10,15 +10,9 @@ use std::io::{BufReader, BufWriter, SeekFrom, Write};
 use std::path::PathBuf;
 use std::sync::RwLock;
 use walkdir::WalkDir;
+use qdoc_parser::{QDocEntry, QDocFile, QDocItem};
 
-use doc_parser::{DocEntry, DocInfo};
 use walkdir;
-
-pub struct DocLookups<'a> {
-	pub cpp_name: HashMap<&'a str, &'a DocEntry>,
-	pub class_name: HashMap<&'a str, &'a DocEntry>,
-	pub property: HashMap<&'a str, &'a DocEntry>,
-}
 
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum AccessLevel {
@@ -271,6 +265,22 @@ fn print_arg<W: Write>(dest: &mut W, arg: &Entity, arg_count: &mut usize) {
     write!(dest, "{}", arg_type);
 }
 
+fn print_doc_comments<W: Write>(dest: &mut W, text: &str, indent: usize) {
+    let lines = text.split("\n");
+
+    for line in lines {
+        for _ in 0..indent {
+            write!(dest, " ").unwrap();
+        }
+
+        if line.len() > 1 {
+            writeln!(dest, "/// {}", line.trim());
+        } else {
+            writeln!(dest, "/// ");
+        }
+    }
+}
+
 ///
 /// Print a functio/method definition
 ///
@@ -278,7 +288,7 @@ fn print_func<W: Write>(
 	dest: &mut W, 
 	entry: &Entity, 
 	class_name: &str, 
-	doc_lookups: &DocLookups, 
+	docs: &HashMap<String, QDocFile>, 
 	func_type: AccessLevel
 ) {
     let name = match entry.get_name() {
@@ -299,11 +309,30 @@ fn print_func<W: Write>(
 
     let full_name = format!("{}::{}", class_name, name);
 
-    if let Some(cpp_func_doc) = doc_lookups.cpp_name.get(full_name.as_str()) {
-    	for tag in &cpp_func_doc.tags {
-    		writeln!(dest, "    /// {}", tag);
-    	}
-    }
+    // So this is slow. Better would be to setup the names so we could
+    // just use a hash table to match it but as this is something
+    // we do very infrequent (generating the base line from Qt)
+    // having this taking a bit longer than needed isn't the end of the world.
+
+	for (_, f) in docs {
+		for entry in &f.0 {
+			match entry.data {
+				QDocItem::Function(ref name) => {
+					if name.contains(&full_name) {
+						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+					}
+				}
+
+				QDocItem::Property(ref name) => {
+					if name.contains(&full_name) {
+						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+					}
+				}
+
+				_ => (),
+			}
+		}
+	}
 
     // check if we have any doc for this 
 
@@ -381,7 +410,7 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
 ///
 /// Print a class. This code a a bit hacky but should do for this usage
 ///
-fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
+fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFile>) {
     let name = match entry.get_name() {
         Some(name) => name,
         None => return,
@@ -434,13 +463,32 @@ fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
     let filename = format!("{}/{}.def", target_path, typename.to_snake_case());
     let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
 
-    // Check if we have some filedata to output
+	//println!("type name {}", typename);
 
+    // Check if we have some filedata to output
+	
+	for (_, f) in docs {
+		for entry in &f.0 {
+			match entry.data {
+				QDocItem::Class(ref class_name) => {
+					if &name == class_name {
+						println!("found class name");
+						print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
+					}
+				}
+
+				_ => (),
+			}
+		}
+	}
+
+	/*
     if let Some(class_doc) = doc_lookups.class_name.get(name.as_str()) {
         for tag in &class_doc.tags {
             writeln!(dest, "/// {}", tag);
         }
     }
+    */
 
     // Always add the licence info 
 	writeln!(dest, "/// # Licence");
@@ -484,7 +532,7 @@ fn print_class(target_path: &str, entry: &Entity, doc_lookups: &DocLookups) {
     for field in entry.get_children() {
         match field.get_kind() {
             EntityKind::Method => {
-                print_func(&mut dest, &field, &name, doc_lookups, access_level);
+                print_func(&mut dest, &field, &name, docs, access_level);
             }
 
             EntityKind::AccessSpecifier => {
@@ -539,7 +587,7 @@ impl Generator {
         output_directory: &str,
         paths: &[&'static str],
         compile_args: &[&'static str],
-        doc_lookups: &DocLookups,
+        docs: &HashMap<String, QDocFile>,
     ) {
         // Acquire an instance of `Clang`
         let clang = Clang::new().unwrap();
@@ -589,7 +637,7 @@ impl Generator {
                             w.insert(t);
                         }
 
-                        print_class(output_directory, &struct_, doc_lookups);
+                        print_class(output_directory, &struct_, docs);
                     }
                 }
 

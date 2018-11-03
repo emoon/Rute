@@ -1,104 +1,99 @@
-///     \class QCompleter
-///     \brief The QCompleter class provides completions based on an item model.
-///     \since 4.2
 /// 
-///     \inmodule QtWidgets
+/// You can use QCompleter to provide auto completions in any Qt
+/// widget, such as QLineEdit and QComboBox.
+/// When the user starts typing a word, QCompleter suggests possible ways of
+/// completing the word, based on a word list. The word list is
+/// provided as a QAbstractItemModel. (For simple applications, where
+/// the word list is static, you can pass a QStringList to
+/// QCompleter's constructor.)
 /// 
-///     You can use QCompleter to provide auto completions in any Qt
-///     widget, such as QLineEdit and QComboBox.
-///     When the user starts typing a word, QCompleter suggests possible ways of
-///     completing the word, based on a word list. The word list is
-///     provided as a QAbstractItemModel. (For simple applications, where
-///     the word list is static, you can pass a QStringList to
-///     QCompleter's constructor.)
+/// # Basic Usage
 /// 
-///     \tableofcontents
+/// A QCompleter is used typically with a QLineEdit or QComboBox.
+/// For example, here's how to provide auto completions from a simple
+/// word list in a QLineEdit:
 /// 
-///     \section1 Basic Usage
+/// A QFileSystemModel can be used to provide auto completion of file names.
+/// For example:
 /// 
-///     A QCompleter is used typically with a QLineEdit or QComboBox.
-///     For example, here's how to provide auto completions from a simple
-///     word list in a QLineEdit:
+/// To set the model on which QCompleter should operate, call
+/// setModel(). By default, QCompleter will attempt to match the [completion prefix](completionPrefix)
+/// (i.e., the word that the
+/// user has started typing) against the Qt::EditRole data stored in
+/// column 0 in the model case sensitively. This can be changed
+/// using setCompletionRole(), setCompletionColumn(), and
+/// setCaseSensitivity().
 /// 
-///     \snippet code/src_gui_util_qcompleter.cpp 0
+/// If the model is sorted on the column and role that are used for completion,
+/// you can call setModelSorting() with either
+/// QCompleter::CaseSensitivelySortedModel or
+/// QCompleter::CaseInsensitivelySortedModel as the argument. On large models,
+/// this can lead to significant performance improvements, because QCompleter
+/// can then use binary search instead of linear search. The binary search only
+/// works when the filterMode is Qt::MatchStartsWith.
 /// 
-///     A QFileSystemModel can be used to provide auto completion of file names.
-///     For example:
+/// The model can be a [list model](QAbstractListModel)
 /// 
-///     \snippet code/src_gui_util_qcompleter.cpp 1
+/// a [table model](QAbstractTableModel)
+/// , or a
+/// [tree model](QAbstractItemModel)
+/// . Completion on tree models
+/// is slightly more involved and is covered in the [Handling
+/// Tree Models](Handling%0A%20%20%20%20Tree%20Models)
+/// section below.
 /// 
-///     To set the model on which QCompleter should operate, call
-///     setModel(). By default, QCompleter will attempt to match the \l
-///     {completionPrefix}{completion prefix} (i.e., the word that the
-///     user has started typing) against the Qt::EditRole data stored in
-///     column 0 in the  model case sensitively. This can be changed
-///     using setCompletionRole(), setCompletionColumn(), and
-///     setCaseSensitivity().
+/// The completionMode() determines the mode used to provide completions to
+/// the user.
 /// 
-///     If the model is sorted on the column and role that are used for completion,
-///     you can call setModelSorting() with either
-///     QCompleter::CaseSensitivelySortedModel or
-///     QCompleter::CaseInsensitivelySortedModel as the argument. On large models,
-///     this can lead to significant performance improvements, because QCompleter
-///     can then use binary search instead of linear search. The binary search only
-///     works when the filterMode is Qt::MatchStartsWith.
+/// # Iterating Through Completions
 /// 
-///     The model can be a \l{QAbstractListModel}{list model},
-///     a \l{QAbstractTableModel}{table model}, or a
-///     \l{QAbstractItemModel}{tree model}. Completion on tree models
-///     is slightly more involved and is covered in the \l{Handling
-///     Tree Models} section below.
+/// To retrieve a single candidate string, call setCompletionPrefix()
+/// with the text that needs to be completed and call
+/// currentCompletion(). You can iterate through the list of
+/// completions as below:
 /// 
-///     The completionMode() determines the mode used to provide completions to
-///     the user.
+/// completionCount() returns the total number of completions for the
+/// current prefix. completionCount() should be avoided when possible,
+/// since it requires a scan of the entire model.
 /// 
-///     \section1 Iterating Through Completions
+/// # The Completion Model
 /// 
-///     To retrieve a single candidate string, call setCompletionPrefix()
-///     with the text that needs to be completed and call
-///     currentCompletion(). You can iterate through the list of
-///     completions as below:
+/// completionModel() return a list model that contains all possible
+/// completions for the current completion prefix, in the order in which
+/// they appear in the model. This model can be used to display the current
+/// completions in a custom view. Calling setCompletionPrefix() automatically
+/// refreshes the completion model.
 /// 
-///     \snippet code/src_gui_util_qcompleter.cpp 2
+/// # Handling Tree Models
 /// 
-///     completionCount() returns the total number of completions for the
-///     current prefix. completionCount() should be avoided when possible,
-///     since it requires a scan of the entire model.
+/// QCompleter can look for completions in tree models, assuming
+/// that any item (or sub-item or sub-sub-item) can be unambiguously
+/// represented as a string by specifying the path to the item. The
+/// completion is then performed one level at a time.
 /// 
-///     \section1 The Completion Model
+/// Let's take the example of a user typing in a file system path.
+/// The model is a (hierarchical) QFileSystemModel. The completion
+/// occurs for every element in the path. For example, if the current
+/// text is `C:\Wind,` QCompleter might suggest `Windows` to
+/// complete the current path element. Similarly, if the current text
+/// is `C:\Windows\Sy,` QCompleter might suggest `System.`
 /// 
-///     completionModel() return a list model that contains all possible
-///     completions for the current completion prefix, in the order in which
-///     they appear in the model. This model can be used to display the current
-///     completions in a custom view. Calling setCompletionPrefix() automatically
-///     refreshes the completion model.
+/// For this kind of completion to work, QCompleter needs to be able to
+/// split the path into a list of strings that are matched at each level.
+/// For `C:\Windows\Sy,` it needs to be split as , and .
+/// The default implementation of splitPath(), splits the completionPrefix
+/// using QDir::separator() if the model is a QFileSystemModel.
 /// 
-///     \section1 Handling Tree Models
+/// To provide completions, QCompleter needs to know the path from an index.
+/// This is provided by pathFromIndex(). The default implementation of
+/// pathFromIndex(), returns the data for the [edit role](Qt::EditRole)
 /// 
-///     QCompleter can look for completions in tree models, assuming
-///     that any item (or sub-item or sub-sub-item) can be unambiguously
-///     represented as a string by specifying the path to the item. The
-///     completion is then performed one level at a time.
+/// for list models and the absolute file path if the mode is a QFileSystemModel.
 /// 
-///     Let's take the example of a user typing in a file system path.
-///     The model is a (hierarchical) QFileSystemModel. The completion
-///     occurs for every element in the path. For example, if the current
-///     text is \c C:\Wind, QCompleter might suggest \c Windows to
-///     complete the current path element. Similarly, if the current text
-///     is \c C:\Windows\Sy, QCompleter might suggest \c System.
-/// 
-///     For this kind of completion to work, QCompleter needs to be able to
-///     split the path into a list of strings that are matched at each level.
-///     For \c C:\Windows\Sy, it needs to be split as "C:", "Windows" and "Sy".
-///     The default implementation of splitPath(), splits the completionPrefix
-///     using QDir::separator() if the model is a QFileSystemModel.
-/// 
-///     To provide completions, QCompleter needs to know the path from an index.
-///     This is provided by pathFromIndex(). The default implementation of
-///     pathFromIndex(), returns the data for the \l{Qt::EditRole}{edit role}
-///     for list models and the absolute file path if the mode is a QFileSystemModel.
-/// 
-///     \sa QAbstractItemModel, QLineEdit, QComboBox, {Completer Example}
+/// **See also:** QAbstractItemModel
+/// QLineEdit
+/// QComboBox
+/// {Completer Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -117,204 +112,298 @@ enum ModelSorting {
 }
 
 struct Completer : Object {
+    /// 
+    /// Sets the widget for which completion are provided for to *widget.* This
+    /// function is automatically called when a QCompleter is set on a QLineEdit
+    /// using QLineEdit::setCompleter() or on a QComboBox using
+    /// QComboBox::setCompleter(). The widget needs to be set explicitly when
+    /// providing completions for custom widgets.
+    /// 
+    /// **See also:** widget()
+    /// setModel()
+    /// setPopup()
     set_widget(widget: *WidgetType),
+    /// 
+    /// Returns the widget for which the completer object is providing completions.
+    /// 
+    /// **See also:** setWidget()
     widget() -> Widget?,
-    ///     Sets the model which provides completions to \a model. The \a model can
-    ///     be list model or a tree model. If a model has been already previously set
-    ///     and it has the QCompleter as its parent, it is deleted.
     /// 
-    ///     For convenience, if \a model is a QFileSystemModel, QCompleter switches its
-    ///     caseSensitivity to Qt::CaseInsensitive on Windows and Qt::CaseSensitive
-    ///     on other platforms.
+    /// Sets the model which provides completions to *model.* The *model* can
+    /// be list model or a tree model. If a model has been already previously set
+    /// and it has the QCompleter as its parent, it is deleted.
     /// 
-    ///     \sa completionModel(), modelSorting, {Handling Tree Models}
+    /// For convenience, if *model* is a QFileSystemModel, QCompleter switches its
+    /// caseSensitivity to Qt::CaseInsensitive on Windows and Qt::CaseSensitive
+    /// on other platforms.
+    /// 
+    /// **See also:** completionModel()
+    /// modelSorting
+    /// {Handling Tree Models}
     set_model(c: *AbstractItemModelType),
-    ///     Returns the model that provides completion strings.
     /// 
-    ///     \sa completionModel()
+    /// Returns the model that provides completion strings.
+    /// 
+    /// **See also:** completionModel()
+    /// 
+    /// By default, no assumptions are made about the order of the items
+    /// in the model that provides the completions.
+    /// 
+    /// If the model's data for the completionColumn() and completionRole() is sorted in
+    /// ascending order, you can set this property to [CaseSensitivelySortedModel](CaseSensitivelySortedModel)
+    /// 
+    /// or [CaseInsensitivelySortedModel.](CaseInsensitivelySortedModel.)
+    /// On large models, this can lead to
+    /// significant performance improvements because the completer object can
+    /// then use a binary search algorithm instead of linear search algorithm.
+    /// 
+    /// The sort order (i.e ascending or descending order) of the model is determined
+    /// dynamically by inspecting the contents of the model.
+    /// 
+    /// **Note:** The performance improvements described above cannot take place
+    /// when the completer's [caseSensitivity](caseSensitivity)
+    /// is different to the case sensitivity
+    /// used by the model's when sorting.
+    /// 
+    /// **See also:** setCaseSensitivity()
+    /// QCompleter::ModelSorting
     model() -> AbstractItemModel?,
-    ///     \property QCompleter::completionMode
-    ///     \brief how the completions are provided to the user
-    /// 
-    ///     The default value is QCompleter::PopupCompletion.
     set_completion_mode(mode: Completer::CompletionMode),
+    /// 
+    /// The default value is QCompleter::PopupCompletion.
+    /// 
+    /// Returns the completion model. The completion model is a read-only list model
+    /// that contains all the possible matches for the current completion prefix.
+    /// The completion model is auto-updated to reflect the current completions.
+    /// 
+    /// **Note**: The return value of this function is defined to be an QAbstractItemModel
+    /// purely for generality. This actual kind of model returned is an instance of an
+    /// QAbstractProxyModel subclass.
+    /// 
+    /// **See also:** completionPrefix
+    /// model()
     completion_mode() -> Completer::CompletionMode,
-    ///     \property QCompleter::filterMode
-    ///     \brief how the filtering is performed
-    ///     \since 5.2
-    /// 
-    ///     If filterMode is set to Qt::MatchStartsWith, only those entries that start
-    ///     with the typed characters will be displayed. Qt::MatchContains will display
-    ///     the entries that contain the typed characters, and Qt::MatchEndsWith the
-    ///     ones that end with the typed characters.
-    /// 
-    ///     Currently, only these three modes are implemented. Setting filterMode to
-    ///     any other Qt::MatchFlag will issue a warning, and no action will be
-    ///     performed.
-    /// 
-    ///     The default mode is Qt::MatchStartsWith.
     set_filter_mode(filter_mode: Rute::MatchFlags),
+    /// 
+    /// If filterMode is set to Qt::MatchStartsWith, only those entries that start
+    /// with the typed characters will be displayed. Qt::MatchContains will display
+    /// the entries that contain the typed characters, and Qt::MatchEndsWith the
+    /// ones that end with the typed characters.
+    /// 
+    /// Currently, only these three modes are implemented. Setting filterMode to
+    /// any other Qt::MatchFlag will issue a warning, and no action will be
+    /// performed.
+    /// 
+    /// The default mode is Qt::MatchStartsWith.
     filter_mode() -> Rute::MatchFlags,
-    ///     Returns the popup used to display completions.
     /// 
-    ///     \sa setPopup()
+    /// Returns the popup used to display completions.
+    /// 
+    /// **See also:** setPopup()
     popup() -> AbstractItemView?,
-    ///     Sets the popup used to display completions to \a popup. QCompleter takes
-    ///     ownership of the view.
     /// 
-    ///     A QListView is automatically created when the completionMode() is set to
-    ///     QCompleter::PopupCompletion or QCompleter::UnfilteredPopupCompletion. The
-    ///     default popup displays the completionColumn().
+    /// Sets the popup used to display completions to *popup.* QCompleter takes
+    /// ownership of the view.
     /// 
-    ///     Ensure that this function is called before the view settings are modified.
-    ///     This is required since view's properties may require that a model has been
-    ///     set on the view (for example, hiding columns in the view requires a model
-    ///     to be set on the view).
+    /// A QListView is automatically created when the completionMode() is set to
+    /// QCompleter::PopupCompletion or QCompleter::UnfilteredPopupCompletion. The
+    /// default popup displays the completionColumn().
     /// 
-    ///     \sa popup()
+    /// Ensure that this function is called before the view settings are modified.
+    /// This is required since view's properties may require that a model has been
+    /// set on the view (for example, hiding columns in the view requires a model
+    /// to be set on the view).
+    /// 
+    /// **See also:** popup()
     set_popup(popup: *AbstractItemViewType),
-    ///     \property QCompleter::caseSensitivity
-    ///     \brief the case sensitivity of the matching
-    /// 
-    ///     The default is Qt::CaseSensitive.
-    /// 
-    ///     \sa completionColumn, completionRole, modelSorting
     set_case_sensitivity(case_sensitivity: Rute::CaseSensitivity),
+    /// 
+    /// The default is Qt::CaseSensitive.
+    /// 
+    /// **See also:** completionColumn
+    /// completionRole
+    /// modelSorting
     case_sensitivity() -> Rute::CaseSensitivity,
-    ///     \property QCompleter::modelSorting
-    ///     \brief the way the model is sorted
-    /// 
-    ///     By default, no assumptions are made about the order of the items
-    ///     in the model that provides the completions.
-    /// 
-    ///     If the model's data for the completionColumn() and completionRole() is sorted in
-    ///     ascending order, you can set this property to \l CaseSensitivelySortedModel
-    ///     or \l CaseInsensitivelySortedModel. On large models, this can lead to
-    ///     significant performance improvements because the completer object can
-    ///     then use a binary search algorithm instead of linear search algorithm.
-    /// 
-    ///     The sort order (i.e ascending or descending order) of the model is determined
-    ///     dynamically by inspecting the contents of the model.
-    /// 
-    ///     \b{Note:} The performance improvements described above cannot take place
-    ///     when the completer's \l caseSensitivity is different to the case sensitivity
-    ///     used by the model's when sorting.
-    /// 
-    ///     \sa setCaseSensitivity(), QCompleter::ModelSorting
     set_model_sorting(sorting: Completer::ModelSorting),
+    /// 
+    /// By default, no assumptions are made about the order of the items
+    /// in the model that provides the completions.
+    /// 
+    /// If the model's data for the completionColumn() and completionRole() is sorted in
+    /// ascending order, you can set this property to [CaseSensitivelySortedModel](CaseSensitivelySortedModel)
+    /// 
+    /// or [CaseInsensitivelySortedModel.](CaseInsensitivelySortedModel.)
+    /// On large models, this can lead to
+    /// significant performance improvements because the completer object can
+    /// then use a binary search algorithm instead of linear search algorithm.
+    /// 
+    /// The sort order (i.e ascending or descending order) of the model is determined
+    /// dynamically by inspecting the contents of the model.
+    /// 
+    /// **Note:** The performance improvements described above cannot take place
+    /// when the completer's [caseSensitivity](caseSensitivity)
+    /// is different to the case sensitivity
+    /// used by the model's when sorting.
+    /// 
+    /// **See also:** setCaseSensitivity()
+    /// QCompleter::ModelSorting
     model_sorting() -> Completer::ModelSorting,
-    ///     \property QCompleter::completionColumn
-    ///     \brief the column in the model in which completions are searched for.
-    /// 
-    ///     If the popup() is a QListView, it is automatically setup to display
-    ///     this column.
-    /// 
-    ///     By default, the match column is 0.
-    /// 
-    ///     \sa completionRole, caseSensitivity
     set_completion_column(column: i32),
+    /// 
+    /// If the popup() is a QListView, it is automatically setup to display
+    /// this column.
+    /// 
+    /// By default, the match column is 0.
+    /// 
+    /// **See also:** completionRole
+    /// caseSensitivity
     completion_column() -> i32,
-    ///     \property QCompleter::completionRole
-    ///     \brief the item role to be used to query the contents of items for matching.
-    /// 
-    ///     The default role is Qt::EditRole.
-    /// 
-    ///     \sa completionColumn, caseSensitivity
     set_completion_role(role: i32),
-    completion_role() -> i32,
-    wrap_around() -> bool,
-    ///     \property QCompleter::maxVisibleItems
-    ///     \brief the maximum allowed size on screen of the completer, measured in items
-    ///     \since 4.6
     /// 
-    ///     By default, this property has a value of 7.
+    /// The default role is Qt::EditRole.
+    /// 
+    /// **See also:** completionColumn
+    /// caseSensitivity
+    completion_role() -> i32,
+    /// 
+    /// The default is true.
+    wrap_around() -> bool,
+    /// 
+    /// By default, this property has a value of 7.
     max_visible_items() -> i32,
     set_max_visible_items(max_items: i32),
-    ///     Returns the number of completions for the current prefix. For an unsorted
-    ///     model with a large number of items this can be expensive. Use setCurrentRow()
-    ///     and currentCompletion() to iterate through all the completions.
+    /// 
+    /// Returns the number of completions for the current prefix. For an unsorted
+    /// model with a large number of items this can be expensive. Use setCurrentRow()
+    /// and currentCompletion() to iterate through all the completions.
     completion_count() -> i32,
-    ///     Sets the current row to the \a row specified. Returns \c true if successful;
-    ///     otherwise returns \c false.
     /// 
-    ///     This function may be used along with currentCompletion() to iterate
-    ///     through all the possible completions.
+    /// Sets the current row to the *row* specified. Returns `true` if successful;
+    /// otherwise returns `false.`
     /// 
-    ///     \sa currentCompletion(), completionCount()
+    /// This function may be used along with currentCompletion() to iterate
+    /// through all the possible completions.
+    /// 
+    /// **See also:** currentCompletion()
+    /// completionCount()
     set_current_row(row: i32) -> bool,
-    ///     Returns the current row.
     /// 
-    ///     \sa setCurrentRow()
+    /// Returns the current row.
+    /// 
+    /// **See also:** setCurrentRow()
     current_row() -> i32,
-    ///     Returns the model index of the current completion in the completionModel().
     /// 
-    ///     \sa setCurrentRow(), currentCompletion(), model()
+    /// Returns the model index of the current completion in the completionModel().
+    /// 
+    /// **See also:** setCurrentRow()
+    /// currentCompletion()
+    /// model()
     current_index() -> ModelIndex,
-    ///     Returns the current completion string. This includes the \l completionPrefix.
-    ///     When used alongside setCurrentRow(), it can be used to iterate through
-    ///     all the matches.
     /// 
-    ///     \sa setCurrentRow(), currentIndex()
+    /// Returns the current completion string. This includes the [completionPrefix.](completionPrefix.)
+    /// 
+    /// When used alongside setCurrentRow(), it can be used to iterate through
+    /// all the matches.
+    /// 
+    /// **See also:** setCurrentRow()
+    /// currentIndex()
     current_completion() -> String,
-    ///     Returns the completion model. The completion model is a read-only list model
-    ///     that contains all the possible matches for the current completion prefix.
-    ///     The completion model is auto-updated to reflect the current completions.
     /// 
-    ///     \note The return value of this function is defined to be an QAbstractItemModel
-    ///     purely for generality. This actual kind of model returned is an instance of an
-    ///     QAbstractProxyModel subclass.
+    /// Returns the completion model. The completion model is a read-only list model
+    /// that contains all the possible matches for the current completion prefix.
+    /// The completion model is auto-updated to reflect the current completions.
     /// 
-    ///     \sa completionPrefix, model()
+    /// **Note**: The return value of this function is defined to be an QAbstractItemModel
+    /// purely for generality. This actual kind of model returned is an instance of an
+    /// QAbstractProxyModel subclass.
+    /// 
+    /// **See also:** completionPrefix
+    /// model()
     completion_model() -> AbstractItemModel?,
+    /// 
+    /// The completionModel() is updated to reflect the list of possible
+    /// matches for *prefix.*
     completion_prefix() -> String,
-    ///     \property QCompleter::completionPrefix
-    ///     \brief the completion prefix used to provide completions.
-    /// 
-    ///     The completionModel() is updated to reflect the list of possible
-    ///     matches for \a prefix.
     set_completion_prefix(prefix: String),
-    ///     For QCompleter::PopupCompletion and QCompletion::UnfilteredPopupCompletion
-    ///     modes, calling this function displays the popup displaying the current
-    ///     completions. By default, if \a rect is not specified, the popup is displayed
-    ///     on the bottom of the widget(). If \a rect is specified the popup is
-    ///     displayed on the left edge of the rectangle.
     /// 
-    ///     For QCompleter::InlineCompletion mode, the highlighted() signal is fired
-    ///     with the current completion.
+    /// For QCompleter::PopupCompletion and QCompletion::UnfilteredPopupCompletion
+    /// modes, calling this function displays the popup displaying the current
+    /// completions. By default, if *rect* is not specified, the popup is displayed
+    /// on the bottom of the widget(). If *rect* is specified the popup is
+    /// displayed on the left edge of the rectangle.
+    /// 
+    /// For QCompleter::InlineCompletion mode, the highlighted() signal is fired
+    /// with the current completion.
     complete(rect: &RectType),
-    ///     \property QCompleter::wrapAround
-    ///     \brief the completions wrap around when navigating through items
-    ///     \since 4.3
-    /// 
-    ///     The default is true.
     set_wrap_around(wrap: bool),
-    ///     Returns the path for the given \a index. The completer object uses this to
-    ///     obtain the completion text from the underlying model.
     /// 
-    ///     The default implementation returns the \l{Qt::EditRole}{edit role} of the
-    ///     item for list models. It returns the absolute file path if the model is a
-    ///     QFileSystemModel.
+    /// Returns the path for the given *index.* The completer object uses this to
+    /// obtain the completion text from the underlying model.
     /// 
-    ///     \sa splitPath()
+    /// The default implementation returns the [edit role](Qt::EditRole)
+    /// of the
+    /// item for list models. It returns the absolute file path if the model is a
+    /// QFileSystemModel.
+    /// 
+    /// **See also:** splitPath()
     [event] path_from_index(index: &ModelIndexType) -> String,
-    ///     Splits the given \a path into strings that are used to match at each level
-    ///     in the model().
     /// 
-    ///     The default implementation of splitPath() splits a file system path based on
-    ///     QDir::separator() when the sourceModel() is a QFileSystemModel.
+    /// Splits the given *path* into strings that are used to match at each level
+    /// in the model().
     /// 
-    ///     When used with list models, the first item in the returned list is used for
-    ///     matching.
+    /// The default implementation of splitPath() splits a file system path based on
+    /// QDir::separator() when the sourceModel() is a QFileSystemModel.
     /// 
-    ///     \sa pathFromIndex(), {Handling Tree Models}
+    /// When used with list models, the first item in the returned list is used for
+    /// matching.
+    /// 
+    /// **See also:** pathFromIndex()
+    /// {Handling Tree Models}
     [event] split_path(path: String) -> [String],
-    ///   \reimp
+    /// 
     [event] event_filter(o: *ObjectType, e: *EventType) -> bool,
-    ///   \reimp
+    /// 
+    /// 
     [event] event(arg0: *EventType) -> bool,
+    /// 
+    /// This signal is sent when an item in the popup() is activated by the user.
+    /// (by clicking or pressing return). The item's *index* in the completionModel()
+    /// is given.
+    /// 
+    /// 
+    /// This signal is sent when an item in the popup() is activated by the user (by
+    /// clicking or pressing return). The item's *text* is given.
+    /// 
     [signal] activated(text: String),
+    /// 
+    /// This signal is sent when an item in the popup() is activated by the user.
+    /// (by clicking or pressing return). The item's *index* in the completionModel()
+    /// is given.
+    /// 
+    /// 
+    /// This signal is sent when an item in the popup() is activated by the user (by
+    /// clicking or pressing return). The item's *text* is given.
+    /// 
     [signal] activated(index: &ModelIndexType),
+    /// 
+    /// This signal is sent when an item in the popup() is highlighted by
+    /// the user. It is also sent if complete() is called with the completionMode()
+    /// set to QCompleter::InlineCompletion. The item's *index* in the completionModel()
+    /// is given.
+    /// 
+    /// This signal is sent when an item in the popup() is highlighted by
+    /// the user. It is also sent if complete() is called with the completionMode()
+    /// set to QCompleter::InlineCompletion. The item's *text* is given.
     [signal] highlighted(text: String),
+    /// 
+    /// This signal is sent when an item in the popup() is highlighted by
+    /// the user. It is also sent if complete() is called with the completionMode()
+    /// set to QCompleter::InlineCompletion. The item's *index* in the completionModel()
+    /// is given.
+    /// 
+    /// This signal is sent when an item in the popup() is highlighted by
+    /// the user. It is also sent if complete() is called with the completionMode()
+    /// set to QCompleter::InlineCompletion. The item's *text* is given.
     [signal] highlighted(index: &ModelIndexType),
 }
 

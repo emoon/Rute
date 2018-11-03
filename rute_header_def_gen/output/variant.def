@@ -1,84 +1,70 @@
-///     \class QVariant
-///     \inmodule QtCore
-///     \brief The QVariant class acts like a union for the most common Qt data types.
 /// 
-///     \ingroup objectmodel
-///     \ingroup shared
+/// Because C++ forbids unions from including types that have
+/// non-default constructors or destructors, most interesting Qt
+/// classes cannot be used in unions. Without QVariant, this would be
+/// a problem for QObject::property() and for database work, etc.
 /// 
+/// A QVariant object holds a single value of a single type() at a
+/// time. (Some type()s are multi-valued, for example a string list.)
+/// You can find out what type, T, the variant holds, convert it to a
+/// different type using convert(), get its value using one of the
+/// toT() functions (e.g., toSize()) and check whether the type can
+/// be converted to a particular type using canConvert().
 /// 
-///     Because C++ forbids unions from including types that have
-///     non-default constructors or destructors, most interesting Qt
-///     classes cannot be used in unions. Without QVariant, this would be
-///     a problem for QObject::property() and for database work, etc.
+/// The methods named toT() (e.g., toInt(), toString()) are const. If
+/// you ask for the stored type, they return a copy of the stored
+/// object. If you ask for a type that can be generated from the
+/// stored type, toT() copies and converts and leaves the object
+/// itself unchanged. If you ask for a type that cannot be generated
+/// from the stored type, the result depends on the type; see the
+/// function documentation for details.
 /// 
-///     A QVariant object holds a single value of a single type() at a
-///     time. (Some type()s are multi-valued, for example a string list.)
-///     You can find out what type, T, the variant holds, convert it to a
-///     different type using convert(), get its value using one of the
-///     toT() functions (e.g., toSize()) and check whether the type can
-///     be converted to a particular type using canConvert().
+/// Here is some example code to demonstrate the use of QVariant:
 /// 
-///     The methods named toT() (e.g., toInt(), toString()) are const. If
-///     you ask for the stored type, they return a copy of the stored
-///     object. If you ask for a type that can be generated from the
-///     stored type, toT() copies and converts and leaves the object
-///     itself unchanged. If you ask for a type that cannot be generated
-///     from the stored type, the result depends on the type; see the
-///     function documentation for details.
+/// You can even store QList<QVariant> and QMap<QString, QVariant>
+/// values in a variant, so you can easily construct arbitrarily
+/// complex data structures of arbitrary types. This is very powerful
+/// and versatile, but may prove less memory and speed efficient than
+/// storing specific types in standard data structures.
 /// 
-///     Here is some example code to demonstrate the use of QVariant:
+/// QVariant also supports the notion of null values, where you can
+/// have a defined type with no value set. However, note that QVariant
+/// types can only be cast when they have had a value set.
 /// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 0
+/// QVariant can be extended to support other types than those
+/// mentioned in the [Type](Type)
+/// enum. See [Creating Custom Qt Types](Creating%20Custom%20Qt%20Types)
 /// 
-///     You can even store QList<QVariant> and QMap<QString, QVariant>
-///     values in a variant, so you can easily construct arbitrarily
-///     complex data structures of arbitrary types. This is very powerful
-///     and versatile, but may prove less memory and speed efficient than
-///     storing specific types in standard data structures.
+/// for details.
 /// 
-///     QVariant also supports the notion of null values, where you can
-///     have a defined type with no value set. However, note that QVariant
-///     types can only be cast when they have had a value set.
+/// # A Note on GUI Types
 /// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 1
+/// Because QVariant is part of the Qt Core module, it cannot provide
+/// conversion functions to data types defined in Qt GUI, such as
+/// QColor, QImage, and QPixmap. In other words, there is no `toColor()` function. Instead, you can use the QVariant::value() or
+/// the qvariant_cast() template function. For example:
 /// 
-///     QVariant can be extended to support other types than those
-///     mentioned in the \l Type enum. See \l{Creating Custom Qt Types}{Creating Custom Qt Types}
-///     for details.
+/// The inverse conversion (e.g., from QColor to QVariant) is
+/// automatic for all data types supported by QVariant, including
+/// GUI-related types:
 /// 
-///     \section1 A Note on GUI Types
+/// # Using canConvert() and convert() Consecutively
 /// 
-///     Because QVariant is part of the Qt Core module, it cannot provide
-///     conversion functions to data types defined in Qt GUI, such as
-///     QColor, QImage, and QPixmap. In other words, there is no \c
-///     toColor() function. Instead, you can use the QVariant::value() or
-///     the qvariant_cast() template function. For example:
+/// When using canConvert() and convert() consecutively, it is possible for
+/// canConvert() to return true, but convert() to return false. This
+/// is typically because canConvert() only reports the general ability of
+/// QVariant to convert between types given suitable data; it is still
+/// possible to supply data which cannot actually be converted.
 /// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 2
+/// For example, canConvert(Int) would return true when called on a variant
+/// containing a string because, in principle, QVariant is able to convert
+/// strings of numbers to integers.
+/// However, if the string contains non-numeric characters, it cannot be
+/// converted to an integer, and any attempt to convert it will fail.
+/// Hence, it is important to have both functions return true for a
+/// successful conversion.
 /// 
-///     The inverse conversion (e.g., from QColor to QVariant) is
-///     automatic for all data types supported by QVariant, including
-///     GUI-related types:
-/// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 3
-/// 
-///     \section1 Using canConvert() and convert() Consecutively
-/// 
-///     When using canConvert() and convert() consecutively, it is possible for
-///     canConvert() to return true, but convert() to return false. This
-///     is typically because canConvert() only reports the general ability of
-///     QVariant to convert between types given suitable data; it is still
-///     possible to supply data which cannot actually be converted.
-/// 
-///     For example, canConvert(Int) would return true when called on a variant
-///     containing a string because, in principle, QVariant is able to convert
-///     strings of numbers to integers.
-///     However, if the string contains non-numeric characters, it cannot be
-///     converted to an integer, and any attempt to convert it will fail.
-///     Hence, it is important to have both functions return true for a
-///     successful conversion.
-/// 
-///     \sa QMetaType
+/// **See also:** QMetaType
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -150,505 +136,822 @@ enum Type {
 
 
 struct Variant {
+    /// 
+    /// Swaps variant *other* with this variant. This operation is very
+    /// fast and never fails.
     swap(other: &VariantType),
-    ///     Returns the storage type of the value stored in the variant.
-    ///     Although this function is declared as returning QVariant::Type,
-    ///     the return value should be interpreted as QMetaType::Type. In
-    ///     particular, QVariant::UserType is returned here only if the value
-    ///     is equal or greater than QMetaType::User.
     /// 
-    ///     Note that return values in the ranges QVariant::Char through
-    ///     QVariant::RegExp and QVariant::Font through QVariant::Transform
-    ///     correspond to the values in the ranges QMetaType::QChar through
-    ///     QMetaType::QRegExp and QMetaType::QFont through QMetaType::QQuaternion.
+    /// Returns the storage type of the value stored in the variant.
+    /// Although this function is declared as returning QVariant::Type,
+    /// the return value should be interpreted as QMetaType::Type. In
+    /// particular, QVariant::UserType is returned here only if the value
+    /// is equal or greater than QMetaType::User.
     /// 
-    ///     Pay particular attention when working with char and QChar
-    ///     variants.  Note that there is no QVariant constructor specifically
-    ///     for type char, but there is one for QChar. For a variant of type
-    ///     QChar, this function returns QVariant::Char, which is the same as
-    ///     QMetaType::QChar, but for a variant of type \c char, this function
-    ///     returns QMetaType::Char, which is \e not the same as
-    ///     QVariant::Char.
+    /// Note that return values in the ranges QVariant::Char through
+    /// QVariant::RegExp and QVariant::Font through QVariant::Transform
+    /// correspond to the values in the ranges QMetaType::QChar through
+    /// QMetaType::QRegExp and QMetaType::QFont through QMetaType::QQuaternion.
     /// 
-    ///     Also note that the types \c void*, \c long, \c short, \c unsigned
-    ///     \c long, \c unsigned \c short, \c unsigned \c char, \c float, \c
-    ///     QObject*, and \c QWidget* are represented in QMetaType::Type but
-    ///     not in QVariant::Type, and they can be returned by this function.
-    ///     However, they are considered to be user defined types when tested
-    ///     against QVariant::Type.
+    /// Pay particular attention when working with char and QChar
+    /// variants. Note that there is no QVariant constructor specifically
+    /// for type char, but there is one for QChar. For a variant of type
+    /// QChar, this function returns QVariant::Char, which is the same as
+    /// QMetaType::QChar, but for a variant of type `char,` this function
+    /// returns QMetaType::Char, which is *not* the same as
+    /// QVariant::Char.
     /// 
-    ///     To test whether an instance of QVariant contains a data type that
-    ///     is compatible with the data type you are interested in, use
-    ///     canConvert().
+    /// Also note that the types `void*,` `long,` `short,` `unsigned`
+    /// `long,` `unsigned` `short,` `unsigned` `char,` `float,` `QObject*,` and `QWidget*` are represented in QMetaType::Type but
+    /// not in QVariant::Type, and they can be returned by this function.
+    /// However, they are considered to be user defined types when tested
+    /// against QVariant::Type.
+    /// 
+    /// To test whether an instance of QVariant contains a data type that
+    /// is compatible with the data type you are interested in, use
+    /// canConvert().
+    /// 
+    /// Returns the name of the type stored in the variant. The returned
+    /// strings describe the C++ datatype used to store the data: for
+    /// example, , , or . An Invalid
+    /// variant returns 0.
+    /// 
+    /// Converts the int representation of the storage type, *typeId,* to
+    /// its string representation.
+    /// 
+    /// Returns a null pointer if the type is QMetaType::UnknownType or doesn't exist.
     type() -> Variant::Type,
-    ///     Returns the storage type of the value stored in the variant. For
-    ///     non-user types, this is the same as type().
     /// 
-    ///     \sa type()
+    /// Returns the storage type of the value stored in the variant. For
+    /// non-user types, this is the same as type().
+    /// 
+    /// **See also:** type()
     user_type() -> i32,
-    ///     Returns the name of the type stored in the variant. The returned
-    ///     strings describe the C++ datatype used to store the data: for
-    ///     example, "QFont", "QString", or "QVariantList". An Invalid
-    ///     variant returns 0.
+    /// 
+    /// Returns the name of the type stored in the variant. The returned
+    /// strings describe the C++ datatype used to store the data: for
+    /// example, , , or . An Invalid
+    /// variant returns 0.
     type_name() -> char?,
-    ///     Returns \c true if the variant's type can be cast to the requested
-    ///     type, \a targetTypeId. Such casting is done automatically when calling the
-    ///     toInt(), toBool(), ... methods.
     /// 
-    ///     The following casts are done automatically:
+    /// Returns `true` if the variant's type can be cast to the requested
+    /// type, *targetTypeId.* Such casting is done automatically when calling the
+    /// toInt(), toBool(), ... methods.
     /// 
-    ///     \table
-    ///     \header \li Type \li Automatically Cast To
-    ///     \row \li \l QMetaType::Bool \li \l QMetaType::QChar, \l QMetaType::Double,
-    ///         \l QMetaType::Int, \l QMetaType::LongLong, \l QMetaType::QString,
-    ///         \l QMetaType::UInt, \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::QByteArray \li \l QMetaType::Double,
-    ///         \l QMetaType::Int, \l QMetaType::LongLong, \l QMetaType::QString,
-    ///         \l QMetaType::UInt, \l QMetaType::ULongLong, \l QMetaType::QUuid
-    ///     \row \li \l QMetaType::QChar \li \l QMetaType::Bool, \l QMetaType::Int,
-    ///         \l QMetaType::UInt, \l QMetaType::LongLong, \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::QColor \li \l QMetaType::QString
-    ///     \row \li \l QMetaType::QDate \li \l QMetaType::QDateTime,
-    ///         \l QMetaType::QString
-    ///     \row \li \l QMetaType::QDateTime \li \l QMetaType::QDate,
-    ///         \l QMetaType::QString, \l QMetaType::QTime
-    ///     \row \li \l QMetaType::Double \li \l QMetaType::Bool, \l QMetaType::Int,
-    ///         \l QMetaType::LongLong, \l QMetaType::QString, \l QMetaType::UInt,
-    ///         \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::QFont \li \l QMetaType::QString
-    ///     \row \li \l QMetaType::Int \li \l QMetaType::Bool, \l QMetaType::QChar,
-    ///         \l QMetaType::Double, \l QMetaType::LongLong, \l QMetaType::QString,
-    ///         \l QMetaType::UInt, \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::QKeySequence \li \l QMetaType::Int,
-    ///         \l QMetaType::QString
-    ///     \row \li \l QMetaType::QVariantList \li \l QMetaType::QStringList (if the
-    ///         list's items can be converted to QStrings)
-    ///     \row \li \l QMetaType::LongLong \li \l QMetaType::Bool,
-    ///         \l QMetaType::QByteArray, \l QMetaType::QChar, \l QMetaType::Double,
-    ///         \l QMetaType::Int, \l QMetaType::QString, \l QMetaType::UInt,
-    ///         \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::QPoint \li QMetaType::QPointF
-    ///     \row \li \l QMetaType::QRect \li QMetaType::QRectF
-    ///     \row \li \l QMetaType::QString \li \l QMetaType::Bool,
-    ///         \l QMetaType::QByteArray, \l QMetaType::QChar, \l QMetaType::QColor,
-    ///         \l QMetaType::QDate, \l QMetaType::QDateTime, \l QMetaType::Double,
-    ///         \l QMetaType::QFont, \l QMetaType::Int, \l QMetaType::QKeySequence,
-    ///         \l QMetaType::LongLong, \l QMetaType::QStringList, \l QMetaType::QTime,
-    ///         \l QMetaType::UInt, \l QMetaType::ULongLong, \l QMetaType::QUuid
-    ///     \row \li \l QMetaType::QStringList \li \l QMetaType::QVariantList,
-    ///         \l QMetaType::QString (if the list contains exactly one item)
-    ///     \row \li \l QMetaType::QTime \li \l QMetaType::QString
-    ///     \row \li \l QMetaType::UInt \li \l QMetaType::Bool, \l QMetaType::QChar,
-    ///         \l QMetaType::Double, \l QMetaType::Int, \l QMetaType::LongLong,
-    ///         \l QMetaType::QString, \l QMetaType::ULongLong
-    ///     \row \li \l QMetaType::ULongLong \li \l QMetaType::Bool,
-    ///         \l QMetaType::QChar, \l QMetaType::Double, \l QMetaType::Int,
-    ///         \l QMetaType::LongLong, \l QMetaType::QString, \l QMetaType::UInt
-    ///     \row \li \l QMetaType::QUuid \li \l QMetaType::QByteArray, \l QMetaType::QString
-    ///     \endtable
+    /// The following casts are done automatically:
     /// 
-    ///     A QVariant containing a pointer to a type derived from QObject will also return true for this
-    ///     function if a qobject_cast to the type described by \a targetTypeId would succeed. Note that
-    ///     this only works for QObject subclasses which use the Q_OBJECT macro.
+    /// * Type
+    /// * Automatically Cast To
+    /// * [QMetaType::Bool](QMetaType::Bool)
     /// 
-    ///     A QVariant containing a sequential container will also return true for this
-    ///     function if the \a targetTypeId is QVariantList. It is possible to iterate over
-    ///     the contents of the container without extracting it as a (copied) QVariantList:
+    /// * [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
     /// 
-    ///     \snippet code/src_corelib_kernel_qvariant.cpp 9
+    /// * [QMetaType::QByteArray](QMetaType::QByteArray)
     /// 
-    ///     This requires that the value_type of the container is itself a metatype.
+    /// * [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong,](QMetaType::ULongLong,)
+    /// [QMetaType::QUuid](QMetaType::QUuid)
     /// 
-    ///     Similarly, a QVariant containing a sequential container will also return true for this
-    ///     function the \a targetTypeId is QVariantHash or QVariantMap. It is possible to iterate over
-    ///     the contents of the container without extracting it as a (copied) QVariantHash or QVariantMap:
+    /// * [QMetaType::QChar](QMetaType::QChar)
     /// 
-    ///     \snippet code/src_corelib_kernel_qvariant.cpp 10
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
     /// 
-    ///     \sa convert(), QSequentialIterable, Q_DECLARE_SEQUENTIAL_CONTAINER_METATYPE(), QAssociativeIterable,
-    ///         Q_DECLARE_ASSOCIATIVE_CONTAINER_METATYPE()
+    /// * [QMetaType::QColor](QMetaType::QColor)
+    /// 
+    /// * [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::QDate](QMetaType::QDate)
+    /// 
+    /// * [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::QDateTime](QMetaType::QDateTime)
+    /// 
+    /// * [QMetaType::QDate,](QMetaType::QDate,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::QTime](QMetaType::QTime)
+    /// 
+    /// * [QMetaType::Double](QMetaType::Double)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// 
+    /// * [QMetaType::QFont](QMetaType::QFont)
+    /// 
+    /// * [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::Int](QMetaType::Int)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// 
+    /// * [QMetaType::QKeySequence](QMetaType::QKeySequence)
+    /// 
+    /// * [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::QVariantList](QMetaType::QVariantList)
+    /// 
+    /// * [QMetaType::QStringList](QMetaType::QStringList)
+    /// (if the list's items can be converted to QStrings)
+    /// * [QMetaType::LongLong](QMetaType::LongLong)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// 
+    /// * [QMetaType::QPoint](QMetaType::QPoint)
+    /// 
+    /// * QMetaType::QPointF
+    /// * [QMetaType::QRect](QMetaType::QRect)
+    /// 
+    /// * QMetaType::QRectF
+    /// * [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::QColor,](QMetaType::QColor,)
+    /// [QMetaType::QDate,](QMetaType::QDate,)
+    /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::QFont,](QMetaType::QFont,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::QKeySequence,](QMetaType::QKeySequence,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QStringList,](QMetaType::QStringList,)
+    /// [QMetaType::QTime,](QMetaType::QTime,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::ULongLong,](QMetaType::ULongLong,)
+    /// [QMetaType::QUuid](QMetaType::QUuid)
+    /// 
+    /// * [QMetaType::QStringList](QMetaType::QStringList)
+    /// 
+    /// * [QMetaType::QVariantList,](QMetaType::QVariantList,)
+    /// [QMetaType::QString](QMetaType::QString)
+    /// (if the list contains exactly one item)
+    /// * [QMetaType::QTime](QMetaType::QTime)
+    /// 
+    /// * [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// * [QMetaType::UInt](QMetaType::UInt)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// 
+    /// * [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// 
+    /// * [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt](QMetaType::UInt)
+    /// 
+    /// * [QMetaType::QUuid](QMetaType::QUuid)
+    /// 
+    /// * [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::QString](QMetaType::QString)
+    /// 
+    /// A QVariant containing a pointer to a type derived from QObject will also return true for this
+    /// function if a qobject_cast to the type described by *targetTypeId* would succeed. Note that
+    /// this only works for QObject subclasses which use the Q_OBJECT macro.
+    /// 
+    /// A QVariant containing a sequential container will also return true for this
+    /// function if the *targetTypeId* is QVariantList. It is possible to iterate over
+    /// the contents of the container without extracting it as a (copied) QVariantList:
+    /// 
+    /// This requires that the value_type of the container is itself a metatype.
+    /// 
+    /// Similarly, a QVariant containing a sequential container will also return true for this
+    /// function the *targetTypeId* is QVariantHash or QVariantMap. It is possible to iterate over
+    /// the contents of the container without extracting it as a (copied) QVariantHash or QVariantMap:
+    /// 
+    /// **See also:** convert()
+    /// QSequentialIterable
+    /// Q_DECLARE_SEQUENTIAL_CONTAINER_METATYPE()
+    /// QAssociativeIterable
+    /// Q_DECLARE_ASSOCIATIVE_CONTAINER_METATYPE()
+    /// 
+    /// Returns `true` if the variant can be converted to the template type `T` ,
+    /// otherwise false.
+    /// 
+    /// Example:
+    /// 
+    /// A QVariant containing a pointer to a type derived from QObject will also return true for this
+    /// function if a qobject_cast to the template type `T` would succeed. Note that this only works
+    /// for QObject subclasses which use the Q_OBJECT macro.
+    /// 
+    /// **See also:** convert()
     can_convert(target_type_id: i32) -> bool,
-    ///   \fn bool QVariant::convert(const int type, void *ptr) const
-    ///   \internal
-    ///   Created for qvariant_cast() usage
+    /// 
+    /// Casts the variant to the requested type, *targetTypeId.* If the cast cannot be
+    /// done, the variant is still changed to the requested type, but is left in a cleared
+    /// null state similar to that constructed by QVariant(Type).
+    /// 
+    /// Returns `true` if the current type of the variant was successfully cast;
+    /// otherwise returns `false.`
+    /// 
+    /// A QVariant containing a pointer to a type derived from QObject will also convert
+    /// and return true for this function if a qobject_cast to the type described
+    /// by *targetTypeId* would succeed. Note that this only works for QObject subclasses
+    /// which use the Q_OBJECT macro.
+    /// 
+    /// **Note**: converting QVariants that are null due to not being initialized or having
+    /// failed a previous conversion will always fail, changing the type, remaining null,
+    /// and returning `false.`
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// clear()
     convert(target_type_id: i32) -> bool,
+    /// 
+    /// Returns `true` if the storage type of this variant is not
+    /// QMetaType::UnknownType; otherwise returns `false.`
     is_valid() -> bool,
-    ///     Returns \c true if this is a null variant, false otherwise. A variant is
-    ///     considered null if it contains no initialized value, or the contained value
-    ///     is a null pointer or is an instance of a built-in type that has an isNull
-    ///     method, in which case the result would be the same as calling isNull on the
-    ///     wrapped object.
     /// 
-    ///     \warning Null variants is not a single state and two null variants may easily
-    ///     return \c false on the == operator if they do not contain similar null values.
+    /// Returns `true` if this is a null variant, false otherwise. A variant is
+    /// considered null if it contains no initialized value, or the contained value
+    /// is a null pointer or is an instance of a built-in type that has an isNull
+    /// method, in which case the result would be the same as calling isNull on the
+    /// wrapped object.
     /// 
-    ///     \sa convert(int)
+    /// **Warning**: Null variants is not a single state and two null variants may easily
+    /// return `false` on the == operator if they do not contain similar null values.
+    /// 
+    /// **See also:** convert(int)
     is_null() -> bool,
-    ///     Convert this variant to type QMetaType::UnknownType and free up any resources
-    ///     used.
-    clear(),
-    ///     \fn void QVariant::detach()
     /// 
-    ///     \internal
+    /// Convert this variant to type QMetaType::UnknownType and free up any resources
+    /// used.
+    clear(),
     detach(),
     is_detached() -> bool,
-    ///     Returns the variant as an int if the variant has userType()
-    ///     \l QMetaType::Int, \l QMetaType::Bool, \l QMetaType::QByteArray,
-    ///     \l QMetaType::QChar, \l QMetaType::Double, \l QMetaType::LongLong,
-    ///     \l QMetaType::QString, \l QMetaType::UInt, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to an int; otherwise \c{*}\a{ok} is set to false.
+    /// Returns the variant as an int if the variant has userType()
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
     /// 
-    ///     \b{Warning:} If the value is convertible to a \l QMetaType::LongLong but is
-    ///     too large to be represented in an int, the resulting arithmetic overflow
-    ///     will not be reflected in \a ok. A simple workaround is to use
-    ///     QString::toInt().
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to an int; otherwise `*` *ok* is set to false.
+    /// 
+    /// **Warning:** If the value is convertible to a [QMetaType::LongLong](QMetaType::LongLong)
+    /// but is
+    /// too large to be represented in an int, the resulting arithmetic overflow
+    /// will not be reflected in *ok.* A simple workaround is to use
+    /// QString::toInt().
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_int(ok: *bool) -> i32,
-    ///     Returns the variant as an unsigned int if the variant has userType()
-    ///     \l QMetaType::UInt, \l QMetaType::Bool, \l QMetaType::QByteArray,
-    ///     \l QMetaType::QChar, \l QMetaType::Double, \l QMetaType::Int,
-    ///     \l QMetaType::LongLong, \l QMetaType::QString, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to an unsigned int; otherwise \c{*}\a{ok} is set to false.
+    /// Returns the variant as an unsigned int if the variant has userType()
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
     /// 
-    ///     \b{Warning:} If the value is convertible to a \l QMetaType::ULongLong but is
-    ///     too large to be represented in an unsigned int, the resulting arithmetic
-    ///     overflow will not be reflected in \a ok. A simple workaround is to use
-    ///     QString::toUInt().
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to an unsigned int; otherwise `*` *ok* is set to false.
+    /// 
+    /// **Warning:** If the value is convertible to a [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// but is
+    /// too large to be represented in an unsigned int, the resulting arithmetic
+    /// overflow will not be reflected in *ok.* A simple workaround is to use
+    /// QString::toUInt().
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_u_int(ok: *bool) -> uint,
-    ///     Returns the variant as a long long int if the variant has userType()
-    ///     \l QMetaType::LongLong, \l QMetaType::Bool, \l QMetaType::QByteArray,
-    ///     \l QMetaType::QChar, \l QMetaType::Double, \l QMetaType::Int,
-    ///     \l QMetaType::QString, \l QMetaType::UInt, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.
     /// 
-    ///     If \a ok is non-null: \c{*}\c{ok} is set to true if the value could be
-    ///     converted to an int; otherwise \c{*}\c{ok} is set to false.
+    /// Returns the variant as a long long int if the variant has userType()
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// 
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.
+    /// 
+    /// If *ok* is non-null: `*` `ok` is set to true if the value could be
+    /// converted to an int; otherwise `*` `ok` is set to false.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_long_long(ok: *bool) -> i64,
-    ///     Returns the variant as an unsigned long long int if the
-    ///     variant has type() \l QMetaType::ULongLong, \l QMetaType::Bool,
-    ///     \l QMetaType::QByteArray, \l QMetaType::QChar, \l QMetaType::Double,
-    ///     \l QMetaType::Int, \l QMetaType::LongLong, \l QMetaType::QString, or
-    ///     \l QMetaType::UInt; otherwise returns 0.
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to an int; otherwise \c{*}\a{ok} is set to false.
+    /// Returns the variant as an unsigned long long int if the
+    /// variant has type() [QMetaType::ULongLong,](QMetaType::ULongLong,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// 
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// or
+    /// [QMetaType::UInt;](QMetaType::UInt;)
+    /// otherwise returns 0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to an int; otherwise `*` *ok* is set to false.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_u_long_long(ok: *bool) -> qulonglong,
-    ///     Returns the variant as a bool if the variant has userType() Bool.
     /// 
-    ///     Returns \c true if the variant has userType() \l QMetaType::Bool,
-    ///     \l QMetaType::QChar, \l QMetaType::Double, \l QMetaType::Int,
-    ///     \l QMetaType::LongLong, \l QMetaType::UInt, or \l QMetaType::ULongLong and
-    ///     the value is non-zero, or if the variant has type \l QMetaType::QString or
-    ///     \l QMetaType::QByteArray and its lower-case content is not one of the
-    ///     following: empty, "0" or "false"; otherwise returns \c false.
+    /// Returns the variant as a bool if the variant has userType() Bool.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// Returns `true` if the variant has userType() [QMetaType::Bool,](QMetaType::Bool,)
+    /// 
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// 
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong](QMetaType::ULongLong)
+    /// and
+    /// the value is non-zero, or if the variant has type [QMetaType::QString](QMetaType::QString)
+    /// or
+    /// [QMetaType::QByteArray](QMetaType::QByteArray)
+    /// and its lower-case content is not one of the
+    /// following: empty, or ; otherwise returns `false.`
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_bool() -> bool,
-    ///     Returns the variant as a double if the variant has userType()
-    ///     \l QMetaType::Double, \l QMetaType::Float, \l QMetaType::Bool,
-    ///     \l QMetaType::QByteArray, \l QMetaType::Int, \l QMetaType::LongLong,
-    ///     \l QMetaType::QString, \l QMetaType::UInt, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.0.
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to a double; otherwise \c{*}\a{ok} is set to false.
+    /// Returns the variant as a double if the variant has userType()
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Float,](QMetaType::Float,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
+    /// 
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to a double; otherwise `*` *ok* is set to false.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_double(ok: *bool) -> double,
-    ///     Returns the variant as a float if the variant has userType()
-    ///     \l QMetaType::Double, \l QMetaType::Float, \l QMetaType::Bool,
-    ///     \l QMetaType::QByteArray, \l QMetaType::Int, \l QMetaType::LongLong,
-    ///     \l QMetaType::QString, \l QMetaType::UInt, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.0.
     /// 
-    ///     \since 4.6
+    /// Returns the variant as a float if the variant has userType()
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Float,](QMetaType::Float,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to a double; otherwise \c{*}\a{ok} is set to false.
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to a double; otherwise `*` *ok* is set to false.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_float(ok: *bool) -> f32,
-    ///     Returns the variant as a qreal if the variant has userType()
-    ///     \l QMetaType::Double, \l QMetaType::Float, \l QMetaType::Bool,
-    ///     \l QMetaType::QByteArray, \l QMetaType::Int, \l QMetaType::LongLong,
-    ///     \l QMetaType::QString, \l QMetaType::UInt, or \l QMetaType::ULongLong;
-    ///     otherwise returns 0.0.
     /// 
-    ///     \since 4.6
+    /// Returns the variant as a qreal if the variant has userType()
+    /// [QMetaType::Double,](QMetaType::Double,)
+    /// [QMetaType::Float,](QMetaType::Float,)
+    /// [QMetaType::Bool,](QMetaType::Bool,)
     /// 
-    ///     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
-    ///     converted to a double; otherwise \c{*}\a{ok} is set to false.
+    /// [QMetaType::QByteArray,](QMetaType::QByteArray,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// [QMetaType::LongLong,](QMetaType::LongLong,)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// [QMetaType::QString,](QMetaType::QString,)
+    /// [QMetaType::UInt,](QMetaType::UInt,)
+    /// or [QMetaType::ULongLong;](QMetaType::ULongLong;)
+    /// 
+    /// otherwise returns 0.0.
+    /// 
+    /// If *ok* is non-null: `*` *ok* is set to true if the value could be
+    /// converted to a double; otherwise `*` *ok* is set to false.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_real(ok: *bool) -> f32,
-    ///     \fn QByteArray QVariant::toByteArray() const
     /// 
-    ///     Returns the variant as a QByteArray if the variant has userType()
-    ///     \l QMetaType::QByteArray or \l QMetaType::QString (converted using
-    ///     QString::fromUtf8()); otherwise returns an empty byte array.
+    /// Returns the variant as a QByteArray if the variant has userType()
+    /// [QMetaType::QByteArray](QMetaType::QByteArray)
+    /// or [QMetaType::QString](QMetaType::QString)
+    /// (converted using
+    /// QString::fromUtf8()); otherwise returns an empty byte array.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_byte_array() -> ByteArray,
-    ///     Returns the variant as a QBitArray if the variant has userType()
-    ///     \l QMetaType::QBitArray; otherwise returns an empty bit array.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// Returns the variant as a QBitArray if the variant has userType()
+    /// [QMetaType::QBitArray;](QMetaType::QBitArray;)
+    /// otherwise returns an empty bit array.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_bit_array() -> BitArray,
-    ///     \fn QChar QVariant::toChar() const
     /// 
-    ///     Returns the variant as a QChar if the variant has userType()
-    ///     \l QMetaType::QChar, \l QMetaType::Int, or \l QMetaType::UInt; otherwise
-    ///     returns an invalid QChar.
+    /// Returns the variant as a QChar if the variant has userType()
+    /// [QMetaType::QChar,](QMetaType::QChar,)
+    /// [QMetaType::Int,](QMetaType::Int,)
+    /// or [QMetaType::UInt;](QMetaType::UInt;)
+    /// otherwise
+    /// returns an invalid QChar.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_char() -> Char,
-    ///     \fn QDate QVariant::toDate() const
     /// 
-    ///     Returns the variant as a QDate if the variant has userType()
-    ///     \l QMetaType::QDate, \l QMetaType::QDateTime, or \l QMetaType::QString;
-    ///     otherwise returns an invalid date.
+    /// Returns the variant as a QDate if the variant has userType()
+    /// [QMetaType::QDate,](QMetaType::QDate,)
+    /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// or [QMetaType::QString;](QMetaType::QString;)
     /// 
-    ///     If the type() is \l QMetaType::QString, an invalid date will be returned if
-    ///     the string cannot be parsed as a Qt::ISODate format date.
+    /// otherwise returns an invalid date.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// If the type() is [QMetaType::QString,](QMetaType::QString,)
+    /// an invalid date will be returned if
+    /// the string cannot be parsed as a Qt::ISODate format date.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// 
+    /// Returns the variant as a QDateTime if the variant has userType()
+    /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// [QMetaType::QDate,](QMetaType::QDate,)
+    /// or [QMetaType::QString;](QMetaType::QString;)
+    /// 
+    /// otherwise returns an invalid date/time.
+    /// 
+    /// If the type() is [QMetaType::QString,](QMetaType::QString,)
+    /// an invalid date/time will be
+    /// returned if the string cannot be parsed as a Qt::ISODate format date/time.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_date() -> Date,
-    ///     \fn QTime QVariant::toTime() const
     /// 
-    ///     Returns the variant as a QTime if the variant has userType()
-    ///     \l QMetaType::QTime, \l QMetaType::QDateTime, or \l QMetaType::QString;
-    ///     otherwise returns an invalid time.
+    /// Returns the variant as a QTime if the variant has userType()
+    /// [QMetaType::QTime,](QMetaType::QTime,)
+    /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// or [QMetaType::QString;](QMetaType::QString;)
     /// 
-    ///     If the type() is \l QMetaType::QString, an invalid time will be returned if
-    ///     the string cannot be parsed as a Qt::ISODate format time.
+    /// otherwise returns an invalid time.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// If the type() is [QMetaType::QString,](QMetaType::QString,)
+    /// an invalid time will be returned if
+    /// the string cannot be parsed as a Qt::ISODate format time.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_time() -> Time,
-    ///     \fn QDateTime QVariant::toDateTime() const
     /// 
-    ///     Returns the variant as a QDateTime if the variant has userType()
-    ///     \l QMetaType::QDateTime, \l QMetaType::QDate, or \l QMetaType::QString;
-    ///     otherwise returns an invalid date/time.
+    /// Returns the variant as a QDateTime if the variant has userType()
+    /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
+    /// [QMetaType::QDate,](QMetaType::QDate,)
+    /// or [QMetaType::QString;](QMetaType::QString;)
     /// 
-    ///     If the type() is \l QMetaType::QString, an invalid date/time will be
-    ///     returned if the string cannot be parsed as a Qt::ISODate format date/time.
+    /// otherwise returns an invalid date/time.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// If the type() is [QMetaType::QString,](QMetaType::QString,)
+    /// an invalid date/time will be
+    /// returned if the string cannot be parsed as a Qt::ISODate format date/time.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_date_time() -> DateTime,
-    ///     Returns the variant as a QVariantList if the variant has userType()
-    ///     \l QMetaType::QVariantList or \l QMetaType::QStringList; otherwise returns
-    ///     an empty list.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// Returns the variant as a QVariantList if the variant has userType()
+    /// [QMetaType::QVariantList](QMetaType::QVariantList)
+    /// or [QMetaType::QStringList;](QMetaType::QStringList;)
+    /// otherwise returns
+    /// an empty list.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_list() -> [Variant],
-    ///     Returns the variant as a QMap<QString, QVariant> if the variant
-    ///     has type() \l QMetaType::QVariantMap; otherwise returns an empty map.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// Returns the variant as a QMap<QString, QVariant> if the variant
+    /// has type() [QMetaType::QVariantMap;](QMetaType::QVariantMap;)
+    /// otherwise returns an empty map.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_map() -> Map<QString,,
-    ///     Returns the variant as a QHash<QString, QVariant> if the variant
-    ///     has type() \l QMetaType::QVariantHash; otherwise returns an empty map.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// Returns the variant as a QHash<QString, QVariant> if the variant
+    /// has type() [QMetaType::QVariantHash;](QMetaType::QVariantHash;)
+    /// otherwise returns an empty map.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_hash() -> Hash<QString,,
-    ///     \fn QPoint QVariant::toPoint() const
     /// 
-    ///     Returns the variant as a QPoint if the variant has userType()
-    ///     \l QMetaType::QPoint or \l QMetaType::QPointF; otherwise returns a null
-    ///     QPoint.
+    /// Returns the variant as a QPoint if the variant has userType()
+    /// [QMetaType::QPoint](QMetaType::QPoint)
+    /// or [QMetaType::QPointF;](QMetaType::QPointF;)
+    /// otherwise returns a null
+    /// QPoint.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// 
+    /// Returns the variant as a QPointF if the variant has userType() [QMetaType::QPoint](QMetaType::QPoint)
+    /// or [QMetaType::QPointF;](QMetaType::QPointF;)
+    /// otherwise returns a null
+    /// QPointF.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_point() -> Point,
-    ///     \fn QPointF QVariant::toPointF() const
     /// 
-    ///     Returns the variant as a QPointF if the variant has userType() \l
-    ///     QMetaType::QPoint or \l QMetaType::QPointF; otherwise returns a null
-    ///     QPointF.
+    /// Returns the variant as a QPointF if the variant has userType() [QMetaType::QPoint](QMetaType::QPoint)
+    /// or [QMetaType::QPointF;](QMetaType::QPointF;)
+    /// otherwise returns a null
+    /// QPointF.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_point_f() -> PointF,
-    ///     \fn QRect QVariant::toRect() const
     /// 
-    ///     Returns the variant as a QRect if the variant has userType()
-    ///     \l QMetaType::QRect; otherwise returns an invalid QRect.
+    /// Returns the variant as a QRect if the variant has userType()
+    /// [QMetaType::QRect;](QMetaType::QRect;)
+    /// otherwise returns an invalid QRect.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// 
+    /// Returns the variant as a QRectF if the variant has userType()
+    /// [QMetaType::QRect](QMetaType::QRect)
+    /// or [QMetaType::QRectF;](QMetaType::QRectF;)
+    /// otherwise returns an invalid
+    /// QRectF.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_rect() -> Rect,
-    ///     \fn QSize QVariant::toSize() const
     /// 
-    ///     Returns the variant as a QSize if the variant has userType()
-    ///     \l QMetaType::QSize; otherwise returns an invalid QSize.
+    /// Returns the variant as a QSize if the variant has userType()
+    /// [QMetaType::QSize;](QMetaType::QSize;)
+    /// otherwise returns an invalid QSize.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// 
+    /// Returns the variant as a QSizeF if the variant has userType() [QMetaType::QSizeF;](QMetaType::QSizeF;)
+    /// otherwise returns an invalid QSizeF.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_size() -> Size,
-    ///     \fn QSizeF QVariant::toSizeF() const
     /// 
-    ///     Returns the variant as a QSizeF if the variant has userType() \l
-    ///     QMetaType::QSizeF; otherwise returns an invalid QSizeF.
+    /// Returns the variant as a QSizeF if the variant has userType() [QMetaType::QSizeF;](QMetaType::QSizeF;)
+    /// otherwise returns an invalid QSizeF.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_size_f() -> SizeF,
-    ///     \fn QLine QVariant::toLine() const
     /// 
-    ///     Returns the variant as a QLine if the variant has userType()
-    ///     \l QMetaType::QLine; otherwise returns an invalid QLine.
+    /// Returns the variant as a QLineF if the variant has userType()
+    /// [QMetaType::QLineF;](QMetaType::QLineF;)
+    /// otherwise returns an invalid QLineF.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// 
+    /// Returns the variant as a QLine if the variant has userType()
+    /// [QMetaType::QLine;](QMetaType::QLine;)
+    /// otherwise returns an invalid QLine.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_line() -> Line,
-    ///     \fn QLineF QVariant::toLineF() const
     /// 
-    ///     Returns the variant as a QLineF if the variant has userType()
-    ///     \l QMetaType::QLineF; otherwise returns an invalid QLineF.
+    /// Returns the variant as a QLineF if the variant has userType()
+    /// [QMetaType::QLineF;](QMetaType::QLineF;)
+    /// otherwise returns an invalid QLineF.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_line_f() -> LineF,
-    ///     \fn QRectF QVariant::toRectF() const
     /// 
-    ///     Returns the variant as a QRectF if the variant has userType()
-    ///     \l QMetaType::QRect or \l QMetaType::QRectF; otherwise returns an invalid
-    ///     QRectF.
+    /// Returns the variant as a QRectF if the variant has userType()
+    /// [QMetaType::QRect](QMetaType::QRect)
+    /// or [QMetaType::QRectF;](QMetaType::QRectF;)
+    /// otherwise returns an invalid
+    /// QRectF.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_rect_f() -> RectF,
-    ///     \fn QLocale QVariant::toLocale() const
     /// 
-    ///     Returns the variant as a QLocale if the variant has userType()
-    ///     \l QMetaType::QLocale; otherwise returns an invalid QLocale.
+    /// Returns the variant as a QLocale if the variant has userType()
+    /// [QMetaType::QLocale;](QMetaType::QLocale;)
+    /// otherwise returns an invalid QLocale.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_locale() -> Locale,
-    ///     \fn QRegExp QVariant::toRegExp() const
-    ///     \since 4.1
     /// 
-    ///     Returns the variant as a QRegExp if the variant has userType()
-    ///     \l QMetaType::QRegExp; otherwise returns an empty QRegExp.
+    /// Returns the variant as a QRegExp if the variant has userType()
+    /// [QMetaType::QRegExp;](QMetaType::QRegExp;)
+    /// otherwise returns an empty QRegExp.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_reg_exp() -> RegExp,
-    ///     \fn QRegularExpression QVariant::toRegularExpression() const
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QRegularExpression if the variant has userType() \l
-    ///     QRegularExpression; otherwise returns an empty QRegularExpression.
+    /// Returns the variant as a QRegularExpression if the variant has userType() [QRegularExpression;](QRegularExpression;)
+    /// otherwise returns an empty QRegularExpression.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_regular_expression() -> RegularExpression,
-    ///     \fn QUrl QVariant::toUrl() const
     /// 
-    ///     Returns the variant as a QUrl if the variant has userType()
-    ///     \l QMetaType::QUrl; otherwise returns an invalid QUrl.
+    /// Returns the variant as a QUrl if the variant has userType()
+    /// [QMetaType::QUrl;](QMetaType::QUrl;)
+    /// otherwise returns an invalid QUrl.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_url() -> Url,
-    ///     \since 4.7
-    ///     \fn QEasingCurve QVariant::toEasingCurve() const
     /// 
-    ///     Returns the variant as a QEasingCurve if the variant has userType()
-    ///     \l QMetaType::QEasingCurve; otherwise returns a default easing curve.
+    /// Returns the variant as a QEasingCurve if the variant has userType()
+    /// [QMetaType::QEasingCurve;](QMetaType::QEasingCurve;)
+    /// otherwise returns a default easing curve.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_easing_curve() -> EasingCurve,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QUuid if the variant has type()
-    ///     \l QMetaType::QUuid, \l QMetaType::QByteArray or \l QMetaType::QString;
-    ///     otherwise returns a default-constructed QUuid.
+    /// Returns the variant as a QUuid if the variant has type()
+    /// [QMetaType::QUuid,](QMetaType::QUuid,)
+    /// [QMetaType::QByteArray](QMetaType::QByteArray)
+    /// or [QMetaType::QString;](QMetaType::QString;)
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// otherwise returns a default-constructed QUuid.
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_uuid() -> Uuid,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QJsonValue if the variant has userType() \l
-    ///     QJsonValue; otherwise returns a default constructed QJsonValue.
+    /// Returns the variant as a QJsonValue if the variant has userType() [QJsonValue;](QJsonValue;)
+    /// otherwise returns a default constructed QJsonValue.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_json_value() -> JsonValue,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QJsonObject if the variant has userType() \l
-    ///     QJsonObject; otherwise returns a default constructed QJsonObject.
+    /// Returns the variant as a QJsonObject if the variant has userType() [QJsonObject;](QJsonObject;)
+    /// otherwise returns a default constructed QJsonObject.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_json_object() -> JsonObject,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QJsonArray if the variant has userType() \l
-    ///     QJsonArray; otherwise returns a default constructed QJsonArray.
+    /// Returns the variant as a QJsonArray if the variant has userType() [QJsonArray;](QJsonArray;)
+    /// otherwise returns a default constructed QJsonArray.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_json_array() -> JsonArray,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QJsonDocument if the variant has userType() \l
-    ///     QJsonDocument; otherwise returns a default constructed QJsonDocument.
+    /// Returns the variant as a QJsonDocument if the variant has userType() [QJsonDocument;](QJsonDocument;)
+    /// otherwise returns a default constructed QJsonDocument.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
     to_json_document() -> JsonDocument,
-    ///     \since 5.0
     /// 
-    ///     Returns the variant as a QModelIndex if the variant has userType() \l
-    ///     QModelIndex; otherwise returns a default constructed QModelIndex.
+    /// Returns the variant as a QModelIndex if the variant has userType() [QModelIndex;](QModelIndex;)
+    /// otherwise returns a default constructed QModelIndex.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert(), toPersistentModelIndex()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// toPersistentModelIndex()
     to_model_index() -> ModelIndex,
-    ///     \since 5.5
     /// 
-    ///     Returns the variant as a QPersistentModelIndex if the variant has userType() \l
-    ///     QPersistentModelIndex; otherwise returns a default constructed QPersistentModelIndex.
+    /// Returns the variant as a QPersistentModelIndex if the variant has userType() [QPersistentModelIndex;](QPersistentModelIndex;)
+    /// otherwise returns a default constructed QPersistentModelIndex.
     /// 
-    ///     \sa canConvert(int targetTypeId), convert(), toModelIndex()
+    /// **See also:** canConvert(int targetTypeId)
+    /// convert()
+    /// toModelIndex()
     to_persistent_model_index() -> PersistentModelIndex,
-    ///     Internal function for loading a variant from stream \a s. Use the
-    ///     stream operators instead.
-    /// 
-    ///     \internal
     load(ds: &DataStreamType),
-    ///     Internal function for saving a variant to the stream \a s. Use the
-    ///     stream operators instead.
-    /// 
-    ///     \internal
     save(ds: &DataStreamType),
-    ///     Converts the int representation of the storage type, \a typeId, to
-    ///     its string representation.
     /// 
-    ///     Returns a null pointer if the type is QMetaType::UnknownType or doesn't exist.
+    /// Converts the int representation of the storage type, *typeId,* to
+    /// its string representation.
+    /// 
+    /// Returns a null pointer if the type is QMetaType::UnknownType or doesn't exist.
     [static] type_to_name(type_id: i32) -> char?,
-    ///     Converts the string representation of the storage type given in \a
-    ///     name, to its enum representation.
     /// 
-    ///     If the string representation cannot be converted to any enum
-    ///     representation, the variant is set to \c Invalid.
+    /// Converts the string representation of the storage type given in *name,* to its enum representation.
+    /// 
+    /// If the string representation cannot be converted to any enum
+    /// representation, the variant is set to `Invalid.`
     [static] name_to_type(name: *char) -> Variant::Type,
-    ///     \internal
     data(),
     const_data(),
-    ///     \internal
     data(),
-    ///     \fn QVariant::create(int type, const void *copy)
-    /// 
-    ///     \internal
-    /// 
-    ///     Constructs a variant private of type \a type, and initializes with \a copy if
-    ///     \a copy is not 0.
     create(type: i32, copy: *void),
     cmp(other: &VariantType) -> bool,
     compare(other: &VariantType) -> i32,
-    ///   \fn bool QVariant::convert(const int type, void *ptr) const
-    ///   \internal
-    ///   Created for qvariant_cast() usage
+    /// 
+    /// Casts the variant to the requested type, *targetTypeId.* If the cast cannot be
+    /// done, the variant is still changed to the requested type, but is left in a cleared
+    /// null state similar to that constructed by QVariant(Type).
+    /// 
+    /// Returns `true` if the current type of the variant was successfully cast;
+    /// otherwise returns `false.`
+    /// 
+    /// A QVariant containing a pointer to a type derived from QObject will also convert
+    /// and return true for this function if a qobject_cast to the type described
+    /// by *targetTypeId* would succeed. Note that this only works for QObject subclasses
+    /// which use the Q_OBJECT macro.
+    /// 
+    /// **Note**: converting QVariants that are null due to not being initialized or having
+    /// failed a previous conversion will always fail, changing the type, remaining null,
+    /// and returning `false.`
+    /// 
+    /// **See also:** canConvert(int targetTypeId)
+    /// clear()
     convert(t: i32, ptr: *void) -> bool,
 }
 

@@ -1,11 +1,3 @@
-///     \class QPlatformBackingStore
-///     \since 5.0
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-/// 
-///     \brief The QPlatformBackingStore class provides the drawing area for top-level
-///     windows.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -18,33 +10,86 @@ enum TextureFlag {
 
 
 struct PlatformBackingStore {
-    ///     Returns a pointer to the top-level window associated with this
-    ///     surface.
+    /// 
+    /// Returns a pointer to the top-level window associated with this
+    /// surface.
     window() -> Window?,
-    ///     Returns a pointer to the backing store associated with this
-    ///     surface.
+    /// 
+    /// Returns a pointer to the backing store associated with this
+    /// surface.
     backing_store() -> BackingStore?,
+    /// 
+    /// Implement this function to return the appropriate paint device.
     [event] paint_device() -> PaintDevice?,
     [event] flush(window: *WindowType, region: &RegionType, offset: &PointType),
+    /// 
+    /// Flushes the given *region* from the specified *window* onto the
+    /// screen, and composes it with the specified *textures.*
+    /// 
+    /// The default implementation retrieves the contents using toTexture()
+    /// and composes using OpenGL. May be reimplemented in subclasses if there
+    /// is a more efficient native way to do it.
+    /// 
+    /// **Note**: *region* is relative to the window which may not be top-level in case
+    /// *window* corresponds to a native child widget. *offset* is the position of
+    /// the native child relative to the top-level window.
     [event] compose_and_flush(window: *WindowType, region: &RegionType, offset: &PointType, textures: *PlatformTextureListType, translucent_background: bool),
+    /// 
+    /// Implemented in subclasses to return the content of the backingstore as a QImage.
+    /// 
+    /// If QPlatformIntegration::RasterGLSurface is supported, either this function or
+    /// toTexture() must be implemented.
+    /// 
+    /// **See also:** toTexture()
     [event] to_image() -> Image,
+    /// 
+    /// May be reimplemented in subclasses to return the content of the
+    /// backingstore as an OpenGL texture. *dirtyRegion* is the part of the
+    /// backingstore which may have changed since the last call to this function. The
+    /// caller of this function must ensure that there is a current context.
+    /// 
+    /// The size of the texture is returned in *textureSize.*
+    /// 
+    /// The ownership of the texture is not transferred. The caller must not store
+    /// the return value between calls, but instead call this function before each use.
+    /// 
+    /// The default implementation returns a cached texture if *dirtyRegion* is empty and
+    /// *textureSize* matches the backingstore size, otherwise it retrieves the content using
+    /// toImage() and performs a texture upload. This works only if the value of *textureSize*
+    /// is preserved between the calls to this function.
+    /// 
+    /// If the red and blue components have to swapped, *flags* will be set to include `TextureSwizzle.` This allows creating textures from images in formats like
+    /// QImage::Format_RGB32 without any further image conversion. Instead, the swizzling will
+    /// be done in the shaders when performing composition. Other formats, that do not need
+    /// such swizzling due to being already byte ordered RGBA, for example
+    /// QImage::Format_RGBA8888, must result in having *needsSwizzle* set to false.
+    /// 
+    /// If the image has to be flipped (e.g. because the texture is attached to an FBO), *flags* will be set to include `TextureFlip.`
+    /// 
+    /// **Note**: *dirtyRegion* is relative to the backingstore so no adjustment is needed.
     to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: PlatformBackingStore::TextureFlags *) -> i32,
-    ///     Accessor for a backingstores graphics buffer abstraction
+    /// 
+    /// Accessor for a backingstores graphics buffer abstraction
     [event] graphics_buffer() -> PlatformGraphicsBuffer?,
     [event] resize(size: &SizeType, static_contents: &RegionType),
-    ///     Scrolls the given \a area \a dx pixels to the right and \a dy
-    ///     downward; both \a dx and \a dy may be negative.
     /// 
-    ///     Returns \c true if the area was scrolled successfully; false otherwise.
+    /// Scrolls the given *area* *dx* pixels to the right and *dy*
+    /// downward; both *dx* and *dy* may be negative.
+    /// 
+    /// Returns `true` if the area was scrolled successfully; false otherwise.
     [event] scroll(area: &RegionType, dx: i32, dy: i32) -> bool,
-    ///     This function is called before painting onto the surface begins,
-    ///     with the \a region in which the painting will occur.
     /// 
-    ///     \sa endPaint(), paintDevice()
+    /// This function is called before painting onto the surface begins,
+    /// with the *region* in which the painting will occur.
+    /// 
+    /// **See also:** endPaint()
+    /// paintDevice()
     [event] begin_paint(arg0: &RegionType),
-    ///     This function is called after painting onto the surface has ended.
     /// 
-    ///     \sa beginPaint(), paintDevice()
+    /// This function is called after painting onto the surface has ended.
+    /// 
+    /// **See also:** beginPaint()
+    /// paintDevice()
     [event] end_paint(),
 }
 

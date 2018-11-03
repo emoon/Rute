@@ -1,19 +1,15 @@
-///     \class QStyleOptionGraphicsItem
-///     \brief The QStyleOptionGraphicsItem class is used to describe
-///     the parameters needed to draw a QGraphicsItem.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     For performance reasons, the access to the member variables is
-///     direct (i.e., using the \c . or \c -> operator). This low-level feel
-///     makes the structures straightforward to use and emphasizes that
-///     these are simply parameters.
+/// For performance reasons, the access to the member variables is
+/// direct (i.e., using the `.` or `->` operator). This low-level feel
+/// makes the structures straightforward to use and emphasizes that
+/// these are simply parameters.
 /// 
-///     For an example demonstrating how style options can be used, see
-///     the \l {widgets/styles}{Styles} example.
+/// For an example demonstrating how style options can be used, see
+/// the [Styles](widgets/styles)
+/// example.
 /// 
-///     \sa QStyleOption, QGraphicsItem::paint()
+/// **See also:** QStyleOption
+/// QGraphicsItem::paint()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -28,17 +24,16 @@ enum StyleOptionVersion {
 }
 
 struct StyleOptionGraphicsItem : StyleOption {
-    ///     \since 4.6
     /// 
-    ///     Returns the level of detail from the \a worldTransform.
+    /// Returns the level of detail from the *worldTransform.*
     /// 
-    ///     Its value represents the maximum value of the height and
-    ///     width of a unity rectangle, mapped using the \a worldTransform
-    ///     of the painter used to draw the item. By default, if no
-    ///     transformations are applied, its value is 1. If zoomed out 1:2, the level
-    ///     of detail will be 0.5, and if zoomed in 2:1, its value is 2.
+    /// Its value represents the maximum value of the height and
+    /// width of a unity rectangle, mapped using the *worldTransform*
+    /// of the painter used to draw the item. By default, if no
+    /// transformations are applied, its value is 1. If zoomed out 1:2, the level
+    /// of detail will be 0.5, and if zoomed in 2:1, its value is 2.
     /// 
-    ///     \sa QGraphicsScene::minimumRenderSize()
+    /// **See also:** QGraphicsScene::minimumRenderSize()
     [static] level_of_detail_from_transform(world_transform: &TransformType) -> f32,
 }
 

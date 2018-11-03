@@ -1,73 +1,82 @@
-///     \class QItemEditorFactory
-///     \brief The QItemEditorFactory class provides widgets for editing item data
-///     in views and delegates.
-///     \since 4.2
-///     \ingroup model-view
-///     \inmodule QtWidgets
 /// 
-///     When editing data in an item view, editors are created and
-///     displayed by a delegate. QItemDelegate, which is the delegate by
-///     default installed on Qt's item views, uses a QItemEditorFactory to
-///     create editors for it. A default unique instance provided by
-///     QItemEditorFactory is used by all item delegates.  If you set a
-///     new default factory with setDefaultFactory(), the new factory will
-///     be used by existing and new delegates.
+/// When editing data in an item view, editors are created and
+/// displayed by a delegate. QItemDelegate, which is the delegate by
+/// default installed on Qt's item views, uses a QItemEditorFactory to
+/// create editors for it. A default unique instance provided by
+/// QItemEditorFactory is used by all item delegates. If you set a
+/// new default factory with setDefaultFactory(), the new factory will
+/// be used by existing and new delegates.
 /// 
-///     A factory keeps a collection of QItemEditorCreatorBase
-///     instances, which are specialized editors that produce editors
-///     for one particular QVariant data type (All Qt models store
-///     their data in \l{QVariant}s).
+/// A factory keeps a collection of QItemEditorCreatorBase
+/// instances, which are specialized editors that produce editors
+/// for one particular QVariant data type (All Qt models store
+/// their data in [QVariant](QVariant)
+/// s).
 /// 
-///     \section1 Standard Editing Widgets
+/// # Standard Editing Widgets
 /// 
-///     The standard factory implementation provides editors for a variety of data
-///     types. These are created whenever a delegate needs to provide an editor for
-///     data supplied by a model. The following table shows the relationship between
-///     types and the standard editors provided.
+/// The standard factory implementation provides editors for a variety of data
+/// types. These are created whenever a delegate needs to provide an editor for
+/// data supplied by a model. The following table shows the relationship between
+/// types and the standard editors provided.
 /// 
-///     \table
-///     \header \li Type \li Editor Widget
-///     \row    \li bool \li QComboBox
-///     \row    \li double \li QDoubleSpinBox
-///     \row    \li int \li{1,2} QSpinBox
-///     \row    \li unsigned int
-///     \row    \li QDate \li QDateEdit
-///     \row    \li QDateTime \li QDateTimeEdit
-///     \row    \li QPixmap \li QLabel
-///     \row    \li QString \li QLineEdit
-///     \row    \li QTime \li QTimeEdit
-///     \endtable
+/// * Type
+/// * Editor Widget
+/// * bool
+/// * QComboBox
+/// * double
+/// * QDoubleSpinBox
+/// * int
+/// * {1,2} QSpinBox
+/// * unsigned int
+/// * QDate
+/// * QDateEdit
+/// * QDateTime
+/// * QDateTimeEdit
+/// * QPixmap
+/// * QLabel
+/// * QString
+/// * QLineEdit
+/// * QTime
+/// * QTimeEdit
 /// 
-///     Additional editors can be registered with the registerEditor() function.
+/// Additional editors can be registered with the registerEditor() function.
 /// 
-///     \sa QItemDelegate, {Model/View Programming}, {Color Editor Factory Example}
+/// **See also:** QItemDelegate
+/// {Model/View Programming}
+/// {Color Editor Factory Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct ItemEditorFactory {
-    ///     Creates an editor widget with the given \a parent for the specified \a userType of data,
-    ///     and returns it as a QWidget.
     /// 
-    ///     \sa registerEditor()
+    /// Creates an editor widget with the given *parent* for the specified *userType* of data,
+    /// and returns it as a QWidget.
+    /// 
+    /// **See also:** registerEditor()
     [event] create_editor(user_type: i32, parent: *WidgetType) -> Widget?,
-    ///     Returns the property name used to access data for the given \a userType of data.
+    /// 
+    /// Returns the property name used to access data for the given *userType* of data.
     [event] value_property_name(user_type: i32) -> ByteArray,
-    ///     Registers an item editor creator specified by \a creator for the given \a userType of data.
     /// 
-    ///     \b{Note:} The factory takes ownership of the item editor creator and will destroy
-    ///     it if a new creator for the same type is registered later.
+    /// Registers an item editor creator specified by *creator* for the given *userType* of data.
     /// 
-    ///     \sa createEditor()
+    /// **Note:** The factory takes ownership of the item editor creator and will destroy
+    /// it if a new creator for the same type is registered later.
+    /// 
+    /// **See also:** createEditor()
     register_editor(user_type: i32, creator: *ItemEditorCreatorBaseType),
-    ///     Returns the default item editor factory.
     /// 
-    ///     \sa setDefaultFactory()
+    /// Returns the default item editor factory.
+    /// 
+    /// **See also:** setDefaultFactory()
     [static] default_factory() -> ItemEditorFactory?,
-    ///     Sets the default item editor factory to the given \a factory.
-    ///     Both new and existing delegates will use the new factory.
     /// 
-    ///     \sa defaultFactory()
+    /// Sets the default item editor factory to the given *factory.*
+    /// Both new and existing delegates will use the new factory.
+    /// 
+    /// **See also:** defaultFactory()
     [static] set_default_factory(factory: *ItemEditorFactoryType),
 }
 

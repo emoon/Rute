@@ -1,27 +1,20 @@
-///     \class QAccessibleBridge
-///     \brief The QAccessibleBridge class is the base class for
-///     accessibility back-ends.
-///     \internal
-/// 
-///     \ingroup accessibility
-///     \inmodule QtWidgets
-/// 
-///     Qt supports Microsoft Active Accessibility (MSAA), \macos
-///     Accessibility, and the Unix/X11 AT-SPI standard. By subclassing
-///     QAccessibleBridge, you can support other backends than the
-///     predefined ones.
-/// 
-///     Currently, custom bridges are only supported on Unix. We might
-///     add support for them on other platforms as well if there is
-///     enough demand.
-/// 
-///     \sa QAccessible, QAccessibleBridgePlugin
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleBridge {
+    /// 
+    /// This function is called by Qt at application startup to set the
+    /// root accessible object of the application to *object.* All other
+    /// accessible objects in the application can be reached by the
+    /// client using object navigation.
     [event] set_root_object(arg0: *AccessibleInterfaceType),
+    /// 
+    /// This function is called by Qt to notify the bridge about a change
+    /// in the accessibility information. The *event* specifies the interface,
+    /// object, reason and child element that has changed.
+    /// 
+    /// **See also:** QAccessible::updateAccessibility()
     [event] notify_accessibility_update(event: *AccessibleEventType),
 }
 

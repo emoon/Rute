@@ -1,22 +1,34 @@
-///     \class QActionEvent
-///     \brief The QActionEvent class provides an event that is generated
-///     when a QAction is added, removed, or changed.
 /// 
-///     \ingroup events
-///     \inmodule QtGui
+/// Actions can be added to widgets using QWidget::addAction(). This
+/// generates an [ActionAdded](ActionAdded)
+/// event, which you can handle to provide
+/// custom behavior. For example, QToolBar reimplements
+/// QWidget::actionEvent() to create [QToolButton](QToolButton)
+/// s for the
+/// actions.
 /// 
-///     Actions can be added to widgets using QWidget::addAction(). This
-///     generates an \l ActionAdded event, which you can handle to provide
-///     custom behavior. For example, QToolBar reimplements
-///     QWidget::actionEvent() to create \l{QToolButton}s for the
-///     actions.
-/// 
-///     \sa QAction, QWidget::addAction(), QWidget::removeAction(), QWidget::actions()
+/// **See also:** QAction
+/// QWidget::addAction()
+/// QWidget::removeAction()
+/// QWidget::actions()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ActionEvent : Event {
+    /// 
+    /// Returns the action that is changed, added, or removed.
+    /// 
+    /// **See also:** before()
     action() -> Action?,
+    /// 
+    /// If type() is [ActionAdded,](ActionAdded,)
+    /// returns the action that should
+    /// appear before action(). If this function returns 0, the action
+    /// should be appended to already existing actions on the same
+    /// widget.
+    /// 
+    /// **See also:** action()
+    /// QWidget::actions()
     before() -> Action?,
 }
 

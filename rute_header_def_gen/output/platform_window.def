@@ -1,260 +1,281 @@
-///     \class QPlatformWindow
-///     \since 4.8
-///     \internal
-///     \preliminary
-///     \ingroup qpa
-/// 
-///     \brief The QPlatformWindow class provides an abstraction for top-level windows.
-/// 
-///     The QPlatformWindow abstraction is used by QWindow for all its top level windows. It is being
-///     created by calling the createPlatformWindow function in the loaded QPlatformIntegration
-///     instance.
-/// 
-///     QPlatformWindow is used to signal to the windowing system, how Qt perceives its frame.
-///     However, it is not concerned with how Qt renders into the window it represents.
-/// 
-///     Visible QWindows will always have a QPlatformWindow. However, it is not necessary for
-///     all windows to have a QBackingStore. This is the case for QOpenGLWidget. And could be the case for
-///     windows where some  3.party renders into it.
-/// 
-///     The platform specific window handle can be retrieved by the winId function.
-/// 
-///     QPlatformWindow is also the way QPA defines how native child windows should be supported
-///     through the setParent function.
-/// 
-///     \section1 Implementation Aspects
-/// 
-///     \list 1
-///         \li Mouse grab: Qt expects windows to automatically grab the mouse if the user presses
-///             a button until the button is released.
-///             Automatic grab should be released if some window is explicitly grabbed.
-///         \li Enter/Leave events: If there is a window explicitly grabbing mouse events
-///             (\c{setMouseGrabEnabled()}), enter and leave events should only be sent to the
-///             grabbing window when mouse cursor passes over the grabbing window boundary.
-///             Other windows will not receive enter or leave events while the grab is active.
-///             While an automatic mouse grab caused by a mouse button press is active, no window
-///             will receive enter or leave events. When the last mouse button is released, the
-///             autograbbing window will receive leave event if mouse cursor is no longer within
-///             the window boundary.
-///             When any grab starts, the window under cursor will receive a leave event unless
-///             it is the grabbing window.
-///             When any grab ends, the window under cursor will receive an enter event unless it
-///             was the grabbing window.
-///         \li Window positioning: When calling \c{QWindow::setFramePosition()}, the flag
-///             \c{QWindowPrivate::positionPolicy} is set to \c{QWindowPrivate::WindowFrameInclusive}.
-///             This means the position includes the window frame, whose size is at this point
-///             unknown and the geometry's topleft point is the position of the window frame.
-///     \endlist
-/// 
-///     Apart from the auto-tests (\c{tests/auto/gui/kernel/qwindow},
-///     \c{tests/auto/gui/kernel/qguiapplication} and \c{tests/auto/widgets/kernel/qwidget}),
-///     there are a number of manual tests and examples that can help testing a platform plugin:
-/// 
-///     \list 1
-///         \li \c{examples/qpa/windows}: Basic \c{QWindow} creation.
-///         \li \c{examples/opengl/hellowindow}: Basic Open GL windows.
-///         \li \c{tests/manual/windowflags}: Tests setting the window flags.
-///         \li \c{tests/manual/windowgeometry} Tests setting the window geometry.
-///         \li \c{tests/manual/windowmodality} Tests setting the window modality.
-///         \li \c{tests/manual/widgetgrab} Tests mouse grab and dialogs.
-///     \endlist
-/// 
-///     \sa QBackingStore, QWindow
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct PlatformWindow {
-    ///     Called as part of QWindow::create(), after constructing
-    ///     the window. Platforms should prefer to do initialization
-    ///     here instead of in the constructor, as the platform window
-    ///     object will be fully constructed, and associated to the
-    ///     corresponding QWindow, allowing synchronous event delivery.
+    /// 
+    /// Called as part of QWindow::create(), after constructing
+    /// the window. Platforms should prefer to do initialization
+    /// here instead of in the constructor, as the platform window
+    /// object will be fully constructed, and associated to the
+    /// corresponding QWindow, allowing synchronous event delivery.
     [event] initialize(),
-    ///     Returns the window which belongs to the QPlatformWindow
+    /// 
+    /// Returns the window which belongs to the QPlatformWindow
+    /// 
+    /// Reimplement this method to be able to do any platform specific event
+    /// handling. All events for window() are passed to this function before being
+    /// sent to QWindow::event().
+    /// 
+    /// The default implementation is empty and does nothing with *event.*
+    /// 
+    /// Returns the QWindow minimum size.
+    /// 
+    /// Returns the QWindow maximum size.
+    /// 
+    /// Returns the QWindow base size.
+    /// 
+    /// Returns the QWindow size increment.
+    /// 
+    /// Returns the QWindow geometry.
+    /// 
+    /// Returns the QWindow frame geometry.
     window() -> Window?,
-    ///     Returns the parent platform window (or 0 if orphan).
+    /// 
+    /// Returns the parent platform window (or 0 if orphan).
     parent() -> PlatformWindow?,
-    ///     Returns the platform screen handle corresponding to this platform window,
-    ///     or null if the window is not associated with a screen.
+    /// 
+    /// Returns the platform screen handle corresponding to this platform window,
+    /// or null if the window is not associated with a screen.
+    /// 
+    /// Helper function for finding the new screen for *newGeometry* in response to
+    /// a geometry changed event. Returns the new screen if the window was moved to
+    /// another virtual sibling. If the screen changes, the platform plugin should call
+    /// QWindowSystemInterface::handleWindowScreenChanged().
+    /// **Note**: : The current screen will always be returned for child windows since
+    /// they should never signal screen changes.
+    /// 
+    /// **See also:** QWindowSystemInterface::handleWindowScreenChanged()
     screen() -> PlatformScreen?,
-    ///     Returns the actual surface format of the window.
+    /// 
+    /// Returns the actual surface format of the window.
+    /// 
+    /// Call this method to put together a window title composed of
+    /// *title*
+    /// *separator*
+    /// the application display name
+    /// 
+    /// If the display name isn't set, and the title is empty, the raw app name is used.
     [event] format() -> SurfaceFormat,
     [event] frame_margins() -> Margins,
-    ///     The safe area margins of a window represent the area that is safe to
-    ///     place content within, without intersecting areas of the screen where
-    ///     system UI is placed, or where a screen bezel may cover the content.
+    /// 
+    /// The safe area margins of a window represent the area that is safe to
+    /// place content within, without intersecting areas of the screen where
+    /// system UI is placed, or where a screen bezel may cover the content.
     [event] safe_area_margins() -> Margins,
-    ///     Reimplemented in subclasses to show the surface
-    ///     if \a visible is \c true, and hide it if \a visible is \c false.
     /// 
-    ///     The default implementation sends a synchronous expose event.
+    /// Reimplemented in subclasses to show the surface
+    /// if *visible* is `true,` and hide it if *visible* is `false.`
+    /// 
+    /// The default implementation sends a synchronous expose event.
     [event] set_visible(visible: bool),
-    ///     Requests setting the window flags of this surface
-    ///     to \a flags.
+    /// 
+    /// Requests setting the window flags of this surface
+    /// to *flags.*
     [event] set_window_flags(flags: Rute::WindowFlags),
-    ///     Requests setting the window state of this surface
-    ///     to \a type.
     /// 
-    ///     Qt::WindowActive can be ignored.
+    /// Requests setting the window state of this surface
+    /// to *type.*
+    /// 
+    /// Qt::WindowActive can be ignored.
     [event] set_window_state(state: Rute::WindowStates),
-    ///   Reimplement in subclasses to return a handle to the native window
+    /// 
+    /// Reimplement in subclasses to return a handle to the native window
     [event] win_id() -> WId,
-    ///     This function is called to enable native child window in QPA. It is common not to support this
-    ///     feature in Window systems, but can be faked. When this function is called all geometry of this
-    ///     platform window will be relative to the parent.
+    /// 
+    /// This function is called to enable native child window in QPA. It is common not to support this
+    /// feature in Window systems, but can be faked. When this function is called all geometry of this
+    /// platform window will be relative to the parent.
     [event] set_parent(window: *PlatformWindowType),
-    ///   Reimplement to set the window title to \a title.
     /// 
-    ///   The implementation might want to append the application display name to
-    ///   the window title, like Windows and Linux do.
+    /// Reimplement to set the window title to *title.*
     /// 
-    ///   \sa QGuiApplication::applicationDisplayName()
+    /// The implementation might want to append the application display name to
+    /// the window title, like Windows and Linux do.
+    /// 
+    /// **See also:** QGuiApplication::applicationDisplayName()
     [event] set_window_title(title: String),
-    ///   Reimplement to set the window file path to \a filePath
+    /// 
+    /// Reimplement to set the window file path to *filePath*
     [event] set_window_file_path(title: String),
-    ///   Reimplement to set the window icon to \a icon
+    /// 
+    /// Reimplement to set the window icon to *icon*
     [event] set_window_icon(icon: &IconType),
-    ///   Reimplement to be able to let Qt raise windows to the top of the desktop
+    /// 
+    /// Reimplement to be able to let Qt raise windows to the top of the desktop
     [event] raise(),
-    ///   Reimplement to be able to let Qt lower windows to the bottom of the desktop
+    /// 
+    /// Reimplement to be able to let Qt lower windows to the bottom of the desktop
     [event] lower(),
+    /// 
+    /// Returns if this window is exposed in the windowing system.
+    /// 
+    /// An exposeEvent() is sent every time this value changes.
     [event] is_exposed() -> bool,
-    ///     Returns \c true if the window should appear active from a style perspective.
     /// 
-    ///     This function can make platform-specific isActive checks, such as checking
-    ///     if the QWindow is embedded in an active native window.
+    /// Returns `true` if the window should appear active from a style perspective.
+    /// 
+    /// This function can make platform-specific isActive checks, such as checking
+    /// if the QWindow is embedded in an active native window.
     [event] is_active() -> bool,
-    ///     Returns \c true if the window is an ancestor of the given \a child.
     /// 
-    ///     Platform overrides should iterate the native window hierarchy of the child,
-    ///     to ensure that ancestary is reflected even with native windows in the window
-    ///     hierarchy.
+    /// Returns `true` if the window is an ancestor of the given *child.*
+    /// 
+    /// Platform overrides should iterate the native window hierarchy of the child,
+    /// to ensure that ancestary is reflected even with native windows in the window
+    /// hierarchy.
     [event] is_ancestor_of(child: *PlatformWindowType) -> bool,
-    ///     Returns \c true if the window is a child of a non-Qt window.
     /// 
-    ///     A embedded window has no parent platform window as reflected
-    ///     though parent(), but will have a native parent window.
+    /// Returns `true` if the window is a child of a non-Qt window.
+    /// 
+    /// A embedded window has no parent platform window as reflected
+    /// though parent(), but will have a native parent window.
     [event] is_embedded() -> bool,
     [event] is_foreign_window() -> bool,
-    ///     Translates the window coordinate \a pos to global screen
-    ///     coordinates using native methods. This is required for embedded windows,
-    ///     where the topmost QWindow coordinates are not global screen coordinates.
     /// 
-    ///     Returns \a pos if there is no platform specific implementation.
+    /// Translates the window coordinate *pos* to global screen
+    /// coordinates using native methods. This is required for embedded windows,
+    /// where the topmost QWindow coordinates are not global screen coordinates.
+    /// 
+    /// Returns *pos* if there is no platform specific implementation.
     [event] map_to_global(pos: &PointType) -> Point,
-    ///     Translates the global screen coordinate \a pos to window
-    ///     coordinates using native methods. This is required for embedded windows,
-    ///     where the topmost QWindow coordinates are not global screen coordinates.
     /// 
-    ///     Returns \a pos if there is no platform specific implementation.
+    /// Translates the global screen coordinate *pos* to window
+    /// coordinates using native methods. This is required for embedded windows,
+    /// where the topmost QWindow coordinates are not global screen coordinates.
+    /// 
+    /// Returns *pos* if there is no platform specific implementation.
     [event] map_from_global(pos: &PointType) -> Point,
-    ///   Reimplement to propagate the size hints of the QWindow.
     /// 
-    ///   The size hints include QWindow::minimumSize(), QWindow::maximumSize(),
-    ///   QWindow::sizeIncrement(), and QWindow::baseSize().
+    /// Reimplement to propagate the size hints of the QWindow.
+    /// 
+    /// The size hints include QWindow::minimumSize(), QWindow::maximumSize(),
+    /// QWindow::sizeIncrement(), and QWindow::baseSize().
     [event] propagate_size_hints(),
-    ///   Reimplement to be able to let Qt set the opacity level of a window
+    /// 
+    /// Reimplement to be able to let Qt set the opacity level of a window
     [event] set_opacity(level: f32),
-    ///   Reimplement to  be able to let Qt set the mask of a window
+    /// 
+    /// Reimplement to be able to let Qt set the mask of a window
     [event] set_mask(region: &RegionType),
-    ///   Reimplement to let Qt be able to request activation/focus for a window
     /// 
-    ///   Some window systems will probably not have callbacks for this functionality,
-    ///   and then calling QWindowSystemInterface::handleWindowActivated(QWindow *w)
-    ///   would be sufficient.
+    /// Reimplement to let Qt be able to request activation/focus for a window
     /// 
-    ///   If the window system has some event handling/callbacks then call
-    ///   QWindowSystemInterface::handleWindowActivated(QWindow *w) when the window system
-    ///   gives the notification.
+    /// Some window systems will probably not have callbacks for this functionality,
+    /// and then calling QWindowSystemInterface::handleWindowActivated(QWindow *w)
+    /// would be sufficient.
     /// 
-    ///   Default implementation calls QWindowSystem::handleWindowActivated(QWindow *w)
+    /// If the window system has some event handling/callbacks then call
+    /// QWindowSystemInterface::handleWindowActivated(QWindow *w) when the window system
+    /// gives the notification.
+    /// 
+    /// Default implementation calls QWindowSystem::handleWindowActivated(QWindow *w)
     [event] request_activate_window(),
-    ///   Handle changes to the orientation of the platform window's contents.
     /// 
-    ///   This is a hint to the window manager in case it needs to display
-    ///   additional content like popups, dialogs, status bars, or similar
-    ///   in relation to the window.
+    /// Handle changes to the orientation of the platform window's contents.
     /// 
-    ///   \sa QWindow::reportContentOrientationChange()
+    /// This is a hint to the window manager in case it needs to display
+    /// additional content like popups, dialogs, status bars, or similar
+    /// in relation to the window.
+    /// 
+    /// **See also:** QWindow::reportContentOrientationChange()
     [event] handle_content_orientation_change(orientation: Rute::ScreenOrientation),
-    ///     Reimplement this function in subclass to return the device pixel ratio
-    ///     for the window. This is the ratio between physical pixels
-    ///     and device-independent pixels.
     /// 
-    ///     \sa QPlatformWindow::devicePixelRatio();
+    /// Reimplement this function in subclass to return the device pixel ratio
+    /// for the window. This is the ratio between physical pixels
+    /// and device-independent pixels.
+    /// 
+    /// **See also:** QPlatformWindow::devicePixelRatio();
     [event] device_pixel_ratio() -> f32,
     [event] set_keyboard_grab_enabled(grab: bool) -> bool,
     [event] set_mouse_grab_enabled(grab: bool) -> bool,
-    ///     Reimplement to be able to let Qt indicate that the window has been
-    ///     modified. Return true if the native window supports setting the modified
-    ///     flag, false otherwise.
+    /// 
+    /// Reimplement to be able to let Qt indicate that the window has been
+    /// modified. Return true if the native window supports setting the modified
+    /// flag, false otherwise.
     [event] set_window_modified(modified: bool) -> bool,
-    ///     Reimplement this method to be able to do any platform specific event
-    ///     handling. All events for window() are passed to this function before being
-    ///     sent to QWindow::event().
     /// 
-    ///     The default implementation is empty and does nothing with \a event.
+    /// Reimplement this method to be able to do any platform specific event
+    /// handling. All events for window() are passed to this function before being
+    /// sent to QWindow::event().
+    /// 
+    /// The default implementation is empty and does nothing with *event.*
     [event] window_event(event: *EventType),
-    ///     Reimplement this method to start a system size grip drag
-    ///     operation if the system supports it and return true to indicate
-    ///     success.
-    ///     It is called from the mouse press event handler of the size grip.
     /// 
-    ///     The default implementation is empty and does nothing with \a pos
-    ///     and \a corner.
+    /// Reimplement this method to start a system size grip drag
+    /// operation if the system supports it and return true to indicate
+    /// success.
+    /// It is called from the mouse press event handler of the size grip.
+    /// 
+    /// The default implementation is empty and does nothing with *pos*
+    /// and *corner.*
     [event] start_system_resize(pos: &PointType, corner: Rute::Corner) -> bool,
-    ///     Reimplement this method to start a system move operation if
-    ///     the system supports it and return true to indicate success.
     /// 
-    ///     The \a pos is a position of MouseButtonPress event or TouchBegin
-    ///     event from a sequence of mouse events that triggered the movement.
-    ///     It must be specified in window coordinates.
+    /// Reimplement this method to start a system move operation if
+    /// the system supports it and return true to indicate success.
     /// 
-    ///     The default implementation is empty and does nothing with \a pos.
+    /// The *pos* is a position of MouseButtonPress event or TouchBegin
+    /// event from a sequence of mouse events that triggered the movement.
+    /// It must be specified in window coordinates.
     /// 
-    ///     \since 5.11
+    /// The default implementation is empty and does nothing with *pos.*
+    /// 
     [event] start_system_move(pos: &PointType) -> bool,
-    ///     Reimplement this method to set whether the window demands attention
-    ///     (for example, by flashing the taskbar icon) depending on \a enabled.
     /// 
-    ///     \sa isAlertState()
-    ///     \since 5.1
+    /// Reimplement this method to set whether the window demands attention
+    /// (for example, by flashing the taskbar icon) depending on *enabled.*
+    /// 
+    /// **See also:** isAlertState()
     [event] set_alert_state(enabled: bool),
-    ///     Reimplement this method return whether the window is in
-    ///     an alert state.
     /// 
-    ///     \sa setAlertState()
-    ///     \since 5.1
+    /// Reimplement this method return whether the window is in
+    /// an alert state.
+    /// 
+    /// **See also:** setAlertState()
     [event] is_alert_state() -> bool,
+    /// 
+    /// Invalidates the window's surface by releasing its surface buffers.
+    /// 
+    /// Many platforms do not support releasing the surface memory,
+    /// and the default implementation does nothing.
+    /// 
+    /// The platform window is expected to recreate the surface again if
+    /// it is needed. For instance, if an OpenGL context is made current
+    /// on this window.
     [event] invalidate_surface(),
-    ///     Requests an QEvent::UpdateRequest event. The event will be
-    ///     delivered to the QWindow.
     /// 
-    ///     QPlatformWindow subclasses can re-implement this function to
-    ///     provide display refresh synchronized updates. The event
-    ///     should be delivered using QWindowPrivate::deliverUpdateRequest()
-    ///     to not get out of sync with the the internal state of QWindow.
+    /// Requests an QEvent::UpdateRequest event. The event will be
+    /// delivered to the QWindow.
     /// 
-    ///     The default implementation posts an UpdateRequest event to the
-    ///     window after 5 ms. The additional time is there to give the event
-    ///     loop a bit of idle time to gather system events.
+    /// QPlatformWindow subclasses can re-implement this function to
+    /// provide display refresh synchronized updates. The event
+    /// should be delivered using QWindowPrivate::deliverUpdateRequest()
+    /// to not get out of sync with the the internal state of QWindow.
+    /// 
+    /// The default implementation posts an UpdateRequest event to the
+    /// window after 5 ms. The additional time is there to give the event
+    /// loop a bit of idle time to gather system events.
     /// 
     [event] request_update(),
-    ///     Returns the QWindow minimum size.
-    window_minimum_size() -> Size,
-    ///     Returns the QWindow maximum size.
-    window_maximum_size() -> Size,
-    ///     Returns the QWindow base size.
-    window_base_size() -> Size,
-    ///     Returns the QWindow size increment.
-    window_size_increment() -> Size,
-    ///     Call this method to put together a window title composed of
-    ///     \a title
-    ///     \a separator
-    ///     the application display name
     /// 
-    ///     If the display name isn't set, and the title is empty, the raw app name is used.
+    /// Returns the QWindow minimum size.
+    window_minimum_size() -> Size,
+    /// 
+    /// Returns the QWindow maximum size.
+    window_maximum_size() -> Size,
+    /// 
+    /// Returns the QWindow base size.
+    window_base_size() -> Size,
+    /// 
+    /// Returns the QWindow size increment.
+    window_size_increment() -> Size,
+    /// 
+    /// Call this method to put together a window title composed of
+    /// *title*
+    /// *separator*
+    /// the application display name
+    /// 
+    /// If the display name isn't set, and the title is empty, the raw app name is used.
     [static] format_window_title(title: String, separator: String) -> String,
 }
 

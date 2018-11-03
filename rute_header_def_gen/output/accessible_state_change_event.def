@@ -1,17 +1,19 @@
-///     \class QAccessibleStateChangeEvent
-///     \ingroup accessibility
-///     \inmodule QtGui
 /// 
-///     \brief The QAccessibleStateChangeEvent notfies the accessibility framework
-///     that the state of an object has changed.
+/// This class is used with [QAccessible::updateAccessibility().](QAccessible::updateAccessibility().)
 /// 
-///     This class is used with \l QAccessible::updateAccessibility().
-/// 
-///     \sa QAccessibleInterface::state()
+/// **See also:** QAccessibleInterface::state()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessibleStateChangeEvent : AccessibleEvent {
+    /// 
+    /// Keep in mind that the returned states are the ones that have changed.
+    /// To find out about the state of an object, use QAccessibleInterface::state().
+    /// 
+    /// For example, if an object used to have the focus but loses it,
+    /// the object's state will have focused set to `false.` This event on the
+    /// other hand tells about the change and has focused set to `true` since
+    /// the focus state is changed from `true` to `false.`
     changed_states() -> Accessible::State,
 }
 

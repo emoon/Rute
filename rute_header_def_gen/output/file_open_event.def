@@ -1,50 +1,44 @@
-///     \class QFileOpenEvent
-///     \brief The QFileOpenEvent class provides an event that will be
-///     sent when there is a request to open a file or a URL.
 /// 
-///     \ingroup events
-///     \inmodule QtGui
+/// File open events will be sent to the QApplication::instance()
+/// when the operating system requests that a file or URL should be opened.
+/// This is a high-level event that can be caused by different user actions
+/// depending on the user's desktop environment; for example, double
+/// clicking on an file icon in the Finder on MacOS .
 /// 
-///     File open events will be sent to the QApplication::instance()
-///     when the operating system requests that a file or URL should be opened.
-///     This is a high-level event that can be caused by different user actions
-///     depending on the user's desktop environment; for example, double
-///     clicking on an file icon in the Finder on \macos.
+/// This event is only used to notify the application of a request.
+/// It may be safely ignored.
 /// 
-///     This event is only used to notify the application of a request.
-///     It may be safely ignored.
+/// **Note**: This class is currently supported for MacOS only.
 /// 
-///     \note This class is currently supported for \macos only.
+/// # \macos Example
 /// 
-///     \section1 \macos Example
+/// In order to trigger the event on MacOS , the application must be configured
+/// to let the OS know what kind of file(s) it should react on.
 /// 
-///     In order to trigger the event on \macos, the application must be configured
-///     to let the OS know what kind of file(s) it should react on.
+/// For example, the following `Info.plist` file declares that the application
+/// can act as a viewer for files with a PNG extension:
 /// 
-///     For example, the following \c Info.plist file declares that the application
-///     can act as a viewer for files with a PNG extension:
+/// The following implementation of a QApplication subclass prints the path to
+/// the file that was, for example, dropped on the Dock icon of the application.
 /// 
-///     \snippet qfileopenevent/Info.plist Custom Info.plist
-/// 
-///     The following implementation of a QApplication subclass prints the path to
-///     the file that was, for example, dropped on the Dock icon of the application.
-/// 
-///     \snippet qfileopenevent/main.cpp QApplication subclass
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct FileOpenEvent : Event {
+    /// 
+    /// Returns the file that is being opened.
     file() -> String,
+    /// 
+    /// Returns the url that is being opened.
+    /// 
     url() -> Url,
-    ///     \fn bool QFileOpenEvent::openFile(QFile &file, QIODevice::OpenMode flags) const
     /// 
-    ///     Opens a QFile on the \a file referenced by this event in the mode specified
-    ///     by \a flags. Returns \c true if successful; otherwise returns \c false.
+    /// Opens a QFile on the *file* referenced by this event in the mode specified
+    /// by *flags.* Returns `true` if successful; otherwise returns `false.`
     /// 
-    ///     This is necessary as some files cannot be opened by name, but require specific
-    ///     information stored in this event.
+    /// This is necessary as some files cannot be opened by name, but require specific
+    /// information stored in this event.
     /// 
-    ///     \since 4.8
     open_file(file: &FileType, flags: IODevice::OpenMode) -> bool,
 }
 

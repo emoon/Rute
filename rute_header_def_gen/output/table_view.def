@@ -1,418 +1,440 @@
-///     \class QTableView
 /// 
-///     \brief The QTableView class provides a default model/view
-///     implementation of a table view.
+/// ![windows-tableview.png](windows-tableview.png)
 /// 
-///     \ingroup model-view
-///     \ingroup advanced
-///     \inmodule QtWidgets
+/// A QTableView implements a table view that displays items from a
+/// model. This class is used to provide standard tables that were
+/// previously provided by the QTable class, but using the more
+/// flexible approach provided by Qt's model/view architecture.
 /// 
-///     \image windows-tableview.png
+/// The QTableView class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     A QTableView implements a table view that displays items from a
-///     model. This class is used to provide standard tables that were
-///     previously provided by the QTable class, but using the more
-///     flexible approach provided by Qt's model/view architecture.
 /// 
-///     The QTableView class is one of the \l{Model/View Classes}
-///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// QTableView implements the interfaces defined by the
+/// QAbstractItemView class to allow it to display data provided by
+/// models derived from the QAbstractItemModel class.
 /// 
-///     QTableView implements the interfaces defined by the
-///     QAbstractItemView class to allow it to display data provided by
-///     models derived from the QAbstractItemModel class.
+/// # Navigation
 /// 
-///     \section1 Navigation
+/// You can navigate the cells in the table by clicking on a cell with the
+/// mouse, or by using the arrow keys. Because QTableView enables
+/// [tabKeyNavigation](QAbstractItemView::tabKeyNavigation)
+/// by default, you
+/// can also hit Tab and Backtab to move from cell to cell.
 /// 
-///     You can navigate the cells in the table by clicking on a cell with the
-///     mouse, or by using the arrow keys. Because QTableView enables
-///     \l{QAbstractItemView::tabKeyNavigation}{tabKeyNavigation} by default, you
-///     can also hit Tab and Backtab to move from cell to cell.
+/// # Visual Appearance
 /// 
-///     \section1 Visual Appearance
+/// The table has a vertical header that can be obtained using the
+/// verticalHeader() function, and a horizontal header that is available
+/// through the horizontalHeader() function. The height of each row in the
+/// table can be found by using rowHeight(); similarly, the width of
+/// columns can be found using columnWidth(). Since both of these are plain
+/// widgets, you can hide either of them using their hide() functions.
 /// 
-///     The table has a vertical header that can be obtained using the
-///     verticalHeader() function, and a horizontal header that is available
-///     through the horizontalHeader() function. The height of each row in the
-///     table can be found by using rowHeight(); similarly, the width of
-///     columns can be found using columnWidth().  Since both of these are plain
-///     widgets, you can hide either of them using their hide() functions.
+/// Rows and columns can be hidden and shown with hideRow(), hideColumn(),
+/// showRow(), and showColumn(). They can be selected with selectRow()
+/// and selectColumn(). The table will show a grid depending on the
+/// [showGrid](showGrid)
+/// property.
 /// 
-///     Rows and columns can be hidden and shown with hideRow(), hideColumn(),
-///     showRow(), and showColumn(). They can be selected with selectRow()
-///     and selectColumn(). The table will show a grid depending on the
-///     \l showGrid property.
+/// The items shown in a table view, like those in the other item views, are
+/// rendered and edited using standard [delegates](QItemDelegate)
+/// . However,
+/// for some tasks it is sometimes useful to be able to insert widgets in a
+/// table instead. Widgets are set for particular indexes with the
+/// [setIndexWidget()](QAbstractItemView::)
+/// function, and
+/// later retrieved with [indexWidget()](QAbstractItemView::)
 /// 
-///     The items shown in a table view, like those in the other item views, are
-///     rendered and edited using standard \l{QItemDelegate}{delegates}. However,
-///     for some tasks it is sometimes useful to be able to insert widgets in a
-///     table instead. Widgets are set for particular indexes with the
-///     \l{QAbstractItemView::}{setIndexWidget()} function, and
-///     later retrieved with \l{QAbstractItemView::}{indexWidget()}.
 /// 
-///     \table
-///     \row \li \inlineimage qtableview-resized.png
-///     \li By default, the cells in a table do not expand to fill the available space.
+/// * ![qtableview-resized.png](qtableview-resized.png)
 /// 
-///     You can make the cells fill the available space by stretching the last
-///     header section. Access the relevant header using horizontalHeader()
-///     or verticalHeader() and set the header's \l{QHeaderView::}{stretchLastSection}
-///     property.
+/// * By default, the cells in a table do not expand to fill the available space. You can make the cells fill the available space by stretching the last header section. Access the relevant header using horizontalHeader() or verticalHeader() and set the header's [stretchLastSection](QHeaderView::)
+/// property. To distribute the available space according to the space requirement of each column or row, call the view's resizeColumnsToContents() or resizeRowsToContents() functions.
 /// 
-///     To distribute the available space according to the space requirement of
-///     each column or row, call the view's resizeColumnsToContents() or
-///     resizeRowsToContents() functions.
-///     \endtable
+/// # Coordinate Systems
 /// 
-///     \section1 Coordinate Systems
+/// For some specialized forms of tables it is useful to be able to
+/// convert between row and column indexes and widget coordinates.
+/// The rowAt() function provides the y-coordinate within the view of the
+/// specified row; the row index can be used to obtain a corresponding
+/// y-coordinate with rowViewportPosition(). The columnAt() and
+/// columnViewportPosition() functions provide the equivalent conversion
+/// operations between x-coordinates and column indexes.
 /// 
-///     For some specialized forms of tables it is useful to be able to
-///     convert between row and column indexes and widget coordinates.
-///     The rowAt() function provides the y-coordinate within the view of the
-///     specified row; the row index can be used to obtain a corresponding
-///     y-coordinate with rowViewportPosition(). The columnAt() and
-///     columnViewportPosition() functions provide the equivalent conversion
-///     operations between x-coordinates and column indexes.
-/// 
-///     \sa QTableWidget, {View Classes}, QAbstractItemModel, QAbstractItemView,
-///         {Chart Example}, {Pixelator Example}, {Table Model Example}
+/// **See also:** QTableWidget
+/// {View Classes}
+/// QAbstractItemModel
+/// QAbstractItemView
+/// {Chart Example}
+/// {Pixelator Example}
+/// {Table Model Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct TableView : AbstractItemView {
-    ///   \reimp
+    /// 
     [event] set_model(model: *AbstractItemModelType),
-    ///   \reimp
+    /// 
     [event] set_root_index(index: &ModelIndexType),
-    ///   \reimp
+    /// 
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///   \internal
     [event] do_items_layout(),
-    ///     Returns the table view's horizontal header.
     /// 
-    ///     \sa setHorizontalHeader(), verticalHeader(), QAbstractItemModel::headerData()
+    /// Returns the table view's horizontal header.
+    /// 
+    /// **See also:** setHorizontalHeader()
+    /// verticalHeader()
+    /// QAbstractItemModel::headerData()
     horizontal_header() -> HeaderView?,
-    ///     Returns the table view's vertical header.
     /// 
-    ///     \sa setVerticalHeader(), horizontalHeader(), QAbstractItemModel::headerData()
+    /// Returns the table view's vertical header.
+    /// 
+    /// **See also:** setVerticalHeader()
+    /// horizontalHeader()
+    /// QAbstractItemModel::headerData()
     vertical_header() -> HeaderView?,
-    ///     Sets the widget to use for the horizontal header to \a header.
     /// 
-    ///     \sa horizontalHeader(), setVerticalHeader()
+    /// Sets the widget to use for the horizontal header to *header.*
+    /// 
+    /// **See also:** horizontalHeader()
+    /// setVerticalHeader()
     set_horizontal_header(header: *HeaderViewType),
-    ///     Sets the widget to use for the vertical header to \a header.
     /// 
-    ///     \sa verticalHeader(), setHorizontalHeader()
+    /// Sets the widget to use for the vertical header to *header.*
+    /// 
+    /// **See also:** verticalHeader()
+    /// setHorizontalHeader()
     set_vertical_header(header: *HeaderViewType),
-    ///     Returns the y-coordinate in contents coordinates of the given \a
-    ///     row.
+    /// 
+    /// Returns the y-coordinate in contents coordinates of the given *row.*
     row_viewport_position(row: i32) -> i32,
-    ///     Returns the row in which the given y-coordinate, \a y, in contents
-    ///     coordinates is located.
     /// 
-    ///     \note This function returns -1 if the given coordinate is not valid
-    ///     (has no row).
+    /// Returns the row in which the given y-coordinate, *y,* in contents
+    /// coordinates is located.
     /// 
-    ///     \sa columnAt()
+    /// **Note**: This function returns -1 if the given coordinate is not valid
+    /// (has no row).
+    /// 
+    /// **See also:** columnAt()
     row_at(y: i32) -> i32,
-    ///     \since 4.1
     /// 
-    ///     Sets the height of the given \a row to be \a height.
+    /// Sets the height of the given *row* to be *height.*
     set_row_height(row: i32, height: i32),
-    ///     Returns the height of the given \a row.
     /// 
-    ///     \sa resizeRowToContents(), columnWidth()
+    /// Returns the height of the given *row.*
+    /// 
+    /// **See also:** resizeRowToContents()
+    /// columnWidth()
     row_height(row: i32) -> i32,
-    ///     Returns the x-coordinate in contents coordinates of the given \a
-    ///     column.
+    /// 
+    /// Returns the x-coordinate in contents coordinates of the given *column.*
     column_viewport_position(column: i32) -> i32,
-    ///     Returns the column in which the given x-coordinate, \a x, in contents
-    ///     coordinates is located.
     /// 
-    ///     \note This function returns -1 if the given coordinate is not valid
-    ///     (has no column).
+    /// Returns the column in which the given x-coordinate, *x,* in contents
+    /// coordinates is located.
     /// 
-    ///     \sa rowAt()
+    /// **Note**: This function returns -1 if the given coordinate is not valid
+    /// (has no column).
+    /// 
+    /// **See also:** rowAt()
     column_at(x: i32) -> i32,
-    ///     \since 4.1
     /// 
-    ///     Sets the width of the given \a column to be \a width.
+    /// Sets the width of the given *column* to be *width.*
     set_column_width(column: i32, width: i32),
-    ///     Returns the width of the given \a column.
     /// 
-    ///     \sa resizeColumnToContents(), rowHeight()
+    /// Returns the width of the given *column.*
+    /// 
+    /// **See also:** resizeColumnToContents()
+    /// rowHeight()
     column_width(column: i32) -> i32,
-    ///     Returns \c true if the given \a row is hidden; otherwise returns \c false.
     /// 
-    ///     \sa isColumnHidden()
+    /// Returns `true` if the given *row* is hidden; otherwise returns `false.`
+    /// 
+    /// **See also:** isColumnHidden()
     is_row_hidden(row: i32) -> bool,
-    ///     If \a hide is true \a row will be hidden, otherwise it will be shown.
     /// 
-    ///     \sa setColumnHidden()
+    /// If *hide* is true *row* will be hidden, otherwise it will be shown.
+    /// 
+    /// **See also:** setColumnHidden()
     set_row_hidden(row: i32, hide: bool),
-    ///     Returns \c true if the given \a column is hidden; otherwise returns \c false.
     /// 
-    ///     \sa isRowHidden()
+    /// Returns `true` if the given *column* is hidden; otherwise returns `false.`
+    /// 
+    /// **See also:** isRowHidden()
     is_column_hidden(column: i32) -> bool,
-    ///   If \a hide is true the given \a column will be hidden; otherwise it
-    ///   will be shown.
     /// 
-    ///   \sa setRowHidden()
+    /// If *hide* is true the given *column* will be hidden; otherwise it
+    /// will be shown.
+    /// 
+    /// **See also:** setRowHidden()
     set_column_hidden(column: i32, hide: bool),
+    /// 
+    /// If *enable* is true, enables sorting for the table and immediately
+    /// trigger a call to sortByColumn() with the current sort section and
+    /// order
     set_sorting_enabled(enable: bool),
     is_sorting_enabled() -> bool,
-    ///     \property QTableView::showGrid
-    ///     \brief whether the grid is shown
     /// 
-    ///     If this property is \c true a grid is drawn for the table; if the
-    ///     property is \c false, no grid is drawn. The default value is true.
+    /// If this property is `true` a grid is drawn for the table; if the
+    /// property is `false,` no grid is drawn. The default value is true.
     show_grid() -> bool,
-    ///   \property QTableView::gridStyle
-    ///   \brief  the pen style used to draw the grid.
     /// 
-    ///   This property holds the style used when drawing the grid (see \l{showGrid}).
+    /// This property holds the style used when drawing the grid (see [showGrid](showGrid)
+    /// ).
     grid_style() -> Rute::PenStyle,
     set_grid_style(style: Rute::PenStyle),
-    ///     \property QTableView::wordWrap
-    ///     \brief the item text word-wrapping policy
-    ///     \since 4.3
-    /// 
-    ///     If this property is \c true then the item text is wrapped where
-    ///     necessary at word-breaks; otherwise it is not wrapped at all.
-    ///     This property is \c true by default.
-    /// 
-    ///     Note that even of wrapping is enabled, the cell will not be
-    ///     expanded to fit all text. Ellipsis will be inserted according to
-    ///     the current \l{QAbstractItemView::}{textElideMode}.
-    /// 
     set_word_wrap(on: bool),
+    /// 
+    /// If this property is `true` then the item text is wrapped where
+    /// necessary at word-breaks; otherwise it is not wrapped at all.
+    /// This property is `true` by default.
+    /// 
+    /// Note that even of wrapping is enabled, the cell will not be
+    /// expanded to fit all text. Ellipsis will be inserted according to
+    /// the current [textElideMode](QAbstractItemView::)
+    /// 
+    /// 
     word_wrap() -> bool,
-    ///     \property QTableView::cornerButtonEnabled
-    ///     \brief whether the button in the top-left corner is enabled
-    ///     \since 4.3
-    /// 
-    ///     If this property is \c true then button in the top-left corner
-    ///     of the table view is enabled. Clicking on this button will
-    ///     select all the cells in the table view.
-    /// 
-    ///     This property is \c true by default.
     set_corner_button_enabled(enable: bool),
     is_corner_button_enabled() -> bool,
-    ///     \internal
-    /// 
-    ///     Returns the rectangle on the viewport occupied by the given \a
-    ///     index.
-    ///     If the index is hidden in the view it will return a null QRect.
     [event] visual_rect(index: &ModelIndexType) -> Rect,
-    ///     \internal
-    /// 
-    ///     Makes sure that the given \a item is visible in the table view,
-    ///     scrolling if necessary.
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
-    ///     Returns the index position of the model item corresponding to the
-    ///     table item at position \a pos in contents coordinates.
+    /// 
+    /// Returns the index position of the model item corresponding to the
+    /// table item at position *pos* in contents coordinates.
     [event] index_at(p: &PointType) -> ModelIndex,
-    ///     \fn void QTableView::setSpan(int row, int column, int rowSpanCount, int columnSpanCount)
-    ///     \since 4.2
     /// 
-    ///     Sets the span of the table element at (\a row, \a column) to the number of
-    ///     rows and columns specified by (\a rowSpanCount, \a columnSpanCount).
+    /// Sets the span of the table element at ( *row,* *column)* to the number of
+    /// rows and columns specified by ( *rowSpanCount,* *columnSpanCount).*
     /// 
-    ///     \sa rowSpan(), columnSpan()
+    /// **See also:** rowSpan()
+    /// columnSpan()
     set_span(row: i32, column: i32, row_span: i32, column_span: i32),
-    ///   \since 4.2
     /// 
-    ///   Returns the row span of the table element at (\a row, \a column).
-    ///   The default is 1.
+    /// Returns the row span of the table element at ( *row,* *column).*
+    /// The default is 1.
     /// 
-    ///   \sa setSpan(), columnSpan()
+    /// **See also:** setSpan()
+    /// columnSpan()
     row_span(row: i32, column: i32) -> i32,
-    ///   \since 4.2
     /// 
-    ///   Returns the column span of the table element at (\a row, \a
-    ///   column). The default is 1.
+    /// Returns the column span of the table element at ( *row,* *column).* The default is 1.
     /// 
-    ///   \sa setSpan(), rowSpan()
+    /// **See also:** setSpan()
+    /// rowSpan()
     column_span(row: i32, column: i32) -> i32,
-    ///   \since 4.4
     /// 
-    ///   Removes all row and column spans in the table view.
+    /// Removes all row and column spans in the table view.
     /// 
-    ///   \sa setSpan()
+    /// **See also:** setSpan()
     clear_spans(),
-    ///   \obsolete
-    ///   \overload
     /// 
-    ///   Sorts the model by the values in the given \a column.
+    /// **Overloads**
+    /// Sorts the model by the values in the given *column.*
+    /// 
+    /// Sorts the model by the values in the given *column* in the given *order.*
+    /// 
+    /// **See also:** sortingEnabled
     sort_by_column(column: i32, order: Rute::SortOrder),
-    ///     Selects the given \a row in the table view if the current
-    ///     SelectionMode and SelectionBehavior allows rows to be selected.
     /// 
-    ///     \sa selectColumn()
+    /// Selects the given *row* in the table view if the current
+    /// SelectionMode and SelectionBehavior allows rows to be selected.
+    /// 
+    /// **See also:** selectColumn()
     select_row(row: i32),
-    ///     Selects the given \a column in the table view if the current
-    ///     SelectionMode and SelectionBehavior allows columns to be selected.
     /// 
-    ///     \sa selectRow()
+    /// Selects the given *column* in the table view if the current
+    /// SelectionMode and SelectionBehavior allows columns to be selected.
+    /// 
+    /// **See also:** selectRow()
     select_column(column: i32),
-    ///     Hide the given \a row.
     /// 
-    ///     \sa showRow(), hideColumn()
+    /// Hide the given *row.*
+    /// 
+    /// **See also:** showRow()
+    /// hideColumn()
     hide_row(row: i32),
-    ///     Hide the given \a column.
     /// 
-    ///     \sa showColumn(), hideRow()
+    /// Hide the given *column.*
+    /// 
+    /// **See also:** showColumn()
+    /// hideRow()
     hide_column(column: i32),
-    ///     Show the given \a row.
     /// 
-    ///     \sa hideRow(), showColumn()
+    /// Show the given *row.*
+    /// 
+    /// **See also:** hideRow()
+    /// showColumn()
     show_row(row: i32),
-    ///     Show the given \a column.
     /// 
-    ///     \sa hideColumn(), showRow()
+    /// Show the given *column.*
+    /// 
+    /// **See also:** hideColumn()
+    /// showRow()
     show_column(column: i32),
-    ///     Resizes the given \a row based on the size hints of the delegate
-    ///     used to render each item in the row.
     /// 
-    ///     \sa resizeRowsToContents(), sizeHintForRow(), QHeaderView::resizeContentsPrecision()
+    /// Resizes the given *row* based on the size hints of the delegate
+    /// used to render each item in the row.
+    /// 
+    /// **See also:** resizeRowsToContents()
+    /// sizeHintForRow()
+    /// QHeaderView::resizeContentsPrecision()
     resize_row_to_contents(row: i32),
-    ///     Resizes all rows based on the size hints of the delegate
-    ///     used to render each item in the rows.
     /// 
-    ///     \sa resizeRowToContents(), sizeHintForRow(), QHeaderView::resizeContentsPrecision()
+    /// Resizes all rows based on the size hints of the delegate
+    /// used to render each item in the rows.
+    /// 
+    /// **See also:** resizeRowToContents()
+    /// sizeHintForRow()
+    /// QHeaderView::resizeContentsPrecision()
     resize_rows_to_contents(),
-    ///     Resizes the given \a column based on the size hints of the delegate
-    ///     used to render each item in the column.
     /// 
-    ///     \note Only visible columns will be resized. Reimplement sizeHintForColumn()
-    ///     to resize hidden columns as well.
+    /// Resizes the given *column* based on the size hints of the delegate
+    /// used to render each item in the column.
     /// 
-    ///     \sa resizeColumnsToContents(), sizeHintForColumn(), QHeaderView::resizeContentsPrecision()
+    /// **Note**: Only visible columns will be resized. Reimplement sizeHintForColumn()
+    /// to resize hidden columns as well.
+    /// 
+    /// **See also:** resizeColumnsToContents()
+    /// sizeHintForColumn()
+    /// QHeaderView::resizeContentsPrecision()
     resize_column_to_contents(column: i32),
-    ///     Resizes all columns based on the size hints of the delegate
-    ///     used to render each item in the columns.
     /// 
-    ///     \sa resizeColumnToContents(), sizeHintForColumn(), QHeaderView::resizeContentsPrecision()
+    /// Resizes all columns based on the size hints of the delegate
+    /// used to render each item in the columns.
+    /// 
+    /// **See also:** resizeColumnToContents()
+    /// sizeHintForColumn()
+    /// QHeaderView::resizeContentsPrecision()
     resize_columns_to_contents(),
-    ///   \obsolete
-    ///   \overload
     /// 
-    ///   Sorts the model by the values in the given \a column.
+    /// **Overloads**
+    /// Sorts the model by the values in the given *column.*
+    /// 
+    /// Sorts the model by the values in the given *column* in the given *order.*
+    /// 
+    /// **See also:** sortingEnabled
     sort_by_column(column: i32),
     set_show_grid(show: bool),
-    ///     This slot is called to change the index of the given \a row in the
-    ///     table view. The old index is specified by \a oldIndex, and the new
-    ///     index by \a newIndex.
     /// 
-    ///     \sa columnMoved()
+    /// This slot is called to change the index of the given *row* in the
+    /// table view. The old index is specified by *oldIndex,* and the new
+    /// index by *newIndex.*
+    /// 
+    /// **See also:** columnMoved()
     row_moved(row: i32, old_index: i32, new_index: i32),
-    ///     This slot is called to change the index of the given \a column in
-    ///     the table view. The old index is specified by \a oldIndex, and
-    ///     the new index by \a newIndex.
     /// 
-    ///     \sa rowMoved()
+    /// This slot is called to change the index of the given *column* in
+    /// the table view. The old index is specified by *oldIndex,* and
+    /// the new index by *newIndex.*
+    /// 
+    /// **See also:** rowMoved()
     column_moved(column: i32, old_index: i32, new_index: i32),
-    ///     This slot is called to change the height of the given \a row. The
-    ///     old height is specified by \a oldHeight, and the new height by \a
-    ///     newHeight.
     /// 
-    ///     \sa columnResized()
+    /// This slot is called to change the height of the given *row.* The
+    /// old height is specified by *oldHeight,* and the new height by *newHeight.*
+    /// 
+    /// **See also:** columnResized()
     row_resized(row: i32, old_height: i32, new_height: i32),
-    ///     This slot is called to change the width of the given \a column.
-    ///     The old width is specified by \a oldWidth, and the new width by \a
-    ///     newWidth.
     /// 
-    ///     \sa rowResized()
+    /// This slot is called to change the width of the given *column.*
+    /// The old width is specified by *oldWidth,* and the new width by *newWidth.*
+    /// 
+    /// **See also:** rowResized()
     column_resized(column: i32, old_width: i32, new_width: i32),
-    ///     This slot is called whenever rows are added or deleted. The
-    ///     previous number of rows is specified by \a oldCount, and the new
-    ///     number of rows is specified by \a newCount.
+    /// 
+    /// This slot is called whenever rows are added or deleted. The
+    /// previous number of rows is specified by *oldCount,* and the new
+    /// number of rows is specified by *newCount.*
     row_count_changed(old_count: i32, new_count: i32),
-    ///     This slot is called whenever columns are added or deleted. The
-    ///     previous number of columns is specified by \a oldCount, and the new
-    ///     number of columns is specified by \a newCount.
+    /// 
+    /// This slot is called whenever columns are added or deleted. The
+    /// previous number of columns is specified by *oldCount,* and the new
+    /// number of columns is specified by *newCount.*
     column_count_changed(old_count: i32, new_count: i32),
-    ///     \internal
-    /// 
-    ///     Scroll the contents of the table view by (\a dx, \a dy).
     [event] scroll_contents_by(dx: i32, dy: i32),
-    ///   \reimp
+    /// 
     [event] view_options() -> StyleOptionViewItem,
-    ///     Paints the table on receipt of the given paint event \a event.
+    /// 
+    /// Paints the table on receipt of the given paint event *event.*
     [event] paint_event(e: *PaintEventType),
+    /// 
     [event] timer_event(event: *TimerEventType),
-    ///     Returns the horizontal offset of the items in the table view.
     /// 
-    ///     Note that the table view uses the horizontal header section
-    ///     positions to determine the positions of columns in the view.
+    /// Returns the horizontal offset of the items in the table view.
     /// 
-    ///     \sa verticalOffset()
+    /// Note that the table view uses the horizontal header section
+    /// positions to determine the positions of columns in the view.
+    /// 
+    /// **See also:** verticalOffset()
     [event] horizontal_offset() -> i32,
-    ///     Returns the vertical offset of the items in the table view.
     /// 
-    ///     Note that the table view uses the vertical header section
-    ///     positions to determine the positions of rows in the view.
+    /// Returns the vertical offset of the items in the table view.
     /// 
-    ///     \sa horizontalOffset()
+    /// Note that the table view uses the vertical header section
+    /// positions to determine the positions of rows in the view.
+    /// 
+    /// **See also:** horizontalOffset()
     [event] vertical_offset() -> i32,
-    ///     \fn QModelIndex QTableView::moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
     /// 
-    ///     Moves the cursor in accordance with the given \a cursorAction, using the
-    ///     information provided by the \a modifiers.
+    /// Moves the cursor in accordance with the given *cursorAction,* using the
+    /// information provided by the *modifiers.*
     /// 
-    ///     \sa QAbstractItemView::CursorAction
+    /// **See also:** QAbstractItemView::CursorAction
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
-    ///     \fn void QTableView::setSelection(const QRect &rect,
-    ///     QItemSelectionModel::SelectionFlags flags)
     /// 
-    ///     Selects the items within the given \a rect and in accordance with
-    ///     the specified selection \a flags.
+    /// 
+    /// QItemSelectionModel::SelectionFlags flags)
+    /// 
+    /// Selects the items within the given *rect* and in accordance with
+    /// the specified selection *flags.*
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
-    ///     \internal
-    /// 
-    ///     Returns the rectangle from the viewport of the items in the given
-    ///     \a selection.
-    /// 
-    ///     Since 4.7, the returned region only contains rectangles intersecting
-    ///     (or included in) the viewport.
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    ///   \reimp
+    /// 
     [event] selected_indexes() -> [ModelIndex],
-    ///   \reimp
+    /// 
     [event] viewport_size_hint() -> Size,
-    ///     Returns the size hint for the given \a row's height or -1 if there
-    ///     is no model.
     /// 
-    ///     If you need to set the height of a given row to a fixed value, call
-    ///     QHeaderView::resizeSection() on the table's vertical header.
+    /// Returns the size hint for the given *row's* height or -1 if there
+    /// is no model.
     /// 
-    ///     If you reimplement this function in a subclass, note that the value you
-    ///     return is only used when resizeRowToContents() is called. In that case,
-    ///     if a larger row height is required by either the vertical header or
-    ///     the item delegate, that width will be used instead.
+    /// If you need to set the height of a given row to a fixed value, call
+    /// QHeaderView::resizeSection() on the table's vertical header.
     /// 
-    ///     \sa QWidget::sizeHint, verticalHeader(), QHeaderView::resizeContentsPrecision()
+    /// If you reimplement this function in a subclass, note that the value you
+    /// return is only used when resizeRowToContents() is called. In that case,
+    /// if a larger row height is required by either the vertical header or
+    /// the item delegate, that width will be used instead.
+    /// 
+    /// **See also:** QWidget::sizeHint
+    /// verticalHeader()
+    /// QHeaderView::resizeContentsPrecision()
     [event] size_hint_for_row(row: i32) -> i32,
-    ///     Returns the size hint for the given \a column's width or -1 if
-    ///     there is no model.
     /// 
-    ///     If you need to set the width of a given column to a fixed value, call
-    ///     QHeaderView::resizeSection() on the table's horizontal header.
+    /// Returns the size hint for the given *column's* width or -1 if
+    /// there is no model.
     /// 
-    ///     If you reimplement this function in a subclass, note that the value you
-    ///     return will be used when resizeColumnToContents() or
-    ///     QHeaderView::resizeSections() is called. If a larger column width is
-    ///     required by either the horizontal header or the item delegate, the larger
-    ///     width will be used instead.
+    /// If you need to set the width of a given column to a fixed value, call
+    /// QHeaderView::resizeSection() on the table's horizontal header.
     /// 
-    ///     \sa QWidget::sizeHint, horizontalHeader(), QHeaderView::resizeContentsPrecision()
+    /// If you reimplement this function in a subclass, note that the value you
+    /// return will be used when resizeColumnToContents() or
+    /// QHeaderView::resizeSections() is called. If a larger column width is
+    /// required by either the horizontal header or the item delegate, the larger
+    /// width will be used instead.
+    /// 
+    /// **See also:** QWidget::sizeHint
+    /// horizontalHeader()
+    /// QHeaderView::resizeContentsPrecision()
     [event] size_hint_for_column(column: i32) -> i32,
-    ///     \internal
     [event] vertical_scrollbar_action(action: i32),
-    ///     \internal
     [event] horizontal_scrollbar_action(action: i32),
-    ///   \reimp
+    /// 
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
+    /// 
     [event] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
+    /// 
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
 }
 

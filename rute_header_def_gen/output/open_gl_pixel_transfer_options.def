@@ -1,8 +1,5 @@
-///  * \class QOpenGLPixelTransferOptions
-///  *
-///  * \brief The QOpenGLPixelTransferOptions class describes the pixel storage
-///  * modes that affect the unpacking of pixels during texture upload.
-///  */
+/// 
+/// * *
 /// 
 /// # Licence
 ///
@@ -10,21 +7,69 @@
 
 struct OpenGLPixelTransferOptions {
     swap(other: &OpenGLPixelTransferOptionsType),
+    /// 
+    /// * Sets the *alignment* requirements for each pixel row. Corresponds to `GL_UNPACK_ALIGNMENT.`
+    /// * The default value is 4, as specified by OpenGL.
     set_alignment(alignment: i32),
+    /// 
+    /// * **Returns** the current alignment requirement for each pixel row.
     alignment() -> i32,
+    /// 
+    /// * Sets the number of images that are skipped to *skipImages.*
+    /// * Corresponds to `GL_UNPACK_SKIP_IMAGES.` Equivalent to incrementing the pointer
+    /// * passed to QOpenGLTexture::setData(). The default value is 0.
     set_skip_images(skip_images: i32),
+    /// 
+    /// * **Returns** the number of images that are skipped.
     skip_images() -> i32,
+    /// 
+    /// * Sets the number of rows that are skipped to *skipRows.*
+    /// * Corresponds to `GL_UNPACK_SKIP_ROWS.` Equivalent to incrementing the pointer
+    /// * passed to QOpenGLTexture::setData(). The default value is 0.
     set_skip_rows(skip_rows: i32),
+    /// 
+    /// * **Returns** the number of rows that are skipped.
     skip_rows() -> i32,
+    /// 
+    /// * Sets the number of pixels that are skipped to *skipPixels.*
+    /// * Corresponds to `GL_UNPACK_SKIP_PIXELS.` Equivalent to incrementing the pointer
+    /// * passed to QOpenGLTexture::setData(). The default value is 0.
     set_skip_pixels(skip_pixels: i32),
+    /// 
+    /// * **Returns** the number of pixels that are skipped.
     skip_pixels() -> i32,
+    /// 
+    /// * Sets the image height for 3D textures to *imageHeight.*
+    /// * Corresponds to `GL_UNPACK_IMAGE_HEIGHT.`
+    /// * The default value is 0.
     set_image_height(image_height: i32),
+    /// 
+    /// * **Returns** the currently set image height.
     image_height() -> i32,
+    /// 
+    /// * Sets the number of pixels in a row to *rowLength.*
+    /// * Corresponds to `GL_UNPACK_ROW_LENGTH.`
+    /// * The default value is 0.
     set_row_length(row_length: i32),
+    /// 
+    /// * **Returns** the currently set row length.
     row_length() -> i32,
+    /// 
+    /// * *lsbFirst* specifies if bits within a byte are ordered from least to most significat.
+    /// * The default value is `false,` meaning that the first bit in each byte is the
+    /// * most significant one. This is significant for bitmap data only.
+    /// * Corresponds to `GL_UNPACK_LSB_FIRST.`
     set_least_significant_byte_first(lsb_first: bool),
+    /// 
+    /// * **Returns** `true` if bits within a byte are ordered from least to most significant.
     is_least_significant_bit_first() -> bool,
+    /// 
+    /// * *swapBytes* specifies if the byte ordering for multibyte components is reversed.
+    /// * The default value is `false.`
+    /// * Corresponds to `GL_UNPACK_SWAP_BYTES.`
     set_swap_bytes_enabled(swap_bytes: bool),
+    /// 
+    /// * **Returns** `true` if the byte ordering for multibyte components is reversed.
     is_swap_bytes_enabled() -> bool,
 }
 

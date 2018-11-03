@@ -1,36 +1,43 @@
-///     \class QPaintEvent
-///     \brief The QPaintEvent class contains event parameters for paint events.
-///     \inmodule QtGui
 /// 
-///     \ingroup events
+/// Paint events are sent to widgets that need to update themselves,
+/// for instance when part of a widget is exposed because a covering
+/// widget was moved.
 /// 
-///     Paint events are sent to widgets that need to update themselves,
-///     for instance when part of a widget is exposed because a covering
-///     widget was moved.
+/// The event contains a region() that needs to be updated, and a
+/// rect() that is the bounding rectangle of that region. Both are
+/// provided because many widgets cannot make much use of region(),
+/// and rect() can be much faster than region().boundingRect().
 /// 
-///     The event contains a region() that needs to be updated, and a
-///     rect() that is the bounding rectangle of that region. Both are
-///     provided because many widgets cannot make much use of region(),
-///     and rect() can be much faster than region().boundingRect().
+/// # Automatic Clipping
 /// 
-///     \section1 Automatic Clipping
+/// Painting is clipped to region() during the processing of a paint
+/// event. This clipping is performed by Qt's paint system and is
+/// independent of any clipping that may be applied to a QPainter used to
+/// draw on the paint device.
 /// 
-///     Painting is clipped to region() during the processing of a paint
-///     event. This clipping is performed by Qt's paint system and is
-///     independent of any clipping that may be applied to a QPainter used to
-///     draw on the paint device.
+/// As a result, the value returned by QPainter::clipRegion() on
+/// a newly-constructed QPainter will not reflect the clip region that is
+/// used by the paint system.
 /// 
-///     As a result, the value returned by QPainter::clipRegion() on
-///     a newly-constructed QPainter will not reflect the clip region that is
-///     used by the paint system.
-/// 
-///     \sa QPainter, QWidget::update(), QWidget::repaint(),
-///         QWidget::paintEvent()
+/// **See also:** QPainter
+/// QWidget::update()
+/// QWidget::repaint()
+/// QWidget::paintEvent()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PaintEvent : Event {
+    /// 
+    /// Returns the rectangle that needs to be updated.
+    /// 
+    /// **See also:** region()
+    /// QPainter::setClipRect()
     rect() -> Rect?,
+    /// 
+    /// Returns the region that needs to be updated.
+    /// 
+    /// **See also:** rect()
+    /// QPainter::setClipRegion()
     region() -> Region?,
 }
 

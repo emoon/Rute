@@ -1,71 +1,71 @@
-///     \class QTextFragment
-///     \reentrant
 /// 
-///     \brief The QTextFragment class holds a piece of text in a
-///     QTextDocument with a single QTextCharFormat.
-///     \inmodule QtGui
+/// A text fragment describes a piece of text that is stored with a single
+/// character format. Text in which the character format changes can be
+/// represented by sequences of text fragments with different formats.
 /// 
-///     \ingroup richtext-processing
+/// If the user edits the text in a fragment and introduces a different
+/// character format, the fragment's text will be split at each point where
+/// the format changes, and new fragments will be created.
+/// For example, changing the style of some text in the middle of a
+/// sentence will cause the fragment to be broken into three separate fragments:
+/// the first and third with the same format as before, and the second with
+/// the new style. The first fragment will contain the text from the beginning
+/// of the sentence, the second will contain the text from the middle, and the
+/// third takes the text from the end of the sentence.
 /// 
-///     A text fragment describes a piece of text that is stored with a single
-///     character format. Text in which the character format changes can be
-///     represented by sequences of text fragments with different formats.
+/// ![qtextfragment-split.png](qtextfragment-split.png)
 /// 
-///     If the user edits the text in a fragment and introduces a different
-///     character format, the fragment's text will be split at each point where
-///     the format changes, and new fragments will be created.
-///     For example, changing the style of some text in the middle of a
-///     sentence will cause the fragment to be broken into three separate fragments:
-///     the first and third with the same format as before, and the second with
-///     the new style. The first fragment will contain the text from the beginning
-///     of the sentence, the second will contain the text from the middle, and the
-///     third takes the text from the end of the sentence.
+/// A fragment's text and character format can be obtained with the text()
+/// and charFormat() functions. The length() function gives the length of
+/// the text in the fragment. position() gives the position in the document
+/// of the start of the fragment. To determine whether the fragment contains
+/// a particular position within the document, use the contains() function.
 /// 
-///     \image qtextfragment-split.png
-/// 
-///     A fragment's text and character format can be obtained with the text()
-///     and charFormat() functions. The length() function gives the length of
-///     the text in the fragment. position() gives the position in the document
-///     of the start of the fragment. To determine whether the fragment contains
-///     a particular position within the document, use the contains() function.
-/// 
-///     \sa QTextDocument, {Rich Text Document Structure}
+/// **See also:** QTextDocument
+/// {Rich Text Document Structure}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextFragment {
+    /// 
+    /// Returns `true` if this is a valid text fragment (i.e. has a valid
+    /// position in a document); otherwise returns `false.`
     is_valid() -> bool,
-    ///     Returns the position of this text fragment in the document.
+    /// 
+    /// Returns the position of this text fragment in the document.
     position() -> i32,
-    ///     Returns the number of characters in the text fragment.
     /// 
-    ///     \sa text()
+    /// Returns the number of characters in the text fragment.
+    /// 
+    /// **See also:** text()
     length() -> i32,
-    ///     Returns \c true if the text fragment contains the text at the given
-    ///     \a position in the document; otherwise returns \c false.
+    /// 
+    /// Returns `true` if the text fragment contains the text at the given
+    /// *position* in the document; otherwise returns `false.`
     contains(position: i32) -> bool,
-    ///     Returns the text fragment's character format.
     /// 
-    ///     \sa text()
+    /// Returns the text fragment's character format.
+    /// 
+    /// **See also:** text()
+    /// 
+    /// Returns an index into the document's internal list of character formats
+    /// for the text fragment's character format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     char_format() -> TextCharFormat,
-    ///     Returns an index into the document's internal list of character formats
-    ///     for the text fragment's character format.
     /// 
-    ///     \sa QTextDocument::allFormats()
+    /// Returns an index into the document's internal list of character formats
+    /// for the text fragment's character format.
+    /// 
+    /// **See also:** QTextDocument::allFormats()
     char_format_index() -> i32,
-    ///     Returns the text fragment's as plain text.
     /// 
-    ///     \sa length(), charFormat()
+    /// Returns the text fragment's as plain text.
+    /// 
+    /// **See also:** length()
+    /// charFormat()
     text() -> String,
-    ///     Returns the glyphs corresponding to \a len characters of this text fragment starting at
-    ///     position \a pos. The positions of the glyphs are relative to the position of the QTextBlock's
-    ///     layout.
-    /// 
-    ///     If \a pos is less than zero, it will default to the start of the QTextFragment. If \a len
-    ///     is less than zero, it will default to the length of the fragment.
-    /// 
-    ///     \sa QGlyphRun, QTextBlock::layout(), QTextLayout::position(), QPainter::drawGlyphRun()
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
 }
 

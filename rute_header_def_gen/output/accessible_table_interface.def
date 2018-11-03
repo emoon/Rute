@@ -1,34 +1,77 @@
-///     \class QAccessibleTableInterface
-///     \ingroup accessibility
 /// 
-///     \brief The QAccessibleTableInterface class implements support for
-///     the IAccessibleTable2 interface.
-/// 
-///     \l{IAccessible2 Specification}
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleTableInterface {
+    /// 
+    /// Returns the caption for the table.
     [event] caption() -> AccessibleInterface?,
+    /// 
+    /// Returns a QAccessibleInterface that represents a summary of the table.
+    /// This function may return 0 if no such interface exists.
     [event] summary() -> AccessibleInterface?,
+    /// 
+    /// Returns the cell at the specified *row* and *column* in the table.
     [event] cell_at(row: i32, column: i32) -> AccessibleInterface?,
+    /// 
+    /// Returns the total number of selected cells.
     [event] selected_cell_count() -> i32,
+    /// 
+    /// Returns the list of selected cell (by their index as [QAccessibleInterface::child()](QAccessibleInterface::child())
+    /// accepts).
     [event] selected_cells() -> [AccessibleInterface?],
+    /// 
+    /// Returns the description text of the specified *column* in the table.
     [event] column_description(column: i32) -> String,
+    /// 
+    /// Returns the description text of the specified *row* in the table.
     [event] row_description(row: i32) -> String,
+    /// 
+    /// Returns the total number of selected columns.
     [event] selected_column_count() -> i32,
+    /// 
+    /// Returns the total number of selected rows.
     [event] selected_row_count() -> i32,
+    /// 
+    /// Returns the total number of columns in table.
     [event] column_count() -> i32,
+    /// 
+    /// Returns the total number of rows in table.
     [event] row_count() -> i32,
+    /// 
+    /// Returns the list of currently selected columns.
     [event] selected_columns() -> [i32],
+    /// 
+    /// Returns the list of currently selected columns.
     [event] selected_rows() -> [i32],
+    /// 
+    /// Returns a boolean value indicating whether the specified *column* is completely selected.
     [event] is_column_selected(column: i32) -> bool,
+    /// 
+    /// Returns a boolean value indicating whether the specified *row* is completely selected.
     [event] is_row_selected(row: i32) -> bool,
+    /// 
+    /// Selects *row.* This function might unselect all previously selected rows.
+    /// Returns `true` if the selection was successful.
     [event] select_row(row: i32) -> bool,
+    /// 
+    /// Selects *column.* This function might unselect all previously selected columns.
+    /// Returns `true` if the selection was successful.
     [event] select_column(column: i32) -> bool,
+    /// 
+    /// Unselects *row,* leaving other selected rows selected (if any).
+    /// Returns `true` if the selection was successful.
     [event] unselect_row(row: i32) -> bool,
+    /// 
+    /// Unselects *column,* leaving other selected columns selected (if any).
+    /// Returns `true` if the selection was successful.
     [event] unselect_column(column: i32) -> bool,
+    /// 
+    /// Informs about a change in the model's layout.
+    /// The *event* contains the details.
+    /// **See also:** QAccessibleTableModelChangeEvent
     [event] model_change(event: *AccessibleTableModelChangeEventType),
 }
 

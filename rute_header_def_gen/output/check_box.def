@@ -1,95 +1,102 @@
-///     \class QCheckBox
-///     \brief The QCheckBox widget provides a checkbox with a text label.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// ![windows-checkbox.png](windows-checkbox.png)
 /// 
-///     \image windows-checkbox.png
+/// A QCheckBox is an option button that can be switched on (checked) or off
+/// (unchecked). Checkboxes are typically used to represent features in an
+/// application that can be enabled or disabled without affecting others.
+/// Different types of behavior can be implemented. For example, a
+/// QButtonGroup can be used to group check buttons logically, allowing
+/// exclusive checkboxes. However, QButtonGroup does not provide any visual
+/// representation.
 /// 
-///     A QCheckBox is an option button that can be switched on (checked) or off
-///     (unchecked). Checkboxes are typically used to represent features in an
-///     application that can be enabled or disabled without affecting others.
-///     Different types of behavior can be implemented. For example, a
-///     QButtonGroup can be used to group check buttons logically, allowing
-///     exclusive checkboxes. However, QButtonGroup does not provide any visual
-///     representation.
+/// The image below further illustrates the differences between exclusive and
+/// non-exclusive checkboxes.
 /// 
-///     The image below further illustrates the differences between exclusive and
-///     non-exclusive checkboxes.
+/// * ![checkboxes-exclusive.png](checkboxes-exclusive.png)
 /// 
-///     \table
-///     \row \li \inlineimage checkboxes-exclusive.png
-///          \li \inlineimage checkboxes-non-exclusive.png
-///     \endtable
+/// * ![checkboxes-non-exclusive.png](checkboxes-non-exclusive.png)
 /// 
-///     Whenever a checkbox is checked or cleared, it emits the signal
-///     stateChanged(). Connect to this signal if you want to trigger an action
-///     each time the checkbox changes state. You can use isChecked() to query
-///     whether or not a checkbox is checked.
+/// Whenever a checkbox is checked or cleared, it emits the signal
+/// stateChanged(). Connect to this signal if you want to trigger an action
+/// each time the checkbox changes state. You can use isChecked() to query
+/// whether or not a checkbox is checked.
 /// 
-///     In addition to the usual checked and unchecked states, QCheckBox optionally
-///     provides a third state to indicate "no change". This is useful whenever you
-///     need to give the user the option of neither checking nor unchecking a
-///     checkbox. If you need this third state, enable it with setTristate(), and
-///     use checkState() to query the current toggle state.
+/// In addition to the usual checked and unchecked states, QCheckBox optionally
+/// provides a third state to indicate . This is useful whenever you
+/// need to give the user the option of neither checking nor unchecking a
+/// checkbox. If you need this third state, enable it with setTristate(), and
+/// use checkState() to query the current toggle state.
 /// 
-///     Just like QPushButton, a checkbox displays text, and optionally a small
-///     icon. The icon is set with setIcon(). The text can be set in the
-///     constructor or with setText(). A shortcut key can be specified by preceding
-///     the preferred character with an ampersand. For example:
+/// Just like QPushButton, a checkbox displays text, and optionally a small
+/// icon. The icon is set with setIcon(). The text can be set in the
+/// constructor or with setText(). A shortcut key can be specified by preceding
+/// the preferred character with an ampersand. For example:
 /// 
-///     \snippet code/src_gui_widgets_qcheckbox.cpp 0
+/// In this example, the shortcut is *Alt+A* . See the [QShortcut](QShortcut%23mnemonic)
+/// documentation for details. To display an actual ampersand,
+/// use '&&'.
 /// 
-///     In this example, the shortcut is \e{Alt+A}. See the \l{QShortcut#mnemonic}
-///     {QShortcut} documentation for details. To display an actual ampersand,
-///     use '&&'.
+/// Important inherited functions: text(), setText(), text(), pixmap(),
+/// setPixmap(), accel(), setAccel(), isToggleButton(), setDown(), isDown(),
+/// isOn(), checkState(), autoRepeat(), isExclusiveToggle(), group(),
+/// setAutoRepeat(), toggle(), pressed(), released(), clicked(), toggled(),
+/// checkState(), and stateChanged().
 /// 
-///     Important inherited functions: text(), setText(), text(), pixmap(),
-///     setPixmap(), accel(), setAccel(), isToggleButton(), setDown(), isDown(),
-///     isOn(), checkState(), autoRepeat(), isExclusiveToggle(), group(),
-///     setAutoRepeat(), toggle(), pressed(), released(), clicked(), toggled(),
-///     checkState(), and stateChanged().
-/// 
-///     \sa QAbstractButton, QRadioButton, {fowler}{GUI Design Handbook: Check Box}
+/// **See also:** QAbstractButton
+/// QRadioButton
+/// {fowler}{GUI Design Handbook: Check Box}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct CheckBox : AbstractButton {
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
-    ///     \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
     set_tristate(y: bool),
     is_tristate() -> bool,
-    ///     Returns the checkbox's check state. If you do not need tristate support,
-    ///     you can also use \l QAbstractButton::isChecked(), which returns a boolean.
     /// 
-    ///     \sa setCheckState(), Qt::CheckState
+    /// Returns the checkbox's check state. If you do not need tristate support,
+    /// you can also use [QAbstractButton::isChecked(),](QAbstractButton::isChecked(),)
+    /// which returns a boolean.
+    /// 
+    /// **See also:** setCheckState()
+    /// Qt::CheckState
+    /// 
     check_state() -> Rute::CheckState,
-    ///     Sets the checkbox's check state to \a state. If you do not need tristate
-    ///     support, you can also use \l QAbstractButton::setChecked(), which takes a
-    ///     boolean.
     /// 
-    ///     \sa checkState(), Qt::CheckState
+    /// Sets the checkbox's check state to *state.* If you do not need tristate
+    /// support, you can also use [QAbstractButton::setChecked(),](QAbstractButton::setChecked(),)
+    /// which takes a
+    /// boolean.
+    /// 
+    /// **See also:** checkState()
+    /// Qt::CheckState
     set_check_state(state: Rute::CheckState),
-    [signal] state_changed(arg0: i32),
-    ///     \reimp
-    [event] event(e: *EventType) -> bool,
-    ///     \reimp
-    [event] hit_button(pos: &PointType) -> bool,
-    ///     \reimp
-    [event] check_state_set(),
-    ///     \reimp
-    [event] next_check_state(),
-    ///     \reimp
-    [event] paint_event(arg0: *PaintEventType),
-    ///     \reimp
-    [event] mouse_move_event(arg0: *MouseEventType),
-    ///     Initializes \a option with the values from this QCheckBox. This method is
-    ///     useful for subclasses that require a QStyleOptionButton, but do not want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// This signal is emitted whenever the checkbox's state changes, i.e.,
+    /// whenever the user checks or unchecks it.
+    /// 
+    /// *state* contains the checkbox's new Qt::CheckState.
+    [signal] state_changed(arg0: i32),
+    /// 
+    [event] event(e: *EventType) -> bool,
+    /// 
+    [event] hit_button(pos: &PointType) -> bool,
+    /// 
+    [event] check_state_set(),
+    /// 
+    [event] next_check_state(),
+    /// 
+    [event] paint_event(arg0: *PaintEventType),
+    /// 
+    [event] mouse_move_event(arg0: *MouseEventType),
+    /// 
+    /// Initializes *option* with the values from this QCheckBox. This method is
+    /// useful for subclasses that require a QStyleOptionButton, but do not want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionButtonType),
 }
 

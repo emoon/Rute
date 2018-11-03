@@ -1,360 +1,460 @@
-///     \class QUndoStack
-///     \brief The QUndoStack class is a stack of QUndoCommand objects.
-///     \since 4.2
 /// 
-///     \inmodule QtWidgets
+/// For an overview of Qt's Undo Framework, see the
+/// [overview document](Overview%20of%20Qt's%20Undo%20Framework)
 /// 
-///     For an overview of Qt's Undo Framework, see the
-///     \l{Overview of Qt's Undo Framework}{overview document}.
 /// 
-///     An undo stack maintains a stack of commands that have been applied to a
-///     document.
+/// An undo stack maintains a stack of commands that have been applied to a
+/// document.
 /// 
-///     New commands are pushed on the stack using push(). Commands can be
-///     undone and redone using undo() and redo(), or by triggering the
-///     actions returned by createUndoAction() and createRedoAction().
+/// New commands are pushed on the stack using push(). Commands can be
+/// undone and redone using undo() and redo(), or by triggering the
+/// actions returned by createUndoAction() and createRedoAction().
 /// 
-///     QUndoStack keeps track of the \a current command. This is the command
-///     which will be executed by the next call to redo(). The index of this
-///     command is returned by index(). The state of the edited object can be
-///     rolled forward or back using setIndex(). If the top-most command on the
-///     stack has already been redone, index() is equal to count().
+/// QUndoStack keeps track of the *current* command. This is the command
+/// which will be executed by the next call to redo(). The index of this
+/// command is returned by index(). The state of the edited object can be
+/// rolled forward or back using setIndex(). If the top-most command on the
+/// stack has already been redone, index() is equal to count().
 /// 
-///     QUndoStack provides support for undo and redo actions, command
-///     compression, command macros, and supports the concept of a
-///     \e{clean state}.
+/// QUndoStack provides support for undo and redo actions, command
+/// compression, command macros, and supports the concept of a
+/// *clean state* .
 /// 
-///     \section1 Undo and Redo Actions
+/// # Undo and Redo Actions
 /// 
-///     QUndoStack provides convenient undo and redo QAction objects, which
-///     can be inserted into a menu or a toolbar. When commands are undone or
-///     redone, QUndoStack updates the text properties of these actions
-///     to reflect what change they will trigger. The actions are also disabled
-///     when no command is available for undo or redo. These actions
-///     are returned by QUndoStack::createUndoAction() and QUndoStack::createRedoAction().
+/// QUndoStack provides convenient undo and redo QAction objects, which
+/// can be inserted into a menu or a toolbar. When commands are undone or
+/// redone, QUndoStack updates the text properties of these actions
+/// to reflect what change they will trigger. The actions are also disabled
+/// when no command is available for undo or redo. These actions
+/// are returned by QUndoStack::createUndoAction() and QUndoStack::createRedoAction().
 /// 
-///     \section1 Command Compression and Macros
+/// # Command Compression and Macros
 /// 
-///     Command compression is useful when several commands can be compressed
-///     into a single command that can be undone and redone in a single operation.
-///     For example, when a user types a character in a text editor, a new command
-///     is created. This command inserts the character into the document at the
-///     cursor position. However, it is more convenient for the user to be able
-///     to undo or redo typing of whole words, sentences, or paragraphs.
-///     Command compression allows these single-character commands to be merged
-///     into a single command which inserts or deletes sections of text.
-///     For more information, see QUndoCommand::mergeWith() and push().
+/// Command compression is useful when several commands can be compressed
+/// into a single command that can be undone and redone in a single operation.
+/// For example, when a user types a character in a text editor, a new command
+/// is created. This command inserts the character into the document at the
+/// cursor position. However, it is more convenient for the user to be able
+/// to undo or redo typing of whole words, sentences, or paragraphs.
+/// Command compression allows these single-character commands to be merged
+/// into a single command which inserts or deletes sections of text.
+/// For more information, see QUndoCommand::mergeWith() and push().
 /// 
-///     A command macro is a sequence of commands, all of which are undone and
-///     redone in one go. Command macros are created by giving a command a list
-///     of child commands.
-///     Undoing or redoing the parent command will cause the child commands to
-///     be undone or redone. Command macros may be created explicitly
-///     by specifying a parent in the QUndoCommand constructor, or by using the
-///     convenience functions beginMacro() and endMacro().
+/// A command macro is a sequence of commands, all of which are undone and
+/// redone in one go. Command macros are created by giving a command a list
+/// of child commands.
+/// Undoing or redoing the parent command will cause the child commands to
+/// be undone or redone. Command macros may be created explicitly
+/// by specifying a parent in the QUndoCommand constructor, or by using the
+/// convenience functions beginMacro() and endMacro().
 /// 
-///     Although command compression and macros appear to have the same effect to the
-///     user, they often have different uses in an application. Commands that
-///     perform small changes to a document may be usefully compressed if there is
-///     no need to individually record them, and if only larger changes are relevant
-///     to the user.
-///     However, for commands that need to be recorded individually, or those that
-///     cannot be compressed, it is useful to use macros to provide a more convenient
-///     user experience while maintaining a record of each command.
+/// Although command compression and macros appear to have the same effect to the
+/// user, they often have different uses in an application. Commands that
+/// perform small changes to a document may be usefully compressed if there is
+/// no need to individually record them, and if only larger changes are relevant
+/// to the user.
+/// However, for commands that need to be recorded individually, or those that
+/// cannot be compressed, it is useful to use macros to provide a more convenient
+/// user experience while maintaining a record of each command.
 /// 
-///     \section1 Clean State
+/// # Clean State
 /// 
-///     QUndoStack supports the concept of a clean state. When the
-///     document is saved to disk, the stack can be marked as clean using
-///     setClean(). Whenever the stack returns to this state through undoing and
-///     redoing commands, it emits the signal cleanChanged(). This signal
-///     is also emitted when the stack leaves the clean state. This signal is
-///     usually used to enable and disable the save actions in the application,
-///     and to update the document's title to reflect that it contains unsaved
-///     changes.
+/// QUndoStack supports the concept of a clean state. When the
+/// document is saved to disk, the stack can be marked as clean using
+/// setClean(). Whenever the stack returns to this state through undoing and
+/// redoing commands, it emits the signal cleanChanged(). This signal
+/// is also emitted when the stack leaves the clean state. This signal is
+/// usually used to enable and disable the save actions in the application,
+/// and to update the document's title to reflect that it contains unsaved
+/// changes.
 /// 
-///     \section1 Obsolete Commands
+/// # Obsolete Commands
 /// 
-///     QUndoStack is able to delete commands from the stack if the command is no
-///     longer needed. One example may be to delete a command when two commands are
-///     merged together in such a way that the merged command has no function. This
-///     can be seen with move commands where the user moves their mouse to one part
-///     of the screen and then moves it to the original position. The merged command
-///     results in a mouse movement of 0. This command can be deleted since it serves
-///     no purpose. Another example is with networking commands that fail due to connection
-///     issues. In this case, the command is to be removed from the stack because the redo()
-///     and undo() functions have no function since there was connection issues.
+/// QUndoStack is able to delete commands from the stack if the command is no
+/// longer needed. One example may be to delete a command when two commands are
+/// merged together in such a way that the merged command has no function. This
+/// can be seen with move commands where the user moves their mouse to one part
+/// of the screen and then moves it to the original position. The merged command
+/// results in a mouse movement of 0. This command can be deleted since it serves
+/// no purpose. Another example is with networking commands that fail due to connection
+/// issues. In this case, the command is to be removed from the stack because the redo()
+/// and undo() functions have no function since there was connection issues.
 /// 
-///     A command can be marked obsolete with the QUndoCommand::setObsolete() function.
-///     The QUndoCommand::isObsolete() flag is checked in QUndoStack::push(),
-///     QUndoStack::undo(), QUndoStack::redo(), and QUndoStack::setIndex() after calling
-///     QUndoCommand::undo(), QUndoCommand::redo() and QUndoCommand:mergeWith() where
-///     applicable.
+/// A command can be marked obsolete with the QUndoCommand::setObsolete() function.
+/// The QUndoCommand::isObsolete() flag is checked in QUndoStack::push(),
+/// QUndoStack::undo(), QUndoStack::redo(), and QUndoStack::setIndex() after calling
+/// QUndoCommand::undo(), QUndoCommand::redo() and QUndoCommand:mergeWith() where
+/// applicable.
 /// 
-///     If a command is set obsolete and the clean index is greater than or equal to the
-///     current command index, then the clean index will be reset when the command is
-///     deleted from the stack.
+/// If a command is set obsolete and the clean index is greater than or equal to the
+/// current command index, then the clean index will be reset when the command is
+/// deleted from the stack.
 /// 
-///     \sa QUndoCommand, QUndoView
+/// **See also:** QUndoCommand
+/// QUndoView
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct UndoStack : Object {
-    ///     Clears the command stack by deleting all commands on it, and returns the stack
-    ///     to the clean state.
     /// 
-    ///     Commands are not undone or redone; the state of the edited object remains
-    ///     unchanged.
+    /// Clears the command stack by deleting all commands on it, and returns the stack
+    /// to the clean state.
     /// 
-    ///     This function is usually used when the contents of the document are
-    ///     abandoned.
+    /// Commands are not undone or redone; the state of the edited object remains
+    /// unchanged.
     /// 
-    ///     \sa QUndoStack()
+    /// This function is usually used when the contents of the document are
+    /// abandoned.
+    /// 
+    /// **See also:** QUndoStack()
     clear(),
-    ///     Pushes \a cmd on the stack or merges it with the most recently executed command.
-    ///     In either case, executes \a cmd by calling its redo() function.
     /// 
-    ///     If \a cmd's id is not -1, and if the id is the same as that of the
-    ///     most recently executed command, QUndoStack will attempt to merge the two
-    ///     commands by calling QUndoCommand::mergeWith() on the most recently executed
-    ///     command. If QUndoCommand::mergeWith() returns \c true, \a cmd is deleted.
+    /// Pushes *cmd* on the stack or merges it with the most recently executed command.
+    /// In either case, executes *cmd* by calling its redo() function.
     /// 
-    ///     After calling QUndoCommand::redo() and, if applicable, QUndoCommand::mergeWith(),
-    ///     QUndoCommand::isObsolete() will be called for \a cmd or the merged command.
-    ///     If QUndoCommand::isObsolete() returns \c true, then \a cmd or the merged command
-    ///     will be deleted from the stack.
+    /// If *cmd's* id is not -1, and if the id is the same as that of the
+    /// most recently executed command, QUndoStack will attempt to merge the two
+    /// commands by calling QUndoCommand::mergeWith() on the most recently executed
+    /// command. If QUndoCommand::mergeWith() returns `true,` *cmd* is deleted.
     /// 
-    ///     In all other cases \a cmd is simply pushed on the stack.
+    /// After calling QUndoCommand::redo() and, if applicable, QUndoCommand::mergeWith(),
+    /// QUndoCommand::isObsolete() will be called for *cmd* or the merged command.
+    /// If QUndoCommand::isObsolete() returns `true,` then *cmd* or the merged command
+    /// will be deleted from the stack.
     /// 
-    ///     If commands were undone before \a cmd was pushed, the current command and
-    ///     all commands above it are deleted. Hence \a cmd always ends up being the
-    ///     top-most on the stack.
+    /// In all other cases *cmd* is simply pushed on the stack.
     /// 
-    ///     Once a command is pushed, the stack takes ownership of it. There
-    ///     are no getters to return the command, since modifying it after it has
-    ///     been executed will almost always lead to corruption of the document's
-    ///     state.
+    /// If commands were undone before *cmd* was pushed, the current command and
+    /// all commands above it are deleted. Hence *cmd* always ends up being the
+    /// top-most on the stack.
     /// 
-    ///     \sa QUndoCommand::id(), QUndoCommand::mergeWith()
+    /// Once a command is pushed, the stack takes ownership of it. There
+    /// are no getters to return the command, since modifying it after it has
+    /// been executed will almost always lead to corruption of the document's
+    /// state.
+    /// 
+    /// **See also:** QUndoCommand::id()
+    /// QUndoCommand::mergeWith()
     push(cmd: *UndoCommandType),
-    ///     Returns \c true if there is a command available for undo; otherwise returns \c false.
     /// 
-    ///     This function returns \c false if the stack is empty, or if the bottom command
-    ///     on the stack has already been undone.
+    /// Returns `true` if there is a command available for undo; otherwise returns `false.`
     /// 
-    ///     Synonymous with index() == 0.
+    /// This function returns `false` if the stack is empty, or if the bottom command
+    /// on the stack has already been undone.
     /// 
-    ///     \sa index(), canRedo()
+    /// Synonymous with index() == 0.
+    /// 
+    /// **See also:** index()
+    /// canRedo()
+    /// 
+    /// This signal is emitted whenever the value of canUndo() changes. It is
+    /// used to enable or disable the undo action returned by createUndoAction().
+    /// *canUndo* specifies the new value.
     can_undo() -> bool,
-    ///     Returns \c true if there is a command available for redo; otherwise returns \c false.
     /// 
-    ///     This function returns \c false if the stack is empty or if the top command
-    ///     on the stack has already been redone.
+    /// Returns `true` if there is a command available for redo; otherwise returns `false.`
     /// 
-    ///     Synonymous with index() == count().
+    /// This function returns `false` if the stack is empty or if the top command
+    /// on the stack has already been redone.
     /// 
-    ///     \sa index(), canUndo()
+    /// Synonymous with index() == count().
+    /// 
+    /// **See also:** index()
+    /// canUndo()
+    /// 
+    /// This signal is emitted whenever the value of canRedo() changes. It is
+    /// used to enable or disable the redo action returned by createRedoAction().
+    /// *canRedo* specifies the new value.
     can_redo() -> bool,
-    ///     Returns the text of the command which will be undone in the next call to undo().
     /// 
-    ///     \sa QUndoCommand::actionText(), redoText()
+    /// Returns the text of the command which will be undone in the next call to undo().
+    /// 
+    /// **See also:** QUndoCommand::actionText()
+    /// redoText()
+    /// 
+    /// This signal is emitted whenever the value of undoText() changes. It is
+    /// used to update the text property of the undo action returned by createUndoAction().
+    /// *undoText* specifies the new text.
     undo_text() -> String,
-    ///     Returns the text of the command which will be redone in the next call to redo().
     /// 
-    ///     \sa QUndoCommand::actionText(), undoText()
+    /// Returns the text of the command which will be redone in the next call to redo().
+    /// 
+    /// **See also:** QUndoCommand::actionText()
+    /// undoText()
+    /// 
+    /// This signal is emitted whenever the value of redoText() changes. It is
+    /// used to update the text property of the redo action returned by createRedoAction().
+    /// *redoText* specifies the new text.
     redo_text() -> String,
-    ///     Returns the number of commands on the stack. Macro commands are counted as
-    ///     one command.
     /// 
-    ///     \sa index(), setIndex(), command()
+    /// Returns the number of commands on the stack. Macro commands are counted as
+    /// one command.
+    /// 
+    /// **See also:** index()
+    /// setIndex()
+    /// command()
     count() -> i32,
-    ///     Returns the index of the current command. This is the command that will be
-    ///     executed on the next call to redo(). It is not always the top-most command
-    ///     on the stack, since a number of commands may have been undone.
     /// 
-    ///     \sa undo(), redo(), count()
+    /// Returns the index of the current command. This is the command that will be
+    /// executed on the next call to redo(). It is not always the top-most command
+    /// on the stack, since a number of commands may have been undone.
+    /// 
+    /// **See also:** undo()
+    /// redo()
+    /// count()
+    /// 
+    /// This signal is emitted whenever a command modifies the state of the document.
+    /// This happens when a command is undone or redone. When a macro
+    /// command is undone or redone, or setIndex() is called, this signal
+    /// is emitted only once.
+    /// 
+    /// *idx* specifies the index of the current command, ie. the command which will be
+    /// executed on the next call to redo().
+    /// 
+    /// **See also:** index()
+    /// setIndex()
     index() -> i32,
-    ///     Returns the text of the command at index \a idx.
     /// 
-    ///     \sa beginMacro()
+    /// Returns the text of the command at index *idx.*
+    /// 
+    /// **See also:** beginMacro()
     text(idx: i32) -> String,
-    ///     Creates an undo QAction object with the given \a parent.
     /// 
-    ///     Triggering this action will cause a call to undo(). The text of this action
-    ///     is the text of the command which will be undone in the next call to undo(),
-    ///     prefixed by the specified \a prefix. If there is no command available for undo,
-    ///     this action will be disabled.
+    /// Creates an undo QAction object with the given *parent.*
     /// 
-    ///     If \a prefix is empty, the default template "Undo %1" is used instead of prefix.
-    ///     Before Qt 4.8, the prefix "Undo" was used by default.
+    /// Triggering this action will cause a call to undo(). The text of this action
+    /// is the text of the command which will be undone in the next call to undo(),
+    /// prefixed by the specified *prefix.* If there is no command available for undo,
+    /// this action will be disabled.
     /// 
-    ///     \sa createRedoAction(), canUndo(), QUndoCommand::text()
+    /// If *prefix* is empty, the default template is used instead of prefix.
+    /// Before Qt 4.8, the prefix was used by default.
+    /// 
+    /// **See also:** createRedoAction()
+    /// canUndo()
+    /// QUndoCommand::text()
     create_undo_action(parent: *ObjectType, prefix: String) -> Action?,
-    ///     Creates an redo QAction object with the given \a parent.
     /// 
-    ///     Triggering this action will cause a call to redo(). The text of this action
-    ///     is the text of the command which will be redone in the next call to redo(),
-    ///     prefixed by the specified \a prefix. If there is no command available for redo,
-    ///     this action will be disabled.
+    /// Creates an redo QAction object with the given *parent.*
     /// 
-    ///     If \a prefix is empty, the default template "Redo %1" is used instead of prefix.
-    ///     Before Qt 4.8, the prefix "Redo" was used by default.
+    /// Triggering this action will cause a call to redo(). The text of this action
+    /// is the text of the command which will be redone in the next call to redo(),
+    /// prefixed by the specified *prefix.* If there is no command available for redo,
+    /// this action will be disabled.
     /// 
-    ///     \sa createUndoAction(), canRedo(), QUndoCommand::text()
+    /// If *prefix* is empty, the default template is used instead of prefix.
+    /// Before Qt 4.8, the prefix was used by default.
+    /// 
+    /// **See also:** createUndoAction()
+    /// canRedo()
+    /// QUndoCommand::text()
     create_redo_action(parent: *ObjectType, prefix: String) -> Action?,
     is_active() -> bool,
-    ///     If the stack is in the clean state, returns \c true; otherwise returns \c false.
     /// 
-    ///     \sa setClean(), cleanIndex()
+    /// If the stack is in the clean state, returns `true;` otherwise returns `false.`
+    /// 
+    /// **See also:** setClean()
+    /// cleanIndex()
     is_clean() -> bool,
-    ///     Returns the clean index. This is the index at which setClean() was called.
     /// 
-    ///     A stack may not have a clean index. This happens if a document is saved,
-    ///     some commands are undone, then a new command is pushed. Since
-    ///     push() deletes all the undone commands before pushing the new command, the stack
-    ///     can't return to the clean state again. In this case, this function returns -1.
-    ///     The -1 may also be returned after an explicit call to resetClean().
+    /// Returns the clean index. This is the index at which setClean() was called.
     /// 
-    ///     \sa isClean(), setClean()
+    /// A stack may not have a clean index. This happens if a document is saved,
+    /// some commands are undone, then a new command is pushed. Since
+    /// push() deletes all the undone commands before pushing the new command, the stack
+    /// can't return to the clean state again. In this case, this function returns -1.
+    /// The -1 may also be returned after an explicit call to resetClean().
+    /// 
+    /// **See also:** isClean()
+    /// setClean()
     clean_index() -> i32,
-    ///     Begins composition of a macro command with the given \a text description.
     /// 
-    ///     An empty command described by the specified \a text is pushed on the stack.
-    ///     Any subsequent commands pushed on the stack will be appended to the empty
-    ///     command's children until endMacro() is called.
+    /// Begins composition of a macro command with the given *text* description.
     /// 
-    ///     Calls to beginMacro() and endMacro() may be nested, but every call to
-    ///     beginMacro() must have a matching call to endMacro().
+    /// An empty command described by the specified *text* is pushed on the stack.
+    /// Any subsequent commands pushed on the stack will be appended to the empty
+    /// command's children until endMacro() is called.
     /// 
-    ///     While a macro is being composed, the stack is disabled. This means that:
-    ///     \list
-    ///     \li indexChanged() and cleanChanged() are not emitted,
-    ///     \li canUndo() and canRedo() return false,
-    ///     \li calling undo() or redo() has no effect,
-    ///     \li the undo/redo actions are disabled.
-    ///     \endlist
+    /// Calls to beginMacro() and endMacro() may be nested, but every call to
+    /// beginMacro() must have a matching call to endMacro().
     /// 
-    ///     The stack becomes enabled and appropriate signals are emitted when endMacro()
-    ///     is called for the outermost macro.
+    /// While a macro is being composed, the stack is disabled. This means that:
+    /// * indexChanged() and cleanChanged() are not emitted,
+    /// * canUndo() and canRedo() return false,
+    /// * calling undo() or redo() has no effect,
+    /// * the undo/redo actions are disabled.
     /// 
-    ///     \snippet code/src_gui_util_qundostack.cpp 4
+    /// The stack becomes enabled and appropriate signals are emitted when endMacro()
+    /// is called for the outermost macro.
     /// 
-    ///     This code is equivalent to:
+    /// This code is equivalent to:
     /// 
-    ///     \snippet code/src_gui_util_qundostack.cpp 5
-    /// 
-    ///     \sa endMacro()
+    /// **See also:** endMacro()
     begin_macro(text: String),
-    ///     Ends composition of a macro command.
     /// 
-    ///     If this is the outermost macro in a set nested macros, this function emits
-    ///     indexChanged() once for the entire macro command.
+    /// Ends composition of a macro command.
     /// 
-    ///     \sa beginMacro()
+    /// If this is the outermost macro in a set nested macros, this function emits
+    /// indexChanged() once for the entire macro command.
+    /// 
+    /// **See also:** beginMacro()
     end_macro(),
-    ///     \property QUndoStack::undoLimit
-    ///     \brief the maximum number of commands on this stack.
-    ///     \since 4.3
-    /// 
-    ///     When the number of commands on a stack exceedes the stack's undoLimit, commands are
-    ///     deleted from the bottom of the stack. Macro commands (commands with child commands)
-    ///     are treated as one command. The default value is 0, which means that there is no
-    ///     limit.
-    /// 
-    ///     This property may only be set when the undo stack is empty, since setting it on a
-    ///     non-empty stack might delete the command at the current index. Calling setUndoLimit()
-    ///     on a non-empty stack prints a warning and does nothing.
     set_undo_limit(limit: i32),
+    /// 
+    /// When the number of commands on a stack exceedes the stack's undoLimit, commands are
+    /// deleted from the bottom of the stack. Macro commands (commands with child commands)
+    /// are treated as one command. The default value is 0, which means that there is no
+    /// limit.
+    /// 
+    /// This property may only be set when the undo stack is empty, since setting it on a
+    /// non-empty stack might delete the command at the current index. Calling setUndoLimit()
+    /// on a non-empty stack prints a warning and does nothing.
     undo_limit() -> i32,
-    ///   \since 4.4
     /// 
-    ///   Returns a const pointer to the command at \a index.
+    /// Returns a const pointer to the command at *index.*
     /// 
-    ///   This function returns a const pointer, because modifying a command,
-    ///   once it has been pushed onto the stack and executed, almost always
-    ///   causes corruption of the state of the document, if the command is
-    ///   later undone or redone.
+    /// This function returns a const pointer, because modifying a command,
+    /// once it has been pushed onto the stack and executed, almost always
+    /// causes corruption of the state of the document, if the command is
+    /// later undone or redone.
     /// 
-    ///   \sa QUndoCommand::child()
+    /// **See also:** QUndoCommand::child()
     command(index: i32) -> UndoCommand?,
-    ///     Marks the stack as clean and emits cleanChanged() if the stack was
-    ///     not already clean.
     /// 
-    ///     This is typically called when a document is saved, for example.
+    /// Marks the stack as clean and emits cleanChanged() if the stack was
+    /// not already clean.
     /// 
-    ///     Whenever the stack returns to this state through the use of undo/redo
-    ///     commands, it emits the signal cleanChanged(). This signal is also
-    ///     emitted when the stack leaves the clean state.
+    /// This is typically called when a document is saved, for example.
     /// 
-    ///     \sa isClean(), resetClean(), cleanIndex()
+    /// Whenever the stack returns to this state through the use of undo/redo
+    /// commands, it emits the signal cleanChanged(). This signal is also
+    /// emitted when the stack leaves the clean state.
+    /// 
+    /// **See also:** isClean()
+    /// resetClean()
+    /// cleanIndex()
     set_clean(),
-    ///     \since 5.8
     /// 
-    ///     Leaves the clean state and emits cleanChanged() if the stack was clean.
-    ///     This method resets the clean index to -1.
+    /// Leaves the clean state and emits cleanChanged() if the stack was clean.
+    /// This method resets the clean index to -1.
     /// 
-    ///     This is typically called in the following cases, when a document has been:
-    ///     \list
-    ///     \li created basing on some template and has not been saved,
-    ///         so no filename has been associated with the document yet.
-    ///     \li restored from a backup file.
-    ///     \li changed outside of the editor and the user did not reload it.
-    ///     \endlist
+    /// This is typically called in the following cases, when a document has been:
+    /// * created basing on some template and has not been saved, so no filename has been associated with the document yet.
+    /// * restored from a backup file.
+    /// * changed outside of the editor and the user did not reload it.
     /// 
-    ///     \sa isClean(), setClean(), cleanIndex()
+    /// **See also:** isClean()
+    /// setClean()
+    /// cleanIndex()
     reset_clean(),
-    ///     Repeatedly calls undo() or redo() until the current command index reaches
-    ///     \a idx. This function can be used to roll the state of the document forwards
-    ///     of backwards. indexChanged() is emitted only once.
     /// 
-    ///     \sa index(), count(), undo(), redo()
+    /// Repeatedly calls undo() or redo() until the current command index reaches
+    /// *idx.* This function can be used to roll the state of the document forwards
+    /// of backwards. indexChanged() is emitted only once.
+    /// 
+    /// **See also:** index()
+    /// count()
+    /// undo()
+    /// redo()
     set_index(idx: i32),
-    ///     Undoes the command below the current command by calling QUndoCommand::undo().
-    ///     Decrements the current command index.
     /// 
-    ///     If the stack is empty, or if the bottom command on the stack has already been
-    ///     undone, this function does nothing.
+    /// Undoes the command below the current command by calling QUndoCommand::undo().
+    /// Decrements the current command index.
     /// 
-    ///     After the command is undone, if QUndoCommand::isObsolete() returns \c true,
-    ///     then the command will be deleted from the stack. Additionally, if the clean
-    ///     index is greater than or equal to the current command index, then the clean
-    ///     index is reset.
+    /// If the stack is empty, or if the bottom command on the stack has already been
+    /// undone, this function does nothing.
     /// 
-    ///     \sa redo(), index()
+    /// After the command is undone, if QUndoCommand::isObsolete() returns `true,`
+    /// then the command will be deleted from the stack. Additionally, if the clean
+    /// index is greater than or equal to the current command index, then the clean
+    /// index is reset.
+    /// 
+    /// **See also:** redo()
+    /// index()
+    /// 
+    /// Returns the text of the command which will be undone in the next call to undo().
+    /// 
+    /// **See also:** QUndoCommand::actionText()
+    /// redoText()
+    /// 
+    /// When the number of commands on a stack exceedes the stack's undoLimit, commands are
+    /// deleted from the bottom of the stack. Macro commands (commands with child commands)
+    /// are treated as one command. The default value is 0, which means that there is no
+    /// limit.
+    /// 
+    /// This property may only be set when the undo stack is empty, since setting it on a
+    /// non-empty stack might delete the command at the current index. Calling setUndoLimit()
+    /// on a non-empty stack prints a warning and does nothing.
+    /// 
+    /// This signal is emitted whenever the value of undoText() changes. It is
+    /// used to update the text property of the undo action returned by createUndoAction().
+    /// *undoText* specifies the new text.
     undo(),
-    ///     Redoes the current command by calling QUndoCommand::redo(). Increments the current
-    ///     command index.
     /// 
-    ///     If the stack is empty, or if the top command on the stack has already been
-    ///     redone, this function does nothing.
+    /// Redoes the current command by calling QUndoCommand::redo(). Increments the current
+    /// command index.
     /// 
-    ///     If QUndoCommand::isObsolete() returns true for the current command, then
-    ///     the command will be deleted from the stack. Additionally, if the clean
-    ///     index is greater than or equal to the current command index, then the clean
-    ///     index is reset.
+    /// If the stack is empty, or if the top command on the stack has already been
+    /// redone, this function does nothing.
     /// 
-    ///     \sa undo(), index()
+    /// If QUndoCommand::isObsolete() returns true for the current command, then
+    /// the command will be deleted from the stack. Additionally, if the clean
+    /// index is greater than or equal to the current command index, then the clean
+    /// index is reset.
+    /// 
+    /// **See also:** undo()
+    /// index()
+    /// 
+    /// Returns the text of the command which will be redone in the next call to redo().
+    /// 
+    /// **See also:** QUndoCommand::actionText()
+    /// undoText()
+    /// 
+    /// This signal is emitted whenever the value of redoText() changes. It is
+    /// used to update the text property of the redo action returned by createRedoAction().
+    /// *redoText* specifies the new text.
     redo(),
-    ///     \property QUndoStack::active
-    ///     \brief the active status of this stack.
-    /// 
-    ///     An application often has multiple undo stacks, one for each opened document. The active
-    ///     stack is the one associated with the currently active document. If the stack belongs
-    ///     to a QUndoGroup, calls to QUndoGroup::undo() or QUndoGroup::redo() will be forwarded
-    ///     to this stack when it is active. If the QUndoGroup is watched by a QUndoView, the view
-    ///     will display the contents of this stack when it is active. If the stack does not belong to
-    ///     a QUndoGroup, making it active has no effect.
-    /// 
-    ///     It is the programmer's responsibility to specify which stack is active by
-    ///     calling setActive(), usually when the associated document window receives focus.
-    /// 
-    ///     \sa QUndoGroup
     set_active(active: bool),
+    /// 
+    /// This signal is emitted whenever a command modifies the state of the document.
+    /// This happens when a command is undone or redone. When a macro
+    /// command is undone or redone, or setIndex() is called, this signal
+    /// is emitted only once.
+    /// 
+    /// *idx* specifies the index of the current command, ie. the command which will be
+    /// executed on the next call to redo().
+    /// 
+    /// **See also:** index()
+    /// setIndex()
     [signal] index_changed(idx: i32),
+    /// 
+    /// This signal is emitted whenever the stack enters or leaves the clean state.
+    /// If *clean* is true, the stack is in a clean state; otherwise this signal
+    /// indicates that it has left the clean state.
+    /// 
+    /// **See also:** isClean()
+    /// setClean()
     [signal] clean_changed(clean: bool),
+    /// 
+    /// This signal is emitted whenever the value of canUndo() changes. It is
+    /// used to enable or disable the undo action returned by createUndoAction().
+    /// *canUndo* specifies the new value.
     [signal] can_undo_changed(can_undo: bool),
+    /// 
+    /// This signal is emitted whenever the value of canRedo() changes. It is
+    /// used to enable or disable the redo action returned by createRedoAction().
+    /// *canRedo* specifies the new value.
     [signal] can_redo_changed(can_redo: bool),
+    /// 
+    /// This signal is emitted whenever the value of undoText() changes. It is
+    /// used to update the text property of the undo action returned by createUndoAction().
+    /// *undoText* specifies the new text.
     [signal] undo_text_changed(undo_text: String),
+    /// 
+    /// This signal is emitted whenever the value of redoText() changes. It is
+    /// used to update the text property of the redo action returned by createRedoAction().
+    /// *redoText* specifies the new text.
     [signal] redo_text_changed(redo_text: String),
 }
 

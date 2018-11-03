@@ -1,67 +1,59 @@
-///     \class QPalette
 /// 
-///     \brief The QPalette class contains color groups for each widget state.
+/// A palette consists of three color groups: *Active,* *Disabled,*
+/// and *Inactive.* All widgets in Qt contain a palette and
+/// use their palette to draw themselves. This makes the user
+/// interface easily configurable and easier to keep consistent.
 /// 
-///     \inmodule QtGui
-///     \ingroup appearance
-///     \ingroup shared
+/// If you create a new widget we strongly recommend that you use the
+/// colors in the palette rather than hard-coding specific colors.
 /// 
-///     A palette consists of three color groups: \e Active, \e Disabled,
-///     and \e Inactive. All widgets in Qt contain a palette and
-///     use their palette to draw themselves. This makes the user
-///     interface easily configurable and easier to keep consistent.
+/// The color groups:
+/// * The Active group is used for the window that has keyboard focus.
+/// * The Inactive group is used for other windows.
+/// * The Disabled group is used for widgets (not windows) that are disabled for some reason.
 /// 
+/// Both active and inactive windows can contain disabled widgets.
+/// (Disabled widgets are often called *inaccessible* or *grayed
+/// out* .)
 /// 
-///     If you create a new widget we strongly recommend that you use the
-///     colors in the palette rather than hard-coding specific colors.
+/// In most styles, Active and Inactive look the same.
 /// 
-///     The color groups:
-///     \list
-///     \li The Active group is used for the window that has keyboard focus.
-///     \li The Inactive group is used for other windows.
-///     \li The Disabled group is used for widgets (not windows) that are
-///     disabled for some reason.
-///     \endlist
+/// Colors and brushes can be set for particular roles in any of a palette's
+/// color groups with setColor() and setBrush(). A color group contains a
+/// group of colors used by widgets for drawing themselves. We recommend that
+/// widgets use color group roles from the palette such as and
+/// rather than literal colors like or . The color
+/// roles are enumerated and defined in the [ColorRole](ColorRole)
+/// documentation.
 /// 
-///     Both active and inactive windows can contain disabled widgets.
-///     (Disabled widgets are often called \e inaccessible or \e{grayed
-///     out}.)
+/// We strongly recommend that you use the default palette of the
+/// current style (returned by QGuiApplication::palette()) and
+/// modify that as necessary. This is done by Qt's widgets when they
+/// are drawn.
 /// 
-///     In most styles, Active and Inactive look the same.
+/// To modify a color group you call the functions
+/// setColor() and setBrush(), depending on whether you want a pure
+/// color or a pixmap pattern.
 /// 
-///     Colors and brushes can be set for particular roles in any of a palette's
-///     color groups with setColor() and setBrush().  A color group contains a
-///     group of colors used by widgets for drawing themselves. We recommend that
-///     widgets use color group roles from the palette such as "foreground" and
-///     "base" rather than literal colors like "red" or "turquoise". The color
-///     roles are enumerated and defined in the \l ColorRole documentation.
+/// There are also corresponding color() and brush() getters, and a
+/// commonly used convenience function to get the ColorRole for the current ColorGroup:
+/// window(), windowText(), base(), etc.
 /// 
-///     We strongly recommend that you use the default palette of the
-///     current style (returned by QGuiApplication::palette()) and
-///     modify that as necessary. This is done by Qt's widgets when they
-///     are drawn.
+/// You can copy a palette using the copy constructor and test to see
+/// if two palettes are *identical* using isCopyOf().
 /// 
-///     To modify a color group you call the functions
-///     setColor() and setBrush(), depending on whether you want a pure
-///     color or a pixmap pattern.
+/// QPalette is optimized by the use of [implicit sharing](implicit%20sharing)
 /// 
-///     There are also corresponding color() and brush() getters, and a
-///     commonly used convenience function to get the ColorRole for the current ColorGroup:
-///     window(), windowText(), base(), etc.
+/// so it is very efficient to pass QPalette objects as arguments.
 /// 
+/// **Warning**: Some styles do not use the palette for all drawing, for
+/// instance, if they make use of native theme engines. This is the
+/// case for both the Windows Vista and the MacOS
+/// styles.
 /// 
-///     You can copy a palette using the copy constructor and test to see
-///     if two palettes are \e identical using isCopyOf().
-/// 
-///     QPalette is optimized by the use of \l{implicit sharing},
-///     so it is very efficient to pass QPalette objects as arguments.
-/// 
-///     \warning Some styles do not use the palette for all drawing, for
-///     instance, if they make use of native theme engines. This is the
-///     case for both the Windows Vista and the \macos
-///     styles.
-/// 
-///     \sa QApplication::setPalette(), QWidget::setPalette(), QColor
+/// **See also:** QApplication::setPalette()
+/// QWidget::setPalette()
+/// QColor
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -106,83 +98,346 @@ enum ColorRole {
 
 struct Palette {
     qt_check_for_qgadget_macro(),
+    /// 
+    /// Swaps this palette instance with *other.* This function is very
+    /// fast and never fails.
     swap(other: &PaletteType),
+    /// 
+    /// Returns the palette's current color group.
     current_color_group() -> Palette::ColorGroup,
+    /// 
+    /// Set the palette's current color group to *cg.*
     set_current_color_group(cg: Palette::ColorGroup),
+    /// 
+    /// **Overloads**
+    /// Returns the color that has been set for the given color *role* in
+    /// the current ColorGroup.
+    /// 
+    /// **See also:** brush()
+    /// ColorRole
+    /// 
+    /// Returns the color in the specified color *group,* used for the
+    /// given color *role.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
     color(cg: Palette::ColorGroup, cr: Palette::ColorRole) -> Color?,
+    /// 
+    /// **Overloads**
+    /// Returns the brush that has been set for the given color *role* in
+    /// the current ColorGroup.
+    /// 
+    /// **See also:** color()
+    /// setBrush()
+    /// ColorRole
+    /// 
+    /// Returns the brush in the specified color *group,* used for the
+    /// given color *role.*
+    /// 
+    /// **See also:** color()
+    /// setBrush()
+    /// ColorRole
     brush(cg: Palette::ColorGroup, cr: Palette::ColorRole) -> Brush?,
+    /// 
+    /// **Overloads**
+    /// Sets the color used for the given color *role,* in all color
+    /// groups, to the specified solid *color.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
+    /// 
+    /// Sets the color in the specified color *group,* used for the given
+    /// color *role,* to the specified solid *color.*
+    /// 
+    /// **See also:** setBrush()
+    /// color()
+    /// ColorRole
+    /// 
+    /// Sets a the group at *cg.* You can pass either brushes, pixmaps or
+    /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
+    /// 
+    /// **See also:** QBrush
     set_color(cg: Palette::ColorGroup, cr: Palette::ColorRole, color: &ColorType),
+    /// 
+    /// **Overloads**
+    /// Sets the color used for the given color *role,* in all color
+    /// groups, to the specified solid *color.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
+    /// 
+    /// Sets the color in the specified color *group,* used for the given
+    /// color *role,* to the specified solid *color.*
+    /// 
+    /// **See also:** setBrush()
+    /// color()
+    /// ColorRole
+    /// 
+    /// Sets a the group at *cg.* You can pass either brushes, pixmaps or
+    /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
+    /// 
+    /// **See also:** QBrush
     set_color(cr: Palette::ColorRole, color: &ColorType),
-    ///     \fn void QPalette::setBrush(ColorGroup group, ColorRole role, const QBrush &brush)
-    ///     \overload
     /// 
-    ///     Sets the brush in the specified color \a group, used for the given
-    ///     color \a role, to \a brush.
+    /// Sets the brush for the given color *role* to the specified *brush* for all groups in the palette.
     /// 
-    ///     \sa brush(), setColor(), ColorRole
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
+    /// 
+    /// **Overloads**
+    /// Sets the brush in the specified color *group,* used for the given
+    /// color *role,* to *brush.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
     set_brush(cr: Palette::ColorRole, brush: &BrushType),
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if the ColorGroup \a cg and ColorRole \a cr has been
-    ///     set previously on this palette; otherwise returns \c false.
+    /// Returns `true` if the ColorGroup *cg* and ColorRole *cr* has been
+    /// set previously on this palette; otherwise returns `false.`
     /// 
-    ///     \sa setBrush()
+    /// **See also:** setBrush()
     is_brush_set(cg: Palette::ColorGroup, cr: Palette::ColorRole) -> bool,
-    ///     \fn void QPalette::setBrush(ColorGroup group, ColorRole role, const QBrush &brush)
-    ///     \overload
     /// 
-    ///     Sets the brush in the specified color \a group, used for the given
-    ///     color \a role, to \a brush.
+    /// Sets the brush for the given color *role* to the specified *brush* for all groups in the palette.
     /// 
-    ///     \sa brush(), setColor(), ColorRole
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
+    /// 
+    /// **Overloads**
+    /// Sets the brush in the specified color *group,* used for the given
+    /// color *role,* to *brush.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
     set_brush(cg: Palette::ColorGroup, cr: Palette::ColorRole, brush: &BrushType),
+    /// 
+    /// Sets a the group at *cg.* You can pass either brushes, pixmaps or
+    /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
+    /// 
+    /// **See also:** QBrush
     set_color_group(cr: Palette::ColorGroup, window_text: &BrushType, button: &BrushType, light: &BrushType, dark: &BrushType, mid: &BrushType, text: &BrushType, bright_text: &BrushType, base: &BrushType, window: &BrushType),
-    ///     \fn bool QPalette::isEqual(ColorGroup cg1, ColorGroup cg2) const
     /// 
-    ///     Returns \c true (usually quickly) if color group \a cg1 is equal to
-    ///     \a cg2; otherwise returns \c false.
+    /// Returns `true` (usually quickly) if color group *cg1* is equal to
+    /// *cg2;* otherwise returns `false.`
     is_equal(cr1: Palette::ColorGroup, cr2: Palette::ColorGroup) -> bool,
+    /// 
+    /// **Overloads**
+    /// Returns the color that has been set for the given color *role* in
+    /// the current ColorGroup.
+    /// 
+    /// **See also:** brush()
+    /// ColorRole
+    /// 
+    /// Returns the color in the specified color *group,* used for the
+    /// given color *role.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
+    /// ColorRole
     color(cr: Palette::ColorRole) -> Color?,
+    /// 
+    /// **Overloads**
+    /// Returns the brush that has been set for the given color *role* in
+    /// the current ColorGroup.
+    /// 
+    /// **See also:** color()
+    /// setBrush()
+    /// ColorRole
+    /// 
+    /// Returns the brush in the specified color *group,* used for the
+    /// given color *role.*
+    /// 
+    /// **See also:** color()
+    /// setBrush()
+    /// ColorRole
     brush(cr: Palette::ColorRole) -> Brush?,
+    /// 
+    /// Use windowText() instead.
     foreground() -> Brush?,
+    /// 
+    /// Returns the window text (general foreground) brush of the
+    /// current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     window_text() -> Brush?,
+    /// 
+    /// Returns the button brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
+    /// 
+    /// Returns the button text foreground brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     button() -> Brush?,
+    /// 
+    /// Returns the light brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     light() -> Brush?,
+    /// 
+    /// Returns the dark brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     dark() -> Brush?,
+    /// 
+    /// Returns the midlight brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
+    /// 
+    /// Returns the mid brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     mid() -> Brush?,
+    /// 
+    /// Returns the text foreground brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     text() -> Brush?,
+    /// 
+    /// Returns the base brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     base() -> Brush?,
+    /// 
+    /// Returns the alternate base brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     alternate_base() -> Brush?,
+    /// 
+    /// Returns the tool tip base brush of the current color group. This brush is
+    /// used by QToolTip and QWhatsThis.
+    /// 
+    /// **Note**: Tool tips use the Inactive color group of QPalette, because tool
+    /// tips are not active windows.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     tool_tip_base() -> Brush?,
+    /// 
+    /// Returns the tool tip text brush of the current color group. This brush is
+    /// used by QToolTip and QWhatsThis.
+    /// 
+    /// **Note**: Tool tips use the Inactive color group of QPalette, because tool
+    /// tips are not active windows.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     tool_tip_text() -> Brush?,
+    /// 
+    /// Use window() instead.
     background() -> Brush?,
+    /// 
+    /// Returns the window text (general foreground) brush of the
+    /// current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
+    /// 
+    /// Returns the window (general background) brush of the current
+    /// color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     window() -> Brush?,
+    /// 
+    /// Returns the midlight brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     midlight() -> Brush?,
+    /// 
+    /// Returns the bright text foreground brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     bright_text() -> Brush?,
+    /// 
+    /// Returns the button text foreground brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     button_text() -> Brush?,
+    /// 
+    /// Returns the shadow brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     shadow() -> Brush?,
+    /// 
+    /// Returns the highlight brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
+    /// 
+    /// Returns the highlighted text brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     highlight() -> Brush?,
+    /// 
+    /// Returns the highlighted text brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     highlighted_text() -> Brush?,
+    /// 
+    /// Returns the unvisited link text brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
+    /// 
+    /// Returns the visited link text brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     link() -> Brush?,
+    /// 
+    /// Returns the visited link text brush of the current color group.
+    /// 
+    /// **See also:** ColorRole
+    /// brush()
     link_visited() -> Brush?,
-    ///     Returns \c true if this palette and \a p are copies of each other,
-    ///     i.e. one of them was created as a copy of the other and neither
-    ///     was subsequently modified; otherwise returns \c false. This is much
-    ///     stricter than equality.
     /// 
-    ///     \sa operator=(), operator==()
+    /// Returns `true` if this palette and *p* are copies of each other,
+    /// i.e. one of them was created as a copy of the other and neither
+    /// was subsequently modified; otherwise returns `false.` This is much
+    /// stricter than equality.
+    /// 
+    /// **See also:** operator=()
+    /// operator==()
     is_copy_of(p: &PaletteType) -> bool,
-    ///     Returns a number that identifies the contents of this QPalette
-    ///     object. Distinct QPalette objects can have the same key if
-    ///     they refer to the same contents.
     /// 
-    ///     The cacheKey() will change when the palette is altered.
+    /// Returns a number that identifies the contents of this QPalette
+    /// object. Distinct QPalette objects can have the same key if
+    /// they refer to the same contents.
+    /// 
+    /// The cacheKey() will change when the palette is altered.
     cache_key() -> i64,
-    ///     Returns a new QPalette that has attributes copied from \a other.
+    /// 
+    /// Returns a new QPalette that has attributes copied from *other.*
     resolve(arg0: &PaletteType) -> Palette,
-    ///     Returns a new QPalette that has attributes copied from \a other.
+    /// 
+    /// Returns a new QPalette that has attributes copied from *other.*
     resolve() -> uint,
-    ///     Returns a new QPalette that has attributes copied from \a other.
+    /// 
+    /// Returns a new QPalette that has attributes copied from *other.*
     resolve(mask: uint),
 }
 

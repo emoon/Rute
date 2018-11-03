@@ -1,131 +1,129 @@
-///     \class QFontInfo
-///     \reentrant
 /// 
-///     \brief The QFontInfo class provides general information about fonts.
-///     \inmodule QtGui
+/// The QFontInfo class provides the same access functions as QFont,
+/// e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
+/// styleHint() etc. But whilst the QFont access functions return the
+/// values that were set, a QFontInfo object returns the values that
+/// apply to the font that will actually be used to draw the text.
 /// 
-///     \ingroup appearance
-///     \ingroup shared
+/// For example, when the program asks for a 25pt Courier font on a
+/// machine that has a non-scalable 24pt Courier font, QFont will
+/// (normally) use the 24pt Courier for rendering. In this case,
+/// QFont::pointSize() returns 25 and QFontInfo::pointSize() returns
+/// 24.
 /// 
-///     The QFontInfo class provides the same access functions as QFont,
-///     e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
-///     styleHint() etc. But whilst the QFont access functions return the
-///     values that were set, a QFontInfo object returns the values that
-///     apply to the font that will actually be used to draw the text.
+/// There are three ways to create a QFontInfo object.
+/// * Calling the QFontInfo constructor with a QFont creates a font info object for a screen-compatible font, i.e. the font cannot be a printer font. If the font is changed later, the font info object is *not* updated. (Note: If you use a printer font the values returned may be inaccurate. Printer fonts are not always accessible so the nearest screen font is used if a printer font is supplied.)
+/// * QWidget::fontInfo() returns the font info for a widget's font. This is equivalent to calling QFontInfo(widget->font()). If the widget's font is changed later, the font info object is *not* updated.
+/// * QPainter::fontInfo() returns the font info for a painter's current font. If the painter's font is changed later, the font info object is *not* updated.
 /// 
-///     For example, when the program asks for a 25pt Courier font on a
-///     machine that has a non-scalable 24pt Courier font, QFont will
-///     (normally) use the 24pt Courier for rendering. In this case,
-///     QFont::pointSize() returns 25 and QFontInfo::pointSize() returns
-///     24.
-/// 
-///     There are three ways to create a QFontInfo object.
-///     \list 1
-///     \li Calling the QFontInfo constructor with a QFont creates a font
-///     info object for a screen-compatible font, i.e. the font cannot be
-///     a printer font. If the font is changed later, the font
-///     info object is \e not updated.
-/// 
-///     (Note: If you use a printer font the values returned may be
-///     inaccurate. Printer fonts are not always accessible so the nearest
-///     screen font is used if a printer font is supplied.)
-/// 
-///     \li QWidget::fontInfo() returns the font info for a widget's font.
-///     This is equivalent to calling QFontInfo(widget->font()). If the
-///     widget's font is changed later, the font info object is \e not
-///     updated.
-/// 
-///     \li QPainter::fontInfo() returns the font info for a painter's
-///     current font. If the painter's font is changed later, the font
-///     info object is \e not updated.
-///     \endlist
-/// 
-///     \sa QFont, QFontMetrics, QFontDatabase
+/// **See also:** QFont
+/// QFontMetrics
+/// QFontDatabase
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct FontInfo {
+    /// 
+    /// Swaps this font info instance with *other.* This function is very
+    /// fast and never fails.
     swap(other: &FontInfoType),
-    ///     Returns the family name of the matched window system font.
     /// 
-    ///     \sa QFont::family()
+    /// Returns the family name of the matched window system font.
+    /// 
+    /// **See also:** QFont::family()
     family() -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns the style name of the matched window system font on
-    ///     systems that support it.
+    /// Returns the style name of the matched window system font on
+    /// systems that support it.
     /// 
-    ///     \sa QFont::styleName()
+    /// **See also:** QFont::styleName()
     style_name() -> String,
-    ///     Returns the pixel size of the matched window system font.
     /// 
-    ///     \sa QFont::pointSize()
+    /// Returns the pixel size of the matched window system font.
+    /// 
+    /// **See also:** QFont::pointSize()
     pixel_size() -> i32,
-    ///     Returns the point size of the matched window system font.
     /// 
-    ///     \sa pointSizeF(), QFont::pointSize()
+    /// Returns the point size of the matched window system font.
+    /// 
+    /// **See also:** pointSizeF()
+    /// QFont::pointSize()
+    /// 
+    /// Returns the point size of the matched window system font.
+    /// 
+    /// **See also:** QFont::pointSizeF()
     point_size() -> i32,
-    ///     Returns the point size of the matched window system font.
     /// 
-    ///     \sa QFont::pointSizeF()
+    /// Returns the point size of the matched window system font.
+    /// 
+    /// **See also:** QFont::pointSizeF()
     point_size_f() -> f32,
-    ///     Returns the italic value of the matched window system font.
     /// 
-    ///     \sa QFont::italic()
+    /// Returns the italic value of the matched window system font.
+    /// 
+    /// **See also:** QFont::italic()
     italic() -> bool,
-    ///     Returns the style value of the matched window system font.
     /// 
-    ///     \sa QFont::style()
+    /// Returns the style name of the matched window system font on
+    /// systems that support it.
+    /// 
+    /// **See also:** QFont::styleName()
+    /// 
+    /// Returns the style value of the matched window system font.
+    /// 
+    /// **See also:** QFont::style()
+    /// 
+    /// Returns the style of the matched window system font.
+    /// 
+    /// Currently only returns the style hint set in QFont.
+    /// 
+    /// **See also:** QFont::styleHint()
+    /// QFont::StyleHint
     style() -> Font::Style,
-    ///     Returns the weight of the matched window system font.
     /// 
-    ///     \sa QFont::weight(), bold()
+    /// Returns the weight of the matched window system font.
+    /// 
+    /// **See also:** QFont::weight()
+    /// bold()
     weight() -> i32,
+    /// 
+    /// Returns `true` if weight() would return a value greater than
+    /// QFont::Normal; otherwise returns `false.`
+    /// 
+    /// **See also:** weight()
+    /// QFont::bold()
     bold() -> bool,
-    ///     Returns the underline value of the matched window system font.
-    /// 
-    ///   \sa QFont::underline()
-    /// 
-    ///   \internal
-    /// 
-    ///   Here we read the underline flag directly from the QFont.
-    ///   This is OK for X11 and for Windows because we always get what we want.
     underline() -> bool,
-    ///     Returns the overline value of the matched window system font.
-    /// 
-    ///     \sa QFont::overline()
-    /// 
-    ///     \internal
-    /// 
-    ///     Here we read the overline flag directly from the QFont.
-    ///     This is OK for X11 and for Windows because we always get what we want.
     overline() -> bool,
-    ///     Returns the fixed pitch value of the matched window system font.
     /// 
-    ///     \sa QFont::fixedPitch()
+    /// Returns the fixed pitch value of the matched window system font.
+    /// 
+    /// **See also:** QFont::fixedPitch()
     fixed_pitch() -> bool,
-    ///     Returns the style of the matched window system font.
     /// 
-    ///     Currently only returns the style hint set in QFont.
+    /// Returns the style of the matched window system font.
     /// 
-    ///     \sa QFont::styleHint(), QFont::StyleHint
+    /// Currently only returns the style hint set in QFont.
+    /// 
+    /// **See also:** QFont::styleHint()
+    /// QFont::StyleHint
     style_hint() -> Font::StyleHint,
-    ///     \deprecated
     /// 
-    ///     Returns \c true if the font is a raw mode font; otherwise returns
-    ///     false.
+    /// Returns `true` if the font is a raw mode font; otherwise returns
+    /// false.
     /// 
-    ///     If it is a raw mode font, all other functions in QFontInfo will
-    ///     return the same values set in the QFont, regardless of the font
-    ///     actually used.
+    /// If it is a raw mode font, all other functions in QFontInfo will
+    /// return the same values set in the QFont, regardless of the font
+    /// actually used.
     /// 
-    ///     \sa QFont::rawMode()
+    /// **See also:** QFont::rawMode()
     raw_mode() -> bool,
-    ///     Returns \c true if the matched window system font is exactly the same
-    ///     as the one specified by the font; otherwise returns \c false.
     /// 
-    ///     \sa QFont::exactMatch()
+    /// Returns `true` if the matched window system font is exactly the same
+    /// as the one specified by the font; otherwise returns `false.`
+    /// 
+    /// **See also:** QFont::exactMatch()
     exact_match() -> bool,
 }
 

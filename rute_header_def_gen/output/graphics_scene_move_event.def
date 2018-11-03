@@ -1,35 +1,32 @@
-///     \class QGraphicsSceneMoveEvent
-///     \brief The QGraphicsSceneMoveEvent class provides events for widget
-///     moving in the graphics view framework.
-///     \since 4.4
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     A QGraphicsWidget sends itself a QGraphicsSceneMoveEvent immediately when
-///     its local position changes. The delivery is implemented as part of
-///     QGraphicsItem::itemChange().
+/// A QGraphicsWidget sends itself a QGraphicsSceneMoveEvent immediately when
+/// its local position changes. The delivery is implemented as part of
+/// QGraphicsItem::itemChange().
 /// 
-///     It's similar to QMoveEvent, but its positions, oldPos() and newPos(), use
-///     QPointF instead of QPoint.
+/// It's similar to QMoveEvent, but its positions, oldPos() and newPos(), use
+/// QPointF instead of QPoint.
 /// 
-///     \sa QGraphicsItem::setPos(), QGraphicsItem::ItemPositionChange,
-///     QGraphicsItem::ItemPositionHasChanged
+/// **See also:** QGraphicsItem::setPos()
+/// QGraphicsItem::ItemPositionChange
+/// QGraphicsItem::ItemPositionHasChanged
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneMoveEvent : GraphicsSceneEvent {
-    ///     Returns the old position (i.e., the position immediately before the widget
-    ///     was moved).
     /// 
-    ///     \sa newPos(), QGraphicsItem::setPos()
+    /// Returns the old position (i.e., the position immediately before the widget
+    /// was moved).
+    /// 
+    /// **See also:** newPos()
+    /// QGraphicsItem::setPos()
     old_pos() -> PointF,
-    ///     \internal
     set_old_pos(pos: &PointFType),
-    ///     Returns the new position (i.e., the current position).
     /// 
-    ///     \sa oldPos(), QGraphicsItem::setPos()
+    /// Returns the new position (i.e., the current position).
+    /// 
+    /// **See also:** oldPos()
+    /// QGraphicsItem::setPos()
     new_pos() -> PointF,
-    ///     \internal
     set_new_pos(pos: &PointFType),
 }
 

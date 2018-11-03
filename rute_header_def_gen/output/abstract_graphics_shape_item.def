@@ -1,49 +1,52 @@
-///     \class QAbstractGraphicsShapeItem
-///     \brief The QAbstractGraphicsShapeItem class provides a common base for
-///     all path items.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     This class does not fully implement an item by itself; in particular, it
-///     does not implement boundingRect() and paint(), which are inherited by
-///     QGraphicsItem.
+/// This class does not fully implement an item by itself; in particular, it
+/// does not implement boundingRect() and paint(), which are inherited by
+/// QGraphicsItem.
 /// 
-///     You can subclass this item to provide a simple base implementation of
-///     accessors for the item's pen and brush.
+/// You can subclass this item to provide a simple base implementation of
+/// accessors for the item's pen and brush.
 /// 
-///     \sa QGraphicsRectItem, QGraphicsEllipseItem, QGraphicsPathItem,
-///     QGraphicsPolygonItem, QGraphicsTextItem, QGraphicsLineItem,
-///     QGraphicsPixmapItem, {Graphics View Framework}
+/// **See also:** QGraphicsRectItem
+/// QGraphicsEllipseItem
+/// QGraphicsPathItem
+/// QGraphicsPolygonItem
+/// QGraphicsTextItem
+/// QGraphicsLineItem
+/// QGraphicsPixmapItem
+/// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AbstractGraphicsShapeItem : GraphicsItem {
-    ///     Returns the item's pen. If no pen has been set, this function returns
-    ///     QPen(), a default black solid line pen with 1 width.
+    /// 
+    /// Returns the item's pen. If no pen has been set, this function returns
+    /// QPen(), a default black solid line pen with 1 width.
     pen() -> Pen,
-    ///     Sets the pen for this item to \a pen.
     /// 
-    ///     The pen is used to draw the item's outline.
+    /// Sets the pen for this item to *pen.*
     /// 
-    ///     \sa pen()
+    /// The pen is used to draw the item's outline.
+    /// 
+    /// **See also:** pen()
     set_pen(pen: &PenType),
-    ///     Returns the item's brush, or an empty brush if no brush has been set.
     /// 
-    ///     \sa setBrush()
+    /// Returns the item's brush, or an empty brush if no brush has been set.
+    /// 
+    /// **See also:** setBrush()
     brush() -> Brush,
-    ///     Sets the item's brush to \a brush.
     /// 
-    ///     The item's brush is used to fill the item.
+    /// Sets the item's brush to *brush.*
     /// 
-    ///     If you use a brush with a QGradient, the gradient
-    ///     is relative to the item's coordinate system.
+    /// The item's brush is used to fill the item.
     /// 
-    ///     \sa brush()
+    /// If you use a brush with a QGradient, the gradient
+    /// is relative to the item's coordinate system.
+    /// 
+    /// **See also:** brush()
     set_brush(brush: &BrushType),
-    ///     \reimp
+    /// 
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
-    ///     \reimp
+    /// 
     [event] opaque_area() -> PainterPath,
 }
 

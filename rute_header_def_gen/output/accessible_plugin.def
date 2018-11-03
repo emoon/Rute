@@ -1,19 +1,16 @@
-///     \class QAccessiblePlugin
-///     \brief The QAccessiblePlugin class provides an abstract base class
-///     for plugins provinding accessibility information for user interface elements.
 /// 
-///     \ingroup plugins
-///     \ingroup accessibility
+/// Writing an accessibility plugin is achieved by subclassing this
+/// base class, reimplementing the pure virtual function create(),
+/// and exporting the class with the Q_PLUGIN_METADATA() macro.
 /// 
-///     Writing an accessibility plugin is achieved by subclassing this
-///     base class, reimplementing the pure virtual function create(),
-///     and exporting the class with the Q_PLUGIN_METADATA() macro.
-/// 
-///     \sa {How to Create Qt Plugins}
+/// **See also:** {How to Create Qt Plugins}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct AccessiblePlugin : Object {
+    /// 
+    /// Creates and returns a QAccessibleInterface implementation for the
+    /// class *key* and the object *object.* Keys are case sensitive.
     [event] create(key: String, object: *ObjectType) -> AccessibleInterface?,
 }
 

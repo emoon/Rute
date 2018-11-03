@@ -1,31 +1,44 @@
+/// 
+/// A QPlainTextDocumentLayout is required for text documents that can
+/// be display or edited in a QPlainTextEdit. See
+/// QTextDocument::setDocumentLayout().
+/// 
+/// QPlainTextDocumentLayout uses the QAbstractTextDocumentLayout API
+/// that QTextDocument requires, but redefines it partially in order to
+/// support plain text better. For instances, it does not operate on
+/// vertical pixels, but on paragraphs (called blocks) instead. The
+/// height of a document is identical to the number of paragraphs it
+/// contains. The layout also doesn't support tables or nested frames,
+/// or any sort of advanced text layout that goes beyond a list of
+/// paragraphs with syntax highlighting.
+/// 
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PlainTextDocumentLayout : AbstractTextDocumentLayout {
+    /// 
     [event] draw(arg0: *PainterType, arg1: onst QAbstractTextDocumentLayout::PaintContext &),
+    /// 
     [event] hit_test(arg0: &PointFType, arg1: Rute::HitTestAccuracy) -> i32,
+    /// 
     [event] page_count() -> i32,
+    /// 
     [event] document_size() -> SizeF,
+    /// 
     [event] frame_bounding_rect(arg0: *TextFrameType) -> RectF,
+    /// 
     [event] block_bounding_rect(block: &TextBlockType) -> RectF,
+    /// 
+    /// Ensures that *block* has a valid layout
     ensure_block_layout(block: &TextBlockType),
-    ///   Ensures that \a block has a valid layout
-    ///  */
-    /// void QPlainTextDocumentLayout::ensureBlockLayout(const QTextBlock &block) const
-    /// {
-    ///     if (!block.isValid())
-    ///         return;
-    ///     QTextLayout *tl = block.layout();
-    ///     if (!tl->lineCount())
-    ///         const_cast<QPlainTextDocumentLayout*>(this)->layoutBlock(block);
-    /// }
-    /// 
-    /// 
-    /// 
-    ///     This property specifies the width of the cursor in pixels. The default value is 1.
     set_cursor_width(width: i32),
+    /// 
+    /// This property specifies the width of the cursor in pixels. The default value is 1.
     cursor_width() -> i32,
+    /// 
+    /// Requests a complete update on all views.
     request_update(),
+    /// 
     [event] document_changed(from: i32, arg0: i32, chars_added: i32),
 }
 

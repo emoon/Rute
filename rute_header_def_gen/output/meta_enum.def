@@ -1,99 +1,172 @@
-///     \class QMetaEnum
-///     \inmodule QtCore
-///     \brief The QMetaEnum class provides meta-data about an enumerator.
 /// 
-///     \ingroup objectmodel
+/// Use name() for the enumerator's name. The enumerator's keys (names
+/// of each enumerated item) are returned by key(); use keyCount() to find
+/// the number of keys. isFlag() returns whether the enumerator is
+/// meant to be used as a flag, meaning that its values can be combined
+/// using the OR operator.
 /// 
-///     Use name() for the enumerator's name. The enumerator's keys (names
-///     of each enumerated item) are returned by key(); use keyCount() to find
-///     the number of keys. isFlag() returns whether the enumerator is
-///     meant to be used as a flag, meaning that its values can be combined
-///     using the OR operator.
+/// The conversion functions keyToValue(), valueToKey(), keysToValue(),
+/// and valueToKeys() allow conversion between the integer
+/// representation of an enumeration or set value and its literal
+/// representation. The scope() function returns the class scope this
+/// enumerator was declared in.
 /// 
-///     The conversion functions keyToValue(), valueToKey(), keysToValue(),
-///     and valueToKeys() allow conversion between the integer
-///     representation of an enumeration or set value and its literal
-///     representation. The scope() function returns the class scope this
-///     enumerator was declared in.
-/// 
-///     \sa QMetaObject, QMetaMethod, QMetaProperty
+/// **See also:** QMetaObject
+/// QMetaMethod
+/// QMetaProperty
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct MetaEnum {
-    ///     Returns the name of the enumerator (without the scope).
     /// 
-    ///     For example, the Qt::AlignmentFlag enumeration has \c
-    ///     AlignmentFlag as the name and \l Qt as the scope.
+    /// Returns the name of the enumerator (without the scope).
     /// 
-    ///     \sa isValid(), scope()
+    /// For example, the Qt::AlignmentFlag enumeration has `AlignmentFlag` as the name and [Qt](Qt)
+    /// as the scope.
+    /// 
+    /// **See also:** isValid()
+    /// scope()
     name() -> char?,
-    ///     Returns \c true if this enumerator is used as a flag; otherwise returns
-    ///     false.
     /// 
-    ///     When used as flags, enumerators can be combined using the OR
-    ///     operator.
+    /// Returns `true` if this enumerator is used as a flag; otherwise returns
+    /// false.
     /// 
-    ///     \sa keysToValue(), valueToKeys()
+    /// When used as flags, enumerators can be combined using the OR
+    /// operator.
+    /// 
+    /// **See also:** keysToValue()
+    /// valueToKeys()
     is_flag() -> bool,
-    ///     \since 5.8
     /// 
-    ///     Returns \c true if this enumerator is declared as a C++11 enum class;
-    ///     otherwise returns false.
+    /// Returns `true` if this enumerator is declared as a C++11 enum class;
+    /// otherwise returns false.
     is_scoped() -> bool,
-    ///     Returns the number of keys.
     /// 
-    ///     \sa key()
+    /// Returns the number of keys.
+    /// 
+    /// **See also:** key()
     key_count() -> i32,
-    ///     Returns the key with the given \a index, or 0 if no such key exists.
     /// 
-    ///     \sa keyCount(), value(), valueToKey()
+    /// Returns the number of keys.
+    /// 
+    /// **See also:** key()
+    /// 
+    /// Returns the key with the given *index,* or 0 if no such key exists.
+    /// 
+    /// **See also:** keyCount()
+    /// value()
+    /// valueToKey()
+    /// 
+    /// Returns the integer value of the given enumeration *key,* or -1
+    /// if *key* is not defined.
+    /// 
+    /// If *key* is not defined, * *ok* is set to false; otherwise
+    /// * *ok* is set to true.
+    /// 
+    /// For flag types, use keysToValue().
+    /// 
+    /// **See also:** valueToKey()
+    /// isFlag()
+    /// keysToValue()
+    /// 
+    /// Returns the value derived from combining together the values of
+    /// the *keys* using the OR operator, or -1 if *keys* is not
+    /// defined. Note that the strings in *keys* must be '|'-separated.
+    /// 
+    /// If *keys* is not defined, * *ok* is set to false; otherwise
+    /// * *ok* is set to true.
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKey()
+    /// valueToKeys()
     key(index: i32) -> char?,
-    ///     Returns the value with the given \a index; or returns -1 if there
-    ///     is no such value.
     /// 
-    ///     \sa keyCount(), key(), keyToValue()
+    /// Returns the value with the given *index;* or returns -1 if there
+    /// is no such value.
+    /// 
+    /// **See also:** keyCount()
+    /// key()
+    /// keyToValue()
+    /// 
+    /// Returns the string that is used as the name of the given
+    /// enumeration *value,* or 0 if *value* is not defined.
+    /// 
+    /// For flag types, use valueToKeys().
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKeys()
+    /// 
+    /// Returns a byte array of '|'-separated keys that represents the
+    /// given *value.*
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKey()
+    /// keysToValue()
     value(index: i32) -> i32,
-    ///     Returns the scope this enumerator was declared in.
     /// 
-    ///     For example, the Qt::AlignmentFlag enumeration has \c Qt as
-    ///     the scope and \c AlignmentFlag as the name.
+    /// Returns the scope this enumerator was declared in.
     /// 
-    ///     \sa name()
+    /// For example, the Qt::AlignmentFlag enumeration has `Qt` as
+    /// the scope and `AlignmentFlag` as the name.
+    /// 
+    /// **See also:** name()
     scope() -> char?,
-    ///     Returns the integer value of the given enumeration \a key, or -1
-    ///     if \a key is not defined.
     /// 
-    ///     If \a key is not defined, *\a{ok} is set to false; otherwise
-    ///     *\a{ok} is set to true.
+    /// Returns the integer value of the given enumeration *key,* or -1
+    /// if *key* is not defined.
     /// 
-    ///     For flag types, use keysToValue().
+    /// If *key* is not defined, * *ok* is set to false; otherwise
+    /// * *ok* is set to true.
     /// 
-    ///     \sa valueToKey(), isFlag(), keysToValue()
+    /// For flag types, use keysToValue().
+    /// 
+    /// **See also:** valueToKey()
+    /// isFlag()
+    /// keysToValue()
     key_to_value(key: *char, ok: *bool) -> i32,
-    ///     Returns the string that is used as the name of the given
-    ///     enumeration \a value, or 0 if \a value is not defined.
     /// 
-    ///     For flag types, use valueToKeys().
+    /// Returns the string that is used as the name of the given
+    /// enumeration *value,* or 0 if *value* is not defined.
     /// 
-    ///     \sa isFlag(), valueToKeys()
+    /// For flag types, use valueToKeys().
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKeys()
+    /// 
+    /// Returns a byte array of '|'-separated keys that represents the
+    /// given *value.*
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKey()
+    /// keysToValue()
     value_to_key(value: i32) -> char?,
-    ///     Returns the value derived from combining together the values of
-    ///     the \a keys using the OR operator, or -1 if \a keys is not
-    ///     defined. Note that the strings in \a keys must be '|'-separated.
     /// 
-    ///     If \a keys is not defined, *\a{ok} is set to false; otherwise
-    ///     *\a{ok} is set to true.
+    /// Returns the value derived from combining together the values of
+    /// the *keys* using the OR operator, or -1 if *keys* is not
+    /// defined. Note that the strings in *keys* must be '|'-separated.
     /// 
-    ///     \sa isFlag(), valueToKey(), valueToKeys()
+    /// If *keys* is not defined, * *ok* is set to false; otherwise
+    /// * *ok* is set to true.
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKey()
+    /// valueToKeys()
     keys_to_value(keys: *char, ok: *bool) -> i32,
-    ///     Returns a byte array of '|'-separated keys that represents the
-    ///     given \a value.
     /// 
-    ///     \sa isFlag(), valueToKey(), keysToValue()
+    /// Returns a byte array of '|'-separated keys that represents the
+    /// given *value.*
+    /// 
+    /// **See also:** isFlag()
+    /// valueToKey()
+    /// keysToValue()
     value_to_keys(value: i32) -> ByteArray,
     enclosing_meta_object() -> MetaObject?,
+    /// 
+    /// Returns `true` if this enum is valid (has a name); otherwise returns
+    /// false.
+    /// 
+    /// **See also:** name()
     is_valid() -> bool,
 }
 

@@ -1,47 +1,35 @@
-///     \class QGraphicsAnchor
-///     \brief The QGraphicsAnchor class represents an anchor between two items in a
-///            QGraphicsAnchorLayout.
-///     \since 4.6
-///     \ingroup appearance
-///     \ingroup geomanagement
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     The graphics anchor provides an API that enables you to query and manipulate the
-///     properties an anchor has. When an anchor is added to the layout with
-///     QGraphicsAnchorLayout::addAnchor(), a QGraphicsAnchor instance is returned where the properties
-///     are initialized to their default values. The properties can then be further changed, and they
-///     will be picked up the next time the layout is activated.
+/// The graphics anchor provides an API that enables you to query and manipulate the
+/// properties an anchor has. When an anchor is added to the layout with
+/// QGraphicsAnchorLayout::addAnchor(), a QGraphicsAnchor instance is returned where the properties
+/// are initialized to their default values. The properties can then be further changed, and they
+/// will be picked up the next time the layout is activated.
 /// 
-///     \sa QGraphicsAnchorLayout::anchor()
+/// **See also:** QGraphicsAnchorLayout::anchor()
 /// 
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsAnchor : Object {
-    ///     \property QGraphicsAnchor::spacing
-    ///     \brief the preferred space between items in the QGraphicsAnchorLayout.
-    /// 
-    ///     Depending on the anchor type, the default spacing is either
-    ///     0 or a value returned from the style.
-    /// 
-    ///     \sa QGraphicsAnchorLayout::addAnchor()
     set_spacing(spacing: f32),
     unset_spacing(),
+    /// 
+    /// Depending on the anchor type, the default spacing is either
+    /// 0 or a value returned from the style.
+    /// 
+    /// **See also:** QGraphicsAnchorLayout::addAnchor()
     spacing() -> f32,
-    ///     \property QGraphicsAnchor::sizePolicy
-    ///     \brief the size policy for the QGraphicsAnchor.
-    /// 
-    ///     By setting the size policy on an anchor you can configure how the anchor can resize itself
-    ///     from its preferred spacing. For instance, if the anchor has the size policy
-    ///     QSizePolicy::Minimum, the spacing is the minimum size of the anchor. However, its size
-    ///     can grow up to the anchors maximum size. If the default size policy is QSizePolicy::Fixed,
-    ///     the anchor can neither grow or shrink, which means that the only size the anchor can have
-    ///     is the spacing. QSizePolicy::Fixed is the default size policy.
-    ///     QGraphicsAnchor always has a minimum spacing of 0 and a very large maximum spacing.
-    /// 
-    ///     \sa QGraphicsAnchor::spacing
     set_size_policy(policy: SizePolicy::Policy),
+    /// 
+    /// By setting the size policy on an anchor you can configure how the anchor can resize itself
+    /// from its preferred spacing. For instance, if the anchor has the size policy
+    /// QSizePolicy::Minimum, the spacing is the minimum size of the anchor. However, its size
+    /// can grow up to the anchors maximum size. If the default size policy is QSizePolicy::Fixed,
+    /// the anchor can neither grow or shrink, which means that the only size the anchor can have
+    /// is the spacing. QSizePolicy::Fixed is the default size policy.
+    /// QGraphicsAnchor always has a minimum spacing of 0 and a very large maximum spacing.
+    /// 
+    /// **See also:** QGraphicsAnchor::spacing
     size_policy() -> SizePolicy::Policy,
 }
 

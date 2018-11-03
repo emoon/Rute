@@ -1,103 +1,95 @@
-///     \class QAbstractItemView
 /// 
-///     \brief The QAbstractItemView class provides the basic functionality for
-///     item view classes.
+/// QAbstractItemView class is the base class for every standard view
+/// that uses a QAbstractItemModel. QAbstractItemView is an abstract
+/// class and cannot itself be instantiated. It provides a standard
+/// interface for interoperating with models through the signals and
+/// slots mechanism, enabling subclasses to be kept up-to-date with
+/// changes to their models. This class provides standard support for
+/// keyboard and mouse navigation, viewport scrolling, item editing,
+/// and selections. The keyboard navigation implements this
+/// functionality:
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// * Keys
+/// * Functionality
 /// 
-///     QAbstractItemView class is the base class for every standard view
-///     that uses a QAbstractItemModel. QAbstractItemView is an abstract
-///     class and cannot itself be instantiated. It provides a standard
-///     interface for interoperating with models through the signals and
-///     slots mechanism, enabling subclasses to be kept up-to-date with
-///     changes to their models.  This class provides standard support for
-///     keyboard and mouse navigation, viewport scrolling, item editing,
-///     and selections. The keyboard navigation implements this
-///     functionality:
+/// * Arrow keys
+/// * Changes the current item and selects it.
 /// 
-///     \table
-///         \header
-///             \li Keys
-///             \li Functionality
-///         \row
-///             \li Arrow keys
-///             \li Changes the current item and selects it.
-///         \row
-///             \li Ctrl+Arrow keys
-///             \li Changes the current item but does not select it.
-///         \row
-///             \li Shift+Arrow keys
-///             \li Changes the current item and selects it. The previously
-///                selected item(s) is not deselected.
-///         \row
-///             \li Ctr+Space
-///             \li Toggles selection of the current item.
-///         \row
-///             \li Tab/Backtab
-///             \li Changes the current item to the next/previous item.
-///         \row
-///             \li Home/End
-///             \li Selects the first/last item in the model.
-///         \row
-///             \li Page up/Page down
-///             \li Scrolls the rows shown up/down by the number of
-///                visible rows in the view.
-///         \row
-///             \li Ctrl+A
-///             \li Selects all items in the model.
-///     \endtable
+/// * Ctrl+Arrow keys
+/// * Changes the current item but does not select it.
 /// 
-///     Note that the above table assumes that the
-///     \l{selectionMode}{selection mode} allows the operations. For
-///     instance, you cannot select items if the selection mode is
-///     QAbstractItemView::NoSelection.
+/// * Shift+Arrow keys
+/// * Changes the current item and selects it. The previously selected item(s) is not deselected.
 /// 
-///     The QAbstractItemView class is one of the \l{Model/View Classes}
-///     and is part of Qt's \l{Model/View Programming}{model/view framework}.
+/// * Ctr+Space
+/// * Toggles selection of the current item.
 /// 
-///     The view classes that inherit QAbstractItemView only need
-///     to implement their own view-specific functionality, such as
-///     drawing items, returning the geometry of items, finding items,
-///     etc.
+/// * Tab/Backtab
+/// * Changes the current item to the next/previous item.
 /// 
-///     QAbstractItemView provides common slots such as edit() and
-///     setCurrentIndex(). Many protected slots are also provided, including
-///     dataChanged(), rowsInserted(), rowsAboutToBeRemoved(), selectionChanged(),
-///     and currentChanged().
+/// * Home/End
+/// * Selects the first/last item in the model.
 /// 
-///     The root item is returned by rootIndex(), and the current item by
-///     currentIndex(). To make sure that an item is visible use
-///     scrollTo().
+/// * Page up/Page down
+/// * Scrolls the rows shown up/down by the number of visible rows in the view.
 /// 
-///     Some of QAbstractItemView's functions are concerned with
-///     scrolling, for example setHorizontalScrollMode() and
-///     setVerticalScrollMode(). To set the range of the scroll bars, you
-///     can, for example, reimplement the view's resizeEvent() function:
+/// * Ctrl+A
+/// * Selects all items in the model.
 /// 
-///     \snippet code/src_gui_itemviews_qabstractitemview.cpp 0
+/// Note that the above table assumes that the
+/// [selection mode](selectionMode)
+/// allows the operations. For
+/// instance, you cannot select items if the selection mode is
+/// QAbstractItemView::NoSelection.
 /// 
-///     Note that the range is not updated until the widget is shown.
+/// The QAbstractItemView class is one of the [Model/View Classes](Model/View%20Classes)
+/// and is part of Qt's [model/view framework](Model/View%20Programming)
 /// 
-///     Several other functions are concerned with selection control; for
-///     example setSelectionMode(), and setSelectionBehavior(). This class
-///     provides a default selection model to work with
-///     (selectionModel()), but this can be replaced by using
-///     setSelectionModel() with an instance of QItemSelectionModel.
 /// 
-///     For complete control over the display and editing of items you can
-///     specify a delegate with setItemDelegate().
+/// The view classes that inherit QAbstractItemView only need
+/// to implement their own view-specific functionality, such as
+/// drawing items, returning the geometry of items, finding items,
+/// etc.
 /// 
-///     QAbstractItemView provides a lot of protected functions. Some are
-///     concerned with editing, for example, edit(), and commitData(),
-///     whilst others are keyboard and mouse event handlers.
+/// QAbstractItemView provides common slots such as edit() and
+/// setCurrentIndex(). Many protected slots are also provided, including
+/// dataChanged(), rowsInserted(), rowsAboutToBeRemoved(), selectionChanged(),
+/// and currentChanged().
 /// 
-///     \note If you inherit QAbstractItemView and intend to update the contents
-///     of the viewport, you should use viewport->update() instead of
-///     \l{QWidget::update()}{update()} as all painting operations take place on the
-///     viewport.
+/// The root item is returned by rootIndex(), and the current item by
+/// currentIndex(). To make sure that an item is visible use
+/// scrollTo().
 /// 
-///     \sa {View Classes}, {Model/View Programming}, QAbstractItemModel, {Chart Example}
+/// Some of QAbstractItemView's functions are concerned with
+/// scrolling, for example setHorizontalScrollMode() and
+/// setVerticalScrollMode(). To set the range of the scroll bars, you
+/// can, for example, reimplement the view's resizeEvent() function:
+/// 
+/// Note that the range is not updated until the widget is shown.
+/// 
+/// Several other functions are concerned with selection control; for
+/// example setSelectionMode(), and setSelectionBehavior(). This class
+/// provides a default selection model to work with
+/// (selectionModel()), but this can be replaced by using
+/// setSelectionModel() with an instance of QItemSelectionModel.
+/// 
+/// For complete control over the display and editing of items you can
+/// specify a delegate with setItemDelegate().
+/// 
+/// QAbstractItemView provides a lot of protected functions. Some are
+/// concerned with editing, for example, edit(), and commitData(),
+/// whilst others are keyboard and mouse event handlers.
+/// 
+/// **Note**: If you inherit QAbstractItemView and intend to update the contents
+/// of the viewport, you should use viewport->update() instead of
+/// [update()](QWidget::update())
+/// as all painting operations take place on the
+/// viewport.
+/// 
+/// **See also:** {View Classes}
+/// {Model/View Programming}
+/// QAbstractItemModel
+/// {Chart Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -185,690 +177,1021 @@ enum DropIndicatorPosition {
 }
 
 struct AbstractItemView : AbstractScrollArea {
-    ///     Sets the \a model for the view to present.
     /// 
-    ///     This function will create and set a new selection model, replacing any
-    ///     model that was previously set with setSelectionModel(). However, the old
-    ///     selection model will not be deleted as it may be shared between several
-    ///     views. We recommend that you delete the old selection model if it is no
-    ///     longer required. This is done with the following code:
+    /// Sets the *model* for the view to present.
     /// 
-    ///     \snippet code/src_gui_itemviews_qabstractitemview.cpp 2
+    /// This function will create and set a new selection model, replacing any
+    /// model that was previously set with setSelectionModel(). However, the old
+    /// selection model will not be deleted as it may be shared between several
+    /// views. We recommend that you delete the old selection model if it is no
+    /// longer required. This is done with the following code:
     /// 
-    ///     If both the old model and the old selection model do not have parents, or
-    ///     if their parents are long-lived objects, it may be preferable to call their
-    ///     deleteLater() functions to explicitly delete them.
+    /// If both the old model and the old selection model do not have parents, or
+    /// if their parents are long-lived objects, it may be preferable to call their
+    /// deleteLater() functions to explicitly delete them.
     /// 
-    ///     The view \e{does not} take ownership of the model unless it is the model's
-    ///     parent object because the model may be shared between many different views.
+    /// The view *does not* take ownership of the model unless it is the model's
+    /// parent object because the model may be shared between many different views.
     /// 
-    ///     \sa selectionModel(), setSelectionModel()
+    /// **See also:** selectionModel()
+    /// setSelectionModel()
     [event] set_model(model: *AbstractItemModelType),
-    ///     Returns the model that this view is presenting.
+    /// 
+    /// Returns the model that this view is presenting.
     model() -> AbstractItemModel?,
-    ///     Sets the current selection model to the given \a selectionModel.
     /// 
-    ///     Note that, if you call setModel() after this function, the given \a selectionModel
-    ///     will be replaced by one created by the view.
+    /// Sets the current selection model to the given *selectionModel.*
     /// 
-    ///     \note It is up to the application to delete the old selection model if it is no
-    ///     longer needed; i.e., if it is not being used by other views. This will happen
-    ///     automatically when its parent object is deleted. However, if it does not have a
-    ///     parent, or if the parent is a long-lived object, it may be preferable to call its
-    ///     deleteLater() function to explicitly delete it.
+    /// Note that, if you call setModel() after this function, the given *selectionModel*
+    /// will be replaced by one created by the view.
     /// 
-    ///     \sa selectionModel(), setModel(), clearSelection()
+    /// **Note**: It is up to the application to delete the old selection model if it is no
+    /// longer needed; i.e., if it is not being used by other views. This will happen
+    /// automatically when its parent object is deleted. However, if it does not have a
+    /// parent, or if the parent is a long-lived object, it may be preferable to call its
+    /// deleteLater() function to explicitly delete it.
+    /// 
+    /// **See also:** selectionModel()
+    /// setModel()
+    /// clearSelection()
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///     Returns the current selection model.
     /// 
-    ///     \sa setSelectionModel(), selectedIndexes()
+    /// Returns the current selection model.
+    /// 
+    /// **See also:** setSelectionModel()
+    /// selectedIndexes()
     selection_model() -> ItemSelectionModel?,
-    ///     Sets the item delegate for this view and its model to \a delegate.
-    ///     This is useful if you want complete control over the editing and
-    ///     display of items.
     /// 
-    ///     Any existing delegate will be removed, but not deleted. QAbstractItemView
-    ///     does not take ownership of \a delegate.
+    /// Sets the item delegate for this view and its model to *delegate.*
+    /// This is useful if you want complete control over the editing and
+    /// display of items.
     /// 
-    ///     \warning You should not share the same instance of a delegate between views.
-    ///     Doing so can cause incorrect or unintuitive editing behavior since each
-    ///     view connected to a given delegate may receive the \l{QAbstractItemDelegate::}{closeEditor()}
-    ///     signal, and attempt to access, modify or close an editor that has already been closed.
+    /// Any existing delegate will be removed, but not deleted. QAbstractItemView
+    /// does not take ownership of *delegate.*
     /// 
-    ///     \sa itemDelegate()
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
+    /// 
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// **See also:** itemDelegate()
+    /// 
+    /// Sets the given item *delegate* used by this view and model for the given
+    /// *row.* All items on *row* will be drawn and managed by *delegate*
+    /// instead of using the default delegate (i.e., itemDelegate()).
+    /// 
+    /// Any existing row delegate for *row* will be removed, but not
+    /// deleted. QAbstractItemView does not take ownership of *delegate.*
+    /// 
+    /// **Note**: If a delegate has been assigned to both a row and a column, the row
+    /// delegate (i.e., this delegate) will take precedence and manage the
+    /// intersecting cell index.
+    /// 
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
+    /// 
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// **See also:** itemDelegateForRow()
+    /// setItemDelegateForColumn()
+    /// itemDelegate()
+    /// 
+    /// Sets the given item *delegate* used by this view and model for the given
+    /// *column.* All items on *column* will be drawn and managed by *delegate*
+    /// instead of using the default delegate (i.e., itemDelegate()).
+    /// 
+    /// Any existing column delegate for *column* will be removed, but not
+    /// deleted. QAbstractItemView does not take ownership of *delegate.*
+    /// 
+    /// **Note**: If a delegate has been assigned to both a row and a column, the row
+    /// delegate will take precedence and manage the intersecting cell index.
+    /// 
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
+    /// 
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// **See also:** itemDelegateForColumn()
+    /// setItemDelegateForRow()
+    /// itemDelegate()
     set_item_delegate(delegate: *AbstractItemDelegateType),
-    ///     Returns the item delegate used by this view and model for
-    ///     the given \a index.
+    /// 
+    /// Returns the item delegate used by this view and model. This is
+    /// either one set with setItemDelegate(), or the default one.
+    /// 
+    /// **See also:** setItemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for the given *row,*
+    /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
+    /// pointer to the current delegate for a given index.
+    /// 
+    /// **See also:** setItemDelegateForRow()
+    /// itemDelegateForColumn()
+    /// setItemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
+    /// for a given index.
+    /// 
+    /// **See also:** setItemDelegateForColumn()
+    /// itemDelegateForRow()
+    /// itemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for
+    /// the given *index.*
     item_delegate() -> AbstractItemDelegate?,
-    ///     \property QAbstractItemView::selectionMode
-    ///     \brief which selection mode the view operates in
     /// 
-    ///     This property controls whether the user can select one or many items
-    ///     and, in many-item selections, whether the selection must be a
-    ///     continuous range of items.
+    /// Sets the current selection model to the given *selectionModel.*
     /// 
-    ///     \sa SelectionMode, SelectionBehavior
+    /// Note that, if you call setModel() after this function, the given *selectionModel*
+    /// will be replaced by one created by the view.
+    /// 
+    /// **Note**: It is up to the application to delete the old selection model if it is no
+    /// longer needed; i.e., if it is not being used by other views. This will happen
+    /// automatically when its parent object is deleted. However, if it does not have a
+    /// parent, or if the parent is a long-lived object, it may be preferable to call its
+    /// deleteLater() function to explicitly delete it.
+    /// 
+    /// **See also:** selectionModel()
+    /// setModel()
+    /// clearSelection()
     set_selection_mode(mode: AbstractItemView::SelectionMode),
+    /// 
+    /// Returns the current selection model.
+    /// 
+    /// **See also:** setSelectionModel()
+    /// selectedIndexes()
+    /// 
+    /// This property controls whether the user can select one or many items
+    /// and, in many-item selections, whether the selection must be a
+    /// continuous range of items.
+    /// 
+    /// **See also:** SelectionMode
+    /// SelectionBehavior
     selection_mode() -> AbstractItemView::SelectionMode,
-    ///     \property QAbstractItemView::selectionBehavior
-    ///     \brief which selection behavior the view uses
-    /// 
-    ///     This property holds whether selections are done
-    ///     in terms of single items, rows or columns.
-    /// 
-    ///     \sa SelectionMode, SelectionBehavior
     set_selection_behavior(behavior: AbstractItemView::SelectionBehavior),
+    /// 
+    /// This property holds whether selections are done
+    /// in terms of single items, rows or columns.
+    /// 
+    /// **See also:** SelectionMode
+    /// SelectionBehavior
     selection_behavior() -> AbstractItemView::SelectionBehavior,
-    ///     Returns the model index of the current item.
     /// 
-    ///     \sa setCurrentIndex()
+    /// Returns the model index of the current item.
+    /// 
+    /// **See also:** setCurrentIndex()
     current_index() -> ModelIndex,
-    ///     Returns the model index of the model's root item. The root item is
-    ///     the parent item to the view's toplevel items. The root can be invalid.
     /// 
-    ///     \sa setRootIndex()
+    /// Returns the model index of the model's root item. The root item is
+    /// the parent item to the view's toplevel items. The root can be invalid.
+    /// 
+    /// **See also:** setRootIndex()
     root_index() -> ModelIndex,
-    ///     \property QAbstractItemView::editTriggers
-    ///     \brief which actions will initiate item editing
-    /// 
-    ///     This property is a selection of flags defined by
-    ///     \l{EditTrigger}, combined using the OR
-    ///     operator. The view will only initiate the editing of an item if the
-    ///     action performed is set in this property.
     set_edit_triggers(triggers: AbstractItemView::EditTriggers),
-    edit_triggers() -> AbstractItemView::EditTriggers,
-    ///     \since 4.2
-    ///     \property QAbstractItemView::verticalScrollMode
-    ///     \brief how the view scrolls its contents in the vertical direction
     /// 
-    ///     This property controls how the view scroll its contents vertically.
-    ///     Scrolling can be done either per pixel or per item. Its default value
-    ///     comes from the style via the QStyle::SH_ItemView_ScrollMode style hint.
+    /// This property is a selection of flags defined by
+    /// [EditTrigger](EditTrigger)
+    /// , combined using the OR
+    /// operator. The view will only initiate the editing of an item if the
+    /// action performed is set in this property.
+    edit_triggers() -> AbstractItemView::EditTriggers,
     set_vertical_scroll_mode(mode: AbstractItemView::ScrollMode),
+    /// 
+    /// This property controls how the view scroll its contents vertically.
+    /// Scrolling can be done either per pixel or per item. Its default value
+    /// comes from the style via the QStyle::SH_ItemView_ScrollMode style hint.
     vertical_scroll_mode() -> AbstractItemView::ScrollMode,
     reset_vertical_scroll_mode(),
-    ///     \since 4.2
-    ///     \property QAbstractItemView::horizontalScrollMode
-    ///     \brief how the view scrolls its contents in the horizontal direction
-    /// 
-    ///     This property controls how the view scroll its contents horizontally.
-    ///     Scrolling can be done either per pixel or per item. Its default value
-    ///     comes from the style via the QStyle::SH_ItemView_ScrollMode style hint.
     set_horizontal_scroll_mode(mode: AbstractItemView::ScrollMode),
+    /// 
+    /// This property controls how the view scroll its contents horizontally.
+    /// Scrolling can be done either per pixel or per item. Its default value
+    /// comes from the style via the QStyle::SH_ItemView_ScrollMode style hint.
     horizontal_scroll_mode() -> AbstractItemView::ScrollMode,
     reset_horizontal_scroll_mode(),
-    ///     \property QAbstractItemView::autoScroll
-    ///     \brief whether autoscrolling in drag move events is enabled
-    /// 
-    ///     If this property is set to true (the default), the
-    ///     QAbstractItemView automatically scrolls the contents of the view
-    ///     if the user drags within 16 pixels of the viewport edge. If the current
-    ///     item changes, then the view will scroll automatically to ensure that the
-    ///     current item is fully visible.
-    /// 
-    ///     This property only works if the viewport accepts drops. Autoscroll is
-    ///     switched off by setting this property to false.
     set_auto_scroll(enable: bool),
     has_auto_scroll() -> bool,
-    ///     \since 4.4
-    ///     \property QAbstractItemView::autoScrollMargin
-    ///     \brief the size of the area when auto scrolling is triggered
-    /// 
-    ///     This property controls the size of the area at the edge of the viewport that
-    ///     triggers autoscrolling. The default value is 16 pixels.
     set_auto_scroll_margin(margin: i32),
+    /// 
+    /// This property controls the size of the area at the edge of the viewport that
+    /// triggers autoscrolling. The default value is 16 pixels.
     auto_scroll_margin() -> i32,
-    ///   \property QAbstractItemView::tabKeyNavigation
-    ///   \brief whether item navigation with tab and backtab is enabled.
     set_tab_key_navigation(enable: bool),
+    /// 
     tab_key_navigation() -> bool,
-    ///     \property QAbstractItemView::showDropIndicator
-    ///     \brief whether the drop indicator is shown when dragging items and dropping.
-    /// 
-    ///     \sa dragEnabled, DragDropMode, dragDropOverwriteMode, acceptDrops
     set_drop_indicator_shown(enable: bool),
+    /// 
+    /// **See also:** dragEnabled
+    /// DragDropMode
+    /// dragDropOverwriteMode
+    /// acceptDrops
     show_drop_indicator() -> bool,
-    ///     \property QAbstractItemView::dragEnabled
-    ///     \brief whether the view supports dragging of its own items
-    /// 
-    ///     \sa showDropIndicator, DragDropMode, dragDropOverwriteMode, acceptDrops
     set_drag_enabled(enable: bool),
+    /// 
+    /// **See also:** showDropIndicator
+    /// DragDropMode
+    /// dragDropOverwriteMode
+    /// acceptDrops
     drag_enabled() -> bool,
-    ///     \since 4.2
-    ///     \property QAbstractItemView::dragDropOverwriteMode
-    ///     \brief the view's drag and drop behavior
-    /// 
-    ///     If its value is \c true, the selected data will overwrite the
-    ///     existing item data when dropped, while moving the data will clear
-    ///     the item. If its value is \c false, the selected data will be
-    ///     inserted as a new item when the data is dropped. When the data is
-    ///     moved, the item is removed as well.
-    /// 
-    ///     The default value is \c false, as in the QListView and QTreeView
-    ///     subclasses. In the QTableView subclass, on the other hand, the
-    ///     property has been set to \c true.
-    /// 
-    ///     Note: This is not intended to prevent overwriting of items.
-    ///     The model's implementation of flags() should do that by not
-    ///     returning Qt::ItemIsDropEnabled.
-    /// 
-    ///     \sa dragDropMode
     set_drag_drop_overwrite_mode(overwrite: bool),
+    /// 
+    /// If its value is `true,` the selected data will overwrite the
+    /// existing item data when dropped, while moving the data will clear
+    /// the item. If its value is `false,` the selected data will be
+    /// inserted as a new item when the data is dropped. When the data is
+    /// moved, the item is removed as well.
+    /// 
+    /// The default value is `false,` as in the QListView and QTreeView
+    /// subclasses. In the QTableView subclass, on the other hand, the
+    /// property has been set to `true.`
+    /// 
+    /// Note: This is not intended to prevent overwriting of items.
+    /// The model's implementation of flags() should do that by not
+    /// returning Qt::ItemIsDropEnabled.
+    /// 
+    /// **See also:** dragDropMode
     drag_drop_overwrite_mode() -> bool,
-    ///     \property QAbstractItemView::dragDropMode
-    ///     \brief the drag and drop event the view will act upon
-    /// 
-    ///     \since 4.2
-    ///     \sa showDropIndicator, dragDropOverwriteMode
     set_drag_drop_mode(behavior: AbstractItemView::DragDropMode),
+    /// 
+    /// **See also:** showDropIndicator
+    /// dragDropOverwriteMode
     drag_drop_mode() -> AbstractItemView::DragDropMode,
-    ///     \property QAbstractItemView::defaultDropAction
-    ///     \brief the drop action that will be used by default in QAbstractItemView::drag()
-    /// 
-    ///     If the property is not set, the drop action is CopyAction when the supported
-    ///     actions support CopyAction.
-    /// 
-    ///     \since 4.6
-    ///     \sa showDropIndicator, dragDropOverwriteMode
     set_default_drop_action(drop_action: Rute::DropAction),
+    /// 
+    /// If the property is not set, the drop action is CopyAction when the supported
+    /// actions support CopyAction.
+    /// 
+    /// **See also:** showDropIndicator
+    /// dragDropOverwriteMode
     default_drop_action() -> Rute::DropAction,
-    ///     \property QAbstractItemView::alternatingRowColors
-    ///     \brief whether to draw the background using alternating colors
-    /// 
-    ///     If this property is \c true, the item background will be drawn using
-    ///     QPalette::Base and QPalette::AlternateBase; otherwise the background
-    ///     will be drawn using the QPalette::Base color.
-    /// 
-    ///     By default, this property is \c false.
     set_alternating_row_colors(enable: bool),
+    /// 
+    /// If this property is `true,` the item background will be drawn using
+    /// QPalette::Base and QPalette::AlternateBase; otherwise the background
+    /// will be drawn using the QPalette::Base color.
+    /// 
+    /// By default, this property is `false.`
     alternating_row_colors() -> bool,
-    ///     \property QAbstractItemView::iconSize
-    ///     \brief the size of items' icons
-    /// 
-    ///     Setting this property when the view is visible will cause the
-    ///     items to be laid out again.
     set_icon_size(size: &SizeType),
+    /// 
+    /// Setting this property when the view is visible will cause the
+    /// items to be laid out again.
     icon_size() -> Size,
-    ///     \property QAbstractItemView::textElideMode
-    /// 
-    ///     \brief the position of the "..." in elided text.
-    /// 
-    ///     The default value for all item views is Qt::ElideRight.
     set_text_elide_mode(mode: Rute::TextElideMode),
+    /// 
+    /// The default value for all item views is Qt::ElideRight.
     text_elide_mode() -> Rute::TextElideMode,
-    ///     Moves to and selects the item best matching the string \a search.
-    ///     If no item is found nothing happens.
     /// 
-    ///     In the default implementation, the search is reset if \a search is empty, or
-    ///     the time interval since the last search has exceeded
-    ///     QApplication::keyboardInputInterval().
+    /// Moves to and selects the item best matching the string *search.*
+    /// If no item is found nothing happens.
+    /// 
+    /// In the default implementation, the search is reset if *search* is empty, or
+    /// the time interval since the last search has exceeded
+    /// QApplication::keyboardInputInterval().
     [event] keyboard_search(search: String),
+    /// 
+    /// Returns the rectangle on the viewport occupied by the item at *index.*
+    /// 
+    /// If your item is displayed in several areas then visualRect should return
+    /// the primary area that contains index and not the complete area that index
+    /// might encompasses, touch or cause drawing.
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// **See also:** indexAt()
+    /// visualRegionForSelection()
     [event] visual_rect(index: &ModelIndexType) -> Rect,
+    /// 
+    /// Scrolls the view if necessary to ensure that the item at *index*
+    /// is visible. The view will try to position the item according to the given *hint.*
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// Scrolls the view to the top.
+    /// 
+    /// **See also:** scrollTo()
+    /// scrollToBottom()
+    /// 
+    /// Scrolls the view to the bottom.
+    /// 
+    /// **See also:** scrollTo()
+    /// scrollToTop()
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
+    /// 
+    /// Returns the model index of the item at the viewport coordinates *point.*
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// **See also:** visualRect()
     [event] index_at(point: &PointType) -> ModelIndex,
-    ///     Returns the size hint for the item with the specified \a index or
-    ///     an invalid size for invalid indexes.
     /// 
-    ///     \sa sizeHintForRow(), sizeHintForColumn()
+    /// Returns the size hint for the item with the specified *index* or
+    /// an invalid size for invalid indexes.
+    /// 
+    /// **See also:** sizeHintForRow()
+    /// sizeHintForColumn()
     size_hint_for_index(index: &ModelIndexType) -> Size,
-    ///     Returns the height size hint for the specified \a row or -1 if
-    ///     there is no model.
     /// 
-    ///     The returned height is calculated using the size hints of the
-    ///     given \a row's items, i.e. the returned value is the maximum
-    ///     height among the items. Note that to control the height of a row,
-    ///     you must reimplement the QAbstractItemDelegate::sizeHint()
-    ///     function.
+    /// Returns the height size hint for the specified *row* or -1 if
+    /// there is no model.
     /// 
-    ///     This function is used in views with a vertical header to find the
-    ///     size hint for a header section based on the contents of the given
-    ///     \a row.
+    /// The returned height is calculated using the size hints of the
+    /// given *row's* items, i.e. the returned value is the maximum
+    /// height among the items. Note that to control the height of a row,
+    /// you must reimplement the QAbstractItemDelegate::sizeHint()
+    /// function.
     /// 
-    ///     \sa sizeHintForColumn()
+    /// This function is used in views with a vertical header to find the
+    /// size hint for a header section based on the contents of the given
+    /// *row.*
+    /// 
+    /// **See also:** sizeHintForColumn()
     [event] size_hint_for_row(row: i32) -> i32,
-    ///     Returns the width size hint for the specified \a column or -1 if there is no model.
     /// 
-    ///     This function is used in views with a horizontal header to find the size hint for
-    ///     a header section based on the contents of the given \a column.
+    /// Returns the width size hint for the specified *column* or -1 if there is no model.
     /// 
-    ///     \sa sizeHintForRow()
+    /// This function is used in views with a horizontal header to find the size hint for
+    /// a header section based on the contents of the given *column.*
+    /// 
+    /// **See also:** sizeHintForRow()
     [event] size_hint_for_column(column: i32) -> i32,
-    ///     Opens a persistent editor on the item at the given \a index.
-    ///     If no editor exists, the delegate will create a new editor.
     /// 
-    ///     \sa closePersistentEditor(), isPersistentEditorOpen()
+    /// Opens a persistent editor on the item at the given *index.*
+    /// If no editor exists, the delegate will create a new editor.
+    /// 
+    /// **See also:** closePersistentEditor()
+    /// isPersistentEditorOpen()
     open_persistent_editor(index: &ModelIndexType),
-    ///     Closes the persistent editor for the item at the given \a index.
     /// 
-    ///     \sa openPersistentEditor(), isPersistentEditorOpen()
+    /// Closes the persistent editor for the item at the given *index.*
+    /// 
+    /// **See also:** openPersistentEditor()
+    /// isPersistentEditorOpen()
     close_persistent_editor(index: &ModelIndexType),
-    ///     \since 5.10
     /// 
-    ///     Returns whether a persistent editor is open for the item at index \a index.
+    /// Returns whether a persistent editor is open for the item at index *index.*
     /// 
-    ///     \sa openPersistentEditor(), closePersistentEditor()
+    /// **See also:** openPersistentEditor()
+    /// closePersistentEditor()
     is_persistent_editor_open(index: &ModelIndexType) -> bool,
-    ///     \since 4.1
     /// 
-    ///     Sets the given \a widget on the item at the given \a index, passing the
-    ///     ownership of the widget to the viewport.
+    /// Sets the given *widget* on the item at the given *index,* passing the
+    /// ownership of the widget to the viewport.
     /// 
-    ///     If \a index is invalid (e.g., if you pass the root index), this function
-    ///     will do nothing.
+    /// If *index* is invalid (e.g., if you pass the root index), this function
+    /// will do nothing.
     /// 
-    ///     The given \a widget's \l{QWidget}{autoFillBackground} property must be set
-    ///     to true, otherwise the widget's background will be transparent, showing
-    ///     both the model data and the item at the given \a index.
+    /// The given *widget's* [autoFillBackground](QWidget)
+    /// property must be set
+    /// to true, otherwise the widget's background will be transparent, showing
+    /// both the model data and the item at the given *index.*
     /// 
-    ///     If index widget A is replaced with index widget B, index widget A will be
-    ///     deleted. For example, in the code snippet below, the QLineEdit object will
-    ///     be deleted.
+    /// If index widget A is replaced with index widget B, index widget A will be
+    /// deleted. For example, in the code snippet below, the QLineEdit object will
+    /// be deleted.
     /// 
-    ///     \snippet code/src_gui_itemviews_qabstractitemview.cpp 1
+    /// This function should only be used to display static content within the
+    /// visible area corresponding to an item of data. If you want to display
+    /// custom dynamic content or implement a custom editor widget, subclass
+    /// QItemDelegate instead.
     /// 
-    ///     This function should only be used to display static content within the
-    ///     visible area corresponding to an item of data. If you want to display
-    ///     custom dynamic content or implement a custom editor widget, subclass
-    ///     QItemDelegate instead.
-    /// 
-    ///     \sa {Delegate Classes}
+    /// **See also:** {Delegate Classes}
     set_index_widget(index: &ModelIndexType, widget: *WidgetType),
-    ///     \since 4.1
     /// 
-    ///     Returns the widget for the item at the given \a index.
+    /// Returns the widget for the item at the given *index.*
     index_widget(index: &ModelIndexType) -> Widget?,
-    ///     \since 4.2
     /// 
-    ///     Sets the given item \a delegate used by this view and model for the given
-    ///     \a row. All items on \a row will be drawn and managed by \a delegate
-    ///     instead of using the default delegate (i.e., itemDelegate()).
+    /// Sets the given item *delegate* used by this view and model for the given
+    /// *row.* All items on *row* will be drawn and managed by *delegate*
+    /// instead of using the default delegate (i.e., itemDelegate()).
     /// 
-    ///     Any existing row delegate for \a row will be removed, but not
-    ///     deleted. QAbstractItemView does not take ownership of \a delegate.
+    /// Any existing row delegate for *row* will be removed, but not
+    /// deleted. QAbstractItemView does not take ownership of *delegate.*
     /// 
-    ///     \note If a delegate has been assigned to both a row and a column, the row
-    ///     delegate (i.e., this delegate) will take precedence and manage the
-    ///     intersecting cell index.
+    /// **Note**: If a delegate has been assigned to both a row and a column, the row
+    /// delegate (i.e., this delegate) will take precedence and manage the
+    /// intersecting cell index.
     /// 
-    ///     \warning You should not share the same instance of a delegate between views.
-    ///     Doing so can cause incorrect or unintuitive editing behavior since each
-    ///     view connected to a given delegate may receive the \l{QAbstractItemDelegate::}{closeEditor()}
-    ///     signal, and attempt to access, modify or close an editor that has already been closed.
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
     /// 
-    ///     \sa itemDelegateForRow(), setItemDelegateForColumn(), itemDelegate()
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// **See also:** itemDelegateForRow()
+    /// setItemDelegateForColumn()
+    /// itemDelegate()
     set_item_delegate_for_row(row: i32, delegate: *AbstractItemDelegateType),
-    ///    \since 4.2
     /// 
-    ///    Returns the item delegate used by this view and model for the given \a row,
-    ///    or 0 if no delegate has been assigned. You can call itemDelegate() to get a
-    ///    pointer to the current delegate for a given index.
+    /// Returns the item delegate used by this view and model for the given *row,*
+    /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
+    /// pointer to the current delegate for a given index.
     /// 
-    ///    \sa setItemDelegateForRow(), itemDelegateForColumn(), setItemDelegate()
+    /// **See also:** setItemDelegateForRow()
+    /// itemDelegateForColumn()
+    /// setItemDelegate()
     item_delegate_for_row(row: i32) -> AbstractItemDelegate?,
-    ///     \since 4.2
     /// 
-    ///     Sets the given item \a delegate used by this view and model for the given
-    ///     \a column. All items on \a column will be drawn and managed by \a delegate
-    ///     instead of using the default delegate (i.e., itemDelegate()).
+    /// Sets the given item *delegate* used by this view and model for the given
+    /// *column.* All items on *column* will be drawn and managed by *delegate*
+    /// instead of using the default delegate (i.e., itemDelegate()).
     /// 
-    ///     Any existing column delegate for \a column will be removed, but not
-    ///     deleted. QAbstractItemView does not take ownership of \a delegate.
+    /// Any existing column delegate for *column* will be removed, but not
+    /// deleted. QAbstractItemView does not take ownership of *delegate.*
     /// 
-    ///     \note If a delegate has been assigned to both a row and a column, the row
-    ///     delegate will take precedence and manage the intersecting cell index.
+    /// **Note**: If a delegate has been assigned to both a row and a column, the row
+    /// delegate will take precedence and manage the intersecting cell index.
     /// 
-    ///     \warning You should not share the same instance of a delegate between views.
-    ///     Doing so can cause incorrect or unintuitive editing behavior since each
-    ///     view connected to a given delegate may receive the \l{QAbstractItemDelegate::}{closeEditor()}
-    ///     signal, and attempt to access, modify or close an editor that has already been closed.
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
     /// 
-    ///     \sa itemDelegateForColumn(), setItemDelegateForRow(), itemDelegate()
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// **See also:** itemDelegateForColumn()
+    /// setItemDelegateForRow()
+    /// itemDelegate()
     set_item_delegate_for_column(column: i32, delegate: *AbstractItemDelegateType),
-    ///     \since 4.2
     /// 
-    ///     Returns the item delegate used by this view and model for the given \a
-    ///     column.  You can call itemDelegate() to get a pointer to the current delegate
-    ///     for a given index.
+    /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
+    /// for a given index.
     /// 
-    ///     \sa setItemDelegateForColumn(), itemDelegateForRow(), itemDelegate()
+    /// **See also:** setItemDelegateForColumn()
+    /// itemDelegateForRow()
+    /// itemDelegate()
     item_delegate_for_column(column: i32) -> AbstractItemDelegate?,
-    ///     Returns the item delegate used by this view and model for
-    ///     the given \a index.
+    /// 
+    /// Returns the item delegate used by this view and model. This is
+    /// either one set with setItemDelegate(), or the default one.
+    /// 
+    /// **See also:** setItemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for the given *row,*
+    /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
+    /// pointer to the current delegate for a given index.
+    /// 
+    /// **See also:** setItemDelegateForRow()
+    /// itemDelegateForColumn()
+    /// setItemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
+    /// for a given index.
+    /// 
+    /// **See also:** setItemDelegateForColumn()
+    /// itemDelegateForRow()
+    /// itemDelegate()
+    /// 
+    /// Returns the item delegate used by this view and model for
+    /// the given *index.*
     item_delegate(index: &ModelIndexType) -> AbstractItemDelegate?,
-    ///     \reimp
+    /// 
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
-    ///     Reset the internal state of the view.
     /// 
-    ///     \warning This function will reset open editors, scroll bar positions,
-    ///     selections, etc. Existing changes will not be committed. If you would like
-    ///     to save your changes when resetting the view, you can reimplement this
-    ///     function, commit your changes, and then call the superclass'
-    ///     implementation.
+    /// Reset the internal state of the view.
+    /// 
+    /// **Warning**: This function will reset open editors, scroll bar positions,
+    /// selections, etc. Existing changes will not be committed. If you would like
+    /// to save your changes when resetting the view, you can reimplement this
+    /// function, commit your changes, and then call the superclass'
+    /// implementation.
     [event] reset(),
-    ///     Sets the root item to the item at the given \a index.
     /// 
-    ///     \sa rootIndex()
+    /// Sets the root item to the item at the given *index.*
+    /// 
+    /// **See also:** rootIndex()
     [event] set_root_index(index: &ModelIndexType),
-    ///     \internal
-    /// 
-    ///     This function is intended to lay out the items in the view.
-    ///     The default implementation just calls updateGeometries() and updates the viewport.
     [event] do_items_layout(),
-    ///     Selects all items in the view.
-    ///     This function will use the selection behavior
-    ///     set on the view when selecting.
     /// 
-    ///     \sa setSelection(), selectedIndexes(), clearSelection()
+    /// Selects all items in the view.
+    /// This function will use the selection behavior
+    /// set on the view when selecting.
+    /// 
+    /// **See also:** setSelection()
+    /// selectedIndexes()
+    /// clearSelection()
     [event] select_all(),
-    ///     Starts editing the item at \a index, creating an editor if
-    ///     necessary, and returns \c true if the view's \l{State} is now
-    ///     EditingState; otherwise returns \c false.
     /// 
-    ///     The action that caused the editing process is described by
-    ///     \a trigger, and the associated event is specified by \a event.
+    /// Starts editing the item corresponding to the given *index* if it is
+    /// editable.
     /// 
-    ///     Editing can be forced by specifying the \a trigger to be
-    ///     QAbstractItemView::AllEditTriggers.
+    /// Note that this function does not change the current index. Since the current
+    /// index defines the next and previous items to edit, users may find that
+    /// keyboard navigation does not work as expected. To provide consistent navigation
+    /// behavior, call setCurrentIndex() before this function with the same model
+    /// index.
     /// 
-    ///     \sa closeEditor()
+    /// **See also:** QModelIndex::flags()
+    /// 
+    /// This property is a selection of flags defined by
+    /// [EditTrigger](EditTrigger)
+    /// , combined using the OR
+    /// operator. The view will only initiate the editing of an item if the
+    /// action performed is set in this property.
+    /// 
+    /// Starts editing the item at *index,* creating an editor if
+    /// necessary, and returns `true` if the view's [State](State)
+    /// is now
+    /// EditingState; otherwise returns `false.`
+    /// 
+    /// The action that caused the editing process is described by
+    /// *trigger,* and the associated event is specified by *event.*
+    /// 
+    /// Editing can be forced by specifying the *trigger* to be
+    /// QAbstractItemView::AllEditTriggers.
+    /// 
+    /// **See also:** closeEditor()
+    /// 
+    /// This function is called when the given *editor* has been destroyed.
+    /// 
+    /// **See also:** closeEditor()
     edit(index: &ModelIndexType),
-    ///     Deselects all selected items. The current index will not be changed.
     /// 
-    ///     \sa setSelection(), selectAll()
+    /// Deselects all selected items. The current index will not be changed.
+    /// 
+    /// **See also:** setSelection()
+    /// selectAll()
     clear_selection(),
-    ///     Sets the current item to be the item at \a index.
     /// 
-    ///     Unless the current selection mode is
-    ///     \l{QAbstractItemView::}{NoSelection}, the item is also selected.
-    ///     Note that this function also updates the starting position for any
-    ///     new selections the user performs.
+    /// Sets the current item to be the item at *index.*
     /// 
-    ///     To set an item as the current item without selecting it, call
+    /// Unless the current selection mode is
+    /// [NoSelection](QAbstractItemView::)
+    /// , the item is also selected.
+    /// Note that this function also updates the starting position for any
+    /// new selections the user performs.
     /// 
-    ///     \c{selectionModel()->setCurrentIndex(index, QItemSelectionModel::NoUpdate);}
+    /// To set an item as the current item without selecting it, call
     /// 
-    ///     \sa currentIndex(), currentChanged(), selectionMode
+    /// `selectionModel()->setCurrentIndex(index, QItemSelectionModel::NoUpdate);`
+    /// 
+    /// **See also:** currentIndex()
+    /// currentChanged()
+    /// selectionMode
     set_current_index(index: &ModelIndexType),
-    ///     \since 4.1
     /// 
-    ///     Scrolls the view to the top.
+    /// Scrolls the view to the top.
     /// 
-    ///     \sa scrollTo(), scrollToBottom()
+    /// **See also:** scrollTo()
+    /// scrollToBottom()
     scroll_to_top(),
-    ///     \since 4.1
     /// 
-    ///     Scrolls the view to the bottom.
+    /// Scrolls the view to the bottom.
     /// 
-    ///     \sa scrollTo(), scrollToTop()
+    /// **See also:** scrollTo()
+    /// scrollToTop()
     scroll_to_bottom(),
-    ///     \since 4.3
     /// 
-    ///     Updates the area occupied by the given \a index.
+    /// Updates the geometry of the child widgets of the view.
+    /// 
+    /// Updates the area occupied by the given *index.*
     /// 
     update(index: &ModelIndexType),
-    ///     This slot is called when items with the given \a roles are changed in the
-    ///     model. The changed items are those from \a topLeft to \a bottomRight
-    ///     inclusive. If just one item is changed \a topLeft == \a bottomRight.
     /// 
-    ///     The \a roles which have been changed can either be an empty container (meaning everything
-    ///     has changed), or a non-empty container with the subset of roles which have changed.
+    /// This slot is called when items with the given *roles* are changed in the
+    /// model. The changed items are those from *topLeft* to *bottomRight*
+    /// inclusive. If just one item is changed *topLeft* == *bottomRight.*
+    /// 
+    /// The *roles* which have been changed can either be an empty container (meaning everything
+    /// has changed), or a non-empty container with the subset of roles which have changed.
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
-    ///     This slot is called when rows are inserted. The new rows are those
-    ///     under the given \a parent from \a start to \a end inclusive. The
-    ///     base class implementation calls fetchMore() on the model to check
-    ///     for more data.
     /// 
-    ///     \sa rowsAboutToBeRemoved()
+    /// This slot is called when rows are inserted. The new rows are those
+    /// under the given *parent* from *start* to *end* inclusive. The
+    /// base class implementation calls fetchMore() on the model to check
+    /// for more data.
+    /// 
+    /// **See also:** rowsAboutToBeRemoved()
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
-    ///     This slot is called when rows are about to be removed. The deleted rows are
-    ///     those under the given \a parent from \a start to \a end inclusive.
     /// 
-    ///     \sa rowsInserted()
+    /// This slot is called when rows are about to be removed. The deleted rows are
+    /// those under the given *parent* from *start* to *end* inclusive.
+    /// 
+    /// **See also:** rowsInserted()
     [event] rows_about_to_be_removed(parent: &ModelIndexType, start: i32, end: i32),
+    /// 
+    /// This slot is called when the selection is changed. The previous
+    /// selection (which may be empty), is specified by *deselected,* and the
+    /// new selection by *selected.*
+    /// 
+    /// **See also:** setSelection()
     [event] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
-    ///     This slot is called when a new item becomes the current item.
-    ///     The previous current item is specified by the \a previous index, and the new
-    ///     item by the \a current index.
     /// 
-    ///     If you want to know about changes to items see the
-    ///     dataChanged() signal.
+    /// This slot is called when a new item becomes the current item.
+    /// The previous current item is specified by the *previous* index, and the new
+    /// item by the *current* index.
+    /// 
+    /// If you want to know about changes to items see the
+    /// dataChanged() signal.
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
-    ///     \internal
-    ///     Updates the data shown in the open editor widgets in the view.
     [event] update_editor_data(),
-    ///     \internal
     [event] vertical_scrollbar_action(action: i32),
-    ///     \internal
     [event] horizontal_scrollbar_action(action: i32),
-    ///     \internal
     [event] vertical_scrollbar_value_changed(value: i32),
-    ///     \internal
     [event] horizontal_scrollbar_value_changed(value: i32),
-    ///     Closes the given \a editor, and releases it. The \a hint is
-    ///     used to specify how the view should respond to the end of the editing
-    ///     operation. For example, the hint may indicate that the next item in
-    ///     the view should be opened for editing.
     /// 
-    ///     \sa edit(), commitData()
+    /// Closes the given *editor,* and releases it. The *hint* is
+    /// used to specify how the view should respond to the end of the editing
+    /// operation. For example, the hint may indicate that the next item in
+    /// the view should be opened for editing.
+    /// 
+    /// **See also:** edit()
+    /// commitData()
     [event] close_editor(editor: *WidgetType, hint: AbstractItemDelegate::EndEditHint),
-    ///     Commit the data in the \a editor to the model.
     /// 
-    ///     \sa closeEditor()
+    /// Commit the data in the *editor* to the model.
+    /// 
+    /// **See also:** closeEditor()
     [event] commit_data(editor: *WidgetType),
+    /// 
+    /// This signal is emitted when a mouse button is pressed. The item
+    /// the mouse was pressed on is specified by *index.* The signal is
+    /// only emitted when the index is valid.
+    /// 
+    /// Use the QApplication::mouseButtons() function to get the state
+    /// of the mouse buttons.
+    /// 
+    /// **See also:** activated()
+    /// clicked()
+    /// doubleClicked()
+    /// entered()
     [signal] pressed(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when a mouse button is left-clicked. The item
+    /// the mouse was clicked on is specified by *index.* The signal is
+    /// only emitted when the index is valid.
+    /// 
+    /// **See also:** activated()
+    /// doubleClicked()
+    /// entered()
+    /// pressed()
     [signal] clicked(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when a mouse button is double-clicked. The
+    /// item the mouse was double-clicked on is specified by *index.*
+    /// The signal is only emitted when the index is valid.
+    /// 
+    /// **See also:** clicked()
+    /// activated()
     [signal] double_clicked(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when the item specified by *index* is
+    /// activated by the user. How to activate items depends on the
+    /// platform; e.g., by single- or double-clicking the item, or by
+    /// pressing the Return or Enter key when the item is current.
+    /// 
+    /// **See also:** clicked()
+    /// doubleClicked()
+    /// entered()
+    /// pressed()
     [signal] activated(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when the mouse cursor enters the item
+    /// specified by *index.*
+    /// Mouse tracking needs to be enabled for this feature to work.
+    /// 
+    /// **See also:** viewportEntered()
+    /// activated()
+    /// clicked()
+    /// doubleClicked()
+    /// pressed()
     [signal] entered(index: &ModelIndexType),
+    /// 
+    /// This signal is emitted when the mouse cursor enters the viewport.
+    /// Mouse tracking needs to be enabled for this feature to work.
+    /// 
+    /// **See also:** entered()
     [signal] viewport_entered(),
     [signal] icon_size_changed(size: &SizeType),
-    ///     \obsolete
-    ///     Sets the horizontal scroll bar's steps per item to \a steps.
     /// 
-    ///     This is the number of steps used by the horizontal scroll bar to
-    ///     represent the width of an item.
+    /// Sets the horizontal scroll bar's steps per item to *steps.*
     /// 
-    ///     Note that if the view has a horizontal header, the item steps
-    ///     will be ignored and the header section size will be used instead.
+    /// This is the number of steps used by the horizontal scroll bar to
+    /// represent the width of an item.
     /// 
-    ///     \sa horizontalStepsPerItem(), setVerticalStepsPerItem()
+    /// Note that if the view has a horizontal header, the item steps
+    /// will be ignored and the header section size will be used instead.
+    /// 
+    /// **See also:** horizontalStepsPerItem()
+    /// setVerticalStepsPerItem()
     set_horizontal_steps_per_item(steps: i32),
-    ///     \obsolete
-    ///     Returns the horizontal scroll bar's steps per item.
     /// 
-    ///     \sa setHorizontalStepsPerItem(), verticalStepsPerItem()
+    /// Returns the horizontal scroll bar's steps per item.
+    /// 
+    /// **See also:** setHorizontalStepsPerItem()
+    /// verticalStepsPerItem()
     horizontal_steps_per_item() -> i32,
-    ///     \obsolete
-    ///     Sets the vertical scroll bar's steps per item to \a steps.
     /// 
-    ///     This is the number of steps used by the vertical scroll bar to
-    ///     represent the height of an item.
+    /// Sets the vertical scroll bar's steps per item to *steps.*
     /// 
-    ///     Note that if the view has a vertical header, the item steps
-    ///     will be ignored and the header section size will be used instead.
+    /// This is the number of steps used by the vertical scroll bar to
+    /// represent the height of an item.
     /// 
-    ///     \sa verticalStepsPerItem(), setHorizontalStepsPerItem()
+    /// Note that if the view has a vertical header, the item steps
+    /// will be ignored and the header section size will be used instead.
+    /// 
+    /// **See also:** verticalStepsPerItem()
+    /// setHorizontalStepsPerItem()
     set_vertical_steps_per_item(steps: i32),
-    ///     \obsolete
-    ///     Returns the vertical scroll bar's steps per item.
     /// 
-    ///     \sa setVerticalStepsPerItem(), horizontalStepsPerItem()
+    /// Returns the vertical scroll bar's steps per item.
+    /// 
+    /// **See also:** setVerticalStepsPerItem()
+    /// horizontalStepsPerItem()
     vertical_steps_per_item() -> i32,
+    /// 
+    /// Returns a QModelIndex object pointing to the next object in the view,
+    /// based on the given *cursorAction* and keyboard modifiers specified
+    /// by *modifiers.*
+    /// 
+    /// In the base class this is a pure virtual function.
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
+    /// 
+    /// Returns the horizontal offset of the view.
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// **See also:** verticalOffset()
     [event] horizontal_offset() -> i32,
+    /// 
+    /// Returns the vertical offset of the view.
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// **See also:** horizontalOffset()
     [event] vertical_offset() -> i32,
+    /// 
+    /// Returns `true` if the item referred to by the given *index* is hidden in the view,
+    /// otherwise returns `false.`
+    /// 
+    /// Hiding is a view specific feature. For example in TableView a column can be marked
+    /// as hidden or a row in the TreeView.
+    /// 
+    /// In the base class this is a pure virtual function.
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
+    /// 
+    /// Applies the selection *flags* to the items in or touched by the
+    /// rectangle, *rect.*
+    /// 
+    /// When implementing your own itemview setSelection should call
+    /// selectionModel()->select(selection, flags) where selection
+    /// is either an empty QModelIndex or a QItemSelection that contains
+    /// all items that are contained in *rect.*
+    /// 
+    /// **See also:** selectionCommand()
+    /// selectedIndexes()
+    /// 
+    /// Sets the current selection model to the given *selectionModel.*
+    /// 
+    /// Note that, if you call setModel() after this function, the given *selectionModel*
+    /// will be replaced by one created by the view.
+    /// 
+    /// **Note**: It is up to the application to delete the old selection model if it is no
+    /// longer needed; i.e., if it is not being used by other views. This will happen
+    /// automatically when its parent object is deleted. However, if it does not have a
+    /// parent, or if the parent is a long-lived object, it may be preferable to call its
+    /// deleteLater() function to explicitly delete it.
+    /// 
+    /// **See also:** selectionModel()
+    /// setModel()
+    /// clearSelection()
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
+    /// 
+    /// Returns the region from the viewport of the items in the given
+    /// *selection.*
+    /// 
+    /// In the base class this is a pure virtual function.
+    /// 
+    /// **See also:** visualRect()
+    /// selectedIndexes()
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
-    ///     This convenience function returns a list of all selected and
-    ///     non-hidden item indexes in the view. The list contains no
-    ///     duplicates, and is not sorted.
     /// 
-    ///     \sa QItemSelectionModel::selectedIndexes()
+    /// This convenience function returns a list of all selected and
+    /// non-hidden item indexes in the view. The list contains no
+    /// duplicates, and is not sorted.
+    /// 
+    /// **See also:** QItemSelectionModel::selectedIndexes()
     [event] selected_indexes() -> [ModelIndex],
-    ///     Starts editing the item at \a index, creating an editor if
-    ///     necessary, and returns \c true if the view's \l{State} is now
-    ///     EditingState; otherwise returns \c false.
     /// 
-    ///     The action that caused the editing process is described by
-    ///     \a trigger, and the associated event is specified by \a event.
+    /// Starts editing the item corresponding to the given *index* if it is
+    /// editable.
     /// 
-    ///     Editing can be forced by specifying the \a trigger to be
-    ///     QAbstractItemView::AllEditTriggers.
+    /// Note that this function does not change the current index. Since the current
+    /// index defines the next and previous items to edit, users may find that
+    /// keyboard navigation does not work as expected. To provide consistent navigation
+    /// behavior, call setCurrentIndex() before this function with the same model
+    /// index.
     /// 
-    ///     \sa closeEditor()
+    /// **See also:** QModelIndex::flags()
+    /// 
+    /// This property is a selection of flags defined by
+    /// [EditTrigger](EditTrigger)
+    /// , combined using the OR
+    /// operator. The view will only initiate the editing of an item if the
+    /// action performed is set in this property.
+    /// 
+    /// Starts editing the item at *index,* creating an editor if
+    /// necessary, and returns `true` if the view's [State](State)
+    /// is now
+    /// EditingState; otherwise returns `false.`
+    /// 
+    /// The action that caused the editing process is described by
+    /// *trigger,* and the associated event is specified by *event.*
+    /// 
+    /// Editing can be forced by specifying the *trigger* to be
+    /// QAbstractItemView::AllEditTriggers.
+    /// 
+    /// **See also:** closeEditor()
+    /// 
+    /// This function is called when the given *editor* has been destroyed.
+    /// 
+    /// **See also:** closeEditor()
     [event] edit(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: *EventType) -> bool,
+    /// 
+    /// Returns the SelectionFlags to be used when updating a selection with
+    /// to include the *index* specified. The *event* is a user input event,
+    /// such as a mouse or keyboard event.
+    /// 
+    /// Reimplement this function to define your own selection behavior.
+    /// 
+    /// **See also:** setSelection()
     [event] selection_command(index: &ModelIndexType, event: *EventType) -> ItemSelectionModel::SelectionFlags,
-    ///     Starts a drag by calling drag->exec() using the given \a supportedActions.
+    /// 
+    /// Starts a drag by calling drag->exec() using the given *supportedActions.*
     [event] start_drag(supported_actions: Rute::DropActions),
-    ///     Returns a QStyleOptionViewItem structure populated with the view's
-    ///     palette, font, state, alignments etc.
+    /// 
+    /// Returns a QStyleOptionViewItem structure populated with the view's
+    /// palette, font, state, alignments etc.
     [event] view_options() -> StyleOptionViewItem,
-    ///     Returns the item view's state.
     /// 
-    ///     \sa setState()
+    /// Returns the item view's state.
+    /// 
+    /// **See also:** setState()
     state() -> AbstractItemView::State,
-    ///     Sets the item view's state to the given \a state.
     /// 
-    ///     \sa state()
+    /// Sets the item view's state to the given *state.*
+    /// 
+    /// **See also:** state()
     set_state(state: AbstractItemView::State),
-    ///   Schedules a layout of the items in the view to be executed when the
-    ///   event processing starts.
     /// 
-    ///   Even if scheduleDelayedItemsLayout() is called multiple times before
-    ///   events are processed, the view will only do the layout once.
+    /// Schedules a layout of the items in the view to be executed when the
+    /// event processing starts.
     /// 
-    ///   \sa executeDelayedItemsLayout()
+    /// Even if scheduleDelayedItemsLayout() is called multiple times before
+    /// events are processed, the view will only do the layout once.
+    /// 
+    /// **See also:** executeDelayedItemsLayout()
     schedule_delayed_items_layout(),
-    ///   Executes the scheduled layouts without waiting for the event processing
-    ///   to begin.
     /// 
-    ///   \sa scheduleDelayedItemsLayout()
+    /// Executes the scheduled layouts without waiting for the event processing
+    /// to begin.
+    /// 
+    /// **See also:** scheduleDelayedItemsLayout()
     execute_delayed_items_layout(),
-    ///     \since 4.1
     /// 
-    ///     Marks the given \a region as dirty and schedules it to be updated.
-    ///     You only need to call this function if you are implementing
-    ///     your own view subclass.
+    /// Marks the given *region* as dirty and schedules it to be updated.
+    /// You only need to call this function if you are implementing
+    /// your own view subclass.
     /// 
-    ///     \sa scrollDirtyRegion(), dirtyRegionOffset()
+    /// **See also:** scrollDirtyRegion()
+    /// dirtyRegionOffset()
     set_dirty_region(region: &RegionType),
-    ///     Prepares the view for scrolling by (\a{dx},\a{dy}) pixels by moving the dirty regions in the
-    ///     opposite direction. You only need to call this function if you are implementing a scrolling
-    ///     viewport in your view subclass.
     /// 
-    ///     If you implement scrollContentsBy() in a subclass of QAbstractItemView, call this function
-    ///     before you call QWidget::scroll() on the viewport. Alternatively, just call update().
+    /// Prepares the view for scrolling by ( *dx* , *dy* ) pixels by moving the dirty regions in the
+    /// opposite direction. You only need to call this function if you are implementing a scrolling
+    /// viewport in your view subclass.
     /// 
-    ///     \sa scrollContentsBy(), dirtyRegionOffset(), setDirtyRegion()
+    /// If you implement scrollContentsBy() in a subclass of QAbstractItemView, call this function
+    /// before you call QWidget::scroll() on the viewport. Alternatively, just call update().
+    /// 
+    /// **See also:** scrollContentsBy()
+    /// dirtyRegionOffset()
+    /// setDirtyRegion()
     scroll_dirty_region(dx: i32, dy: i32),
-    ///     Returns the offset of the dirty regions in the view.
     /// 
-    ///     If you use scrollDirtyRegion() and implement a paintEvent() in a subclass of
-    ///     QAbstractItemView, you should translate the area given by the paint event with
-    ///     the offset returned from this function.
+    /// Returns the offset of the dirty regions in the view.
     /// 
-    ///     \sa scrollDirtyRegion(), setDirtyRegion()
+    /// If you use scrollDirtyRegion() and implement a paintEvent() in a subclass of
+    /// QAbstractItemView, you should translate the area given by the paint event with
+    /// the offset returned from this function.
+    /// 
+    /// **See also:** scrollDirtyRegion()
+    /// setDirtyRegion()
     dirty_region_offset() -> Point,
-    ///   \internal
     start_auto_scroll(),
-    ///   \internal
     stop_auto_scroll(),
-    ///   \internal
     do_auto_scroll(),
-    ///   \reimp
+    /// 
     [event] focus_next_prev_child(next: bool) -> bool,
-    ///   \reimp
+    /// 
+    /// 
     [event] event(event: *EventType) -> bool,
-    ///     \fn bool QAbstractItemView::viewportEvent(QEvent *event)
     /// 
-    ///     This function is used to handle tool tips, and What's
-    ///     This? mode, if the given \a event is a QEvent::ToolTip,or a
-    ///     QEvent::WhatsThis. It passes all other
-    ///     events on to its base class viewportEvent() handler.
+    /// This function is used to handle tool tips, and What's
+    /// This? mode, if the given *event* is a QEvent::ToolTip,or a
+    /// QEvent::WhatsThis. It passes all other
+    /// events on to its base class viewportEvent() handler.
     [event] viewport_event(event: *EventType) -> bool,
-    ///     This function is called with the given \a event when a mouse button is pressed
-    ///     while the cursor is inside the widget. If a valid item is pressed on it is made
-    ///     into the current item. This function emits the pressed() signal.
+    /// 
+    /// This function is called with the given *event* when a mouse button is pressed
+    /// while the cursor is inside the widget. If a valid item is pressed on it is made
+    /// into the current item. This function emits the pressed() signal.
     [event] mouse_press_event(event: *MouseEventType),
-    ///     This function is called with the given \a event when a mouse move event is
-    ///     sent to the widget. If a selection is in progress and new items are moved
-    ///     over the selection is extended; if a drag is in progress it is continued.
+    /// 
+    /// This function is called with the given *event* when a mouse move event is
+    /// sent to the widget. If a selection is in progress and new items are moved
+    /// over the selection is extended; if a drag is in progress it is continued.
     [event] mouse_move_event(event: *MouseEventType),
-    ///     This function is called with the given \a event when a mouse button is released,
-    ///     after a mouse press event on the widget. If a user presses the mouse inside your
-    ///     widget and then drags the mouse to another location before releasing the mouse button,
-    ///     your widget receives the release event. The function will emit the clicked() signal if an
-    ///     item was being pressed.
+    /// 
+    /// This function is called with the given *event* when a mouse button is released,
+    /// after a mouse press event on the widget. If a user presses the mouse inside your
+    /// widget and then drags the mouse to another location before releasing the mouse button,
+    /// your widget receives the release event. The function will emit the clicked() signal if an
+    /// item was being pressed.
     [event] mouse_release_event(event: *MouseEventType),
-    ///     This function is called with the given \a event when a mouse button is
-    ///     double clicked inside the widget. If the double-click is on a valid item it
-    ///     emits the doubleClicked() signal and calls edit() on the item.
+    /// 
+    /// This function is called with the given *event* when a mouse button is
+    /// double clicked inside the widget. If the double-click is on a valid item it
+    /// emits the doubleClicked() signal and calls edit() on the item.
     [event] mouse_double_click_event(event: *MouseEventType),
-    ///     This function is called with the given \a event when a drag and drop operation enters
-    ///     the widget. If the drag is over a valid dropping place (e.g. over an item that
-    ///     accepts drops), the event is accepted; otherwise it is ignored.
     /// 
-    ///     \sa dropEvent(), startDrag()
+    /// This function is called with the given *event* when a drag and drop operation enters
+    /// the widget. If the drag is over a valid dropping place (e.g. over an item that
+    /// accepts drops), the event is accepted; otherwise it is ignored.
+    /// 
+    /// **See also:** dropEvent()
+    /// startDrag()
     [event] drag_enter_event(event: *DragEnterEventType),
-    ///     This function is called continuously with the given \a event during a drag and
-    ///     drop operation over the widget. It can cause the view to scroll if, for example,
-    ///     the user drags a selection to view's right or bottom edge. In this case, the
-    ///     event will be accepted; otherwise it will be ignored.
     /// 
-    ///     \sa dropEvent(), startDrag()
+    /// This function is called continuously with the given *event* during a drag and
+    /// drop operation over the widget. It can cause the view to scroll if, for example,
+    /// the user drags a selection to view's right or bottom edge. In this case, the
+    /// event will be accepted; otherwise it will be ignored.
+    /// 
+    /// **See also:** dropEvent()
+    /// startDrag()
     [event] drag_move_event(event: *DragMoveEventType),
-    ///     \fn void QAbstractItemView::dragLeaveEvent(QDragLeaveEvent *event)
     /// 
-    ///     This function is called when the item being dragged leaves the view.
-    ///     The \a event describes the state of the drag and drop operation.
+    /// This function is called when the item being dragged leaves the view.
+    /// The *event* describes the state of the drag and drop operation.
     [event] drag_leave_event(event: *DragLeaveEventType),
-    ///     This function is called with the given \a event when a drop event occurs over
-    ///     the widget. If the model accepts the even position the drop event is accepted;
-    ///     otherwise it is ignored.
     /// 
-    ///     \sa startDrag()
+    /// This function is called with the given *event* when a drop event occurs over
+    /// the widget. If the model accepts the even position the drop event is accepted;
+    /// otherwise it is ignored.
+    /// 
+    /// **See also:** startDrag()
     [event] drop_event(event: *DropEventType),
-    ///     This function is called with the given \a event when the widget obtains the focus.
-    ///     By default, the event is ignored.
     /// 
-    ///     \sa setFocus(), focusOutEvent()
+    /// This function is called with the given *event* when the widget obtains the focus.
+    /// By default, the event is ignored.
+    /// 
+    /// **See also:** setFocus()
+    /// focusOutEvent()
     [event] focus_in_event(event: *FocusEventType),
-    ///     This function is called with the given \a event when the widget
-    ///     loses the focus. By default, the event is ignored.
     /// 
-    ///     \sa clearFocus(), focusInEvent()
+    /// This function is called with the given *event* when the widget
+    /// loses the focus. By default, the event is ignored.
+    /// 
+    /// **See also:** clearFocus()
+    /// focusInEvent()
     [event] focus_out_event(event: *FocusEventType),
-    ///     This function is called with the given \a event when a key event is sent to
-    ///     the widget. The default implementation handles basic cursor movement, e.g. Up,
-    ///     Down, Left, Right, Home, PageUp, and PageDown; the activated() signal is
-    ///     emitted if the current index is valid and the activation key is pressed
-    ///     (e.g. Enter or Return, depending on the platform).
-    ///     This function is where editing is initiated by key press, e.g. if F2 is
-    ///     pressed.
     /// 
-    ///     \sa edit(), moveCursor(), keyboardSearch(), tabKeyNavigation
+    /// This function is called with the given *event* when a key event is sent to
+    /// the widget. The default implementation handles basic cursor movement, e.g. Up,
+    /// Down, Left, Right, Home, PageUp, and PageDown; the activated() signal is
+    /// emitted if the current index is valid and the activation key is pressed
+    /// (e.g. Enter or Return, depending on the platform).
+    /// This function is where editing is initiated by key press, e.g. if F2 is
+    /// pressed.
+    /// 
+    /// **See also:** edit()
+    /// moveCursor()
+    /// keyboardSearch()
+    /// tabKeyNavigation
     [event] key_press_event(event: *KeyEventType),
-    ///     This function is called with the given \a event when a resize event is sent to
-    ///     the widget.
     /// 
-    ///     \sa QWidget::resizeEvent()
+    /// This function is called with the given *event* when a resize event is sent to
+    /// the widget.
+    /// 
+    /// **See also:** QWidget::resizeEvent()
     [event] resize_event(event: *ResizeEventType),
-    ///   This function is called with the given \a event when a timer event is sent
-    ///   to the widget.
     /// 
-    ///   \sa QObject::timerEvent()
+    /// This function is called with the given *event* when a timer event is sent
+    /// to the widget.
+    /// 
+    /// **See also:** QObject::timerEvent()
     [event] timer_event(event: *TimerEventType),
-    ///     \reimp
-    [event] input_method_event(event: *InputMethodEventType),
-    ///     \reimp
-    [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
-    ///     \since 4.1
     /// 
-    ///     Returns the position of the drop indicator in relation to the closest item.
+    [event] input_method_event(event: *InputMethodEventType),
+    /// 
+    [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
+    /// 
+    /// Returns the position of the drop indicator in relation to the closest item.
     drop_indicator_position() -> AbstractItemView::DropIndicatorPosition,
-    ///     \since 5.2
-    ///     \reimp
+    /// 
     [event] viewport_size_hint() -> Size,
 }
 

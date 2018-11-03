@@ -1,31 +1,35 @@
-///     \class QCommandLinkButton
-///     \since 4.4
-///     \brief The QCommandLinkButton widget provides a Vista style command link button.
 /// 
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// The command link is a new control that was introduced by Windows Vista. It's
+/// intended use is similar to that of a radio button in that it is used to choose
+/// between a set of mutually exclusive options. Command link buttons should not
+/// be used by themselves but rather as an alternative to radio buttons in
+/// Wizards and dialogs and makes pressing the button redundant.
+/// The appearance is generally similar to that of a flat pushbutton, but
+/// it allows for a descriptive text in addition to the normal button text.
+/// By default it will also carry an arrow icon, indicating that pressing the
+/// control will open another window or page.
 /// 
-///     The command link is a new control that was introduced by Windows Vista. It's
-///     intended use is similar to that of a radio button in that it is used to choose
-///     between a set of mutually exclusive options. Command link buttons should not
-///     be used by themselves but rather as an alternative to radio buttons in
-///     Wizards and dialogs and makes pressing the "next" button redundant.
-///     The appearance is generally similar to that of a flat pushbutton, but
-///     it allows for a descriptive text in addition to the normal button text.
-///     By default it will also carry an arrow icon, indicating that pressing the
-///     control will open another window or page.
-/// 
-///     \sa QPushButton, QRadioButton
+/// **See also:** QPushButton
+/// QRadioButton
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct CommandLinkButton : PushButton {
+    /// 
+    /// Setting this property will set a descriptive text on the
+    /// button, complementing the text label. This will usually
+    /// be displayed in a smaller font than the primary text.
     description() -> String,
     set_description(description: String),
+    /// 
     [event] size_hint() -> Size,
+    /// 
     [event] height_for_width(arg0: i32) -> i32,
+    /// 
     [event] minimum_size_hint() -> Size,
+    /// 
     [event] event(e: *EventType) -> bool,
+    /// 
     [event] paint_event(arg0: *PaintEventType),
 }
 

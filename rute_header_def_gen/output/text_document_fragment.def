@@ -1,67 +1,68 @@
-///     \class QTextDocumentFragment
-///     \reentrant
 /// 
-///     \inmodule QtGui
-///     \brief The QTextDocumentFragment class represents a piece of formatted text
-///     from a QTextDocument.
+/// A QTextDocumentFragment is a fragment of rich text, that can be inserted into
+/// a QTextDocument. A document fragment can be created from a
+/// QTextDocument, from a QTextCursor's selection, or from another
+/// document fragment. Document fragments can also be created by the
+/// static functions, fromPlainText() and fromHtml().
 /// 
-///     \ingroup richtext-processing
-///     \ingroup shared
-/// 
-///     A QTextDocumentFragment is a fragment of rich text, that can be inserted into
-///     a QTextDocument. A document fragment can be created from a
-///     QTextDocument, from a QTextCursor's selection, or from another
-///     document fragment. Document fragments can also be created by the
-///     static functions, fromPlainText() and fromHtml().
-/// 
-///     The contents of a document fragment can be obtained as plain text
-///     by using the toPlainText() function, or it can be obtained as HTML
-///     with toHtml().
+/// The contents of a document fragment can be obtained as plain text
+/// by using the toPlainText() function, or it can be obtained as HTML
+/// with toHtml().
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct TextDocumentFragment {
-    ///     Returns \c true if the fragment is empty; otherwise returns \c false.
+    /// 
+    /// Returns `true` if the fragment is empty; otherwise returns `false.`
     is_empty() -> bool,
-    ///     Returns the document fragment's text as plain text (i.e. with no
-    ///     formatting information).
     /// 
-    ///     \sa toHtml()
+    /// Returns the document fragment's text as plain text (i.e. with no
+    /// formatting information).
+    /// 
+    /// **See also:** toHtml()
     to_plain_text() -> String,
-    ///     \since 4.2
     /// 
-    ///     Returns the contents of the document fragment as HTML,
-    ///     using the specified \a encoding (e.g., "UTF-8", "ISO 8859-1").
+    /// Returns the contents of the document fragment as HTML,
+    /// using the specified *encoding* (e.g., , ).
     /// 
-    ///     \sa toPlainText(), QTextDocument::toHtml(), QTextCodec
+    /// **See also:** toPlainText()
+    /// QTextDocument::toHtml()
+    /// QTextCodec
     to_html(encoding: &ByteArrayType) -> String,
-    ///     Returns a document fragment that contains the given \a plainText.
     /// 
-    ///     When inserting such a fragment into a QTextDocument the current char format of
-    ///     the QTextCursor used for insertion is used as format for the text.
+    /// Returns a document fragment that contains the given *plainText.*
+    /// 
+    /// When inserting such a fragment into a QTextDocument the current char format of
+    /// the QTextCursor used for insertion is used as format for the text.
     [static] from_plain_text(plain_text: String) -> TextDocumentFragment,
-    ///     \fn QTextDocumentFragment QTextDocumentFragment::fromHtml(const QString &text, const QTextDocument *resourceProvider)
-    ///     \since 4.2
     /// 
-    ///     Returns a QTextDocumentFragment based on the arbitrary piece of
-    ///     HTML in the given \a text. The formatting is preserved as much as
-    ///     possible; for example, "<b>bold</b>" will become a document
-    ///     fragment with the text "bold" with a bold character format.
+    /// Returns a QTextDocumentFragment based on the arbitrary piece of
+    /// HTML in the given *text.* The formatting is preserved as much as
+    /// possible; for example, will become a document
+    /// fragment with the text with a bold character format.
     /// 
-    ///     If the provided HTML contains references to external resources such as imported style sheets, then
-    ///     they will be loaded through the \a resourceProvider.
+    /// Returns a QTextDocumentFragment based on the arbitrary piece of
+    /// HTML in the given *text.* The formatting is preserved as much as
+    /// possible; for example, will become a document
+    /// fragment with the text with a bold character format.
+    /// 
+    /// If the provided HTML contains references to external resources such as imported style sheets, then
+    /// they will be loaded through the *resourceProvider.*
     [static] from_html(html: String) -> TextDocumentFragment,
-    ///     \fn QTextDocumentFragment QTextDocumentFragment::fromHtml(const QString &text, const QTextDocument *resourceProvider)
-    ///     \since 4.2
     /// 
-    ///     Returns a QTextDocumentFragment based on the arbitrary piece of
-    ///     HTML in the given \a text. The formatting is preserved as much as
-    ///     possible; for example, "<b>bold</b>" will become a document
-    ///     fragment with the text "bold" with a bold character format.
+    /// Returns a QTextDocumentFragment based on the arbitrary piece of
+    /// HTML in the given *text.* The formatting is preserved as much as
+    /// possible; for example, will become a document
+    /// fragment with the text with a bold character format.
     /// 
-    ///     If the provided HTML contains references to external resources such as imported style sheets, then
-    ///     they will be loaded through the \a resourceProvider.
+    /// Returns a QTextDocumentFragment based on the arbitrary piece of
+    /// HTML in the given *text.* The formatting is preserved as much as
+    /// possible; for example, will become a document
+    /// fragment with the text with a bold character format.
+    /// 
+    /// If the provided HTML contains references to external resources such as imported style sheets, then
+    /// they will be loaded through the *resourceProvider.*
     [static] from_html(html: String, resource_provider: *TextDocumentType) -> TextDocumentFragment,
 }
 

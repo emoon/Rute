@@ -1,23 +1,20 @@
-///     \class QOpenGLContextGroup
-///     \since 5.0
-///     \brief The QOpenGLContextGroup class represents a group of contexts sharing
-///     OpenGL resources.
-///     \inmodule QtGui
 /// 
-///     QOpenGLContextGroup is automatically created and managed by QOpenGLContext
-///     instances.  Its purpose is to identify all the contexts that are sharing
-///     resources.
+/// QOpenGLContextGroup is automatically created and managed by QOpenGLContext
+/// instances. Its purpose is to identify all the contexts that are sharing
+/// resources.
 /// 
-///     \sa QOpenGLContext::shareGroup()
+/// **See also:** QOpenGLContext::shareGroup()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct OpenGLContextGroup : Object {
-    ///     Returns all the QOpenGLContext objects in this share group.
-    shares() -> [OpenGLContext?],
-    ///     Returns the QOpenGLContextGroup corresponding to the current context.
     /// 
-    ///     \sa QOpenGLContext::currentContext()
+    /// Returns all the QOpenGLContext objects in this share group.
+    shares() -> [OpenGLContext?],
+    /// 
+    /// Returns the QOpenGLContextGroup corresponding to the current context.
+    /// 
+    /// **See also:** QOpenGLContext::currentContext()
     [static] current_context_group() -> OpenGLContextGroup?,
 }
 

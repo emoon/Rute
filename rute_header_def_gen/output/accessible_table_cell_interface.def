@@ -1,23 +1,33 @@
-///     \class QAccessibleTableCellInterface
-///     \inmodule QtGui
-///     \ingroup accessibility
 /// 
-///     \brief The QAccessibleTableCellInterface class implements support for
-///     the IAccessibleTable2 Cell interface.
-/// 
-///     \l{IAccessible2 Specification}
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleTableCellInterface {
+    /// 
+    /// Returns a boolean value indicating whether this cell is selected.
     [event] is_selected() -> bool,
+    /// 
+    /// Returns the column headers as an array of cell accessibles.
     [event] column_header_cells() -> [AccessibleInterface?],
+    /// 
+    /// Returns the row headers as an array of cell accessibles.
     [event] row_header_cells() -> [AccessibleInterface?],
+    /// 
+    /// Translates this cell accessible into the corresponding column index.
     [event] column_index() -> i32,
+    /// 
+    /// Translates this cell accessible into the corresponding row index.
     [event] row_index() -> i32,
+    /// 
+    /// Returns the number of columns occupied by this cell accessible.
     [event] column_extent() -> i32,
+    /// 
+    /// Returns the number of rows occupied by this cell accessible.
     [event] row_extent() -> i32,
+    /// 
+    /// Returns the QAccessibleInterface of the table containing this cell.
     [event] table() -> AccessibleInterface?,
 }
 

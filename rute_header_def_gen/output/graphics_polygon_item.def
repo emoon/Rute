@@ -1,25 +1,24 @@
-///     \class QGraphicsPolygonItem
-///     \brief The QGraphicsPolygonItem class provides a polygon item that you
-///     can add to a QGraphicsScene.
-///     \since 4.2
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     To set the item's polygon, pass a QPolygonF to
-///     QGraphicsPolygonItem's constructor, or call the setPolygon()
-///     function. The polygon() function returns the current polygon.
+/// To set the item's polygon, pass a QPolygonF to
+/// QGraphicsPolygonItem's constructor, or call the setPolygon()
+/// function. The polygon() function returns the current polygon.
 /// 
-///     \image graphicsview-polygonitem.png
+/// ![graphicsview-polygonitem.png](graphicsview-polygonitem.png)
 /// 
-///     QGraphicsPolygonItem uses the polygon and the pen width to provide
-///     a reasonable implementation of boundingRect(), shape(), and
-///     contains(). The paint() function draws the polygon using the
-///     item's associated pen and brush, which you can set by calling the
-///     setPen() and setBrush() functions.
+/// QGraphicsPolygonItem uses the polygon and the pen width to provide
+/// a reasonable implementation of boundingRect(), shape(), and
+/// contains(). The paint() function draws the polygon using the
+/// item's associated pen and brush, which you can set by calling the
+/// setPen() and setBrush() functions.
 /// 
-///     \sa QGraphicsPathItem, QGraphicsRectItem, QGraphicsEllipseItem,
-///     QGraphicsTextItem, QGraphicsLineItem, QGraphicsPixmapItem, {Graphics
-///     View Framework}
+/// **See also:** QGraphicsPathItem
+/// QGraphicsRectItem
+/// QGraphicsEllipseItem
+/// QGraphicsTextItem
+/// QGraphicsLineItem
+/// QGraphicsPixmapItem
+/// {Graphics
+/// View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -29,44 +28,49 @@ enum GraphicsPolygonItemFixMeEnums {
 }
 
 struct GraphicsPolygonItem : AbstractGraphicsShapeItem {
-    ///     Returns the item's polygon, or an empty polygon if no polygon
-    ///     has been set.
     /// 
-    ///     \sa setPolygon()
+    /// Returns the item's polygon, or an empty polygon if no polygon
+    /// has been set.
+    /// 
+    /// **See also:** setPolygon()
     polygon() -> PolygonF,
-    ///     Sets the item's polygon to be the given \a polygon.
     /// 
-    ///     \sa polygon()
+    /// Sets the item's polygon to be the given *polygon.*
+    /// 
+    /// **See also:** polygon()
     set_polygon(polygon: &PolygonFType),
-    ///      Returns the fill rule of the polygon. The default fill rule is
-    ///      Qt::OddEvenFill.
     /// 
-    ///      \sa setFillRule(), QPainterPath::fillRule(), QPainter::drawPolygon()
+    /// Returns the fill rule of the polygon. The default fill rule is
+    /// Qt::OddEvenFill.
+    /// 
+    /// **See also:** setFillRule()
+    /// QPainterPath::fillRule()
+    /// QPainter::drawPolygon()
     fill_rule() -> Rute::FillRule,
-    ///      Sets the fill rule of the polygon to \a rule. The default fill rule is
-    ///      Qt::OddEvenFill.
     /// 
-    ///      \sa fillRule(), QPainterPath::fillRule(), QPainter::drawPolygon()
+    /// Sets the fill rule of the polygon to *rule.* The default fill rule is
+    /// Qt::OddEvenFill.
+    /// 
+    /// **See also:** fillRule()
+    /// QPainterPath::fillRule()
+    /// QPainter::drawPolygon()
     set_fill_rule(rule: Rute::FillRule),
-    ///     \reimp
+    /// 
     [event] bounding_rect() -> RectF,
-    ///     \reimp
+    /// 
     [event] shape() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] contains(point: &PointFType) -> bool,
-    ///     \reimp
+    /// 
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
-    ///     \reimp
+    /// 
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
-    ///     \reimp
+    /// 
     [event] opaque_area() -> PainterPath,
-    ///     \reimp
+    /// 
     [event] type() -> i32,
-    ///     \internal
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
-    ///     \internal
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
-    ///     \internal
     [event] extension(variant: &VariantType) -> Variant,
 }
 

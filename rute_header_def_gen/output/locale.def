@@ -858,670 +858,1377 @@ enum QuotationStyle {
 
 struct Locale {
     qt_check_for_qgadget_macro(),
+    /// 
+    /// Swaps locale *other* with this locale. This operation is very fast and
+    /// never fails.
     swap(other: &LocaleType),
-    ///     Returns the language of this locale.
     /// 
-    ///     \sa script(), country(), languageToString(), bcp47Name()
+    /// Returns the language of this locale.
+    /// 
+    /// **See also:** script()
+    /// country()
+    /// languageToString()
+    /// bcp47Name()
+    /// 
+    /// Returns a QString containing the name of *language.*
+    /// 
+    /// **See also:** countryToString()
+    /// scriptToString()
+    /// bcp47Name()
     language() -> Locale::Language,
-    ///     \since 4.8
     /// 
-    ///     Returns the script of this locale.
+    /// Returns the script of this locale.
     /// 
-    ///     \sa language(), country(), languageToString(), scriptToString(), bcp47Name()
+    /// **See also:** language()
+    /// country()
+    /// languageToString()
+    /// scriptToString()
+    /// bcp47Name()
+    /// 
+    /// Returns a QString containing the name of *script.*
+    /// 
+    /// **See also:** languageToString()
+    /// countryToString()
+    /// script()
+    /// bcp47Name()
     script() -> Locale::Script,
-    ///     Returns the language and country of this locale as a
-    ///     string of the form "language_country", where
-    ///     language is a lowercase, two-letter ISO 639 language code,
-    ///     and country is an uppercase, two- or three-letter ISO 3166 country code.
     /// 
-    ///     Note that even if QLocale object was constructed with an explicit script,
-    ///     name() will not contain it for compatibility reasons. Use bcp47Name() instead
-    ///     if you need a full locale name.
+    /// Returns the language and country of this locale as a
+    /// string of the form , where
+    /// language is a lowercase, two-letter ISO 639 language code,
+    /// and country is an uppercase, two- or three-letter ISO 3166 country code.
     /// 
-    ///     \sa QLocale(), language(), script(), country(), bcp47Name()
+    /// Note that even if QLocale object was constructed with an explicit script,
+    /// name() will not contain it for compatibility reasons. Use bcp47Name() instead
+    /// if you need a full locale name.
+    /// 
+    /// **See also:** QLocale()
+    /// language()
+    /// script()
+    /// country()
+    /// bcp47Name()
     name() -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns the dash-separated language, script and country (and possibly other BCP47 fields)
-    ///     of this locale as a string.
+    /// Returns the dash-separated language, script and country (and possibly other BCP47 fields)
+    /// of this locale as a string.
     /// 
-    ///     Unlike the uiLanguages() the returned value of the bcp47Name() represents
-    ///     the locale name of the QLocale data but not the language the user-interface
-    ///     should be in.
+    /// Unlike the uiLanguages() the returned value of the bcp47Name() represents
+    /// the locale name of the QLocale data but not the language the user-interface
+    /// should be in.
     /// 
-    ///     This function tries to conform the locale name to BCP47.
+    /// This function tries to conform the locale name to BCP47.
     /// 
-    ///     \sa language(), country(), script(), uiLanguages()
+    /// **See also:** language()
+    /// country()
+    /// script()
+    /// uiLanguages()
     bcp47_name() -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns a native name of the language for the locale. For example
-    ///     "Schwiizertüütsch" for Swiss-German locale.
+    /// Returns a native name of the language for the locale. For example
+    /// for Swiss-German locale.
     /// 
-    ///     \sa nativeCountryName(), languageToString()
+    /// **See also:** nativeCountryName()
+    /// languageToString()
     native_language_name() -> String,
-    ///     Returns the short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
     to_short(s: String, ok: *bool) -> short,
-    ///     Returns the unsigned short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
     to_u_short(s: String, ok: *bool) -> ushort,
-    ///     Returns the int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
     to_int(s: String, ok: *bool) -> i32,
-    ///     Returns the unsigned int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
     to_u_int(s: String, ok: *bool) -> uint,
-    ///     Returns the long long int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the long long int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toULongLong(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
     to_long_long(s: String, ok: *bool) -> i64,
-    ///     Returns the unsigned long long int represented by the localized
-    ///     string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toLongLong(), toInt(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
     to_u_long_long(s: String, ok: *bool) -> qulonglong,
-    ///     Returns the float represented by the localized string \a s, or 0.0
-    ///     if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toDouble(), toInt(), toString()
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     \since 5.10
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
     to_float(s: String, ok: *bool) -> f32,
-    ///     Returns the double represented by the localized string \a s, or
-    ///     0.0 if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
     /// 
-    ///     Unlike QString::toDouble(), this function does not fall back to
-    ///     the "C" locale if the string cannot be interpreted in this
-    ///     locale.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \snippet code/src_corelib_tools_qlocale.cpp 3-qstringview
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     Notice that the last conversion returns 1234.0, because '.' is the
-    ///     thousands group separator in the German locale.
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \sa toFloat(), toInt(), toString()
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
     /// 
-    ///     \since 5.10
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
     to_double(s: String, ok: *bool) -> double,
-    ///     Returns the short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
     to_short(s: &StringRefType, ok: *bool) -> short,
-    ///     Returns the unsigned short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
     to_u_short(s: &StringRefType, ok: *bool) -> ushort,
-    ///     Returns the int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
     to_int(s: &StringRefType, ok: *bool) -> i32,
-    ///     Returns the unsigned int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
     to_u_int(s: &StringRefType, ok: *bool) -> uint,
-    ///     Returns the long long int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the long long int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toULongLong(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
     to_long_long(s: &StringRefType, ok: *bool) -> i64,
-    ///     Returns the unsigned long long int represented by the localized
-    ///     string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toLongLong(), toInt(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
     to_u_long_long(s: &StringRefType, ok: *bool) -> qulonglong,
-    ///     Returns the float represented by the localized string \a s, or 0.0
-    ///     if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toDouble(), toInt(), toString()
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     \since 5.10
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
     to_float(s: &StringRefType, ok: *bool) -> f32,
-    ///     Returns the double represented by the localized string \a s, or
-    ///     0.0 if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
     /// 
-    ///     Unlike QString::toDouble(), this function does not fall back to
-    ///     the "C" locale if the string cannot be interpreted in this
-    ///     locale.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \snippet code/src_corelib_tools_qlocale.cpp 3-qstringview
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     Notice that the last conversion returns 1234.0, because '.' is the
-    ///     thousands group separator in the German locale.
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \sa toFloat(), toInt(), toString()
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
     /// 
-    ///     \since 5.10
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
     to_double(s: &StringRefType, ok: *bool) -> double,
-    ///     Returns the short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUShort()
+    /// toString()
+    /// 
     to_short(s: StringViewType, ok: *bool) -> short,
-    ///     Returns the unsigned short int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned short int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toShort(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toShort()
+    /// toString()
+    /// 
     to_u_short(s: StringViewType, ok: *bool) -> ushort,
-    ///     Returns the int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toUInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toUInt()
+    /// toString()
+    /// 
     to_int(s: StringViewType, ok: *bool) -> i32,
-    ///     Returns the unsigned int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toString()
+    /// 
     to_u_int(s: StringViewType, ok: *bool) -> uint,
-    ///     Returns the long long int represented by the localized string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the long long int represented by the localized string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toInt(), toULongLong(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toInt()
+    /// toULongLong()
+    /// toDouble()
+    /// toString()
+    /// 
     to_long_long(s: StringViewType, ok: *bool) -> i64,
-    ///     Returns the unsigned long long int represented by the localized
-    ///     string \a s.
     /// 
-    ///     If the conversion fails, the function returns 0.
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// If the conversion fails the function returns 0.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toLongLong(), toInt(), toDouble(), toString()
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \since 5.10
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toLongLong()
+    /// toInt()
+    /// toDouble()
+    /// toString()
+    /// 
     to_u_long_long(s: StringViewType, ok: *bool) -> qulonglong,
-    ///     Returns the float represented by the localized string \a s, or 0.0
-    ///     if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \sa toDouble(), toInt(), toString()
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     \since 5.10
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toDouble()
+    /// toInt()
+    /// toString()
+    /// 
     to_float(s: StringViewType, ok: *bool) -> f32,
-    ///     Returns the double represented by the localized string \a s, or
-    ///     0.0 if the conversion failed.
     /// 
-    ///     If \a ok is not \c nullptr, failure is reported by setting *\a{ok}
-    ///     to \c false, and success by setting *\a{ok} to \c true.
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
     /// 
-    ///     Unlike QString::toDouble(), this function does not fall back to
-    ///     the "C" locale if the string cannot be interpreted in this
-    ///     locale.
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
     /// 
-    ///     \snippet code/src_corelib_tools_qlocale.cpp 3-qstringview
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
     /// 
-    ///     Notice that the last conversion returns 1234.0, because '.' is the
-    ///     thousands group separator in the German locale.
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
     /// 
-    ///     This function ignores leading and trailing whitespace.
+    /// This function ignores leading and trailing whitespace.
     /// 
-    ///     \sa toFloat(), toInt(), toString()
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
     /// 
-    ///     \since 5.10
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** toFloat()
+    /// toInt()
+    /// toString()
+    /// 
     to_double(s: StringViewType, ok: *bool) -> double,
-    ///     \since 4.1
     /// 
-    ///     Returns the date format used for the current locale.
+    /// Returns the date format used for the current locale.
     /// 
-    ///     If \a format is LongFormat the format will be a long version.
-    ///     Otherwise it uses a shorter version.
+    /// If *format* is LongFormat the format will be a long version.
+    /// Otherwise it uses a shorter version.
     /// 
-    ///     \sa QDate::toString(), QDate::fromString()
+    /// **See also:** QDate::toString()
+    /// QDate::fromString()
     date_format(format: Locale::FormatType) -> String,
-    ///     \since 4.1
     /// 
-    ///     Returns the time format used for the current locale.
+    /// Returns the time format used for the current locale.
     /// 
-    ///     If \a format is LongFormat the format will be a long version.
-    ///     Otherwise it uses a shorter version.
+    /// If *format* is LongFormat the format will be a long version.
+    /// Otherwise it uses a shorter version.
     /// 
-    ///     \sa QTime::toString(), QTime::fromString()
+    /// **See also:** QTime::toString()
+    /// QTime::fromString()
     time_format(format: Locale::FormatType) -> String,
-    ///     \since 4.4
     /// 
-    ///     Returns the date time format used for the current locale.
+    /// Returns the date time format used for the current locale.
     /// 
-    ///     If \a format is ShortFormat the format will be a short version.
-    ///     Otherwise it uses a longer version.
+    /// If *format* is ShortFormat the format will be a short version.
+    /// Otherwise it uses a longer version.
     /// 
-    ///     \sa QDateTime::toString(), QDateTime::fromString()
+    /// **See also:** QDateTime::toString()
+    /// QDateTime::fromString()
     date_time_format(format: Locale::FormatType) -> String,
-    ///     \since 4.4
-    /// 
-    ///     Parses the date string given in \a string and returns the
-    ///     date. See QDate::fromString() for information on the expressions
-    ///     that can be used with this function.
-    /// 
-    ///     This function searches month names and the names of the days of
-    ///     the week in the current locale.
-    /// 
-    ///     If the date could not be parsed, returns an invalid date.
-    /// 
-    ///     \sa dateFormat(), toTime(), toDateTime(), QDate::fromString()
     to_date(string: String, arg0: Locale::FormatType) -> Date,
-    ///     \since 4.4
-    /// 
-    ///     Parses the time string given in \a string and returns the
-    ///     time. See QTime::fromString() for information on what is a valid
-    ///     format string.
-    /// 
-    ///     If the time could not be parsed, returns an invalid time.
-    /// 
-    ///     \sa timeFormat(), toDate(), toDateTime(), QTime::fromString()
     to_time(string: String, arg0: Locale::FormatType) -> Time,
-    ///     \since 4.4
-    /// 
-    ///     Parses the date/time string given in \a string and returns the
-    ///     time.  See QDateTime::fromString() for information on the expressions
-    ///     that can be used with this function.
-    /// 
-    ///     \note The month and day names used must be given in the user's local
-    ///     language.
-    /// 
-    ///     If the string could not be parsed, returns an invalid QDateTime.
-    /// 
-    ///     \sa dateTimeFormat(), toTime(), toDate(), QDateTime::fromString()
     to_date_time(string: String, format: Locale::FormatType) -> DateTime,
-    ///     \since 4.4
-    /// 
-    ///     Parses the date string given in \a string and returns the
-    ///     date. See QDate::fromString() for information on the expressions
-    ///     that can be used with this function.
-    /// 
-    ///     This function searches month names and the names of the days of
-    ///     the week in the current locale.
-    /// 
-    ///     If the date could not be parsed, returns an invalid date.
-    /// 
-    ///     \sa dateFormat(), toTime(), toDateTime(), QDate::fromString()
     to_date(string: String, format: String) -> Date,
-    ///     \since 4.4
-    /// 
-    ///     Parses the time string given in \a string and returns the
-    ///     time. See QTime::fromString() for information on what is a valid
-    ///     format string.
-    /// 
-    ///     If the time could not be parsed, returns an invalid time.
-    /// 
-    ///     \sa timeFormat(), toDate(), toDateTime(), QTime::fromString()
     to_time(string: String, format: String) -> Time,
-    ///     \since 4.4
-    /// 
-    ///     Parses the date/time string given in \a string and returns the
-    ///     time.  See QDateTime::fromString() for information on the expressions
-    ///     that can be used with this function.
-    /// 
-    ///     \note The month and day names used must be given in the user's local
-    ///     language.
-    /// 
-    ///     If the string could not be parsed, returns an invalid QDateTime.
-    /// 
-    ///     \sa dateTimeFormat(), toTime(), toDate(), QDateTime::fromString()
     to_date_time(string: String, format: String) -> DateTime,
-    ///     \since 4.1
     /// 
-    ///     Returns the decimal point character of this locale.
+    /// Returns the decimal point character of this locale.
     decimal_point() -> Char,
-    ///     \since 4.1
     /// 
-    ///     Returns the group separator character of this locale.
+    /// Returns the group separator character of this locale.
     group_separator() -> Char,
-    ///     \since 4.1
     /// 
-    ///     Returns the percent character of this locale.
+    /// Returns the percent character of this locale.
     percent() -> Char,
-    ///     \since 4.1
     /// 
-    ///     Returns the zero digit character of this locale.
+    /// Returns the zero digit character of this locale.
     zero_digit() -> Char,
-    ///     \since 4.1
     /// 
-    ///     Returns the negative sign character of this locale.
+    /// Returns the negative sign character of this locale.
     negative_sign() -> Char,
-    ///     \since 4.5
     /// 
-    ///     Returns the positive sign character of this locale.
+    /// Returns the positive sign character of this locale.
     positive_sign() -> Char,
-    ///     \since 4.1
     /// 
-    ///     Returns the exponential character of this locale.
+    /// Returns the exponential character of this locale.
     exponential() -> Char,
-    ///     \since 4.2
     /// 
-    ///     Returns the localized name of \a month, in the format specified
-    ///     by \a type.
+    /// Returns the localized name of *month,* in the format specified
+    /// by *type.*
     /// 
-    ///     \sa dayName(), standaloneMonthName()
+    /// **See also:** dayName()
+    /// standaloneMonthName()
     month_name(arg0: i32, format: Locale::FormatType) -> String,
-    ///     \since 4.5
     /// 
-    ///     Returns the localized name of \a month that is used as a
-    ///     standalone text, in the format specified by \a type.
+    /// Returns the localized name of *month* that is used as a
+    /// standalone text, in the format specified by *type.*
     /// 
-    ///     If the locale information doesn't specify the standalone month
-    ///     name then return value is the same as in monthName().
+    /// If the locale information doesn't specify the standalone month
+    /// name then return value is the same as in monthName().
     /// 
-    ///     \sa monthName(), standaloneDayName()
+    /// **See also:** monthName()
+    /// standaloneDayName()
     standalone_month_name(arg0: i32, format: Locale::FormatType) -> String,
-    ///     \since 4.2
     /// 
-    ///     Returns the localized name of the \a day (where 1 represents
-    ///     Monday, 2 represents Tuesday and so on), in the format specified
-    ///     by \a type.
+    /// Returns the localized name of the *day* (where 1 represents
+    /// Monday, 2 represents Tuesday and so on), in the format specified
+    /// by *type.*
     /// 
-    ///     \sa monthName(), standaloneDayName()
+    /// **See also:** monthName()
+    /// standaloneDayName()
     day_name(arg0: i32, format: Locale::FormatType) -> String,
-    ///     \since 4.5
     /// 
-    ///     Returns the localized name of the \a day (where 1 represents
-    ///     Monday, 2 represents Tuesday and so on) that is used as a
-    ///     standalone text, in the format specified by \a type.
+    /// Returns the localized name of the *day* (where 1 represents
+    /// Monday, 2 represents Tuesday and so on) that is used as a
+    /// standalone text, in the format specified by *type.*
     /// 
-    ///     If the locale information does not specify the standalone day
-    ///     name then return value is the same as in dayName().
+    /// If the locale information does not specify the standalone day
+    /// name then return value is the same as in dayName().
     /// 
-    ///     \sa dayName(), standaloneMonthName()
+    /// **See also:** dayName()
+    /// standaloneMonthName()
     standalone_day_name(arg0: i32, format: Locale::FormatType) -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns the first day of the week according to the current locale.
+    /// Returns the first day of the week according to the current locale.
     first_day_of_week() -> Rute::DayOfWeek,
-    ///     \since 4.8
     /// 
-    ///     Returns a list of days that are considered weekdays according to the current locale.
+    /// Returns a list of days that are considered weekdays according to the current locale.
     weekdays() -> List<Qt::DayOfWeek>,
-    ///     \since 4.5
     /// 
-    ///     Returns the localized name of the "AM" suffix for times specified using
-    ///     the conventions of the 12-hour clock.
+    /// Returns the localized name of the suffix for times specified using
+    /// the conventions of the 12-hour clock.
     /// 
-    ///     \sa pmText()
+    /// **See also:** pmText()
     am_text() -> String,
-    ///     \since 4.5
     /// 
-    ///     Returns the localized name of the "PM" suffix for times specified using
-    ///     the conventions of the 12-hour clock.
+    /// Returns the localized name of the suffix for times specified using
+    /// the conventions of the 12-hour clock.
     /// 
-    ///     \sa amText()
+    /// **See also:** amText()
     pm_text() -> String,
-    ///     \since 4.4
     /// 
-    ///     Returns the measurement system for the locale.
+    /// Returns the measurement system for the locale.
     measurement_system() -> Locale::MeasurementSystem,
-    ///   \since 4.7
     /// 
-    ///   Returns the text direction of the language.
+    /// Returns the text direction of the language.
     text_direction() -> Rute::LayoutDirection,
-    ///   \since 4.8
     /// 
-    ///   Returns an uppercase copy of \a str.
+    /// Returns an uppercase copy of *str.*
     /// 
-    ///   If Qt Core is using the ICU libraries, they will be used to perform
-    ///   the transformation according to the rules of the current locale.
-    ///   Otherwise the conversion may be done in a platform-dependent manner,
-    ///   with QString::toUpper() as a generic fallback.
+    /// If Qt Core is using the ICU libraries, they will be used to perform
+    /// the transformation according to the rules of the current locale.
+    /// Otherwise the conversion may be done in a platform-dependent manner,
+    /// with QString::toUpper() as a generic fallback.
     /// 
-    ///   \sa QString::toUpper()
+    /// **See also:** QString::toUpper()
     to_upper(str: String) -> String,
-    ///   \since 4.8
     /// 
-    ///   Returns a lowercase copy of \a str.
+    /// Returns a lowercase copy of *str.*
     /// 
-    ///   If Qt Core is using the ICU libraries, they will be used to perform
-    ///   the transformation according to the rules of the current locale.
-    ///   Otherwise the conversion may be done in a platform-dependent manner,
-    ///   with QString::toLower() as a generic fallback.
+    /// If Qt Core is using the ICU libraries, they will be used to perform
+    /// the transformation according to the rules of the current locale.
+    /// Otherwise the conversion may be done in a platform-dependent manner,
+    /// with QString::toLower() as a generic fallback.
     /// 
-    ///   \sa QString::toLower()
+    /// **See also:** QString::toLower()
     to_lower(str: String) -> String,
-    ///     \since 4.8
-    ///     Returns a currency symbol according to the \a format.
+    /// 
+    /// Returns a currency symbol according to the *format.*
     currency_symbol(arg0: Locale::CurrencySymbolFormat) -> String,
-    ///     \since 5.10
     /// 
-    ///     Converts a size in bytes to a human-readable localized string, comprising a
-    ///     number and a quantified unit. The quantifier is chosen such that the number
-    ///     is at least one, and as small as possible. For example if \a bytes is
-    ///     16384, \a precision is 2, and \a format is \l DataSizeIecFormat (the
-    ///     default), this function returns "16.00 KiB"; for 1330409069609 bytes it
-    ///     returns "1.21 GiB"; and so on. If \a format is \l DataSizeIecFormat or
-    ///     \l DataSizeTraditionalFormat, the given number of bytes is divided by a
-    ///     power of 1024, with result less than 1024; for \l DataSizeSIFormat, it is
-    ///     divided by a power of 1000, with result less than 1000.
-    ///     \c DataSizeIecFormat uses the new IEC standard quantifiers Ki, Mi and so on,
-    ///     whereas \c DataSizeSIFormat uses the older SI quantifiers k, M, etc., and
-    ///     \c DataSizeTraditionalFormat abuses them.
+    /// Converts a size in bytes to a human-readable localized string, comprising a
+    /// number and a quantified unit. The quantifier is chosen such that the number
+    /// is at least one, and as small as possible. For example if *bytes* is
+    /// 16384, *precision* is 2, and *format* is [DataSizeIecFormat](DataSizeIecFormat)
+    /// (the
+    /// default), this function returns ; for 1330409069609 bytes it
+    /// returns ; and so on. If *format* is [DataSizeIecFormat](DataSizeIecFormat)
+    /// or
+    /// [DataSizeTraditionalFormat,](DataSizeTraditionalFormat,)
+    /// the given number of bytes is divided by a
+    /// power of 1024, with result less than 1024; for [DataSizeSIFormat,](DataSizeSIFormat,)
+    /// it is
+    /// divided by a power of 1000, with result less than 1000.
+    /// `DataSizeIecFormat` uses the new IEC standard quantifiers Ki, Mi and so on,
+    /// whereas `DataSizeSIFormat` uses the older SI quantifiers k, M, etc., and
+    /// `DataSizeTraditionalFormat` abuses them.
     formatted_data_size(bytes: i64, precision: i32, format: Locale::DataSizeFormats) -> String,
-    ///     \since 4.8
     /// 
-    ///     Returns an ordered list of locale names for translation purposes in
-    ///     preference order (like "en-Latn-US", "en-US", "en").
+    /// Returns an ordered list of locale names for translation purposes in
+    /// preference order (like , , ).
     /// 
-    ///     The return value represents locale names that the user expects to see the
-    ///     UI translation in.
+    /// The return value represents locale names that the user expects to see the
+    /// UI translation in.
     /// 
-    ///     Most like you do not need to use this function directly, but just pass the
-    ///     QLocale object to the QTranslator::load() function.
+    /// Most like you do not need to use this function directly, but just pass the
+    /// QLocale object to the QTranslator::load() function.
     /// 
-    ///     The first item in the list is the most preferred one.
+    /// The first item in the list is the most preferred one.
     /// 
-    ///     \sa QTranslator, bcp47Name()
+    /// **See also:** QTranslator
+    /// bcp47Name()
     ui_languages() -> [String],
-    ///     \nonreentrant
     /// 
-    ///     Sets the global default locale to \a locale. These
-    ///     values are used when a QLocale object is constructed with
-    ///     no arguments. If this function is not called, the system's
-    ///     locale is used.
+    /// Sets the global default locale to *locale.* These
+    /// values are used when a QLocale object is constructed with
+    /// no arguments. If this function is not called, the system's
+    /// locale is used.
     /// 
-    ///     \warning In a multithreaded application, the default locale
-    ///     should be set at application startup, before any non-GUI threads
-    ///     are created.
+    /// **Warning**: In a multithreaded application, the default locale
+    /// should be set at application startup, before any non-GUI threads
+    /// are created.
     /// 
-    ///     \sa system(), c()
+    /// **See also:** system()
+    /// c()
     [static] set_default(locale: &LocaleType),
+    /// 
+    /// Returns a string that represents a join of a given *list* of strings with
+    /// a separator defined by the locale.
+    /// 
+    /// Returns the country of this locale.
+    /// 
+    /// **See also:** language()
+    /// script()
+    /// countryToString()
+    /// bcp47Name()
+    /// 
+    /// Returns a QString containing the name of *country.*
+    /// 
+    /// **See also:** languageToString()
+    /// scriptToString()
+    /// country()
+    /// bcp47Name()
+    /// 
+    /// Returns a QLocale object initialized to the locale.
+    /// 
+    /// **See also:** system()
+    /// 
+    /// Returns the list of countries that have entries for *language* in Qt's locale
+    /// database. If the result is an empty list, then *language* is not represented in
+    /// Qt's locale database.
+    /// 
+    /// **See also:** matchingLocales()
+    /// 
+    /// Returns a currency symbol according to the *format.*
     [static] c() -> Locale,
-    ///     Returns a QLocale object initialized to the system locale.
     /// 
-    ///     On Windows and Mac, this locale will use the decimal/grouping characters and date/time
-    ///     formats specified in the system configuration panel.
+    /// Returns a QLocale object initialized to the system locale.
     /// 
-    ///     \sa c()
+    /// On Windows and Mac, this locale will use the decimal/grouping characters and date/time
+    /// formats specified in the system configuration panel.
+    /// 
+    /// **See also:** c()
     [static] system() -> Locale,
+    /// 
+    /// Returns a list of valid locale objects that match the given *language,* *script* and *country.*
+    /// 
+    /// Getting a list of all locales:
+    /// QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
+    /// 
+    /// Getting a list of locales suitable for Russia:
+    /// QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::Russia);
     [static] matching_locales(language: Locale::Language, script: Locale::Script, country: Locale::Country) -> [Locale],
-    ///     \since 4.2
     /// 
-    ///     Sets the \a options related to number conversions for this
-    ///     QLocale instance.
+    /// Sets the *options* related to number conversions for this
+    /// QLocale instance.
     set_number_options(options: Locale::NumberOptions),
-    ///     \since 4.2
     /// 
-    ///     Returns the options related to number conversions for this
-    ///     QLocale instance.
+    /// Returns the options related to number conversions for this
+    /// QLocale instance.
     /// 
-    ///     By default, no options are set for the standard locales.
+    /// By default, no options are set for the standard locales.
     number_options() -> Locale::NumberOptions,
-    ///     \since 4.8
     /// 
-    ///     Returns a string that represents a join of a given \a list of strings with
-    ///     a separator defined by the locale.
+    /// Returns a string that represents a join of a given *list* of strings with
+    /// a separator defined by the locale.
     create_separated_list(strl: &[String]) -> String,
 }
 

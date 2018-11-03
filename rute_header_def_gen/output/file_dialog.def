@@ -1,85 +1,82 @@
-///   \class QFileDialog
-///   \brief The QFileDialog class provides a dialog that allow users to select files or directories.
-///   \ingroup standard-dialogs
-///   \inmodule QtWidgets
 /// 
-///   The QFileDialog class enables a user to traverse the file system in
-///   order to select one or many files or a directory.
+/// The QFileDialog class enables a user to traverse the file system in
+/// order to select one or many files or a directory.
 /// 
-///   The easiest way to create a QFileDialog is to use the static functions.
+/// The easiest way to create a QFileDialog is to use the static functions.
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 0
+/// In the above example, a modal QFileDialog is created using a static
+/// function. The dialog initially displays the contents of the
+/// directory, and displays files matching the patterns given in the
+/// string . The parent of the file dialog
+/// is set to *this,* and the window title is set to .
 /// 
-///   In the above example, a modal QFileDialog is created using a static
-///   function. The dialog initially displays the contents of the "/home/jana"
-///   directory, and displays files matching the patterns given in the
-///   string "Image Files (*.png *.jpg *.bmp)". The parent of the file dialog
-///   is set to \e this, and the window title is set to "Open Image".
+/// If you want to use multiple filters, separate each one with
+/// *two* semicolons. For example:
 /// 
-///   If you want to use multiple filters, separate each one with
-///   \e two semicolons. For example:
+/// You can create your own QFileDialog without using the static
+/// functions. By calling setFileMode(), you can specify what the user must
+/// select in the dialog:
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 1
+/// In the above example, the mode of the file dialog is set to
+/// AnyFile, meaning that the user can select any file, or even specify a
+/// file that doesn't exist. This mode is useful for creating a
+/// file dialog. Use ExistingFile if the user must select an
+/// existing file, or [Directory](Directory)
+/// if only a directory may be selected.
+/// See the [QFileDialog::FileMode](QFileDialog::FileMode)
+/// enum for the complete list of modes.
 /// 
-///   You can create your own QFileDialog without using the static
-///   functions. By calling setFileMode(), you can specify what the user must
-///   select in the dialog:
+/// The fileMode property contains the mode of operation for the dialog;
+/// this indicates what types of objects the user is expected to select.
+/// Use setNameFilter() to set the dialog's file filter. For example:
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 2
+/// In the above example, the filter is set to `"Images (*.png *.xpm *.jpg)"` ,
+/// this means that only files with the extension `png,` `xpm,`
+/// or `jpg` will be shown in the QFileDialog. You can apply
+/// several filters by using setNameFilters(). Use selectNameFilter() to select
+/// one of the filters you've given as the file dialog's default filter.
 /// 
-///   In the above example, the mode of the file dialog is set to
-///   AnyFile, meaning that the user can select any file, or even specify a
-///   file that doesn't exist. This mode is useful for creating a
-///   "Save As" file dialog. Use ExistingFile if the user must select an
-///   existing file, or \l Directory if only a directory may be selected.
-///   See the \l QFileDialog::FileMode enum for the complete list of modes.
+/// The file dialog has two view modes: [List](QFileDialog::)
+/// and
+/// [Detail](QFileDialog::)
 /// 
-///   The fileMode property contains the mode of operation for the dialog;
-///   this indicates what types of objects the user is expected to select.
-///   Use setNameFilter() to set the dialog's file filter. For example:
+/// [List](QFileDialog::)
+/// presents the contents of the current directory
+/// as a list of file and directory names. [Detail](QFileDialog::)
+/// also
+/// displays a list of file and directory names, but provides additional
+/// information alongside each name, such as the file size and modification
+/// date. Set the mode with setViewMode():
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 3
+/// The last important function you will need to use when creating your
+/// own file dialog is selectedFiles().
 /// 
-///   In the above example, the filter is set to \c{"Images (*.png *.xpm *.jpg)"},
-///   this means that only files with the extension \c png, \c xpm,
-///   or \c jpg will be shown in the QFileDialog. You can apply
-///   several filters by using setNameFilters(). Use selectNameFilter() to select
-///   one of the filters you've given as the file dialog's default filter.
+/// In the above example, a modal file dialog is created and shown. If
+/// the user clicked OK, the file they selected is put in `fileName.`
 /// 
-///   The file dialog has two view modes: \l{QFileDialog::}{List} and
-///   \l{QFileDialog::}{Detail}.
-///   \l{QFileDialog::}{List} presents the contents of the current directory
-///   as a list of file and directory names. \l{QFileDialog::}{Detail} also
-///   displays a list of file and directory names, but provides additional
-///   information alongside each name, such as the file size and modification
-///   date. Set the mode with setViewMode():
+/// The dialog's working directory can be set with setDirectory().
+/// Each file in the current directory can be selected using
+/// the selectFile() function.
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 4
+/// The [Standard Dialogs](dialogs/standarddialogs)
+/// example shows
+/// how to use QFileDialog as well as other built-in Qt dialogs.
 /// 
-///   The last important function you will need to use when creating your
-///   own file dialog is selectedFiles().
+/// By default, a platform-native file dialog will be used if the platform has
+/// one. In that case, the widgets which would otherwise be used to construct the
+/// dialog will not be instantiated, so related accessors such as layout() and
+/// itemDelegate() will return null. You can set the [DontUseNativeDialog](DontUseNativeDialog)
+/// option to
+/// ensure that the widget-based implementation will be used instead of the
+/// native dialog.
 /// 
-///   \snippet code/src_gui_dialogs_qfiledialog.cpp 5
-/// 
-///   In the above example, a modal file dialog is created and shown. If
-///   the user clicked OK, the file they selected is put in \c fileName.
-/// 
-///   The dialog's working directory can be set with setDirectory().
-///   Each file in the current directory can be selected using
-///   the selectFile() function.
-/// 
-///   The \l{dialogs/standarddialogs}{Standard Dialogs} example shows
-///   how to use QFileDialog as well as other built-in Qt dialogs.
-/// 
-///   By default, a platform-native file dialog will be used if the platform has
-///   one. In that case, the widgets which would otherwise be used to construct the
-///   dialog will not be instantiated, so related accessors such as layout() and
-///   itemDelegate() will return null. You can set the \l DontUseNativeDialog option to
-///   ensure that the widget-based implementation will be used instead of the
-///   native dialog.
-/// 
-///   \sa QDir, QFileInfo, QFile, QColorDialog, QFontDialog, {Standard Dialogs Example},
-///       {Application Example}
+/// **See also:** QDir
+/// QFileInfo
+/// QFile
+/// QColorDialog
+/// QFontDialog
+/// {Standard Dialogs Example}
+/// {Application Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -126,396 +123,879 @@ enum Option {
 }
 
 struct FileDialog : Dialog {
-    ///     Sets the file dialog's current \a directory.
     /// 
-    ///     \note On iOS, if you set \a directory to \l{QStandardPaths::standardLocations()}
-    ///         {QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).last()},
-    ///         a native image picker dialog will be used for accessing the user's photo album.
-    ///         The filename returned can be loaded using QFile and related APIs.
-    ///         For this to be enabled, the Info.plist assigned to QMAKE_INFO_PLIST in the
-    ///         project file must contain the key \c NSPhotoLibraryUsageDescription. See
-    ///         Info.plist documentation from Apple for more information regarding this key.
-    ///         This feature was added in Qt 5.5.
+    /// **Overloads**
+    /// 
+    /// Sets the file dialog's current *directory.*
+    /// 
+    /// **Note**: On iOS, if you set *directory* to [QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).last()](QStandardPaths::standardLocations())
+    /// 
+    /// a native image picker dialog will be used for accessing the user's photo album.
+    /// The filename returned can be loaded using QFile and related APIs.
+    /// For this to be enabled, the Info.plist assigned to QMAKE_INFO_PLIST in the
+    /// project file must contain the key `NSPhotoLibraryUsageDescription.` See
+    /// Info.plist documentation from Apple for more information regarding this key.
+    /// This feature was added in Qt 5.5.
+    /// 
+    /// Sets the file dialog's current *directory* url.
+    /// 
+    /// **Note**: The non-native QFileDialog supports only local files.
+    /// 
+    /// **Note**: On Windows, it is possible to pass URLs representing
+    /// one of the *virtual folders* , such as or .
+    /// This is done by passing a QUrl using the scheme `clsid` followed
+    /// by the CLSID value with the curly braces removed. For example the URL
+    /// `clsid:374DE290-123F-4565-9164-39C4925E467B` denotes the download
+    /// location. For a complete list of possible values, see the MSDN documentation on
+    /// [KNOWNFOLDERID](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx)
+    /// 
+    /// This feature was added in Qt 5.5.
+    /// 
+    /// **See also:** QUuid
     set_directory(directory: String),
-    ///     Sets the file dialog's current \a directory.
     /// 
-    ///     \note On iOS, if you set \a directory to \l{QStandardPaths::standardLocations()}
-    ///         {QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).last()},
-    ///         a native image picker dialog will be used for accessing the user's photo album.
-    ///         The filename returned can be loaded using QFile and related APIs.
-    ///         For this to be enabled, the Info.plist assigned to QMAKE_INFO_PLIST in the
-    ///         project file must contain the key \c NSPhotoLibraryUsageDescription. See
-    ///         Info.plist documentation from Apple for more information regarding this key.
-    ///         This feature was added in Qt 5.5.
+    /// **Overloads**
+    /// 
+    /// Sets the file dialog's current *directory.*
+    /// 
+    /// **Note**: On iOS, if you set *directory* to [QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).last()](QStandardPaths::standardLocations())
+    /// 
+    /// a native image picker dialog will be used for accessing the user's photo album.
+    /// The filename returned can be loaded using QFile and related APIs.
+    /// For this to be enabled, the Info.plist assigned to QMAKE_INFO_PLIST in the
+    /// project file must contain the key `NSPhotoLibraryUsageDescription.` See
+    /// Info.plist documentation from Apple for more information regarding this key.
+    /// This feature was added in Qt 5.5.
+    /// 
+    /// Sets the file dialog's current *directory* url.
+    /// 
+    /// **Note**: The non-native QFileDialog supports only local files.
+    /// 
+    /// **Note**: On Windows, it is possible to pass URLs representing
+    /// one of the *virtual folders* , such as or .
+    /// This is done by passing a QUrl using the scheme `clsid` followed
+    /// by the CLSID value with the curly braces removed. For example the URL
+    /// `clsid:374DE290-123F-4565-9164-39C4925E467B` denotes the download
+    /// location. For a complete list of possible values, see the MSDN documentation on
+    /// [KNOWNFOLDERID](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx)
+    /// 
+    /// This feature was added in Qt 5.5.
+    /// 
+    /// **See also:** QUuid
     set_directory(directory: &DirType),
-    ///     Returns the directory currently being displayed in the dialog.
+    /// 
+    /// This signal is emitted for local operations when the user enters
+    /// a *directory.*
+    /// 
+    /// This signal is emitted when the user enters a *directory.*
+    /// 
+    /// 
+    /// Returns the directory currently being displayed in the dialog.
+    /// 
+    /// Returns the url of the directory currently being displayed in the dialog.
+    /// 
     directory() -> Dir,
-    ///     Sets the file dialog's current \a directory url.
     /// 
-    ///     \note The non-native QFileDialog supports only local files.
+    /// Sets the file dialog's current *directory* url.
     /// 
-    ///     \note On Windows, it is possible to pass URLs representing
-    ///     one of the \e {virtual folders}, such as "Computer" or "Network".
-    ///     This is done by passing a QUrl using the scheme \c clsid followed
-    ///     by the CLSID value with the curly braces removed. For example the URL
-    ///     \c clsid:374DE290-123F-4565-9164-39C4925E467B denotes the download
-    ///     location. For a complete list of possible values, see the MSDN documentation on
-    ///     \l{https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx}{KNOWNFOLDERID}.
-    ///     This feature was added in Qt 5.5.
+    /// **Note**: The non-native QFileDialog supports only local files.
     /// 
-    ///     \sa QUuid
-    ///     \since 5.2
+    /// **Note**: On Windows, it is possible to pass URLs representing
+    /// one of the *virtual folders* , such as or .
+    /// This is done by passing a QUrl using the scheme `clsid` followed
+    /// by the CLSID value with the curly braces removed. For example the URL
+    /// `clsid:374DE290-123F-4565-9164-39C4925E467B` denotes the download
+    /// location. For a complete list of possible values, see the MSDN documentation on
+    /// [KNOWNFOLDERID](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx)
+    /// 
+    /// This feature was added in Qt 5.5.
+    /// 
+    /// **See also:** QUuid
     set_directory_url(directory: &UrlType),
-    ///     Returns the url of the directory currently being displayed in the dialog.
     /// 
-    ///     \since 5.2
+    /// This signal is emitted when the user enters a *directory.*
+    /// 
+    /// 
+    /// Returns the url of the directory currently being displayed in the dialog.
+    /// 
     directory_url() -> Url,
-    ///     Selects the given \a filename in the file dialog.
     /// 
-    ///     \sa selectedFiles()
+    /// Selects the given *filename* in the file dialog.
+    /// 
+    /// **See also:** selectedFiles()
     select_file(filename: String),
-    ///     Returns a list of strings containing the absolute paths of the
-    ///     selected files in the dialog. If no files are selected, or
-    ///     the mode is not ExistingFiles or ExistingFile, selectedFiles() contains the current path in the viewport.
     /// 
-    ///     \sa selectedNameFilter(), selectFile()
+    /// Returns a list of strings containing the absolute paths of the
+    /// selected files in the dialog. If no files are selected, or
+    /// the mode is not ExistingFiles or ExistingFile, selectedFiles() contains the current path in the viewport.
+    /// 
+    /// **See also:** selectedNameFilter()
+    /// selectFile()
     selected_files() -> [String],
-    ///     Selects the given \a url in the file dialog.
     /// 
-    ///     \note The non-native QFileDialog supports only local files.
+    /// Selects the given *url* in the file dialog.
     /// 
-    ///     \sa selectedUrls()
-    ///     \since 5.2
+    /// **Note**: The non-native QFileDialog supports only local files.
+    /// 
+    /// **See also:** selectedUrls()
     select_url(url: &UrlType),
-    ///     Returns a list of urls containing the selected files in the dialog.
-    ///     If no files are selected, or the mode is not ExistingFiles or
-    ///     ExistingFile, selectedUrls() contains the current path in the viewport.
     /// 
-    ///     \sa selectedNameFilter(), selectUrl()
-    ///     \since 5.2
+    /// Returns a list of urls containing the selected files in the dialog.
+    /// If no files are selected, or the mode is not ExistingFiles or
+    /// ExistingFile, selectedUrls() contains the current path in the viewport.
+    /// 
+    /// **See also:** selectedNameFilter()
+    /// selectUrl()
     selected_urls() -> [Url],
-    ///     \property QFileDialog::nameFilterDetailsVisible
-    ///     \obsolete
-    ///     \brief This property holds whether the filter details is shown or not.
-    ///     \since 4.4
-    /// 
-    ///     When this property is \c true (the default), the filter details are shown
-    ///     in the combo box.  When the property is set to false, these are hidden.
-    /// 
-    ///     Use setOption(HideNameFilterDetails, !\e enabled) or
-    ///     !testOption(HideNameFilterDetails).
     set_name_filter_details_visible(enabled: bool),
     is_name_filter_details_visible() -> bool,
-    ///     \since 4.4
     /// 
-    ///     Sets the filter used in the file dialog to the given \a filter.
+    /// Sets the filter used in the file dialog to the given *filter.*
     /// 
-    ///     If \a filter contains a pair of parentheses containing one or more
-    ///     filename-wildcard patterns, separated by spaces, then only the
-    ///     text contained in the parentheses is used as the filter. This means
-    ///     that these calls are all equivalent:
+    /// If *filter* contains a pair of parentheses containing one or more
+    /// filename-wildcard patterns, separated by spaces, then only the
+    /// text contained in the parentheses is used as the filter. This means
+    /// that these calls are all equivalent:
     /// 
-    ///     \snippet code/src_gui_dialogs_qfiledialog.cpp 6
+    /// **See also:** setMimeTypeFilters()
+    /// setNameFilters()
     /// 
-    ///     \sa setMimeTypeFilters(), setNameFilters()
+    /// Sets the *filters* used in the file dialog.
+    /// 
+    /// Note that the filter ***.*** is not portable, because the historical
+    /// assumption that the file extension determines the file type is not
+    /// consistent on every operating system. It is possible to have a file with no
+    /// dot in its name (for example, `Makefile).` In a native Windows file
+    /// dialog, ***.*** will match such files, while in other types of file dialogs
+    /// it may not. So it is better to use ***** if you mean to select any file.
+    /// 
+    /// [setMimeTypeFilters()](setMimeTypeFilters())
+    /// has the advantage of providing all possible name
+    /// filters for each file type. For example, JPEG images have three possible
+    /// extensions; if your application can open such files, selecting the
+    /// `image/jpeg` mime type as a filter will allow you to open all of them.
     set_name_filter(filter: String),
-    ///     \since 4.4
     /// 
-    ///     Sets the \a filters used in the file dialog.
+    /// Sets the *filters* used in the file dialog.
     /// 
-    ///     Note that the filter \b{*.*} is not portable, because the historical
-    ///     assumption that the file extension determines the file type is not
-    ///     consistent on every operating system. It is possible to have a file with no
-    ///     dot in its name (for example, \c Makefile). In a native Windows file
-    ///     dialog, \b{*.*} will match such files, while in other types of file dialogs
-    ///     it may not. So it is better to use \b{*} if you mean to select any file.
+    /// Note that the filter ***.*** is not portable, because the historical
+    /// assumption that the file extension determines the file type is not
+    /// consistent on every operating system. It is possible to have a file with no
+    /// dot in its name (for example, `Makefile).` In a native Windows file
+    /// dialog, ***.*** will match such files, while in other types of file dialogs
+    /// it may not. So it is better to use ***** if you mean to select any file.
     /// 
-    ///     \snippet code/src_gui_dialogs_qfiledialog.cpp 7
-    /// 
-    ///     \l setMimeTypeFilters() has the advantage of providing all possible name
-    ///     filters for each file type. For example, JPEG images have three possible
-    ///     extensions; if your application can open such files, selecting the
-    ///     \c image/jpeg mime type as a filter will allow you to open all of them.
+    /// [setMimeTypeFilters()](setMimeTypeFilters())
+    /// has the advantage of providing all possible name
+    /// filters for each file type. For example, JPEG images have three possible
+    /// extensions; if your application can open such files, selecting the
+    /// `image/jpeg` mime type as a filter will allow you to open all of them.
     set_name_filters(filters: &[String]),
-    ///     \since 4.4
     /// 
-    ///     Returns the file type filters that are in operation on this file
-    ///     dialog.
+    /// Returns the file type filters that are in operation on this file
+    /// dialog.
     name_filters() -> [String],
-    ///     \since 4.4
     /// 
-    ///     Sets the current file type \a filter. Multiple filters can be
-    ///     passed in \a filter by separating them with semicolons or spaces.
+    /// Sets the current file type *filter.* Multiple filters can be
+    /// passed in *filter* by separating them with semicolons or spaces.
     /// 
-    ///     \sa setNameFilter(), setNameFilters(), selectedNameFilter()
+    /// **See also:** setNameFilter()
+    /// setNameFilters()
+    /// selectedNameFilter()
     select_name_filter(filter: String),
+    /// 
+    /// * * **Returns** The mimetype of the file that the user selected in the file dialog.
     selected_mime_type_filter() -> String,
-    ///     \since 4.4
     /// 
-    ///     Returns the filter that the user selected in the file dialog.
+    /// Returns the filter that the user selected in the file dialog.
     /// 
-    ///     \sa selectedFiles()
+    /// **See also:** selectedFiles()
     selected_name_filter() -> String,
-    ///     \since 5.2
     /// 
-    ///     Sets the \a filters used in the file dialog, from a list of MIME types.
+    /// Sets the *filters* used in the file dialog, from a list of MIME types.
     /// 
-    ///     Convenience method for setNameFilters().
-    ///     Uses QMimeType to create a name filter from the glob patterns and description
-    ///     defined in each MIME type.
+    /// Convenience method for setNameFilters().
+    /// Uses QMimeType to create a name filter from the glob patterns and description
+    /// defined in each MIME type.
     /// 
-    ///     Use application/octet-stream for the "All files (*)" filter, since that
-    ///     is the base MIME type for all files.
+    /// Use application/octet-stream for the filter, since that
+    /// is the base MIME type for all files.
     /// 
-    ///     Calling setMimeTypeFilters overrides any previously set name filters,
-    ///     and changes the return value of nameFilters().
+    /// Calling setMimeTypeFilters overrides any previously set name filters,
+    /// and changes the return value of nameFilters().
     /// 
-    ///     \snippet code/src_gui_dialogs_qfiledialog.cpp 13
     set_mime_type_filters(filters: &[String]),
-    ///     \since 5.2
     /// 
-    ///     Returns the MIME type filters that are in operation on this file
-    ///     dialog.
+    /// Returns the MIME type filters that are in operation on this file
+    /// dialog.
     mime_type_filters() -> [String],
-    ///     \since 5.2
     /// 
-    ///     Sets the current MIME type \a filter.
+    /// Sets the current MIME type *filter.*
     /// 
     select_mime_type_filter(filter: String),
-    ///     \since 4.4
     /// 
-    ///     Returns the filter that is used when displaying files.
+    /// This signal is emitted when the user selects a *filter.*
     /// 
-    ///     \sa setFilter()
+    /// Returns the filter that is used when displaying files.
+    /// 
+    /// **See also:** setFilter()
     filter() -> Dir::Filters,
-    ///     \since 4.4
     /// 
-    ///     Sets the filter used by the model to \a filters. The filter is used
-    ///     to specify the kind of files that should be shown.
+    /// Sets the filter used by the model to *filters.* The filter is used
+    /// to specify the kind of files that should be shown.
     /// 
-    ///     \sa filter()
+    /// **See also:** filter()
     set_filter(filters: Dir::Filters),
-    ///     \property QFileDialog::viewMode
-    ///     \brief the way files and directories are displayed in the dialog
-    /// 
-    ///     By default, the \c Detail mode is used to display information about
-    ///     files and directories.
-    /// 
-    ///     \sa ViewMode
     set_view_mode(mode: FileDialog::ViewMode),
+    /// 
+    /// By default, the `Detail` mode is used to display information about
+    /// files and directories.
+    /// 
+    /// **See also:** ViewMode
     view_mode() -> FileDialog::ViewMode,
-    ///     \property QFileDialog::fileMode
-    ///     \brief the file mode of the dialog
-    /// 
-    ///     The file mode defines the number and type of items that the user is
-    ///     expected to select in the dialog.
-    /// 
-    ///     By default, this property is set to AnyFile.
-    /// 
-    ///     This function will set the labels for the FileName and
-    ///     \l{QFileDialog::}{Accept} \l{DialogLabel}s. It is possible to set
-    ///     custom text after the call to setFileMode().
-    /// 
-    ///     \sa FileMode
     set_file_mode(mode: FileDialog::FileMode),
+    /// 
+    /// The file mode defines the number and type of items that the user is
+    /// expected to select in the dialog.
+    /// 
+    /// By default, this property is set to AnyFile.
+    /// 
+    /// This function will set the labels for the FileName and
+    /// [Accept](QFileDialog::)
+    /// [DialogLabel](DialogLabel)
+    /// s. It is possible to set
+    /// custom text after the call to setFileMode().
+    /// 
+    /// **See also:** FileMode
     file_mode() -> FileDialog::FileMode,
-    ///     \property QFileDialog::acceptMode
-    ///     \brief the accept mode of the dialog
-    /// 
-    ///     The action mode defines whether the dialog is for opening or saving files.
-    /// 
-    ///     By default, this property is set to \l{AcceptOpen}.
-    /// 
-    ///     \sa AcceptMode
     set_accept_mode(mode: FileDialog::AcceptMode),
+    /// 
+    /// The action mode defines whether the dialog is for opening or saving files.
+    /// 
+    /// By default, this property is set to [AcceptOpen](AcceptOpen)
+    /// 
+    /// 
+    /// **See also:** AcceptMode
     accept_mode() -> FileDialog::AcceptMode,
-    ///     \property QFileDialog::readOnly
-    ///     \obsolete
-    ///     \brief Whether the filedialog is read-only
-    /// 
-    ///     If this property is set to false, the file dialog will allow renaming,
-    ///     and deleting of files and directories and creating directories.
-    /// 
-    ///     Use setOption(ReadOnly, \e enabled) or testOption(ReadOnly) instead.
     set_read_only(enabled: bool),
     is_read_only() -> bool,
-    ///     \property QFileDialog::resolveSymlinks
-    ///     \obsolete
-    ///     \brief whether the filedialog should resolve shortcuts
-    /// 
-    ///     If this property is set to true, the file dialog will resolve
-    ///     shortcuts or symbolic links.
-    /// 
-    ///     Use setOption(DontResolveSymlinks, !\a enabled) or
-    ///     !testOption(DontResolveSymlinks).
     set_resolve_symlinks(enabled: bool),
+    /// 
+    /// If this property is set to true, the file dialog will resolve
+    /// shortcuts or symbolic links.
+    /// 
+    /// Use setOption(DontResolveSymlinks, ! *enabled)* or
+    /// !testOption(DontResolveSymlinks).
     resolve_symlinks() -> bool,
-    ///     \since 4.3
-    ///     Sets the \a urls that are located in the sidebar.
     /// 
-    ///     For instance:
+    /// Sets the *urls* that are located in the sidebar.
     /// 
-    ///     \snippet filedialogurls.cpp 0
+    /// For instance:
     /// 
-    ///     The file dialog will then look like this:
+    /// The file dialog will then look like this:
     /// 
-    ///     \image filedialogurls.png
+    /// ![filedialogurls.png](filedialogurls.png)
     /// 
-    ///     \sa sidebarUrls()
+    /// **See also:** sidebarUrls()
     set_sidebar_urls(urls: [UrlType]),
-    ///     \since 4.3
-    ///     Returns a list of urls that are currently in the sidebar
+    /// 
+    /// Returns a list of urls that are currently in the sidebar
     sidebar_urls() -> [Url],
-    ///     \since 4.3
-    ///     Saves the state of the dialog's layout, history and current directory.
     /// 
-    ///     Typically this is used in conjunction with QSettings to remember the size
-    ///     for a future session. A version number is stored as part of the data.
+    /// Saves the state of the dialog's layout, history and current directory.
+    /// 
+    /// Typically this is used in conjunction with QSettings to remember the size
+    /// for a future session. A version number is stored as part of the data.
     save_state() -> ByteArray,
-    ///     \since 4.3
-    ///     Restores the dialogs's layout, history and current directory to the \a state specified.
     /// 
-    ///     Typically this is used in conjunction with QSettings to restore the size
-    ///     from a past session.
+    /// Restores the dialogs's layout, history and current directory to the *state* specified.
     /// 
-    ///     Returns \c false if there are errors
+    /// Typically this is used in conjunction with QSettings to restore the size
+    /// from a past session.
+    /// 
+    /// Returns `false` if there are errors
     restore_state(state: &ByteArrayType) -> bool,
-    ///     \property QFileDialog::confirmOverwrite
-    ///     \obsolete
-    ///     \brief whether the filedialog should ask before accepting a selected file,
-    ///     when the accept mode is AcceptSave
-    /// 
-    ///     Use setOption(DontConfirmOverwrite, !\e enabled) or
-    ///     !testOption(DontConfirmOverwrite) instead.
     set_confirm_overwrite(enabled: bool),
+    /// 
+    /// Use setOption(DontConfirmOverwrite, ! *enabled)* or
+    /// !testOption(DontConfirmOverwrite) instead.
     confirm_overwrite() -> bool,
-    ///     \property QFileDialog::defaultSuffix
-    ///     \brief suffix added to the filename if no other suffix was specified
-    /// 
-    ///     This property specifies a string that will be added to the
-    ///     filename if it has no suffix already. The suffix is typically
-    ///     used to indicate the file type (e.g. "txt" indicates a text
-    ///     file).
-    /// 
-    ///     If the first character is a dot ('.'), it is removed.
     set_default_suffix(suffix: String),
+    /// 
+    /// This property specifies a string that will be added to the
+    /// filename if it has no suffix already. The suffix is typically
+    /// used to indicate the file type (e.g. indicates a text
+    /// file).
+    /// 
+    /// If the first character is a dot ('.'), it is removed.
     default_suffix() -> String,
-    ///     Sets the browsing history of the filedialog to contain the given
-    ///     \a paths.
+    /// 
+    /// Sets the browsing history of the filedialog to contain the given
+    /// *paths.*
     set_history(paths: &[String]),
-    ///     Returns the browsing history of the filedialog as a list of paths.
+    /// 
+    /// Returns the browsing history of the filedialog as a list of paths.
     history() -> [String],
-    ///     Sets the item delegate used to render items in the views in the
-    ///     file dialog to the given \a delegate.
     /// 
-    ///     \warning You should not share the same instance of a delegate between views.
-    ///     Doing so can cause incorrect or unintuitive editing behavior since each
-    ///     view connected to a given delegate may receive the \l{QAbstractItemDelegate::}{closeEditor()}
-    ///     signal, and attempt to access, modify or close an editor that has already been closed.
+    /// Sets the item delegate used to render items in the views in the
+    /// file dialog to the given *delegate.*
     /// 
-    ///     Note that the model used is QFileSystemModel. It has custom item data roles, which is
-    ///     described by the \l{QFileSystemModel::}{Roles} enum. You can use a QFileIconProvider if
-    ///     you only want custom icons.
+    /// **Warning**: You should not share the same instance of a delegate between views.
+    /// Doing so can cause incorrect or unintuitive editing behavior since each
+    /// view connected to a given delegate may receive the [closeEditor()](QAbstractItemDelegate::)
     /// 
-    ///     \sa itemDelegate(), setIconProvider(), QFileSystemModel
+    /// signal, and attempt to access, modify or close an editor that has already been closed.
+    /// 
+    /// Note that the model used is QFileSystemModel. It has custom item data roles, which is
+    /// described by the [Roles](QFileSystemModel::)
+    /// enum. You can use a QFileIconProvider if
+    /// you only want custom icons.
+    /// 
+    /// **See also:** itemDelegate()
+    /// setIconProvider()
+    /// QFileSystemModel
     set_item_delegate(delegate: *AbstractItemDelegateType),
-    ///   Returns the item delegate used to render the items in the views in the filedialog.
+    /// 
+    /// Returns the item delegate used to render the items in the views in the filedialog.
     item_delegate() -> AbstractItemDelegate?,
-    ///     Sets the icon provider used by the filedialog to the specified \a provider.
+    /// 
+    /// Sets the icon provider used by the filedialog to the specified *provider.*
     set_icon_provider(provider: *FileIconProviderType),
-    ///     Returns the icon provider used by the filedialog.
+    /// 
+    /// Returns the icon provider used by the filedialog.
     icon_provider() -> FileIconProvider?,
-    ///     Sets the \a text shown in the filedialog in the specified \a label.
+    /// 
+    /// Sets the *text* shown in the filedialog in the specified *label.*
     set_label_text(label: FileDialog::DialogLabel, text: String),
-    ///     Returns the text shown in the filedialog in the specified \a label.
+    /// 
+    /// Returns the text shown in the filedialog in the specified *label.*
     label_text(label: FileDialog::DialogLabel) -> String,
-    ///     \property QFileDialog::supportedSchemes
-    ///     \brief the URL schemes that the file dialog should allow navigating to.
-    ///     \since 5.6
-    /// 
-    ///     Setting this property allows to restrict the type of URLs the
-    ///     user will be able to select. It is a way for the application to declare
-    ///     the protocols it will support to fetch the file content. An empty list
-    ///     means that no restriction is applied (the default).
-    ///     Supported for local files ("file" scheme) is implicit and always enabled;
-    ///     it is not necessary to include it in the restriction.
     set_supported_schemes(schemes: &[String]),
+    /// 
+    /// Setting this property allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
     supported_schemes() -> [String],
-    ///     \since 4.3
     /// 
-    ///     Sets the model for the views to the given \a proxyModel.  This is useful if you
-    ///     want to modify the underlying model; for example, to add columns, filter
-    ///     data or add drives.
+    /// Sets the model for the views to the given *proxyModel.* This is useful if you
+    /// want to modify the underlying model; for example, to add columns, filter
+    /// data or add drives.
     /// 
-    ///     Any existing proxy model will be removed, but not deleted.  The file dialog
-    ///     will take ownership of the \a proxyModel.
+    /// Any existing proxy model will be removed, but not deleted. The file dialog
+    /// will take ownership of the *proxyModel.*
     /// 
-    ///     \sa proxyModel()
+    /// **See also:** proxyModel()
     set_proxy_model(model: *AbstractProxyModelType),
-    ///     Returns the proxy model used by the file dialog.  By default no proxy is set.
     /// 
-    ///     \sa setProxyModel()
+    /// Returns the proxy model used by the file dialog. By default no proxy is set.
+    /// 
+    /// **See also:** setProxyModel()
     proxy_model() -> AbstractProxyModel?,
-    ///     \since 4.5
-    ///     Sets the given \a option to be enabled if \a on is true; otherwise,
-    ///     clears the given \a option.
     /// 
-    ///     \sa options, testOption()
+    /// Sets the given *option* to be enabled if *on* is true; otherwise,
+    /// clears the given *option.*
+    /// 
+    /// **See also:** options
+    /// testOption()
     set_option(option: FileDialog::Option, on: bool),
-    ///     \since 4.5
     /// 
-    ///     Returns \c true if the given \a option is enabled; otherwise, returns
-    ///     false.
+    /// Returns `true` if the given *option* is enabled; otherwise, returns
+    /// false.
     /// 
-    ///     \sa options, setOption()
+    /// **See also:** options
+    /// setOption()
     test_option(option: FileDialog::Option) -> bool,
-    ///     \property QFileDialog::options
-    ///     \brief the various options that affect the look and feel of the dialog
-    ///     \since 4.5
-    /// 
-    ///     By default, all options are disabled.
-    /// 
-    ///     Options should be set before showing the dialog. Setting them while the
-    ///     dialog is visible is not guaranteed to have an immediate effect on the
-    ///     dialog (depending on the option and on the platform).
-    /// 
-    ///     \sa setOption(), testOption()
     set_options(options: FileDialog::Options),
+    /// 
+    /// By default, all options are disabled.
+    /// 
+    /// Options should be set before showing the dialog. Setting them while the
+    /// dialog is visible is not guaranteed to have an immediate effect on the
+    /// dialog (depending on the option and on the platform).
+    /// 
+    /// **See also:** setOption()
+    /// testOption()
     options() -> FileDialog::Options,
-    ///     \overload
     /// 
-    ///     \since 4.5
+    /// **Overloads**
     /// 
-    ///     This function connects one of its signals to the slot specified by \a receiver
-    ///     and \a member. The specific signal depends is filesSelected() if fileMode is
-    ///     ExistingFiles and fileSelected() if fileMode is anything else.
+    /// This function connects one of its signals to the slot specified by *receiver*
+    /// and *member.* The specific signal depends is filesSelected() if fileMode is
+    /// ExistingFiles and fileSelected() if fileMode is anything else.
     /// 
-    ///     The signal will be disconnected from the slot when the dialog is closed.
+    /// The signal will be disconnected from the slot when the dialog is closed.
     open(receiver: *ObjectType, member: *char),
-    ///     \reimp
+    /// 
     [event] set_visible(visible: bool),
+    /// 
+    /// When the selection changes for local operations and the dialog is
+    /// accepted, this signal is emitted with the (possibly empty)
+    /// selected *file.*
+    /// 
+    /// **See also:** currentChanged()
+    /// QDialog::Accepted
     [signal] file_selected(file: String),
+    /// 
+    /// When the selection changes for local operations and the dialog is
+    /// accepted, this signal is emitted with the (possibly empty) list
+    /// of *selected* files.
+    /// 
+    /// **See also:** currentChanged()
+    /// QDialog::Accepted
     [signal] files_selected(files: &[String]),
+    /// 
+    /// When the current file changes for local operations, this signal is
+    /// emitted with the new file name as the *path* parameter.
+    /// 
+    /// **See also:** filesSelected()
     [signal] current_changed(path: String),
+    /// 
+    /// This signal is emitted for local operations when the user enters
+    /// a *directory.*
     [signal] directory_entered(directory: String),
+    /// 
+    /// When the selection changes and the dialog is accepted, this signal is
+    /// emitted with the (possibly empty) selected *url.*
+    /// 
+    /// **See also:** currentUrlChanged()
+    /// QDialog::Accepted
     [signal] url_selected(url: &UrlType),
+    /// 
+    /// When the selection changes and the dialog is accepted, this signal is
+    /// emitted with the (possibly empty) list of selected *urls.*
+    /// 
+    /// **See also:** currentUrlChanged()
+    /// QDialog::Accepted
     [signal] urls_selected(urls: [UrlType]),
+    /// 
+    /// When the current file changes, this signal is emitted with the
+    /// new file URL as the *url* parameter.
+    /// 
+    /// **See also:** urlsSelected()
     [signal] current_url_changed(url: &UrlType),
+    /// 
+    /// This signal is emitted when the user enters a *directory.*
+    /// 
     [signal] directory_url_entered(directory: &UrlType),
+    /// 
+    /// This signal is emitted when the user selects a *filter.*
     [signal] filter_selected(filter: String),
+    /// 
+    /// This is a convenience static function that returns an existing file
+    /// selected by the user. If the user presses Cancel, it returns a null string.
+    /// 
+    /// The function creates a modal file dialog with the given *parent* widget.
+    /// If *parent* is not 0, the dialog will be shown centered over the parent
+    /// widget.
+    /// 
+    /// The file dialog's working directory will be set to *dir.* If *dir*
+    /// includes a file name, the file will be selected. Only files that match the
+    /// given *filter* are shown. The filter selected is set to *selectedFilter.*
+    /// The parameters *dir,* *selectedFilter,* and *filter* may be empty
+    /// strings. If you want multiple filters, separate them with ';;', for
+    /// example:
+    /// 
+    /// ```
+    /// "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    /// ```
+    /// 
+    /// The *options* argument holds various options about how to run the dialog,
+    /// see the QFileDialog::Option enum for more information on the flags you can
+    /// pass.
+    /// 
+    /// The dialog's caption is set to *caption.* If *caption* is not specified
+    /// then a default caption will be used.
+    /// 
+    /// On Windows, and MacOS , this static function will use the
+    /// native file dialog and not a QFileDialog.
+    /// 
+    /// On Windows the dialog will spin a blocking modal event loop that will not
+    /// dispatch any QTimers, and if *parent* is not 0 then it will position the
+    /// dialog just below the parent's title bar.
+    /// 
+    /// On Unix/X11, the normal behavior of the file dialog is to resolve and
+    /// follow symlinks. For example, if `/usr/tmp` is a symlink to `/var/tmp` ,
+    /// the file dialog will change to `/var/tmp` after entering `/usr/tmp` . If
+    /// *options* includes DontResolveSymlinks, the file dialog will treat
+    /// symlinks as regular directories.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog. If you
+    /// want to do this, you should create the dialog yourself using one of the
+    /// QFileDialog constructors.
+    /// 
+    /// **See also:** getOpenFileNames()
+    /// getSaveFileName()
+    /// getExistingDirectory()
+    /// 
+    /// This is a convenience static function that will return one or more existing
+    /// files selected by the user.
+    /// 
+    /// This function creates a modal file dialog with the given *parent* widget.
+    /// If *parent* is not 0, the dialog will be shown centered over the parent
+    /// widget.
+    /// 
+    /// The file dialog's working directory will be set to *dir.* If *dir*
+    /// includes a file name, the file will be selected. The filter is set to
+    /// *filter* so that only those files which match the filter are shown. The
+    /// filter selected is set to *selectedFilter.* The parameters *dir,*
+    /// *selectedFilter* and *filter* may be empty strings. If you need multiple
+    /// filters, separate them with ';;', for instance:
+    /// 
+    /// ```
+    /// "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    /// ```
+    /// 
+    /// The dialog's caption is set to *caption.* If *caption* is not specified
+    /// then a default caption will be used.
+    /// 
+    /// On Windows, and MacOS , this static function will use the
+    /// native file dialog and not a QFileDialog.
+    /// 
+    /// On Windows the dialog will spin a blocking modal event loop that will not
+    /// dispatch any QTimers, and if *parent* is not 0 then it will position the
+    /// dialog just below the parent's title bar.
+    /// 
+    /// On Unix/X11, the normal behavior of the file dialog is to resolve and
+    /// follow symlinks. For example, if `/usr/tmp` is a symlink to `/var/tmp` ,
+    /// the file dialog will change to `/var/tmp` after entering `/usr/tmp` .
+    /// The *options* argument holds various options about how to run the dialog,
+    /// see the QFileDialog::Option enum for more information on the flags you can
+    /// pass.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog. If you
+    /// want to do this, you should create the dialog yourself using one of the
+    /// QFileDialog constructors.
+    /// 
+    /// **See also:** getOpenFileName()
+    /// getSaveFileName()
+    /// getExistingDirectory()
     [static] get_open_file_name(parent: *WidgetType, caption: String, dir: String, filter: String, selected_filter: String, options: FileDialog::Options) -> String,
+    /// 
+    /// This is a convenience static function that returns an existing file
+    /// selected by the user. If the user presses Cancel, it returns an
+    /// empty url.
+    /// 
+    /// The function is used similarly to QFileDialog::getOpenFileName(). In
+    /// particular *parent,* *caption,* *dir,* *filter,* *selectedFilter*
+    /// and *options* are used in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getOpenFileName() comes from
+    /// the ability offered to the user to select a remote file. That's why
+    /// the return type and the type of *dir* is QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getOpenFileName()
+    /// getOpenFileUrls()
+    /// getSaveFileUrl()
+    /// getExistingDirectoryUrl()
+    /// 
+    /// This is a convenience static function that will return one or more existing
+    /// files selected by the user. If the user presses Cancel, it returns an
+    /// empty list.
+    /// 
+    /// The function is used similarly to QFileDialog::getOpenFileNames(). In
+    /// particular *parent,* *caption,* *dir,* *filter,* *selectedFilter*
+    /// and *options* are used in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getOpenFileNames() comes from
+    /// the ability offered to the user to select remote files. That's why
+    /// the return type and the type of *dir* are respectively QList<QUrl>
+    /// and QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getOpenFileNames()
+    /// getOpenFileUrl()
+    /// getSaveFileUrl()
+    /// getExistingDirectoryUrl()
     [static] get_open_file_url(parent: *WidgetType, caption: String, dir: &UrlType, filter: String, selected_filter: String, options: FileDialog::Options, supported_schemes: &[String]) -> Url,
+    /// 
+    /// This is a convenience static function that will return a file name selected
+    /// by the user. The file does not have to exist.
+    /// 
+    /// It creates a modal file dialog with the given *parent* widget. If
+    /// *parent* is not 0, the dialog will be shown centered over the parent
+    /// widget.
+    /// 
+    /// The file dialog's working directory will be set to *dir.* If *dir*
+    /// includes a file name, the file will be selected. Only files that match the
+    /// *filter* are shown. The filter selected is set to *selectedFilter.* The
+    /// parameters *dir,* *selectedFilter,* and *filter* may be empty strings.
+    /// Multiple filters are separated with ';;'. For instance:
+    /// 
+    /// ```
+    /// "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    /// ```
+    /// 
+    /// The *options* argument holds various options about how to run the dialog,
+    /// see the QFileDialog::Option enum for more information on the flags you can
+    /// pass.
+    /// 
+    /// The default filter can be chosen by setting *selectedFilter* to the
+    /// desired value.
+    /// 
+    /// The dialog's caption is set to *caption.* If *caption* is not specified,
+    /// a default caption will be used.
+    /// 
+    /// On Windows, and MacOS , this static function will use the
+    /// native file dialog and not a QFileDialog.
+    /// 
+    /// On Windows the dialog will spin a blocking modal event loop that will not
+    /// dispatch any QTimers, and if *parent* is not 0 then it will position the
+    /// dialog just below the parent's title bar. On MacOS , with its native file
+    /// dialog, the filter argument is ignored.
+    /// 
+    /// On Unix/X11, the normal behavior of the file dialog is to resolve and
+    /// follow symlinks. For example, if `/usr/tmp` is a symlink to `/var/tmp` ,
+    /// the file dialog will change to `/var/tmp` after entering `/usr/tmp` . If
+    /// *options* includes DontResolveSymlinks the file dialog will treat symlinks
+    /// as regular directories.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog. If you
+    /// want to do this, you should create the dialog yourself using one of the
+    /// QFileDialog constructors.
+    /// 
+    /// **See also:** getOpenFileName()
+    /// getOpenFileNames()
+    /// getExistingDirectory()
     [static] get_save_file_name(parent: *WidgetType, caption: String, dir: String, filter: String, selected_filter: String, options: FileDialog::Options) -> String,
+    /// 
+    /// This is a convenience static function that returns a file selected by
+    /// the user. The file does not have to exist. If the user presses Cancel,
+    /// it returns an empty url.
+    /// 
+    /// The function is used similarly to QFileDialog::getSaveFileName(). In
+    /// particular *parent,* *caption,* *dir,* *filter,* *selectedFilter*
+    /// and *options* are used in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getSaveFileName() comes from
+    /// the ability offered to the user to select a remote file. That's why
+    /// the return type and the type of *dir* is QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to save the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getSaveFileName()
+    /// getOpenFileUrl()
+    /// getOpenFileUrls()
+    /// getExistingDirectoryUrl()
     [static] get_save_file_url(parent: *WidgetType, caption: String, dir: &UrlType, filter: String, selected_filter: String, options: FileDialog::Options, supported_schemes: &[String]) -> Url,
+    /// 
+    /// This is a convenience static function that will return an existing
+    /// directory selected by the user.
+    /// 
+    /// This function creates a modal file dialog with the given *parent* widget.
+    /// If *parent* is not 0, the dialog will be shown centered over the parent
+    /// widget.
+    /// 
+    /// The dialog's working directory is set to *dir,* and the caption is set to
+    /// *caption.* Either of these may be an empty string in which case the
+    /// current directory and a default caption will be used respectively.
+    /// 
+    /// The *options* argument holds various options about how to run the dialog,
+    /// see the QFileDialog::Option enum for more information on the flags you can
+    /// pass. To ensure a native file dialog, [ShowDirsOnly](QFileDialog::)
+    /// must
+    /// be set.
+    /// 
+    /// On Windows and MacOS , this static function will use the
+    /// native file dialog and not a QFileDialog. However, the native Windows file
+    /// dialog does not support displaying files in the directory chooser. You need
+    /// to pass [DontUseNativeDialog](QFileDialog::)
+    /// to display files using a
+    /// QFileDialog.
+    /// 
+    /// On Unix/X11, the normal behavior of the file dialog is to resolve and
+    /// follow symlinks. For example, if `/usr/tmp` is a symlink to `/var/tmp` ,
+    /// the file dialog will change to `/var/tmp` after entering `/usr/tmp` . If
+    /// *options* includes DontResolveSymlinks, the file dialog will treat
+    /// symlinks as regular directories.
+    /// 
+    /// On Windows, the dialog will spin a blocking modal event loop that will not
+    /// dispatch any QTimers, and if *parent* is not 0 then it will position the
+    /// dialog just below the parent's title bar.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog. If you
+    /// want to do this, you should create the dialog yourself using one of the
+    /// QFileDialog constructors.
+    /// 
+    /// **See also:** getOpenFileName()
+    /// getOpenFileNames()
+    /// getSaveFileName()
+    /// 
+    /// This is a convenience static function that will return an existing
+    /// directory selected by the user. If the user presses Cancel, it
+    /// returns an empty url.
+    /// 
+    /// The function is used similarly to QFileDialog::getExistingDirectory().
+    /// In particular *parent,* *caption,* *dir* and *options* are used
+    /// in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getExistingDirectory() comes from
+    /// the ability offered to the user to select a remote directory. That's why
+    /// the return type and the type of *dir* is QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getExistingDirectory()
+    /// getOpenFileUrl()
+    /// getOpenFileUrls()
+    /// getSaveFileUrl()
     [static] get_existing_directory(parent: *WidgetType, caption: String, dir: String, options: FileDialog::Options) -> String,
+    /// 
+    /// This is a convenience static function that will return an existing
+    /// directory selected by the user. If the user presses Cancel, it
+    /// returns an empty url.
+    /// 
+    /// The function is used similarly to QFileDialog::getExistingDirectory().
+    /// In particular *parent,* *caption,* *dir* and *options* are used
+    /// in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getExistingDirectory() comes from
+    /// the ability offered to the user to select a remote directory. That's why
+    /// the return type and the type of *dir* is QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getExistingDirectory()
+    /// getOpenFileUrl()
+    /// getOpenFileUrls()
+    /// getSaveFileUrl()
     [static] get_existing_directory_url(parent: *WidgetType, caption: String, dir: &UrlType, options: FileDialog::Options, supported_schemes: &[String]) -> Url,
+    /// 
+    /// This is a convenience static function that will return one or more existing
+    /// files selected by the user.
+    /// 
+    /// This function creates a modal file dialog with the given *parent* widget.
+    /// If *parent* is not 0, the dialog will be shown centered over the parent
+    /// widget.
+    /// 
+    /// The file dialog's working directory will be set to *dir.* If *dir*
+    /// includes a file name, the file will be selected. The filter is set to
+    /// *filter* so that only those files which match the filter are shown. The
+    /// filter selected is set to *selectedFilter.* The parameters *dir,*
+    /// *selectedFilter* and *filter* may be empty strings. If you need multiple
+    /// filters, separate them with ';;', for instance:
+    /// 
+    /// ```
+    /// "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    /// ```
+    /// 
+    /// The dialog's caption is set to *caption.* If *caption* is not specified
+    /// then a default caption will be used.
+    /// 
+    /// On Windows, and MacOS , this static function will use the
+    /// native file dialog and not a QFileDialog.
+    /// 
+    /// On Windows the dialog will spin a blocking modal event loop that will not
+    /// dispatch any QTimers, and if *parent* is not 0 then it will position the
+    /// dialog just below the parent's title bar.
+    /// 
+    /// On Unix/X11, the normal behavior of the file dialog is to resolve and
+    /// follow symlinks. For example, if `/usr/tmp` is a symlink to `/var/tmp` ,
+    /// the file dialog will change to `/var/tmp` after entering `/usr/tmp` .
+    /// The *options* argument holds various options about how to run the dialog,
+    /// see the QFileDialog::Option enum for more information on the flags you can
+    /// pass.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog. If you
+    /// want to do this, you should create the dialog yourself using one of the
+    /// QFileDialog constructors.
+    /// 
+    /// **See also:** getOpenFileName()
+    /// getSaveFileName()
+    /// getExistingDirectory()
     [static] get_open_file_names(parent: *WidgetType, caption: String, dir: String, filter: String, selected_filter: String, options: FileDialog::Options) -> [String],
+    /// 
+    /// This is a convenience static function that will return one or more existing
+    /// files selected by the user. If the user presses Cancel, it returns an
+    /// empty list.
+    /// 
+    /// The function is used similarly to QFileDialog::getOpenFileNames(). In
+    /// particular *parent,* *caption,* *dir,* *filter,* *selectedFilter*
+    /// and *options* are used in the exact same way.
+    /// 
+    /// The main difference with QFileDialog::getOpenFileNames() comes from
+    /// the ability offered to the user to select remote files. That's why
+    /// the return type and the type of *dir* are respectively QList<QUrl>
+    /// and QUrl.
+    /// 
+    /// The *supportedSchemes* argument allows to restrict the type of URLs the
+    /// user will be able to select. It is a way for the application to declare
+    /// the protocols it will support to fetch the file content. An empty list
+    /// means that no restriction is applied (the default).
+    /// Supported for local files ("file" scheme) is implicit and always enabled;
+    /// it is not necessary to include it in the restriction.
+    /// 
+    /// When possible, this static function will use the native file dialog and
+    /// not a QFileDialog. On platforms which don't support selecting remote
+    /// files, Qt will allow to select only local files.
+    /// 
+    /// **See also:** getOpenFileNames()
+    /// getOpenFileUrl()
+    /// getSaveFileUrl()
+    /// getExistingDirectoryUrl()
     [static] get_open_file_urls(parent: *WidgetType, caption: String, dir: &UrlType, filter: String, selected_filter: String, options: FileDialog::Options, supported_schemes: &[String]) -> [Url],
-    ///  \reimp
+    /// 
     [event] done(result: i32),
-    ///  \reimp
+    /// 
+    /// The action mode defines whether the dialog is for opening or saving files.
+    /// 
+    /// By default, this property is set to [AcceptOpen](AcceptOpen)
+    /// 
+    /// 
+    /// **See also:** AcceptMode
+    /// 
     [event] accept(),
-    ///     \reimp
+    /// 
     [event] change_event(e: *EventType),
 }
 

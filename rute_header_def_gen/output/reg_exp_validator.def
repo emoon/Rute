@@ -1,58 +1,64 @@
-///     \class QRegExpValidator
-///     \brief The QRegExpValidator class is used to check a string
-///     against a regular expression.
-///     \inmodule QtGui
 /// 
-///     QRegExpValidator uses a regular expression (regexp) to
-///     determine whether an input string is \l Acceptable, \l
-///     Intermediate, or \l Invalid. The regexp can either be supplied
-///     when the QRegExpValidator is constructed, or at a later time.
+/// QRegExpValidator uses a regular expression (regexp) to
+/// determine whether an input string is [Acceptable,](Acceptable,)
+/// [Intermediate,](Intermediate,)
+/// or [Invalid.](Invalid.)
+/// The regexp can either be supplied
+/// when the QRegExpValidator is constructed, or at a later time.
 /// 
-///     When QRegExpValidator determines whether a string is \l Acceptable
-///     or not, the regexp is treated as if it begins with the start of string
-///     assertion (\b{^}) and ends with the end of string assertion
-///     (\b{$}); the match is against the entire input string, or from
-///     the given position if a start position greater than zero is given.
+/// When QRegExpValidator determines whether a string is [Acceptable](Acceptable)
 /// 
-///     If a string is a prefix of an \l Acceptable string, it is considered
-///     \l Intermediate. For example, "" and "A" are \l Intermediate for the
-///     regexp \b{[A-Z][0-9]} (whereas "_" would be \l Invalid).
+/// or not, the regexp is treated as if it begins with the start of string
+/// assertion ( **^** ) and ends with the end of string assertion
+/// ( **$** ); the match is against the entire input string, or from
+/// the given position if a start position greater than zero is given.
 /// 
-///     For a brief introduction to Qt's regexp engine, see \l QRegExp.
+/// If a string is a prefix of an [Acceptable](Acceptable)
+/// string, it is considered
+/// [Intermediate.](Intermediate.)
+/// For example, and are [Intermediate](Intermediate)
+/// for the
+/// regexp **[A-Z][0-9]** (whereas would be [Invalid).](Invalid).)
 /// 
-///     Example of use:
-///     \snippet code/src_gui_util_qvalidator.cpp 3
+/// For a brief introduction to Qt's regexp engine, see [QRegExp.](QRegExp.)
 /// 
-///     Below we present some examples of validators. In practice they would
-///     normally be associated with a widget as in the example above.
+/// Example of use:
 /// 
-///     \snippet code/src_gui_util_qvalidator.cpp 4
+/// Below we present some examples of validators. In practice they would
+/// normally be associated with a widget as in the example above.
 /// 
-///     \sa QRegExp, QIntValidator, QDoubleValidator, {Settings Editor Example}
+/// **See also:** QRegExp
+/// QIntValidator
+/// QDoubleValidator
+/// {Settings Editor Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct RegExpValidator : Validator {
-    ///     Returns \l Acceptable if \a input is matched by the regular
-    ///     expression for this validator, \l Intermediate if it has matched
-    ///     partially (i.e. could be a valid match if additional valid
-    ///     characters are added), and \l Invalid if \a input is not matched.
     /// 
-    ///     Additionally, if \a input is not matched, the \a pos parameter is set to
-    ///     the length of the \a input parameter.
+    /// Returns [Acceptable](Acceptable)
+    /// if *input* is matched by the regular
+    /// expression for this validator, [Intermediate](Intermediate)
+    /// if it has matched
+    /// partially (i.e. could be a valid match if additional valid
+    /// characters are added), and [Invalid](Invalid)
+    /// if *input* is not matched.
     /// 
-    ///     For example, if the regular expression is \b{\\w\\d\\d}
-    ///     (word-character, digit, digit) then "A57" is \l Acceptable,
-    ///     "E5" is \l Intermediate, and "+9" is \l Invalid.
+    /// Additionally, if *input* is not matched, the *pos* parameter is set to
+    /// the length of the *input* parameter.
     /// 
-    ///     \sa QRegExp::exactMatch()
+    /// For example, if the regular expression is **\\w\\d\\d**
+    /// (word-character, digit, digit) then is [Acceptable,](Acceptable,)
+    /// 
+    /// is [Intermediate,](Intermediate,)
+    /// and is [Invalid.](Invalid.)
+    /// 
+    /// **See also:** QRegExp::exactMatch()
     [event] validate(input: String, pos: &i32) -> Validator::State,
-    ///     \property QRegExpValidator::regExp
-    ///     \brief the regular expression used for validation
-    /// 
-    ///     By default, this property contains a regular expression with the pattern \c{.*}
-    ///     that matches any string.
     set_reg_exp(rx: &RegExpType),
+    /// 
+    /// By default, this property contains a regular expression with the pattern `.*`
+    /// that matches any string.
     reg_exp() -> RegExp?,
     [signal] reg_exp_changed(reg_exp: &RegExpType),
 }

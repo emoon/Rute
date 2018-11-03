@@ -1,52 +1,45 @@
-///     \class QFontDatabase
-///     \threadsafe
-///     \inmodule QtGui
 /// 
-///     \brief The QFontDatabase class provides information about the fonts available in the underlying window system.
+/// The most common uses of this class are to query the database for
+/// the list of font families() and for the pointSizes() and styles()
+/// that are available for each family. An alternative to pointSizes()
+/// is smoothSizes() which returns the sizes at which a given family
+/// and style will look attractive.
 /// 
-///     \ingroup appearance
+/// If the font family is available from two or more foundries the
+/// foundry name is included in the family name; for example:
+/// and . When you specify a
+/// family, you can either use the old hyphenated
+/// format or the bracketed format; for example:
+/// or . If the family has a
+/// foundry it is always returned using the bracketed format, as is
+/// the case with the value returned by families().
 /// 
-///     The most common uses of this class are to query the database for
-///     the list of font families() and for the pointSizes() and styles()
-///     that are available for each family. An alternative to pointSizes()
-///     is smoothSizes() which returns the sizes at which a given family
-///     and style will look attractive.
+/// The font() function returns a QFont given a family, style and
+/// point size.
 /// 
-///     If the font family is available from two or more foundries the
-///     foundry name is included in the family name; for example:
-///     "Helvetica [Adobe]" and "Helvetica [Cronyx]". When you specify a
-///     family, you can either use the old hyphenated "foundry-family"
-///     format or the bracketed "family [foundry]" format; for example:
-///     "Cronyx-Helvetica" or "Helvetica [Cronyx]". If the family has a
-///     foundry it is always returned using the bracketed format, as is
-///     the case with the value returned by families().
+/// A family and style combination can be checked to see if it is
+/// italic() or bold(), and to retrieve its weight(). Similarly we can
+/// call isBitmapScalable(), isSmoothlyScalable(), isScalable() and
+/// isFixedPitch().
 /// 
-///     The font() function returns a QFont given a family, style and
-///     point size.
+/// Use the styleString() to obtain a text version of a style.
 /// 
-///     A family and style combination can be checked to see if it is
-///     italic() or bold(), and to retrieve its weight(). Similarly we can
-///     call isBitmapScalable(), isSmoothlyScalable(), isScalable() and
-///     isFixedPitch().
+/// The QFontDatabase class also supports some static functions, for
+/// example, standardSizes(). You can retrieve the description of a
+/// writing system using writingSystemName(), and a sample of
+/// characters in a writing system with writingSystemSample().
 /// 
-///     Use the styleString() to obtain a text version of a style.
+/// Example:
 /// 
-///     The QFontDatabase class also supports some static functions, for
-///     example, standardSizes(). You can retrieve the description of a
-///     writing system using writingSystemName(), and a sample of
-///     characters in a writing system with writingSystemSample().
+/// This example gets the list of font families, the list of
+/// styles for each family, and the point sizes that are available for
+/// each combination of family and style, displaying this information
+/// in a tree view.
 /// 
-///     Example:
-/// 
-///     \snippet qfontdatabase/main.cpp 0
-///     \snippet qfontdatabase/main.cpp 1
-/// 
-///     This example gets the list of font families, the list of
-///     styles for each family, and the point sizes that are available for
-///     each combination of family and style, displaying this information
-///     in a tree view.
-/// 
-///     \sa QFont, QFontInfo, QFontMetrics, {Character Map Example}
+/// **See also:** QFont
+/// QFontInfo
+/// QFontMetrics
+/// {Character Map Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -101,141 +94,220 @@ enum SystemFont {
 
 struct FontDatabase {
     qt_check_for_qgadget_macro(),
-    ///     Returns a list of standard font sizes.
     /// 
-    ///     \sa smoothSizes(), pointSizes()
+    /// Returns a list of standard font sizes.
+    /// 
+    /// **See also:** smoothSizes()
+    /// pointSizes()
     [static] standard_sizes() -> [i32],
-    ///     Returns a sorted list of the writing systems supported by a given
-    ///     font \a family.
     /// 
-    ///     \sa families()
+    /// Returns a sorted list of the available writing systems. This is
+    /// list generated from information about all installed fonts on the
+    /// system.
+    /// 
+    /// **See also:** families()
+    /// 
+    /// Returns a sorted list of the writing systems supported by a given
+    /// font *family.*
+    /// 
+    /// **See also:** families()
     writing_systems() -> List<QFontDatabase::WritingSystem>,
-    ///     Returns a sorted list of the writing systems supported by a given
-    ///     font \a family.
     /// 
-    ///     \sa families()
+    /// Returns a sorted list of the available writing systems. This is
+    /// list generated from information about all installed fonts on the
+    /// system.
+    /// 
+    /// **See also:** families()
+    /// 
+    /// Returns a sorted list of the writing systems supported by a given
+    /// font *family.*
+    /// 
+    /// **See also:** families()
     writing_systems(family: String) -> List<QFontDatabase::WritingSystem>,
-    ///     Returns a sorted list of the available font families which support
-    ///     the \a writingSystem.
     /// 
-    ///     If a family exists in several foundries, the returned name for
-    ///     that font is in the form "family [foundry]". Examples: "Times
-    ///     [Adobe]", "Times [Cronyx]", "Palatino".
+    /// Returns a sorted list of the available font families which support
+    /// the *writingSystem.*
     /// 
-    ///     \sa writingSystems()
+    /// If a family exists in several foundries, the returned name for
+    /// that font is in the form . Examples: , , .
+    /// 
+    /// **See also:** writingSystems()
     families(writing_system: FontDatabase::WritingSystem) -> [String],
-    ///     Returns a list of the styles available for the font family \a
-    ///     family. Some example styles: "Light", "Light Italic", "Bold",
-    ///     "Oblique", "Demi". The list may be empty.
     /// 
-    ///     \sa families()
+    /// Returns a list of the styles available for the font family *family.* Some example styles: , , ,
+    /// , . The list may be empty.
+    /// 
+    /// **See also:** families()
     styles(family: String) -> [String],
+    /// 
+    /// Returns a list of the point sizes available for the font that has
+    /// family *family* and style *styleName.* The list may be empty.
+    /// 
+    /// **See also:** smoothSizes()
+    /// standardSizes()
     point_sizes(family: String, style: String) -> [i32],
+    /// 
+    /// Returns the point sizes of a font that has family *family* and
+    /// style *styleName* that will look attractive. The list may be empty.
+    /// For non-scalable fonts and bitmap scalable fonts, this function
+    /// is equivalent to pointSizes().
+    /// 
+    /// **See also:** pointSizes()
+    /// standardSizes()
     smooth_sizes(family: String, style: String) -> [i32],
+    /// 
+    /// Returns a QFont object that has family *family,* style *style*
+    /// and point size *pointSize.* If no matching font could be created,
+    /// a QFont object that uses the application's default font is
+    /// returned.
     font(family: String, style: String, point_size: i32) -> Font,
+    /// 
+    /// Returns `true` if the font that has family *family* and style *style* is a scalable bitmap font; otherwise returns `false.` Scaling
+    /// a bitmap font usually produces an unattractive hardly readable
+    /// result, because the pixels of the font are scaled. If you need to
+    /// scale a bitmap font it is better to scale it to one of the fixed
+    /// sizes returned by smoothSizes().
+    /// 
+    /// **See also:** isScalable()
+    /// isSmoothlyScalable()
     is_bitmap_scalable(family: String, style: String) -> bool,
-    ///     Returns \c true if the font that has family \a family and style \a
-    ///     style is smoothly scalable; otherwise returns \c false. If this
-    ///     function returns \c true, it's safe to scale this font to any size,
-    ///     and the result will always look attractive.
     /// 
-    ///     \sa isScalable(), isBitmapScalable()
+    /// Returns `true` if the font that has family *family* and style *style* is smoothly scalable; otherwise returns `false.` If this
+    /// function returns `true,` it's safe to scale this font to any size,
+    /// and the result will always look attractive.
+    /// 
+    /// **See also:** isScalable()
+    /// isBitmapScalable()
     is_smoothly_scalable(family: String, style: String) -> bool,
-    is_scalable(family: String, style: String) -> bool,
-    is_fixed_pitch(family: String, style: String) -> bool,
-    ///     Returns \c true if the font that has family \a family and style \a
-    ///     style is italic; otherwise returns \c false.
     /// 
-    ///     \sa weight(), bold()
+    /// Returns `true` if the font that has family *family* and style *style* is scalable; otherwise returns `false.`
+    /// 
+    /// **See also:** isBitmapScalable()
+    /// isSmoothlyScalable()
+    is_scalable(family: String, style: String) -> bool,
+    /// 
+    /// Returns `true` if the font that has family *family* and style *style* is fixed pitch; otherwise returns `false.`
+    is_fixed_pitch(family: String, style: String) -> bool,
+    /// 
+    /// Returns `true` if the font that has family *family* and style *style* is italic; otherwise returns `false.`
+    /// 
+    /// **See also:** weight()
+    /// bold()
     italic(family: String, style: String) -> bool,
+    /// 
+    /// Returns `true` if the font that has family *family* and style *style* is bold; otherwise returns `false.`
+    /// 
+    /// **See also:** italic()
+    /// weight()
     bold(family: String, style: String) -> bool,
+    /// 
+    /// Returns the weight of the font that has family *family* and style
+    /// *style.* If there is no such family and style combination,
+    /// returns -1.
+    /// 
+    /// **See also:** italic()
+    /// bold()
     weight(family: String, style: String) -> i32,
     has_family(family: String) -> bool,
-    ///     Returns the names the \a writingSystem (e.g. for displaying to the
-    ///     user in a dialog).
+    /// 
+    /// Returns the names the *writingSystem* (e.g. for displaying to the
+    /// user in a dialog).
     [static] writing_system_name(writing_system: FontDatabase::WritingSystem) -> String,
-    ///     Returns a string with sample characters from \a writingSystem.
+    /// 
+    /// Returns a string with sample characters from *writingSystem.*
     [static] writing_system_sample(writing_system: FontDatabase::WritingSystem) -> String,
-    ///     \since 4.2
     /// 
-    ///     Loads the font from the file specified by \a fileName and makes it available to
-    ///     the application. An ID is returned that can be used to remove the font again
-    ///     with removeApplicationFont() or to retrieve the list of family names contained
-    ///     in the font.
+    /// Loads the font from the file specified by *fileName* and makes it available to
+    /// the application. An ID is returned that can be used to remove the font again
+    /// with removeApplicationFont() or to retrieve the list of family names contained
+    /// in the font.
     /// 
-    ///     The function returns -1 if the font could not be loaded.
+    /// The function returns -1 if the font could not be loaded.
     /// 
-    ///     Currently only TrueType fonts, TrueType font collections, and OpenType fonts are
-    ///     supported.
+    /// Currently only TrueType fonts, TrueType font collections, and OpenType fonts are
+    /// supported.
     /// 
-    ///     \note Adding application fonts on Unix/X11 platforms without fontconfig is
-    ///     currently not supported.
+    /// **Note**: Adding application fonts on Unix/X11 platforms without fontconfig is
+    /// currently not supported.
     /// 
-    ///     \sa addApplicationFontFromData(), applicationFontFamilies(), removeApplicationFont()
+    /// **See also:** addApplicationFontFromData()
+    /// applicationFontFamilies()
+    /// removeApplicationFont()
+    /// 
+    /// Loads the font from binary data specified by *fontData* and makes it available to
+    /// the application. An ID is returned that can be used to remove the font again
+    /// with removeApplicationFont() or to retrieve the list of family names contained
+    /// in the font.
+    /// 
+    /// The function returns -1 if the font could not be loaded.
+    /// 
+    /// Currently only TrueType fonts and TrueType font collections are supported.
+    /// 
+    /// **Note:** Adding application fonts on Unix/X11 platforms without fontconfig is
+    /// currently not supported.
+    /// 
+    /// **See also:** addApplicationFont()
+    /// applicationFontFamilies()
+    /// removeApplicationFont()
     [static] add_application_font(file_name: String) -> i32,
-    ///     \since 4.2
     /// 
-    ///     Loads the font from binary data specified by \a fontData and makes it available to
-    ///     the application. An ID is returned that can be used to remove the font again
-    ///     with removeApplicationFont() or to retrieve the list of family names contained
-    ///     in the font.
+    /// Loads the font from binary data specified by *fontData* and makes it available to
+    /// the application. An ID is returned that can be used to remove the font again
+    /// with removeApplicationFont() or to retrieve the list of family names contained
+    /// in the font.
     /// 
-    ///     The function returns -1 if the font could not be loaded.
+    /// The function returns -1 if the font could not be loaded.
     /// 
-    ///     Currently only TrueType fonts and TrueType font collections are supported.
+    /// Currently only TrueType fonts and TrueType font collections are supported.
     /// 
-    ///     \b{Note:} Adding application fonts on Unix/X11 platforms without fontconfig is
-    ///     currently not supported.
+    /// **Note:** Adding application fonts on Unix/X11 platforms without fontconfig is
+    /// currently not supported.
     /// 
-    ///     \sa addApplicationFont(), applicationFontFamilies(), removeApplicationFont()
+    /// **See also:** addApplicationFont()
+    /// applicationFontFamilies()
+    /// removeApplicationFont()
     [static] add_application_font_from_data(font_data: &ByteArrayType) -> i32,
-    ///     \since 4.2
     /// 
-    ///     Returns a list of font families for the given application font identified by
-    ///     \a id.
+    /// Returns a list of font families for the given application font identified by
+    /// *id.*
     /// 
-    ///     \sa addApplicationFont(), addApplicationFontFromData()
+    /// **See also:** addApplicationFont()
+    /// addApplicationFontFromData()
     [static] application_font_families(id: i32) -> [String],
-    ///     \fn bool QFontDatabase::removeApplicationFont(int id)
-    ///     \since 4.2
     /// 
-    ///     Removes the previously loaded application font identified by \a
-    ///     id. Returns \c true if unloading of the font succeeded; otherwise
-    ///     returns \c false.
+    /// Removes the previously loaded application font identified by *id.* Returns `true` if unloading of the font succeeded; otherwise
+    /// returns `false.`
     /// 
-    ///     \sa removeAllApplicationFonts(), addApplicationFont(),
-    ///         addApplicationFontFromData()
+    /// **See also:** removeAllApplicationFonts()
+    /// addApplicationFont()
+    /// addApplicationFontFromData()
     [static] remove_application_font(id: i32) -> bool,
-    ///     \fn bool QFontDatabase::removeAllApplicationFonts()
-    ///     \since 4.2
     /// 
-    ///     Removes all application-local fonts previously added using addApplicationFont()
-    ///     and addApplicationFontFromData().
+    /// Removes all application-local fonts previously added using addApplicationFont()
+    /// and addApplicationFontFromData().
     /// 
-    ///     Returns \c true if unloading of the fonts succeeded; otherwise
-    ///     returns \c false.
+    /// Returns `true` if unloading of the fonts succeeded; otherwise
+    /// returns `false.`
     /// 
-    ///     \sa removeApplicationFont(), addApplicationFont(), addApplicationFontFromData()
+    /// **See also:** removeApplicationFont()
+    /// addApplicationFont()
+    /// addApplicationFontFromData()
     [static] remove_all_application_fonts() -> bool,
-    ///     \fn bool QFontDatabase::supportsThreadedFontRendering()
-    ///     \since 4.4
-    ///     \deprecated
     /// 
-    ///     Returns \c true if font rendering is supported outside the GUI
-    ///     thread, false otherwise. In other words, a return value of false
-    ///     means that all QPainter::drawText() calls outside the GUI thread
-    ///     will not produce readable output.
+    /// Returns `true` if font rendering is supported outside the GUI
+    /// thread, false otherwise. In other words, a return value of false
+    /// means that all QPainter::drawText() calls outside the GUI thread
+    /// will not produce readable output.
     /// 
-    ///     As of 5.0, always returns \c true.
+    /// As of 5.0, always returns `true.`
     /// 
-    ///     \sa {Thread-Support in Qt Modules#Painting In Threads}{Painting In Threads}
+    /// **See also:** {Thread-Support in Qt Modules#Painting In Threads}{Painting In Threads}
     [static] supports_threaded_font_rendering() -> bool,
-    ///     \since 5.2
     /// 
-    ///     Returns the most adequate font for a given \a type case for proper integration
-    ///     with the system's look and feel.
+    /// Returns the most adequate font for a given *type* case for proper integration
+    /// with the system's look and feel.
     /// 
-    ///     \sa QGuiApplication::font()
+    /// **See also:** QGuiApplication::font()
     [static] system_font(type: FontDatabase::SystemFont) -> Font,
 }
 

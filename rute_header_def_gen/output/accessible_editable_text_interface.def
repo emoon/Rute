@@ -1,21 +1,22 @@
-///     \class QAccessibleEditableTextInterface
-///     \ingroup accessibility
-///     \inmodule QtGui
 /// 
-///     \brief The QAccessibleEditableTextInterface class implements support for objects with editable text.
+/// When implementing this interface you will almost certainly also want to implement [QAccessibleTextInterface.](QAccessibleTextInterface.)
 /// 
-///     When implementing this interface you will almost certainly also want to implement \l QAccessibleTextInterface.
+/// **See also:** QAccessibleInterface
 /// 
-///     \sa QAccessibleInterface
-/// 
-///     \l{IAccessible2 Specification}
+/// [IAccessible2 Specification](IAccessible2%20Specification)
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct AccessibleEditableTextInterface {
+    /// 
+    /// Deletes the text from *startOffset* to *endOffset.*
     [event] delete_text(start_offset: i32, end_offset: i32),
+    /// 
+    /// Inserts *text* at position *offset.*
     [event] insert_text(offset: i32, text: String),
+    /// 
+    /// Removes the text from *startOffset* to *endOffset* and instead inserts *text.*
     [event] replace_text(start_offset: i32, end_offset: i32, text: String),
 }
 

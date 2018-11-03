@@ -1,43 +1,51 @@
-///     \class QScrollPrepareEvent
-///     \since 4.8
-///     \ingroup events
-///     \inmodule QtGui
 /// 
-///     \brief The QScrollPrepareEvent class is sent in preparation of scrolling.
+/// The scroll prepare event is sent before scrolling (usually by QScroller) is started.
+/// The object receiving this event should set viewportSize, maxContentPos and contentPos.
+/// It also should accept this event to indicate that scrolling should be started.
 /// 
-///     The scroll prepare event is sent before scrolling (usually by QScroller) is started.
-///     The object receiving this event should set viewportSize, maxContentPos and contentPos.
-///     It also should accept this event to indicate that scrolling should be started.
+/// It is not guaranteed that a QScrollEvent will be sent after an acceepted
+/// QScrollPrepareEvent, e.g. in a case where the maximum content position is (0,0).
 /// 
-///     It is not guaranteed that a QScrollEvent will be sent after an acceepted
-///     QScrollPrepareEvent, e.g. in a case where the maximum content position is (0,0).
-/// 
-///     \sa QScrollEvent, QScroller
+/// **See also:** QScrollEvent
+/// QScroller
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ScrollPrepareEvent : Event {
-    ///     Returns the position of the touch or mouse event that started the scrolling.
+    /// 
+    /// Returns the position of the touch or mouse event that started the scrolling.
     start_pos() -> PointF,
-    ///     Returns size of the area that is to be scrolled as set by setViewportSize
     /// 
-    ///     \sa setViewportSize()
+    /// Returns size of the area that is to be scrolled as set by setViewportSize
+    /// 
+    /// **See also:** setViewportSize()
     viewport_size() -> SizeF,
-    ///     Returns the range of coordinates for the content as set by setContentPosRange().
+    /// 
+    /// Returns the range of coordinates for the content as set by setContentPosRange().
     content_pos_range() -> RectF,
-    ///     Returns the current position of the content as set by setContentPos.
+    /// 
+    /// Returns the range of coordinates for the content as set by setContentPosRange().
+    /// 
+    /// Returns the current position of the content as set by setContentPos.
     content_pos() -> PointF,
-    ///     Sets the size of the area that is to be scrolled to \a size.
     /// 
-    ///     \sa viewportSize()
+    /// Sets the size of the area that is to be scrolled to *size.*
+    /// 
+    /// **See also:** viewportSize()
     set_viewport_size(size: &SizeFType),
-    ///     Sets the range of content coordinates to \a rect.
     /// 
-    ///     \sa contentPosRange()
+    /// Sets the range of content coordinates to *rect.*
+    /// 
+    /// **See also:** contentPosRange()
     set_content_pos_range(rect: &RectFType),
-    ///     Sets the current content position to \a pos.
     /// 
-    ///     \sa contentPos()
+    /// Sets the range of content coordinates to *rect.*
+    /// 
+    /// **See also:** contentPosRange()
+    /// 
+    /// Sets the current content position to *pos.*
+    /// 
+    /// **See also:** contentPos()
     set_content_pos(pos: &PointFType),
 }
 

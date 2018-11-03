@@ -1,65 +1,64 @@
-///     \class QDate
-///     \inmodule QtCore
-///     \reentrant
-///     \brief The QDate class provides date functions.
 /// 
+/// A QDate object contains a calendar date, i.e. year, month, and day
+/// numbers, in the Gregorian calendar. It can read the current date
+/// from the system clock. It provides functions for comparing dates,
+/// and for manipulating dates. For example, it is possible to add
+/// and subtract days, months, and years to dates.
 /// 
-///     A QDate object contains a calendar date, i.e. year, month, and day
-///     numbers, in the Gregorian calendar. It can read the current date
-///     from the system clock. It provides functions for comparing dates,
-///     and for manipulating dates. For example, it is possible to add
-///     and subtract days, months, and years to dates.
+/// A QDate object is typically created by giving the year,
+/// month, and day numbers explicitly. Note that QDate interprets two
+/// digit years as is, i.e., years 0 - 99. A QDate can also be
+/// constructed with the static function currentDate(), which creates
+/// a QDate object containing the system clock's date. An explicit
+/// date can also be set using setDate(). The fromString() function
+/// returns a QDate given a string and a date format which is used to
+/// interpret the date within the string.
 /// 
-///     A QDate object is typically created by giving the year,
-///     month, and day numbers explicitly. Note that QDate interprets two
-///     digit years as is, i.e., years 0 - 99. A QDate can also be
-///     constructed with the static function currentDate(), which creates
-///     a QDate object containing the system clock's date.  An explicit
-///     date can also be set using setDate(). The fromString() function
-///     returns a QDate given a string and a date format which is used to
-///     interpret the date within the string.
+/// The year(), month(), and day() functions provide access to the
+/// year, month, and day numbers. Also, dayOfWeek() and dayOfYear()
+/// functions are provided. The same information is provided in
+/// textual format by the toString(), shortDayName(), longDayName(),
+/// shortMonthName(), and longMonthName() functions.
 /// 
-///     The year(), month(), and day() functions provide access to the
-///     year, month, and day numbers. Also, dayOfWeek() and dayOfYear()
-///     functions are provided. The same information is provided in
-///     textual format by the toString(), shortDayName(), longDayName(),
-///     shortMonthName(), and longMonthName() functions.
+/// QDate provides a full set of operators to compare two QDate
+/// objects where smaller means earlier, and larger means later.
 /// 
-///     QDate provides a full set of operators to compare two QDate
-///     objects where smaller means earlier, and larger means later.
+/// You can increment (or decrement) a date by a given number of days
+/// using addDays(). Similarly you can use addMonths() and addYears().
+/// The daysTo() function returns the number of days between two
+/// dates.
 /// 
-///     You can increment (or decrement) a date by a given number of days
-///     using addDays(). Similarly you can use addMonths() and addYears().
-///     The daysTo() function returns the number of days between two
-///     dates.
+/// The daysInMonth() and daysInYear() functions return how many days
+/// there are in this date's month and year, respectively. The
+/// isLeapYear() function indicates whether a date is in a leap year.
 /// 
-///     The daysInMonth() and daysInYear() functions return how many days
-///     there are in this date's month and year, respectively. The
-///     isLeapYear() function indicates whether a date is in a leap year.
+/// # Remarks
 /// 
-///     \section1 Remarks
+/// ## No Year 0
 /// 
-///     \section2 No Year 0
+/// There is no year 0. Dates in that year are considered invalid. The
+/// year -1 is the year or
+/// The day before 1 January 1 CE is 31 December 1 BCE.
 /// 
-///     There is no year 0. Dates in that year are considered invalid. The
-///     year -1 is the year "1 before Christ" or "1 before current era."
-///     The day before 1 January 1 CE is 31 December 1 BCE.
+/// ## Range of Valid Dates
 /// 
-///     \section2 Range of Valid Dates
+/// Dates are stored internally as a Julian Day number, an integer count of
+/// every day in a contiguous range, with 24 November 4714 BCE in the Gregorian
+/// calendar being Julian Day 0 (1 January 4713 BCE in the Julian calendar).
+/// As well as being an efficient and accurate way of storing an absolute date,
+/// it is suitable for converting a Date into other calendar systems such as
+/// Hebrew, Islamic or Chinese. The Julian Day number can be obtained using
+/// QDate::toJulianDay() and can be set using QDate::fromJulianDay().
 /// 
-///     Dates are stored internally as a Julian Day number, an integer count of
-///     every day in a contiguous range, with 24 November 4714 BCE in the Gregorian
-///     calendar being Julian Day 0 (1 January 4713 BCE in the Julian calendar).
-///     As well as being an efficient and accurate way of storing an absolute date,
-///     it is suitable for converting a Date into other calendar systems such as
-///     Hebrew, Islamic or Chinese. The Julian Day number can be obtained using
-///     QDate::toJulianDay() and can be set using QDate::fromJulianDay().
+/// The range of dates able to be stored by QDate as a Julian Day number is
+/// for technical reasons limited to between -784350574879 and 784354017364,
+/// which means from before 2 billion BCE to after 2 billion CE.
 /// 
-///     The range of dates able to be stored by QDate as a Julian Day number is
-///     for technical reasons limited to between -784350574879 and 784354017364,
-///     which means from before 2 billion BCE to after 2 billion CE.
-/// 
-///     \sa QTime, QDateTime, QDateEdit, QDateTimeEdit, QCalendarWidget
+/// **See also:** QTime
+/// QDateTime
+/// QDateEdit
+/// QDateTimeEdit
+/// QCalendarWidget
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -71,272 +70,373 @@ enum MonthNameType {
 
 
 struct Date {
+    /// 
+    /// Returns `true` if the date is null; otherwise returns `false.` A null
+    /// date is invalid.
+    /// 
+    /// **Note**: The behavior of this function is equivalent to isValid().
+    /// 
+    /// **See also:** isValid()
     is_null() -> bool,
-    ///     \overload
     /// 
-    ///     Returns \c true if the specified date (\a year, \a month, and \a
-    ///     day) is valid; otherwise returns \c false.
+    /// Returns `true` if this date is valid; otherwise returns `false.`
     /// 
-    ///     Example:
-    ///     \snippet code/src_corelib_tools_qdatetime.cpp 4
+    /// **See also:** isNull()
     /// 
-    ///     \sa isNull(), setDate()
+    /// **Overloads**
+    /// Returns `true` if the specified date ( *year,* *month,* and *day)* is valid; otherwise returns `false.`
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** isNull()
+    /// setDate()
     is_valid() -> bool,
-    ///     Returns the year of this date. Negative numbers indicate years
-    ///     before 1 CE, such that year -44 is 44 BCE.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the year of this date. Negative numbers indicate years
+    /// before 1 CE, such that year -44 is 44 BCE.
     /// 
-    ///     \sa month(), day()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** month()
+    /// day()
     year() -> i32,
-    ///     Returns the number corresponding to the month of this date, using
-    ///     the following convention:
     /// 
-    ///     \list
-    ///     \li 1 = "January"
-    ///     \li 2 = "February"
-    ///     \li 3 = "March"
-    ///     \li 4 = "April"
-    ///     \li 5 = "May"
-    ///     \li 6 = "June"
-    ///     \li 7 = "July"
-    ///     \li 8 = "August"
-    ///     \li 9 = "September"
-    ///     \li 10 = "October"
-    ///     \li 11 = "November"
-    ///     \li 12 = "December"
-    ///     \endlist
+    /// Returns the number corresponding to the month of this date, using
+    /// the following convention:
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// * 1 = "January"
+    /// * 2 = "February"
+    /// * 3 = "March"
+    /// * 4 = "April"
+    /// * 5 = "May"
+    /// * 6 = "June"
+    /// * 7 = "July"
+    /// * 8 = "August"
+    /// * 9 = "September"
+    /// * 10 = "October"
+    /// * 11 = "November"
+    /// * 12 = "December"
     /// 
-    ///     \sa year(), day()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** year()
+    /// day()
     month() -> i32,
-    ///     Returns the day of the month (1 to 31) of this date.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the day of the month (1 to 31) of this date.
     /// 
-    ///     \sa year(), month(), dayOfWeek()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** year()
+    /// month()
+    /// dayOfWeek()
+    /// 
+    /// Returns the weekday (1 = Monday to 7 = Sunday) for this date.
+    /// 
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// dayOfYear()
+    /// Qt::DayOfWeek
+    /// 
+    /// Returns the day of the year (1 to 365 or 366 on leap years) for
+    /// this date.
+    /// 
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// dayOfWeek()
+    /// 
+    /// Returns the number of days in the month (28 to 31) for this date.
+    /// 
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// daysInYear()
+    /// 
+    /// Returns the number of days in the year (365 or 366) for this date.
+    /// 
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// daysInMonth()
+    /// 
+    /// Returns the number of days from this date to *d* (which is
+    /// negative if *d* is earlier than this date).
+    /// 
+    /// Returns 0 if either date is invalid.
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** addDays()
     day() -> i32,
-    ///     Returns the weekday (1 = Monday to 7 = Sunday) for this date.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the weekday (1 = Monday to 7 = Sunday) for this date.
     /// 
-    ///     \sa day(), dayOfYear(), Qt::DayOfWeek
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// dayOfYear()
+    /// Qt::DayOfWeek
     day_of_week() -> i32,
-    ///     Returns the day of the year (1 to 365 or 366 on leap years) for
-    ///     this date.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the day of the year (1 to 365 or 366 on leap years) for
+    /// this date.
     /// 
-    ///     \sa day(), dayOfWeek()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// dayOfWeek()
     day_of_year() -> i32,
-    ///     Returns the number of days in the month (28 to 31) for this date.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the number of days in the month (28 to 31) for this date.
     /// 
-    ///     \sa day(), daysInYear()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// daysInYear()
     days_in_month() -> i32,
-    ///     Returns the number of days in the year (365 or 366) for this date.
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the number of days in the year (365 or 366) for this date.
     /// 
-    ///     \sa day(), daysInMonth()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **See also:** day()
+    /// daysInMonth()
     days_in_year() -> i32,
-    ///     Returns the week number (1 to 53), and stores the year in
-    ///     *\a{yearNumber} unless \a yearNumber is null (the default).
     /// 
-    ///     Returns 0 if the date is invalid.
+    /// Returns the week number (1 to 53), and stores the year in
+    /// * *yearNumber* unless *yearNumber* is null (the default).
     /// 
-    ///     In accordance with ISO 8601, weeks start on Monday and the first
-    ///     Thursday of a year is always in week 1 of that year. Most years
-    ///     have 52 weeks, but some have 53.
+    /// Returns 0 if the date is invalid.
     /// 
-    ///     *\a{yearNumber} is not always the same as year(). For example, 1
-    ///     January 2000 has week number 52 in the year 1999, and 31 December
-    ///     2002 has week number 1 in the year 2003.
+    /// In accordance with ISO 8601, weeks start on Monday and the first
+    /// Thursday of a year is always in week 1 of that year. Most years
+    /// have 52 weeks, but some have 53.
     /// 
-    ///     \sa isValid()
+    /// * *yearNumber* is not always the same as year(). For example, 1
+    /// January 2000 has week number 52 in the year 1999, and 31 December
+    /// 2002 has week number 1 in the year 2003.
+    /// 
+    /// **See also:** isValid()
     week_number(year_num: *i32) -> i32,
-    ///     \since 4.5
-    ///     \deprecated
     /// 
-    ///     Returns the short name of the \a month for the representation specified
-    ///     by \a type.
+    /// Returns the short name of the *month* for the representation specified
+    /// by *type.*
     /// 
-    ///     The months are enumerated using the following convention:
+    /// The months are enumerated using the following convention:
     /// 
-    ///     \list
-    ///     \li 1 = "Jan"
-    ///     \li 2 = "Feb"
-    ///     \li 3 = "Mar"
-    ///     \li 4 = "Apr"
-    ///     \li 5 = "May"
-    ///     \li 6 = "Jun"
-    ///     \li 7 = "Jul"
-    ///     \li 8 = "Aug"
-    ///     \li 9 = "Sep"
-    ///     \li 10 = "Oct"
-    ///     \li 11 = "Nov"
-    ///     \li 12 = "Dec"
-    ///     \endlist
+    /// * 1 = "Jan"
+    /// * 2 = "Feb"
+    /// * 3 = "Mar"
+    /// * 4 = "Apr"
+    /// * 5 = "May"
+    /// * 6 = "Jun"
+    /// * 7 = "Jul"
+    /// * 8 = "Aug"
+    /// * 9 = "Sep"
+    /// * 10 = "Oct"
+    /// * 11 = "Nov"
+    /// * 12 = "Dec"
     /// 
-    ///     The month names will be localized according to the system's
-    ///     locale settings, i.e. using QLocale::system().
+    /// The month names will be localized according to the system's
+    /// locale settings, i.e. using QLocale::system().
     /// 
-    ///     Returns an empty string if the date is invalid.
+    /// Returns an empty string if the date is invalid.
     /// 
-    ///     \sa toString(), longMonthName(), shortDayName(), longDayName()
+    /// **See also:** toString()
+    /// longMonthName()
+    /// shortDayName()
+    /// longDayName()
     [static] short_month_name(month: i32, type: Date::MonthNameType) -> String,
-    ///     \since 4.5
-    ///     \deprecated
     /// 
-    ///     Returns the short name of the \a weekday for the representation specified
-    ///     by \a type.
+    /// Returns the short name of the *weekday* for the representation specified
+    /// by *type.*
     /// 
-    ///     The days are enumerated using the following convention:
+    /// The days are enumerated using the following convention:
     /// 
-    ///     \list
-    ///     \li 1 = "Mon"
-    ///     \li 2 = "Tue"
-    ///     \li 3 = "Wed"
-    ///     \li 4 = "Thu"
-    ///     \li 5 = "Fri"
-    ///     \li 6 = "Sat"
-    ///     \li 7 = "Sun"
-    ///     \endlist
+    /// * 1 = "Mon"
+    /// * 2 = "Tue"
+    /// * 3 = "Wed"
+    /// * 4 = "Thu"
+    /// * 5 = "Fri"
+    /// * 6 = "Sat"
+    /// * 7 = "Sun"
     /// 
-    ///     The day names will be localized according to the system's
-    ///     locale settings, i.e. using QLocale::system().
+    /// The day names will be localized according to the system's
+    /// locale settings, i.e. using QLocale::system().
     /// 
-    ///     Returns an empty string if the date is invalid.
+    /// Returns an empty string if the date is invalid.
     /// 
-    ///     \sa toString(), shortMonthName(), longMonthName(), longDayName()
+    /// **See also:** toString()
+    /// shortMonthName()
+    /// longMonthName()
+    /// longDayName()
     [static] short_day_name(weekday: i32, type: Date::MonthNameType) -> String,
-    ///     \since 4.5
-    ///     \deprecated
     /// 
-    ///     Returns the long name of the \a month for the representation specified
-    ///     by \a type.
+    /// Returns the long name of the *month* for the representation specified
+    /// by *type.*
     /// 
-    ///     The months are enumerated using the following convention:
+    /// The months are enumerated using the following convention:
     /// 
-    ///     \list
-    ///     \li 1 = "January"
-    ///     \li 2 = "February"
-    ///     \li 3 = "March"
-    ///     \li 4 = "April"
-    ///     \li 5 = "May"
-    ///     \li 6 = "June"
-    ///     \li 7 = "July"
-    ///     \li 8 = "August"
-    ///     \li 9 = "September"
-    ///     \li 10 = "October"
-    ///     \li 11 = "November"
-    ///     \li 12 = "December"
-    ///     \endlist
+    /// * 1 = "January"
+    /// * 2 = "February"
+    /// * 3 = "March"
+    /// * 4 = "April"
+    /// * 5 = "May"
+    /// * 6 = "June"
+    /// * 7 = "July"
+    /// * 8 = "August"
+    /// * 9 = "September"
+    /// * 10 = "October"
+    /// * 11 = "November"
+    /// * 12 = "December"
     /// 
-    ///     The month names will be localized according to the system's
-    ///     locale settings, i.e. using QLocale::system().
+    /// The month names will be localized according to the system's
+    /// locale settings, i.e. using QLocale::system().
     /// 
-    ///     Returns an empty string if the date is invalid.
+    /// Returns an empty string if the date is invalid.
     /// 
-    ///     \sa toString(), shortMonthName(), shortDayName(), longDayName()
+    /// **See also:** toString()
+    /// shortMonthName()
+    /// shortDayName()
+    /// longDayName()
     [static] long_month_name(month: i32, type: Date::MonthNameType) -> String,
-    ///     \since 4.5
-    ///     \deprecated
     /// 
-    ///     Returns the long name of the \a weekday for the representation specified
-    ///     by \a type.
+    /// Returns the long name of the *weekday* for the representation specified
+    /// by *type.*
     /// 
-    ///     The days are enumerated using the following convention:
+    /// The days are enumerated using the following convention:
     /// 
-    ///     \list
-    ///     \li 1 = "Monday"
-    ///     \li 2 = "Tuesday"
-    ///     \li 3 = "Wednesday"
-    ///     \li 4 = "Thursday"
-    ///     \li 5 = "Friday"
-    ///     \li 6 = "Saturday"
-    ///     \li 7 = "Sunday"
-    ///     \endlist
+    /// * 1 = "Monday"
+    /// * 2 = "Tuesday"
+    /// * 3 = "Wednesday"
+    /// * 4 = "Thursday"
+    /// * 5 = "Friday"
+    /// * 6 = "Saturday"
+    /// * 7 = "Sunday"
     /// 
-    ///     The day names will be localized according to the system's
-    ///     locale settings, i.e. using QLocale::system().
+    /// The day names will be localized according to the system's
+    /// locale settings, i.e. using QLocale::system().
     /// 
-    ///     Returns an empty string if the date is invalid.
+    /// Returns an empty string if the date is invalid.
     /// 
-    ///     \sa toString(), shortDayName(), shortMonthName(), longMonthName()
+    /// **See also:** toString()
+    /// shortDayName()
+    /// shortMonthName()
+    /// longMonthName()
     [static] long_day_name(weekday: i32, type: Date::MonthNameType) -> String,
-    ///     \since 4.2
     /// 
-    ///     Sets the date's \a year, \a month, and \a day. Returns \c true if
-    ///     the date is valid; otherwise returns \c false.
+    /// Sets the date's *year,* *month,* and *day.* Returns `true` if
+    /// the date is valid; otherwise returns `false.`
     /// 
-    ///     If the specified date is invalid, the QDate object is set to be
-    ///     invalid.
+    /// If the specified date is invalid, the QDate object is set to be
+    /// invalid.
     /// 
-    ///     \sa isValid()
+    /// **See also:** isValid()
     set_date(year: i32, month: i32, day: i32) -> bool,
-    ///     \overload
-    ///     \internal
-    get_date(year: *i32, month: *i32, day: *i32),
-    ///     \overload
-    ///     \internal
-    get_date(year: *i32, month: *i32, day: *i32),
-    ///     Returns a QDate object containing a date \a ndays later than the
-    ///     date of this object (or earlier if \a ndays is negative).
     /// 
-    ///     Returns a null date if the current date is invalid or the new date is
-    ///     out of range.
+    /// Extracts the date's year, month, and day, and assigns them to
+    /// * *year,* * *month,* and * *day.* The pointers may be null.
     /// 
-    ///     \sa addMonths(), addYears(), daysTo()
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **Note**: In Qt versions prior to 5.7, this function is marked as non- `const` .
+    /// 
+    /// **See also:** year()
+    /// month()
+    /// day()
+    /// isValid()
+    get_date(year: *i32, month: *i32, day: *i32),
+    /// 
+    /// Extracts the date's year, month, and day, and assigns them to
+    /// * *year,* * *month,* and * *day.* The pointers may be null.
+    /// 
+    /// Returns 0 if the date is invalid.
+    /// 
+    /// **Note**: In Qt versions prior to 5.7, this function is marked as non- `const` .
+    /// 
+    /// **See also:** year()
+    /// month()
+    /// day()
+    /// isValid()
+    get_date(year: *i32, month: *i32, day: *i32),
+    /// 
+    /// Returns a QDate object containing a date *ndays* later than the
+    /// date of this object (or earlier if *ndays* is negative).
+    /// 
+    /// Returns a null date if the current date is invalid or the new date is
+    /// out of range.
+    /// 
+    /// **See also:** addMonths()
+    /// addYears()
+    /// daysTo()
     add_days(days: i64) -> Date,
-    ///     Returns a QDate object containing a date \a nmonths later than the
-    ///     date of this object (or earlier if \a nmonths is negative).
     /// 
-    ///     \note If the ending day/month combination does not exist in the
-    ///     resulting month/year, this function will return a date that is the
-    ///     latest valid date.
+    /// Returns a QDate object containing a date *nmonths* later than the
+    /// date of this object (or earlier if *nmonths* is negative).
     /// 
-    ///     \sa addDays(), addYears()
+    /// **Note**: If the ending day/month combination does not exist in the
+    /// resulting month/year, this function will return a date that is the
+    /// latest valid date.
+    /// 
+    /// **See also:** addDays()
+    /// addYears()
     add_months(months: i32) -> Date,
-    ///     Returns a QDate object containing a date \a nyears later than the
-    ///     date of this object (or earlier if \a nyears is negative).
     /// 
-    ///     \note If the ending day/month combination does not exist in the
-    ///     resulting year (i.e., if the date was Feb 29 and the final year is
-    ///     not a leap year), this function will return a date that is the
-    ///     latest valid date (that is, Feb 28).
+    /// Returns a QDate object containing a date *nyears* later than the
+    /// date of this object (or earlier if *nyears* is negative).
     /// 
-    ///     \sa addDays(), addMonths()
+    /// **Note**: If the ending day/month combination does not exist in the
+    /// resulting year (i.e., if the date was Feb 29 and the final year is
+    /// not a leap year), this function will return a date that is the
+    /// latest valid date (that is, Feb 28).
+    /// 
+    /// **See also:** addDays()
+    /// addMonths()
     add_years(years: i32) -> Date,
-    ///     Returns the number of days from this date to \a d (which is
-    ///     negative if \a d is earlier than this date).
     /// 
-    ///     Returns 0 if either date is invalid.
+    /// Returns the number of days from this date to *d* (which is
+    /// negative if *d* is earlier than this date).
     /// 
-    ///     Example:
-    ///     \snippet code/src_corelib_tools_qdatetime.cpp 0
+    /// Returns 0 if either date is invalid.
     /// 
-    ///     \sa addDays()
+    /// Example:
+    /// 
+    /// **See also:** addDays()
     days_to(arg0: &DateType) -> i64,
+    /// 
+    /// Returns the current date, as reported by the system clock.
+    /// 
+    /// **See also:** QTime::currentTime()
+    /// QDateTime::currentDateTime()
     [static] current_date() -> Date,
-    ///     \overload
     /// 
-    ///     Returns \c true if the specified date (\a year, \a month, and \a
-    ///     day) is valid; otherwise returns \c false.
+    /// Returns `true` if this date is valid; otherwise returns `false.`
     /// 
-    ///     Example:
-    ///     \snippet code/src_corelib_tools_qdatetime.cpp 4
+    /// **See also:** isNull()
     /// 
-    ///     \sa isNull(), setDate()
+    /// **Overloads**
+    /// Returns `true` if the specified date ( *year,* *month,* and *day)* is valid; otherwise returns `false.`
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** isNull()
+    /// setDate()
     [static] is_valid(y: i32, m: i32, d: i32) -> bool,
-    ///     \fn bool QDate::isLeapYear(int year)
     /// 
-    ///     Returns \c true if the specified \a year is a leap year; otherwise
-    ///     returns \c false.
+    /// Returns `true` if the specified *year* is a leap year; otherwise
+    /// returns `false.`
     [static] is_leap_year(year: i32) -> bool,
+    /// 
+    /// Converts the Julian day *jd* to a QDate.
+    /// 
+    /// **See also:** toJulianDay()
     [static] from_julian_day(jd: i64) -> Date,
+    /// 
+    /// Converts the date to a Julian day.
+    /// 
+    /// **See also:** fromJulianDay()
     to_julian_day() -> i64,
 }
 

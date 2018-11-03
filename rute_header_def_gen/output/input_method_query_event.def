@@ -1,24 +1,25 @@
-///     \class QInputMethodQueryEvent
-///     \since 5.0
-///     \inmodule QtGui
 /// 
-///     \brief The QInputMethodQueryEvent class provides an event sent by the input context to input objects.
+/// It is used by the
+/// input method to query a set of properties of the object to be
+/// able to support complex input method operations as support for
+/// surrounding text and reconversions.
 /// 
-///     It is used by the
-///     input method to query a set of properties of the object to be
-///     able to support complex input method operations as support for
-///     surrounding text and reconversions.
+/// queries() specifies which properties are queried.
 /// 
-///     queries() specifies which properties are queried.
-/// 
-///     The object should call setValue() on the event to fill in the requested
-///     data before calling accept().
+/// The object should call setValue() on the event to fill in the requested
+/// data before calling accept().
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct InputMethodQueryEvent : Event {
+    /// 
+    /// Returns the properties queried by the event.
     queries() -> Rute::InputMethodQueries,
+    /// 
+    /// Sets property *query* to *value.*
     set_value(query: Rute::InputMethodQuery, value: &VariantType),
+    /// 
+    /// Returns value of the property *query.*
     value(query: Rute::InputMethodQuery) -> Variant,
 }
 

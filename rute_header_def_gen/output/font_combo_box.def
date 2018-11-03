@@ -1,33 +1,32 @@
-///     \class QFontComboBox
-///     \brief The QFontComboBox widget is a combobox that lets the user
-///     select a font family.
 /// 
-///     \since 4.2
-///     \ingroup basicwidgets
-///     \inmodule QtWidgets
+/// The combobox is populated with an alphabetized list of font
+/// family names, such as Arial, Helvetica, and Times New Roman.
+/// Family names are displayed using the actual font when possible.
+/// For fonts such as Symbol, where the name is not representable in
+/// the font itself, a sample of the font is displayed next to the
+/// family name.
 /// 
-///     The combobox is populated with an alphabetized list of font
-///     family names, such as Arial, Helvetica, and Times New Roman.
-///     Family names are displayed using the actual font when possible.
-///     For fonts such as Symbol, where the name is not representable in
-///     the font itself, a sample of the font is displayed next to the
-///     family name.
+/// QFontComboBox is often used in toolbars, in conjunction with a
+/// QComboBox for controlling the font size and two [QToolButton](QToolButton)
 /// 
-///     QFontComboBox is often used in toolbars, in conjunction with a
-///     QComboBox for controlling the font size and two \l{QToolButton}s
-///     for bold and italic.
+/// for bold and italic.
 /// 
-///     When the user selects a new font, the currentFontChanged() signal
-///     is emitted in addition to currentIndexChanged().
+/// When the user selects a new font, the currentFontChanged() signal
+/// is emitted in addition to currentIndexChanged().
 /// 
-///     Call setWritingSystem() to tell QFontComboBox to show only fonts
-///     that support a given writing system, and setFontFilters() to
-///     filter out certain types of fonts as e.g. non scalable fonts or
-///     monospaced fonts.
+/// Call setWritingSystem() to tell QFontComboBox to show only fonts
+/// that support a given writing system, and setFontFilters() to
+/// filter out certain types of fonts as e.g. non scalable fonts or
+/// monospaced fonts.
 /// 
-///     \image windowsvista-fontcombobox.png Screenshot of QFontComboBox on Windows Vista
+/// ![Screenshot of QFontComboBox on Windows Vista](windowsvista-fontcombobox.png)
 /// 
-///     \sa QComboBox, QFont, QFontInfo, QFontMetrics, QFontDatabase, {Character Map Example}
+/// **See also:** QComboBox
+/// QFont
+/// QFontInfo
+/// QFontMetrics
+/// QFontDatabase
+/// {Character Map Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -41,33 +40,38 @@ enum FontFilter {
 }
 
 struct FontComboBox : ComboBox {
-    ///     \property QFontComboBox::writingSystem
-    ///     \brief the writing system that serves as a filter for the combobox
-    /// 
-    ///     If \a script is QFontDatabase::Any (the default), all fonts are
-    ///     listed.
-    /// 
-    ///     \sa fontFilters
     set_writing_system(arg0: FontDatabase::WritingSystem),
+    /// 
+    /// If *script* is QFontDatabase::Any (the default), all fonts are
+    /// listed.
+    /// 
+    /// **See also:** fontFilters
     writing_system() -> FontDatabase::WritingSystem,
-    ///     \property QFontComboBox::fontFilters
-    ///     \brief the filter for the combobox
-    /// 
-    ///     By default, all fonts are listed.
-    /// 
-    ///     \sa writingSystem
     set_font_filters(filters: FontComboBox::FontFilters),
-    font_filters() -> FontComboBox::FontFilters,
-    ///     \property QFontComboBox::currentFont
-    ///     \brief the currently selected font
     /// 
-    ///     \sa currentIndex, currentText
+    /// By default, all fonts are listed.
+    /// 
+    /// **See also:** writingSystem
+    font_filters() -> FontComboBox::FontFilters,
+    /// 
+    /// **See also:** currentIndex
+    /// currentText
+    /// 
+    /// This signal is emitted whenever the current font changes, with
+    /// the new *font.*
+    /// 
+    /// **See also:** currentFont
     current_font() -> Font,
-    ///     \reimp
+    /// 
     [event] size_hint() -> Size,
     set_current_font(f: &FontType),
+    /// 
+    /// This signal is emitted whenever the current font changes, with
+    /// the new *font.*
+    /// 
+    /// **See also:** currentFont
     [signal] current_font_changed(f: &FontType),
-    ///     \reimp
+    /// 
     [event] event(e: *EventType) -> bool,
 }
 

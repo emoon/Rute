@@ -1,263 +1,474 @@
-///     \class QListWidget
-///     \brief The QListWidget class provides an item-based list widget.
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// ![windows-listview.png](windows-listview.png)
 /// 
-///     \image windows-listview.png
+/// QListWidget is a convenience class that provides a list view similar to the
+/// one supplied by QListView, but with a classic item-based interface for
+/// adding and removing items. QListWidget uses an internal model to manage
+/// each QListWidgetItem in the list.
 /// 
-///     QListWidget is a convenience class that provides a list view similar to the
-///     one supplied by QListView, but with a classic item-based interface for
-///     adding and removing items. QListWidget uses an internal model to manage
-///     each QListWidgetItem in the list.
+/// For a more flexible list view widget, use the QListView class with a
+/// standard model.
 /// 
-///     For a more flexible list view widget, use the QListView class with a
-///     standard model.
+/// List widgets are constructed in the same way as other widgets:
 /// 
-///     List widgets are constructed in the same way as other widgets:
+/// The selectionMode() of a list widget determines how many of the items in
+/// the list can be selected at the same time, and whether complex selections
+/// of items can be created. This can be set with the setSelectionMode()
+/// function.
 /// 
-///     \snippet qlistwidget-using/mainwindow.cpp 0
+/// There are two ways to add items to the list: they can be constructed with
+/// the list widget as their parent widget, or they can be constructed with no
+/// parent widget and added to the list later. If a list widget already exists
+/// when the items are constructed, the first method is easier to use:
 /// 
-///     The selectionMode() of a list widget determines how many of the items in
-///     the list can be selected at the same time, and whether complex selections
-///     of items can be created. This can be set with the setSelectionMode()
-///     function.
+/// If you need to insert a new item into the list at a particular position,
+/// then it should be constructed without a parent widget. The insertItem()
+/// function should then be used to place it within the list. The list widget
+/// will take ownership of the item.
 /// 
-///     There are two ways to add items to the list: they can be constructed with
-///     the list widget as their parent widget, or they can be constructed with no
-///     parent widget and added to the list later. If a list widget already exists
-///     when the items are constructed, the first method is easier to use:
+/// For multiple items, insertItems() can be used instead. The number of items
+/// in the list is found with the count() function. To remove items from the
+/// list, use takeItem().
 /// 
-///     \snippet qlistwidget-using/mainwindow.cpp 1
+/// The current item in the list can be found with currentItem(), and changed
+/// with setCurrentItem(). The user can also change the current item by
+/// navigating with the keyboard or clicking on a different item. When the
+/// current item changes, the currentItemChanged() signal is emitted with the
+/// new current item and the item that was previously current.
 /// 
-///     If you need to insert a new item into the list at a particular position,
-///     then it should be constructed without a parent widget. The insertItem()
-///     function should then be used to place it within the list. The list widget
-///     will take ownership of the item.
-/// 
-///     \snippet qlistwidget-using/mainwindow.cpp 6
-///     \snippet qlistwidget-using/mainwindow.cpp 7
-/// 
-///     For multiple items, insertItems() can be used instead. The number of items
-///     in the list is found with the count() function. To remove items from the
-///     list, use takeItem().
-/// 
-///     The current item in the list can be found with currentItem(), and changed
-///     with setCurrentItem(). The user can also change the current item by
-///     navigating with the keyboard or clicking on a different item. When the
-///     current item changes, the currentItemChanged() signal is emitted with the
-///     new current item and the item that was previously current.
-/// 
-///     \sa QListWidgetItem, QListView, QTreeView, {Model/View Programming},
-///         {Tab Dialog Example}
+/// **See also:** QListWidgetItem
+/// QListView
+/// QTreeView
+/// {Model/View Programming}
+/// {Tab Dialog Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct ListWidget : ListView {
-    ///     \reimp
+    /// 
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
-    ///     Returns the item that occupies the given \a row in the list if one has been
-    ///     set; otherwise returns 0.
     /// 
-    ///     \sa row()
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// pressed on an item in the widget.
+    /// 
+    /// **See also:** itemClicked()
+    /// itemDoubleClicked()
+    /// 
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// clicked on an item in the widget.
+    /// 
+    /// **See also:** itemPressed()
+    /// itemDoubleClicked()
+    /// 
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// double clicked on an item in the widget.
+    /// 
+    /// **See also:** itemClicked()
+    /// itemPressed()
+    /// 
+    /// This signal is emitted when the *item* is activated. The *item* is
+    /// activated when the user clicks or double clicks on it, depending on the
+    /// system configuration. It is also activated when the user presses the
+    /// activation key (on Windows and X11 this is the **Return** key, on Mac OS
+    /// X it is **{Command+O}).**
+    /// 
+    /// This signal is emitted when the mouse cursor enters an item. The *item* is
+    /// the item entered. This signal is only emitted when mouseTracking is turned
+    /// on, or when a mouse button is pressed while moving into an item.
+    /// 
+    /// **See also:** QWidget::setMouseTracking()
+    /// 
+    /// This signal is emitted whenever the data of *item* has changed.
+    /// 
+    /// This signal is emitted whenever the selection changes.
+    /// 
+    /// **See also:** selectedItems()
+    /// QListWidgetItem::isSelected()
+    /// currentItemChanged()
+    /// 
+    /// Returns the item that occupies the given *row* in the list if one has been
+    /// set; otherwise returns 0.
+    /// 
+    /// **See also:** row()
+    /// 
+    /// Returns a pointer to the item at the coordinates *p.* The coordinates
+    /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// 
+    /// **Overloads**
+    /// Returns a pointer to the item at the coordinates ( *x,* *y).*
+    /// The coordinates are relative to the list widget's
+    /// [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// 
+    /// Returns the widget displayed in the given *item.*
+    /// 
+    /// **See also:** setItemWidget()
+    /// removeItemWidget()
+    /// 
+    /// Returns a list of pointers to the items contained in the *data* object. If
+    /// the object was not created by a QListWidget in the same process, the list
+    /// is empty.
+    /// 
+    /// Returns a pointer to the QListWidgetItem associated with the given *index.*
     item(row: i32) -> ListWidgetItem?,
-    ///     Returns the row containing the given \a item.
     /// 
-    ///     \sa item()
+    /// Returns the row containing the given *item.*
+    /// 
+    /// **See also:** item()
     row(item: *ListWidgetItemType) -> i32,
-    ///     Inserts an item with the text \a label in the list widget at the position
-    ///     given by \a row.
     /// 
-    ///     \sa addItem()
+    /// Inserts the *item* at the position in the list given by *row.*
+    /// 
+    /// **See also:** addItem()
+    /// 
+    /// Inserts an item with the text *label* in the list widget at the position
+    /// given by *row.*
+    /// 
+    /// **See also:** addItem()
+    /// 
+    /// Inserts items from the list of *labels* into the list, starting at the
+    /// given *row.*
+    /// 
+    /// **See also:** insertItem()
+    /// addItem()
     insert_item(row: i32, item: *ListWidgetItemType),
-    ///     Inserts an item with the text \a label in the list widget at the position
-    ///     given by \a row.
     /// 
-    ///     \sa addItem()
+    /// Inserts the *item* at the position in the list given by *row.*
+    /// 
+    /// **See also:** addItem()
+    /// 
+    /// Inserts an item with the text *label* in the list widget at the position
+    /// given by *row.*
+    /// 
+    /// **See also:** addItem()
+    /// 
+    /// Inserts items from the list of *labels* into the list, starting at the
+    /// given *row.*
+    /// 
+    /// **See also:** insertItem()
+    /// addItem()
     insert_item(row: i32, label: String),
-    ///     Inserts items from the list of \a labels into the list, starting at the
-    ///     given \a row.
     /// 
-    ///     \sa insertItem(), addItem()
+    /// Inserts items from the list of *labels* into the list, starting at the
+    /// given *row.*
+    /// 
+    /// **See also:** insertItem()
+    /// addItem()
     insert_items(row: i32, labels: &[String]),
+    /// 
+    /// Inserts the *item* at the end of the list widget.
+    /// 
+    /// **Warning**: A QListWidgetItem can only be added to a QListWidget once. Adding
+    /// the same QListWidgetItem multiple times to a QListWidget will result in
+    /// undefined behavior.
+    /// 
+    /// **See also:** insertItem()
+    /// 
+    /// Inserts an item with the text *label* at the end of the list widget.
+    /// 
+    /// Inserts items with the text *labels* at the end of the list widget.
+    /// 
+    /// **See also:** insertItems()
     add_item(label: String),
+    /// 
+    /// Inserts the *item* at the end of the list widget.
+    /// 
+    /// **Warning**: A QListWidgetItem can only be added to a QListWidget once. Adding
+    /// the same QListWidgetItem multiple times to a QListWidget will result in
+    /// undefined behavior.
+    /// 
+    /// **See also:** insertItem()
+    /// 
+    /// Inserts an item with the text *label* at the end of the list widget.
+    /// 
+    /// Inserts items with the text *labels* at the end of the list widget.
+    /// 
+    /// **See also:** insertItems()
     add_item(item: *ListWidgetItemType),
+    /// 
+    /// Inserts items with the text *labels* at the end of the list widget.
+    /// 
+    /// **See also:** insertItems()
     add_items(labels: &[String]),
-    ///     Removes and returns the item from the given \a row in the list widget;
-    ///     otherwise returns 0.
     /// 
-    ///     Items removed from a list widget will not be managed by Qt, and will need
-    ///     to be deleted manually.
+    /// Removes and returns the item from the given *row* in the list widget;
+    /// otherwise returns 0.
     /// 
-    ///     \sa insertItem(), addItem()
+    /// Items removed from a list widget will not be managed by Qt, and will need
+    /// to be deleted manually.
+    /// 
+    /// **See also:** insertItem()
+    /// addItem()
     take_item(row: i32) -> ListWidgetItem?,
-    ///     \property QListWidget::count
-    ///     \brief the number of items in the list including any hidden items.
+    /// 
     count() -> i32,
-    ///     Returns the current item.
+    /// 
+    /// This signal is emitted whenever the current item changes.
+    /// 
+    /// *previous* is the item that previously had the focus; *current* is the
+    /// new current item.
+    /// 
+    /// Returns the current item.
     current_item() -> ListWidgetItem?,
-    ///     \since 4.4
-    ///     Set the current item to \a item, using the given \a command.
+    /// 
+    /// Sets the current item to *item.*
+    /// 
+    /// Unless the selection mode is [NoSelection](QAbstractItemView::)
+    /// 
+    /// the item is also selected.
+    /// 
+    /// Set the current item to *item,* using the given *command.*
     set_current_item(item: *ListWidgetItemType),
-    ///     \since 4.4
-    ///     Set the current item to \a item, using the given \a command.
+    /// 
+    /// Sets the current item to *item.*
+    /// 
+    /// Unless the selection mode is [NoSelection](QAbstractItemView::)
+    /// 
+    /// the item is also selected.
+    /// 
+    /// Set the current item to *item,* using the given *command.*
     set_current_item(item: *ListWidgetItemType, command: ItemSelectionModel::SelectionFlags),
-    ///     \property QListWidget::currentRow
-    ///     \brief the row of the current item.
     /// 
-    ///     Depending on the current selection mode, the row may also be selected.
+    /// This signal is emitted whenever the current item changes.
+    /// 
+    /// *currentRow* is the row of the current item. If there is no current item,
+    /// the *currentRow* is -1.
+    /// 
+    /// Depending on the current selection mode, the row may also be selected.
     current_row() -> i32,
-    ///     \since 4.4
     /// 
-    ///     Sets the current row to be the given \a row, using the given \a command,
+    /// Sets the current row to be the given *row,* using the given *command,*
     set_current_row(row: i32),
-    ///     \since 4.4
     /// 
-    ///     Sets the current row to be the given \a row, using the given \a command,
+    /// Sets the current row to be the given *row,* using the given *command,*
     set_current_row(row: i32, command: ItemSelectionModel::SelectionFlags),
-    ///     Returns a pointer to the item at the coordinates \a p. The coordinates
-    ///     are relative to the list widget's \l{QAbstractScrollArea::}{viewport()}.
+    /// 
+    /// Returns a pointer to the item at the coordinates *p.* The coordinates
+    /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// 
+    /// **Overloads**
+    /// Returns a pointer to the item at the coordinates ( *x,* *y).*
+    /// The coordinates are relative to the list widget's
+    /// [viewport()](QAbstractScrollArea::)
+    /// 
     /// 
     item_at(p: &PointType) -> ListWidgetItem?,
-    ///     Returns a pointer to the item at the coordinates \a p. The coordinates
-    ///     are relative to the list widget's \l{QAbstractScrollArea::}{viewport()}.
+    /// 
+    /// Returns a pointer to the item at the coordinates *p.* The coordinates
+    /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
+    /// 
+    /// 
+    /// 
+    /// **Overloads**
+    /// Returns a pointer to the item at the coordinates ( *x,* *y).*
+    /// The coordinates are relative to the list widget's
+    /// [viewport()](QAbstractScrollArea::)
+    /// 
     /// 
     item_at(x: i32, y: i32) -> ListWidgetItem?,
-    ///     Returns the rectangle on the viewport occupied by the item at \a item.
+    /// 
+    /// Returns the rectangle on the viewport occupied by the item at *item.*
     visual_item_rect(item: *ListWidgetItemType) -> Rect,
-    ///     Sorts all the items in the list widget according to the specified \a order.
+    /// 
+    /// Sorts all the items in the list widget according to the specified *order.*
     sort_items(order: Rute::SortOrder),
-    ///     \since 4.2
-    ///     \property QListWidget::sortingEnabled
-    ///     \brief whether sorting is enabled
-    /// 
-    ///     If this property is \c true, sorting is enabled for the list; if the property
-    ///     is false, sorting is not enabled.
-    /// 
-    ///     The default value is false.
     set_sorting_enabled(enable: bool),
     is_sorting_enabled() -> bool,
-    ///     Starts editing the \a item if it is editable.
+    /// 
+    /// Starts editing the *item* if it is editable.
     edit_item(item: *ListWidgetItemType),
-    ///     Opens an editor for the given \a item. The editor remains open after
-    ///     editing.
     /// 
-    ///     \sa closePersistentEditor(), isPersistentEditorOpen()
+    /// Opens an editor for the given *item.* The editor remains open after
+    /// editing.
+    /// 
+    /// **See also:** closePersistentEditor()
+    /// isPersistentEditorOpen()
     open_persistent_editor(item: *ListWidgetItemType),
-    ///     Closes the persistent editor for the given \a item.
     /// 
-    ///     \sa openPersistentEditor(), isPersistentEditorOpen()
+    /// Closes the persistent editor for the given *item.*
+    /// 
+    /// **See also:** openPersistentEditor()
+    /// isPersistentEditorOpen()
     close_persistent_editor(item: *ListWidgetItemType),
-    ///     \since 5.10
     /// 
-    ///     Returns whether a persistent editor is open for item \a item.
+    /// Returns whether a persistent editor is open for item *item.*
     /// 
-    ///     \sa openPersistentEditor(), closePersistentEditor()
+    /// **See also:** openPersistentEditor()
+    /// closePersistentEditor()
     is_persistent_editor_open(item: *ListWidgetItemType) -> bool,
-    ///     \since 4.1
     /// 
-    ///     Returns the widget displayed in the given \a item.
+    /// Returns the widget displayed in the given *item.*
     /// 
-    ///     \sa setItemWidget(), removeItemWidget()
+    /// **See also:** setItemWidget()
+    /// removeItemWidget()
     item_widget(item: *ListWidgetItemType) -> Widget?,
-    ///     \since 4.1
     /// 
-    ///     Sets the \a widget to be displayed in the given \a item.
+    /// Sets the *widget* to be displayed in the given *item.*
     /// 
-    ///     This function should only be used to display static content in the place of
-    ///     a list widget item. If you want to display custom dynamic content or
-    ///     implement a custom editor widget, use QListView and subclass QItemDelegate
-    ///     instead.
+    /// This function should only be used to display static content in the place of
+    /// a list widget item. If you want to display custom dynamic content or
+    /// implement a custom editor widget, use QListView and subclass QItemDelegate
+    /// instead.
     /// 
-    ///     \sa itemWidget(), removeItemWidget(), {Delegate Classes}
+    /// **See also:** itemWidget()
+    /// removeItemWidget()
+    /// {Delegate Classes}
     set_item_widget(item: *ListWidgetItemType, widget: *WidgetType),
+    /// 
+    /// Removes the widget set on the given *item.*
+    /// 
+    /// To remove an item (row) from the list entirely, either delete the item or
+    /// use takeItem().
+    /// 
+    /// **See also:** itemWidget()
+    /// setItemWidget()
     remove_item_widget(item: *ListWidgetItemType),
-    ///     Returns \c true if \a item is selected; otherwise returns \c false.
     /// 
-    ///     \obsolete
+    /// Returns `true` if *item* is selected; otherwise returns `false.`
     /// 
-    ///     This function is deprecated. Use QListWidgetItem::isSelected() instead.
+    /// This function is deprecated. Use QListWidgetItem::isSelected() instead.
     is_item_selected(item: *ListWidgetItemType) -> bool,
-    ///     Selects or deselects the given \a item depending on whether \a select is
-    ///     true of false.
     /// 
-    ///     \obsolete
+    /// Selects or deselects the given *item* depending on whether *select* is
+    /// true of false.
     /// 
-    ///     This function is deprecated. Use QListWidgetItem::setSelected() instead.
+    /// This function is deprecated. Use QListWidgetItem::setSelected() instead.
     set_item_selected(item: *ListWidgetItemType, select: bool),
-    ///     Returns a list of all selected items in the list widget.
+    /// 
+    /// Returns a list of all selected items in the list widget.
     selected_items() -> [ListWidgetItem?],
-    ///     Finds items with the text that matches the string \a text using the given
-    ///     \a flags.
+    /// 
+    /// Finds items with the text that matches the string *text* using the given
+    /// *flags.*
     find_items(text: String, flags: Rute::MatchFlags) -> [ListWidgetItem?],
-    ///     Returns \c true if the \a item is explicitly hidden; otherwise returns \c false.
     /// 
-    ///     \obsolete
+    /// Returns `true` if the *item* is explicitly hidden; otherwise returns `false.`
     /// 
-    ///     This function is deprecated. Use QListWidgetItem::isHidden() instead.
+    /// This function is deprecated. Use QListWidgetItem::isHidden() instead.
     is_item_hidden(item: *ListWidgetItemType) -> bool,
-    ///     If \a hide is true, the \a item will be hidden; otherwise it will be shown.
     /// 
-    ///     \obsolete
+    /// If *hide* is true, the *item* will be hidden; otherwise it will be shown.
     /// 
-    ///     This function is deprecated. Use QListWidgetItem::setHidden() instead.
+    /// This function is deprecated. Use QListWidgetItem::setHidden() instead.
     set_item_hidden(item: *ListWidgetItemType, hide: bool),
+    /// 
     [event] drop_event(event: *DropEventType),
-    ///     Scrolls the view if necessary to ensure that the \a item is visible.
     /// 
-    ///     \a hint specifies where the \a item should be located after the operation.
+    /// Scrolls the view if necessary to ensure that the *item* is visible.
+    /// 
+    /// *hint* specifies where the *item* should be located after the operation.
     scroll_to_item(item: *ListWidgetItemType, hint: AbstractItemView::ScrollHint),
-    ///     Removes all items and selections in the view.
     /// 
-    ///     \warning All items will be permanently deleted.
+    /// Removes all items and selections in the view.
+    /// 
+    /// **Warning**: All items will be permanently deleted.
     clear(),
+    /// 
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// pressed on an item in the widget.
+    /// 
+    /// **See also:** itemClicked()
+    /// itemDoubleClicked()
     [signal] item_pressed(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// clicked on an item in the widget.
+    /// 
+    /// **See also:** itemPressed()
+    /// itemDoubleClicked()
     [signal] item_clicked(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted with the specified *item* when a mouse button is
+    /// double clicked on an item in the widget.
+    /// 
+    /// **See also:** itemClicked()
+    /// itemPressed()
     [signal] item_double_clicked(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted when the *item* is activated. The *item* is
+    /// activated when the user clicks or double clicks on it, depending on the
+    /// system configuration. It is also activated when the user presses the
+    /// activation key (on Windows and X11 this is the **Return** key, on Mac OS
+    /// X it is **{Command+O}).**
     [signal] item_activated(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted when the mouse cursor enters an item. The *item* is
+    /// the item entered. This signal is only emitted when mouseTracking is turned
+    /// on, or when a mouse button is pressed while moving into an item.
+    /// 
+    /// **See also:** QWidget::setMouseTracking()
     [signal] item_entered(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted whenever the data of *item* has changed.
     [signal] item_changed(item: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted whenever the current item changes.
+    /// 
+    /// *previous* is the item that previously had the focus; *current* is the
+    /// new current item.
     [signal] current_item_changed(current: *ListWidgetItemType, previous: *ListWidgetItemType),
+    /// 
+    /// This signal is emitted whenever the current item changes.
+    /// 
+    /// *currentText* is the text data in the current item. If there is no current
+    /// item, the *currentText* is invalid.
     [signal] current_text_changed(current_text: String),
+    /// 
+    /// This signal is emitted whenever the current item changes.
+    /// 
+    /// *currentRow* is the row of the current item. If there is no current item,
+    /// the *currentRow* is -1.
     [signal] current_row_changed(current_row: i32),
+    /// 
+    /// This signal is emitted whenever the selection changes.
+    /// 
+    /// **See also:** selectedItems()
+    /// QListWidgetItem::isSelected()
+    /// currentItemChanged()
     [signal] item_selection_changed(),
-    ///     \reimp
+    /// 
     [event] event(e: *EventType) -> bool,
-    ///     Returns a list of MIME types that can be used to describe a list of
-    ///     listwidget items.
     /// 
-    ///     \sa mimeData()
+    /// Returns a list of MIME types that can be used to describe a list of
+    /// listwidget items.
+    /// 
+    /// **See also:** mimeData()
     [event] mime_types() -> [String],
-    ///     Returns an object that contains a serialized description of the specified
-    ///     \a items. The format used to describe the items is obtained from the
-    ///     mimeTypes() function.
-    /// 
-    ///     If the list of items is empty, 0 is returned instead of a serialized empty
-    ///     list.
     [event] mime_data(items: [*ListWidgetItemType]) -> MimeData?,
-    ///     Handles \a data supplied by an external drag and drop operation that ended
-    ///     with the given \a action in the given \a index. Returns \c true if \a data and
-    ///     \a action can be handled by the model; otherwise returns \c false.
     /// 
-    ///     \sa supportedDropActions()
+    /// Handles *data* supplied by an external drag and drop operation that ended
+    /// with the given *action* in the given *index.* Returns `true` if *data* and
+    /// *action* can be handled by the model; otherwise returns `false.`
+    /// 
+    /// **See also:** supportedDropActions()
     [event] drop_mime_data(index: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
-    ///     Returns the drop actions supported by this view.
     /// 
-    ///     \sa Qt::DropActions
+    /// Returns the drop actions supported by this view.
+    /// 
+    /// **See also:** Qt::DropActions
     [event] supported_drop_actions() -> Rute::DropActions,
-    ///     Returns a list of pointers to the items contained in the \a data object. If
-    ///     the object was not created by a QListWidget in the same process, the list
-    ///     is empty.
+    /// 
+    /// Returns a list of pointers to the items contained in the *data* object. If
+    /// the object was not created by a QListWidget in the same process, the list
+    /// is empty.
     items(data: *MimeDataType) -> [ListWidgetItem?],
-    ///     \internal
-    ///     \obsolete
-    ///     \overload
+    /// 
+    /// Returns the QModelIndex associated with the given *item.*
+    /// 
+    /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
     index_from_item(item: *ListWidgetItemType) -> ModelIndex,
-    ///     \internal
-    ///     \obsolete
-    ///     \overload
+    /// 
+    /// Returns the QModelIndex associated with the given *item.*
+    /// 
+    /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
     index_from_item(item: *ListWidgetItemType) -> ModelIndex,
-    ///     Returns a pointer to the QListWidgetItem associated with the given \a index.
+    /// 
+    /// Returns a pointer to the QListWidgetItem associated with the given *index.*
     item_from_index(index: &ModelIndexType) -> ListWidgetItem?,
 }
 

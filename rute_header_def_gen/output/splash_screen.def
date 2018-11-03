@@ -1,82 +1,106 @@
-///    \class QSplashScreen
-///    \brief The QSplashScreen widget provides a splash screen that can
-///    be shown during application startup.
 /// 
-///    \inmodule QtWidgets
+/// A splash screen is a widget that is usually displayed when an
+/// application is being started. Splash screens are often used for
+/// applications that have long start up times (e.g. database or
+/// networking applications that take time to establish connections) to
+/// provide the user with feedback that the application is loading.
 /// 
-///    A splash screen is a widget that is usually displayed when an
-///    application is being started. Splash screens are often used for
-///    applications that have long start up times (e.g. database or
-///    networking applications that take time to establish connections) to
-///    provide the user with feedback that the application is loading.
+/// The splash screen appears in the center of the screen. It may be
+/// useful to add the Qt::WindowStaysOnTopHint to the splash widget's
+/// window flags if you want to keep it above all the other windows on
+/// the desktop.
 /// 
-///    The splash screen appears in the center of the screen. It may be
-///    useful to add the Qt::WindowStaysOnTopHint to the splash widget's
-///    window flags if you want to keep it above all the other windows on
-///    the desktop.
+/// Some X11 window managers do not support the flag. A
+/// solution is to set up a timer that periodically calls raise() on
+/// the splash screen to simulate the effect.
 /// 
-///    Some X11 window managers do not support the "stays on top" flag. A
-///    solution is to set up a timer that periodically calls raise() on
-///    the splash screen to simulate the "stays on top" effect.
+/// The most common usage is to show a splash screen before the main
+/// widget is displayed on the screen. This is illustrated in the
+/// following code snippet in which a splash screen is displayed and
+/// some initialization tasks are performed before the application's
+/// main window is shown:
 /// 
-///    The most common usage is to show a splash screen before the main
-///    widget is displayed on the screen. This is illustrated in the
-///    following code snippet in which a splash screen is displayed and
-///    some initialization tasks are performed before the application's
-///    main window is shown:
+/// ...
 /// 
-///    \snippet qsplashscreen/main.cpp 0
-///    \dots
-///    \snippet qsplashscreen/main.cpp 1
+/// The user can hide the splash screen by clicking on it with the
+/// mouse. Since the splash screen is typically displayed before the
+/// event loop has started running, it is necessary to periodically
+/// call QApplication::processEvents() to receive the mouse clicks.
 /// 
-///    The user can hide the splash screen by clicking on it with the
-///    mouse. Since the splash screen is typically displayed before the
-///    event loop has started running, it is necessary to periodically
-///    call QApplication::processEvents() to receive the mouse clicks.
+/// It is sometimes useful to update the splash screen with messages,
+/// for example, announcing connections established or modules loaded
+/// as the application starts up:
 /// 
-///    It is sometimes useful to update the splash screen with messages,
-///    for example, announcing connections established or modules loaded
-///    as the application starts up:
-/// 
-///    \snippet code/src_gui_widgets_qsplashscreen.cpp 0
-/// 
-///    QSplashScreen supports this with the showMessage() function. If you
-///    wish to do your own drawing you can get a pointer to the pixmap
-///    used in the splash screen with pixmap().  Alternatively, you can
-///    subclass QSplashScreen and reimplement drawContents().
+/// QSplashScreen supports this with the showMessage() function. If you
+/// wish to do your own drawing you can get a pointer to the pixmap
+/// used in the splash screen with pixmap(). Alternatively, you can
+/// subclass QSplashScreen and reimplement drawContents().
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct SplashScreen : Widget {
-    ///     Sets the pixmap that will be used as the splash screen's image to
-    ///     \a pixmap.
+    /// 
+    /// Sets the pixmap that will be used as the splash screen's image to
+    /// *pixmap.*
     set_pixmap(pixmap: &PixmapType),
-    ///     Returns the pixmap that is used in the splash screen. The image
-    ///     does not have any of the text drawn by showMessage() calls.
+    /// 
+    /// Returns the pixmap that is used in the splash screen. The image
+    /// does not have any of the text drawn by showMessage() calls.
     pixmap() -> Pixmap,
-    ///     Makes the splash screen wait until the widget \a mainWin is displayed
-    ///     before calling close() on itself.
+    /// 
+    /// Makes the splash screen wait until the widget *mainWin* is displayed
+    /// before calling close() on itself.
     finish(w: *WidgetType),
-    ///     This overrides QWidget::repaint(). It differs from the standard repaint
-    ///     function in that it also calls QApplication::processEvents() to ensure
-    ///     the updates are displayed, even when there is no event loop present.
+    /// 
+    /// This overrides QWidget::repaint(). It differs from the standard repaint
+    /// function in that it also calls QApplication::processEvents() to ensure
+    /// the updates are displayed, even when there is no event loop present.
     repaint(),
-    ///     \since 5.2
     /// 
-    ///     Returns the message that is currently displayed on the splash screen.
+    /// This signal is emitted when the message on the splash screen
+    /// changes. *message* is the new message and is a null-string
+    /// when the message has been removed.
     /// 
-    ///     \sa showMessage(), clearMessage()
+    /// **See also:** showMessage()
+    /// clearMessage()
+    /// 
+    /// Returns the message that is currently displayed on the splash screen.
+    /// 
+    /// **See also:** showMessage()
+    /// clearMessage()
     message() -> String,
+    /// 
+    /// Draws the *message* text onto the splash screen with color *color* and aligns the text according to the flags in *alignment.*
+    /// This function calls repaint() to make sure the splash screen is
+    /// repainted immediately. As a result the message is kept up
+    /// to date with what your application is doing (e.g. loading files).
+    /// 
+    /// **See also:** Qt::Alignment
+    /// clearMessage()
+    /// message()
     show_message(message: String, alignment: i32, color: &ColorType),
+    /// 
+    /// Removes the message being displayed on the splash screen
+    /// 
+    /// **See also:** showMessage()
     clear_message(),
+    /// 
+    /// This signal is emitted when the message on the splash screen
+    /// changes. *message* is the new message and is a null-string
+    /// when the message has been removed.
+    /// 
+    /// **See also:** showMessage()
+    /// clearMessage()
     [signal] message_changed(message: String),
+    /// 
     [event] event(e: *EventType) -> bool,
-    ///     Draw the contents of the splash screen using painter \a painter.
-    ///     The default implementation draws the message passed by showMessage().
-    ///     Reimplement this function if you want to do your own drawing on
-    ///     the splash screen.
+    /// 
+    /// Draw the contents of the splash screen using painter *painter.*
+    /// The default implementation draws the message passed by showMessage().
+    /// Reimplement this function if you want to do your own drawing on
+    /// the splash screen.
     [event] draw_contents(painter: *PainterType),
-    ///     \reimp
+    /// 
     [event] mouse_press_event(arg0: *MouseEventType),
 }
 

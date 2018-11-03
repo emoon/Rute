@@ -1,42 +1,75 @@
-///     \class QStylePainter
 /// 
-///     \brief The QStylePainter class is a convenience class for drawing QStyle
-///     elements inside a widget.
+/// QStylePainter extends QPainter with a set of high-level `draw...()` functions implemented on top of QStyle's API. The
+/// advantage of using QStylePainter is that the parameter lists get
+/// considerably shorter. Whereas a QStyle object must be able to
+/// draw on any widget using any painter (because the application
+/// normally has one QStyle object shared by all widget), a
+/// QStylePainter is initialized with a widget, eliminating the need
+/// to specify the QWidget, the QPainter, and the QStyle for every
+/// function call.
 /// 
-///     \ingroup appearance
-///     \ingroup painting
-///     \inmodule QtWidgets
+/// Example using QStyle directly:
 /// 
-///     QStylePainter extends QPainter with a set of high-level \c
-///     draw...() functions implemented on top of QStyle's API. The
-///     advantage of using QStylePainter is that the parameter lists get
-///     considerably shorter. Whereas a QStyle object must be able to
-///     draw on any widget using any painter (because the application
-///     normally has one QStyle object shared by all widget), a
-///     QStylePainter is initialized with a widget, eliminating the need
-///     to specify the QWidget, the QPainter, and the QStyle for every
-///     function call.
+/// Example using QStylePainter:
 /// 
-///     Example using QStyle directly:
-/// 
-///     \snippet styles/styles.cpp 1
-/// 
-///     Example using QStylePainter:
-/// 
-///     \snippet styles/styles.cpp 0
-///     \snippet styles/styles.cpp 4
-///     \snippet styles/styles.cpp 6
-/// 
-///     \sa QStyle, QStyleOption
+/// **See also:** QStyle
+/// QStyleOption
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StylePainter : Painter {
+    /// 
+    /// Begin painting operations on the specified *widget.*
+    /// Returns `true` if the painter is ready to use; otherwise returns `false.`
+    /// 
+    /// This is automatically called by the constructor that takes a QWidget.
+    /// 
+    /// **Overloads**
+    /// Begin painting operations on paint device *pd* as if it was *widget.*
+    /// 
+    /// This is automatically called by the constructor that
+    /// takes a QPaintDevice and a QWidget.
     begin(w: *WidgetType) -> bool,
+    /// 
+    /// Begin painting operations on the specified *widget.*
+    /// Returns `true` if the painter is ready to use; otherwise returns `false.`
+    /// 
+    /// This is automatically called by the constructor that takes a QWidget.
+    /// 
+    /// **Overloads**
+    /// Begin painting operations on paint device *pd* as if it was *widget.*
+    /// 
+    /// This is automatically called by the constructor that
+    /// takes a QPaintDevice and a QWidget.
     begin(pd: *PaintDeviceType, w: *WidgetType) -> bool,
+    /// 
+    /// Use the widget's style to draw a primitive element *pe* specified by QStyleOption *option.*
+    /// 
+    /// **See also:** QStyle::drawPrimitive()
     draw_primitive(pe: Style::PrimitiveElement, opt: &StyleOptionType),
+    /// 
+    /// bool enabled, const QString &text,
+    /// QPalette::ColorRole textRole = QPalette::NoRole)
+    /// 
+    /// Draws the *text* in rectangle *rect* and palette *pal.*
+    /// The text is aligned and wrapped according to *flags.*
+    /// 
+    /// The pen color is specified with *textRole.* The *enabled* bool
+    /// indicates whether or not the item is enabled; when reimplementing
+    /// this bool should influence how the item is drawn.
+    /// 
+    /// **See also:** QStyle::drawItemText()
+    /// Qt::Alignment
     draw_item_text(r: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
+    /// 
+    /// Draws the *pixmap* in rectangle *rect.*
+    /// The pixmap is aligned according to *flags.*
+    /// 
+    /// **See also:** QStyle::drawItemPixmap()
+    /// Qt::Alignment
     draw_item_pixmap(r: &RectType, flags: i32, pixmap: &PixmapType),
+    /// 
+    /// Return the current style used by the QStylePainter.
     style() -> Style?,
 }
 

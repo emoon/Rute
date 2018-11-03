@@ -1,112 +1,76 @@
-///   \class QIcon
 /// 
-///   \brief The QIcon class provides scalable icons in different modes
-///   and states.
+/// A QIcon can generate smaller, larger, active, and disabled pixmaps
+/// from the set of pixmaps it is given. Such pixmaps are used by Qt
+/// widgets to show an icon representing a particular action.
 /// 
-///   \ingroup painting
-///   \ingroup shared
-///   \inmodule QtGui
+/// The simplest use of QIcon is to create one from a QPixmap file or
+/// resource, and then use it, allowing Qt to work out all the required
+/// icon styles and sizes. For example:
 /// 
-///   A QIcon can generate smaller, larger, active, and disabled pixmaps
-///   from the set of pixmaps it is given. Such pixmaps are used by Qt
-///   widgets to show an icon representing a particular action.
+/// To undo a QIcon, simply set a null icon in its place:
 /// 
-///   The simplest use of QIcon is to create one from a QPixmap file or
-///   resource, and then use it, allowing Qt to work out all the required
-///   icon styles and sizes. For example:
+/// Use the QImageReader::supportedImageFormats() and
+/// QImageWriter::supportedImageFormats() functions to retrieve a
+/// complete list of the supported file formats.
 /// 
-///   \snippet code/src_gui_image_qicon.cpp 0
+/// When you retrieve a pixmap using pixmap(QSize, Mode, State), and no
+/// pixmap for this given size, mode and state has been added with
+/// addFile() or addPixmap(), then QIcon will generate one on the
+/// fly. This pixmap generation happens in a QIconEngine. The default
+/// engine scales pixmaps down if required, but never up, and it uses
+/// the current style to calculate a disabled appearance. By using
+/// custom icon engines, you can customize every aspect of generated
+/// icons. With QIconEnginePlugin it is possible to register different
+/// icon engines for different file suffixes, making it possible for
+/// third parties to provide additional icon engines to those included
+/// with Qt.
 /// 
-///   To undo a QIcon, simply set a null icon in its place:
+/// **Note**: Since Qt 4.2, an icon engine that supports SVG is included.
 /// 
-///   \snippet code/src_gui_image_qicon.cpp 1
+/// # Making Classes that Use QIcon
 /// 
-///   Use the QImageReader::supportedImageFormats() and
-///   QImageWriter::supportedImageFormats() functions to retrieve a
-///   complete list of the supported file formats.
+/// If you write your own widgets that have an option to set a small
+/// pixmap, consider allowing a QIcon to be set for that pixmap. The
+/// Qt class QToolButton is an example of such a widget.
 /// 
-///   When you retrieve a pixmap using pixmap(QSize, Mode, State), and no
-///   pixmap for this given size, mode and state has been added with
-///   addFile() or addPixmap(), then QIcon will generate one on the
-///   fly. This pixmap generation happens in a QIconEngine. The default
-///   engine scales pixmaps down if required, but never up, and it uses
-///   the current style to calculate a disabled appearance. By using
-///   custom icon engines, you can customize every aspect of generated
-///   icons. With QIconEnginePlugin it is possible to register different
-///   icon engines for different file suffixes, making it possible for
-///   third parties to provide additional icon engines to those included
-///   with Qt.
+/// Provide a method to set a QIcon, and when you draw the icon, choose
+/// whichever pixmap is appropriate for the current state of your widget.
+/// For example:
 /// 
-///   \note Since Qt 4.2, an icon engine that supports SVG is included.
+/// You might also make use of the `Active` mode, perhaps making your
+/// widget `Active` when the mouse is over the widget (see [QWidget::enterEvent()),](QWidget::enterEvent()),)
+/// while the mouse is pressed pending the
+/// release that will activate the function, or when it is the currently
+/// selected item. If the widget can be toggled, the mode might be
+/// used to draw a different icon.
 /// 
-///   \section1 Making Classes that Use QIcon
+/// ![QIcon](icon.png)
 /// 
-///   If you write your own widgets that have an option to set a small
-///   pixmap, consider allowing a QIcon to be set for that pixmap.  The
-///   Qt class QToolButton is an example of such a widget.
+/// **Note**: QIcon needs a QGuiApplication instance before the icon is created.
 /// 
-///   Provide a method to set a QIcon, and when you draw the icon, choose
-///   whichever pixmap is appropriate for the current state of your widget.
-///   For example:
-///   \snippet code/src_gui_image_qicon.cpp 2
+/// # High DPI Icons
 /// 
-///   You might also make use of the \c Active mode, perhaps making your
-///   widget \c Active when the mouse is over the widget (see \l
-///   QWidget::enterEvent()), while the mouse is pressed pending the
-///   release that will activate the function, or when it is the currently
-///   selected item. If the widget can be toggled, the "On" mode might be
-///   used to draw a different icon.
+/// There are two ways that QIcon supports [high DPI](High%20DPI%20Displays)
 /// 
-///   \image icon.png QIcon
+/// icons: via [addFile()](addFile())
+/// and [fromTheme().](fromTheme().)
 /// 
-///   \note QIcon needs a QGuiApplication instance before the icon is created.
+/// [addFile()](addFile())
+/// is useful if you have your own custom directory structure and do
+/// not need to use the [freedesktop.org Icon Theme
+/// Specification](Icon%20Theme%20Specification)
+/// . Icons created via this approach use Qt's ["@nx" high DPI syntax](High%20Resolution%0A%20%20Versions%20of%20Images)
 /// 
-///   \section1 High DPI Icons
 /// 
-///   There are two ways that QIcon supports \l {High DPI Displays}{high DPI}
-///   icons: via \l addFile() and \l fromTheme().
+/// Using [fromTheme()](fromTheme())
+/// is necessary if you plan on following the Icon Theme
+/// Specification. To make QIcon use the high DPI version of an image, add an
+/// additional entry to the appropriate `index.theme` file:
 /// 
-///   \l addFile() is useful if you have your own custom directory structure and do
-///   not need to use the \l {Icon Theme Specification}{freedesktop.org Icon Theme
-///   Specification}. Icons created via this approach use Qt's \l {High Resolution
-///   Versions of Images}{"@nx" high DPI syntax}.
+/// Your icon theme directory would then look something like this:
 /// 
-///   Using \l fromTheme() is necessary if you plan on following the Icon Theme
-///   Specification. To make QIcon use the high DPI version of an image, add an
-///   additional entry to the appropriate \c index.theme file:
-/// 
-///   \badcode
-///   [Icon Theme]
-///   Name=Test
-///   Comment=Test Theme
-/// 
-///   Directories=32x32/actions,32x32@2/actions
-/// 
-///   [32x32/actions]
-///   Size=32
-///   Context=Actions
-///   Type=Fixed
-/// 
-///   # High DPI version of the entry above.
-///   [32x32@2/actions]
-///   Size=32
-///   Scale=2
-///   Type=Fixed
-///   \endcode
-/// 
-///   Your icon theme directory would then look something like this:
-/// 
-///   \badcode
-///     ├── 32x32
-///     │   └── actions
-///     │       └── appointment-new.png
-///     ├── 32x32@2
-///     │   └── actions
-///     │       └── appointment-new.png
-///     └── index.theme
-///   \endcode
-/// 
-///   \sa {fowler}{GUI Design Handbook: Iconic Label}, {Icons Example}
+/// **See also:** {fowler}{GUI Design Handbook: Iconic Label}
+/// {Icons Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -126,226 +90,445 @@ enum State {
 
 
 struct Icon {
+    /// 
+    /// Swaps icon *other* with this icon. This operation is very
+    /// fast and never fails.
     swap(other: &IconType),
-    ///   \since 5.1
     /// 
-    ///   Returns a pixmap with the requested \a window \a size, \a mode, and \a
-    ///   state, generating one if necessary.
+    /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
+    /// requested, but never larger.
     /// 
-    ///   The pixmap can be smaller than the requested size. If \a window is on
-    ///   a high-dpi display the pixmap can be larger. In that case it will have
-    ///   a devicePixelRatio larger than 1.
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
     /// 
-    ///   \sa  actualSize(), paint()
+    /// **See also:** actualSize()
+    /// paint()
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *w,* *h).* The pixmap might be smaller than
+    /// requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *extent,* *extent).* The pixmap might be smaller
+    /// than requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// Returns a pixmap with the requested *window* *size,* *mode,* and *state,* generating one if necessary.
+    /// 
+    /// The pixmap can be smaller than the requested size. If *window* is on
+    /// a high-dpi display the pixmap can be larger. In that case it will have
+    /// a devicePixelRatio larger than 1.
+    /// 
+    /// **See also:** actualSize()
+    /// paint()
     pixmap(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
-    ///   \since 5.1
     /// 
-    ///   Returns a pixmap with the requested \a window \a size, \a mode, and \a
-    ///   state, generating one if necessary.
+    /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
+    /// requested, but never larger.
     /// 
-    ///   The pixmap can be smaller than the requested size. If \a window is on
-    ///   a high-dpi display the pixmap can be larger. In that case it will have
-    ///   a devicePixelRatio larger than 1.
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
     /// 
-    ///   \sa  actualSize(), paint()
+    /// **See also:** actualSize()
+    /// paint()
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *w,* *h).* The pixmap might be smaller than
+    /// requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *extent,* *extent).* The pixmap might be smaller
+    /// than requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// Returns a pixmap with the requested *window* *size,* *mode,* and *state,* generating one if necessary.
+    /// 
+    /// The pixmap can be smaller than the requested size. If *window* is on
+    /// a high-dpi display the pixmap can be larger. In that case it will have
+    /// a devicePixelRatio larger than 1.
+    /// 
+    /// **See also:** actualSize()
+    /// paint()
     pixmap(w: i32, h: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
-    ///   \since 5.1
     /// 
-    ///   Returns a pixmap with the requested \a window \a size, \a mode, and \a
-    ///   state, generating one if necessary.
+    /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
+    /// requested, but never larger.
     /// 
-    ///   The pixmap can be smaller than the requested size. If \a window is on
-    ///   a high-dpi display the pixmap can be larger. In that case it will have
-    ///   a devicePixelRatio larger than 1.
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
     /// 
-    ///   \sa  actualSize(), paint()
+    /// **See also:** actualSize()
+    /// paint()
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *w,* *h).* The pixmap might be smaller than
+    /// requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *extent,* *extent).* The pixmap might be smaller
+    /// than requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// Returns a pixmap with the requested *window* *size,* *mode,* and *state,* generating one if necessary.
+    /// 
+    /// The pixmap can be smaller than the requested size. If *window* is on
+    /// a high-dpi display the pixmap can be larger. In that case it will have
+    /// a devicePixelRatio larger than 1.
+    /// 
+    /// **See also:** actualSize()
+    /// paint()
     pixmap(extent: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
-    ///   \since 5.1
     /// 
-    ///   Returns a pixmap with the requested \a window \a size, \a mode, and \a
-    ///   state, generating one if necessary.
+    /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
+    /// requested, but never larger.
     /// 
-    ///   The pixmap can be smaller than the requested size. If \a window is on
-    ///   a high-dpi display the pixmap can be larger. In that case it will have
-    ///   a devicePixelRatio larger than 1.
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
     /// 
-    ///   \sa  actualSize(), paint()
+    /// **See also:** actualSize()
+    /// paint()
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *w,* *h).* The pixmap might be smaller than
+    /// requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// **Overloads**
+    /// Returns a pixmap of size QSize( *extent,* *extent).* The pixmap might be smaller
+    /// than requested, but never larger.
+    /// 
+    /// Setting the Qt::AA_UseHighDpiPixmaps application attribute enables this
+    /// function to return pixmaps that are larger than the requested size. Such
+    /// images will have a devicePixelRatio larger than 1.
+    /// 
+    /// Returns a pixmap with the requested *window* *size,* *mode,* and *state,* generating one if necessary.
+    /// 
+    /// The pixmap can be smaller than the requested size. If *window* is on
+    /// a high-dpi display the pixmap can be larger. In that case it will have
+    /// a devicePixelRatio larger than 1.
+    /// 
+    /// **See also:** actualSize()
+    /// paint()
     pixmap(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
-    ///   \since 5.1
+    /// Returns the actual size of the icon for the requested *size,* *mode,* and *state.* The result might be smaller than requested, but
+    /// never larger. The returned size is in device-independent pixels (This
+    /// is relevant for high-dpi pixmaps.)
     /// 
-    ///   Returns the actual size of the icon for the requested \a window  \a size, \a
-    ///   mode, and \a state.
+    /// **See also:** pixmap()
+    /// paint()
     /// 
-    ///   The pixmap can be smaller than the requested size. The returned size
-    ///   is in device-independent pixels (This is relevant for high-dpi pixmaps.)
+    /// Returns the actual size of the icon for the requested *window* *size,* *mode,* and *state.*
     /// 
-    ///   \sa actualSize(), pixmap(), paint()
+    /// The pixmap can be smaller than the requested size. The returned size
+    /// is in device-independent pixels (This is relevant for high-dpi pixmaps.)
+    /// 
+    /// **See also:** actualSize()
+    /// pixmap()
+    /// paint()
     actual_size(size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
-    ///   \since 5.1
+    /// Returns the actual size of the icon for the requested *size,* *mode,* and *state.* The result might be smaller than requested, but
+    /// never larger. The returned size is in device-independent pixels (This
+    /// is relevant for high-dpi pixmaps.)
     /// 
-    ///   Returns the actual size of the icon for the requested \a window  \a size, \a
-    ///   mode, and \a state.
+    /// **See also:** pixmap()
+    /// paint()
     /// 
-    ///   The pixmap can be smaller than the requested size. The returned size
-    ///   is in device-independent pixels (This is relevant for high-dpi pixmaps.)
+    /// Returns the actual size of the icon for the requested *window* *size,* *mode,* and *state.*
     /// 
-    ///   \sa actualSize(), pixmap(), paint()
+    /// The pixmap can be smaller than the requested size. The returned size
+    /// is in device-independent pixels (This is relevant for high-dpi pixmaps.)
+    /// 
+    /// **See also:** actualSize()
+    /// pixmap()
+    /// paint()
     actual_size(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
-    ///     \since 4.7
     /// 
-    ///     Returns the name used to create the icon, if available.
+    /// Returns the name used to create the icon, if available.
     /// 
-    ///     Depending on the way the icon was created, it may have an associated
-    ///     name. This is the case for icons created with fromTheme() or icons
-    ///     using a QIconEngine which supports the QIconEngine::IconNameHook.
+    /// Depending on the way the icon was created, it may have an associated
+    /// name. This is the case for icons created with fromTheme() or icons
+    /// using a QIconEngine which supports the QIconEngine::IconNameHook.
     /// 
-    ///     \sa fromTheme(), QIconEngine
+    /// **See also:** fromTheme()
+    /// QIconEngine
     name() -> String,
-    ///     Uses the \a painter to paint the icon with specified \a alignment,
-    ///     required \a mode, and \a state into the rectangle \a rect.
     /// 
-    ///     \sa actualSize(), pixmap()
+    /// Uses the *painter* to paint the icon with specified *alignment,*
+    /// required *mode,* and *state* into the rectangle *rect.*
+    /// 
+    /// **See also:** actualSize()
+    /// pixmap()
+    /// 
+    /// Mode mode, State state) const
+    /// 
+    /// **Overloads**
+    /// Paints the icon into the rectangle QRect( *x,* *y,* *w,* *h).*
     paint(painter: *PainterType, rect: &RectType, alignment: Rute::Alignment, mode: Icon::Mode, state: Icon::State),
-    ///     Uses the \a painter to paint the icon with specified \a alignment,
-    ///     required \a mode, and \a state into the rectangle \a rect.
     /// 
-    ///     \sa actualSize(), pixmap()
+    /// Uses the *painter* to paint the icon with specified *alignment,*
+    /// required *mode,* and *state* into the rectangle *rect.*
+    /// 
+    /// **See also:** actualSize()
+    /// pixmap()
+    /// 
+    /// Mode mode, State state) const
+    /// 
+    /// **Overloads**
+    /// Paints the icon into the rectangle QRect( *x,* *y,* *w,* *h).*
     paint(painter: *PainterType, x: i32, y: i32, w: i32, h: i32, alignment: Rute::Alignment, mode: Icon::Mode, state: Icon::State),
-    ///     Returns \c true if the icon is empty; otherwise returns \c false.
     /// 
-    ///     An icon is empty if it has neither a pixmap nor a filename.
+    /// Returns `true` if the icon is empty; otherwise returns `false.`
     /// 
-    ///     Note: Even a non-null icon might not be able to create valid
-    ///     pixmaps, eg. if the file does not exist or cannot be read.
+    /// An icon is empty if it has neither a pixmap nor a filename.
+    /// 
+    /// Note: Even a non-null icon might not be able to create valid
+    /// pixmaps, eg. if the file does not exist or cannot be read.
     is_null() -> bool,
     is_detached() -> bool,
     detach(),
-    ///     Returns a number that identifies the contents of this QIcon
-    ///     object. Distinct QIcon objects can have the same key if
-    ///     they refer to the same contents.
-    ///     \since 4.3
     /// 
-    ///     The cacheKey() will change when the icon is altered via
-    ///     addPixmap() or addFile().
+    /// Returns a number that identifies the contents of this QIcon
+    /// object. Distinct QIcon objects can have the same key if
+    /// they refer to the same contents.
     /// 
-    ///     Cache keys are mostly useful in conjunction with caching.
+    /// The cacheKey() will change when the icon is altered via
+    /// addPixmap() or addFile().
     /// 
-    ///     \sa QPixmap::cacheKey()
+    /// Cache keys are mostly useful in conjunction with caching.
+    /// 
+    /// **See also:** QPixmap::cacheKey()
     cache_key() -> i64,
-    ///     Adds \a pixmap to the icon, as a specialization for \a mode and
-    ///     \a state.
     /// 
-    ///     Custom icon engines are free to ignore additionally added
-    ///     pixmaps.
+    /// Adds *pixmap* to the icon, as a specialization for *mode* and
+    /// *state.*
     /// 
-    ///     \sa addFile()
+    /// Custom icon engines are free to ignore additionally added
+    /// pixmaps.
+    /// 
+    /// **See also:** addFile()
     add_pixmap(pixmap: &PixmapType, mode: Icon::Mode, state: Icon::State),
+    /// Adds an image from the file with the given *fileName* to the
+    /// icon, as a specialization for *size,* *mode* and *state.* The
+    /// file will be loaded on demand. Note: custom icon engines are free
+    /// to ignore additionally added pixmaps.
+    /// 
+    /// If *fileName* contains a relative path (e.g. the filename only)
+    /// the relevant file must be found relative to the runtime working
+    /// directory.
+    /// 
+    /// The file name can refer to an actual file on disk or to
+    /// one of the application's embedded resources. See the
+    /// [Resource System](resources.html)
+    /// overview for details on how to
+    /// embed images and other resource files in the application's
+    /// executable.
+    /// 
+    /// Use the QImageReader::supportedImageFormats() and
+    /// QImageWriter::supportedImageFormats() functions to retrieve a
+    /// complete list of the supported file formats.
+    /// 
+    /// If a high resolution version of the image exists (identified by
+    /// the suffix `@2x` on the base name), it is automatically loaded
+    /// and added with the *device pixel ratio* set to a value of 2.
+    /// This can be disabled by setting the environment variable
+    /// `QT_HIGHDPI_DISABLE_2X_IMAGE_LOADING` (see QImageReader).
+    /// 
+    /// **Note**: When you add a non-empty filename to a QIcon, the icon becomes
+    /// non-null, even if the file doesn't exist or points to a corrupt file.
+    /// 
+    /// **See also:** addPixmap()
+    /// QPixmap::devicePixelRatio()
     add_file(file_name: String, size: &SizeType, mode: Icon::Mode, state: Icon::State),
-    ///     \since 4.5
     /// 
-    ///     Returns a list of available icon sizes for the specified \a mode and
-    ///     \a state.
+    /// Returns a list of available icon sizes for the specified *mode* and
+    /// *state.*
     available_sizes(mode: Icon::Mode, state: Icon::State) -> [Size],
-    ///     \since 5.6
     /// 
-    ///     Indicate that this icon is a mask image(boolean \a isMask), and hence can
-    ///     potentially be modified based on where it's displayed.
-    ///     \sa isMask()
+    /// Indicate that this icon is a mask image(boolean *isMask),* and hence can
+    /// potentially be modified based on where it's displayed.
+    /// **See also:** isMask()
     set_is_mask(is_mask: bool),
-    ///     \since 5.6
     /// 
-    ///     Returns \c true if this icon has been marked as a mask image.
-    ///     Certain platforms render mask icons differently (for example,
-    ///     menu icons on \macos).
+    /// Returns `true` if this icon has been marked as a mask image.
+    /// Certain platforms render mask icons differently (for example,
+    /// menu icons on MacOS ).
     /// 
-    ///     \sa setIsMask()
+    /// **See also:** setIsMask()
     is_mask() -> bool,
-    ///     \overload
     /// 
-    ///     Returns the QIcon corresponding to \a name in the current
-    ///     icon theme. If no such icon is found in the current theme
-    ///     \a fallback is returned instead.
+    /// Returns the QIcon corresponding to *name* in the current
+    /// icon theme.
     /// 
-    ///     If you want to provide a guaranteed fallback for platforms that
-    ///     do not support theme icons, you can use the second argument:
+    /// The latest version of the freedesktop icon specification and naming
+    /// specification can be obtained here:
     /// 
-    ///     \snippet code/src_gui_image_qicon.cpp 4
+    /// * [http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html](http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html)
+    /// 
+    /// * [http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html](http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html)
+    /// 
+    /// To fetch an icon from the current icon theme:
+    /// 
+    /// **Note**: By default, only X11 will support themed icons. In order to
+    /// use themed icons on Mac and Windows, you will have to bundle a
+    /// compliant theme in one of your themeSearchPaths() and set the
+    /// appropriate themeName().
+    /// 
+    /// **Note**: Qt will make use of GTK's icon-theme.cache if present to speed up
+    /// the lookup. These caches can be generated using gtk-update-icon-cache:
+    /// [https://developer.gnome.org/gtk3/stable/gtk-update-icon-cache.html](https://developer.gnome.org/gtk3/stable/gtk-update-icon-cache.html)
+    /// 
+    /// 
+    /// **Note**: If an icon can't be found in the current theme, then it will be
+    /// searched in fallbackSearchPaths() as an unthemed icon.
+    /// 
+    /// **See also:** themeName()
+    /// setThemeName()
+    /// themeSearchPaths()
+    /// fallbackSearchPaths()
+    /// 
+    /// **Overloads**
+    /// Returns the QIcon corresponding to *name* in the current
+    /// icon theme. If no such icon is found in the current theme
+    /// *fallback* is returned instead.
+    /// 
+    /// If you want to provide a guaranteed fallback for platforms that
+    /// do not support theme icons, you can use the second argument:
+    /// 
     [static] from_theme(name: String) -> Icon,
-    ///     \overload
     /// 
-    ///     Returns the QIcon corresponding to \a name in the current
-    ///     icon theme. If no such icon is found in the current theme
-    ///     \a fallback is returned instead.
+    /// Returns the QIcon corresponding to *name* in the current
+    /// icon theme.
     /// 
-    ///     If you want to provide a guaranteed fallback for platforms that
-    ///     do not support theme icons, you can use the second argument:
+    /// The latest version of the freedesktop icon specification and naming
+    /// specification can be obtained here:
     /// 
-    ///     \snippet code/src_gui_image_qicon.cpp 4
+    /// * [http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html](http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html)
+    /// 
+    /// * [http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html](http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html)
+    /// 
+    /// To fetch an icon from the current icon theme:
+    /// 
+    /// **Note**: By default, only X11 will support themed icons. In order to
+    /// use themed icons on Mac and Windows, you will have to bundle a
+    /// compliant theme in one of your themeSearchPaths() and set the
+    /// appropriate themeName().
+    /// 
+    /// **Note**: Qt will make use of GTK's icon-theme.cache if present to speed up
+    /// the lookup. These caches can be generated using gtk-update-icon-cache:
+    /// [https://developer.gnome.org/gtk3/stable/gtk-update-icon-cache.html](https://developer.gnome.org/gtk3/stable/gtk-update-icon-cache.html)
+    /// 
+    /// 
+    /// **Note**: If an icon can't be found in the current theme, then it will be
+    /// searched in fallbackSearchPaths() as an unthemed icon.
+    /// 
+    /// **See also:** themeName()
+    /// setThemeName()
+    /// themeSearchPaths()
+    /// fallbackSearchPaths()
+    /// 
+    /// **Overloads**
+    /// Returns the QIcon corresponding to *name* in the current
+    /// icon theme. If no such icon is found in the current theme
+    /// *fallback* is returned instead.
+    /// 
+    /// If you want to provide a guaranteed fallback for platforms that
+    /// do not support theme icons, you can use the second argument:
+    /// 
     [static] from_theme(name: String, fallback: &IconType) -> Icon,
-    ///     \since 4.6
     /// 
-    ///     Returns \c true if there is an icon available for \a name in the
-    ///     current icon theme, otherwise returns \c false.
+    /// Returns `true` if there is an icon available for *name* in the
+    /// current icon theme, otherwise returns `false.`
     /// 
-    ///     \sa themeSearchPaths(), fromTheme(), setThemeName()
+    /// **See also:** themeSearchPaths()
+    /// fromTheme()
+    /// setThemeName()
     [static] has_theme_icon(name: String) -> bool,
-    ///   \since 4.6
     /// 
-    ///   Returns the search paths for icon themes.
+    /// Returns the search paths for icon themes.
     /// 
-    ///   The default value will depend on the platform:
+    /// The default value will depend on the platform:
     /// 
-    ///   On X11, the search path will use the XDG_DATA_DIRS environment
-    ///   variable if available.
+    /// On X11, the search path will use the XDG_DATA_DIRS environment
+    /// variable if available.
     /// 
-    ///   By default all platforms will have the resource directory
-    ///   \c{:\icons} as a fallback. You can use "rcc -project" to generate a
-    ///   resource file from your icon theme.
+    /// By default all platforms will have the resource directory
+    /// `:\icons` as a fallback. You can use to generate a
+    /// resource file from your icon theme.
     /// 
-    ///   \sa setThemeSearchPaths(), fromTheme(), setThemeName()
+    /// **See also:** setThemeSearchPaths()
+    /// fromTheme()
+    /// setThemeName()
     [static] theme_search_paths() -> [String],
-    ///     \since 4.6
     /// 
-    ///     Sets the search paths for icon themes to \a paths.
-    ///     \sa themeSearchPaths(), fromTheme(), setThemeName()
+    /// Sets the search paths for icon themes to *paths.*
+    /// **See also:** themeSearchPaths()
+    /// fromTheme()
+    /// setThemeName()
     [static] set_theme_search_paths(searchpath: &[String]),
-    ///     \since 5.11
     /// 
-    ///     Returns the fallback search paths for icons.
+    /// Returns the fallback search paths for icons.
     /// 
-    ///     The default value will depend on the platform.
+    /// The default value will depend on the platform.
     /// 
-    ///     \sa setFallbackSearchPaths(), themeSearchPaths()
+    /// **See also:** setFallbackSearchPaths()
+    /// themeSearchPaths()
     [static] fallback_search_paths() -> [String],
-    ///     \since 5.11
     /// 
-    ///     Sets the fallback search paths for icons to \a paths.
+    /// Sets the fallback search paths for icons to *paths.*
     /// 
-    ///     \note To add some path without replacing existing ones:
+    /// **Note**: To add some path without replacing existing ones:
     /// 
-    ///     \snippet code/src_gui_image_qicon.cpp 5
-    /// 
-    ///     \sa fallbackSearchPaths(), setThemeSearchPaths()
+    /// **See also:** fallbackSearchPaths()
+    /// setThemeSearchPaths()
     [static] set_fallback_search_paths(paths: &[String]),
-    ///     \since 4.6
     /// 
-    ///     Returns the name of the current icon theme.
+    /// Returns the name of the current icon theme.
     /// 
-    ///     On X11, the current icon theme depends on your desktop
-    ///     settings. On other platforms it is not set by default.
+    /// On X11, the current icon theme depends on your desktop
+    /// settings. On other platforms it is not set by default.
     /// 
-    ///     \sa setThemeName(), themeSearchPaths(), fromTheme(),
-    ///     hasThemeIcon()
+    /// **See also:** setThemeName()
+    /// themeSearchPaths()
+    /// fromTheme()
+    /// hasThemeIcon()
     [static] theme_name() -> String,
-    ///     \since 4.6
     /// 
-    ///     Sets the current icon theme to \a name.
+    /// Sets the current icon theme to *name.*
     /// 
-    ///     The \a name should correspond to a directory name in the
-    ///     themeSearchPath() containing an index.theme
-    ///     file describing it's contents.
+    /// The *name* should correspond to a directory name in the
+    /// themeSearchPath() containing an index.theme
+    /// file describing it's contents.
     /// 
-    ///     \sa themeSearchPaths(), themeName()
+    /// **See also:** themeSearchPaths()
+    /// themeName()
     [static] set_theme_name(path: String),
 }
 

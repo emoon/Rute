@@ -1,25 +1,59 @@
-///     \class QHelpEvent
-///     \brief The QHelpEvent class provides an event that is used to request helpful information
-///     about a particular point in a widget.
 /// 
-///     \ingroup events
-///     \ingroup helpsystem
-///     \inmodule QtGui
+/// This event can be intercepted in applications to provide tooltips
+/// or help for custom widgets. The type() can be
+/// either QEvent::ToolTip or QEvent::WhatsThis.
 /// 
-///     This event can be intercepted in applications to provide tooltips
-///     or "What's This?" help for custom widgets. The type() can be
-///     either QEvent::ToolTip or QEvent::WhatsThis.
-/// 
-///     \sa QToolTip, QWhatsThis, QStatusTipEvent, QWhatsThisClickedEvent
+/// **See also:** QToolTip
+/// QWhatsThis
+/// QStatusTipEvent
+/// QWhatsThisClickedEvent
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct HelpEvent : Event {
+    /// 
+    /// Same as pos().x().
+    /// 
+    /// **See also:** y()
+    /// pos()
+    /// globalPos()
     x() -> i32,
+    /// 
+    /// Same as pos().y().
+    /// 
+    /// **See also:** x()
+    /// pos()
+    /// globalPos()
     y() -> i32,
+    /// 
+    /// Same as globalPos().x().
+    /// 
+    /// **See also:** x()
+    /// globalY()
+    /// globalPos()
     global_x() -> i32,
+    /// 
+    /// Same as globalPos().y().
+    /// 
+    /// **See also:** y()
+    /// globalX()
+    /// globalPos()
     global_y() -> i32,
+    /// 
+    /// Returns the mouse cursor position when the event was generated,
+    /// relative to the widget to which the event is dispatched.
+    /// 
+    /// **See also:** globalPos()
+    /// x()
+    /// y()
     pos() -> Point?,
+    /// 
+    /// Returns the mouse cursor position when the event was generated
+    /// in global coordinates.
+    /// 
+    /// **See also:** pos()
+    /// globalX()
+    /// globalY()
     global_pos() -> Point?,
 }
 

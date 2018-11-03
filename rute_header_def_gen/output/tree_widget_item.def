@@ -1,63 +1,56 @@
-///   \class QTreeWidgetItem
 /// 
-///   \brief The QTreeWidgetItem class provides an item for use with the
-///   QTreeWidget convenience class.
+/// Tree widget items are used to hold rows of information for tree widgets.
+/// Rows usually contain several columns of data, each of which can contain
+/// a text label and an icon.
 /// 
-///   \ingroup model-view
-///   \inmodule QtWidgets
+/// The QTreeWidgetItem class is a convenience class that replaces the
+/// QListViewItem class in Qt 3. It provides an item for use with
+/// the QTreeWidget class.
 /// 
-///   Tree widget items are used to hold rows of information for tree widgets.
-///   Rows usually contain several columns of data, each of which can contain
-///   a text label and an icon.
+/// Items are usually constructed with a parent that is either a QTreeWidget
+/// (for top-level items) or a QTreeWidgetItem (for items on lower levels of
+/// the tree). For example, the following code constructs a top-level item
+/// to represent cities of the world, and adds a entry for Oslo as a child
+/// item:
 /// 
-///   The QTreeWidgetItem class is a convenience class that replaces the
-///   QListViewItem class in Qt 3. It provides an item for use with
-///   the QTreeWidget class.
+/// Items can be added in a particular order by specifying the item they
+/// follow when they are constructed:
 /// 
-///   Items are usually constructed with a parent that is either a QTreeWidget
-///   (for top-level items) or a QTreeWidgetItem (for items on lower levels of
-///   the tree). For example, the following code constructs a top-level item
-///   to represent cities of the world, and adds a entry for Oslo as a child
-///   item:
+/// Each column in an item can have its own background brush which is set with
+/// the setBackground() function. The current background brush can be
+/// found with background().
+/// The text label for each column can be rendered with its own font and brush.
+/// These are specified with the setFont() and setForeground() functions,
+/// and read with font() and foreground().
 /// 
-///   \snippet qtreewidget-using/mainwindow.cpp 3
+/// The main difference between top-level items and those in lower levels of
+/// the tree is that a top-level item has no parent(). This information
+/// can be used to tell the difference between items, and is useful to know
+/// when inserting and removing items from the tree.
+/// Children of an item can be removed with takeChild() and inserted at a
+/// given index in the list of children with the insertChild() function.
 /// 
-///   Items can be added in a particular order by specifying the item they
-///   follow when they are constructed:
+/// By default, items are enabled, selectable, checkable, and can be the source
+/// of a drag and drop operation.
+/// Each item's flags can be changed by calling setFlags() with the appropriate
+/// value (see [Qt::ItemFlags](Qt::ItemFlags)
+/// ). Checkable items can be checked and unchecked
+/// with the setCheckState() function. The corresponding checkState() function
+/// indicates whether the item is currently checked.
 /// 
-///   \snippet qtreewidget-using/mainwindow.cpp 5
+/// # Subclassing
 /// 
-///   Each column in an item can have its own background brush which is set with
-///   the setBackground() function. The current background brush can be
-///   found with background().
-///   The text label for each column can be rendered with its own font and brush.
-///   These are specified with the setFont() and setForeground() functions,
-///   and read with font() and foreground().
+/// When subclassing QTreeWidgetItem to provide custom items, it is possible to
+/// define new types for them so that they can be distinguished from standard
+/// items. The constructors for subclasses that require this feature need to
+/// call the base class constructor with a new type value equal to or greater
+/// than [UserType.](UserType.)
 /// 
-///   The main difference between top-level items and those in lower levels of
-///   the tree is that a top-level item has no parent(). This information
-///   can be used to tell the difference between items, and is useful to know
-///   when inserting and removing items from the tree.
-///   Children of an item can be removed with takeChild() and inserted at a
-///   given index in the list of children with the insertChild() function.
-/// 
-///   By default, items are enabled, selectable, checkable, and can be the source
-///   of a drag and drop operation.
-///   Each item's flags can be changed by calling setFlags() with the appropriate
-///   value (see \l{Qt::ItemFlags}). Checkable items can be checked and unchecked
-///   with the setCheckState() function. The corresponding checkState() function
-///   indicates whether the item is currently checked.
-/// 
-///   \section1 Subclassing
-/// 
-///   When subclassing QTreeWidgetItem to provide custom items, it is possible to
-///   define new types for them so that they can be distinguished from standard
-///   items. The constructors for subclasses that require this feature need to
-///   call the base class constructor with a new type value equal to or greater
-///   than \l UserType.
-/// 
-///   \sa QTreeWidget, QTreeWidgetItemIterator, {Model/View Programming},
-///   QListWidgetItem, QTableWidgetItem
+/// **See also:** QTreeWidget
+/// QTreeWidgetItemIterator
+/// {Model/View Programming}
+/// QListWidgetItem
+/// QTableWidgetItem
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -76,143 +69,362 @@ enum ChildIndicatorPolicy {
 
 
 struct TreeWidgetItem {
-    ///     Creates a deep copy of the item and of its children.
+    /// 
+    /// Creates a deep copy of the item and of its children.
     [event] clone() -> TreeWidgetItem?,
+    /// 
+    /// Sets the selected state of the item to *select.*
+    /// 
+    /// **See also:** isSelected()
+    /// 
     set_selected(select: bool),
+    /// 
+    /// Returns `true` if the item is selected, otherwise returns `false.`
+    /// 
+    /// **See also:** setSelected()
     is_selected() -> bool,
+    /// 
+    /// Hides the item if *hide* is true, otherwise shows the item.
+    /// **Note**: A call to this function has no effect if the item is not currently in a view. In particular,
+    /// calling `setHidden(true)` on an item and only then adding it to a view will result in
+    /// a visible item.
+    /// 
+    /// **See also:** isHidden()
     set_hidden(hide: bool),
+    /// 
+    /// Returns `true` if the item is hidden, otherwise returns `false.`
+    /// 
+    /// **See also:** setHidden()
     is_hidden() -> bool,
+    /// 
+    /// Expands the item if *expand* is true, otherwise collapses the item.
+    /// **Warning**: The QTreeWidgetItem must be added to the QTreeWidget before calling this function.
+    /// 
+    /// **See also:** isExpanded()
     set_expanded(expand: bool),
+    /// 
+    /// Returns `true` if the item is expanded, otherwise returns `false.`
+    /// 
+    /// **See also:** setExpanded()
     is_expanded() -> bool,
+    /// 
+    /// Sets the first section to span all columns if *span* is true;
+    /// otherwise all item sections are shown.
+    /// 
+    /// **See also:** isFirstColumnSpanned()
     set_first_column_spanned(span: bool),
+    /// 
+    /// Returns `true` if the item is spanning all the columns in a row; otherwise returns `false.`
+    /// 
+    /// **See also:** setFirstColumnSpanned()
     is_first_column_spanned() -> bool,
+    /// 
+    /// Disables the item if *disabled* is true; otherwise enables the item.
+    /// 
+    /// **See also:** setFlags()
     set_disabled(disabled: bool),
+    /// 
+    /// Returns `true` if the item is disabled; otherwise returns `false.`
+    /// 
+    /// **See also:** setFlags()
     is_disabled() -> bool,
-    ///    Sets the item indicator \a policy. This policy decides when the
-    ///    tree branch expand/collapse indicator is shown.
-    ///    The default value is ShowForChildren.
     /// 
-    ///    \sa childIndicatorPolicy()
+    /// Sets the item indicator *policy.* This policy decides when the
+    /// tree branch expand/collapse indicator is shown.
+    /// The default value is ShowForChildren.
+    /// 
+    /// **See also:** childIndicatorPolicy()
     set_child_indicator_policy(policy: TreeWidgetItem::ChildIndicatorPolicy),
-    ///    Returns the item indicator policy. This policy decides when the
-    ///    tree branch expand/collapse indicator is shown.
     /// 
-    ///    \sa setChildIndicatorPolicy()
+    /// Returns the item indicator policy. This policy decides when the
+    /// tree branch expand/collapse indicator is shown.
+    /// 
+    /// **See also:** setChildIndicatorPolicy()
     child_indicator_policy() -> TreeWidgetItem::ChildIndicatorPolicy,
-    ///     \fn Qt::ItemFlags QTreeWidgetItem::flags() const
     /// 
-    ///     Returns the flags used to describe the item. These determine whether
-    ///     the item can be checked, edited, and selected.
+    /// Returns the flags used to describe the item. These determine whether
+    /// the item can be checked, edited, and selected.
     /// 
-    ///     The default value for flags is
-    ///     Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled |
-    ///     Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled.
+    /// The default value for flags is
+    /// Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled |
+    /// Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled.
     /// 
-    ///     \sa setFlags()
+    /// **See also:** setFlags()
     flags() -> Rute::ItemFlags,
-    ///     \fn void QTreeWidgetItem::setFlags(Qt::ItemFlags flags)
     /// 
-    ///     Sets the flags for the item to the given \a flags. These determine whether
-    ///     the item can be selected or modified.  This is often used to disable an item.
+    /// Sets the flags for the item to the given *flags.* These determine whether
+    /// the item can be selected or modified. This is often used to disable an item.
     /// 
-    ///     \sa flags()
+    /// **See also:** flags()
     set_flags(flags: Rute::ItemFlags),
+    /// 
+    /// Returns the text in the specified *column.*
+    /// 
+    /// **See also:** setText()
+    /// 
+    /// This function is deprecated. Use foreground() instead.
+    /// 
+    /// Returns the text alignment for the label in the given *column*
+    /// (see [Qt::AlignmentFlag](Qt::AlignmentFlag)
+    /// ).
     text(column: i32) -> String,
+    /// 
+    /// Sets the text to be displayed in the given *column* to the given *text.*
+    /// 
+    /// **See also:** text()
+    /// setFont()
+    /// setForeground()
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
+    /// 
+    /// Sets the text alignment for the label in the given *column* to
+    /// the *alignment* specified (see [Qt::AlignmentFlag](Qt::AlignmentFlag)
+    /// ).
     set_text(column: i32, text: String),
+    /// 
+    /// Returns the icon that is displayed in the specified *column.*
+    /// 
+    /// **See also:** setIcon()
+    /// {QAbstractItemView::iconSize}{iconSize}
     icon(column: i32) -> Icon,
+    /// 
+    /// Sets the icon to be displayed in the given *column* to *icon.*
+    /// 
+    /// **See also:** icon()
+    /// setText()
+    /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(column: i32, icon: &IconType),
+    /// 
+    /// Returns the status tip for the contents of the given *column.*
+    /// 
+    /// **See also:** setStatusTip()
     status_tip(column: i32) -> String,
+    /// 
+    /// Sets the status tip for the given *column* to the given *statusTip.*
+    /// QTreeWidget mouse tracking needs to be enabled for this feature to work.
+    /// 
+    /// **See also:** statusTip()
+    /// setToolTip()
+    /// setWhatsThis()
     set_status_tip(column: i32, status_tip: String),
+    /// 
+    /// Returns the tool tip for the given *column.*
+    /// 
+    /// **See also:** setToolTip()
     tool_tip(column: i32) -> String,
+    /// 
+    /// Sets the tooltip for the given *column* to *toolTip.*
+    /// 
+    /// **See also:** toolTip()
+    /// setStatusTip()
+    /// setWhatsThis()
     set_tool_tip(column: i32, tool_tip: String),
+    /// 
+    /// Returns the help for the contents of the given *column.*
+    /// 
+    /// **See also:** setWhatsThis()
     whats_this(column: i32) -> String,
+    /// 
+    /// Sets the help for the given *column* to *whatsThis.*
+    /// 
+    /// **See also:** whatsThis()
+    /// setStatusTip()
+    /// setToolTip()
     set_whats_this(column: i32, whats_this: String),
+    /// 
+    /// Returns the font used to render the text in the specified *column.*
+    /// 
+    /// **See also:** setFont()
     font(column: i32) -> Font,
+    /// 
+    /// Sets the font used to display the text in the given *column* to the given
+    /// *font.*
+    /// 
+    /// **See also:** font()
+    /// setText()
+    /// setForeground()
     set_font(column: i32, font: &FontType),
+    /// 
+    /// Returns the text alignment for the label in the given *column*
+    /// (see [Qt::AlignmentFlag](Qt::AlignmentFlag)
+    /// ).
     text_alignment(column: i32) -> i32,
+    /// 
+    /// Sets the text alignment for the label in the given *column* to
+    /// the *alignment* specified (see [Qt::AlignmentFlag](Qt::AlignmentFlag)
+    /// ).
     set_text_alignment(column: i32, alignment: i32),
+    /// 
+    /// This function is deprecated. Use background() instead.
     background_color(column: i32) -> Color,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
     set_background_color(column: i32, color: &ColorType),
+    /// 
+    /// This function is deprecated. Use background() instead.
+    /// 
+    /// Returns the brush used to render the background of the specified *column.*
+    /// 
+    /// **See also:** foreground()
     background(column: i32) -> Brush,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
+    /// 
+    /// Sets the background brush of the label in the given *column* to the
+    /// specified *brush.*
+    /// 
+    /// **See also:** setForeground()
     set_background(column: i32, brush: &BrushType),
+    /// 
+    /// This function is deprecated. Use foreground() instead.
     text_color(column: i32) -> Color,
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
     set_text_color(column: i32, color: &ColorType),
+    /// 
+    /// Returns the brush used to render the foreground (e.g. text) of the
+    /// specified *column.*
+    /// 
+    /// **See also:** background()
     foreground(column: i32) -> Brush,
+    /// 
+    /// Sets the foreground brush of the label in the given *column* to the
+    /// specified *brush.*
+    /// 
+    /// **See also:** setBackground()
     set_foreground(column: i32, brush: &BrushType),
+    /// 
+    /// Returns the check state of the label in the given *column.*
+    /// 
+    /// **See also:** Qt::CheckState
     check_state(column: i32) -> Rute::CheckState,
+    /// 
+    /// Sets the item in the given *column* check state to be *state.*
+    /// 
+    /// **See also:** checkState()
     set_check_state(column: i32, state: Rute::CheckState),
+    /// 
+    /// Returns the size hint set for the tree item in the given
+    /// *column* (see [QSize](QSize)
+    /// ).
     size_hint(column: i32) -> Size,
+    /// 
+    /// Sets the size hint for the tree item in the given *column* to be *size.*
+    /// If no size hint is set, the item delegate will compute the size hint based
+    /// on the item data.
     set_size_hint(column: i32, size: &SizeType),
-    ///     Returns the value for the item's \a column and \a role.
+    /// 
+    /// Returns the value for the item's *column* and *role.*
     [event] data(column: i32, role: i32) -> Variant,
-    ///     Sets the value for the item's \a column and \a role to the given
-    ///     \a value.
     /// 
-    ///     The \a role describes the type of data specified by \a value, and is defined by
-    ///     the Qt::ItemDataRole enum.
+    /// Sets the value for the item's *column* and *role* to the given
+    /// *value.*
     /// 
-    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole as
-    ///     referring to the same data.
+    /// The *role* describes the type of data specified by *value,* and is defined by
+    /// the Qt::ItemDataRole enum.
+    /// 
+    /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole as
+    /// referring to the same data.
     [event] set_data(column: i32, role: i32, value: &VariantType),
-    ///     Reads the item from stream \a in. This only reads data into a single item.
     /// 
-    ///     \sa write()
+    /// Reads the item from stream *in.* This only reads data into a single item.
+    /// 
+    /// **See also:** write()
     [event] read(in: &DataStreamType),
-    ///     Writes the item to stream \a out. This only writes data from one single item.
     /// 
-    ///     \sa read()
+    /// Writes the item to stream *out.* This only writes data from one single item.
+    /// 
+    /// **See also:** read()
     [event] write(out: &DataStreamType),
+    /// 
+    /// Returns the item's parent.
+    /// 
+    /// **See also:** child()
     parent() -> TreeWidgetItem?,
+    /// 
+    /// Returns the item at the given *index* in the list of the item's children.
+    /// 
+    /// **See also:** parent()
+    /// 
+    /// Returns the number of child items.
+    /// 
+    /// Returns the item indicator policy. This policy decides when the
+    /// tree branch expand/collapse indicator is shown.
+    /// 
+    /// **See also:** setChildIndicatorPolicy()
     child(index: i32) -> TreeWidgetItem?,
+    /// 
+    /// Returns the number of child items.
     child_count() -> i32,
+    /// 
+    /// Returns the number of columns in the item.
     column_count() -> i32,
+    /// 
+    /// Returns the index of the given *child* in the item's list of children.
     index_of_child(child: *TreeWidgetItemType) -> i32,
-    ///   Appends the \a child item to the list of children.
     /// 
-    ///   \sa insertChild(), takeChild()
+    /// Appends the *child* item to the list of children.
+    /// 
+    /// **See also:** insertChild()
+    /// takeChild()
+    /// 
+    /// Appends the given list of *children* to the item.
+    /// 
+    /// **See also:** insertChildren()
+    /// takeChildren()
     add_child(child: *TreeWidgetItemType),
-    ///   Inserts the \a child item at \a index in the list of children.
     /// 
-    ///   If the child has already been inserted somewhere else it won't be inserted again.
+    /// Inserts the *child* item at *index* in the list of children.
+    /// 
+    /// If the child has already been inserted somewhere else it won't be inserted again.
+    /// 
+    /// Inserts the given list of *children* into the list of the item children at *index* .
+    /// 
+    /// Children that have already been inserted somewhere else won't be inserted.
     insert_child(index: i32, child: *TreeWidgetItemType),
-    ///   Removes the given item indicated by \a child.
-    ///   The removed item will not be deleted.
+    /// 
+    /// Removes the given item indicated by *child.*
+    /// The removed item will not be deleted.
     remove_child(child: *TreeWidgetItemType),
-    ///   Removes the item at \a index and returns it, otherwise return 0.
+    /// 
+    /// Removes the item at *index* and returns it, otherwise return 0.
+    /// 
+    /// Removes the list of children and returns it, otherwise returns an empty list.
     take_child(index: i32) -> TreeWidgetItem?,
-    ///   \since 4.1
     /// 
-    ///   Appends the given list of \a children to the item.
+    /// Appends the given list of *children* to the item.
     /// 
-    ///   \sa insertChildren(), takeChildren()
+    /// **See also:** insertChildren()
+    /// takeChildren()
     add_children(children: [*TreeWidgetItemType]),
-    ///   \since 4.1
     /// 
-    ///   Inserts the given list of \a children into the list of the item children at \a index .
+    /// Inserts the given list of *children* into the list of the item children at *index* .
     /// 
-    ///   Children that have already been inserted somewhere else won't be inserted.
+    /// Children that have already been inserted somewhere else won't be inserted.
     insert_children(index: i32, children: [*TreeWidgetItemType]),
-    ///   \since 4.1
     /// 
-    ///   Removes the list of children and returns it, otherwise returns an empty list.
+    /// Removes the list of children and returns it, otherwise returns an empty list.
     take_children() -> [TreeWidgetItem?],
+    /// 
+    /// Returns the type passed to the QTreeWidgetItem constructor.
     type() -> i32,
-    ///   \internal
     /// 
-    ///   Sorts the children by the value in the given \a column, in the \a order
-    ///   specified. If \a climb is true, the items below each of the children will
-    ///   also be sorted.
+    /// Sorts the children of the item using the given *order,*
+    /// by the values in the given *column.*
+    /// 
+    /// **Note**: This function does nothing if the item is not associated with a
+    /// QTreeWidget.
     sort_children(column: i32, order: Rute::SortOrder),
-    ///   \since 4.5
     /// 
-    ///   Causes the model associated with this item to emit a
-    ///   \l{QAbstractItemModel::dataChanged()}{dataChanged}() signal for this
-    ///   item.
+    /// Causes the model associated with this item to emit a
+    /// [dataChanged](QAbstractItemModel::dataChanged())
+    /// () signal for this
+    /// item.
     /// 
-    ///   You normally only need to call this function if you have subclassed
-    ///   QTreeWidgetItem and reimplemented data() and/or setData().
+    /// You normally only need to call this function if you have subclassed
+    /// QTreeWidgetItem and reimplemented data() and/or setData().
     /// 
-    ///   \sa setData()
+    /// **See also:** setData()
     emit_data_changed(),
 }
 

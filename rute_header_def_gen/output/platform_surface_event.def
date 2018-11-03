@@ -1,15 +1,9 @@
-///     \class QPlatformSurfaceEvent
-///     \since 5.5
-///     \brief The QPlatformSurfaceEvent class is used to notify about native platform surface events.
-///     \inmodule QtGui
 /// 
-///     \ingroup events
+/// Platform window events are synchronously sent to windows and offscreen surfaces when their
+/// underlying native surfaces are created or are about to be destroyed.
 /// 
-///     Platform window events are synchronously sent to windows and offscreen surfaces when their
-///     underlying native surfaces are created or are about to be destroyed.
-/// 
-///     Applications can respond to these events to know when the underlying platform
-///     surface exists.
+/// Applications can respond to these events to know when the underlying platform
+/// surface exists.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -20,6 +14,8 @@ enum SurfaceEventType {
 }
 
 struct PlatformSurfaceEvent : Event {
+    /// 
+    /// Returns the specific type of platform surface event.
     surface_event_type() -> PlatformSurfaceEvent::SurfaceEventType,
 }
 

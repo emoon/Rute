@@ -1,35 +1,38 @@
-///     \class QSequentialIterable
-///     \since 5.2
-///     \inmodule QtCore
-///     \brief The QSequentialIterable class is an iterable interface for a container in a QVariant.
 /// 
-///     This class allows several methods of accessing the elements of a container held within
-///     a QVariant. An instance of QSequentialIterable can be extracted from a QVariant if it can
-///     be converted to a QVariantList.
+/// This class allows several methods of accessing the elements of a container held within
+/// a QVariant. An instance of QSequentialIterable can be extracted from a QVariant if it can
+/// be converted to a QVariantList.
 /// 
-///     \snippet code/src_corelib_kernel_qvariant.cpp 9
+/// The container itself is not copied before iterating over it.
 /// 
-///     The container itself is not copied before iterating over it.
-/// 
-///     \sa QVariant
+/// **See also:** QVariant
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct SequentialIterable {
-    begin() -> SequentialIterable::const_iterator,
-    ///     Returns a QSequentialIterable::const_iterator for the end of the container. This
-    ///     can be used in stl-style iteration.
     /// 
-    ///     \sa begin()
+    /// Returns a QSequentialIterable::const_iterator for the beginning of the container. This
+    /// can be used in stl-style iteration.
+    /// 
+    /// **See also:** end()
+    begin() -> SequentialIterable::const_iterator,
+    /// 
+    /// Returns a QSequentialIterable::const_iterator for the end of the container. This
+    /// can be used in stl-style iteration.
+    /// 
+    /// **See also:** begin()
     end() -> SequentialIterable::const_iterator,
-    ///     Returns the element at position \a idx in the container.
+    /// 
+    /// Returns the element at position *idx* in the container.
     at(idx: i32) -> Variant,
-    ///     Returns the number of elements in the container.
+    /// 
+    /// Returns the number of elements in the container.
     size() -> i32,
-    ///     Returns whether it is possible to iterate over the container in reverse. This
-    ///     corresponds to the std::bidirectional_iterator_tag iterator trait of the
-    ///     const_iterator of the container.
+    /// 
+    /// Returns whether it is possible to iterate over the container in reverse. This
+    /// corresponds to the std::bidirectional_iterator_tag iterator trait of the
+    /// const_iterator of the container.
     can_reverse_iterate() -> bool,
 }
 

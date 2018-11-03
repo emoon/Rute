@@ -1,23 +1,3 @@
-///     \class QPlatformGraphicsBuffer
-///     \inmodule QtGui
-///     \since 5.5
-///     \brief The QPlatformGraphicsBuffer is a windowsystem abstraction for native graphics buffers
-/// 
-///     Different platforms have different ways of representing graphics buffers. On
-///     some platforms, it is possible to create one graphics buffer that you can bind
-///     to a texture and also get main memory access to the image bits. On the
-///     other hand, on some platforms all graphics buffer abstraction is completely
-///     hidden.
-/// 
-///     QPlatformGraphicsBuffer is an abstraction of a single Graphics Buffer.
-/// 
-///     There is no public constructor nor any public factory function.
-/// 
-///     QPlatformGraphicsBuffer is intended to be created by using platform specific
-///     APIs available from QtPlatformHeaders, or there might be accessor functions
-///     similar to the accessor function that QPlatformBackingstore has.
-/// 
-///     \internal
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -37,65 +17,111 @@ enum Origin {
 }
 
 struct PlatformGraphicsBuffer : Object {
+    /// 
+    /// Function to check if the buffer is locked.
+    /// 
+    /// **See also:** lock()
     is_locked() -> PlatformGraphicsBuffer::AccessTypes,
-    ///     Before the data can be retrieved or before a buffer can be bound to a
-    ///     texture it needs to be locked. This is a separate function call since this
-    ///     operation might be time consuming, and it would not be satisfactory to do
-    ///     it per function call.
     /// 
-    ///     \a access is the access type wanted.
+    /// Before the data can be retrieved or before a buffer can be bound to a
+    /// texture it needs to be locked. This is a separate function call since this
+    /// operation might be time consuming, and it would not be satisfactory to do
+    /// it per function call.
     /// 
-    ///     \a rect is the subrect which is desired to be locked. This
-    ///     argument has a no less than semantic, meaning more (if not all) of the buffer
-    ///     can be locked. An empty QRect is interpreted as entire buffer should be locked.
+    /// *access* is the access type wanted.
     /// 
-    ///     Return true on successfully locking all AccessTypes specified \a access
-    ///     otherwise returns false and no locks have been granted.
+    /// *rect* is the subrect which is desired to be locked. This
+    /// argument has a no less than semantic, meaning more (if not all) of the buffer
+    /// can be locked. An empty QRect is interpreted as entire buffer should be locked.
+    /// 
+    /// Return true on successfully locking all AccessTypes specified *access*
+    /// otherwise returns false and no locks have been granted.
     lock(access: PlatformGraphicsBuffer::AccessTypes, rect: &RectType) -> bool,
-    ///     Unlocks the current buffer lock.
     /// 
-    ///     This function calls doUnlock, and then emits the unlocked signal with the
-    ///     AccessTypes from before doUnlock was called.
+    /// Unlocks the current buffer lock.
+    /// 
+    /// This function calls doUnlock, and then emits the unlocked signal with the
+    /// AccessTypes from before doUnlock was called.
+    /// 
+    /// Signal that is emitted after unlocked has been called.
+    /// 
+    /// *previousAccessTypes* is the access types locked before unlock was called.
     unlock(),
-    ///     Binds the content of this graphics buffer into the currently bound texture.
     /// 
-    ///     This function should fail for buffers not capable of locking to TextureAccess.
+    /// Binds the content of this graphics buffer into the currently bound texture.
     /// 
-    ///     \a rect is the subrect which is desired to be bounded to the texture. This
-    ///     argument has a no less than semantic, meaning more (if not all) of the buffer
-    ///     can be bounded to the texture. An empty QRect is interpreted as entire buffer
-    ///     should be bound.
+    /// This function should fail for buffers not capable of locking to TextureAccess.
     /// 
-    ///     This function only supports binding buffers to the GL_TEXTURE_2D texture
-    ///     target.
+    /// *rect* is the subrect which is desired to be bounded to the texture. This
+    /// argument has a no less than semantic, meaning more (if not all) of the buffer
+    /// can be bounded to the texture. An empty QRect is interpreted as entire buffer
+    /// should be bound.
     /// 
-    ///     Returns true on success, otherwise false.
+    /// This function only supports binding buffers to the GL_TEXTURE_2D texture
+    /// target.
+    /// 
+    /// Returns true on success, otherwise false.
     [event] bind_to_texture(rect: &RectType) -> bool,
-    ///     Accessor for the bytes of the buffer. This function needs to be called on a
-    ///     buffer with SWReadAccess access lock. Behavior is undefined for modifying
-    ///     the memory returned when not having a SWWriteAccess.
+    /// 
+    /// Accessor for the bytes of the buffer. This function needs to be called on a
+    /// buffer with SWReadAccess access lock. Behavior is undefined for modifying
+    /// the memory returned when not having a SWWriteAccess.
+    /// 
+    /// Accessor for the bytes of the buffer. This function needs to be called on a
+    /// buffer with SWReadAccess access lock. Behavior is undefined for modifying
+    /// the memory returned when not having a SWWriteAccess.
     [event] data() -> uchar?,
-    ///     Accessor for the bytes of the buffer. This function needs to be called on a
-    ///     buffer with SWReadAccess access lock. Behavior is undefined for modifying
-    ///     the memory returned when not having a SWWriteAccess.
+    /// 
+    /// Accessor for the bytes of the buffer. This function needs to be called on a
+    /// buffer with SWReadAccess access lock. Behavior is undefined for modifying
+    /// the memory returned when not having a SWWriteAccess.
+    /// 
+    /// Accessor for the bytes of the buffer. This function needs to be called on a
+    /// buffer with SWReadAccess access lock. Behavior is undefined for modifying
+    /// the memory returned when not having a SWWriteAccess.
     [event] data() -> uchar?,
-    ///     Accessor for bytes per line in the graphics buffer.
+    /// 
+    /// Accessor for bytes per line in the graphics buffer.
     [event] bytes_per_line() -> i32,
-    ///     Accessor for the length of the data buffer. This function is a convenience
-    ///     function multiplying height of buffer with bytesPerLine().
     /// 
-    ///     \sa data() bytesPerLine() size()
+    /// Accessor for the length of the data buffer. This function is a convenience
+    /// function multiplying height of buffer with bytesPerLine().
+    /// 
+    /// **See also:** data() bytesPerLine() size()
     byte_count() -> i32,
-    ///     In origin of the content of the graphics buffer.
     /// 
-    ///     Default implementation is OriginTopLeft, as this is the coordinate
-    ///     system default for Qt. However, for most regular OpenGL textures
-    ///     this will be OriginBottomLeft.
+    /// In origin of the content of the graphics buffer.
+    /// 
+    /// Default implementation is OriginTopLeft, as this is the coordinate
+    /// system default for Qt. However, for most regular OpenGL textures
+    /// this will be OriginBottomLeft.
     [event] origin() -> PlatformGraphicsBuffer::Origin,
+    /// 
+    /// Accessor for content size.
     size() -> Size,
+    /// 
+    /// Accessor for the pixel format of the buffer.
     format() -> PixelFormat,
+    /// 
+    /// Signal that is emitted after unlocked has been called.
+    /// 
+    /// *previousAccessTypes* is the access types locked before unlock was called.
     [signal] unlocked(previous_access_types: PlatformGraphicsBuffer::AccessTypes),
+    /// 
+    /// This function should be reimplemented by subclasses. If one of the *access* types specified can not be locked, then all should fail and this
+    /// function should return false.
+    /// 
+    /// *rect* is the subrect which is desired to be locked. This
+    /// argument has a no less than semantic, meaning more (if not all) of the
+    /// buffer can be locked. An empty QRect should be interpreted as the entire buffer
+    /// should be locked.
+    /// 
+    /// It is safe to call isLocked() to verify the current lock state.
     [event] do_lock(access: PlatformGraphicsBuffer::AccessTypes, rect: &RectType) -> bool,
+    /// 
+    /// This function should remove all locks set on the buffer.
+    /// 
+    /// It is safe to call isLocked() to verify the current lock state.
     [event] do_unlock(),
 }
 

@@ -1,26 +1,25 @@
-///     \class QStyleOptionGroupBox
-///     \brief The QStyleOptionGroupBox class describes the parameters for
-///     drawing a group box.
 /// 
-///     \since 4.1
-///     \inmodule QtWidgets
+/// QStyleOptionButton contains all the information that QStyle
+/// functions need the various graphical elements of a group box.
 /// 
-///     QStyleOptionButton contains all the information that QStyle
-///     functions need the various graphical elements of a group box.
+/// It holds the lineWidth and the midLineWidth for drawing the panel,
+/// the group box's [title](text)
+/// and the title's [alignment](textAlignment)
+/// and [color](textColor)
 /// 
-///     It holds the lineWidth and the midLineWidth for drawing the panel,
-///     the group box's \l {text}{title} and the title's \l
-///     {textAlignment}{alignment} and \l {textColor}{color}.
 /// 
-///     For performance reasons, the access to the member variables is
-///     direct (i.e., using the \c . or \c -> operator). This low-level feel
-///     makes the structures straightforward to use and emphasizes that
-///     these are simply parameters used by the style functions.
+/// For performance reasons, the access to the member variables is
+/// direct (i.e., using the `.` or `->` operator). This low-level feel
+/// makes the structures straightforward to use and emphasizes that
+/// these are simply parameters used by the style functions.
 /// 
-///     For an example demonstrating how style options can be used, see
-///     the \l {widgets/styles}{Styles} example.
+/// For an example demonstrating how style options can be used, see
+/// the [Styles](widgets/styles)
+/// example.
 /// 
-///     \sa QStyleOption, QStyleOptionComplex, QGroupBox
+/// **See also:** QStyleOption
+/// QStyleOptionComplex
+/// QGroupBox
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

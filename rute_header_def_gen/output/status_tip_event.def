@@ -1,46 +1,31 @@
-///     \class QStatusTipEvent
-///     \brief The QStatusTipEvent class provides an event that is used to show messages in a status bar.
 /// 
-///     \ingroup events
-///     \ingroup helpsystem
-///     \inmodule QtGui
+/// Status tips can be set on a widget using the
+/// QWidget::setStatusTip() function. They are shown in the status
+/// bar when the mouse cursor enters the widget. For example:
 /// 
-///     Status tips can be set on a widget using the
-///     QWidget::setStatusTip() function.  They are shown in the status
-///     bar when the mouse cursor enters the widget. For example:
+/// * ...
+/// * ![Widget with status tip.](qstatustipevent-widget.png)
 /// 
-///     \table 100%
-///     \row
-///     \li
-///     \snippet qstatustipevent/main.cpp 1
-///     \dots
-///     \snippet qstatustipevent/main.cpp 3
-///     \li
-///     \image qstatustipevent-widget.png Widget with status tip.
-///     \endtable
+/// Status tips can also be set on actions using the
+/// QAction::setStatusTip() function:
 /// 
-///     Status tips can also be set on actions using the
-///     QAction::setStatusTip() function:
+/// * ...
+/// * ![Action with status tip.](qstatustipevent-action.png)
 /// 
-///     \table 100%
-///     \row
-///     \li
-///     \snippet qstatustipevent/main.cpp 0
-///     \snippet qstatustipevent/main.cpp 2
-///     \dots
-///     \snippet qstatustipevent/main.cpp 3
-///     \li
-///     \image qstatustipevent-action.png Action with status tip.
-///     \endtable
+/// Finally, status tips are supported for the item view classes
+/// through the Qt::StatusTipRole enum value.
 /// 
-///     Finally, status tips are supported for the item view classes
-///     through the Qt::StatusTipRole enum value.
-/// 
-///     \sa QStatusBar, QHelpEvent, QWhatsThisClickedEvent
+/// **See also:** QStatusBar
+/// QHelpEvent
+/// QWhatsThisClickedEvent
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct StatusTipEvent : Event {
+    /// 
+    /// Returns the message to show in the status bar.
+    /// 
+    /// **See also:** QStatusBar::showMessage()
     tip() -> String,
 }
 

@@ -1,53 +1,48 @@
-///     \class QListWidgetItem
-///     \brief The QListWidgetItem class provides an item for use with the
-///     QListWidget item view class.
 /// 
-///     \ingroup model-view
-///     \inmodule QtWidgets
+/// A QListWidgetItem represents a single item in a QListWidget. Each item can
+/// hold several pieces of information, and will display them appropriately.
 /// 
-///     A QListWidgetItem represents a single item in a QListWidget. Each item can
-///     hold several pieces of information, and will display them appropriately.
+/// The item view convenience classes use a classic item-based interface rather
+/// than a pure model/view approach. For a more flexible list view widget,
+/// consider using the QListView class with a standard model.
 /// 
-///     The item view convenience classes use a classic item-based interface rather
-///     than a pure model/view approach. For a more flexible list view widget,
-///     consider using the QListView class with a standard model.
+/// List items can be inserted automatically into a list, when they are
+/// constructed, by specifying the list widget:
 /// 
-///     List items can be inserted automatically into a list, when they are
-///     constructed, by specifying the list widget:
+/// Alternatively, list items can also be created without a parent widget, and
+/// later inserted into a list using QListWidget::insertItem().
 /// 
-///     \snippet qlistwidget-using/mainwindow.cpp 2
+/// List items are typically used to display text() and an icon(). These are
+/// set with the setText() and setIcon() functions. The appearance of the text
+/// can be customized with setFont(), setForeground(), and setBackground().
+/// Text in list items can be aligned using the setTextAlignment() function.
+/// Tooltips, status tips and help can be added to list items
+/// with setToolTip(), setStatusTip(), and setWhatsThis().
 /// 
-///     Alternatively, list items can also be created without a parent widget, and
-///     later inserted into a list using QListWidget::insertItem().
+/// By default, items are enabled, selectable, checkable, and can be the source
+/// of drag and drop operations.
 /// 
-///     List items are typically used to display text() and an icon(). These are
-///     set with the setText() and setIcon() functions. The appearance of the text
-///     can be customized with setFont(), setForeground(), and setBackground().
-///     Text in list items can be aligned using the setTextAlignment() function.
-///     Tooltips, status tips and "What's This?" help can be added to list items
-///     with setToolTip(), setStatusTip(), and setWhatsThis().
+/// Each item's flags can be changed by calling setFlags() with the appropriate
+/// value (see Qt::ItemFlags). Checkable items can be checked, unchecked and
+/// partially checked with the setCheckState() function. The corresponding
+/// checkState() function indicates the item's current check state.
 /// 
-///     By default, items are enabled, selectable, checkable, and can be the source
-///     of drag and drop operations.
+/// The isHidden() function can be used to determine whether the item is
+/// hidden. To hide an item, use setHidden().
 /// 
-///     Each item's flags can be changed by calling setFlags() with the appropriate
-///     value (see Qt::ItemFlags). Checkable items can be checked, unchecked and
-///     partially checked with the setCheckState() function. The corresponding
-///     checkState() function indicates the item's current check state.
+/// # Subclassing
 /// 
-///     The isHidden() function can be used to determine whether the item is
-///     hidden. To hide an item, use setHidden().
+/// When subclassing QListWidgetItem to provide custom items, it is possible to
+/// define new types for them enabling them to be distinguished from standard
+/// items. For subclasses that require this feature, ensure that you call the
+/// base class constructor with a new type value equal to or greater than
+/// [UserType,](UserType,)
+/// within *your* constructor.
 /// 
-/// 
-///     \section1 Subclassing
-/// 
-///     When subclassing QListWidgetItem to provide custom items, it is possible to
-///     define new types for them enabling them to be distinguished from standard
-///     items. For subclasses that require this feature, ensure that you call the
-///     base class constructor with a new type value equal to or greater than
-///     \l UserType, within \e your constructor.
-/// 
-///     \sa QListWidget, {Model/View Programming}, QTreeWidgetItem, QTableWidgetItem
+/// **See also:** QListWidget
+/// {Model/View Programming}
+/// QTreeWidgetItem
+/// QTableWidgetItem
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -59,67 +54,227 @@ enum ItemType {
 
 
 struct ListWidgetItem {
-    ///     Creates an exact copy of the item.
+    /// 
+    /// Creates an exact copy of the item.
     [event] clone() -> ListWidgetItem?,
+    /// 
+    /// Returns the list widget containing the item.
     list_widget() -> ListWidget?,
+    /// 
+    /// Sets the selected state of the item to *select.*
+    /// 
+    /// **See also:** isSelected()
     set_selected(select: bool),
+    /// 
+    /// Returns `true` if the item is selected; otherwise returns `false.`
+    /// 
+    /// **See also:** setSelected()
     is_selected() -> bool,
+    /// 
+    /// Hides the item if *hide* is true; otherwise shows the item.
+    /// 
+    /// **See also:** isHidden()
     set_hidden(hide: bool),
+    /// 
+    /// Returns `true` if the item is hidden; otherwise returns `false.`
+    /// 
+    /// **See also:** setHidden()
     is_hidden() -> bool,
+    /// 
+    /// Returns the item flags for this item (see [Qt::ItemFlags](Qt::ItemFlags)
+    /// ).
     flags() -> Rute::ItemFlags,
-    ///     \fn void QListWidgetItem::setFlags(Qt::ItemFlags flags)
     /// 
-    ///     Sets the item flags for the list item to \a flags.
+    /// Sets the item flags for the list item to *flags.*
     /// 
-    ///     \sa Qt::ItemFlags
+    /// **See also:** Qt::ItemFlags
     set_flags(flags: Rute::ItemFlags),
+    /// 
+    /// Returns the list item's text.
+    /// 
+    /// **See also:** setText()
+    /// 
+    /// Returns the text alignment for the list item.
+    /// 
+    /// **See also:** Qt::AlignmentFlag
+    /// 
+    /// Returns the color used to display the list item's text.
+    /// 
+    /// This function is deprecated. Use foreground() instead.
     text() -> String,
+    /// 
+    /// Sets the text for the list widget item's to the given *text.*
+    /// 
+    /// **See also:** text()
+    /// 
+    /// Sets the list item's text alignment to *alignment.*
+    /// 
+    /// **See also:** Qt::AlignmentFlag
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
     set_text(text: String),
+    /// 
+    /// Returns the list item's icon.
+    /// 
+    /// **See also:** setIcon()
+    /// {QAbstractItemView::iconSize}{iconSize}
     icon() -> Icon,
+    /// 
+    /// Sets the icon for the list item to the given *icon.*
+    /// 
+    /// **See also:** icon()
+    /// text()
+    /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(icon: &IconType),
+    /// 
+    /// Returns the list item's status tip.
+    /// 
+    /// **See also:** setStatusTip()
     status_tip() -> String,
+    /// 
+    /// Sets the status tip for the list item to the text specified by
+    /// *statusTip.* QListWidget mouseTracking needs to be enabled for this
+    /// feature to work.
+    /// 
+    /// **See also:** statusTip()
+    /// setToolTip()
+    /// setWhatsThis()
+    /// QWidget::setMouseTracking()
     set_status_tip(status_tip: String),
+    /// 
+    /// Returns the list item's tooltip.
+    /// 
+    /// **See also:** setToolTip()
+    /// statusTip()
+    /// whatsThis()
     tool_tip() -> String,
+    /// 
+    /// Sets the tooltip for the list item to the text specified by *toolTip.*
+    /// 
+    /// **See also:** toolTip()
+    /// setStatusTip()
+    /// setWhatsThis()
     set_tool_tip(tool_tip: String),
+    /// 
+    /// Returns the list item's help text.
+    /// 
+    /// **See also:** setWhatsThis()
+    /// statusTip()
+    /// toolTip()
     whats_this() -> String,
+    /// 
+    /// Sets the help for the list item to the text specified by
+    /// *whatsThis.*
+    /// 
+    /// **See also:** whatsThis()
+    /// setStatusTip()
+    /// setToolTip()
     set_whats_this(whats_this: String),
+    /// 
+    /// Returns the font used to display this list item's text.
     font() -> Font,
+    /// 
+    /// Sets the font used when painting the item to the given *font.*
     set_font(font: &FontType),
+    /// 
+    /// Returns the text alignment for the list item.
+    /// 
+    /// **See also:** Qt::AlignmentFlag
     text_alignment() -> i32,
+    /// 
+    /// Sets the list item's text alignment to *alignment.*
+    /// 
+    /// **See also:** Qt::AlignmentFlag
     set_text_alignment(alignment: i32),
+    /// 
+    /// This function is deprecated. Use background() instead.
     background_color() -> Color,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
     [event] set_background_color(color: &ColorType),
+    /// 
+    /// This function is deprecated. Use background() instead.
+    /// 
+    /// Returns the brush used to display the list item's background.
+    /// 
+    /// **See also:** setBackground()
+    /// foreground()
     background() -> Brush,
+    /// 
+    /// This function is deprecated. Use setBackground() instead.
+    /// 
+    /// Sets the background brush of the list item to the given *brush.*
+    /// 
+    /// **See also:** background()
+    /// setForeground()
     set_background(brush: &BrushType),
+    /// 
+    /// Returns the color used to display the list item's text.
+    /// 
+    /// This function is deprecated. Use foreground() instead.
     text_color() -> Color,
+    /// 
+    /// This function is deprecated. Use setForeground() instead.
     set_text_color(color: &ColorType),
+    /// 
+    /// Returns the brush used to display the list item's foreground (e.g. text).
+    /// 
+    /// **See also:** setForeground()
+    /// background()
     foreground() -> Brush,
+    /// 
+    /// Sets the foreground brush of the list item to the given *brush.*
+    /// 
+    /// **See also:** foreground()
+    /// setBackground()
     set_foreground(brush: &BrushType),
+    /// 
+    /// Returns the checked state of the list item (see [Qt::CheckState](Qt::CheckState)
+    /// ).
+    /// 
+    /// **See also:** flags()
     check_state() -> Rute::CheckState,
+    /// 
+    /// Sets the check state of the list item to *state.*
+    /// 
+    /// **See also:** checkState()
     set_check_state(state: Rute::CheckState),
+    /// 
+    /// Returns the size hint set for the list item.
     size_hint() -> Size,
+    /// 
+    /// Sets the size hint for the list item to be *size.* If no size hint is set,
+    /// the item delegate will compute the size hint based on the item data.
     set_size_hint(size: &SizeType),
-    ///     Returns the item's data for a given \a role. Reimplement this function if
-    ///     you need extra roles or special behavior for certain roles.
     /// 
-    ///     \sa Qt::ItemDataRole, setData()
+    /// Returns the item's data for a given *role.* Reimplement this function if
+    /// you need extra roles or special behavior for certain roles.
+    /// 
+    /// **See also:** Qt::ItemDataRole
+    /// setData()
     [event] data(role: i32) -> Variant,
-    ///     Sets the data for a given \a role to the given \a value. Reimplement this
-    ///     function if you need extra roles or special behavior for certain roles.
     /// 
-    ///     \note The default implementation treats Qt::EditRole and Qt::DisplayRole as
-    ///     referring to the same data.
+    /// Sets the data for a given *role* to the given *value.* Reimplement this
+    /// function if you need extra roles or special behavior for certain roles.
     /// 
-    ///     \sa Qt::ItemDataRole, data()
+    /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole as
+    /// referring to the same data.
+    /// 
+    /// **See also:** Qt::ItemDataRole
+    /// data()
     [event] set_data(role: i32, value: &VariantType),
-    ///     Reads the item from stream \a in.
     /// 
-    ///     \sa write()
+    /// Reads the item from stream *in.*
+    /// 
+    /// **See also:** write()
     [event] read(in: &DataStreamType),
-    ///     Writes the item to stream \a out.
     /// 
-    ///     \sa read()
+    /// Writes the item to stream *out.*
+    /// 
+    /// **See also:** read()
     [event] write(out: &DataStreamType),
+    /// 
+    /// Returns the type passed to the QListWidgetItem constructor.
     type() -> i32,
 }
 

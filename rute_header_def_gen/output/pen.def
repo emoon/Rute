@@ -1,346 +1,394 @@
-///     \class QPen
-///     \inmodule QtGui
-///     \ingroup painting
-///     \ingroup shared
 /// 
+/// A pen has a style(), width(), brush(), capStyle() and joinStyle().
 /// 
-///     \brief The QPen class defines how a QPainter should draw lines and outlines
-///     of shapes.
+/// The pen style defines the line type. The brush is used to fill
+/// strokes generated with the pen. Use the QBrush class to specify
+/// fill styles. The cap style determines the line end caps that can
+/// be drawn using QPainter, while the join style describes how joins
+/// between two lines are drawn. The pen width can be specified in
+/// both integer (width()) and floating point (widthF()) precision. A
+/// line width of zero indicates a cosmetic pen. This means that the
+/// pen width is always drawn one pixel wide, independent of the [transformation](QPainter%23Coordinate%20Transformations)
+/// set on the
+/// painter.
 /// 
-///     A pen has a style(), width(), brush(), capStyle() and joinStyle().
+/// The various settings can easily be modified using the
+/// corresponding setStyle(), setWidth(), setBrush(), setCapStyle()
+/// and setJoinStyle() functions (note that the painter's pen must be
+/// reset when altering the pen's properties).
 /// 
-///     The pen style defines the line type. The brush is used to fill
-///     strokes generated with the pen. Use the QBrush class to specify
-///     fill styles.  The cap style determines the line end caps that can
-///     be drawn using QPainter, while the join style describes how joins
-///     between two lines are drawn. The pen width can be specified in
-///     both integer (width()) and floating point (widthF()) precision. A
-///     line width of zero indicates a cosmetic pen.  This means that the
-///     pen width is always drawn one pixel wide, independent of the \l
-///     {QPainter#Coordinate Transformations}{transformation} set on the
-///     painter.
+/// For example:
 /// 
-///     The various settings can easily be modified using the
-///     corresponding setStyle(), setWidth(), setBrush(), setCapStyle()
-///     and setJoinStyle() functions (note that the painter's pen must be
-///     reset when altering the pen's properties).
+/// which is equivalent to
 /// 
-///     For example:
+/// The default pen is a solid black brush with 1 width, square
+/// cap style (Qt::SquareCap), and bevel join style (Qt::BevelJoin).
 /// 
-///     \snippet code/src_gui_painting_qpen.cpp 0
+/// In addition QPen provides the color() and setColor()
+/// convenience functions to extract and set the color of the pen's
+/// brush, respectively. Pens may also be compared and streamed.
 /// 
-///     which is equivalent to
+/// For more information about painting in general, see the [Paint
+/// System](Paint%0A%20%20%20%20System)
+/// documentation.
 /// 
-///     \snippet code/src_gui_painting_qpen.cpp 1
+/// # Pen Style
 /// 
-///     The default pen is a solid black brush with 1 width, square
-///     cap style (Qt::SquareCap), and  bevel join style (Qt::BevelJoin).
+/// Qt provides several built-in styles represented by the
+/// Qt::PenStyle enum:
 /// 
-///     In addition QPen provides the color() and setColor()
-///     convenience functions to extract and set the color of the pen's
-///     brush, respectively. Pens may also be compared and streamed.
+/// * ![qpen-solid.png](qpen-solid.png)
 /// 
-///     For more information about painting in general, see the \l{Paint
-///     System} documentation.
+/// * ![qpen-dash.png](qpen-dash.png)
 /// 
-///     \tableofcontents
+/// * ![qpen-dot.png](qpen-dot.png)
 /// 
-///     \section1 Pen Style
+/// * Qt::SolidLine
+/// * Qt::DashLine
+/// * Qt::DotLine
 /// 
-///     Qt provides several built-in styles represented by the
-///     Qt::PenStyle enum:
+/// * ![qpen-dashdot.png](qpen-dashdot.png)
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qpen-solid.png
-///     \li \inlineimage qpen-dash.png
-///     \li \inlineimage qpen-dot.png
-///     \row
-///     \li Qt::SolidLine
-///     \li Qt::DashLine
-///     \li Qt::DotLine
-///     \row
-///     \li \inlineimage qpen-dashdot.png
-///     \li \inlineimage qpen-dashdotdot.png
-///     \li \inlineimage qpen-custom.png
-///     \row
-///     \li Qt::DashDotLine
-///     \li Qt::DashDotDotLine
-///     \li Qt::CustomDashLine
-///     \endtable
+/// * ![qpen-dashdotdot.png](qpen-dashdotdot.png)
 /// 
-///     Simply use the setStyle() function to convert the pen style to
-///     either of the built-in styles, except the Qt::CustomDashLine style
-///     which we will come back to shortly. Setting the style to Qt::NoPen
-///     tells the painter to not draw lines or outlines. The default pen
-///     style is Qt::SolidLine.
+/// * ![qpen-custom.png](qpen-custom.png)
 /// 
-///     Since Qt 4.1 it is also possible to specify a custom dash pattern
-///     using the setDashPattern() function which implicitly converts the
-///     style of the pen to Qt::CustomDashLine. The pattern argument, a
-///     QVector, must be specified as an even number of \l qreal entries
-///     where the entries 1, 3, 5... are the dashes and 2, 4, 6... are the
-///     spaces. For example, the custom pattern shown above is created
-///     using the following code:
+/// * Qt::DashDotLine
+/// * Qt::DashDotDotLine
+/// * Qt::CustomDashLine
 /// 
-///     \snippet code/src_gui_painting_qpen.cpp 2
+/// Simply use the setStyle() function to convert the pen style to
+/// either of the built-in styles, except the Qt::CustomDashLine style
+/// which we will come back to shortly. Setting the style to Qt::NoPen
+/// tells the painter to not draw lines or outlines. The default pen
+/// style is Qt::SolidLine.
 /// 
-///     Note that the dash pattern is specified in units of the pens
-///     width, e.g. a dash of length 5 in width 10 is 50 pixels long.
+/// Since Qt 4.1 it is also possible to specify a custom dash pattern
+/// using the setDashPattern() function which implicitly converts the
+/// style of the pen to Qt::CustomDashLine. The pattern argument, a
+/// QVector, must be specified as an even number of [qreal](qreal)
+/// entries
+/// where the entries 1, 3, 5... are the dashes and 2, 4, 6... are the
+/// spaces. For example, the custom pattern shown above is created
+/// using the following code:
 /// 
-///     The currently set dash pattern can be retrieved using the
-///     dashPattern() function. Use the isSolid() function to determine
-///     whether the pen has a solid fill, or not.
+/// Note that the dash pattern is specified in units of the pens
+/// width, e.g. a dash of length 5 in width 10 is 50 pixels long.
 /// 
-///     \section1 Cap Style
+/// The currently set dash pattern can be retrieved using the
+/// dashPattern() function. Use the isSolid() function to determine
+/// whether the pen has a solid fill, or not.
 /// 
-///     The cap style defines how the end points of lines are drawn using
-///     QPainter.  The cap style only apply to wide lines, i.e. when the
-///     width is 1 or greater. The Qt::PenCapStyle enum provides the
-///     following styles:
+/// # Cap Style
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qpen-square.png
-///     \li \inlineimage qpen-flat.png
-///     \li \inlineimage qpen-roundcap.png
-///     \row
-///     \li Qt::SquareCap
-///     \li Qt::FlatCap
-///     \li Qt::RoundCap
-///     \endtable
+/// The cap style defines how the end points of lines are drawn using
+/// QPainter. The cap style only apply to wide lines, i.e. when the
+/// width is 1 or greater. The Qt::PenCapStyle enum provides the
+/// following styles:
 /// 
-///     The Qt::SquareCap style is a square line end that covers the end
-///     point and extends beyond it by half the line width. The
-///     Qt::FlatCap style is a square line end that does not cover the end
-///     point of the line. And the Qt::RoundCap style is a rounded line
-///     end covering the end point.
+/// * ![qpen-square.png](qpen-square.png)
 /// 
-///     The default is Qt::SquareCap.
+/// * ![qpen-flat.png](qpen-flat.png)
 /// 
-///     Whether or not end points are drawn when the pen width is 0 or 1
-///     depends on the cap style. Using Qt::SquareCap or Qt::RoundCap they
-///     are drawn, using Qt::FlatCap they are not drawn.
+/// * ![qpen-roundcap.png](qpen-roundcap.png)
 /// 
-///     \section1 Join Style
+/// * Qt::SquareCap
+/// * Qt::FlatCap
+/// * Qt::RoundCap
 /// 
-///     The join style defines how joins between two connected lines can
-///     be drawn using QPainter. The join style only apply to wide lines,
-///     i.e. when the width is 1 or greater. The Qt::PenJoinStyle enum
-///     provides the following styles:
+/// The Qt::SquareCap style is a square line end that covers the end
+/// point and extends beyond it by half the line width. The
+/// Qt::FlatCap style is a square line end that does not cover the end
+/// point of the line. And the Qt::RoundCap style is a rounded line
+/// end covering the end point.
 /// 
-///     \table
-///     \row
-///     \li \inlineimage qpen-bevel.png
-///     \li \inlineimage qpen-miter.png
-///     \li \inlineimage qpen-roundjoin.png
-///     \row
-///     \li Qt::BevelJoin
-///     \li Qt::MiterJoin
-///     \li Qt::RoundJoin
-///     \endtable
+/// The default is Qt::SquareCap.
 /// 
-///     The Qt::BevelJoin style fills the triangular notch between the two
-///     lines. The Qt::MiterJoin style extends the lines to meet at an
-///     angle. And the Qt::RoundJoin style fills a circular arc between
-///     the two lines.
+/// Whether or not end points are drawn when the pen width is 0 or 1
+/// depends on the cap style. Using Qt::SquareCap or Qt::RoundCap they
+/// are drawn, using Qt::FlatCap they are not drawn.
 /// 
-///     The default is Qt::BevelJoin.
+/// # Join Style
 /// 
-///     \image qpen-miterlimit.png
+/// The join style defines how joins between two connected lines can
+/// be drawn using QPainter. The join style only apply to wide lines,
+/// i.e. when the width is 1 or greater. The Qt::PenJoinStyle enum
+/// provides the following styles:
 /// 
-///     When the Qt::MiterJoin style is applied, it is possible to use the
-///     setMiterLimit() function to specify how far the miter join can
-///     extend from the join point. The miterLimit() is used to reduce
-///     artifacts between line joins where the lines are close to
-///     parallel.
+/// * ![qpen-bevel.png](qpen-bevel.png)
 /// 
-///     The miterLimit() must be specified in units of the pens width,
-///     e.g. a miter limit of 5 in width 10 is 50 pixels long. The
-///     default miter limit is 2, i.e. twice the pen width in pixels.
+/// * ![qpen-miter.png](qpen-miter.png)
 /// 
-///     \table 100%
-///     \row
-///     \li \inlineimage qpen-demo.png
-///     \li \b {\l {painting/pathstroke}{The Path Stroking Example}}
+/// * ![qpen-roundjoin.png](qpen-roundjoin.png)
 /// 
-///     The Path Stroking example shows Qt's built-in dash patterns and shows
-///     how custom patterns can be used to extend the range of available
-///     patterns.
-///     \endtable
+/// * Qt::BevelJoin
+/// * Qt::MiterJoin
+/// * Qt::RoundJoin
 /// 
-///     \sa QPainter, QBrush, {painting/pathstroke}{Path Stroking Example},
-///         {Scribble Example}
+/// The Qt::BevelJoin style fills the triangular notch between the two
+/// lines. The Qt::MiterJoin style extends the lines to meet at an
+/// angle. And the Qt::RoundJoin style fills a circular arc between
+/// the two lines.
+/// 
+/// The default is Qt::BevelJoin.
+/// 
+/// ![qpen-miterlimit.png](qpen-miterlimit.png)
+/// 
+/// When the Qt::MiterJoin style is applied, it is possible to use the
+/// setMiterLimit() function to specify how far the miter join can
+/// extend from the join point. The miterLimit() is used to reduce
+/// artifacts between line joins where the lines are close to
+/// parallel.
+/// 
+/// The miterLimit() must be specified in units of the pens width,
+/// e.g. a miter limit of 5 in width 10 is 50 pixels long. The
+/// default miter limit is 2, i.e. twice the pen width in pixels.
+/// 
+/// * ![qpen-demo.png](qpen-demo.png)
+/// 
+/// * **\l {painting/pathstroke** {The Path Stroking Example}} The Path Stroking example shows Qt's built-in dash patterns and shows how custom patterns can be used to extend the range of available patterns.
+/// 
+/// **See also:** QPainter
+/// QBrush
+/// {painting/pathstroke}{Path Stroking Example}
+/// {Scribble Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 
 struct Pen {
+    /// 
+    /// Swaps pen *other* with this pen. This operation is very
+    /// fast and never fails.
     swap(other: &PenType),
-    ///     \fn Qt::PenStyle QPen::style() const
     /// 
-    ///     Returns the pen style.
+    /// Returns the pen style.
     /// 
-    ///     \sa setStyle(), {QPen#Pen Style}{Pen Style}
+    /// **See also:** setStyle()
+    /// {QPen#Pen Style}{Pen Style}
     style() -> Rute::PenStyle,
-    ///     \fn void QPen::setStyle(Qt::PenStyle style)
     /// 
-    ///     Sets the pen style to the given \a style.
+    /// Sets the pen style to the given *style.*
     /// 
-    ///     See the \l Qt::PenStyle documentation for a list of the available
-    ///     styles. Since Qt 4.1 it is also possible to specify a custom dash
-    ///     pattern using the setDashPattern() function which implicitly
-    ///     converts the style of the pen to Qt::CustomDashLine.
+    /// See the [Qt::PenStyle](Qt::PenStyle)
+    /// documentation for a list of the available
+    /// styles. Since Qt 4.1 it is also possible to specify a custom dash
+    /// pattern using the setDashPattern() function which implicitly
+    /// converts the style of the pen to Qt::CustomDashLine.
     /// 
-    ///     \note This function resets the dash offset to zero.
+    /// **Note**: This function resets the dash offset to zero.
     /// 
-    ///     \sa style(), {QPen#Pen Style}{Pen Style}
+    /// **See also:** style()
+    /// {QPen#Pen Style}{Pen Style}
     set_style(arg0: Rute::PenStyle),
+    /// 
+    /// Returns the dash pattern of this pen.
+    /// 
+    /// **See also:** style()
+    /// isSolid()
     dash_pattern() -> [f32],
+    /// 
+    /// Sets the dash pattern for this pen to the given *pattern.* This
+    /// implicitly converts the style of the pen to Qt::CustomDashLine.
+    /// 
+    /// The pattern must be specified as an even number of positive entries
+    /// where the entries 1, 3, 5... are the dashes and 2, 4, 6... are the
+    /// spaces. For example:
+    /// 
+    /// * ![qpen-custom.png](qpen-custom.png)
+    /// 
+    /// 
+    /// 
+    /// The dash pattern is specified in units of the pens width; e.g. a
+    /// dash of length 5 in width 10 is 50 pixels long. Note that a pen
+    /// with zero width is equivalent to a cosmetic pen with a width of 1
+    /// pixel.
+    /// 
+    /// Each dash is also subject to cap styles so a dash of 1 with square
+    /// cap set will extend 0.5 pixels out in each direction resulting in
+    /// a total width of 2.
+    /// 
+    /// Note that the default cap style is Qt::SquareCap, meaning that a
+    /// square line end covers the end point and extends beyond it by half
+    /// the line width.
+    /// 
+    /// **See also:** setStyle()
+    /// dashPattern()
+    /// setCapStyle()
+    /// setCosmetic()
     set_dash_pattern(pattern: [f32]),
-    ///     Returns the dash offset for the pen.
     /// 
-    ///     \sa setDashOffset()
+    /// Returns the dash offset for the pen.
+    /// 
+    /// **See also:** setDashOffset()
     dash_offset() -> f32,
-    ///     Sets the dash offset (the starting point on the dash pattern) for this pen
-    ///     to the \a offset specified. The offset is measured in terms of the units used
-    ///     to specify the dash pattern.
     /// 
-    ///     \table
-    ///     \row \li \inlineimage qpen-dashpattern.png
-    ///     \li For example, a pattern where each stroke is four units long, followed by a gap
-    ///     of two units, will begin with the stroke when drawn as a line.
+    /// Sets the dash offset (the starting point on the dash pattern) for this pen
+    /// to the *offset* specified. The offset is measured in terms of the units used
+    /// to specify the dash pattern.
     /// 
-    ///     However, if the dash offset is set to 4.0, any line drawn will begin with the gap.
-    ///     Values of the offset up to 4.0 will cause part of the stroke to be drawn first,
-    ///     and values of the offset between 4.0 and 6.0 will cause the line to begin with
-    ///     part of the gap.
-    ///     \endtable
+    /// * ![qpen-dashpattern.png](qpen-dashpattern.png)
     /// 
-    ///     \note This implicitly converts the style of the pen to Qt::CustomDashLine.
+    /// * For example, a pattern where each stroke is four units long, followed by a gap of two units, will begin with the stroke when drawn as a line. However, if the dash offset is set to 4.0, any line drawn will begin with the gap. Values of the offset up to 4.0 will cause part of the stroke to be drawn first, and values of the offset between 4.0 and 6.0 will cause the line to begin with part of the gap.
+    /// 
+    /// **Note**: This implicitly converts the style of the pen to Qt::CustomDashLine.
     set_dash_offset(doffset: f32),
-    ///     Returns the miter limit of the pen. The miter limit is only
-    ///     relevant when the join style is set to Qt::MiterJoin.
     /// 
-    ///     \sa setMiterLimit(), {QPen#Join Style}{Join Style}
+    /// Returns the miter limit of the pen. The miter limit is only
+    /// relevant when the join style is set to Qt::MiterJoin.
+    /// 
+    /// **See also:** setMiterLimit()
+    /// {QPen#Join Style}{Join Style}
     miter_limit() -> f32,
-    ///     Sets the miter limit of this pen to the given \a limit.
     /// 
-    ///     \image qpen-miterlimit.png
+    /// Sets the miter limit of this pen to the given *limit.*
     /// 
-    ///     The miter limit describes how far a miter join can extend from the
-    ///     join point. This is used to reduce artifacts between line joins
-    ///     where the lines are close to parallel.
+    /// ![qpen-miterlimit.png](qpen-miterlimit.png)
     /// 
-    ///     This value does only have effect when the pen style is set to
-    ///     Qt::MiterJoin. The value is specified in units of the pen's width,
-    ///     e.g. a miter limit of 5 in width 10 is 50 pixels long. The default
-    ///     miter limit is 2, i.e. twice the pen width in pixels.
+    /// The miter limit describes how far a miter join can extend from the
+    /// join point. This is used to reduce artifacts between line joins
+    /// where the lines are close to parallel.
     /// 
-    ///     \sa miterLimit(), setJoinStyle(), {QPen#Join Style}{Join Style}
+    /// This value does only have effect when the pen style is set to
+    /// Qt::MiterJoin. The value is specified in units of the pen's width,
+    /// e.g. a miter limit of 5 in width 10 is 50 pixels long. The default
+    /// miter limit is 2, i.e. twice the pen width in pixels.
+    /// 
+    /// **See also:** miterLimit()
+    /// setJoinStyle()
+    /// {QPen#Join Style}{Join Style}
     set_miter_limit(limit: f32),
-    ///     \fn qreal QPen::widthF() const
     /// 
-    ///     Returns the pen width with floating point precision.
+    /// Returns the pen width with floating point precision.
     /// 
-    ///     \sa setWidthF(), width()
+    /// **See also:** setWidthF()
+    /// width()
     width_f() -> f32,
-    ///     Sets the pen width to the given \a width in pixels with floating point
-    ///     precision.
     /// 
-    ///     A line width of zero indicates a cosmetic pen. This means that the
-    ///     pen width is always drawn one pixel wide, independent of the \l
-    ///     {QPainter#Coordinate Transformations}{transformation} on the
-    ///     painter.
+    /// Sets the pen width to the given *width* in pixels with floating point
+    /// precision.
     /// 
-    ///     Setting a pen width with a negative value is not supported.
+    /// A line width of zero indicates a cosmetic pen. This means that the
+    /// pen width is always drawn one pixel wide, independent of the [transformation](QPainter%23Coordinate%20Transformations)
+    /// on the
+    /// painter.
     /// 
-    ///     \sa setWidth(), widthF()
+    /// Setting a pen width with a negative value is not supported.
+    /// 
+    /// **See also:** setWidth()
+    /// widthF()
     set_width_f(width: f32),
-    ///     \fn qreal QPen::width() const
     /// 
-    ///     Returns the pen width with integer precision.
+    /// Returns the pen width with integer precision.
     /// 
-    ///     \sa setWidth(), widthF()
+    /// **See also:** setWidth()
+    /// widthF()
+    /// 
+    /// Returns the pen width with floating point precision.
+    /// 
+    /// **See also:** setWidthF()
+    /// width()
     width() -> i32,
-    ///     \fn QPen::setWidth(int width)
     /// 
-    ///     Sets the pen width to the given \a width in pixels with integer
-    ///     precision.
+    /// Sets the pen width to the given *width* in pixels with integer
+    /// precision.
     /// 
-    ///     A line width of zero indicates a cosmetic pen. This means that the
-    ///     pen width is always drawn one pixel wide, independent of the \l
-    ///     {QPainter#Coordinate Transformations}{transformation} set on the
-    ///     painter.
+    /// A line width of zero indicates a cosmetic pen. This means that the
+    /// pen width is always drawn one pixel wide, independent of the [transformation](QPainter%23Coordinate%20Transformations)
+    /// set on the
+    /// painter.
     /// 
-    ///     Setting a pen width with a negative value is not supported.
+    /// Setting a pen width with a negative value is not supported.
     /// 
-    ///     \sa setWidthF(), width()
+    /// **See also:** setWidthF()
+    /// width()
+    /// 
+    /// Sets the pen width to the given *width* in pixels with floating point
+    /// precision.
+    /// 
+    /// A line width of zero indicates a cosmetic pen. This means that the
+    /// pen width is always drawn one pixel wide, independent of the [transformation](QPainter%23Coordinate%20Transformations)
+    /// on the
+    /// painter.
+    /// 
+    /// Setting a pen width with a negative value is not supported.
+    /// 
+    /// **See also:** setWidth()
+    /// widthF()
     set_width(width: i32),
-    ///     \fn const QColor &QPen::color() const
     /// 
-    ///     Returns the color of this pen's brush.
+    /// Returns the color of this pen's brush.
     /// 
-    ///     \sa brush(), setColor()
+    /// **See also:** brush()
+    /// setColor()
     color() -> Color,
-    ///     \fn void QPen::setColor(const QColor &color)
     /// 
-    ///     Sets the color of this pen's brush to the given \a color.
+    /// Sets the color of this pen's brush to the given *color.*
     /// 
-    ///     \sa setBrush(), color()
+    /// **See also:** setBrush()
+    /// color()
     set_color(color: &ColorType),
-    ///     Returns the brush used to fill strokes generated with this pen.
+    /// 
+    /// Returns the brush used to fill strokes generated with this pen.
     brush() -> Brush,
-    ///     Sets the brush used to fill strokes generated with this pen to the given
-    ///     \a brush.
     /// 
-    ///     \sa brush(), setColor()
+    /// Sets the brush used to fill strokes generated with this pen to the given
+    /// *brush.*
+    /// 
+    /// **See also:** brush()
+    /// setColor()
     set_brush(brush: &BrushType),
-    ///     Returns \c true if the pen has a solid fill, otherwise false.
     /// 
-    ///     \sa style(), dashPattern()
+    /// Returns `true` if the pen has a solid fill, otherwise false.
+    /// 
+    /// **See also:** style()
+    /// dashPattern()
     is_solid() -> bool,
-    ///     Returns the pen's cap style.
     /// 
-    ///     \sa setCapStyle(), {QPen#Cap Style}{Cap Style}
+    /// Returns the pen's cap style.
+    /// 
+    /// **See also:** setCapStyle()
+    /// {QPen#Cap Style}{Cap Style}
     cap_style() -> Rute::PenCapStyle,
-    ///     \fn void QPen::setCapStyle(Qt::PenCapStyle style)
     /// 
-    ///     Sets the pen's cap style to the given \a style. The default value
-    ///     is Qt::SquareCap.
+    /// Sets the pen's cap style to the given *style.* The default value
+    /// is Qt::SquareCap.
     /// 
-    ///     \sa capStyle(), {QPen#Cap Style}{Cap Style}
+    /// **See also:** capStyle()
+    /// {QPen#Cap Style}{Cap Style}
     set_cap_style(pcs: Rute::PenCapStyle),
-    ///     Returns the pen's join style.
     /// 
-    ///     \sa setJoinStyle(), {QPen#Join Style}{Join Style}
+    /// Returns the pen's join style.
+    /// 
+    /// **See also:** setJoinStyle()
+    /// {QPen#Join Style}{Join Style}
     join_style() -> Rute::PenJoinStyle,
-    ///     \fn void QPen::setJoinStyle(Qt::PenJoinStyle style)
     /// 
-    ///     Sets the pen's join style to the given \a style. The default value
-    ///     is Qt::BevelJoin.
+    /// Sets the pen's join style to the given *style.* The default value
+    /// is Qt::BevelJoin.
     /// 
-    ///     \sa joinStyle(), {QPen#Join Style}{Join Style}
+    /// **See also:** joinStyle()
+    /// {QPen#Join Style}{Join Style}
     set_join_style(pcs: Rute::PenJoinStyle),
-    ///     Returns \c true if the pen is cosmetic; otherwise returns \c false.
     /// 
-    ///     Cosmetic pens are used to draw strokes that have a constant width
-    ///     regardless of any transformations applied to the QPainter they are
-    ///     used with. Drawing a shape with a cosmetic pen ensures that its
-    ///     outline will have the same thickness at different scale factors.
+    /// Returns `true` if the pen is cosmetic; otherwise returns `false.`
     /// 
-    ///     A zero width pen is cosmetic by default.
+    /// Cosmetic pens are used to draw strokes that have a constant width
+    /// regardless of any transformations applied to the QPainter they are
+    /// used with. Drawing a shape with a cosmetic pen ensures that its
+    /// outline will have the same thickness at different scale factors.
     /// 
-    ///     \sa setCosmetic(), widthF()
+    /// A zero width pen is cosmetic by default.
+    /// 
+    /// **See also:** setCosmetic()
+    /// widthF()
     is_cosmetic() -> bool,
-    ///     Sets this pen to cosmetic or non-cosmetic, depending on the value of
-    ///     \a cosmetic.
     /// 
-    ///     \sa isCosmetic()
+    /// Sets this pen to cosmetic or non-cosmetic, depending on the value of
+    /// *cosmetic.*
+    /// 
+    /// **See also:** isCosmetic()
     set_cosmetic(cosmetic: bool),
-    ///     \fn bool QPen::isDetached()
-    /// 
-    ///     \internal
     is_detached() -> bool,
 }
 

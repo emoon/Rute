@@ -1,33 +1,30 @@
-///     \class QGraphicsSceneResizeEvent
-///     \brief The QGraphicsSceneResizeEvent class provides events for widget
-///     resizing in the graphics view framework.
-///     \since 4.4
-///     \ingroup graphicsview-api
-///     \inmodule QtWidgets
 /// 
-///     A QGraphicsWidget sends itself a QGraphicsSceneResizeEvent immediately
-///     when its geometry changes.
+/// A QGraphicsWidget sends itself a QGraphicsSceneResizeEvent immediately
+/// when its geometry changes.
 /// 
-///     It's similar to QResizeEvent, but its sizes, oldSize() and newSize(), use
-///     QSizeF instead of QSize.
+/// It's similar to QResizeEvent, but its sizes, oldSize() and newSize(), use
+/// QSizeF instead of QSize.
 /// 
-///     \sa QGraphicsWidget::setGeometry(), QGraphicsWidget::resize()
+/// **See also:** QGraphicsWidget::setGeometry()
+/// QGraphicsWidget::resize()
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GraphicsSceneResizeEvent : GraphicsSceneEvent {
-    ///     Returns the old size (i.e., the size immediately before the widget was
-    ///     resized).
     /// 
-    ///     \sa newSize(), QGraphicsWidget::resize()
+    /// Returns the old size (i.e., the size immediately before the widget was
+    /// resized).
+    /// 
+    /// **See also:** newSize()
+    /// QGraphicsWidget::resize()
     old_size() -> SizeF,
-    ///     \internal
     set_old_size(size: &SizeFType),
-    ///     Returns the new size (i.e., the current size).
     /// 
-    ///     \sa oldSize(), QGraphicsWidget::resize()
+    /// Returns the new size (i.e., the current size).
+    /// 
+    /// **See also:** oldSize()
+    /// QGraphicsWidget::resize()
     new_size() -> SizeF,
-    ///     \internal
     set_new_size(size: &SizeFType),
 }
 

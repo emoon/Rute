@@ -1,97 +1,51 @@
-///     \class QClipboard
-///     \brief The QClipboard class provides access to the window system clipboard.
-///     \inmodule QtGui
 /// 
-///     The clipboard offers a simple mechanism to copy and paste data
-///     between applications.
+/// The clipboard offers a simple mechanism to copy and paste data
+/// between applications.
 /// 
-///     QClipboard supports the same data types that QDrag does, and uses
-///     similar mechanisms. For advanced clipboard usage read \l{Drag and
-///     Drop}.
+/// QClipboard supports the same data types that QDrag does, and uses
+/// similar mechanisms. For advanced clipboard usage read [Drag and
+/// Drop](Drag%20and%0A%20%20%20%20Drop)
 /// 
-///     There is a single QClipboard object in an application, accessible
-///     as QGuiApplication::clipboard().
 /// 
-///     Example:
-///     \snippet code/src_gui_kernel_qclipboard.cpp 0
+/// There is a single QClipboard object in an application, accessible
+/// as QGuiApplication::clipboard().
 /// 
-///     QClipboard features some convenience functions to access common
-///     data types: setText() allows the exchange of Unicode text and
-///     setPixmap() and setImage() allows the exchange of QPixmaps and
-///     QImages between applications. The setMimeData() function is the
-///     ultimate in flexibility: it allows you to add any QMimeData into
-///     the clipboard. There are corresponding getters for each of these,
-///     e.g. text(), image() and pixmap(). You can clear the clipboard by
-///     calling clear().
+/// Example:
 /// 
-///     A typical example of the use of these functions follows:
+/// QClipboard features some convenience functions to access common
+/// data types: setText() allows the exchange of Unicode text and
+/// setPixmap() and setImage() allows the exchange of QPixmaps and
+/// QImages between applications. The setMimeData() function is the
+/// ultimate in flexibility: it allows you to add any QMimeData into
+/// the clipboard. There are corresponding getters for each of these,
+/// e.g. text(), image() and pixmap(). You can clear the clipboard by
+/// calling clear().
 /// 
-///     \snippet droparea.cpp 0
+/// A typical example of the use of these functions follows:
 /// 
-///     \section1 Notes for X11 Users
+/// # Notes for X11 Users
 /// 
-///     \list
+/// * The X11 Window System has the concept of a separate selection and clipboard. When text is selected, it is immediately available as the global mouse selection. The global mouse selection may later be copied to the clipboard. By convention, the middle mouse button is used to paste the global mouse selection.
+/// * X11 also has the concept of ownership; if you change the selection within a window, X11 will only notify the owner and the previous owner of the change, i.e. it will not notify all applications that the selection or clipboard data changed.
+/// * Lastly, the X11 clipboard is event driven, i.e. the clipboard will not function properly if the event loop is not running. Similarly, it is recommended that the contents of the clipboard are stored or retrieved in direct response to user-input events, e.g. mouse button or key presses and releases. You should not store or retrieve the clipboard contents in response to timer or non-user-input events.
+/// * Since there is no standard way to copy and paste files between applications on X11, various MIME types and conventions are currently in use. For instance, Nautilus expects files to be supplied with a `x-special/gnome-copied-files` MIME type with data beginning with the cut/copy action, a newline character, and the URL of the file.
 /// 
-///     \li The X11 Window System has the concept of a separate selection
-///     and clipboard.  When text is selected, it is immediately available
-///     as the global mouse selection.  The global mouse selection may
-///     later be copied to the clipboard.  By convention, the middle mouse
-///     button is used to paste the global mouse selection.
+/// # Notes for \macos Users
 /// 
-///     \li X11 also has the concept of ownership; if you change the
-///     selection within a window, X11 will only notify the owner and the
-///     previous owner of the change, i.e. it will not notify all
-///     applications that the selection or clipboard data changed.
+/// MacOS supports a separate find buffer that holds the current
+/// search string in Find operations. This find clipboard can be accessed
+/// by specifying the FindBuffer mode.
 /// 
-///     \li Lastly, the X11 clipboard is event driven, i.e. the clipboard
-///     will not function properly if the event loop is not running.
-///     Similarly, it is recommended that the contents of the clipboard
-///     are stored or retrieved in direct response to user-input events,
-///     e.g. mouse button or key presses and releases.  You should not
-///     store or retrieve the clipboard contents in response to timer or
-///     non-user-input events.
+/// # Notes for Windows and \macos Users
 /// 
-///     \li Since there is no standard way to copy and paste files between
-///     applications on X11, various MIME types and conventions are currently
-///     in use. For instance, Nautilus expects files to be supplied with a
-///     \c{x-special/gnome-copied-files} MIME type with data beginning with
-///     the cut/copy action, a newline character, and the URL of the file.
+/// * Windows and MacOS do not support the global mouse selection; they only supports the global clipboard, i.e. they only add text to the clipboard when an explicit copy or cut is made.
+/// * Windows and MacOS does not have the concept of ownership; the clipboard is a fully global resource so all applications are notified of changes.
 /// 
-///     \endlist
+/// # Notes for Universal Windows Platform Users
 /// 
-///     \section1 Notes for \macos Users
+/// * The Universal Windows Platform only allows to query the clipboard in case the application is active and an application window has focus. Accessing the clipboard data when in background will fail due to access denial.
 /// 
-///     \macos supports a separate find buffer that holds the current
-///     search string in Find operations. This find clipboard can be accessed
-///     by specifying the FindBuffer mode.
-/// 
-///     \section1 Notes for Windows and \macos Users
-/// 
-///     \list
-/// 
-///     \li Windows and \macos do not support the global mouse
-///     selection; they only supports the global clipboard, i.e. they
-///     only add text to the clipboard when an explicit copy or cut is
-///     made.
-/// 
-///     \li Windows and \macos does not have the concept of ownership;
-///     the clipboard is a fully global resource so all applications are
-///     notified of changes.
-/// 
-///     \endlist
-/// 
-///     \section1 Notes for Universal Windows Platform Users
-/// 
-///     \list
-/// 
-///     \li The Universal Windows Platform only allows to query the
-///     clipboard in case the application is active and an application
-///     window has focus. Accessing the clipboard data when in background
-///     will fail due to access denial.
-/// 
-///     \endlist
-/// 
-///     \sa QGuiApplication
+/// **See also:** QGuiApplication
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -104,165 +58,261 @@ enum Mode {
 }
 
 struct Clipboard : Object {
-    ///     \fn void QClipboard::clear(Mode mode)
-    ///     Clear the clipboard contents.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, this
-    ///     function clears the global clipboard contents.  If \a mode is
-    ///     QClipboard::Selection, this function clears the global mouse
-    ///     selection contents. If \a mode is QClipboard::FindBuffer, this
-    ///     function clears the search string buffer.
+    /// Clear the clipboard contents.
     /// 
-    ///     \sa QClipboard::Mode, supportsSelection()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, this
+    /// function clears the global clipboard contents. If *mode* is
+    /// QClipboard::Selection, this function clears the global mouse
+    /// selection contents. If *mode* is QClipboard::FindBuffer, this
+    /// function clears the search string buffer.
+    /// 
+    /// **See also:** QClipboard::Mode
+    /// supportsSelection()
     clear(mode: Clipboard::Mode),
-    ///     Returns \c true if the clipboard supports mouse selection; otherwise
-    ///     returns \c false.
+    /// 
+    /// Returns `true` if the clipboard supports mouse selection; otherwise
+    /// returns `false.`
     supports_selection() -> bool,
-    ///     Returns \c true if the clipboard supports a separate search buffer; otherwise
-    ///     returns \c false.
+    /// 
+    /// Returns `true` if the clipboard supports a separate search buffer; otherwise
+    /// returns `false.`
     supports_find_buffer() -> bool,
-    ///     Returns \c true if this clipboard object owns the mouse selection
-    ///     data; otherwise returns \c false.
+    /// 
+    /// Returns `true` if this clipboard object owns the mouse selection
+    /// data; otherwise returns `false.`
     owns_selection() -> bool,
-    ///     Returns \c true if this clipboard object owns the clipboard data;
-    ///     otherwise returns \c false.
+    /// 
+    /// Returns `true` if this clipboard object owns the clipboard data;
+    /// otherwise returns `false.`
     owns_clipboard() -> bool,
-    ///     \since 4.2
     /// 
-    ///     Returns \c true if this clipboard object owns the find buffer data;
-    ///     otherwise returns \c false.
+    /// Returns `true` if this clipboard object owns the find buffer data;
+    /// otherwise returns `false.`
     owns_find_buffer() -> bool,
-    ///     Returns the clipboard text as plain text, or an empty string if the
-    ///     clipboard does not contain any text.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     text is retrieved from the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the text is retrieved from the global
-    ///     mouse selection. If \a mode is QClipboard::FindBuffer, the
-    ///     text is retrieved from the search string buffer.
+    /// **Overloads**
+    /// Returns the clipboard text in subtype *subtype,* or an empty string
+    /// if the clipboard does not contain any text. If *subtype* is null,
+    /// any subtype is acceptable, and *subtype* is set to the chosen
+    /// subtype.
     /// 
-    ///     \sa setText(), mimeData()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// text is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the text is retrieved from the global
+    /// mouse selection.
+    /// 
+    /// Common values for *subtype* are and .
+    /// 
+    /// Note that calling this function repeatedly, for instance from a
+    /// key event handler, may be slow. In such cases, you should use the
+    /// `dataChanged()` signal instead.
+    /// 
+    /// **See also:** setText()
+    /// mimeData()
+    /// 
+    /// Returns the clipboard text as plain text, or an empty string if the
+    /// clipboard does not contain any text.
+    /// 
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// text is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the text is retrieved from the global
+    /// mouse selection. If *mode* is QClipboard::FindBuffer, the
+    /// text is retrieved from the search string buffer.
+    /// 
+    /// **See also:** setText()
+    /// mimeData()
     text(mode: Clipboard::Mode) -> String,
-    ///     Returns the clipboard text as plain text, or an empty string if the
-    ///     clipboard does not contain any text.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     text is retrieved from the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the text is retrieved from the global
-    ///     mouse selection. If \a mode is QClipboard::FindBuffer, the
-    ///     text is retrieved from the search string buffer.
+    /// **Overloads**
+    /// Returns the clipboard text in subtype *subtype,* or an empty string
+    /// if the clipboard does not contain any text. If *subtype* is null,
+    /// any subtype is acceptable, and *subtype* is set to the chosen
+    /// subtype.
     /// 
-    ///     \sa setText(), mimeData()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// text is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the text is retrieved from the global
+    /// mouse selection.
+    /// 
+    /// Common values for *subtype* are and .
+    /// 
+    /// Note that calling this function repeatedly, for instance from a
+    /// key event handler, may be slow. In such cases, you should use the
+    /// `dataChanged()` signal instead.
+    /// 
+    /// **See also:** setText()
+    /// mimeData()
+    /// 
+    /// Returns the clipboard text as plain text, or an empty string if the
+    /// clipboard does not contain any text.
+    /// 
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// text is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the text is retrieved from the global
+    /// mouse selection. If *mode* is QClipboard::FindBuffer, the
+    /// text is retrieved from the search string buffer.
+    /// 
+    /// **See also:** setText()
+    /// mimeData()
     text(subtype: String, mode: Clipboard::Mode) -> String,
-    ///     Copies \a text into the clipboard as plain text.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     text is stored in the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the text is stored in the global
-    ///     mouse selection. If \a mode is QClipboard::FindBuffer, the
-    ///     text is stored in the search string buffer.
+    /// Copies *text* into the clipboard as plain text.
     /// 
-    ///     \sa text(), setMimeData()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// text is stored in the global clipboard. If *mode* is
+    /// QClipboard::Selection, the text is stored in the global
+    /// mouse selection. If *mode* is QClipboard::FindBuffer, the
+    /// text is stored in the search string buffer.
+    /// 
+    /// **See also:** text()
+    /// setMimeData()
     set_text(arg0: String, mode: Clipboard::Mode),
-    ///     \fn QMimeData *QClipboard::mimeData(Mode mode) const
     /// 
-    ///     Returns a pointer to a QMimeData representation of the current
-    ///     clipboard data (can be NULL if the given \a mode is not
-    ///     supported by the platform).
+    /// Returns a pointer to a QMimeData representation of the current
+    /// clipboard data (can be NULL if the given *mode* is not
+    /// supported by the platform).
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     data is retrieved from the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the data is retrieved from the global
-    ///     mouse selection. If \a mode is QClipboard::FindBuffer, the
-    ///     data is retrieved from the search string buffer.
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// data is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the data is retrieved from the global
+    /// mouse selection. If *mode* is QClipboard::FindBuffer, the
+    /// data is retrieved from the search string buffer.
     /// 
-    ///     The text(), image(), and pixmap() functions are simpler
-    ///     wrappers for retrieving text, image, and pixmap data.
+    /// The text(), image(), and pixmap() functions are simpler
+    /// wrappers for retrieving text, image, and pixmap data.
     /// 
-    ///     \note The pointer returned might become invalidated when the contents
-    ///     of the clipboard changes; either by calling one of the setter functions
-    ///     or externally by the system clipboard changing.
+    /// **Note**: The pointer returned might become invalidated when the contents
+    /// of the clipboard changes; either by calling one of the setter functions
+    /// or externally by the system clipboard changing.
     /// 
-    ///     \sa setMimeData()
+    /// **See also:** setMimeData()
     mime_data(mode: Clipboard::Mode) -> MimeData?,
-    ///     \fn void QClipboard::setMimeData(QMimeData *src, Mode mode)
     /// 
-    ///     Sets the clipboard data to \a src. Ownership of the data is
-    ///     transferred to the clipboard. If you want to remove the data
-    ///     either call clear() or call setMimeData() again with new data.
+    /// Sets the clipboard data to *src.* Ownership of the data is
+    /// transferred to the clipboard. If you want to remove the data
+    /// either call clear() or call setMimeData() again with new data.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     data is stored in the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the data is stored in the global
-    ///     mouse selection. If \a mode is QClipboard::FindBuffer, the
-    ///     data is stored in the search string buffer.
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// data is stored in the global clipboard. If *mode* is
+    /// QClipboard::Selection, the data is stored in the global
+    /// mouse selection. If *mode* is QClipboard::FindBuffer, the
+    /// data is stored in the search string buffer.
     /// 
-    ///     The setText(), setImage() and setPixmap() functions are simpler
-    ///     wrappers for setting text, image and pixmap data respectively.
+    /// The setText(), setImage() and setPixmap() functions are simpler
+    /// wrappers for setting text, image and pixmap data respectively.
     /// 
-    ///     \sa mimeData()
+    /// **See also:** mimeData()
     set_mime_data(data: *MimeDataType, mode: Clipboard::Mode),
-    ///     Returns the clipboard image, or returns a null image if the
-    ///     clipboard does not contain an image or if it contains an image in
-    ///     an unsupported image format.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     image is retrieved from the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the image is retrieved from the global
-    ///     mouse selection.
+    /// Returns the clipboard image, or returns a null image if the
+    /// clipboard does not contain an image or if it contains an image in
+    /// an unsupported image format.
     /// 
-    ///     \sa setImage(), pixmap(), mimeData(), QImage::isNull()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// image is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the image is retrieved from the global
+    /// mouse selection.
+    /// 
+    /// **See also:** setImage()
+    /// pixmap()
+    /// mimeData()
+    /// QImage::isNull()
     image(mode: Clipboard::Mode) -> Image,
-    ///     Returns the clipboard pixmap, or null if the clipboard does not
-    ///     contain a pixmap. Note that this can lose information. For
-    ///     example, if the image is 24-bit and the display is 8-bit, the
-    ///     result is converted to 8 bits, and if the image has an alpha
-    ///     channel, the result just has a mask.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     pixmap is retrieved from the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the pixmap is retrieved from the global
-    ///     mouse selection.
+    /// Returns the clipboard pixmap, or null if the clipboard does not
+    /// contain a pixmap. Note that this can lose information. For
+    /// example, if the image is 24-bit and the display is 8-bit, the
+    /// result is converted to 8 bits, and if the image has an alpha
+    /// channel, the result just has a mask.
     /// 
-    ///     \sa setPixmap(), image(), mimeData(), QPixmap::convertFromImage()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// pixmap is retrieved from the global clipboard. If *mode* is
+    /// QClipboard::Selection, the pixmap is retrieved from the global
+    /// mouse selection.
+    /// 
+    /// **See also:** setPixmap()
+    /// image()
+    /// mimeData()
+    /// QPixmap::convertFromImage()
     pixmap(mode: Clipboard::Mode) -> Pixmap,
-    ///     Copies the \a image into the clipboard.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     image is stored in the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the data is stored in the global
-    ///     mouse selection.
+    /// Copies the *image* into the clipboard.
     /// 
-    ///     This is shorthand for:
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// image is stored in the global clipboard. If *mode* is
+    /// QClipboard::Selection, the data is stored in the global
+    /// mouse selection.
     /// 
-    ///     \snippet code/src_gui_kernel_qclipboard.cpp 1
+    /// This is shorthand for:
     /// 
-    ///     \sa image(), setPixmap(), setMimeData()
+    /// **See also:** image()
+    /// setPixmap()
+    /// setMimeData()
     set_image(arg0: &ImageType, mode: Clipboard::Mode),
-    ///     Copies \a pixmap into the clipboard. Note that this is slower
-    ///     than setImage() because it needs to convert the QPixmap to a
-    ///     QImage first.
     /// 
-    ///     The \a mode argument is used to control which part of the system
-    ///     clipboard is used.  If \a mode is QClipboard::Clipboard, the
-    ///     pixmap is stored in the global clipboard.  If \a mode is
-    ///     QClipboard::Selection, the pixmap is stored in the global
-    ///     mouse selection.
+    /// Copies *pixmap* into the clipboard. Note that this is slower
+    /// than setImage() because it needs to convert the QPixmap to a
+    /// QImage first.
     /// 
-    ///     \sa pixmap(), setImage(), setMimeData()
+    /// The *mode* argument is used to control which part of the system
+    /// clipboard is used. If *mode* is QClipboard::Clipboard, the
+    /// pixmap is stored in the global clipboard. If *mode* is
+    /// QClipboard::Selection, the pixmap is stored in the global
+    /// mouse selection.
+    /// 
+    /// **See also:** pixmap()
+    /// setImage()
+    /// setMimeData()
     set_pixmap(arg0: &PixmapType, mode: Clipboard::Mode),
+    /// 
+    /// This signal is emitted when the data for the given clipboard *mode* is changed.
+    /// 
+    /// **See also:** dataChanged()
+    /// selectionChanged()
+    /// findBufferChanged()
     [signal] changed(mode: Clipboard::Mode),
+    /// 
+    /// This signal is emitted when the selection is changed. This only
+    /// applies to windowing systems that support selections, e.g. X11.
+    /// Windows and MacOS don't support selections.
+    /// 
+    /// **See also:** dataChanged()
+    /// findBufferChanged()
+    /// changed()
     [signal] selection_changed(),
+    /// 
+    /// This signal is emitted when the find buffer is changed. This only
+    /// applies to MacOS .
+    /// 
+    /// With Qt version 4.3 or higher, clipboard changes made by other
+    /// applications will only be detected when the application is activated.
+    /// 
+    /// **See also:** dataChanged()
+    /// selectionChanged()
+    /// changed()
     [signal] find_buffer_changed(),
+    /// 
+    /// This signal is emitted when the clipboard data is changed.
+    /// 
+    /// On MacOS and with Qt version 4.3 or higher, clipboard
+    /// changes made by other applications will only be detected
+    /// when the application is activated.
+    /// 
+    /// **See also:** findBufferChanged()
+    /// selectionChanged()
+    /// changed()
     [signal] data_changed(),
 }
 

@@ -1,15 +1,12 @@
-///     \class QSwipeGesture
-///     \since 4.6
-///     \brief The QSwipeGesture class describes a swipe gesture made by the user.
-///     \ingroup gestures
-///     \inmodule QtWidgets
 /// 
-///     \image swipegesture.png
+/// ![swipegesture.png](swipegesture.png)
 /// 
-///     For an overview of gesture handling in Qt and information on using gestures
-///     in your applications, see the \l{Gestures in Widgets and Graphics View} document.
+/// For an overview of gesture handling in Qt and information on using gestures
+/// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
+/// document.
 /// 
-///     \sa QPanGesture, QPinchGesture
+/// **See also:** QPanGesture
+/// QPinchGesture
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -23,8 +20,29 @@ enum SwipeDirection {
 }
 
 struct SwipeGesture : Gesture {
+    /// 
+    /// If the gesture has a horizontal component, the horizontal direction
+    /// is either Left or Right; otherwise, it is NoDirection.
+    /// 
+    /// **See also:** verticalDirection
+    /// swipeAngle
     horizontal_direction() -> SwipeGesture::SwipeDirection,
+    /// 
+    /// If the gesture has a vertical component, the vertical direction
+    /// is either Up or Down; otherwise, it is NoDirection.
+    /// 
+    /// **See also:** horizontalDirection
+    /// swipeAngle
     vertical_direction() -> SwipeGesture::SwipeDirection,
+    /// 
+    /// If the gesture has either a horizontal or vertical component, the
+    /// swipe angle describes the angle between the direction of motion and the
+    /// x-axis as defined using the standard widget
+    /// [coordinate system](Coordinate%20System)
+    /// 
+    /// 
+    /// **See also:** horizontalDirection
+    /// verticalDirection
     swipe_angle() -> f32,
     set_swipe_angle(value: f32),
 }

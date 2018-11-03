@@ -1,137 +1,118 @@
-///     \class QGroupBox
-///     \brief The QGroupBox widget provides a group box frame with a title.
 /// 
-///     \ingroup organizers
-///     \ingroup geomanagement
-///     \inmodule QtWidgets
+/// ![windows-groupbox.png](windows-groupbox.png)
 /// 
-///     \image windows-groupbox.png
+/// A group box provides a frame, a title on top, a keyboard shortcut, and
+/// displays various other widgets inside itself. The keyboard shortcut moves
+/// keyboard focus to one of the group box's child widgets.
 /// 
-///     A group box provides a frame, a title on top, a keyboard shortcut, and
-///     displays various other widgets inside itself. The keyboard shortcut moves
-///     keyboard focus to one of the group box's child widgets.
+/// QGroupBox also lets you set the [title](title)
+/// (normally set in the
+/// constructor) and the title's [alignment.](alignment.)
+/// Group boxes can be
+/// [checkable.](checkable.)
+/// Child widgets in checkable group boxes are enabled or
+/// disabled depending on whether or not the group box is [checked.](checked.)
 /// 
-///     QGroupBox also lets you set the \l title (normally set in the
-///     constructor) and the title's \l alignment. Group boxes can be
-///     \l checkable. Child widgets in checkable group boxes are enabled or
-///     disabled depending on whether or not the group box is \l checked.
+/// You can minimize the space consumption of a group box by enabling
+/// the [flat](flat)
+/// property. In most [styles](QStyle)
+/// , enabling this
+/// property results in the removal of the left, right and bottom
+/// edges of the frame.
 /// 
-///     You can minimize the space consumption of a group box by enabling
-///     the \l flat property. In most \l{QStyle}{styles}, enabling this
-///     property results in the removal of the left, right and bottom
-///     edges of the frame.
+/// QGroupBox doesn't automatically lay out the child widgets (which
+/// are often [QCheckBox](QCheckBox)
+/// es or [QRadioButton](QRadioButton)
+/// s but can be any
+/// widgets). The following example shows how we can set up a
+/// QGroupBox with a layout:
 /// 
-///     QGroupBox doesn't automatically lay out the child widgets (which
-///     are often \l{QCheckBox}es or \l{QRadioButton}s but can be any
-///     widgets). The following example shows how we can set up a
-///     QGroupBox with a layout:
-/// 
-///     \snippet widgets/groupbox/window.cpp 2
-/// 
-///     \sa QButtonGroup, {Group Box Example}
+/// **See also:** QButtonGroup
+/// {Group Box Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct GroupBox : Widget {
-    ///     \property QGroupBox::title
-    ///     \brief the group box title text
     /// 
-    ///     The group box title text will have a keyboard shortcut if the title
-    ///     contains an ampersand ('&') followed by a letter.
+    /// The group box title text will have a keyboard shortcut if the title
+    /// contains an ampersand ('&') followed by a letter.
     /// 
-    ///     \snippet code/src_gui_widgets_qgroupbox.cpp 0
+    /// In the example above, **Alt+U** moves the keyboard focus to the
+    /// group box. See the [QShortcut](QShortcut%23mnemonic)
     /// 
-    ///     In the example above, \uicontrol Alt+U moves the keyboard focus to the
-    ///     group box. See the \l {QShortcut#mnemonic}{QShortcut}
-    ///     documentation for details (to display an actual ampersand, use
-    ///     '&&').
+    /// documentation for details (to display an actual ampersand, use
+    /// '&&').
     /// 
-    ///     There is no default title text.
+    /// There is no default title text.
     /// 
-    ///     \sa alignment
+    /// **See also:** alignment
     title() -> String,
     set_title(title: String),
-    ///     \property QGroupBox::alignment
-    ///     \brief the alignment of the group box title.
     /// 
-    ///     Most styles place the title at the top of the frame. The horizontal
-    ///     alignment of the title can be specified using single values from
-    ///     the following list:
+    /// Most styles place the title at the top of the frame. The horizontal
+    /// alignment of the title can be specified using single values from
+    /// the following list:
     /// 
-    ///     \list
-    ///     \li Qt::AlignLeft aligns the title text with the left-hand side of the group box.
-    ///     \li Qt::AlignRight aligns the title text with the right-hand side of the group box.
-    ///     \li Qt::AlignHCenter aligns the title text with the horizontal center of the group box.
-    ///     \endlist
+    /// * Qt::AlignLeft aligns the title text with the left-hand side of the group box.
+    /// * Qt::AlignRight aligns the title text with the right-hand side of the group box.
+    /// * Qt::AlignHCenter aligns the title text with the horizontal center of the group box.
     /// 
-    ///     The default alignment is Qt::AlignLeft.
+    /// The default alignment is Qt::AlignLeft.
     /// 
-    ///     \sa Qt::Alignment
+    /// **See also:** Qt::Alignment
     alignment() -> Rute::Alignment,
     set_alignment(alignment: i32),
-    ///   \reimp
+    /// 
     [event] minimum_size_hint() -> Size,
-    ///     \property QGroupBox::flat
-    ///     \brief whether the group box is painted flat or has a frame
-    /// 
-    ///     A group box usually consists of a surrounding frame with a title
-    ///     at the top. If this property is enabled, only the top part of the frame is
-    ///     drawn in most styles; otherwise, the whole frame is drawn.
-    /// 
-    ///     By default, this property is disabled, i.e., group boxes are not flat unless
-    ///     explicitly specified.
-    /// 
-    ///     \b{Note:} In some styles, flat and non-flat group boxes have similar
-    ///     representations and may not be as distinguishable as they are in other
-    ///     styles.
-    /// 
-    ///     \sa title
     is_flat() -> bool,
     set_flat(flat: bool),
     is_checkable() -> bool,
-    ///     \property QGroupBox::checkable
-    ///     \brief whether the group box has a checkbox in its title
-    /// 
-    ///     If this property is \c true, the group box displays its title using
-    ///     a checkbox in place of an ordinary label. If the checkbox is checked,
-    ///     the group box's children are enabled; otherwise, they are disabled and
-    ///     inaccessible.
-    /// 
-    ///     By default, group boxes are not checkable.
-    /// 
-    ///     If this property is enabled for a group box, it will also be initially
-    ///     checked to ensure that its contents are enabled.
-    /// 
-    ///     \sa checked
     set_checkable(checkable: bool),
     is_checked() -> bool,
-    ///     \property QGroupBox::checked
-    ///     \brief whether the group box is checked
-    /// 
-    ///     If the group box is checkable, it is displayed with a check box.
-    ///     If the check box is checked, the group box's children are enabled;
-    ///     otherwise, the children are disabled and are inaccessible to the user.
-    /// 
-    ///     By default, checkable group boxes are also checked.
-    /// 
-    ///     \sa checkable
     set_checked(checked: bool),
-    [signal] clicked(checked: bool),
-    [signal] toggled(arg0: bool),
-    [event] event(event: *EventType) -> bool,
-    [event] child_event(event: *ChildEventType),
-    [event] resize_event(event: *ResizeEventType),
-    [event] paint_event(event: *PaintEventType),
-    [event] focus_in_event(event: *FocusEventType),
-    [event] change_event(event: *EventType),
-    [event] mouse_press_event(event: *MouseEventType),
-    [event] mouse_move_event(event: *MouseEventType),
-    [event] mouse_release_event(event: *MouseEventType),
-    ///     Initialize \a option with the values from this QGroupBox. This method
-    ///     is useful for subclasses when they need a QStyleOptionGroupBox, but don't want
-    ///     to fill in all the information themselves.
     /// 
-    ///     \sa QStyleOption::initFrom()
+    /// This signal is emitted when the check box is activated (i.e., pressed down
+    /// then released while the mouse cursor is inside the button), or when the
+    /// shortcut key is typed. Notably, this signal is *not* emitted if you call
+    /// setChecked().
+    /// 
+    /// If the check box is checked, *checked* is true; it is false if the check
+    /// box is unchecked.
+    /// 
+    /// **See also:** checkable
+    /// toggled()
+    /// checked
+    [signal] clicked(checked: bool),
+    /// 
+    /// If the group box is checkable, this signal is emitted when the check box
+    /// is toggled. *on* is true if the check box is checked; otherwise, it is false.
+    /// 
+    /// **See also:** checkable
+    [signal] toggled(arg0: bool),
+    /// 
+    [event] event(event: *EventType) -> bool,
+    /// 
+    [event] child_event(event: *ChildEventType),
+    /// 
+    [event] resize_event(event: *ResizeEventType),
+    /// 
+    [event] paint_event(event: *PaintEventType),
+    /// 
+    [event] focus_in_event(event: *FocusEventType),
+    /// 
+    [event] change_event(event: *EventType),
+    /// 
+    [event] mouse_press_event(event: *MouseEventType),
+    /// 
+    [event] mouse_move_event(event: *MouseEventType),
+    /// 
+    [event] mouse_release_event(event: *MouseEventType),
+    /// 
+    /// Initialize *option* with the values from this QGroupBox. This method
+    /// is useful for subclasses when they need a QStyleOptionGroupBox, but don't want
+    /// to fill in all the information themselves.
+    /// 
+    /// **See also:** QStyleOption::initFrom()
     init_style_option(option: *StyleOptionGroupBoxType),
 }
 

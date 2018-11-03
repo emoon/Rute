@@ -1,51 +1,70 @@
+/// 
+/// QPdfWriter generates PDF out of a series of drawing commands using QPainter.
+/// The newPage() method can be used to create several pages.
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PdfWriter : Object, PagedPaintDevice {
-    ///     \since 5.10
     /// 
-    ///     Sets the PDF version for this writer to \a version.
+    /// Sets the PDF version for this writer to *version.*
     /// 
-    ///     If \a version is the same value as currently set then no change will be made.
+    /// If *version* is the same value as currently set then no change will be made.
     set_pdf_version(version: PagedPaintDevice::PdfVersion),
-    ///     \since 5.10
     /// 
-    ///     Returns the PDF version for this writer. The default is \c PdfVersion_1_4.
+    /// Returns the PDF version for this writer. The default is `PdfVersion_1_4.`
     pdf_version() -> PagedPaintDevice::PdfVersion,
+    /// 
+    /// Returns the title of the document.
     title() -> String,
+    /// 
+    /// Sets the title of the document being created to *title.*
     set_title(title: String),
+    /// 
+    /// Returns the creator of the document.
     creator() -> String,
+    /// 
+    /// Sets the creator of the document to *creator.*
     set_creator(creator: String),
-    ///   \reimp
+    /// 
     [event] new_page() -> bool,
-    ///     \since 5.3
     /// 
-    ///     Sets the PDF \a resolution in DPI.
+    /// Sets the PDF *resolution* in DPI.
     /// 
-    ///     This setting affects the coordinate system as returned by, for
-    ///     example QPainter::viewport().
+    /// This setting affects the coordinate system as returned by, for
+    /// example QPainter::viewport().
     /// 
-    ///     \sa resolution()
+    /// **See also:** resolution()
     set_resolution(resolution: i32),
-    ///     \since 5.3
     /// 
-    ///     Returns the resolution of the PDF in DPI.
+    /// Returns the resolution of the PDF in DPI.
     /// 
-    ///     \sa setResolution()
+    /// **See also:** setResolution()
     resolution() -> i32,
-    ///     \reimp
     /// 
-    ///     \obsolete Use setPageSize(QPageSize(id)) instead
+    /// Sets the PDF page size to *pageSize.*
     /// 
-    ///     \sa setPageSize()
+    /// To get the current QPageSize use pageLayout().pageSize().
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new page size to a new page.
+    /// You should not call any painting methods between a call to setPageSize()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// Returns true if the page size was successfully set to *pageSize.*
+    /// 
+    /// **See also:** pageLayout()
+    /// 
+    /// **See also:** setPageSize()
+    /// 
+    /// **See also:** setPageSize()
     [event] set_page_size(size: PagedPaintDevice::PageSize),
-    ///     \reimp
     /// 
-    ///     \obsolete Use setPageSize(QPageSize(size, QPageSize::Millimeter)) instead
-    /// 
-    ///     \sa setPageSize()
+    /// **See also:** setPageSize()
     [event] set_page_size_mm(size: &SizeFType),
+    /// 
+    /// **See also:** setPageMargins()
     [event] set_margins(m: onst QPagedPaintDevice::Margins &),
+    /// 
     [event] paint_engine() -> PaintEngine?,
 }
 

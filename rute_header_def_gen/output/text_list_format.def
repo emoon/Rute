@@ -1,34 +1,23 @@
-///     \class QTextListFormat
-///     \reentrant
 /// 
-///     \brief The QTextListFormat class provides formatting information for
-///     lists in a QTextDocument.
-///     \inmodule QtGui
+/// A list is composed of one or more items, represented as text blocks.
+/// The list's format specifies the appearance of items in the list.
+/// In particular, it determines the indentation and the style of each item.
 /// 
-///     \ingroup richtext-processing
-///     \ingroup shared
+/// The indentation of the items is an integer value that causes each item to
+/// be offset from the left margin by a certain amount. This value is read with
+/// indent() and set with setIndent().
 /// 
-///     A list is composed of one or more items, represented as text blocks.
-///     The list's format specifies the appearance of items in the list.
-///     In particular, it determines the indentation and the style of each item.
+/// The style used to decorate each item is set with setStyle() and can be read
+/// with the style() function. The style controls the type of bullet points and
+/// numbering scheme used for items in the list. Note that lists that use the
+/// decimal numbering scheme begin counting at 1 rather than 0.
 /// 
-///     The indentation of the items is an integer value that causes each item to
-///     be offset from the left margin by a certain amount. This value is read with
-///     indent() and set with setIndent().
+/// Style properties can be set to further configure the appearance of list
+/// items; for example, the ListNumberPrefix and ListNumberSuffix properties
+/// can be used to customize the numbers used in an ordered list so that they
+/// appear as (1), (2), (3), etc.:
 /// 
-///     The style used to decorate each item is set with setStyle() and can be read
-///     with the style() function. The style controls the type of bullet points and
-///     numbering scheme used for items in the list. Note that lists that use the
-///     decimal numbering scheme begin counting at 1 rather than 0.
-/// 
-///     Style properties can be set to further configure the appearance of list
-///     items; for example, the ListNumberPrefix and ListNumberSuffix properties
-///     can be used to customize the numbers used in an ordered list so that they
-///     appear as (1), (2), (3), etc.:
-/// 
-///     \snippet textdocument-listitemstyles/mainwindow.cpp add a styled, ordered list
-/// 
-///     \sa QTextList
+/// **See also:** QTextList
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -46,14 +35,63 @@ enum Style {
 }
 
 struct TextListFormat : TextFormat {
+    /// 
+    /// Returns `true` if this list format is valid; otherwise
+    /// returns `false.`
     is_valid() -> bool,
+    /// 
+    /// Sets the list format's *style.*
+    /// 
+    /// **See also:** style()
+    /// Style
     set_style(style: TextListFormat::Style),
+    /// 
+    /// Returns the list format's style.
+    /// 
+    /// **See also:** setStyle()
+    /// Style
     style() -> TextListFormat::Style,
+    /// 
+    /// Sets the list format's *indentation.*
+    /// The indentation is multiplied by the QTextDocument::indentWidth
+    /// property to get the effective indent in pixels.
+    /// 
+    /// **See also:** indent()
     set_indent(indent: i32),
+    /// 
+    /// Returns the list format's indentation.
+    /// The indentation is multiplied by the QTextDocument::indentWidth
+    /// property to get the effective indent in pixels.
+    /// 
+    /// **See also:** setIndent()
     indent() -> i32,
+    /// 
+    /// Sets the list format's number prefix to the string specified by
+    /// *numberPrefix.* This can be used with all sorted list types. It does not
+    /// have any effect on unsorted list types.
+    /// 
+    /// The default prefix is an empty string.
+    /// 
+    /// **See also:** numberPrefix()
     set_number_prefix(number_prefix: String),
+    /// 
+    /// Returns the list format's number prefix.
+    /// 
+    /// **See also:** setNumberPrefix()
     number_prefix() -> String,
+    /// 
+    /// Sets the list format's number suffix to the string specified by
+    /// *numberSuffix.* This can be used with all sorted list types. It does not
+    /// have any effect on unsorted list types.
+    /// 
+    /// The default suffix is .
+    /// 
+    /// **See also:** numberSuffix()
     set_number_suffix(number_suffix: String),
+    /// 
+    /// Returns the list format's number suffix.
+    /// 
+    /// **See also:** setNumberSuffix()
     number_suffix() -> String,
 }
 
