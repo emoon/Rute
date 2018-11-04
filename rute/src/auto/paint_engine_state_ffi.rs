@@ -4,7 +4,6 @@ use rute_ffi_base::*;
 use auto::brush_ffi::RUBrush;
 use auto::font_ffi::RUFont;
 use auto::painter_ffi::RUPainter;
-use auto::painter_path_ffi::RUPainterPath;
 use auto::pen_ffi::RUPen;
 use auto::point_f_ffi::RUPointF;
 use auto::region_ffi::RURegion;
@@ -23,7 +22,6 @@ pub struct RUPaintEngineStateFuncs {
     pub font: extern "C" fn(self_c: *const RUBase) -> RUFont,
     pub clip_operation: extern "C" fn(self_c: *const RUBase) -> i32,
     pub clip_region: extern "C" fn(self_c: *const RUBase) -> RURegion,
-    pub clip_path: extern "C" fn(self_c: *const RUBase) -> RUPainterPath,
     pub is_clip_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
     pub render_hints: extern "C" fn(self_c: *const RUBase) -> i32,
     pub composition_mode: extern "C" fn(self_c: *const RUBase) -> i32,

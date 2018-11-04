@@ -5,6 +5,7 @@ use auto::brush_ffi::*;
 use auto::color_ffi::*;
 use auto::event_ffi::*;
 use auto::font_ffi::*;
+use auto::font_info_ffi::*;
 use auto::gradient_ffi::*;
 use auto::image_ffi::*;
 use auto::list_widget_ffi::*;
@@ -15,13 +16,19 @@ use auto::paint_engine_ffi::*;
 use auto::paint_engine_state_ffi::*;
 use auto::paint_event_ffi::*;
 use auto::painter_ffi::*;
+use auto::pen_ffi::*;
 use auto::pixel_format_ffi::*;
 use auto::pixmap_ffi::*;
+use auto::point_f_ffi::*;
 use auto::point_ffi::*;
 use auto::push_button_ffi::*;
+use auto::rect_f_ffi::*;
 use auto::rect_ffi::*;
+use auto::region_ffi::*;
 use auto::screen_ffi::*;
+use auto::size_f_ffi::*;
 use auto::size_ffi::*;
+use auto::transform_ffi::*;
 use auto::widget_ffi::*;
 use rute_ffi_base::*;
 use std::os::raw::c_void;
@@ -54,6 +61,11 @@ pub struct RuteFFI {
     ) -> RUColor,
     pub get_color: extern "C" fn(priv_data: *const RUBase) -> RUColor,
     pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
+    pub create_font_info: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUFontInfo,
     pub create_gradient: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -102,6 +114,11 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUPainter,
     pub get_painter: extern "C" fn(priv_data: *const RUBase) -> RUPainter,
+    pub create_pen: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPen,
     pub create_pixel_format: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -120,6 +137,12 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUPoint,
     pub get_point: extern "C" fn(priv_data: *const RUBase) -> RUPoint,
+    pub create_point_f: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPointF,
+    pub get_point_f: extern "C" fn(priv_data: *const RUBase) -> RUPointF,
     pub create_push_button: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -130,11 +153,32 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RURect,
+    pub create_rect_f: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RURectF,
+    pub create_region: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RURegion,
     pub create_size: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUSize,
+    pub create_size_f: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUSizeF,
+    pub create_transform: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUTransform,
+    pub get_transform: extern "C" fn(priv_data: *const RUBase) -> RUTransform,
     pub create_widget: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

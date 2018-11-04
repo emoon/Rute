@@ -260,7 +260,7 @@ static struct RURect widget_children_rect(struct RUBase* self_c) {
 static struct RURegion widget_children_region(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->childrenRegion();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -651,7 +651,7 @@ static void widget_set_font(struct RUBase* self_c, struct RUBase* arg0) {
 static struct RUFontInfo widget_font_info(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->fontInfo();
-    * new_val = new ();
+    WRFontInfo* new_val = new WRFontInfo();
     *new_val = ret_value;
     struct RUFontInfo ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -745,7 +745,7 @@ static void widget_set_mask(struct RUBase* self_c, struct RUBase* arg0) {
 static struct RURegion widget_mask(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->mask();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -1628,7 +1628,7 @@ static void remove_widget_has_height_for_width(void* object) {
 static struct RURegion widget_visible_region(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->visibleRegion();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;

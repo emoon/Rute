@@ -323,12 +323,12 @@ pub trait BrushType<'a> {
     ///
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    fn set_color<C: ColorType<'a>>(&self, color: &C) -> &Self {
+    fn set_color_by_type<C: ColorType<'a>>(&self, color: &C) -> &Self {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
-            ((*funcs).set_color)(obj_data, obj_color_1);
+            ((*funcs).set_color_by_type)(obj_data, obj_color_1);
         }
         self
     }

@@ -20,7 +20,7 @@ static int paint_engine_state_state(struct RUBase* self_c) {
 static struct RUPen paint_engine_state_pen(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->pen();
-    * new_val = new ();
+    WRPen* new_val = new WRPen();
     *new_val = ret_value;
     struct RUPen ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -48,7 +48,7 @@ static struct RUBrush paint_engine_state_brush(struct RUBase* self_c) {
 static struct RUPointF paint_engine_state_brush_origin(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->brushOrigin();
-    * new_val = new ();
+    WRPointF* new_val = new WRPointF();
     *new_val = ret_value;
     struct RUPointF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -106,26 +106,12 @@ static int paint_engine_state_clip_operation(struct RUBase* self_c) {
 static struct RURegion paint_engine_state_clip_region(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->clipRegion();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
     ctl.all_funcs = &s_region_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPainterPath paint_engine_state_clip_path(struct RUBase* self_c) {
-    WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
-    auto ret_value = qt_value->clipPath();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUPainterPath ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_painter_path_all_funcs;
     return ctl;
 }
 
@@ -222,7 +208,6 @@ struct RUPaintEngineStateFuncs s_paint_engine_state_funcs = {
     paint_engine_state_font,
     paint_engine_state_clip_operation,
     paint_engine_state_clip_region,
-    paint_engine_state_clip_path,
     paint_engine_state_is_clip_enabled,
     paint_engine_state_render_hints,
     paint_engine_state_composition_mode,

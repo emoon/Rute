@@ -1,0 +1,309 @@
+/// 
+/// QRegion is used with QPainter::setClipRegion() to limit the paint
+/// area to what needs to be painted. There is also a QWidget::repaint()
+/// function that takes a QRegion parameter. QRegion is the best tool for
+/// minimizing the amount of screen area to be updated by a repaint.
+/// 
+/// This class is not suitable for constructing shapes for rendering, especially
+/// as outlines. Use QPainterPath to create paths and shapes for use with
+/// QPainter.
+/// 
+/// QRegion is an [implicitly shared](implicitly%20shared)
+/// class.
+/// 
+/// # Creating and Using Regions
+/// 
+/// A region can be created from a rectangle, an ellipse, a polygon or
+/// a bitmap. Complex regions may be created by combining simple
+/// regions using united(), intersected(), subtracted(), or xored() (exclusive
+/// or). You can move a region using translate().
+/// 
+/// You can test whether a region isEmpty() or if it
+/// contains() a QPoint or QRect. The bounding rectangle can be found
+/// with boundingRect().
+/// 
+/// Iteration over the region (with begin(), end(), or C++11
+/// ranged-for loops) gives a decomposition of the region into
+/// rectangles.
+/// 
+/// Example of using complex regions:
+/// 
+/// # Additional License Information
+/// 
+/// On Embedded Linux and X11 platforms, parts of this class rely on
+/// code obtained under the following licenses:
+/// 
+/// ```
+/// Copyright (c) 1987  X Consortium
+/// 
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+/// 
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+/// 
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+/// X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+/// AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+/// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/// 
+/// Except as contained in this notice, the name of the X Consortium shall not be
+/// used in advertising or otherwise to promote the sale, use or other dealings
+/// in this Software without prior written authorization from the X Consortium.
+/// ```
+/// 
+/// **r**
+/// 
+/// ```
+/// Copyright 1987 by Digital Equipment Corporation, Maynard, Massachusetts.
+/// 
+/// All Rights Reserved
+/// 
+/// Permission to use, copy, modify, and distribute this software and its
+/// documentation for any purpose and without fee is hereby granted,
+/// provided that the above copyright notice appear in all copies and that
+/// both that copyright notice and this permission notice appear in
+/// supporting documentation, and that the name of Digital not be
+/// used in advertising or publicity pertaining to distribution of the
+/// software without specific, written prior permission.
+/// 
+/// DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+/// ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+/// DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+/// ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+/// WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+/// ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+/// SOFTWARE.
+/// ```
+/// 
+/// **See also:** QPainter::setClipRegion()
+/// QPainter::setClipRect()
+/// QPainterPath
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+
+struct Region {
+    /// 
+    /// Swaps region *other* with this region. This operation is very
+    /// fast and never fails.
+    swap(other: &RegionType),
+    /// 
+    /// Returns `true` if the region is empty; otherwise returns `false.` An
+    /// empty region is a region that contains no points.
+    /// 
+    /// Example:
+    is_empty() -> bool,
+    /// 
+    /// Returns `true` if the region is empty; otherwise returns `false.` An
+    /// empty region is a region that contains no points. This function is
+    /// the same as isEmpty
+    /// 
+    /// **See also:** isEmpty()
+    is_null() -> bool,
+    /// 
+    /// Returns a const_iterator pointing to the beginning of the range of
+    /// non-overlapping rectangles that make up the region.
+    /// 
+    /// The union of all the rectangles is equal to the original region.
+    /// 
+    /// **See also:** rbegin()
+    /// cbegin()
+    /// end()
+    begin() -> Region::const_iterator,
+    /// 
+    /// Same as begin().
+    cbegin() -> Region::const_iterator,
+    /// 
+    /// Returns a const_iterator pointing to one past the end of
+    /// non-overlapping rectangles that make up the region.
+    /// 
+    /// The union of all the rectangles is equal to the original region.
+    /// 
+    /// **See also:** rend()
+    /// cend()
+    /// begin()
+    end() -> Region::const_iterator,
+    /// 
+    /// Same as end().
+    cend() -> Region::const_iterator,
+    /// 
+    /// Returns a const_reverse_iterator pointing to the beginning of the
+    /// range of non-overlapping rectangles that make up the region.
+    /// 
+    /// The union of all the rectangles is equal to the original region.
+    /// 
+    /// **See also:** begin()
+    /// crbegin()
+    /// rend()
+    rbegin() -> Region::const_reverse_iterator,
+    /// 
+    /// Same as rbegin().
+    crbegin() -> Region::const_reverse_iterator,
+    /// 
+    /// Returns a const_reverse_iterator pointing to one past the end of
+    /// the range of non-overlapping rectangles that make up the region.
+    /// 
+    /// The union of all the rectangles is equal to the original region.
+    /// 
+    /// **See also:** end()
+    /// crend()
+    /// rbegin()
+    rend() -> Region::const_reverse_iterator,
+    /// 
+    /// Same as rend().
+    crend() -> Region::const_reverse_iterator,
+    /// 
+    /// Returns `true` if the region contains the point *p;* otherwise
+    /// returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the region overlaps the rectangle *r;* otherwise
+    /// returns `false.`
+    contains(p: &PointType) -> bool,
+    /// 
+    /// Returns `true` if the region contains the point *p;* otherwise
+    /// returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the region overlaps the rectangle *r;* otherwise
+    /// returns `false.`
+    contains(r: &RectType) -> bool,
+    /// 
+    /// Returns a region which is the union of this region and the given *rect.*
+    /// 
+    /// **See also:** intersected()
+    /// subtracted()
+    /// xored()
+    /// 
+    /// Returns a region which is the union of this region and *r.*
+    /// 
+    /// ![Region Union](runion.png)
+    /// 
+    /// The figure shows the union of two elliptical regions.
+    /// 
+    /// **See also:** intersected()
+    /// subtracted()
+    /// xored()
+    united(r: &RegionType) -> Region,
+    /// 
+    /// Returns a region which is the union of this region and the given *rect.*
+    /// 
+    /// **See also:** intersected()
+    /// subtracted()
+    /// xored()
+    /// 
+    /// Returns a region which is the union of this region and *r.*
+    /// 
+    /// ![Region Union](runion.png)
+    /// 
+    /// The figure shows the union of two elliptical regions.
+    /// 
+    /// **See also:** intersected()
+    /// subtracted()
+    /// xored()
+    united(r: &RectType) -> Region,
+    /// 
+    /// Returns a region which is the intersection of this region and the given *rect.*
+    /// 
+    /// **See also:** subtracted()
+    /// united()
+    /// xored()
+    /// 
+    /// Returns a region which is the intersection of this region and *r.*
+    /// 
+    /// ![Region Intersection](rintersect.png)
+    /// 
+    /// The figure shows the intersection of two elliptical regions.
+    /// 
+    /// **See also:** subtracted()
+    /// united()
+    /// xored()
+    intersected(r: &RegionType) -> Region,
+    /// 
+    /// Returns a region which is the intersection of this region and the given *rect.*
+    /// 
+    /// **See also:** subtracted()
+    /// united()
+    /// xored()
+    /// 
+    /// Returns a region which is the intersection of this region and *r.*
+    /// 
+    /// ![Region Intersection](rintersect.png)
+    /// 
+    /// The figure shows the intersection of two elliptical regions.
+    /// 
+    /// **See also:** subtracted()
+    /// united()
+    /// xored()
+    intersected(r: &RectType) -> Region,
+    /// 
+    /// Returns a region which is the exclusive or (XOR) of this region
+    /// and *r.*
+    /// 
+    /// ![Region XORed](rxor.png)
+    /// 
+    /// The figure shows the exclusive or of two elliptical regions.
+    /// 
+    /// **See also:** intersected()
+    /// united()
+    /// subtracted()
+    xored(r: &RegionType) -> Region,
+    /// 
+    /// Returns `true` if this region intersects with *region,* otherwise
+    /// returns `false.`
+    /// 
+    /// Returns `true` if this region intersects with *rect,* otherwise
+    /// returns `false.`
+    intersects(r: &RegionType) -> bool,
+    /// 
+    /// Returns `true` if this region intersects with *region,* otherwise
+    /// returns `false.`
+    /// 
+    /// Returns `true` if this region intersects with *rect,* otherwise
+    /// returns `false.`
+    intersects(r: &RectType) -> bool,
+    /// 
+    /// Returns the bounding rectangle of this region. An empty region
+    /// gives a rectangle that is QRect::isNull().
+    bounding_rect() -> Rect,
+    // 
+    // Use begin() and end() instead.
+    // 
+    // Returns an array of non-overlapping rectangles that make up the
+    // region.
+    // 
+    // The union of all the rectangles is equal to the original region.
+    //rects() -> [Rect],
+    /// 
+    /// Sets the region using the array of rectangles specified by *rects* and
+    /// *number.*
+    /// The rectangles *must* be optimally Y-X sorted and follow these restrictions:
+    /// 
+    /// * The rectangles must not intersect.
+    /// * All rectangles with a given top coordinate must have the same height.
+    /// * No two rectangles may abut horizontally (they should be combined into a single wider rectangle in that case).
+    /// * The rectangles must be sorted in ascending order, with Y as the major sort key and X as the minor sort key.
+    /// 
+    set_rects(rect: *RectType, num: i32),
+    /// 
+    /// Returns the number of rectangles that this region is composed of.
+    /// Same as `end() - begin()` .
+    rect_count() -> i32,
+}
+
+[org_name(QRegion)]
+enum RegionType {
+    Rectangle,
+    Ellipse,
+}
+
+
+
+// vim: syntax=rust expandtab ts=4 sw=4

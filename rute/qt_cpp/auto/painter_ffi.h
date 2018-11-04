@@ -14,7 +14,6 @@ extern "C" {
 #include "font_info_ffi.h"
 #include "paint_device_ffi.h"
 #include "paint_engine_ffi.h"
-#include "painter_path_ffi.h"
 #include "pen_ffi.h"
 #include "point_ffi.h"
 #include "rect_ffi.h"
@@ -56,7 +55,6 @@ typedef struct RUPainterFuncs {
     float (*opacity)(struct RUBase* self_c);
     void (*set_opacity)(struct RUBase* self_c, float opacity);
     struct RURegion (*clip_region)(struct RUBase* self_c);
-    struct RUPainterPath (*clip_path)(struct RUBase* self_c);
     void (*set_clip_rect)(struct RUBase* self_c, struct RUBase* arg0, int op);
     void (*set_clip_rect)(struct RUBase* self_c, struct RUBase* arg0, int op);
     void (*set_clip_rect)(struct RUBase* self_c, int x, int y, int w, int h, int op);
@@ -84,8 +82,6 @@ typedef struct RUPainterFuncs {
     void (*set_viewport)(struct RUBase* self_c, int x, int y, int w, int h);
     void (*set_view_transform_enabled)(struct RUBase* self_c, bool enable);
     bool (*view_transform_enabled)(struct RUBase* self_c);
-    void (*fill_path)(struct RUBase* self_c, struct RUBase* path, struct RUBase* brush);
-    void (*draw_path)(struct RUBase* self_c, struct RUBase* path);
     void (*draw_point)(struct RUBase* self_c, struct RUBase* pt);
     void (*draw_point)(struct RUBase* self_c, struct RUBase* p);
     void (*draw_point)(struct RUBase* self_c, int x, int y);

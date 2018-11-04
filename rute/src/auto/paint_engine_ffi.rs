@@ -95,15 +95,6 @@ pub struct RUPaintEngineFuncs {
 
     pub remove_draw_ellipse: extern "C" fn(object: *const RUBase),
 
-    pub set_draw_path: extern "C" fn(
-        object: *const RUBase,
-        user_data: *const c_void,
-        trampoline_func: *const c_void,
-        callback: *const c_void,
-    ),
-
-    pub remove_draw_path: extern "C" fn(object: *const RUBase),
-
     pub set_draw_points: extern "C" fn(
         object: *const RUBase,
         user_data: *const c_void,

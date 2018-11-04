@@ -526,7 +526,7 @@ struct Pixmap : PaintDevice {
     /// **See also:** isNull()
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    scaled(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
+    scaled_by_size(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
     /// 
     /// mode) const
     /// 
@@ -572,35 +572,6 @@ struct Pixmap : PaintDevice {
     /// **See also:** fromImage()
     /// {QImage#Image Formats}{Image Formats}
     to_image() -> Image,
-    /// 
-    /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
-    /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    /// . Passing 0 for *flags* sets all the default options.
-    /// 
-    /// In case of monochrome and 8-bit images, the image is first
-    /// converted to a 32-bit pixmap and then filled with the colors in
-    /// the color table. If this is too expensive an operation, you can
-    /// use QBitmap::fromImage() instead.
-    /// 
-    /// **See also:** fromImageReader()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    /// 
-    /// **Overloads**
-    /// Converts the given *image* to a pixmap without copying if possible.
-    /// 
-    /// Create a QPixmap from an image read directly from an *imageReader.*
-    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    /// 
-    /// Passing 0 for *flags* sets all the default options.
-    /// 
-    /// On some systems, reading an image directly to QPixmap can use less memory than
-    /// reading a QImage to convert it to QPixmap.
-    /// 
-    /// **See also:** fromImage()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     /// 
     /// Create a QPixmap from an image read directly from an *imageReader.*
     /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
@@ -704,25 +675,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load_from_data(buf: *uchar, len: uint, format: *char, flags: Rute::ImageConversionFlags) -> bool,
-    /// 
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
-    /// 
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    /// 
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    /// 
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
-    /// 
-    /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load_from_data(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    load_from_data(buf: *u8, len: uint, format: *char, flags: Rute::ImageConversionFlags) -> bool,
     /// 
     /// Saves the pixmap to the file with the given *fileName* using the
     /// specified image file *format* and *quality* factor. Returns `true`
@@ -764,7 +717,7 @@ struct Pixmap : PaintDevice {
     /// specified image file *format* and *quality* factor. This can be
     /// used, for example, to save a pixmap directly into a QByteArray:
     /// 
-    save(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    save_by_io_device(device: *IODeviceType, format: *char, quality: i32) -> bool,
     /// 
     /// Replaces this pixmap's data with the given *image* using the
     /// specified *flags* to control the conversion. The *flags*
@@ -812,7 +765,7 @@ struct Pixmap : PaintDevice {
     /// QPixmap()
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    copy(rect: &RectType) -> Pixmap,
+    copy_by_rect(rect: &RectType) -> Pixmap,
     /// 
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
@@ -844,7 +797,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// **See also:** QWidget::scroll()
     /// QGraphicsItem::scroll()
-    scroll(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
+    scroll_by_rect(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
     /// 
     /// Returns a number that identifies this QPixmap. Distinct QPixmap
     /// objects can only have the same cache key if they refer to the same

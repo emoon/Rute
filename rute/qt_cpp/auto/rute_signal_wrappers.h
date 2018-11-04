@@ -26,6 +26,9 @@
 #include <QFont>
 #include "font_ffi.h"
 
+#include <QFontInfo>
+#include "font_info_ffi.h"
+
 #include <QGradient>
 #include "gradient_ffi.h"
 
@@ -56,6 +59,9 @@
 #include <QPainter>
 #include "painter_ffi.h"
 
+#include <QPen>
+#include "pen_ffi.h"
+
 #include <QPixelFormat>
 #include "pixel_format_ffi.h"
 
@@ -65,6 +71,9 @@
 #include <QPoint>
 #include "point_ffi.h"
 
+#include <QPointF>
+#include "point_f_ffi.h"
+
 #include <QPushButton>
 #include "push_button_ffi.h"
 
@@ -72,11 +81,23 @@
 #include <QRect>
 #include "rect_ffi.h"
 
+#include <QRectF>
+#include "rect_f_ffi.h"
+
+#include <QRegion>
+#include "region_ffi.h"
+
 #include <QScreen>
 #include "screen_ffi.h"
 
 #include <QSize>
 #include "size_ffi.h"
+
+#include <QSizeF>
+#include "size_f_ffi.h"
+
+#include <QTransform>
+#include "transform_ffi.h"
 
 #include <QWidget>
 #include "widget_ffi.h"
@@ -141,6 +162,23 @@ public:
     WRColor(const QColor& clone) : QColor(clone) { }
     WRColor() : QColor() { }
     virtual ~WRColor() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRFontInfo : public QFontInfo {
+    //Q_OBJECT
+public:
+    WRFontInfo(const QFontInfo& clone) : QFontInfo(clone) { }
+    WRFontInfo() : QFontInfo() { }
+    virtual ~WRFontInfo() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }
@@ -533,22 +571,6 @@ void drawEllipse(*(QRect)* r) {
     void (*m_draw_ellipse)(void*, void* self_c, struct RUBase* r) = nullptr;
     void* m_draw_ellipse_user_data = nullptr;
     void* m_draw_ellipse_wrapped_func = nullptr;
-void drawPath(*(QPainterPath)* path) {
-        if (m_draw_path) {
-            RUPainterPath obj_in_path_1;
-            obj_in_path_1.qt_data = (struct RUBase*)path;
-            obj_in_path_1.host_data = nullptr;
-            obj_in_path_1.all_funcs = &s_painter_path_all_funcs;
-            
-            m_draw_path(m_draw_path_user_data, m_draw_path_wrapped_func, (struct RUBase*)&obj_in_path_1);
-        } else {
-            QPaintEngine::drawPath(path);
-        }
-    }
-
-    void (*m_draw_path)(void*, void* self_c, struct RUBase* path) = nullptr;
-    void* m_draw_path_user_data = nullptr;
-    void* m_draw_path_wrapped_func = nullptr;
 void drawPoints(QPointF* points, int point_count) {
         if (m_draw_points) {
             RUPointF obj_in_points_1;
@@ -773,6 +795,23 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRPen : public QPen {
+    //Q_OBJECT
+public:
+    WRPen(const QPen& clone) : QPen(clone) { }
+    WRPen() : QPen() { }
+    virtual ~WRPen() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRPixelFormat : public QPixelFormat {
     //Q_OBJECT
 public:
@@ -858,6 +897,23 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRPointF : public QPointF {
+    //Q_OBJECT
+public:
+    WRPointF(const QPointF& clone) : QPointF(clone) { }
+    WRPointF() : QPointF() { }
+    virtual ~WRPointF() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRPushButton : public QPushButton {
     //Q_OBJECT
 public:
@@ -891,12 +947,80 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class WRRectF : public QRectF {
+    //Q_OBJECT
+public:
+    WRRectF(const QRectF& clone) : QRectF(clone) { }
+    WRRectF() : QRectF() { }
+    virtual ~WRRectF() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRRegion : public QRegion {
+    //Q_OBJECT
+public:
+    WRRegion(const QRegion& clone) : QRegion(clone) { }
+    WRRegion() : QRegion() { }
+    virtual ~WRRegion() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class WRSize : public QSize {
     //Q_OBJECT
 public:
     WRSize(const QSize& clone) : QSize(clone) { }
     WRSize() : QSize() { }
     virtual ~WRSize() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRSizeF : public QSizeF {
+    //Q_OBJECT
+public:
+    WRSizeF(const QSizeF& clone) : QSizeF(clone) { }
+    WRSizeF() : QSizeF() { }
+    virtual ~WRSizeF() {
+        if (m_delete_callback) {
+             m_delete_callback(m_private_data);
+         }
+    }
+    
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRTransform : public QTransform {
+    //Q_OBJECT
+public:
+    WRTransform(const QTransform& clone) : QTransform(clone) { }
+    WRTransform() : QTransform() { }
+    virtual ~WRTransform() {
         if (m_delete_callback) {
              m_delete_callback(m_private_data);
          }

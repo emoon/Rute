@@ -28,7 +28,7 @@ typedef struct RUBrushFuncs {
     struct RUImage (*texture_image)(struct RUBase* self_c);
     void (*set_texture_image)(struct RUBase* self_c, struct RUBase* image);
     struct RUColor (*color)(struct RUBase* self_c);
-    void (*set_color)(struct RUBase* self_c, struct RUBase* color);
+    void (*set_color_by_type)(struct RUBase* self_c, struct RUBase* color);
     void (*set_color)(struct RUBase* self_c, int color);
     struct RUGradient (*gradient)(struct RUBase* self_c);
     bool (*is_opaque)(struct RUBase* self_c);

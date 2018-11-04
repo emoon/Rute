@@ -97,7 +97,7 @@ static void backing_store_set_static_contents(struct RUBase* self_c, struct RUBa
 static struct RURegion backing_store_static_contents(struct RUBase* self_c) {
     WRBackingStore* qt_value = (WRBackingStore*)self_c;
     auto ret_value = qt_value->staticContents();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;

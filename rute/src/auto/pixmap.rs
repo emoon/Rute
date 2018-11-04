@@ -846,7 +846,7 @@ pub trait PixmapType<'a> {
     /// **See also:** isNull()
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled<S: SizeType<'a>>(
+    fn scaled_by_size<S: SizeType<'a>>(
         &self,
         s: &S,
         aspect_mode: AspectRatioMode,
@@ -858,7 +858,8 @@ pub trait PixmapType<'a> {
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).scaled)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
+            let ret_val =
+                ((*funcs).scaled_by_size)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1030,7 +1031,7 @@ pub trait PixmapType<'a> {
     /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
     fn load_from_data(
         &self,
-        buf: &uchar,
+        buf: &u8,
         len: uint,
         format: &char,
         flags: ImageConversionFlags,
@@ -1040,38 +1041,6 @@ pub trait PixmapType<'a> {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).load_from_data)(obj_data, buf, len, format, enum_flags_4);
-            ret_val
-        }
-    }
-    ///
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
-    ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    ///
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
-    ///
-    /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    fn load_from_data<B: ByteArrayType<'a>>(
-        &self,
-        data: &B,
-        format: &char,
-        flags: ImageConversionFlags,
-    ) -> bool {
-        let (obj_data_1, _funcs) = data.get_byte_array_obj_funcs();
-        let enum_flags_3 = flags as i32;
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).load_from_data)(obj_data, obj_data_1, format, enum_flags_3);
             ret_val
         }
     }
@@ -1124,12 +1093,17 @@ pub trait PixmapType<'a> {
     /// specified image file *format* and *quality* factor. This can be
     /// used, for example, to save a pixmap directly into a QByteArray:
     ///
-    fn save<I: IODeviceType<'a>>(&self, device: &I, format: &char, quality: i32) -> bool {
+    fn save_by_io_device<I: IODeviceType<'a>>(
+        &self,
+        device: &I,
+        format: &char,
+        quality: i32,
+    ) -> bool {
         let (obj_device_1, _funcs) = device.get_io_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).save)(obj_data, obj_device_1, format, quality);
+            let ret_val = ((*funcs).save_by_io_device)(obj_data, obj_device_1, format, quality);
             ret_val
         }
     }
@@ -1202,12 +1176,12 @@ pub trait PixmapType<'a> {
     /// QPixmap()
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    fn copy<R: RectType<'a>>(&self, rect: &R) -> Pixmap {
+    fn copy_by_rect<R: RectType<'a>>(&self, rect: &R) -> Pixmap {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).copy)(obj_data, obj_rect_1);
+            let ret_val = ((*funcs).copy_by_rect)(obj_data, obj_rect_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1266,7 +1240,7 @@ pub trait PixmapType<'a> {
     ///
     /// **See also:** QWidget::scroll()
     /// QGraphicsItem::scroll()
-    fn scroll<R: RectType<'a>, S: RegionType<'a>>(
+    fn scroll_by_rect<R: RectType<'a>, S: RegionType<'a>>(
         &self,
         dx: i32,
         dy: i32,
@@ -1278,7 +1252,7 @@ pub trait PixmapType<'a> {
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            ((*funcs).scroll)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
+            ((*funcs).scroll_by_rect)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
         }
         self
     }
@@ -1491,56 +1465,6 @@ pub trait PixmapStaticType {
         };
         unsafe {
             let ret_val = ((*funcs).grab_widget)(obj_data, obj_widget_1, x, y, w, h);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
-    /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    /// . Passing 0 for *flags* sets all the default options.
-    ///
-    /// In case of monochrome and 8-bit images, the image is first
-    /// converted to a 32-bit pixmap and then filled with the colors in
-    /// the color table. If this is too expensive an operation, you can
-    /// use QBitmap::fromImage() instead.
-    ///
-    /// **See also:** fromImageReader()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    ///
-    /// **Overloads**
-    /// Converts the given *image* to a pixmap without copying if possible.
-    ///
-    /// Create a QPixmap from an image read directly from an *imageReader.*
-    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    ///
-    /// Passing 0 for *flags* sets all the default options.
-    ///
-    /// On some systems, reading an image directly to QPixmap can use less memory than
-    /// reading a QImage to convert it to QPixmap.
-    ///
-    /// **See also:** fromImage()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    fn from_image<'a, I: ImageType<'a>>(image: &I, flags: ImageConversionFlags) -> Pixmap<'a> {
-        let (obj_image_1, _funcs) = image.get_image_obj_funcs();
-        let enum_flags_2 = flags as i32;
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).from_image)(obj_data, obj_image_1, enum_flags_2);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {

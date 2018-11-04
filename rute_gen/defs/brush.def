@@ -158,7 +158,7 @@ struct Brush {
     /// 
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    set_color(color: &ColorType),
+    set_color_by_type(color: &ColorType),
     /// 
     /// Sets the brush color to the given *color.*
     /// 

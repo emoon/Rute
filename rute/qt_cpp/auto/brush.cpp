@@ -94,9 +94,9 @@ static struct RUColor brush_color(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void brush_set_color(struct RUBase* self_c, struct RUBase* color) {
+static void brush_set_color_by_type(struct RUBase* self_c, struct RUBase* color) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setColor(*((QColor*)color));
+    qt_value->setColorByType(*((QColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +167,7 @@ struct RUBrushFuncs s_brush_funcs = {
     brush_texture_image,
     brush_set_texture_image,
     brush_color,
-    brush_set_color,
+    brush_set_color_by_type,
     brush_set_color,
     brush_gradient,
     brush_is_opaque,

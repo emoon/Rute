@@ -55,13 +55,12 @@ pub struct RUPixmapFuncs {
             -> RUPixmap,
     pub scaled: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, aspect_mode: i32, mode: i32)
         -> RUPixmap,
-    pub scaled: extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
-        -> RUPixmap,
+    pub scaled_by_size:
+        extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
+            -> RUPixmap,
     pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: i32) -> RUPixmap,
     pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: i32) -> RUPixmap,
     pub to_image: extern "C" fn(self_c: *const RUBase) -> RUImage,
-    pub from_image:
-        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: i32) -> RUPixmap,
     pub from_image_reader:
         extern "C" fn(self_c: *const RUBase, image_reader: *const RUBase, flags: i32) -> RUPixmap,
     pub from_image:
@@ -79,19 +78,13 @@ pub struct RUPixmapFuncs {
         format: *const RUBase,
         flags: i32,
     ) -> bool,
-    pub load_from_data: extern "C" fn(
-        self_c: *const RUBase,
-        data: *const RUBase,
-        format: *const RUBase,
-        flags: i32,
-    ) -> bool,
     pub save: extern "C" fn(
         self_c: *const RUBase,
         file_name: *const ::std::os::raw::c_char,
         format: *const RUBase,
         quality: i32,
     ) -> bool,
-    pub save: extern "C" fn(
+    pub save_by_io_device: extern "C" fn(
         self_c: *const RUBase,
         device: *const RUBase,
         format: *const RUBase,
@@ -101,7 +94,7 @@ pub struct RUPixmapFuncs {
         extern "C" fn(self_c: *const RUBase, img: *const RUBase, flags: i32) -> bool,
     pub copy:
         extern "C" fn(self_c: *const RUBase, x: i32, y: i32, width: i32, height: i32) -> RUPixmap,
-    pub copy: extern "C" fn(self_c: *const RUBase, rect: *const RUBase) -> RUPixmap,
+    pub copy_by_rect: extern "C" fn(self_c: *const RUBase, rect: *const RUBase) -> RUPixmap,
     pub scroll: extern "C" fn(
         self_c: *const RUBase,
         dx: i32,
@@ -112,7 +105,7 @@ pub struct RUPixmapFuncs {
         height: i32,
         exposed: *const RUBase,
     ),
-    pub scroll: extern "C" fn(
+    pub scroll_by_rect: extern "C" fn(
         self_c: *const RUBase,
         dx: i32,
         dy: i32,

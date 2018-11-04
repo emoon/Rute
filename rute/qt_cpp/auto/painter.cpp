@@ -100,7 +100,7 @@ static void painter_set_font(struct RUBase* self_c, struct RUBase* f) {
 static struct RUFontInfo painter_font_info(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->fontInfo();
-    * new_val = new ();
+    WRFontInfo* new_val = new WRFontInfo();
     *new_val = ret_value;
     struct RUFontInfo ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -135,7 +135,7 @@ static void painter_set_pen(struct RUBase* self_c, int style) {
 static struct RUPen painter_pen(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->pen();
-    * new_val = new ();
+    WRPen* new_val = new WRPen();
     *new_val = ret_value;
     struct RUPen ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -263,26 +263,12 @@ static void painter_set_opacity(struct RUBase* self_c, float opacity) {
 static struct RURegion painter_clip_region(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->clipRegion();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
     ctl.all_funcs = &s_region_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPainterPath painter_clip_path(struct RUBase* self_c) {
-    WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->clipPath();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUPainterPath ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_painter_path_all_funcs;
     return ctl;
 }
 
@@ -341,7 +327,7 @@ static bool painter_has_clipping(struct RUBase* self_c) {
 static struct RURectF painter_clip_bounding_rect(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->clipBoundingRect();
-    * new_val = new ();
+    WRRectF* new_val = new WRRectF();
     *new_val = ret_value;
     struct RURectF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -376,7 +362,7 @@ static void painter_set_transform(struct RUBase* self_c, struct RUBase* transfor
 static struct RUTransform painter_device_transform(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->deviceTransform();
-    * new_val = new ();
+    WRTransform* new_val = new WRTransform();
     *new_val = ret_value;
     struct RUTransform ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -404,7 +390,7 @@ static void painter_set_world_transform(struct RUBase* self_c, struct RUBase* ma
 static struct RUTransform painter_world_transform(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->worldTransform();
-    * new_val = new ();
+    WRTransform* new_val = new WRTransform();
     *new_val = ret_value;
     struct RUTransform ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -418,7 +404,7 @@ static struct RUTransform painter_world_transform(struct RUBase* self_c) {
 static struct RUTransform painter_combined_transform(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->combinedTransform();
-    * new_val = new ();
+    WRTransform* new_val = new WRTransform();
     *new_val = ret_value;
     struct RUTransform ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -517,20 +503,6 @@ static bool painter_view_transform_enabled(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->viewTransformEnabled();
     return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void painter_fill_path(struct RUBase* self_c, struct RUBase* path, struct RUBase* brush) {
-    WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillPath(*((QPainterPath*)path), *((QBrush*)brush));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void painter_draw_path(struct RUBase* self_c, struct RUBase* path) {
-    WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPath(*((QPainterPath*)path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1197,7 +1169,7 @@ static void painter_draw_text(struct RUBase* self_c, struct RUBase* r, const cha
 static struct RURectF painter_bounding_rect(struct RUBase* self_c, struct RUBase* rect, int flags, const char* text) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->boundingRect(*((QRectF*)rect), flags, QString::fromUtf8(text));
-    * new_val = new ();
+    WRRectF* new_val = new WRRectF();
     *new_val = ret_value;
     struct RURectF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -1239,7 +1211,7 @@ static struct RURect painter_bounding_rect(struct RUBase* self_c, int x, int y, 
 static struct RURectF painter_bounding_rect(struct RUBase* self_c, struct RUBase* rect, const char* text, struct RUBase* o) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->boundingRect(*((QRectF*)rect), QString::fromUtf8(text), *((QTextOption*)o));
-    * new_val = new ();
+    WRRectF* new_val = new WRRectF();
     *new_val = ret_value;
     struct RURectF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -1522,7 +1494,6 @@ struct RUPainterFuncs s_painter_funcs = {
     painter_opacity,
     painter_set_opacity,
     painter_clip_region,
-    painter_clip_path,
     painter_set_clip_rect,
     painter_set_clip_rect,
     painter_set_clip_rect,
@@ -1550,8 +1521,6 @@ struct RUPainterFuncs s_painter_funcs = {
     painter_set_viewport,
     painter_set_view_transform_enabled,
     painter_view_transform_enabled,
-    painter_fill_path,
-    painter_draw_path,
     painter_draw_point,
     painter_draw_point,
     painter_draw_point,

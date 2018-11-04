@@ -13,6 +13,7 @@
 #include "color_ffi.h"
 #include "event_ffi.h"
 #include "font_ffi.h"
+#include "font_info_ffi.h"
 #include "gradient_ffi.h"
 #include "image_ffi.h"
 #include "list_widget_ffi.h"
@@ -23,13 +24,19 @@
 #include "paint_engine_state_ffi.h"
 #include "paint_event_ffi.h"
 #include "painter_ffi.h"
+#include "pen_ffi.h"
 #include "pixel_format_ffi.h"
 #include "pixmap_ffi.h"
 #include "point_ffi.h"
+#include "point_f_ffi.h"
 #include "push_button_ffi.h"
 #include "rect_ffi.h"
+#include "rect_f_ffi.h"
+#include "region_ffi.h"
 #include "screen_ffi.h"
 #include "size_ffi.h"
+#include "size_f_ffi.h"
+#include "transform_ffi.h"
 #include "widget_ffi.h"
 
 #ifdef __cplusplus
@@ -54,6 +61,9 @@ typedef struct RuteFFI {
         RUDeleteCallback delete_callback, void* host_data);
     struct RUColor (*get_color)(struct RUBase* priv_data);
     struct RUFont (*create_font)(struct RUBase* priv_data);
+    struct RUFontInfo (*create_font_info)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUGradient (*create_gradient)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
@@ -84,6 +94,9 @@ typedef struct RuteFFI {
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUPainter (*get_painter)(struct RUBase* priv_data);
+    struct RUPen (*create_pen)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUPixelFormat (*create_pixel_format)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
@@ -96,15 +109,32 @@ typedef struct RuteFFI {
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RUPoint (*get_point)(struct RUBase* priv_data);
+    struct RUPointF (*create_point_f)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUPointF (*get_point_f)(struct RUBase* priv_data);
     struct RUPushButton (*create_push_button)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
     struct RURect (*create_rect)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
+    struct RURectF (*create_rect_f)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RURegion (*create_region)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
     struct RUSize (*create_size)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);
+    struct RUSizeF (*create_size_f)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUTransform (*create_transform)(
+        struct RUBase* priv_data,
+        RUDeleteCallback delete_callback, void* host_data);
+    struct RUTransform (*get_transform)(struct RUBase* priv_data);
     struct RUWidget (*create_widget)(
         struct RUBase* priv_data,
         RUDeleteCallback delete_callback, void* host_data);

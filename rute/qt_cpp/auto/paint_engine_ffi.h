@@ -40,8 +40,6 @@ typedef struct RUPaintEngineFuncs {
     void (*remove_draw_ellipse)(void* object);
     void (*set_draw_ellipse)(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* r));
     void (*remove_draw_ellipse)(void* object);
-    void (*set_draw_path)(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* path));
-    void (*remove_draw_path)(void* object);
     void (*set_draw_points)(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* points, int point_count));
     void (*remove_draw_points)(void* object);
     void (*set_draw_points)(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* points, int point_count));

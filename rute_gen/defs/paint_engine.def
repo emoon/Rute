@@ -195,9 +195,9 @@ struct PaintEngine {
     /// The default implementation of this function calls the floating
     /// point version of this function
     [event] draw_ellipse(r: &RectType),
-    /// 
-    /// The default implementation ignores the *path* and does nothing.
-    [event] draw_path(path: &PainterPathType),
+    // 
+    // The default implementation ignores the *path* and does nothing.
+    //[event] draw_path(path: &PainterPathType),
     /// 
     /// Draws the first *pointCount* points in the buffer *points*
     /// 

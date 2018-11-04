@@ -157,15 +157,15 @@ struct PaintEngineState {
     /// **See also:** state()
     /// QPaintEngine::updateState()
     clip_region() -> Region,
-    /// 
-    /// Returns the clip path in the current paint engine state.
-    /// 
-    /// This variable should only be used when the state() returns a
-    /// combination which includes the QPaintEngine::DirtyClipPath flag.
-    /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
-    clip_path() -> PainterPath,
+    // 
+    // Returns the clip path in the current paint engine state.
+    // 
+    // This variable should only be used when the state() returns a
+    // combination which includes the QPaintEngine::DirtyClipPath flag.
+    // 
+    // **See also:** state()
+    // QPaintEngine::updateState()
+    //clip_path() -> PainterPath,
     /// 
     /// Returns whether clipping is enabled or not in the current paint
     /// engine state.

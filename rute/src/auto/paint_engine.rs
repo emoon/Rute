@@ -469,47 +469,6 @@ impl<'a> PaintEngine<'a> {
         self
     }
 
-    pub fn set_draw_path_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PainterPathType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PainterPathType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_path_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_path_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_path_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PainterPathType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PainterPathType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_path_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_path_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
     pub fn set_draw_points_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
         F: Fn(&T, &PointFType, i32) + 'a,
@@ -1203,30 +1162,6 @@ unsafe extern "C" fn paint_engine_draw_ellipse_trampoline(
     let f: &&(Fn(&RectType) + 'static) = transmute(func);
     let obj_r_0 = Rect::new_from_temporary(*(r as *const RURect));
     f(&obj_r_0);
-}
-
-///
-/// The default implementation ignores the *path* and does nothing.
-
-unsafe extern "C" fn paint_engine_draw_path_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    path: *const RUBase,
-) {
-    let f: &&(Fn(&T, &PainterPathType) + 'static) = transmute(func);
-    let obj_path_0 = PainterPath::new_from_temporary(*(path as *const RUPainterPath));
-    let data = self_c as *const T;
-    f(&*data, &obj_path_0);
-}
-
-unsafe extern "C" fn paint_engine_draw_path_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    path: *const RUBase,
-) {
-    let f: &&(Fn(&PainterPathType) + 'static) = transmute(func);
-    let obj_path_0 = PainterPath::new_from_temporary(*(path as *const RUPainterPath));
-    f(&obj_path_0);
 }
 
 ///

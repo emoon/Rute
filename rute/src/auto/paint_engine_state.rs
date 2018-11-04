@@ -333,28 +333,6 @@ pub trait PaintEngineStateType<'a> {
         }
     }
     ///
-    /// Returns the clip path in the current paint engine state.
-    ///
-    /// This variable should only be used when the state() returns a
-    /// combination which includes the QPaintEngine::DirtyClipPath flag.
-    ///
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
-    fn clip_path(&self) -> PainterPath {
-        let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).clip_path)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = PainterPath::new_from_rc(t);
-            } else {
-                ret_val = PainterPath::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
     /// Returns whether clipping is enabled or not in the current paint
     /// engine state.
     ///

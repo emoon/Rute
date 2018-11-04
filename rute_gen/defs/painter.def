@@ -855,18 +855,18 @@ struct Painter {
     /// clipPath()
     /// setClipping()
     clip_region() -> Region,
-    /// 
-    /// Returns the current clip path in logical coordinates.
-    /// 
-    /// **Warning**: QPainter does not store the combined clip explicitly as
-    /// this is handled by the underlying QPaintEngine, so the path is
-    /// recreated on demand and transformed to the current logical
-    /// coordinate system. This is potentially an expensive operation.
-    /// 
-    /// **See also:** setClipPath()
-    /// clipRegion()
-    /// setClipping()
-    clip_path() -> PainterPath,
+    // 
+    // Returns the current clip path in logical coordinates.
+    // 
+    // **Warning**: QPainter does not store the combined clip explicitly as
+    // this is handled by the underlying QPaintEngine, so the path is
+    // recreated on demand and transformed to the current logical
+    // coordinate system. This is potentially an expensive operation.
+    // 
+    // **See also:** setClipPath()
+    // clipRegion()
+    // setClipping()
+    //clip_path() -> PainterPath,
     /// 
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
     /// is to replace the current clip rectangle.
@@ -1177,27 +1177,27 @@ struct Painter {
     /// **See also:** setViewTransformEnabled()
     /// worldTransform()
     view_transform_enabled() -> bool,
-    /// 
-    /// Fills the given *path* using the given *brush.* The outline is
-    /// not drawn.
-    /// 
-    /// Alternatively, you can specify a QColor instead of a QBrush; the
-    /// QBrush constructor (taking a QColor argument) will automatically
-    /// create a solid pattern brush.
-    /// 
-    /// **See also:** drawPath()
-    fill_path(path: &PainterPathType, brush: &BrushType),
-    /// 
-    /// Draws the given painter *path* using the current pen for outline
-    /// and the current brush for filling.
-    /// 
-    /// * ![qpainter-path.png](qpainter-path.png)
-    /// 
-    /// 
-    /// 
-    /// **See also:** {painting/painterpaths}{the Painter Paths
-    /// example},{painting/deform}{the Vector Deformation example}
-    draw_path(path: &PainterPathType),
+    // 
+    // Fills the given *path* using the given *brush.* The outline is
+    // not drawn.
+    // 
+    // Alternatively, you can specify a QColor instead of a QBrush; the
+    // QBrush constructor (taking a QColor argument) will automatically
+    // create a solid pattern brush.
+    // 
+    // **See also:** drawPath()
+    //fill_path(path: &PainterPathType, brush: &BrushType),
+    // 
+    // Draws the given painter *path* using the current pen for outline
+    // and the current brush for filling.
+    // 
+    // * ![qpainter-path.png](qpainter-path.png)
+    // 
+    // 
+    // 
+    // **See also:** {painting/painterpaths}{the Painter Paths
+    // example},{painting/deform}{the Vector Deformation example}
+    //draw_path(path: &PainterPathType),
     /// 
     /// Draws a single point at the given *position* using the current
     /// pen's color.

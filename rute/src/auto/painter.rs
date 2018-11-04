@@ -1153,31 +1153,6 @@ pub trait PainterType<'a> {
         }
     }
     ///
-    /// Returns the current clip path in logical coordinates.
-    ///
-    /// **Warning**: QPainter does not store the combined clip explicitly as
-    /// this is handled by the underlying QPaintEngine, so the path is
-    /// recreated on demand and transformed to the current logical
-    /// coordinate system. This is potentially an expensive operation.
-    ///
-    /// **See also:** setClipPath()
-    /// clipRegion()
-    /// setClipping()
-    fn clip_path(&self) -> PainterPath {
-        let (obj_data, funcs) = self.get_painter_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).clip_path)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = PainterPath::new_from_rc(t);
-            } else {
-                ret_val = PainterPath::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
     /// is to replace the current clip rectangle.
     ///
@@ -1718,44 +1693,6 @@ pub trait PainterType<'a> {
             let ret_val = ((*funcs).view_transform_enabled)(obj_data);
             ret_val
         }
-    }
-    ///
-    /// Fills the given *path* using the given *brush.* The outline is
-    /// not drawn.
-    ///
-    /// Alternatively, you can specify a QColor instead of a QBrush; the
-    /// QBrush constructor (taking a QColor argument) will automatically
-    /// create a solid pattern brush.
-    ///
-    /// **See also:** drawPath()
-    fn fill_path<B: BrushType<'a>, P: PainterPathType<'a>>(&self, path: &P, brush: &B) -> &Self {
-        let (obj_path_1, _funcs) = path.get_painter_path_obj_funcs();
-        let (obj_brush_2, _funcs) = brush.get_brush_obj_funcs();
-
-        let (obj_data, funcs) = self.get_painter_obj_funcs();
-        unsafe {
-            ((*funcs).fill_path)(obj_data, obj_path_1, obj_brush_2);
-        }
-        self
-    }
-    ///
-    /// Draws the given painter *path* using the current pen for outline
-    /// and the current brush for filling.
-    ///
-    /// * ![qpainter-path.png](qpainter-path.png)
-    ///
-    ///
-    ///
-    /// **See also:** {painting/painterpaths}{the Painter Paths
-    /// example},{painting/deform}{the Vector Deformation example}
-    fn draw_path<P: PainterPathType<'a>>(&self, path: &P) -> &Self {
-        let (obj_path_1, _funcs) = path.get_painter_path_obj_funcs();
-
-        let (obj_data, funcs) = self.get_painter_obj_funcs();
-        unsafe {
-            ((*funcs).draw_path)(obj_data, obj_path_1);
-        }
-        self
     }
     ///
     /// Draws a single point at the given *position* using the current

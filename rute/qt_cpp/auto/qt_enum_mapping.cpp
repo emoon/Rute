@@ -6,6 +6,8 @@
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPixelFormat>
+#include <QRegion>
+#include <QTransform>
 #include <Qt>
 #include <map>
 
@@ -89,6 +91,7 @@ std::map<int, int> s_pen_join_style_lookup;
 std::map<int, int> s_pen_style_lookup;
 std::map<int, int> s_pixmap_fragment_hint_lookup;
 std::map<int, int> s_polygon_draw_mode_lookup;
+std::map<int, int> s_region_type_lookup;
 std::map<int, int> s_render_hint_lookup;
 std::map<int, int> s_screen_orientation_lookup;
 std::map<int, int> s_scroll_bar_policy_lookup;
@@ -112,6 +115,7 @@ std::map<int, int> s_tool_bar_area_sizes_lookup;
 std::map<int, int> s_tool_button_style_lookup;
 std::map<int, int> s_touch_point_state_lookup;
 std::map<int, int> s_transformation_mode_lookup;
+std::map<int, int> s_transformation_type_lookup;
 std::map<int, int> s_type_lookup;
 std::map<int, int> s_type_interpretation_lookup;
 std::map<int, int> s_ui_effect_lookup;
@@ -1733,6 +1737,15 @@ extern void create_enum_mappings() {
         s_polygon_draw_mode_lookup[polygon_draw_mode_vals[i].key] = polygon_draw_mode_vals[i].val;
     }
 
+    static KeyVal region_type_vals[] =
+    {{  (int)QRegion::Rectangle, 0 },
+    {  (int)QRegion::Ellipse, 1 },
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_region_type_lookup[region_type_vals[i].key] = region_type_vals[i].val;
+    }
+
     static KeyVal render_hint_vals[] =
     {{  (int)QPainter::Antialiasing, 0 },
     {  (int)QPainter::TextAntialiasing, 1 },
@@ -1993,6 +2006,19 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 2; ++i) {
         s_transformation_mode_lookup[transformation_mode_vals[i].key] = transformation_mode_vals[i].val;
+    }
+
+    static KeyVal transformation_type_vals[] =
+    {{  (int)QTransform::TxNone, 0 },
+    {  (int)QTransform::TxTranslate, 1 },
+    {  (int)QTransform::TxScale, 2 },
+    {  (int)QTransform::TxRotate, 3 },
+    {  (int)QTransform::TxShear, 4 },
+    {  (int)QTransform::TxProject, 5 },
+    };
+
+    for (int i = 0; i < 6; ++i) {
+        s_transformation_type_lookup[transformation_type_vals[i].key] = transformation_type_vals[i].val;
     }
 
     static KeyVal type_vals[] =

@@ -208,7 +208,7 @@ pub static QT_FUNC_DEF_TEMPLATE: &str ="{% if c_return_type != 'void' %}
 {%- when 'string' %}
     return return_string_array(ret_value);
 {%- when 'primitive' %}
-    return return_primitive_array<{{c_primitive_type}}>(ret_value);
+    return return_primitive_array<{{c_return_type}}>(ret_value);
 {%- when 'regular' %}
     return return_by_value_array<{{qt_type}}>(ret_value);
 {%- when 'reference' %}

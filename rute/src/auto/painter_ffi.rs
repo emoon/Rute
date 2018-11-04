@@ -6,7 +6,6 @@ use auto::font_ffi::RUFont;
 use auto::font_info_ffi::RUFontInfo;
 use auto::paint_device_ffi::RUPaintDevice;
 use auto::paint_engine_ffi::RUPaintEngine;
-use auto::painter_path_ffi::RUPainterPath;
 use auto::pen_ffi::RUPen;
 use auto::point_ffi::RUPoint;
 use auto::rect_f_ffi::RURectF;
@@ -48,7 +47,6 @@ pub struct RUPainterFuncs {
     pub opacity: extern "C" fn(self_c: *const RUBase) -> f32,
     pub set_opacity: extern "C" fn(self_c: *const RUBase, opacity: f32),
     pub clip_region: extern "C" fn(self_c: *const RUBase) -> RURegion,
-    pub clip_path: extern "C" fn(self_c: *const RUBase) -> RUPainterPath,
     pub set_clip_rect: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, op: i32),
     pub set_clip_rect: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, op: i32),
     pub set_clip_rect:
@@ -79,8 +77,6 @@ pub struct RUPainterFuncs {
     pub set_viewport: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, w: i32, h: i32),
     pub set_view_transform_enabled: extern "C" fn(self_c: *const RUBase, enable: bool),
     pub view_transform_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub fill_path: extern "C" fn(self_c: *const RUBase, path: *const RUBase, brush: *const RUBase),
-    pub draw_path: extern "C" fn(self_c: *const RUBase, path: *const RUBase),
     pub draw_point: extern "C" fn(self_c: *const RUBase, pt: *const RUBase),
     pub draw_point: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
     pub draw_point: extern "C" fn(self_c: *const RUBase, x: i32, y: i32),

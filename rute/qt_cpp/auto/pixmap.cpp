@@ -259,9 +259,9 @@ static struct RUPixmap pixmap_scaled(struct RUBase* self_c, int w, int h, int as
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
+static struct RUPixmap pixmap_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaledBySize(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -315,20 +315,6 @@ static struct RUImage pixmap_to_image(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* image, int flags) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    WRPixmap* new_val = new WRPixmap();
-    *new_val = ret_value;
-    struct RUPixmap ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_pixmap_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUPixmap pixmap_from_image_reader(struct RUBase* self_c, struct RUBase* image_reader, int flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->fromImageReader((QImageReader*)image_reader, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
@@ -373,14 +359,6 @@ static bool pixmap_load_from_data(struct RUBase* self_c, struct RUBase* buf, str
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool pixmap_load_from_data(struct RUBase* self_c, struct RUBase* data, struct RUBase* format, int flags) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->loadFromData(*((QByteArray*)data), format, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool pixmap_save(struct RUBase* self_c, const char* file_name, struct RUBase* format, int quality) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->save(QString::fromUtf8(file_name), format, quality);
@@ -389,9 +367,9 @@ static bool pixmap_save(struct RUBase* self_c, const char* file_name, struct RUB
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool pixmap_save(struct RUBase* self_c, struct RUBase* device, struct RUBase* format, int quality) {
+static bool pixmap_save_by_io_device(struct RUBase* self_c, struct RUBase* device, struct RUBase* format, int quality) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->save((QIODevice*)device, format, quality);
+    auto ret_value = qt_value->saveByIoDevice((QIODevice*)device, format, quality);
     return ret_value;
 }
 
@@ -419,9 +397,9 @@ static struct RUPixmap pixmap_copy(struct RUBase* self_c, int x, int y, int widt
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_copy(struct RUBase* self_c, struct RUBase* rect) {
+static struct RUPixmap pixmap_copy_by_rect(struct RUBase* self_c, struct RUBase* rect) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->copy(*((QRect*)rect));
+    auto ret_value = qt_value->copyByRect(*((QRect*)rect));
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -440,9 +418,9 @@ static void pixmap_scroll(struct RUBase* self_c, int dx, int dy, int x, int y, i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pixmap_scroll(struct RUBase* self_c, int dx, int dy, struct RUBase* rect, struct RUBase* exposed) {
+static void pixmap_scroll_by_rect(struct RUBase* self_c, int dx, int dy, struct RUBase* rect, struct RUBase* exposed) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    qt_value->scroll(dx, dy, *((QRect*)rect), (QRegion*)exposed);
+    qt_value->scrollByRect(dx, dy, *((QRect*)rect), (QRegion*)exposed);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -566,23 +544,21 @@ struct RUPixmapFuncs s_pixmap_funcs = {
     pixmap_grab_widget_by_rect,
     pixmap_grab_widget,
     pixmap_scaled,
-    pixmap_scaled,
+    pixmap_scaled_by_size,
     pixmap_scaled_to_width,
     pixmap_scaled_to_height,
     pixmap_to_image,
-    pixmap_from_image,
     pixmap_from_image_reader,
     pixmap_from_image,
     pixmap_load,
     pixmap_load_from_data,
-    pixmap_load_from_data,
     pixmap_save,
-    pixmap_save,
+    pixmap_save_by_io_device,
     pixmap_convert_from_image,
     pixmap_copy,
-    pixmap_copy,
+    pixmap_copy_by_rect,
     pixmap_scroll,
-    pixmap_scroll,
+    pixmap_scroll_by_rect,
     pixmap_cache_key,
     pixmap_is_detached,
     pixmap_detach,

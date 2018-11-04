@@ -20,7 +20,7 @@ pub struct RUBrushFuncs {
     pub texture_image: extern "C" fn(self_c: *const RUBase) -> RUImage,
     pub set_texture_image: extern "C" fn(self_c: *const RUBase, image: *const RUBase),
     pub color: extern "C" fn(self_c: *const RUBase) -> RUColor,
-    pub set_color: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
+    pub set_color_by_type: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
     pub set_color: extern "C" fn(self_c: *const RUBase, color: i32),
     pub gradient: extern "C" fn(self_c: *const RUBase) -> RUGradient,
     pub is_opaque: extern "C" fn(self_c: *const RUBase) -> bool,

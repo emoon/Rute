@@ -186,24 +186,6 @@ static void remove_paint_engine_draw_ellipse(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_path(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* path)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_path = trampoline_func;
-    qt_object->m_draw_path_user_data = user_data;
-    qt_object->m_draw_path_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_path(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_path = nullptr;
-    qt_object->m_draw_path_user_data = nullptr;
-    qt_object->m_draw_path_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void set_paint_engine_draw_points(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* points, int point_count)) {
     WRPaintEngine* qt_object = (WRPaintEngine*)object;
     qt_object->m_draw_points = trampoline_func;
@@ -379,7 +361,7 @@ static void paint_engine_set_system_clip(struct RUBase* self_c, struct RUBase* b
 static struct RURegion paint_engine_system_clip(struct RUBase* self_c) {
     WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
     auto ret_value = qt_value->systemClip();
-    * new_val = new ();
+    WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -553,8 +535,6 @@ struct RUPaintEngineFuncs s_paint_engine_funcs = {
     remove_paint_engine_draw_ellipse,
     set_paint_engine_draw_ellipse,
     remove_paint_engine_draw_ellipse,
-    set_paint_engine_draw_path,
-    remove_paint_engine_draw_path,
     set_paint_engine_draw_points,
     remove_paint_engine_draw_points,
     set_paint_engine_draw_points,

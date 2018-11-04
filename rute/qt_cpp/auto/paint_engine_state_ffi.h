@@ -12,7 +12,6 @@ extern "C" {
 #include "brush_ffi.h"
 #include "font_ffi.h"
 #include "painter_ffi.h"
-#include "painter_path_ffi.h"
 #include "pen_ffi.h"
 #include "point_f_ffi.h"
 #include "region_ffi.h"
@@ -31,7 +30,6 @@ typedef struct RUPaintEngineStateFuncs {
     struct RUFont (*font)(struct RUBase* self_c);
     int (*clip_operation)(struct RUBase* self_c);
     struct RURegion (*clip_region)(struct RUBase* self_c);
-    struct RUPainterPath (*clip_path)(struct RUBase* self_c);
     bool (*is_clip_enabled)(struct RUBase* self_c);
     int (*render_hints)(struct RUBase* self_c);
     int (*composition_mode)(struct RUBase* self_c);
