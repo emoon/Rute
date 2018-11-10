@@ -844,11 +844,11 @@ struct Font {
     /// 
     /// Returns a new QFont that has attributes copied from *other* that
     /// have not been previously set on this font.
-    resolve() -> uint,
+    resolve_2() -> uint,
     /// 
     /// Returns a new QFont that has attributes copied from *other* that
     /// have not been previously set on this font.
-    resolve(mask: uint),
+    resolve_3(mask: uint),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

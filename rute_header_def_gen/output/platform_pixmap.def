@@ -33,7 +33,7 @@ struct PlatformPixmap {
     [event] set_mask(mask: &BitmapType),
     [event] has_alpha_channel() -> bool,
     [event] to_image() -> Image,
-    [event] to_image(rect: &RectType) -> Image,
+    [event] to_image_2(rect: &RectType) -> Image,
     [event] paint_engine() -> PaintEngine?,
     serial_number() -> i32,
     pixel_type() -> PlatformPixmap::PixelType,

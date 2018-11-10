@@ -158,7 +158,7 @@ struct RawFont {
     /// 
     /// **See also:** QTextLine::horizontalAdvance()
     /// QFontMetricsF::width()
-    advances_for_glyph_indexes(glyph_indexes: [u32], layout_flags: RawFont::LayoutFlags) -> [PointF],
+    advances_for_glyph_indexes_2(glyph_indexes: [u32], layout_flags: RawFont::LayoutFlags) -> [PointF],
     /// 
     /// Converts a string of unicode points to glyph indexes using the CMAP table in the
     /// underlying font. The function works like glyphIndexesForString() except it take
@@ -209,7 +209,7 @@ struct RawFont {
     /// 
     /// **See also:** QTextLine::horizontalAdvance()
     /// QFontMetricsF::width()
-    advances_for_glyph_indexes(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32) -> bool,
+    advances_for_glyph_indexes_3(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32) -> bool,
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
     /// give the distance from the position of a given glyph to where the next glyph should be drawn
@@ -246,7 +246,7 @@ struct RawFont {
     /// 
     /// **See also:** QTextLine::horizontalAdvance()
     /// QFontMetricsF::width()
-    advances_for_glyph_indexes(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32, layout_flags: RawFont::LayoutFlags) -> bool,
+    advances_for_glyph_indexes_4(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32, layout_flags: RawFont::LayoutFlags) -> bool,
     /// 
     /// This function returns a rasterized image of the glyph at the given
     /// *glyphIndex* in the underlying font, using the *transform* specified.
@@ -403,7 +403,7 @@ struct RawFont {
     /// Returns `true` if the font has a glyph that corresponds to the UCS-4 encoded character *ucs4.*
     /// 
     /// **See also:** supportedWritingSystems()
-    supports_character(character: CharType) -> bool,
+    supports_character_2(character: CharType) -> bool,
     /// 
     /// Returns a list of writing systems supported by the font according to designer supplied
     /// information in the font file. Please note that this does not guarantee support for a

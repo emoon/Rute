@@ -65,7 +65,7 @@ struct LinearGradient : Gradient {
     /// coordinates to *start.*
     /// 
     /// **See also:** start()
-    set_start(x: f32, y: f32),
+    set_start_2(x: f32, y: f32),
     /// 
     /// Returns the final stop point of this linear gradient in logical coordinates.
     /// 
@@ -94,7 +94,7 @@ struct LinearGradient : Gradient {
     /// coordinates to *stop.*
     /// 
     /// **See also:** finalStop()
-    set_final_stop(x: f32, y: f32),
+    set_final_stop_2(x: f32, y: f32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

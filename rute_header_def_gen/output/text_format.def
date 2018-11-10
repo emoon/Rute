@@ -327,7 +327,7 @@ struct TextFormat {
     /// 
     /// **See also:** lengthVectorProperty()
     /// Property
-    set_property(property_id: i32, lengths: [TextLengthType]),
+    set_property_2(property_id: i32, lengths: [TextLengthType]),
     /// 
     /// Returns a map with all properties of this text format.
     properties() -> Map<int,,

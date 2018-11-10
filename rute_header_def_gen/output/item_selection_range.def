@@ -116,7 +116,7 @@ struct ItemSelectionRange {
     /// Returns `true` if the model item specified by ( *row,* *column)*
     /// and with *parentIndex* as the parent item lies within the range
     /// of selected items; otherwise returns `false.`
-    contains(row: i32, column: i32, parent_index: &ModelIndexType) -> bool,
+    contains_2(row: i32, column: i32, parent_index: &ModelIndexType) -> bool,
     /// 
     /// Returns `true` if this selection range intersects (overlaps with) the *other*
     /// range given; otherwise returns `false.`

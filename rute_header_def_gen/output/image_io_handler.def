@@ -108,7 +108,7 @@ struct ImageIOHandler {
     /// This function is declared const so that it can be called from canRead().
     /// 
     /// **See also:** format()
-    set_format(format: &ByteArrayType),
+    set_format_2(format: &ByteArrayType),
     /// 
     /// Returns the format that is currently assigned to
     /// QImageIOHandler. If no format has been assigned, an empty string

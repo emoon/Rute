@@ -193,7 +193,7 @@ struct GridLayout : Layout {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     /// 
-    add_widget(arg0: *WidgetType, row: i32, column: i32, arg1: Rute::Alignment),
+    add_widget_2(arg0: *WidgetType, row: i32, column: i32, arg1: Rute::Alignment),
     /// 
     /// Adds the given *widget* to the cell grid at *row,* *column.* The
     /// top-left position is (0, 0) by default.
@@ -210,7 +210,7 @@ struct GridLayout : Layout {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     /// 
-    add_widget(arg0: *WidgetType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
+    add_widget_3(arg0: *WidgetType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
     /// 
     /// Places the *layout* at position ( *row,* *column)* in the grid. The
     /// top-left position is (0, 0).
@@ -248,7 +248,7 @@ struct GridLayout : Layout {
     /// 
     /// If *rowSpan* and/or *columnSpan* is -1, then the layout will extend to the bottom
     /// and/or right edge, respectively.
-    add_layout(arg0: *LayoutType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
+    add_layout_2(arg0: *LayoutType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
     /// 
     /// Sets the grid's origin corner, i.e. position (0, 0), to *corner.*
     set_origin_corner(arg0: Rute::Corner),
@@ -305,7 +305,7 @@ struct GridLayout : Layout {
     /// 
     /// **Warning**: Do not use this function to add child layouts or child
     /// widget items. Use addLayout() or addWidget() instead.
-    [event] add_item(arg0: *LayoutItemType),
+    [event] add_item_2(arg0: *LayoutItemType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

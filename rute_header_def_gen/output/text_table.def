@@ -144,7 +144,7 @@ struct TextTable : TextFrame {
     /// Merges the cells selected by the provided *cursor.*
     /// 
     /// **See also:** splitCell()
-    merge_cells(cursor: &TextCursorType),
+    merge_cells_2(cursor: &TextCursorType),
     /// 
     /// Splits the specified cell at *row* and *column* into an array of multiple
     /// cells with dimensions specified by *numRows* and *numCols.*
@@ -189,7 +189,7 @@ struct TextTable : TextFrame {
     /// 
     /// **Overloads**
     /// Returns the table cell containing the given *cursor.*
-    cell_at(position: i32) -> TextTableCell,
+    cell_at_2(position: i32) -> TextTableCell,
     /// 
     /// Returns the table cell at the given *row* and *column* in the table.
     /// 
@@ -202,7 +202,7 @@ struct TextTable : TextFrame {
     /// 
     /// **Overloads**
     /// Returns the table cell containing the given *cursor.*
-    cell_at(c: &TextCursorType) -> TextTableCell,
+    cell_at_3(c: &TextCursorType) -> TextTableCell,
     /// 
     /// Returns a cursor pointing to the start of the row that contains the
     /// given *cursor.*

@@ -203,7 +203,7 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
-    add_action(icon: &IconType, text: String) -> Action?,
+    add_action_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// **Overloads**
     /// Creates a new action with the given *text.* This action is added to
@@ -270,7 +270,7 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
-    add_action(text: String, receiver: *ObjectType, member: *char) -> Action?,
+    add_action_3(text: String, receiver: *ObjectType, member: *char) -> Action?,
     /// 
     /// **Overloads**
     /// Creates a new action with the given *text.* This action is added to
@@ -337,7 +337,7 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
-    add_action(icon: &IconType, text: String, receiver: *ObjectType, member: *char) -> Action?,
+    add_action_4(icon: &IconType, text: String, receiver: *ObjectType, member: *char) -> Action?,
     /// 
     /// Inserts a separator into the toolbar in front of the toolbar
     /// item associated with the *before* action.
@@ -386,7 +386,7 @@ struct ToolBar : Widget {
     /// **Overloads**
     /// Returns the action at the point *x,* *y.* This function returns
     /// zero if no action was found.
-    action_at(x: i32, y: i32) -> Action?,
+    action_at_2(x: i32, y: i32) -> Action?,
     /// 
     /// Returns a checkable action that can be used to show or hide this
     /// toolbar.

@@ -344,7 +344,7 @@ struct OpenGLDebugLogger : Object {
     /// **See also:** disableMessages()
     /// pushGroup()
     /// popGroup()
-    enable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
+    enable_messages_2(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
     /// 
     /// Disables the logging of messages with the given *sources,* of the given *types* and with the given *severities* and any message id.
     /// 
@@ -378,7 +378,7 @@ struct OpenGLDebugLogger : Object {
     /// **See also:** enableMessages()
     /// pushGroup()
     /// popGroup()
-    disable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
+    disable_messages_2(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
     /// 
     /// Reads all the available messages in the OpenGL internal debug log and
     /// returns them. Moreover, this function will clear the internal debug log,

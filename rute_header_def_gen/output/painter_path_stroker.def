@@ -122,7 +122,7 @@ struct PainterPathStroker {
     /// The vector can contain an odd number of elements, in which case the last
     /// element will be extended by the length of the first element when the
     /// pattern repeats.
-    set_dash_pattern(dash_pattern: [f32]),
+    set_dash_pattern_2(dash_pattern: [f32]),
     /// 
     /// Returns the dash pattern for the generated outlines.
     dash_pattern() -> [f32],

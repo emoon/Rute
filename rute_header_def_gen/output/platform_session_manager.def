@@ -16,7 +16,7 @@ struct PlatformSessionManager {
     [event] set_discard_command(command: &[String]),
     [event] discard_command() -> [String],
     [event] set_manager_property(name: String, value: String),
-    [event] set_manager_property(name: String, value: &[String]),
+    [event] set_manager_property_2(name: String, value: &[String]),
     [event] is_phase2() -> bool,
     [event] request_phase2(),
     app_commit_data(),

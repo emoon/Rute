@@ -301,7 +301,7 @@ struct TextLayout {
     /// Draws a text cursor with the current pen and the specified *width* at the given *position* using the
     /// *painter* specified.
     /// The corresponding position within the text is specified by *cursorPosition.*
-    draw_cursor(p: *PainterType, pos: &PointFType, cursor_position: i32, width: i32),
+    draw_cursor_2(p: *PainterType, pos: &PointFType, cursor_position: i32, width: i32),
     /// 
     /// The global position of the layout. This is independent of the
     /// bounding rectangle and of the layout process.

@@ -387,7 +387,7 @@ struct PageSize {
     /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
     /// 
     /// If the QPageSize is invalid then the key will be empty.
-    [static] key(page_size_id: PageSize::PageSizeId) -> String,
+    [static] key_2(page_size_id: PageSize::PageSizeId) -> String,
     /// 
     /// Returns a localized human-readable name for the page size.
     /// 
@@ -400,7 +400,7 @@ struct PageSize {
     /// Returns the localized name of the standard *pageSizeId.*
     /// 
     /// If the QPageSize is invalid then the name will be empty.
-    [static] name(page_size_id: PageSize::PageSizeId) -> String,
+    [static] name_2(page_size_id: PageSize::PageSizeId) -> String,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -425,7 +425,7 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    [static] id_2(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -450,7 +450,7 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    [static] id_3(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -475,7 +475,7 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(windows_id: i32) -> PageSize::PageSizeId,
+    [static] id_4(windows_id: i32) -> PageSize::PageSizeId,
     /// 
     /// Returns the Windows DMPAPER enum value for the page size.
     /// 
@@ -490,7 +490,7 @@ struct PageSize {
     /// 
     /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
     /// will be returned.
-    [static] windows_id(page_size_id: PageSize::PageSizeId) -> i32,
+    [static] windows_id_2(page_size_id: PageSize::PageSizeId) -> i32,
     /// 
     /// Returns the definition size of the page size.
     /// 
@@ -508,7 +508,7 @@ struct PageSize {
     /// Returns the definition size of the standard *pageSizeId.*
     /// 
     /// To obtain the definition units, call QPageSize::definitionUnits().
-    [static] definition_size(page_size_id: PageSize::PageSizeId) -> SizeF,
+    [static] definition_size_2(page_size_id: PageSize::PageSizeId) -> SizeF,
     /// 
     /// Returns the definition units of the page size.
     /// 
@@ -526,7 +526,7 @@ struct PageSize {
     /// Returns the definition units of the standard *pageSizeId.*
     /// 
     /// To obtain the definition size, call QPageSize::definitionSize().
-    [static] definition_units(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
+    [static] definition_units_2(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
     /// 
     /// Returns the size of the page in the required *units.*
     /// 
@@ -546,14 +546,14 @@ struct PageSize {
     /// 
     /// Returns the size of the standard *pageSizeId* in Device Pixels
     /// for the given *resolution.*
-    [static] size(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
+    [static] size_2(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
     /// 
     /// Returns the size of the page in Postscript Points (1/72 of an inch).
     /// 
     /// If the QPageSize is invalid then the QSize will be invalid.
     /// 
     /// Returns the size of the standard *pageSizeId* in Points.
-    [static] size_points(page_size_id: PageSize::PageSizeId) -> Size,
+    [static] size_points_2(page_size_id: PageSize::PageSizeId) -> Size,
     /// 
     /// Returns the size of the page in Device Pixels at the given *resolution.*
     /// 
@@ -561,7 +561,7 @@ struct PageSize {
     /// 
     /// Returns the size of the standard *pageSizeId* in Device Pixels
     /// for the given *resolution.*
-    [static] size_pixels(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
+    [static] size_pixels_2(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -57,7 +57,7 @@ struct RubberBand : Widget {
     /// Moves the rubberband to point ( *x,* *y).*
     /// 
     /// **See also:** resize()
-    move(p: &PointType),
+    move_2(p: &PointType),
     /// 
     /// 
     /// **Overloads**
@@ -81,7 +81,7 @@ struct RubberBand : Widget {
     /// height is *height.*
     /// 
     /// **See also:** move()
-    resize(s: &SizeType),
+    resize_2(s: &SizeType),
     /// 
     [event] event(e: *EventType) -> bool,
     /// 

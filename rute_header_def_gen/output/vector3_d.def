@@ -185,7 +185,7 @@ struct Vector3D {
     /// 
     /// **See also:** crossProduct()
     /// distanceToPlane()
-    [static] normal(v1: &Vector3DType, v2: &Vector3DType, v3: &Vector3DType) -> Vector3D,
+    [static] normal_2(v1: &Vector3DType, v2: &Vector3DType, v3: &Vector3DType) -> Vector3D,
     /// 
     /// Returns the window coordinates of this vector initially in object/model
     /// coordinates using the model view matrix *modelView,* the projection matrix
@@ -268,7 +268,7 @@ struct Vector3D {
     /// 
     /// **See also:** normal()
     /// distanceToLine()
-    distance_to_plane(plane1: &Vector3DType, plane2: &Vector3DType, plane3: &Vector3DType) -> f32,
+    distance_to_plane_2(plane1: &Vector3DType, plane2: &Vector3DType, plane3: &Vector3DType) -> f32,
     /// 
     /// Returns the distance that this vertex is from a line defined
     /// by *point* and the unit vector *direction.*

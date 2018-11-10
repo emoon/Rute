@@ -88,6 +88,12 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[org_name(QRegion)]
+enum RegionType {
+    Rectangle,
+    Ellipse,
+}
+
 
 struct Region {
     /// 
@@ -174,7 +180,7 @@ struct Region {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
-    contains(r: &RectType) -> bool,
+    contains_2(r: &RectType) -> bool,
     /// 
     /// Returns a region which is the union of this region and the given *rect.*
     /// 
@@ -208,7 +214,7 @@ struct Region {
     /// **See also:** intersected()
     /// subtracted()
     /// xored()
-    united(r: &RectType) -> Region,
+    united_2(r: &RectType) -> Region,
     /// 
     /// Returns a region which is the intersection of this region and the given *rect.*
     /// 
@@ -242,7 +248,7 @@ struct Region {
     /// **See also:** subtracted()
     /// united()
     /// xored()
-    intersected(r: &RectType) -> Region,
+    intersected_2(r: &RectType) -> Region,
     /// 
     /// Returns a region which is the exclusive or (XOR) of this region
     /// and *r.*
@@ -268,7 +274,7 @@ struct Region {
     /// 
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
-    intersects(r: &RectType) -> bool,
+    intersects_2(r: &RectType) -> bool,
     /// 
     /// Returns the bounding rectangle of this region. An empty region
     /// gives a rectangle that is QRect::isNull().
@@ -297,13 +303,5 @@ struct Region {
     /// Same as `end() - begin()` .
     rect_count() -> i32,
 }
-
-[org_name(QRegion)]
-enum RegionType {
-    Rectangle,
-    Ellipse,
-}
-
-
 
 // vim: syntax=rust expandtab ts=4 sw=4

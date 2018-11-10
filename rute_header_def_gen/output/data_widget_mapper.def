@@ -212,7 +212,7 @@ struct DataWidgetMapper : Object {
     /// the property to use specifying *propertyName.*
     /// 
     /// **See also:** addMapping()
-    add_mapping(widget: *WidgetType, section: i32, property_name: &ByteArrayType),
+    add_mapping_2(widget: *WidgetType, section: i32, property_name: &ByteArrayType),
     /// 
     /// Removes the mapping for the given *widget.*
     /// 

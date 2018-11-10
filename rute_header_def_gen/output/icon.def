@@ -165,7 +165,7 @@ struct Icon {
     /// 
     /// **See also:** actualSize()
     /// paint()
-    pixmap(w: i32, h: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
+    pixmap_2(w: i32, h: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
     /// 
     /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
     /// requested, but never larger.
@@ -201,7 +201,7 @@ struct Icon {
     /// 
     /// **See also:** actualSize()
     /// paint()
-    pixmap(extent: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
+    pixmap_3(extent: i32, mode: Icon::Mode, state: Icon::State) -> Pixmap,
     /// 
     /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
     /// requested, but never larger.
@@ -237,7 +237,7 @@ struct Icon {
     /// 
     /// **See also:** actualSize()
     /// paint()
-    pixmap(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
+    pixmap_4(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Pixmap,
     /// Returns the actual size of the icon for the requested *size,* *mode,* and *state.* The result might be smaller than requested, but
     /// never larger. The returned size is in device-independent pixels (This
     /// is relevant for high-dpi pixmaps.)
@@ -269,7 +269,7 @@ struct Icon {
     /// **See also:** actualSize()
     /// pixmap()
     /// paint()
-    actual_size(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
+    actual_size_2(window: *WindowType, size: &SizeType, mode: Icon::Mode, state: Icon::State) -> Size,
     /// 
     /// Returns the name used to create the icon, if available.
     /// 
@@ -303,7 +303,7 @@ struct Icon {
     /// 
     /// **Overloads**
     /// Paints the icon into the rectangle QRect( *x,* *y,* *w,* *h).*
-    paint(painter: *PainterType, x: i32, y: i32, w: i32, h: i32, alignment: Rute::Alignment, mode: Icon::Mode, state: Icon::State),
+    paint_2(painter: *PainterType, x: i32, y: i32, w: i32, h: i32, alignment: Rute::Alignment, mode: Icon::Mode, state: Icon::State),
     /// 
     /// Returns `true` if the icon is empty; otherwise returns `false.`
     /// 
@@ -462,7 +462,7 @@ struct Icon {
     /// If you want to provide a guaranteed fallback for platforms that
     /// do not support theme icons, you can use the second argument:
     /// 
-    [static] from_theme(name: String, fallback: &IconType) -> Icon,
+    [static] from_theme_2(name: String, fallback: &IconType) -> Icon,
     /// 
     /// Returns `true` if there is an icon available for *name* in the
     /// current icon theme, otherwise returns `false.`

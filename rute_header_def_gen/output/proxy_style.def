@@ -81,17 +81,17 @@ struct ProxyStyle : CommonStyle {
     /// 
     /// 
     /// 
-    [event] polish(pal: &PaletteType),
+    [event] polish_2(pal: &PaletteType),
     /// 
     /// 
     /// 
-    [event] polish(app: *ApplicationType),
+    [event] polish_3(app: *ApplicationType),
     /// 
     /// 
     [event] unpolish(widget: *WidgetType),
     /// 
     /// 
-    [event] unpolish(app: *ApplicationType),
+    [event] unpolish_2(app: *ApplicationType),
     /// 
     [event] event(e: *EventType) -> bool,
 }

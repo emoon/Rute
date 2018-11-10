@@ -711,7 +711,7 @@ struct Dir {
     /// 
     /// **See also:** QFileInfo::exists()
     /// QFile::exists()
-    exists(name: String) -> bool,
+    exists_2(name: String) -> bool,
     /// 
     /// Returns a list of the root directories on this system.
     /// 
@@ -975,7 +975,7 @@ struct Dir {
     /// QRegExp::exactMatch()
     /// entryList()
     /// entryInfoList()
-    [static] match(filter: String, file_name: String) -> bool,
+    [static] match_2(filter: String, file_name: String) -> bool,
     /// 
     /// Returns *path* with directory separators normalized (converted to ) and
     /// redundant ones removed, and s and s resolved (as far as possible).

@@ -315,7 +315,7 @@ struct TableView : AbstractItemView {
     /// Sorts the model by the values in the given *column* in the given *order.*
     /// 
     /// **See also:** sortingEnabled
-    sort_by_column(column: i32),
+    sort_by_column_2(column: i32),
     set_show_grid(show: bool),
     /// 
     /// This slot is called to change the index of the given *row* in the

@@ -384,7 +384,7 @@ struct Completer : Object {
     /// This signal is sent when an item in the popup() is activated by the user (by
     /// clicking or pressing return). The item's *text* is given.
     /// 
-    [signal] activated(index: &ModelIndexType),
+    [signal] activated_2(index: &ModelIndexType),
     /// 
     /// This signal is sent when an item in the popup() is highlighted by
     /// the user. It is also sent if complete() is called with the completionMode()
@@ -404,7 +404,7 @@ struct Completer : Object {
     /// This signal is sent when an item in the popup() is highlighted by
     /// the user. It is also sent if complete() is called with the completionMode()
     /// set to QCompleter::InlineCompletion. The item's *text* is given.
-    [signal] highlighted(index: &ModelIndexType),
+    [signal] highlighted_2(index: &ModelIndexType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -713,7 +713,7 @@ struct DateTime {
     /// 
     /// **See also:** toTime_t()
     /// setTime_t()
-    [static] from_time_t(secs_since1_jan1970_utc: uint, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
+    [static] from_time_t_2(secs_since1_jan1970_utc: uint, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -749,7 +749,7 @@ struct DateTime {
     /// 
     /// **See also:** toTime_t()
     /// setTime_t()
-    [static] from_time_t(secs_since1_jan1970_utc: uint, time_zone: &TimeZoneType) -> DateTime,
+    [static] from_time_t_3(secs_since1_jan1970_utc: uint, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds, *msecs,*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -823,7 +823,7 @@ struct DateTime {
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
     /// **See also:** fromSecsSinceEpoch()
-    [static] from_m_secs_since_epoch(msecs: i64, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
+    [static] from_m_secs_since_epoch_2(msecs: i64, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -885,7 +885,7 @@ struct DateTime {
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
     /// **See also:** fromSecsSinceEpoch()
-    [static] from_m_secs_since_epoch(msecs: i64, time_zone: &TimeZoneType) -> DateTime,
+    [static] from_m_secs_since_epoch_3(msecs: i64, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -910,7 +910,7 @@ struct DateTime {
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
     /// **See also:** fromMSecsSinceEpoch()
-    [static] from_secs_since_epoch(secs: i64, time_zone: &TimeZoneType) -> DateTime,
+    [static] from_secs_since_epoch_2(secs: i64, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns the number of milliseconds since 1970-01-01T00:00:00 Universal
     /// Coordinated Time. This number is like the POSIX time_t variable, but

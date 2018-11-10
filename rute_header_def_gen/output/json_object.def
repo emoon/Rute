@@ -95,7 +95,7 @@ struct JsonObject {
     /// QJsonValue::isUndefined()
     /// 
     /// **Overloads**
-    value(key: Latin1StringType) -> JsonValue,
+    value_2(key: Latin1StringType) -> JsonValue,
     /// 
     /// Removes *key* from the object.
     /// 
@@ -130,7 +130,7 @@ struct JsonObject {
     /// take()
     /// 
     /// **Overloads**
-    contains(key: Latin1StringType) -> bool,
+    contains_2(key: Latin1StringType) -> bool,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the first item in
@@ -150,7 +150,7 @@ struct JsonObject {
     /// end()
     /// 
     /// **Overloads**
-    begin() -> JsonObject::const_iterator,
+    begin_2() -> JsonObject::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first item
@@ -178,7 +178,7 @@ struct JsonObject {
     /// constEnd()
     /// 
     /// **Overloads**
-    end() -> JsonObject::const_iterator,
+    end_2() -> JsonObject::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
@@ -219,7 +219,7 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: Latin1StringType) -> JsonObject::iterator,
+    find_2(key: Latin1StringType) -> JsonObject::iterator,
     /// 
     /// Returns an iterator pointing to the item with key *key* in the
     /// map.
@@ -232,7 +232,7 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: String) -> JsonObject::const_iterator,
+    find_3(key: String) -> JsonObject::const_iterator,
     /// 
     /// Returns an iterator pointing to the item with key *key* in the
     /// map.
@@ -245,7 +245,7 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: Latin1StringType) -> JsonObject::const_iterator,
+    find_4(key: Latin1StringType) -> JsonObject::const_iterator,
     /// 
     /// Returns a const iterator pointing to the item with key *key* in the
     /// map.
@@ -263,7 +263,7 @@ struct JsonObject {
     /// returns constEnd().
     /// 
     /// **Overloads**
-    const_find(key: Latin1StringType) -> JsonObject::const_iterator,
+    const_find_2(key: Latin1StringType) -> JsonObject::const_iterator,
     /// 
     /// Inserts a new item with the key *key* and a value of *value.*
     /// 

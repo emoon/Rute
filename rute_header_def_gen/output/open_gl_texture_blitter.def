@@ -165,7 +165,7 @@ struct OpenGLTextureBlitter {
     /// targetTransform()
     /// Origin
     /// bind()
-    blit(texture: i32, target_transform: &Matrix4x4Type, source_transform: &Matrix3x3Type),
+    blit_2(texture: i32, target_transform: &Matrix4x4Type, source_transform: &Matrix3x3Type),
     /// 
     /// Calculates a target transform suitable for blit().
     /// 

@@ -186,7 +186,7 @@ struct JsonValue {
     /// 
     /// If type() is not Array, a [QJsonArray()](QJsonArray::)
     /// will be returned.
-    to_array(default_value: &JsonArrayType) -> JsonArray,
+    to_array_2(default_value: &JsonArrayType) -> JsonArray,
     /// 
     /// Converts the value to an object and returns it.
     /// 
@@ -208,7 +208,7 @@ struct JsonValue {
     /// 
     /// If type() is not Object, the [QJsonObject()](QJsonObject::)
     /// will be returned.
-    to_object(default_value: &JsonObjectType) -> JsonObject,
+    to_object_2(default_value: &JsonObjectType) -> JsonObject,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

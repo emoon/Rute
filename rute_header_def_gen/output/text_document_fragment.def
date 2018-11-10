@@ -63,7 +63,7 @@ struct TextDocumentFragment {
     /// 
     /// If the provided HTML contains references to external resources such as imported style sheets, then
     /// they will be loaded through the *resourceProvider.*
-    [static] from_html(html: String, resource_provider: *TextDocumentType) -> TextDocumentFragment,
+    [static] from_html_2(html: String, resource_provider: *TextDocumentType) -> TextDocumentFragment,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

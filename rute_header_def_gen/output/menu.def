@@ -283,7 +283,7 @@ struct Menu : Widget {
     /// QMenu takes ownership of the returned QAction.
     /// 
     /// **See also:** QWidget::addAction()
-    add_action(icon: &IconType, text: String) -> Action?,
+    add_action_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with *text.*
@@ -386,7 +386,7 @@ struct Menu : Widget {
     /// QMenu takes ownership of the returned QAction.
     /// 
     /// **See also:** QWidget::addAction()
-    add_action(text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
+    add_action_3(text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with *text.*
@@ -489,7 +489,7 @@ struct Menu : Widget {
     /// QMenu takes ownership of the returned QAction.
     /// 
     /// **See also:** QWidget::addAction()
-    add_action(icon: &IconType, text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
+    add_action_4(icon: &IconType, text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
     /// 
     /// This convenience function adds *menu* as a submenu to this menu.
     /// It returns *menu's* menuAction(). This menu does not take
@@ -529,7 +529,7 @@ struct Menu : Widget {
     /// 
     /// **See also:** QWidget::addAction()
     /// QMenu::menuAction()
-    add_menu(icon: &IconType, title: String) -> Menu?,
+    add_menu_2(icon: &IconType, title: String) -> Menu?,
     /// 
     /// This convenience function creates a new separator action, i.e. an
     /// action with QAction::isSeparator() returning true, and adds the new
@@ -593,7 +593,7 @@ struct Menu : Widget {
     /// QMenu takes ownership of the returned QAction.
     /// 
     /// **See also:** QWidget::addAction()
-    add_section(icon: &IconType, text: String) -> Action?,
+    add_section_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// This convenience function inserts *menu* before action *before*
     /// and returns the menus menuAction().
@@ -671,7 +671,7 @@ struct Menu : Widget {
     /// 
     /// **See also:** QWidget::insertAction()
     /// addSection()
-    insert_section(before: *ActionType, icon: &IconType, text: String) -> Action?,
+    insert_section_2(before: *ActionType, icon: &IconType, text: String) -> Action?,
     /// 
     /// Returns `true` if there are no visible actions inserted into the menu, false
     /// otherwise.
@@ -726,7 +726,7 @@ struct Menu : Widget {
     /// **See also:** hideTearOffMenu()
     /// isTearOffMenuVisible()
     /// isTearOffEnabled()
-    show_tear_off_menu(pos: &PointType),
+    show_tear_off_menu_2(pos: &PointType),
     /// 
     /// This function will forcibly hide the torn off menu making it
     /// disappear from the user's desktop.
@@ -858,7 +858,7 @@ struct Menu : Widget {
     /// 
     /// **See also:** popup()
     /// QWidget::mapToGlobal()
-    exec(pos: &PointType, at: *ActionType) -> Action?,
+    exec_2(pos: &PointType, at: *ActionType) -> Action?,
     /// 
     /// Executes this menu synchronously.
     /// 
@@ -903,7 +903,7 @@ struct Menu : Widget {
     /// 
     /// **See also:** popup()
     /// QWidget::mapToGlobal()
-    [static] exec(actions: [*ActionType], pos: &PointType, at: *ActionType, parent: *WidgetType) -> Action?,
+    [static] exec_3(actions: [*ActionType], pos: &PointType, at: *ActionType, parent: *WidgetType) -> Action?,
     /// 
     [event] size_hint() -> Size,
     /// 

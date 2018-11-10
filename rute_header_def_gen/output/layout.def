@@ -108,7 +108,7 @@ struct Layout : Object, LayoutItem {
     /// most platforms, the margin is 11 pixels in all directions.
     /// 
     /// **See also:** contentsMargins()
-    set_contents_margins(margins: &MarginsType),
+    set_contents_margins_2(margins: &MarginsType),
     /// 
     /// Extracts the left, top, right, and bottom margins used around the
     /// layout, and assigns them to * *left,* * *top,* * *right,* and * *bottom* (unless they are null pointers).
@@ -157,7 +157,7 @@ struct Layout : Object, LayoutItem {
     /// Sets the alignment for the layout *l* to *alignment* and
     /// returns `true` if *l* is found in this layout (not including child
     /// layouts); otherwise returns `false.`
-    set_alignment(l: *LayoutType, alignment: Rute::Alignment) -> bool,
+    set_alignment_2(l: *LayoutType, alignment: Rute::Alignment) -> bool,
     /// 
     /// Tells the geometry manager to place the menu bar *widget* at the
     /// top of parentWidget(), outside QWidget::contentsMargins(). All

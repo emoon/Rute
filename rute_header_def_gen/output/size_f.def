@@ -129,7 +129,7 @@ struct SizeF {
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    scale(s: &SizeFType, mode: Rute::AspectRatioMode),
+    scale_2(s: &SizeFType, mode: Rute::AspectRatioMode),
     /// 
     /// Returns a size scaled to a rectangle with the given *width* and
     /// *height,* according to the specified *mode.*
@@ -149,7 +149,7 @@ struct SizeF {
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    scaled(s: &SizeFType, mode: Rute::AspectRatioMode) -> SizeF,
+    scaled_2(s: &SizeFType, mode: Rute::AspectRatioMode) -> SizeF,
     /// 
     /// Returns a size holding the maximum width and height of this size
     /// and the given *otherSize.*

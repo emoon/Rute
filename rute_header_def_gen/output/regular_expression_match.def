@@ -542,7 +542,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedLength()
     /// captured()
-    captured(name: String) -> String,
+    captured_2(name: String) -> String,
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
@@ -580,7 +580,7 @@ struct RegularExpressionMatch {
     /// capturedEnd()
     /// capturedLength()
     /// QStringRef::isNull()
-    captured_ref(name: String) -> StringRef,
+    captured_ref_2(name: String) -> StringRef,
     /// 
     /// Returns the substring captured by the *nth* capturing group.
     /// 
@@ -764,7 +764,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedLength()
     /// captured()
-    captured(name: StringViewType) -> String,
+    captured_3(name: StringViewType) -> String,
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
@@ -802,7 +802,7 @@ struct RegularExpressionMatch {
     /// capturedEnd()
     /// capturedLength()
     /// QStringRef::isNull()
-    captured_ref(name: StringViewType) -> StringRef,
+    captured_ref_3(name: StringViewType) -> StringRef,
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
     /// 
@@ -828,7 +828,7 @@ struct RegularExpressionMatch {
     /// capturedEnd()
     /// capturedLength()
     /// QStringRef::isNull()
-    captured_view(name: StringViewType) -> StringView,
+    captured_view_2(name: StringViewType) -> StringView,
     /// 
     /// Returns a list of all strings captured by capturing groups, in the order
     /// the groups themselves appear in the pattern string.
@@ -944,7 +944,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedEnd()
     /// capturedLength()
     /// captured()
-    captured_start(name: String) -> i32,
+    captured_start_2(name: String) -> i32,
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
@@ -974,7 +974,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedEnd()
     /// captured()
-    captured_length(name: String) -> i32,
+    captured_length_2(name: String) -> i32,
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
@@ -1000,7 +1000,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedLength()
     /// captured()
-    captured_end(name: String) -> i32,
+    captured_end_2(name: String) -> i32,
     /// 
     /// Returns the offset inside the subject string corresponding to the
     /// starting position of the substring captured by the *nth* capturing group.
@@ -1028,7 +1028,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedEnd()
     /// capturedLength()
     /// captured()
-    captured_start(name: StringViewType) -> i32,
+    captured_start_3(name: StringViewType) -> i32,
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
@@ -1058,7 +1058,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedEnd()
     /// captured()
-    captured_length(name: StringViewType) -> i32,
+    captured_length_3(name: StringViewType) -> i32,
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
@@ -1084,7 +1084,7 @@ struct RegularExpressionMatch {
     /// **See also:** capturedStart()
     /// capturedLength()
     /// captured()
-    captured_end(name: StringViewType) -> i32,
+    captured_end_3(name: StringViewType) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

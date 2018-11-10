@@ -204,7 +204,7 @@ struct PainterPath {
     /// **See also:** closeSubpath()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    move_to(x: f32, y: f32),
+    move_to_2(x: f32, y: f32),
     /// 
     /// **Overloads**
     /// Draws a line from the current position to the point ( *x* ,
@@ -230,7 +230,7 @@ struct PainterPath {
     /// addRect()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    line_to(x: f32, y: f32),
+    line_to_2(x: f32, y: f32),
     /// 
     /// **Overloads**
     /// Creates a move to that lies on the arc that occupies the
@@ -256,7 +256,7 @@ struct PainterPath {
     /// 
     /// **See also:** moveTo()
     /// arcTo()
-    arc_move_to(x: f32, y: f32, w: f32, h: f32, angle: f32),
+    arc_move_to_2(x: f32, y: f32, w: f32, h: f32, angle: f32),
     /// 
     /// height, qreal startAngle, qreal sweepLength)
     /// 
@@ -320,7 +320,7 @@ struct PainterPath {
     /// QPainter::drawPie()
     /// {QPainterPath#Composing a QPainterPath}{Composing a
     /// QPainterPath}
-    arc_to(x: f32, y: f32, w: f32, h: f32, start_angle: f32, arc_length: f32),
+    arc_to_2(x: f32, y: f32, w: f32, h: f32, start_angle: f32, arc_length: f32),
     /// 
     /// qreal c2Y, qreal endPointX, qreal endPointY);
     /// 
@@ -366,7 +366,7 @@ struct PainterPath {
     /// **See also:** quadTo()
     /// {QPainterPath#Composing a QPainterPath}{Composing
     /// a QPainterPath}
-    cubic_to(ctrl_pt1x: f32, ctrl_pt1y: f32, ctrl_pt2x: f32, ctrl_pt2y: f32, end_ptx: f32, end_pty: f32),
+    cubic_to_2(ctrl_pt1x: f32, ctrl_pt1y: f32, ctrl_pt2x: f32, ctrl_pt2y: f32, end_ptx: f32, end_pty: f32),
     /// 
     /// **Overloads**
     /// Adds a quadratic Bezier curve between the current point and the endpoint
@@ -398,7 +398,7 @@ struct PainterPath {
     /// **See also:** cubicTo()
     /// {QPainterPath#Composing a QPainterPath}{Composing a
     /// QPainterPath}
-    quad_to(ctrl_ptx: f32, ctrl_pty: f32, end_ptx: f32, end_pty: f32),
+    quad_to_2(ctrl_ptx: f32, ctrl_pty: f32, end_ptx: f32, end_pty: f32),
     /// 
     /// Returns the current position of the path.
     current_position() -> PointF,
@@ -439,7 +439,7 @@ struct PainterPath {
     /// lineTo()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    add_rect(x: f32, y: f32, w: f32, h: f32),
+    add_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// **Overloads**
     /// Creates an ellipse within the bounding rectangle defined by its top-left
@@ -489,7 +489,7 @@ struct PainterPath {
     /// QPainter::drawEllipse()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    add_ellipse(x: f32, y: f32, w: f32, h: f32),
+    add_ellipse_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// **Overloads**
     /// Creates an ellipse within the bounding rectangle defined by its top-left
@@ -514,7 +514,7 @@ struct PainterPath {
     /// QPainter::drawEllipse()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    add_ellipse(center: &PointFType, rx: f32, ry: f32),
+    add_ellipse_3(center: &PointFType, rx: f32, ry: f32),
     /// 
     /// Adds the given *polygon* to the path as an (unclosed) subpath.
     /// 
@@ -565,7 +565,7 @@ struct PainterPath {
     /// **See also:** QPainter::drawText()
     /// {QPainterPath#Composing a
     /// QPainterPath}{Composing a QPainterPath}
-    add_text(x: f32, y: f32, f: &FontType, text: String),
+    add_text_2(x: f32, y: f32, f: &FontType, text: String),
     /// 
     /// Adds the given *path* to *this* path as a closed subpath.
     /// 
@@ -608,7 +608,7 @@ struct PainterPath {
     /// 
     /// **Overloads**
     /// Adds the given rectangle *x,* *y,* *w,* *h* with rounded corners to the path.
-    add_rounded_rect(x: f32, y: f32, w: f32, h: f32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
+    add_rounded_rect_2(x: f32, y: f32, w: f32, h: f32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
     /// 
     /// Adds a rectangle *r* with rounded corners to the path.
     /// 
@@ -688,7 +688,7 @@ struct PainterPath {
     /// Y axis.
     /// 
     /// **See also:** addRoundedRect()
-    add_round_rect(x: f32, y: f32, w: f32, h: f32, x_rnd: i32, y_rnd: i32),
+    add_round_rect_2(x: f32, y: f32, w: f32, h: f32, x_rnd: i32, y_rnd: i32),
     /// 
     /// Adds a rectangle *r* with rounded corners to the path.
     /// 
@@ -728,7 +728,7 @@ struct PainterPath {
     /// Y axis.
     /// 
     /// **See also:** addRoundedRect()
-    add_round_rect(rect: &RectFType, roundness: i32),
+    add_round_rect_3(rect: &RectFType, roundness: i32),
     /// 
     /// Adds a rectangle *r* with rounded corners to the path.
     /// 
@@ -768,7 +768,7 @@ struct PainterPath {
     /// Y axis.
     /// 
     /// **See also:** addRoundedRect()
-    add_round_rect(x: f32, y: f32, w: f32, h: f32, roundness: i32),
+    add_round_rect_4(x: f32, y: f32, w: f32, h: f32, roundness: i32),
     /// 
     /// Connects the given *path* to *this* path by adding a line from the
     /// last element of this path to the first element of the given path.
@@ -812,7 +812,7 @@ struct PainterPath {
     /// paths will be treated as implicitly closed.
     /// 
     /// **See also:** intersects()
-    contains(rect: &RectFType) -> bool,
+    contains_2(rect: &RectFType) -> bool,
     /// 
     /// Returns `true` if any point in the given *rectangle* intersects the
     /// path; otherwise returns `false.`
@@ -968,7 +968,7 @@ struct PainterPath {
     /// Conversion}{QPainterPath Conversion}
     /// 
     /// **Overloads**
-    to_subpath_polygons(matrix: &TransformType) -> [PolygonF],
+    to_subpath_polygons_2(matrix: &TransformType) -> [PolygonF],
     /// 
     /// Converts the path into a list of polygons using the
     /// QTransform *matrix,* and returns the list.
@@ -993,7 +993,7 @@ struct PainterPath {
     /// {QPainterPath#QPainterPath Conversion}{QPainterPath Conversion}
     /// 
     /// **Overloads**
-    to_fill_polygons(matrix: &TransformType) -> [PolygonF],
+    to_fill_polygons_2(matrix: &TransformType) -> [PolygonF],
     /// 
     /// Converts the path into a list of polygons using the
     /// QTransform *matrix,* and returns the list.
@@ -1035,7 +1035,7 @@ struct PainterPath {
     /// {QPainterPath#QPainterPath Conversion}{QPainterPath Conversion}
     /// 
     /// **Overloads**
-    to_fill_polygon(matrix: &TransformType) -> PolygonF,
+    to_fill_polygon_2(matrix: &TransformType) -> PolygonF,
     /// 
     /// Returns the number of path elements in the painter path.
     /// 
@@ -1113,7 +1113,7 @@ struct PainterPath {
     /// paths will be treated as implicitly closed.
     /// 
     /// **See also:** contains()
-    intersects(p: &PainterPathType) -> bool,
+    intersects_2(p: &PainterPathType) -> bool,
     /// 
     /// Returns `true` if the given *point* is inside the path, otherwise
     /// returns `false.`
@@ -1131,7 +1131,7 @@ struct PainterPath {
     /// paths will be treated as implicitly closed.
     /// 
     /// **See also:** intersects()
-    contains(p: &PainterPathType) -> bool,
+    contains_3(p: &PainterPathType) -> bool,
     /// 
     /// Returns a path which is the union of this path's fill area and *p's* fill area.
     /// 

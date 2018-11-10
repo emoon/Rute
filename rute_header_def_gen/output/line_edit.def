@@ -521,7 +521,7 @@ struct LineEdit : Widget {
     /// Sets the *margins* around the text inside the frame.
     /// 
     /// See also textMargins().
-    set_text_margins(margins: &MarginsType),
+    set_text_margins_2(margins: &MarginsType),
     /// 
     /// Returns the widget's text margins for *left,* *top,* *right,* and *bottom.*
     /// 
@@ -549,7 +549,7 @@ struct LineEdit : Widget {
     /// **Overloads**
     /// Creates a new action with the given *icon* at the *position.*
     /// 
-    add_action(icon: &IconType, position: LineEdit::ActionPosition) -> Action?,
+    add_action_2(icon: &IconType, position: LineEdit::ActionPosition) -> Action?,
     /// 
     /// Sets the margins around the text inside the frame to have the
     /// sizes *left,* *top,* *right,* and *bottom.*
@@ -754,7 +754,7 @@ struct LineEdit : Widget {
     /// 
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
     /// 
-    input_method_query(property: Rute::InputMethodQuery, argument: VariantType) -> Variant,
+    input_method_query_2(property: Rute::InputMethodQuery, argument: VariantType) -> Variant,
     /// 
     [event] event(arg0: *EventType) -> bool,
     /// 

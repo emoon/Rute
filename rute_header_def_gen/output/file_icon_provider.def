@@ -29,7 +29,7 @@ struct FileIconProvider {
     /// Returns an icon set for the given *type.*
     /// 
     /// Returns an icon for the file described by *info.*
-    [event] icon(info: &FileInfoType) -> Icon,
+    [event] icon_2(info: &FileInfoType) -> Icon,
     /// 
     /// Returns the type of the file described by *info.*
     [event] type(info: &FileInfoType) -> String,

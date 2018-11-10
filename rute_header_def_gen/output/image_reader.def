@@ -467,7 +467,7 @@ struct ImageReader {
     /// supportedImageFormats()
     /// supportsAnimation()
     /// QMovie
-    read(image: *ImageType) -> bool,
+    read_2(image: *ImageType) -> bool,
     /// 
     /// For image formats that support animation, this function steps over the
     /// current image, returning true if successful or false if there is no
@@ -583,7 +583,7 @@ struct ImageReader {
     /// *device.* Otherwise, an empty string is returned.
     /// 
     /// **See also:** QImageReader::autoDetectImageFormat()
-    [static] image_format(file_name: String) -> ByteArray,
+    [static] image_format_2(file_name: String) -> ByteArray,
     /// 
     /// Returns the format of the image, without actually reading the image
     /// contents. The format describes the image format [QImageReader::read()](QImageReader::read())
@@ -604,7 +604,7 @@ struct ImageReader {
     /// *device.* Otherwise, an empty string is returned.
     /// 
     /// **See also:** QImageReader::autoDetectImageFormat()
-    [static] image_format(device: *IODeviceType) -> ByteArray,
+    [static] image_format_3(device: *IODeviceType) -> ByteArray,
     /// 
     /// Returns the list of image formats supported by QImageReader.
     /// 

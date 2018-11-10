@@ -357,7 +357,7 @@ struct Label : Frame {
     /// **See also:** setText()
     /// QString::setNum()
     /// setBuddy()
-    set_num(arg0: double),
+    set_num_2(arg0: double),
     /// 
     /// Clears any label contents.
     clear(),

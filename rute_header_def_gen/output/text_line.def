@@ -163,7 +163,7 @@ struct TextLine {
     /// point to this valid cursor position.
     /// 
     /// **See also:** xToCursor()
-    cursor_to_x(cursor_pos: i32, edge: TextLine::Edge) -> f32,
+    cursor_to_x_2(cursor_pos: i32, edge: TextLine::Edge) -> f32,
     /// 
     /// Converts the x-coordinate *x,* to the nearest matching cursor
     /// position, depending on the cursor position type, *cpos.*
@@ -205,7 +205,7 @@ struct TextLine {
     /// will be filled with as many characters to the next whitespace or
     /// end of the text. The provided *alignmentWidth* is used as reference
     /// width for alignment.
-    set_num_columns(columns: i32, alignment_width: f32),
+    set_num_columns_2(columns: i32, alignment_width: f32),
     /// 
     /// Moves the line to position *pos.*
     set_position(pos: &PointFType),

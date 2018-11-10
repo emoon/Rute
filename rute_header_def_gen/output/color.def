@@ -238,7 +238,7 @@ struct Color {
     /// 
     /// **See also:** setNamedColor()
     /// NameFormat
-    name(format: Color::NameFormat) -> String,
+    name_2(format: Color::NameFormat) -> String,
     /// 
     /// Sets the RGB value of this QColor to *name,* which may be in one
     /// of these formats:
@@ -284,7 +284,7 @@ struct Color {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_named_color(name: StringViewType),
+    set_named_color_2(name: StringViewType),
     /// 
     /// Sets the RGB value of this QColor to *name,* which may be in one
     /// of these formats:
@@ -307,7 +307,7 @@ struct Color {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_named_color(name: Latin1StringType),
+    set_named_color_3(name: Latin1StringType),
     /// 
     /// Returns a QStringList containing the color names Qt knows about.
     /// 
@@ -664,7 +664,7 @@ struct Color {
     /// 
     /// **Overloads**
     /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
-    set_rgb(rgb: RgbType),
+    set_rgb_2(rgb: RgbType),
     /// 
     /// Returns the hue color component of this color.
     /// 
@@ -1292,7 +1292,7 @@ struct Color {
     /// fromRgbF()
     /// toRgb()
     /// isValid()
-    [static] from_rgb(r: i32, g: i32, b: i32, a: i32) -> Color,
+    [static] from_rgb_2(r: i32, g: i32, b: i32, a: i32) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1340,7 +1340,7 @@ struct Color {
     /// fromRgbF()
     /// toRgb()
     /// isValid()
-    [static] from_rgba64(rgba: Rgba64Type) -> Color,
+    [static] from_rgba64_2(rgba: Rgba64Type) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the HSV
     /// color values, *h* (hue), *s* (saturation), *v* (value), and *a*
@@ -1550,7 +1550,7 @@ struct Color {
     /// **Overloads**
     /// 
     /// **Overloads**
-    [static] is_valid_color(arg0: StringViewType) -> bool,
+    [static] is_valid_color_2(arg0: StringViewType) -> bool,
     /// 
     /// Returns `true` if the *name* is a valid color name and can
     /// be used to construct a valid QColor object, otherwise returns
@@ -1563,7 +1563,7 @@ struct Color {
     /// **Overloads**
     /// 
     /// **Overloads**
-    [static] is_valid_color(arg0: Latin1StringType) -> bool,
+    [static] is_valid_color_3(arg0: Latin1StringType) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

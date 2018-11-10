@@ -178,7 +178,7 @@ struct SyntaxHighlighter : Object {
     /// 
     /// **See also:** format()
     /// highlightBlock()
-    set_format(start: i32, count: i32, color: &ColorType),
+    set_format_2(start: i32, count: i32, color: &ColorType),
     /// 
     /// This function is applied to the syntax highlighter's current text
     /// block (i.e. the text that is passed to the highlightBlock()
@@ -214,7 +214,7 @@ struct SyntaxHighlighter : Object {
     /// 
     /// **See also:** format()
     /// highlightBlock()
-    set_format(start: i32, count: i32, font: &FontType),
+    set_format_3(start: i32, count: i32, font: &FontType),
     /// 
     /// Returns the format at *position* inside the syntax highlighter's
     /// current text block.

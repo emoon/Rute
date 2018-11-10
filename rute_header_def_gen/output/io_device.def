@@ -608,7 +608,7 @@ struct IODevice : Object {
     /// **See also:** read()
     /// readLine()
     /// writeData()
-    read(maxlen: i64) -> ByteArray,
+    read_2(maxlen: i64) -> ByteArray,
     /// 
     /// Reads all remaining data from the device, and returns it as a
     /// byte array.
@@ -728,7 +728,7 @@ struct IODevice : Object {
     /// including the terminating newline, or 0 if there is no line to be
     /// read at this point. If an error occurs, it should return -1 if and
     /// only if no bytes were read. Reading past EOF is considered an error.
-    read_line(maxlen: i64) -> ByteArray,
+    read_line_2(maxlen: i64) -> ByteArray,
     /// 
     /// Returns `true` if a complete line of data can be read from the device;
     /// otherwise returns `false.`
@@ -879,7 +879,7 @@ struct IODevice : Object {
     /// 
     /// **See also:** read()
     /// write()
-    write(data: *char) -> i64,
+    write_2(data: *char) -> i64,
     /// 
     /// Returns the number of available write channels if the device is open;
     /// otherwise returns 0.
@@ -927,7 +927,7 @@ struct IODevice : Object {
     /// 
     /// **See also:** read()
     /// write()
-    write(data: &ByteArrayType) -> i64,
+    write_3(data: &ByteArrayType) -> i64,
     /// 
     /// Reads at most *maxSize* bytes from the device into *data,* without side
     /// effects (i.e., if you call read() after peek(), you will get the same
@@ -977,7 +977,7 @@ struct IODevice : Object {
     /// for peeking, or that an error occurred.
     /// 
     /// **See also:** read()
-    peek(maxlen: i64) -> ByteArray,
+    peek_2(maxlen: i64) -> ByteArray,
     /// 
     /// Skips up to *maxSize* bytes from the device. Returns the number of bytes
     /// actually skipped, or -1 on error.

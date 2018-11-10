@@ -286,7 +286,7 @@ struct OpenGLContext : Object {
     /// Returns 0 if no such function can be found.
     /// 
     /// **Overloads**
-    get_proc_address(proc_name: *char) -> FunctionPointer,
+    get_proc_address_2(proc_name: *char) -> FunctionPointer,
     /// 
     /// Returns the surface the context has been made current with.
     /// 

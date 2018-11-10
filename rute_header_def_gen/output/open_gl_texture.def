@@ -486,7 +486,7 @@ struct OpenGLTexture {
     /// the active unit to the texture unit that was active upon entry.
     /// 
     /// **See also:** release()
-    bind(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    bind_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
     /// 
     /// Unbinds this texture from the currently active texture unit.
     /// 
@@ -508,7 +508,7 @@ struct OpenGLTexture {
     /// If parameter *reset* is `true` then this function
     /// will restore the active unit to the texture unit that was active
     /// upon entry.
-    release(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    release_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
     /// 
     /// Returns `true` if this texture is bound to the corresponding target
     /// of the currently active texture unit.
@@ -534,7 +534,7 @@ struct OpenGLTexture {
     /// 
     /// **See also:** bind()
     /// release()
-    is_bound(unit: uint) -> bool,
+    is_bound_2(unit: uint) -> bool,
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the currently active texture unit.
@@ -548,7 +548,7 @@ struct OpenGLTexture {
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the texture unit *unit.*
-    [static] bound_texture_id(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
+    [static] bound_texture_id_2(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
     /// 
     /// Sets the format of this texture object to *format.* This function
     /// must be called before texture storage is allocated.
@@ -803,7 +803,7 @@ struct OpenGLTexture {
     /// 
     /// **See also:** isStorageAllocated()
     /// setData()
-    allocate_storage(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
+    allocate_storage_2(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
     /// 
     /// Returns `true` if server-side storage for this texture as been
     /// allocated.
@@ -936,7 +936,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_2(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -977,7 +977,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_3(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1018,7 +1018,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_4(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1059,7 +1059,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1100,7 +1100,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1141,7 +1141,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_7(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1182,7 +1182,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_8(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1223,7 +1223,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_data_9(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1277,7 +1277,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_2(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1304,7 +1304,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_3(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1331,7 +1331,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_4(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1358,7 +1358,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1385,7 +1385,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1412,7 +1412,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_7(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1439,7 +1439,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_8(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1466,7 +1466,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    set_compressed_data_9(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1507,7 +1507,7 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
+    set_data_10(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
     /// 
     /// Returns `true` if your OpenGL implementation and version supports the texture
     /// feature *feature.*
@@ -1626,7 +1626,7 @@ struct OpenGLTexture {
     /// **See also:** setAutoMipMapGenerationEnabled()
     /// setMipLevels()
     /// mipLevels()
-    generate_mip_maps(base_level: i32, reset_base_level: bool),
+    generate_mip_maps_2(base_level: i32, reset_base_level: bool),
     /// 
     /// GLSL shaders are able to reorder the components of the vec4 returned by texture
     /// functions. It is also desirable to be able to control this reordering from CPU
@@ -1658,7 +1658,7 @@ struct OpenGLTexture {
     /// Parameters *r* , *g* , *b* , and *a* are values used for setting
     /// the colors red, green, blue, and the alpha value.
     /// **Overloads**
-    set_swizzle_mask(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
+    set_swizzle_mask_2(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
     /// 
     /// Returns the swizzle mask for texture *component.*
     swizzle_mask(component: OpenGLTexture::SwizzleComponent) -> OpenGLTexture::SwizzleValue,
@@ -1749,7 +1749,7 @@ struct OpenGLTexture {
     /// 
     /// Holds the texture dimension *direction.*
     /// **Overloads**
-    set_wrap_mode(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
+    set_wrap_mode_2(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
     /// 
     /// Returns the wrap mode for the texture dimension *direction.*
     /// 
@@ -1790,7 +1790,7 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: f32, g: f32, b: f32, a: f32),
+    set_border_color_2(r: f32, g: f32, b: f32, a: f32),
     /// 
     /// Sets the border color of the texture to *color.*
     /// 
@@ -1808,7 +1808,7 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: i32, g: i32, b: i32, a: i32),
+    set_border_color_3(r: i32, g: i32, b: i32, a: i32),
     /// 
     /// Sets the border color of the texture to *color.*
     /// 
@@ -1826,7 +1826,7 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: uint, g: uint, b: uint, a: uint),
+    set_border_color_4(r: uint, g: uint, b: uint, a: uint),
     /// 
     /// Returns the borderColor of this texture.
     /// 
@@ -1866,7 +1866,7 @@ struct OpenGLTexture {
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *f32),
+    border_color_2(border: *f32),
     /// 
     /// Returns the borderColor of this texture.
     /// 
@@ -1886,7 +1886,7 @@ struct OpenGLTexture {
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *i32),
+    border_color_3(border: *i32),
     /// 
     /// Returns the borderColor of this texture.
     /// 
@@ -1906,7 +1906,7 @@ struct OpenGLTexture {
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *unsigned),
+    border_color_4(border: *unsigned),
     /// 
     /// Sets the minimum level of detail to *value.* This limits the selection of highest
     /// resolution mipmap (lowest mipmap level). The default value is -1000.

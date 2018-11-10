@@ -554,7 +554,7 @@ struct Char {
     /// Returns a reference to the numeric Unicode value of the QChar.
     /// 
     /// Returns the numeric Unicode value of the QChar.
-    unicode() -> ushort?,
+    unicode_2() -> ushort?,
     /// 
     /// Converts the Latin-1 character *c* to its equivalent QChar. This
     /// is mainly useful for non-internationalized software.
@@ -794,7 +794,7 @@ struct Char {
     /// in applications but cannot be used for text interchange.
     /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
     /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    [static] is_non_character(ucs4: uint) -> bool,
+    [static] is_non_character_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar is the high part of a UTF16 surrogate
     /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
@@ -803,7 +803,7 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is the high part of a UTF16 surrogate
     /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    [static] is_high_surrogate(ucs4: uint) -> bool,
+    [static] is_high_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar is the low part of a UTF16 surrogate
     /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
@@ -812,7 +812,7 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is the low part of a UTF16 surrogate
     /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    [static] is_low_surrogate(ucs4: uint) -> bool,
+    [static] is_low_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar contains a code point that is in either
     /// the high or the low part of the UTF-16 surrogate range
@@ -823,7 +823,7 @@ struct Char {
     /// contains a code point that is in either the high or the low part of the
     /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
     /// false otherwise.
-    [static] is_surrogate(ucs4: uint) -> bool,
+    [static] is_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// can be split into the high and low parts of a UTF16 surrogate
@@ -843,7 +843,7 @@ struct Char {
     /// 
     /// **Overloads**
     /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
-    [static] surrogate_to_ucs4(high: CharType, low: CharType) -> uint,
+    [static] surrogate_to_ucs4_2(high: CharType, low: CharType) -> uint,
     /// 
     /// Returns the high surrogate part of a UCS-4-encoded code point.
     /// The returned result is undefined if *ucs4* is smaller than 0x10000.
@@ -856,12 +856,12 @@ struct Char {
     /// Returns the character's category.
     /// 
     /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
-    [static] category(ucs4: uint) -> Char::Category,
+    [static] category_2(ucs4: uint) -> Char::Category,
     /// 
     /// Returns the character's direction.
     /// 
     /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
-    [static] direction(ucs4: uint) -> Char::Direction,
+    [static] direction_2(ucs4: uint) -> Char::Direction,
     /// 
     /// Returns information about the joining type attributes of the character
     /// (needed for certain languages such as Arabic or Syriac).
@@ -870,7 +870,7 @@ struct Char {
     /// Returns information about the joining type attributes of the UCS-4-encoded
     /// character specified by *ucs4*
     /// (needed for certain languages such as Arabic or Syriac).
-    [static] joining_type(ucs4: uint) -> Char::JoiningType,
+    [static] joining_type_2(ucs4: uint) -> Char::JoiningType,
     /// 
     /// Returns information about the joining type attributes of the character
     /// (needed for certain languages such as Arabic or Syriac).
@@ -886,7 +886,7 @@ struct Char {
     /// **Overloads**
     /// Returns information about the joining properties of the UCS-4-encoded
     /// character specified by *ucs4* (needed for certain languages such as Arabic).
-    [static] joining(ucs4: uint) -> Char::Joining,
+    [static] joining_2(ucs4: uint) -> Char::Joining,
     /// 
     /// Returns the combining class for the character as defined in the
     /// Unicode standard. This is mainly useful as a positioning hint for
@@ -897,7 +897,7 @@ struct Char {
     /// 
     /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
     /// *ucs4,* as defined in the Unicode standard.
-    [static] combining_class(ucs4: uint) -> unsigned,
+    [static] combining_class_2(ucs4: uint) -> unsigned,
     /// 
     /// Returns the mirrored character if this character is a mirrored
     /// character; otherwise returns the character itself.
@@ -908,7 +908,7 @@ struct Char {
     /// by *ucs4* is a mirrored character; otherwise returns the character itself.
     /// 
     /// **See also:** hasMirrored()
-    [static] mirrored_char(ucs4: uint) -> uint,
+    [static] mirrored_char_2(ucs4: uint) -> uint,
     /// 
     /// Returns `true` if the character should be reversed if the text
     /// direction is reversed; otherwise returns `false.`
@@ -924,7 +924,7 @@ struct Char {
     /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
     /// 
     /// **See also:** mirroredChar()
-    [static] has_mirrored(ucs4: uint) -> bool,
+    [static] has_mirrored_2(ucs4: uint) -> bool,
     /// 
     /// Decomposes a character into it's constituent parts. Returns an empty string
     /// if no decomposition exists.
@@ -937,20 +937,20 @@ struct Char {
     /// 
     /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
     /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition(ucs4: uint) -> String,
+    [static] decomposition_2(ucs4: uint) -> String,
     /// 
     /// Returns the tag defining the composition of the character. Returns
     /// QChar::NoDecomposition if no decomposition exists.
     /// 
     /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
     /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition_tag(ucs4: uint) -> Char::Decomposition,
+    [static] decomposition_tag_2(ucs4: uint) -> Char::Decomposition,
     /// 
     /// Returns the numeric value of the digit, or -1 if the character is not a digit.
     /// 
     /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
     /// character, *ucs4,* or -1 if the character is not a digit.
-    [static] digit_value(ucs4: uint) -> i32,
+    [static] digit_value_2(ucs4: uint) -> i32,
     /// 
     /// Returns the lowercase equivalent if the character is uppercase or titlecase;
     /// otherwise returns the character itself.
@@ -958,7 +958,7 @@ struct Char {
     /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
     /// the character itself.
-    [static] to_lower(ucs4: uint) -> uint,
+    [static] to_lower_2(ucs4: uint) -> uint,
     /// 
     /// Returns the uppercase equivalent if the character is lowercase or titlecase;
     /// otherwise returns the character itself.
@@ -966,7 +966,7 @@ struct Char {
     /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
     /// the character itself.
-    [static] to_upper(ucs4: uint) -> uint,
+    [static] to_upper_2(ucs4: uint) -> uint,
     /// 
     /// Returns the title case equivalent if the character is lowercase or uppercase;
     /// otherwise returns the character itself.
@@ -974,27 +974,27 @@ struct Char {
     /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
     /// the character itself.
-    [static] to_title_case(ucs4: uint) -> uint,
+    [static] to_title_case_2(ucs4: uint) -> uint,
     /// 
     /// Returns the case folded equivalent of the character.
     /// For most Unicode characters this is the same as toLower().
     /// 
     /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
     /// by *ucs4.* For most Unicode characters this is the same as toLower().
-    [static] to_case_folded(ucs4: uint) -> uint,
+    [static] to_case_folded_2(ucs4: uint) -> uint,
     /// 
     /// Returns the Unicode script property value for this character.
     /// 
     /// **Overloads**
     /// Returns the Unicode script property value for the character specified in
     /// its UCS-4-encoded form as *ucs4.*
-    [static] script(ucs4: uint) -> Char::Script,
+    [static] script_2(ucs4: uint) -> Char::Script,
     /// 
     /// Returns the Unicode version that introduced this character.
     /// 
     /// **Overloads**  Returns the Unicode version that introduced the character specified in
     /// its UCS-4-encoded form as *ucs4.*
-    [static] unicode_version(ucs4: uint) -> Char::UnicodeVersion,
+    [static] unicode_version_2(ucs4: uint) -> Char::UnicodeVersion,
     /// 
     /// Returns the most recent supported Unicode version.
     [static] current_unicode_version() -> Char::UnicodeVersion,
@@ -1012,7 +1012,7 @@ struct Char {
     /// 
     /// Note that this gives no indication of whether the character is
     /// available in a particular font.
-    [static] is_print(ucs4: uint) -> bool,
+    [static] is_print_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a separator character
     /// (Separator_* categories or certain code points from Other_Control category);
@@ -1022,7 +1022,7 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a separator character (Separator_* categories or certain code points
     /// from Other_Control category); otherwise returns `false.`
-    [static] is_space(ucs4: uint) -> bool,
+    [static] is_space_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a mark (Mark_* categories);
     /// otherwise returns `false.`
@@ -1032,7 +1032,7 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a mark (Mark_* categories); otherwise returns `false.`
-    [static] is_mark(ucs4: uint) -> bool,
+    [static] is_mark_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a punctuation mark (Punctuation_*
     /// categories); otherwise returns `false.`
@@ -1040,7 +1040,7 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
-    [static] is_punct(ucs4: uint) -> bool,
+    [static] is_punct_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a symbol (Symbol_* categories);
     /// otherwise returns `false.`
@@ -1048,7 +1048,7 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a symbol (Symbol_* categories); otherwise returns `false.`
-    [static] is_symbol(ucs4: uint) -> bool,
+    [static] is_symbol_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a letter (Letter_* categories);
     /// otherwise returns `false.`
@@ -1063,7 +1063,7 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter(ucs4: uint) -> bool,
+    [static] is_letter_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a number (Number_* categories,
     /// not just 0-9); otherwise returns `false.`
@@ -1075,7 +1075,7 @@ struct Char {
     /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
     /// 
     /// **See also:** isDigit()
-    [static] is_number(ucs4: uint) -> bool,
+    [static] is_number_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a letter or number (Letter_* or
     /// Number_* categories); otherwise returns `false.`
@@ -1083,7 +1083,7 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter_or_number(ucs4: uint) -> bool,
+    [static] is_letter_or_number_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a decimal digit
     /// (Number_DecimalDigit); otherwise returns `false.`
@@ -1095,7 +1095,7 @@ struct Char {
     /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
     /// 
     /// **See also:** isNumber()
-    [static] is_digit(ucs4: uint) -> bool,
+    [static] is_digit_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a lowercase letter, for example
     /// category() is Letter_Lowercase.
@@ -1111,7 +1111,7 @@ struct Char {
     /// **See also:** isUpper()
     /// toLower()
     /// toUpper()
-    [static] is_lower(ucs4: uint) -> bool,
+    [static] is_lower_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is an uppercase letter, for example
     /// category() is Letter_Uppercase.
@@ -1127,7 +1127,7 @@ struct Char {
     /// **See also:** isLower()
     /// toUpper()
     /// toLower()
-    [static] is_upper(ucs4: uint) -> bool,
+    [static] is_upper_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a titlecase letter, for example
     /// category() is Letter_Titlecase.
@@ -1145,7 +1145,7 @@ struct Char {
     /// toUpper()
     /// toLower()
     /// toTitleCase()
-    [static] is_title_case(ucs4: uint) -> bool,
+    [static] is_title_case_2(ucs4: uint) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

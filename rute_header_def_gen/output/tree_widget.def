@@ -212,7 +212,7 @@ struct TreeWidget : TreeView {
     /// using the given *command.*
     /// 
     /// **See also:** currentItem()
-    set_current_item(item: *TreeWidgetItemType, column: i32),
+    set_current_item_2(item: *TreeWidgetItemType, column: i32),
     /// 
     /// Sets the current *item* in the tree widget.
     /// 
@@ -231,7 +231,7 @@ struct TreeWidget : TreeView {
     /// using the given *command.*
     /// 
     /// **See also:** currentItem()
-    set_current_item(item: *TreeWidgetItemType, column: i32, command: ItemSelectionModel::SelectionFlags),
+    set_current_item_3(item: *TreeWidgetItemType, column: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns a pointer to the item at the coordinates *p.* The coordinates
     /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
@@ -255,7 +255,7 @@ struct TreeWidget : TreeView {
     /// Returns a pointer to the item at the coordinates ( *x,* *y).* The coordinates
     /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
     /// 
-    item_at(x: i32, y: i32) -> TreeWidgetItem?,
+    item_at_2(x: i32, y: i32) -> TreeWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
     /// 
@@ -561,7 +561,7 @@ struct TreeWidget : TreeView {
     /// 
     /// **See also:** itemFromIndex()
     /// topLevelItem()
-    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
+    index_from_item_2(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
     /// 
     /// Returns a pointer to the QTreeWidgetItem associated with the given *index.*
     /// 

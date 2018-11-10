@@ -214,7 +214,7 @@ struct TextStream {
     /// 
     /// **See also:** QTextCodec::codecForName()
     /// setLocale()
-    set_codec(codec_name: *char),
+    set_codec_2(codec_name: *char),
     /// 
     /// Returns the codec that is current assigned to the stream.
     /// 

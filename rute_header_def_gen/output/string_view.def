@@ -196,7 +196,7 @@ struct StringView {
     /// chopped()
     /// chop()
     /// truncate()
-    mid(pos: i32, n: i32) -> StringView,
+    mid_2(pos: i32, n: i32) -> StringView,
     /// 
     /// Returns the substring of length *length* starting at position
     /// 0 in this object.
@@ -280,7 +280,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    starts_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -290,7 +290,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(c: CharType) -> bool,
+    starts_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -300,7 +300,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    starts_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -320,7 +320,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    ends_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -330,7 +330,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(c: CharType) -> bool,
+    ends_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -340,7 +340,7 @@ struct StringView {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    ends_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string is read right to left.
     /// 

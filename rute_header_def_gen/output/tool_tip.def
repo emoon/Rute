@@ -96,7 +96,7 @@ struct ToolTip {
     /// 
     /// **Overloads**
     /// This is analogous to calling QToolTip::showText( *pos,* *text,* *w,* QRect())
-    [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType),
+    [static] show_text_2(pos: &PointType, text: String, w: *WidgetType, rect: &RectType),
     /// 
     /// Shows *text* as a tool tip, with the global position *pos* as
     /// the point of interest. The tool tip will be shown with a platform
@@ -120,7 +120,7 @@ struct ToolTip {
     /// 
     /// **Overloads**
     /// This is analogous to calling QToolTip::showText( *pos,* *text,* *w,* QRect())
-    [static] show_text(pos: &PointType, text: String, w: *WidgetType, rect: &RectType, msec_show_time: i32),
+    [static] show_text_3(pos: &PointType, text: String, w: *WidgetType, rect: &RectType, msec_show_time: i32),
     /// 
     /// Hides the tool tip. This is the same as calling showText() with an
     /// empty string.

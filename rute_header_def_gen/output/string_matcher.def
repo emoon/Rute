@@ -72,7 +72,7 @@ struct StringMatcher {
     /// 
     /// **See also:** setPattern()
     /// setCaseSensitivity()
-    index_in(str: *CharType, length: i32, from: i32) -> i32,
+    index_in_2(str: *CharType, length: i32, from: i32) -> i32,
     /// 
     /// Returns the string pattern that this string matcher will search
     /// for.

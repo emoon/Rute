@@ -61,7 +61,7 @@ struct PaintDeviceWindow : Window, PaintDevice {
     /// 
     /// **Note**: For non-exposed windows the update is deferred until the
     /// window becomes exposed again.
-    update(region: &RegionType),
+    update_2(region: &RegionType),
     /// 
     /// Marks the entire window as dirty and schedules a repaint.
     /// 
@@ -86,7 +86,7 @@ struct PaintDeviceWindow : Window, PaintDevice {
     /// 
     /// **Note**: For non-exposed windows the update is deferred until the
     /// window becomes exposed again.
-    update(),
+    update_3(),
     /// 
     /// Handles paint events passed in the *event* parameter.
     /// 

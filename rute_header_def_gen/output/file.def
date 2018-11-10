@@ -156,7 +156,7 @@ struct File : FileDevice {
     /// This does the reverse of QFile::encodeName() using *localFileName.*
     /// 
     /// **See also:** encodeName()
-    [static] decode_name(local_file_name: *char) -> String,
+    [static] decode_name_2(local_file_name: *char) -> String,
     /// 
     /// **Overloads**
     /// Returns `true` if the file specified by fileName() exists; otherwise
@@ -184,7 +184,7 @@ struct File : FileDevice {
     /// 
     /// **Note**: If *fileName* is a symlink that points to a non-existing
     /// file, false is returned.
-    [static] exists(file_name: String) -> bool,
+    [static] exists_2(file_name: String) -> bool,
     /// 
     /// Use symLinkTarget() instead.
     /// 
@@ -194,7 +194,7 @@ struct File : FileDevice {
     /// Use symLinkTarget() instead.
     /// 
     /// Use symLinkTarget() instead.
-    [static] read_link(file_name: String) -> String,
+    [static] read_link_2(file_name: String) -> String,
     /// 
     /// **Overloads**
     /// Returns the absolute path of the file or directory a symlink (or shortcut
@@ -232,7 +232,7 @@ struct File : FileDevice {
     /// 
     /// This name may not represent an existing file; it is only a string.
     /// QFile::exists() returns `true` if the symlink points to an existing file.
-    [static] sym_link_target(file_name: String) -> String,
+    [static] sym_link_target_2(file_name: String) -> String,
     /// 
     /// Removes the file specified by fileName(). Returns `true` if successful;
     /// otherwise returns `false.`
@@ -262,7 +262,7 @@ struct File : FileDevice {
     /// Returns `true` if successful; otherwise returns `false.`
     /// 
     /// **See also:** remove()
-    [static] remove(file_name: String) -> bool,
+    [static] remove_2(file_name: String) -> bool,
     /// 
     /// Renames the file currently specified by fileName() to *newName.*
     /// Returns `true` if successful; otherwise returns `false.`
@@ -312,7 +312,7 @@ struct File : FileDevice {
     /// (i.e., QFile will not overwrite it).
     /// 
     /// **See also:** rename()
-    [static] rename(old_name: String, new_name: String) -> bool,
+    [static] rename_2(old_name: String, new_name: String) -> bool,
     /// 
     /// Creates a link named *linkName* that points to the file currently specified by
     /// fileName(). What a link is depends on the underlying filesystem (be it a
@@ -360,7 +360,7 @@ struct File : FileDevice {
     /// returns `false.`
     /// 
     /// **See also:** link()
-    [static] link(oldname: String, new_name: String) -> bool,
+    [static] link_2(oldname: String, new_name: String) -> bool,
     /// 
     /// Copies the file currently specified by fileName() to a file called
     /// *newName.* Returns `true` if successful; otherwise returns `false.`
@@ -400,7 +400,7 @@ struct File : FileDevice {
     /// (i.e., QFile will not overwrite it).
     /// 
     /// **See also:** rename()
-    [static] copy(file_name: String, new_name: String) -> bool,
+    [static] copy_2(file_name: String, new_name: String) -> bool,
     /// 
     /// Opens the file using OpenMode *mode,* returning true if successful;
     /// otherwise false.
@@ -550,7 +550,7 @@ struct File : FileDevice {
     /// you cannot use this QFile with a QFileInfo.
     /// 
     /// **See also:** close()
-    open(f: *i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
+    open_2(f: *i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
     /// 
     /// Opens the file using OpenMode *mode,* returning true if successful;
     /// otherwise false.
@@ -625,7 +625,7 @@ struct File : FileDevice {
     /// you cannot use this QFile with a QFileInfo.
     /// 
     /// **See also:** close()
-    open(fd: i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
+    open_3(fd: i32, io_flags: IODevice::OpenMode, handle_flags: FileDevice::FileHandleFlags) -> bool,
     /// 
     [event] size() -> i64,
     /// 
@@ -649,7 +649,7 @@ struct File : FileDevice {
     /// **Warning**: This function can fail if the file doesn't exist.
     /// 
     /// **See also:** resize()
-    [static] resize(filename: String, sz: i64) -> bool,
+    [static] resize_2(filename: String, sz: i64) -> bool,
     /// 
     /// 
     /// **Overloads**
@@ -661,7 +661,7 @@ struct File : FileDevice {
     /// **Overloads**
     /// Returns the complete OR-ed together combination of
     /// QFile::Permission for *fileName.*
-    [static] permissions(filename: String) -> FileDevice::Permissions,
+    [static] permissions_2(filename: String) -> FileDevice::Permissions,
     /// 
     /// Sets the permissions for the file to the *permissions* specified.
     /// Returns `true` if successful, or `false` if the permissions cannot be
@@ -689,7 +689,7 @@ struct File : FileDevice {
     /// 
     /// **Overloads**
     /// Sets the permissions for *fileName* file to *permissions.*
-    [static] set_permissions(filename: String, permission_spec: FileDevice::Permissions) -> bool,
+    [static] set_permissions_2(filename: String, permission_spec: FileDevice::Permissions) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -58,7 +58,7 @@ struct OpenGLShader : Object {
     /// Returns `true` if the source was successfully compiled, false otherwise.
     /// 
     /// **See also:** compileSourceFile()
-    compile_source_code(source: &ByteArrayType) -> bool,
+    compile_source_code_2(source: &ByteArrayType) -> bool,
     /// 
     /// Sets the *source* code for this shader and compiles it.
     /// Returns `true` if the source was successfully compiled, false otherwise.
@@ -76,7 +76,7 @@ struct OpenGLShader : Object {
     /// Returns `true` if the source was successfully compiled, false otherwise.
     /// 
     /// **See also:** compileSourceFile()
-    compile_source_code(source: String) -> bool,
+    compile_source_code_3(source: String) -> bool,
     /// 
     /// Sets the source code for this shader to the contents of *fileName*
     /// and compiles it. Returns `true` if the file could be opened and the

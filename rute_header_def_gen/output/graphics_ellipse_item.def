@@ -70,7 +70,7 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// 
     /// **See also:** rect()
     /// QPainter::drawEllipse()
-    set_rect(x: f32, y: f32, w: f32, h: f32),
+    set_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// Returns the start angle for an ellipse segment in 16ths of a degree. This
     /// angle is used together with spanAngle() for representing an ellipse

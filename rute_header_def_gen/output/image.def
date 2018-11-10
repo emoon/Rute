@@ -326,8 +326,7 @@ struct Image : PaintDevice {
     /// copied.
     /// 
     /// **See also:** QImage()
-    [org_name(copy)]
-    copy_by_rect(rect: &RectType) -> Image,
+    copy(rect: &RectType) -> Image,
     /// 
     /// **Overloads**
     /// The returned image is copied from the position ( *x,* *y)* in
@@ -350,8 +349,7 @@ struct Image : PaintDevice {
     /// copied.
     /// 
     /// **See also:** QImage()
-    [org_name(copy)]
-    copy(x: i32, y: i32, w: i32, h: i32) -> Image,
+    copy_2(x: i32, y: i32, w: i32, h: i32) -> Image,
     /// 
     /// Returns the format of the image.
     /// 
@@ -388,7 +386,7 @@ struct Image : PaintDevice {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
-    convert_to_format(f: Image::Format, flags: Rute::ImageConversionFlags) -> Image,
+    convert_to_format_2(f: Image::Format, flags: Rute::ImageConversionFlags) -> Image,
     /// 
     /// Returns a copy of the image in the given *format.*
     /// 
@@ -404,7 +402,7 @@ struct Image : PaintDevice {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
-    convert_to_format(f: Image::Format, color_table: [RgbType], flags: Rute::ImageConversionFlags) -> Image,
+    convert_to_format_3(f: Image::Format, color_table: [RgbType], flags: Rute::ImageConversionFlags) -> Image,
     /// 
     /// Changes the format of the image to *format* without changing the
     /// data. Only works between formats of the same depth.
@@ -622,7 +620,7 @@ struct Image : PaintDevice {
     /// sharing](Implicit%20Data%20Sharing)
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
-    bits() -> uchar?,
+    bits_2() -> uchar?,
     /// 
     /// Returns a pointer to the first pixel data.
     /// 
@@ -692,7 +690,7 @@ struct Image : PaintDevice {
     /// Manipulation}, constScanLine()
     /// 
     /// **Overloads**
-    scan_line(arg0: i32) -> uchar?,
+    scan_line_2(arg0: i32) -> uchar?,
     /// 
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
     /// 
@@ -734,7 +732,7 @@ struct Image : PaintDevice {
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
-    valid(pt: &PointType) -> bool,
+    valid_2(pt: &PointType) -> bool,
     /// 
     /// Returns the pixel index at the given *position.*
     /// 
@@ -760,7 +758,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
-    pixel_index(pt: &PointType) -> i32,
+    pixel_index_2(pt: &PointType) -> i32,
     /// 
     /// Returns the pixel index at the given *position.*
     /// 
@@ -862,7 +860,7 @@ struct Image : PaintDevice {
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
     /// 
     /// Returns the QImage::Format as a QPixelFormat
-    pixel(pt: &PointType) -> Rgb,
+    pixel_2(pt: &PointType) -> Rgb,
     /// 
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
     /// 
@@ -936,7 +934,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    set_pixel(pt: &PointType, index_or_rgb: uint),
+    set_pixel_2(pt: &PointType, index_or_rgb: uint),
     /// 
     /// Returns the color of the pixel at the given *position* as a QColor.
     /// 
@@ -974,7 +972,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
-    pixel_color(pt: &PointType) -> Color,
+    pixel_color_2(pt: &PointType) -> Color,
     /// 
     /// Sets the color at the given *position* to *color.*
     /// 
@@ -1010,7 +1008,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    set_pixel_color(pt: &PointType, c: &ColorType),
+    set_pixel_color_2(pt: &PointType, c: &ColorType),
     /// 
     /// Returns a list of the colors contained in the image's color table,
     /// or an empty list if the image does not have a color table
@@ -1119,7 +1117,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
-    fill(color: &ColorType),
+    fill_2(color: &ColorType),
     /// 
     /// Fills the entire image with the given *pixelValue.*
     /// 
@@ -1152,7 +1150,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
-    fill(color: Rute::GlobalColor),
+    fill_3(color: Rute::GlobalColor),
     /// 
     /// Returns `true` if the image has a format that respects the alpha
     /// channel, otherwise returns `false.`
@@ -1346,7 +1344,7 @@ struct Image : PaintDevice {
     /// If the given *height* is 0 or negative, a null image is returned.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    scaled(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Image,
+    scaled_2(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Image,
     /// 
     /// Returns a scaled copy of the image. The returned image is scaled
     /// to the given *width* using the specified transformation *mode.*
@@ -1384,7 +1382,7 @@ struct Image : PaintDevice {
     /// Note that the original image is not changed.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    mirrored(horizontally: bool, vertically: bool) -> Image?,
+    mirrored_2(horizontally: bool, vertically: bool) -> Image?,
     /// 
     /// Returns a QImage in which the values of the red and blue
     /// components of all pixels have been swapped, effectively converting
@@ -1402,7 +1400,7 @@ struct Image : PaintDevice {
     /// The original QImage is not changed.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    rgb_swapped() -> Image?,
+    rgb_swapped_2() -> Image?,
     /// 
     /// Inverts all pixel values in the image.
     /// 
@@ -1490,7 +1488,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    load(file_name: String, format: *char) -> bool,
+    load_2(file_name: String, format: *char) -> bool,
     /// 
     /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
     /// invalidates the image and returns `false.`
@@ -1516,7 +1514,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    load_from_data(data: &ByteArrayType, aformat: *char) -> bool,
+    load_from_data_2(data: &ByteArrayType, aformat: *char) -> bool,
     /// 
     /// Saves the image to the file with the given *fileName,* using the
     /// given image file *format* and *quality* factor. If *format* is
@@ -1562,7 +1560,7 @@ struct Image : PaintDevice {
     /// This can, for example, be used to save an image directly into a
     /// QByteArray:
     /// 
-    save(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    save_2(device: *IODeviceType, format: *char, quality: i32) -> bool,
     /// 
     /// Constructs a QImage from the first *size* bytes of the given
     /// binary *data.* The loader attempts to read the image using the
@@ -1598,7 +1596,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    [static] from_data(data: &ByteArrayType, format: *char) -> Image,
+    [static] from_data_2(data: &ByteArrayType, format: *char) -> Image,
     /// 
     /// Returns a number that identifies the contents of this QImage
     /// object. Distinct QImage objects can only have the same key if they

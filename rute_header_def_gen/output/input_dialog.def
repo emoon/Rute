@@ -422,7 +422,7 @@ struct InputDialog : Dialog {
     /// getInt()
     /// getItem()
     /// getMultiLineText()
-    [static] get_double(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags, step: double) -> double,
+    [static] get_double_2(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags, step: double) -> double,
     set_double_step(step: double),
     /// 
     /// This property is only relevant when the input dialog is used in

@@ -106,7 +106,7 @@ struct GraphicsRotation : GraphicsTransform {
     /// r.setAngle(-45);
     /// ```
     /// 
-    set_axis(axis: Rute::Axis),
+    set_axis_2(axis: Rute::Axis),
     /// 
     [event] apply_to(matrix: *Matrix4x4Type),
     /// 

@@ -123,7 +123,7 @@ struct TabWidget : Widget {
     /// of *page* is passed on to the QTabWidget.
     /// 
     /// This function is the same as addTab(), but with an additional *icon.*
-    add_tab(widget: *WidgetType, icon: &IconType, label: String) -> i32,
+    add_tab_2(widget: *WidgetType, icon: &IconType, label: String) -> i32,
     /// 
     /// Inserts a tab with the given *label* and *page* into the tab
     /// widget at the specified *index,* and returns the index of the
@@ -203,7 +203,7 @@ struct TabWidget : Widget {
     /// 
     /// This function is the same as insertTab(), but with an additional
     /// *icon.*
-    insert_tab(index: i32, widget: *WidgetType, icon: &IconType, label: String) -> i32,
+    insert_tab_2(index: i32, widget: *WidgetType, icon: &IconType, label: String) -> i32,
     /// 
     /// Removes the tab at position *index* from this stack of widgets.
     /// The page widget itself is not deleted.

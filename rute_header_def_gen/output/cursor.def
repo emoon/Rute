@@ -226,7 +226,7 @@ struct Cursor {
     /// QWidget::mapFromGlobal()
     /// QWidget::mapToGlobal()
     /// QGuiApplication::primaryScreen()
-    [static] pos(screen: *ScreenType) -> Point,
+    [static] pos_2(screen: *ScreenType) -> Point,
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -306,7 +306,7 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(screen: *ScreenType, x: i32, y: i32),
+    [static] set_pos_2(screen: *ScreenType, x: i32, y: i32),
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -346,7 +346,7 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(p: &PointType),
+    [static] set_pos_3(p: &PointType),
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -386,7 +386,7 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(screen: *ScreenType, p: &PointType),
+    [static] set_pos_4(screen: *ScreenType, p: &PointType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

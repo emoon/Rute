@@ -343,7 +343,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// **See also:** geometry()
     /// setGeometry()
-    resize(w: f32, h: f32),
+    resize_2(w: f32, h: f32),
     /// 
     /// Calling resize() resizes the widget to a *size* bounded by minimumSize()
     /// and maximumSize(). This property only affects the widget's width and

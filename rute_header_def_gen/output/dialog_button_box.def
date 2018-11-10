@@ -190,7 +190,7 @@ struct DialogButtonBox : Widget {
     /// 
     /// **See also:** removeButton()
     /// clear()
-    add_button(text: String, role: DialogButtonBox::ButtonRole) -> PushButton?,
+    add_button_2(text: String, role: DialogButtonBox::ButtonRole) -> PushButton?,
     /// 
     /// Adds the given *button* to the button box with the specified *role.*
     /// If the role is invalid, the button is not added.
@@ -216,7 +216,7 @@ struct DialogButtonBox : Widget {
     /// 
     /// **See also:** removeButton()
     /// clear()
-    add_button(button: DialogButtonBox::StandardButton) -> PushButton?,
+    add_button_3(button: DialogButtonBox::StandardButton) -> PushButton?,
     /// 
     /// Removes *button* from the button box without deleting it and sets its parent to zero.
     /// 

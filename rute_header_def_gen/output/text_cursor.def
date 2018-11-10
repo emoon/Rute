@@ -218,7 +218,7 @@ struct TextCursor {
     /// 
     /// **Overloads**
     /// Inserts *text* at the current position with the given *format.*
-    insert_text(text: String, format: &TextCharFormatType),
+    insert_text_2(text: String, format: &TextCharFormatType),
     /// 
     /// Moves the cursor by performing the given *operation* *n* times, using the specified
     /// *mode,* and returns `true` if all operations were completed successfully; otherwise
@@ -588,7 +588,7 @@ struct TextCursor {
     /// format *format* and *charFormat* as block char format.
     /// 
     /// **See also:** setBlockFormat()
-    insert_block(format: &TextBlockFormatType),
+    insert_block_2(format: &TextBlockFormatType),
     /// 
     /// Inserts a new empty block at the cursor position() with the
     /// current blockFormat() and charFormat().
@@ -606,7 +606,7 @@ struct TextCursor {
     /// format *format* and *charFormat* as block char format.
     /// 
     /// **See also:** setBlockFormat()
-    insert_block(format: &TextBlockFormatType, char_format: &TextCharFormatType),
+    insert_block_3(format: &TextBlockFormatType, char_format: &TextCharFormatType),
     /// 
     /// Inserts a new block at the current position and makes it the first
     /// list item of a newly created list with the given *format.* Returns
@@ -642,7 +642,7 @@ struct TextCursor {
     /// **See also:** currentList()
     /// createList()
     /// insertBlock()
-    insert_list(style: TextListFormat::Style) -> TextList?,
+    insert_list_2(style: TextListFormat::Style) -> TextList?,
     /// 
     /// Creates and returns a new list with the given *format,* and makes the
     /// current paragraph the cursor is in the first list item.
@@ -674,7 +674,7 @@ struct TextCursor {
     /// 
     /// **See also:** insertList()
     /// currentList()
-    create_list(style: TextListFormat::Style) -> TextList?,
+    create_list_2(style: TextListFormat::Style) -> TextList?,
     /// 
     /// Returns the current list if the cursor position() is inside a
     /// block that is part of a list; otherwise returns 0.
@@ -719,7 +719,7 @@ struct TextCursor {
     /// There must be at least one row and one column in the table.
     /// 
     /// **See also:** currentTable()
-    insert_table(rows: i32, cols: i32) -> TextTable?,
+    insert_table_2(rows: i32, cols: i32) -> TextTable?,
     /// 
     /// Returns a pointer to the current table if the cursor position()
     /// is inside a block that is part of a table; otherwise returns 0.
@@ -779,7 +779,7 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(format: &TextImageFormatType),
+    insert_image_2(format: &TextImageFormatType),
     /// 
     /// **Overloads**
     /// Inserts the image defined by the given *format* at the cursor's current position
@@ -797,7 +797,7 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(name: String),
+    insert_image_3(name: String),
     /// 
     /// **Overloads**
     /// Inserts the image defined by the given *format* at the cursor's current position
@@ -815,7 +815,7 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(image: &ImageType, name: String),
+    insert_image_4(image: &ImageType, name: String),
     /// 
     /// Indicates the start of a block of editing operations on the
     /// document that should appear as a single operation from an

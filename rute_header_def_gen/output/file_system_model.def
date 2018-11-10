@@ -75,7 +75,7 @@ struct FileSystemModel : AbstractItemModel {
     /// 
     /// **Overloads**
     /// Returns the model item index for the given *path* and *column.*
-    index(path: String, column: i32) -> ModelIndex,
+    index_2(path: String, column: i32) -> ModelIndex,
     /// 
     [event] parent(child: &ModelIndexType) -> ModelIndex,
     /// 

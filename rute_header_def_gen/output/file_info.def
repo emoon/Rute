@@ -147,7 +147,7 @@ struct FileInfo {
     /// have a relative path.
     /// 
     /// **See also:** isRelative()
-    set_file(file: &FileType),
+    set_file_2(file: &FileType),
     /// 
     /// Sets the file that the QFileInfo provides information about to *file.*
     /// 
@@ -178,7 +178,7 @@ struct FileInfo {
     /// have a relative path.
     /// 
     /// **See also:** isRelative()
-    set_file(dir: &DirType, file: String),
+    set_file_3(dir: &DirType, file: String),
     /// 
     /// Returns `true` if the file exists; otherwise returns `false.`
     /// 
@@ -206,7 +206,7 @@ struct FileInfo {
     /// 
     /// **Note**: Using this function is faster than using
     /// `QFileInfo(file).exists()` for file system access.
-    [static] exists(file: String) -> bool,
+    [static] exists_2(file: String) -> bool,
     /// 
     /// Refreshes the information about the file, i.e. reads in information
     /// from the file system the next time a cached property is fetched.

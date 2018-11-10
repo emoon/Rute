@@ -265,7 +265,7 @@ struct SurfaceFormat {
     /// **See also:** setOptions()
     /// options()
     /// testOption()
-    set_option(option: SurfaceFormat::FormatOption, on: bool),
+    set_option_2(option: SurfaceFormat::FormatOption, on: bool),
     /// 
     /// **Overloads**
     /// Use testOption(QSurfaceFormat::FormatOption) instead.
@@ -278,7 +278,7 @@ struct SurfaceFormat {
     /// Returns true if the format option *option* is set; otherwise returns false.
     /// 
     /// **See also:** options()
-    test_option(option: SurfaceFormat::FormatOption) -> bool,
+    test_option_2(option: SurfaceFormat::FormatOption) -> bool,
     /// 
     /// Returns the currently set format options.
     /// 

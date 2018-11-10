@@ -57,7 +57,7 @@ struct Polygon {
     /// 
     /// **Overloads**
     /// Returns the point at the given *index.*
-    point(i: i32) -> Point,
+    point_2(i: i32) -> Point,
     /// 
     /// **Overloads**
     /// Sets the point at the given *index* to the given *point.*
@@ -121,7 +121,7 @@ struct Polygon {
     /// The example code creates a polygon with two points (10, 20) and
     /// (30, 40):
     /// 
-    set_point(index: i32, p: &PointType),
+    set_point_2(index: i32, p: &PointType),
     /// 
     /// **Overloads**
     /// Resizes the polygon to *nPoints* and populates it with the points
@@ -143,7 +143,7 @@ struct Polygon {
     /// The example code creates a polygon with two points (10, 20) and
     /// (30, 40):
     /// 
-    set_points(n_points: i32, firstx: i32, firsty: i32),
+    set_points_2(n_points: i32, firstx: i32, firsty: i32),
     /// 
     /// Copies *nPoints* points from the variable argument list into this
     /// polygon from the given *index.*
@@ -185,7 +185,7 @@ struct Polygon {
     /// default) in *fromPolygon* into this polygon, starting at the
     /// specified *index.* For example:
     /// 
-    put_points(index: i32, n_points: i32, firstx: i32, firsty: i32),
+    put_points_2(index: i32, n_points: i32, firstx: i32, firsty: i32),
     /// 
     /// Copies *nPoints* points from the variable argument list into this
     /// polygon from the given *index.*
@@ -206,7 +206,7 @@ struct Polygon {
     /// default) in *fromPolygon* into this polygon, starting at the
     /// specified *index.* For example:
     /// 
-    put_points(index: i32, n_points: i32, from: &PolygonType, from_index: i32),
+    put_points_3(index: i32, n_points: i32, from: &PolygonType, from_index: i32),
     /// 
     /// Returns `true` if the given *point* is inside the polygon according to
     /// the specified *fillRule;* otherwise returns `false.`

@@ -169,7 +169,7 @@ struct FontDialog : Dialog {
     /// **Warning**: Do not delete *parent* during the execution of the dialog.
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QFontDialog constructors.
-    [static] get_font(ok: *bool, initial: &FontType, parent: *WidgetType, title: String, options: FontDialog::FontDialogOptions) -> Font,
+    [static] get_font_2(ok: *bool, initial: &FontType, parent: *WidgetType, title: String, options: FontDialog::FontDialogOptions) -> Font,
     /// 
     /// This signal is emitted when the current font is changed. The new font is
     /// specified in *font.*

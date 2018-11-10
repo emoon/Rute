@@ -170,7 +170,7 @@ struct Brush {
     /// 
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    set_color(color: Rute::GlobalColor),
+    set_color_2(color: Rute::GlobalColor),
     /// 
     /// Returns the gradient describing this brush.
     gradient() -> Gradient?,

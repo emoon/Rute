@@ -360,7 +360,7 @@ struct Date {
     /// month()
     /// day()
     /// isValid()
-    get_date(year: *i32, month: *i32, day: *i32),
+    get_date_2(year: *i32, month: *i32, day: *i32),
     /// 
     /// Returns a QDate object containing a date *ndays* later than the
     /// date of this object (or earlier if *ndays* is negative).
@@ -423,7 +423,7 @@ struct Date {
     /// 
     /// **See also:** isNull()
     /// setDate()
-    [static] is_valid(y: i32, m: i32, d: i32) -> bool,
+    [static] is_valid_2(y: i32, m: i32, d: i32) -> bool,
     /// 
     /// Returns `true` if the specified *year* is a leap year; otherwise
     /// returns `false.`

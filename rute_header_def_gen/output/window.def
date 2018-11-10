@@ -170,7 +170,7 @@ struct Window : Object, Surface {
     /// Returns the parent window, if any.
     /// 
     /// A window without a parent is known as a top level window.
-    parent() -> Window?,
+    parent_2() -> Window?,
     /// 
     /// Sets the *parent* Window. This will lead to the windowing system managing
     /// the clip of the window, so it will be clipped to the *parent* window.
@@ -590,7 +590,7 @@ struct Window : Object, Surface {
     /// The position is in relation to the virtualGeometry() of its screen.
     /// 
     /// **See also:** position()
-    set_position(posx: i32, posy: i32),
+    set_position_2(posx: i32, posy: i32),
     /// 
     /// set the size of the window, excluding any window frame, to a QSize
     /// constructed from width *w* and height *h*
@@ -626,7 +626,7 @@ struct Window : Object, Surface {
     /// The resize event is called whenever the window is resized in the windowing system,
     /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
     /// or indirectly through the user resizing the window manually.
-    resize(w: i32, h: i32),
+    resize_2(w: i32, h: i32),
     /// 
     /// The windowing system might use *filePath* to display the
     /// path of the document this window is representing in the tile bar.

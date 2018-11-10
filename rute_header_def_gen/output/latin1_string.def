@@ -122,7 +122,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    starts_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this Latin-1 string starts with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -132,7 +132,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(c: CharType) -> bool,
+    starts_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this Latin-1 string starts with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -142,7 +142,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** endsWith()
-    starts_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    starts_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this Latin-1 string ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -162,7 +162,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    ends_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this Latin-1 string ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -172,7 +172,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(c: CharType) -> bool,
+    ends_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this Latin-1 string ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -182,7 +182,7 @@ struct Latin1String {
     /// otherwise the search is case-insensitive.
     /// 
     /// **See also:** startsWith()
-    ends_with(c: CharType, cs: Rute::CaseSensitivity) -> bool,
+    ends_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character in
@@ -325,7 +325,7 @@ struct Latin1String {
     /// chopped()
     /// chop()
     /// truncate()
-    mid(pos: i32, n: i32) -> Latin1String,
+    mid_2(pos: i32, n: i32) -> Latin1String,
     /// 
     /// Returns the substring of length *length* starting at position
     /// 0 in this object.

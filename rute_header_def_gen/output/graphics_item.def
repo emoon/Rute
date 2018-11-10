@@ -458,7 +458,7 @@ struct GraphicsItem {
     /// 
     /// Return the graphics item cast to a QGraphicsObject, if the class is actually a
     /// graphics object, 0 otherwise.
-    to_graphics_object() -> GraphicsObject?,
+    to_graphics_object_2() -> GraphicsObject?,
     /// 
     /// Returns a pointer to this item's item group, or 0 if this item is not
     /// member of a group.
@@ -1301,7 +1301,7 @@ struct GraphicsItem {
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling setPos(QPointF( *x,* *y)).*
-    set_pos(x: f32, y: f32),
+    set_pos_2(x: f32, y: f32),
     /// 
     /// Moves the item by *dx* points horizontally, and *dy* point
     /// vertically. This function is equivalent to calling setPos(pos() +
@@ -1342,7 +1342,7 @@ struct GraphicsItem {
     /// 
     /// This convenience function is equivalent to calling
     /// ensureVisible(QRectF( *x,* *y,* *w,* *h),* *xmargin,* *ymargin).*
-    ensure_visible(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
+    ensure_visible_2(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
     /// 
     /// Returns this item's scene transformation matrix. This matrix can be used
     /// to map coordinates and geometrical shapes from this item's local
@@ -1581,7 +1581,7 @@ struct GraphicsItem {
     /// 
     /// **See also:** setTransformOriginPoint()
     /// {Transformations}
-    set_transform_origin_point(ax: f32, ay: f32),
+    set_transform_origin_point_2(ax: f32, ay: f32),
     /// 
     /// This virtual function is called twice for all items by the
     /// QGraphicsScene::advance() slot. In the first phase, all items are called
@@ -1869,7 +1869,7 @@ struct GraphicsItem {
     /// 
     /// **See also:** opaqueArea()
     /// isObscured()
-    is_obscured(x: f32, y: f32, w: f32, h: f32) -> bool,
+    is_obscured_2(x: f32, y: f32, w: f32, h: f32) -> bool,
     /// 
     /// Returns `true` if this item's bounding rect is completely obscured by the
     /// opaque shape of *item.*
@@ -2045,7 +2045,7 @@ struct GraphicsItem {
     /// Updates the item's micro focus.
     /// 
     /// **See also:** QInputMethod
-    update(x: f32, y: f32, width: f32, height: f32),
+    update_2(x: f32, y: f32, width: f32, height: f32),
     /// 
     /// Scrolls the contents of *rect* by *dx,* *dy.* If *rect* is a null rect
     /// (the default), the item's bounding rect is scrolled.
@@ -2272,7 +2272,7 @@ struct GraphicsItem {
     /// mapFromItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
+    map_to_item_2(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
@@ -2322,7 +2322,7 @@ struct GraphicsItem {
     /// mapFromParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(rect: &RectFType) -> PolygonF,
+    map_to_parent_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
@@ -2365,7 +2365,7 @@ struct GraphicsItem {
     /// mapFromScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(rect: &RectFType) -> PolygonF,
+    map_to_scene_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// *item's* coordinate system, and returns the mapped rectangle as a new
@@ -2464,7 +2464,7 @@ struct GraphicsItem {
     /// mapFromItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
+    map_to_item_3(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
@@ -2514,7 +2514,7 @@ struct GraphicsItem {
     /// mapFromParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(polygon: &PolygonFType) -> PolygonF,
+    map_to_parent_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
@@ -2557,7 +2557,7 @@ struct GraphicsItem {
     /// mapFromScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(polygon: &PolygonFType) -> PolygonF,
+    map_to_scene_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
@@ -2612,7 +2612,7 @@ struct GraphicsItem {
     /// mapFromItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
+    map_to_item_4(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
@@ -2662,7 +2662,7 @@ struct GraphicsItem {
     /// mapFromParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(path: &PainterPathType) -> PainterPath,
+    map_to_parent_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
@@ -2705,7 +2705,7 @@ struct GraphicsItem {
     /// mapFromScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(path: &PainterPathType) -> PainterPath,
+    map_to_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
@@ -2910,7 +2910,7 @@ struct GraphicsItem {
     /// mapToItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
+    map_from_item_2(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -2956,7 +2956,7 @@ struct GraphicsItem {
     /// mapToParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(rect: &RectFType) -> PolygonF,
+    map_from_parent_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3001,7 +3001,7 @@ struct GraphicsItem {
     /// mapToScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(rect: &RectFType) -> PolygonF,
+    map_from_scene_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in *item's* coordinate system, to
     /// this item's coordinate system, and returns the mapped rectangle as a new
@@ -3103,7 +3103,7 @@ struct GraphicsItem {
     /// mapToItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
+    map_from_item_3(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3149,7 +3149,7 @@ struct GraphicsItem {
     /// mapToParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(polygon: &PolygonFType) -> PolygonF,
+    map_from_parent_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3194,7 +3194,7 @@ struct GraphicsItem {
     /// mapToScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(polygon: &PolygonFType) -> PolygonF,
+    map_from_scene_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
@@ -3251,7 +3251,7 @@ struct GraphicsItem {
     /// mapToItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
+    map_from_item_4(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3297,7 +3297,7 @@ struct GraphicsItem {
     /// mapToParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(path: &PainterPathType) -> PainterPath,
+    map_from_parent_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3342,7 +3342,7 @@ struct GraphicsItem {
     /// mapToScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(path: &PainterPathType) -> PainterPath,
+    map_from_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
@@ -3397,7 +3397,7 @@ struct GraphicsItem {
     /// mapFromItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
+    map_to_item_5(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
@@ -3447,7 +3447,7 @@ struct GraphicsItem {
     /// mapFromParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(x: f32, y: f32) -> PointF,
+    map_to_parent_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
@@ -3490,7 +3490,7 @@ struct GraphicsItem {
     /// mapFromScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(x: f32, y: f32) -> PointF,
+    map_to_scene_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
@@ -3545,7 +3545,7 @@ struct GraphicsItem {
     /// mapFromItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_to_item_6(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
@@ -3595,7 +3595,7 @@ struct GraphicsItem {
     /// mapFromParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_to_parent_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
@@ -3638,7 +3638,7 @@ struct GraphicsItem {
     /// mapFromScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_to_scene_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// *item's* coordinate system, and returns the mapped rectangle as a new
@@ -3654,7 +3654,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToItem(item, QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_to_item_2(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// its parent's coordinate system, and returns the mapped rectangle as a new
@@ -3668,7 +3668,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToParent(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_parent(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_to_parent_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene coordinate system, and returns the mapped rectangle as a new
@@ -3682,7 +3682,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToScene(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_scene(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_to_scene_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
@@ -3739,7 +3739,7 @@ struct GraphicsItem {
     /// mapToItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
+    map_from_item_5(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3785,7 +3785,7 @@ struct GraphicsItem {
     /// mapToParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(x: f32, y: f32) -> PointF,
+    map_from_parent_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3830,7 +3830,7 @@ struct GraphicsItem {
     /// mapToScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(x: f32, y: f32) -> PointF,
+    map_from_scene_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
@@ -3887,7 +3887,7 @@ struct GraphicsItem {
     /// mapToItem()
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_from_item_6(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3933,7 +3933,7 @@ struct GraphicsItem {
     /// mapToParent()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_from_parent_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
@@ -3978,7 +3978,7 @@ struct GraphicsItem {
     /// mapToScene()
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    map_from_scene_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in *item's* coordinate system, to
     /// this item's coordinate system, and returns the mapped rectangle as a new
@@ -3994,7 +3994,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromItem(item, QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_from_item_2(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped rectangle
@@ -4009,7 +4009,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromParent(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_parent(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_from_parent_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in scene coordinates, to this item's
     /// coordinate system, and returns the mapped rectangle as a new rectangle
@@ -4023,7 +4023,7 @@ struct GraphicsItem {
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromScene(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_scene(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    map_rect_from_scene_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Returns `true` if this item is an ancestor of *child* (i.e., if this item
     /// is *child's* parent, or one of *child's* parent's ancestors).

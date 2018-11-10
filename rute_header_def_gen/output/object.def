@@ -899,7 +899,7 @@ struct Object {
     /// 
     /// Overloaded functions can be resolved with help of [qOverload.](qOverload.)
     /// 
-    [static] connect(sender: *ObjectType, signal: &MetaMethodType, receiver: *ObjectType, method: &MetaMethodType, type: Rute::ConnectionType) -> MetaObject::Connection,
+    [static] connect_2(sender: *ObjectType, signal: &MetaMethodType, receiver: *ObjectType, method: &MetaMethodType, type: Rute::ConnectionType) -> MetaObject::Connection,
     /// 
     /// Creates a connection of the given *type* from the *signal* in
     /// the *sender* object to the *method* in the *receiver* object.
@@ -1121,7 +1121,7 @@ struct Object {
     /// 
     /// Overloaded functions can be resolved with help of [qOverload.](qOverload.)
     /// 
-    connect(sender: *ObjectType, signal: *char, member: *char, type: Rute::ConnectionType) -> MetaObject::Connection,
+    connect_3(sender: *ObjectType, signal: *char, member: *char, type: Rute::ConnectionType) -> MetaObject::Connection,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1395,7 +1395,7 @@ struct Object {
     /// QMetaObject::Connection
     /// 
     /// **See also:** connect()
-    disconnect(signal: *char, receiver: *ObjectType, member: *char) -> bool,
+    disconnect_2(signal: *char, receiver: *ObjectType, member: *char) -> bool,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1532,7 +1532,7 @@ struct Object {
     /// QMetaObject::Connection
     /// 
     /// **See also:** connect()
-    disconnect(receiver: *ObjectType, member: *char) -> bool,
+    disconnect_3(receiver: *ObjectType, member: *char) -> bool,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1669,7 +1669,7 @@ struct Object {
     /// QMetaObject::Connection
     /// 
     /// **See also:** connect()
-    [static] disconnect(arg0: onst QMetaObject::Connection &) -> bool,
+    [static] disconnect_4(arg0: onst QMetaObject::Connection &) -> bool,
     /// 
     /// **Overloads**
     /// Dumps a tree of children to the debug output.
@@ -1707,7 +1707,7 @@ struct Object {
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
     /// **See also:** dumpObjectInfo()
-    dump_object_tree(),
+    dump_object_tree_2(),
     /// 
     /// **Overloads**
     /// Dumps information about signal connections, etc. for this object
@@ -1721,7 +1721,7 @@ struct Object {
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
     /// **See also:** dumpObjectTree()
-    dump_object_info(),
+    dump_object_info_2(),
     /// 
     /// Sets the value of the object's *name* property to *value.*
     /// 

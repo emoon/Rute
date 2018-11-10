@@ -150,7 +150,7 @@ struct ListWidget : ListView {
     /// 
     /// **See also:** insertItem()
     /// addItem()
-    insert_item(row: i32, label: String),
+    insert_item_2(row: i32, label: String),
     /// 
     /// Inserts items from the list of *labels* into the list, starting at the
     /// given *row.*
@@ -187,7 +187,7 @@ struct ListWidget : ListView {
     /// Inserts items with the text *labels* at the end of the list widget.
     /// 
     /// **See also:** insertItems()
-    add_item(item: *ListWidgetItemType),
+    add_item_2(item: *ListWidgetItemType),
     /// 
     /// Inserts items with the text *labels* at the end of the list widget.
     /// 
@@ -230,7 +230,7 @@ struct ListWidget : ListView {
     /// the item is also selected.
     /// 
     /// Set the current item to *item,* using the given *command.*
-    set_current_item(item: *ListWidgetItemType, command: ItemSelectionModel::SelectionFlags),
+    set_current_item_2(item: *ListWidgetItemType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// This signal is emitted whenever the current item changes.
     /// 
@@ -244,7 +244,7 @@ struct ListWidget : ListView {
     set_current_row(row: i32),
     /// 
     /// Sets the current row to be the given *row,* using the given *command,*
-    set_current_row(row: i32, command: ItemSelectionModel::SelectionFlags),
+    set_current_row_2(row: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns a pointer to the item at the coordinates *p.* The coordinates
     /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
@@ -270,7 +270,7 @@ struct ListWidget : ListView {
     /// [viewport()](QAbstractScrollArea::)
     /// 
     /// 
-    item_at(x: i32, y: i32) -> ListWidgetItem?,
+    item_at_2(x: i32, y: i32) -> ListWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
     visual_item_rect(item: *ListWidgetItemType) -> Rect,
@@ -466,7 +466,7 @@ struct ListWidget : ListView {
     /// Returns the QModelIndex associated with the given *item.*
     /// 
     /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
-    index_from_item(item: *ListWidgetItemType) -> ModelIndex,
+    index_from_item_2(item: *ListWidgetItemType) -> ModelIndex,
     /// 
     /// Returns a pointer to the QListWidgetItem associated with the given *index.*
     item_from_index(index: &ModelIndexType) -> ListWidgetItem?,

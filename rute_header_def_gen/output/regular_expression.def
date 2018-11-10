@@ -608,7 +608,7 @@ struct RegularExpression {
     /// 
     /// **See also:** QRegularExpressionMatch
     /// {normal matching}
-    match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
     /// 
     /// Attempts to perform a global match of the regular expression against the
     /// given *subject* string, starting at the position *offset* inside the
@@ -652,7 +652,7 @@ struct RegularExpression {
     /// 
     /// **See also:** QRegularExpressionMatchIterator
     /// {global matching}
-    global_match(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
+    global_match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
     /// 
     /// Forces an immediate optimization of the pattern, including
     /// JIT-compiling it (if the JIT compiler is enabled).

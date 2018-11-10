@@ -202,7 +202,7 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
-    add_row(label: *WidgetType, field: *LayoutType),
+    add_row_2(label: *WidgetType, field: *LayoutType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
@@ -228,7 +228,7 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
-    add_row(label_text: String, field: *WidgetType),
+    add_row_3(label_text: String, field: *WidgetType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
@@ -254,7 +254,7 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
-    add_row(label_text: String, field: *LayoutType),
+    add_row_4(label_text: String, field: *LayoutType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
@@ -280,7 +280,7 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
-    add_row(widget: *WidgetType),
+    add_row_5(widget: *WidgetType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
@@ -306,7 +306,7 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
-    add_row(layout: *LayoutType),
+    add_row_6(layout: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
@@ -364,7 +364,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
-    insert_row(row: i32, label: *WidgetType, field: *LayoutType),
+    insert_row_2(row: i32, label: *WidgetType, field: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
@@ -393,7 +393,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
-    insert_row(row: i32, label_text: String, field: *WidgetType),
+    insert_row_3(row: i32, label_text: String, field: *WidgetType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
@@ -422,7 +422,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
-    insert_row(row: i32, label_text: String, field: *LayoutType),
+    insert_row_4(row: i32, label_text: String, field: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
@@ -451,7 +451,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
-    insert_row(row: i32, widget: *WidgetType),
+    insert_row_5(row: i32, widget: *WidgetType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
@@ -480,7 +480,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
-    insert_row(row: i32, layout: *LayoutType),
+    insert_row_6(row: i32, layout: *LayoutType),
     /// 
     /// Deletes row *row* from this form layout.
     /// 
@@ -612,7 +612,7 @@ struct FormLayout : Layout {
     /// use takeRow() instead.
     /// 
     /// **See also:** takeRow()
-    remove_row(widget: *WidgetType),
+    remove_row_2(widget: *WidgetType),
     /// 
     /// Deletes row *row* from this form layout.
     /// 
@@ -678,7 +678,7 @@ struct FormLayout : Layout {
     /// use takeRow() instead.
     /// 
     /// **See also:** takeRow()
-    remove_row(layout: *LayoutType),
+    remove_row_3(layout: *LayoutType),
     /// 
     /// Removes the specified *row* from this form layout.
     /// 
@@ -824,7 +824,7 @@ struct FormLayout : Layout {
     /// corresponding label layout items
     /// 
     /// **See also:** removeRow()
-    take_row(widget: *WidgetType) -> FormLayout::TakeRowResult,
+    take_row_2(widget: *WidgetType) -> FormLayout::TakeRowResult,
     /// 
     /// Removes the specified *row* from this form layout.
     /// 
@@ -897,7 +897,7 @@ struct FormLayout : Layout {
     /// corresponding label layout items
     /// 
     /// **See also:** removeRow()
-    take_row(layout: *LayoutType) -> FormLayout::TakeRowResult,
+    take_row_3(layout: *LayoutType) -> FormLayout::TakeRowResult,
     /// 
     /// Sets the item in the given *row* for the given *role* to *item,* extending the
     /// layout with empty rows if necessary.
@@ -978,7 +978,7 @@ struct FormLayout : Layout {
     /// **See also:** itemAt()
     /// 
     /// **Overloads**
-    label_for_field(field: *LayoutType) -> Widget?,
+    label_for_field_2(field: *LayoutType) -> Widget?,
     /// 
     [event] add_item(item: *LayoutItemType),
     /// 
@@ -987,7 +987,7 @@ struct FormLayout : Layout {
     /// 
     /// **See also:** QLayout::itemAt()
     /// setItem()
-    [event] item_at(index: i32) -> LayoutItem?,
+    [event] item_at_2(index: i32) -> LayoutItem?,
     /// 
     [event] take_at(index: i32) -> LayoutItem?,
     /// 

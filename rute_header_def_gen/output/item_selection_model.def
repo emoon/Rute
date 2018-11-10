@@ -138,7 +138,7 @@ struct ItemSelectionModel : Object {
     /// Returns the item model operated on by the selection model.
     /// 
     /// Returns the item model operated on by the selection model.
-    model() -> AbstractItemModel?,
+    model_2() -> AbstractItemModel?,
     /// 
     /// Sets the model to *model.* The modelChanged() signal will be emitted.
     /// 
@@ -228,7 +228,7 @@ struct ItemSelectionModel : Object {
     /// 
     /// Returns the selection ranges stored in the selection model.
     /// 
-    [event] select(selection: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
+    [event] select_2(selection: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Clears the selection model. Emits selectionChanged() and currentChanged().
     /// 

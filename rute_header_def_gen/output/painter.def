@@ -604,7 +604,7 @@ struct Painter {
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    set_pen(pen: &PenType),
+    set_pen_2(pen: &PenType),
     /// 
     /// **Overloads**
     /// Sets the painter's pen to have style Qt::SolidLine, width 1 and the
@@ -621,7 +621,7 @@ struct Painter {
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    set_pen(style: Rute::PenStyle),
+    set_pen_3(style: Rute::PenStyle),
     /// 
     /// Returns the painter's current pen.
     /// 
@@ -691,7 +691,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the painter's brush to black color and the specified *style.*
-    set_brush(style: Rute::BrushStyle),
+    set_brush_2(style: Rute::BrushStyle),
     /// 
     /// Returns the currently set brush origin.
     /// 
@@ -772,7 +772,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    set_brush_origin(arg0: &PointType),
+    set_brush_origin_2(arg0: &PointType),
     /// 
     /// Sets the brush origin to *position.*
     /// 
@@ -794,7 +794,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    set_brush_origin(arg0: &PointFType),
+    set_brush_origin_3(arg0: &PointFType),
     /// 
     /// Sets the background mode of the painter to the given *mode*
     /// 
@@ -902,7 +902,7 @@ struct Painter {
     /// 
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    set_clip_rect(arg0: &RectType, op: Rute::ClipOperation),
+    set_clip_rect_2(arg0: &RectType, op: Rute::ClipOperation),
     /// 
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
     /// is to replace the current clip rectangle.
@@ -920,7 +920,7 @@ struct Painter {
     /// 
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    set_clip_rect(x: i32, y: i32, w: i32, h: i32, op: Rute::ClipOperation),
+    set_clip_rect_3(x: i32, y: i32, w: i32, h: i32, op: Rute::ClipOperation),
     /// 
     /// Sets the clip region to the given *region* using the specified clip
     /// *operation.* The default clip operation is to replace the current
@@ -1115,7 +1115,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the painter's window to the rectangle beginning at ( *x,* *y)* and the given *width* and *height.*
-    set_window(x: i32, y: i32, w: i32, h: i32),
+    set_window_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Returns the viewport rectangle.
     /// 
@@ -1161,7 +1161,7 @@ struct Painter {
     /// **Overloads**
     /// Sets the painter's viewport rectangle to be the rectangle
     /// beginning at ( *x,* *y)* with the given *width* and *height.*
-    set_viewport(x: i32, y: i32, w: i32, h: i32),
+    set_viewport_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Enables view transformations if *enable* is true, or disables
     /// view transformations if *enable* is false.
@@ -1253,7 +1253,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_point(p: &PointType),
+    draw_point_2(p: &PointType),
     /// 
     /// Draws a single point at the given *position* using the current
     /// pen's color.
@@ -1281,7 +1281,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_point(x: i32, y: i32),
+    draw_point_3(x: i32, y: i32),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1313,7 +1313,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: &PolygonFType),
+    draw_points_2(points: &PolygonFType),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1329,7 +1329,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: *PointType, point_count: i32),
+    draw_points_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1345,7 +1345,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: &PolygonType),
+    draw_points_4(points: &PolygonType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1463,7 +1463,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(line: &LineType),
+    draw_line_2(line: &LineType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1522,7 +1522,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(x1: i32, y1: i32, x2: i32, y2: i32),
+    draw_line_3(x1: i32, y1: i32, x2: i32, y2: i32),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1581,7 +1581,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(p1: &PointType, p2: &PointType),
+    draw_line_4(p1: &PointType, p2: &PointType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1640,7 +1640,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(p1: &PointFType, p2: &PointFType),
+    draw_line_5(p1: &PointFType, p2: &PointFType),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1714,7 +1714,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(lines: [LineFType]),
+    draw_lines_2(lines: [LineFType]),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1751,7 +1751,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: *PointFType, line_count: i32),
+    draw_lines_3(point_pairs: *PointFType, line_count: i32),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1788,7 +1788,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: [PointFType]),
+    draw_lines_4(point_pairs: [PointFType]),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1825,7 +1825,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(lines: *LineType, line_count: i32),
+    draw_lines_5(lines: *LineType, line_count: i32),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1862,7 +1862,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(lines: [LineType]),
+    draw_lines_6(lines: [LineType]),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1899,7 +1899,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: *PointType, line_count: i32),
+    draw_lines_7(point_pairs: *PointType, line_count: i32),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1936,7 +1936,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: [PointType]),
+    draw_lines_8(point_pairs: [PointType]),
     /// 
     /// Draws the current *rectangle* with the current pen and brush.
     /// 
@@ -2008,7 +2008,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rect(x1: i32, y1: i32, w: i32, h: i32),
+    draw_rect_2(x1: i32, y1: i32, w: i32, h: i32),
     /// 
     /// Draws the current *rectangle* with the current pen and brush.
     /// 
@@ -2044,7 +2044,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rect(rect: &RectType),
+    draw_rect_3(rect: &RectType),
     /// 
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
@@ -2076,7 +2076,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rectangles: [RectFType]),
+    draw_rects_2(rectangles: [RectFType]),
     /// 
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
@@ -2092,7 +2092,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rects: *RectType, rect_count: i32),
+    draw_rects_3(rects: *RectType, rect_count: i32),
     /// 
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
@@ -2108,7 +2108,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rectangles: [RectType]),
+    draw_rects_4(rectangles: [RectType]),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2164,7 +2164,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(r: &RectType),
+    draw_ellipse_2(r: &RectType),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2192,7 +2192,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(x: i32, y: i32, w: i32, h: i32),
+    draw_ellipse_3(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2220,7 +2220,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(center: &PointFType, rx: f32, ry: f32),
+    draw_ellipse_4(center: &PointFType, rx: f32, ry: f32),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2248,7 +2248,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(center: &PointType, rx: i32, ry: i32),
+    draw_ellipse_5(center: &PointType, rx: i32, ry: i32),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2292,7 +2292,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(polyline: &PolygonFType),
+    draw_polyline_2(polyline: &PolygonFType),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2314,7 +2314,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(points: *PointType, point_count: i32),
+    draw_polyline_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2336,7 +2336,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(polygon: &PolygonType),
+    draw_polyline_4(polygon: &PolygonType),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2402,7 +2402,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(polygon: &PolygonFType, fill_rule: Rute::FillRule),
+    draw_polygon_2(polygon: &PolygonFType, fill_rule: Rute::FillRule),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2435,7 +2435,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(points: *PointType, point_count: i32, fill_rule: Rute::FillRule),
+    draw_polygon_3(points: *PointType, point_count: i32, fill_rule: Rute::FillRule),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2468,7 +2468,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(polygon: &PolygonType, fill_rule: Rute::FillRule),
+    draw_polygon_4(polygon: &PolygonType, fill_rule: Rute::FillRule),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2532,7 +2532,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(polygon: &PolygonFType),
+    draw_convex_polygon_2(polygon: &PolygonFType),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2564,7 +2564,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(points: *PointType, point_count: i32),
+    draw_convex_polygon_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2596,7 +2596,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(polygon: &PolygonType),
+    draw_convex_polygon_4(polygon: &PolygonType),
     /// 
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.*
@@ -2654,7 +2654,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_arc(arg0: &RectType, a: i32, alen: i32),
+    draw_arc_2(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.*
@@ -2683,7 +2683,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_arc(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    draw_arc_3(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
     /// 
@@ -2743,7 +2743,7 @@ struct Painter {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    draw_pie(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    draw_pie_2(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
     /// 
@@ -2773,7 +2773,7 @@ struct Painter {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    draw_pie(arg0: &RectType, a: i32, alen: i32),
+    draw_pie_3(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.* The chord is filled with the current brush().
@@ -2829,7 +2829,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_chord(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    draw_chord_2(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.* The chord is filled with the current brush().
@@ -2857,7 +2857,7 @@ struct Painter {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_chord(arg0: &RectType, a: i32, alen: i32),
+    draw_chord_3(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the given rectangle *rect* with rounded corners.
     /// 
@@ -2913,7 +2913,7 @@ struct Painter {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
+    draw_rounded_rect_2(x: i32, y: i32, w: i32, h: i32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
     /// 
     /// Draws the given rectangle *rect* with rounded corners.
     /// 
@@ -2941,7 +2941,7 @@ struct Painter {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_rounded_rect(rect: &RectType, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
+    draw_rounded_rect_3(rect: &RectType, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
     /// 
     /// Draws a rectangle *r* with rounded corners.
     /// 
@@ -2975,7 +2975,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_round_rect(x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32),
+    draw_round_rect_2(x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32),
     /// 
     /// Draws a rectangle *r* with rounded corners.
     /// 
@@ -2992,7 +2992,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_round_rect(r: &RectType, xround: i32, yround: i32),
+    draw_round_rect_3(r: &RectType, xround: i32, yround: i32),
     /// 
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
     /// origin at the given *position.*
@@ -3038,7 +3038,7 @@ struct Painter {
     /// 
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    draw_tiled_pixmap(x: i32, y: i32, w: i32, h: i32, arg0: &PixmapType, sx: i32, sy: i32),
+    draw_tiled_pixmap_2(x: i32, y: i32, w: i32, h: i32, arg0: &PixmapType, sx: i32, sy: i32),
     /// 
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
     /// origin at the given *position.*
@@ -3061,7 +3061,7 @@ struct Painter {
     /// 
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    draw_tiled_pixmap(arg0: &RectType, arg1: &PixmapType, arg2: &PointType),
+    draw_tiled_pixmap_3(arg0: &RectType, arg1: &PixmapType, arg2: &PointType),
     /// 
     /// Replays the given *picture* at the given *point.*
     /// 
@@ -3103,7 +3103,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    draw_picture(x: i32, y: i32, picture: &PictureType),
+    draw_picture_2(x: i32, y: i32, picture: &PictureType),
     /// 
     /// Replays the given *picture* at the given *point.*
     /// 
@@ -3124,7 +3124,7 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    draw_picture(p: &PointType, picture: &PictureType),
+    draw_picture_3(p: &PointType, picture: &PictureType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3306,7 +3306,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(target_rect: &RectType, pixmap: &PixmapType, source_rect: &RectType),
+    draw_pixmap_2(target_rect: &RectType, pixmap: &PixmapType, source_rect: &RectType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3397,7 +3397,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
+    draw_pixmap_3(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3488,7 +3488,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
+    draw_pixmap_4(x: i32, y: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3579,7 +3579,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointFType, pm: &PixmapType, sr: &RectFType),
+    draw_pixmap_5(p: &PointFType, pm: &PixmapType, sr: &RectFType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3670,7 +3670,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointType, pm: &PixmapType, sr: &RectType),
+    draw_pixmap_6(p: &PointType, pm: &PixmapType, sr: &RectType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3761,7 +3761,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointFType, pm: &PixmapType),
+    draw_pixmap_7(p: &PointFType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3852,7 +3852,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointType, pm: &PixmapType),
+    draw_pixmap_8(p: &PointType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3943,7 +3943,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, pm: &PixmapType),
+    draw_pixmap_9(x: i32, y: i32, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -4034,7 +4034,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(r: &RectType, pm: &PixmapType),
+    draw_pixmap_10(r: &RectType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -4125,7 +4125,7 @@ struct Painter {
     /// 
     /// **See also:** QPainter::PixmapFragment
     /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType),
+    draw_pixmap_11(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType),
     /// 
     /// This function is used to draw *pixmap,* or a sub-rectangle of *pixmap,*
     /// at multiple positions with different scale, rotation and opacity. *fragments* is an array of *fragmentCount* elements specifying the
@@ -4271,7 +4271,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(target_rect: &RectType, image: &ImageType, source_rect: &RectType, flags: Rute::ImageConversionFlags),
+    draw_image_2(target_rect: &RectType, image: &ImageType, source_rect: &RectType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4338,7 +4338,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointFType, image: &ImageType, sr: &RectFType, flags: Rute::ImageConversionFlags),
+    draw_image_3(p: &PointFType, image: &ImageType, sr: &RectFType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4405,7 +4405,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointType, image: &ImageType, sr: &RectType, flags: Rute::ImageConversionFlags),
+    draw_image_4(p: &PointType, image: &ImageType, sr: &RectType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4472,7 +4472,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(r: &RectFType, image: &ImageType),
+    draw_image_5(r: &RectFType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4539,7 +4539,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(r: &RectType, image: &ImageType),
+    draw_image_6(r: &RectType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4606,7 +4606,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointFType, image: &ImageType),
+    draw_image_7(p: &PointFType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4673,7 +4673,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointType, image: &ImageType),
+    draw_image_8(p: &PointType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4740,7 +4740,7 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(x: i32, y: i32, image: &ImageType, sx: i32, sy: i32, sw: i32, sh: i32, flags: Rute::ImageConversionFlags),
+    draw_image_9(x: i32, y: i32, image: &ImageType, sx: i32, sy: i32, sw: i32, sh: i32, flags: Rute::ImageConversionFlags),
     /// 
     /// Sets the layout direction used by the painter when drawing text,
     /// to the specified *direction.*
@@ -4829,7 +4829,7 @@ struct Painter {
     /// **Note**: The y-position is used as the top of the font.
     /// 
     /// **See also:** QStaticText
-    draw_static_text(top_left_position: &PointType, static_text: &StaticTextType),
+    draw_static_text_2(top_left_position: &PointType, static_text: &StaticTextType),
     /// 
     /// **Overloads**
     /// Draws the *staticText* at the *topLeftPosition.*
@@ -4859,7 +4859,7 @@ struct Painter {
     /// **Note**: The y-position is used as the top of the font.
     /// 
     /// **See also:** QStaticText
-    draw_static_text(left: i32, top: i32, static_text: &StaticTextType),
+    draw_static_text_3(left: i32, top: i32, static_text: &StaticTextType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5167,7 +5167,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(p: &PointType, s: String),
+    draw_text_2(p: &PointType, s: String),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5321,7 +5321,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(x: i32, y: i32, s: String),
+    draw_text_3(x: i32, y: i32, s: String),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5475,7 +5475,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(p: &PointFType, str: String, tf: i32, justification_padding: i32),
+    draw_text_4(p: &PointFType, str: String, tf: i32, justification_padding: i32),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5629,7 +5629,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(r: &RectFType, flags: i32, text: String, br: *RectFType),
+    draw_text_5(r: &RectFType, flags: i32, text: String, br: *RectFType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5783,7 +5783,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(r: &RectType, flags: i32, text: String, br: *RectType),
+    draw_text_6(r: &RectType, flags: i32, text: String, br: *RectType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5937,7 +5937,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, br: *RectType),
+    draw_text_7(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, br: *RectType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -6091,7 +6091,7 @@ struct Painter {
     /// 
     /// **See also:** setFont()
     /// setPen()
-    draw_text(r: &RectFType, text: String, o: &TextOptionType),
+    draw_text_8(r: &RectFType, text: String, o: &TextOptionType),
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6197,7 +6197,7 @@ struct Painter {
     /// description of general rich text properties.
     /// 
     /// **See also:** QTextOption
-    bounding_rect(rect: &RectType, flags: i32, text: String) -> Rect,
+    bounding_rect_2(rect: &RectType, flags: i32, text: String) -> Rect,
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6250,7 +6250,7 @@ struct Painter {
     /// description of general rich text properties.
     /// 
     /// **See also:** QTextOption
-    bounding_rect(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String) -> Rect,
+    bounding_rect_3(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String) -> Rect,
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6303,10 +6303,10 @@ struct Painter {
     /// description of general rich text properties.
     /// 
     /// **See also:** QTextOption
-    bounding_rect(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
+    bounding_rect_4(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
     draw_text_item(p: &PointFType, ti: &TextItemType),
-    draw_text_item(x: i32, y: i32, ti: &TextItemType),
-    draw_text_item(p: &PointType, ti: &TextItemType),
+    draw_text_item_2(x: i32, y: i32, ti: &TextItemType),
+    draw_text_item_3(p: &PointType, ti: &TextItemType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6408,7 +6408,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, arg0: &BrushType),
+    fill_rect_2(x: i32, y: i32, w: i32, h: i32, arg0: &BrushType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6459,7 +6459,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectType, arg1: &BrushType),
+    fill_rect_3(arg0: &RectType, arg1: &BrushType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6510,7 +6510,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectFType, color: &ColorType),
+    fill_rect_4(arg0: &RectFType, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6561,7 +6561,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, color: &ColorType),
+    fill_rect_5(x: i32, y: i32, w: i32, h: i32, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6612,7 +6612,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectType, color: &ColorType),
+    fill_rect_6(arg0: &RectType, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6663,7 +6663,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, c: Rute::GlobalColor),
+    fill_rect_7(x: i32, y: i32, w: i32, h: i32, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6714,7 +6714,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectType, c: Rute::GlobalColor),
+    fill_rect_8(r: &RectType, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6765,7 +6765,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectFType, c: Rute::GlobalColor),
+    fill_rect_9(r: &RectFType, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6816,7 +6816,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, style: Rute::BrushStyle),
+    fill_rect_10(x: i32, y: i32, w: i32, h: i32, style: Rute::BrushStyle),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6867,7 +6867,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectType, style: Rute::BrushStyle),
+    fill_rect_11(r: &RectType, style: Rute::BrushStyle),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6918,7 +6918,7 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectFType, style: Rute::BrushStyle),
+    fill_rect_12(r: &RectFType, style: Rute::BrushStyle),
     /// 
     /// Erases the area inside the given *rectangle.* Equivalent to
     /// calling
@@ -6944,7 +6944,7 @@ struct Painter {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    erase_rect(x: i32, y: i32, w: i32, h: i32),
+    erase_rect_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Erases the area inside the given *rectangle.* Equivalent to
     /// calling
@@ -6957,7 +6957,7 @@ struct Painter {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    erase_rect(arg0: &RectType),
+    erase_rect_3(arg0: &RectType),
     /// 
     /// Sets the given render *hint* on the painter if *on* is true;
     /// otherwise clears the render hint.

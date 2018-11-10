@@ -646,7 +646,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Returns the item delegate used by this view and model for
     /// the given *index.*
-    item_delegate(index: &ModelIndexType) -> AbstractItemDelegate?,
+    item_delegate_2(index: &ModelIndexType) -> AbstractItemDelegate?,
     /// 
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     /// 
@@ -1008,7 +1008,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// This function is called when the given *editor* has been destroyed.
     /// 
     /// **See also:** closeEditor()
-    [event] edit(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: *EventType) -> bool,
+    [event] edit_2(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: *EventType) -> bool,
     /// 
     /// Returns the SelectionFlags to be used when updating a selection with
     /// to include the *index* specified. The *event* is a user input event,

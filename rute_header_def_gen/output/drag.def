@@ -165,7 +165,7 @@ struct Drag : Object {
     /// blocked during the operation. However, QDrag::exec() on
     /// Windows causes processEvents() to be called frequently to keep the GUI responsive.
     /// If any loops or operations are called while a drag operation is active, it will block the drag operation.
-    exec(supported_actions: Rute::DropActions, default_action: Rute::DropAction) -> Rute::DropAction,
+    exec_2(supported_actions: Rute::DropActions, default_action: Rute::DropAction) -> Rute::DropAction,
     /// 
     /// Sets the drag *cursor* for the *action.* This allows you
     /// to override the default native cursors. To revert to using the

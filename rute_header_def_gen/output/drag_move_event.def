@@ -63,7 +63,7 @@ struct DragMoveEvent : DropEvent {
     /// 
     /// **Overloads**
     /// Calls QDropEvent::accept().
-    accept(r: &RectType),
+    accept_2(r: &RectType),
     /// 
     /// **Overloads**
     /// Calls QDropEvent::ignore().
@@ -71,7 +71,7 @@ struct DragMoveEvent : DropEvent {
     /// The opposite of the accept(const QRect&) function.
     /// Moves within the *rectangle* are not acceptable, and will be
     /// ignored.
-    ignore(r: &RectType),
+    ignore_2(r: &RectType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -86,7 +86,7 @@ struct Picture : PaintDevice {
     /// 
     /// **Overloads**
     /// *dev* is the device to use for loading.
-    load(file_name: String, format: *char) -> bool,
+    load_2(file_name: String, format: *char) -> bool,
     /// 
     /// Saves a picture to the file specified by *fileName* and returns
     /// true if successful; otherwise returns `false.`
@@ -110,7 +110,7 @@ struct Picture : PaintDevice {
     /// 
     /// **Overloads**
     /// *dev* is the device to use for saving.
-    save(file_name: String, format: *char) -> bool,
+    save_2(file_name: String, format: *char) -> bool,
     /// 
     /// Returns the picture's bounding rectangle or an invalid rectangle
     /// if the picture contains no data.

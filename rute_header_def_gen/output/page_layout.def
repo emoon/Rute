@@ -219,7 +219,7 @@ struct PageLayout {
     /// Returns the margins of the page layout in device pixels for the given *resolution.*
     /// 
     /// **See also:** setMargins()
-    margins(units: PageLayout::Unit) -> MarginsF,
+    margins_2(units: PageLayout::Unit) -> MarginsF,
     /// 
     /// Returns the margins of the page layout in Postscript Points (1/72 of an inch).
     /// 
@@ -321,7 +321,7 @@ struct PageLayout {
     /// but not the page margins.
     /// 
     /// **See also:** paintRect()
-    full_rect(units: PageLayout::Unit) -> RectF,
+    full_rect_2(units: PageLayout::Unit) -> RectF,
     /// 
     /// Returns the full page rectangle in Postscript Points (1/72 of an inch).
     /// 
@@ -403,7 +403,7 @@ struct PageLayout {
     /// 
     /// If the FullPageMode mode is set then the fullRect() is returned and
     /// the margins must be manually managed.
-    paint_rect(units: PageLayout::Unit) -> RectF,
+    paint_rect_2(units: PageLayout::Unit) -> RectF,
     /// 
     /// Returns the paintable rectangle in rounded Postscript Points (1/72 of an inch).
     /// 

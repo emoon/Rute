@@ -180,7 +180,7 @@ struct Palette {
     /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
     /// 
     /// **See also:** QBrush
-    set_color(cr: Palette::ColorRole, color: &ColorType),
+    set_color_2(cr: Palette::ColorRole, color: &ColorType),
     /// 
     /// Sets the brush for the given color *role* to the specified *brush* for all groups in the palette.
     /// 
@@ -216,7 +216,7 @@ struct Palette {
     /// **See also:** brush()
     /// setColor()
     /// ColorRole
-    set_brush(cg: Palette::ColorGroup, cr: Palette::ColorRole, brush: &BrushType),
+    set_brush_2(cg: Palette::ColorGroup, cr: Palette::ColorRole, brush: &BrushType),
     /// 
     /// Sets a the group at *cg.* You can pass either brushes, pixmaps or
     /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
@@ -241,7 +241,7 @@ struct Palette {
     /// **See also:** brush()
     /// setColor()
     /// ColorRole
-    color(cr: Palette::ColorRole) -> Color?,
+    color_2(cr: Palette::ColorRole) -> Color?,
     /// 
     /// **Overloads**
     /// Returns the brush that has been set for the given color *role* in
@@ -257,7 +257,7 @@ struct Palette {
     /// **See also:** color()
     /// setBrush()
     /// ColorRole
-    brush(cr: Palette::ColorRole) -> Brush?,
+    brush_2(cr: Palette::ColorRole) -> Brush?,
     /// 
     /// Use windowText() instead.
     foreground() -> Brush?,
@@ -435,10 +435,10 @@ struct Palette {
     resolve(arg0: &PaletteType) -> Palette,
     /// 
     /// Returns a new QPalette that has attributes copied from *other.*
-    resolve() -> uint,
+    resolve_2() -> uint,
     /// 
     /// Returns a new QPalette that has attributes copied from *other.*
-    resolve(mask: uint),
+    resolve_3(mask: uint),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

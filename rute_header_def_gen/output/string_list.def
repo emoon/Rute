@@ -120,7 +120,7 @@ struct StringList {
     /// **See also:** indexOf()
     /// lastIndexOf()
     /// QString::contains()
-    contains(str: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
+    contains_2(str: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns the index position of the first exact match of *rx* in
     /// the list, searching forward from index position *from.* Returns
@@ -204,7 +204,7 @@ struct StringList {
     /// -1 if no item matched.
     /// 
     /// **See also:** lastIndexOf()
-    index_of(rx: &RegExpType, from: i32) -> i32,
+    index_of_2(rx: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last exact match of *rx* in
     /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
@@ -232,7 +232,7 @@ struct StringList {
     /// Returns -1 if no item matched.
     /// 
     /// **See also:** indexOf()
-    last_index_of(rx: &RegExpType, from: i32) -> i32,
+    last_index_of_2(rx: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns the index position of the first exact match of *rx* in
     /// the list, searching forward from index position *from.* Returns
@@ -260,7 +260,7 @@ struct StringList {
     /// -1 if no item matched.
     /// 
     /// **See also:** lastIndexOf()
-    index_of(re: &RegularExpressionType, from: i32) -> i32,
+    index_of_3(re: &RegularExpressionType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last exact match of *rx* in
     /// the list, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the last item.
@@ -288,7 +288,7 @@ struct StringList {
     /// Returns -1 if no item matched.
     /// 
     /// **See also:** indexOf()
-    last_index_of(re: &RegularExpressionType, from: i32) -> i32,
+    last_index_of_3(re: &RegularExpressionType, from: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

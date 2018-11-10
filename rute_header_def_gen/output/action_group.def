@@ -88,7 +88,7 @@ struct ActionGroup : Object {
     /// group as its parent, so this function is not usually used.
     /// 
     /// **See also:** QAction::setActionGroup()
-    add_action(text: String) -> Action?,
+    add_action_2(text: String) -> Action?,
     /// 
     /// Adds the *action* to this group, and returns it.
     /// 
@@ -112,7 +112,7 @@ struct ActionGroup : Object {
     /// group as its parent, so this function is not usually used.
     /// 
     /// **See also:** QAction::setActionGroup()
-    add_action(icon: &IconType, text: String) -> Action?,
+    add_action_3(icon: &IconType, text: String) -> Action?,
     /// 
     /// Removes the *action* from this group. The action will have no
     /// parent as a result.

@@ -316,7 +316,7 @@ struct MessageBox : Dialog {
     /// returns the push button.
     /// 
     /// **See also:** setStandardButtons()
-    add_button(text: String, role: MessageBox::ButtonRole) -> PushButton?,
+    add_button_2(text: String, role: MessageBox::ButtonRole) -> PushButton?,
     /// 
     /// Adds the given *button* to the message box with the specified *role.*
     /// 
@@ -333,7 +333,7 @@ struct MessageBox : Dialog {
     /// returns the push button.
     /// 
     /// **See also:** setStandardButtons()
-    add_button(button: MessageBox::StandardButton) -> PushButton?,
+    add_button_3(button: MessageBox::StandardButton) -> PushButton?,
     /// 
     /// Removes *button* from the button box without deleting it.
     /// 
@@ -451,7 +451,7 @@ struct MessageBox : Dialog {
     /// 
     /// **See also:** addButton()
     /// QPushButton::setDefault()
-    set_default_button(button: MessageBox::StandardButton),
+    set_default_button_2(button: MessageBox::StandardButton),
     /// 
     /// Returns the button that is activated when escape is pressed.
     /// 
@@ -493,7 +493,7 @@ struct MessageBox : Dialog {
     /// 
     /// **See also:** addButton()
     /// clickedButton()
-    set_escape_button(button: MessageBox::StandardButton),
+    set_escape_button_2(button: MessageBox::StandardButton),
     /// 
     /// Returns the button that was clicked by the user,
     /// or 0 if the user hit the **Esc** key and
@@ -1098,7 +1098,7 @@ struct MessageBox : Dialog {
     /// **See also:** question()
     /// warning()
     /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    [static] information_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens an information message box with the given *title* and
     /// *text* in front of the specified *parent* widget.
@@ -1189,7 +1189,7 @@ struct MessageBox : Dialog {
     /// **See also:** question()
     /// warning()
     /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    [static] information_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens an information message box with the given *title* and
     /// *text* in front of the specified *parent* widget.
@@ -1280,7 +1280,7 @@ struct MessageBox : Dialog {
     /// **See also:** question()
     /// warning()
     /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    [static] information_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1367,7 +1367,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// warning()
     /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    [static] question_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1454,7 +1454,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// warning()
     /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    [static] question_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1541,7 +1541,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// warning()
     /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    [static] question_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1629,7 +1629,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    [static] warning_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1717,7 +1717,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    [static] warning_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1805,7 +1805,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    [static] warning_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1894,7 +1894,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    [static] critical_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1983,7 +1983,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    [static] critical_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -2072,7 +2072,7 @@ struct MessageBox : Dialog {
     /// **See also:** information()
     /// question()
     /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    [static] critical_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Returns the text of the message box button *button,* or
     /// an empty string if the message box does not contain the button.

@@ -214,7 +214,7 @@ struct SessionManager : Object {
     /// are kept in the session manager.
     /// 
     /// The property called *name* has its value set to the string list *value.*
-    set_manager_property(name: String, value: &[String]),
+    set_manager_property_2(name: String, value: &[String]),
     /// 
     /// Returns `true` if the session manager is currently performing a second
     /// session management phase; otherwise returns `false.`

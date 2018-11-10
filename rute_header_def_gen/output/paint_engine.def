@@ -1,3 +1,29 @@
+/// 
+/// Qt provides several premade implementations of QPaintEngine for the
+/// different painter backends we support. The primary paint engine
+/// provided is the raster paint engine, which contains a software
+/// rasterizer which supports the full feature set on all supported platforms.
+/// This is the default for painting on QWidget-based classes in e.g. on Windows,
+/// X11 and MacOS , it is the backend for painting on QImage and it is
+/// used as a fallback for paint engines that do not support a certain
+/// capability. In addition we provide QPaintEngine implementations for
+/// OpenGL (accessible through QGLWidget) and printing (which allows using
+/// QPainter to draw on a QPrinter object).
+/// 
+/// If one wants to use QPainter to draw to a different backend,
+/// one must subclass QPaintEngine and reimplement all its virtual
+/// functions. The QPaintEngine implementation is then made available by
+/// subclassing QPaintDevice and reimplementing the virtual function
+/// QPaintDevice::paintEngine().
+/// 
+/// QPaintEngine is created and owned by the QPaintDevice that created it.
+/// 
+/// **See also:** QPainter
+/// QPaintDevice::paintEngine()
+/// {Paint System}
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [org_name(QPaintEngine)]
 enum PaintEngineFeature {
     PrimitiveTransform,
@@ -72,32 +98,7 @@ enum Type {
     MaxUser,
 }
 
-/// 
-/// Qt provides several premade implementations of QPaintEngine for the
-/// different painter backends we support. The primary paint engine
-/// provided is the raster paint engine, which contains a software
-/// rasterizer which supports the full feature set on all supported platforms.
-/// This is the default for painting on QWidget-based classes in e.g. on Windows,
-/// X11 and MacOS , it is the backend for painting on QImage and it is
-/// used as a fallback for paint engines that do not support a certain
-/// capability. In addition we provide QPaintEngine implementations for
-/// OpenGL (accessible through QGLWidget) and printing (which allows using
-/// QPainter to draw on a QPrinter object).
-/// 
-/// If one wants to use QPainter to draw to a different backend,
-/// one must subclass QPaintEngine and reimplement all its virtual
-/// functions. The QPaintEngine implementation is then made available by
-/// subclassing QPaintDevice and reimplementing the virtual function
-/// QPaintDevice::paintEngine().
-/// 
-/// QPaintEngine is created and owned by the QPaintDevice that created it.
-/// 
-/// **See also:** QPainter
-/// QPaintDevice::paintEngine()
-/// {Paint System}
-/// # Licence
-///
-/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+
 struct PaintEngine {
     /// 
     /// Returns `true` if the paint engine is actively drawing; otherwise
@@ -156,7 +157,7 @@ struct PaintEngine {
     /// 
     /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
     /// or drawPolygon() depending on the feature set of the paint engine.
-    [event] draw_rects(rects: *RectFType, rect_count: i32),
+    [event] draw_rects_2(rects: *RectFType, rect_count: i32),
     /// 
     /// The default implementation splits the list of lines in *lines*
     /// into *lineCount* separate calls to drawPath() or drawPolygon()
@@ -176,7 +177,7 @@ struct PaintEngine {
     /// The default implementation converts the first *lineCount* lines
     /// in *lines* to a QLineF and calls the floating point version of
     /// this function.
-    [event] draw_lines(lines: *LineFType, line_count: i32),
+    [event] draw_lines_2(lines: *LineFType, line_count: i32),
     /// 
     /// Reimplement this function to draw the largest ellipse that can be
     /// contained within rectangle *rect.*
@@ -194,7 +195,7 @@ struct PaintEngine {
     /// 
     /// The default implementation of this function calls the floating
     /// point version of this function
-    [event] draw_ellipse(r: &RectType),
+    [event] draw_ellipse_2(r: &RectType),
     /// 
     /// The default implementation ignores the *path* and does nothing.
     [event] draw_path(path: &PainterPathType),
@@ -215,7 +216,7 @@ struct PaintEngine {
     /// The default implementation converts the first *pointCount* QPoints in *points*
     /// to QPointFs and calls the floating point version of drawPoints.
     /// 
-    [event] draw_points(points: *PointType, point_count: i32),
+    [event] draw_points_2(points: *PointType, point_count: i32),
     /// 
     /// PolygonDrawMode mode)
     /// 
@@ -243,7 +244,7 @@ struct PaintEngine {
     /// *pointCount* first points in *points,* using mode *mode.*
     /// 
     /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-    [event] draw_polygon(points: *PointType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
+    [event] draw_polygon_2(points: *PointType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
     /// 
     /// &pm, const QRectF &sr)
     /// 

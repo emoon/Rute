@@ -238,7 +238,7 @@ struct LineF {
     /// the same direction; otherwise it returns 180.
     /// 
     /// **See also:** intersect()
-    angle(l: &LineFType) -> f32,
+    angle_2(l: &LineFType) -> f32,
     /// 
     /// Returns the point at the parameterized position specified by *t.* The function returns the line's start point if t = 0, and its end
     /// point if t = 1.

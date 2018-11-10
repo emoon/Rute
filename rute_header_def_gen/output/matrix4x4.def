@@ -167,7 +167,7 @@ struct Matrix4x4 {
     /// 
     /// **See also:** translate()
     /// rotate()
-    scale(x: f32, y: f32),
+    scale_2(x: f32, y: f32),
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
@@ -195,7 +195,7 @@ struct Matrix4x4 {
     /// 
     /// **See also:** translate()
     /// rotate()
-    scale(x: f32, y: f32, z: f32),
+    scale_3(x: f32, y: f32, z: f32),
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
@@ -223,7 +223,7 @@ struct Matrix4x4 {
     /// 
     /// **See also:** translate()
     /// rotate()
-    scale(factor: f32),
+    scale_4(factor: f32),
     /// 
     /// Multiples this matrix by another that rotates coordinates through
     /// *angle* degrees about *vector.*
@@ -245,7 +245,7 @@ struct Matrix4x4 {
     /// **See also:** scale()
     /// translate()
     /// QQuaternion
-    rotate(angle: f32, x: f32, y: f32, z: f32),
+    rotate_2(angle: f32, x: f32, y: f32, z: f32),
     /// 
     /// Multiples this matrix by another that rotates coordinates through
     /// *angle* degrees about *vector.*
@@ -267,7 +267,7 @@ struct Matrix4x4 {
     /// **See also:** scale()
     /// translate()
     /// QQuaternion
-    rotate(quaternion: &QuaternionType),
+    rotate_3(quaternion: &QuaternionType),
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
@@ -317,7 +317,7 @@ struct Matrix4x4 {
     /// 
     /// **See also:** frustum()
     /// perspective()
-    ortho(rect: &RectFType),
+    ortho_2(rect: &RectFType),
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
@@ -342,7 +342,7 @@ struct Matrix4x4 {
     /// 
     /// **See also:** frustum()
     /// perspective()
-    ortho(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
+    ortho_3(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Multiplies this matrix by another that applies a perspective
     /// frustum projection for a window with lower-left corner ( *left,* *bottom),*
@@ -401,7 +401,7 @@ struct Matrix4x4 {
     /// 
     /// This matches the transform used by the fixed function OpenGL viewport
     /// transform controlled by the functions glViewport() and glDepthRange().
-    viewport(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
+    viewport_2(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Flips between right-handed and left-handed coordinate systems
     /// by multiplying the y and z co-ordinates by -1. This is normally
@@ -474,7 +474,7 @@ struct Matrix4x4 {
     /// be dropped rather than projected.
     /// 
     /// **See also:** toAffine()
-    to_transform(distance_to_plane: f32) -> Transform,
+    to_transform_2(distance_to_plane: f32) -> Transform,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
@@ -550,7 +550,7 @@ struct Matrix4x4 {
     /// with sides parallel to the horizontal and vertical axes.
     /// 
     /// **See also:** map()
-    map(point: &PointFType) -> PointF,
+    map_2(point: &PointFType) -> PointF,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
@@ -588,7 +588,7 @@ struct Matrix4x4 {
     /// with sides parallel to the horizontal and vertical axes.
     /// 
     /// **See also:** map()
-    map(point: &Vector3DType) -> Vector3D,
+    map_3(point: &Vector3DType) -> Vector3D,
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
@@ -633,7 +633,7 @@ struct Matrix4x4 {
     /// with sides parallel to the horizontal and vertical axes.
     /// 
     /// **See also:** map()
-    map(point: &Vector4DType) -> Vector4D,
+    map_4(point: &Vector4DType) -> Vector4D,
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
@@ -663,7 +663,7 @@ struct Matrix4x4 {
     /// with sides parallel to the horizontal and vertical axes.
     /// 
     /// **See also:** map()
-    map_rect(rect: &RectFType) -> RectF,
+    map_rect_2(rect: &RectFType) -> RectF,
     /// 
     /// Returns a pointer to the raw data of this matrix.
     /// 
@@ -685,7 +685,7 @@ struct Matrix4x4 {
     /// This raw data is stored in column-major format.
     /// 
     /// **See also:** constData()
-    data() -> f32?,
+    data_2() -> f32?,
     /// 
     /// Returns a constant pointer to the raw data of this matrix.
     /// This raw data is stored in column-major format.

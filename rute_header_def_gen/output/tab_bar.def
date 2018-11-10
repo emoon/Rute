@@ -117,7 +117,7 @@ struct TabBar : Widget {
     /// 
     /// **Overloads**
     /// Adds a new tab with icon *icon* and text *text.* Returns the new tab's index.
-    add_tab(icon: &IconType, text: String) -> i32,
+    add_tab_2(icon: &IconType, text: String) -> i32,
     /// 
     /// Inserts a new tab with text *text* at position *index.* If *index* is out of range, the new tab is appened. Returns the new
     /// tab's index.
@@ -145,7 +145,7 @@ struct TabBar : Widget {
     /// 
     /// Inserting a new tab at an index less than or equal to the current index
     /// will increment the current index, but keep the current tab.
-    insert_tab(index: i32, icon: &IconType, text: String) -> i32,
+    insert_tab_2(index: i32, icon: &IconType, text: String) -> i32,
     /// 
     /// Removes the tab at position *index.*
     /// 

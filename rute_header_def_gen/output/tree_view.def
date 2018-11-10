@@ -408,7 +408,7 @@ struct TreeView : AbstractItemView {
     /// all models support this and may even crash in this case.
     /// 
     /// **See also:** sortingEnabled
-    sort_by_column(column: i32),
+    sort_by_column_2(column: i32),
     /// 
     /// Expands all expandable items.
     /// 

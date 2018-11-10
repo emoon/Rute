@@ -75,7 +75,7 @@ struct ErrorMessage : Dialog {
     /// pending messages, it will be queued to be displayed later.
     /// 
     /// **See also:** showMessage()
-    show_message(message: String, type: String),
+    show_message_2(message: String, type: String),
     /// 
     [event] done(arg0: i32),
     /// 

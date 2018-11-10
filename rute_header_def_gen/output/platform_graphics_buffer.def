@@ -79,7 +79,7 @@ struct PlatformGraphicsBuffer : Object {
     /// Accessor for the bytes of the buffer. This function needs to be called on a
     /// buffer with SWReadAccess access lock. Behavior is undefined for modifying
     /// the memory returned when not having a SWWriteAccess.
-    [event] data() -> uchar?,
+    [event] data_2() -> uchar?,
     /// 
     /// Accessor for bytes per line in the graphics buffer.
     [event] bytes_per_line() -> i32,

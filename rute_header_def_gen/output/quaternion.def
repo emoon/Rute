@@ -43,7 +43,7 @@ struct Quaternion {
     /// 
     /// **See also:** vector()
     /// setScalar()
-    set_vector(x: f32, y: f32, z: f32),
+    set_vector_2(x: f32, y: f32, z: f32),
     /// 
     /// Returns the x coordinate of this quaternion's vector.
     /// 
@@ -233,7 +233,7 @@ struct Quaternion {
     /// that corresponds to this quaternion.
     /// 
     /// **See also:** fromAxisAndAngle()
-    get_axis_and_angle(x: *f32, y: *f32, z: *f32, angle: *f32),
+    get_axis_and_angle_2(x: *f32, y: *f32, z: *f32, angle: *f32),
     /// 
     /// Creates a normalized quaternion that corresponds to rotating through
     /// *angle* degrees about the specified 3D *axis.*
@@ -244,7 +244,7 @@ struct Quaternion {
     /// *angle* degrees about the 3D axis ( *x,* *y,* *z).*
     /// 
     /// **See also:** getAxisAndAngle()
-    [static] from_axis_and_angle(x: f32, y: f32, z: f32, angle: f32) -> Quaternion,
+    [static] from_axis_and_angle_2(x: f32, y: f32, z: f32, angle: f32) -> Quaternion,
     /// 
     /// **Overloads**
     /// Calculates roll, pitch, and yaw Euler angles (in degrees)
@@ -285,7 +285,7 @@ struct Quaternion {
     /// and *yaw* degrees around the y axis (in that order).
     /// 
     /// **See also:** getEulerAngles()
-    [static] from_euler_angles(pitch: f32, yaw: f32, roll: f32) -> Quaternion,
+    [static] from_euler_angles_2(pitch: f32, yaw: f32, roll: f32) -> Quaternion,
     /// 
     /// Returns the 3 orthonormal axes ( *xAxis,* *yAxis,* *zAxis)* defining the quaternion.
     /// 

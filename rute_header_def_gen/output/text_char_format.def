@@ -283,7 +283,7 @@ struct TextCharFormat : TextFormat {
     /// The stretch factor is only applied to outline fonts. The stretch factor is ignored for bitmap fonts.
     /// 
     /// **See also:** fontStretch()
-    set_font(font: &FontType),
+    set_font_2(font: &FontType),
     /// 
     /// Returns the text format's font family.
     /// 

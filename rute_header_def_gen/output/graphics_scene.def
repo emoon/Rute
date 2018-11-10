@@ -154,7 +154,7 @@ struct GraphicsScene : Object {
     /// **See also:** width()
     height() -> f32,
     set_scene_rect(rect: &RectFType),
-    set_scene_rect(x: f32, y: f32, w: f32, h: f32),
+    set_scene_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// Renders the *source* rect from scene into *target,* using *painter.* This
     /// function is useful for capturing the contents of the scene onto a paint
@@ -402,7 +402,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** itemAt()
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(pos: &PointFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    items_2(pos: &PointFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
@@ -494,7 +494,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** itemAt()
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(rect: &RectFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    items_3(rect: &RectFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
@@ -586,7 +586,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** itemAt()
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(polygon: &PolygonFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    items_4(polygon: &PolygonFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
@@ -678,7 +678,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** itemAt()
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(path: &PainterPathType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    items_5(path: &PainterPathType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Returns a list of all items that collide with *item.* Collisions are
     /// determined by calling QGraphicsItem::collidesWithItem(); the collision
@@ -833,7 +833,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** itemAt()
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(x: f32, y: f32, w: f32, h: f32, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
+    items_6(x: f32, y: f32, w: f32, h: f32, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// **Overloads**
     /// Returns the topmost visible item at the specified *position,* or 0 if
@@ -881,7 +881,7 @@ struct GraphicsScene : Object {
     /// a QTransform instead.
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
-    item_at(x: f32, y: f32, device_transform: &TransformType) -> GraphicsItem?,
+    item_at_2(x: f32, y: f32, device_transform: &TransformType) -> GraphicsItem?,
     /// 
     /// Returns a list of all currently selected items. The items are
     /// returned in no particular order.
@@ -966,7 +966,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** clearSelection()
     /// selectionArea()
-    set_selection_area(path: &PainterPathType, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
+    set_selection_area_2(path: &PainterPathType, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
     /// 
     /// Sets the selection area to *path.* All items within this area are
     /// immediately selected, and all items outside are unselected. You can get
@@ -1002,7 +1002,7 @@ struct GraphicsScene : Object {
     /// 
     /// **See also:** clearSelection()
     /// selectionArea()
-    set_selection_area(path: &PainterPathType, selection_operation: Rute::ItemSelectionOperation, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
+    set_selection_area_3(path: &PainterPathType, selection_operation: Rute::ItemSelectionOperation, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
     /// 
     /// Groups all items in *items* into a new QGraphicsItemGroup, and returns a
     /// pointer to the group. The group is created with the common ancestor of *items* as its parent, and with position (0, 0). The items are all
@@ -1258,7 +1258,7 @@ struct GraphicsScene : Object {
     /// 
     /// This convenience function is equivalent to calling addEllipse(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
-    add_ellipse(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsEllipseItem?,
+    add_ellipse_2(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsEllipseItem?,
     /// 
     /// Creates and adds a line item to the scene, and returns the item
     /// pointer. The geometry of the line is defined by *line,* and its pen
@@ -1281,7 +1281,7 @@ struct GraphicsScene : Object {
     /// 
     /// This convenience function is equivalent to calling addLine(QLineF( *x1,*
     /// *y1,* *x2,* *y2),* *pen).*
-    add_line(x1: f32, y1: f32, x2: f32, y2: f32, pen: &PenType) -> GraphicsLineItem?,
+    add_line_2(x1: f32, y1: f32, x2: f32, y2: f32, pen: &PenType) -> GraphicsLineItem?,
     /// 
     /// Creates and adds a rectangle item to the scene, and returns the item
     /// pointer. The geometry of the rectangle is defined by *rect,* and its pen
@@ -1305,7 +1305,7 @@ struct GraphicsScene : Object {
     /// 
     /// This convenience function is equivalent to calling addRect(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
-    add_rect(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsRectItem?,
+    add_rect_2(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsRectItem?,
     /// 
     /// Removes the item *item* and all its children from the scene. The
     /// ownership of *item* is passed on to the caller (i.e.,
@@ -1668,7 +1668,7 @@ struct GraphicsScene : Object {
     /// **Overloads**
     /// This function is equivalent to calling update(QRectF( *x,* *y,* *w,*
     /// *h));*
-    update(rect: &RectFType),
+    update_2(rect: &RectFType),
     /// 
     /// Invalidates and schedules a redraw of the *layers* in *rect* on the
     /// scene. Any cached content in *layers* is unconditionally invalidated and
@@ -1691,7 +1691,7 @@ struct GraphicsScene : Object {
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling invalidate(QRectF( *x,* *y,* *w,* *h),* *layers);*
-    invalidate(rect: &RectFType, layers: GraphicsScene::SceneLayers),
+    invalidate_2(rect: &RectFType, layers: GraphicsScene::SceneLayers),
     /// 
     /// This slot *advances* the scene by one step, by calling
     /// QGraphicsItem::advance() for all items on the scene. This is done in two

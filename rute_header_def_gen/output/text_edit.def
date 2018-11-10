@@ -432,7 +432,7 @@ struct TextEdit : AbstractScrollArea {
     /// 
     /// Returns `true` if a match was found and changes the cursor to select the match;
     /// otherwise returns `false.`
-    find(exp: &RegExpType, options: TextDocument::FindFlags) -> bool,
+    find_2(exp: &RegExpType, options: TextDocument::FindFlags) -> bool,
     /// 
     /// QString QTextEdit::toPlainText() const
     /// 
@@ -481,7 +481,7 @@ struct TextEdit : AbstractScrollArea {
     /// and it takes the *position* in document coordinates where the mouse click was.
     /// This can enable actions that are sensitive to the position where the user clicked.
     /// The popup menu's ownership is transferred to the caller.
-    create_standard_context_menu(position: &PointType) -> Menu?,
+    create_standard_context_menu_2(position: &PointType) -> Menu?,
     /// 
     /// returns a QTextCursor at position *pos* (in viewport coordinates).
     cursor_for_position(pos: &PointType) -> TextCursor,
@@ -498,7 +498,7 @@ struct TextEdit : AbstractScrollArea {
     /// 
     /// returns a rectangle (in viewport coordinates) that includes the
     /// cursor of the text edit.
-    cursor_rect() -> Rect,
+    cursor_rect_2() -> Rect,
     /// 
     /// Returns the reference of the anchor at position *pos,* or an
     /// empty string if no anchor exists at that point.
@@ -549,7 +549,7 @@ struct TextEdit : AbstractScrollArea {
     /// 
     [event] input_method_query(property: Rute::InputMethodQuery) -> Variant,
     /// 
-    input_method_query(query: Rute::InputMethodQuery, argument: VariantType) -> Variant,
+    input_method_query_2(query: Rute::InputMethodQuery, argument: VariantType) -> Variant,
     /// 
     /// Sets the point size of the current format to *s.*
     /// 

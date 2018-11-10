@@ -180,7 +180,7 @@ struct ButtonGroup : Object {
     /// 
     /// **See also:** checkedButton()
     /// QAbstractButton::clicked()
-    [signal] button_clicked(arg0: i32),
+    [signal] button_clicked_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is pressed down.
     /// 
@@ -200,7 +200,7 @@ struct ButtonGroup : Object {
     /// pressed down.
     /// 
     /// **See also:** QAbstractButton::pressed()
-    [signal] button_pressed(arg0: i32),
+    [signal] button_pressed_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is released.
     /// 
@@ -220,7 +220,7 @@ struct ButtonGroup : Object {
     /// released.
     /// 
     /// **See also:** QAbstractButton::released()
-    [signal] button_released(arg0: i32),
+    [signal] button_released_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
@@ -242,7 +242,7 @@ struct ButtonGroup : Object {
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
     /// **See also:** QAbstractButton::toggled()
-    [signal] button_toggled(arg0: i32, arg1: bool),
+    [signal] button_toggled_2(arg0: i32, arg1: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

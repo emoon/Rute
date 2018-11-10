@@ -85,7 +85,7 @@ struct GraphicsPixmapItem : GraphicsItem {
     /// **See also:** offset()
     /// 
     /// This convenience function is equivalent to calling setOffset(QPointF( *x,* *y)).*
-    set_offset(x: f32, y: f32),
+    set_offset_2(x: f32, y: f32),
     /// 
     [event] bounding_rect() -> RectF,
     /// 

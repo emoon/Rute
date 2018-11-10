@@ -1212,7 +1212,7 @@ struct AbstractItemModel : Object {
     /// use to create model indexes.
     /// 
     /// **See also:** QModelIndex::internalId()
-    create_index(row: i32, column: i32, id: quintptr) -> ModelIndex,
+    create_index_2(row: i32, column: i32, id: quintptr) -> ModelIndex,
     encode_data(indexes: &[ModelIndex], stream: &DataStreamType),
     decode_data(row: i32, column: i32, parent: &ModelIndexType, stream: &DataStreamType) -> bool,
     /// 

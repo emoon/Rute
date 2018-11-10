@@ -335,7 +335,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(x: f32, y: f32, tx: *f32, ty: *f32),
+    map_2(x: f32, y: f32, tx: *f32, ty: *f32),
     /// 
     /// Creates and returns a QRectF object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix.
@@ -375,7 +375,7 @@ struct Matrix {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    map_rect(arg0: &RectFType) -> RectF,
+    map_rect_2(arg0: &RectFType) -> RectF,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -466,7 +466,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(p: &PointType) -> Point,
+    map_3(p: &PointType) -> Point,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -557,7 +557,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(p: &PointFType) -> PointF,
+    map_4(p: &PointFType) -> PointF,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -648,7 +648,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(l: &LineType) -> Line,
+    map_5(l: &LineType) -> Line,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -739,7 +739,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(l: &LineFType) -> LineF,
+    map_6(l: &LineFType) -> LineF,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -830,7 +830,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(a: &PolygonFType) -> PolygonF,
+    map_7(a: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -921,7 +921,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(a: &PolygonType) -> Polygon,
+    map_8(a: &PolygonType) -> Polygon,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -1012,7 +1012,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(r: &RegionType) -> Region,
+    map_9(r: &RegionType) -> Region,
     /// 
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively.
@@ -1103,7 +1103,7 @@ struct Matrix {
     /// **See also:** mapRect()
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    map(p: &PainterPathType) -> PainterPath,
+    map_10(p: &PainterPathType) -> PainterPath,
     /// 
     /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix.

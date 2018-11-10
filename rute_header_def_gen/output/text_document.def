@@ -391,7 +391,7 @@ struct TextDocument : Object {
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
     /// **See also:** QTextBlock::firstLineNumber()
-    find(sub_string: String, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    find_2(sub_string: String, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -490,7 +490,7 @@ struct TextDocument : Object {
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
     /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegExpType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
+    find_3(expr: &RegExpType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -589,7 +589,7 @@ struct TextDocument : Object {
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
     /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegExpType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    find_4(expr: &RegExpType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -688,7 +688,7 @@ struct TextDocument : Object {
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
     /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegularExpressionType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
+    find_5(expr: &RegularExpressionType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -787,7 +787,7 @@ struct TextDocument : Object {
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
     /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegularExpressionType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    find_6(expr: &RegularExpressionType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     frame_at(pos: i32) -> TextFrame?,
     /// 
     /// Returns the document's root frame.
@@ -1245,7 +1245,7 @@ struct TextDocument : Object {
     /// isUndoRedoEnabled()
     /// 
     /// This signal is emitted every time a new level of undo is added to the QTextDocument.
-    undo(),
+    undo_2(),
     /// 
     /// Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
     /// 
@@ -1258,7 +1258,7 @@ struct TextDocument : Object {
     /// 
     /// This signal is emitted whenever redo operations become available
     /// ( *available* is true) or unavailable ( *available* is false).
-    redo(),
+    redo_2(),
     append_undo_item(arg0: *AbstractUndoItemType),
     set_modified(m: bool),
     /// 

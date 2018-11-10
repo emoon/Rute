@@ -233,7 +233,7 @@ struct FontMetricsF {
     /// an interactive text control, use QTextLayout instead.
     /// 
     /// **See also:** boundingRect()
-    width(arg0: CharType) -> f32,
+    width_2(arg0: CharType) -> f32,
     /// 
     /// Returns the horizontal advance in pixels of the first *length* characters of *text.* If *length* is negative (the default), the entire string is
     /// used.
@@ -293,7 +293,7 @@ struct FontMetricsF {
     /// an interactive text control, use QTextLayout instead.
     /// 
     /// **See also:** boundingRect()
-    horizontal_advance(arg0: CharType) -> f32,
+    horizontal_advance_2(arg0: CharType) -> f32,
     /// 
     /// Returns the bounding rectangle of the characters in the string
     /// specified by *text.* The bounding rectangle always covers at least
@@ -469,7 +469,7 @@ struct FontMetricsF {
     /// **See also:** width()
     /// QPainter::boundingRect()
     /// Qt::Alignment
-    bounding_rect(arg0: CharType) -> RectF,
+    bounding_rect_2(arg0: CharType) -> RectF,
     /// 
     /// Returns the bounding rectangle of the characters in the string
     /// specified by *text.* The bounding rectangle always covers at least
@@ -557,7 +557,7 @@ struct FontMetricsF {
     /// **See also:** width()
     /// QPainter::boundingRect()
     /// Qt::Alignment
-    bounding_rect(r: &RectFType, flags: i32, string: String, tabstops: i32, tabarray: *i32) -> RectF,
+    bounding_rect_3(r: &RectFType, flags: i32, string: String, tabstops: i32, tabarray: *i32) -> RectF,
     /// 
     /// Returns the size in pixels of the characters in the given *text.*
     /// 

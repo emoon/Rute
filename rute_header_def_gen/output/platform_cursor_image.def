@@ -48,7 +48,7 @@ struct PlatformCursorImage {
     /// character array containing packed 1 bit per pixel format data, with any
     /// padding bits at the end of the array. Bits of value 0 represent transparent
     /// pixels in the image data.
-    set(image: &ImageType, hx: i32, hy: i32),
+    set_2(image: &ImageType, hx: i32, hy: i32),
     /// 
     /// *id* is one of the defined Qt::CursorShape values.
     /// 
@@ -69,7 +69,7 @@ struct PlatformCursorImage {
     /// character array containing packed 1 bit per pixel format data, with any
     /// padding bits at the end of the array. Bits of value 0 represent transparent
     /// pixels in the image data.
-    set(arg0: Rute::CursorShape),
+    set_3(arg0: Rute::CursorShape),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

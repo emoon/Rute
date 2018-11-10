@@ -140,7 +140,7 @@ struct TextFrameFormat : TextFormat {
     /// **Overloads**
     /// Convenience method that sets the width of the frame's border
     /// rectangle's width to the specified fixed *width.*
-    set_width(length: &TextLengthType),
+    set_width_2(length: &TextLengthType),
     /// 
     /// Returns the width of the frame's border rectangle.
     /// 
@@ -157,7 +157,7 @@ struct TextFrameFormat : TextFormat {
     /// 
     /// **Overloads**
     /// Sets the frame's *height.*
-    set_height(height: &TextLengthType),
+    set_height_2(height: &TextLengthType),
     /// 
     /// Returns the height of the frame's border rectangle.
     height() -> TextLength,

@@ -106,7 +106,7 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: String, pixmap: &PixmapType) -> bool,
+    [static] find_2(key: String, pixmap: &PixmapType) -> bool,
     /// 
     /// **Overloads**
     /// Returns the pixmap associated with the *key* in the cache, or
@@ -133,7 +133,7 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: String, pixmap: *PixmapType) -> bool,
+    [static] find_3(key: String, pixmap: *PixmapType) -> bool,
     /// 
     /// **Overloads**
     /// Returns the pixmap associated with the *key* in the cache, or
@@ -160,7 +160,7 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: onst QPixmapCache::Key &, pixmap: *PixmapType) -> bool,
+    [static] find_4(key: onst QPixmapCache::Key &, pixmap: *PixmapType) -> bool,
     /// 
     /// Inserts a copy of the pixmap *pixmap* associated with the *key* into
     /// the cache.
@@ -226,7 +226,7 @@ struct PixmapCache {
     /// **See also:** setCacheLimit()
     /// replace()
     /// 
-    [static] insert(pixmap: &PixmapType) -> PixmapCache::Key,
+    [static] insert_2(pixmap: &PixmapType) -> PixmapCache::Key,
     /// 
     /// Replaces the pixmap associated with the given *key* with the *pixmap*
     /// specified. Returns `true` if the *pixmap* has been correctly inserted into
@@ -249,7 +249,7 @@ struct PixmapCache {
     /// Removes the pixmap associated with *key* from the cache and releases
     /// the key for a future insertion.
     /// 
-    [static] remove(key: onst QPixmapCache::Key &),
+    [static] remove_2(key: onst QPixmapCache::Key &),
     /// 
     /// Removes all pixmaps from the cache.
     [static] clear(),

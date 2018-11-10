@@ -801,7 +801,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This function corresponds to setMinimumSize(QSize(minw, minh)).
     /// Sets the minimum width to *minw* and the minimum height to *minh.*
-    set_minimum_size(minw: i32, minh: i32),
+    set_minimum_size_2(minw: i32, minh: i32),
     /// 
     /// **Overloads**
     /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
@@ -811,7 +811,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
     /// to *maxh.*
-    set_maximum_size(maxw: i32, maxh: i32),
+    set_maximum_size_2(maxw: i32, maxh: i32),
     set_minimum_width(minw: i32),
     set_minimum_height(minh: i32),
     set_maximum_width(maxw: i32),
@@ -844,7 +844,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// Sets the x (width) size increment to *w* and the y (height) size
     /// increment to *h.*
-    set_size_increment(w: i32, h: i32),
+    set_size_increment_2(w: i32, h: i32),
     /// 
     /// The base size is used to calculate a proper widget size if the
     /// widget defines sizeIncrement().
@@ -863,7 +863,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
     /// the widgets base size to width *basew* and height *baseh.*
-    set_base_size(basew: i32, baseh: i32),
+    set_base_size_2(basew: i32, baseh: i32),
     /// 
     /// Sets both the minimum and maximum sizes of the widget to *s,*
     /// thereby preventing it from ever growing or shrinking.
@@ -899,7 +899,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the width of the widget to *w* and the height to *h.*
-    set_fixed_size(w: i32, h: i32),
+    set_fixed_size_2(w: i32, h: i32),
     /// 
     /// Sets both the minimum and maximum width of the widget to *w*
     /// without changing the heights. Provided for convenience.
@@ -1483,7 +1483,7 @@ struct Widget : Object, PaintDevice {
     /// **See also:** clearMask()
     /// windowOpacity()
     /// {Shaped Clock Example}
-    set_mask(arg0: &RegionType),
+    set_mask_2(arg0: &RegionType),
     /// 
     /// Returns the mask currently set on a widget. If no mask is set the
     /// return value will be an empty region.
@@ -1553,7 +1553,7 @@ struct Widget : Object, PaintDevice {
     /// rendered into a QPixmap and then drawn by the *painter.*
     /// 
     /// **See also:** QPainter::device()
-    render(painter: *PainterType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
+    render_2(painter: *PainterType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
     /// 
     /// Renders the widget into a pixmap restricted by the
     /// given *rectangle.* If the widget has any children, then
@@ -2103,7 +2103,7 @@ struct Widget : Object, PaintDevice {
     /// proxy) if this widget or one of its parents is the
     /// [active window](isActiveWindow())
     /// 
-    set_focus(reason: Rute::FocusReason),
+    set_focus_2(reason: Rute::FocusReason),
     /// 
     /// The policy is Qt::TabFocus if the widget accepts keyboard
     /// focus by tabbing, Qt::ClickFocus if the widget accepts
@@ -2270,7 +2270,7 @@ struct Widget : Object, PaintDevice {
     /// grabKeyboard()
     /// releaseKeyboard()
     /// setCursor()
-    grab_mouse(arg0: &CursorType),
+    grab_mouse_2(arg0: &CursorType),
     /// 
     /// Releases the mouse grab.
     /// 
@@ -2570,7 +2570,7 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(x: i32, y: i32, w: i32, h: i32),
+    update_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// An updates enabled widget receives paint events and has a system
     /// background; a disabled widget does not. This also implies that
@@ -2633,7 +2633,7 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(arg0: &RectType),
+    update_3(arg0: &RectType),
     /// 
     /// An updates enabled widget receives paint events and has a system
     /// background; a disabled widget does not. This also implies that
@@ -2696,7 +2696,7 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(arg0: &RegionType),
+    update_4(arg0: &RegionType),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2724,7 +2724,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(x: i32, y: i32, w: i32, h: i32),
+    repaint_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2752,7 +2752,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(arg0: &RectType),
+    repaint_3(arg0: &RectType),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2780,7 +2780,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(arg0: &RegionType),
+    repaint_4(arg0: &RegionType),
     [event] set_visible(visible: bool),
     /// 
     /// Convenience function, equivalent to setVisible(! *hidden).*
@@ -3107,7 +3107,7 @@ struct Widget : Object, PaintDevice {
     /// event()
     /// move()
     /// QMoveEvent
-    move(arg0: &PointType),
+    move_2(arg0: &PointType),
     /// **Overloads**
     /// This corresponds to resize(QSize( *w,* *h)).*
     /// 
@@ -3147,7 +3147,7 @@ struct Widget : Object, PaintDevice {
     /// QResizeEvent
     /// paintEvent()
     /// {Scribble Example}
-    resize(arg0: &SizeType),
+    resize_2(arg0: &SizeType),
     /// 
     /// Adjusts the size of the widget to fit its contents.
     /// 
@@ -3322,7 +3322,7 @@ struct Widget : Object, PaintDevice {
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     /// 
     /// **See also:** QSizePolicy::QSizePolicy()
-    set_size_policy(horizontal: SizePolicy::Policy, vertical: SizePolicy::Policy),
+    set_size_policy_2(horizontal: SizePolicy::Policy, vertical: SizePolicy::Policy),
     /// 
     /// Returns the preferred height for this widget, given the width *w.*
     /// 
@@ -3389,7 +3389,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **See also:** contentsRect()
     /// getContentsMargins()
-    set_contents_margins(margins: &MarginsType),
+    set_contents_margins_2(margins: &MarginsType),
     /// 
     /// Returns the widget's contents margins for *left,* *top,* *right,* and *bottom.*
     /// 
@@ -3515,7 +3515,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This function also takes widget flags, *f* as an argument.
-    set_parent(parent: *WidgetType, f: Rute::WindowFlags),
+    set_parent_2(parent: *WidgetType, f: Rute::WindowFlags),
     /// 
     /// Scrolls the widget including its children *dx* pixels to the
     /// right and *dy* downward. Both *dx* and *dy* may be negative.
@@ -3573,7 +3573,7 @@ struct Widget : Object, PaintDevice {
     /// If *r* is empty or invalid, the result is undefined.
     /// 
     /// **See also:** QScrollArea
-    scroll(dx: i32, dy: i32, arg0: &RectType),
+    scroll_2(dx: i32, dy: i32, arg0: &RectType),
     /// 
     /// Returns the last child of this widget that setFocus had been
     /// called on. For top level widgets this is the widget that will get
@@ -3724,7 +3724,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// Returns the visible child widget at point *p* in the widget's own
     /// coordinate system.
-    child_at(p: &PointType) -> Widget?,
+    child_at_2(p: &PointType) -> Widget?,
     /// 
     /// Returns the widget's paint engine.
     /// 
@@ -4460,6 +4460,24 @@ struct Widget : Object, PaintDevice {
     /// Updates the widget's micro focus.
     update_micro_focus(),
     /// 
+    /// Creates a new widget window.
+    /// 
+    /// The parameter *window* is ignored in Qt 5. Please use
+    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
+    /// window and pass it to QWidget::createWindowContainer() instead.
+    /// 
+    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
+    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
+    /// 
+    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
+    /// window yourself (using platform native code).
+    /// 
+    /// The QWidget constructor calls create(0,true,true) to create a
+    /// window for this widget.
+    /// 
+    /// **See also:** createWindowContainer()
+    /// QWindow::fromWinId()
+    /// 
     /// Creates a QWidget that makes it possible to embed *window* into
     /// a QWidget-based application.
     /// 
@@ -4493,24 +4511,6 @@ struct Widget : Object, PaintDevice {
     /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
     /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
     /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    /// 
-    /// Creates a new widget window.
-    /// 
-    /// The parameter *window* is ignored in Qt 5. Please use
-    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
-    /// window and pass it to QWidget::createWindowContainer() instead.
-    /// 
-    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
-    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
-    /// 
-    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
-    /// window yourself (using platform native code).
-    /// 
-    /// The QWidget constructor calls create(0,true,true) to create a
-    /// window for this widget.
-    /// 
-    /// **See also:** createWindowContainer()
-    /// QWindow::fromWinId()
     create(arg0: WId, initialize_window: bool, destroy_old_window: bool),
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate

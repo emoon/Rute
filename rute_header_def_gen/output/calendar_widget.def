@@ -209,7 +209,7 @@ struct CalendarWidget : Widget {
     /// 
     /// Returns a QTextCharFormat for *date.* The char format can be be
     /// empty if the date is not renderd specially.
-    date_text_format(date: &DateType) -> TextCharFormat,
+    date_text_format_2(date: &DateType) -> TextCharFormat,
     /// 
     /// Sets the format used to render the given *date* to that specified by *format.*
     /// 

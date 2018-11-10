@@ -107,7 +107,7 @@ struct GraphicsLayoutItem {
     /// 
     /// **See also:** sizePolicy()
     /// QWidget::sizePolicy()
-    set_size_policy(h_policy: SizePolicy::Policy, v_policy: SizePolicy::Policy, control_type: SizePolicy::ControlType),
+    set_size_policy_2(h_policy: SizePolicy::Policy, v_policy: SizePolicy::Policy, control_type: SizePolicy::ControlType),
     /// 
     /// Returns the current size policy.
     /// 
@@ -157,7 +157,7 @@ struct GraphicsLayoutItem {
     /// setMaximumSize()
     /// setPreferredSize()
     /// sizeHint()
-    set_minimum_size(w: f32, h: f32),
+    set_minimum_size_2(w: f32, h: f32),
     /// 
     /// Returns the minimum size.
     /// 
@@ -232,7 +232,7 @@ struct GraphicsLayoutItem {
     /// setMaximumSize()
     /// setMinimumSize()
     /// sizeHint()
-    set_preferred_size(w: f32, h: f32),
+    set_preferred_size_2(w: f32, h: f32),
     /// 
     /// Returns the preferred size.
     /// 
@@ -309,7 +309,7 @@ struct GraphicsLayoutItem {
     /// setMinimumSize()
     /// setPreferredSize()
     /// sizeHint()
-    set_maximum_size(w: f32, h: f32),
+    set_maximum_size_2(w: f32, h: f32),
     /// 
     /// Returns the maximum size.
     /// 

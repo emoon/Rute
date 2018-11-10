@@ -221,7 +221,7 @@ struct PictureIO {
     /// example, at the beginning of the file).
     /// 
     /// **See also:** QIODevice::pos()
-    [static] picture_format(arg0: *IODeviceType) -> ByteArray,
+    [static] picture_format_2(arg0: *IODeviceType) -> ByteArray,
     /// 
     /// Returns a sorted list of picture formats that are supported for
     /// picture input.

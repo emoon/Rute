@@ -105,7 +105,7 @@ struct Scroller : Object {
     /// 
     /// **See also:** scrollerProperties
     /// 
-    [static] scroller(target: *ObjectType) -> Scroller?,
+    [static] scroller_2(target: *ObjectType) -> Scroller?,
     /// 
     /// Registers a custom scroll gesture recognizer, grabs it for the *target* and returns the resulting gesture type. If *scrollGestureType* is
     /// set to TouchGesture the gesture triggers on touch events. If it is set to
@@ -228,7 +228,7 @@ struct Scroller : Object {
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
     /// Snapping can be deactivated by setting an interval of 0.0
-    set_snap_positions_x(first: f32, interval: f32),
+    set_snap_positions_x_2(first: f32, interval: f32),
     /// Set the snap positions for the vertical axis to a list of *positions.*
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
@@ -248,7 +248,7 @@ struct Scroller : Object {
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
     /// Snapping can be deactivated by setting an interval of 0.0
-    set_snap_positions_y(first: f32, interval: f32),
+    set_snap_positions_y_2(first: f32, interval: f32),
     set_scroller_properties(prop: &ScrollerPropertiesType),
     /// 
     /// Starts scrolling the widget so that point *pos* is at the top-left position in
@@ -281,7 +281,7 @@ struct Scroller : Object {
     /// **See also:** ensureVisible()
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
-    scroll_to(pos: &PointFType, scroll_time: i32),
+    scroll_to_2(pos: &PointFType, scroll_time: i32),
     /// 
     /// Starts scrolling so that the rectangle *rect* is visible inside the
     /// viewport with additional margins specified in pixels by *xmargin* and *ymargin* around
@@ -315,7 +315,7 @@ struct Scroller : Object {
     /// **See also:** scrollTo()
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
-    ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
+    ensure_visible_2(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
     /// This function resends the QScrollPrepareEvent.
     /// Calling resendPrepareEvent triggers a QScrollPrepareEvent from the scroller.
     /// This allows the receiver to re-set content position and content size while

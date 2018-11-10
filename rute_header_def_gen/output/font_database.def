@@ -123,7 +123,7 @@ struct FontDatabase {
     /// font *family.*
     /// 
     /// **See also:** families()
-    writing_systems(family: String) -> List<QFontDatabase::WritingSystem>,
+    writing_systems_2(family: String) -> List<QFontDatabase::WritingSystem>,
     /// 
     /// Returns a sorted list of the available font families which support
     /// the *writingSystem.*

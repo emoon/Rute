@@ -83,7 +83,7 @@ struct TextDocumentWriter {
     /// 
     /// Writes the document fragment specified by *fragment* to the assigned device
     /// or file and returns `true` if successful; otherwise returns `false.`
-    write(fragment: &TextDocumentFragmentType) -> bool,
+    write_2(fragment: &TextDocumentFragmentType) -> bool,
     set_codec(codec: *TextCodecType),
     codec() -> TextCodec?,
     /// 

@@ -70,7 +70,7 @@ struct EventLoop : Object {
     /// * This function does not process events continuously; it returns after all available events are processed.
     /// * Specifying the [WaitForMoreEvents](WaitForMoreEvents)
     /// flag makes no sense and will be ignored.
-    process_events(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
+    process_events_2(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
     /// 
     /// Enters the main event loop and waits until exit() is called.
     /// Returns the value that was passed to exit().

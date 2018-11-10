@@ -110,7 +110,7 @@ struct LCDNumber : Frame {
     /// **See also:** display()
     /// digitCount()
     /// smallDecimalPoint()
-    check_overflow(num: i32) -> bool,
+    check_overflow_2(num: i32) -> bool,
     /// 
     /// Corresponds to the current display mode, which is one of `Bin,`
     /// `Oct,` `Dec` (the default) and `Hex.` `Dec` mode can display
@@ -194,7 +194,7 @@ struct LCDNumber : Frame {
     /// P, r, u, U, Y, colon, degree sign (which is specified as single
     /// quote in the string) and space. QLCDNumber substitutes spaces for
     /// illegal characters.
-    display(num: i32),
+    display_2(num: i32),
     /// 
     /// **Overloads**
     /// Displays the number *num.*
@@ -212,7 +212,7 @@ struct LCDNumber : Frame {
     /// P, r, u, U, Y, colon, degree sign (which is specified as single
     /// quote in the string) and space. QLCDNumber substitutes spaces for
     /// illegal characters.
-    display(num: double),
+    display_3(num: double),
     /// 
     /// Calls setMode(Hex). Provided for convenience (e.g. for
     /// connecting buttons to it).

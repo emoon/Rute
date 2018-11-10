@@ -286,7 +286,7 @@ struct Action : Object {
     /// If only the primary shortcut is required, use setShortcut instead.
     /// 
     /// **See also:** QKeySequence::keyBindings()
-    set_shortcuts(arg0: KeySequence::StandardKey),
+    set_shortcuts_2(arg0: KeySequence::StandardKey),
     /// 
     /// Returns the list of shortcuts, with the primary shortcut as
     /// the first element of the list.

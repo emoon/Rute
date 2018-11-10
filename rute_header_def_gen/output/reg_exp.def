@@ -776,7 +776,7 @@ struct RegExp {
     /// 
     /// **See also:** cap()
     /// pos()
-    captured_texts() -> [String],
+    captured_texts_2() -> [String],
     /// 
     /// Returns the number of captures contained in the regular expression.
     /// 
@@ -878,7 +878,7 @@ struct RegExp {
     /// 
     /// **See also:** capturedTexts()
     /// pos()
-    cap(nth: i32) -> String,
+    cap_2(nth: i32) -> String,
     /// 
     /// Returns the position of the *nth* captured text in the searched
     /// string. If *nth* is 0 (the default), pos() returns the position
@@ -906,7 +906,7 @@ struct RegExp {
     /// 
     /// **See also:** cap()
     /// capturedTexts()
-    pos(nth: i32) -> i32,
+    pos_2(nth: i32) -> i32,
     /// 
     /// Returns the string *str* with every regexp special character
     /// escaped with a backslash. The special characters are $, (,), *, +,

@@ -249,7 +249,7 @@ struct TableWidget : TableView {
     /// 
     /// **See also:** currentItem()
     /// setCurrentCell()
-    set_current_item(item: *TableWidgetItemType, command: ItemSelectionModel::SelectionFlags),
+    set_current_item_2(item: *TableWidgetItemType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Sets the current cell to be the cell at position ( *row,* *column).*
     /// 
@@ -283,7 +283,7 @@ struct TableWidget : TableView {
     /// **See also:** setCurrentItem()
     /// currentRow()
     /// currentColumn()
-    set_current_cell(row: i32, column: i32, command: ItemSelectionModel::SelectionFlags),
+    set_current_cell_2(row: i32, column: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Sorts all the rows in the table widget based on *column* and *order.*
     sort_items(column: i32, order: Rute::SortOrder),
@@ -391,7 +391,7 @@ struct TableWidget : TableView {
     /// *point* is not covered by an item in the table widget.
     /// 
     /// **See also:** item()
-    item_at(x: i32, y: i32) -> TableWidgetItem?,
+    item_at_2(x: i32, y: i32) -> TableWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
     visual_item_rect(item: *TableWidgetItemType) -> Rect,
@@ -550,7 +550,7 @@ struct TableWidget : TableView {
     /// Returns the QModelIndex associated with the given *item.*
     /// 
     /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
-    index_from_item(item: *TableWidgetItemType) -> ModelIndex,
+    index_from_item_2(item: *TableWidgetItemType) -> ModelIndex,
     /// 
     /// Returns a pointer to the QTableWidgetItem associated with the given *index.*
     item_from_index(index: &ModelIndexType) -> TableWidgetItem?,

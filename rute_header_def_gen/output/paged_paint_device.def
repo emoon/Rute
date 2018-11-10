@@ -250,7 +250,7 @@ struct PagedPaintDevice : PaintDevice {
     /// Returns true if the page margins were successfully set to *margins.*
     /// 
     /// **See also:** pageLayout()
-    set_page_margins(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
+    set_page_margins_2(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
     /// 
     /// Returns the current page layout. Use this method to access the current
     /// QPageSize, QPageLayout::Orientation, QMarginsF, fullRect() and paintRect().
@@ -285,7 +285,7 @@ struct PagedPaintDevice : PaintDevice {
     /// Returns true if the page size was successfully set to *pageSize.*
     /// 
     /// **See also:** pageLayout()
-    [event] set_page_size(size: PagedPaintDevice::PageSize),
+    [event] set_page_size_2(size: PagedPaintDevice::PageSize),
     /// 
     /// Returns the currently used page size.
     /// 
@@ -319,7 +319,7 @@ struct PagedPaintDevice : PaintDevice {
     margins() -> PagedPaintDevice::Margins,
     dd() -> PagedPaintDevicePrivate?,
     device_page_layout() -> PageLayout,
-    device_page_layout() -> PageLayout?,
+    device_page_layout_2() -> PageLayout?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

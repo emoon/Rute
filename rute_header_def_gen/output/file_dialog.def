@@ -182,7 +182,7 @@ struct FileDialog : Dialog {
     /// This feature was added in Qt 5.5.
     /// 
     /// **See also:** QUuid
-    set_directory(directory: &DirType),
+    set_directory_2(directory: &DirType),
     /// 
     /// This signal is emitted for local operations when the user enters
     /// a *directory.*

@@ -84,7 +84,7 @@ struct RadialGradient : Gradient {
     /// 
     /// Sets the center radius of this radial gradient in logical coordinates
     /// to *radius*
-    set_center(x: f32, y: f32),
+    set_center_2(x: f32, y: f32),
     /// 
     /// Returns the focal point of this radial gradient in logical
     /// coordinates.
@@ -114,7 +114,7 @@ struct RadialGradient : Gradient {
     /// coordinates to *focalPoint.*
     /// 
     /// **See also:** focalPoint()
-    set_focal_point(x: f32, y: f32),
+    set_focal_point_2(x: f32, y: f32),
     /// 
     /// Returns the radius of this radial gradient in logical coordinates.
     /// 

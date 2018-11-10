@@ -70,8 +70,8 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     /// The *color* parameter holds the effect's new color.
     color() -> Color,
     set_offset(ofs: &PointFType),
-    set_offset(dx: f32, dy: f32),
-    set_offset(d: f32),
+    set_offset_2(dx: f32, dy: f32),
+    set_offset_3(d: f32),
     set_x_offset(dx: f32),
     set_y_offset(dy: f32),
     set_blur_radius(blur_radius: f32),

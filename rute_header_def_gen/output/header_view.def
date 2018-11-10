@@ -164,7 +164,7 @@ struct HeaderView : AbstractItemView {
     /// y-coordinate will be used to find the logical index.
     /// 
     /// **See also:** sectionPosition()
-    logical_index_at(x: i32, y: i32) -> i32,
+    logical_index_at_2(x: i32, y: i32) -> i32,
     /// 
     /// Returns the section that covers the given *position* in the viewport.
     /// 
@@ -180,7 +180,7 @@ struct HeaderView : AbstractItemView {
     /// y-coordinate will be used to find the logical index.
     /// 
     /// **See also:** sectionPosition()
-    logical_index_at(pos: &PointType) -> i32,
+    logical_index_at_3(pos: &PointType) -> i32,
     /// 
     /// Returns a suitable size hint for the section specified by *logicalIndex.*
     /// 
@@ -426,7 +426,7 @@ struct HeaderView : AbstractItemView {
     /// 
     /// **See also:** setStretchLastSection()
     /// resizeContentsPrecision()
-    set_section_resize_mode(logical_index: i32, mode: HeaderView::ResizeMode),
+    set_section_resize_mode_2(logical_index: i32, mode: HeaderView::ResizeMode),
     /// 
     /// Sets how precise QHeaderView should calculate the size when ResizeToContents is used.
     /// A low value will provide a less accurate but fast auto resize while a higher
@@ -692,7 +692,7 @@ struct HeaderView : AbstractItemView {
     /// 
     /// Resizes the sections according to their size hints. Normally, you do not
     /// have to call this function.
-    resize_sections(),
+    resize_sections_2(),
     /// 
     /// This slot is called when sections are inserted into the *parent.*
     /// *logicalFirst* and *logicalLast* indices signify where the new sections
@@ -710,7 +710,7 @@ struct HeaderView : AbstractItemView {
     sections_about_to_be_removed(parent: &ModelIndexType, logical_first: i32, logical_last: i32),
     initialize(),
     initialize_sections(),
-    initialize_sections(start: i32, end: i32),
+    initialize_sections_2(start: i32, end: i32),
     /// 
     [event] current_changed(current: &ModelIndexType, old: &ModelIndexType),
     /// 

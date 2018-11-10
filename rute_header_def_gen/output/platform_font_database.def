@@ -69,7 +69,7 @@ struct PlatformFontDatabase {
     /// 
     /// Returns the font engine that can be used to render the font described by
     /// the font definition, *fontDef,* in the specified *script.*
-    [event] font_engine(font_data: &ByteArrayType, pixel_size: f32, hinting_preference: Font::HintingPreference) -> FontEngine?,
+    [event] font_engine_2(font_data: &ByteArrayType, pixel_size: f32, hinting_preference: Font::HintingPreference) -> FontEngine?,
     /// 
     /// Returns the directory containing the fonts used by the database.
     [event] font_dir() -> String,

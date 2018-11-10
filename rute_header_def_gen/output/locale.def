@@ -1320,7 +1320,7 @@ struct Locale {
     /// **See also:** toUShort()
     /// toString()
     /// 
-    to_short(s: &StringRefType, ok: *bool) -> short,
+    to_short_2(s: &StringRefType, ok: *bool) -> short,
     /// 
     /// Returns the unsigned short int represented by the localized string *s.*
     /// 
@@ -1359,7 +1359,7 @@ struct Locale {
     /// **See also:** toShort()
     /// toString()
     /// 
-    to_u_short(s: &StringRefType, ok: *bool) -> ushort,
+    to_u_short_2(s: &StringRefType, ok: *bool) -> ushort,
     /// 
     /// Returns the int represented by the localized string *s.*
     /// 
@@ -1398,7 +1398,7 @@ struct Locale {
     /// **See also:** toUInt()
     /// toString()
     /// 
-    to_int(s: &StringRefType, ok: *bool) -> i32,
+    to_int_2(s: &StringRefType, ok: *bool) -> i32,
     /// 
     /// Returns the unsigned int represented by the localized string *s.*
     /// 
@@ -1437,7 +1437,7 @@ struct Locale {
     /// **See also:** toInt()
     /// toString()
     /// 
-    to_u_int(s: &StringRefType, ok: *bool) -> uint,
+    to_u_int_2(s: &StringRefType, ok: *bool) -> uint,
     /// 
     /// Returns the long long int represented by the localized string *s.*
     /// 
@@ -1482,7 +1482,7 @@ struct Locale {
     /// toDouble()
     /// toString()
     /// 
-    to_long_long(s: &StringRefType, ok: *bool) -> i64,
+    to_long_long_2(s: &StringRefType, ok: *bool) -> i64,
     /// 
     /// Returns the unsigned long long int represented by the localized
     /// string *s.*
@@ -1530,7 +1530,7 @@ struct Locale {
     /// toDouble()
     /// toString()
     /// 
-    to_u_long_long(s: &StringRefType, ok: *bool) -> qulonglong,
+    to_u_long_long_2(s: &StringRefType, ok: *bool) -> qulonglong,
     /// 
     /// Returns the float represented by the localized string *s,* or 0.0
     /// if the conversion failed.
@@ -1575,7 +1575,7 @@ struct Locale {
     /// toInt()
     /// toString()
     /// 
-    to_float(s: &StringRefType, ok: *bool) -> f32,
+    to_float_2(s: &StringRefType, ok: *bool) -> f32,
     /// 
     /// Returns the double represented by the localized string *s,* or
     /// 0.0 if the conversion failed.
@@ -1633,7 +1633,7 @@ struct Locale {
     /// toInt()
     /// toString()
     /// 
-    to_double(s: &StringRefType, ok: *bool) -> double,
+    to_double_2(s: &StringRefType, ok: *bool) -> double,
     /// 
     /// Returns the short int represented by the localized string *s.*
     /// 
@@ -1672,7 +1672,7 @@ struct Locale {
     /// **See also:** toUShort()
     /// toString()
     /// 
-    to_short(s: StringViewType, ok: *bool) -> short,
+    to_short_3(s: StringViewType, ok: *bool) -> short,
     /// 
     /// Returns the unsigned short int represented by the localized string *s.*
     /// 
@@ -1711,7 +1711,7 @@ struct Locale {
     /// **See also:** toShort()
     /// toString()
     /// 
-    to_u_short(s: StringViewType, ok: *bool) -> ushort,
+    to_u_short_3(s: StringViewType, ok: *bool) -> ushort,
     /// 
     /// Returns the int represented by the localized string *s.*
     /// 
@@ -1750,7 +1750,7 @@ struct Locale {
     /// **See also:** toUInt()
     /// toString()
     /// 
-    to_int(s: StringViewType, ok: *bool) -> i32,
+    to_int_3(s: StringViewType, ok: *bool) -> i32,
     /// 
     /// Returns the unsigned int represented by the localized string *s.*
     /// 
@@ -1789,7 +1789,7 @@ struct Locale {
     /// **See also:** toInt()
     /// toString()
     /// 
-    to_u_int(s: StringViewType, ok: *bool) -> uint,
+    to_u_int_3(s: StringViewType, ok: *bool) -> uint,
     /// 
     /// Returns the long long int represented by the localized string *s.*
     /// 
@@ -1834,7 +1834,7 @@ struct Locale {
     /// toDouble()
     /// toString()
     /// 
-    to_long_long(s: StringViewType, ok: *bool) -> i64,
+    to_long_long_3(s: StringViewType, ok: *bool) -> i64,
     /// 
     /// Returns the unsigned long long int represented by the localized
     /// string *s.*
@@ -1882,7 +1882,7 @@ struct Locale {
     /// toDouble()
     /// toString()
     /// 
-    to_u_long_long(s: StringViewType, ok: *bool) -> qulonglong,
+    to_u_long_long_3(s: StringViewType, ok: *bool) -> qulonglong,
     /// 
     /// Returns the float represented by the localized string *s,* or 0.0
     /// if the conversion failed.
@@ -1927,7 +1927,7 @@ struct Locale {
     /// toInt()
     /// toString()
     /// 
-    to_float(s: StringViewType, ok: *bool) -> f32,
+    to_float_3(s: StringViewType, ok: *bool) -> f32,
     /// 
     /// Returns the double represented by the localized string *s,* or
     /// 0.0 if the conversion failed.
@@ -1985,7 +1985,7 @@ struct Locale {
     /// toInt()
     /// toString()
     /// 
-    to_double(s: StringViewType, ok: *bool) -> double,
+    to_double_3(s: StringViewType, ok: *bool) -> double,
     /// 
     /// Returns the date format used for the current locale.
     /// 
@@ -2016,9 +2016,9 @@ struct Locale {
     to_date(string: String, arg0: Locale::FormatType) -> Date,
     to_time(string: String, arg0: Locale::FormatType) -> Time,
     to_date_time(string: String, format: Locale::FormatType) -> DateTime,
-    to_date(string: String, format: String) -> Date,
-    to_time(string: String, format: String) -> Time,
-    to_date_time(string: String, format: String) -> DateTime,
+    to_date_2(string: String, format: String) -> Date,
+    to_time_2(string: String, format: String) -> Time,
+    to_date_time_2(string: String, format: String) -> DateTime,
     /// 
     /// Returns the decimal point character of this locale.
     decimal_point() -> Char,

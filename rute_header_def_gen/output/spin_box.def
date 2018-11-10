@@ -219,7 +219,7 @@ struct SpinBox : AbstractSpinBox {
     /// 
     /// **Overloads**
     /// The new value is passed in *text* with prefix() and suffix().
-    [signal] value_changed(arg0: String),
+    [signal] value_changed_2(arg0: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

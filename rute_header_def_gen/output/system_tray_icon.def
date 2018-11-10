@@ -183,7 +183,7 @@ struct SystemTrayIcon : Object {
     /// Shows a balloon message for the entry with the given *title,* *message,*
     /// and custom icon *icon* for the time specified in *millisecondsTimeoutHint.*
     /// 
-    show_message(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
+    show_message_2(title: String, msg: String, icon: SystemTrayIcon::MessageIcon, msecs: i32),
     /// 
     /// This signal is emitted when the user activates the system tray icon. *reason*
     /// specifies the reason for activation. QSystemTrayIcon::ActivationReason enumerates

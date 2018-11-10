@@ -548,7 +548,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(p: &PointFType) -> PointF,
+    map_2(p: &PointFType) -> PointF,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -640,7 +640,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(l: &LineType) -> Line,
+    map_3(l: &LineType) -> Line,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -732,7 +732,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(l: &LineFType) -> LineF,
+    map_4(l: &LineFType) -> LineF,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -824,7 +824,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(a: &PolygonFType) -> PolygonF,
+    map_5(a: &PolygonFType) -> PolygonF,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -916,7 +916,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(a: &PolygonType) -> Polygon,
+    map_6(a: &PolygonType) -> Polygon,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -1008,7 +1008,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(r: &RegionType) -> Region,
+    map_7(r: &RegionType) -> Region,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -1100,7 +1100,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(p: &PainterPathType) -> PainterPath,
+    map_8(p: &PainterPathType) -> PainterPath,
     /// 
     /// Creates and returns a QPolygon representation of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix.
@@ -1156,7 +1156,7 @@ struct Transform {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    map_rect(arg0: &RectFType) -> RectF,
+    map_rect_2(arg0: &RectFType) -> RectF,
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -1248,7 +1248,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(x: i32, y: i32, tx: *i32, ty: *i32),
+    map_9(x: i32, y: i32, tx: *i32, ty: *i32),
     /// 
     /// **Overloads**
     /// Creates and returns a QPointF object that is a copy of the given point,
@@ -1340,7 +1340,7 @@ struct Transform {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    map(x: f32, y: f32, tx: *f32, ty: *f32),
+    map_10(x: f32, y: f32, tx: *f32, ty: *f32),
     /// 
     /// Returns the QTransform as an affine matrix.
     /// 

@@ -180,7 +180,7 @@ struct MenuBar : Widget {
     /// 
     /// **See also:** QWidget::addAction()
     /// QWidget::actions()
-    add_action(text: String, receiver: *ObjectType, member: *char) -> Action?,
+    add_action_2(text: String, receiver: *ObjectType, member: *char) -> Action?,
     /// 
     /// Appends a new QMenu with *title* to the menu bar. The menu bar
     /// takes ownership of the menu. Returns the new menu.
@@ -222,7 +222,7 @@ struct MenuBar : Widget {
     /// 
     /// **See also:** QWidget::addAction()
     /// QMenu::menuAction()
-    add_menu(icon: &IconType, title: String) -> Menu?,
+    add_menu_2(icon: &IconType, title: String) -> Menu?,
     /// 
     /// Appends a separator to the menu.
     add_separator() -> Action?,

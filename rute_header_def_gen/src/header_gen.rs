@@ -309,7 +309,7 @@ fn print_func<W: Write>(
     }
 
     let full_name = format!("{}::{}", class_name, name);
-    println!("full name {}", full_name);
+    //println!("full name {}", full_name);
 
     // So this is slow. Better would be to setup the names so we could
     // just use a hash table to match it but as this is something
@@ -359,7 +359,7 @@ fn print_func<W: Write>(
     }
 
     if !name_count_lookup.contains_key(&name) {
-        name_count_lookup.insert(name.to_owned(), 1);
+        name_count_lookup.insert(name.to_owned(), 2);
     }
 
     if name_count > 0 {
@@ -492,7 +492,7 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
             match entry.data {
                 QDocItem::Class(ref class_name) => {
                     if &name == class_name {
-                        println!("found class name");
+                        //println!("found class name");
                         print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
                     }
                 }
@@ -647,7 +647,7 @@ impl Generator {
 
             for struct_ in structs {
                 if let Some(name) = struct_.get_name() {
-                    println!("name {}", name);
+                    //println!("name {}", name);
                     let t = name.to_owned();
                     {
                         let data = lock.read().unwrap();
@@ -662,7 +662,7 @@ impl Generator {
                         w.insert(t);
                     }
 
-                    println!("name {}", name);
+                    //println!("name {}", name);
 
                     print_class(output_directory, &struct_, docs);
                 }

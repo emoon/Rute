@@ -160,7 +160,7 @@ struct Clipboard : Object {
     /// 
     /// **See also:** setText()
     /// mimeData()
-    text(subtype: String, mode: Clipboard::Mode) -> String,
+    text_2(subtype: String, mode: Clipboard::Mode) -> String,
     /// 
     /// Copies *text* into the clipboard as plain text.
     /// 

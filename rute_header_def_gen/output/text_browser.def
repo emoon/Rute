@@ -258,7 +258,7 @@ struct TextBrowser : TextEdit {
     /// Convenience signal that allows connecting to a slot
     /// that takes just a QString, like for example QStatusBar's
     /// message().
-    [signal] highlighted(arg0: String),
+    [signal] highlighted_2(arg0: String),
     /// 
     /// This signal is emitted when the user clicks an anchor. The
     /// URL referred to by the anchor is passed in *link.*

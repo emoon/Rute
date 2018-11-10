@@ -227,7 +227,7 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     /// 
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill(device: *PaintDeviceType, ofs: &PointType),
+    fill_2(device: *PaintDeviceType, ofs: &PointType),
     /// 
     /// Use QPainter or the fill(QColor) overload instead.
     /// 
@@ -239,7 +239,7 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     /// 
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill(device: *PaintDeviceType, xofs: i32, yofs: i32),
+    fill_3(device: *PaintDeviceType, xofs: i32, yofs: i32),
     /// 
     /// Extracts a bitmap mask from the pixmap's alpha channel.
     /// 
@@ -402,7 +402,7 @@ struct Pixmap : PaintDevice {
     /// Use QWidget::grab() instead.
     /// 
     /// Use QWidget::grab() instead.
-    [static] grab_widget(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
+    [static] grab_widget_2(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     /// 
     /// Qt::AspectRatioMode aspectRatioMode, Qt::TransformationMode
     /// transformMode) const
@@ -526,7 +526,7 @@ struct Pixmap : PaintDevice {
     /// **See also:** isNull()
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    scaled(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
+    scaled_2(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
     /// 
     /// mode) const
     /// 
@@ -642,7 +642,7 @@ struct Pixmap : PaintDevice {
     /// **See also:** fromImage()
     /// toImage()
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
+    [static] from_image_2(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     /// 
     /// Loads a pixmap from the file with the given *fileName.* Returns
     /// true if the pixmap was successfully loaded; otherwise invalidates
@@ -722,7 +722,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load_from_data(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    load_from_data_2(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
     /// 
     /// Saves the pixmap to the file with the given *fileName* using the
     /// specified image file *format* and *quality* factor. Returns `true`
@@ -764,7 +764,7 @@ struct Pixmap : PaintDevice {
     /// specified image file *format* and *quality* factor. This can be
     /// used, for example, to save a pixmap directly into a QByteArray:
     /// 
-    save(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    save_2(device: *IODeviceType, format: *char, quality: i32) -> bool,
     /// 
     /// Replaces this pixmap's data with the given *image* using the
     /// specified *flags* to control the conversion. The *flags*
@@ -812,7 +812,7 @@ struct Pixmap : PaintDevice {
     /// QPixmap()
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    copy(rect: &RectType) -> Pixmap,
+    copy_2(rect: &RectType) -> Pixmap,
     /// 
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
@@ -844,7 +844,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// **See also:** QWidget::scroll()
     /// QGraphicsItem::scroll()
-    scroll(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
+    scroll_2(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
     /// 
     /// Returns a number that identifies this QPixmap. Distinct QPixmap
     /// objects can only have the same cache key if they refer to the same

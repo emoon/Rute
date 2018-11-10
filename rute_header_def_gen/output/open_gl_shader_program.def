@@ -268,7 +268,7 @@ struct OpenGLShaderProgram : Object {
     /// link()
     /// log()
     /// removeAllShaders()
-    add_shader_from_source_code(type: OpenGLShader::ShaderType, source: &ByteArrayType) -> bool,
+    add_shader_from_source_code_2(type: OpenGLShader::ShaderType, source: &ByteArrayType) -> bool,
     /// 
     /// Compiles *source* as a shader of the specified *type* and
     /// adds it to this shader program. Returns `true` if compilation
@@ -319,7 +319,7 @@ struct OpenGLShaderProgram : Object {
     /// link()
     /// log()
     /// removeAllShaders()
-    add_shader_from_source_code(type: OpenGLShader::ShaderType, source: String) -> bool,
+    add_shader_from_source_code_3(type: OpenGLShader::ShaderType, source: String) -> bool,
     /// 
     /// Compiles the contents of *fileName* as a shader of the specified
     /// *type* and adds it to this shader program. Returns `true` if
@@ -432,7 +432,7 @@ struct OpenGLShaderProgram : Object {
     /// 
     /// **See also:** addShaderFromSourceCode()
     /// addCacheableShaderFromSourceFile()
-    add_cacheable_shader_from_source_code(type: OpenGLShader::ShaderType, source: &ByteArrayType) -> bool,
+    add_cacheable_shader_from_source_code_2(type: OpenGLShader::ShaderType, source: &ByteArrayType) -> bool,
     /// 
     /// Registers the shader of the specified *type* and *source* to this
     /// program. Unlike addShaderFromSourceCode(), this function does not perform
@@ -482,7 +482,7 @@ struct OpenGLShaderProgram : Object {
     /// 
     /// **See also:** addShaderFromSourceCode()
     /// addCacheableShaderFromSourceFile()
-    add_cacheable_shader_from_source_code(type: OpenGLShader::ShaderType, source: String) -> bool,
+    add_cacheable_shader_from_source_code_3(type: OpenGLShader::ShaderType, source: String) -> bool,
     /// 
     /// Registers the shader of the specified *type* and *fileName* to this
     /// program. Unlike addShaderFromSourceFile(), this function does not perform
@@ -753,7 +753,7 @@ struct OpenGLShaderProgram : Object {
     /// uniform variable for this shader program.
     /// 
     /// **See also:** attributeLocation()
-    uniform_location(name: &ByteArrayType) -> i32,
+    uniform_location_2(name: &ByteArrayType) -> i32,
     /// 
     /// Returns the location of the uniform variable *name* within this shader
     /// program's parameter list. Returns -1 if *name* is not a valid
@@ -774,7 +774,7 @@ struct OpenGLShaderProgram : Object {
     /// uniform variable for this shader program.
     /// 
     /// **See also:** attributeLocation()
-    uniform_location(name: String) -> i32,
+    uniform_location_3(name: String) -> i32,
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -1834,7 +1834,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: GLint),
+    set_uniform_value_2(location: i32, value: GLint),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -2364,7 +2364,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: i32),
+    set_uniform_value_3(location: i32, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -2894,7 +2894,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, x: i32, y: i32),
+    set_uniform_value_4(location: i32, x: i32, y: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -3424,7 +3424,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, x: i32, y: i32, z: i32),
+    set_uniform_value_5(location: i32, x: i32, y: i32, z: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -3954,7 +3954,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, x: i32, y: i32, z: i32, w: i32),
+    set_uniform_value_6(location: i32, x: i32, y: i32, z: i32, w: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -4484,7 +4484,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Vector2DType),
+    set_uniform_value_7(location: i32, value: &Vector2DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -5014,7 +5014,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Vector3DType),
+    set_uniform_value_8(location: i32, value: &Vector3DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -5544,7 +5544,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Vector4DType),
+    set_uniform_value_9(location: i32, value: &Vector4DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -6074,7 +6074,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, color: &ColorType),
+    set_uniform_value_10(location: i32, color: &ColorType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -6604,7 +6604,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, point: &PointType),
+    set_uniform_value_11(location: i32, point: &PointType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -7134,7 +7134,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, point: &PointFType),
+    set_uniform_value_12(location: i32, point: &PointFType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -7664,7 +7664,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, size: &SizeType),
+    set_uniform_value_13(location: i32, size: &SizeType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -8194,7 +8194,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, size: &SizeFType),
+    set_uniform_value_14(location: i32, size: &SizeFType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -8724,7 +8724,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix2x2Type),
+    set_uniform_value_15(location: i32, value: &Matrix2x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -9254,7 +9254,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix2x3Type),
+    set_uniform_value_16(location: i32, value: &Matrix2x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -9784,7 +9784,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix2x4Type),
+    set_uniform_value_17(location: i32, value: &Matrix2x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -10314,7 +10314,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix3x2Type),
+    set_uniform_value_18(location: i32, value: &Matrix3x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -10844,7 +10844,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix3x3Type),
+    set_uniform_value_19(location: i32, value: &Matrix3x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -11374,7 +11374,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix3x4Type),
+    set_uniform_value_20(location: i32, value: &Matrix3x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -11904,7 +11904,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix4x2Type),
+    set_uniform_value_21(location: i32, value: &Matrix4x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -12434,7 +12434,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix4x3Type),
+    set_uniform_value_22(location: i32, value: &Matrix4x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -12964,7 +12964,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &Matrix4x4Type),
+    set_uniform_value_23(location: i32, value: &Matrix4x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -13494,7 +13494,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: i32),
+    set_uniform_value_24(location: i32, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -14024,7 +14024,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: i32),
+    set_uniform_value_25(location: i32, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -14554,7 +14554,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: i32),
+    set_uniform_value_26(location: i32, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -15084,7 +15084,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(location: i32, value: &TransformType),
+    set_uniform_value_27(location: i32, value: &TransformType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -15614,7 +15614,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: i32),
+    set_uniform_value_28(name: *char, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -16144,7 +16144,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: GLint),
+    set_uniform_value_29(name: *char, value: GLint),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -16674,7 +16674,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: i32),
+    set_uniform_value_30(name: *char, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -17204,7 +17204,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, x: i32, y: i32),
+    set_uniform_value_31(name: *char, x: i32, y: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -17734,7 +17734,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, x: i32, y: i32, z: i32),
+    set_uniform_value_32(name: *char, x: i32, y: i32, z: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -18264,7 +18264,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, x: i32, y: i32, z: i32, w: i32),
+    set_uniform_value_33(name: *char, x: i32, y: i32, z: i32, w: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -18794,7 +18794,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Vector2DType),
+    set_uniform_value_34(name: *char, value: &Vector2DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -19324,7 +19324,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Vector3DType),
+    set_uniform_value_35(name: *char, value: &Vector3DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -19854,7 +19854,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Vector4DType),
+    set_uniform_value_36(name: *char, value: &Vector4DType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -20384,7 +20384,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, color: &ColorType),
+    set_uniform_value_37(name: *char, color: &ColorType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -20914,7 +20914,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, point: &PointType),
+    set_uniform_value_38(name: *char, point: &PointType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -21444,7 +21444,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, point: &PointFType),
+    set_uniform_value_39(name: *char, point: &PointFType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -21974,7 +21974,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, size: &SizeType),
+    set_uniform_value_40(name: *char, size: &SizeType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -22504,7 +22504,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, size: &SizeFType),
+    set_uniform_value_41(name: *char, size: &SizeFType),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -23034,7 +23034,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix2x2Type),
+    set_uniform_value_42(name: *char, value: &Matrix2x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -23564,7 +23564,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix2x3Type),
+    set_uniform_value_43(name: *char, value: &Matrix2x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -24094,7 +24094,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix2x4Type),
+    set_uniform_value_44(name: *char, value: &Matrix2x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -24624,7 +24624,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix3x2Type),
+    set_uniform_value_45(name: *char, value: &Matrix3x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -25154,7 +25154,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix3x3Type),
+    set_uniform_value_46(name: *char, value: &Matrix3x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -25684,7 +25684,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix3x4Type),
+    set_uniform_value_47(name: *char, value: &Matrix3x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -26214,7 +26214,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix4x2Type),
+    set_uniform_value_48(name: *char, value: &Matrix4x2Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -26744,7 +26744,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix4x3Type),
+    set_uniform_value_49(name: *char, value: &Matrix4x3Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -27274,7 +27274,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &Matrix4x4Type),
+    set_uniform_value_50(name: *char, value: &Matrix4x4Type),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -27804,7 +27804,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: i32),
+    set_uniform_value_51(name: *char, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -28334,7 +28334,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: i32),
+    set_uniform_value_52(name: *char, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -28864,7 +28864,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: i32),
+    set_uniform_value_53(name: *char, value: i32),
     /// 
     /// Sets the uniform variable at *location* in the current context to *value.*
     /// 
@@ -29394,7 +29394,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value(name: *char, value: &TransformType),
+    set_uniform_value_54(name: *char, value: &TransformType),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -29740,7 +29740,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *GLint, count: i32),
+    set_uniform_value_array_2(location: i32, values: *GLint, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -29913,7 +29913,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *i32, count: i32),
+    set_uniform_value_array_3(location: i32, values: *i32, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30086,7 +30086,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Vector2DType, count: i32),
+    set_uniform_value_array_4(location: i32, values: *Vector2DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30259,7 +30259,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Vector3DType, count: i32),
+    set_uniform_value_array_5(location: i32, values: *Vector3DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30432,7 +30432,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Vector4DType, count: i32),
+    set_uniform_value_array_6(location: i32, values: *Vector4DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30605,7 +30605,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix2x2Type, count: i32),
+    set_uniform_value_array_7(location: i32, values: *Matrix2x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30778,7 +30778,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix2x3Type, count: i32),
+    set_uniform_value_array_8(location: i32, values: *Matrix2x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -30951,7 +30951,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix2x4Type, count: i32),
+    set_uniform_value_array_9(location: i32, values: *Matrix2x4Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31124,7 +31124,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix3x2Type, count: i32),
+    set_uniform_value_array_10(location: i32, values: *Matrix3x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31297,7 +31297,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix3x3Type, count: i32),
+    set_uniform_value_array_11(location: i32, values: *Matrix3x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31470,7 +31470,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix3x4Type, count: i32),
+    set_uniform_value_array_12(location: i32, values: *Matrix3x4Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31643,7 +31643,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix4x2Type, count: i32),
+    set_uniform_value_array_13(location: i32, values: *Matrix4x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31816,7 +31816,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix4x3Type, count: i32),
+    set_uniform_value_array_14(location: i32, values: *Matrix4x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -31989,7 +31989,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(location: i32, values: *Matrix4x4Type, count: i32),
+    set_uniform_value_array_15(location: i32, values: *Matrix4x4Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -32162,7 +32162,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *i32, count: i32, tuple_size: i32),
+    set_uniform_value_array_16(name: *char, values: *i32, count: i32, tuple_size: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -32335,7 +32335,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *GLint, count: i32),
+    set_uniform_value_array_17(name: *char, values: *GLint, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -32508,7 +32508,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *i32, count: i32),
+    set_uniform_value_array_18(name: *char, values: *i32, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -32681,7 +32681,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Vector2DType, count: i32),
+    set_uniform_value_array_19(name: *char, values: *Vector2DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -32854,7 +32854,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Vector3DType, count: i32),
+    set_uniform_value_array_20(name: *char, values: *Vector3DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33027,7 +33027,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Vector4DType, count: i32),
+    set_uniform_value_array_21(name: *char, values: *Vector4DType, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33200,7 +33200,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix2x2Type, count: i32),
+    set_uniform_value_array_22(name: *char, values: *Matrix2x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33373,7 +33373,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix2x3Type, count: i32),
+    set_uniform_value_array_23(name: *char, values: *Matrix2x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33546,7 +33546,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix2x4Type, count: i32),
+    set_uniform_value_array_24(name: *char, values: *Matrix2x4Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33719,7 +33719,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix3x2Type, count: i32),
+    set_uniform_value_array_25(name: *char, values: *Matrix3x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -33892,7 +33892,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix3x3Type, count: i32),
+    set_uniform_value_array_26(name: *char, values: *Matrix3x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -34065,7 +34065,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix3x4Type, count: i32),
+    set_uniform_value_array_27(name: *char, values: *Matrix3x4Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -34238,7 +34238,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix4x2Type, count: i32),
+    set_uniform_value_array_28(name: *char, values: *Matrix4x2Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -34411,7 +34411,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix4x3Type, count: i32),
+    set_uniform_value_array_29(name: *char, values: *Matrix4x3Type, count: i32),
     /// 
     /// Sets the uniform variable array at *location* in the current
     /// context to the *count* elements of *values.*
@@ -34584,7 +34584,7 @@ struct OpenGLShaderProgram : Object {
     /// context to the *count* 4x4 matrix elements of *values.*
     /// 
     /// **See also:** setAttributeValue()
-    set_uniform_value_array(name: *char, values: *Matrix4x4Type, count: i32),
+    set_uniform_value_array_30(name: *char, values: *Matrix4x4Type, count: i32),
     /// 
     /// Returns `true` if shader programs written in the OpenGL Shading
     /// Language (GLSL) are supported on this system; false otherwise.

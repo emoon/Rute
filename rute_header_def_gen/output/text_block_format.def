@@ -211,7 +211,7 @@ struct TextBlockFormat : TextFormat {
     /// **See also:** LineHeightTypes
     /// setLineHeight()
     /// lineHeight()
-    line_height() -> f32,
+    line_height_2() -> f32,
     /// 
     /// This returns the LineHeightType property of the paragraph.
     /// 

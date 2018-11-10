@@ -49,7 +49,7 @@ struct GraphicsRectItem : AbstractGraphicsShapeItem {
     /// Sets the item's rectangle to be the given *rectangle.*
     /// 
     /// **See also:** rect()
-    set_rect(x: f32, y: f32, w: f32, h: f32),
+    set_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     [event] bounding_rect() -> RectF,
     /// 

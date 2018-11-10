@@ -33,18 +33,18 @@ fn main() {
     */
 
     // TODO: Don't hardcode these
-    let header_files_path = &[
-        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
-        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h",
-        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtGui.framework/Versions/5/Headers"
+    let header_files_path = vec![
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers".to_owned(),
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtCore.framework/Versions/5/Headers/qnamespace.h".to_owned(),
+        "/Users/danielcollin/Qt/5.11.2/clang_64/lib/QtGui.framework/Versions/5/Headers".to_owned()
     ];
 
     // TODO: Don't hardcode these
-    let compile_args = &[
-        "-std=c++11",
-        "-F/Users/danielcollin/Qt/5.11.2/clang_64/lib",
-        "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers",
-        "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2",
+    let compile_args = vec![
+        "-std=c++11".to_owned(),
+        "-F/Users/danielcollin/Qt/5.11.2/clang_64/lib".to_owned(),
+        "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers".to_owned(),
+        "-i /Users/danielcollin/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/5.11.2".to_owned(),
     ];
 
     // Parse source files for documentation

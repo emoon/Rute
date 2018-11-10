@@ -332,7 +332,7 @@ struct Url {
     /// * ftp.qt-project.org becomes ftp://ftp.qt-project.org
     /// * hostname becomes http://hostname
     /// * /home/user/test.html becomes file:///home/user/test.html
-    [static] from_user_input(user_input: String, working_directory: String, options: Url::UserInputResolutionOptions) -> Url,
+    [static] from_user_input_2(user_input: String, working_directory: String, options: Url::UserInputResolutionOptions) -> Url,
     /// 
     /// Returns `true` if the URL is non-empty and valid; otherwise returns `false.`
     /// 
@@ -846,7 +846,7 @@ struct Url {
     /// 
     /// **See also:** queryItems()
     /// setEncodedQueryItems()
-    set_query(query: &UrlQueryType),
+    set_query_2(query: &UrlQueryType),
     /// 
     /// Returns the query string of the URL, as a map of keys and values.
     /// 

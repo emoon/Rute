@@ -41,7 +41,7 @@ struct StylePainter : Painter {
     /// 
     /// This is automatically called by the constructor that
     /// takes a QPaintDevice and a QWidget.
-    begin(pd: *PaintDeviceType, w: *WidgetType) -> bool,
+    begin_2(pd: *PaintDeviceType, w: *WidgetType) -> bool,
     /// 
     /// Use the widget's style to draw a primitive element *pe* specified by QStyleOption *option.*
     /// 

@@ -929,7 +929,7 @@ struct Variant {
     [static] name_to_type(name: *char) -> Variant::Type,
     data(),
     const_data(),
-    data(),
+    data_2(),
     create(type: i32, copy: *void),
     cmp(other: &VariantType) -> bool,
     compare(other: &VariantType) -> i32,
@@ -952,7 +952,7 @@ struct Variant {
     /// 
     /// **See also:** canConvert(int targetTypeId)
     /// clear()
-    convert(t: i32, ptr: *void) -> bool,
+    convert_2(t: i32, ptr: *void) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

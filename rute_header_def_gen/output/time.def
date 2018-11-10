@@ -223,7 +223,7 @@ struct Time {
     /// 
     /// Example:
     /// 
-    [static] is_valid(h: i32, m: i32, s: i32, ms: i32) -> bool,
+    [static] is_valid_2(h: i32, m: i32, s: i32, ms: i32) -> bool,
     /// 
     /// Sets this time to the current time. This is practical for timing:
     /// 

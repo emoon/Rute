@@ -106,7 +106,7 @@ struct AbstractEventDispatcher : Object {
     /// given *object* and returns the timer id.
     /// 
     /// Register a timer with the specified *timerId,* *interval,* and *timerType* for the given *object.*
-    [event] register_timer(timer_id: i32, interval: i32, timer_type: Rute::TimerType, object: *ObjectType),
+    [event] register_timer_2(timer_id: i32, interval: i32, timer_type: Rute::TimerType, object: *ObjectType),
     /// 
     /// Unregisters the timer with the given *timerId.*
     /// Returns `true` if successful; otherwise returns `false.`

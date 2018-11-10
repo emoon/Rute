@@ -315,7 +315,7 @@ struct MainWindow : Widget {
     /// and inserts it into the top toolbar area.
     /// 
     /// **See also:** setWindowTitle()
-    add_tool_bar(toolbar: *ToolBarType),
+    add_tool_bar_2(toolbar: *ToolBarType),
     /// 
     /// Adds a toolbar break to the given *area* after all the other
     /// objects that are present.
@@ -335,7 +335,7 @@ struct MainWindow : Widget {
     /// and inserts it into the top toolbar area.
     /// 
     /// **See also:** setWindowTitle()
-    add_tool_bar(title: String) -> ToolBar?,
+    add_tool_bar_3(title: String) -> ToolBar?,
     /// 
     /// Inserts a toolbar break before the toolbar specified by *before.*
     /// 
@@ -391,7 +391,7 @@ struct MainWindow : Widget {
     /// 
     /// Adds *dockwidget* into the given *area* in the direction
     /// specified by the *orientation.*
-    add_dock_widget(area: Rute::DockWidgetArea, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
+    add_dock_widget_2(area: Rute::DockWidgetArea, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
     /// 
     /// Splits the space covered by the *first* dock widget into two parts,
     /// moves the *first* dock widget into the first part, and moves the

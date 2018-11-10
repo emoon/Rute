@@ -34,17 +34,17 @@ struct CommonStyle : Style {
     /// 
     /// 
     /// 
-    [event] polish(app: *ApplicationType),
+    [event] polish_2(app: *ApplicationType),
     /// 
     /// 
     /// 
-    [event] polish(widget: *WidgetType),
+    [event] polish_3(widget: *WidgetType),
     /// 
     /// 
     [event] unpolish(widget: *WidgetType),
     /// 
     /// 
-    [event] unpolish(application: *ApplicationType),
+    [event] unpolish_2(application: *ApplicationType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

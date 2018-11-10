@@ -153,7 +153,7 @@ struct OpenGLBuffer {
     /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
     /// ```
     /// 
-    [static] release(type: OpenGLBuffer::Type),
+    [static] release_2(type: OpenGLBuffer::Type),
     /// 
     /// Returns the OpenGL identifier associated with this buffer; zero if
     /// the buffer has not been created.
@@ -234,7 +234,7 @@ struct OpenGLBuffer {
     /// 
     /// **See also:** create()
     /// write()
-    allocate(count: i32),
+    allocate_2(count: i32),
     /// 
     /// Maps the contents of this buffer into the application's memory
     /// space and returns a pointer to it. Returns null if memory

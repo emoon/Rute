@@ -36,7 +36,7 @@ struct CharRef {
     set_row(row: uchar),
     to_latin1() -> char,
     unicode() -> ushort,
-    unicode() -> ushort?,
+    unicode_2() -> ushort?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

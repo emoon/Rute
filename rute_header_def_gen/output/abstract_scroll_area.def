@@ -334,7 +334,7 @@ struct AbstractScrollArea : Frame {
     /// 
     /// By default all margins are zero.
     /// **See also:** viewportMargins()
-    set_viewport_margins(margins: &MarginsType),
+    set_viewport_margins_2(margins: &MarginsType),
     /// 
     /// Returns the margins around the scrolling area.
     /// By default all the margins are zero.

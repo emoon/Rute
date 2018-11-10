@@ -60,7 +60,7 @@ struct ConicalGradient : Gradient {
     /// *center.*
     /// 
     /// **See also:** center()
-    set_center(x: f32, y: f32),
+    set_center_2(x: f32, y: f32),
     /// 
     /// Returns the start angle of the conical gradient in logical
     /// coordinates.

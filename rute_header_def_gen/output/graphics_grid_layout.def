@@ -43,7 +43,7 @@ struct GraphicsGridLayout : GraphicsLayout {
     /// 
     /// Adds *item* to the grid on *row* and *column.* You can specify
     /// an optional *alignment* for *item.*
-    add_item(item: *GraphicsLayoutItemType, row: i32, column: i32, alignment: Rute::Alignment),
+    add_item_2(item: *GraphicsLayoutItemType, row: i32, column: i32, alignment: Rute::Alignment),
     /// 
     /// Sets the default horizontal spacing for the grid layout to *spacing.*
     set_horizontal_spacing(spacing: f32),
@@ -159,7 +159,7 @@ struct GraphicsGridLayout : GraphicsLayout {
     /// 
     /// Returns the layout item at *index,* or 0 if there is no layout item at
     /// this index.
-    [event] item_at(index: i32) -> GraphicsLayoutItem?,
+    [event] item_at_2(index: i32) -> GraphicsLayoutItem?,
     /// 
     /// Removes the layout item at *index* without destroying it. Ownership of
     /// the item is transferred to the caller.

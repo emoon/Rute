@@ -429,7 +429,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
-    invoke(object: *ObjectType, return_value: GenericReturnArgumentType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    invoke_2(object: *ObjectType, return_value: GenericReturnArgumentType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on the object *object.* Returns `true` if the member could be invoked.
     /// Returns `false` if there is no such member or the parameters did not match.
@@ -563,7 +563,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
-    invoke(object: *ObjectType, connection_type: Rute::ConnectionType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    invoke_3(object: *ObjectType, connection_type: Rute::ConnectionType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on the object *object.* Returns `true` if the member could be invoked.
     /// Returns `false` if there is no such member or the parameters did not match.
@@ -697,7 +697,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
-    invoke(object: *ObjectType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    invoke_4(object: *ObjectType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on a Q_GADGET. Returns `true` if the member could be invoked.
     /// Returns `false` if there is no such member or the parameters did not match.
@@ -769,7 +769,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
-    invoke_on_gadget(gadget: *void, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
+    invoke_on_gadget_2(gadget: *void, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Returns `true` if this method is valid (can be introspected and
     /// invoked), otherwise returns `false.`

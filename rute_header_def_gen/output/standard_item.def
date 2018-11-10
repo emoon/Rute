@@ -596,7 +596,7 @@ struct StandardItem {
     /// 
     /// **Overloads**
     /// Sets the child at *row* to *item.*
-    set_child(row: i32, item: *StandardItemType),
+    set_child_2(row: i32, item: *StandardItemType),
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
@@ -653,7 +653,7 @@ struct StandardItem {
     /// 
     /// **See also:** insertRow()
     /// insertColumns()
-    insert_rows(row: i32, count: i32),
+    insert_rows_2(row: i32, count: i32),
     /// 
     /// Inserts *count* columns of child items at column *column.*
     /// 
@@ -750,7 +750,7 @@ struct StandardItem {
     /// 
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to insert a single new item.
-    insert_row(row: i32, item: *StandardItemType),
+    insert_row_2(row: i32, item: *StandardItemType),
     /// 
     /// Appends a row containing *items.* If necessary, the column count is
     /// increased to the size of *items.*
@@ -766,7 +766,7 @@ struct StandardItem {
     /// 
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to append a single new item.
-    append_row(item: *StandardItemType),
+    append_row_2(item: *StandardItemType),
     /// 
     /// Removes the child item at ( *row,* *column)* without deleting it, and returns
     /// a pointer to the item. If there was no child at the given location, then

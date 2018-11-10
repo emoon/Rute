@@ -148,7 +148,7 @@ struct GestureEvent : Event {
     /// , and cleared with
     /// [ignore(gestureType)](QGestureEvent::ignore())
     /// 
-    set_accepted(arg0: Rute::GestureType, arg1: bool),
+    set_accepted_2(arg0: Rute::GestureType, arg1: bool),
     /// 
     /// Sets the accept flag of the given *gesture* object, the equivalent of calling
     /// [setAccepted(gesture, true)](QGestureEvent::setAccepted())
@@ -167,7 +167,7 @@ struct GestureEvent : Event {
     /// gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
     /// **See also:** QGestureEvent::ignore()
-    accept(arg0: Rute::GestureType),
+    accept_2(arg0: Rute::GestureType),
     /// 
     /// Clears the accept flag parameter of the given *gesture* object, the equivalent
     /// of calling [setAccepted(gesture, false)](QGestureEvent::setAccepted())
@@ -186,13 +186,13 @@ struct GestureEvent : Event {
     /// want the gesture. Unwanted gestures may be propgated to the parent widget.
     /// 
     /// **See also:** QGestureEvent::accept()
-    ignore(arg0: Rute::GestureType),
+    ignore_2(arg0: Rute::GestureType),
     /// 
     /// Returns `true` if the *gesture* is accepted; otherwise returns `false.`
     /// 
     /// Returns `true` if the gesture of type *gestureType* is accepted; otherwise
     /// returns `false.`
-    is_accepted(arg0: Rute::GestureType) -> bool,
+    is_accepted_2(arg0: Rute::GestureType) -> bool,
     set_widget(widget: *WidgetType),
     /// 
     /// Returns the widget on which the event occurred.

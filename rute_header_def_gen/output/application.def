@@ -165,7 +165,7 @@ struct Application : GuiApplication {
     /// **Warning**: To ensure that the application's style is set correctly, it is
     /// best to call this function before the QApplication constructor, if
     /// possible.
-    [static] set_style(arg0: String) -> Style?,
+    [static] set_style_2(arg0: String) -> Style?,
     /// 
     /// Returns the color specification.
     /// 
@@ -234,7 +234,7 @@ struct Application : GuiApplication {
     /// 
     /// **See also:** setPalette()
     /// QWidget::palette()
-    [static] palette(class_name: *char) -> Palette,
+    [static] palette_2(class_name: *char) -> Palette,
     /// 
     /// Changes the default application palette to *palette.*
     /// 
@@ -309,7 +309,7 @@ struct Application : GuiApplication {
     /// setFont()
     /// QWidget::fontMetrics()
     /// QPainter::fontMetrics()
-    [static] font(arg0: *WidgetType) -> Font,
+    [static] font_2(arg0: *WidgetType) -> Font,
     /// 
     /// Returns the default application font.
     /// 
@@ -334,7 +334,7 @@ struct Application : GuiApplication {
     /// setFont()
     /// QWidget::fontMetrics()
     /// QPainter::fontMetrics()
-    [static] font(class_name: *char) -> Font,
+    [static] font_3(class_name: *char) -> Font,
     /// 
     /// Changes the default application font to *font.* If *className* is passed,
     /// the change applies only to classes that inherit *className* (as reported
@@ -489,7 +489,7 @@ struct Application : GuiApplication {
     /// **Overloads**
     /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
     /// no Qt widget there.
-    [static] widget_at(x: i32, y: i32) -> Widget?,
+    [static] widget_at_2(x: i32, y: i32) -> Widget?,
     /// 
     /// Returns the top-level widget at the given *point;* returns 0 if
     /// there is no such widget.
@@ -505,7 +505,7 @@ struct Application : GuiApplication {
     /// **Overloads**
     /// Returns the top-level widget at the point ( *x* , *y* ); returns
     /// 0 if there is no such widget.
-    [static] top_level_at(x: i32, y: i32) -> Widget?,
+    [static] top_level_at_2(x: i32, y: i32) -> Widget?,
     /// 
     /// Sounds the bell, using the default volume and sound. The function is *not*
     /// available in Qt for Embedded Linux.

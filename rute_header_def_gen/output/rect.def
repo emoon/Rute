@@ -584,7 +584,7 @@ struct Rect {
     /// moveTopLeft()
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.*
-    move_to(p: &PointType),
+    move_to_2(p: &PointType),
     /// 
     /// Sets the coordinates of the rectangle's top-left corner to ( *x* ,
     /// *y* ), and its size to the given *width* and *height.*
@@ -723,7 +723,7 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(p: &PointType, proper: bool) -> bool,
+    contains_2(p: &PointType, proper: bool) -> bool,
     /// 
     /// Returns `true` if the given *point* is inside or on the edge of
     /// the rectangle, otherwise returns `false.` If *proper* is true, this
@@ -747,7 +747,7 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(x: i32, y: i32) -> bool,
+    contains_3(x: i32, y: i32) -> bool,
     /// 
     /// Returns `true` if the given *point* is inside or on the edge of
     /// the rectangle, otherwise returns `false.` If *proper* is true, this
@@ -771,7 +771,7 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(x: i32, y: i32, proper: bool) -> bool,
+    contains_4(x: i32, y: i32, proper: bool) -> bool,
     /// 
     /// Returns the bounding rectangle of this rectangle and the given *rectangle.*
     /// 

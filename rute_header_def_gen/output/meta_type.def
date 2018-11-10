@@ -147,10 +147,10 @@ enum TypeFlag {
 
 struct MetaType {
     [static] register_type(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator) -> i32,
-    [static] register_type(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
+    [static] register_type_2(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
     [static] unregister_type(type: i32) -> bool,
     [static] register_normalized_type(normalized_type_name: onst ::QByteArray &, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
-    [static] register_normalized_type(normalized_type_name: onst ::QByteArray &, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
+    [static] register_normalized_type_2(normalized_type_name: onst ::QByteArray &, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
     [static] register_typedef(type_name: *char, alias_id: i32) -> i32,
     [static] register_normalized_typedef(normalized_type_name: onst ::QByteArray &, alias_id: i32) -> i32,
     /// 
@@ -206,7 +206,7 @@ struct MetaType {
     /// Returns flags of the given *type.*
     /// 
     /// **See also:** QMetaType::TypeFlags
-    [static] type(type_name: onst ::QByteArray &) -> i32,
+    [static] type_2(type_name: onst ::QByteArray &) -> i32,
     /// 
     /// Returns the type name associated with the given *typeId,* or a null
     /// pointer if no matching type was found. The returned pointer must not be
@@ -307,7 +307,7 @@ struct MetaType {
     /// **See also:** type()
     /// typeName()
     /// Type
-    is_registered() -> bool,
+    is_registered_2() -> bool,
     /// 
     /// Returns the size of the type in bytes (i.e. sizeof(T),
     /// where T is the actual type for which this QMetaType instance
@@ -326,7 +326,7 @@ struct MetaType {
     /// to perform low-level management of the memory used by a type.
     /// 
     /// **See also:** construct()
-    size_of() -> i32,
+    size_of_2() -> i32,
     /// 
     /// Returns flags of the type for which this QMetaType instance was constructed.
     /// 
@@ -345,7 +345,7 @@ struct MetaType {
     /// **See also:** destroy()
     /// isRegistered()
     /// Type
-    create(copy: *void),
+    create_2(copy: *void),
     /// 
     /// Returns `true,` if the meta type system has registered comparators for type T.
     /// 

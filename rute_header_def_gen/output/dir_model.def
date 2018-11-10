@@ -176,7 +176,7 @@ struct DirModel : AbstractItemModel {
     /// 
     /// **Overloads**
     /// Returns the model item index for the given *path.*
-    index(path: String, column: i32) -> ModelIndex,
+    index_2(path: String, column: i32) -> ModelIndex,
     /// 
     /// Returns `true` if the model item *index* represents a directory;
     /// otherwise returns `false.`

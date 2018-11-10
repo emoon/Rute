@@ -909,7 +909,7 @@ struct Style : Object {
     /// 
     /// **See also:** QPalette
     /// QApplication::setPalette()
-    [event] polish(application: *ApplicationType),
+    [event] polish_2(application: *ApplicationType),
     /// 
     /// Uninitialize the given *widget* 's appearance.
     /// 
@@ -927,7 +927,7 @@ struct Style : Object {
     /// 
     /// **Overloads**
     /// Uninitialize the given *application.*
-    [event] unpolish(application: *ApplicationType),
+    [event] unpolish_2(application: *ApplicationType),
     /// 
     /// Initializes the appearance of the given *widget.*
     /// 
@@ -960,7 +960,7 @@ struct Style : Object {
     /// 
     /// **See also:** QPalette
     /// QApplication::setPalette()
-    [event] polish(palette: &PaletteType),
+    [event] polish_3(palette: &PaletteType),
     /// 
     /// Returns the area within the given *rectangle* in which to draw
     /// the provided *text* according to the specified font *metrics*
