@@ -6,7 +6,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
-#[cfg(debug_assertions)]
+//#[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
 
 ///
@@ -50,7 +50,7 @@ pub enum VariableType {
 ///
 #[derive(Debug, Clone)]
 pub struct Variable {
-    /// Documentation 
+    /// Documentation
     pub doc_comments: String,
     /// Name of the variable
     pub name: String,
@@ -113,8 +113,8 @@ pub enum FunctionType {
 ///
 #[derive(Debug, Clone)]
 pub struct Function {
-	/// Documentation
-	pub doc_comments: String,
+    /// Documentation
+    pub doc_comments: String,
     /// Name of the function
     pub name: String,
     /// This is the C++ name of the function. Most of the time it will
@@ -136,7 +136,7 @@ pub struct Function {
 impl Default for Function {
     fn default() -> Self {
         Function {
-        	doc_comments: String::new(),
+            doc_comments: String::new(),
             name: String::new(),
             cpp_name: String::new(),
             function_args: Vec::new(),
@@ -169,7 +169,7 @@ pub struct Struct {
     /// Traits
     pub traits: Vec<String>,
     /// If the struct inherits another
-    pub inherit: Option<String>,
+    pub inherit: Option<Vec<String>>,
     /// The full inherit chain
     pub full_inherit: Vec<String>,
     /// If the struct is a widget or not
@@ -274,8 +274,8 @@ impl ApiParser {
                 }
 
                 Rule::doc_comment => {
-                	struct_comments.push_str(chunk.as_str());
-                	struct_comments.push_str("\n");
+                    struct_comments.push_str(chunk.as_str());
+                    struct_comments.push_str("\n");
                 }
 
                 Rule::enumdef => {
@@ -316,7 +316,7 @@ impl ApiParser {
         for entry in chunk.into_inner() {
             match entry.as_rule() {
                 Rule::name => sdef.name = entry.as_str().to_owned(),
-                Rule::derive => sdef.inherit = Some(Self::get_name(entry)),
+                Rule::derive => sdef.inherit = Some(Self::get_namelist_list(entry)),
                 Rule::attributes => sdef.attributes = Self::get_attrbutes(entry),
                 Rule::traits => sdef.traits = Self::get_attrbutes(entry),
                 Rule::fieldlist => {
@@ -379,31 +379,31 @@ impl ApiParser {
         let mut doc_comments = String::new();
 
         for entry in rule.into_inner() {
-        	match entry.as_rule() {
-        		Rule::field => {
-					let field = entry.clone().into_inner().next().unwrap();
+            match entry.as_rule() {
+                Rule::field => {
+                    let field = entry.clone().into_inner().next().unwrap();
 
-					match field.as_rule() {
-						Rule::var => { 
-							var_entries.push(Self::get_variable(field, &doc_comments));
-							doc_comments.clear();
-						}
-						Rule::function => {
-							func_entries.push(Self::get_function(field, &doc_comments));
-							doc_comments.clear();
-						}
-						_ => (),
-					}
-				}
+                    match field.as_rule() {
+                        Rule::var => {
+                            var_entries.push(Self::get_variable(field, &doc_comments));
+                            doc_comments.clear();
+                        }
+                        Rule::function => {
+                            func_entries.push(Self::get_function(field, &doc_comments));
+                            doc_comments.clear();
+                        }
+                        _ => (),
+                    }
+                }
 
-				Rule::doc_comment => {
-					doc_comments.push_str("    ");
-					doc_comments.push_str(entry.as_str());
-					doc_comments.push_str("\n");
-				}
+                Rule::doc_comment => {
+                    doc_comments.push_str("    ");
+                    doc_comments.push_str(entry.as_str());
+                    doc_comments.push_str("\n");
+                }
 
-				_ => (),
-        	}
+                _ => (),
+            }
         }
 
         (var_entries, func_entries)
@@ -430,8 +430,8 @@ impl ApiParser {
     ///
     fn get_function(rule: Pair<Rule>, doc_comments: &str) -> Function {
         let mut function = Function {
-        	doc_comments: doc_comments.to_owned(),
-        	.. Function::default()
+            doc_comments: doc_comments.to_owned(),
+            ..Function::default()
         };
 
         for entry in rule.into_inner() {
@@ -449,7 +449,7 @@ impl ApiParser {
                         .map(|e| e.as_str())
                         .unwrap()
                         .to_owned();
-                },
+                }
 
                 Rule::manual => {
                     function.is_manual = true;
@@ -671,7 +671,9 @@ impl ApiParser {
             api_def.class_structs.iter().for_each(|s| {
                 s.inherit.as_ref().map_or((), |i| {
                     let mut in_values = Vec::new();
-                    in_values.push(i.to_owned());
+                    for v in i {
+                        in_values.push(v.to_owned());
+                    }
                     // Using vec here to support multiple classes later
                     inherited_classes.insert(s.name.to_owned(), in_values);
                 })
@@ -841,12 +843,10 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference => {
-                match is_ret_type {
-                    IsReturnType::Yes => format!("struct RU{}", tname).into(),
-                    IsReturnType::No => "struct RUBase*".into(),
-                }
-            }
+            VariableType::Reference => match is_ret_type {
+                IsReturnType::Yes => format!("struct RU{}", tname).into(),
+                IsReturnType::No => "struct RUBase*".into(),
+            },
 
             VariableType::Regular => {
                 if tname == "String" {
@@ -1060,7 +1060,6 @@ impl Function {
             &self.name
         }
     }
-
 }
 
 #[cfg(test)]
@@ -1104,7 +1103,7 @@ mod tests {
     fn test_var_untyped_name_typed() {
         let var = Variable {
             type_name: "WidgetType".to_owned(),
-            .. Variable::default()
+            ..Variable::default()
         };
 
         assert_eq!(var.get_untyped_name(), "Widget");
@@ -1117,7 +1116,7 @@ mod tests {
     fn test_var_untyped_name() {
         let var = Variable {
             type_name: "Widget".to_owned(),
-            .. Variable::default()
+            ..Variable::default()
         };
 
         assert_eq!(var.get_untyped_name(), "Widget");
