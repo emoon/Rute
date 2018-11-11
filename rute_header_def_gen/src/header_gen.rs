@@ -336,6 +336,21 @@ fn print_func<W: Write>(
         }
     }
 
+    let mut name_count: usize = 0;
+
+    if let Some(count) = name_count_lookup.get_mut(&name) {
+        name_count = *count;
+        *count += 1;
+    }
+
+    if !name_count_lookup.contains_key(&name) {
+        name_count_lookup.insert(name.to_owned(), 2);
+    }
+
+    if name_count > 0 {
+        writeln!(dest, "    [org_name({})]", name);
+    }
+
     // check if we have any doc for this
 
     if func_type == AccessLevel::Signal {
@@ -351,16 +366,6 @@ fn print_func<W: Write>(
     // If we have multiple instances of the same name
     // we just add _1, _2, etc to the names. These will be renamed (manually) later
 
-    let mut name_count: usize = 0;
-
-    if let Some(count) = name_count_lookup.get_mut(&name) {
-        name_count = *count;
-        *count += 1;
-    }
-
-    if !name_count_lookup.contains_key(&name) {
-        name_count_lookup.insert(name.to_owned(), 2);
-    }
 
     if name_count > 0 {
         write!(dest, "{}_{}", name.to_snake_case(), name_count);
@@ -515,23 +520,10 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     writeln!(dest, "///");
     writeln!(dest, "/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.");
 
-    // print all enums for the class
-
-    for field in entry.get_children() {
-        match field.get_kind() {
-            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name),
-            _ => (),
-        }
-    }
-
-    if method_count == 0 {
-        return;
-    }
-
     // Print class and the inharitance
 
     if base_classes.is_empty() {
-        writeln!(dest, "\nstruct {} {{", &name[1..]);
+        writeln!(dest, "struct {} {{", &name[1..]);
     } else {
         if base_classes.len() > 1 {
             write!(dest, "struct {} : {}", &name[1..], &base_classes[0][7..]);
@@ -564,7 +556,17 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
         }
     }
 
-    writeln!(dest, "}}\n\n// vim: syntax=rust expandtab ts=4 sw=4");
+    writeln!(dest, "}}\n");
+
+    // print all enums for the class
+    for field in entry.get_children() {
+        match field.get_kind() {
+            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name),
+            _ => (),
+        }
+    }
+
+    writeln!(dest, "// vim: syntax=rust expandtab ts=4 sw=4");
 }
 
 fn is_header_file(entry: &walkdir::DirEntry) -> bool {
@@ -634,6 +636,8 @@ impl Generator {
                 .parse()
                 .unwrap();
 
+            // Use this to figure out if something doesn't work correctly
+            //println!("{:?}", tu.get_diagnostics());
 
             // Get the structs in this translation unit
             let structs = tu
@@ -643,11 +647,9 @@ impl Generator {
                 .filter(|e| e.get_kind() == EntityKind::ClassDecl)
                 .collect::<Vec<_>>();
 
-            //println!("{:?}", structs);
 
             for struct_ in structs {
                 if let Some(name) = struct_.get_name() {
-                    //println!("name {}", name);
                     let t = name.to_owned();
                     {
                         let data = lock.read().unwrap();
