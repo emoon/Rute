@@ -7,14 +7,39 @@ extern crate walkdir;
 mod header_gen;
 
 //use doc_parser::{DocEntry, DocInfo, DocParser};
+use heck::SnakeCase;
 use header_gen::Generator;
 use std::path::Path;
 use std::env;
 
 use qdoc_parser::{QDocFilterable, QDocParser};
 
-fn filter_func(data: &str, _doc_type: QDocFilterable) -> String {
-    data.to_owned()
+fn generate_code_link(data: &str) -> String {
+    if data.contains("::") && data.ends_with("()") && data.starts_with("Q") {
+        let type_name = data.split("::").collect::<Vec<&str>>();
+        format!("[`{}::{}`]", &type_name[0][1..], type_name[1].to_snake_case())
+    } else if data.contains("::") && data.starts_with("Q") {
+        let type_name = data.split("::").collect::<Vec<&str>>();
+        format!("[`{}::{}()`]", &type_name[0][1..], type_name[1].to_snake_case())
+    } else if data.ends_with("()") {
+        format!("[`{}()`]", data.to_snake_case())
+    } else if data.starts_with("Q") {
+        format!("[`{}`]", &data[1..])
+    } else {
+        data.to_owned()
+    }
+}
+
+fn filter_func(data: &str, doc_type: QDocFilterable) -> String {
+    match doc_type {
+        QDocFilterable::LinkSeeAlso => generate_code_link(data),
+        // This is not correct
+        QDocFilterable::Function => data.to_snake_case(),
+        QDocFilterable::Overload => data.to_snake_case(),
+        QDocFilterable::LinkName => data.to_snake_case(),
+        QDocFilterable::LinkUrl => data.to_snake_case(),
+        _ => data.to_owned(),
+    }
 }
 
 fn add_path_arg(dest: &mut Vec<String>, base_path: &str, path: &str) {
