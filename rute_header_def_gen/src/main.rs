@@ -34,10 +34,12 @@ fn filter_func(data: &str, doc_type: QDocFilterable) -> String {
     match doc_type {
         QDocFilterable::LinkSeeAlso => generate_code_link(data),
         // This is not correct
+        /*
         QDocFilterable::Function => data.to_snake_case(),
         QDocFilterable::Overload => data.to_snake_case(),
         QDocFilterable::LinkName => data.to_snake_case(),
         QDocFilterable::LinkUrl => data.to_snake_case(),
+        */
         _ => data.to_owned(),
     }
 }
