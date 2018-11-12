@@ -1,0 +1,178 @@
+/// 
+/// The size policy of a widget is an expression of its willingness to
+/// be resized in various ways, and affects how the widget is treated
+/// by the [layout engine](Layout%20Management)
+/// . Each widget returns a
+/// QSizePolicy that describes the horizontal and vertical resizing
+/// policy it prefers when being laid out. You can change this for
+/// a specific widget by changing its QWidget::sizePolicy property.
+/// 
+/// QSizePolicy contains two independent QSizePolicy::Policy values
+/// and two stretch factors; one describes the widgets's horizontal
+/// size policy, and the other describes its vertical size policy. It
+/// also contains a flag to indicate whether the height and width of
+/// its preferred size are related.
+/// 
+/// The horizontal and vertical policies can be set in the
+/// constructor, and altered using the setHorizontalPolicy() and
+/// setVerticalPolicy() functions. The stretch factors can be set
+/// using the setHorizontalStretch() and setVerticalStretch()
+/// functions. The flag indicating whether the widget's
+/// [sizeHint()](QWidget::sizeHint())
+/// is width-dependent (such as a
+/// menu bar or a word-wrapping label) can be set using the
+/// setHeightForWidth() function.
+/// 
+/// The current size policies and stretch factors be retrieved using
+/// the horizontalPolicy(), verticalPolicy(), horizontalStretch() and
+/// verticalStretch() functions. Alternatively, use the transpose()
+/// function to swap the horizontal and vertical policies and
+/// stretches. The hasHeightForWidth() function returns the current
+/// status of the flag indicating the size hint dependencies.
+/// 
+/// Use the expandingDirections() function to determine whether the
+/// associated widget can make use of more space than its
+/// [sizeHint()](QWidget::sizeHint())
+/// function indicates, as well as
+/// find out in which directions it can expand.
+/// 
+/// Finally, the QSizePolicy class provides operators comparing this
+/// size policy to a given policy, as well as a QVariant operator
+/// storing this QSizePolicy as a QVariant object.
+/// 
+/// **See also:** QSize
+/// QWidget::sizeHint()
+/// QWidget::sizePolicy
+/// QLayoutItem::sizeHint()
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[org_name(QSizePolicy)]
+enum PolicyFlag {
+    GrowFlag,
+    ExpandFlag,
+    ShrinkFlag,
+    IgnoreFlag,
+}
+
+[org_name(QSizePolicy)]
+enum Policy {
+    Fixed,
+    Minimum,
+    Maximum,
+    Preferred,
+    MinimumExpanding,
+    Expanding,
+    Ignored,
+}
+
+[org_name(QSizePolicy)]
+enum ControlType {
+    DefaultType,
+    ButtonBox,
+    CheckBox,
+    ComboBox,
+    Frame,
+    GroupBox,
+    Label,
+    Line,
+    LineEdit,
+    PushButton,
+    RadioButton,
+    Slider,
+    SpinBox,
+    TabWidget,
+    ToolButton,
+}
+
+
+struct SizePolicy {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the horizontal component of the size policy.
+    /// 
+    /// **See also:** setHorizontalPolicy()
+    /// verticalPolicy()
+    /// horizontalStretch()
+    horizontal_policy() -> SizePolicy::Policy,
+    /// 
+    /// Returns the vertical component of the size policy.
+    /// 
+    /// **See also:** setVerticalPolicy()
+    /// horizontalPolicy()
+    /// verticalStretch()
+    vertical_policy() -> SizePolicy::Policy,
+    /// 
+    /// Sets the horizontal component to the given *policy.*
+    /// 
+    /// **See also:** horizontalPolicy()
+    /// setVerticalPolicy()
+    /// setHorizontalStretch()
+    set_horizontal_policy(d: SizePolicy::Policy),
+    /// 
+    /// Sets the vertical component to the given *policy.*
+    /// 
+    /// **See also:** verticalPolicy()
+    /// setHorizontalPolicy()
+    /// setVerticalStretch()
+    set_vertical_policy(d: SizePolicy::Policy),
+    /// 
+    /// Returns whether a widget can make use of more space than the
+    /// QWidget::sizeHint() function indicates.
+    /// 
+    /// A value of Qt::Horizontal or Qt::Vertical means that the widget
+    /// can grow horizontally or vertically (i.e., the horizontal or
+    /// vertical policy is [Expanding](Expanding)
+    /// or [MinimumExpanding),](MinimumExpanding),)
+    /// whereas
+    /// Qt::Horizontal | Qt::Vertical means that it can grow in both
+    /// dimensions.
+    /// 
+    /// **See also:** horizontalPolicy()
+    /// verticalPolicy()
+    expanding_directions() -> Rute::Orientations,
+    /// 
+    /// Sets the flag determining whether the widget's preferred height
+    /// depends on its width, to *dependent.*
+    /// 
+    /// **See also:** hasHeightForWidth()
+    /// setWidthForHeight()
+    set_height_for_width(b: bool),
+    /// 
+    /// Returns `true` if the widget's preferred height depends on its
+    /// width; otherwise returns `false.`
+    /// 
+    /// **See also:** setHeightForWidth()
+    has_height_for_width() -> bool,
+    /// 
+    /// Sets the flag determining whether the widget's width
+    /// depends on its height, to *dependent.*
+    /// 
+    /// This is only supported for QGraphicsLayout's subclasses.
+    /// It is not possible to have a layout with both height-for-width
+    /// and width-for-height constraints at the same time.
+    /// 
+    /// **See also:** hasWidthForHeight()
+    /// setHeightForWidth()
+    set_width_for_height(b: bool),
+    /// 
+    /// Returns `true` if the widget's width depends on its
+    /// height; otherwise returns `false.`
+    /// 
+    /// **See also:** setWidthForHeight()
+    has_width_for_height() -> bool,
+    /// 
+    /// Returns whether the layout should retain the widget's size when it is hidden.
+    /// This is `false` by default.
+    /// 
+    /// **See also:** setRetainSizeWhenHidden()
+    retain_size_when_hidden() -> bool,
+    /// 
+    /// Sets whether a layout should retain the widget's size when it is hidden.
+    /// If *retainSize* is `true,` the layout will not be changed by hiding the widget.
+    /// 
+    /// **See also:** retainSizeWhenHidden()
+    set_retain_size_when_hidden(retain_size: bool),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

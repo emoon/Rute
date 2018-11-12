@@ -144,7 +144,8 @@ pub static SET_SIGNAL_TEMPLATE: &str = "static {{event_def}}) {
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-pub static WRAP_EVENT_TEMPLATE: &str = "{{c_return_type}} {{qt_event_name}}({{qt_event_args}}) {
+pub static WRAP_EVENT_TEMPLATE: &str = "
+    {{c_return_type}} {{qt_event_name}}({{qt_event_args}}) {
         if (m_{{event_type_snake}}) {
             {{body_init}}
             {{body_setup}}
@@ -157,7 +158,7 @@ pub static WRAP_EVENT_TEMPLATE: &str = "{{c_return_type}} {{qt_event_name}}({{qt
         }
     }
 
-    void (*m_{{event_type_snake}})({{c_event_args}}) = nullptr;
+    {{c_return_type}} (*m_{{event_type_snake}})({{c_event_args}}) = nullptr;
     void* m_{{event_type_snake}}_user_data = nullptr;
     void* m_{{event_type_snake}}_wrapped_func = nullptr;
 ";

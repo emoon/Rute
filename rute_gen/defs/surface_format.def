@@ -1,0 +1,367 @@
+///
+/// The format includes the size of the color buffers, red, green, and blue;
+/// the size of the alpha buffer; the size of the depth and stencil buffers;
+/// and number of samples per pixel for multisampling. In addition, the format
+/// contains surface configuration parameters such as OpenGL profile and
+/// version for rendering, whether or not to enable stereo buffers, and swap
+/// behaviour.
+///
+/// **Note**: When troubleshooting context or window format issues, it can be
+/// helpful to enable the logging category `qt.qpa.gl` . Depending on the
+/// platform, this may print useful debug information when it comes to OpenGL
+/// initialization and the native visual or framebuffer configurations which
+/// QSurfaceFormat gets mapped to.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct SurfaceFormat {
+    ///
+    /// Set the minimum depth buffer size to *size.*
+    ///
+    /// **See also:** depthBufferSize()
+    set_depth_buffer_size(size: i32),
+    ///
+    /// Returns the depth buffer size.
+    ///
+    /// **See also:** setDepthBufferSize()
+    depth_buffer_size() -> i32,
+    ///
+    /// Set the preferred stencil buffer size to *size* bits.
+    ///
+    /// **See also:** stencilBufferSize()
+    set_stencil_buffer_size(size: i32),
+    ///
+    /// Returns the stencil buffer size in bits.
+    ///
+    /// **See also:** setStencilBufferSize()
+    stencil_buffer_size() -> i32,
+    ///
+    /// Set the desired *size* in bits of the red channel of the color buffer.
+    ///
+    /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
+    /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
+    /// the current bit-depth of the screen is used.
+    set_red_buffer_size(size: i32),
+    ///
+    /// Get the size in bits of the red channel of the color buffer.
+    red_buffer_size() -> i32,
+    ///
+    /// Set the desired *size* in bits of the green channel of the color buffer.
+    ///
+    /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
+    /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
+    /// the current bit-depth of the screen is used.
+    set_green_buffer_size(size: i32),
+    ///
+    /// Get the size in bits of the green channel of the color buffer.
+    green_buffer_size() -> i32,
+    ///
+    /// Set the desired *size* in bits of the blue channel of the color buffer.
+    ///
+    /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
+    /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
+    /// the current bit-depth of the screen is used.
+    set_blue_buffer_size(size: i32),
+    ///
+    /// Get the size in bits of the blue channel of the color buffer.
+    blue_buffer_size() -> i32,
+    ///
+    /// Set the desired *size* in bits of the alpha channel of the color buffer.
+    set_alpha_buffer_size(size: i32),
+    ///
+    /// Get the size in bits of the alpha channel of the color buffer.
+    alpha_buffer_size() -> i32,
+    ///
+    /// Set the preferred number of samples per pixel when multisampling
+    /// is enabled to *numSamples.* By default, multisampling is disabled.
+    ///
+    /// **See also:** samples()
+    set_samples(num_samples: i32),
+    ///
+    /// Returns the number of samples per pixel when multisampling is
+    /// enabled. By default, multisampling is disabled.
+    ///
+    /// **See also:** setSamples()
+    samples() -> i32,
+    ///
+    /// Set the swap *behavior* of the surface.
+    ///
+    /// The swap behavior specifies whether single, double, or triple
+    /// buffering is desired. The default, DefaultSwapBehavior,
+    /// gives the default swap behavior of the platform.
+    set_swap_behavior(behavior: SurfaceFormat::SwapBehavior),
+    ///
+    /// Returns the configured swap behaviour.
+    ///
+    /// **See also:** setSwapBehavior()
+    swap_behavior() -> SurfaceFormat::SwapBehavior,
+    ///
+    /// Returns `true` if the alpha buffer size is greater than zero.
+    ///
+    /// This means that the surface might be used with per pixel
+    /// translucency effects.
+    has_alpha() -> bool,
+    ///
+    /// Sets the desired OpenGL context *profile.*
+    ///
+    /// This setting is ignored if the requested OpenGL version is
+    /// less than 3.2.
+    set_profile(profile: SurfaceFormat::OpenGLContextProfile),
+    ///
+    /// Get the configured OpenGL context profile.
+    ///
+    /// This setting is ignored if the requested OpenGL version is
+    /// less than 3.2.
+    profile() -> SurfaceFormat::OpenGLContextProfile,
+    ///
+    /// Sets the desired renderable *type.*
+    ///
+    /// Chooses between desktop OpenGL, OpenGL ES, and OpenVG.
+    set_renderable_type(type: SurfaceFormat::RenderableType),
+    ///
+    /// Gets the renderable type.
+    ///
+    /// Chooses between desktop OpenGL, OpenGL ES, and OpenVG.
+    renderable_type() -> SurfaceFormat::RenderableType,
+    ///
+    /// Sets the desired *major* OpenGL version.
+    set_major_version(major_version: i32),
+    ///
+    /// Returns the major OpenGL version.
+    ///
+    /// The default version is 2.0.
+    major_version() -> i32,
+    ///
+    /// Sets the desired *minor* OpenGL version.
+    ///
+    /// The default version is 2.0.
+    set_minor_version(minor_version: i32),
+    ///
+    /// Returns the minor OpenGL version.
+    minor_version() -> i32,
+    //
+    // Returns a QPair<int, int> representing the OpenGL version.
+    //
+    // Useful for version checks, for example format.version() >= qMakePair(3, 2)
+    //version() -> Pair<int,,
+    ///
+    /// Sets the desired *major* and *minor* OpenGL versions.
+    ///
+    /// The default version is 2.0.
+    set_version(major: i32, minor: i32),
+    ///
+    /// Returns `true` if stereo buffering is enabled; otherwise returns
+    /// false. Stereo buffering is disabled by default.
+    ///
+    /// **See also:** setStereo()
+    stereo() -> bool,
+    ///
+    /// If *enable* is true enables stereo buffering; otherwise disables
+    /// stereo buffering.
+    ///
+    /// Stereo buffering is disabled by default.
+    ///
+    /// Stereo buffering provides extra color buffers to generate left-eye
+    /// and right-eye images.
+    ///
+    /// **See also:** stereo()
+    set_stereo(enable: bool),
+    ///
+    /// **Overloads**
+    /// Use setOption(QSurfaceFormat::FormatOption, bool) or setOptions() instead.
+    ///
+    /// Sets the format options to the OR combination of *opt* and the
+    /// current format options.
+    ///
+    /// **See also:** options()
+    /// testOption()
+    ///
+    /// Sets the format options to *options.*
+    ///
+    /// **See also:** options()
+    /// testOption()
+    ///
+    /// Sets the format option *option* if *on* is true; otherwise, clears the option.
+    ///
+    /// **See also:** setOptions()
+    /// options()
+    /// testOption()
+    set_option(opt: SurfaceFormat::FormatOptions),
+    ///
+    /// **Overloads**
+    /// Use testOption(QSurfaceFormat::FormatOption) instead.
+    ///
+    /// Returns `true` if any of the options in *opt* is currently set
+    /// on this object; otherwise returns false.
+    ///
+    /// **See also:** setOption()
+    ///
+    /// Returns true if the format option *option* is set; otherwise returns false.
+    ///
+    /// **See also:** options()
+    test_option(opt: SurfaceFormat::FormatOptions) -> bool,
+    ///
+    /// Sets the format options to *options.*
+    ///
+    /// **See also:** options()
+    /// testOption()
+    set_options(options: SurfaceFormat::FormatOptions),
+    ///
+    /// **Overloads**
+    /// Use setOption(QSurfaceFormat::FormatOption, bool) or setOptions() instead.
+    ///
+    /// Sets the format options to the OR combination of *opt* and the
+    /// current format options.
+    ///
+    /// **See also:** options()
+    /// testOption()
+    ///
+    /// Sets the format options to *options.*
+    ///
+    /// **See also:** options()
+    /// testOption()
+    ///
+    /// Sets the format option *option* if *on* is true; otherwise, clears the option.
+    ///
+    /// **See also:** setOptions()
+    /// options()
+    /// testOption()
+    set_option_2(option: SurfaceFormat::FormatOption, on: bool),
+    ///
+    /// **Overloads**
+    /// Use testOption(QSurfaceFormat::FormatOption) instead.
+    ///
+    /// Returns `true` if any of the options in *opt* is currently set
+    /// on this object; otherwise returns false.
+    ///
+    /// **See also:** setOption()
+    ///
+    /// Returns true if the format option *option* is set; otherwise returns false.
+    ///
+    /// **See also:** options()
+    test_option_2(option: SurfaceFormat::FormatOption) -> bool,
+    ///
+    /// Returns the currently set format options.
+    ///
+    /// **See also:** setOption()
+    /// setOptions()
+    /// testOption()
+    options() -> SurfaceFormat::FormatOptions,
+    ///
+    /// Returns the swap interval.
+    ///
+    /// **See also:** setSwapInterval()
+    swap_interval() -> i32,
+    ///
+    /// Sets the preferred swap interval. The swap interval specifies the
+    /// minimum number of video frames that are displayed before a buffer
+    /// swap occurs. This can be used to sync the GL drawing into a window
+    /// to the vertical refresh of the screen.
+    ///
+    /// Setting an *interval* value of 0 will turn the vertical refresh
+    /// syncing off, any value higher than 0 will turn the vertical
+    /// syncing on. Setting *interval* to a higher value, for example 10,
+    /// results in having 10 vertical retraces between every buffer swap.
+    ///
+    /// The default interval is 1.
+    ///
+    /// Changing the swap interval may not be supported by the underlying
+    /// platform. In this case, the request will be silently ignored.
+    ///
+    /// **See also:** swapInterval()
+    set_swap_interval(interval: i32),
+    ///
+    /// **Returns** the color space.
+    ///
+    /// **See also:** setColorSpace()
+    color_space() -> SurfaceFormat::ColorSpace,
+    ///
+    /// Sets the preferred *colorSpace.*
+    ///
+    /// For example, this allows requesting windows with default framebuffers that
+    /// are sRGB-capable on platforms that support it.
+    ///
+    /// **Note**: When the requested color space is not supported by the platform, the
+    /// request is ignored. Query the QSurfaceFormat after window creation to verify
+    /// if the color space request could be honored or not.
+    ///
+    /// **Note**: This setting controls if the default framebuffer of the window is
+    /// capable of updates and blending in a given color space. It does not change
+    /// applications' output by itself. The applications' rendering code will still
+    /// have to opt in via the appropriate OpenGL calls to enable updates and
+    /// blending to be performed in the given color space instead of using the
+    /// standard linear operations.
+    ///
+    /// **See also:** colorSpace()
+    set_color_space(color_space: SurfaceFormat::ColorSpace),
+    ///
+    /// Sets the global default surface *format.*
+    ///
+    /// This format is used by default in QOpenGLContext, QWindow, QOpenGLWidget and
+    /// similar classes.
+    ///
+    /// It can always be overridden on a per-instance basis by using the class in
+    /// question's own setFormat() function. However, it is often more convenient to
+    /// set the format for all windows once at the start of the application. It also
+    /// guarantees proper behavior in cases where shared contexts are required,
+    /// because settings the format via this function guarantees that all contexts
+    /// and surfaces, even the ones created internally by Qt, will use the same
+    /// format.
+    ///
+    /// **Note**: When setting Qt::AA_ShareOpenGLContexts, it is strongly recommended to
+    /// place the call to this function before the construction of the
+    /// QGuiApplication or QApplication. Otherwise *format* will not be applied to
+    /// the global share context and therefore issues may arise with context sharing
+    /// afterwards.
+    ///
+    /// **See also:** defaultFormat()
+    [static] set_default_format(format: &SurfaceFormatType),
+    ///
+    /// Returns the global default surface format.
+    ///
+    /// When setDefaultFormat() is not called, this is a default-constructed QSurfaceFormat.
+    ///
+    /// **See also:** setDefaultFormat()
+    [static] default_format() -> SurfaceFormat,
+}
+
+[org_name(QSurfaceFormat)]
+enum FormatOption {
+    StereoBuffers,
+    DebugContext,
+    DeprecatedFunctions,
+    ResetNotification,
+}
+
+[org_name(QSurfaceFormat)]
+enum SwapBehavior {
+    DefaultSwapBehavior,
+    SingleBuffer,
+    DoubleBuffer,
+    TripleBuffer,
+}
+
+[org_name(QSurfaceFormat)]
+enum RenderableType {
+    DefaultRenderableType,
+    OpenGL,
+    OpenGLES,
+    OpenVG,
+}
+
+[org_name(QSurfaceFormat)]
+enum OpenGLContextProfile {
+    NoProfile,
+    CoreProfile,
+    CompatibilityProfile,
+}
+
+[org_name(QSurfaceFormat)]
+enum ColorSpace {
+    DefaultColorSpace,
+    sRGBColorSpace,
+}
+
+
+
+// vim: syntax=rust expandtab ts=4 sw=4

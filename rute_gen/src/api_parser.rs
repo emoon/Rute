@@ -316,7 +316,7 @@ impl ApiParser {
         for entry in chunk.into_inner() {
             match entry.as_rule() {
                 Rule::name => sdef.name = entry.as_str().to_owned(),
-                Rule::derive => sdef.inherit = Some(Self::get_namelist_list(entry)),
+                Rule::derive => sdef.inherit = Some(Self::get_derive_list(entry)),
                 Rule::attributes => sdef.attributes = Self::get_attrbutes(entry),
                 Rule::traits => sdef.traits = Self::get_attrbutes(entry),
                 Rule::fieldlist => {
@@ -351,7 +351,20 @@ impl ApiParser {
     ///
     fn get_attrbutes(rule: Pair<Rule>) -> Vec<String> {
         let mut attribs = Vec::new();
+        for entry in rule.into_inner() {
+            if entry.as_rule() == Rule::namelist {
+                attribs = Self::get_namelist_list(entry);
+            }
+        }
 
+        attribs
+    }
+
+    ///
+    /// Get attributes for a struct
+    ///
+    fn get_derive_list(rule: Pair<Rule>) -> Vec<String> {
+        let mut attribs = Vec::new();
         for entry in rule.into_inner() {
             if entry.as_rule() == Rule::namelist {
                 attribs = Self::get_namelist_list(entry);
@@ -672,7 +685,7 @@ impl ApiParser {
                 s.inherit.as_ref().map_or((), |i| {
                     let mut in_values = Vec::new();
                     for v in i {
-                        in_values.push(v.to_owned());
+                        in_values.push(v.trim().to_owned());
                     }
                     // Using vec here to support multiple classes later
                     inherited_classes.insert(s.name.to_owned(), in_values);

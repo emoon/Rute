@@ -1,0 +1,406 @@
+///
+/// This is an abstract base class inherited by the concrete classes
+/// QBoxLayout, QGridLayout, QFormLayout, and QStackedLayout.
+///
+/// For users of QLayout subclasses or of QMainWindow there is seldom
+/// any need to use the basic functions provided by QLayout, such as
+/// setSizeConstraint() or setMenuBar(). See [Layout Management](Layout%20Management)
+/// for more information.
+///
+/// To make your own layout manager, implement the functions
+/// addItem(), sizeHint(), setGeometry(), itemAt() and takeAt(). You
+/// should also implement minimumSize() to ensure your layout isn't
+/// resized to zero size if there is too little space. To support
+/// children whose heights depend on their widths, implement
+/// hasHeightForWidth() and heightForWidth(). See the
+/// [Border Layout](layouts/borderlayout)
+/// and
+/// [Flow Layout](layouts/flowlayout)
+/// examples for
+/// more information about implementing custom layout managers.
+///
+/// Geometry management stops when the layout manager is deleted.
+///
+/// **See also:** [`LayoutItem`]
+/// {Layout Management}
+/// {Basic Layouts Example}
+/// {Border Layout Example}
+/// {Flow Layout Example}
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrap)]
+struct Layout : Object, LayoutItem {
+    ///
+    /// Use setContentsMargins() and getContentsMargins() instead.
+    ///
+    /// **See also:** [`contents_rect()`]
+    /// spacing
+    ///
+    margin() -> i32,
+    ///
+    /// If no value is explicitly set, the layout's spacing is inherited
+    /// from the parent layout, or from the style settings for the parent
+    /// widget.
+    ///
+    /// For QGridLayout and QFormLayout, it is possible to set different horizontal and
+    /// vertical spacings using [setHorizontalSpacing()](QGridLayout::)
+    ///
+    /// and [setVerticalSpacing()](QGridLayout::)
+    /// . In that case,
+    /// spacing() returns -1.
+    ///
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
+    /// [`Style::layout_spacing`]
+    /// [`Style::pixel_metric`]
+    spacing() -> i32,
+    ///
+    set_margin(arg0: i32),
+    set_spacing(arg0: i32),
+    ///
+    /// Sets the *left,* *top,* *right,* and *bottom* margins to use
+    /// around the layout.
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`get_contents_margins()`]
+    /// [`Style::pixel_metric`]
+    /// {QStyle::}{PM_LayoutLeftMargin}
+    /// {QStyle::}{PM_LayoutTopMargin}
+    /// {QStyle::}{PM_LayoutRightMargin}
+    /// {QStyle::}{PM_LayoutBottomMargin}
+    ///
+    /// Sets the *margins* to use around the layout.
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`contents_margins()`]
+    set_contents_margins(left: i32, top: i32, right: i32, bottom: i32),
+    ///
+    /// Sets the *left,* *top,* *right,* and *bottom* margins to use
+    /// around the layout.
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`get_contents_margins()`]
+    /// [`Style::pixel_metric`]
+    /// {QStyle::}{PM_LayoutLeftMargin}
+    /// {QStyle::}{PM_LayoutTopMargin}
+    /// {QStyle::}{PM_LayoutRightMargin}
+    /// {QStyle::}{PM_LayoutBottomMargin}
+    ///
+    /// Sets the *margins* to use around the layout.
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`contents_margins()`]
+    [org_name(setContentsMargins)]
+    set_contents_margins_2(margins: &MarginsType),
+    ///
+    /// Extracts the left, top, right, and bottom margins used around the
+    /// layout, and assigns them to * *left,* * *top,* * *right,* and * *bottom* (unless they are null pointers).
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`set_contents_margins()`]
+    /// [`Style::pixel_metric`]
+    /// {QStyle::}{PM_LayoutLeftMargin}
+    /// {QStyle::}{PM_LayoutTopMargin}
+    /// {QStyle::}{PM_LayoutRightMargin}
+    /// {QStyle::}{PM_LayoutBottomMargin}
+    get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
+    ///
+    /// Returns the margins used around the layout.
+    ///
+    /// By default, QLayout uses the values provided by the style. On
+    /// most platforms, the margin is 11 pixels in all directions.
+    ///
+    /// **See also:** [`set_contents_margins()`]
+    contents_margins() -> Margins,
+    ///
+    /// Returns the layout's geometry() rectangle, but taking into account the
+    /// contents margins.
+    ///
+    /// **See also:** [`set_contents_margins()`]
+    /// [`get_contents_margins()`]
+    contents_rect() -> Rect,
+    ///
+    /// Sets the alignment for widget *w* to *alignment* and returns
+    /// true if *w* is found in this layout (not including child
+    /// layouts); otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Sets the alignment for the layout *l* to *alignment* and
+    /// returns `true` if *l* is found in this layout (not including child
+    /// layouts); otherwise returns `false.`
+    set_alignment(w: *WidgetType, alignment: Rute::Alignment) -> bool,
+    ///
+    /// Sets the alignment for widget *w* to *alignment* and returns
+    /// true if *w* is found in this layout (not including child
+    /// layouts); otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Sets the alignment for the layout *l* to *alignment* and
+    /// returns `true` if *l* is found in this layout (not including child
+    /// layouts); otherwise returns `false.`
+    [org_name(setAlignment)]
+    set_alignment_2(l: *LayoutType, alignment: Rute::Alignment) -> bool,
+    ///
+    /// Tells the geometry manager to place the menu bar *widget* at the
+    /// top of parentWidget(), outside QWidget::contentsMargins(). All
+    /// child widgets are placed below the bottom edge of the menu bar.
+    set_menu_bar(w: *WidgetType),
+    ///
+    /// Returns the menu bar set for this layout, or 0 if no menu bar is
+    /// set.
+    menu_bar() -> Widget?,
+    ///
+    /// Returns the parent widget of this layout, or 0 if this layout is
+    /// not installed on any widget.
+    ///
+    /// If the layout is a sub-layout, this function returns the parent
+    /// widget of the parent layout.
+    ///
+    /// **See also:** [`parent()`]
+    parent_widget() -> Widget?,
+    ///
+    //[event]
+    invalidate(),
+    ///
+    /// Redoes the layout for parentWidget() if necessary.
+    ///
+    /// You should generally not need to call this because it is
+    /// automatically called at the most appropriate times. It returns
+    /// true if the layout was redone.
+    ///
+    /// **See also:** [`update()`]
+    /// [`Widget::update_geometry`]
+    activate() -> bool,
+    ///
+    /// Updates the layout for parentWidget().
+    ///
+    /// You should generally not need to call this because it is
+    /// automatically called at the most appropriate times.
+    ///
+    /// **See also:** [`activate()`]
+    /// [`invalidate()`]
+    update(),
+    ///
+    /// Adds widget *w* to this layout in a manner specific to the
+    /// layout. This function uses addItem().
+    add_widget(w: *WidgetType),
+    ///
+    /// Implemented in subclasses to add an *item.* How it is added is
+    /// specific to each subclass.
+    ///
+    /// This function is not usually called in application code. To add a widget
+    /// to a layout, use the addWidget() function; to add a child layout, use the
+    /// addLayout() function provided by the relevant QLayout subclass.
+    ///
+    /// **Note:** The ownership of *item* is transferred to the layout, and it's
+    /// the layout's responsibility to delete it.
+    ///
+    /// **See also:** [`add_widget()`]
+    /// [`BoxLayout::add_layout`]
+    /// [`GridLayout::add_layout`]
+    //[event]
+    add_item(arg0: *LayoutItemType),
+    ///
+    /// Removes the widget *widget* from the layout. After this call, it
+    /// is the caller's responsibility to give the widget a reasonable
+    /// geometry or to put the widget back into a layout or to explicitly
+    /// hide it if necessary.
+    ///
+    /// **Note:** The ownership of *widget* remains the same as
+    /// when it was added.
+    ///
+    /// **See also:** [`remove_item()`]
+    /// [`Widget::set_geometry`]
+    /// [`add_widget()`]
+    remove_widget(w: *WidgetType),
+    ///
+    /// Removes the layout item *item* from the layout. It is the
+    /// caller's responsibility to delete the item.
+    ///
+    /// Notice that *item* can be a layout (since QLayout inherits
+    /// QLayoutItem).
+    ///
+    /// **See also:** [`remove_widget()`]
+    /// [`add_item()`]
+    remove_item(arg0: *LayoutItemType),
+    ///
+    /// Returns whether this layout can make use of more space than
+    /// sizeHint(). A value of Qt::Vertical or Qt::Horizontal means that
+    /// it wants to grow in only one dimension, whereas Qt::Vertical |
+    /// Qt::Horizontal means that it wants to grow in both dimensions.
+    ///
+    /// The default implementation returns Qt::Horizontal | Qt::Vertical.
+    /// Subclasses reimplement it to return a meaningful value based on
+    /// their child widgets's [size policies](QSizePolicy)
+    ///
+    ///
+    /// **See also:** [`size_hint()`]
+    //[event]
+    expanding_directions() -> Rute::Orientations,
+    ///
+    /// Returns the minimum size of this layout. This is the smallest
+    /// size that the layout can have while still respecting the
+    /// specifications.
+    ///
+    /// The returned value doesn't include the space required by
+    /// QWidget::setContentsMargins() or menuBar().
+    ///
+    /// The default implementation allows unlimited resizing.
+    //[event]
+    minimum_size() -> Size,
+    ///
+    /// Returns the maximum size of this layout. This is the largest size
+    /// that the layout can have while still respecting the
+    /// specifications.
+    ///
+    /// The returned value doesn't include the space required by
+    /// QWidget::setContentsMargins() or menuBar().
+    ///
+    /// The default implementation allows unlimited resizing.
+    //[event]
+    maximum_size() -> Size,
+    ///
+    /// Must be implemented in subclasses to return the layout item at *index.* If there is no such item, the function must return 0.
+    /// Items are numbered consecutively from 0. If an item is deleted, other items will be renumbered.
+    ///
+    /// This function can be used to iterate over a layout. The following
+    /// code will draw a rectangle for each layout item in the layout structure of the widget.
+    ///
+    /// **See also:** [`count()`]
+    /// [`take_at()`]
+    //[event]
+    item_at(index: i32) -> LayoutItem?,
+    ///
+    /// Must be implemented in subclasses to remove the layout item at *index* from the layout, and return the item. If there is no such
+    /// item, the function must do nothing and return 0. Items are numbered
+    /// consecutively from 0. If an item is removed, other items will be
+    /// renumbered.
+    ///
+    /// The following code fragment shows a safe way to remove all items
+    /// from a layout:
+    ///
+    /// **See also:** [`item_at()`]
+    /// [`count()`]
+    //[event]
+    take_at(index: i32) -> LayoutItem?,
+    ///
+    /// Searches for widget *widget* in this layout (not including child
+    /// layouts).
+    ///
+    /// Returns the index of *widget,* or -1 if *widget* is not found.
+    ///
+    /// The default implementation iterates over all items using itemAt()
+    //[event]
+    index_of(arg0: *WidgetType) -> i32,
+    ///
+    /// Must be implemented in subclasses to return the number of items
+    /// in the layout.
+    ///
+    /// **See also:** [`item_at()`]
+    //[event]
+    count() -> i32,
+    ///
+    //[event]
+    is_empty() -> bool,
+    ///
+    /// Searches for widget *from* and replaces it with widget *to* if found.
+    /// Returns the layout item that contains the widget *from* on success.
+    /// Otherwise `0` is returned. If *options* contains `Qt::FindChildrenRecursively`
+    /// (the default), sub-layouts are searched for doing the replacement.
+    /// Any other flag in *options* is ignored.
+    ///
+    /// Notice that the returned item therefore might not belong to this layout,
+    /// but to a sub-layout.
+    ///
+    /// The returned layout item is no longer owned by the layout and should be
+    /// either deleted or inserted to another layout. The widget *from* is no
+    /// longer managed by the layout and may need to be deleted or hidden. The
+    /// parent of widget *from* is left unchanged.
+    ///
+    /// This function works for the built-in Qt layouts, but might not work for
+    /// custom layouts.
+    ///
+    /// **See also:** [`index_of()`]
+    replace_widget(from: *WidgetType, to: *WidgetType, options: Rute::FindChildOptions) -> LayoutItem?,
+    total_height_for_width(w: i32) -> i32,
+    total_minimum_size() -> Size,
+    total_maximum_size() -> Size,
+    total_size_hint() -> Size,
+    ///
+    //[event]
+    layout() -> Layout?,
+    ///
+    /// Enables this layout if *enable* is true, otherwise disables it.
+    ///
+    /// An enabled layout adjusts dynamically to changes; a disabled
+    /// layout acts as if it did not exist.
+    ///
+    /// By default all layouts are enabled.
+    ///
+    /// **See also:** [`is_enabled()`]
+    set_enabled(arg0: bool),
+    ///
+    /// Returns `true` if the layout is enabled; otherwise returns `false.`
+    ///
+    /// **See also:** [`set_enabled()`]
+    is_enabled() -> bool,
+    ///
+    /// Returns a size that satisfies all size constraints on *widget,*
+    /// including heightForWidth() and that is as close as possible to *size.*
+    [static] closest_acceptable_size(w: *WidgetType, s: &SizeType) -> Size,
+    widget_event(arg0: *EventType),
+    ///
+    //[event]
+    child_event(e: *ChildEventType),
+    ///
+    /// This function is called from `addLayout()` or `insertLayout()` functions in
+    /// subclasses to add layout *l* as a sub-layout.
+    ///
+    /// The only scenario in which you need to call it directly is if you
+    /// implement a custom layout that supports nested layouts.
+    ///
+    /// **See also:** [`BoxLayout::add_layout`]
+    /// [`BoxLayout::insert_layout`]
+    /// [`GridLayout::add_layout`]
+    add_child_layout(l: *LayoutType),
+    ///
+    /// This function is called from `addWidget()` functions in
+    /// subclasses to add *w* as a managed widget of a layout.
+    ///
+    /// If *w* is already managed by a layout, this function will give a warning
+    /// and remove *w* from that layout. This function must therefore be
+    /// called before adding *w* to the layout's data structure.
+    add_child_widget(w: *WidgetType),
+    adopt_layout(layout: *LayoutType) -> bool,
+    ///
+    /// Returns the rectangle that should be covered when the geometry of
+    /// this layout is set to *r,* provided that this layout supports
+    /// setAlignment().
+    ///
+    /// The result is derived from sizeHint() and expanding(). It is never
+    /// larger than *r.*
+    alignment_rect(arg0: &RectType) -> Rect,
+}
+
+[org_name(QLayout)]
+enum SizeConstraint {
+    SetDefaultConstraint,
+    SetNoConstraint,
+    SetMinimumSize,
+    SetFixedSize,
+    SetMaximumSize,
+    SetMinAndMaxSize,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

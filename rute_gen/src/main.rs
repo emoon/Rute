@@ -72,12 +72,24 @@ fn run_rustfmt(filename: &str) {
 }
 
 ///
+/// Run Rustfmt on generated file
+///
+fn run_clang_format(filename: &str) {
+    Command::new("clang-format")
+        .arg("-style=file")
+        .arg("-i")
+        .arg(filename)
+        .output()
+        .expect("failed to execute cargo fmt");
+}
+
+///
 /// Main
 ///
 fn main() {
     let wd = WalkDir::new("defs");
     // temporary set to one thread during debugging
-	/*
+    /*
 	rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
@@ -189,6 +201,13 @@ fn main() {
             run_rustfmt(&main_rute_rust);
             run_rustfmt(&main_mod_rust);
             run_rustfmt(&main_ffi);
+
+            run_clang_format(&signal_wrappers);
+            run_clang_format(&enum_mapping);
+            run_clang_format(&enum_mapping_header);
+            run_clang_format(&qt_bulk_cpp);
+            run_clang_format(&qt_rute_cpp);
+            run_clang_format(&main_ffi_header);
         }
 
         // We handle this file a bit special because it contains enums that are used for pretty
@@ -229,6 +248,8 @@ fn main() {
             // Rust Rustfmt on rust files
             run_rustfmt(&rust_ffi_target);
             run_rustfmt(&rust_target);
+            run_clang_format(&header_target);
+            run_clang_format(&qt_cpp_target);
         }
     });
 
