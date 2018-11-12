@@ -3274,7 +3274,8 @@ struct Widget : Object, PaintDevice {
     /// [`size_policy()`]
     /// [`set_minimum_size()`]
     /// [`update_geometry()`]
-    [event] size_hint() -> Size,
+    //[event]
+    size_hint() -> Size,
     ///
     /// If the value of this property is an invalid size, no minimum size
     /// is recommended.
@@ -3294,7 +3295,8 @@ struct Widget : Object, PaintDevice {
     /// [`resize()`]
     /// [`set_minimum_size()`]
     /// [`size_policy()`]
-    [event] minimum_size_hint() -> Size,
+    //[event]
+    minimum_size_hint() -> Size,
     ///
     /// If there is a QLayout that manages this widget's children, the
     /// size policy specified by that layout is used. If there is no such
@@ -3746,7 +3748,8 @@ struct Widget : Object, PaintDevice {
     /// user, since it's meant for reimplementation purposes only. The
     /// function is called by Qt internally, and the default
     /// implementation may not always return a valid pointer.
-    [event] paint_engine() -> PaintEngine?,
+    //[event]
+    paint_engine() -> PaintEngine?,
     ///
     /// Ensures that the widget and its children have been polished by
     /// QStyle (i.e., have a proper font and palette).
@@ -4366,35 +4369,35 @@ struct Widget : Object, PaintDevice {
     /// [`event()`]
     /// [`HideEvent`]
     [event] hide_event(event: *HideEventType),
-    ///
-    /// This special event handler can be reimplemented in a subclass to
-    /// receive native platform events identified by *eventType*
-    /// which are passed in the *message* parameter.
-    ///
-    /// In your reimplementation of this function, if you want to stop the
-    /// event being handled by Qt, return true and set *result.*
-    /// If you return false, this native event is passed back to Qt,
-    /// which translates the event into a Qt event and sends it to the widget.
-    ///
-    /// **Note**: Events are only delivered to this event handler if the widget is
-    /// has a native Window handle.
-    ///
-    /// **Note**: This function superseedes the event filter functions
-    /// x11Event(), winEvent() and macEvent() of Qt 4.
-    ///
-    /// * Platform
-    /// * Event Type Identifier
-    /// * Message Type
-    /// * Result Type
-    /// * Windows
-    /// * "windows_generic_MSG"
-    /// * MSG *
-    /// * LRESULT
-    /// * macOS
-    /// * "NSEvent"
-    /// * NSEvent *
-    ///
-    [event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
+    //
+    // This special event handler can be reimplemented in a subclass to
+    // receive native platform events identified by *eventType*
+    // which are passed in the *message* parameter.
+    //
+    // In your reimplementation of this function, if you want to stop the
+    // event being handled by Qt, return true and set *result.*
+    // If you return false, this native event is passed back to Qt,
+    // which translates the event into a Qt event and sends it to the widget.
+    //
+    // **Note**: Events are only delivered to this event handler if the widget is
+    // has a native Window handle.
+    //
+    // **Note**: This function superseedes the event filter functions
+    // x11Event(), winEvent() and macEvent() of Qt 4.
+    //
+    // * Platform
+    // * Event Type Identifier
+    // * Message Type
+    // * Result Type
+    // * Windows
+    // * "windows_generic_MSG"
+    // * MSG *
+    // * LRESULT
+    // * macOS
+    // * "NSEvent"
+    // * NSEvent *
+    //
+    //[event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
     ///
     /// This event handler can be reimplemented to handle state changes.
     ///

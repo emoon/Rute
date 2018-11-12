@@ -1,8 +1,8 @@
-/// 
+///
 /// Normally, you don't need to use this class directly. Qt's
 /// built-in layout managers provide the following functions for
 /// manipulating empty space in layouts:
-/// 
+///
 /// * Class
 /// * Functions
 /// * QHBoxLayout
@@ -10,49 +10,56 @@
 /// , [addStretch()](QBoxLayout::addStretch())
 /// , [insertSpacing()](QBoxLayout::insertSpacing())
 /// , [insertStretch()](QBoxLayout::insertStretch())
-/// 
+///
 /// * QGridLayout
 /// * [setRowMinimumHeight()](QGridLayout::setRowMinimumHeight())
 /// , [setRowStretch()](QGridLayout::setRowStretch())
 /// , [setColumnMinimumWidth()](QGridLayout::setColumnMinimumWidth())
 /// , [setColumnStretch()](QGridLayout::setColumnStretch())
-/// 
-/// **See also:** QLayout
-/// QWidgetItem
-/// QLayoutItem::spacerItem()
+///
+/// **See also:** [`Layout`]
+/// [`WidgetItem`]
+/// [`LayoutItem::spacer_item`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass, NoCreate)]
 struct SpacerItem : LayoutItem {
-    /// 
+    ///
     /// Changes this spacer item to have preferred width *w,* preferred
     /// height *h,* horizontal size policy *hPolicy* and vertical size
     /// policy *vPolicy.*
-    /// 
+    ///
     /// The default values provide a gap that is able to stretch if
     /// nothing else wants the space.
-    /// 
+    ///
     /// Note that if changeSize() is called after the spacer item has been added
     /// to a layout, it is necessary to invalidate the layout in order for the
     /// spacer item's new size to take effect.
-    /// 
-    /// **See also:** QSpacerItem::invalidate()
+    ///
+    /// **See also:** [`SpacerItem::invalidate`]
     change_size(w: i32, h: i32, h_data: SizePolicy::Policy, v_data: SizePolicy::Policy),
-    /// 
-    [event] size_hint() -> Size,
-    /// 
-    [event] minimum_size() -> Size,
-    /// 
-    [event] maximum_size() -> Size,
-    /// 
-    [event] expanding_directions() -> Rute::Orientations,
-    /// 
+    ///
+    //[event]
+    size_hint() -> Size,
+    ///
+    //[event]
+    minimum_size() -> Size,
+    ///
+    //[event]
+    maximum_size() -> Size,
+    ///
+    //[event]
+    expanding_directions() -> Rute::Orientations,
+    ///
     /// Returns `true.`
-    [event] is_empty() -> bool,
-    /// 
+    //[event]
+    is_empty() -> bool,
+    ///
     /// Returns a pointer to this object.
-    [event] spacer_item() -> SpacerItem?,
-    /// 
+    //[event]
+    spacer_item() -> SpacerItem?,
+    ///
     /// Returns the size policy of this item.
     size_policy() -> SizePolicy,
 }

@@ -79,7 +79,9 @@ public:
 {%- if widget %}
     WR{{struct_name}}(QWidget* widget) : {{qt_name}}(widget) { }
 {%- else %}
+{%- if supports_clone %}
     WR{{struct_name}}(const {{qt_name}}& clone) : {{qt_name}}(clone) { }
+{%- endif %}
     WR{{struct_name}}() : {{qt_name}}() { }
 {%- endif %}
     virtual ~WR{{struct_name}}() {

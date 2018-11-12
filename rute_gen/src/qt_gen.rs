@@ -1079,6 +1079,7 @@ impl QtGenerator {
                 });
 
             template_data.insert("events".into(), Value::scalar(events));
+            template_data.insert("supports_clone".into(), Value::scalar(sdef.supports_cpp_clone()));
 
             let res = self.wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;

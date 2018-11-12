@@ -23,6 +23,7 @@ const PRMITIVE_TYPES: &[&str] = &[
 static ATTRIB_NO_CREATE: &'static str = "NoCreate";
 static ATTRIB_MANUAL_CREATE: &'static str = "ManualCreate";
 static ATTRIB_NO_WRAP_CLASS: &'static str = "NoWrapClass";
+static ATTRIB_NO_CPP_CLONE: &'static str = "NoCppClone";
 static ATTRIB_DROP: &'static str = "Drop";
 
 ///
@@ -818,6 +819,16 @@ impl Struct {
         self.attributes
             .iter()
             .find(|&s| s == ATTRIB_NO_WRAP_CLASS)
+            .is_none()
+    }
+
+    ///
+    /// Check if no wrapping class should be generated
+    ///
+    pub fn supports_cpp_clone(&self) -> bool {
+        self.attributes
+            .iter()
+            .find(|&s| s == ATTRIB_NO_CPP_CLONE)
             .is_none()
     }
 

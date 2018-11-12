@@ -807,7 +807,8 @@ struct Pixmap : PaintDevice {
     ///
     /// Returns `true` if this is a QBitmap; otherwise returns `false.`
     is_q_bitmap() -> bool,
-    [event] paint_engine() -> PaintEngine?,
+    //[event]
+    paint_engine() -> PaintEngine?,
     [static] from_image_in_place(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     //handle() -> PlatformPixmap?,
 }

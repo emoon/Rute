@@ -154,6 +154,7 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoCppClone)]
 struct Object {
     ///
     /// This virtual function receives events to an object and should
@@ -773,56 +774,56 @@ struct Object {
     /// expensive initialization only if something is connected to a
     /// signal.
     is_signal_connected(signal: &MetaMethodType) -> bool,
-    ///
-    /// This event handler can be reimplemented in a subclass to receive
-    /// timer events for the object.
-    ///
-    /// QTimer provides a higher-level interface to the timer
-    /// functionality, and also more general information about timers. The
-    /// timer event is passed in the *event* parameter.
-    ///
-    /// **See also:** [`start_timer()`]
-    /// [`kill_timer()`]
-    /// [`event()`]
-    [event] timer_event(event: *TimerEventType),
-    ///
-    /// This event handler can be reimplemented in a subclass to receive
-    /// child events. The event is passed in the *event* parameter.
-    ///
-    /// QEvent::ChildAdded and QEvent::ChildRemoved events are sent to
-    /// objects when children are added or removed. In both cases you can
-    /// only rely on the child being a QObject, or if isWidgetType()
-    /// returns `true,` a QWidget. (This is because, in the
-    /// [ChildAdded](QEvent::ChildAdded)
-    /// case, the child is not yet
-    /// fully constructed, and in the [ChildRemoved](QEvent::ChildRemoved)
-    ///
-    /// case it might have been destructed already).
-    ///
-    /// QEvent::ChildPolished events are sent to widgets when children
-    /// are polished, or when polished children are added. If you receive
-    /// a child polished event, the child's construction is usually
-    /// completed. However, this is not guaranteed, and multiple polish
-    /// events may be delivered during the execution of a widget's
-    /// constructor.
-    ///
-    /// For every child widget, you receive one
-    /// [ChildAdded](QEvent::ChildAdded)
-    /// event, zero or more
-    /// [ChildPolished](QEvent::ChildPolished)
-    /// events, and one
-    /// [ChildRemoved](QEvent::ChildRemoved)
-    /// event.
-    ///
-    /// The [ChildPolished](QEvent::ChildPolished)
-    /// event is omitted if
-    /// a child is removed immediately after it is added. If a child is
-    /// polished several times during construction and destruction, you
-    /// may receive several child polished events for the same child,
-    /// each time with a different virtual table.
-    ///
-    /// **See also:** [`event()`]
-    [event] child_event(event: *ChildEventType),
+    //
+    // This event handler can be reimplemented in a subclass to receive
+    // timer events for the object.
+    //
+    // QTimer provides a higher-level interface to the timer
+    // functionality, and also more general information about timers. The
+    // timer event is passed in the *event* parameter.
+    //
+    // **See also:** [`start_timer()`]
+    // [`kill_timer()`]
+    // [`event()`]
+    //[event] timer_event(event: *TimerEventType),
+    //
+    // This event handler can be reimplemented in a subclass to receive
+    // child events. The event is passed in the *event* parameter.
+    //
+    // QEvent::ChildAdded and QEvent::ChildRemoved events are sent to
+    // objects when children are added or removed. In both cases you can
+    // only rely on the child being a QObject, or if isWidgetType()
+    // returns `true,` a QWidget. (This is because, in the
+    // [ChildAdded](QEvent::ChildAdded)
+    // case, the child is not yet
+    // fully constructed, and in the [ChildRemoved](QEvent::ChildRemoved)
+    //
+    // case it might have been destructed already).
+    //
+    // QEvent::ChildPolished events are sent to widgets when children
+    // are polished, or when polished children are added. If you receive
+    // a child polished event, the child's construction is usually
+    // completed. However, this is not guaranteed, and multiple polish
+    // events may be delivered during the execution of a widget's
+    // constructor.
+    //
+    // For every child widget, you receive one
+    // [ChildAdded](QEvent::ChildAdded)
+    // event, zero or more
+    // [ChildPolished](QEvent::ChildPolished)
+    // events, and one
+    // [ChildRemoved](QEvent::ChildRemoved)
+    // event.
+    //
+    // The [ChildPolished](QEvent::ChildPolished)
+    // event is omitted if
+    // a child is removed immediately after it is added. If a child is
+    // polished several times during construction and destruction, you
+    // may receive several child polished events for the same child,
+    // each time with a different virtual table.
+    //
+    // **See also:** [`event()`]
+    //[event] child_event(event: *ChildEventType),
     ///
     /// This event handler can be reimplemented in a subclass to receive
     /// custom events. Custom events are user-defined events with a type
@@ -833,53 +834,53 @@ struct Object {
     /// **See also:** [`event()`]
     /// [`Event`]
     [event] custom_event(event: *EventType),
-    ///
-    /// This virtual function is called when something has been connected
-    /// to *signal* in this object.
-    ///
-    /// If you want to compare *signal* with a specific signal, you can
-    /// use QMetaMethod::fromSignal() as follows:
-    ///
-    /// **Warning**: This function violates the object-oriented principle of
-    /// modularity. However, it might be useful when you need to perform
-    /// expensive initialization only if something is connected to a
-    /// signal.
-    ///
-    /// **Warning**: This function is called from the thread which performs the
-    /// connection, which may be a different thread from the thread in
-    /// which this object lives.
-    ///
-    /// **See also:** [`connect()`]
-    /// [`disconnect_notify()`]
-    [event] connect_notify(signal: &MetaMethodType),
-    ///
-    /// This virtual function is called when something has been
-    /// disconnected from *signal* in this object.
-    ///
-    /// See connectNotify() for an example of how to compare
-    /// *signal* with a specific signal.
-    ///
-    /// If all signals were disconnected from this object (e.g., the
-    /// signal argument to disconnect() was 0), disconnectNotify()
-    /// is only called once, and the *signal* will be an invalid
-    /// QMetaMethod (QMetaMethod::isValid() returns `false).`
-    ///
-    /// **Warning**: This function violates the object-oriented principle of
-    /// modularity. However, it might be useful for optimizing access to
-    /// expensive resources.
-    ///
-    /// **Warning**: This function is called from the thread which performs the
-    /// disconnection, which may be a different thread from the thread in
-    /// which this object lives. This function may also be called with a QObject
-    /// internal mutex locked. It is therefore not allowed to re-enter any
-    /// of any QObject functions from your reimplementation and if you lock
-    /// a mutex in your reimplementation, make sure that you don't call QObject
-    /// functions with that mutex held in other places or it will result in
-    /// a deadlock.
-    ///
-    /// **See also:** [`disconnect()`]
-    /// [`connect_notify()`]
-    [event] disconnect_notify(signal: &MetaMethodType),
+    //
+    // This virtual function is called when something has been connected
+    // to *signal* in this object.
+    //
+    // If you want to compare *signal* with a specific signal, you can
+    // use QMetaMethod::fromSignal() as follows:
+    //
+    // **Warning**: This function violates the object-oriented principle of
+    // modularity. However, it might be useful when you need to perform
+    // expensive initialization only if something is connected to a
+    // signal.
+    //
+    // **Warning**: This function is called from the thread which performs the
+    // connection, which may be a different thread from the thread in
+    // which this object lives.
+    //
+    // **See also:** [`connect()`]
+    // [`disconnect_notify()`]
+    //[event] connect_notify(signal: &MetaMethodType),
+    //
+    // This virtual function is called when something has been
+    // disconnected from *signal* in this object.
+    //
+    // See connectNotify() for an example of how to compare
+    // *signal* with a specific signal.
+    //
+    // If all signals were disconnected from this object (e.g., the
+    // signal argument to disconnect() was 0), disconnectNotify()
+    // is only called once, and the *signal* will be an invalid
+    // QMetaMethod (QMetaMethod::isValid() returns `false).`
+    //
+    // **Warning**: This function violates the object-oriented principle of
+    // modularity. However, it might be useful for optimizing access to
+    // expensive resources.
+    //
+    // **Warning**: This function is called from the thread which performs the
+    // disconnection, which may be a different thread from the thread in
+    // which this object lives. This function may also be called with a QObject
+    // internal mutex locked. It is therefore not allowed to re-enter any
+    // of any QObject functions from your reimplementation and if you lock
+    // a mutex in your reimplementation, make sure that you don't call QObject
+    // functions with that mutex held in other places or it will result in
+    // a deadlock.
+    //
+    // **See also:** [`disconnect()`]
+    // [`connect_notify()`]
+    //[event] disconnect_notify(signal: &MetaMethodType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
